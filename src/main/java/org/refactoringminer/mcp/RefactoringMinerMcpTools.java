@@ -293,7 +293,7 @@ public final class RefactoringMinerMcpTools {
 			return McpAnalysisResult.error("Tool arguments are required.", List.of("arguments=null"));
 		}
 		try {
-			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			Path repositoryPath = repositoryPath(arguments.get("repositoryPath"));
 			String baseRef = optionalStringValue(arguments.get("baseRef"), "HEAD");
 			boolean includeUntracked = booleanValue(arguments.get("includeUntracked"), false);
 			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
@@ -301,7 +301,7 @@ public final class RefactoringMinerMcpTools {
 					"maxBytesPerFile");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
-			return service.analyzeWorktree(Path.of(repositoryPath), baseRef, includeUntracked, maxFiles,
+			return service.analyzeWorktree(repositoryPath, baseRef, includeUntracked, maxFiles,
 					maxBytesPerFile, maxRefactorings);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
@@ -318,12 +318,12 @@ public final class RefactoringMinerMcpTools {
 			return McpAnalysisResult.error("Tool arguments are required.", List.of("arguments=null"));
 		}
 		try {
-			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			Path repositoryPath = repositoryPath(arguments.get("repositoryPath"));
 			String commitId = stringValue(arguments.get("commitId"), "commitId");
 			Integer parentIndex = optionalIntegerValue(arguments.get("parentIndex"), "parentIndex");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
-			return service.analyzeCommit(Path.of(repositoryPath), commitId, parentIndex, maxRefactorings);
+			return service.analyzeCommit(repositoryPath, commitId, parentIndex, maxRefactorings);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -405,7 +405,7 @@ public final class RefactoringMinerMcpTools {
 			return McpValidationResult.error("Tool arguments are required.", null, List.of("arguments=null"));
 		}
 		try {
-			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			Path repositoryPath = repositoryPath(arguments.get("repositoryPath"));
 			String baseRef = optionalStringValue(arguments.get("baseRef"), "HEAD");
 			boolean includeUntracked = booleanValue(arguments.get("includeUntracked"), false);
 			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
@@ -413,7 +413,7 @@ public final class RefactoringMinerMcpTools {
 					"maxBytesPerFile");
 			McpRefactoringIntent intent = intentValue(arguments.get("intent"));
 			int maxCandidates = integerValue(arguments.get("maxCandidates"), DEFAULT_MAX_CANDIDATES, "maxCandidates");
-			return service.validateWorktree(Path.of(repositoryPath), baseRef, includeUntracked, maxFiles,
+			return service.validateWorktree(repositoryPath, baseRef, includeUntracked, maxFiles,
 					maxBytesPerFile, intent, maxCandidates);
 		} catch (IllegalArgumentException e) {
 			return McpValidationResult.error(e.getMessage(), null, List.of("Invalid tool arguments."));
@@ -430,12 +430,12 @@ public final class RefactoringMinerMcpTools {
 			return McpValidationResult.error("Tool arguments are required.", null, List.of("arguments=null"));
 		}
 		try {
-			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			Path repositoryPath = repositoryPath(arguments.get("repositoryPath"));
 			String commitId = stringValue(arguments.get("commitId"), "commitId");
 			Integer parentIndex = optionalIntegerValue(arguments.get("parentIndex"), "parentIndex");
 			McpRefactoringIntent intent = intentValue(arguments.get("intent"));
 			int maxCandidates = integerValue(arguments.get("maxCandidates"), DEFAULT_MAX_CANDIDATES, "maxCandidates");
-			return service.validateCommit(Path.of(repositoryPath), commitId, parentIndex, intent, maxCandidates);
+			return service.validateCommit(repositoryPath, commitId, parentIndex, intent, maxCandidates);
 		} catch (IllegalArgumentException e) {
 			return McpValidationResult.error(e.getMessage(), null, List.of("Invalid tool arguments."));
 		}
@@ -519,14 +519,14 @@ public final class RefactoringMinerMcpTools {
 					List.of("arguments=null"));
 		}
 		try {
-			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			Path repositoryPath = repositoryPath(arguments.get("repositoryPath"));
 			String baseRef = optionalStringValue(arguments.get("baseRef"), "HEAD");
 			boolean includeUntracked = booleanValue(arguments.get("includeUntracked"), false);
 			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
 			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
 					"maxBytesPerFile");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
-			return service.diffWorktree(Path.of(repositoryPath), baseRef, includeUntracked, maxFiles, maxBytesPerFile,
+			return service.diffWorktree(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile,
 					port);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Worktree changes",
@@ -545,11 +545,11 @@ public final class RefactoringMinerMcpTools {
 					List.of("arguments=null"));
 		}
 		try {
-			String repositoryPath = stringValue(arguments.get("repositoryPath"), "repositoryPath");
+			Path repositoryPath = repositoryPath(arguments.get("repositoryPath"));
 			String commitId = stringValue(arguments.get("commitId"), "commitId");
 			Integer parentIndex = optionalIntegerValue(arguments.get("parentIndex"), "parentIndex");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
-			return service.diffCommit(Path.of(repositoryPath), commitId, parentIndex, port);
+			return service.diffCommit(repositoryPath, commitId, parentIndex, port);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Commit diff", List.of("Invalid tool arguments."));
 		}
@@ -710,6 +710,13 @@ public final class RefactoringMinerMcpTools {
 		throw new IllegalArgumentException(name + " must be a non-empty string.");
 	}
 
+	private static Path repositoryPath(Object value) {
+		if (value == null) {
+			return Path.of(System.getProperty("user.dir"));
+		}
+		return Path.of(stringValue(value, "repositoryPath"));
+	}
+
 	private static String optionalStringValue(Object value, String defaultValue) {
 		if (value == null) {
 			return defaultValue;
@@ -738,22 +745,22 @@ public final class RefactoringMinerMcpTools {
 
 	private static JsonSchema worktreeInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("repositoryPath", Map.of("type", "string"));
+		putRepositoryPathProperty(properties);
 		properties.put("baseRef", Map.of("type", "string", "default", "HEAD"));
 		properties.put("includeUntracked", Map.of("type", "boolean", "default", false));
 		properties.put("maxFiles", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_FILES));
 		properties.put("maxBytesPerFile", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_BYTES_PER_FILE));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
-		return new JsonSchema("object", properties, List.of("repositoryPath"), false, null, null);
+		return new JsonSchema("object", properties, List.of(), false, null, null);
 	}
 
 	private static JsonSchema commitInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("repositoryPath", Map.of("type", "string"));
+		putRepositoryPathProperty(properties);
 		properties.put("commitId", Map.of("type", "string"));
 		properties.put("parentIndex", Map.of("type", "integer", "minimum", 0));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
-		return new JsonSchema("object", properties, List.of("repositoryPath", "commitId"), false, null, null);
+		return new JsonSchema("object", properties, List.of("commitId"), false, null, null);
 	}
 
 	private static JsonSchema pullRequestInputSchema() {
@@ -784,23 +791,22 @@ public final class RefactoringMinerMcpTools {
 
 	private static JsonSchema validateWorktreeInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("repositoryPath", Map.of("type", "string"));
+		putRepositoryPathProperty(properties);
 		properties.put("baseRef", Map.of("type", "string", "default", "HEAD"));
 		properties.put("includeUntracked", Map.of("type", "boolean", "default", false));
 		properties.put("maxFiles", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_FILES));
 		properties.put("maxBytesPerFile", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_BYTES_PER_FILE));
 		putValidationProperties(properties);
-		return new JsonSchema("object", properties, List.of("repositoryPath", "intent"), false, null, null);
+		return new JsonSchema("object", properties, List.of("intent"), false, null, null);
 	}
 
 	private static JsonSchema validateCommitInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("repositoryPath", Map.of("type", "string"));
+		putRepositoryPathProperty(properties);
 		properties.put("commitId", Map.of("type", "string"));
 		properties.put("parentIndex", Map.of("type", "integer", "minimum", 0));
 		putValidationProperties(properties);
-		return new JsonSchema("object", properties, List.of("repositoryPath", "commitId", "intent"), false, null,
-				null);
+		return new JsonSchema("object", properties, List.of("commitId", "intent"), false, null, null);
 	}
 
 	private static JsonSchema validatePullRequestInputSchema() {
@@ -831,22 +837,22 @@ public final class RefactoringMinerMcpTools {
 
 	private static JsonSchema diffWorktreeInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("repositoryPath", Map.of("type", "string"));
+		putRepositoryPathProperty(properties);
 		properties.put("baseRef", Map.of("type", "string", "default", "HEAD"));
 		properties.put("includeUntracked", Map.of("type", "boolean", "default", false));
 		properties.put("maxFiles", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_FILES));
 		properties.put("maxBytesPerFile", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_BYTES_PER_FILE));
 		putDiffBrowserProperties(properties);
-		return new JsonSchema("object", properties, List.of("repositoryPath"), false, null, null);
+		return new JsonSchema("object", properties, List.of(), false, null, null);
 	}
 
 	private static JsonSchema diffCommitInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("repositoryPath", Map.of("type", "string"));
+		putRepositoryPathProperty(properties);
 		properties.put("commitId", Map.of("type", "string"));
 		properties.put("parentIndex", Map.of("type", "integer", "minimum", 0));
 		putDiffBrowserProperties(properties);
-		return new JsonSchema("object", properties, List.of("repositoryPath", "commitId"), false, null, null);
+		return new JsonSchema("object", properties, List.of("commitId"), false, null, null);
 	}
 
 	private static JsonSchema diffPullRequestInputSchema() {
@@ -862,6 +868,12 @@ public final class RefactoringMinerMcpTools {
 		properties.put("port", Map.of("type", "integer", "minimum", 1, "maximum", 65535,
 				"default", DEFAULT_WEB_DIFF_PORT,
 				"description", "Local WebDiff port. Defaults to 6789."));
+	}
+
+	private static void putRepositoryPathProperty(Map<String, Object> properties) {
+		properties.put("repositoryPath", Map.of(
+				"type", "string",
+				"description", "Absolute repository path. Defaults to the MCP server working directory."));
 	}
 
 	private static void putFileContentBoundsProperties(Map<String, Object> properties) {

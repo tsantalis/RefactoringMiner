@@ -44,7 +44,7 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void worktreeToolMetadataIsReadOnlyAndRequiresRepositoryPath() {
+	void worktreeToolMetadataIsReadOnlyAndDefaultsRepositoryPath() {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeWorktreeTool(
 				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
 
@@ -52,7 +52,7 @@ class RefactoringMinerMcpToolsTest {
 		assertTrue(tool.tool().description().contains("local modified, added, deleted"));
 		assertTrue(tool.tool().annotations().readOnlyHint());
 		assertFalse(tool.tool().annotations().destructiveHint());
-		assertTrue(tool.tool().inputSchema().required().contains("repositoryPath"));
+		assertFalse(tool.tool().inputSchema().required().contains("repositoryPath"));
 	}
 
 	@Test
@@ -100,7 +100,7 @@ class RefactoringMinerMcpToolsTest {
 		SyncToolSpecification directoriesTool = RefactoringMinerMcpTools.analyzeDirectoriesTool(service);
 
 		assertTrue(commitTool.tool().annotations().readOnlyHint());
-		assertTrue(commitTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
 		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
 		assertTrue(pullRequestTool.tool().annotations().readOnlyHint());
 		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
@@ -129,8 +129,8 @@ class RefactoringMinerMcpToolsTest {
 		}
 		assertTrue(fileTool.tool().inputSchema().required().contains("beforeFiles"));
 		assertTrue(fileTool.tool().inputSchema().required().contains("afterFiles"));
-		assertTrue(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertTrue(commitTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertFalse(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
 		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
 		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
 		assertTrue(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
@@ -153,8 +153,8 @@ class RefactoringMinerMcpToolsTest {
 		}
 		assertTrue(fileTool.tool().inputSchema().required().contains("beforeFiles"));
 		assertTrue(fileTool.tool().inputSchema().required().contains("afterFiles"));
-		assertTrue(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertTrue(commitTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertFalse(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
+		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
 		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
 		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
 		assertTrue(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
@@ -470,6 +470,36 @@ class RefactoringMinerMcpToolsTest {
 		assertEquals("ok", json.get("status").asText());
 		assertEquals("http://127.0.0.1:6793", json.get("url").asText());
 		assertEquals("src/main/java/A.java", json.get("affectedFiles").get(0).asText());
+	}
+
+	@Test
+	void worktreeDiffToolDefaultsRepositoryPathToUserDir(@TempDir Path tempDir) throws Exception {
+		Path repo = tempDir.resolve("repo");
+		try (Git git = Git.init().setDirectory(repo.toFile()).call()) {
+			write(repo, "src/main/java/A.java", "class A { void f() {} }");
+			git.add().addFilepattern(".").call();
+			git.commit().setMessage("initial").setAuthor("Test", "test@example.com")
+					.setCommitter("Test", "test@example.com").call();
+			write(repo, "src/main/java/A.java", "class A { void g() {} }");
+		}
+		String previousUserDir = System.getProperty("user.dir");
+		try {
+			System.setProperty("user.dir", repo.toString());
+			SyncToolSpecification tool = RefactoringMinerMcpTools.diffWorktreeTool(fakeDiffBrowserService());
+			CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_WORKTREE, Map.of(
+					"baseRef", "HEAD",
+					"port", 6793));
+
+			CallToolResult result = tool.callHandler().apply(null, request);
+
+			assertFalse(result.isError());
+			TextContent content = (TextContent) result.content().get(0);
+			JsonNode json = OBJECT_MAPPER.readTree(content.text());
+			assertEquals("ok", json.get("status").asText());
+			assertEquals("src/main/java/A.java", json.get("affectedFiles").get(0).asText());
+		} finally {
+			System.setProperty("user.dir", previousUserDir);
+		}
 	}
 
 	@Test

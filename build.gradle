@@ -119,6 +119,9 @@ dependencies {
 }
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
     withJavadocJar()
     withSourcesJar()
 }
@@ -197,8 +200,14 @@ bootJar {
     mainClass.set('narrator.restapi.RestAPI')
 }
 
-bootJarMcp {
+tasks.register('bootJarMcp', org.springframework.boot.gradle.tasks.bundling.BootJar) {
+    group = 'build'
+    description = 'Builds a bootable JAR for the MCP server'
     enabled = true
     archiveFileName = 'ChangeNarratorMCP.jar'
     mainClass.set('narrator.mcp.McpServer')
+    
+    dependsOn classes
+    
+    targetJavaVersion.set(JavaVersion.VERSION_17)
 }

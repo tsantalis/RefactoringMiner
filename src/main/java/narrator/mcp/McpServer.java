@@ -14,6 +14,7 @@ public class McpServer {
     private static final McpHandler handler = new McpHandler();
 
     public static void main(String[] args) {
+        System.out.println("Up and Running");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out))) {
             
@@ -41,7 +42,7 @@ public class McpServer {
         try {
             JsonObject error = new JsonObject();
             error.addProperty("jsonrpc", "2.0");
-            error.addProperty("error", new JsonObject());
+            error.add("error", new JsonObject());
             error.getAsJsonObject("error").addProperty("code", -32603);
             error.getAsJsonObject("error").addProperty("message", "Internal error: " + e.getMessage());
             writer.write(gson.toJson(error));

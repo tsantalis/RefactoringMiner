@@ -24,7 +24,7 @@ public class McpHandler {
         response.addProperty("jsonrpc", "2.0");
         
         if (request.has("id")) {
-            response.addProperty("id", request.get("id"));
+            response.add("id", request.get("id"));
         }
 
         switch (method) {

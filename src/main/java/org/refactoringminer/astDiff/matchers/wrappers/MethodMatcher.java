@@ -348,6 +348,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if(matched != null) {
             mappingStore.addMapping(matched.first, matched.second);
         }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.STATIC, LANG2.STATIC);
+        if(matched != null) {
+            mappingStore.addMapping(matched.first, matched.second);
+        }
 
         if (umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
             if (umlOperationBodyMapper.getOperation1().isStatic() && umlOperationBodyMapper.getOperation2().isStatic())

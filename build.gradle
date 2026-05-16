@@ -200,14 +200,25 @@ bootJar {
     mainClass.set('narrator.restapi.RestAPI')
 }
 
-tasks.register('bootJarMcp', org.springframework.boot.gradle.tasks.bundling.BootJar) {
+
+// Use shadowJar for the MCP server to ensure all dependencies are bundled into a single fat JAR
+tasks.register('shadowJarMcp', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
     group = 'build'
-    description = 'Builds a bootable JAR for the MCP server'
-    enabled = true
-    archiveFileName = 'ChangeNarratorMCP.jar'
-    mainClass.set('narrator.mcp.McpServer')
+    description = 'Builds a fat JAR for the MCP server'
+    archiveFileName = 'ChangeNarratorMCP-fat.jar'
+    zip64 = true
     
-    dependsOn classes
+    configurations = [project.configurations.runtimeClasspath]
     
-    targetJavaVersion.set(JavaVersion.VERSION_17)
+    manifest {
+        attributes 'Main-Class': 'narrator.mcp.McpServer'
+    }
+    
+    // Explicitly include classes
+    from sourceSets.main.output
+    
+    // Exclude signature files from dependencies to avoid SecurityException
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
 }

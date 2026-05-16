@@ -45,6 +45,7 @@ public class McpHandler {
 
     private void handleInitialize(JsonObject response) {
         JsonObject result = new JsonObject();
+        result.addProperty("protocolVersion", "2024-11-05");
         JsonObject capabilities = new JsonObject();
         capabilities.add("tools", new JsonObject());
         result.add("capabilities", capabilities);

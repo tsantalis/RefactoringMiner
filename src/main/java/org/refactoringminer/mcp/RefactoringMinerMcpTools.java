@@ -339,7 +339,7 @@ public final class RefactoringMinerMcpTools {
 			return McpAnalysisResult.error("Tool arguments are required.", List.of("arguments=null"));
 		}
 		try {
-			String cloneUrl = stringValue(arguments.get("cloneUrl"), "cloneUrl");
+			String cloneUrl = optionalCloneUrlValue(arguments.get("cloneUrl"));
 			int pullRequestId = integerValue(arguments.get("pullRequestId"), 0, "pullRequestId");
 			int timeoutSeconds = integerValue(arguments.get("timeoutSeconds"), DEFAULT_TIMEOUT_SECONDS, "timeoutSeconds");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
@@ -452,7 +452,7 @@ public final class RefactoringMinerMcpTools {
 			return McpValidationResult.error("Tool arguments are required.", null, List.of("arguments=null"));
 		}
 		try {
-			String cloneUrl = stringValue(arguments.get("cloneUrl"), "cloneUrl");
+			String cloneUrl = optionalCloneUrlValue(arguments.get("cloneUrl"));
 			int pullRequestId = integerValue(arguments.get("pullRequestId"), 0, "pullRequestId");
 			int timeoutSeconds = integerValue(arguments.get("timeoutSeconds"), DEFAULT_TIMEOUT_SECONDS, "timeoutSeconds");
 			McpRefactoringIntent intent = intentValue(arguments.get("intent"));
@@ -566,7 +566,7 @@ public final class RefactoringMinerMcpTools {
 					List.of("arguments=null"));
 		}
 		try {
-			String cloneUrl = stringValue(arguments.get("cloneUrl"), "cloneUrl");
+			String cloneUrl = optionalCloneUrlValue(arguments.get("cloneUrl"));
 			int pullRequestId = integerValue(arguments.get("pullRequestId"), 0, "pullRequestId");
 			int timeoutSeconds = integerValue(arguments.get("timeoutSeconds"), DEFAULT_TIMEOUT_SECONDS, "timeoutSeconds");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
@@ -710,6 +710,16 @@ public final class RefactoringMinerMcpTools {
 		throw new IllegalArgumentException(name + " must be a non-empty string.");
 	}
 
+	private static String optionalCloneUrlValue(Object value) {
+		if (value == null) {
+			return null;
+		}
+		if (value instanceof String stringValue && !stringValue.isBlank()) {
+			return stringValue;
+		}
+		throw new IllegalArgumentException("cloneUrl must be a non-empty string when provided.");
+	}
+
 	private static Path repositoryPath(Object value) {
 		if (value == null) {
 			return Path.of(System.getProperty("user.dir"));
@@ -765,11 +775,11 @@ public final class RefactoringMinerMcpTools {
 
 	private static JsonSchema pullRequestInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("cloneUrl", Map.of("type", "string"));
+		putCloneUrlProperty(properties);
 		properties.put("pullRequestId", Map.of("type", "integer", "minimum", 1));
 		properties.put("timeoutSeconds", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_TIMEOUT_SECONDS));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
-		return new JsonSchema("object", properties, List.of("cloneUrl", "pullRequestId"), false, null, null);
+		return new JsonSchema("object", properties, List.of("pullRequestId"), false, null, null);
 	}
 
 	private static JsonSchema directoriesInputSchema() {
@@ -811,11 +821,11 @@ public final class RefactoringMinerMcpTools {
 
 	private static JsonSchema validatePullRequestInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("cloneUrl", Map.of("type", "string"));
+		putCloneUrlProperty(properties);
 		properties.put("pullRequestId", Map.of("type", "integer", "minimum", 1));
 		properties.put("timeoutSeconds", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_TIMEOUT_SECONDS));
 		putValidationProperties(properties);
-		return new JsonSchema("object", properties, List.of("cloneUrl", "pullRequestId", "intent"), false, null, null);
+		return new JsonSchema("object", properties, List.of("pullRequestId", "intent"), false, null, null);
 	}
 
 	private static JsonSchema validateDirectoriesInputSchema() {
@@ -857,11 +867,11 @@ public final class RefactoringMinerMcpTools {
 
 	private static JsonSchema diffPullRequestInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
-		properties.put("cloneUrl", Map.of("type", "string"));
+		putCloneUrlProperty(properties);
 		properties.put("pullRequestId", Map.of("type", "integer", "minimum", 1));
 		properties.put("timeoutSeconds", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_TIMEOUT_SECONDS));
 		putDiffBrowserProperties(properties);
-		return new JsonSchema("object", properties, List.of("cloneUrl", "pullRequestId"), false, null, null);
+		return new JsonSchema("object", properties, List.of("pullRequestId"), false, null, null);
 	}
 
 	private static void putDiffBrowserProperties(Map<String, Object> properties) {
@@ -874,6 +884,12 @@ public final class RefactoringMinerMcpTools {
 		properties.put("repositoryPath", Map.of(
 				"type", "string",
 				"description", "Absolute repository path. Defaults to the MCP server working directory."));
+	}
+
+	private static void putCloneUrlProperty(Map<String, Object> properties) {
+		properties.put("cloneUrl", Map.of(
+				"type", "string",
+				"description", "GitHub repository clone URL. Defaults to the MCP server working directory's origin remote."));
 	}
 
 	private static void putFileContentBoundsProperties(Map<String, Object> properties) {

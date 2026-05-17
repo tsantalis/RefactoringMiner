@@ -205,10 +205,6 @@ public class RefactoringMinerMcpService {
 			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
 					List.of("maxCandidates=" + maxCandidates));
 		}
-		if (cloneUrl == null || cloneUrl.isBlank()) {
-			return McpValidationResult.error("cloneUrl must be a non-empty string.", intent,
-					List.of("cloneUrl is required."));
-		}
 		if (pullRequestId <= 0) {
 			return McpValidationResult.error("pullRequestId must be greater than 0.", intent,
 					List.of("pullRequestId=" + pullRequestId));
@@ -218,8 +214,15 @@ public class RefactoringMinerMcpService {
 					List.of("timeoutSeconds=" + timeoutSeconds));
 		}
 
+		String resolvedCloneUrl;
 		try {
-			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(cloneUrl, pullRequestId, timeoutSeconds);
+			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
+		} catch (IllegalArgumentException e) {
+			return McpValidationResult.error(e.getMessage(), intent, List.of("cloneUrl is not available."));
+		}
+
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
 			return new McpIntentValidator().validate(diff, intent, maxCandidates);
 		} catch (Exception e) {
 			return McpValidationResult.error("Pull-request validation failed: " + e.getMessage(), intent,
@@ -298,9 +301,6 @@ public class RefactoringMinerMcpService {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
 		}
-		if (cloneUrl == null || cloneUrl.isBlank()) {
-			return McpAnalysisResult.error("cloneUrl must be a non-empty string.", List.of("cloneUrl is required."));
-		}
 		if (pullRequestId <= 0) {
 			return McpAnalysisResult.error("pullRequestId must be greater than 0.",
 					List.of("pullRequestId=" + pullRequestId));
@@ -310,8 +310,15 @@ public class RefactoringMinerMcpService {
 					List.of("timeoutSeconds=" + timeoutSeconds));
 		}
 
+		String resolvedCloneUrl;
 		try {
-			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(cloneUrl, pullRequestId, timeoutSeconds);
+			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
+		} catch (IllegalArgumentException e) {
+			return McpAnalysisResult.error(e.getMessage(), List.of("cloneUrl is not available."));
+		}
+
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
 			return toResult(diff, maxRefactorings, "Pull-request");
 		} catch (Exception e) {
 			return McpAnalysisResult.error("Pull-request analysis failed: " + e.getMessage(),
@@ -412,10 +419,6 @@ public class RefactoringMinerMcpService {
 	}
 
 	public McpDiffBrowserResult diffPullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds, int port) {
-		if (cloneUrl == null || cloneUrl.isBlank()) {
-			return McpDiffBrowserResult.error("cloneUrl must be a non-empty string.", port, "Pull-request diff",
-					List.of("cloneUrl is required."));
-		}
 		if (pullRequestId <= 0) {
 			return McpDiffBrowserResult.error("pullRequestId must be greater than 0.", port, "Pull-request diff",
 					List.of("pullRequestId=" + pullRequestId));
@@ -425,9 +428,18 @@ public class RefactoringMinerMcpService {
 					List.of("timeoutSeconds=" + timeoutSeconds));
 		}
 
-		String inputSummary = String.format("Pull request #%d in %s.", pullRequestId, cloneUrl);
+		String inputSummary = "Pull request #" + pullRequestId + ".";
+		String resolvedCloneUrl;
 		try {
-			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(cloneUrl, pullRequestId, timeoutSeconds);
+			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), port, inputSummary,
+					List.of("cloneUrl is not available."));
+		}
+
+		inputSummary = String.format("Pull request #%d in %s.", pullRequestId, resolvedCloneUrl);
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
 			return launchDiffBrowser(diff, port, inputSummary, List.of());
 		} catch (Exception e) {
 			return McpDiffBrowserResult.error("Pull-request diff browser failed: " + e.getMessage(), port,
@@ -472,6 +484,18 @@ public class RefactoringMinerMcpService {
 			return repositoryPath;
 		}
 		return Path.of(System.getProperty("user.dir"));
+	}
+
+	private static String resolvePullRequestCloneUrl(String cloneUrl) {
+		if (cloneUrl != null && !cloneUrl.isBlank()) {
+			return cloneUrl;
+		}
+		String discoveredCloneUrl = gitHubCloneUrl(resolveRepositoryPath(null));
+		if (discoveredCloneUrl == null) {
+			throw new IllegalArgumentException(
+					"cloneUrl is required unless the MCP server working directory has a GitHub origin remote.");
+		}
+		return discoveredCloneUrl;
 	}
 
 	static String gitHubCloneUrl(Path repositoryPath) {

@@ -173,12 +173,14 @@ Analysis tools report the refactorings RefactoringMiner detects. They return `st
 | `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
 | `refactoringminer_analyze_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
 | `refactoringminer_analyze_commit` | `commitId` | `repositoryPath`, `parentIndex`, `maxRefactorings` |
-| `refactoringminer_analyze_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `maxRefactorings` |
+| `refactoringminer_analyze_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `maxRefactorings` |
 | `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings` |
 
 Local paths must be absolute when provided. Worktree and commit tools default `repositoryPath` to the MCP server working directory, which is usually the directory where the agent was started. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep calls small. Analysis tools default to `maxRefactorings=20`; set a higher value when the agent needs more returned detail, or `0` when counts and warnings are enough.
 
 Commit tools first try the GitHub API when the working tree has a GitHub `origin` remote. If the commit is not available from GitHub, they fall back to the local repository. This keeps pushed commits small for MCP clients while still supporting local-only commits.
+
+Pull-request tools also default `cloneUrl` from the MCP server working directory's GitHub `origin` remote. In a Docker config that mounts the repository at `/workspace` and starts the MCP process with `-w /workspace`, agents can usually pass only `pullRequestId`. Keep using an explicit `cloneUrl` when the MCP server is launched outside the target repository, or when the PR belongs to a different repository than the current working directory.
 
 ## Intent validation tools
 
@@ -189,7 +191,7 @@ Validation tools let an agent state the refactoring it intended and ask Refactor
 | `refactoringminer_validate_file_contents` | `beforeFiles`, `afterFiles`, `intent` | `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
 | `refactoringminer_validate_worktree` | `intent` | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
 | `refactoringminer_validate_commit` | `commitId`, `intent` | `repositoryPath`, `parentIndex`, `maxCandidates` |
-| `refactoringminer_validate_pull_request` | `cloneUrl`, `pullRequestId`, `intent` | `timeoutSeconds`, `maxCandidates` |
+| `refactoringminer_validate_pull_request` | `pullRequestId`, `intent` | `cloneUrl`, `timeoutSeconds`, `maxCandidates` |
 | `refactoringminer_validate_directories` | `beforePath`, `afterPath`, `intent` | `maxCandidates` |
 
 Validation tools default to `maxCandidates=20`. This only limits what comes back to the MCP client; it does not change the RefactoringMiner detection pass.
@@ -236,7 +238,7 @@ Diff browser tools generate a RefactoringMiner AST diff, start the existing loca
 | `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port` |
 | `refactoringminer_diff_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
 | `refactoringminer_diff_commit` | `commitId` | `repositoryPath`, `parentIndex`, `port` |
-| `refactoringminer_diff_pull_request` | `cloneUrl`, `pullRequestId` | `timeoutSeconds`, `port` |
+| `refactoringminer_diff_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `port` |
 
 The default port is `6789`. The returned `message` uses the same wording as the WebDiff CLI startup line:
 
@@ -288,12 +290,13 @@ Example pull-request browser request:
 
 ```json
 {
-  "cloneUrl": "https://github.com/tsantalis/RefactoringMiner.git",
   "pullRequestId": 1234,
   "timeoutSeconds": 300,
   "port": 6789
 }
 ```
+
+Add `cloneUrl` to the request when the MCP process is not running from the repository that owns the pull request.
 
 ## Example validation request
 
@@ -332,10 +335,10 @@ Codex:
 Generic MCP clients:
 
 - "Call `refactoringminer_validate_commit` for commit `abc123` with intent `{ \"type\": \"Rename Class\", \"classNames\": [\"OrderService\"] }`."
-- "Call `refactoringminer_validate_pull_request` for PR 1234 in `https://github.com/tsantalis/RefactoringMiner.git` with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
+- "Call `refactoringminer_validate_pull_request` for PR 1234 with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
 - "Call `refactoringminer_validate_directories` for `/path/to/before` and `/path/to/after` with intent `{ \"type\": \"Extract Method\" }`."
 - "Call `refactoringminer_diff_worktree` and return the local URL."
-- "Call `refactoringminer_diff_pull_request` for PR 1234 in `https://github.com/tsantalis/RefactoringMiner.git` and return the startup message and URL."
+- "Call `refactoringminer_diff_pull_request` for PR 1234 and return the startup message and URL."
 
 ## GitHub pull requests
 
@@ -347,7 +350,7 @@ Pull-request analysis and validation read GitHub data through the existing Refac
 
 The MCP tool only reads pull-request data. It does not post comments, mark files viewed, edit pull requests, or change repository state.
 
-Use a GitHub number that identifies a pull request, not a plain issue. For pull-request diff browser tools, the returned WebDiff URL is local to the machine running the MCP server. It is not a hosted report link.
+Use a GitHub number that identifies a pull request, not a plain issue. If `cloneUrl` is omitted, the MCP server reads the GitHub `origin` remote from its working directory. If there is no GitHub `origin`, pass `cloneUrl` explicitly. For pull-request diff browser tools, the returned WebDiff URL is local to the machine running the MCP server. It is not a hosted report link.
 
 ## What the server does not do
 

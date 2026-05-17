@@ -104,7 +104,7 @@ class RefactoringMinerMcpToolsTest {
 		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
 		assertTrue(pullRequestTool.tool().annotations().readOnlyHint());
 		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
-		assertTrue(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
+		assertFalse(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
 		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
 		assertTrue(directoriesTool.tool().annotations().readOnlyHint());
 		assertTrue(directoriesTool.tool().inputSchema().required().contains("beforePath"));
@@ -133,7 +133,7 @@ class RefactoringMinerMcpToolsTest {
 		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
 		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
 		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
-		assertTrue(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
+		assertFalse(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
 		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
 	}
 
@@ -157,7 +157,7 @@ class RefactoringMinerMcpToolsTest {
 		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
 		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
 		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
-		assertTrue(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
+		assertFalse(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
 		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
 		assertTrue(directoriesTool.tool().inputSchema().required().contains("beforePath"));
 		assertTrue(directoriesTool.tool().inputSchema().required().contains("afterPath"));

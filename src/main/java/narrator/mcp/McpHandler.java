@@ -2,6 +2,8 @@ package narrator.mcp;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import narrator.Driver;
 import narrator.graph.Edge;
 import narrator.graph.Node;
@@ -16,9 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class McpHandler {
+    private static final Logger logger = LoggerFactory.getLogger(McpHandler.class);
     private static final CacheManager cacheManager = new CacheManager();
 
     public JsonObject handle(JsonObject request) {
+        logger.debug("Handling MCP request: {}", request);
         String method = request.get("method").getAsString();
         JsonObject response = new JsonObject();
         response.addProperty("jsonrpc", "2.0");
@@ -115,37 +119,19 @@ public class McpHandler {
     private void handleCallTool(JsonObject request, JsonObject response) {
         JsonObject params = request.getAsJsonObject("params");
         if (params == null) {
-            response = makeErrorResult(response, -32602, "Missing params");
+            makeErrorResult(response, -32602, "Missing params");
             return;
         }
         
         String toolName = params.get("name").getAsString();
         JsonObject arguments = params.getAsJsonObject("arguments");
         if (arguments == null) {
-            response = makeErrorResult(response, -32602, "Missing arguments");
+            makeErrorResult(response, -32602, "Missing arguments");
             return;
         }
         
-        String url = arguments.get("url").getAsString();
-        
         try {
-            String resultValue;
-            if ("get_cluster_count".equals(toolName)) {
-                resultValue = fetchClusterCount(url);
-            } else if ("narrate_cluster".equals(toolName)) {
-                int clusterIndex;
-                try {
-                    clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
-                } catch (NumberFormatException e) {
-                    response = makeErrorResult(response, -32602, 
-                            "Invalid clusterIndex: must be a positive integer");
-                    return;
-                }
-                resultValue = narrateCluster(url, clusterIndex);
-            } else {
-                response = makeErrorResult(response, -32601, "Unknown tool: " + toolName);
-                return;
-            }
+            String resultValue = executeTool(toolName, arguments);
             
             JsonObject result = new JsonObject();
             JsonArray content = new JsonArray();
@@ -157,9 +143,29 @@ public class McpHandler {
             
             response.add("result", result);
         } catch (IllegalArgumentException e) {
-            response = makeErrorResult(response, -32602, e.getMessage());
+            logger.warn("Invalid arguments for tool call: {}", e.getMessage());
+            makeErrorResult(response, -32602, e.getMessage());
         } catch (Exception e) {
-            response = makeErrorResult(response, -32603, "Internal error: " + e.getMessage());
+            logger.error("Internal error during tool call", e);
+            makeErrorResult(response, -32603, "Internal error: " + e.getMessage());
+        }
+    }
+
+    private String executeTool(String toolName, JsonObject arguments) throws Exception {
+        String url = arguments.get("url").getAsString();
+        
+        if ("get_cluster_count".equals(toolName)) {
+            return fetchClusterCount(url);
+        } else if ("narrate_cluster".equals(toolName)) {
+            int clusterIndex;
+            try {
+                clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid clusterIndex: must be a positive integer");
+            }
+            return narrateCluster(url, clusterIndex);
+        } else {
+            throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
     }
 
@@ -193,7 +199,11 @@ public class McpHandler {
     }
     
     private static String clustersToKey(List<Cluster> clusters) {
-        return clusters.isEmpty() ? "empty" : clusters.get(0).hashCode() + "@" + System.identityHashCode(clusters);
+        if (clusters == null || clusters.isEmpty()) {
+            return "empty";
+        }
+        // Use the hashCode of the first cluster and the size of the list as a stable key
+        return clusters.get(0).hashCode() + "@" + clusters.size();
     }
 
     private Graph<Node, Edge> loadGraph(String url) throws Exception {
@@ -227,6 +237,6 @@ public class McpHandler {
             narrations.add(leaf.textualRepresentation(null));
         }
         
-        return narrations.toString();
+        return String.join("\n\n", narrations);
     }
 }

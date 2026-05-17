@@ -38,7 +38,7 @@ public class McpHandler {
                 handleCallTool(request, response);
                 break;
             default:
-                sendMethodNotFound(response, request);
+                sendMethodNotFound(response);
         }
 
         return response;
@@ -97,10 +97,35 @@ public class McpHandler {
         return tool;
     }
 
+    private static JsonObject makeErrorResult(JsonObject response, int code, String message) {
+        JsonObject error = new JsonObject();
+        error.addProperty("code", code);
+        error.addProperty("message", message);
+        response.add("error", error);
+        return response;
+    }
+    
+    private void sendMethodNotFound(JsonObject response) {
+        JsonObject error = new JsonObject();
+        error.addProperty("code", -32601);
+        error.addProperty("message", "Method not found");
+        response.add("error", error);
+    }
+
     private void handleCallTool(JsonObject request, JsonObject response) {
         JsonObject params = request.getAsJsonObject("params");
+        if (params == null) {
+            response = makeErrorResult(response, -32602, "Missing params");
+            return;
+        }
+        
         String toolName = params.get("name").getAsString();
         JsonObject arguments = params.getAsJsonObject("arguments");
+        if (arguments == null) {
+            response = makeErrorResult(response, -32602, "Missing arguments");
+            return;
+        }
+        
         String url = arguments.get("url").getAsString();
         
         try {
@@ -108,10 +133,18 @@ public class McpHandler {
             if ("get_cluster_count".equals(toolName)) {
                 resultValue = fetchClusterCount(url);
             } else if ("narrate_cluster".equals(toolName)) {
-                int clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
+                int clusterIndex;
+                try {
+                    clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
+                } catch (NumberFormatException e) {
+                    response = makeErrorResult(response, -32602, 
+                            "Invalid clusterIndex: must be a positive integer");
+                    return;
+                }
                 resultValue = narrateCluster(url, clusterIndex);
             } else {
-                throw new IllegalArgumentException("Unknown tool: " + toolName);
+                response = makeErrorResult(response, -32601, "Unknown tool: " + toolName);
+                return;
             }
             
             JsonObject result = new JsonObject();
@@ -123,17 +156,11 @@ public class McpHandler {
             result.add("content", content);
             
             response.add("result", result);
+        } catch (IllegalArgumentException e) {
+            response = makeErrorResult(response, -32602, e.getMessage());
         } catch (Exception e) {
-            JsonObject error = new JsonObject();
-            error.addProperty("code", -32602);
-            error.addProperty("message", "Tool execution failed: " + e.getMessage());
-            response.add("error", error);
+            response = makeErrorResult(response, -32603, "Internal error: " + e.getMessage());
         }
-    }
-
-    private String fetchClusterCount(String url) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        return String.valueOf(clusters.size());
     }
 
     private List<Cluster> getOrComputeClusters(String url) throws Exception {
@@ -142,33 +169,49 @@ public class McpHandler {
             return cached;
         }
 
-        Graph<Node, Edge> graph;
-        if (url.contains("/pull/") || url.contains("/pr/")) {
-            graph = Driver.getPullRequestGraph(url);
-        } else {
-            graph = Driver.getCommitGraph(url);
-        }
-        
-        Clusterer clusterer = new Clusterer(graph);
-        List<Cluster> clusters = clusterer.getClusters();
+        Graph<Node, Edge> graph = loadGraph(url);
+        List<Cluster> clusters = new Clusterer(graph).getClusters();
         cacheManager.putClusters(url, clusters);
         return clusters;
+    }
+    
+    private List<List<TraversalPattern>> getOrComputeHierarchy(List<Cluster> clusters) {
+        String cacheKey = clustersToKey(clusters);
+        List<List<TraversalPattern>> cached = cacheManager.getHierarchy(cacheKey);
+        if (cached != null) {
+            return cached;
+        }
+        
+        List<List<TraversalPattern>> hierarchy = clusters.stream()
+                .map(TraversalEngine::new)
+                .map(TraversalEngine::getComponents)
+                .filter(components -> !components.isEmpty())
+                .toList();
+        
+        cacheManager.putHierarchy(cacheKey, hierarchy);
+        return hierarchy;
+    }
+    
+    private static String clustersToKey(List<Cluster> clusters) {
+        return clusters.isEmpty() ? "empty" : clusters.get(0).hashCode() + "@" + System.identityHashCode(clusters);
+    }
+
+    private Graph<Node, Edge> loadGraph(String url) throws Exception {
+        if (url.contains("/pull/") || url.contains("/pr/")) {
+            return Driver.getPullRequestGraph(url);
+        } else {
+            return Driver.getCommitGraph(url);
+        }
+    }
+
+    private String fetchClusterCount(String url) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        return String.valueOf(clusters.size());
     }
 
     private String narrateCluster(String url, int clusterIndex) throws Exception {
         List<Cluster> clusters = getOrComputeClusters(url);
-        Graph<Node, Edge> graph;
-        if (url.contains("/pull/") || url.contains("/pr/")) {
-            graph = Driver.getPullRequestGraph(url);
-        } else {
-            graph = Driver.getCommitGraph(url);
-        }
-        
-        Clusterer clusterer = new Clusterer(graph);
-        List<Cluster> allClusters = clusterer.getClusters();
-        List<List<TraversalPattern>> hierarchy =
-                allClusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents)
-                        .filter(components -> !components.isEmpty()).toList();
+        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(clusters);
         
         if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
             throw new IllegalArgumentException(
@@ -177,8 +220,7 @@ public class McpHandler {
         }
         
         List<TraversalPattern> components = hierarchy.get(clusterIndex);
-        Narrator narrator = new Narrator();
-        List<Leaf> leaves = narrator.narrate(components);
+        List<Leaf> leaves = new Narrator().narrate(components);
         
         List<String> narrations = new ArrayList<>();
         for (Leaf leaf : leaves) {
@@ -186,12 +228,5 @@ public class McpHandler {
         }
         
         return narrations.toString();
-    }
-
-    private void sendMethodNotFound(JsonObject response, JsonObject request) {
-        JsonObject error = new JsonObject();
-        error.addProperty("code", -32601);
-        error.addProperty("message", "Method not found");
-        response.add("error", error);
     }
 }

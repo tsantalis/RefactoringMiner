@@ -17,75 +17,32 @@ public class Narrator {
             return Collections.emptyList();
         }
 
-        // Filter out TraversalComponent as it is not a leaf and does not directly have any nodes
-        List<Leaf> leaves = patterns.stream()
+        List<TraversalPattern> result = new ArrayList<>();
+        Set<TraversalPattern> visited = new HashSet<>();
+        
+        for (TraversalPattern p : patterns) {
+            postOrderTraverse(p, visited, result);
+        }
+        
+        return result.stream()
                 .filter(p -> p instanceof Leaf)
                 .map(p -> (Leaf) p)
                 .toList();
-
-        // Build dependency graph
-        // A depends on B if A requires B to be understood first.
-        Map<TraversalPattern, Set<TraversalPattern>> adj = new HashMap<>();
-        Map<TraversalPattern, Integer> inDegree = new HashMap<>();
-
-        for (TraversalPattern p : leaves) {
-            adj.putIfAbsent(p, new HashSet<>());
-            inDegree.putIfAbsent(p, 0);
-
-            Set<TraversalPattern> deps = getDependencies(p, leaves);
-            for (TraversalPattern dep : deps) {
-                // dep -> p (dep must be understood before p)
-                adj.computeIfAbsent(dep, k -> new HashSet<>()).add(p);
-                inDegree.put(p, inDegree.getOrDefault(p, 0) + 1);
-                inDegree.putIfAbsent(dep, 0);
-            }
-        }
-
-        // Topological Sort (Kahn's Algorithm)
-        Queue<Leaf> queue = new LinkedList<>();
-        for (Map.Entry<TraversalPattern, Integer> entry : inDegree.entrySet()) {
-            if (entry.getValue() == 0) {
-                queue.add(entry.getKey());
-            }
-        }
-
-        List<Leaf> result = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            Leaf u = queue.poll();
-            result.add(u);
-
-            for (TraversalPattern v : adj.getOrDefault(u, Collections.emptySet())) {
-                inDegree.put(v, inDegree.get(v) - 1);
-                if (inDegree.get(v) == 0) {
-                    queue.add((Leaf) v);
-                }
-            }
-        }
-
-        // Handle cycles: if result size < leaves size, there's a cycle.
-        if (result.size() < leaves.size()) {
-            Set<Leaf> visited = new HashSet<>(result);
-            for (Leaf p : leaves) {
-                if (!visited.contains(p)) {
-                    result.add(p);
-                }
-            }
-        }
-
-        return result;
     }
 
-    private Set<TraversalPattern> getDependencies(Leaf p, List<Leaf> allPatterns) {
-        Set<TraversalPattern> deps = new HashSet<>();
+    private void postOrderTraverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+        if (visited.contains(p)) {
+            return;
+        }
         
         if (p instanceof AggregatorPattern aggregator) {
             for (TraversalPattern sub : aggregator.subs) {
-                if (allPatterns.contains(sub)) {
-                    deps.add(sub);
-                }
+                postOrderTraverse(sub, visited, result);
             }
         }
         
-        return deps;
+        visited.add(p);
+        result.add(p);
     }
+
 }

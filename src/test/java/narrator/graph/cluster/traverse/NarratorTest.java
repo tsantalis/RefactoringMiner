@@ -7,11 +7,12 @@ import java.util.*;
 public class NarratorTest {
 
     // Dummy classes to avoid Node/Tree dependencies for the logic test
-    private static class TestLeaf extends TraversalPattern {
+    private static class TestLeaf extends TraversalPattern implements Leaf {
         TestLeaf() {
             nodeType = NodeType.SINGULAR;
         }
         @Override public String getId() { return "leaf-" + System.identityHashCode(this); }
+        @Override public String textualRepresentation() { return "test-leaf"; }
     }
 
     private static class TestUsage extends AggregatorPattern {
@@ -37,12 +38,12 @@ public class NarratorTest {
         TestComponent component = new TestComponent(Collections.singletonList(leaf), ReasonType.SINK);
 
         List<TraversalPattern> patterns = Arrays.asList(leaf, usage, component);
-        List<TraversalPattern> result = narrator.narrate(patterns);
+        List<Leaf> result = narrator.narrate(patterns);
 
-        assertEquals(2, result.size(), " traversal component should be excluded");
-        assertFalse(result.contains(component), "Result should not contain TraversalComponent");
+        assertEquals(1, result.size(), "Only TestLeaf should be included");
         assertTrue(result.contains(leaf));
-        assertTrue(result.contains(usage));
+        assertFalse(result.contains(usage), "Aggregators should be excluded");
+        assertFalse(result.contains(component), "TraversalComponent should be excluded");
     }
 
     @Test
@@ -58,12 +59,10 @@ public class NarratorTest {
         root.subs.add(middle);
 
         List<TraversalPattern> patterns = Arrays.asList(root, middle, leaf);
-        List<TraversalPattern> result = narrator.narrate(patterns);
+        List<Leaf> result = narrator.narrate(patterns);
 
-        assertEquals(3, result.size());
-        assertEquals(leaf, result.get(0), "Deepest leaf should be first");
-        assertEquals(middle, result.get(1), "Middle should be second");
-        assertEquals(root, result.get(2), "Root should be third");
+        assertEquals(1, result.size(), "Only the deepest leaf should be in the result");
+        assertEquals(leaf, result.get(0), "Leaf should be first");
     }
 
     @Test
@@ -79,12 +78,11 @@ public class NarratorTest {
         root.subs.add(leaf2);
 
         List<TraversalPattern> patterns = Arrays.asList(root, leaf1, leaf2);
-        List<TraversalPattern> result = narrator.narrate(patterns);
+        List<Leaf> result = narrator.narrate(patterns);
 
-        assertEquals(3, result.size());
-        assertEquals(root, result.get(2), "Root should be last");
-        assertTrue(result.indexOf(leaf1) < 2);
-        assertTrue(result.indexOf(leaf2) < 2);
+        assertEquals(2, result.size());
+        assertTrue(result.contains(leaf1));
+        assertTrue(result.contains(leaf2));
     }
 
     @Test
@@ -92,6 +90,7 @@ public class NarratorTest {
         Narrator narrator = new Narrator();
 
         // Setup: Leaf1 -> Leaf2 -> Leaf1 (Cycle)
+        // Using TestUsage here but they are NOT Leafs, so result should be empty
         TestUsage leaf1 = new TestUsage();
         TestUsage leaf2 = new TestUsage();
 
@@ -99,10 +98,8 @@ public class NarratorTest {
         leaf2.subs.add(leaf1);
 
         List<TraversalPattern> patterns = Arrays.asList(leaf1, leaf2);
-        List<TraversalPattern> result = narrator.narrate(patterns);
+        List<Leaf> result = narrator.narrate(patterns);
 
-        assertEquals(2, result.size(), "Should still return all leaves despite cycle");
-        assertTrue(result.contains(leaf1));
-        assertTrue(result.contains(leaf2));
+        assertEquals(0, result.size(), "Should return empty as no Leaf objects are present");
     }
 }

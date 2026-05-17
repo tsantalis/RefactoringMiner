@@ -227,7 +227,17 @@ public class Node {
   }
 
    public String textualRepresentation(narrator.graph.cluster.Cluster cluster) {
-    String validNodeType = nodeType.name();
+    String basePrompt = "";
+
+    String promptId = id;
+    String contextString = path;
+    String normalizedContent = getContent();
+    String nodeTypeField = nodeType.name();
+
+    basePrompt += "{ id: " + promptId;
+
+    // TODO: find a way to support other types (is it really needed?)
+    String validNodeType = nodeTypeField;
     switch (nodeType) {
       case EXTENSION:
         validNodeType = "UNCHANGED";
@@ -240,16 +250,68 @@ public class Node {
         break;
     }
 
-    StringBuilder sb = new StringBuilder();
-    sb.append(String.format("{ id: %s, type: %s", id, validNodeType));
-    
-    if (path != null && !path.isEmpty()) {
-      sb.append(String.format(", location: %s", path));
+    String finalValidNodeType = validNodeType;
+
+    // Use cluster to determine sources/targets via MAPPING edges
+    if (cluster != null) {
+      java.util.Set<narrator.graph.Node> vertices = cluster.getGraph().vertexSet();
+      boolean containsThis = vertices.contains(this);
+
+      if (containsThis) {
+        // Get mapping sources (nodes this node maps to via MAPPING edges)
+        java.util.List<narrator.graph.Edge> sourceEdges = new java.util.ArrayList<>();
+        java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
+        if (allEdgesOut != null) {
+          for (narrator.graph.Edge edge : allEdgesOut) {
+            if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
+              sourceEdges.add(edge);
+            }
+          }
+        }
+
+        // Get mapping targets (nodes that map to this node)
+        java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
+
+        java.util.List<String> operations = new java.util.ArrayList<>();
+        java.util.List<narrator.graph.Node> sources = new java.util.ArrayList<>();
+        java.util.List<narrator.graph.Node> targets = new java.util.ArrayList<>();
+
+        if (!sourceEdges.isEmpty()) {
+          for (narrator.graph.Edge edge : sourceEdges) {
+            narrator.graph.Node target = cluster.getGraph().getEdgeTarget(edge);
+            sources.add(target);
+            operations.add(edge.getType().name());
+          }
+        }
+
+        if (allEdgesIn != null) {
+          for (narrator.graph.Edge edge : allEdgesIn) {
+            if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
+              narrator.graph.Node source = cluster.getGraph().getEdgeSource(edge);
+              targets.add(source);
+              operations.add(edge.getType().name());
+            }
+          }
+        }
+
+        if (!sources.isEmpty()) {
+          finalValidNodeType = "AFTER_" + String.join("_AND_", operations);
+        }
+        if (!targets.isEmpty()) {
+          finalValidNodeType = "BEFORE_" + String.join("_AND_", operations);
+        }
+      }
     }
-    sb.append(" }\n");
-    sb.append(getContent());
-    
-    return sb.toString();
+
+    basePrompt += ", type: " + finalValidNodeType;
+
+    if (contextString != null && !contextString.isEmpty()) {
+      basePrompt += ", location: " + contextString;
+    }
+    basePrompt += " }\n";
+    basePrompt += normalizedContent;
+
+    return basePrompt;
   }
 
   public Tree getRight() {

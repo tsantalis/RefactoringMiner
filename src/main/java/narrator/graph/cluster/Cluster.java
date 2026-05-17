@@ -3,7 +3,7 @@ package narrator.graph.cluster;
 import narrator.graph.Node;
 
 public class Cluster extends GraphWrapper {
-    Cluster() {
+    public Cluster() {
     }
 
     Cluster(Node node) {

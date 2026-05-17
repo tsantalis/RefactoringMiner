@@ -1918,6 +1918,15 @@ public class OperationBody {
 					umlClass.addImplementedInterface(type);
 				}
 			}
+			Optional<Swc4jAstTsTypeParamDecl> typeParams = interfaceDecl.getTypeParams();
+			if(typeParams.isPresent()) {
+				List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+				for(Swc4jAstTsTypeParam param : list) {
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+					UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+					umlClass.addTypeParameter(umlTypeParameter);
+				}
+			}
 			if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedClass(umlClass);
 			}
@@ -2231,6 +2240,15 @@ public class OperationBody {
 			if(expr instanceof Swc4jAstIdent ident) {
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
 				umlClass.addImplementedInterface(type);
+			}
+		}
+		Optional<Swc4jAstTsTypeParamDecl> typeParams = clazz.getTypeParams();
+		if(typeParams.isPresent()) {
+			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+			for(Swc4jAstTsTypeParam param : list) {
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+				umlClass.addTypeParameter(umlTypeParameter);
 			}
 		}
 		List<ISwc4jAstClassMember> typeElements = clazz.getBody();

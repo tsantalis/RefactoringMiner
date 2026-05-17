@@ -172,6 +172,22 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMappingRecursively(srcTypeParam,dstTypeParam);
             if (srcTypeParam.getParent().getType().name.equals(LANG1.TYPE_PARAMETERS) && dstTypeParam.getParent().getType().name.equals(LANG2.TYPE_PARAMETERS)) {
                 mappingStore.addMapping(srcTypeParam.getParent(), dstTypeParam.getParent());
+                matched = Helpers.findPairOfType(srcTypeParam.getParent(),dstTypeParam.getParent(),LANG1.OPENING_TAG,LANG2.OPENING_TAG);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                matched = Helpers.findPairOfType(srcTypeParam.getParent(),dstTypeParam.getParent(),LANG1.CLOSING_TAG,LANG2.CLOSING_TAG);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                int index1 = srcTypeParam.getParent().getChildPosition(srcTypeParam);
+                int index2 = dstTypeParam.getParent().getChildPosition(dstTypeParam);
+                if(srcTypeParam.getParent().getChildren().size() > index1+1 && srcTypeParam.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        dstTypeParam.getParent().getChildren().size() > index2+1 && dstTypeParam.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = srcTypeParam.getParent().getChild(index1+1);
+                    Tree t2 = dstTypeParam.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
             }
         }
         

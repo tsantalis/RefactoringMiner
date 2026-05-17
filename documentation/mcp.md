@@ -250,7 +250,7 @@ MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1`
 
 The returned URL is only available while the MCP server process is still running. If an MCP client starts RefactoringMiner for a single command and immediately exits, the local WebDiff server can disappear before the user opens the URL. Use an interactive client session for browser tools, or use the direct WebDiff CLI when the goal is only manual browser inspection.
 
-Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. The WebDiff Quit button stops the active local WebDiff view but does not exit the MCP JVM. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a summary and warnings. It does not corrupt stdio output or discard the previous view on another port.
+Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. MCP-managed WebDiff pages hide the WebDiff Quit button so the MCP server can keep serving later browser-tool calls on the same port. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a summary and warnings. It does not corrupt stdio output or discard the previous view on another port.
 
 Example file-content browser request:
 

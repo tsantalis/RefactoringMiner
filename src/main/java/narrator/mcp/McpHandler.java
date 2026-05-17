@@ -68,11 +68,14 @@ public class McpHandler {
         JsonArray tools = new JsonArray();
         
         tools.add(createToolDefinition("get_cluster_count",
-                "Get the number of clusters (groups of refactoring patterns) for a commit or pull request. Call this first to know how many clusters exist, then use narrate_cluster with each cluster index (1-based) to get narration for that cluster.",
+                "Get the number of clusters (groups of refactoring patterns) for a commit or pull request. Call this first to know how many clusters exist.",
                 "url"));
-        tools.add(createToolDefinition("narrate_cluster",
-                "Get narration for a single cluster — returns the ordered narrative of changes (usage, succession, singular patterns) in that cluster. Call get_cluster_count first to discover how many clusters exist, then call this tool once per cluster with the cluster index (1-based).",
+        tools.add(createToolDefinition("get_cluster_chapters_count",
+                "Get the number of chapters (narrative elements) in a specific cluster. Call this before fetching individual chapters.",
                 "url", "clusterIndex"));
+        tools.add(createToolDefinition("narrate_cluster_chapter",
+                "Get a specific chapter of narration for a cluster. Returns a single narrative element. Call get_cluster_chapters_count first to know how many chapters exist.",
+                "url", "clusterIndex", "chapterIndex"));
         result.add("tools", tools);
         response.add("result", result);
     }
@@ -156,14 +159,24 @@ public class McpHandler {
         
         if ("get_cluster_count".equals(toolName)) {
             return fetchClusterCount(url);
-        } else if ("narrate_cluster".equals(toolName)) {
+        } else if ("get_cluster_chapters_count".equals(toolName)) {
             int clusterIndex;
             try {
                 clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid clusterIndex: must be a positive integer");
             }
-            return narrateCluster(url, clusterIndex);
+            return fetchClusterChaptersCount(url, clusterIndex);
+        } else if ("narrate_cluster_chapter".equals(toolName)) {
+            int clusterIndex;
+            int chapterIndex;
+            try {
+                clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
+                chapterIndex = Integer.parseInt(arguments.get("chapterIndex").getAsString()) - 1;
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid index: clusterIndex and chapterIndex must be positive integers");
+            }
+            return narrateClusterChapter(url, clusterIndex, chapterIndex);
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
@@ -217,6 +230,53 @@ public class McpHandler {
     private String fetchClusterCount(String url) throws Exception {
         List<Cluster> clusters = getOrComputeClusters(url);
         return String.valueOf(clusters.size());
+    }
+
+    private String fetchClusterChaptersCount(String url, int clusterIndex) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(clusters);
+        
+        if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
+            throw new IllegalArgumentException(
+                    String.format("Cluster index out of range: %d (clusters: 1-%d)", 
+                            clusterIndex + 1, hierarchy.size()));
+        }
+        
+        String cacheKey = clustersToKey(clusters) + ":" + clusterIndex;
+        List<Leaf> leaves = cacheManager.getNarrative(cacheKey);
+        if (leaves == null) {
+            List<TraversalPattern> components = hierarchy.get(clusterIndex);
+            leaves = new Narrator().narrate(components);
+            cacheManager.putNarrative(cacheKey, leaves);
+        }
+        return String.valueOf(leaves.size());
+    }
+
+    private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(clusters);
+        
+        if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
+            throw new IllegalArgumentException(
+                    String.format("Cluster index out of range: %d (clusters: 1-%d)", 
+                            clusterIndex + 1, hierarchy.size()));
+        }
+        
+        String cacheKey = clustersToKey(clusters) + ":" + clusterIndex;
+        List<Leaf> leaves = cacheManager.getNarrative(cacheKey);
+        if (leaves == null) {
+            List<TraversalPattern> components = hierarchy.get(clusterIndex);
+            leaves = new Narrator().narrate(components);
+            cacheManager.putNarrative(cacheKey, leaves);
+        }
+        
+        if (chapterIndex < 0 || chapterIndex >= leaves.size()) {
+            throw new IllegalArgumentException(
+                    String.format("Chapter index out of range: %d (chapters: 1-%d)", 
+                            chapterIndex + 1, leaves.size()));
+        }
+        
+        return leaves.get(chapterIndex).textualRepresentation(null);
     }
 
     private String narrateCluster(String url, int clusterIndex) throws Exception {

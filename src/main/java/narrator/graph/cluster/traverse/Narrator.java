@@ -17,18 +17,21 @@ public class Narrator {
             return Collections.emptyList();
         }
 
+        // Filter out TraversalComponent as it is not a leaf and does not directly have any nodes
+        List<TraversalPattern> leaves = patterns.stream()
+                .filter(p -> !(p instanceof TraversalComponent))
+                .toList();
+
         // Build dependency graph
         // A depends on B if A requires B to be understood first.
-        // In our case, if A is a UsagePattern and B is one of its requirements.
-        // Or if A is a TraversalComponent and B is one of its child components.
         Map<TraversalPattern, Set<TraversalPattern>> adj = new HashMap<>();
         Map<TraversalPattern, Integer> inDegree = new HashMap<>();
 
-        for (TraversalPattern p : patterns) {
+        for (TraversalPattern p : leaves) {
             adj.putIfAbsent(p, new HashSet<>());
             inDegree.putIfAbsent(p, 0);
 
-            Set<TraversalPattern> deps = getDependencies(p, patterns);
+            Set<TraversalPattern> deps = getDependencies(p, leaves);
             for (TraversalPattern dep : deps) {
                 // dep -> p (dep must be understood before p)
                 adj.computeIfAbsent(dep, k -> new HashSet<>()).add(p);
@@ -58,11 +61,10 @@ public class Narrator {
             }
         }
 
-        // Handle cycles: if result size < patterns size, there's a cycle.
-        // In the case of cycles, we just add the remaining ones to avoid data loss.
-        if (result.size() < patterns.size()) {
+        // Handle cycles: if result size < leaves size, there's a cycle.
+        if (result.size() < leaves.size()) {
             Set<TraversalPattern> visited = new HashSet<>(result);
-            for (TraversalPattern p : patterns) {
+            for (TraversalPattern p : leaves) {
                 if (!visited.contains(p)) {
                     result.add(p);
                 }

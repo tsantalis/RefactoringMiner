@@ -16,10 +16,13 @@ import narrator.graph.cluster.traverse.TraversalPattern;
 import org.jgrapht.Graph;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class McpHandler {
     private static final Logger logger = LoggerFactory.getLogger(McpHandler.class);
     private static final CacheManager cacheManager = new CacheManager();
+    private final Map<String, Integer> clusterProgress = new ConcurrentHashMap<>();
 
     public JsonObject handle(JsonObject request) {
         logger.debug("Handling MCP request: {}", request);
@@ -70,12 +73,12 @@ public class McpHandler {
         tools.add(createToolDefinition("get_available_clusters",
                 "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
-        tools.add(createToolDefinition("get_available_chapters",
-                "Get the available chapter indices (narrative elements) in a specific cluster. Returns a range (e.g., 1-12).",
+        tools.add(createToolDefinition("begin_cluster_narrative",
+                "Start reading the narrative for a cluster. Returns the first chapter.",
                 "url", "clusterIndex"));
-        tools.add(createToolDefinition("narrate_cluster_chapter",
-                "Get a specific chapter of narration for a cluster. Returns a single narrative element. Call get_cluster_chapters_count first to know how many chapters exist.",
-                "url", "clusterIndex", "chapterIndex"));
+        tools.add(createToolDefinition("get_next_cluster_chapter",
+                "Get the next chapter in the narrative for the current cluster. Use this after begin_cluster_narrative.",
+                "url", "clusterIndex"));
         result.add("tools", tools);
         response.add("result", result);
     }
@@ -159,24 +162,31 @@ public class McpHandler {
         
         if ("get_available_clusters".equals(toolName)) {
             return fetchClusterCount(url);
-        } else if ("get_available_chapters".equals(toolName)) {
+        } else if ("begin_cluster_narrative".equals(toolName)) {
             int clusterIndex;
             try {
                 clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Invalid clusterIndex: must be a positive integer");
             }
-            return fetchClusterChaptersCount(url, clusterIndex);
-        } else if ("narrate_cluster_chapter".equals(toolName)) {
+            String stateKey = url + ":" + clusterIndex;
+            clusterProgress.put(stateKey, 0);
+            return narrateClusterChapter(url, clusterIndex, 0);
+        } else if ("get_next_cluster_chapter".equals(toolName)) {
             int clusterIndex;
-            int chapterIndex;
             try {
                 clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
-                chapterIndex = Integer.parseInt(arguments.get("chapterIndex").getAsString()) - 1;
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid index: clusterIndex and chapterIndex must be positive integers");
+                throw new IllegalArgumentException("Invalid clusterIndex: must be a positive integer");
             }
-            return narrateClusterChapter(url, clusterIndex, chapterIndex);
+            String stateKey = url + ":" + clusterIndex;
+            Integer currentIndex = clusterProgress.get(stateKey);
+            if (currentIndex == null) {
+                currentIndex = -1;
+            }
+            int nextIndex = currentIndex + 1;
+            clusterProgress.put(stateKey, nextIndex);
+            return narrateClusterChapter(url, clusterIndex, nextIndex);
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }

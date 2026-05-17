@@ -42,6 +42,7 @@ public class McpHandler {
             default:
                 sendMethodNotFound(response, request);
         }
+
         return response;
     }
 
@@ -64,15 +65,24 @@ public class McpHandler {
         JsonObject result = new JsonObject();
         JsonArray tools = new JsonArray();
         
-        tools.add(createToolDefinition("get_clusters", "Get clusters for a commit or pull request", "url"));
-        tools.add(createToolDefinition("get_hierarchy", "Get refactoring hierarchy for a commit or pull request", "url"));
-        tools.add(createToolDefinition("narrate", "Get narration for clusters for a commit or pull request", "url"));
+        tools.add(createToolDefinition("get_clusters",
+                "Get clusters (groups of refactoring patterns) for a commit or pull request. Call this first before narrate_cluster to see what clusters exist. Cluster indices are 1-based.",
+                "url"));
+        tools.add(createToolDefinition("get_cluster_count",
+                "Get the number of clusters for a commit or pull request. Use this to know how many clusters to narrate individually.",
+                "url"));
+        tools.add(createToolDefinition("narrate_cluster",
+                "Get narration for a single cluster — returns the ordered narrative of changes (usage, succession, singular patterns) for that cluster. Call get_clusters first to discover clusters, then narrate_cluster with the cluster index (1-based) for each cluster.",
+                "url", "clusterIndex"));
+        tools.add(createToolDefinition("get_hierarchy",
+                "Get refactoring hierarchy for a commit or pull request. This provides a structural overview of all clusters. For narrative detail, prefer get_clusters + narrate_cluster workflow instead.",
+                "url"));
         
         result.add("tools", tools);
         response.add("result", result);
     }
 
-    private JsonObject createToolDefinition(String name, String description, String paramName) {
+    private JsonObject createToolDefinition(String name, String description, String... paramNames) {
         JsonObject tool = new JsonObject();
         tool.addProperty("name", name);
         tool.addProperty("description", description);
@@ -80,13 +90,16 @@ public class McpHandler {
         JsonObject inputSchema = new JsonObject();
         inputSchema.addProperty("type", "object");
         JsonObject properties = new JsonObject();
-        JsonObject prop = new JsonObject();
-        prop.addProperty("type", "string");
-        properties.add(paramName, prop);
-        inputSchema.add("properties", properties);
-        
         JsonArray required = new JsonArray();
-        required.add(paramName);
+        
+        for (String paramName : paramNames) {
+            JsonObject prop = new JsonObject();
+            prop.addProperty("type", "string");
+            properties.add(paramName, prop);
+            required.add(paramName);
+        }
+        
+        inputSchema.add("properties", properties);
         inputSchema.add("required", required);
         
         tool.add("inputSchema", inputSchema);
@@ -103,10 +116,13 @@ public class McpHandler {
             String resultValue;
             if ("get_clusters".equals(toolName)) {
                 resultValue = fetchClusters(url);
+            } else if ("get_cluster_count".equals(toolName)) {
+                resultValue = fetchClusterCount(url);
             } else if ("get_hierarchy".equals(toolName)) {
                 resultValue = fetchHierarchy(url);
-            } else if ("narrate".equals(toolName)) {
-                resultValue = fetchNarration(url);
+            } else if ("narrate_cluster".equals(toolName)) {
+                int clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
+                resultValue = narrateCluster(url, clusterIndex);
             } else {
                 throw new IllegalArgumentException("Unknown tool: " + toolName);
             }
@@ -129,11 +145,26 @@ public class McpHandler {
     }
 
     private String fetchClusters(String url) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        JsonArray stringifiedClusters = new JsonArray();
+        clusters.forEach(cluster -> stringifiedClusters.add(Stringifier.graph(cluster.getGraph())));
+        return stringifiedClusters.toString();
+    }
+
+    private String fetchHierarchy(String url) throws Exception {
+        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(url);
+        return Stringifier.hierarchy(hierarchy).toString();
+    }
+
+    private String fetchClusterCount(String url) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        return String.valueOf(clusters.size());
+    }
+
+    private List<Cluster> getOrComputeClusters(String url) throws Exception {
         List<Cluster> cached = cacheManager.getClusters(url);
         if (cached != null) {
-            JsonArray stringifiedClusters = new JsonArray();
-            cached.forEach(cluster -> stringifiedClusters.add(Stringifier.graph(cluster.getGraph())));
-            return stringifiedClusters.toString();
+            return cached;
         }
 
         Graph<Node, Edge> graph;
@@ -146,16 +177,35 @@ public class McpHandler {
         Clusterer clusterer = new Clusterer(graph);
         List<Cluster> clusters = clusterer.getClusters();
         cacheManager.putClusters(url, clusters);
-        
-        JsonArray stringifiedClusters = new JsonArray();
-        clusters.forEach(cluster -> stringifiedClusters.add(Stringifier.graph(cluster.getGraph())));
-        return stringifiedClusters.toString();
+        return clusters;
     }
 
-    private String fetchHierarchy(String url) throws Exception {
+    private String narrateCluster(String url, int clusterIndex) throws Exception {
+        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(url);
+        
+        if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
+            throw new IllegalArgumentException(
+                    String.format("Cluster index out of range: %d (clusters: 1-%d)", 
+                            clusterIndex + 1, hierarchy.size()));
+        }
+        
+        List<TraversalPattern> components = hierarchy.get(clusterIndex);
+        Narrator narrator = new Narrator();
+        List<Leaf> leaves = narrator.narrate(components);
+        
+        List<String> narrations = new ArrayList<>();
+        List<Cluster> clusters = getOrComputeClusters(url);
+        for (Leaf leaf : leaves) {
+            narrations.add(leaf.textualRepresentation(null));
+        }
+        
+        return narrations.toString();
+    }
+
+    private List<List<TraversalPattern>> getOrComputeHierarchy(String url) throws Exception {
         List<List<TraversalPattern>> cached = cacheManager.getHierarchy(url);
         if (cached != null) {
-            return Stringifier.hierarchy(cached).toString();
+            return cached;
         }
 
         Graph<Node, Edge> graph;
@@ -167,12 +217,12 @@ public class McpHandler {
         
         Clusterer clusterer = new Clusterer(graph);
         List<Cluster> clusters = clusterer.getClusters();
-        List<List<TraversalPattern>> clustersComponents =
+        List<List<TraversalPattern>> hierarchy =
                 clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents)
                         .filter(components -> !components.isEmpty()).toList();
         
-        cacheManager.putHierarchy(url, clustersComponents);
-        return Stringifier.hierarchy(clustersComponents).toString();
+        cacheManager.putHierarchy(url, hierarchy);
+        return hierarchy;
     }
 
     private String fetchNarration(String url) throws Exception {

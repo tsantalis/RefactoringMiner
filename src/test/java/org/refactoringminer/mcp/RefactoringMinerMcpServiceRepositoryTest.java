@@ -116,6 +116,64 @@ class RefactoringMinerMcpServiceRepositoryTest {
 	}
 
 	@Test
+	void analyzePullRequestDerivesCloneUrlFromWorkingDirectoryOrigin() throws Exception {
+		Path repositoryPath = tempDir.resolve("pull-request-origin-repo");
+		try (Git git = Git.init().setDirectory(repositoryPath.toFile()).call()) {
+			git.remoteAdd()
+					.setName("origin")
+					.setUri(new org.eclipse.jgit.transport.URIish("git@github.com:tsantalis/RefactoringMiner.git"))
+					.call();
+		}
+		AtomicBoolean pullRequestCalled = new AtomicBoolean(false);
+		RefactoringMinerMcpService service = new RefactoringMinerMcpService(
+				(before, after) -> new ProjectASTDiff(before, after),
+				(localRepositoryPath, commitId, parentIndex) -> new ProjectASTDiff(Map.of(), Map.of()),
+				(cloneUrl, pullRequestId, timeoutSeconds) -> {
+					pullRequestCalled.set(true);
+					assertEquals("https://github.com/tsantalis/RefactoringMiner.git", cloneUrl);
+					return new ProjectASTDiff(
+							Map.of("src/main/java/A.java", "class A {}"),
+							Map.of("src/main/java/A.java", "class A { int x; }"));
+				},
+				(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()));
+
+		String previousUserDir = System.getProperty("user.dir");
+		try {
+			System.setProperty("user.dir", repositoryPath.toString());
+			McpAnalysisResult result = service.analyzePullRequest(null, 1, 30, 20);
+
+			assertEquals("ok", result.status());
+			assertTrue(pullRequestCalled.get());
+			assertEquals(1, result.filesBefore());
+			assertEquals(1, result.filesAfter());
+		} finally {
+			System.setProperty("user.dir", previousUserDir);
+		}
+	}
+
+	@Test
+	void analyzePullRequestReportsMissingCloneUrlWhenWorkingDirectoryHasNoGitHubOrigin() {
+		RefactoringMinerMcpService service = new RefactoringMinerMcpService(
+				(before, after) -> new ProjectASTDiff(before, after),
+				(repositoryPath, commitId, parentIndex) -> new ProjectASTDiff(Map.of(), Map.of()),
+				(cloneUrl, pullRequestId, timeoutSeconds) -> {
+					throw new AssertionError("pull request differ should not run without a clone URL");
+				},
+				(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()));
+
+		String previousUserDir = System.getProperty("user.dir");
+		try {
+			System.setProperty("user.dir", tempDir.toString());
+			McpAnalysisResult result = service.analyzePullRequest(null, 1, 30, 20);
+
+			assertEquals("error", result.status());
+			assertTrue(result.summary().contains("cloneUrl is required"));
+		} finally {
+			System.setProperty("user.dir", previousUserDir);
+		}
+	}
+
+	@Test
 	void analyzePullRequestValidatesBeforeNetworkCapablePath() {
 		RefactoringMinerMcpService service = new RefactoringMinerMcpService(
 				(before, after) -> new ProjectASTDiff(before, after),

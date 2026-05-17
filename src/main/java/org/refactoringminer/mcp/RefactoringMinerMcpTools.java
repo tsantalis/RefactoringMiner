@@ -34,6 +34,8 @@ public final class RefactoringMinerMcpTools {
 	static final String DIFF_PULL_REQUEST = "refactoringminer_diff_pull_request";
 	private static final int DEFAULT_MAX_REFACTORINGS = 20;
 	private static final int DEFAULT_MAX_CANDIDATES = 20;
+	private static final int DEFAULT_MAX_AST_DIFFS = 10;
+	private static final int DEFAULT_MAX_ACTIONS_PER_AST_DIFF = 10;
 	private static final int DEFAULT_MAX_FILES = 100;
 	private static final int DEFAULT_MAX_BYTES_PER_FILE = 200_000;
 	private static final int DEFAULT_TIMEOUT_SECONDS = 300;
@@ -273,11 +275,14 @@ public final class RefactoringMinerMcpTools {
 			Map<String, String> afterFiles = stringMap(arguments.get("afterFiles"), "afterFiles");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
 			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
 			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
 					"maxBytesPerFile");
 			return service.analyzeFileContents(beforeFiles, afterFiles, maxRefactorings, maxFiles,
-					maxBytesPerFile);
+					maxBytesPerFile, maxAstDiffs, maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -301,8 +306,11 @@ public final class RefactoringMinerMcpTools {
 					"maxBytesPerFile");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
 			return service.analyzeWorktree(repositoryPath, baseRef, includeUntracked, maxFiles,
-					maxBytesPerFile, maxRefactorings);
+					maxBytesPerFile, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -323,7 +331,11 @@ public final class RefactoringMinerMcpTools {
 			Integer parentIndex = optionalIntegerValue(arguments.get("parentIndex"), "parentIndex");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
-			return service.analyzeCommit(repositoryPath, commitId, parentIndex, maxRefactorings);
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
+			return service.analyzeCommit(repositoryPath, commitId, parentIndex, maxRefactorings, maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -344,7 +356,11 @@ public final class RefactoringMinerMcpTools {
 			int timeoutSeconds = integerValue(arguments.get("timeoutSeconds"), DEFAULT_TIMEOUT_SECONDS, "timeoutSeconds");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
-			return service.analyzePullRequest(cloneUrl, pullRequestId, timeoutSeconds, maxRefactorings);
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
+			return service.analyzePullRequest(cloneUrl, pullRequestId, timeoutSeconds, maxRefactorings, maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -364,7 +380,11 @@ public final class RefactoringMinerMcpTools {
 			String afterPath = stringValue(arguments.get("afterPath"), "afterPath");
 			int maxRefactorings = integerValue(arguments.get("maxRefactorings"), DEFAULT_MAX_REFACTORINGS,
 					"maxRefactorings");
-			return service.analyzeDirectories(Path.of(beforePath), Path.of(afterPath), maxRefactorings);
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
+			return service.analyzeDirectories(Path.of(beforePath), Path.of(afterPath), maxRefactorings, maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid tool arguments."));
 		}
@@ -501,7 +521,11 @@ public final class RefactoringMinerMcpTools {
 			int maxFiles = integerValue(arguments.get("maxFiles"), DEFAULT_MAX_FILES, "maxFiles");
 			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
 					"maxBytesPerFile");
-			return service.diffFileContents(beforeFiles, afterFiles, port, maxFiles, maxBytesPerFile);
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
+			return service.diffFileContents(beforeFiles, afterFiles, port, maxFiles, maxBytesPerFile, maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Explicit file contents",
 					List.of("Invalid tool arguments."));
@@ -526,8 +550,11 @@ public final class RefactoringMinerMcpTools {
 			int maxBytesPerFile = integerValue(arguments.get("maxBytesPerFile"), DEFAULT_MAX_BYTES_PER_FILE,
 					"maxBytesPerFile");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
 			return service.diffWorktree(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile,
-					port);
+					port, maxAstDiffs, maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Worktree changes",
 					List.of("Invalid tool arguments."));
@@ -549,7 +576,11 @@ public final class RefactoringMinerMcpTools {
 			String commitId = stringValue(arguments.get("commitId"), "commitId");
 			Integer parentIndex = optionalIntegerValue(arguments.get("parentIndex"), "parentIndex");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
-			return service.diffCommit(repositoryPath, commitId, parentIndex, port);
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
+			return service.diffCommit(repositoryPath, commitId, parentIndex, port, maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Commit diff", List.of("Invalid tool arguments."));
 		}
@@ -570,7 +601,11 @@ public final class RefactoringMinerMcpTools {
 			int pullRequestId = integerValue(arguments.get("pullRequestId"), 0, "pullRequestId");
 			int timeoutSeconds = integerValue(arguments.get("timeoutSeconds"), DEFAULT_TIMEOUT_SECONDS, "timeoutSeconds");
 			int port = integerValue(arguments.get("port"), DEFAULT_WEB_DIFF_PORT, "port");
-			return service.diffPullRequest(cloneUrl, pullRequestId, timeoutSeconds, port);
+			int maxAstDiffs = integerValue(arguments.get("maxAstDiffs"), DEFAULT_MAX_AST_DIFFS, "maxAstDiffs");
+			int maxActionsPerAstDiff = integerValue(arguments.get("maxActionsPerAstDiff"),
+					DEFAULT_MAX_ACTIONS_PER_AST_DIFF, "maxActionsPerAstDiff");
+			return service.diffPullRequest(cloneUrl, pullRequestId, timeoutSeconds, port, maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (IllegalArgumentException e) {
 			return McpDiffBrowserResult.error(e.getMessage(), null, "Pull-request diff",
 					List.of("Invalid tool arguments."));
@@ -675,10 +710,42 @@ public final class RefactoringMinerMcpTools {
 			return defaultValue;
 		}
 		if (value instanceof Number number) {
-			return number.intValue();
+			if (number instanceof Byte || number instanceof Short || number instanceof Integer) {
+				return number.intValue();
+			}
+			if (number instanceof Long longValue) {
+				if (longValue < Integer.MIN_VALUE || longValue > Integer.MAX_VALUE) {
+					throw new IllegalArgumentException(name + " must be an integer.");
+				}
+				return longValue.intValue();
+			}
+			if (number instanceof java.math.BigInteger bigInteger) {
+				try {
+					return bigInteger.intValueExact();
+				} catch (ArithmeticException e) {
+					throw new IllegalArgumentException(name + " must be an integer.", e);
+				}
+			}
+			if (number instanceof java.math.BigDecimal bigDecimal) {
+				try {
+					return bigDecimal.toBigIntegerExact().intValueExact();
+				} catch (ArithmeticException e) {
+					throw new IllegalArgumentException(name + " must be an integer.", e);
+				}
+			}
+			double doubleValue = number.doubleValue();
+			if (!Double.isFinite(doubleValue) || doubleValue % 1 != 0 || doubleValue < Integer.MIN_VALUE
+					|| doubleValue > Integer.MAX_VALUE) {
+				throw new IllegalArgumentException(name + " must be an integer.");
+			}
+			return (int) doubleValue;
 		}
 		if (value instanceof String stringValue) {
-			return Integer.parseInt(stringValue);
+			try {
+				return Integer.parseInt(stringValue);
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException(name + " must be an integer.", e);
+			}
 		}
 		throw new IllegalArgumentException(name + " must be an integer.");
 	}
@@ -749,6 +816,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("beforeFiles", fileMapSchema);
 		properties.put("afterFiles", fileMapSchema);
 		properties.put("maxRefactorings", maxRefactoringsSchema);
+		putAstDiffSummaryProperties(properties);
 		putFileContentBoundsProperties(properties);
 		return new JsonSchema("object", properties, List.of("beforeFiles", "afterFiles"), false, null, null);
 	}
@@ -761,6 +829,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("maxFiles", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_FILES));
 		properties.put("maxBytesPerFile", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_MAX_BYTES_PER_FILE));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
+		putAstDiffSummaryProperties(properties);
 		return new JsonSchema("object", properties, List.of(), false, null, null);
 	}
 
@@ -770,6 +839,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("commitId", Map.of("type", "string"));
 		properties.put("parentIndex", Map.of("type", "integer", "minimum", 0));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
+		putAstDiffSummaryProperties(properties);
 		return new JsonSchema("object", properties, List.of("commitId"), false, null, null);
 	}
 
@@ -779,6 +849,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("pullRequestId", Map.of("type", "integer", "minimum", 1));
 		properties.put("timeoutSeconds", Map.of("type", "integer", "minimum", 1, "default", DEFAULT_TIMEOUT_SECONDS));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
+		putAstDiffSummaryProperties(properties);
 		return new JsonSchema("object", properties, List.of("pullRequestId"), false, null, null);
 	}
 
@@ -787,6 +858,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("beforePath", Map.of("type", "string"));
 		properties.put("afterPath", Map.of("type", "string"));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_REFACTORINGS));
+		putAstDiffSummaryProperties(properties);
 		return new JsonSchema("object", properties, List.of("beforePath", "afterPath"), false, null, null);
 	}
 
@@ -878,6 +950,7 @@ public final class RefactoringMinerMcpTools {
 		properties.put("port", Map.of("type", "integer", "minimum", 1, "maximum", 65535,
 				"default", DEFAULT_WEB_DIFF_PORT,
 				"description", "Local WebDiff port. Defaults to 6789."));
+		putAstDiffSummaryProperties(properties);
 	}
 
 	private static void putRepositoryPathProperty(Map<String, Object> properties) {
@@ -901,6 +974,19 @@ public final class RefactoringMinerMcpTools {
 	private static void putValidationProperties(Map<String, Object> properties) {
 		properties.put("intent", intentSchema());
 		properties.put("maxCandidates", Map.of("type", "integer", "minimum", 0, "default", DEFAULT_MAX_CANDIDATES));
+	}
+
+	private static void putAstDiffSummaryProperties(Map<String, Object> properties) {
+		properties.put("maxAstDiffs", Map.of(
+				"type", "integer",
+				"minimum", 0,
+				"default", DEFAULT_MAX_AST_DIFFS,
+				"description", "Maximum number of AST diff summaries to include. Use 0 to omit astDiffs."));
+		properties.put("maxActionsPerAstDiff", Map.of(
+				"type", "integer",
+				"minimum", 0,
+				"default", DEFAULT_MAX_ACTIONS_PER_AST_DIFF,
+				"description", "Maximum number of sampled edit actions per AST diff summary."));
 	}
 
 	private static Map<String, Object> fileMapSchema() {
@@ -960,12 +1046,13 @@ public final class RefactoringMinerMcpTools {
 		properties.put("filesBefore", Map.of("type", "integer"));
 		properties.put("filesAfter", Map.of("type", "integer"));
 		properties.put("refactorings", Map.of("type", "array"));
+		properties.put("astDiffs", Map.of("type", "array"));
 		properties.put("warnings", Map.of("type", "array", "items", Map.of("type", "string")));
 		return Map.of(
 				"type", "object",
 				"properties", properties,
 				"required", List.of("status", "summary", "refactoringCount", "astDiffCount", "moveAstDiffCount",
-						"filesBefore", "filesAfter", "refactorings", "warnings"));
+						"filesBefore", "filesAfter", "refactorings", "astDiffs", "warnings"));
 	}
 
 	private static Map<String, Object> diffBrowserOutputSchema() {
@@ -982,11 +1069,12 @@ public final class RefactoringMinerMcpTools {
 		properties.put("filesBefore", Map.of("type", "integer"));
 		properties.put("filesAfter", Map.of("type", "integer"));
 		properties.put("affectedFiles", Map.of("type", "array", "items", Map.of("type", "string")));
+		properties.put("astDiffs", Map.of("type", "array"));
 		properties.put("warnings", Map.of("type", "array", "items", Map.of("type", "string")));
 		return Map.of(
 				"type", "object",
 				"properties", properties,
 				"required", List.of("status", "summary", "inputSummary", "refactoringCount", "astDiffCount",
-						"moveAstDiffCount", "filesBefore", "filesAfter", "affectedFiles", "warnings"));
+						"moveAstDiffCount", "filesBefore", "filesAfter", "affectedFiles", "astDiffs", "warnings"));
 	}
 }

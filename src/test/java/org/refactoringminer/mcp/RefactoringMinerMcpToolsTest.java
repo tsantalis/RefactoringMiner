@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -41,6 +42,8 @@ class RefactoringMinerMcpToolsTest {
 		assertFalse(tool.tool().annotations().destructiveHint());
 		assertTrue(tool.tool().inputSchema().required().contains("beforeFiles"));
 		assertTrue(tool.tool().inputSchema().required().contains("afterFiles"));
+		assertTrue(tool.tool().inputSchema().properties().containsKey("maxAstDiffs"));
+		assertTrue(tool.tool().inputSchema().properties().containsKey("maxActionsPerAstDiff"));
 	}
 
 	@Test
@@ -185,6 +188,7 @@ class RefactoringMinerMcpToolsTest {
 		assertEquals("ok", json.get("status").asText());
 		assertEquals(1, json.get("filesBefore").asInt());
 		assertEquals(1, json.get("filesAfter").asInt());
+		assertTrue(json.has("astDiffs"));
 	}
 
 	@Test
@@ -202,6 +206,23 @@ class RefactoringMinerMcpToolsTest {
 		JsonNode json = OBJECT_MAPPER.readTree(content.text());
 		assertEquals("error", json.get("status").asText());
 		assertTrue(json.get("summary").asText().contains("beforeFiles and afterFiles are required"));
+	}
+
+	@Test
+	void numericToolArgumentsRejectFractionalValues() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeFileContentsTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, Map.of(
+				"beforeFiles", Map.of("src/main/java/A.java", "class A {}"),
+				"afterFiles", Map.of("src/main/java/A.java", "class A { int x; }"),
+				"maxRefactorings", new BigDecimal("1.5")));
+
+		CallToolResult result = tool.callHandler().apply(null, request);
+
+		assertTrue(result.isError());
+		TextContent content = (TextContent) result.content().get(0);
+		JsonNode json = OBJECT_MAPPER.readTree(content.text());
+		assertEquals("error", json.get("status").asText());
+		assertTrue(json.get("summary").asText().contains("maxRefactorings must be an integer"));
 	}
 
 	@Test
@@ -587,11 +608,12 @@ class RefactoringMinerMcpToolsTest {
 				(beforePath, afterPath) -> diffWithRefactoring(
 						Map.of("src/main/java/A.java", "class A { void f() {} }"),
 						Map.of("src/main/java/A.java", "class A { void g() {} }")),
-				(diff, port, inputSummary, warnings) -> {
+				(diff, port, inputSummary, warnings, maxAstDiffs, maxActionsPerAstDiff) -> {
 					if (port < 1 || port > 65535) {
 						throw new IllegalArgumentException("port must be between 1 and 65535.");
 					}
-					return McpDiffBrowserResult.ok(diff, port, inputSummary, warnings);
+					return McpDiffBrowserResult.ok(diff, port, inputSummary, warnings, maxAstDiffs,
+							maxActionsPerAstDiff);
 				});
 	}
 

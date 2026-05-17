@@ -2,8 +2,9 @@ package narrator.graph.cluster.traverse;
 
 import narrator.graph.Node;
 import narrator.graph.NodeType;
+import narrator.graph.cluster.Cluster;
 
-public class SingularPattern implements Leaf {
+public class SingularPattern extends TraversalPattern implements Leaf {
 
     private final Node node;
 
@@ -22,7 +23,8 @@ public class SingularPattern implements Leaf {
         return node;
     }
 
-    public String textualRepresentation() {
-        return node.getDetailedRepresentation();
+    @Override
+    public String textualRepresentation(Cluster cluster) {
+        return node.textualRepresentation(cluster);
     }
 }

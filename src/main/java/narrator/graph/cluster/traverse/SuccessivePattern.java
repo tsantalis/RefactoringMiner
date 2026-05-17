@@ -6,6 +6,7 @@ import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
+import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
 
 public class SuccessivePattern extends TraversalPattern implements Leaf {
@@ -39,9 +40,10 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         return getHead();
     }
 
-    public String textualRepresentation() {
+    @Override
+    public String textualRepresentation(Cluster cluster) {
         Node head = getHead();
-        return "Succession starting at " + head.getDetailedRepresentation();
+        return "Succession starting at " + head.textualRepresentation(cluster);
     }
 
     @Override

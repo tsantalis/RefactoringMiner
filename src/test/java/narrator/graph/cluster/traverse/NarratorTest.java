@@ -3,6 +3,8 @@ package narrator.graph.cluster.traverse;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
+import narrator.graph.NodeType;
+import narrator.graph.cluster.traverse.ReasonType;
 
 public class NarratorTest {
 
@@ -12,7 +14,7 @@ public class NarratorTest {
             nodeType = NodeType.SINGULAR;
         }
         @Override public String getId() { return "leaf-" + System.identityHashCode(this); }
-        @Override public String textualRepresentation() { return "test-leaf"; }
+        @Override public String textualRepresentation(narrator.graph.cluster.Cluster cluster) { return "test-leaf"; }
     }
 
     private static class TestUsage extends AggregatorPattern {
@@ -35,7 +37,7 @@ public class NarratorTest {
 
         TestLeaf leaf = new TestLeaf();
         TestUsage usage = new TestUsage();
-        TestComponent component = new TestComponent(Collections.singletonList(leaf), ReasonType.SINK);
+        TestComponent component = new TestComponent(Collections.singletonList(leaf), ReasonType.CONTEXT);
 
         List<TraversalPattern> patterns = Arrays.asList(leaf, usage, component);
         List<Leaf> result = narrator.narrate(patterns);

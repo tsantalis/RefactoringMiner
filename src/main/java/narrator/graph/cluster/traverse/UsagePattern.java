@@ -8,6 +8,7 @@ import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
+import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
 
 /*
@@ -81,7 +82,8 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
         breakCircularDependencies(new ArrayList<>());
     }
 
-    public String textualRepresentation() {
-        return "Usage of " + useNode.getDetailedRepresentation();
+    @Override
+    public String textualRepresentation(Cluster cluster) {
+        return "Usage of " + useNode.textualRepresentation(cluster);
     }
 }

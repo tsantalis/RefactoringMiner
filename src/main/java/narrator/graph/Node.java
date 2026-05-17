@@ -226,7 +226,7 @@ public class Node {
     return path;
   }
 
-  public String getDetailedRepresentation() {
+   public String textualRepresentation(narrator.graph.cluster.Cluster cluster) {
     String validNodeType = nodeType.name();
     switch (nodeType) {
       case EXTENSION:

@@ -35,13 +35,14 @@ public class Narrator {
             return;
         }
         
+        visited.add(p);
+        
         if (p instanceof AggregatorPattern aggregator) {
             for (TraversalPattern sub : aggregator.subs) {
                 postOrderTraverse(sub, visited, result);
             }
         }
         
-        visited.add(p);
         result.add(p);
     }
 

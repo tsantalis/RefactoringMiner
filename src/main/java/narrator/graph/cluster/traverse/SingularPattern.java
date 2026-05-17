@@ -3,7 +3,7 @@ package narrator.graph.cluster.traverse;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
 
-public class SingularPattern extends TraversalPattern {
+public class SingularPattern implements Leaf {
 
     private final Node node;
 
@@ -20,5 +20,9 @@ public class SingularPattern extends TraversalPattern {
     @Override
     public Node getLead() {
         return node;
+    }
+
+    public String textualRepresentation() {
+        return node.getDetailedRepresentation();
     }
 }

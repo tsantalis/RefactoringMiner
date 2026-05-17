@@ -8,7 +8,7 @@ import narrator.graph.Node;
 import narrator.graph.NodeType;
 import org.jgrapht.Graph;
 
-public class SuccessivePattern extends TraversalPattern {
+public class SuccessivePattern extends TraversalPattern implements Leaf {
 
     Node cachedHead;
 
@@ -37,6 +37,11 @@ public class SuccessivePattern extends TraversalPattern {
     @Override
     public Node getLead() {
         return getHead();
+    }
+
+    public String textualRepresentation() {
+        Node head = getHead();
+        return "Succession starting at " + head.getDetailedRepresentation();
     }
 
     @Override

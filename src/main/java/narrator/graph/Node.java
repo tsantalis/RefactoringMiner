@@ -226,6 +226,32 @@ public class Node {
     return path;
   }
 
+  public String getDetailedRepresentation() {
+    String validNodeType = nodeType.name();
+    switch (nodeType) {
+      case EXTENSION:
+        validNodeType = "UNCHANGED";
+        break;
+      case DELETION:
+        validNodeType = "DELETED";
+        break;
+      case ADDITION:
+        validNodeType = "ADDED";
+        break;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(String.format("{ id: %s, type: %s", id, validNodeType));
+    
+    if (path != null && !path.isEmpty()) {
+      sb.append(String.format(", location: %s", path));
+    }
+    sb.append(" }\n");
+    sb.append(getContent());
+    
+    return sb.toString();
+  }
+
   public Tree getRight() {
     Tree parent = tree.getParent();
     if (parent == null) {

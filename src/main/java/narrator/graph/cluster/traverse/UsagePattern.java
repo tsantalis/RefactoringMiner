@@ -16,7 +16,7 @@ import org.jgrapht.Graph;
  * - method invocations within a variable declaration change: EXTENSION is being used
  * */
 
-public class UsagePattern extends AggregatorPattern {
+public class UsagePattern extends AggregatorPattern implements Leaf {
 
     private final HashMap<Node, TraversalPattern> requirements = new HashMap<>();
     Node useNode;
@@ -79,5 +79,9 @@ public class UsagePattern extends AggregatorPattern {
 
     public void breakCircularDependencies() {
         breakCircularDependencies(new ArrayList<>());
+    }
+
+    public String textualRepresentation() {
+        return "Usage of " + useNode.getDetailedRepresentation();
     }
 }

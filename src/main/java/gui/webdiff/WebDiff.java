@@ -62,6 +62,7 @@ public class WebDiff  {
     private String toolName = "RefactoringMiner";
     private boolean staticExport;
     private boolean exitJvmOnQuit = true;
+    private boolean quitEnabled = true;
     private String bindHost = configuredBindHost();
     private String publicHost = configuredPublicHost();
 
@@ -87,6 +88,10 @@ public class WebDiff  {
 
     public void setExitJvmOnQuit(boolean exitJvmOnQuit) {
         this.exitJvmOnQuit = exitJvmOnQuit;
+    }
+
+    public void setQuitEnabled(boolean quitEnabled) {
+        this.quitEnabled = quitEnabled;
     }
 
     private final String resourcesPath = "/web/";
@@ -319,7 +324,8 @@ public class WebDiff  {
         });
         get("/list", (request, response) -> {
             DiffViewState state = currentState;
-            Renderable view = new DirectoryDiffView(state.comparator(), false, state.projectASTDiff().getMetaInfo(), !staticExport);
+            Renderable view = new DirectoryDiffView(state.comparator(), false, state.projectASTDiff().getMetaInfo(),
+                    !staticExport, quitEnabled);
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
@@ -383,6 +389,10 @@ public class WebDiff  {
             return render(new SinglePageView(state.comparator(), state.projectASTDiff().getMetaInfo(), !staticExport, !staticExport));
         });
         get("/quit", (request, response) -> {
+            if (!quitEnabled) {
+                response.status(403);
+                return "WebDiff quit is disabled.";
+            }
             if (exitJvmOnQuit) {
                 System.exit(0);
                 return "";

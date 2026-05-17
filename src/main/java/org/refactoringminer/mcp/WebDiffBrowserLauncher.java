@@ -93,6 +93,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 	private static WebDiffView defaultView(ProjectASTDiff diff) {
 		WebDiff webDiff = new WebDiff(diff);
 		webDiff.setExitJvmOnQuit(false);
+		webDiff.setQuitEnabled(false);
 		return new ManagedWebDiffView(webDiff);
 	}
 

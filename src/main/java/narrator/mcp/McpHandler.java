@@ -229,8 +229,13 @@ public class McpHandler {
                             clusterIndex + 1, hierarchy.size()));
         }
         
-        List<TraversalPattern> components = hierarchy.get(clusterIndex);
-        List<Leaf> leaves = new Narrator().narrate(components);
+        String cacheKey = clustersToKey(clusters) + ":" + clusterIndex;
+        List<Leaf> leaves = cacheManager.getNarrative(cacheKey);
+        if (leaves == null) {
+            List<TraversalPattern> components = hierarchy.get(clusterIndex);
+            leaves = new Narrator().narrate(components);
+            cacheManager.putNarrative(cacheKey, leaves);
+        }
         
         List<String> narrations = new ArrayList<>();
         for (Leaf leaf : leaves) {

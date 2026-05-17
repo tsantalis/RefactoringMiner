@@ -8,10 +8,13 @@ import narrator.graph.Edge;
 import narrator.graph.Node;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
+import narrator.graph.cluster.traverse.Leaf;
+import narrator.graph.cluster.traverse.Narrator;
 import narrator.graph.cluster.traverse.TraversalEngine;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.json.Stringifier;
 import org.jgrapht.Graph;
+import java.util.ArrayList;
 import java.util.List;
 
 public class McpHandler {
@@ -63,6 +66,7 @@ public class McpHandler {
         
         tools.add(createToolDefinition("get_clusters", "Get clusters for a commit or pull request", "url"));
         tools.add(createToolDefinition("get_hierarchy", "Get refactoring hierarchy for a commit or pull request", "url"));
+        tools.add(createToolDefinition("narrate", "Get narration for clusters for a commit or pull request", "url"));
         
         result.add("tools", tools);
         response.add("result", result);
@@ -101,6 +105,8 @@ public class McpHandler {
                 resultValue = fetchClusters(url);
             } else if ("get_hierarchy".equals(toolName)) {
                 resultValue = fetchHierarchy(url);
+            } else if ("narrate".equals(toolName)) {
+                resultValue = fetchNarration(url);
             } else {
                 throw new IllegalArgumentException("Unknown tool: " + toolName);
             }
@@ -167,6 +173,42 @@ public class McpHandler {
         
         cacheManager.putHierarchy(url, clustersComponents);
         return Stringifier.hierarchy(clustersComponents).toString();
+    }
+
+    private String fetchNarration(String url) throws Exception {
+        List<List<TraversalPattern>> cached = cacheManager.getHierarchy(url);
+        if (cached == null) {
+            // Need to compute hierarchy first (same logic as fetchHierarchy)
+            Graph<Node, Edge> graph;
+            if (url.contains("/pull/") || url.contains("/pr/")) {
+                graph = Driver.getPullRequestGraph(url);
+            } else {
+                graph = Driver.getCommitGraph(url);
+            }
+            
+            Clusterer clusterer = new Clusterer(graph);
+            List<Cluster> clusters = clusterer.getClusters();
+            List<List<TraversalPattern>> clustersComponents =
+                    clusters.stream().map(TraversalEngine::new).map(TraversalEngine::getComponents)
+                            .filter(components -> !components.isEmpty()).toList();
+            
+            cacheManager.putHierarchy(url, clustersComponents);
+        } else {
+            // Already computed
+        }
+
+        List<List<TraversalPattern>> clustersComponents = cacheManager.getHierarchy(url);
+        List<String> allNarrations = new ArrayList<>();
+        Narrator narrator = new Narrator();
+        
+        for (List<TraversalPattern> components : clustersComponents) {
+            List<Leaf> leaves = narrator.narrate(components);
+            for (Leaf leaf : leaves) {
+                allNarrations.add(leaf.textualRepresentation(null));
+            }
+        }
+        
+        return allNarrations.toString();
     }
 
     private void sendMethodNotFound(JsonObject response, JsonObject request) {

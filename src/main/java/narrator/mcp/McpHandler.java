@@ -67,11 +67,11 @@ public class McpHandler {
         JsonObject result = new JsonObject();
         JsonArray tools = new JsonArray();
         
-        tools.add(createToolDefinition("get_cluster_count",
-                "Get the number of clusters (groups of refactoring patterns) for a commit or pull request. Call this first to know how many clusters exist.",
+        tools.add(createToolDefinition("get_available_clusters",
+                "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
-        tools.add(createToolDefinition("get_cluster_chapters_count",
-                "Get the number of chapters (narrative elements) in a specific cluster. Call this before fetching individual chapters.",
+        tools.add(createToolDefinition("get_available_chapters",
+                "Get the available chapter indices (narrative elements) in a specific cluster. Returns a range (e.g., 1-12).",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("narrate_cluster_chapter",
                 "Get a specific chapter of narration for a cluster. Returns a single narrative element. Call get_cluster_chapters_count first to know how many chapters exist.",
@@ -157,9 +157,9 @@ public class McpHandler {
     private String executeTool(String toolName, JsonObject arguments) throws Exception {
         String url = arguments.get("url").getAsString();
         
-        if ("get_cluster_count".equals(toolName)) {
+        if ("get_available_clusters".equals(toolName)) {
             return fetchClusterCount(url);
-        } else if ("get_cluster_chapters_count".equals(toolName)) {
+        } else if ("get_available_chapters".equals(toolName)) {
             int clusterIndex;
             try {
                 clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
@@ -229,7 +229,8 @@ public class McpHandler {
 
     private String fetchClusterCount(String url) throws Exception {
         List<Cluster> clusters = getOrComputeClusters(url);
-        return String.valueOf(clusters.size());
+        int count = clusters.size();
+        return count == 0 ? "No clusters found." : "Available clusters: 1-" + count;
     }
 
     private String fetchClusterChaptersCount(String url, int clusterIndex) throws Exception {
@@ -249,7 +250,8 @@ public class McpHandler {
             leaves = new Narrator().narrate(components);
             cacheManager.putNarrative(cacheKey, leaves);
         }
-        return String.valueOf(leaves.size());
+        int count = leaves.size();
+        return count == 0 ? "No chapters found in this cluster." : "Available chapters: 1-" + count;
     }
 
     private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {

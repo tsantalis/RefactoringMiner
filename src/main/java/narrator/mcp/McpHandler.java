@@ -74,10 +74,10 @@ public class McpHandler {
                 "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response before calling get_next_cluster_chapter to proceed. Do not call get_next_cluster_chapter immediately after this tool without providing a synthesis of the current chapter.",
+                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response before calling this tool again. Do not call this tool in a loop or batch without providing an explanation for each intermediate chapter.",
+                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "clusterIndex"));
         result.add("tools", tools);
         response.add("result", result);
@@ -291,7 +291,7 @@ public class McpHandler {
         
         if (!isLastChapter) {
             int remaining = totalChapters - currentChapter;
-            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then call get_next_cluster_chapter for the next part.");
+            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
         } else {
             output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your final synthesis and explanation of the cluster.");
         }

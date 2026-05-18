@@ -19,6 +19,7 @@ public class Node {
   private final String id;
   private final String promptId;
   private final String path;
+  private final Constants constants;
   private final SrcDst srcDst;
   private final String fileContent;
   private final Tree tree;
@@ -38,6 +39,7 @@ public class Node {
     this.promptId = generateShortId();
     this.fileContent = fileContent;
     this.path = path;
+    this.constants = new Constants(path);
     this.srcDst = srcDst;
     this.tree = tree;
     this.subTrees = subTrees;
@@ -260,7 +262,6 @@ public class Node {
 
   public String getContent() {
     if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
-      Constants constants = new Constants(this.getPath());
       String type = tree.getType().name;
 
       if (type.equals(constants.TYPE_DECLARATION) || type.equals(
@@ -339,14 +340,28 @@ public class Node {
     basePrompt += ", type: " + validNodeType;
 
     java.util.List<Node> contexts = Context.get(cluster.getGraph(), this);
-    java.util.List<String> locationParts = new java.util.ArrayList<>();
+    java.util.List<Node> locationNodes = new java.util.ArrayList<>();
     for (Node contextNode : contexts) {
       if (contextNode.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
-        locationParts.add(contextNode.getContent());
+        locationNodes.add(contextNode);
       }
     }
-    java.util.Collections.reverse(locationParts);
-    String contextString = String.join(" > ", locationParts);
+    java.util.Collections.reverse(locationNodes);
+
+    StringBuilder sb = new StringBuilder();
+    if (!locationNodes.isEmpty()) {
+      sb.append(locationNodes.get(0).getContent());
+      if (locationNodes.size() > 1) {
+        sb.append("::").append(locationNodes.get(1).getContent());
+        for (int i = 2; i < locationNodes.size(); i++) {
+          Node node = locationNodes.get(i);
+          String prefix =
+              node.getTree().getType().name.equals(constants.METHOD_DECLARATION) ? "#" : ".";
+          sb.append(prefix).append(node.getContent());
+        }
+      }
+    }
+    String contextString = sb.toString();
     String normalizedContent = getContent();
     if (contextString != null && !contextString.isEmpty()) {
       basePrompt += ", location: " + contextString;
@@ -380,8 +395,7 @@ public class Node {
     List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
     trees.add(tree);
     List<Tree> simpleNameTrees = trees.stream()
-        .filter(tree -> tree.getType().name.equals(
-            new Constants(this.getPath()).SIMPLE_NAME)).toList();
+        .filter(tree -> tree.getType().name.equals(constants.SIMPLE_NAME)).toList();
     return simpleNameTrees.stream()
         .map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
   }

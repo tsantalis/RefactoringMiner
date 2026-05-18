@@ -12,10 +12,12 @@ import javax.annotation.Nullable;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import narrator.graph.cluster.Cluster;
 
 public class Node {
 
   private final String id;
+  private final String promptId;
   private final String path;
   private final SrcDst srcDst;
   private final String fileContent;
@@ -33,6 +35,7 @@ public class Node {
       @Nullable Set<Tree> subTrees, @Nullable Set<Tree> moveTrees, NodeType nodeType,
       @Nullable ASTDiff diff) {
     this.id = formatId(path, srcDst, nodeType, tree);
+    this.promptId = generateShortId();
     this.fileContent = fileContent;
     this.path = path;
     this.srcDst = srcDst;
@@ -46,6 +49,16 @@ public class Node {
   public static String formatId(String path, SrcDst srcDst, NodeType nodeType, Tree tree) {
     return String.format("%s-%s-%s-%s-%s-%s", path, srcDst, nodeType, tree.getPos(),
         tree.getEndPos(), tree.getType().name);
+  }
+
+  private String generateShortId() {
+    String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    java.util.Random random = new java.util.Random();
+    StringBuilder sb = new StringBuilder(4);
+    for (int i = 0; i < 4; i++) {
+      sb.append(alphabet.charAt(random.nextInt(alphabet.length())));
+    }
+    return sb.toString();
   }
 
   @Nullable
@@ -226,15 +239,14 @@ public class Node {
     return path;
   }
 
-   public String textualRepresentation(narrator.graph.cluster.Cluster cluster) {
+   public String textualRepresentation(Cluster cluster) {
     String basePrompt = "";
 
-    String promptId = id;
     String contextString = path;
     String normalizedContent = getContent();
     String nodeTypeField = nodeType.name();
 
-    basePrompt += "{ id: " + promptId;
+    basePrompt += "{ id: " + this.promptId;
 
     // TODO: find a way to support other types (is it really needed?)
     String validNodeType = nodeTypeField;

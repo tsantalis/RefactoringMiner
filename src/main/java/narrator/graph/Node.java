@@ -9,10 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
+import narrator.graph.cluster.Cluster;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
-import narrator.graph.cluster.Cluster;
 
 public class Node {
 
@@ -289,71 +289,65 @@ public class Node {
     return path;
   }
 
-   public String textualRepresentation(Cluster cluster) {
+  public String textualRepresentation(Cluster cluster) {
     String basePrompt = "";
-
-    String contextString = "";
-    if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
-      contextString = path;
-    }
-    String normalizedContent = getContent();
-    String nodeTypeField = nodeType.name();
 
     basePrompt += "{ id: " + this.promptId;
 
     // TODO: find a way to support other types (is it really needed?)
-    String validNodeType = nodeTypeField;
-    switch (nodeType) {
-      case EXTENSION:
-        validNodeType = "UNCHANGED";
-        break;
-      case DELETION:
-        validNodeType = "DELETED";
-        break;
-      case ADDITION:
-        validNodeType = "ADDED";
-        break;
-    }
+    String validNodeType = nodeType.name();
+    validNodeType = switch (nodeType) {
+      case EXTENSION -> "UNCHANGED";
+      case DELETION -> "DELETED";
+      case ADDITION -> "ADDED";
+      default -> validNodeType;
+    };
 
-    String finalValidNodeType = validNodeType;
-
-    if (cluster != null) {
-      java.util.Set<narrator.graph.Node> vertices = cluster.getGraph().vertexSet();
-      if (vertices.contains(this)) {
-        java.util.List<narrator.graph.Edge> sourceEdges = new java.util.ArrayList<>();
-        java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
-        if (allEdgesOut != null) {
-          for (narrator.graph.Edge edge : allEdgesOut) {
-            if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-              sourceEdges.add(edge);
-            }
+    java.util.Set<narrator.graph.Node> vertices = cluster.getGraph().vertexSet();
+    if (vertices.contains(this)) {
+      java.util.List<narrator.graph.Edge> sourceEdges = new java.util.ArrayList<>();
+      java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
+      if (allEdgesOut != null) {
+        for (narrator.graph.Edge edge : allEdgesOut) {
+          if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
+            sourceEdges.add(edge);
           }
         }
+      }
 
-        java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
-        boolean hasTargets = false;
-        if (allEdgesIn != null) {
-          for (narrator.graph.Edge edge : allEdgesIn) {
-            if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-              hasTargets = true;
-              break;
-            }
+      java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
+      boolean hasTargets = false;
+      if (allEdgesIn != null) {
+        for (narrator.graph.Edge edge : allEdgesIn) {
+          if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
+            hasTargets = true;
+            break;
           }
         }
+      }
 
-        java.util.List<String> operations = getOperations(cluster);
+      java.util.List<String> operations = getOperations(cluster);
 
-        if (!sourceEdges.isEmpty()) {
-          finalValidNodeType = "AFTER_" + String.join("_AND_", operations);
-        }
-        if (hasTargets) {
-          finalValidNodeType = "BEFORE_" + String.join("_AND_", operations);
-        }
+      if (!sourceEdges.isEmpty()) {
+        validNodeType = "AFTER_" + String.join("_AND_", operations);
+      }
+      if (hasTargets) {
+        validNodeType = "BEFORE_" + String.join("_AND_", operations);
       }
     }
 
-    basePrompt += ", type: " + finalValidNodeType;
+    basePrompt += ", type: " + validNodeType;
 
+    java.util.List<Node> contexts = Context.get(cluster.getGraph(), this);
+    java.util.List<String> locationParts = new java.util.ArrayList<>();
+    for (Node contextNode : contexts) {
+      if (contextNode.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
+        locationParts.add(contextNode.getContent());
+      }
+    }
+    java.util.Collections.reverse(locationParts);
+    String contextString = String.join(" > ", locationParts);
+    String normalizedContent = getContent();
     if (contextString != null && !contextString.isEmpty()) {
       basePrompt += ", location: " + contextString;
     }

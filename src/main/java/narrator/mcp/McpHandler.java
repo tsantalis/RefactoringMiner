@@ -74,10 +74,10 @@ public class McpHandler {
                 "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. Please describe the content of the current chapter before calling get_next_cluster_chapter to proceed.",
+                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response before calling get_next_cluster_chapter to proceed. Do not call get_next_cluster_chapter immediately after this tool without providing a synthesis of the current chapter.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. Please describe the content of the current chapter, then call this tool again if chapters remain, until you reach [End of Narrative].",
+                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response before calling this tool again. Do not call this tool in a loop or batch without providing an explanation for each intermediate chapter.",
                 "url", "clusterIndex"));
         result.add("tools", tools);
         response.add("result", result);

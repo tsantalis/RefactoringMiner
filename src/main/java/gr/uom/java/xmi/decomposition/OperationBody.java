@@ -1823,7 +1823,7 @@ public class OperationBody {
 						}
 						return;
 					}
-					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral) {
+					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
 						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
 						List<UMLImport> imports = new ArrayList<>();

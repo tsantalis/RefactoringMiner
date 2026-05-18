@@ -181,6 +181,56 @@ public class Node {
     return id;
   }
 
+  private java.util.List<String> getOperations(Cluster cluster) {
+    java.util.List<String> operations = new java.util.ArrayList<>();
+    if (cluster == null) {
+      return operations;
+    }
+
+    java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
+    java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
+
+    narrator.graph.Node alt = null;
+    if (allEdgesOut != null) {
+      for (narrator.graph.Edge edge : allEdgesOut) {
+        if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
+          alt = cluster.getGraph().getEdgeTarget(edge);
+          break;
+        }
+      }
+    }
+    if (alt == null && allEdgesIn != null) {
+      for (narrator.graph.Edge edge : allEdgesIn) {
+        if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
+          alt = cluster.getGraph().getEdgeSource(edge);
+          break;
+        }
+      }
+    }
+
+    if (alt != null) {
+      String thisContext = this.path;
+      String altContext = alt.path;
+      String thisContent = this.getContent();
+      String altContent = alt.getContent();
+
+      if (!java.util.Objects.equals(thisContext, altContext)) {
+        if (!(altContext.endsWith(altContent) && thisContext.endsWith(thisContent))) {
+          operations.add("MOVE");
+        }
+      }
+      if (!java.util.Objects.equals(thisContent, altContent)) {
+        operations.add("CHANGE");
+      }
+
+      if (operations.isEmpty()) {
+        operations.add("MOVE");
+      }
+    }
+
+    return operations;
+  }
+
   public boolean isBase() {
     return nodeType.equals(NodeType.DELETION) || nodeType.equals(NodeType.SRC_MOVE)
         || nodeType.equals(NodeType.ADDITION) || nodeType.equals(NodeType.DST_MOVE);
@@ -242,7 +292,10 @@ public class Node {
    public String textualRepresentation(Cluster cluster) {
     String basePrompt = "";
 
-    String contextString = path;
+    String contextString = "";
+    if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
+      contextString = path;
+    }
     String normalizedContent = getContent();
     String nodeTypeField = nodeType.name();
 
@@ -264,13 +317,9 @@ public class Node {
 
     String finalValidNodeType = validNodeType;
 
-    // Use cluster to determine sources/targets via MAPPING edges
     if (cluster != null) {
       java.util.Set<narrator.graph.Node> vertices = cluster.getGraph().vertexSet();
-      boolean containsThis = vertices.contains(this);
-
-      if (containsThis) {
-        // Get mapping sources (nodes this node maps to via MAPPING edges)
+      if (vertices.contains(this)) {
         java.util.List<narrator.graph.Edge> sourceEdges = new java.util.ArrayList<>();
         java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
         if (allEdgesOut != null) {
@@ -281,35 +330,23 @@ public class Node {
           }
         }
 
-        // Get mapping targets (nodes that map to this node)
         java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
-
-        java.util.List<String> operations = new java.util.ArrayList<>();
-        java.util.List<narrator.graph.Node> sources = new java.util.ArrayList<>();
-        java.util.List<narrator.graph.Node> targets = new java.util.ArrayList<>();
-
-        if (!sourceEdges.isEmpty()) {
-          for (narrator.graph.Edge edge : sourceEdges) {
-            narrator.graph.Node target = cluster.getGraph().getEdgeTarget(edge);
-            sources.add(target);
-            operations.add(edge.getType().name());
-          }
-        }
-
+        boolean hasTargets = false;
         if (allEdgesIn != null) {
           for (narrator.graph.Edge edge : allEdgesIn) {
             if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-              narrator.graph.Node source = cluster.getGraph().getEdgeSource(edge);
-              targets.add(source);
-              operations.add(edge.getType().name());
+              hasTargets = true;
+              break;
             }
           }
         }
 
-        if (!sources.isEmpty()) {
+        java.util.List<String> operations = getOperations(cluster);
+
+        if (!sourceEdges.isEmpty()) {
           finalValidNodeType = "AFTER_" + String.join("_AND_", operations);
         }
-        if (!targets.isEmpty()) {
+        if (hasTargets) {
           finalValidNodeType = "BEFORE_" + String.join("_AND_", operations);
         }
       }

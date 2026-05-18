@@ -1831,17 +1831,7 @@ public class OperationBody {
 						umlClass.setObject(true);
 						umlClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, fileContent, typeDeclarations, objectLiteral, umlClass);
-						if(container instanceof UMLOperation) {
-							((UMLOperation)container).addNestedClass(umlClass);
-						}
-						else if(container instanceof LambdaExpressionObject lambda) {
-							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
-								((UMLOperation)lambda.getOwner()).addNestedClass(umlClass);
-							}
-						}
-						else if(container instanceof ModuleContainer) {
-							((ModuleContainer)container).addNestedClass(umlClass);
-						}
+						addToContainer(umlClass);
 						return;
 					}
 				}
@@ -1928,12 +1918,7 @@ public class OperationBody {
 					umlClass.addTypeParameter(umlTypeParameter);
 				}
 			}
-			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
-			}
+			addToContainer(umlClass);
 		}
 		else if(statement instanceof Swc4jAstTsModuleDecl moduleDecl) {
 			ISwc4jAstTsModuleName moduleId = moduleDecl.getId();
@@ -1986,12 +1971,9 @@ public class OperationBody {
 					umlClass.getComments().add(comment);
 				}
 			}
+			addToContainer(umlClass);
 			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
 				umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
 			}
 		}
 		else if(statement instanceof Swc4jAstTsEnumDecl enumDecl) {
@@ -2038,12 +2020,7 @@ public class OperationBody {
 					umlClass.addEnumConstant(attribute);
 				}
 			}
-			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
-			}
+			addToContainer(umlClass);
 		}
 		else if(statement instanceof Swc4jAstExportDecl exportDecl) {
 			ISwc4jAstDecl decl = exportDecl.getDecl();
@@ -2131,12 +2108,9 @@ public class OperationBody {
 						umlClass.getComments().add(comment);
 					}
 				}
+				addToContainer(umlClass);
 				if(container instanceof ModuleContainer) {
-					((ModuleContainer)container).addNestedClass(umlClass);
 					umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
-				}
-				else if(container instanceof UMLOperation) {
-					((UMLOperation)container).addNestedClass(umlClass);
 				}
 			}
 			else if(defaultDecl instanceof Swc4jAstTsInterfaceDecl interfaceDecl) {
@@ -2314,17 +2288,7 @@ public class OperationBody {
 						nestedClass.setObject(true);
 						nestedClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, fileContent, typeDeclarations, nestedObjectLiteral, nestedClass);
-						if(container instanceof UMLOperation) {
-							((UMLOperation)container).addNestedClass(umlClass);
-						}
-						else if(container instanceof LambdaExpressionObject lambda) {
-							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
-								((UMLOperation)lambda.getOwner()).addNestedClass(umlClass);
-							}
-						}
-						else if(container instanceof ModuleContainer) {
-							((ModuleContainer)container).addNestedClass(nestedClass);
-						}
+						addToContainer(nestedClass);
 					}
 					else if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
@@ -2364,8 +2328,30 @@ public class OperationBody {
 				}
 			}
 			else if(prop instanceof Swc4jAstSpreadElement spread) {
-				
+				if(spread.getExpr() instanceof Swc4jAstIdent ident) {
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, ident, container, activeVariableDeclarations, fileContent);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, spread.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					umlClass.addAttribute(attribute);
+				}
 			}
+		}
+	}
+
+	private void addToContainer(UMLClass umlClass) {
+		if(container instanceof UMLOperation) {
+			((UMLOperation)container).addNestedClass(umlClass);
+		}
+		else if(container instanceof LambdaExpressionObject lambda) {
+			if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+				((UMLOperation)lambda.getOwner()).addNestedClass(umlClass);
+			}
+		}
+		else if(container instanceof ModuleContainer) {
+			((ModuleContainer)container).addNestedClass(umlClass);
 		}
 	}
 

@@ -2165,12 +2165,7 @@ public class OperationBody {
 					umlClass.getComments().add(comment);
 				}
 			}
-			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
-			}
+			addToContainer(umlClass);
 		}
 		else if(statement instanceof Swc4jAstImportDecl importDecl) {
 			String source = importDecl.getSrc().getValue();

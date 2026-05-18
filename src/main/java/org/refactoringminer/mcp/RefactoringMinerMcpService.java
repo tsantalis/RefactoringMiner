@@ -18,6 +18,8 @@ import org.refactoringminer.util.GitServiceImpl;
 public class RefactoringMinerMcpService {
 	private static final int DEFAULT_MAX_FILES = 100;
 	private static final int DEFAULT_MAX_BYTES_PER_FILE = 200_000;
+	private static final int DEFAULT_MAX_AST_DIFFS = 10;
+	private static final int DEFAULT_MAX_ACTIONS_PER_AST_DIFF = 10;
 
 	private final FileContentDiffer differ;
 	private final CommitDiffer commitDiffer;
@@ -77,14 +79,23 @@ public class RefactoringMinerMcpService {
 	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			int maxRefactorings) {
 		return analyzeFileContents(beforeFiles, afterFiles, maxRefactorings, DEFAULT_MAX_FILES,
-				DEFAULT_MAX_BYTES_PER_FILE);
+				DEFAULT_MAX_BYTES_PER_FILE, 0, 0);
 	}
 
 	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			int maxRefactorings, int maxFiles, int maxBytesPerFile) {
+		return analyzeFileContents(beforeFiles, afterFiles, maxRefactorings, maxFiles, maxBytesPerFile, 0, 0);
+	}
+
+	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int maxRefactorings, int maxFiles, int maxBytesPerFile, int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (maxRefactorings < 0) {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		McpAnalysisResult limitError = validateAstDiffLimits(maxAstDiffs, maxActionsPerAstDiff);
+		if (limitError != null) {
+			return limitError;
 		}
 		if (beforeFiles == null || afterFiles == null) {
 			return McpAnalysisResult.error("beforeFiles and afterFiles are required.",
@@ -102,7 +113,7 @@ public class RefactoringMinerMcpService {
 
 		try {
 			ProjectASTDiff diff = differ.diffAtFileContents(beforeFiles, afterFiles);
-			return toResult(diff, maxRefactorings, "File-content");
+			return toResult(diff, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff, "File-content");
 		} catch (Exception e) {
 			return McpAnalysisResult.error("File-content analysis failed: " + e.getMessage(),
 					List.of(e.getClass().getName()));
@@ -253,9 +264,19 @@ public class RefactoringMinerMcpService {
 
 	public McpAnalysisResult analyzeWorktree(Path repositoryPath, String baseRef, boolean includeUntracked, int maxFiles,
 			int maxBytesPerFile, int maxRefactorings) {
+		return analyzeWorktree(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile, maxRefactorings,
+				0, 0);
+	}
+
+	public McpAnalysisResult analyzeWorktree(Path repositoryPath, String baseRef, boolean includeUntracked, int maxFiles,
+			int maxBytesPerFile, int maxRefactorings, int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (maxRefactorings < 0) {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		McpAnalysisResult limitError = validateAstDiffLimits(maxAstDiffs, maxActionsPerAstDiff);
+		if (limitError != null) {
+			return limitError;
 		}
 		try {
 			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
@@ -266,7 +287,7 @@ public class RefactoringMinerMcpService {
 				return McpAnalysisResult.error("Worktree analysis did not produce a diff.",
 						List.of("RefactoringMiner returned null."));
 			}
-			return McpAnalysisResult.ok(diff, maxRefactorings, changes.warnings());
+			return McpAnalysisResult.ok(diff, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff, changes.warnings());
 		} catch (Exception e) {
 			return McpAnalysisResult.error("Worktree analysis failed: " + e.getMessage(), List.of(e.getClass().getName()));
 		}
@@ -274,9 +295,18 @@ public class RefactoringMinerMcpService {
 
 	public McpAnalysisResult analyzeCommit(Path repositoryPath, String commitId, Integer parentIndex,
 			int maxRefactorings) {
+		return analyzeCommit(repositoryPath, commitId, parentIndex, maxRefactorings, 0, 0);
+	}
+
+	public McpAnalysisResult analyzeCommit(Path repositoryPath, String commitId, Integer parentIndex,
+			int maxRefactorings, int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (maxRefactorings < 0) {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		McpAnalysisResult limitError = validateAstDiffLimits(maxAstDiffs, maxActionsPerAstDiff);
+		if (limitError != null) {
+			return limitError;
 		}
 		if (commitId == null || commitId.isBlank()) {
 			return McpAnalysisResult.error("commitId must be a non-empty string.", List.of("commitId is required."));
@@ -289,7 +319,7 @@ public class RefactoringMinerMcpService {
 
 		try {
 			ProjectASTDiff diff = diffCommit(repositoryPath, commitId, resolvedParentIndex, 300);
-			return toResult(diff, maxRefactorings, "Commit");
+			return toResult(diff, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff, "Commit");
 		} catch (Exception e) {
 			return McpAnalysisResult.error("Commit analysis failed: " + e.getMessage(), List.of(e.getClass().getName()));
 		}
@@ -297,9 +327,18 @@ public class RefactoringMinerMcpService {
 
 	public McpAnalysisResult analyzePullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds,
 			int maxRefactorings) {
+		return analyzePullRequest(cloneUrl, pullRequestId, timeoutSeconds, maxRefactorings, 0, 0);
+	}
+
+	public McpAnalysisResult analyzePullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds,
+			int maxRefactorings, int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (maxRefactorings < 0) {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		McpAnalysisResult limitError = validateAstDiffLimits(maxAstDiffs, maxActionsPerAstDiff);
+		if (limitError != null) {
+			return limitError;
 		}
 		if (pullRequestId <= 0) {
 			return McpAnalysisResult.error("pullRequestId must be greater than 0.",
@@ -319,7 +358,7 @@ public class RefactoringMinerMcpService {
 
 		try {
 			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
-			return toResult(diff, maxRefactorings, "Pull-request");
+			return toResult(diff, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff, "Pull-request");
 		} catch (Exception e) {
 			return McpAnalysisResult.error("Pull-request analysis failed: " + e.getMessage(),
 					List.of(e.getClass().getName()));
@@ -327,16 +366,25 @@ public class RefactoringMinerMcpService {
 	}
 
 	public McpAnalysisResult analyzeDirectories(Path beforePath, Path afterPath, int maxRefactorings) {
+		return analyzeDirectories(beforePath, afterPath, maxRefactorings, 0, 0);
+	}
+
+	public McpAnalysisResult analyzeDirectories(Path beforePath, Path afterPath, int maxRefactorings,
+			int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (maxRefactorings < 0) {
 			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
 					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		McpAnalysisResult limitError = validateAstDiffLimits(maxAstDiffs, maxActionsPerAstDiff);
+		if (limitError != null) {
+			return limitError;
 		}
 
 		try {
 			requireExistingAbsolutePath(beforePath, "beforePath");
 			requireExistingAbsolutePath(afterPath, "afterPath");
 			ProjectASTDiff diff = directoryDiffer.diffAtDirectories(beforePath, afterPath);
-			return toResult(diff, maxRefactorings, "Directory");
+			return toResult(diff, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff, "Directory");
 		} catch (Exception e) {
 			return McpAnalysisResult.error("Directory analysis failed: " + e.getMessage(),
 					List.of(e.getClass().getName()));
@@ -345,15 +393,27 @@ public class RefactoringMinerMcpService {
 
 	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			int port) {
-		return diffFileContents(beforeFiles, afterFiles, port, DEFAULT_MAX_FILES, DEFAULT_MAX_BYTES_PER_FILE);
+		return diffFileContents(beforeFiles, afterFiles, port, DEFAULT_MAX_FILES, DEFAULT_MAX_BYTES_PER_FILE,
+				DEFAULT_MAX_AST_DIFFS, DEFAULT_MAX_ACTIONS_PER_AST_DIFF);
 	}
 
 	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
 			int port, int maxFiles, int maxBytesPerFile) {
+		return diffFileContents(beforeFiles, afterFiles, port, maxFiles, maxBytesPerFile, DEFAULT_MAX_AST_DIFFS,
+				DEFAULT_MAX_ACTIONS_PER_AST_DIFF);
+	}
+
+	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int port, int maxFiles, int maxBytesPerFile, int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (beforeFiles == null || afterFiles == null) {
 			return McpDiffBrowserResult.error("beforeFiles and afterFiles are required.", port,
 					"Explicit file contents",
 					List.of("beforeFiles and afterFiles must be JSON objects mapping paths to file contents."));
+		}
+		McpDiffBrowserResult invalidAstLimits = validateDiffAstLimits(maxAstDiffs, maxActionsPerAstDiff, port,
+				"Explicit file contents");
+		if (invalidAstLimits != null) {
+			return invalidAstLimits;
 		}
 		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
 			return McpDiffBrowserResult.error("At least one before or after file is required.", port,
@@ -370,7 +430,7 @@ public class RefactoringMinerMcpService {
 				beforeFiles.size(), afterFiles.size());
 		try {
 			ProjectASTDiff diff = differ.diffAtFileContents(beforeFiles, afterFiles);
-			return launchDiffBrowser(diff, port, inputSummary, List.of());
+			return launchDiffBrowser(diff, port, inputSummary, List.of(), maxAstDiffs, maxActionsPerAstDiff);
 		} catch (Exception e) {
 			return McpDiffBrowserResult.error("File-content diff browser failed: " + e.getMessage(), port,
 					inputSummary, List.of(e.getClass().getName()));
@@ -379,14 +439,26 @@ public class RefactoringMinerMcpService {
 
 	public McpDiffBrowserResult diffWorktree(Path repositoryPath, String baseRef, boolean includeUntracked,
 			int maxFiles, int maxBytesPerFile, int port) {
+		return diffWorktree(repositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile, port,
+				DEFAULT_MAX_AST_DIFFS, DEFAULT_MAX_ACTIONS_PER_AST_DIFF);
+	}
+
+	public McpDiffBrowserResult diffWorktree(Path repositoryPath, String baseRef, boolean includeUntracked,
+			int maxFiles, int maxBytesPerFile, int port, int maxAstDiffs, int maxActionsPerAstDiff) {
 		String resolvedBaseRef = baseRef == null || baseRef.isBlank() ? "HEAD" : baseRef;
 		Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
 		String inputSummary = "Worktree changes in " + resolvedRepositoryPath + " against " + resolvedBaseRef + ".";
+		McpDiffBrowserResult invalidAstLimits = validateDiffAstLimits(maxAstDiffs, maxActionsPerAstDiff, port,
+				inputSummary);
+		if (invalidAstLimits != null) {
+			return invalidAstLimits;
+		}
 		try {
 			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
 					.collect(resolvedRepositoryPath, resolvedBaseRef, includeUntracked, maxFiles, maxBytesPerFile);
 			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
-			return launchDiffBrowser(diff, port, inputSummary, changes.warnings());
+			return launchDiffBrowser(diff, port, inputSummary, changes.warnings(), maxAstDiffs,
+					maxActionsPerAstDiff);
 		} catch (Exception e) {
 			return McpDiffBrowserResult.error("Worktree diff browser failed: " + e.getMessage(), port,
 					inputSummary, List.of(e.getClass().getName()));
@@ -394,6 +466,12 @@ public class RefactoringMinerMcpService {
 	}
 
 	public McpDiffBrowserResult diffCommit(Path repositoryPath, String commitId, Integer parentIndex, int port) {
+		return diffCommit(repositoryPath, commitId, parentIndex, port, DEFAULT_MAX_AST_DIFFS,
+				DEFAULT_MAX_ACTIONS_PER_AST_DIFF);
+	}
+
+	public McpDiffBrowserResult diffCommit(Path repositoryPath, String commitId, Integer parentIndex, int port,
+			int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (commitId == null || commitId.isBlank()) {
 			return McpDiffBrowserResult.error("commitId must be a non-empty string.", port, "Commit diff",
 					List.of("commitId is required."));
@@ -406,12 +484,17 @@ public class RefactoringMinerMcpService {
 
 		String inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, repositoryPath,
 				resolvedParentIndex);
+		McpDiffBrowserResult invalidAstLimits = validateDiffAstLimits(maxAstDiffs, maxActionsPerAstDiff, port,
+				inputSummary);
+		if (invalidAstLimits != null) {
+			return invalidAstLimits;
+		}
 		try {
 			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
 			inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, resolvedRepositoryPath,
 					resolvedParentIndex);
 			ProjectASTDiff diff = diffCommit(resolvedRepositoryPath, commitId, resolvedParentIndex, 300);
-			return launchDiffBrowser(diff, port, inputSummary, List.of());
+			return launchDiffBrowser(diff, port, inputSummary, List.of(), maxAstDiffs, maxActionsPerAstDiff);
 		} catch (Exception e) {
 			return McpDiffBrowserResult.error("Commit diff browser failed: " + e.getMessage(), port, inputSummary,
 					List.of(e.getClass().getName()));
@@ -419,6 +502,12 @@ public class RefactoringMinerMcpService {
 	}
 
 	public McpDiffBrowserResult diffPullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds, int port) {
+		return diffPullRequest(cloneUrl, pullRequestId, timeoutSeconds, port, DEFAULT_MAX_AST_DIFFS,
+				DEFAULT_MAX_ACTIONS_PER_AST_DIFF);
+	}
+
+	public McpDiffBrowserResult diffPullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds, int port,
+			int maxAstDiffs, int maxActionsPerAstDiff) {
 		if (pullRequestId <= 0) {
 			return McpDiffBrowserResult.error("pullRequestId must be greater than 0.", port, "Pull-request diff",
 					List.of("pullRequestId=" + pullRequestId));
@@ -429,6 +518,11 @@ public class RefactoringMinerMcpService {
 		}
 
 		String inputSummary = "Pull request #" + pullRequestId + ".";
+		McpDiffBrowserResult invalidAstLimits = validateDiffAstLimits(maxAstDiffs, maxActionsPerAstDiff, port,
+				inputSummary);
+		if (invalidAstLimits != null) {
+			return invalidAstLimits;
+		}
 		String resolvedCloneUrl;
 		try {
 			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
@@ -440,7 +534,7 @@ public class RefactoringMinerMcpService {
 		inputSummary = String.format("Pull request #%d in %s.", pullRequestId, resolvedCloneUrl);
 		try {
 			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
-			return launchDiffBrowser(diff, port, inputSummary, List.of());
+			return launchDiffBrowser(diff, port, inputSummary, List.of(), maxAstDiffs, maxActionsPerAstDiff);
 		} catch (Exception e) {
 			return McpDiffBrowserResult.error("Pull-request diff browser failed: " + e.getMessage(), port,
 					inputSummary, List.of(e.getClass().getName()));
@@ -560,21 +654,53 @@ public class RefactoringMinerMcpService {
 		return realPath;
 	}
 
-	private static McpAnalysisResult toResult(ProjectASTDiff diff, int maxRefactorings, String label) {
+	private static McpAnalysisResult toResult(ProjectASTDiff diff, int maxRefactorings, int maxAstDiffs,
+			int maxActionsPerAstDiff, String label) {
 		if (diff == null) {
 			return McpAnalysisResult.error(label + " analysis did not produce a diff.",
 					List.of("RefactoringMiner returned null."));
 		}
-		return McpAnalysisResult.ok(diff, maxRefactorings);
+		return McpAnalysisResult.ok(diff, maxRefactorings, maxAstDiffs, maxActionsPerAstDiff);
+	}
+
+	private static McpAnalysisResult validateAstDiffLimits(int maxAstDiffs, int maxActionsPerAstDiff) {
+		if (maxAstDiffs < 0) {
+			return McpAnalysisResult.error("maxAstDiffs must be greater than or equal to 0.",
+					List.of("maxAstDiffs=" + maxAstDiffs));
+		}
+		if (maxActionsPerAstDiff < 0) {
+			return McpAnalysisResult.error("maxActionsPerAstDiff must be greater than or equal to 0.",
+					List.of("maxActionsPerAstDiff=" + maxActionsPerAstDiff));
+		}
+		return null;
 	}
 
 	private McpDiffBrowserResult launchDiffBrowser(ProjectASTDiff diff, int port, String inputSummary,
 			List<String> warnings) throws Exception {
+		return launchDiffBrowser(diff, port, inputSummary, warnings, DEFAULT_MAX_AST_DIFFS,
+				DEFAULT_MAX_ACTIONS_PER_AST_DIFF);
+	}
+
+	private McpDiffBrowserResult launchDiffBrowser(ProjectASTDiff diff, int port, String inputSummary,
+			List<String> warnings, int maxAstDiffs, int maxActionsPerAstDiff) throws Exception {
 		if (diff == null) {
 			return McpDiffBrowserResult.error("Analysis did not produce a diff.", port, inputSummary,
 					List.of("RefactoringMiner returned null."));
 		}
-		return diffBrowserLauncher.launch(diff, port, inputSummary, warnings);
+		return diffBrowserLauncher.launch(diff, port, inputSummary, warnings, maxAstDiffs, maxActionsPerAstDiff);
+	}
+
+	private static McpDiffBrowserResult validateDiffAstLimits(int maxAstDiffs, int maxActionsPerAstDiff, int port,
+			String inputSummary) {
+		if (maxAstDiffs < 0) {
+			return McpDiffBrowserResult.error("maxAstDiffs must be greater than or equal to 0.", port,
+					inputSummary, List.of("maxAstDiffs=" + maxAstDiffs));
+		}
+		if (maxActionsPerAstDiff < 0) {
+			return McpDiffBrowserResult.error("maxActionsPerAstDiff must be greater than or equal to 0.", port,
+					inputSummary, List.of("maxActionsPerAstDiff=" + maxActionsPerAstDiff));
+		}
+		return null;
 	}
 
 	private static void validateFileContentBounds(Map<String, String> beforeFiles, Map<String, String> afterFiles,

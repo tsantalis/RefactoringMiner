@@ -38,7 +38,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 
 	@Override
 	public synchronized McpDiffBrowserResult launch(ProjectASTDiff diff, int port, String inputSummary,
-			List<String> warnings) throws Exception {
+			List<String> warnings, int maxAstDiffs, int maxActionsPerAstDiff) throws Exception {
 		if (diff == null) {
 			throw new IllegalArgumentException("ProjectASTDiff is required.");
 		}
@@ -64,7 +64,8 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 		activeView = view;
 		activePort = port;
-		return McpDiffBrowserResult.ok(diff, port, publicHost, inputSummary, warnings);
+		return McpDiffBrowserResult.ok(diff, port, publicHost, inputSummary, warnings, maxAstDiffs,
+				maxActionsPerAstDiff);
 	}
 
 	private void stopActiveView() {

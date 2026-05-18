@@ -6,6 +6,7 @@ public interface UMLClassMatcher {
 
 	public class MatchResult {
 		private int identicalBodyOperations;
+		private int identicalAttributeInitializers;
 		private int matchedOperations;
 		private int matchedAttributes;
 		private int matchedCompanions;
@@ -15,13 +16,14 @@ public interface UMLClassMatcher {
 		private boolean match;
 
 		public MatchResult(int matchedOperations, int matchedAttributes,
-				int identicalBodyOperations,
+				int identicalBodyOperations, int identicalAttributeInitializers,
 				int totalOperations, int totalAttributes,
 				int matchedCompanions, int totalCompanions,
 				boolean match) {
 			this.matchedOperations = matchedOperations;
 			this.matchedAttributes = matchedAttributes;
 			this.identicalBodyOperations = identicalBodyOperations;
+			this.identicalAttributeInitializers = identicalAttributeInitializers;
 			this.totalOperations = totalOperations;
 			this.totalAttributes = totalAttributes;
 			this.matchedCompanions = matchedCompanions;
@@ -29,8 +31,17 @@ public interface UMLClassMatcher {
 			this.match = match;
 		}
 
+		public boolean isPerfect() {
+			return matchedAttributes > 0 && matchedOperations > 0 &&
+					matchedAttributes == identicalAttributeInitializers && matchedOperations == identicalBodyOperations;
+		}
+
 		public int getIdenticalBodyOperations() {
 			return identicalBodyOperations;
+		}
+
+		public int getIdenticalAttributeInitializers() {
+			return identicalAttributeInitializers;
 		}
 
 		public int getMatchedOperations() {

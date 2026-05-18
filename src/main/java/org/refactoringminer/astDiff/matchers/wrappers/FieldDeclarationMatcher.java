@@ -133,6 +133,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if((srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) ||
                 (srcAttr.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstAttr.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION)) ||
+                (srcAttr.getType().name.equals(LANG1.SHORTHAND_PROPERTY_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.SHORTHAND_PROPERTY_IDENTIFIER)) ||
+                (srcAttr.getType().name.equals(LANG1.PAIR) && dstAttr.getType().name.equals(LANG2.PAIR)) ||
                 (srcAttr.getType().name.equals(LANG1.ENUM_ASSIGNMENT) && dstAttr.getType().name.equals(LANG2.ENUM_ASSIGNMENT))) {
             if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
                 int index1 = srcAttr.getParent().getChildPosition(srcAttr);

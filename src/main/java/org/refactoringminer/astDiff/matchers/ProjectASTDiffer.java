@@ -177,6 +177,7 @@ public class ProjectASTDiffer
 			else {
 				projectASTDiff.addASTDiff(classASTDiff);
 			}
+			makeASTDiff(classDiff.getNestedClassDiffList(), mergeFlag);
 		}
 	}
 

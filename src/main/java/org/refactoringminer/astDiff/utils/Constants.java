@@ -441,4 +441,7 @@ public class Constants {
     public final String AMBIENT_DECLARATION = "ambient_declaration";
     public final String DECLARE_KEYWORD = "declare";
     public final String GENERATOR_FUNCTION_DECLARATION = "generator_function_declaration";
+    public final String OBJECT = "object";
+    public final String SHORTHAND_PROPERTY_IDENTIFIER = "shorthand_property_identifier";
+    public final String PAIR = "pair";
 }

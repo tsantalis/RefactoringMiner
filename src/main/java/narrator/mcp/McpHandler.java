@@ -74,10 +74,10 @@ public class McpHandler {
                 "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Start reading the narrative for a cluster. Returns the first chapter. Returns the first chapter with a progress indicator showing [Chapter X of Y]. After reading each chapter, call get_next_cluster_chapter to continue. Keep calling get_next_cluster_chapter until you see [End of Narrative] in the output, which means all chapters have been read. Do NOT stop early—each chapter contains essential information.",
+                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. Please describe the content of the current chapter before calling get_next_cluster_chapter to proceed.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. If you see [End of Narrative], all chapters are complete and you can proceed to explain the cluster. If you see chapter progress WITHOUT [End of Narrative] and remaining chapters listed, you MUST call this tool again until [End of Narrative] appears. Missing even one chapter is a critical error.",
+                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. Please describe the content of the current chapter, then call this tool again if chapters remain, until you reach [End of Narrative].",
                 "url", "clusterIndex"));
         result.add("tools", tools);
         response.add("result", result);
@@ -291,9 +291,9 @@ public class McpHandler {
         
         if (!isLastChapter) {
             int remaining = totalChapters - currentChapter;
-            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Call get_next_cluster_chapter to read the next chapter.");
+            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then call get_next_cluster_chapter for the next part.");
         } else {
-            output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your explanation of the cluster.");
+            output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your final synthesis and explanation of the cluster.");
         }
         
         return output.toString();

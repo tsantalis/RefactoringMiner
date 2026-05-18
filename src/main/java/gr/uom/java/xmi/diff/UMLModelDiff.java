@@ -1603,17 +1603,17 @@ public class UMLModelDiff {
 			if(identicalAnonymousDeclarationDiffSet.size() == 1) {
 				return identicalAnonymousDeclarationDiffSet;
 			}
-			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> entry = identicalMethodMap.lastEntry();
+			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> entry = identicalCompanionMap.lastEntry();
+			if(entry != null && entry.getKey() > 0 && identicalCompanionMap.firstEntry().getKey() == 0 && entry.getValue().size() == 1) {
+				return entry.getValue();
+			}
+			entry = identicalMethodMap.lastEntry();
 			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> firstEntry = identicalMethodMap.firstEntry();
 			if(entry != null && entry.getKey() > 0 && firstEntry.getKey() == 0 && entry.getValue().size() == 1) {
 				return entry.getValue();
 			}
 			entry = matchingStatementMap.lastEntry();
 			if(entry != null && entry.getKey() > 0 && entry.getValue().size() == 1) {
-				return entry.getValue();
-			}
-			entry = identicalCompanionMap.lastEntry();
-			if(entry != null && entry.getKey() > 0 && identicalCompanionMap.firstEntry().getKey() == 0 && entry.getValue().size() == 1) {
 				return entry.getValue();
 			}
 		}

@@ -3,7 +3,10 @@ package narrator.graph.cluster.traverse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
@@ -84,6 +87,9 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        return "Usage of " + useNode.mapping(cluster);
+        List<Node> semanticContexts = Context.get(cluster.getGraph(), useNode).stream()
+                .filter(n -> n.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
+                .toList();
+        return "Usage of " + useNode.mapping(cluster) + " (Containers: " + semanticContexts.size() + ")";
     }
 }

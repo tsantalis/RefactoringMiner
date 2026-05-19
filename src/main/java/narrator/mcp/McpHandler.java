@@ -23,6 +23,7 @@ public class McpHandler {
     private static final Logger logger = LoggerFactory.getLogger(McpHandler.class);
     private static final CacheManager cacheManager = new CacheManager();
     private final Map<String, Integer> clusterProgress = new ConcurrentHashMap<>();
+    private final Map<String, Integer> containerLevels = new ConcurrentHashMap<>();
 
     public JsonObject handle(JsonObject request) {
         logger.debug("Handling MCP request: {}", request);
@@ -79,6 +80,9 @@ public class McpHandler {
         tools.add(createToolDefinition("get_next_cluster_chapter",
                 "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "clusterIndex"));
+        tools.add(createToolDefinition("get_container",
+                "Get a larger container for a specific chapter in a cluster to have better visibility about its role within the surrounding code. Each call returns the next larger semantic container.",
+                "url", "clusterIndex", "chapterIndex"));
         result.add("tools", tools);
         response.add("result", result);
     }
@@ -198,6 +202,8 @@ public class McpHandler {
             int nextIndex = clusterProgress.getOrDefault(stateKey, 0);
             clusterProgress.put(stateKey, nextIndex + 1);
             return narrateClusterChapter(url, clusterIndex, nextIndex + 1);
+        } else if ("get_container".equals(toolName)) {
+            return fetchContainer(url, arguments);
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
@@ -249,10 +255,61 @@ public class McpHandler {
         }
     }
 
-    private String fetchClusterCount(String url) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        int count = clusters.size();
-        return count == 0 ? "No clusters found." : "Available clusters: 1-" + count;
+    private String fetchContainer(String url, JsonObject arguments) throws Exception {
+        if (!arguments.has("clusterIndex") || !arguments.has("chapterIndex")) {
+            throw new IllegalArgumentException("Missing required arguments: clusterIndex, chapterIndex");
+        }
+
+        int clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
+        int chapterIndex = Integer.parseInt(arguments.get("chapterIndex").getAsString()) - 1;
+        
+        String stateKey = url + ":" + clusterIndex + ":" + chapterIndex;
+        int currentLevel = containerLevels.getOrDefault(stateKey, 0) + 1;
+        containerLevels.put(stateKey, currentLevel);
+
+        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(url);
+        if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
+            throw new IllegalArgumentException("Cluster index out of range");
+        }
+
+        List<TraversalPattern> components = hierarchy.get(clusterIndex);
+        List<Leaf> leaves = new Narrator().narrate(components);
+        if (chapterIndex < 0 || chapterIndex >= leaves.size()) {
+            throw new IllegalArgumentException("Chapter index out of range");
+        }
+
+        Leaf leaf = leaves.get(chapterIndex);
+        Node leadNode = null;
+        if (leaf instanceof SuccessivePattern) {
+            leadNode = ((SuccessivePattern) leaf).getLead();
+        } else if (leaf instanceof SingularPattern) {
+            leadNode = ((SingularPattern) leaf).getLead();
+        } else if (leaf instanceof UsagePattern) {
+            leadNode = ((UsagePattern) leaf).getLead();
+        }
+        
+        if (leadNode == null) {
+            throw new IllegalArgumentException("Could not resolve lead node for chapter");
+        }
+
+        Graph<Node, Edge> graph = loadGraph(url);
+        Node current = leadNode;
+        int semanticCount = 0;
+        
+        while (current != null && semanticCount < currentLevel) {
+            var contextEdge = graph.outgoingEdgesOf(current).stream()
+                    .filter(e -> e.getType().equals(EdgeType.CONTEXT))
+                    .findFirst();
+            
+            if (contextEdge.isEmpty()) break;
+            
+            current = graph.getEdgeTarget(contextEdge.get());
+            if (current.getNodeType().equals(NodeType.SEMANTIC_CONTEXT)) {
+                semanticCount++;
+            }
+        }
+
+        return current == null ? "No more containers available" : "Container level " + currentLevel + ":\n" + current.getContent();
     }
 
     private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {

@@ -2,6 +2,8 @@ package narrator.graph.cluster.traverse;
 
 import com.google.gson.JsonObject;
 import java.util.List;
+import java.util.stream.Collectors;
+import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
@@ -43,7 +45,10 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
     @Override
     public String base(Cluster cluster) {
         Node head = getHead();
-        return "Succession starting at " + head.mapping(cluster);
+        List<Node> semanticContexts = Context.get(cluster.getGraph(), head).stream()
+                .filter(n -> n.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
+                .toList();
+        return "Succession starting at " + head.mapping(cluster) + " (Containers: " + semanticContexts.size() + ")";
     }
 
     @Override

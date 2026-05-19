@@ -332,15 +332,15 @@ public class Node {
     if (!thisContextString.equals(altContextString)) {
       if (!(thisContextString.endsWith(this.getContent()) && altContextString.endsWith(
           alt.getContent()))) {
-        operations.add("MOVE");
+        operations.add("Move");
       }
     }
     if (!this.getContent().equals(alt.getContent())) {
-      operations.add("CHANGE");
+      operations.add("Change");
     }
 
     if (operations.isEmpty()) {
-      operations.add("MOVE");
+      operations.add("Move");
     }
 
     return operations;
@@ -363,11 +363,12 @@ public class Node {
       return type;
     }
 
+    List<String> upperCaseOperations = operations.stream().map(String::toUpperCase).toList();
     if (!this.getMappingSources(cluster).isEmpty()) {
-      return "AFTER_" + String.join("_AND_", operations);
+      return "AFTER_" + String.join("_AND_", upperCaseOperations);
     }
     if (!this.getMappingTargets(cluster).isEmpty()) {
-      return "BEFORE_" + String.join("_AND_", operations);
+      return "BEFORE_" + String.join("_AND_", upperCaseOperations);
     }
     return type;
   }
@@ -396,6 +397,46 @@ public class Node {
       }
     }
     return sb.toString();
+  }
+
+  public String mapping(Cluster cluster) {
+    String basePrompt = base(cluster);
+
+    List<Node> sources = getMappingSources(cluster);
+    List<Node> targets = getMappingTargets(cluster);
+
+    if (sources.isEmpty() && targets.isEmpty()) {
+      return basePrompt;
+    }
+
+    List<String> operations = getOperations(cluster);
+
+    if (!sources.isEmpty()) {
+      List<String> sourcePrompts = new ArrayList<>();
+      for (Node source : sources) {
+        sourcePrompts.add(source.base(cluster));
+      }
+      String sourcePrompt = String.join("\n", sourcePrompts);
+      return sourcePrompt
+          + "\n\n"
+          + operations.stream().map(op -> op + "d")
+          .collect(java.util.stream.Collectors.joining(" and "))
+          + " to:\n\n"
+          + basePrompt;
+    }
+
+    // targets.length > 0
+    List<String> targetPrompts = new ArrayList<>();
+    for (Node target : targets) {
+      targetPrompts.add(target.base(cluster));
+    }
+    String targetPrompt = String.join("\n", targetPrompts);
+    return basePrompt
+        + "\n\n"
+        + operations.stream().map(op -> op + "d")
+        .collect(java.util.stream.Collectors.joining(" and "))
+        + " to:\n\n"
+        + targetPrompt;
   }
 
   public List<Node> getMappingSources(Cluster cluster) {

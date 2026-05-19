@@ -25,6 +25,6 @@ public class SingularPattern extends TraversalPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        return node.base(cluster);
+        return node.mapping(cluster);
     }
 }

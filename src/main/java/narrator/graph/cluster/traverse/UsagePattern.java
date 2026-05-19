@@ -84,6 +84,6 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        return "Usage of " + useNode.base(cluster);
+        return "Usage of " + useNode.mapping(cluster);
     }
 }

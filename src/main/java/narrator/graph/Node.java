@@ -162,6 +162,37 @@ public class Node {
     return fileContent.substring(tree.getPos(), tree.getEndPos());
   }
 
+  public String normalizeContent() {
+    String content = getContent();
+    if (content == null || !content.contains("\n")) {
+      return content;
+    }
+
+    if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
+      return content;
+    }
+
+    int lineStart = fileContent.lastIndexOf('\n', tree.getPos() - 1);
+    String baseIndent = (lineStart == -1)
+        ? fileContent.substring(0, tree.getPos())
+        : fileContent.substring(lineStart + 1, tree.getPos());
+
+    String[] lines = content.split("\n", -1);
+    StringBuilder sb = new StringBuilder();
+    sb.append(lines[0]);
+
+    for (int i = 1; i < lines.length; i++) {
+      sb.append("\n");
+      String line = lines[i];
+      if (line.startsWith(baseIndent)) {
+        sb.append(line.substring(baseIndent.length()));
+      } else {
+        sb.append(line);
+      }
+    }
+    return sb.toString();
+  }
+
   public String getFileContent() {
     return fileContent;
   }
@@ -279,7 +310,7 @@ public class Node {
     if (!contextString.isEmpty()) {
       basePrompt += ", location: " + contextString;
     }
-    basePrompt += " }\n" + this.getContent();
+    basePrompt += " }\n" + this.normalizeContent();
 
     return basePrompt;
   }
@@ -307,7 +338,7 @@ public class Node {
     if (!this.getContent().equals(alt.getContent())) {
       operations.add("CHANGE");
     }
-    
+
     if (operations.isEmpty()) {
       operations.add("MOVE");
     }
@@ -359,7 +390,7 @@ public class Node {
         for (int i = 2; i < locationContexts.size(); i++) {
           Node n = locationContexts.get(i);
           String prefix =
-              n.getTree().getType().name.equals(this.getConstants().SIMPLE_NAME) ? "#" : ".";
+              n.getTree().getType().name.equals(this.getConstants().METHOD_DECLARATION) ? "#" : ".";
           sb.append(prefix).append(n.getContent());
         }
       }

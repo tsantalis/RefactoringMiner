@@ -41,9 +41,9 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
     }
 
     @Override
-    public String textualRepresentation(Cluster cluster) {
+    public String base(Cluster cluster) {
         Node head = getHead();
-        return "Succession starting at " + head.textualRepresentation(cluster);
+        return "Succession starting at " + head.base(cluster);
     }
 
     @Override

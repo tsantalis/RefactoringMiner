@@ -283,7 +283,7 @@ public class McpHandler {
         boolean isLastChapter = (currentChapter == totalChapters);
         
         List<Cluster> clusters = getOrComputeClusters(url);
-        String chapterContent = leaves.get(chapterIndex).textualRepresentation(clusters.get(clusterIndex));
+        String chapterContent = leaves.get(chapterIndex).base(clusters.get(clusterIndex));
         
         StringBuilder output = new StringBuilder();
         output.append(chapterContent);

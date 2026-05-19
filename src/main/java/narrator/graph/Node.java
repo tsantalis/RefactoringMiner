@@ -1,10 +1,15 @@
 package narrator.graph;
 
+import static narrator.graph.NodeType.ADDITION;
+import static narrator.graph.NodeType.DELETION;
+import static narrator.graph.NodeType.EXTENSION;
+
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +20,9 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 public class Node {
+
+  private static final java.util.Random RANDOM = new java.util.Random();
+  private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
   private final String id;
   private final String promptId;
@@ -54,11 +62,9 @@ public class Node {
   }
 
   private String generateShortId() {
-    String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    java.util.Random random = new java.util.Random();
     StringBuilder sb = new StringBuilder(4);
     for (int i = 0; i < 4; i++) {
-      sb.append(alphabet.charAt(random.nextInt(alphabet.length())));
+      sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
     }
     return sb.toString();
   }
@@ -91,86 +97,6 @@ public class Node {
         .contains(node.getTree());
   }
 
-  public JsonObject stringify() {
-    JsonObject nodeObj = new JsonObject();
-
-    nodeObj.addProperty("id", id);
-    nodeObj.addProperty("path", path);
-    nodeObj.addProperty("srcDst", this.srcDst.name());
-    nodeObj.addProperty("content", getContent());
-    nodeObj.addProperty("nodeType", nodeType.name());
-    nodeObj.addProperty("treeType", tree.getType().name);
-
-    List<String> descendantSimpleNames = getDescendantSimpleNames();
-    JsonArray descendantSimpleNamesArr = new JsonArray();
-    for (String descendantSimpleName : descendantSimpleNames) {
-      descendantSimpleNamesArr.add(descendantSimpleName);
-    }
-    nodeObj.add("descendantSimpleNames", descendantSimpleNamesArr);
-
-    if (!identifiers.isEmpty()) {
-      JsonArray identifiersArr = new JsonArray();
-      for (String identifier : identifiers) {
-        identifiersArr.add(identifier);
-      }
-
-      nodeObj.add("identifiers", identifiersArr);
-    }
-
-    Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(
-        this.tree,
-        this.fileContent);
-    Pair<Integer, Integer> startLineRange = lineRange.first;
-    nodeObj.addProperty("startLine", startLineRange.first);
-    nodeObj.addProperty("startLineOffset", startLineRange.second);
-    Pair<Integer, Integer> endLineRange = lineRange.second;
-    nodeObj.addProperty("endLine", endLineRange.first);
-    nodeObj.addProperty("endLineOffset", endLineRange.second);
-    nodeObj.addProperty("length", this.tree.getEndPos() - this.tree.getPos() + 1);
-
-    if (moveTrees != null) {
-      JsonArray movesArr = new JsonArray();
-      for (Tree move : moveTrees) {
-        JsonObject moveObj = new JsonObject();
-
-        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> dstLineRange =
-            TreeUtilFunctions.getLineRange(move, this.fileContent);
-        Pair<Integer, Integer> startDstRange = dstLineRange.first;
-        moveObj.addProperty("startLine", startDstRange.first);
-        moveObj.addProperty("startLineOffset", startDstRange.second);
-        Pair<Integer, Integer> endDstRange = dstLineRange.second;
-        moveObj.addProperty("endLine", endDstRange.first);
-        moveObj.addProperty("endLineOffset", endDstRange.second);
-        moveObj.addProperty("length", move.getEndPos() - move.getPos() + 1);
-
-        movesArr.add(moveObj);
-      }
-      nodeObj.add("moves", movesArr);
-    }
-
-    if (subTrees != null) {
-      JsonArray subsArr = new JsonArray();
-      for (Tree subTree : subTrees) {
-        JsonObject exceptionObj = new JsonObject();
-
-        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> exceptionLineRange =
-            TreeUtilFunctions.getLineRange(subTree, this.fileContent);
-        Pair<Integer, Integer> startExceptionRange = exceptionLineRange.first;
-        exceptionObj.addProperty("startLine", startExceptionRange.first);
-        exceptionObj.addProperty("startLineOffset", startExceptionRange.second);
-        Pair<Integer, Integer> endExceptionRange = exceptionLineRange.second;
-        exceptionObj.addProperty("endLine", endExceptionRange.first);
-        exceptionObj.addProperty("endLineOffset", endExceptionRange.second);
-        exceptionObj.addProperty("length", subTree.getEndPos() - subTree.getPos() + 1);
-
-        subsArr.add(exceptionObj);
-      }
-      nodeObj.add("subs", subsArr);
-    }
-
-    return nodeObj;
-  }
-
   public void addIdentifier(String identifier) {
     this.identifiers.add(identifier);
   }
@@ -183,68 +109,22 @@ public class Node {
     return id;
   }
 
-  private java.util.List<String> getOperations(Cluster cluster) {
-    java.util.List<String> operations = new java.util.ArrayList<>();
-    if (cluster == null) {
-      return operations;
-    }
+  public String getPromptId() {
+    return promptId;
+  }
 
-    java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
-    java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
-
-    narrator.graph.Node alt = null;
-    if (allEdgesOut != null) {
-      for (narrator.graph.Edge edge : allEdgesOut) {
-        if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-          alt = cluster.getGraph().getEdgeTarget(edge);
-          break;
-        }
-      }
-    }
-    if (alt == null && allEdgesIn != null) {
-      for (narrator.graph.Edge edge : allEdgesIn) {
-        if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-          alt = cluster.getGraph().getEdgeSource(edge);
-          break;
-        }
-      }
-    }
-
-    if (alt != null) {
-      String thisContext = this.path;
-      String altContext = alt.path;
-      String thisContent = this.getContent();
-      String altContent = alt.getContent();
-
-      if (!java.util.Objects.equals(thisContext, altContext)) {
-        if (!(altContext.endsWith(altContent) && thisContext.endsWith(thisContent))) {
-          operations.add("MOVE");
-        }
-      }
-      if (!java.util.Objects.equals(thisContent, altContent)) {
-        operations.add("CHANGE");
-      }
-
-      if (operations.isEmpty()) {
-        operations.add("MOVE");
-      }
-    }
-
-    return operations;
+  public boolean isExtension() {
+    return nodeType.equals(EXTENSION);
   }
 
   public boolean isBase() {
-    return nodeType.equals(NodeType.DELETION) || nodeType.equals(NodeType.SRC_MOVE)
-        || nodeType.equals(NodeType.ADDITION) || nodeType.equals(NodeType.DST_MOVE);
+    return nodeType.equals(DELETION) || nodeType.equals(NodeType.SRC_MOVE)
+        || nodeType.equals(ADDITION) || nodeType.equals(NodeType.DST_MOVE);
   }
 
   public boolean isContext() {
     return nodeType.equals(NodeType.LOCATION_CONTEXT) || nodeType.equals(
         NodeType.SEMANTIC_CONTEXT);
-  }
-
-  public boolean isExtension() {
-    return nodeType.equals(NodeType.EXTENSION);
   }
 
   public Tree getTree() {
@@ -290,86 +170,8 @@ public class Node {
     return path;
   }
 
-  public String textualRepresentation(Cluster cluster) {
-    String basePrompt = "";
-
-    basePrompt += "{ id: " + this.promptId;
-
-    // TODO: find a way to support other types (is it really needed?)
-    String validNodeType = nodeType.name();
-    validNodeType = switch (nodeType) {
-      case EXTENSION -> "UNCHANGED";
-      case DELETION -> "DELETED";
-      case ADDITION -> "ADDED";
-      default -> validNodeType;
-    };
-
-    java.util.Set<narrator.graph.Node> vertices = cluster.getGraph().vertexSet();
-    if (vertices.contains(this)) {
-      java.util.List<narrator.graph.Edge> sourceEdges = new java.util.ArrayList<>();
-      java.util.Set<narrator.graph.Edge> allEdgesOut = cluster.getGraph().outgoingEdgesOf(this);
-      if (allEdgesOut != null) {
-        for (narrator.graph.Edge edge : allEdgesOut) {
-          if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-            sourceEdges.add(edge);
-          }
-        }
-      }
-
-      java.util.Set<narrator.graph.Edge> allEdgesIn = cluster.getGraph().incomingEdgesOf(this);
-      boolean hasTargets = false;
-      if (allEdgesIn != null) {
-        for (narrator.graph.Edge edge : allEdgesIn) {
-          if (edge.getType() == narrator.graph.EdgeType.MAPPING) {
-            hasTargets = true;
-            break;
-          }
-        }
-      }
-
-      java.util.List<String> operations = getOperations(cluster);
-
-      if (!sourceEdges.isEmpty()) {
-        validNodeType = "AFTER_" + String.join("_AND_", operations);
-      }
-      if (hasTargets) {
-        validNodeType = "BEFORE_" + String.join("_AND_", operations);
-      }
-    }
-
-    basePrompt += ", type: " + validNodeType;
-
-    java.util.List<Node> contexts = Context.get(cluster.getGraph(), this);
-    java.util.List<Node> locationNodes = new java.util.ArrayList<>();
-    for (Node contextNode : contexts) {
-      if (contextNode.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
-        locationNodes.add(contextNode);
-      }
-    }
-    java.util.Collections.reverse(locationNodes);
-
-    StringBuilder sb = new StringBuilder();
-    if (!locationNodes.isEmpty()) {
-      sb.append(locationNodes.get(0).getContent());
-      if (locationNodes.size() > 1) {
-        sb.append("::").append(locationNodes.get(1).getContent());
-        for (int i = 2; i < locationNodes.size(); i++) {
-          Node node = locationNodes.get(i);
-          String prefix =
-              node.getTree().getType().name.equals(constants.METHOD_DECLARATION) ? "#" : ".";
-          sb.append(prefix).append(node.getContent());
-        }
-      }
-    }
-    String contextString = sb.toString();
-    String normalizedContent = getContent();
-    if (contextString != null && !contextString.isEmpty()) {
-      basePrompt += ", location: " + contextString;
-    }
-    basePrompt += " }\n";
-    basePrompt += normalizedContent;
-
-    return basePrompt;
+  public Constants getConstants() {
+    return constants;
   }
 
   public Tree getRight() {
@@ -378,7 +180,7 @@ public class Node {
       return null;
     }
 
-    List<Tree> parentChildren = tree.getParent().getChildren();
+    List<Tree> parentChildren = parent.getChildren();
 
     int nodeIndex = -1;
     for (int i = 0; i < parentChildren.size(); i++) {
@@ -391,7 +193,193 @@ public class Node {
     return nodeIndex < parentChildren.size() - 1 ? parentChildren.get(nodeIndex + 1) : null;
   }
 
-  private List<String> getDescendantSimpleNames() {
+  public JsonObject stringify() {
+    JsonObject nodeObj = new JsonObject();
+
+    nodeObj.addProperty("id", this.getId());
+    nodeObj.addProperty("path", this.getPath());
+    nodeObj.addProperty("srcDst", this.getSrcDst().name());
+    nodeObj.addProperty("content", this.getContent());
+    nodeObj.addProperty("nodeType", this.getNodeType().name());
+    nodeObj.addProperty("treeType", this.getTree().getType().name);
+
+    List<String> descendantSimpleNames = this.getDescendantSimpleNames();
+    JsonArray descendantSimpleNamesArr = new JsonArray();
+    for (String descendantSimpleName : descendantSimpleNames) {
+      descendantSimpleNamesArr.add(descendantSimpleName);
+    }
+    nodeObj.add("descendantSimpleNames", descendantSimpleNamesArr);
+
+    if (!this.getIdentifiers().isEmpty()) {
+      JsonArray identifiersArr = new JsonArray();
+      for (String identifier : this.getIdentifiers()) {
+        identifiersArr.add(identifier);
+      }
+
+      nodeObj.add("identifiers", identifiersArr);
+    }
+
+    Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(
+        this.getTree(),
+        this.getFileContent());
+    Pair<Integer, Integer> startLineRange = lineRange.first;
+    nodeObj.addProperty("startLine", startLineRange.first);
+    nodeObj.addProperty("startLineOffset", startLineRange.second);
+    Pair<Integer, Integer> endLineRange = lineRange.second;
+    nodeObj.addProperty("endLine", endLineRange.first);
+    nodeObj.addProperty("endLineOffset", endLineRange.second);
+    nodeObj.addProperty("length", this.getTree().getEndPos() - this.getTree().getPos() + 1);
+
+    if (this.getMoveTrees() != null) {
+      JsonArray movesArr = new JsonArray();
+      for (com.github.gumtreediff.tree.Tree move : this.getMoveTrees()) {
+        JsonObject moveObj = new JsonObject();
+
+        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> dstLineRange =
+            TreeUtilFunctions.getLineRange(move, this.getFileContent());
+        Pair<Integer, Integer> startDstRange = dstLineRange.first;
+        moveObj.addProperty("startLine", startDstRange.first);
+        moveObj.addProperty("startLineOffset", startDstRange.second);
+        Pair<Integer, Integer> endDstRange = dstLineRange.second;
+        moveObj.addProperty("endLine", endDstRange.first);
+        moveObj.addProperty("endLineOffset", endDstRange.second);
+        moveObj.addProperty("length", move.getEndPos() - move.getPos() + 1);
+
+        movesArr.add(moveObj);
+      }
+      nodeObj.add("moves", movesArr);
+    }
+
+    if (this.getSubTrees() != null) {
+      JsonArray subsArr = new JsonArray();
+      for (com.github.gumtreediff.tree.Tree subTree : this.getSubTrees()) {
+        JsonObject exceptionObj = new JsonObject();
+
+        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> exceptionLineRange =
+            TreeUtilFunctions.getLineRange(subTree, this.getFileContent());
+        Pair<Integer, Integer> startExceptionRange = exceptionLineRange.first;
+        exceptionObj.addProperty("startLine", startExceptionRange.first);
+        exceptionObj.addProperty("startLineOffset", startExceptionRange.second);
+        Pair<Integer, Integer> endExceptionRange = exceptionLineRange.second;
+        exceptionObj.addProperty("endLine", endExceptionRange.first);
+        exceptionObj.addProperty("endLineOffset", endExceptionRange.second);
+        exceptionObj.addProperty("length", subTree.getEndPos() - subTree.getPos() + 1);
+
+        subsArr.add(exceptionObj);
+      }
+      nodeObj.add("subs", subsArr);
+    }
+
+    return nodeObj;
+  }
+
+  public String base(Cluster cluster) {
+    String basePrompt = "{ id: " + this.getPromptId() + ", type: " + getPromptType(cluster);
+    String contextString = getContextString(cluster);
+    if (!contextString.isEmpty()) {
+      basePrompt += ", location: " + contextString;
+    }
+    basePrompt += " }\n" + this.getContent();
+
+    return basePrompt;
+  }
+
+  private List<String> getOperations(Cluster cluster) {
+    List<String> operations = new ArrayList<>();
+
+    List<Node> alts = new ArrayList<>();
+    alts.addAll(this.getMappingSources(cluster));
+    alts.addAll(this.getMappingTargets(cluster));
+    Node alt = alts.isEmpty() ? null : alts.get(0);
+
+    if (alt == null) {
+      return operations;
+    }
+
+    String thisContextString = this.getContextString(cluster);
+    String altContextString = alt.getContextString(cluster);
+    if (!thisContextString.equals(altContextString)) {
+      if (!(thisContextString.endsWith(this.getContent()) && altContextString.endsWith(
+          alt.getContent()))) {
+        operations.add("MOVE");
+      }
+    }
+    if (!this.getContent().equals(alt.getContent())) {
+      operations.add("CHANGE");
+    }
+    
+    if (operations.isEmpty()) {
+      operations.add("MOVE");
+    }
+
+    return operations;
+  }
+
+  private String getPromptType(Cluster cluster) {
+    String type = switch (this.getNodeType()) {
+      case EXTENSION -> "UNCHANGED";
+      case DELETION -> "DELETED";
+      case ADDITION -> "ADDED";
+      default -> this.getNodeType().name();
+    };
+
+    if (!cluster.getGraph().vertexSet().contains(this)) {
+      return type;
+    }
+
+    List<String> operations = getOperations(cluster);
+    if (operations.isEmpty()) {
+      return type;
+    }
+
+    if (!this.getMappingSources(cluster).isEmpty()) {
+      return "AFTER_" + String.join("_AND_", operations);
+    }
+    if (!this.getMappingTargets(cluster).isEmpty()) {
+      return "BEFORE_" + String.join("_AND_", operations);
+    }
+    return type;
+  }
+
+  private String getContextString(Cluster cluster) {
+    List<Node> contexts = Context.get(cluster.getGraph(), this);
+    List<Node> locationContexts = new ArrayList<>();
+    for (Node contextNode : contexts) {
+      if (contextNode.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
+        locationContexts.add(contextNode);
+      }
+    }
+    Collections.reverse(locationContexts);
+
+    StringBuilder sb = new StringBuilder();
+    if (!locationContexts.isEmpty()) {
+      sb.append(locationContexts.get(0).getContent());
+      if (locationContexts.size() > 1) {
+        sb.append("::").append(locationContexts.get(1).getContent());
+        for (int i = 2; i < locationContexts.size(); i++) {
+          Node n = locationContexts.get(i);
+          String prefix =
+              n.getTree().getType().name.equals(this.getConstants().SIMPLE_NAME) ? "#" : ".";
+          sb.append(prefix).append(n.getContent());
+        }
+      }
+    }
+    return sb.toString();
+  }
+
+  public List<Node> getMappingSources(Cluster cluster) {
+    return cluster.getGraph().incomingEdgesOf(this).stream()
+        .filter(edge -> edge.getType().equals(EdgeType.MAPPING))
+        .map(edge -> cluster.getGraph().getEdgeSource(edge)).toList();
+  }
+
+  public List<Node> getMappingTargets(Cluster cluster) {
+    return cluster.getGraph().outgoingEdgesOf(this).stream()
+        .filter(edge -> edge.getType().equals(EdgeType.MAPPING))
+        .map(edge -> cluster.getGraph().getEdgeTarget(edge)).toList();
+  }
+
+  public List<String> getDescendantSimpleNames() {
     List<Tree> trees = new ArrayList<>(this.tree.getDescendants());
     trees.add(tree);
     List<Tree> simpleNameTrees = trees.stream()

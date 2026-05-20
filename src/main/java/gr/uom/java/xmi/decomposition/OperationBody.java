@@ -1835,6 +1835,10 @@ public class OperationBody {
 						umlClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
 						addToContainer(container, umlClass);
+						StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+						parent.addStatement(child);
+						addStatementInVariableScopes(child);
+						addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 						return;
 					}
 				}

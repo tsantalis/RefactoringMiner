@@ -3421,7 +3421,10 @@ public class UMLModelDiff {
 						UMLAnonymousToClassDiff diff = new UMLAnonymousToClassDiff(anonymousClass, addedClass, this);
 						diff.process();
 						List<UMLOperationBodyMapper> matchedOperationMappers = diff.getOperationBodyMapperList();
-						if(matchedOperationMappers.size() > 0) {
+						boolean allIdenticalAttributes = diff.getCommonAtrributes().size() > 0 &&
+								diff.getOriginalClass().getAttributes().size() == diff.getCommonAtrributes().size() &&
+								diff.getNextClass().getAttributes().size() == diff.getCommonAtrributes().size();
+						if(matchedOperationMappers.size() > 0 || allIdenticalAttributes) {
 							matchingDiffs.add(diff);
 						}
 					}

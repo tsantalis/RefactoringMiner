@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
+
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -57,6 +59,11 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	public AnonymousClassDeclarationObject(KtFile cu, String sourceFolder, String filePath, KtObjectDeclaration objectDeclaration) {
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, objectDeclaration, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		this.astNodeString = objectDeclaration.getText();
+	}
+
+	public AnonymousClassDeclarationObject(String sourceFolder, String filePath, Swc4jAstObjectLit objectLiteral, String fileContent) {
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, objectLiteral.getSpan(), CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
+		this.astNodeString = fileContent.substring(objectLiteral.getSpan().getStart(), objectLiteral.getSpan().getEnd());
 	}
 
 	public LocationInfo getLocationInfo() {

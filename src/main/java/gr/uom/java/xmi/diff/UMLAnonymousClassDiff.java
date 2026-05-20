@@ -129,7 +129,9 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
 			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
     		if(matchingAttribute != null) {
-    			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute, operationBodyMapperList);
+    			UMLAttributeDiff attributeDiff = classDiff != null ?
+    					new UMLAttributeDiff(attribute, matchingAttribute, classDiff, modelDiff) :
+    					new UMLAttributeDiff(attribute, matchingAttribute, operationBodyMapperList);
     			if(!attributeDiff.isEmpty()) {
     				refactorings.addAll(attributeDiff.getRefactorings());
     				if(!attributeDiffList.contains(attributeDiff)) {
@@ -153,7 +155,9 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
     		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
     		if(matchingAttribute != null) {
-    			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute, operationBodyMapperList);
+    			UMLAttributeDiff attributeDiff = classDiff != null ?
+    					new UMLAttributeDiff(matchingAttribute, attribute, classDiff, modelDiff) :
+    					new UMLAttributeDiff(matchingAttribute, attribute, operationBodyMapperList);
     			if(!attributeDiff.isEmpty()) {
     				refactorings.addAll(attributeDiff.getRefactorings());
     				if(!attributeDiffList.contains(attributeDiff)) {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
@@ -23,10 +24,14 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBool;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNull;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstTplElement;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
@@ -34,7 +39,9 @@ import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.ModuleContainer;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLOperation;
@@ -255,6 +262,91 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 			stringLiterals.add(literal);
 		}
 		return super.visitTpl(node);
+	}
+
+	public Swc4jAstVisitorResponse visitObjectLit(Swc4jAstObjectLit node) {
+		if(node.getProps().isEmpty()) {
+			return super.visitObjectLit(node);
+		}
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, node.getSpan(), CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
+		UMLAnonymousClass anonymousClass = null;
+		boolean alreadyAdded = false;
+		for(UMLAnonymousClass anonymous : container.getAnonymousClassList()) {
+			if(anonymous.getLocationInfo().equals(location)) {
+				alreadyAdded = true;
+				anonymousClass = anonymous;
+				break;
+			}
+		}
+		if(anonymousClass == null) {
+			List<UMLImport> imports = new ArrayList<>();
+			String codePath = getAnonymousCodePath(node);
+			anonymousClass = new UMLAnonymousClass(container.getClassName(), codePath, codePath, location, imports);
+			OperationBody.processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, container.getComments(), node, anonymousClass);
+		}
+		if(container instanceof LambdaExpressionObject lambda) {
+			VariableDeclarationContainer owner = lambda.getOwner();
+			owner.getAnonymousClassList().add(anonymousClass);
+			while(owner instanceof LambdaExpressionObject parentLambda && parentLambda.getOwner() != null) {
+				parentLambda.getOwner().getAnonymousClassList().add(anonymousClass);
+				owner = parentLambda.getOwner();
+			}
+		}
+		else if(!alreadyAdded) {
+			container.getAnonymousClassList().add(anonymousClass);
+		}
+		if(!anonymousClass.getParentContainers().contains(container))
+			anonymousClass.addParentContainer(container);
+		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(sourceFolder, filePath, node, fileContent);
+		anonymousClassDeclarations.add(anonymousObject);
+		return super.visitObjectLit(node);
+	}
+
+	private String getAnonymousCodePath(Swc4jAstObjectLit node) {
+		String name = "";
+		ISwc4jAst parent = node.getParent();
+		while(parent != null) {
+			if(parent instanceof Swc4jAstFnDecl function) {
+				String methodName = function.getIdent().getSym();
+				if(name.isEmpty()) {
+					name = methodName;
+				}
+				else {
+					name = methodName + "." + name;
+				}
+			}
+			else if(parent instanceof Swc4jAstClassMethod function) {
+				String methodName = function.getKey().toString();
+				if(name.isEmpty()) {
+					name = methodName;
+				}
+				else {
+					name = methodName + "." + name;
+				}
+			}
+			else if(parent instanceof Swc4jAstVarDeclarator declarator) {
+				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+				String fieldName = identifiers.get(0).getId().getSym();
+				if(name.isEmpty()) {
+					name = fieldName;
+				}
+				else {
+					name = fieldName + "." + name;
+				}
+			}
+			else if(parent instanceof Swc4jAstKeyValueProp keyValueProp) {
+				ISwc4jAstPropName key = keyValueProp.getKey();
+				String keyValue = OperationBody.extractString(key, fileContent);
+				if(name.isEmpty()) {
+					name = keyValue;
+				}
+				else {
+					name = keyValue + "." + name;
+				}
+			}
+			parent = parent.getParent();
+		}
+		return name.toString();
 	}
 
 	public List<LeafExpression> getVariables() {

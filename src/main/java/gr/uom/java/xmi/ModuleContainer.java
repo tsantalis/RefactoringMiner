@@ -1,7 +1,6 @@
 package gr.uom.java.xmi;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -34,6 +33,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private List<UMLAttribute> nestedAttributes = new ArrayList<>();
 	private List<UMLImport> nestedImports = new ArrayList<>();
 	private List<UMLNamedExport> namedExports = new ArrayList<>();
+	private List<UMLAnonymousClass> anonymousClassList = new ArrayList<>();
 	private Map<String, AbstractStatement> describeMap = new LinkedHashMap<>();
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
@@ -173,7 +173,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public List<UMLAnonymousClass> getAnonymousClassList() {
-		return Collections.emptyList();
+		return anonymousClassList;
 	}
 
 	@Override

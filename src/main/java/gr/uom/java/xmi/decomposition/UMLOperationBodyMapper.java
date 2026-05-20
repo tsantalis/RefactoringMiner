@@ -10816,7 +10816,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 				anonymousClassDiff.process();
 				List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
-				if(matchedOperationMappers.size() > 0) {
+				if(matchedOperationMappers.size() > 0 || anonymousClassDiff.getCommonAtrributes().size() > 0) {
 					this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 					this.anonymousClassDiffs.add(anonymousClassDiff);
 					if(parentMapper != null && minStatementMapping.getFragment1() instanceof AbstractExpression && minStatementMapping.getFragment2() instanceof AbstractExpression) {
@@ -11456,6 +11456,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						mapping.addSubExpressionMapping(newMapping);
 						nestedCreations1.remove(minIndex);
 					}
+				}
+			}
+		}
+		if(leaf1.getAnonymousClassDeclarations().size() > 0 && leaf2.getAnonymousClassDeclarations().size() == 0) {
+			for(AnonymousClassDeclarationObject object : leaf1.getAnonymousClassDeclarations()) {
+				UMLAnonymousClass anonymousClass = container1.findAnonymousClass(object);
+				if(anonymousClass != null && classDiff != null && !classDiff.getRemovedAnonymousClasses().contains(anonymousClass)) {
+					classDiff.getRemovedAnonymousClasses().add(anonymousClass);
+				}
+			}
+		}
+		else if(leaf1.getAnonymousClassDeclarations().size() == 0 && leaf2.getAnonymousClassDeclarations().size() > 0) {
+			for(AnonymousClassDeclarationObject object : leaf2.getAnonymousClassDeclarations()) {
+				UMLAnonymousClass anonymousClass = container2.findAnonymousClass(object);
+				if(anonymousClass != null && classDiff != null && !classDiff.getAddedAnonymousClasses().contains(anonymousClass)) {
+					classDiff.getAddedAnonymousClasses().add(anonymousClass);
 				}
 			}
 		}

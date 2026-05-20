@@ -77,6 +77,9 @@ public class McpHandler {
         JsonObject result = new JsonObject();
         JsonArray tools = new JsonArray();
         
+        tools.add(createToolDefinition("get_line_range",
+                "Get the line range of a change for a specific changeId. Returns the start and end line numbers.",
+                "url", "changeId"));
         tools.add(createToolDefinition("get_available_clusters",
                 "Get the available cluster indices (groups of related changes) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
@@ -176,7 +179,13 @@ public class McpHandler {
         }
         String url = arguments.get("url").getAsString();
 
-        if ("get_available_clusters".equals(toolName)) {
+        if ("get_line_range".equals(toolName)) {
+            if (!arguments.has("changeId")) {
+                throw new IllegalArgumentException("Missing required argument: changeId");
+            }
+            String changeId = arguments.get("changeId").getAsString();
+            return fetchLineRange(url, changeId);
+        } else if ("get_available_clusters".equals(toolName)) {
             return fetchClusterCount(url);
         } else if ("begin_cluster_narrative".equals(toolName)) {
             if (!arguments.has("clusterIndex")) {
@@ -208,6 +217,23 @@ public class McpHandler {
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
+    }
+
+    private String fetchLineRange(String url, String changeId) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        for (Cluster cluster : clusters) {
+            for (Node node : cluster.vertexSet()) {
+                if (node.getPromptId().equals(changeId)) {
+                    var range = org.refactoringminer.astDiff.utils.TreeUtilFunctions.getLineRange(
+                            node.getTree(), 
+                            node.getFileContent());
+                    return String.format("Line Range: %d:%d - %d:%d", 
+                            range.first.first, range.first.second, 
+                            range.second.first, range.second.second);
+                }
+            }
+        }
+        throw new IllegalArgumentException("Could not find node with changeId: " + changeId);
     }
 
     private String getHierarchyCacheKey(String url) {

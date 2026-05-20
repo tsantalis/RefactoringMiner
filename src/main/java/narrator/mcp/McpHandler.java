@@ -81,10 +81,10 @@ public class McpHandler {
                 "Get the available cluster indices (groups of related changes) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Begin the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter 1 of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
+                "Begin the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter 1 of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Get the next chapter in the narrative for the cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "clusterIndex"));
         result.add("tools", tools);
         response.add("result", result);

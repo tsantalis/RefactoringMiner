@@ -430,7 +430,8 @@ public class MappingOptimizer {
 								!mappings.get(i).getFragment1().getString().startsWith(LANG1.RETURN_SPACE) && !mappings.get(i).getFragment2().getString().startsWith(LANG2.RETURN_SPACE)) {
 							skip = true;
 						}
-						if(parentIsContainerBody.get(i) == true && mappings.get(i).getFragment1().getAnonymousClassDeclarations().size() > 0 && mappings.get(i).getFragment2().getAnonymousClassDeclarations().size() > 0) {
+						if(parentIsContainerBody.get(i) == true && mappings.get(i).getFragment1().getAnonymousClassDeclarations().size() > 0 && mappings.get(i).getFragment2().getAnonymousClassDeclarations().size() > 0 &&
+								!mappings.get(i).getFragment1().getLANG().equals(Constants.TYPESCRIPT) && !mappings.get(i).getFragment2().getLANG().equals(Constants.TYPESCRIPT)) {
 							skip = true;
 							anonymousClassDeclarationMatch = true;
 						}

@@ -6309,6 +6309,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(anonymousClassDeclarations1.size() >= 1 && container1 != null && lambdas2.size() >= 1 &&
+				lambdas1.size() != lambdas2.size() &&
 				!lambdas1.stream().map(l -> l.toString()).collect(Collectors.toList()).containsAll(lambdas2.stream().map(l -> l.toString()).collect(Collectors.toList()))) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);

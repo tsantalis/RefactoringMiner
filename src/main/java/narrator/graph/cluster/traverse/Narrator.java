@@ -38,7 +38,19 @@ public class Narrator {
         visited.add(p);
         
         if (p instanceof AggregatorPattern aggregator) {
-            for (TraversalPattern sub : aggregator.subs) {
+            List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
+            sortedSubs.sort(Comparator.comparing((TraversalPattern sub) -> {
+                return sub.getLead().isSrc();
+            }).reversed()
+              .thenComparing(sub -> {
+                if (sub instanceof SingularPattern) return 1;
+                if (sub instanceof UsagePattern) return 2;
+                if (sub instanceof SuccessivePattern) return 3;
+                if (sub instanceof TraversalComponent) return 4;
+                return 5;
+              }));
+
+            for (TraversalPattern sub : sortedSubs) {
                 postOrderTraverse(sub, visited, result);
             }
         }

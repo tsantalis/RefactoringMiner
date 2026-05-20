@@ -222,7 +222,7 @@ public class McpHandler {
     private String fetchLineRange(String url, String changeId) throws Exception {
         List<Cluster> clusters = getOrComputeClusters(url);
         for (Cluster cluster : clusters) {
-            for (Node node : cluster.vertexSet()) {
+            for (Node node : cluster.getGraph().vertexSet()) {
                 if (node.getPromptId().equals(changeId)) {
                     var range = org.refactoringminer.astDiff.utils.TreeUtilFunctions.getLineRange(
                             node.getTree(), 

@@ -162,6 +162,13 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 				return anonymousClass;
 			}
 		}
+		if(this instanceof UMLOperation operation) {
+			for(UMLOperation nestedOperation : operation.getNestedOperations()) {
+				UMLAnonymousClass anonymousClass = nestedOperation.findAnonymousClass(anonymousClassDeclaration);
+				if(anonymousClass != null)
+					return anonymousClass;
+			}
+		}
 		return null;
 	}
 	default boolean hasTestAnnotation() {

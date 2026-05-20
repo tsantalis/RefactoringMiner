@@ -11633,6 +11633,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	protected UMLAnonymousClass findAnonymousClass1(AnonymousClassDeclarationObject anonymousClassDeclaration1) {
 		UMLAnonymousClass anonymousClass1 = container1.findAnonymousClass(anonymousClassDeclaration1);
+		if(anonymousClass1 == null && container1 instanceof UMLOperation op1) {
+			for(UMLOperation nestedOperation : op1.getNestedOperations()) {
+				anonymousClass1 = nestedOperation.findAnonymousClass(anonymousClassDeclaration1);
+				if(anonymousClass1 != null)
+					break;
+			}
+		}
 		if(anonymousClass1 == null && parentMapper != null) {
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				anonymousClass1 = childMapper.container1.findAnonymousClass(anonymousClassDeclaration1);
@@ -11658,6 +11665,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	protected UMLAnonymousClass findAnonymousClass2(AnonymousClassDeclarationObject anonymousClassDeclaration2) {
 		UMLAnonymousClass anonymousClass2 = container2.findAnonymousClass(anonymousClassDeclaration2);
+		if(anonymousClass2 == null && container2 instanceof UMLOperation op2) {
+			for(UMLOperation nestedOperation : op2.getNestedOperations()) {
+				anonymousClass2 = nestedOperation.findAnonymousClass(anonymousClassDeclaration2);
+				if(anonymousClass2 != null)
+					break;
+			}
+		}
 		if(anonymousClass2 == null && parentMapper != null) {
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				anonymousClass2 = childMapper.container2.findAnonymousClass(anonymousClassDeclaration2);

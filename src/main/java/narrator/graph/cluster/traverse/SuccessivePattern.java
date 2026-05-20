@@ -1,6 +1,7 @@
 package narrator.graph.cluster.traverse;
 
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import narrator.graph.Context;
@@ -42,13 +43,57 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         return getHead();
     }
 
+    public List<Node> getSequence(Cluster cluster) {
+        List<Node> sequence = new ArrayList<>();
+        Node current = getHead();
+        if (current == null) {
+            return sequence;
+        }
+
+        Graph<Node, Edge> graph = cluster.getGraph();
+        while (current != null) {
+            sequence.add(current);
+            Node next = null;
+            for (Edge edge : graph.outgoingEdgesOf(current)) {
+                if (edge.getType().equals(EdgeType.SUCCESSION)) {
+                    next = graph.getEdgeTarget(edge);
+                    break;
+                }
+            }
+            current = next;
+        }
+        return sequence;
+    }
+
     @Override
     public String base(Cluster cluster) {
-        Node head = getHead();
-        List<Node> semanticContexts = Context.get(cluster.getGraph(), head).stream()
-                .filter(n -> n.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
+        List<Node> sequence = getSequence(cluster);
+
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("# Subject:\n```\n");
+
+        List<String> basePrompts = sequence.stream()
+                .map(node -> node.base(cluster))
                 .toList();
-        return "Succession starting at " + head.mapping(cluster) + " (Containers: " + semanticContexts.size() + ")";
+        prompt.append(String.join("\n---\n", basePrompts));
+        prompt.append("\n```");
+
+        List<String> mappingHunks = new ArrayList<>();
+        for (Node node : sequence) {
+            String base = node.base(cluster);
+            String mapping = node.mapping(cluster);
+            if (!base.equals(mapping)) {
+                mappingHunks.add(mapping);
+            }
+        }
+
+        if (!mappingHunks.isEmpty()) {
+            prompt.append("\n\nContext:\n```\n");
+            prompt.append(String.join("\n---\n", mappingHunks));
+            prompt.append("\n```");
+        }
+
+        return prompt.toString();
     }
 
     @Override

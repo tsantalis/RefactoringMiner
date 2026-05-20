@@ -39,6 +39,7 @@ public class DirectoryDiffView implements Renderable {
     private final boolean external;
     protected final DiffMetaInfo metaInfo;
     protected final boolean showMergeParentBar;
+    private final boolean showQuitButton;
 
     public DirectoryDiffView(DirComparator comparator, DiffMetaInfo metaInfo) {
         this(comparator, false, metaInfo, true);
@@ -49,10 +50,16 @@ public class DirectoryDiffView implements Renderable {
     }
 
     public DirectoryDiffView(DirComparator comparator, boolean external, DiffMetaInfo metaInfo, boolean showMergeParentBar) {
+        this(comparator, external, metaInfo, showMergeParentBar, true);
+    }
+
+    public DirectoryDiffView(DirComparator comparator, boolean external, DiffMetaInfo metaInfo,
+                             boolean showMergeParentBar, boolean showQuitButton) {
         this.comparator = comparator;
         this.external = external;
         this.metaInfo = metaInfo;
         this.showMergeParentBar = showMergeParentBar;
+        this.showQuitButton = showQuitButton;
     }
 
     protected boolean isMovedCode(TreeNodeInfo info) {
@@ -75,7 +82,7 @@ public class DirectoryDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid"))
                     .div(class_("row"))
-                        .render(new MenuBar(external, metaInfo))
+                        .render(new MenuBar(external, metaInfo, showQuitButton))
                     ._div()
                     .render_if(new MergeParentBar(metaInfo), showMergeParentBar && metaInfo != null && metaInfo.supportsParentSelection())
                     .if_(!external)
@@ -445,11 +452,17 @@ public class DirectoryDiffView implements Renderable {
     private static class MenuBar implements Renderable {
         private final boolean external;
         private final DiffMetaInfo metaInfo;
+        private final boolean showQuitButton;
 
 
         public MenuBar(boolean external, DiffMetaInfo metaInfo) {
+            this(external, metaInfo, true);
+        }
+
+        public MenuBar(boolean external, DiffMetaInfo metaInfo, boolean showQuitButton) {
             this.external = external;
             this.metaInfo = metaInfo;
+            this.showQuitButton = showQuitButton;
         }
 
         @Override
@@ -476,7 +489,9 @@ public class DirectoryDiffView implements Renderable {
                         .onClick("handleCompareClick()")
                             )
                         .content("Compare Selected Files")
+                        .if_(showQuitButton)
                         .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content("Quit")
+                        ._if()
                         ._if()
                         .if_(external)
                         .a(class_("btn btn-default btn-sm btn-danger").href("/list")).content("Back")

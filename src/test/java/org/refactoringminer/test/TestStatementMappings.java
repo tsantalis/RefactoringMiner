@@ -38,6 +38,7 @@ import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.PullUpOperationRefactoring;
 import gr.uom.java.xmi.diff.PushDownOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
+import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
@@ -2095,7 +2096,8 @@ public class TestStatementMappings {
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/junit-team/junit5.git, b2ba6b95138382f25ca757a5ca2a7295bee4c3b8, junit5-b2ba6b95138382f25ca757a5ca2a7295bee4c3b8.txt",
-		"https://github.com/spring-projects/spring-boot.git, bb8e8849993980ae658046eaa786502f42ce63bf, spring-boot-bb8e8849993980ae658046eaa786502f42ce63bf.txt"
+		"https://github.com/spring-projects/spring-boot.git, bb8e8849993980ae658046eaa786502f42ce63bf, spring-boot-bb8e8849993980ae658046eaa786502f42ce63bf.txt",
+		"https://github.com/spring-projects/spring-boot.git, 08cc62a6b602506425da3829ef25e6278a86b00e, spring-boot-08cc62a6b602506425da3829ef25e6278a86b00e.txt"
 	})
 	public void testRenameMethod(String cloneURL, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -2279,7 +2281,7 @@ public class TestStatementMappings {
 		fileContentsCurrent.put("utils/washroomSearch.ts", contentsV2);
 		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
 		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 		for (Refactoring ref : modelDiff.getRefactorings()) {
@@ -2312,7 +2314,7 @@ public class TestStatementMappings {
 		fileContentsCurrent.put("gitnexus/src/core/ingestion/export-detection.ts", contentsV2);
 		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
 		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
-		
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 		for (Refactoring ref : modelDiff.getRefactorings()) {
@@ -2376,6 +2378,12 @@ public class TestStatementMappings {
 					RenameOperationRefactoring ex = (RenameOperationRefactoring)ref;
 					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
 					mapperInfo(bodyMapper, actual);
+				}
+				else if(ref instanceof ReplaceAnonymousWithClassRefactoring) {
+					ReplaceAnonymousWithClassRefactoring ex = (ReplaceAnonymousWithClassRefactoring)ref;
+					actual.add(ex.getAnonymousClass().getName() + " -> " + ex.getAddedClass().getName());
+					String line = ex.getAnonymousClass().getLocationInfo() + "==" + ex.getAddedClass().getLocationInfo();
+					actual.add(line);
 				}
 			}
 			for(UMLOperationBodyMapper parentMapper : parentMappers) {

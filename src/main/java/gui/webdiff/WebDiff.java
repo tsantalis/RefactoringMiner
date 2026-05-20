@@ -50,14 +50,32 @@ public class WebDiff  {
     public static final String HIGHLIGHT_CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css";
     public static final String HIGHLIGHT_JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js";
     public static final String HIGHLIGHT_JAVA_URL = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js";
-    public int port = 6789;
+    public static final String LOCAL_HOST = "127.0.0.1";
+    public static final String BIND_HOST_PROPERTY = "refactoringminer.webdiff.bindHost";
+    public static final String PUBLIC_HOST_PROPERTY = "refactoringminer.webdiff.publicHost";
+    public static final String BIND_HOST_ENV = "REFACTORINGMINER_WEBDIFF_BIND_HOST";
+    public static final String PUBLIC_HOST_ENV = "REFACTORINGMINER_WEBDIFF_PUBLIC_HOST";
+    public static final int DEFAULT_PORT = 6789;
+    public int port = DEFAULT_PORT;
     private static final AtomicInteger DIFF_LOADER_THREAD_SEQUENCE = new AtomicInteger();
 
     private String toolName = "RefactoringMiner";
     private boolean staticExport;
+    private boolean exitJvmOnQuit = true;
+    private boolean quitEnabled = true;
+    private String bindHost = configuredBindHost();
+    private String publicHost = configuredPublicHost();
 
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public void setBindHost(String bindHost) {
+        this.bindHost = normalizeHost(bindHost, "bindHost");
+    }
+
+    public void setPublicHost(String publicHost) {
+        this.publicHost = normalizeHost(publicHost, "publicHost");
     }
 
     public void setToolName(String toolName) {
@@ -66,6 +84,14 @@ public class WebDiff  {
 
     public void setStaticExport(boolean staticExport) {
         this.staticExport = staticExport;
+    }
+
+    public void setExitJvmOnQuit(boolean exitJvmOnQuit) {
+        this.exitJvmOnQuit = exitJvmOnQuit;
+    }
+
+    public void setQuitEnabled(boolean quitEnabled) {
+        this.quitEnabled = quitEnabled;
     }
 
     private final String resourcesPath = "/web/";
@@ -177,12 +203,63 @@ public class WebDiff  {
     private record DiffViewState(ProjectASTDiff projectASTDiff, DirComparator comparator) {
     }
 
-    public void run() {
+    public String localUrl() {
+        return localUrl(this.publicHost, this.port);
+    }
+
+    public static String localUrl(int port) {
+        return localUrl(LOCAL_HOST, port);
+    }
+
+    public static String localUrl(String publicHost, int port) {
+        return "http://" + normalizeHost(publicHost, "publicHost") + ":" + port;
+    }
+
+    public static String startupMessage(int port) {
+        return "Starting server: " + localUrl(port);
+    }
+
+    public static String startupMessage(String publicHost, int port) {
+        return "Starting server: " + localUrl(publicHost, port);
+    }
+
+    public static String configuredBindHost() {
+        return configuredHost(BIND_HOST_PROPERTY, BIND_HOST_ENV, LOCAL_HOST);
+    }
+
+    public static String configuredPublicHost() {
+        return configuredHost(PUBLIC_HOST_PROPERTY, PUBLIC_HOST_ENV, LOCAL_HOST);
+    }
+
+    private static String configuredHost(String propertyName, String envName, String defaultValue) {
+        String propertyValue = System.getProperty(propertyName);
+        if (propertyValue != null && !propertyValue.isBlank()) {
+            return normalizeHost(propertyValue, propertyName);
+        }
+        String envValue = System.getenv(envName);
+        if (envValue != null && !envValue.isBlank()) {
+            return normalizeHost(envValue, envName);
+        }
+        return defaultValue;
+    }
+
+    private static String normalizeHost(String value, String name) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(name + " must be a non-empty host.");
+        }
+        return value.trim();
+    }
+
+    public String start() {
 //        killProcessOnPort(this.port);
         configureSpark(this.port);
         warmUpMergeParents();
         awaitInitialization();
-        System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
+        return startupMessage(this.publicHost, this.port);
+    }
+
+    public void run() {
+        System.out.println(start() + ".");
     }
     public void terminate(){
         diffLoader.shutdownNow();
@@ -194,7 +271,7 @@ public class WebDiff  {
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
-                desktop.browse(new URI("http://127.0.0.1" + ":" + this.port));
+                desktop.browse(new URI(localUrl()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -223,6 +300,7 @@ public class WebDiff  {
     }
 
     public void configureSpark(int port) {
+        ipAddress(bindHost);
         port(port);
         staticFiles.location(getResources());
         get("/", (request, response) -> {
@@ -246,7 +324,8 @@ public class WebDiff  {
         });
         get("/list", (request, response) -> {
             DiffViewState state = currentState;
-            Renderable view = new DirectoryDiffView(state.comparator(), false, state.projectASTDiff().getMetaInfo(), !staticExport);
+            Renderable view = new DirectoryDiffView(state.comparator(), false, state.projectASTDiff().getMetaInfo(),
+                    !staticExport, quitEnabled);
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
@@ -310,8 +389,25 @@ public class WebDiff  {
             return render(new SinglePageView(state.comparator(), state.projectASTDiff().getMetaInfo(), !staticExport, !staticExport));
         });
         get("/quit", (request, response) -> {
-            System.exit(0);
-            return "";
+            if (!quitEnabled) {
+                response.status(403);
+                return "WebDiff quit is disabled.";
+            }
+            if (exitJvmOnQuit) {
+                System.exit(0);
+                return "";
+            }
+            Thread stopper = new Thread(() -> {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                terminate();
+            }, "webdiff-quit");
+            stopper.setDaemon(true);
+            stopper.start();
+            return "WebDiff server stopping.";
         });
         get("/content", (request, response) -> {
             DiffViewState state = currentState;
@@ -356,7 +452,7 @@ public class WebDiff  {
                         }}
                 );
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             ASTDiff astDiff;

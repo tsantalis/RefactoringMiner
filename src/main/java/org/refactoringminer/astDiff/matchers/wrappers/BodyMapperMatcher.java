@@ -80,6 +80,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1);
         LocationInfo dstLocationInfo = compositeStatementObjectMapping.getFragment2().getLocationInfo();
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2);
+        if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.IF_KEYWORD))
+            srcStatementNode = srcStatementNode.getParent();
+        if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.IF_KEYWORD))
+            dstStatementNode = dstStatementNode.getParent();
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -568,6 +572,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.MEMBER_EXPRESSION) && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
+                srcStatementNode.getParent().getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
+            srcStatementNode = srcStatementNode.getParent().getParent();
+        }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CONST_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.LEXICAL_DECLARATION)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.THROW_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.THROW_STATEMENT)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
@@ -576,6 +590,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.MEMBER_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) &&
+                dstStatementNode.getParent().getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+            dstStatementNode = dstStatementNode.getParent().getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CONST_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.THROW_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.THROW_STATEMENT)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         if (srcStatementNode == null || dstStatementNode == null) {
@@ -621,6 +645,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
                     if(matched != null) {
                         mappingStore.addMapping(matched.first, matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.DEFAULT_KEYWORD, LANG2.DEFAULT_KEYWORD);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
                     }
                 }
             }

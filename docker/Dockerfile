@@ -21,6 +21,8 @@ RUN apk add --no-cache openjdk17-jre
 # Set environment variables for Java
 ENV JAVA_HOME=/usr/lib/jvm/default-jvm
 ENV PATH="$JAVA_HOME/bin:${PATH}"
+ENV REFACTORINGMINER_WEBDIFF_BIND_HOST=0.0.0.0
+ENV REFACTORINGMINER_WEBDIFF_PUBLIC_HOST=127.0.0.1
 
 RUN apk add --no-cache libc6-compat libgcc
 RUN mkdir -p /diff/left /diff/right

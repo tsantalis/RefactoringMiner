@@ -81,10 +81,18 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition) {
+		List<Tree> matches = new ArrayList<>();
 		for (Tree t: tree.preOrder()) {
-			if (t.getPos() >= position && t.getEndPos() <= endPosition)
+			if (t.getPos() >= position && t.getEndPos() <= endPosition) {
+				matches.add(t);
+			}
+		}
+		for(Tree t : matches) {
+			if(t.getPos() == position && t.getEndPos() == endPosition)
 				return t;
 		}
+		if(matches.size() > 0)
+			return matches.get(0);
 		return null;
 	}
 

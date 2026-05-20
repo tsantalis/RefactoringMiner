@@ -1255,7 +1255,7 @@ public class ReplacementAlgorithm {
 		if(stringLiterals1.size() > 0 && methodInvocationMap2.size() > 0) {
 			for(String stringLiteral1 : stringLiterals1) {
 				List<LeafExpression> leafExpressions1 = statement1.findExpression(stringLiteral1);
-				String value1 = stringLiteral1.substring(1, stringLiteral1.length()-1);
+				String value1 = stringLiteral1.startsWith("\"") && stringLiteral1.endsWith("\"") && stringLiteral1.length() > 1 ? stringLiteral1.substring(1, stringLiteral1.length()-1) : stringLiteral1;
 				if(!value1.isEmpty()) {
 					for(AbstractCall call2 : statement2.getMethodInvocations()) {
 						String expression = call2.getExpression();
@@ -6308,7 +6308,8 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		if(anonymousClassDeclarations1.size() >= 1 && container1 != null && lambdas2.size() >= 1) {
+		if(anonymousClassDeclarations1.size() >= 1 && container1 != null && lambdas2.size() >= 1 &&
+				!lambdas1.stream().map(l -> l.toString()).collect(Collectors.toList()).containsAll(lambdas2.stream().map(l -> l.toString()).collect(Collectors.toList()))) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
 				UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);

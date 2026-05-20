@@ -78,6 +78,7 @@ public abstract class UMLAbstractClassDiff {
 	private UMLTypeListDiff interfaceListDiff;
 	private UMLTypeListDiff permittedTypeListDiff;
 	private UMLCommentListDiff commentListDiff;
+	private List<UMLClassDiff> nestedClassDiffList;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
 	public final Constants LANG1;
 	public final Constants LANG2;
@@ -102,6 +103,7 @@ public abstract class UMLAbstractClassDiff {
 		this.enumConstantDiffList = new ArrayList<UMLEnumConstantDiff>();
 		this.commonAtrributes = new LinkedHashSet<Pair<UMLAttribute, UMLAttribute>>();
 		this.commonEnumConstants = new LinkedHashSet<Pair<UMLEnumConstant, UMLEnumConstant>>();
+		this.nestedClassDiffList = new ArrayList<UMLClassDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
@@ -185,6 +187,10 @@ public abstract class UMLAbstractClassDiff {
 		return commonEnumConstants;
 	}
 
+	public List<UMLClassDiff> getNestedClassDiffList() {
+		return nestedClassDiffList;
+	}
+
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
 		this.addedAnonymousClasses.add(umlClass);
 	}
@@ -208,10 +214,10 @@ public abstract class UMLAbstractClassDiff {
 	private void processNestedClasses(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
 		for(UMLClass class1 : operation1.getNestedClasses()) {
 			for(UMLClass class2 : operation2.getNestedClasses()) {
-				if(class1.getName().equals(class2.getName())) {
+				if(class1.getName().equals(class2.getName()) || class1.getNonQualifiedName().equals(class2.getNonQualifiedName())) {
 					UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
 					classDiff.process();
-					modelDiff.addUMLClassDiff(classDiff);
+					this.nestedClassDiffList.add(classDiff);
 				}
 			}
 		}

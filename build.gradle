@@ -6,14 +6,12 @@ plugins {
     id 'signing'
     id 'idea'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'org.springframework.boot' version '3.2.0'
-    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
-        : '3.1.3'
+        : '3.1.4'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -70,15 +68,18 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation platform("io.modelcontextprotocol.sdk:mcp-bom:1.1.2")
+    implementation "io.modelcontextprotocol.sdk:mcp-core"
+    implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
     implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'com.caoccao.javet:swc4j:2.1.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.1.0'
     implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.1.0'
     implementation 'org.antlr:antlr4-runtime:4.13.2'
-    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.20'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0'
+    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.21'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
     implementation 'org.slf4j:slf4j-api:2.0.17'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.32'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.45.0'
     implementation 'org.apache.commons:commons-text:1.15.0'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
@@ -90,8 +91,8 @@ dependencies {
         exclude group: 'com.github.gumtreediff', module: 'core'
     }
     implementation 'org.jcommander:jcommander:3.0'
-    implementation 'org.jsoup:jsoup:1.22.1'
-    implementation 'com.perforce:p4java:2025.2.2872146'
+    implementation 'org.jsoup:jsoup:1.22.2'
+    implementation 'com.perforce:p4java:2025.2.2917314'
     implementation 'org.jgrapht:jgrapht-core:1.5.1'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
     implementation 'org.apache.commons:commons-collections4:4.4'
@@ -119,9 +120,6 @@ dependencies {
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
     withJavadocJar()
     withSourcesJar()
 }
@@ -194,6 +192,30 @@ shadowJar {
     archiveFileName = jarName
 }
 
+tasks.register('runMcp', JavaExec) {
+    group = 'application'
+    description = 'Run RefactoringMiner as a local stdio MCP server.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.refactoringminer.mcp.RefactoringMinerMcpServer'
+}
+
+tasks.register('mcpSmoke', JavaExec) {
+    group = 'verification'
+    description = 'Start the MCP server in smoke mode and fail if it writes to stdout.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.refactoringminer.mcp.RefactoringMinerMcpServer'
+    args '--smoke'
+
+    def stdout = new ByteArrayOutputStream()
+    standardOutput = stdout
+
+    doLast {
+        if (stdout.size() != 0) {
+            throw new GradleException("MCP smoke wrote to stdout: ${stdout.toString('UTF-8')}")
+        }
+    }
+}
+
 bootJar {
     enabled = true
     archiveFileName = 'ChangeNarrator.jar'
@@ -207,16 +229,16 @@ tasks.register('shadowJarMcp', com.github.jengelman.gradle.plugins.shadow.tasks.
     description = 'Builds a fat JAR for the MCP server'
     archiveFileName = 'ChangeNarratorMCP-fat.jar'
     zip64 = true
-    
+
     configurations = [project.configurations.runtimeClasspath]
-    
+
     manifest {
         attributes 'Main-Class': 'narrator.mcp.McpServer'
     }
-    
+
     // Explicitly include classes
     from sourceSets.main.output
-    
+
     // Exclude signature files from dependencies to avoid SecurityException
     exclude 'META-INF/*.SF'
     exclude 'META-INF/*.DSA'

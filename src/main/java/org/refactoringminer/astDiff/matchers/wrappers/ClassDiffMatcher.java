@@ -1,13 +1,18 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.utils.Pair;
+
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLAnonymousToClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.List;
 
@@ -51,6 +56,27 @@ public class ClassDiffMatcher extends OptimizationAwareMatcher{
             UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
             new ImportMatcher(baseClassDiff.getImportDiffList(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
             new ClassDeclarationMatcher(optimizationData, baseClassDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+        }
+        if(classDiff instanceof UMLAnonymousToClassDiff) {
+            Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1);
+            Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2);
+            if(srcTypeDeclaration.getType().name.equals(LANG1.OBJECT) && dstTypeDeclaration.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+                Tree variableDeclarator2 = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, LANG2.VARIABLE_DECLARATOR);
+                if(variableDeclarator2 != null) {
+                    Tree object2 = TreeUtilFunctions.findFirstByType(variableDeclarator2, LANG2.OBJECT);
+                    if (object2 != null) {
+                        mappingStore.addMapping(srcTypeDeclaration, object2);
+                        Pair<Tree,Tree> opening = Helpers.findPairOfType(srcTypeDeclaration, object2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                        if (opening != null) {
+                            mappingStore.addMapping(opening.first,opening.second);
+                        }
+                        Pair<Tree,Tree> closing = Helpers.findPairOfType(srcTypeDeclaration, object2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                        if (closing != null) {
+                            mappingStore.addMapping(closing.first,closing.second);
+                        }
+                    }
+                }
+            }
         }
         new ClassAttrMatcher(optimizationData, classDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         new EnumConstantsMatcher(optimizationData, classDiff.getCommonEnumConstants(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);

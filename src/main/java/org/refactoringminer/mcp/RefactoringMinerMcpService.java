@@ -1,0 +1,636 @@
+package org.refactoringminer.mcp;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+import org.eclipse.jgit.lib.Repository;
+import org.refactoringminer.api.GitHistoryRefactoringMiner;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.GitServiceImpl;
+
+public class RefactoringMinerMcpService {
+	private static final int DEFAULT_MAX_FILES = 100;
+	private static final int DEFAULT_MAX_BYTES_PER_FILE = 200_000;
+
+	private final FileContentDiffer differ;
+	private final CommitDiffer commitDiffer;
+	private final RemoteCommitDiffer remoteCommitDiffer;
+	private final PullRequestDiffer pullRequestDiffer;
+	private final DirectoryDiffer directoryDiffer;
+	private final DiffBrowserLauncher diffBrowserLauncher;
+
+	public RefactoringMinerMcpService() {
+		this(new GitHistoryRefactoringMinerImpl());
+	}
+
+	RefactoringMinerMcpService(GitHistoryRefactoringMiner miner) {
+		this(miner::diffAtFileContents, miner::diffAtMergeCommit,
+				(cloneUrl, commitId, parentIndex, timeoutSeconds) -> miner.diffAtMergeCommit(cloneUrl, commitId,
+						parentIndex, timeoutSeconds),
+				miner::diffAtPullRequest, miner::diffAtDirectories,
+				new WebDiffBrowserLauncher());
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ) {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		this.differ = differ;
+		this.commitDiffer = miner::diffAtMergeCommit;
+		this.remoteCommitDiffer = (cloneUrl, commitId, parentIndex, timeoutSeconds) -> miner.diffAtMergeCommit(
+				cloneUrl, commitId, parentIndex, timeoutSeconds);
+		this.pullRequestDiffer = miner::diffAtPullRequest;
+		this.directoryDiffer = miner::diffAtDirectories;
+		this.diffBrowserLauncher = new WebDiffBrowserLauncher();
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, PullRequestDiffer pullRequestDiffer,
+			DirectoryDiffer directoryDiffer) {
+		this(differ, commitDiffer, null, pullRequestDiffer, directoryDiffer, new WebDiffBrowserLauncher());
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, RemoteCommitDiffer remoteCommitDiffer,
+			PullRequestDiffer pullRequestDiffer, DirectoryDiffer directoryDiffer) {
+		this(differ, commitDiffer, remoteCommitDiffer, pullRequestDiffer, directoryDiffer, new WebDiffBrowserLauncher());
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, PullRequestDiffer pullRequestDiffer,
+			DirectoryDiffer directoryDiffer, DiffBrowserLauncher diffBrowserLauncher) {
+		this(differ, commitDiffer, null, pullRequestDiffer, directoryDiffer, diffBrowserLauncher);
+	}
+
+	RefactoringMinerMcpService(FileContentDiffer differ, CommitDiffer commitDiffer, RemoteCommitDiffer remoteCommitDiffer,
+			PullRequestDiffer pullRequestDiffer, DirectoryDiffer directoryDiffer, DiffBrowserLauncher diffBrowserLauncher) {
+		this.differ = differ;
+		this.commitDiffer = commitDiffer;
+		this.remoteCommitDiffer = remoteCommitDiffer;
+		this.pullRequestDiffer = pullRequestDiffer;
+		this.directoryDiffer = directoryDiffer;
+		this.diffBrowserLauncher = diffBrowserLauncher;
+	}
+
+	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int maxRefactorings) {
+		return analyzeFileContents(beforeFiles, afterFiles, maxRefactorings, DEFAULT_MAX_FILES,
+				DEFAULT_MAX_BYTES_PER_FILE);
+	}
+
+	public McpAnalysisResult analyzeFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int maxRefactorings, int maxFiles, int maxBytesPerFile) {
+		if (maxRefactorings < 0) {
+			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
+					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		if (beforeFiles == null || afterFiles == null) {
+			return McpAnalysisResult.error("beforeFiles and afterFiles are required.",
+					List.of("beforeFiles and afterFiles must be JSON objects mapping paths to file contents."));
+		}
+		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
+			return McpAnalysisResult.error("At least one before or after file is required.",
+					List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+		try {
+			validateFileContentBounds(beforeFiles, afterFiles, maxFiles, maxBytesPerFile);
+		} catch (IllegalArgumentException e) {
+			return McpAnalysisResult.error(e.getMessage(), List.of("Invalid file-content bounds."));
+		}
+
+		try {
+			ProjectASTDiff diff = differ.diffAtFileContents(beforeFiles, afterFiles);
+			return toResult(diff, maxRefactorings, "File-content");
+		} catch (Exception e) {
+			return McpAnalysisResult.error("File-content analysis failed: " + e.getMessage(),
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpValidationResult validateFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			McpRefactoringIntent intent, int maxCandidates) {
+		return validateFileContents(beforeFiles, afterFiles, intent, maxCandidates, DEFAULT_MAX_FILES,
+				DEFAULT_MAX_BYTES_PER_FILE);
+	}
+
+	public McpValidationResult validateFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			McpRefactoringIntent intent, int maxCandidates, int maxFiles, int maxBytesPerFile) {
+		if (maxCandidates < 0) {
+			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
+					List.of("maxCandidates=" + maxCandidates));
+		}
+		if (intent == null) {
+			return McpValidationResult.error("intent is required.", null, List.of("intent=null"));
+		}
+		if (beforeFiles == null || afterFiles == null) {
+			return McpValidationResult.error("beforeFiles and afterFiles are required.", intent,
+					List.of("beforeFiles and afterFiles must be JSON objects mapping paths to file contents."));
+		}
+		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
+			return McpValidationResult.error("At least one before or after file is required.", intent,
+					List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+		try {
+			validateFileContentBounds(beforeFiles, afterFiles, maxFiles, maxBytesPerFile);
+		} catch (IllegalArgumentException e) {
+			return McpValidationResult.error(e.getMessage(), intent, List.of("Invalid file-content bounds."));
+		}
+
+		try {
+			ProjectASTDiff diff = differ.diffAtFileContents(beforeFiles, afterFiles);
+			return new McpIntentValidator().validate(diff, intent, maxCandidates);
+		} catch (Exception e) {
+			return McpValidationResult.error("File-content validation failed: " + e.getMessage(), intent,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpValidationResult validateWorktree(Path repositoryPath, String baseRef, boolean includeUntracked,
+			int maxFiles, int maxBytesPerFile, McpRefactoringIntent intent, int maxCandidates) {
+		if (intent == null) {
+			return McpValidationResult.error("intent is required.", null, List.of("intent=null"));
+		}
+		if (maxCandidates < 0) {
+			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
+					List.of("maxCandidates=" + maxCandidates));
+		}
+		try {
+			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
+					.collect(resolvedRepositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
+			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
+			return new McpIntentValidator().validate(diff, intent, maxCandidates, changes.warnings());
+		} catch (Exception e) {
+			return McpValidationResult.error("Worktree validation failed: " + e.getMessage(), intent,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpValidationResult validateCommit(Path repositoryPath, String commitId, Integer parentIndex,
+			McpRefactoringIntent intent, int maxCandidates) {
+		if (intent == null) {
+			return McpValidationResult.error("intent is required.", null, List.of("intent=null"));
+		}
+		if (maxCandidates < 0) {
+			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
+					List.of("maxCandidates=" + maxCandidates));
+		}
+		if (commitId == null || commitId.isBlank()) {
+			return McpValidationResult.error("commitId must be a non-empty string.", intent,
+					List.of("commitId is required."));
+		}
+		int resolvedParentIndex = parentIndex == null ? 0 : parentIndex;
+		if (resolvedParentIndex < 0) {
+			return McpValidationResult.error("parentIndex must be greater than or equal to 0.", intent,
+					List.of("parentIndex=" + resolvedParentIndex));
+		}
+
+		try {
+			ProjectASTDiff diff = diffCommit(repositoryPath, commitId, resolvedParentIndex, 300);
+			return new McpIntentValidator().validate(diff, intent, maxCandidates);
+		} catch (Exception e) {
+			return McpValidationResult.error("Commit validation failed: " + e.getMessage(), intent,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpValidationResult validatePullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds,
+			McpRefactoringIntent intent, int maxCandidates) {
+		if (intent == null) {
+			return McpValidationResult.error("intent is required.", null, List.of("intent=null"));
+		}
+		if (maxCandidates < 0) {
+			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
+					List.of("maxCandidates=" + maxCandidates));
+		}
+		if (pullRequestId <= 0) {
+			return McpValidationResult.error("pullRequestId must be greater than 0.", intent,
+					List.of("pullRequestId=" + pullRequestId));
+		}
+		if (timeoutSeconds <= 0) {
+			return McpValidationResult.error("timeoutSeconds must be greater than 0.", intent,
+					List.of("timeoutSeconds=" + timeoutSeconds));
+		}
+
+		String resolvedCloneUrl;
+		try {
+			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
+		} catch (IllegalArgumentException e) {
+			return McpValidationResult.error(e.getMessage(), intent, List.of("cloneUrl is not available."));
+		}
+
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
+			return new McpIntentValidator().validate(diff, intent, maxCandidates);
+		} catch (Exception e) {
+			return McpValidationResult.error("Pull-request validation failed: " + e.getMessage(), intent,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpValidationResult validateDirectories(Path beforePath, Path afterPath, McpRefactoringIntent intent,
+			int maxCandidates) {
+		if (intent == null) {
+			return McpValidationResult.error("intent is required.", null, List.of("intent=null"));
+		}
+		if (maxCandidates < 0) {
+			return McpValidationResult.error("maxCandidates must be greater than or equal to 0.", intent,
+					List.of("maxCandidates=" + maxCandidates));
+		}
+
+		try {
+			requireExistingAbsolutePath(beforePath, "beforePath");
+			requireExistingAbsolutePath(afterPath, "afterPath");
+			ProjectASTDiff diff = directoryDiffer.diffAtDirectories(beforePath, afterPath);
+			return new McpIntentValidator().validate(diff, intent, maxCandidates);
+		} catch (Exception e) {
+			return McpValidationResult.error("Directory validation failed: " + e.getMessage(), intent,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpAnalysisResult analyzeWorktree(Path repositoryPath, String baseRef, boolean includeUntracked, int maxFiles,
+			int maxBytesPerFile, int maxRefactorings) {
+		if (maxRefactorings < 0) {
+			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
+					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		try {
+			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
+					.collect(resolvedRepositoryPath, baseRef, includeUntracked, maxFiles, maxBytesPerFile);
+			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
+			if (diff == null) {
+				return McpAnalysisResult.error("Worktree analysis did not produce a diff.",
+						List.of("RefactoringMiner returned null."));
+			}
+			return McpAnalysisResult.ok(diff, maxRefactorings, changes.warnings());
+		} catch (Exception e) {
+			return McpAnalysisResult.error("Worktree analysis failed: " + e.getMessage(), List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpAnalysisResult analyzeCommit(Path repositoryPath, String commitId, Integer parentIndex,
+			int maxRefactorings) {
+		if (maxRefactorings < 0) {
+			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
+					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		if (commitId == null || commitId.isBlank()) {
+			return McpAnalysisResult.error("commitId must be a non-empty string.", List.of("commitId is required."));
+		}
+		int resolvedParentIndex = parentIndex == null ? 0 : parentIndex;
+		if (resolvedParentIndex < 0) {
+			return McpAnalysisResult.error("parentIndex must be greater than or equal to 0.",
+					List.of("parentIndex=" + resolvedParentIndex));
+		}
+
+		try {
+			ProjectASTDiff diff = diffCommit(repositoryPath, commitId, resolvedParentIndex, 300);
+			return toResult(diff, maxRefactorings, "Commit");
+		} catch (Exception e) {
+			return McpAnalysisResult.error("Commit analysis failed: " + e.getMessage(), List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpAnalysisResult analyzePullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds,
+			int maxRefactorings) {
+		if (maxRefactorings < 0) {
+			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
+					List.of("maxRefactorings=" + maxRefactorings));
+		}
+		if (pullRequestId <= 0) {
+			return McpAnalysisResult.error("pullRequestId must be greater than 0.",
+					List.of("pullRequestId=" + pullRequestId));
+		}
+		if (timeoutSeconds <= 0) {
+			return McpAnalysisResult.error("timeoutSeconds must be greater than 0.",
+					List.of("timeoutSeconds=" + timeoutSeconds));
+		}
+
+		String resolvedCloneUrl;
+		try {
+			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
+		} catch (IllegalArgumentException e) {
+			return McpAnalysisResult.error(e.getMessage(), List.of("cloneUrl is not available."));
+		}
+
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
+			return toResult(diff, maxRefactorings, "Pull-request");
+		} catch (Exception e) {
+			return McpAnalysisResult.error("Pull-request analysis failed: " + e.getMessage(),
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpAnalysisResult analyzeDirectories(Path beforePath, Path afterPath, int maxRefactorings) {
+		if (maxRefactorings < 0) {
+			return McpAnalysisResult.error("maxRefactorings must be greater than or equal to 0.",
+					List.of("maxRefactorings=" + maxRefactorings));
+		}
+
+		try {
+			requireExistingAbsolutePath(beforePath, "beforePath");
+			requireExistingAbsolutePath(afterPath, "afterPath");
+			ProjectASTDiff diff = directoryDiffer.diffAtDirectories(beforePath, afterPath);
+			return toResult(diff, maxRefactorings, "Directory");
+		} catch (Exception e) {
+			return McpAnalysisResult.error("Directory analysis failed: " + e.getMessage(),
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int port) {
+		return diffFileContents(beforeFiles, afterFiles, port, DEFAULT_MAX_FILES, DEFAULT_MAX_BYTES_PER_FILE);
+	}
+
+	public McpDiffBrowserResult diffFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int port, int maxFiles, int maxBytesPerFile) {
+		if (beforeFiles == null || afterFiles == null) {
+			return McpDiffBrowserResult.error("beforeFiles and afterFiles are required.", port,
+					"Explicit file contents",
+					List.of("beforeFiles and afterFiles must be JSON objects mapping paths to file contents."));
+		}
+		if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
+			return McpDiffBrowserResult.error("At least one before or after file is required.", port,
+					"Explicit file contents", List.of("beforeFiles and afterFiles cannot both be empty."));
+		}
+		try {
+			validateFileContentBounds(beforeFiles, afterFiles, maxFiles, maxBytesPerFile);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), port, "Explicit file contents",
+					List.of("Invalid file-content bounds."));
+		}
+
+		String inputSummary = String.format("Explicit file contents: %d before files, %d after files.",
+				beforeFiles.size(), afterFiles.size());
+		try {
+			ProjectASTDiff diff = differ.diffAtFileContents(beforeFiles, afterFiles);
+			return launchDiffBrowser(diff, port, inputSummary, List.of());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("File-content diff browser failed: " + e.getMessage(), port,
+					inputSummary, List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffWorktree(Path repositoryPath, String baseRef, boolean includeUntracked,
+			int maxFiles, int maxBytesPerFile, int port) {
+		String resolvedBaseRef = baseRef == null || baseRef.isBlank() ? "HEAD" : baseRef;
+		Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+		String inputSummary = "Worktree changes in " + resolvedRepositoryPath + " against " + resolvedBaseRef + ".";
+		try {
+			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
+					.collect(resolvedRepositoryPath, resolvedBaseRef, includeUntracked, maxFiles, maxBytesPerFile);
+			ProjectASTDiff diff = differ.diffAtFileContents(changes.beforeFiles(), changes.afterFiles());
+			return launchDiffBrowser(diff, port, inputSummary, changes.warnings());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("Worktree diff browser failed: " + e.getMessage(), port,
+					inputSummary, List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffCommit(Path repositoryPath, String commitId, Integer parentIndex, int port) {
+		if (commitId == null || commitId.isBlank()) {
+			return McpDiffBrowserResult.error("commitId must be a non-empty string.", port, "Commit diff",
+					List.of("commitId is required."));
+		}
+		int resolvedParentIndex = parentIndex == null ? 0 : parentIndex;
+		if (resolvedParentIndex < 0) {
+			return McpDiffBrowserResult.error("parentIndex must be greater than or equal to 0.", port,
+					"Commit diff", List.of("parentIndex=" + resolvedParentIndex));
+		}
+
+		String inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, repositoryPath,
+				resolvedParentIndex);
+		try {
+			Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+			inputSummary = String.format("Commit %s in %s against parent index %d.", commitId, resolvedRepositoryPath,
+					resolvedParentIndex);
+			ProjectASTDiff diff = diffCommit(resolvedRepositoryPath, commitId, resolvedParentIndex, 300);
+			return launchDiffBrowser(diff, port, inputSummary, List.of());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("Commit diff browser failed: " + e.getMessage(), port, inputSummary,
+					List.of(e.getClass().getName()));
+		}
+	}
+
+	public McpDiffBrowserResult diffPullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds, int port) {
+		if (pullRequestId <= 0) {
+			return McpDiffBrowserResult.error("pullRequestId must be greater than 0.", port, "Pull-request diff",
+					List.of("pullRequestId=" + pullRequestId));
+		}
+		if (timeoutSeconds <= 0) {
+			return McpDiffBrowserResult.error("timeoutSeconds must be greater than 0.", port, "Pull-request diff",
+					List.of("timeoutSeconds=" + timeoutSeconds));
+		}
+
+		String inputSummary = "Pull request #" + pullRequestId + ".";
+		String resolvedCloneUrl;
+		try {
+			resolvedCloneUrl = resolvePullRequestCloneUrl(cloneUrl);
+		} catch (IllegalArgumentException e) {
+			return McpDiffBrowserResult.error(e.getMessage(), port, inputSummary,
+					List.of("cloneUrl is not available."));
+		}
+
+		inputSummary = String.format("Pull request #%d in %s.", pullRequestId, resolvedCloneUrl);
+		try {
+			ProjectASTDiff diff = pullRequestDiffer.diffAtPullRequest(resolvedCloneUrl, pullRequestId, timeoutSeconds);
+			return launchDiffBrowser(diff, port, inputSummary, List.of());
+		} catch (Exception e) {
+			return McpDiffBrowserResult.error("Pull-request diff browser failed: " + e.getMessage(), port,
+					inputSummary, List.of(e.getClass().getName()));
+		}
+	}
+
+	private ProjectASTDiff diffCommit(Path repositoryPath, String commitId, int parentIndex, int timeoutSeconds)
+			throws Exception {
+		Path resolvedRepositoryPath = resolveRepositoryPath(repositoryPath);
+		requireExistingAbsolutePath(resolvedRepositoryPath, "repositoryPath");
+		Path analysisRepositoryPath = resolveCommitRepositoryPath(resolvedRepositoryPath);
+		String cloneUrl = gitHubCloneUrl(analysisRepositoryPath);
+		if (cloneUrl != null && remoteCommitDiffer != null) {
+			try {
+				ProjectASTDiff remoteDiff = remoteCommitDiffer.diffAtMergeCommit(cloneUrl, commitId, parentIndex,
+						timeoutSeconds);
+				if (remoteDiff != null) {
+					return remoteDiff;
+				}
+			} catch (Exception ignored) {
+				// The commit may be local-only, or GitHub may be unreachable. Fall back to the mounted repository.
+			}
+		}
+		return commitDiffer.diffAtMergeCommit(analysisRepositoryPath, commitId, parentIndex);
+	}
+
+	private static void requireExistingAbsolutePath(Path path, String name) {
+		if (path == null) {
+			throw new IllegalArgumentException(name + " is required.");
+		}
+		if (!path.isAbsolute()) {
+			throw new IllegalArgumentException(name + " must be absolute.");
+		}
+		if (!Files.exists(path)) {
+			throw new IllegalArgumentException(name + " does not exist: " + path);
+		}
+	}
+
+	private static Path resolveRepositoryPath(Path repositoryPath) {
+		if (repositoryPath != null) {
+			return repositoryPath;
+		}
+		return Path.of(System.getProperty("user.dir"));
+	}
+
+	private static String resolvePullRequestCloneUrl(String cloneUrl) {
+		if (cloneUrl != null && !cloneUrl.isBlank()) {
+			return cloneUrl;
+		}
+		String discoveredCloneUrl = gitHubCloneUrl(resolveRepositoryPath(null));
+		if (discoveredCloneUrl == null) {
+			throw new IllegalArgumentException(
+					"cloneUrl is required unless the MCP server working directory has a GitHub origin remote.");
+		}
+		return discoveredCloneUrl;
+	}
+
+	static String gitHubCloneUrl(Path repositoryPath) {
+		try (Repository repository = new GitServiceImpl().openRepository(repositoryPath.toString())) {
+			return normalizeGitHubCloneUrl(repository.getConfig().getString("remote", "origin", "url"));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	static String normalizeGitHubCloneUrl(String cloneUrl) {
+		if (cloneUrl == null || cloneUrl.isBlank()) {
+			return null;
+		}
+		String trimmed = cloneUrl.trim();
+		String lower = trimmed.toLowerCase(Locale.ROOT);
+		if (lower.startsWith("https://github.com/")) {
+			return trimmed;
+		}
+		if (lower.startsWith("http://github.com/")) {
+			return "https://" + trimmed.substring("http://".length());
+		}
+		if (lower.startsWith("git@github.com:")) {
+			return "https://github.com/" + trimmed.substring("git@github.com:".length());
+		}
+		if (lower.startsWith("ssh://git@github.com/")) {
+			return "https://github.com/" + trimmed.substring("ssh://git@github.com/".length());
+		}
+		return null;
+	}
+
+	static Path resolveCommitRepositoryPath(Path repositoryPath) throws Exception {
+		Path realPath = repositoryPath.toRealPath();
+		Path dotGit = realPath.resolve(".git");
+		if (!Files.isRegularFile(dotGit)) {
+			return realPath;
+		}
+
+		String gitFile = Files.readString(dotGit).trim();
+		if (!gitFile.startsWith("gitdir:")) {
+			return realPath;
+		}
+
+		Path gitDir = Path.of(gitFile.substring("gitdir:".length()).trim());
+		if (!gitDir.isAbsolute()) {
+			gitDir = realPath.resolve(gitDir).normalize();
+		}
+
+		Path commonDirFile = gitDir.resolve("commondir");
+		if (!Files.isRegularFile(commonDirFile)) {
+			return realPath;
+		}
+
+		Path commonGitDir = Path.of(Files.readString(commonDirFile).trim());
+		if (!commonGitDir.isAbsolute()) {
+			commonGitDir = gitDir.resolve(commonGitDir).normalize();
+		}
+		if (commonGitDir.getFileName() != null && ".git".equals(commonGitDir.getFileName().toString())
+				&& commonGitDir.getParent() != null) {
+			return commonGitDir.getParent().toRealPath();
+		}
+		return realPath;
+	}
+
+	private static McpAnalysisResult toResult(ProjectASTDiff diff, int maxRefactorings, String label) {
+		if (diff == null) {
+			return McpAnalysisResult.error(label + " analysis did not produce a diff.",
+					List.of("RefactoringMiner returned null."));
+		}
+		return McpAnalysisResult.ok(diff, maxRefactorings);
+	}
+
+	private McpDiffBrowserResult launchDiffBrowser(ProjectASTDiff diff, int port, String inputSummary,
+			List<String> warnings) throws Exception {
+		if (diff == null) {
+			return McpDiffBrowserResult.error("Analysis did not produce a diff.", port, inputSummary,
+					List.of("RefactoringMiner returned null."));
+		}
+		return diffBrowserLauncher.launch(diff, port, inputSummary, warnings);
+	}
+
+	private static void validateFileContentBounds(Map<String, String> beforeFiles, Map<String, String> afterFiles,
+			int maxFiles, int maxBytesPerFile) {
+		if (maxFiles < 1) {
+			throw new IllegalArgumentException("maxFiles must be greater than 0.");
+		}
+		if (maxBytesPerFile < 1) {
+			throw new IllegalArgumentException("maxBytesPerFile must be greater than 0.");
+		}
+		Set<String> paths = new LinkedHashSet<>();
+		paths.addAll(beforeFiles.keySet());
+		paths.addAll(afterFiles.keySet());
+		if (paths.size() > maxFiles) {
+			throw new IllegalArgumentException("File-content input count " + paths.size()
+					+ " exceeds maxFiles=" + maxFiles + ".");
+		}
+		validateFileContentMap(beforeFiles, "beforeFiles", maxBytesPerFile);
+		validateFileContentMap(afterFiles, "afterFiles", maxBytesPerFile);
+	}
+
+	private static void validateFileContentMap(Map<String, String> files, String name, int maxBytesPerFile) {
+		for (Map.Entry<String, String> entry : files.entrySet()) {
+			if (entry.getValue() == null) {
+				throw new IllegalArgumentException(name + " contains null content for path: " + entry.getKey());
+			}
+			int bytes = entry.getValue().getBytes(StandardCharsets.UTF_8).length;
+			if (bytes > maxBytesPerFile) {
+				throw new IllegalArgumentException(entry.getKey() + " exceeds maxBytesPerFile=" + maxBytesPerFile + ".");
+			}
+		}
+	}
+
+	@FunctionalInterface
+	interface FileContentDiffer {
+		ProjectASTDiff diffAtFileContents(Map<String, String> beforeFiles, Map<String, String> afterFiles) throws Exception;
+	}
+
+	@FunctionalInterface
+	interface CommitDiffer {
+		ProjectASTDiff diffAtMergeCommit(Path repositoryPath, String commitId, int parentIndex) throws Exception;
+	}
+
+	@FunctionalInterface
+	interface RemoteCommitDiffer {
+		ProjectASTDiff diffAtMergeCommit(String cloneUrl, String commitId, int parentIndex, int timeoutSeconds)
+				throws Exception;
+	}
+
+	@FunctionalInterface
+	interface PullRequestDiffer {
+		ProjectASTDiff diffAtPullRequest(String cloneUrl, int pullRequestId, int timeoutSeconds) throws Exception;
+	}
+
+	@FunctionalInterface
+	interface DirectoryDiffer {
+		ProjectASTDiff diffAtDirectories(Path beforePath, Path afterPath) throws Exception;
+	}
+}

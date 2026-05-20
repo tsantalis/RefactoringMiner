@@ -400,6 +400,22 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	public boolean equalsIgnoringChangedTypeWithIdenticalInitializer(UMLAttribute attribute) {
+		AbstractExpression expr1 = this.getVariableDeclaration().getInitializer();
+		AbstractExpression expr2 = attribute.getVariableDeclaration().getInitializer();
+		boolean identicalInitializer = expr1 != null && expr2 != null && expr1.getString().equals(expr2.getString());
+		if(identicalInitializer && this.name.equals(attribute.name) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type))
+			return true;
+		if(!this.type.equals(attribute.type) || !this.type.equalsQualified(attribute.type)) {
+			boolean equalAnnotations = true;
+			if(this instanceof UMLEnumConstant && attribute instanceof UMLEnumConstant) {
+				equalAnnotations = this.getAnnotations().equals(attribute.getAnnotations());
+			}
+			return identicalInitializer && equalAnnotations && this.name.equals(attribute.name);
+		}
+		return false;
+	}
+
 	public boolean equalsIgnoringChangedVisibility(UMLAttribute attribute) {
 		if(this.name.equals(attribute.name) && this.type.equals(attribute.type))
 			return true;

@@ -65,6 +65,14 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
 		return false;
 	}
 
+	public boolean identicalAttributesAndAllMethodsMatched() {
+		return this.getCommonAtrributes().size() > 0 &&
+				this.getOriginalClass().getAttributes().size() == this.getCommonAtrributes().size() &&
+				this.getNextClass().getAttributes().size() == this.getCommonAtrributes().size() &&
+				this.getOriginalClass().getOperations().size() == operationBodyMapperList.size() &&
+				this.getNextClass().getOperations().size() == operationBodyMapperList.size();
+	}
+
 	protected void processOperations() throws RefactoringMinerTimedOutException {
 		for(UMLOperation operation : originalClass.getOperations()) {
     		UMLOperation operationWithTheSameSignature = nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
@@ -147,4 +155,10 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
 		return false;
 	}
 
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(originalClass.getName()).append(" -> ").append(nextClass.getName());
+		return sb.toString();
+	}
 }

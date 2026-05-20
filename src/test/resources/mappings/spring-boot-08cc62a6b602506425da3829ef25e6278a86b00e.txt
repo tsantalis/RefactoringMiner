@@ -1,0 +1,25 @@
+package getCreatesKey() : void -> package equalsAndHashCode() : void
+line range:43-43==line range:46-47
+line range:43-43==line range:47-47
+line range:42-42==line range:43-43
+package getWhenUppercaseProtocolCreatesKey() : void -> package equalsWhenUppercaseAndLowercaseProtocol() : void
+line range:48-48==line range:53-53
+line range:49-49==line range:55-55
+package getWhenHasHostAndPortCreatesKey() : void -> package equalsWhenHasHostAndPort() : void
+line range:55-55==line range:62-62
+line range:54-54==line range:60-60
+package getWhenHasUppercaseHostCreatesKey() : void -> package equalsWhenHasUppercaseAndLowercaseHost() : void
+line range:60-60==line range:67-67
+line range:61-61==line range:69-69
+package getWhenHasNoPortCreatesKeyWithDefaultPort() : void -> package equalsWhenHasNoPortUsesDefaultPort() : void
+line range:66-66==line range:74-74
+line range:67-67==line range:76-76
+package getWhenHasNoFileCreatesKey() : void -> package equalsWhenHasNoFile() : void
+line range:72-72==line range:81-81
+line range:73-73==line range:83-83
+package getWhenHasRuntimeRefCreatesKey() : void -> package equalsWhenHasRuntimeRef() : void
+line range:79-79==line range:90-90
+line range:78-78==line range:88-88
+package getWhenHasOtherRefCreatesKeyWithoutRef() : void -> package equalsWhenHasOtherRefIgnoresRefs() : void
+line range:84-84==line range:95-95
+line range:85-85==line range:97-97

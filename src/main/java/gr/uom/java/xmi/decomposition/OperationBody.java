@@ -65,17 +65,32 @@ import org.jetbrains.kotlin.psi.KtWhenEntry;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAssignProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstGetterProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstMethodProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstSetterProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstAccessibility;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstClassExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSpreadElement;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBigInt;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
+import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstClassMember;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDecl;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstDefaultDecl;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExportSpecifier;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
@@ -83,14 +98,21 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstImportSpecifier;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleExportName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstModuleItem;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstProp;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropOrSpread;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEnumMemberId;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsModuleName;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsNamespaceBody;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsTypeElement;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstVarDeclOrExpr;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstCatchClause;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstSwitchCase;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultDecl;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultExpr;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportDefaultSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportNamedSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstExportNamespaceSpecifier;
@@ -99,6 +121,8 @@ import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDefaultSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportNamedSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportStarAsSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstNamedExport;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsModuleBlock;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsNamespaceDecl;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
@@ -121,6 +145,7 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstThrowStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTryStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsEnumDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsModuleDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
@@ -177,10 +202,13 @@ import extension.umladapter.UMLAdapterUtil;
 
 import static extension.umladapter.UMLModelAdapter.createUMLClass;
 import static extension.umladapter.UMLModelAdapter.createUMLOperation;
+
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.TypeScriptFileProcessor;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -1775,41 +1803,7 @@ public class OperationBody {
 						else {
 							operation.setVisibility(Visibility.PRIVATE);
 						}
-						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, arrowExpr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
-						if(arrowExpr.getReturnType().isPresent()) {
-							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, arrowExpr.getReturnType().get().getTypeAnn(), 0);
-							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
-							operation.addParameter(returnParameter);
-						}
-						else if(typeAnnotation != null) {
-							UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
-							UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
-							operation.addParameter(returnParameter);
-						}
-						Optional<Swc4jAstTsTypeParamDecl> typeParams = arrowExpr.getTypeParams();
-						if(typeParams.isPresent()) {
-							List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
-							for(Swc4jAstTsTypeParam param : list) {
-								LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
-								UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
-								operation.addTypeParameter(umlTypeParameter);
-							}
-						}
-						List<LambdaExpressionObject> lambdas = expression.getLambdas();
-						if(lambdas.size() > 0) {
-							for(UMLParameter param : lambdas.get(0).getUmlParameters()) {
-								operation.addParameter(param);
-							}
-						}
-						ISwc4jAstBlockStmtOrExpr body = arrowExpr.getBody();
-						if(body instanceof Swc4jAstBlockStmt blockStmt) {
-							OperationBody operationBody = new OperationBody(sourceFolder, filePath, blockStmt, operation, activeVariableDeclarations, fileContent);
-							operation.setBody(operationBody);
-						}
-						else if(body instanceof ISwc4jAstExpr expr) {
-							AbstractExpression bodyExpr = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
-							operation.setDefaultExpression(bodyExpr);
-						}
+						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation);
 						int startSignatureOffset = variableDecl.getSpan().getStart();
 						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
@@ -1832,6 +1826,17 @@ public class OperationBody {
 						}
 						return;
 					}
+					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+						List<UMLImport> imports = new ArrayList<>();
+						UMLClass umlClass = new UMLClass(container.getClassName(), identifiers.get(0).getId().getSym(), location, true, imports);
+						umlClass.setObject(true);
+						umlClass.setVisibility(Visibility.PUBLIC);
+						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
+						addToContainer(container, umlClass);
+						return;
+					}
 				}
 			}
 			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
@@ -1844,6 +1849,12 @@ public class OperationBody {
 					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), container.getName());
 					attribute.setVariableDeclaration(vd);
 					attribute.setVisibility(Visibility.PRIVATE);
+					for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+						if(attribute.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+							attribute.addAnonymousClass(anonymousClass);
+							anonymousClass.addParentContainer(attribute);
+						}
+					}
 					((ModuleContainer)container).addNestedAttribute(attribute);
 				}
 			}
@@ -1907,11 +1918,48 @@ public class OperationBody {
 					umlClass.addImplementedInterface(type);
 				}
 			}
-			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
+			Optional<Swc4jAstTsTypeParamDecl> typeParams = interfaceDecl.getTypeParams();
+			if(typeParams.isPresent()) {
+				List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+				for(Swc4jAstTsTypeParam param : list) {
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+					UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+					umlClass.addTypeParameter(umlTypeParameter);
+				}
 			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
+			addToContainer(container, umlClass);
+		}
+		else if(statement instanceof Swc4jAstTsModuleDecl moduleDecl) {
+			ISwc4jAstTsModuleName moduleId = moduleDecl.getId();
+			String typeName = null;
+			if(moduleId instanceof Swc4jAstIdent ident) {
+				typeName = ident.getSym();
+			}
+			else if(moduleId instanceof Swc4jAstStr str) {
+				typeName = str.getValue();
+			}
+			LocationInfo location = new LocationInfo(sourceFolder, filePath, moduleDecl.getSpan(), CodeElementType.MODULE_DECLARATION, fileContent);
+			List<UMLImport> imports = new ArrayList<>();
+			UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+			if(moduleDecl.getParent() instanceof Swc4jAstExportDecl) {
+				umlClass.setVisibility(Visibility.PUBLIC);
+			}
+			else {
+				umlClass.setVisibility(Visibility.PRIVATE);
+			}
+			Optional<ISwc4jAstTsNamespaceBody> body = moduleDecl.getBody();
+			if(body.isPresent()) {
+				ISwc4jAstTsNamespaceBody namespaceBody = body.get();
+				if(namespaceBody instanceof Swc4jAstTsModuleBlock moduleBlock) {
+					CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, moduleBlock, 0, CodeElementType.BLOCK, fileContent);
+					List<ISwc4jAstModuleItem> moduleItems = moduleBlock.getBody();
+					for(ISwc4jAstModuleItem moduleItem : moduleItems) {
+						processStatement(sourceFolder, filePath, child, moduleItem, fileContent);
+					}
+				}
+				else if(namespaceBody instanceof Swc4jAstTsNamespaceDecl namespaceDecl) {
+					ISwc4jAstTsNamespaceBody namespaceBody2 = namespaceDecl.getBody();
+				}
 			}
 		}
 		else if(statement instanceof Swc4jAstClassDecl classDecl) {
@@ -1926,27 +1974,15 @@ public class OperationBody {
 				umlClass.setVisibility(Visibility.PRIVATE);
 			}
 			Swc4jAstClass clazz = classDecl.getClazz();
-			List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
-			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
-				ISwc4jAstExpr expr = inter.getExpr();
-				if(expr instanceof Swc4jAstIdent ident) {
-					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
-					umlClass.addImplementedInterface(type);
-				}
-			}
-			List<ISwc4jAstClassMember> typeElements = clazz.getBody();
-			processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
+			processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
 					umlClass.getComments().add(comment);
 				}
 			}
+			addToContainer(container, umlClass);
 			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
 				umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
 			}
 		}
 		else if(statement instanceof Swc4jAstTsEnumDecl enumDecl) {
@@ -1993,12 +2029,7 @@ public class OperationBody {
 					umlClass.addEnumConstant(attribute);
 				}
 			}
-			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
-			}
+			addToContainer(container, umlClass);
 		}
 		else if(statement instanceof Swc4jAstExportDecl exportDecl) {
 			ISwc4jAstDecl decl = exportDecl.getDecl();
@@ -2046,6 +2077,60 @@ public class OperationBody {
 				((ModuleContainer)container).addNamedExport(export);
 			}
 		}
+		else if(statement instanceof Swc4jAstExportDefaultDecl exportDefaultDecl) {
+			ISwc4jAstDefaultDecl defaultDecl = exportDefaultDecl.getDecl();
+			if(defaultDecl instanceof Swc4jAstFnExpr functionExpr) {
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, functionExpr.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+				String name = functionExpr.getIdent().isPresent() ? functionExpr.getIdent().get().getSym() : "";
+				String className = container.getClassName();
+				UMLOperation nested = new UMLOperation(name, location, className);
+				nested.setVisibility(Visibility.PUBLIC);
+				Swc4jAstFunction function = functionExpr.getFunction();
+				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested);
+				for(UMLComment comment : comments) {
+					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
+						nested.getComments().add(comment);
+					}
+				}
+				if(container instanceof UMLOperation) {
+					((UMLOperation)container).addNestedOperation(nested);
+				}
+				else if(container instanceof LambdaExpressionObject lambda) {
+					if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+						((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
+					}
+				}
+				else if(container instanceof ModuleContainer) {
+					((ModuleContainer)container).addNestedOperation(nested);
+				}
+			}
+			else if(defaultDecl instanceof Swc4jAstClassExpr classExpr) {
+				String typeName = classExpr.getIdent().isPresent() ? classExpr.getIdent().get().getSym() : "";
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, classExpr.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+				List<UMLImport> imports = new ArrayList<>();
+				UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
+				umlClass.setVisibility(Visibility.PUBLIC);
+				Swc4jAstClass clazz = classExpr.getClazz();
+				processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
+				for(UMLComment comment : comments) {
+					if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
+						umlClass.getComments().add(comment);
+					}
+				}
+				addToContainer(container, umlClass);
+				if(container instanceof ModuleContainer) {
+					umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
+				}
+			}
+			else if(defaultDecl instanceof Swc4jAstTsInterfaceDecl interfaceDecl) {
+				processStatement(sourceFolder, filePath, parent, interfaceDecl, fileContent);
+			}
+		}
+		else if(statement instanceof Swc4jAstExportDefaultExpr exportDefaultExpr) {
+			StatementObject child = new StatementObject(sourceFolder, filePath, exportDefaultExpr, parent.getDepth()+1, CodeElementType.EXPORT_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
 		else if(statement instanceof Swc4jAstTsTypeAliasDecl typeAliasDecl) {
 			String typeName = typeAliasDecl.getId().getSym();
 			LocationInfo location = new LocationInfo(sourceFolder, filePath, typeAliasDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
@@ -2089,12 +2174,7 @@ public class OperationBody {
 					umlClass.getComments().add(comment);
 				}
 			}
-			if(container instanceof ModuleContainer) {
-				((ModuleContainer)container).addNestedClass(umlClass);
-			}
-			else if(container instanceof UMLOperation) {
-				((UMLOperation)container).addNestedClass(umlClass);
-			}
+			addToContainer(container, umlClass);
 		}
 		else if(statement instanceof Swc4jAstImportDecl importDecl) {
 			String source = importDecl.getSrc().getValue();
@@ -2121,6 +2201,281 @@ public class OperationBody {
 				}
 			}
 		}
+	}
+
+	private static void processArrowExpression(String sourceFolder, String filePath, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
+			List<UMLClass> typeDeclarations, Swc4jAstArrowExpr arrowExpr, Swc4jAstTsTypeAnn typeAnnotation,
+			UMLOperation operation) {
+		if(arrowExpr.getReturnType().isPresent()) {
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, arrowExpr.getReturnType().get().getTypeAnn(), 0);
+			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+			operation.addParameter(returnParameter);
+		}
+		else if(typeAnnotation != null) {
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+			operation.addParameter(returnParameter);
+		}
+		Optional<Swc4jAstTsTypeParamDecl> typeParams = arrowExpr.getTypeParams();
+		if(typeParams.isPresent()) {
+			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+			for(Swc4jAstTsTypeParam param : list) {
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+				operation.addTypeParameter(umlTypeParameter);
+			}
+		}
+		List<ISwc4jAstPat> params = arrowExpr.getParams();
+		for(ISwc4jAstPat param : params) {
+			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);
+			List<UMLAttribute> attributes = new ArrayList<>();
+			Swc4jAstTsTypeAnn typeAnnotation2 = VariableDeclaration.extractTypeAnnotation(param);
+			if(typeAnnotation2 != null) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation2.getTypeAnn(), 0);
+				for(UMLClass typeDeclaration : typeDeclarations) {
+					if(type.getClassType().equals(typeDeclaration.getNonQualifiedName())) {
+						attributes = new ArrayList<>(typeDeclaration.getAttributes());
+						break;
+					}
+				}
+			}
+			int index = 0;
+			for(Swc4jAstBindingIdent identifier : identifiers) {
+				VariableDeclaration parameter = null;
+				if(identifiers.size() == attributes.size()) {
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, operation, activeVariableDeclarations, fileContent);
+				}
+				else {
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation2, identifier, operation, activeVariableDeclarations, fileContent);
+				}
+				if(parameter.getType() != null) {
+					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+					parameter.setParameter(true);
+					umlParameter.setVariableDeclaration(parameter);
+					operation.addParameter(umlParameter);
+				}
+				else {
+					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), new InferredType(), "in", false);
+					parameter.setParameter(true);
+					umlParameter.setVariableDeclaration(parameter);
+					operation.addParameter(umlParameter);
+				}
+				index++;
+			}
+		}
+		ISwc4jAstBlockStmtOrExpr body = arrowExpr.getBody();
+		if(body instanceof Swc4jAstBlockStmt blockStmt) {
+			OperationBody operationBody = new OperationBody(sourceFolder, filePath, blockStmt, operation, activeVariableDeclarations, fileContent);
+			operation.setBody(operationBody);
+		}
+		else if(body instanceof ISwc4jAstExpr expr) {
+			for(VariableDeclaration v : operation.getParameterDeclarationList()) {
+				if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+					activeVariableDeclarations.get(v.getVariableName()).add(v);
+				}
+				else {
+					Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+					set.add(v);
+					activeVariableDeclarations.put(v.getVariableName(), set);
+				}
+			}
+			AbstractExpression bodyExpr = new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, operation, activeVariableDeclarations, fileContent, typeDeclarations);
+			operation.setDefaultExpression(bodyExpr);
+		}
+	}
+
+	public static void processObjectLiteral(String sourceFolder, String filePath, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
+			List<UMLClass> typeDeclarations, List<UMLComment> comments, Swc4jAstObjectLit objectLiteral, UMLAbstractClass umlClass) {
+		List<ISwc4jAstPropOrSpread> props = objectLiteral.getProps();
+		for(ISwc4jAstPropOrSpread prop : props) {
+			if(prop instanceof ISwc4jAstProp astProp) {
+				if(astProp instanceof Swc4jAstAssignProp assignProp) {
+					Swc4jAstIdent key = assignProp.getKey();
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, key, container, activeVariableDeclarations, fileContent);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, assignProp.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					ISwc4jAstExpr expr = assignProp.getValue();
+					vd.setInitializer(new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations));
+					umlClass.addAttribute(attribute);
+				}
+				else if(astProp instanceof Swc4jAstGetterProp getterProp) {
+
+				}
+				else if(astProp instanceof Swc4jAstSetterProp setterProp) {
+
+				}
+				else if(astProp instanceof Swc4jAstMethodProp methodProp) {
+					ISwc4jAstPropName key = methodProp.getKey();
+					LocationInfo location = new LocationInfo(sourceFolder, filePath, methodProp.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+					String name = extractString(key, fileContent);
+					UMLOperation nested = new UMLOperation(name, location, umlClass.getName());
+					nested.setVisibility(Visibility.PUBLIC);
+					Swc4jAstFunction function = methodProp.getFunction();
+					TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested);
+					for(UMLComment comment : comments) {
+						if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
+							nested.getComments().add(comment);
+						}
+					}
+					umlClass.addOperation(nested);
+				}
+				else if(astProp instanceof Swc4jAstKeyValueProp keyValueProp) {
+					ISwc4jAstPropName key = keyValueProp.getKey();
+					String name = extractString(key, fileContent);
+					ISwc4jAstExpr expr = keyValueProp.getValue();
+					if(expr instanceof Swc4jAstObjectLit nestedObjectLiteral) {
+						if(nestedObjectLiteral.getProps().isEmpty()) {
+							if(key instanceof Swc4jAstIdentName identName) {
+								VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, identName, container, activeVariableDeclarations, fileContent);
+								vd.setAttribute(true);
+								LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+								UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+								attribute.setVariableDeclaration(vd);
+								attribute.setVisibility(Visibility.PRIVATE);
+								vd.setInitializer(new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations));
+								for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+									if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+										attribute.addAnonymousClass(anonymousClass);
+										anonymousClass.addParentContainer(attribute);
+									}
+								}
+								umlClass.addAttribute(attribute);
+							}
+						}
+						else {
+							LocationInfo location = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+							List<UMLImport> imports = new ArrayList<>();
+							UMLClass nestedClass = new UMLClass(umlClass.getName(), name, location, false, imports);
+							nestedClass.setObject(true);
+							nestedClass.setVisibility(Visibility.PUBLIC);
+							processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, nestedObjectLiteral, nestedClass);
+							addToContainer(container, nestedClass);
+						}
+					}
+					else if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+						UMLOperation operation = new UMLOperation(name, location, umlClass.getName());
+						operation.setVisibility(Visibility.PUBLIC);
+						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, null, operation);
+						int startSignatureOffset = keyValueProp.getSpan().getStart();
+						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
+						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+						operation.setActualSignature(text);
+						for(UMLComment comment : comments) {
+							if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
+								operation.getComments().add(comment);
+							}
+						}
+						umlClass.addOperation(operation);
+					}
+					else if (key instanceof Swc4jAstIdentName identName){
+						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, identName, container, activeVariableDeclarations, fileContent);
+						vd.setAttribute(true);
+						LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+						UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+						attribute.setVariableDeclaration(vd);
+						attribute.setVisibility(Visibility.PRIVATE);
+						vd.setInitializer(new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations));
+						for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+							if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+								attribute.addAnonymousClass(anonymousClass);
+								anonymousClass.addParentContainer(attribute);
+							}
+						}
+						umlClass.addAttribute(attribute);
+					}
+				}
+				else if(astProp instanceof Swc4jAstIdent ident) {
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, ident, container, activeVariableDeclarations, fileContent);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, ident.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					umlClass.addAttribute(attribute);
+				}
+			}
+			else if(prop instanceof Swc4jAstSpreadElement spread) {
+				if(spread.getExpr() instanceof Swc4jAstIdent ident) {
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, ident, container, activeVariableDeclarations, fileContent);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, spread.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					attribute.setVisibility(Visibility.PRIVATE);
+					umlClass.addAttribute(attribute);
+				}
+			}
+		}
+	}
+
+	private static void addToContainer(VariableDeclarationContainer container, UMLClass umlClass) {
+		if(container instanceof UMLOperation) {
+			((UMLOperation)container).addNestedClass(umlClass);
+		}
+		else if(container instanceof LambdaExpressionObject lambda) {
+			if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+				((UMLOperation)lambda.getOwner()).addNestedClass(umlClass);
+			}
+		}
+		else if(container instanceof ModuleContainer) {
+			((ModuleContainer)container).addNestedClass(umlClass);
+		}
+	}
+
+	public static String extractString(ISwc4jAstPropName propName, String fileContent) {
+		if(propName instanceof Swc4jAstBigInt bigInt) {
+			return bigInt.asString();
+		}
+		else if(propName instanceof Swc4jAstComputedPropName computed) {
+			ISwc4jAstExpr expr = computed.getExpr();
+			String text = fileContent.substring(expr.getSpan().getStart(), expr.getSpan().getEnd());
+			return text;
+		}
+		else if(propName instanceof Swc4jAstIdentName identName) {
+			return identName.getSym();
+		}
+		else if(propName instanceof Swc4jAstNumber number) {
+			return number.asString();
+		}
+		else if(propName instanceof Swc4jAstStr str) {
+			return str.getValue();
+		}
+		return "";
+	}
+
+	private void processTypeScriptClass(String sourceFolder, String filePath, String fileContent,
+			List<UMLClass> typeDeclarations, UMLClass umlClass, Swc4jAstClass clazz) {
+		Optional<ISwc4jAstExpr> superclass = clazz.getSuperClass();
+		if(superclass.isPresent()) {
+			ISwc4jAstExpr expr = superclass.get();
+			if(expr instanceof Swc4jAstIdent ident) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+				umlClass.setSuperclass(type);
+			}
+		}
+		List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
+		for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
+			ISwc4jAstExpr expr = inter.getExpr();
+			if(expr instanceof Swc4jAstIdent ident) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
+				umlClass.addImplementedInterface(type);
+			}
+		}
+		Optional<Swc4jAstTsTypeParamDecl> typeParams = clazz.getTypeParams();
+		if(typeParams.isPresent()) {
+			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+			for(Swc4jAstTsTypeParam param : list) {
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+				umlClass.addTypeParameter(umlTypeParameter);
+			}
+		}
+		List<ISwc4jAstClassMember> typeElements = clazz.getBody();
+		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
 	}
 
 	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,

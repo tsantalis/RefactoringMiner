@@ -16,6 +16,7 @@ import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
+import org.refactoringminer.mcp.RefactoringMinerMcpServer;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
@@ -47,6 +48,8 @@ public class RefactoringMiner {
 			detectAtGitHubPullRequest(args);
 		} else if (option.equalsIgnoreCase("diff")) {
 			new DiffDriver().execute(Arrays.copyOfRange(args, 1, args.length));
+		} else if (option.equalsIgnoreCase("mcp")) {
+			RefactoringMinerMcpServer.main(Arrays.copyOfRange(args, 1, args.length));
 		}
 		else {
 			throw argumentException();

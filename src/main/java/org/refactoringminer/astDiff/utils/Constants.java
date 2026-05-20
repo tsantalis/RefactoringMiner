@@ -41,6 +41,7 @@ public class Constants {
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
 			ASSIGNMENT = "assignment";
+			THROW_STATEMENT = "raise_statement";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -75,6 +76,7 @@ public class Constants {
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
 			ASSIGNMENT = "assignment";
+			THROW_STATEMENT = "throw_expression";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -109,6 +111,7 @@ public class Constants {
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "switch_case";
 			ASSIGNMENT = "assignment";
+			THROW_STATEMENT = "throw_statement";
 		}
 		else {
 			// Java values as default
@@ -144,6 +147,7 @@ public class Constants {
 			SWITCH_STATEMENT = "SwitchStatement";
 			SWITCH_CASE = "SwitchCase";
 			ASSIGNMENT = "Assignment";
+			THROW_STATEMENT = "ThrowStatement";
 		}
 	}
 
@@ -224,7 +228,7 @@ public class Constants {
     public final String SWITCH_CASE;
     public final String SWITCH_STATEMENT;
     public final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
-    public final String THROW_STATEMENT = "ThrowStatement";
+    public final String THROW_STATEMENT;
     public final String WHILE_STATEMENT;
     public final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
     public final String CAST_EXPRESSION = "CastExpression";
@@ -369,6 +373,7 @@ public class Constants {
     public final String COLON = ":";
     public final String CONST_KEYWORD = "const";
     public final String ASYNC_KEYWORD = "async";
+    public final String THROW_KEYWORD = "throw";
     public final String LET_KEYWORD = "let";
     public final String ARRAY_PATTERN = "array_pattern";
     public final String EXPORT_STATEMENT = "export_statement";
@@ -416,9 +421,11 @@ public class Constants {
     public final String IMPORT_STAR = "*";
     public final String IMPORT_SPECIFIER = "import_specifier";
     public final String EXTENDS_TYPE_CLAUSE = "extends_type_clause";
+    public final String EXTENDS_CLAUSE = "extends_clause";
     public final String EXTENDS_KEYWORD = "extends";
     public final String MEMBER_EXPRESSION = "member_expression";
     public final String METHOD_SIGNATURE = "method_signature";
+    public final String FUNCTION_SIGNATURE = "function_signature";
     public final String OPTIONAL_KEYWORD = "?";
     public final String UNION = "|";
     public final String GET_KEYWORD = "get";
@@ -431,4 +438,10 @@ public class Constants {
     public final String ENUM_KEYWORD = "enum";
     public final String ENUM_BODY = "enum_body";
     public final String ENUM_ASSIGNMENT = "enum_assignment";
+    public final String AMBIENT_DECLARATION = "ambient_declaration";
+    public final String DECLARE_KEYWORD = "declare";
+    public final String GENERATOR_FUNCTION_DECLARATION = "generator_function_declaration";
+    public final String OBJECT = "object";
+    public final String SHORTHAND_PROPERTY_IDENTIFIER = "shorthand_property_identifier";
+    public final String PAIR = "pair";
 }

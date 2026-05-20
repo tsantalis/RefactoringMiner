@@ -1,29 +1,24 @@
-private cClassExtractor : Inferred -> private cClassConfig : ClassExtractionConfig
+c-cpp.cClassExtractor -> c-cpp.cClassConfig
 line range:148-151==line range:6-9
-private cppClassExtractor : Inferred -> private cppClassConfig : ClassExtractionConfig
+c-cpp.cppClassExtractor -> c-cpp.cppClassConfig
 line range:153-157==line range:11-15
-private csharpProvider : Inferred -> private csharpClassConfig : ClassExtractionConfig
-line range:117-149==line range:6-24
-private dartProvider : Inferred -> private dartClassConfig : ClassExtractionConfig
-line range:86-103==line range:6-10
-private goProvider : Inferred -> private goClassConfig : ClassExtractionConfig
-line range:39-39==line range:11-11
-line range:43-43==line range:15-15
-line range:24-50==line range:6-21
-private javaProvider : Inferred -> private javaClassConfig : ClassExtractionConfig
-line range:23-51==line range:10-25
-private kotlinProvider : Inferred -> private kotlinClassConfig : ClassExtractionConfig
-line range:117-117==line range:38-38
-line range:98-126==line range:31-40
-private phpProvider : Inferred -> private phpClassConfig : ClassExtractionConfig
-line range:232-250==line range:6-10
-private pythonProvider : Inferred -> private pythonClassConfig : ClassExtractionConfig
-line range:56-74==line range:6-10
-private rubyProvider : Inferred -> private rubyClassConfig : ClassExtractionConfig
-line range:102-137==line range:6-10
-private rustProvider : Inferred -> private rustClassConfig : ClassExtractionConfig
-line range:114-134==line range:6-10
-private swiftProvider : Inferred -> private swiftClassConfig : ClassExtractionConfig
-line range:255-255==line range:13-13
-line range:256-256==line range:14-14
-line range:234-262==line range:6-17
+csharp.csharpProvider.classExtractor -> csharp.csharpClassConfig
+line range:129-147==line range:6-24
+dart.dartProvider.classExtractor -> dart.dartClassConfig
+line range:96-100==line range:6-10
+go.goProvider.classExtractor -> go.goClassConfig
+line range:34-49==line range:6-21
+java.javaProvider.classExtractor -> jvm.javaClassConfig
+line range:35-50==line range:10-25
+kotlin.kotlinProvider.classExtractor -> jvm.kotlinClassConfig
+line range:110-119==line range:31-40
+php.phpProvider.classExtractor -> php.phpClassConfig
+line range:242-246==line range:6-10
+python.pythonProvider.classExtractor -> python.pythonClassConfig
+line range:68-72==line range:6-10
+ruby.rubyProvider.classExtractor -> ruby.rubyClassConfig
+line range:131-135==line range:6-10
+rust.rustProvider.classExtractor -> rust.rustClassConfig
+line range:128-132==line range:6-10
+swift.swiftProvider.classExtractor -> swift.swiftClassConfig
+line range:248-259==line range:6-17

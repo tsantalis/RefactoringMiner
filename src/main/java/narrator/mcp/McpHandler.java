@@ -78,17 +78,14 @@ public class McpHandler {
         JsonArray tools = new JsonArray();
         
         tools.add(createToolDefinition("get_available_clusters",
-                "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
+                "Get the available cluster indices (groups of related changes) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. MANDATORY: Before providing the chapter's explanation, you should check if the change has associated containers (indicated by '(Containers: N)' in the output) and consider calling get_container to gain better visibility into the surrounding code if it's necessary or helpful. After analyzing the content, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
+                "Begin the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter 1 of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: Before providing the chapter's explanation, you should check if the change has associated containers (indicated by '(Containers: N)' in the output) and consider calling get_container to gain better visibility into the surrounding code if it's necessary or helpful. After analyzing the content, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Get the next chapter in the narrative for the cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "clusterIndex"));
-        tools.add(createToolDefinition("get_container",
-                "Get a larger container for a specific chapter in a cluster to have better visibility about its role within the surrounding code. Each call returns the next larger semantic container.",
-                "url", "clusterIndex", "chapterIndex"));
         result.add("tools", tools);
         response.add("result", result);
     }
@@ -208,8 +205,6 @@ public class McpHandler {
             int nextIndex = clusterProgress.getOrDefault(stateKey, 0);
             clusterProgress.put(stateKey, nextIndex + 1);
             return narrateClusterChapter(url, clusterIndex, nextIndex + 1);
-        } else if ("get_container".equals(toolName)) {
-            return fetchContainer(url, arguments);
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
@@ -265,57 +260,6 @@ public class McpHandler {
         List<Cluster> clusters = getOrComputeClusters(url);
         int count = clusters.size();
         return count == 0 ? "No clusters found." : "Available clusters: 1-" + count;
-    }
-
-    private String fetchContainer(String url, JsonObject arguments) throws Exception {
-        if (!arguments.has("clusterIndex") || !arguments.has("chapterIndex")) {
-            throw new IllegalArgumentException("Missing required arguments: clusterIndex, chapterIndex");
-        }
-
-        int clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
-        int chapterIndex = Integer.parseInt(arguments.get("chapterIndex").getAsString()) - 1;
-        
-        String stateKey = url + ":" + clusterIndex + ":" + chapterIndex;
-        int currentLevel = containerLevels.getOrDefault(stateKey, 0) + 1;
-        containerLevels.put(stateKey, currentLevel);
-
-        String narrativeCacheKey = getNarrativeCacheKey(url, clusterIndex);
-        List<Leaf> leaves = cacheManager.getNarrative(narrativeCacheKey);
-        if (leaves == null) {
-            List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(url);
-            if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
-                throw new IllegalArgumentException("Cluster index out of range");
-            }
-
-            List<TraversalPattern> components = hierarchy.get(clusterIndex);
-            leaves = new Narrator().narrate(components);
-            cacheManager.putNarrative(narrativeCacheKey, leaves);
-        }
-        
-        if (chapterIndex < 0 || chapterIndex >= leaves.size()) {
-            throw new IllegalArgumentException("Chapter index out of range");
-        }
-
-        Leaf leaf = leaves.get(chapterIndex);
-        Node leadNode = ((TraversalPattern) leaf).getLead();
-        
-        if (leadNode == null) {
-            throw new IllegalArgumentException("Could not resolve lead node for chapter");
-        }
-
-        List<Cluster> clusters = getOrComputeClusters(url);
-        Cluster cluster = clusters.get(clusterIndex);
-        Graph<Node, Edge> graph = cluster.getGraph();
-        List<Node> semanticContexts = Context.get(graph, leadNode).stream()
-                .filter(n -> n.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
-                .toList();
-
-        if (currentLevel > semanticContexts.size()) {
-            return "No more containers available";
-        }
-        Node current = semanticContexts.get(currentLevel - 1);
-
-        return "Container level " + currentLevel + ":\n" + current.mapping(cluster);
     }
 
     private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {

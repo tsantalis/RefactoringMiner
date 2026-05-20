@@ -217,18 +217,20 @@ tasks.register('mcpSmoke', JavaExec) {
     }
 }
 
-bootJar {
-    enabled = true
+
+tasks.register('changeNarratorRestApi', org.springframework.boot.gradle.tasks.bundling.BootJar) {
+    group = 'build'
+    description = 'Builds the ChangeNarrator executable JAR.'
     archiveFileName = 'ChangeNarrator.jar'
     mainClass.set('narrator.restapi.RestAPI')
 }
 
 
 // Use shadowJar for the MCP server to ensure all dependencies are bundled into a single fat JAR
-tasks.register('shadowJarMcp', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
+tasks.register('changeNarratorMcp', com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
     group = 'build'
-    description = 'Builds a fat JAR for the MCP server'
-    archiveFileName = 'ChangeNarratorMCP-fat.jar'
+    description = 'Builds the ChangeNarrator MCP server'
+    archiveFileName = 'ChangeNarratorMCP.jar'
     zip64 = true
 
     configurations = [project.configurations.runtimeClasspath]

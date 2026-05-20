@@ -134,7 +134,13 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 		}
 		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
 		if(initializer1 != null && initializer2 != null) {
-			if(!initializer1.getExpression().equals(initializer2.getExpression())) {
+			boolean equalTypeScript = false;
+			if(initializer1.getLANG().equals(Constants.TYPESCRIPT) && initializer2.getLANG().equals(Constants.TYPESCRIPT)) {
+				String s1 = initializer1.getExpression().replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				String s2 = initializer2.getExpression().replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+				equalTypeScript = s1.equals(s2);
+			}
+			if(!initializer1.getExpression().equals(initializer2.getExpression()) && !equalTypeScript) {
 				initializerChanged = true;
 			}
 			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);

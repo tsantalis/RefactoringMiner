@@ -38,6 +38,7 @@ import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.PullUpOperationRefactoring;
 import gr.uom.java.xmi.diff.PushDownOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
+import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.SplitOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
@@ -2377,6 +2378,12 @@ public class TestStatementMappings {
 					RenameOperationRefactoring ex = (RenameOperationRefactoring)ref;
 					UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
 					mapperInfo(bodyMapper, actual);
+				}
+				else if(ref instanceof ReplaceAnonymousWithClassRefactoring) {
+					ReplaceAnonymousWithClassRefactoring ex = (ReplaceAnonymousWithClassRefactoring)ref;
+					actual.add(ex.getAnonymousClass().getName() + " -> " + ex.getAddedClass().getName());
+					String line = ex.getAnonymousClass().getLocationInfo() + "==" + ex.getAddedClass().getLocationInfo();
+					actual.add(line);
 				}
 			}
 			for(UMLOperationBodyMapper parentMapper : parentMappers) {

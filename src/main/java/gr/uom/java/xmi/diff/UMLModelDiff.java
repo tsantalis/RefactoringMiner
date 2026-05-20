@@ -3421,17 +3421,14 @@ public class UMLModelDiff {
 						UMLAnonymousToClassDiff diff = new UMLAnonymousToClassDiff(anonymousClass, addedClass, this);
 						diff.process();
 						List<UMLOperationBodyMapper> matchedOperationMappers = diff.getOperationBodyMapperList();
-						boolean allIdenticalAttributes = diff.getCommonAtrributes().size() > 0 &&
-								diff.getOriginalClass().getAttributes().size() == diff.getCommonAtrributes().size() &&
-								diff.getNextClass().getAttributes().size() == diff.getCommonAtrributes().size();
-						if(matchedOperationMappers.size() > 0 || allIdenticalAttributes) {
+						if(matchedOperationMappers.size() > 0 || diff.identicalAttributesAndAllMethodsMatched()) {
 							matchingDiffs.add(diff);
 						}
 					}
 				}
 				if(matchingDiffs.size() == 1) {
 					UMLAnonymousToClassDiff diff = matchingDiffs.get(0);
-					if(diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) {
+					if((diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) || diff.identicalAttributesAndAllMethodsMatched()) {
 						List<Refactoring> anonymousClassDiffRefactorings = diff.getRefactorings();
 						Set<Refactoring> toBeRemoved = new LinkedHashSet<>();
 						for(Refactoring r : anonymousClassDiffRefactorings) {
@@ -3460,7 +3457,8 @@ public class UMLModelDiff {
 				}
 				else if(matchingDiffs.size() > 1) {
 					for(UMLAnonymousToClassDiff diff : matchingDiffs) {
-						if(nameCompatibility(diff) && diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) {
+						boolean mappingsAndConstructorCallFound = diff.containsStatementMappings() && constructorCallFound(classDiff, diff);
+						if(nameCompatibility(diff) && (mappingsAndConstructorCallFound || diff.identicalAttributesAndAllMethodsMatched())) {
 							List<Refactoring> anonymousClassDiffRefactorings = diff.getRefactorings();
 							Set<Refactoring> toBeRemoved = new LinkedHashSet<>();
 							for(Refactoring r : anonymousClassDiffRefactorings) {
@@ -3505,6 +3503,9 @@ public class UMLModelDiff {
 		for(String token1 : tokens1) {
 			for(String token2 : tokens2) {
 				if(token1.equals(token2)) {
+					commonTokens++;
+				}
+				else if(token2.endsWith("." + token1)) {
 					commonTokens++;
 				}
 			}

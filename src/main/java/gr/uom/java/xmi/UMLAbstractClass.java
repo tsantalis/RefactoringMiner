@@ -1096,10 +1096,11 @@ public abstract class UMLAbstractClass implements AnnotationProvider {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 		}
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
+		boolean typeScriptObjectWithNonIdenticalValues = this.isObject() && umlClass.isObject() && PathFileUtils.isTypeScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile()) && identicalInitializerAttributes != commonAttributes.size();
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
 				(identicalOperations.size() > Math.floor(commonOperations.size()/3.0*2.0) && commonOperations.size() >= 2 && identicalOperations.size() >= Math.floor((totalOperations - abstractOperationsToBeDeducted)/3.0*2.0)) ||
-				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
+				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0) && !typeScriptObjectWithNonIdenticalValues) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1) ||
 				(identicalAttributes.size() == totalAttributes && totalAttributes > 0) ||
@@ -1258,6 +1259,9 @@ public abstract class UMLAbstractClass implements AnnotationProvider {
 		boolean emptyModules = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && (this.container.isEmpty() || umlClass.container.isEmpty()) && totalAttributes + totalOperations == 0;
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes && !emptyModules) {
 			if(allAttributes == totalAttributes && identicalAllAttributes != allAttributes && totalOperations == 0) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
+			}
+			if(this.isObject() && umlClass.isObject() && PathFileUtils.isTypeScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile()) && identicalInitializerAttributes != commonAttributes.size()) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, true);

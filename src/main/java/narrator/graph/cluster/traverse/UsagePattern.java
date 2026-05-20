@@ -87,9 +87,21 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        List<Node> semanticContexts = Context.get(cluster.getGraph(), useNode).stream()
-                .filter(n -> n.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
-                .toList();
-        return "Usage of " + useNode.mapping(cluster) + " (Containers: " + semanticContexts.size() + ")";
+        String subject = useNode.mapping(cluster);
+        Set<Node> usedNodes = getUsedNodes();
+        
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("# Subject:\n```\n").append(subject).append("\n```\n");
+        
+        if (!usedNodes.isEmpty()) {
+            prompt.append("\nContext:\n```\n");
+            List<String> mappings = usedNodes.stream()
+                    .map(n -> n.mapping(cluster))
+                    .toList();
+            prompt.append(String.join("\n", mappings));
+            prompt.append("\n```\n");
+        }
+        
+        return prompt.toString();
     }
 }

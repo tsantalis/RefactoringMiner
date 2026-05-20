@@ -28,9 +28,14 @@ public class SingularPattern extends TraversalPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        List<Node> semanticContexts = Context.get(cluster.getGraph(), node).stream()
-                .filter(n -> n.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
-                .toList();
-        return node.mapping(cluster) + " (Containers: " + semanticContexts.size() + ")";
+        String basePrompt = node.base(cluster);
+        String mappingPrompt = node.mapping(cluster);
+
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("# Subject:\n```\n").append(basePrompt).append("\n```\n");
+        if (!basePrompt.equals(mappingPrompt)) {
+            prompt.append("\nContext:\n```\n").append(mappingPrompt).append("\n```\n");
+        }
+        return prompt.toString();
     }
 }

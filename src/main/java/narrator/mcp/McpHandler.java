@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import narrator.Driver;
+import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
@@ -80,10 +81,10 @@ public class McpHandler {
                 "Get the available cluster indices (groups of refactoring patterns) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
+                "Start reading the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter X of Y]. MANDATORY: Before providing the chapter's explanation, you should check if the change has associated containers (indicated by '(Containers: N)' in the output) and consider calling get_container to gain better visibility into the surrounding code if it's necessary or helpful. After analyzing the content, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, then ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Get the next chapter in the narrative for the current cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: Before providing the chapter's explanation, you should check if the change has associated containers (indicated by '(Containers: N)' in the output) and consider calling get_container to gain better visibility into the surrounding code if it's necessary or helpful. After analyzing the content, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_container",
                 "Get a larger container for a specific chapter in a cluster to have better visibility about its role within the surrounding code. Each call returns the next larger semantic container.",
@@ -314,7 +315,7 @@ public class McpHandler {
         }
         Node current = semanticContexts.get(currentLevel - 1);
 
-        return "Container level " + currentLevel + ":\n" + current.getContent();
+        return "Container level " + currentLevel + ":\n" + current.mapping(cluster);
     }
 
     private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {

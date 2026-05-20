@@ -373,6 +373,17 @@ public class Node {
     return type;
   }
 
+  public List<Node> getSemanticContexts(Cluster cluster) {
+    List<Node> contexts = Context.get(cluster.getGraph(), this);
+    List<Node> semanticContexts = new ArrayList<>();
+    for (Node contextNode : contexts) {
+      if (contextNode.getNodeType().equals(NodeType.SEMANTIC_CONTEXT)) {
+        semanticContexts.add(contextNode);
+      }
+    }
+    return semanticContexts;
+  }
+
   private String getContextString(Cluster cluster) {
     List<Node> contexts = Context.get(cluster.getGraph(), this);
     List<Node> locationContexts = new ArrayList<>();

@@ -80,6 +80,9 @@ public class McpHandler {
         tools.add(createToolDefinition("get_line_range",
                 "Get the line range of a change for a specific changeId. Returns the start and end line numbers.",
                 "url", "changeId"));
+        tools.add(createToolDefinition("get_semantic_context",
+                "Get the next semantic context of a node given its changeId. This is useful when the current change's content (e.g., a simple name) is not understandable in isolation. Use this tool to retrieve the surrounding construct (e.g., the method invocation or statement) to provide a more informed explanation of the change. You can call this recursively using the returned context's ID to climb higher in the AST hierarchy.",
+                "url", "changeId"));
         tools.add(createToolDefinition("get_available_clusters",
                 "Get the available cluster indices (groups of related changes) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
@@ -200,6 +203,12 @@ public class McpHandler {
             String stateKey = url + ":" + clusterIndex;
             clusterProgress.put(stateKey, 0);
             return narrateClusterChapter(url, clusterIndex, 0);
+        } else if ("get_semantic_context".equals(toolName)) {
+            if (!arguments.has("changeId")) {
+                throw new IllegalArgumentException("Missing required argument: changeId");
+            }
+            String changeId = arguments.get("changeId").getAsString();
+            return fetchNextSemanticContext(url, changeId);
         } else if ("get_next_cluster_chapter".equals(toolName)) {
             if (!arguments.has("clusterIndex")) {
                 throw new IllegalArgumentException("Missing required argument: clusterIndex");
@@ -230,6 +239,26 @@ public class McpHandler {
                     return String.format("Line Range: %d:%d - %d:%d", 
                             range.first.first, range.first.second, 
                             range.second.first, range.second.second);
+                }
+            }
+        }
+        throw new IllegalArgumentException("Could not find node with changeId: " + changeId);
+    }
+
+    private String fetchNextSemanticContext(String url, String changeId) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        for (Cluster cluster : clusters) {
+            for (Node node : cluster.getGraph().vertexSet()) {
+                if (node.getPromptId().equals(changeId)) {
+                    List<Node> semanticContexts = node.getSemanticContexts(cluster);
+                    if (semanticContexts.isEmpty()) {
+                        return "No semantic context found for this node.";
+                    }
+                    // Return the first semantic context (the immediate parent)
+                    Node contextNode = semanticContexts.get(0);
+                    return String.format("Semantic Context (ID: %s): %s", 
+                            contextNode.getPromptId(), 
+                            contextNode.getContent());
                 }
             }
         }
@@ -325,7 +354,7 @@ public class McpHandler {
         
         if (!isLastChapter) {
             int remaining = totalChapters - currentChapter;
-            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
+            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first. If the changes in this chapter are not clear in isolation, you can use the 'get_semantic_context' tool with the changeId of a node to understand its surrounding structural context. Then, ask the user if they would like to proceed to the next chapter (Yes/No).");
         } else {
             output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your final synthesis and explanation of the cluster.");
         }

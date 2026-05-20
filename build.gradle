@@ -6,6 +6,8 @@ plugins {
     id 'signing'
     id 'idea'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = "com.github.tsantalis"
@@ -79,7 +81,6 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.21'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
     implementation 'org.slf4j:slf4j-api:2.0.17'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.5.32'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.45.0'
     implementation 'org.apache.commons:commons-text:1.15.0'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'

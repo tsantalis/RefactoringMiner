@@ -10727,15 +10727,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : mappings) {
 			if(parent1 == null && parent2 == null) {
 				parent1 = mapping.getFragment1().getParent();
-				if(parent1.getParent() != null && parent1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
+				if(parent1 != null && parent1.getParent() != null && parent1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
 					parentWithSkippedTryBlocks1 = parent1.getParent().getParent();
 				}
 				else {
 					parentWithSkippedTryBlocks1 = parent1;
 				}
 				parent2 = mapping.getFragment2().getParent();
-				if(parent2.getParent() != null && parent2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
-					parentWithSkippedTryBlocks2 = parent2.getParent();
+				if(parent2 != null && parent2.getParent() != null && parent2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
+					parentWithSkippedTryBlocks2 = parent2.getParent().getParent();
 				}
 				else {
 					parentWithSkippedTryBlocks2 = parent2;

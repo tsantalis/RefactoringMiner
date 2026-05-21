@@ -43,11 +43,10 @@ public class Narrator {
                 return sub.getLead().isSrc();
             }).reversed()
               .thenComparing(sub -> {
-                if (sub instanceof SingularPattern) return 1;
-                if (sub instanceof UsagePattern) return 2;
+                if (sub instanceof AggregatorPattern) return 1;
+                if (sub instanceof SingularPattern) return 2;
                 if (sub instanceof SuccessivePattern) return 3;
-                if (sub instanceof TraversalComponent) return 4;
-                return 5;
+                return 4;
               }));
 
             for (TraversalPattern sub : sortedSubs) {

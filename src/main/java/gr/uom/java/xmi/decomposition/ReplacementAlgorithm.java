@@ -6213,7 +6213,7 @@ public class ReplacementAlgorithm {
 		else if(anonymousClassDeclarations1.size() == 0 && anonymousClassDeclarations2.size() == 1 && container2 != null && parentMapper == null) {
 			AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(0);
 			UMLAnonymousClass anonymousClass2 = operationBodyMapper.findAnonymousClass2(anonymousClassDeclaration2);
-			if(anonymousClass2.getOperations().size() == 1) {
+			if(anonymousClass2 != null && anonymousClass2.getOperations().size() == 1) {
 				UMLOperation anonymousClass2Operation = anonymousClass2.getOperations().get(0);
 				if(anonymousClass2Operation.getBody() != null) {
 					List<AbstractStatement> statements = anonymousClass2Operation.getBody().getCompositeStatement().getStatements();
@@ -6239,7 +6239,7 @@ public class ReplacementAlgorithm {
 		else if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && container1 != null && parentMapper == null) {
 			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
 			UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);
-			if(anonymousClass1.getOperations().size() == 1) {
+			if(anonymousClass1 != null && anonymousClass1.getOperations().size() == 1) {
 				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
 				if(anonymousClass1Operation.getBody() != null) {
 					List<AbstractCodeFragment> statements = anonymousClass1Operation.getBody().getCompositeStatement().getLeaves();

@@ -227,7 +227,9 @@ public abstract class UMLAbstractClassDiff {
 					if(class1.getName().equals(class2.getName()) || class1.getNonQualifiedName().equals(class2.getNonQualifiedName())) {
 						UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
 						classDiff.process();
-						this.nestedClassDiffList.add(classDiff);
+						if(classDiff.isEmpty()) {
+							this.nestedClassDiffList.add(classDiff);
+						}
 					}
 				}
 			}

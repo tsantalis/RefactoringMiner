@@ -36,12 +36,12 @@ public class TypeScriptDiffTest {
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
         boolean partial = info.getSrc_files() != null && !info.getSrc_files().isEmpty();
 
-        Set<ASTDiff> astDiffs = getProjectDiffLocally(info.makeURL());
+        Set<ASTDiff> astDiffs = getProjectDiffLocally(info);
         boolean hit = false;
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());
             if (partial)
-                if (!info.getSrc_files().contains(astDiff.getSrcPath()))
+                if (info.getSrc_files().size() > 1 && !info.getSrc_files().contains(astDiff.getSrcPath()))
                     continue;
             hit = true;
             String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");

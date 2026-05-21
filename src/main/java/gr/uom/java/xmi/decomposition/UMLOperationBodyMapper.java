@@ -10721,14 +10721,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean allUnderTheSameParent(Set<? extends AbstractCodeMapping> mappings) {
 		CompositeStatementObject parent1 = null;
 		CompositeStatementObject parent2 = null;
+		CompositeStatementObject parentWithSkippedTryBlocks1 = null;
+		CompositeStatementObject parentWithSkippedTryBlocks2 = null;
 		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : mappings) {
 			if(parent1 == null && parent2 == null) {
 				parent1 = mapping.getFragment1().getParent();
+				if(parent1.getParent() != null && parent1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
+					parentWithSkippedTryBlocks1 = parent1.getParent().getParent();
+				}
+				else {
+					parentWithSkippedTryBlocks1 = parent1;
+				}
 				parent2 = mapping.getFragment2().getParent();
+				if(parent2.getParent() != null && parent2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
+					parentWithSkippedTryBlocks2 = parent2.getParent();
+				}
+				else {
+					parentWithSkippedTryBlocks2 = parent2;
+				}
 				commonParentMappings.add(mapping);
 			}
 			else if(parent1 != null && parent2 != null && parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
+				commonParentMappings.add(mapping);
+			}
+			else if(parentWithSkippedTryBlocks1 != null && parentWithSkippedTryBlocks2 != null &&
+					parentWithSkippedTryBlocks1.equals(mapping.getFragment1().getParent()) && parentWithSkippedTryBlocks2.equals(mapping.getFragment2().getParent())) {
 				commonParentMappings.add(mapping);
 			}
 			else if(parent1 != null && parent2 != null && (parent1.equals(mapping.getFragment1().getParent()) || parent2.equals(mapping.getFragment2().getParent()))) {

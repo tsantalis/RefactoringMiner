@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.gen.jdt.JdtVisitor;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
@@ -11,8 +12,11 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl.ChangedFileInfo;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.util.Collections;
 import java.util.Set;
 
 import static gr.uom.java.xmi.JavaFileProcessor.getCompilationUnit;
@@ -50,7 +54,24 @@ public class UtilMethods {
     }
 
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {
-        return getProjectDiffLocally(info.makeURL());
+        if(info.getSrc_files() != null && info.getSrc_files().size() == 1) {
+            String cloneURL = info.getRepo();
+            String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));
+            String jsonFilePath = repoName + "-" + info.getCommit() + ".json";
+            File jsonFile = new File(new File(REPOS), jsonFilePath);
+            if(jsonFile.exists()) {
+                final ObjectMapper mapper = new ObjectMapper();
+                ChangedFileInfo changedFileInfo = mapper.readValue(jsonFile, ChangedFileInfo.class);
+                String folder1 = REPOS + "/" + repoName + "-" +
+                        changedFileInfo.getParentCommitId() + "/" + info.getSrc_files().iterator().next();
+                String folder2 = REPOS + "/" + repoName + "-" +
+                        changedFileInfo.getCurrentCommitId() + "/" + info.getSrc_files().iterator().next();
+                return new GitHistoryRefactoringMinerImpl().diffAtDirectories(Path.of(folder1), Path.of(folder2)).getDiffSet();
+            }
+            return Collections.emptySet();
+        }
+        else
+            return getProjectDiffLocally(info.makeURL());
     }
     public static String getDefect4jAfterDir(String projectDir, String bugID) {
         return getProperDir("after",projectDir,bugID);

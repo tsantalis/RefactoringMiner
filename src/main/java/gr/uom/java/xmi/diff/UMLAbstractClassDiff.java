@@ -212,12 +212,23 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private void processNestedClasses(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
-		for(UMLClass class1 : operation1.getNestedClasses()) {
-			for(UMLClass class2 : operation2.getNestedClasses()) {
-				if(class1.getName().equals(class2.getName()) || class1.getNonQualifiedName().equals(class2.getNonQualifiedName())) {
-					UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
-					classDiff.process();
-					this.nestedClassDiffList.add(classDiff);
+		if(operation1.getNestedClasses().size() == operation2.getNestedClasses().size() && operation1.getNestedClasses().toString().equals(operation2.getNestedClasses().toString())) {
+			for(int i=0; i<operation1.getNestedClasses().size(); i++) {
+				UMLClass class1 = operation1.getNestedClasses().get(i);
+				UMLClass class2 = operation2.getNestedClasses().get(i);
+				UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
+				classDiff.process();
+				this.nestedClassDiffList.add(classDiff);
+			}
+		}
+		else {
+			for(UMLClass class1 : operation1.getNestedClasses()) {
+				for(UMLClass class2 : operation2.getNestedClasses()) {
+					if(class1.getName().equals(class2.getName()) || class1.getNonQualifiedName().equals(class2.getNonQualifiedName())) {
+						UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
+						classDiff.process();
+						this.nestedClassDiffList.add(classDiff);
+					}
 				}
 			}
 		}

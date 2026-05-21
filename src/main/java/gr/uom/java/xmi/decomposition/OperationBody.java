@@ -2375,7 +2375,7 @@ public class OperationBody {
 						}
 						umlClass.addOperation(operation);
 					}
-					else if (key instanceof Swc4jAstIdentName identName){
+					else if (key instanceof Swc4jAstIdentName identName) {
 						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, identName, container, activeVariableDeclarations, fileContent);
 						vd.setAttribute(true);
 						LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);

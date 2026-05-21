@@ -32,6 +32,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
@@ -221,15 +222,46 @@ public abstract class UMLAbstractClassDiff {
 				this.nestedClassDiffList.add(classDiff);
 			}
 		}
-		else {
+		else if(operation1.getNestedClasses().size() <= operation2.getNestedClasses().size()) {
 			for(UMLClass class1 : operation1.getNestedClasses()) {
+				List<UMLClassDiff> nestedClassDiffs = new ArrayList<>();
 				for(UMLClass class2 : operation2.getNestedClasses()) {
 					if(class1.getName().equals(class2.getName()) || class1.getNonQualifiedName().equals(class2.getNonQualifiedName())) {
 						UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
-						classDiff.process();
-						if(classDiff.isEmpty()) {
-							this.nestedClassDiffList.add(classDiff);
-						}
+						nestedClassDiffs.add(classDiff);
+					}
+				}
+				for(UMLClassDiff nested : nestedClassDiffs) {
+					processNested(nested);
+				}
+			}
+		}
+		else if(operation1.getNestedClasses().size() > operation2.getNestedClasses().size()) {
+			for(UMLClass class2 : operation2.getNestedClasses()) {
+				List<UMLClassDiff> nestedClassDiffs = new ArrayList<>();
+				for(UMLClass class1 : operation1.getNestedClasses()) {
+					if(class1.getName().equals(class2.getName()) || class1.getNonQualifiedName().equals(class2.getNonQualifiedName())) {
+						UMLClassDiff classDiff = new UMLClassDiff(class1, class2, modelDiff);
+						nestedClassDiffs.add(classDiff);
+					}
+				}
+				for(UMLClassDiff nested : nestedClassDiffs) {
+					processNested(nested);
+				}
+			}
+		}
+	}
+
+	private void processNested(UMLClassDiff nested) throws RefactoringMinerTimedOutException {
+		if(nested.getOriginalClass().getParentStatement().isPresent() && nested.getNextClass().getParentStatement().isPresent()) {
+			AbstractStatement statement1 = nested.getOriginalClass().getParentStatement().get();
+			AbstractStatement statement2 = nested.getNextClass().getParentStatement().get();
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					if(mapping.getFragment1().equals(statement1) && mapping.getFragment2().equals(statement2)) {
+						this.nestedClassDiffList.add(nested);
+						nested.process();
+						return;
 					}
 				}
 			}

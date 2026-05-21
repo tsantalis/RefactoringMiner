@@ -1088,6 +1088,20 @@ public class OperationBody {
 				}
 			}
 		}
+		if(container instanceof ModuleContainer module) {
+			for(UMLClass nestedClass : module.getNestedClasses()) {
+				if(statement.getLocationInfo().subsumes(nestedClass.getLocationInfo())) {
+					nestedClass.setParentStatement(statement);
+				}
+			}
+		}
+		else if(container instanceof UMLOperation op) {
+			for(UMLClass nestedClass : op.getNestedClasses()) {
+				if(statement.getLocationInfo().subsumes(nestedClass.getLocationInfo())) {
+					nestedClass.setParentStatement(statement);
+				}
+			}
+		}
 		for(UMLComment comment : comments) {
 			if(comment.getLocationInfo().nextLine(statement.getLocationInfo())) {
 				comment.addPreviousLocation(statement.getLocationInfo());

@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -46,6 +47,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
     private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
+    private Optional<AbstractStatement> parentStatement;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
@@ -93,6 +95,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
         this.typeAliasList = new ArrayList<UMLTypeAlias>();
+        this.parentStatement = Optional.empty();
     }
 
     public String getTypeDeclarationKind() {
@@ -109,6 +112,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	else
     		return "class";
     }
+
+	public void setParentStatement(AbstractStatement s) {
+		this.parentStatement = Optional.of(s);
+	}
+
+	public Optional<AbstractStatement> getParentStatement() {
+		return parentStatement;
+	}
 
 	public ConditionallyCreated getConditionallyCreated() {
 		return conditionallyCreated;

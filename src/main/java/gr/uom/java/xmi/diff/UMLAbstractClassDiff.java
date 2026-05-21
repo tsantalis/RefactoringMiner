@@ -231,8 +231,14 @@ public abstract class UMLAbstractClassDiff {
 						nestedClassDiffs.add(classDiff);
 					}
 				}
-				for(UMLClassDiff nested : nestedClassDiffs) {
-					processNested(nested);
+				if(nestedClassDiffs.size() == 1) {
+					nestedClassDiffs.get(0).process();
+					this.nestedClassDiffList.add(nestedClassDiffs.get(0));
+				}
+				else {
+					for(UMLClassDiff nested : nestedClassDiffs) {
+						processNested(nested);
+					}
 				}
 			}
 		}
@@ -245,8 +251,14 @@ public abstract class UMLAbstractClassDiff {
 						nestedClassDiffs.add(classDiff);
 					}
 				}
-				for(UMLClassDiff nested : nestedClassDiffs) {
-					processNested(nested);
+				if(nestedClassDiffs.size() == 1) {
+					nestedClassDiffs.get(0).process();
+					this.nestedClassDiffList.add(nestedClassDiffs.get(0));
+				}
+				else {
+					for(UMLClassDiff nested : nestedClassDiffs) {
+						processNested(nested);
+					}
 				}
 			}
 		}
@@ -259,8 +271,8 @@ public abstract class UMLAbstractClassDiff {
 			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {
 					if(mapping.getFragment1().equals(statement1) && mapping.getFragment2().equals(statement2)) {
-						this.nestedClassDiffList.add(nested);
 						nested.process();
+						this.nestedClassDiffList.add(nested);
 						return;
 					}
 				}

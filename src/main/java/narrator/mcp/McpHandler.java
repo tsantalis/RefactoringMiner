@@ -239,9 +239,10 @@ public class McpHandler {
         output.append(content);
         output.append("\n\n");
         
-        output.append("Reminder: Evaluate context, explain changes as a diff, and ask to proceed.");
-        
-        if (currentChapter == totalChapters) {
+        if (currentChapter < totalChapters) {
+            output.append("Reminder: Evaluate context, explain changes as a diff, and ask to proceed.");
+        } else {
+            output.append("Reminder: Evaluate context and explain changes as a diff.");
             output.append("\n\n[End of Narrative] All chapters have been read. You may now provide your final synthesis and explanation of the commit.");
         }
         

@@ -305,6 +305,7 @@ public class Constants {
     public final String SUBSCRIPT = "subscript";
     public final String ARROW_PYTHON = "->";
     public final String TYPE = "type";
+    public final String WITH_STATEMENT = "with_statement";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";

@@ -124,6 +124,11 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
                 Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
                 new BodyMapperMatcher(optimizationData, bodyMapper, true, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+                if(bodyMapper.getImportListDiff() != null) {
+                    Tree srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperation1().getLocationInfo(), LANG1);
+                    Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperation2().getLocationInfo(), LANG2);
+                    new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
+                }
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
                     processArgumentMappings(srcTree, dstTree, extractOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof InlineOperationRefactoring) {
@@ -132,6 +137,11 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
                 Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
                 new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+                if(bodyMapper.getImportListDiff() != null) {
+                    Tree srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperation1().getLocationInfo(), LANG1);
+                    Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperation2().getLocationInfo(), LANG2);
+                    new ImportMatcher(bodyMapper.getImportListDiff(), LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
+                }
                 if(!multipleInstancesWithSameDescription(refactoringList, refactoring))
                     processArgumentMappings(srcTree, dstTree, inlineOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof MoveCodeRefactoring) {

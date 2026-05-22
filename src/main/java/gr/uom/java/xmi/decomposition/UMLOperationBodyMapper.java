@@ -1344,7 +1344,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
-		if(operation1.getNestedImports().size() > 0 && operation2.getNestedImports().size() > 0) {
+		if(operation1.getNestedImports().size() > 0 || operation2.getNestedImports().size() > 0) {
 			this.importListDiff = new UMLImportListDiff(operation1.getNestedImports(), operation2.getNestedImports());
 		}
 	}
@@ -3881,6 +3881,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 			processCommentsAndJavadoc(addedOperation);
+			if(parentMapper != null && parentMapper.importListDiff != null) {
+				if(parentMapper.importListDiff.getRemovedImports().size() > 0 && addedOperation.getNestedImports().size() > 0) {
+					this.importListDiff = new UMLImportListDiff(new ArrayList<>(parentMapper.importListDiff.getRemovedImports()), addedOperation.getNestedImports());
+				}
+			}
 		}
 	}
 
@@ -4442,6 +4447,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments), this);
 				checkUnmatchedStatementsBeingCommented();
+			}
+			if(parentMapper != null && parentMapper.importListDiff != null) {
+				if(parentMapper.importListDiff.getAddedImports().size() > 0 && removedOperation.getNestedImports().size() > 0) {
+					this.importListDiff = new UMLImportListDiff(removedOperation.getNestedImports(), new ArrayList<>(parentMapper.importListDiff.getAddedImports()));
+				}
 			}
 		}
 	}

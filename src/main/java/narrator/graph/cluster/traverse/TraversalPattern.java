@@ -52,6 +52,16 @@ public class TraversalPattern extends GraphWrapper {
         return getGraph().vertexSet();
     }
 
+    public int getDepth() {
+        if (this instanceof AggregatorPattern aggregator) {
+            return aggregator.subs.stream()
+                    .mapToInt(TraversalPattern::getDepth)
+                    .max()
+                    .orElse(0) + 1;
+        }
+        return 0;
+    }
+
     public void addIdentifier(String identifier) {
         this.identifiers.add(identifier);
     }

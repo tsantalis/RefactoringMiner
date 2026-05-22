@@ -36,15 +36,8 @@ public class Narrator {
         
         if (p instanceof AggregatorPattern aggregator) {
             List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
-            sortedSubs.sort(Comparator.comparing((TraversalPattern sub) -> {
-                return sub.getLead().isSrc();
-            }).reversed()
-              .thenComparing(sub -> {
-                if (sub instanceof AggregatorPattern) return 1;
-                if (sub instanceof SingularPattern) return 2;
-                if (sub instanceof SuccessivePattern) return 3;
-                return 4;
-              }));
+            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
+
 
             for (TraversalPattern sub : sortedSubs) {
                 postOrderTraverse(sub, visited, result);

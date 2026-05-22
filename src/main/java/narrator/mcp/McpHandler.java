@@ -235,14 +235,13 @@ public class McpHandler {
         int totalChapters = leaves.size();
         
         StringBuilder output = new StringBuilder();
+        output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append("]\n\n");
         output.append(content);
         output.append("\n\n");
-        output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append("]");
         
-        if (currentChapter < totalChapters) {
-            int remaining = totalChapters - currentChapter;
-            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
-        } else {
+        output.append("Reminder: Evaluate context, explain changes as a diff, and ask to proceed.");
+        
+        if (currentChapter == totalChapters) {
             output.append("\n\n[End of Narrative] All chapters have been read. You may now provide your final synthesis and explanation of the commit.");
         }
         
@@ -336,51 +335,5 @@ public class McpHandler {
         }
         
         return "Could not find code with ID " + codeId + " in any cluster.";
-    }
-
-
-    private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {
-        TraversalPattern root = getOrComputeHierarchy(url);
-        List<TraversalPattern> hierarchy = java.util.Collections.singletonList(root);
-
-        if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
-            throw new IllegalArgumentException(
-                    String.format("Cluster index out of range: %d (clusters: 1-%d)",
-                            clusterIndex + 1, hierarchy.size()));
-        }
-
-        String cacheKey = getHierarchyCacheKey(url);
-        List<Leaf> leaves = cacheManager.getNarrative(cacheKey);
-        if (leaves == null) {
-            leaves = new Narrator().narrate(hierarchy.get(clusterIndex));
-            cacheManager.putNarrative(cacheKey, leaves);
-        }
-
-        if (chapterIndex < 0 || chapterIndex >= leaves.size()) {
-            throw new IllegalArgumentException(
-                    String.format("Chapter index out of range: %d (chapters: 1-%d)",
-                            chapterIndex + 1, leaves.size()));
-        }
-
-        int currentChapter = chapterIndex + 1;
-        int totalChapters = leaves.size();
-        boolean isLastChapter = (currentChapter == totalChapters);
-
-        List<Cluster> clusters = getOrComputeClusters(url);
-        String chapterContent = leaves.get(chapterIndex).base(clusters.get(clusterIndex));
-
-        StringBuilder output = new StringBuilder();
-        output.append(chapterContent);
-        output.append("\n\n");
-        output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append("]");
-
-        if (!isLastChapter) {
-            int remaining = totalChapters - currentChapter;
-            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
-        } else {
-            output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your final synthesis and explanation of the cluster.");
-        }
-
-        return output.toString();
     }
 }

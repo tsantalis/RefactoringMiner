@@ -303,6 +303,8 @@ public class Constants {
     public final String AS_PATTERN = "as_pattern";
     public final String CALL = "call";
     public final String SUBSCRIPT = "subscript";
+    public final String ARROW_PYTHON = "->";
+    public final String TYPE = "type";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";

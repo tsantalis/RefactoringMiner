@@ -230,6 +230,32 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMappingRecursively(modifiers.first, modifiers.second);
                 }
             }
+            if(srcOperationNode.getType().name.equals(LANG1.DECORATED_METHOD) && dstOperationNode.getType().name.equals(LANG1.DECORATED_METHOD)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> function_definitions = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.METHOD_DECLARATION,LANG2.METHOD_DECLARATION);
+                if (function_definitions != null) {
+                    mappingStore.addMapping(function_definitions.first, function_definitions.second);
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
+                    if (identifiers != null) {
+                        mappingStore.addMapping(identifiers.first, identifiers.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> parameters = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.PARAMETERS,LANG2.PARAMETERS);
+                    if (parameters != null) {
+                        mappingStore.addMapping(parameters.first, parameters.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> arrows = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.ARROW_PYTHON,LANG2.ARROW_PYTHON);
+                    if (arrows != null) {
+                        mappingStore.addMapping(arrows.first, arrows.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> types = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.TYPE,LANG2.TYPE);
+                    if (types != null) {
+                        mappingStore.addMappingRecursively(types.first, types.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> blocks = Helpers.findPairOfType(function_definitions.first, function_definitions.second,LANG1.CLASS_BLOCK,LANG2.CLASS_BLOCK);
+                    if (blocks != null) {
+                        mappingStore.addMapping(blocks.first, blocks.second);
+                    }
+                }
+            }
             }
         } else {
             //Static Initializers
@@ -302,6 +328,14 @@ public class MethodMatcher extends BodyMapperMatcher{
             else {
                 mappingStore.addMapping(matched.first,matched.second);
             }
+        }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> arrows = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ARROW_PYTHON,LANG2.ARROW_PYTHON);
+        if (arrows != null) {
+            mappingStore.addMapping(arrows.first, arrows.second);
+        }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> types = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.TYPE,LANG2.TYPE);
+        if (types != null) {
+            mappingStore.addMappingRecursively(types.first, types.second);
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
         if (matched != null) {

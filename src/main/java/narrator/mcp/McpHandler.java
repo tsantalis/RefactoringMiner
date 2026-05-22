@@ -77,21 +77,18 @@ public class McpHandler {
         JsonObject result = new JsonObject();
         JsonArray tools = new JsonArray();
         
-        tools.add(createToolDefinition("get_line_range",
-                "Get the line range of a change for a specific changeId. Returns the start and end line numbers.",
-                "url", "changeId"));
-        tools.add(createToolDefinition("get_semantic_context",
-                "Get the next semantic context of a node given its changeId. This is useful when the current change's content (e.g., a simple name) is not understandable in isolation. Use this tool to retrieve the surrounding construct (e.g., the method invocation or statement) to provide a more informed explanation of the change. You can call this recursively using the returned context's ID to climb higher in the AST hierarchy.",
-                "url", "changeId"));
         tools.add(createToolDefinition("get_available_clusters",
                 "Get the available cluster indices (groups of related changes) for a commit or pull request. Returns a range (e.g., 1-3).",
                 "url"));
         tools.add(createToolDefinition("begin_cluster_narrative",
-                "Begin the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter 1 of Y]. MANDATORY: You must analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
+                "Begin the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter 1 of Y]. \n\nMANDATORY: Before analyzing and explaining a chapter, you MUST evaluate if the provided code snippets are sufficient for a detailed and informed description. If the chapter's changes cannot be well-described without surrounding context, you MUST call 'get_surrounding_code' for the relevant pieces of code first. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
                 "url", "clusterIndex"));
         tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the cluster. Each output includes [Chapter X of Y] progress info. MANDATORY: You must analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Get the next chapter in the narrative for the cluster. Each output includes [Chapter X of Y] progress info. \n\nMANDATORY: Before analyzing and explaining a chapter, you MUST evaluate if the provided code snippets are sufficient for a detailed and informed description. If the chapter's changes cannot be well-described without surrounding context, you MUST call 'get_surrounding_code' for the relevant pieces of code first. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "clusterIndex"));
+        tools.add(createToolDefinition("get_surrounding_code",
+                "Fetch the surrounding code for a specific piece of code provided in a narrative chapter. Use this tool when the provided snippets are insufficient to provide a detailed and informed explanation of the change. This tool is a placeholder and will be implemented later.",
+                "url", "codeId"));
         result.add("tools", tools);
         response.add("result", result);
     }
@@ -182,13 +179,7 @@ public class McpHandler {
         }
         String url = arguments.get("url").getAsString();
 
-        if ("get_line_range".equals(toolName)) {
-            if (!arguments.has("changeId")) {
-                throw new IllegalArgumentException("Missing required argument: changeId");
-            }
-            String changeId = arguments.get("changeId").getAsString();
-            return fetchLineRange(url, changeId);
-        } else if ("get_available_clusters".equals(toolName)) {
+        if ("get_available_clusters".equals(toolName)) {
             return fetchClusterCount(url);
         } else if ("begin_cluster_narrative".equals(toolName)) {
             if (!arguments.has("clusterIndex")) {
@@ -203,12 +194,6 @@ public class McpHandler {
             String stateKey = url + ":" + clusterIndex;
             clusterProgress.put(stateKey, 0);
             return narrateClusterChapter(url, clusterIndex, 0);
-        } else if ("get_semantic_context".equals(toolName)) {
-            if (!arguments.has("changeId")) {
-                throw new IllegalArgumentException("Missing required argument: changeId");
-            }
-            String changeId = arguments.get("changeId").getAsString();
-            return fetchNextSemanticContext(url, changeId);
         } else if ("get_next_cluster_chapter".equals(toolName)) {
             if (!arguments.has("clusterIndex")) {
                 throw new IllegalArgumentException("Missing required argument: clusterIndex");
@@ -223,46 +208,14 @@ public class McpHandler {
             int nextIndex = clusterProgress.getOrDefault(stateKey, 0);
             clusterProgress.put(stateKey, nextIndex + 1);
             return narrateClusterChapter(url, clusterIndex, nextIndex + 1);
+        } else if ("get_surrounding_code".equals(toolName)) {
+            if (!arguments.has("codeId")) {
+                throw new IllegalArgumentException("Missing required argument: codeId");
+            }
+            return fetchSurroundingCode(url, arguments.get("codeId").getAsString());
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
-    }
-
-    private String fetchLineRange(String url, String changeId) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        for (Cluster cluster : clusters) {
-            for (Node node : cluster.getGraph().vertexSet()) {
-                if (node.getPromptId().equals(changeId)) {
-                    var range = org.refactoringminer.astDiff.utils.TreeUtilFunctions.getLineRange(
-                            node.getTree(), 
-                            node.getFileContent());
-                    return String.format("Line Range: %d:%d - %d:%d", 
-                            range.first.first, range.first.second, 
-                            range.second.first, range.second.second);
-                }
-            }
-        }
-        throw new IllegalArgumentException("Could not find node with changeId: " + changeId);
-    }
-
-    private String fetchNextSemanticContext(String url, String changeId) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        for (Cluster cluster : clusters) {
-            for (Node node : cluster.getGraph().vertexSet()) {
-                if (node.getPromptId().equals(changeId)) {
-                    List<Node> semanticContexts = node.getSemanticContexts(cluster);
-                    if (semanticContexts.isEmpty()) {
-                        return "No semantic context found for this node.";
-                    }
-                    // Return the first semantic context (the immediate parent)
-                    Node contextNode = semanticContexts.get(0);
-                    return String.format("Semantic Context (ID: %s): %s", 
-                            contextNode.getPromptId(), 
-                            contextNode.getContent());
-                }
-            }
-        }
-        throw new IllegalArgumentException("Could not find node with changeId: " + changeId);
     }
 
     private String getHierarchyCacheKey(String url) {
@@ -271,6 +224,27 @@ public class McpHandler {
 
     private String getNarrativeCacheKey(String url, int clusterIndex) {
         return "narrative:" + url + ":" + clusterIndex;
+    }
+
+    private String fetchSurroundingCode(String url, String codeId) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
+        
+        for (Cluster cluster : clusters) {
+            Node targetNode = cluster.getGraph().vertexSet().stream()
+                    .filter(node -> node.getId().equals(codeId))
+                    .findFirst()
+                    .orElse(null);
+            
+            if (targetNode != null) {
+                List<Node> semanticContexts = targetNode.getSemanticContexts(cluster);
+                if (!semanticContexts.isEmpty()) {
+                    return semanticContexts.get(0).mapping(cluster);
+                }
+                return "No semantic context found for " + codeId;
+            }
+        }
+        
+        return "Could not find code with ID " + codeId + " in any cluster.";
     }
 
     private List<Cluster> getOrComputeClusters(String url) throws Exception {
@@ -354,7 +328,7 @@ public class McpHandler {
         
         if (!isLastChapter) {
             int remaining = totalChapters - currentChapter;
-            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first. If the changes in this chapter are not clear in isolation, you can use the 'get_semantic_context' tool with the changeId of a node to understand its surrounding structural context. Then, ask the user if they would like to proceed to the next chapter (Yes/No).");
+            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
         } else {
             output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your final synthesis and explanation of the cluster.");
         }

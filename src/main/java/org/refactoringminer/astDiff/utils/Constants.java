@@ -306,6 +306,7 @@ public class Constants {
     public final String ARROW_PYTHON = "->";
     public final String TYPE = "type";
     public final String WITH_STATEMENT = "with_statement";
+    public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";

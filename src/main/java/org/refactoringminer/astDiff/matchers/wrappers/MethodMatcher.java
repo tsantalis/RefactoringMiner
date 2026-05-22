@@ -599,6 +599,11 @@ public class MethodMatcher extends BodyMapperMatcher{
                 leftTree = leftTree.getParent();
                 rightTree = rightTree.getParent();
             }
+            if(leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
+                    leftTree.getParent().getType().name.equals(LANG1.TYPED_DEFAULT_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.TYPED_DEFAULT_PARAMETER)) {
+                leftTree = leftTree.getParent();
+                rightTree = rightTree.getParent();
+            }
             if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
                 if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                     mappingStore.addMappingRecursively(leftTree, rightTree);

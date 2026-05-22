@@ -2,8 +2,53 @@ package narrator.graph.cluster.traverse;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import narrator.graph.Node;
+import narrator.graph.Edge;
+import narrator.graph.EdgeType;
+import narrator.graph.cluster.Cluster;
+import org.jgrapht.Graph;
 
 public class Narrator {
+
+    public List<Node> getTopCandidates(Cluster cluster) {
+        Graph<Node, Edge> graph = cluster.getGraph();
+        Set<Node> allNodes = graph.vertexSet();
+        
+        Map<Node, Set<Node>> supportBases = new HashMap<>();
+        
+        for (Node n : allNodes) {
+            if (n.isContext() || n.isExtension()) {
+                continue;
+            }
+            
+            Set<Node> ancestors = new HashSet<>();
+            Queue<Node> queue = new LinkedList<>();
+            queue.add(n);
+            
+            Set<Node> visited = new HashSet<>();
+            visited.add(n);
+            
+            while (!queue.isEmpty()) {
+                Node curr = queue.poll();
+                for (Edge edge : graph.incomingEdgesOf(curr)) {
+                    Node parent = graph.getEdgeSource(edge);
+                    if (edge.getType() == EdgeType.DEF_USE && !visited.contains(parent)) {
+                        visited.add(parent);
+                        if (!parent.isContext() && !parent.isExtension()) {
+                            ancestors.add(parent);
+                        }
+                        queue.add(parent);
+                    }
+                }
+            }
+            supportBases.put(n, ancestors);
+        }
+        
+        return supportBases.entrySet().stream()
+                .sorted((e1, e2) -> Integer.compare(e2.getValue().size(), e1.getValue().size()))
+                .map(Map.Entry::getKey)
+                .toList();
+    }
 
     /**
      * Produces a list of patterns ordered from deepest leaf to highest.

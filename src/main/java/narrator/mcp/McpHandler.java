@@ -6,20 +6,16 @@ import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import narrator.Driver;
-import narrator.graph.Context;
 import narrator.graph.Edge;
-import narrator.graph.EdgeType;
 import narrator.graph.Node;
-import narrator.graph.NodeType;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.Clusterer;
 import narrator.graph.cluster.traverse.Leaf;
 import narrator.graph.cluster.traverse.Narrator;
+import narrator.graph.cluster.traverse.TraversalComponent;
 import narrator.graph.cluster.traverse.TraversalEngine;
 import narrator.graph.cluster.traverse.TraversalPattern;
-import narrator.graph.cluster.traverse.SuccessivePattern;
-import narrator.graph.cluster.traverse.SingularPattern;
-import narrator.graph.cluster.traverse.UsagePattern;
+import narrator.graph.cluster.traverse.ReasonType;
 import org.jgrapht.Graph;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +25,13 @@ public class McpHandler {
     private static final Logger logger = LoggerFactory.getLogger(McpHandler.class);
     private static final CacheManager cacheManager = new CacheManager();
     private final Map<String, Integer> clusterProgress = new ConcurrentHashMap<>();
-    private final Map<String, Integer> containerLevels = new ConcurrentHashMap<>();
 
     public JsonObject handle(JsonObject request) {
         logger.debug("Handling MCP request: {}", request);
         String method = request.get("method").getAsString();
         JsonObject response = new JsonObject();
         response.addProperty("jsonrpc", "2.0");
-        
+
         if (request.has("id")) {
             response.add("id", request.get("id"));
         }
@@ -64,30 +59,27 @@ public class McpHandler {
         JsonObject capabilities = new JsonObject();
         capabilities.add("tools", new JsonObject());
         result.add("capabilities", capabilities);
-        
+
         JsonObject serverInfo = new JsonObject();
         serverInfo.addProperty("name", "RefactoringMiner MCP");
         serverInfo.addProperty("version", "1.0.0");
         result.add("serverInfo", serverInfo);
-        
+
         response.add("result", result);
     }
 
     private void handleListTools(JsonObject response) {
         JsonObject result = new JsonObject();
         JsonArray tools = new JsonArray();
-        
-        tools.add(createToolDefinition("get_available_clusters",
-                "Get the available cluster indices (groups of related changes) for a commit or pull request. Returns a range (e.g., 1-3).",
+
+        tools.add(createToolDefinition("init_narrative",
+                "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters. This is the required first step before calling get_next_chapter.",
                 "url"));
-        tools.add(createToolDefinition("begin_cluster_narrative",
-                "Begin the narrative for a cluster. Returns the first chapter with a progress indicator [Chapter 1 of Y]. \n\nMANDATORY: Before analyzing and explaining a chapter, you MUST evaluate if the provided code snippets are sufficient for a detailed and informed description. If the chapter's changes cannot be well-described without surrounding context, you MUST call 'get_surrounding_code' for the relevant pieces of code first. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call get_next_cluster_chapter without user confirmation.",
-                "url", "clusterIndex"));
-        tools.add(createToolDefinition("get_next_cluster_chapter",
-                "Get the next chapter in the narrative for the cluster. Each output includes [Chapter X of Y] progress info. \n\nMANDATORY: Before analyzing and explaining a chapter, you MUST evaluate if the provided code snippets are sufficient for a detailed and informed description. If the chapter's changes cannot be well-described without surrounding context, you MUST call 'get_surrounding_code' for the relevant pieces of code first. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
-                "url", "clusterIndex"));
+        tools.add(createToolDefinition("get_next_chapter",
+                "Retrieves the next chapter in the narrative. \n\nMANDATORY: Before analyzing and explaining a chapter, you MUST evaluate if the provided code snippets are sufficient for a detailed and informed description. If the chapter's changes cannot be well-described without surrounding context, you MUST call 'get_surrounding_code' for the relevant pieces of code first. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "url"));
         tools.add(createToolDefinition("get_surrounding_code",
-                "Fetch the surrounding code for a specific piece of code provided in a narrative chapter. Use this tool when the provided snippets are insufficient to provide a detailed and informed explanation of the change. This tool is a placeholder and will be implemented later.",
+                "Fetch the surrounding code for a specific piece of code provided in a narrative chapter. Use this tool when the provided snippets are insufficient to provide a detailed and informed explanation of the change.",
                 "url", "codeId"));
         result.add("tools", tools);
         response.add("result", result);
@@ -179,35 +171,10 @@ public class McpHandler {
         }
         String url = arguments.get("url").getAsString();
 
-        if ("get_available_clusters".equals(toolName)) {
-            return fetchClusterCount(url);
-        } else if ("begin_cluster_narrative".equals(toolName)) {
-            if (!arguments.has("clusterIndex")) {
-                throw new IllegalArgumentException("Missing required argument: clusterIndex");
-            }
-            int clusterIndex;
-            try {
-                clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid clusterIndex: must be a positive integer");
-            }
-            String stateKey = url + ":" + clusterIndex;
-            clusterProgress.put(stateKey, 0);
-            return narrateClusterChapter(url, clusterIndex, 0);
-        } else if ("get_next_cluster_chapter".equals(toolName)) {
-            if (!arguments.has("clusterIndex")) {
-                throw new IllegalArgumentException("Missing required argument: clusterIndex");
-            }
-            int clusterIndex;
-            try {
-                clusterIndex = Integer.parseInt(arguments.get("clusterIndex").getAsString()) - 1;
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid clusterIndex: must be a positive integer");
-            }
-            String stateKey = url + ":" + clusterIndex;
-            int nextIndex = clusterProgress.getOrDefault(stateKey, 0);
-            clusterProgress.put(stateKey, nextIndex + 1);
-            return narrateClusterChapter(url, clusterIndex, nextIndex + 1);
+        if ("init_narrative".equals(toolName)) {
+            return initNarrative(url);
+        } else if ("get_next_chapter".equals(toolName)) {
+            return getNextChapter(url);
         } else if ("get_surrounding_code".equals(toolName)) {
             if (!arguments.has("codeId")) {
                 throw new IllegalArgumentException("Missing required argument: codeId");
@@ -218,12 +185,136 @@ public class McpHandler {
         }
     }
 
+    private Cluster findClusterForLeaf(Leaf leaf, List<Cluster> clusters) {
+        if (clusters.isEmpty()) {
+            return null;
+        }
+
+        Node lead = ((TraversalPattern) leaf).getLead();
+        for (Cluster cluster : clusters) {
+            if (cluster.getGraph().vertexSet().contains(lead)) {
+                return cluster;
+            }
+        }
+
+        return null;
+    }
+
     private String getHierarchyCacheKey(String url) {
         return "hierarchy:" + url;
     }
 
-    private String getNarrativeCacheKey(String url, int clusterIndex) {
-        return "narrative:" + url + ":" + clusterIndex;
+    private String getNextChapter(String url) throws Exception {
+        Integer progress = clusterProgress.get(url);
+        if (progress == null) {
+            return "No narrative initialized for this URL. Please call init_narrative first.";
+        }
+        
+        List<Leaf> leaves = cacheManager.getNarrative(url + ":root");
+        if (leaves == null) {
+            return "Narrative state lost. Please call init_narrative again.";
+        }
+        
+        if (progress >= leaves.size()) {
+            return "[End of Narrative] All chapters have been read.";
+        }
+        
+        Leaf leaf = leaves.get(progress);
+        clusterProgress.put(url, progress + 1);
+        
+        // Need a cluster to call leaf.base(cluster).
+        // We just use the first cluster from the project as a context for base().
+        List<Cluster> clusters = getOrComputeClusters(url);
+        if (clusters.isEmpty()) {
+            return "Error: No clusters available to provide context for the chapter.";
+        }
+        
+        Cluster cluster = findClusterForLeaf(leaf, clusters);
+        String content = leaf.base(cluster);
+        int currentChapter = progress + 1;
+        int totalChapters = leaves.size();
+        
+        StringBuilder output = new StringBuilder();
+        output.append(content);
+        output.append("\n\n");
+        output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append("]");
+        
+        if (currentChapter < totalChapters) {
+            int remaining = totalChapters - currentChapter;
+            output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
+        } else {
+            output.append("\n\n[End of Narrative] All chapters have been read. You may now provide your final synthesis and explanation of the commit.");
+        }
+        
+        return output.toString();
+    }
+
+    private String initNarrative(String url) throws Exception {
+        TraversalPattern root = getOrComputeHierarchy(url);
+        if (root == null) {
+            return "No changes found to narrate.";
+        }
+
+        List<Leaf> leaves = new Narrator().narrate(root);
+        int chapterCount = leaves.size();
+
+        cacheManager.putNarrative(url + ":root", leaves);
+        clusterProgress.put(url, 0);
+
+        return "Narrative initialized. Total chapters: " + chapterCount + ". Use get_next_chapter to start.";
+    }
+
+
+    private List<Cluster> getOrComputeClusters(String url) throws Exception {
+        List<Cluster> cached = cacheManager.getClusters(url);
+        if (cached != null) {
+            return cached;
+        }
+
+        Graph<Node, Edge> graph = loadGraph(url);
+        List<Cluster> clusters = new Clusterer(graph).getClusters();
+        cacheManager.putClusters(url, clusters);
+        return clusters;
+    }
+
+    private TraversalPattern getOrComputeHierarchy(String url) throws Exception {
+        String cacheKey = getHierarchyCacheKey(url);
+        TraversalPattern cached = cacheManager.getHierarchy(cacheKey);
+        if (cached != null) {
+            return cached;
+        }
+
+        List<Cluster> clusters = getOrComputeClusters(url);
+        List<TraversalPattern> finalHierarchy = new java.util.ArrayList<>();
+
+        for (Cluster cluster : clusters) {
+            List<TraversalPattern> patterns = new TraversalEngine(cluster).getComponents();
+            if (patterns.size() > 1) {
+                finalHierarchy.add(new TraversalComponent(patterns, ReasonType.CONTEXT));
+            } else if (patterns.size() == 1) {
+                finalHierarchy.add(patterns.get(0));
+            }
+        }
+
+        TraversalPattern root;
+        if (finalHierarchy.size() > 1) {
+            root = new TraversalComponent(finalHierarchy, ReasonType.CONTEXT);
+        } else if (finalHierarchy.size() == 1) {
+            root = finalHierarchy.get(0);
+        } else {
+            return null;
+        }
+
+        cacheManager.putHierarchy(cacheKey, root);
+        return root;
+    }
+
+    private Graph<Node, Edge> loadGraph(String url) throws Exception {
+        if (url.contains("/pull/") || url.contains("/pr/")) {
+            return Driver.getPullRequestGraph(url);
+        } else {
+            return Driver.getCommitGraph(url);
+        }
     }
 
     private String fetchSurroundingCode(String url, String codeId) throws Exception {
@@ -247,92 +338,49 @@ public class McpHandler {
         return "Could not find code with ID " + codeId + " in any cluster.";
     }
 
-    private List<Cluster> getOrComputeClusters(String url) throws Exception {
-        List<Cluster> cached = cacheManager.getClusters(url);
-        if (cached != null) {
-            return cached;
-        }
-
-        Graph<Node, Edge> graph = loadGraph(url);
-        List<Cluster> clusters = new Clusterer(graph).getClusters();
-        cacheManager.putClusters(url, clusters);
-        return clusters;
-    }
-
-    private List<List<TraversalPattern>> getOrComputeHierarchy(String url) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        String cacheKey = getHierarchyCacheKey(url);
-        List<List<TraversalPattern>> cached = cacheManager.getHierarchy(cacheKey);
-        if (cached != null) {
-            return cached;
-        }
-
-        List<List<TraversalPattern>> hierarchy = clusters.stream()
-                .map(TraversalEngine::new)
-                .map(TraversalEngine::getComponents)
-                .filter(components -> !components.isEmpty())
-                .toList();
-
-        cacheManager.putHierarchy(cacheKey, hierarchy);
-        return hierarchy;
-    }
-    
-    private Graph<Node, Edge> loadGraph(String url) throws Exception {
-        if (url.contains("/pull/") || url.contains("/pr/")) {
-            return Driver.getPullRequestGraph(url);
-        } else {
-            return Driver.getCommitGraph(url);
-        }
-    }
-
-    private String fetchClusterCount(String url) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        int count = clusters.size();
-        return count == 0 ? "No clusters found." : "Available clusters: 1-" + count;
-    }
 
     private String narrateClusterChapter(String url, int clusterIndex, int chapterIndex) throws Exception {
-        List<List<TraversalPattern>> hierarchy = getOrComputeHierarchy(url);
+        TraversalPattern root = getOrComputeHierarchy(url);
+        List<TraversalPattern> hierarchy = java.util.Collections.singletonList(root);
 
         if (clusterIndex < 0 || clusterIndex >= hierarchy.size()) {
             throw new IllegalArgumentException(
-                    String.format("Cluster index out of range: %d (clusters: 1-%d)", 
+                    String.format("Cluster index out of range: %d (clusters: 1-%d)",
                             clusterIndex + 1, hierarchy.size()));
         }
 
-        String cacheKey = getNarrativeCacheKey(url, clusterIndex);
+        String cacheKey = getHierarchyCacheKey(url);
         List<Leaf> leaves = cacheManager.getNarrative(cacheKey);
         if (leaves == null) {
-            List<TraversalPattern> components = hierarchy.get(clusterIndex);
-            leaves = new Narrator().narrate(components);
+            leaves = new Narrator().narrate(hierarchy.get(clusterIndex));
             cacheManager.putNarrative(cacheKey, leaves);
         }
-        
+
         if (chapterIndex < 0 || chapterIndex >= leaves.size()) {
             throw new IllegalArgumentException(
-                    String.format("Chapter index out of range: %d (chapters: 1-%d)", 
+                    String.format("Chapter index out of range: %d (chapters: 1-%d)",
                             chapterIndex + 1, leaves.size()));
         }
-        
+
         int currentChapter = chapterIndex + 1;
         int totalChapters = leaves.size();
         boolean isLastChapter = (currentChapter == totalChapters);
-        
+
         List<Cluster> clusters = getOrComputeClusters(url);
         String chapterContent = leaves.get(chapterIndex).base(clusters.get(clusterIndex));
-        
+
         StringBuilder output = new StringBuilder();
         output.append(chapterContent);
         output.append("\n\n");
         output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append("]");
-        
+
         if (!isLastChapter) {
             int remaining = totalChapters - currentChapter;
             output.append("\n\nContinue: ").append(remaining).append(" chapter(s) remaining. Please analyze this chapter first, then ask the user if they would like to proceed to the next chapter (Yes/No).");
         } else {
             output.append("\n\n[End of Narrative] All chapters for this cluster have been read. You may now provide your final synthesis and explanation of the cluster.");
         }
-        
+
         return output.toString();
     }
 }

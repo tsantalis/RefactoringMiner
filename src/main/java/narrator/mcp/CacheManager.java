@@ -9,7 +9,8 @@ import narrator.graph.cluster.traverse.TraversalPattern;
 
 public class CacheManager {
     private final Map<String, List<Cluster>> clustersCache = new ConcurrentHashMap<>();
-    private final Map<String, List<List<TraversalPattern>>> hierarchyCache = new ConcurrentHashMap<>();
+    private final Map<String, TraversalPattern> hierarchyCache = new ConcurrentHashMap<>();
+
     private final Map<String, List<Leaf>> narrativesCache = new ConcurrentHashMap<>();
 
     public List<Cluster> getClusters(String url) {
@@ -20,11 +21,12 @@ public class CacheManager {
         clustersCache.put(url, clusters);
     }
 
-    public List<List<TraversalPattern>> getHierarchy(String url) {
+    public TraversalPattern getHierarchy(String url) {
         return hierarchyCache.get(url);
     }
 
-    public void putHierarchy(String url, List<List<TraversalPattern>> hierarchy) {
+
+    public void putHierarchy(String url, TraversalPattern hierarchy) {
         hierarchyCache.put(url, hierarchy);
     }
 

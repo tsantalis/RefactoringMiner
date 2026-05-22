@@ -12,7 +12,7 @@ public class TraversalComponent extends AggregatorPattern {
     private final List<TraversalPattern> components;
     private final ReasonType reasonType;
 
-    TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
+    public TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
         nodeType = NodeType.COMPONENT;
         this.components = components;
         subs = new HashSet<>(components);

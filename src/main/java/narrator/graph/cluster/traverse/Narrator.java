@@ -9,20 +9,17 @@ public class Narrator {
      * Produces a list of patterns ordered from deepest leaf to highest.
      * Deepest leaves are those that are not requirements for any other pattern in the set,
      * or are the base requirements in a chain.
-     * 
      * The order is determined by a topological sort of the dependency graph.
      */
-    public List<Leaf> narrate(List<TraversalPattern> patterns) {
-        if (patterns == null || patterns.isEmpty()) {
+    public List<Leaf> narrate(TraversalPattern pattern) {
+        if (pattern == null) {
             return Collections.emptyList();
         }
 
         List<TraversalPattern> result = new ArrayList<>();
         Set<TraversalPattern> visited = new HashSet<>();
         
-        for (TraversalPattern p : patterns) {
-            postOrderTraverse(p, visited, result);
-        }
+        postOrderTraverse(pattern, visited, result);
         
         return result.stream()
                 .filter(p -> p instanceof Leaf)

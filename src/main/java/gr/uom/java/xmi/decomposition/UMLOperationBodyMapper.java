@@ -7396,19 +7396,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										mappingSet.add(mapping);
 									}
 								}
-								else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && leaf1.getLambdas().size() == leaf2.getLambdas().size() && leaf1.getLambdas().size() > 0) {
-									LambdaExpressionObject lambda1 = leaf1.getLambdas().get(0);
-									LambdaExpressionObject lambda2 = leaf2.getLambdas().get(0);
-									if((leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine() || leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine()-1) &&
-											(leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine() || leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine()-1)) {
-										if(lambda1.toString().equals(lambda2.toString())) {
-											matchCount++;
-											if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
-												LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
-												mappingSet.add(mapping);
-											}
-										}
-									}
+								else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+									matchCount = handleTypeScript(leaf1, leaf2, mappingSet, parameterToArgumentMap, equalNumberOfAssertions, matchCount);
 								}
 							}
 						}
@@ -7937,19 +7926,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										mappingSet.add(mapping);
 									}
 								}
-								else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && leaf1.getLambdas().size() == leaf2.getLambdas().size() && leaf1.getLambdas().size() > 0) {
-									LambdaExpressionObject lambda1 = leaf1.getLambdas().get(0);
-									LambdaExpressionObject lambda2 = leaf2.getLambdas().get(0);
-									if((leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine() || leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine()-1) &&
-											(leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine() || leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine()-1)) {
-										if(lambda1.toString().equals(lambda2.toString())) {
-											matchCount++;
-											if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
-												LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
-												mappingSet.add(mapping);
-											}
-										}
-									}
+								else if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+									matchCount = handleTypeScript(leaf1, leaf2, mappingSet, parameterToArgumentMap, equalNumberOfAssertions, matchCount);
 								}
 							}
 						}
@@ -8470,6 +8448,82 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private int handleTypeScript(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2,
+			TreeSet<LeafMapping> mappingSet, Map<String, String> parameterToArgumentMap,
+			boolean equalNumberOfAssertions, int matchCount) {
+		if(leaf1.getLambdas().size() == leaf2.getLambdas().size() && leaf1.getLambdas().size() > 0) {
+			LambdaExpressionObject lambda1 = leaf1.getLambdas().get(0);
+			LambdaExpressionObject lambda2 = leaf2.getLambdas().get(0);
+			if((leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine() || leaf1.getLocationInfo().getStartLine() == lambda1.getLocationInfo().getStartLine()-1) &&
+					(leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine() || leaf2.getLocationInfo().getStartLine() == lambda2.getLocationInfo().getStartLine()-1)) {
+				if(lambda1.toString().equals(lambda2.toString())) {
+					matchCount++;
+					if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
+						LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+						mappingSet.add(mapping);
+					}
+				}
+				else {
+					List<String> repr1 = lambda1.stringRepresentation();
+					List<String> repr2 = lambda2.stringRepresentation();
+					int identical = 0;
+					if(repr1.size() == repr2.size()) {
+						for(int i=0; i<repr1.size(); i++) {
+							String s1 = repr1.get(i);
+							String s2 = repr2.get(i);
+							if(s1.equals(s2)) {
+								identical++;
+							}
+						}
+					}
+					if(identical >= repr1.size()-1) {
+						matchCount++;
+						if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
+							LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+							mappingSet.add(mapping);
+						}
+					}
+				}
+			}
+		}
+		if(leaf1.getAnonymousClassDeclarations().size() == leaf2.getAnonymousClassDeclarations().size() && leaf1.getAnonymousClassDeclarations().size() > 0) {
+			AnonymousClassDeclarationObject anonymous1 = leaf1.getAnonymousClassDeclarations().get(0);
+			AnonymousClassDeclarationObject anonymous2 = leaf2.getAnonymousClassDeclarations().get(0);
+			if((leaf1.getLocationInfo().getStartLine() == anonymous1.getLocationInfo().getStartLine() || leaf1.getLocationInfo().getStartLine() == anonymous1.getLocationInfo().getStartLine()-1) &&
+					(leaf2.getLocationInfo().getStartLine() == anonymous2.getLocationInfo().getStartLine() || leaf2.getLocationInfo().getStartLine() == anonymous2.getLocationInfo().getStartLine()-1)) {
+				if(anonymous1.toString().equals(anonymous2.toString())) {
+					matchCount++;
+					if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
+						LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+						mappingSet.add(mapping);
+					}
+				}
+				else {
+					String[] lines1 = anonymous1.toString().split("\\R");
+					String[] lines2 = anonymous2.toString().split("\\R");
+					int identical = 0;
+					if(lines1.length == lines2.length) {
+						for(int i=0; i<lines1.length; i++) {
+							String s1 = lines1[i];
+							String s2 = lines2[i];
+							if(s1.equals(s2)) {
+								identical++;
+							}
+						}
+					}
+					if(identical >= lines1.length-1) {
+						matchCount++;
+						if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
+							LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+							mappingSet.add(mapping);
+						}
+					}
+				}
+			}
+		}
+		return matchCount;
 	}
 
 	private boolean match(String s1, String s2) {

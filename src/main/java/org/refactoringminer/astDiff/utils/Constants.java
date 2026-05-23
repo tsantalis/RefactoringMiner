@@ -400,6 +400,7 @@ public class Constants {
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
     public final String PROPERTY_IDENTIFIER = "property_identifier";
+    public final String PRIVATE_PROPERTY_IDENTIFIER = "private_property_identifier";
     public final String INTERSECTION_TYPE = "intersection_type";
     public final String UNION_TYPE = "union_type";
     public final String GENERIC_TYPE = "generic_type";

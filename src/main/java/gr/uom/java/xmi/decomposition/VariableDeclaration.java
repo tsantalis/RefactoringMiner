@@ -44,10 +44,13 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import static org.jetbrains.kotlin.lexer.KtTokens.*;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAutoAccessor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateName;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateProp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
@@ -55,6 +58,7 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstKey;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstObjectPatProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
@@ -915,6 +919,50 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, classProperty.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		ISwc4jAstPropName key = classProperty.getKey();
+		Optional<Swc4jAstTsTypeAnn> typeAnnotation = classProperty.getTypeAnn();
+		if(typeAnnotation.isPresent()) {
+			ISwc4jAstTsType type = typeAnnotation.get().getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+		}
+		else {
+			this.type = new InferredType();
+		}
+		this.variableName = key.toString();
+		this.initializer = classProperty.getValue().isPresent() ? new AbstractExpression(sourceFolder, filePath, classProperty.getValue().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations) : null;
+		ISwc4jAst scopeNode = getScopeNode(classProperty);
+		int startOffset = classProperty.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstPrivateProp classProperty, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, classProperty.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		Swc4jAstPrivateName key = classProperty.getKey();
+		Optional<Swc4jAstTsTypeAnn> typeAnnotation = classProperty.getTypeAnn();
+		if(typeAnnotation.isPresent()) {
+			ISwc4jAstTsType type = typeAnnotation.get().getTypeAnn();
+			this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type, 0);
+		}
+		else {
+			this.type = new InferredType();
+		}
+		this.variableName = key.getName();
+		this.initializer = classProperty.getValue().isPresent() ? new AbstractExpression(sourceFolder, filePath, classProperty.getValue().get(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations) : null;
+		ISwc4jAst scopeNode = getScopeNode(classProperty);
+		int startOffset = classProperty.getSpan().getStart();
+		int endOffset = scopeNode.getSpan().getEnd();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstAutoAccessor classProperty, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, classProperty.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		ISwc4jAstKey key = classProperty.getKey();
 		Optional<Swc4jAstTsTypeAnn> typeAnnotation = classProperty.getTypeAnn();
 		if(typeAnnotation.isPresent()) {
 			ISwc4jAstTsType type = typeAnnotation.get().getTypeAnn();

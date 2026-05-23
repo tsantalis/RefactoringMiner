@@ -66,6 +66,7 @@ import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAssignProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAutoAccessor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClass;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
@@ -75,6 +76,8 @@ import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstGetterProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstMethodProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstSetterProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstAccessibility;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
@@ -1992,6 +1995,15 @@ public class OperationBody {
 				umlClass.setVisibility(Visibility.PRIVATE);
 			}
 			Swc4jAstClass clazz = classDecl.getClazz();
+			Optional<Swc4jAstTsTypeParamDecl> typeParams = clazz.getTypeParams();
+			if(typeParams.isPresent()) {
+				List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+				for(Swc4jAstTsTypeParam param : list) {
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+					UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+					umlClass.addTypeParameter(umlTypeParameter);
+				}
+			}
 			processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
@@ -2129,6 +2141,15 @@ public class OperationBody {
 				UMLClass umlClass = new UMLClass(container.getClassName(), typeName, location, true, imports);
 				umlClass.setVisibility(Visibility.PUBLIC);
 				Swc4jAstClass clazz = classExpr.getClazz();
+				Optional<Swc4jAstTsTypeParamDecl> typeParams = clazz.getTypeParams();
+				if(typeParams.isPresent()) {
+					List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+					for(Swc4jAstTsTypeParam param : list) {
+						LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+						UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+						umlClass.addTypeParameter(umlTypeParameter);
+					}
+				}
 				processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
 				for(UMLComment comment : comments) {
 					if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
@@ -2186,6 +2207,15 @@ public class OperationBody {
 			else {
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation, 0);
 				umlClass.setFunctionType(type);
+			}
+			Optional<Swc4jAstTsTypeParamDecl> typeParams = typeAliasDecl.getTypeParams();
+			if(typeParams.isPresent()) {
+				List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
+				for(Swc4jAstTsTypeParam param : list) {
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+					UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
+					umlClass.addTypeParameter(umlTypeParameter);
+				}
 			}
 			for(UMLComment comment : comments) {
 				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
@@ -2592,6 +2622,33 @@ public class OperationBody {
 					attribute.setVisibility(Visibility.PUBLIC);
 				}
 				umlClass.addAttribute(attribute);
+			}
+			else if(member instanceof Swc4jAstPrivateProp privateProp) {
+				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, privateProp, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				vd.setAttribute(true);
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+				attribute.setVariableDeclaration(vd);
+				attribute.setVisibility(Visibility.PRIVATE);
+				umlClass.addAttribute(attribute);
+			}
+			else if(member instanceof Swc4jAstAutoAccessor autoAccessor) {
+				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, autoAccessor, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				vd.setAttribute(true);
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+				attribute.setVariableDeclaration(vd);
+				attribute.setVisibility(Visibility.PRIVATE);
+				umlClass.addAttribute(attribute);
+			}
+			else if(member instanceof Swc4jAstPrivateMethod privateMethod) {
+				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, privateMethod, activeVariableDeclarations, fileContent, umlClass.getName());
+				for(UMLComment comment : comments) {
+					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
+						nested.getComments().add(comment);
+					}
+				}
+				umlClass.addOperation(nested);
 			}
 		}
 	}

@@ -175,6 +175,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (identifiers != null) {
                     mappingStore.addMapping(identifiers.first, identifiers.second);
                 }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> private_identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIVATE_PROPERTY_IDENTIFIER,LANG2.PRIVATE_PROPERTY_IDENTIFIER);
+                if (private_identifiers != null) {
+                    mappingStore.addMapping(private_identifiers.first, private_identifiers.second);
+                }
                 com.github.gumtreediff.utils.Pair<Tree,Tree> modifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ACCESSIBILITY_MODIFIER,LANG2.ACCESSIBILITY_MODIFIER);
                 if (modifiers != null) {
                     mappingStore.addMappingRecursively(modifiers.first, modifiers.second);

@@ -1864,20 +1864,19 @@ public class OperationBody {
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
-			if(container instanceof ModuleContainer) {
-				for(VariableDeclaration vd : child.getVariableDeclarations()) {
-					vd.setAttribute(true);
-					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), container.getName());
-					attribute.setVariableDeclaration(vd);
-					attribute.setVisibility(Visibility.PRIVATE);
-					for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
-						if(attribute.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
-							attribute.addAnonymousClass(anonymousClass);
-							anonymousClass.addParentContainer(attribute);
-						}
+			if(container instanceof ModuleContainer && child.getVariableDeclarations().size() > 0) {
+				VariableDeclaration vd = child.getVariableDeclarations().get(0);
+				vd.setAttribute(true);
+				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), container.getName());
+				attribute.setVariableDeclaration(vd);
+				attribute.setVisibility(Visibility.PRIVATE);
+				for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+					if(attribute.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+						attribute.addAnonymousClass(anonymousClass);
+						anonymousClass.addParentContainer(attribute);
 					}
-					((ModuleContainer)container).addNestedAttribute(attribute);
 				}
+				((ModuleContainer)container).addNestedAttribute(attribute);
 			}
 		}
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {

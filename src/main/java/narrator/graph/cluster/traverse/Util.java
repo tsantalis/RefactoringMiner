@@ -12,7 +12,7 @@ public class Util {
 
     Graph<Node, Edge> graph;
 
-    Util(Graph<Node, Edge> graph) {
+    public Util(Graph<Node, Edge> graph) {
         this.graph = graph;
     }
 

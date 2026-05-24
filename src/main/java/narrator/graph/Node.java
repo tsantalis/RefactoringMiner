@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
 import narrator.graph.cluster.Cluster;
+import narrator.graph.cluster.traverse.Util;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -451,15 +452,11 @@ public class Node {
   }
 
   public List<Node> getMappingSources(Cluster cluster) {
-    return cluster.getGraph().incomingEdgesOf(this).stream()
-        .filter(edge -> edge.getType().equals(EdgeType.MAPPING))
-        .map(edge -> cluster.getGraph().getEdgeSource(edge)).toList();
+    return new Util(cluster.getGraph()).getMappingSources(this);
   }
 
   public List<Node> getMappingTargets(Cluster cluster) {
-    return cluster.getGraph().outgoingEdgesOf(this).stream()
-        .filter(edge -> edge.getType().equals(EdgeType.MAPPING))
-        .map(edge -> cluster.getGraph().getEdgeTarget(edge)).toList();
+    return new Util(cluster.getGraph()).getMappingTargets(this);
   }
 
   public List<String> getDescendantSimpleNames() {

@@ -2,6 +2,7 @@ package narrator.graph.cluster.traverse;
 
 import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
@@ -44,42 +44,7 @@ public class TraversalEngine {
 
         Set<Pair<Set<Node>, TraversalPattern>> traversalComponentsTracker = mergeByContext();
 
-        for (UsagePattern usagePattern : usagePatterns) {
-            List<Node> nullRequirementsNode = usagePattern.getRequirements().entrySet().stream()
-                    .filter(entry -> entry.getValue() == null).map(
-                            Entry::getKey).toList();
-            for (Node nullRequirementNode : nullRequirementsNode) {
-                List<Node> contextNodes = Context.get(graph, nullRequirementNode);
-                List<Node> sameContextNodes = contextNodes.stream().filter(contextNode -> contextNode.getTree().equals(nullRequirementNode.getTree())).toList();
-                Node targetNode = sameContextNodes.isEmpty() ? nullRequirementNode : sameContextNodes.get(sameContextNodes.size() - 1);
-
-                List<TraversalPattern> requirementComponents = traversalComponentsTracker.stream()
-                        .filter(nodesTraversalComponent -> nodesTraversalComponent.first.contains(
-                                targetNode))
-                        .sorted((nrn1, nrn2) -> nrn2.first.size() - nrn1.first.size())
-                        .map(nodesTraversalComponent -> nodesTraversalComponent.second).toList();
-                if (requirementComponents.isEmpty()) {
-                    continue;
-                }
-
-                TraversalPattern topRequirementComponent = requirementComponents.get(0);
-                for (String identifier : nullRequirementNode.getIdentifiers()) {
-                    topRequirementComponent.addIdentifier(identifier);
-                }
-                usagePattern.addRequirement(nullRequirementNode, topRequirementComponent);
-            }
-
-            List<Node> remainingNullRequirementNodes = usagePattern.getRequirements().entrySet()
-                    .stream().filter(entry -> entry.getValue() == null).map(Entry::getKey).toList();
-            for (Node remainingRequirementNode : remainingNullRequirementNodes) {
-                usagePattern.breakRequirement(remainingRequirementNode);
-                addMapping(remainingRequirementNode, usagePattern);
-            }
-        }
-
-        for (UsagePattern usagePattern : usagePatterns) {
-            usagePattern.breakCircularDependencies();
-        }
+        finalizeUsagePatterns(traversalComponentsTracker);
 
         // up until this point, they are merged per file.
         mergeByUsageChain();
@@ -120,7 +85,8 @@ public class TraversalEngine {
             } else if (usedNode.isContext()) {
                 // It will be populated after merging
                 usageComponent.addRequirement(usedNode, null);
-            } else if (!usedNode.isExtension()) {
+            } else if (!usedNode.isExtension() &&
+                (usedNode.isDst() || util.getMappingTargets(usedNode).isEmpty())) {
                 if (!singularPatternsLeads.containsKey(usedNode)) {
                     SingularPattern usedComponent = new SingularPattern(usedNode);
                     addContext(usedNode, usedComponent);
@@ -335,6 +301,48 @@ public class TraversalEngine {
 
     }
 
+    private void finalizeUsagePatterns(Set<Pair<Set<Node>, TraversalPattern>> traversalComponentsTracker) {
+        for (UsagePattern usagePattern : usagePatterns) {
+            List<Node> nullRequirementsNode = usagePattern.getRequirements().entrySet().stream()
+                .filter(entry -> entry.getValue() == null).map(
+                    Entry::getKey).toList();
+            for (Node nullRequirementNode : nullRequirementsNode) {
+                List<Node> requirementTargets = new ArrayList<>();
+                requirementTargets.add(nullRequirementNode);
+                requirementTargets.addAll(Context.get(graph, nullRequirementNode).stream()
+                    .filter(contextNode -> contextNode.getTree().equals(nullRequirementNode.getTree())).toList());
+
+                List<TraversalPattern> targetComponents = new ArrayList<>(
+                    requirementTargets.stream()
+                        .map(requirementTarget -> traversalComponentsTracker.stream()
+                            .filter(nodesTraversalComponent -> nodesTraversalComponent.first.contains(requirementTarget))
+                            .sorted((ntc1, ntc2) -> ntc2.first.size() - ntc1.first.size())
+                            .map(nodesTraversalComponent -> nodesTraversalComponent.second).findFirst())
+                        .filter(Optional::isPresent).map(Optional::get).toList());
+                Collections.reverse(targetComponents);
+
+                TraversalPattern targetComponent = targetComponents.isEmpty() ? null : targetComponents.get(0);
+//                for (String identifier : nullRequirementNode.getIdentifiers()) {
+//                    topRequirementComponent.addIdentifier(identifier);
+//                }
+                if (targetComponent != null) {
+                    usagePattern.addRequirement(nullRequirementNode, targetComponent);
+                }
+            }
+
+            List<Node> remainingNullRequirementNodes = usagePattern.getRequirements().entrySet()
+                .stream().filter(entry -> entry.getValue() == null).map(Entry::getKey).toList();
+            for (Node remainingRequirementNode : remainingNullRequirementNodes) {
+                usagePattern.breakRequirement(remainingRequirementNode);
+                addMapping(remainingRequirementNode, usagePattern);
+            }
+        }
+
+        for (UsagePattern usagePattern : usagePatterns) {
+            usagePattern.breakCircularDependencies();
+        }
+    }
+
     private void mergeByUsageChain() {
         Map<UsagePattern, Set<TraversalPattern>> usageRequirements = new HashMap<>();
         for (UsagePattern usagePattern : usagePatterns) {
@@ -418,24 +426,43 @@ public class TraversalEngine {
         }
     }
 
-    // It creates duplicate singular patterns, but it is necessary for covering all hunks beneath contexts
     private void addSingularComponents() {
-        List<Node> singularNodes = graph.vertexSet().stream().filter(node -> !node.isContext())
-                .filter(node -> {
-                    for (TraversalPattern traversalPattern : components) {
-                        boolean contains = traversalPattern.containsNode(node);
-                        if (contains) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }).collect(Collectors.toCollection(ArrayList::new));
-        for (Node singularNode : singularNodes) {
-            SingularPattern singularComponent = new SingularPattern(singularNode);
-            addContext(singularNode, singularComponent);
-            addMapping(singularNode, singularComponent);
-            components.add(singularComponent);
-            singularPatternsLeads.put(singularNode, singularComponent);
+        List<Node> nodes = new ArrayList<>(graph.vertexSet());
+        for (Node node : nodes) {
+            if (node.isContext()) {
+                continue;
+            }
+
+            if (node.isDst()) {
+                tryCreatingSingularPattern(node);
+            } else {
+                List<Node> mappings = util.getMappingTargets(node);
+                for (Node dst : mappings) {
+                    tryCreatingSingularPattern(dst);
+                }
+                tryCreatingSingularPattern(node);
+            }
         }
+    }
+
+    private void tryCreatingSingularPattern(Node node) {
+        if (isCovered(node)) {
+            return;
+        }
+
+        SingularPattern singularComponent = new SingularPattern(node);
+        addContext(node, singularComponent);
+        addMapping(node, singularComponent);
+        components.add(singularComponent);
+        singularPatternsLeads.put(node, singularComponent);
+    }
+
+    private boolean isCovered(Node node) {
+        for (TraversalPattern component : components) {
+            if (component.containsNode(node)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

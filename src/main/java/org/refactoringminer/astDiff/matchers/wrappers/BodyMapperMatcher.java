@@ -639,7 +639,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
-                if(srcStatementNode.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstStatementNode.getParent().getType().name.equals(LANG2.EXPORT_STATEMENT)) {
+                if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.EXPORT_STATEMENT)) {
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
                     com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
                     if(matched != null) {
@@ -655,7 +655,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
         }
-        if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+        if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
             mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
         }
         boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;

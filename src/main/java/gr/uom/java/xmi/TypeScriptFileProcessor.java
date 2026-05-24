@@ -58,10 +58,17 @@ public class TypeScriptFileProcessor {
 
 	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {
 		try {
+			Swc4jMediaType mediaType = null;
+			if(filePath.endsWith(".tsx"))
+				mediaType = Swc4jMediaType.Tsx;
+			else if(filePath.endsWith(".ts"))
+				mediaType = Swc4jMediaType.TypeScript;
+			else if(filePath.endsWith(".js"))
+				mediaType = Swc4jMediaType.JavaScript;
 			URL specifier = Path.of(filePath).toUri().toURL();
 			Swc4jParseOptions options = new Swc4jParseOptions()
 					.setSpecifier(specifier)
-					.setMediaType(filePath.endsWith(".tsx") ? Swc4jMediaType.Tsx : Swc4jMediaType.TypeScript)
+					.setMediaType(mediaType)
 					.setCaptureAst(true)
 					.setCaptureComments(true)
 					.setParseMode(Swc4jParseMode.Module);

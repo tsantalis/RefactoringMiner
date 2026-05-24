@@ -904,7 +904,7 @@ public class UMLCommentListDiff {
 	private int nonPunctuationWords(List<String> longestSubSequence) {
 		int count = 0;
 		for(String str : longestSubSequence) {
-			if(!Pattern.matches("\\p{Punct}", str)) {
+			if(!Pattern.matches("\\p{Punct}", str) && !str.equals("─")) {
 				count++;
 			}
 		}

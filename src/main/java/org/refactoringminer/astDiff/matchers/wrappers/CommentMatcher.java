@@ -43,6 +43,11 @@ public class CommentMatcher extends OptimizationAwareMatcher {
                 else {
                     Tree srcComment = TreeUtilFunctions.findByLocationInfo(src, commonComment.getLeft().getLocationInfo(), LANG1, LANG1.LINE_COMMENT, LANG1.BLOCK_COMMENT);
                     Tree dstComment = TreeUtilFunctions.findByLocationInfo(dst, commonComment.getRight().getLocationInfo(), LANG2, LANG2.LINE_COMMENT, LANG2.BLOCK_COMMENT);
+                    if(srcComment == null && src.getParent() != null && dstComment == null && dst.getParent() != null) {
+                        //check if the comment exists in the parent, some comments are before a function declaration
+                        srcComment = TreeUtilFunctions.findByLocationInfo(src.getParent(), commonComment.getLeft().getLocationInfo(), LANG1, LANG1.LINE_COMMENT, LANG1.BLOCK_COMMENT);
+                        dstComment = TreeUtilFunctions.findByLocationInfo(dst.getParent(), commonComment.getRight().getLocationInfo(), LANG2, LANG2.LINE_COMMENT, LANG2.BLOCK_COMMENT);
+                    }
                     if (srcComment != null && dstComment != null && (srcComment.getType().equals(dstComment.getType()) || Constants.isCrossLanguage(LANG1, LANG2))) {
                         mappingStore.addMapping(srcComment, dstComment);
                         if (TreeUtilFunctions.areBothFromThisType(srcComment.getParent(), dstComment.getParent(), LANG1.EXPRESSION_STATEMENT, LANG2.EXPRESSION_STATEMENT))

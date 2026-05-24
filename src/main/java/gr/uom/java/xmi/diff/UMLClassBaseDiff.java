@@ -222,16 +222,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.typeAliasListDiff = Optional.empty();
 		}
-		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
-			ModuleContainer container1 = originalClass.getContainer().get();
-			ModuleContainer container2 = nextClass.getContainer().get();
-			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(container1, container2, this);
-			addOperationBodyMapper(mapper);
-			if(container1.getNamedExports().size() > 0 || container2.getNamedExports().size() > 0) {
-				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
-				this.namedExportListDiff = Optional.of(diff);
-			}
-		}
 		processInitializers();
 		processModifiers();
 		processTypeParameters();
@@ -255,6 +245,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
 		checkForMovedAnnotations();
+		if(originalClass.getContainer().isPresent() && nextClass.getContainer().isPresent()) {
+			ModuleContainer container1 = originalClass.getContainer().get();
+			ModuleContainer container2 = nextClass.getContainer().get();
+			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(container1, container2, this);
+			addOperationBodyMapper(mapper);
+			if(container1.getNamedExports().size() > 0 || container2.getNamedExports().size() > 0) {
+				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
+				this.namedExportListDiff = Optional.of(diff);
+			}
+		}
 	}
 
 	public void checkForMovedAnnotations() {

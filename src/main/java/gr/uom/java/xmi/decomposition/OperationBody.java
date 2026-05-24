@@ -2426,7 +2426,7 @@ public class OperationBody {
 
 	private static void processComments(List<UMLComment> comments, CommentProvider operation) {
 		for(UMLComment comment : comments) {
-			if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
+			if(operation.getLocationInfo().subsumes(comment.getLocationInfo()) || operation.getLocationInfo().nextLine(comment.getLocationInfo())) {
 				operation.getComments().add(comment);
 			}
 		}

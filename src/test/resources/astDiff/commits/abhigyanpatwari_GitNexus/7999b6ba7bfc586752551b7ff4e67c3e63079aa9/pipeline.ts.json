@@ -46342,17 +46342,6 @@
   "firstEndPos" : 19450,
   "secondEndPos" : 19155
 }, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// ── Phase 2: Structure (paths only — no content needed) ────────────",
-  "secondLabel" : "// ── Phase 14: Cross-file binding propagation (topological level sort) ──",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 19350,
-  "secondPos" : 52083,
-  "firstEndPos" : 19450,
-  "secondEndPos" : 52165
-}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -50488,17 +50477,6 @@
   "secondPos" : 20279,
   "firstEndPos" : 20630,
   "secondEndPos" : 20280
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// ── Phase 3+4: Chunked read + parse ────────────────────────────────",
-  "secondLabel" : "// ── Extracted pipeline phases ──────────────────────────────────────────────",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "program",
-  "firstPos" : 20636,
-  "secondPos" : 17475,
-  "firstEndPos" : 20774,
-  "secondEndPos" : 17649
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -62929,6 +62907,17 @@
   "secondPos" : 26086,
   "firstEndPos" : 25506,
   "secondEndPos" : 26156
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// Phase 14: Collect exported type bindings for cross-file propagation",
+  "secondLabel" : "// ── Phase 14: Cross-file binding propagation (topological level sort) ──",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 25436,
+  "secondPos" : 52083,
+  "firstEndPos" : 25506,
+  "secondEndPos" : 52165
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -106746,17 +106735,6 @@
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// ── Phase 14 pre-pass: Final synthesis pass for whole-module-import languages ──",
-  "secondLabel" : "// ── Phase 1: Scan paths only (no content read) ─────────────────────",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 43192,
-  "secondPos" : 18242,
-  "firstEndPos" : 43282,
-  "secondEndPos" : 18358
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// ── Phase 14 pre-pass: Final synthesis pass for whole-module-import languages ──",
   "secondLabel" : "// ── Final synthesis pass for whole-module-import languages ──",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
@@ -107325,28 +107303,6 @@
   "secondPos" : 36924,
   "firstEndPos" : 43748,
   "secondEndPos" : 36925
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// ── Phase 14: Cross-file binding propagation ──────────────────────",
-  "secondLabel" : "// ── Phase 2: Structure (paths only — no content needed) ────────────",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 43754,
-  "secondPos" : 19055,
-  "firstEndPos" : 43871,
-  "secondEndPos" : 19155
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// ── Phase 14: Cross-file binding propagation ──────────────────────",
-  "secondLabel" : "// ── Pipeline orchestrator ─────────────────────────────────────────────────",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "program",
-  "firstPos" : 43754,
-  "secondPos" : 44183,
-  "firstEndPos" : 43871,
-  "secondEndPos" : 44362
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

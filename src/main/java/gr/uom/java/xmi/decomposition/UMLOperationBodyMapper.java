@@ -2073,6 +2073,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(container1.getJavadoc(), container2.getJavadoc());
 			this.javadocDiff = Optional.of(diff);
 		}
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				for(Pair<UMLComment, UMLComment> pair : mapper.commentListDiff.getCommonComments()) {
+					container1.getComments().remove(pair.getLeft());
+					container2.getComments().remove(pair.getRight());
+				}
+				for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
+					for(Pair<UMLComment, UMLComment> pair : childMapper.commentListDiff.getCommonComments()) {
+						container1.getComments().remove(pair.getLeft());
+						container2.getComments().remove(pair.getRight());
+					}
+				}
+			}
+			if(modelDiff != null) {
+				for(UMLClassBaseDiff nestedClassDiff : modelDiff.getCommonClassDiffList()) {
+					if(nestedClassDiff.getOriginalClass().getSourceFile().equals(container1.getLocationInfo().getFilePath()) &&
+							nestedClassDiff.getNextClass().getSourceFile().equals(container2.getLocationInfo().getFilePath())) {
+						for(Pair<UMLComment, UMLComment> pair : nestedClassDiff.getCommentListDiff().getCommonComments()) {
+							container1.getComments().remove(pair.getLeft());
+							container2.getComments().remove(pair.getRight());
+						}
+					}
+				}
+			}
+		}
 		UMLCommentListDiff commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		this.commentListDiff.append(commentListDiff);
 		checkUnmatchedStatementsBeingCommented();
@@ -3911,6 +3936,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(parentMapper != null && parentMapper.commentListDiff != null) {
 			AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 			Set<UMLComment> deletedComments = new LinkedHashSet<UMLComment>();
+			for(Pair<UMLComment, UMLComment> pair : parentMapper.commentListDiff.getCommonComments()) {
+				if(!pair.getLeft().getText().equals(pair.getRight().getText())) {
+					deletedComments.add(pair.getLeft());
+				}
+			}
 			if(parentMapping != null) {
 				boolean containsReturn = false;
 				if(parentMapping.getFragment1() instanceof CompositeStatementObject) {

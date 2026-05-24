@@ -23,7 +23,7 @@ import gr.uom.java.xmi.diff.RenamePattern;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 
-public abstract class UMLAbstractClass implements AnnotationProvider {
+public abstract class UMLAbstractClass implements AnnotationProvider, CommentProvider {
 	protected LocationInfo locationInfo;
 	protected String packageName;
 	protected String name;

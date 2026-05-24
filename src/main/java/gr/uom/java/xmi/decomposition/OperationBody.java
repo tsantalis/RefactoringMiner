@@ -206,6 +206,7 @@ import extension.umladapter.UMLAdapterUtil;
 import static extension.umladapter.UMLModelAdapter.createUMLClass;
 import static extension.umladapter.UMLModelAdapter.createUMLOperation;
 
+import gr.uom.java.xmi.CommentProvider;
 import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -1825,11 +1826,7 @@ public class OperationBody {
 						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 						operation.setActualSignature(text);
-						for(UMLComment comment : comments) {
-							if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
-								operation.getComments().add(comment);
-							}
-						}
+						processComments(comments, operation);
 						if(container instanceof UMLOperation) {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
@@ -1885,11 +1882,7 @@ public class OperationBody {
 			if(functionDecl.getParent() instanceof Swc4jAstExportDecl) {
 				nested.setVisibility(Visibility.PUBLIC);
 			}
-			for(UMLComment comment : comments) {
-				if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
-					nested.getComments().add(comment);
-				}
-			}
+			processComments(comments, nested);
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}
@@ -1917,11 +1910,7 @@ public class OperationBody {
 			Swc4jAstTsInterfaceBody interfaceBody = interfaceDecl.getBody();
 			List<ISwc4jAstTsTypeElement> typeElements = interfaceBody.getBody();
 			processTypeElements(sourceFolder, filePath, fileContent, umlClass, typeElements);
-			for(UMLComment comment : comments) {
-				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
-					umlClass.getComments().add(comment);
-				}
-			}
+			processComments(comments, umlClass);
 			List<Swc4jAstTsExprWithTypeArgs> interfaces = interfaceDecl.getExtends();
 			for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
 				ISwc4jAstExpr expr = inter.getExpr();
@@ -2004,11 +1993,7 @@ public class OperationBody {
 				}
 			}
 			processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
-			for(UMLComment comment : comments) {
-				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
-					umlClass.getComments().add(comment);
-				}
-			}
+			processComments(comments, umlClass);
 			addToContainer(container, umlClass);
 			if(container instanceof ModuleContainer) {
 				umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
@@ -2116,11 +2101,7 @@ public class OperationBody {
 				nested.setVisibility(Visibility.PUBLIC);
 				Swc4jAstFunction function = functionExpr.getFunction();
 				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested);
-				for(UMLComment comment : comments) {
-					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
-						nested.getComments().add(comment);
-					}
-				}
+				processComments(comments, nested);
 				if(container instanceof UMLOperation) {
 					((UMLOperation)container).addNestedOperation(nested);
 				}
@@ -2150,11 +2131,7 @@ public class OperationBody {
 					}
 				}
 				processTypeScriptClass(sourceFolder, filePath, fileContent, typeDeclarations, umlClass, clazz);
-				for(UMLComment comment : comments) {
-					if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
-						umlClass.getComments().add(comment);
-					}
-				}
+				processComments(comments, umlClass);
 				addToContainer(container, umlClass);
 				if(container instanceof ModuleContainer) {
 					umlClass.getImportedTypes().addAll(((ModuleContainer)container).getNestedImports());
@@ -2216,11 +2193,7 @@ public class OperationBody {
 					umlClass.addTypeParameter(umlTypeParameter);
 				}
 			}
-			for(UMLComment comment : comments) {
-				if(umlClass.getLocationInfo().subsumes(comment.getLocationInfo())) {
-					umlClass.getComments().add(comment);
-				}
-			}
+			processComments(comments, umlClass);
 			addToContainer(container, umlClass);
 		}
 		else if(statement instanceof Swc4jAstImportDecl importDecl) {
@@ -2362,11 +2335,7 @@ public class OperationBody {
 					nested.setVisibility(Visibility.PUBLIC);
 					Swc4jAstFunction function = methodProp.getFunction();
 					TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested);
-					for(UMLComment comment : comments) {
-						if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
-							nested.getComments().add(comment);
-						}
-					}
+					processComments(comments, nested);
 					umlClass.addOperation(nested);
 				}
 				else if(astProp instanceof Swc4jAstKeyValueProp keyValueProp) {
@@ -2411,11 +2380,7 @@ public class OperationBody {
 						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 						operation.setActualSignature(text);
-						for(UMLComment comment : comments) {
-							if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
-								operation.getComments().add(comment);
-							}
-						}
+						processComments(comments, operation);
 						umlClass.addOperation(operation);
 					}
 					else if (key instanceof Swc4jAstIdentName identName) {
@@ -2455,6 +2420,14 @@ public class OperationBody {
 					attribute.setVisibility(Visibility.PRIVATE);
 					umlClass.addAttribute(attribute);
 				}
+			}
+		}
+	}
+
+	private static void processComments(List<UMLComment> comments, CommentProvider operation) {
+		for(UMLComment comment : comments) {
+			if(operation.getLocationInfo().subsumes(comment.getLocationInfo())) {
+				operation.getComments().add(comment);
 			}
 		}
 	}
@@ -2583,20 +2556,12 @@ public class OperationBody {
 		for(ISwc4jAstClassMember member : members) {
 			if(member instanceof Swc4jAstClassMethod classMethod) {
 				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, classMethod, activeVariableDeclarations, fileContent, umlClass.getName());
-				for(UMLComment comment : comments) {
-					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
-						nested.getComments().add(comment);
-					}
-				}
+				processComments(comments, nested);
 				umlClass.addOperation(nested);
 			}
 			else if(member instanceof Swc4jAstConstructor constructor) {
 				UMLOperation nested = TypeScriptFileProcessor.processConstructor(sourceFolder, filePath, constructor, activeVariableDeclarations, fileContent, umlClass.getName());
-				for(UMLComment comment : comments) {
-					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
-						nested.getComments().add(comment);
-					}
-				}
+				processComments(comments, nested);
 				umlClass.addOperation(nested);
 			}
 			else if(member instanceof Swc4jAstClassProp classProperty) {
@@ -2642,11 +2607,7 @@ public class OperationBody {
 			}
 			else if(member instanceof Swc4jAstPrivateMethod privateMethod) {
 				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, privateMethod, activeVariableDeclarations, fileContent, umlClass.getName());
-				for(UMLComment comment : comments) {
-					if(nested.getLocationInfo().subsumes(comment.getLocationInfo())) {
-						nested.getComments().add(comment);
-					}
-				}
+				processComments(comments, nested);
 				umlClass.addOperation(nested);
 			}
 		}

@@ -1229,6 +1229,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			
 			detectExtractVariableWithinUnmatchedStatements(operation1, operation2);
 			detectInlineVariableWithinUnmatchedStatements(operation1, operation2);
+			if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && operation1.getAnonymousClassList().size() > 0 && operation2.getAnonymousClassList().size() > 0 &&
+					operation1.getAnonymousClassList().size() == operation2.getAnonymousClassList().size() &&
+					body1.getAllAnonymousClassDeclarations().size() == 0 && body2.getAllAnonymousClassDeclarations().size() == 0) {
+				for(int i=0; i<operation1.getAnonymousClassList().size(); i++) {
+					UMLAnonymousClass anonymousClass1 = operation1.getAnonymousClassList().get(i);
+					UMLAnonymousClass anonymousClass2 = operation2.getAnonymousClassList().get(i);
+					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+					anonymousClassDiff.process();
+					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+					if(matchedOperationMappers.size() > 0 || anonymousClassDiff.getCommonAtrributes().size() > 0) {
+						this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+						this.anonymousClassDiffs.add(anonymousClassDiff);
+						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+							classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+						}
+						if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+							classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+						}
+						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+							addAllMappings(mapper.mappings);
+						}
+					}
+				}
+			}
 		}
 		AbstractExpression defaultExpression1 = operation1.getDefaultExpression();
 		AbstractExpression defaultExpression2 = operation2.getDefaultExpression();
@@ -2078,6 +2102,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(Pair<UMLComment, UMLComment> pair : mapper.commentListDiff.getCommonComments()) {
 					container1.getComments().remove(pair.getLeft());
 					container2.getComments().remove(pair.getRight());
+				}
+				for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+					for(UMLOperationBodyMapper anonymousMapper : anonymousDiff.getOperationBodyMapperList()) {
+						for(Pair<UMLComment, UMLComment> pair : anonymousMapper.commentListDiff.getCommonComments()) {
+							container1.getComments().remove(pair.getLeft());
+							container2.getComments().remove(pair.getRight());
+						}
+					}
 				}
 				for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
 					for(Pair<UMLComment, UMLComment> pair : childMapper.commentListDiff.getCommonComments()) {

@@ -104,7 +104,7 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
 			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
-			METHOD_INVOCATION_ARGUMENTS = "argument_list";
+			METHOD_INVOCATION_ARGUMENTS = "arguments";
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			METHOD_INVOCATION = "call_expression";
@@ -449,4 +449,6 @@ public class Constants {
     public final String OBJECT = "object";
     public final String SHORTHAND_PROPERTY_IDENTIFIER = "shorthand_property_identifier";
     public final String PAIR = "pair";
+    public final String FUNCTION_EXPRESSION = "function_expression";
+    public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
 }

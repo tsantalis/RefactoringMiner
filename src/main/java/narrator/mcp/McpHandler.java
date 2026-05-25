@@ -73,11 +73,11 @@ public class McpHandler {
         JsonArray tools = new JsonArray();
 
         tools.add(createToolDefinition("init_narrative",
-                "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters. This is the required first step before calling get_next_chapter.",
+                "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters for each grain level. \n\nAfter calling this, the user MUST be asked to choose a GrainLevel for the narrative (LEAF, USAGE_CHAIN_ROOT, METHOD, CLASS, or FILE). This is the required first step before calling get_next_chapter.",
                 "url"));
         tools.add(createToolDefinition("get_next_chapter",
-                "Retrieves the next chapter in the narrative. \n\nMANDATORY: High-quality narration requires understanding the intent and impact of a change, which is rarely visible in a small snippet. DO NOT rely on superficial inferences or pattern-matching. You MUST call 'get_surrounding_code' to verify the role and intention of the code unless the change is an obvious, triviality (e.g., a typo fix). Whenever you find yourself using words like 'likely' or 'probably', you have failed to call this tool. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
-                "url"));
+                "Retrieves the next chapter in the narrative for the specified grain level. \n\nMANDATORY: High-quality narration requires understanding the intent and impact of a change, which is rarely visible in a small snippet. DO NOT rely on superficial inferences or pattern-matching. You MUST call 'get_surrounding_code' to verify the role and intention of the code unless the change is an obvious, triviality (e.g., a typo fix). Whenever you find yourself using words like 'likely' or 'probably', you have failed to call this tool. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "url", "grainLevel"));
         tools.add(createToolDefinition("get_surrounding_code",
                 "Reveals the semantic and structural context of a code snippet. Use this tool to uncover the method signatures, class hierarchies, and surrounding logic that are essential for a professional analysis. This tool is the only way to transform a superficial guess into a verified technical explanation.",
                 "url", "codeId"));
@@ -174,7 +174,10 @@ public class McpHandler {
         if ("init_narrative".equals(toolName)) {
             return initNarrative(url);
         } else if ("get_next_chapter".equals(toolName)) {
-            return getNextChapter(url);
+            if (!arguments.has("grainLevel")) {
+                throw new IllegalArgumentException("Missing required argument: grainLevel");
+            }
+            return getNextChapter(url, arguments.get("grainLevel").getAsString());
         } else if ("get_surrounding_code".equals(toolName)) {
             if (!arguments.has("codeId")) {
                 throw new IllegalArgumentException("Missing required argument: codeId");
@@ -203,24 +206,30 @@ public class McpHandler {
         return "hierarchy:" + url;
     }
 
-    private String getNextChapter(String url) throws Exception {
+    private String getNextChapter(String url, String grainLevelStr) throws Exception {
+        GrainLevel level;
+        try {
+            level = GrainLevel.valueOf(grainLevelStr.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid grainLevel: " + grainLevelStr + ". Valid values are: LEAF, USAGE_CHAIN_ROOT, METHOD, CLASS, FILE");
+        }
+
         Narrator narrator = cacheManager.getNarrative(url + ":root");
         if (narrator == null) {
             return "No narrative initialized for this URL. Please call init_narrative first.";
         }
         
-        GrainLevel level = GrainLevel.LEAF;
         int progress = narrator.getProgress(level);
-        List<TraversalPattern> leaves = narrator.getNarrative(level);
-        if (leaves == null) {
+        List<TraversalPattern> chapters = narrator.getNarrative(level);
+        if (chapters == null) {
             return "Narrative state lost. Please call init_narrative again.";
         }
         
-        if (progress >= leaves.size()) {
-            return "[End of Narrative] All chapters have been read.";
+        if (progress >= chapters.size()) {
+            return "[End of Narrative] All chapters for grain level " + level + " have been read.";
         }
         
-        TraversalPattern leafPattern = leaves.get(progress);
+        TraversalPattern chapterPattern = chapters.get(progress);
         narrator.incrementProgress(level);
         
         List<Cluster> clusters = getOrComputeClusters(url);
@@ -228,18 +237,18 @@ public class McpHandler {
             return "Error: No clusters available to provide context for the chapter.";
         }
         
-        Cluster cluster = findClusterForNode(leafPattern.getLead(), clusters);
+        Cluster cluster = findClusterForNode(chapterPattern.getLead(), clusters);
 
         if (cluster == null) {
             return "Error: Could not find associated cluster for the current chapter.";
         }
-
-        String content = leafPattern.extended(cluster);
+        
+        String content = chapterPattern.extended(cluster);
         int currentChapter = progress + 1;
-        int totalChapters = leaves.size();
+        int totalChapters = chapters.size();
         
         StringBuilder output = new StringBuilder();
-        output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append("]\n\n");
+        output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append(" - GrainLevel: ").append(level).append("]\n\n");
         output.append(content);
         output.append("\n\n");
         
@@ -247,7 +256,7 @@ public class McpHandler {
             output.append("Reminder: Evaluate context, explain changes as a diff, and ask to proceed.");
         } else {
             output.append("Reminder: Evaluate context and explain changes as a diff.");
-            output.append("\n\n[End of Narrative] All chapters have been read. You may now provide your final synthesis and explanation of the commit.");
+            output.append("\n\n[End of Narrative] All chapters for grain level " + level + " have been read. You may now provide your final synthesis and explanation of the commit.");
         }
         
         return output.toString();
@@ -261,10 +270,19 @@ public class McpHandler {
 
         Narrator narrator = new Narrator(root);
         cacheManager.putNarrative(url + ":root", narrator);
-        List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
-        int chapterCount = leaves.size();
+        
+        StringBuilder summary = new StringBuilder();
+        summary.append("Narrative initialized. Please choose a GrainLevel to start the narration.\n\n");
+        summary.append("Available GrainLevels and their chapter counts:\n");
+        
+        for (GrainLevel level : GrainLevel.values()) {
+            int count = narrator.getNarrative(level).size();
+            summary.append("- ").append(level).append(": ").append(count).append(" chapters\n");
+        }
+        
+        summary.append("\nUse get_next_chapter with the chosen 'grainLevel' parameter to start.");
 
-        return "Narrative initialized. Total chapters: " + chapterCount + ". Use get_next_chapter to start.";
+        return summary.toString();
     }
 
 

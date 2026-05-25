@@ -15,7 +15,7 @@ public class Narrator {
      * or are the base requirements in a chain.
      * The order is determined by a topological sort of the dependency graph.
      */
-    public List<Leaf> narrate(TraversalPattern pattern) {
+    public List<Leaf> narrate(TraversalPattern pattern, GrainLevel grainLevel) {
         if (pattern == null) {
             return Collections.emptyList();
         }
@@ -23,7 +23,7 @@ public class Narrator {
         List<TraversalPattern> result = new ArrayList<>();
         Set<TraversalPattern> visited = new HashSet<>();
         
-        postOrderTraverse(pattern, visited, result);
+        postOrderTraverse(pattern, visited, result, grainLevel);
         
         return result.stream()
                 .filter(p -> p instanceof Leaf)
@@ -31,7 +31,7 @@ public class Narrator {
                 .toList();
     }
 
-    private void postOrderTraverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+    private void postOrderTraverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
         if (visited.contains(p)) {
             return;
         }
@@ -39,16 +39,35 @@ public class Narrator {
         visited.add(p);
         
         if (p instanceof AggregatorPattern aggregator) {
+            if (shouldStopAtThisLevel(aggregator, grainLevel)) {
+                result.add(p);
+                return;
+            }
             List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
             sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 
 
             for (TraversalPattern sub : sortedSubs) {
-                postOrderTraverse(sub, visited, result);
+                postOrderTraverse(sub, visited, result, grainLevel);
+            }
             }
         }
         
-        result.add(p);
+        if (!(p instanceof AggregatorPattern && shouldStopAtThisLevel((AggregatorPattern) p, grainLevel))) {
+             result.add(p);
+        }
+
+    private boolean shouldStopAtThisLevel(AggregatorPattern aggregator, GrainLevel grainLevel) {
+        if (grainLevel == GrainLevel.LEAF) return false;
+        if (grainLevel == GrainLevel.USAGE_CHAIN_ROOT && aggregator instanceof UsagePattern) return true;
+        if (aggregator instanceof TraversalComponent tc) {
+            String type = tc.getMergeContextType();
+            if (type == null) return false;
+            if (grainLevel == GrainLevel.METHOD && type.contains("Method")) return true;
+            if (grainLevel == GrainLevel.CLASS && (type.contains("Class") || type.contains("Interface"))) return true;
+            if (grainLevel == GrainLevel.FILE && type.contains("File")) return true;
+        }
+        return false;
     }
 
 }

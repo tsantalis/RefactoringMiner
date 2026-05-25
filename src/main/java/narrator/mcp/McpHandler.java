@@ -255,7 +255,7 @@ public class McpHandler {
             return "No changes found to narrate.";
         }
 
-        List<Leaf> leaves = new Narrator().narrate(root);
+        List<Leaf> leaves = new Narrator().narrate(root, GrainLevel.LEAF);
         int chapterCount = leaves.size();
 
         cacheManager.putNarrative(url + ":root", leaves);

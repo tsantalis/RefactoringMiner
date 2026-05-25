@@ -291,6 +291,7 @@ public class TraversalEngine {
 
         TraversalComponent mergedComponent = new TraversalComponent(mergeComponents,
                 ReasonType.CONTEXT);
+        mergedComponent.setMergeContextType(heads.iterator().next().getTree().getType().name);
         components.add(mergedComponent);
         traversalComponentsTracker.add(new Pair<>(heads, mergedComponent));
 

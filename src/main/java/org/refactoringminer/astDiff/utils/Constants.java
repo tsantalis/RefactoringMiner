@@ -451,4 +451,5 @@ public class Constants {
     public final String PAIR = "pair";
     public final String FUNCTION_EXPRESSION = "function_expression";
     public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
+    public final String UPDATE_EXPRESSION = "update_expression";
 }

@@ -263,6 +263,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMappingRecursively(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.VARIABLE_DECLARATION, LANG2.VARIABLE_DECLARATION);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PATTERN_LIST, LANG2.PATTERN_LIST);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -278,6 +282,19 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SEMICOLON, LANG2.SEMICOLON);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.UPDATE_EXPRESSION, LANG2.UPDATE_EXPRESSION);
+                if (matched != null) {
+                    Tree t1 = matched.first;
+                    Tree t2 = matched.second;
+                    int index1 = t1.getParent().getChildPosition(t1);
+                    int index2 = t2.getParent().getChildPosition(t2);
+                    if(index1 > 0 && t1.getParent().getChild(index1-1).getType().name.equals(LANG1.SEMICOLON) &&
+                            index2 > 0 && t2.getParent().getChild(index2-1).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree tt1 = t1.getParent().getChild(index1-1);
+                        Tree tt2 = t2.getParent().getChild(index2-1);
+                        mappingStore.addMapping(tt1,tt2);
+                    }
                 }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.LEXICAL_DECLARATION, LANG2.LEXICAL_DECLARATION);
                 if (matched != null) {

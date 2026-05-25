@@ -7,10 +7,20 @@ import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
+import org.refactoringminer.astDiff.utils.Constants;
 
 public class Narrator {
     private final TraversalPattern rootPattern;
     private final Map<GrainLevel, List<TraversalPattern>> cache = new HashMap<>();
+
+    private static final Map<GrainLevel, Set<String>> GRAIN_LEVEL_TYPES = new HashMap<>();
+    static {
+        Constants c = new Constants("");
+        GRAIN_LEVEL_TYPES.put(GrainLevel.USAGE_CHAIN_ROOT, Set.of("UsagePattern")); // Handled by type check
+        GRAIN_LEVEL_TYPES.put(GrainLevel.METHOD, Set.of(c.METHOD_DECLARATION));
+        GRAIN_LEVEL_TYPES.put(GrainLevel.CLASS, Set.of(c.TYPE_DECLARATION, c.INTERFACE_DECLARATION, c.ENUM_DECLARATION, c.RECORD_DECLARATION));
+        GRAIN_LEVEL_TYPES.put(GrainLevel.FILE, Set.of(c.COMPILATION_UNIT));
+    }
 
     public Narrator(TraversalPattern rootPattern) {
         this.rootPattern = rootPattern;
@@ -59,21 +69,24 @@ public class Narrator {
     private boolean shouldStopAtThisLevel(AggregatorPattern aggregator, GrainLevel grainLevel) {
         if (grainLevel == GrainLevel.LEAF) return false;
         
-        GrainLevel currentLevel = getAggregatorLevel(aggregator);
-        return currentLevel.ordinal() <= grainLevel.ordinal();
-    }
-
-    private GrainLevel getAggregatorLevel(AggregatorPattern aggregator) {
-        if (aggregator instanceof UsagePattern) {
-            return GrainLevel.USAGE_CHAIN_ROOT;
-        }
+        if (grainLevel == GrainLevel.USAGE_CHAIN_ROOT && aggregator instanceof UsagePattern) return true;
+        
         if (aggregator instanceof TraversalComponent tc) {
-            String type = tc.getMergeContextType();
-            if (type == null) return GrainLevel.LEAF;
-            if (type.contains("File")) return GrainLevel.FILE;
-            if (type.contains("Class") || type.contains("Interface")) return GrainLevel.CLASS;
-            if (type.contains("Method")) return GrainLevel.METHOD;
+            Set<Node> contexts = tc.getMergeContexts();
+            if (contexts == null || contexts.isEmpty()) return false;
+            
+            Node representative = contexts.iterator().next();
+            Set<String> targetTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
+            if (targetTypes == null) return false;
+            
+            com.github.gumtreediff.tree.Tree currentTree = representative.getTree();
+            while (currentTree != null) {
+                if (targetTypes.contains(currentTree.getType().name)) {
+                    return true;
+                }
+                currentTree = currentTree.getParent();
+            }
         }
-        return GrainLevel.LEAF;
+        return false;
     }
 }

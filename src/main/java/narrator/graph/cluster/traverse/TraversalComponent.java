@@ -13,7 +13,7 @@ public class TraversalComponent extends AggregatorPattern {
 
     private final List<TraversalPattern> components;
     private final ReasonType reasonType;
-    private String mergeContextType;
+    private Set<Node> mergeContexts;
 
     public TraversalComponent(List<TraversalPattern> components, ReasonType reasonType) {
         nodeType = NodeType.COMPONENT;
@@ -26,12 +26,12 @@ public class TraversalComponent extends AggregatorPattern {
         return components;
     }
 
-    public String getMergeContextType() {
-        return mergeContextType;
+    public Set<Node> getMergeContexts() {
+        return mergeContexts;
     }
 
-    public void setMergeContextType(String mergeContextType) {
-        this.mergeContextType = mergeContextType;
+    public void setMergeContexts(Set<Node> mergeContexts) {
+        this.mergeContexts = mergeContexts;
     }
 
     @Override
@@ -54,11 +54,11 @@ public class TraversalComponent extends AggregatorPattern {
         JsonObject result = super.stringify();
 
         result.addProperty("reasonType", reasonType.name());
-        result.addProperty("mergeContextType", mergeContextType);
 
         return result;
     }
 
+    @Override
     public String extended(Cluster cluster) {
         return super.extended(cluster);
     }

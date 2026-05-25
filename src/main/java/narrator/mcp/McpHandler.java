@@ -16,6 +16,7 @@ import narrator.graph.cluster.traverse.TraversalComponent;
 import narrator.graph.cluster.traverse.TraversalEngine;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.graph.cluster.traverse.ReasonType;
+import narrator.graph.cluster.traverse.GrainLevel;
 import org.jgrapht.Graph;
 import java.util.List;
 import java.util.Map;
@@ -210,7 +211,7 @@ public class McpHandler {
             return "No narrative initialized for this URL. Please call init_narrative first.";
         }
         
-        List<Leaf> leaves = cacheManager.getNarrative(url + ":root");
+        List<TraversalPattern> leaves = cacheManager.getNarrative(url + ":root").getNarrative(GrainLevel.LEAF);
         if (leaves == null) {
             return "Narrative state lost. Please call init_narrative again.";
         }
@@ -219,16 +220,17 @@ public class McpHandler {
             return "[End of Narrative] All chapters have been read.";
         }
         
-        Leaf leaf = leaves.get(progress);
+        TraversalPattern leafPattern = leaves.get(progress);
         clusterProgress.put(url, progress + 1);
         
-        // Need a cluster to call leaf.base(cluster).
-        // We just use the first cluster from the project as a context for base().
         List<Cluster> clusters = getOrComputeClusters(url);
         if (clusters.isEmpty()) {
             return "Error: No clusters available to provide context for the chapter.";
         }
         
+        if (!(leafPattern instanceof Leaf leaf)) {
+            return "Error: Expected leaf pattern at this stage.";
+        }
         Cluster cluster = findClusterForLeaf(leaf, clusters);
         String content = leaf.base(cluster);
         int currentChapter = progress + 1;
@@ -255,10 +257,11 @@ public class McpHandler {
             return "No changes found to narrate.";
         }
 
-        List<Leaf> leaves = new Narrator().narrate(root, GrainLevel.LEAF);
+        Narrator narrator = new Narrator(root);
+        cacheManager.putNarrative(url + ":root", narrator);
+        List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
         int chapterCount = leaves.size();
 
-        cacheManager.putNarrative(url + ":root", leaves);
         clusterProgress.put(url, 0);
 
         return "Narrative initialized. Total chapters: " + chapterCount + ". Use get_next_chapter to start.";

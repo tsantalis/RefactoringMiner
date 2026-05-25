@@ -9,26 +9,28 @@ import narrator.graph.cluster.Cluster;
 import org.jgrapht.Graph;
 
 public class Narrator {
-    /**
-     * Produces a list of patterns ordered from deepest leaf to highest.
-     * Deepest leaves are those that are not requirements for any other pattern in the set,
-     * or are the base requirements in a chain.
-     * The order is determined by a topological sort of the dependency graph.
-     */
-    public List<Leaf> narrate(TraversalPattern pattern, GrainLevel grainLevel) {
-        if (pattern == null) {
+    private final TraversalPattern rootPattern;
+    private final Map<GrainLevel, List<TraversalPattern>> cache = new HashMap<>();
+
+    public Narrator(TraversalPattern rootPattern) {
+        this.rootPattern = rootPattern;
+    }
+
+    public List<TraversalPattern> getNarrative(GrainLevel grainLevel) {
+        return cache.computeIfAbsent(grainLevel, this::narrate);
+    }
+
+    private List<TraversalPattern> narrate(GrainLevel grainLevel) {
+        if (rootPattern == null) {
             return Collections.emptyList();
         }
 
         List<TraversalPattern> result = new ArrayList<>();
         Set<TraversalPattern> visited = new HashSet<>();
         
-        postOrderTraverse(pattern, visited, result, grainLevel);
+        postOrderTraverse(rootPattern, visited, result, grainLevel);
         
-        return result.stream()
-                .filter(p -> p instanceof Leaf)
-                .map(p -> (Leaf) p)
-                .toList();
+        return result;
     }
 
     private void postOrderTraverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
@@ -46,16 +48,15 @@ public class Narrator {
             List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
             sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 
-
             for (TraversalPattern sub : sortedSubs) {
                 postOrderTraverse(sub, visited, result, grainLevel);
-            }
             }
         }
         
         if (!(p instanceof AggregatorPattern && shouldStopAtThisLevel((AggregatorPattern) p, grainLevel))) {
              result.add(p);
         }
+    }
 
     private boolean shouldStopAtThisLevel(AggregatorPattern aggregator, GrainLevel grainLevel) {
         if (grainLevel == GrainLevel.LEAF) return false;
@@ -69,5 +70,4 @@ public class Narrator {
         }
         return false;
     }
-
 }

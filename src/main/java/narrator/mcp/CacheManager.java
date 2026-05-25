@@ -6,12 +6,13 @@ import java.util.List;
 import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.traverse.Leaf;
 import narrator.graph.cluster.traverse.TraversalPattern;
+import narrator.graph.cluster.traverse.Narrator;
 
 public class CacheManager {
     private final Map<String, List<Cluster>> clustersCache = new ConcurrentHashMap<>();
     private final Map<String, TraversalPattern> hierarchyCache = new ConcurrentHashMap<>();
 
-    private final Map<String, List<Leaf>> narrativesCache = new ConcurrentHashMap<>();
+    private final Map<String, Narrator> narrativesCache = new ConcurrentHashMap<>();
 
     public List<Cluster> getClusters(String url) {
         return clustersCache.get(url);
@@ -30,11 +31,11 @@ public class CacheManager {
         hierarchyCache.put(url, hierarchy);
     }
 
-    public List<Leaf> getNarrative(String key) {
+    public Narrator getNarrative(String key) {
         return narrativesCache.get(key);
     }
 
-    public void putNarrative(String key, List<Leaf> narrative) {
+    public void putNarrative(String key, Narrator narrative) {
         narrativesCache.put(key, narrative);
     }
 

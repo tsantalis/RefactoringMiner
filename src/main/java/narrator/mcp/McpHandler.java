@@ -76,10 +76,10 @@ public class McpHandler {
                 "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters. This is the required first step before calling get_next_chapter.",
                 "url"));
         tools.add(createToolDefinition("get_next_chapter",
-                "Retrieves the next chapter in the narrative. \n\nMANDATORY: Before analyzing and explaining a chapter, you MUST evaluate if the provided code snippets are sufficient for a detailed and informed description. If the chapter's changes cannot be well-described without surrounding context, you MUST call 'get_surrounding_code' for the relevant pieces of code first. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Retrieves the next chapter in the narrative. \n\nMANDATORY: High-quality narration requires understanding the intent and impact of a change, which is rarely visible in a small snippet. DO NOT rely on superficial inferences or pattern-matching. You MUST call 'get_surrounding_code' to verify the role and intention of the code unless the change is an obvious, triviality (e.g., a typo fix). Whenever you find yourself using words like 'likely' or 'probably', you have failed to call this tool. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url"));
         tools.add(createToolDefinition("get_surrounding_code",
-                "Fetch the surrounding code for a specific piece of code provided in a narrative chapter. Use this tool when the provided snippets are insufficient to provide a detailed and informed explanation of the change.",
+                "Reveals the semantic and structural context of a code snippet. Use this tool to uncover the method signatures, class hierarchies, and surrounding logic that are essential for a professional analysis. This tool is the only way to transform a superficial guess into a verified technical explanation.",
                 "url", "codeId"));
         result.add("tools", tools);
         response.add("result", result);
@@ -322,7 +322,7 @@ public class McpHandler {
         
         for (Cluster cluster : clusters) {
             Node targetNode = cluster.getGraph().vertexSet().stream()
-                    .filter(node -> node.getId().equals(codeId))
+                    .filter(node -> node.getPromptId().equals(codeId))
                     .findFirst()
                     .orElse(null);
             

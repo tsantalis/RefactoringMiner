@@ -296,7 +296,7 @@ public class HunkNetwork {
   }
 
   private void processMapping() {
-    List<Node> nodes = graph.vertexSet().stream().toList();
+    List<Node> nodes = graph.vertexSet().stream().toList().stream().filter(node -> !node.isExtension()).toList();
     List<Node> srcNodes = nodes.stream().filter(Node::isSrc).toList();
     List<Node> dstNodes = nodes.stream().filter(Node::isDst).toList();
 

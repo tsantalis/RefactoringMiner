@@ -6,8 +6,27 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import narrator.graph.Node;
+import narrator.graph.cluster.Cluster;
 
 public class AggregatorPattern extends TraversalPattern {
+
+    @Override
+    public String extended(Cluster cluster) {
+        Narrator narrator = new Narrator(this);
+        List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
+        if (leaves.isEmpty()) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < leaves.size(); i++) {
+            sb.append(leaves.get(i).extended(cluster));
+            if (i < leaves.size() - 1) {
+                sb.append("\n---\n");
+            }
+        }
+        return sb.toString();
+    }
 
     Set<TraversalPattern> subs = new HashSet<>();
 

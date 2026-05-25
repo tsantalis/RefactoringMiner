@@ -7,9 +7,14 @@ import java.util.HashSet;
 import java.util.Set;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
+import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.GraphWrapper;
 
 public class TraversalPattern extends GraphWrapper {
+
+    public String extended(Cluster cluster) {
+        return "";
+    }
 
     protected final Util util = new Util(getGraph());
     protected final Set<String> identifiers = new HashSet<>();

@@ -51,23 +51,29 @@ public class Narrator {
             for (TraversalPattern sub : sortedSubs) {
                 postOrderTraverse(sub, visited, result, grainLevel);
             }
-        }
-        
-        if (!(p instanceof AggregatorPattern && shouldStopAtThisLevel((AggregatorPattern) p, grainLevel))) {
-             result.add(p);
+        } else {
+            result.add(p);
         }
     }
 
     private boolean shouldStopAtThisLevel(AggregatorPattern aggregator, GrainLevel grainLevel) {
         if (grainLevel == GrainLevel.LEAF) return false;
-        if (grainLevel == GrainLevel.USAGE_CHAIN_ROOT && aggregator instanceof UsagePattern) return true;
+        
+        GrainLevel currentLevel = getAggregatorLevel(aggregator);
+        return currentLevel.ordinal() <= grainLevel.ordinal();
+    }
+
+    private GrainLevel getAggregatorLevel(AggregatorPattern aggregator) {
+        if (aggregator instanceof UsagePattern) {
+            return GrainLevel.USAGE_CHAIN_ROOT;
+        }
         if (aggregator instanceof TraversalComponent tc) {
             String type = tc.getMergeContextType();
-            if (type == null) return false;
-            if (grainLevel == GrainLevel.METHOD && type.contains("Method")) return true;
-            if (grainLevel == GrainLevel.CLASS && (type.contains("Class") || type.contains("Interface"))) return true;
-            if (grainLevel == GrainLevel.FILE && type.contains("File")) return true;
+            if (type == null) return GrainLevel.LEAF;
+            if (type.contains("File")) return GrainLevel.FILE;
+            if (type.contains("Class") || type.contains("Interface")) return GrainLevel.CLASS;
+            if (type.contains("Method")) return GrainLevel.METHOD;
         }
-        return false;
+        return GrainLevel.LEAF;
     }
 }

@@ -97,6 +97,11 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
     }
 
     @Override
+    public String extended(Cluster cluster) {
+        return base(cluster);
+    }
+
+    @Override
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 

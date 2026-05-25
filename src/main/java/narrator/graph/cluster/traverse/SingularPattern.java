@@ -38,4 +38,9 @@ public class SingularPattern extends TraversalPattern implements Leaf {
         }
         return prompt.toString();
     }
+
+    @Override
+    public String extended(Cluster cluster) {
+        return base(cluster);
+    }
 }

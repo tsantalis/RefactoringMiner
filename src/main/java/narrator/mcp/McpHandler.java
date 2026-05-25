@@ -186,14 +186,13 @@ public class McpHandler {
         }
     }
 
-    private Cluster findClusterForLeaf(Leaf leaf, List<Cluster> clusters) {
+    private Cluster findClusterForNode(Node node, List<Cluster> clusters) {
         if (clusters.isEmpty()) {
             return null;
         }
 
-        Node lead = ((TraversalPattern) leaf).getLead();
         for (Cluster cluster : clusters) {
-            if (cluster.getGraph().vertexSet().contains(lead)) {
+            if (cluster.getGraph().vertexSet().contains(node)) {
                 return cluster;
             }
         }
@@ -228,11 +227,13 @@ public class McpHandler {
             return "Error: No clusters available to provide context for the chapter.";
         }
         
-        if (!(leafPattern instanceof Leaf leaf)) {
-            return "Error: Expected leaf pattern at this stage.";
+        Cluster cluster = findClusterForNode(leafPattern.getLead(), clusters);
+
+        if (cluster == null) {
+            return "Error: Could not find associated cluster for the current chapter.";
         }
-        Cluster cluster = findClusterForLeaf(leaf, clusters);
-        String content = leaf.base(cluster);
+
+        String content = leafPattern.extended(cluster);
         int currentChapter = progress + 1;
         int totalChapters = leaves.size();
         

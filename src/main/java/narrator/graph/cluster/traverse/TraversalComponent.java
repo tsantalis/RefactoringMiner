@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
+import narrator.graph.cluster.Cluster;
+import narrator.graph.cluster.GraphWrapper;
 
 public class TraversalComponent extends AggregatorPattern {
 
@@ -55,6 +57,10 @@ public class TraversalComponent extends AggregatorPattern {
         result.addProperty("mergeContextType", mergeContextType);
 
         return result;
+    }
+
+    public String extended(Cluster cluster) {
+        return super.extended(cluster);
     }
 
     @Override

@@ -25,7 +25,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class McpHandler {
     private static final Logger logger = LoggerFactory.getLogger(McpHandler.class);
     private static final CacheManager cacheManager = new CacheManager();
-    private final Map<String, Integer> clusterProgress = new ConcurrentHashMap<>();
 
     public JsonObject handle(JsonObject request) {
         logger.debug("Handling MCP request: {}", request);
@@ -205,12 +204,14 @@ public class McpHandler {
     }
 
     private String getNextChapter(String url) throws Exception {
-        Integer progress = clusterProgress.get(url);
-        if (progress == null) {
+        Narrator narrator = cacheManager.getNarrative(url + ":root");
+        if (narrator == null) {
             return "No narrative initialized for this URL. Please call init_narrative first.";
         }
         
-        List<TraversalPattern> leaves = cacheManager.getNarrative(url + ":root").getNarrative(GrainLevel.LEAF);
+        GrainLevel level = GrainLevel.LEAF;
+        int progress = narrator.getProgress(level);
+        List<TraversalPattern> leaves = narrator.getNarrative(level);
         if (leaves == null) {
             return "Narrative state lost. Please call init_narrative again.";
         }
@@ -220,7 +221,7 @@ public class McpHandler {
         }
         
         TraversalPattern leafPattern = leaves.get(progress);
-        clusterProgress.put(url, progress + 1);
+        narrator.incrementProgress(level);
         
         List<Cluster> clusters = getOrComputeClusters(url);
         if (clusters.isEmpty()) {
@@ -262,8 +263,6 @@ public class McpHandler {
         cacheManager.putNarrative(url + ":root", narrator);
         List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
         int chapterCount = leaves.size();
-
-        clusterProgress.put(url, 0);
 
         return "Narrative initialized. Total chapters: " + chapterCount + ". Use get_next_chapter to start.";
     }

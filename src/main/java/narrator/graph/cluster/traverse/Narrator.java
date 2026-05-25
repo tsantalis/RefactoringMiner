@@ -12,6 +12,7 @@ import org.refactoringminer.astDiff.utils.Constants;
 public class Narrator {
     private final TraversalPattern rootPattern;
     private final Map<GrainLevel, List<TraversalPattern>> cache = new HashMap<>();
+    private final Map<GrainLevel, Integer> progressMap = new HashMap<>();
 
     private static final Map<GrainLevel, Set<String>> GRAIN_LEVEL_TYPES = new HashMap<>();
     static {
@@ -28,6 +29,14 @@ public class Narrator {
 
     public List<TraversalPattern> getNarrative(GrainLevel grainLevel) {
         return cache.computeIfAbsent(grainLevel, this::narrate);
+    }
+
+    public int getProgress(GrainLevel grainLevel) {
+        return progressMap.getOrDefault(grainLevel, 0);
+    }
+
+    public void incrementProgress(GrainLevel grainLevel) {
+        progressMap.put(grainLevel, getProgress(grainLevel) + 1);
     }
 
     private List<TraversalPattern> narrate(GrainLevel grainLevel) {

@@ -1366,6 +1366,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc(), operationSignatureDiff);
 			this.javadocDiff = Optional.of(diff);
 		}
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+			for(UMLAnonymousClassDiff anonymousDiff : this.anonymousClassDiffs) {
+				for(UMLOperationBodyMapper anonymousMapper : anonymousDiff.getOperationBodyMapperList()) {
+					for(Pair<UMLComment, UMLComment> pair : anonymousMapper.commentListDiff.getCommonComments()) {
+						container1.getComments().remove(pair.getLeft());
+						container2.getComments().remove(pair.getRight());
+					}
+				}
+			}
+		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 		if(operation1.getNestedImports().size() > 0 || operation2.getNestedImports().size() > 0) {

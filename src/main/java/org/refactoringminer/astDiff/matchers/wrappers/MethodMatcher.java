@@ -245,9 +245,17 @@ public class MethodMatcher extends BodyMapperMatcher{
                             if (closingParen != null) {
                                 mappingStore.addMapping(closingParen.first,closingParen.second);
                             }
-                            if(arguments1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) && arguments2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION)) {
-                                mappingStore.addMapping(arguments1.getParent(), arguments2.getParent());
-                                mappingStore.addMapping(arguments1.getParent().getParent(), arguments2.getParent().getParent());
+                            Tree call1 = arguments1.getParent();
+                            Tree call2 = arguments2.getParent();
+                            if(call1.getType().name.equals(LANG1.METHOD_INVOCATION) && call2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                                mappingStore.addMapping(call1, call2);
+                                if(call1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && call2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+                                    mappingStore.addMapping(call1.getParent(), call2.getParent());
+                                    com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(call1.getParent(), call2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
+                                    if (semicolons != null) {
+                                        mappingStore.addMapping(semicolons.first, semicolons.second);
+                                    }
+                                }
                             }
                         }
                     }

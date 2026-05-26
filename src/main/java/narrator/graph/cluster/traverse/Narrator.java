@@ -47,55 +47,65 @@ public class Narrator {
         List<TraversalPattern> result = new ArrayList<>();
         Set<TraversalPattern> visited = new HashSet<>();
         
-        postOrderTraverse(rootPattern, visited, result, grainLevel);
+        switch (grainLevel) {
+            case LEAF -> narrateLeaf(rootPattern, visited, result);
+            case USAGE_CHAIN_ROOT -> narrateUsageChainRoot(rootPattern, visited, result);
+            case METHOD, CLASS, FILE -> narrateComponentGrain(rootPattern, visited, result, grainLevel);
+        }
         
         return result;
     }
 
-    private void postOrderTraverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
-        if (visited.contains(p)) {
-            return;
-        }
-        
+    private void narrateLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+        if (visited.contains(p)) return;
         visited.add(p);
-        
-        if (p instanceof AggregatorPattern aggregator) {
-            if (shouldStopAtThisLevel(aggregator, grainLevel)) {
-                result.add(p);
-                return;
-            }
-            List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
-            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 
-            for (TraversalPattern sub : sortedSubs) {
-                postOrderTraverse(sub, visited, result, grainLevel);
+        if (p instanceof UsagePattern) {
+            result.add(p);
+            if (p instanceof AggregatorPattern agg) {
+                for (TraversalPattern sub : agg.subs) {
+                    narrateLeaf(sub, visited, result);
+                }
+            }
+        } else if (p instanceof AggregatorPattern agg) {
+            if (agg.subs.isEmpty()) {
+                result.add(p);
+            } else {
+                for (TraversalPattern sub : agg.subs) {
+                    narrateLeaf(sub, visited, result);
+                }
             }
         } else {
             result.add(p);
         }
     }
 
-    private boolean shouldStopAtThisLevel(AggregatorPattern aggregator, GrainLevel grainLevel) {
-        if (grainLevel == GrainLevel.LEAF) return false;
-        
-        if (grainLevel == GrainLevel.USAGE_CHAIN_ROOT && aggregator instanceof UsagePattern) return true;
-        
-        if (aggregator instanceof TraversalComponent tc) {
-            Set<Node> contexts = tc.getMergeContexts();
-            if (contexts == null || contexts.isEmpty()) return false;
-            
-            Node representative = contexts.iterator().next();
-            Set<String> targetTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
-            if (targetTypes == null) return false;
-            
-            com.github.gumtreediff.tree.Tree currentTree = representative.getTree();
-            while (currentTree != null) {
-                if (targetTypes.contains(currentTree.getType().name)) {
-                    return true;
-                }
-                currentTree = currentTree.getParent();
-            }
+    private void narrateUsageChainRoot(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+        if (visited.contains(p)) return;
+        visited.add(p);
+
+        if (p instanceof UsagePattern) {
+            result.add(p);
+            // Prune children for USAGE_CHAIN_ROOT
+            return;
         }
-        return false;
+
+        if (p instanceof AggregatorPattern agg) {
+            if (agg.subs.isEmpty()) {
+                result.add(p);
+            } else {
+                for (TraversalPattern sub : agg.subs) {
+                    narrateUsageChainRoot(sub, visited, result);
+                }
+            }
+        } else {
+            result.add(p);
+        }
+    }
+
+    private void narrateComponentGrain(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
+        // TODO: Implement based on updated requirements from user
+        // Should handle TraversalComponent types (METHOD, CLASS, FILE)
+        // and fall back to leaf behavior.
     }
 }

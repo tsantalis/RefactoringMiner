@@ -59,11 +59,6 @@ public class TraversalComponent extends AggregatorPattern {
     }
 
     @Override
-    public String extended(Cluster cluster) {
-        return super.extended(cluster);
-    }
-
-    @Override
     public boolean containsNode(Node node) {
         return this.containsNode(node, new HashSet<>());
     }

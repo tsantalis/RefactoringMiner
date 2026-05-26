@@ -20,7 +20,9 @@ public class AggregatorPattern extends TraversalPattern {
         
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < leaves.size(); i++) {
-            sb.append(leaves.get(i).extended(cluster));
+            if (leaves.get(i) instanceof Leaf leaf) {
+                sb.append(leaf.base(cluster));
+            }
             if (i < leaves.size() - 1) {
                 sb.append("\n---\n");
             }

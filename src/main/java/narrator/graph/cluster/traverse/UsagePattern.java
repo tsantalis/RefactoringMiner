@@ -104,13 +104,4 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
         
         return prompt.toString();
     }
-
-    @Override
-    public String extended(Cluster cluster) {
-        String children = super.extended(cluster);
-        if (children.isEmpty()) {
-            return base(cluster);
-        }
-        return base(cluster) + "\n\nDetails:\n" + children;
-    }
 }

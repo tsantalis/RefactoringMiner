@@ -3,6 +3,7 @@ package narrator.graph.cluster.traverse;
 import java.util.*;
 import java.util.stream.Collectors;
 import narrator.graph.Node;
+import narrator.graph.NodeType;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.cluster.Cluster;
@@ -49,6 +50,7 @@ public class Narrator {
         switch (grainLevel) {
             case LEAF -> narrateLeaf(rootPattern, visited, result);
             case USAGE_CHAIN_ROOT -> narrateUsageChainRoot(rootPattern, visited, result);
+            case SEMANTIC_LEAF -> narrateSemanticLeaf(rootPattern, visited, result);
             case METHOD, CLASS, FILE -> narrateComponentGrain(rootPattern, visited, result, grainLevel);
         }
         
@@ -101,6 +103,51 @@ public class Narrator {
         if (p instanceof Leaf) {
             result.add(p);
         }
+    }
+
+    private void narrateSemanticLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+        if (visited.contains(p)) return;
+        visited.add(p);
+
+        if (p instanceof TraversalComponent tc) {
+            if (isSemanticLeaf(tc)) {
+                result.add(p);
+                return;
+            }
+        }
+
+        if (p instanceof AggregatorPattern agg) {
+            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
+            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
+
+            for (TraversalPattern sub : sortedSubs) {
+                narrateSemanticLeaf(sub, visited, result);
+            }
+        }
+
+        if (p instanceof Leaf) {
+            result.add(p);
+        }
+    }
+
+    private boolean isSemanticLeaf(TraversalComponent tc) {
+        if (tc.getMergeContexts() == null || tc.getMergeContexts().isEmpty()) return false;
+
+        boolean hasSemanticContext = false;
+        for (Node node : tc.getMergeContexts()) {
+            if (node.getNodeType() == NodeType.SEMANTIC_CONTEXT) {
+                hasSemanticContext = true;
+                break;
+            }
+        }
+
+        if (!hasSemanticContext) return false;
+
+        for (TraversalPattern sub : tc.subs) {
+            if (!(sub instanceof Leaf)) return false;
+        }
+
+        return true;
     }
 
     private boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {

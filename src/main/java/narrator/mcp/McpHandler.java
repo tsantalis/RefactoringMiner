@@ -73,7 +73,7 @@ public class McpHandler {
         JsonArray tools = new JsonArray();
 
         tools.add(createToolDefinition("init_narrative",
-                "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters for each grain level. \n\nAfter calling this, the user MUST be asked to choose a GrainLevel for the narrative (LEAF, USAGE_CHAIN_ROOT, METHOD, CLASS, or FILE). This is the required first step before calling get_next_chapter.",
+                "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters for each grain level. \n\nAfter calling this, the user MUST be asked to choose a GrainLevel for the narrative. This is the required first step before calling get_next_chapter.",
                 "url"));
         tools.add(createToolDefinition("get_next_chapter",
                 "Retrieves the next chapter in the narrative for the specified grain level. \n\nMANDATORY: High-quality narration requires understanding the intent and impact of a change, which is rarely visible in a small snippet. DO NOT rely on superficial inferences or pattern-matching. You MUST call 'get_surrounding_code' to verify the role and intention of the code unless the change is an obvious, triviality (e.g., a typo fix). Whenever you find yourself using words like 'likely' or 'probably', you have failed to call this tool. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
@@ -211,7 +211,7 @@ public class McpHandler {
         try {
             level = GrainLevel.valueOf(grainLevelStr.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid grainLevel: " + grainLevelStr + ". Valid values are: LEAF, USAGE_CHAIN_ROOT, METHOD, CLASS, FILE");
+            throw new IllegalArgumentException("Invalid grainLevel: " + grainLevelStr + ". Valid values are: " + java.util.Arrays.toString(GrainLevel.values()));
         }
 
         Narrator narrator = cacheManager.getNarrative(url + ":root");
@@ -277,7 +277,7 @@ public class McpHandler {
         
         for (GrainLevel level : GrainLevel.values()) {
             int count = narrator.getNarrative(level).size();
-            summary.append("- ").append(level).append(": ").append(count).append(" chapters\n");
+            summary.append("- ").append(level).append(" (").append(level.getDescription()).append("): ").append(count).append(" chapters\n");
         }
         
         summary.append("\nUse get_next_chapter with the chosen 'grainLevel' parameter to start.");

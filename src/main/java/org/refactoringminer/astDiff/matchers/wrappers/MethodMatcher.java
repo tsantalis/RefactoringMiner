@@ -279,6 +279,14 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (equals != null) {
                         mappingStore.addMapping(equals.first, equals.second);
                     }
+                    int index1 = parent1.getParent().getChildPosition(parent1);
+                    int index2 = parent2.getParent().getChildPosition(parent2);
+                    if(parent1.getParent().getChildren().size() > index1+1 && parent1.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                            parent2.getParent().getChildren().size() > index2+1 && parent2.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree t1 = parent1.getParent().getChild(index1+1);
+                        Tree t2 = parent2.getParent().getChild(index2+1);
+                        mappingStore.addMapping(t1,t2);
+                    }
                 }
             }
             if(srcOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE) && dstOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE)) {

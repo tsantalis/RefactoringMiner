@@ -1879,10 +1879,11 @@ public class OperationBody {
 						return;
 					}
 					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
-						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+						//List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
 						List<UMLImport> imports = new ArrayList<>();
-						UMLClass umlClass = new UMLClass(container.getClassName(), identifiers.get(0).getId().getSym(), location, true, imports);
+						String codePath = getAnonymousCodePath(objectLiteral, fileContent);
+						UMLClass umlClass = new UMLClass(container.getClassName(), codePath, location, true, imports);
 						umlClass.setObject(true);
 						umlClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
@@ -2573,6 +2574,20 @@ public class OperationBody {
 			}
 			else if(parent instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getProp() instanceof Swc4jAstIdentName ident) {
 				String callName = ident.getSym();
+				if(name.isEmpty()) {
+					name = callName;
+				}
+				else {
+					name = callName + "." + name;
+				}
+			}
+			else if(parent instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstIdent ident) {
+				String callName = ident.getSym();
+				if((callName.equals("it") || callName.equals("describe")) && callExpr.getArgs().size() > 0) {
+					Swc4jAstExprOrSpread firstArg = callExpr.getArgs().get(0);
+					String firstArgString = fileContent.substring(firstArg.getSpan().getStart(), firstArg.getSpan().getEnd());
+					callName = callName + "(" + firstArgString + ")";
+				}
 				if(name.isEmpty()) {
 					name = callName;
 				}

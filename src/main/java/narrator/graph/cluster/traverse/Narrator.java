@@ -60,22 +60,16 @@ public class Narrator {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof UsagePattern) {
-            result.add(p);
-            if (p instanceof AggregatorPattern agg) {
-                for (TraversalPattern sub : agg.subs) {
-                    narrateLeaf(sub, visited, result);
-                }
+        if (p instanceof AggregatorPattern agg) {
+            List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
+            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
+
+            for (TraversalPattern sub : sortedSubs) {
+                narrateLeaf(sub, visited, result);
             }
-        } else if (p instanceof AggregatorPattern agg) {
-            if (agg.subs.isEmpty()) {
-                result.add(p);
-            } else {
-                for (TraversalPattern sub : agg.subs) {
-                    narrateLeaf(sub, visited, result);
-                }
-            }
-        } else {
+        }
+
+        if (p instanceof Leaf) {
             result.add(p);
         }
     }
@@ -84,21 +78,16 @@ public class Narrator {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof UsagePattern) {
-            result.add(p);
-            // Prune children for USAGE_CHAIN_ROOT
-            return;
+        if (p instanceof AggregatorPattern agg && !(p instanceof UsagePattern)) {
+            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
+            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
+
+            for (TraversalPattern sub : sortedSubs) {
+                narrateUsageChainRoot(sub, visited, result);
+            }
         }
 
-        if (p instanceof AggregatorPattern agg) {
-            if (agg.subs.isEmpty()) {
-                result.add(p);
-            } else {
-                for (TraversalPattern sub : agg.subs) {
-                    narrateUsageChainRoot(sub, visited, result);
-                }
-            }
-        } else {
+        if (p instanceof Leaf) {
             result.add(p);
         }
     }

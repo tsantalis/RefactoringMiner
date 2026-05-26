@@ -51,9 +51,10 @@ public class TestJavaScriptDatasetRefactorings {
 					.or(Refactorings.ParameterizeVariable.getValue())
 					.or(Refactorings.EncapsulateAttribute.getValue())
 					.or(Refactorings.InvertCondition.getValue())
-					.or(Refactorings.SplitParameter.getValue());
+					.or(Refactorings.SplitParameter.getValue())
+					.or(Refactorings.ChangeMethodAccessModifier.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareJavaScriptRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(5, 0, 0);
+		test.assertExpectationsWithGitHubAPI(7, 0, 0);
 	}
 }

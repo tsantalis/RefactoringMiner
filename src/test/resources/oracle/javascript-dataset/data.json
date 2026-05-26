@@ -51,4 +51,27 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 3,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "312773ba7b7e2acf6cd1273c92017d3c197a992b",
+    "url": "https://github.com/chartjs/Chart.js/commit/312773ba7b7e2acf6cd1273c92017d3c197a992b",
+    "author": "simonbrunel",
+    "time": "1/15/17 02:25 PM",
+    "refactorings": [{
+        "type": "Inline Variable",
+        "description": "Inline Variable chartEvent : Inferred in method public eventHandler(e) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private eventHandler(e) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

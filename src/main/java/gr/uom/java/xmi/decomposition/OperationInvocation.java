@@ -62,6 +62,7 @@ import com.caoccao.javet.swc4j.ast.enums.Swc4jAstImportPhase;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
@@ -1325,6 +1326,10 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(callee instanceof Swc4jAstSuper superCall) {
 			this.methodName = "super";
+		}
+		else if(callee instanceof Swc4jAstFnExpr functionExpr) {
+			//f()() is used to call a function that returns another function
+			this.methodName = "";
 		}
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = invocation.getArgs().size();

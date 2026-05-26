@@ -17,7 +17,6 @@ public class Narrator {
     private static final Map<GrainLevel, Set<String>> GRAIN_LEVEL_TYPES = new HashMap<>();
     static {
         Constants c = new Constants("");
-        GRAIN_LEVEL_TYPES.put(GrainLevel.USAGE_CHAIN_ROOT, Set.of("UsagePattern")); // Handled by type check
         GRAIN_LEVEL_TYPES.put(GrainLevel.METHOD, Set.of(c.METHOD_DECLARATION));
         GRAIN_LEVEL_TYPES.put(GrainLevel.CLASS, Set.of(c.TYPE_DECLARATION, c.INTERFACE_DECLARATION, c.ENUM_DECLARATION, c.RECORD_DECLARATION));
         GRAIN_LEVEL_TYPES.put(GrainLevel.FILE, Set.of(c.COMPILATION_UNIT));
@@ -61,7 +60,7 @@ public class Narrator {
         visited.add(p);
 
         if (p instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(aggregator.subs);
+            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
             sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 
             for (TraversalPattern sub : sortedSubs) {
@@ -92,9 +91,40 @@ public class Narrator {
         }
     }
 
+    private boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {
+        Set<String> allowedTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
+        if (allowedTypes == null || tc.getMergeContexts() == null) return false;
+
+        for (Node contextNode : tc.getMergeContexts()) {
+            var tree = contextNode.getTree();
+            if (allowedTypes.contains(tree.getType().name)) return true;
+            for (var parent : tree.getParents()) {
+                if (allowedTypes.contains(parent.getType().name)) return true;
+            }
+        }
+        return false;
+    }
+
     private void narrateComponentGrain(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
-        // TODO: Implement based on updated requirements from user
-        // Should handle TraversalComponent types (METHOD, CLASS, FILE)
-        // and fall back to leaf behavior.
+        if (visited.contains(p)) return;
+        visited.add(p);
+
+        if (p instanceof TraversalComponent tc && matchesGrain(tc, grainLevel)) {
+            result.add(p);
+            return;
+        }
+
+        if (p instanceof AggregatorPattern agg) {
+            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
+            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
+
+            for (TraversalPattern sub : sortedSubs) {
+                narrateComponentGrain(sub, visited, result, grainLevel);
+            }
+        }
+
+        if (p instanceof Leaf) {
+            result.add(p);
+        }
     }
 }

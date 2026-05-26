@@ -23,6 +23,10 @@ public class PathFileUtils {
         return path.endsWith(".ts")/* || path.endsWith(".tsx")*/ || path.endsWith(".js");
     }
 
+    public static boolean isJavaScriptFile(String path){
+        return path.endsWith(".js");
+    }
+
     public static boolean isLangSupportedFile(String path){
         // Add new languages in the future
         return isPythonFile(path);

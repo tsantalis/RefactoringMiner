@@ -180,6 +180,16 @@ public class RefactoringPopulator {
 		}
 	}
 
+	public static void prepareJavaScriptRefactorings(TestBuilder test, BigInteger flag)
+			throws IOException {
+		List<Root> roots = getJavaScriptRefactorings(flag);
+		
+		for (Root root : roots) {
+			test.project(root.repository, "master").atCommit(root.sha1)
+					.containsOnly(extractRefactorings(root.refactorings));
+		}
+	}
+
 	private static void prepareFSERefactorings(TestBuilder test, BigInteger flag)
 			throws IOException {
 		List<Root> roots = getFSERefactorings(flag);
@@ -274,6 +284,10 @@ public class RefactoringPopulator {
 
 	public static List<Root> getPythonRefactorings(BigInteger flag) throws IOException {
 		return getRefactorings(flag, "python-dataset/data.json");
+	}
+
+	public static List<Root> getJavaScriptRefactorings(BigInteger flag) throws IOException {
+		return getRefactorings(flag, "javascript-dataset/data.json");
 	}
 
 	public static List<Root> getKotlinRefactorings(BigInteger flag) throws IOException {

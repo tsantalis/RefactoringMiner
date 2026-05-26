@@ -2479,6 +2479,11 @@ public class OperationBody {
 		for(UMLComment comment : comments) {
 			if(operation.getLocationInfo().subsumes(comment.getLocationInfo()) || operation.getLocationInfo().nextLine(comment.getLocationInfo())) {
 				operation.getComments().add(comment);
+				if(comment.getText().contains("@private") && operation.getLocationInfo().nextLine(comment.getLocationInfo())) {
+					if(operation instanceof UMLOperation op) {
+						op.setVisibility(Visibility.PRIVATE);
+					}
+				}
 			}
 		}
 	}

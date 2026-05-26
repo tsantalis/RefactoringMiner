@@ -1,0 +1,54 @@
+[{
+    "id": 1,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "2922dc96cfd3c3448538c19c02b349fe939f16eb",
+    "url": "https://github.com/chartjs/Chart.js/commit/2922dc96cfd3c3448538c19c02b349fe939f16eb",
+    "author": "benmccann",
+    "time": "8/2/17 01:29 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private destroyDatasetMeta(datasetIndex) extracted from public destroy() in class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "JSDiffer, RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 2,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "2e5df0ff42c9ec542bd7c88de8f88f50a8ad5864",
+    "url": "https://github.com/chartjs/Chart.js/commit/2e5df0ff42c9ec542bd7c88de8f88f50a8ad5864",
+    "author": "etimberg",
+    "time": "11/25/16 07:19 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private createNewLegendAndAttach(chartInstance, legendOpts) extracted from public module.exports(Chart) in class core.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private createNewTitleBlockAndAttach(chartInstance, titleOpts) extracted from public module.exports(Chart) in class core.title",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable legend : Inferred in method private createNewLegendAndAttach(chartInstance, legendOpts) from class core.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable title : Inferred in method private createNewTitleBlockAndAttach(chartInstance, titleOpts) from class core.title",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}]

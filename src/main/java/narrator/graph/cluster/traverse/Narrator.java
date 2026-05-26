@@ -55,6 +55,16 @@ public class Narrator {
         return result;
     }
 
+    private void markDescendantsAsVisited(AggregatorPattern agg, Set<TraversalPattern> visited) {
+        for (TraversalPattern sub : agg.subs) {
+            if (visited.add(sub)) {
+                if (sub instanceof AggregatorPattern subAgg) {
+                    markDescendantsAsVisited(subAgg, visited);
+                }
+            }
+        }
+    }
+
     private void narrateLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
         if (visited.contains(p)) return;
         visited.add(p);
@@ -77,7 +87,9 @@ public class Narrator {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof AggregatorPattern agg && !(p instanceof UsagePattern)) {
+        if (p instanceof UsagePattern usage) {
+            markDescendantsAsVisited(usage, visited);
+        } else if (p instanceof AggregatorPattern agg) {
             List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
             sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 

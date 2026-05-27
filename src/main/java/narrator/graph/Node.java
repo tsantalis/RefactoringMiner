@@ -316,7 +316,7 @@ public class Node {
     return basePrompt;
   }
 
-  private List<String> getOperations(Cluster cluster) {
+  public List<String> getOperations(Cluster cluster) {
     List<String> operations = new ArrayList<>();
 
     List<Node> alts = new ArrayList<>();

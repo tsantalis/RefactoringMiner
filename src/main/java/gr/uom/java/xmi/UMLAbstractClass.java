@@ -27,6 +27,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 	protected LocationInfo locationInfo;
 	protected String packageName;
 	protected String name;
+	private String sourceFolder;
 	protected List<UMLOperation> operations;
 	protected List<UMLAttribute> attributes;
 	protected List<UMLComment> comments;
@@ -45,7 +46,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
     private List<UMLClass> companionObjects;
     protected final Constants LANG;
 
-	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<UMLImport> importedTypes) {
+	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<UMLImport> importedTypes, boolean topLevel) {
 		this.packageName = packageName;
 		this.name = name;
 		this.locationInfo = locationInfo;
@@ -65,6 +66,35 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
         this.enumConstants = new ArrayList<UMLEnumConstant>();
         this.companionObjects = new ArrayList<UMLClass>();
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+        String sourceFile = locationInfo.getFilePath();
+        this.sourceFolder = "";
+        if(packageName.equals("")) {
+        	int index = sourceFile.indexOf(name);
+        	if(index != -1) {
+    			this.sourceFolder = sourceFile.substring(0, index);
+    		}
+        }
+        else {
+        	if(topLevel) {
+        		int index = sourceFile.indexOf(packageName.replace('.', '/'));
+        		if(index != -1) {
+        			this.sourceFolder = sourceFile.substring(0, index);
+        		}
+        	}
+        	else {
+        		int index = -1;
+        		if(packageName.contains(".")) {
+        			String realPackageName = packageName.substring(0, packageName.lastIndexOf('.'));
+        			index = sourceFile.indexOf(realPackageName.replace('.', '/'));
+        		}
+        		else {
+        			index = sourceFile.indexOf(packageName);
+        		}
+        		if(index != -1) {
+        			this.sourceFolder = sourceFile.substring(0, index);
+        		}
+        	}
+        }
 	}
 
 	public void addCompanion(UMLClass companion) {
@@ -105,6 +135,10 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 
 	public String getPackageName() {
 		return this.packageName;
+	}
+
+	public String getSourceFolder() {
+		return sourceFolder;
 	}
 
 	public void addOperation(UMLOperation operation) {

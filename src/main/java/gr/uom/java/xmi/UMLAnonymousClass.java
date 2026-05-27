@@ -10,7 +10,7 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
 	private Set<VariableDeclarationContainer> parentContainers;
 	
 	public UMLAnonymousClass(String packageName, String name, String codePath, LocationInfo locationInfo, List<UMLImport> importedTypes) {
-    	super(packageName, name, locationInfo, importedTypes);
+    	super(packageName, name, locationInfo, importedTypes, false);
         this.codePath = codePath;
         this.parentContainers = new LinkedHashSet<>();
     }

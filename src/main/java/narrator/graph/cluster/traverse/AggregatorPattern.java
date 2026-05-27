@@ -2,6 +2,7 @@ package narrator.graph.cluster.traverse;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class AggregatorPattern extends TraversalPattern {
         if (leaves.isEmpty()) {
             return "";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < leaves.size(); i++) {
             if (leaves.get(i) instanceof Leaf leaf) {
@@ -28,6 +29,52 @@ public class AggregatorPattern extends TraversalPattern {
             }
         }
         return sb.toString();
+    }
+
+    public List<Node> getMains(Cluster cluster) {
+        Narrator narrator = new Narrator(this);
+        List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
+        if (leaves.isEmpty()) {
+            return List.of();
+        }
+
+        Set<Node> mainsOrdered = new LinkedHashSet<>();
+        Set<Node> sidesSet = new LinkedHashSet<>();
+
+        for (TraversalPattern leaf : leaves) {
+            for (Node main : leaf.getMains(cluster)) {
+                if (!mainsOrdered.contains(main)) {
+                    sidesSet.remove(main);
+                    mainsOrdered.add(main);
+                }
+            }
+            for (Node side : leaf.getSides(cluster)) {
+                sidesSet.add(side);
+            }
+        }
+
+        return new ArrayList<>(mainsOrdered);
+    }
+
+    public List<Node> getSides(Cluster cluster) {
+        Set<Node> mainsSet = new HashSet<>(getMains(cluster));
+        Narrator narrator = new Narrator(this);
+        List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
+        if (leaves.isEmpty()) {
+            return List.of();
+        }
+
+        Set<Node> sidesOrdered = new LinkedHashSet<>();
+
+        for (TraversalPattern leaf : leaves) {
+            for (Node side : leaf.getSides(cluster)) {
+                if (!mainsSet.contains(side)) {
+                    sidesOrdered.add(side);
+                }
+            }
+        }
+
+        return new ArrayList<>(sidesOrdered);
     }
 
     Set<TraversalPattern> subs = new HashSet<>();

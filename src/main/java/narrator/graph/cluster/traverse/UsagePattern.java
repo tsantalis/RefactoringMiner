@@ -86,6 +86,16 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
     }
 
     @Override
+    public List<Node> getMains(Cluster cluster) {
+        return List.of(useNode);
+    }
+
+    @Override
+    public List<Node> getSides(Cluster cluster) {
+        return new ArrayList<>(getUsedNodes());
+    }
+
+    @Override
     public String base(Cluster cluster) {
         String subject = useNode.mapping(cluster);
         Set<Node> usedNodes = getUsedNodes();

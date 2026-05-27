@@ -122,6 +122,11 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
     }
 
     @Override
+    public List<Node> getMains(Cluster cluster) {
+        return getSequence(cluster);
+    }
+
+    @Override
     public JsonObject stringify() {
         JsonObject result = super.stringify();
 

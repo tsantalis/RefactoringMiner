@@ -3,7 +3,9 @@ package narrator.graph.cluster.traverse;
 import com.github.gumtreediff.tree.Tree;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
@@ -69,5 +71,13 @@ public class TraversalPattern extends GraphWrapper {
 
     public void addIdentifier(String identifier) {
         this.identifiers.add(identifier);
+    }
+
+    public List<Node> getMains(Cluster cluster) {
+        return List.of(getLead());
+    }
+
+    public List<Node> getSides(Cluster cluster) {
+        return List.of();
     }
 }

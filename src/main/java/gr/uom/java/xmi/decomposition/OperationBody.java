@@ -1879,6 +1879,40 @@ public class OperationBody {
 						}
 						return;
 					}
+					else if(declarator.getInit().get() instanceof Swc4jAstFnExpr functionExpr) {
+						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+						//function expression declaration style
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+						String append = "";
+						if(container instanceof UMLOperation) {
+							append = "." + ((UMLOperation)container).getName();
+						}
+						else if(container instanceof LambdaExpressionObject lambda) {
+							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+								append = "." + ((UMLOperation)lambda.getOwner()).getName();
+							}
+						}
+						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName() + append);
+						if(variableDecl.getParent() instanceof Swc4jAstExportDecl) {
+							operation.setVisibility(Visibility.PUBLIC);
+						}
+						else {
+							operation.setVisibility(Visibility.PRIVATE);
+						}
+						Swc4jAstFunction function = functionExpr.getFunction();
+						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
+						if(container instanceof UMLOperation) {
+							((UMLOperation)container).addNestedOperation(operation);
+						}
+						else if(container instanceof LambdaExpressionObject lambda) {
+							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
+							}
+						}
+						else if(container instanceof ModuleContainer) {
+							((ModuleContainer)container).addNestedOperation(operation);
+						}
+					}
 					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
 						//List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
@@ -1924,7 +1958,7 @@ public class OperationBody {
 		else if(statement instanceof Swc4jAstFnDecl functionDecl) {
 			String className = container.getClassName();
 			UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, functionDecl, activeVariableDeclarations, fileContent, className, comments);
-			if(functionDecl.getParent() instanceof Swc4jAstExportDecl) {
+			if(functionDecl.getParent() instanceof Swc4jAstExportDecl || container.getName().contains("exports")) {
 				nested.setVisibility(Visibility.PUBLIC);
 			}
 			if(container instanceof UMLOperation) {

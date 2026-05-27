@@ -23,28 +23,28 @@
     "time": "11/25/16 07:19 AM",
     "refactorings": [{
         "type": "Extract Method",
-        "description": "Extract Method private createNewLegendAndAttach(chartInstance, legendOpts) extracted from public module.exports(Chart) in class core.legend",
+        "description": "Extract Method public createNewLegendAndAttach(chartInstance, legendOpts) extracted from public module.exports(Chart) in class core.legend",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method private createNewTitleBlockAndAttach(chartInstance, titleOpts) extracted from public module.exports(Chart) in class core.title",
+        "description": "Extract Method public createNewTitleBlockAndAttach(chartInstance, titleOpts) extracted from public module.exports(Chart) in class core.title",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable legend : Inferred in method private createNewLegendAndAttach(chartInstance, legendOpts) from class core.legend",
+        "description": "Extract Variable legend : Inferred in method public createNewLegendAndAttach(chartInstance, legendOpts) from class core.legend",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable title : Inferred in method private createNewTitleBlockAndAttach(chartInstance, titleOpts) from class core.title",
+        "description": "Extract Variable title : Inferred in method public createNewTitleBlockAndAttach(chartInstance, titleOpts) from class core.title",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -68,6 +68,78 @@
     }, {
         "type": "Change Method Access Modifier",
         "description": "Change Method Access Modifier public to private in method private eventHandler(e) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.addResizeListener(node, callback) from class core.helpers to public createResizer(handler) from class platform.dom",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.removeResizeListener(node) from class core.helpers to public removeResizeListener(node) from class platform.dom",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method private notify() from class core.helpers.helpers.addResizeListener to private notify() from class platform.dom.addResizeListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable iframe : Inferred to resizer : Inferred in method public removeResizeListener(node) from class platform.dom",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable notify : Inferred to handler : Inferred in method public createResizer(handler) from class platform.dom",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter callback : Inferred in method public helpers.addResizeListener(node, callback) from class core.helpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 4,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "26c1936dee7dcc2f00b63af9bb04e9af1703e461",
+    "url": "https://github.com/chartjs/Chart.js/commit/26c1936dee7dcc2f00b63af9bb04e9af1703e461",
+    "author": "simonbrunel",
+    "time": "10/24/17 01:11 PM",
+    "refactorings": [{
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.extend(base) from class core.helpers to public extend(target) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.inherits(extensions) from class core.helpers to public inherits(extensions) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter base : Inferred to target : Inferred in method public extend(target) from class helpers.core",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

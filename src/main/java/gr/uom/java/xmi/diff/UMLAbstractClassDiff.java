@@ -114,6 +114,30 @@ public abstract class UMLAbstractClassDiff {
 		processAnnotations();
 	}
 
+	public List<UMLOperation> getAddedNestedOperations() {
+		return addedNestedOperations;
+	}
+
+	public List<UMLOperation> getAddedNestedOperationsRecursively() {
+		List<UMLOperation> all = new ArrayList<>(addedNestedOperations);
+		for(UMLOperation op : addedNestedOperations) {
+			all.addAll(op.getNestedOperations());
+		}
+		return all;
+	}
+
+	public List<UMLOperation> getRemovedNestedOperations() {
+		return removedNestedOperations;
+	}
+
+	public List<UMLOperation> getRemovedNestedOperationsRecursively() {
+		List<UMLOperation> all = new ArrayList<>(removedNestedOperations);
+		for(UMLOperation op : removedNestedOperations) {
+			all.addAll(op.getNestedOperations());
+		}
+		return all;
+	}
+
 	public List<UMLOperation> getAddedOperations() {
 		return addedOperations;
 	}

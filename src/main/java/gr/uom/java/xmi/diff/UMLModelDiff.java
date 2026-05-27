@@ -2731,6 +2731,7 @@ public class UMLModelDiff {
 		List<UMLOperation> addedOperations = new ArrayList<UMLOperation>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			addedOperations.addAll(classDiff.getAddedOperations());
+			addedOperations.addAll(classDiff.getAddedNestedOperationsRecursively());
 			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
 				if(ref instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
@@ -2769,6 +2770,7 @@ public class UMLModelDiff {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			removedOperations.addAll(classDiff.getRemovedOperations());
+			removedOperations.addAll(classDiff.getRemovedNestedOperationsRecursively());
 			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
 				if(ref instanceof InlineOperationRefactoring) {
 					InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;

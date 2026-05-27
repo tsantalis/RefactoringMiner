@@ -376,6 +376,7 @@ public class Constants {
     public final String SEMICOLON = ";";
     public final String COLON = ":";
     public final String CONST_KEYWORD = "const";
+    public final String VAR_KEYWORD = "var";
     public final String ASYNC_KEYWORD = "async";
     public final String THROW_KEYWORD = "throw";
     public final String LET_KEYWORD = "let";

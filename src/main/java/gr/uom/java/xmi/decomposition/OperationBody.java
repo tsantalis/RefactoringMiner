@@ -64,6 +64,7 @@ import org.jetbrains.kotlin.psi.KtWhenCondition;
 import org.jetbrains.kotlin.psi.KtWhenEntry;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
 import org.jetbrains.kotlin.psi.KtWhileExpression;
+import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAssignProp;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAutoAccessor;
@@ -1887,11 +1888,16 @@ public class OperationBody {
 						umlClass.setObject(true);
 						umlClass.setVisibility(Visibility.PUBLIC);
 						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
-						addToContainer(container, umlClass);
-						StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
-						parent.addStatement(child);
-						addStatementInVariableScopes(child);
-						addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+						if(PathFileUtils.isJavaScriptFile(umlClass.getSourceFile()) && umlClass.getOperations().size() > 0) {
+							addToContainer(container, umlClass);
+						}
+						else {
+							addToContainer(container, umlClass);
+							StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+							parent.addStatement(child);
+							addStatementInVariableScopes(child);
+							addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+						}
 						return;
 					}
 				}

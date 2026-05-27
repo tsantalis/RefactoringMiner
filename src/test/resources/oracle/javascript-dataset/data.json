@@ -146,4 +146,20 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 5,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "2409908027a3762f142a04e7583bd2e88681a867",
+    "url": "https://github.com/chartjs/Chart.js/commit/2409908027a3762f142a04e7583bd2e88681a867",
+    "author": "MatthieuRivaud",
+    "time": "8/8/16 08:01 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method private capIfNecessary(pt, min, max) renamed to private capControlPoint(pt, min, max) in class controller.line",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

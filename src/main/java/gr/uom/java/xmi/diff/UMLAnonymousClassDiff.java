@@ -30,6 +30,12 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		processOperations();
 		createBodyMappers();
 		checkForOperationSignatureChanges();
+		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
+			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
+			if(removedNestedOperations.size() == addedOperations.size() && addedNestedOperations.size() == 0) {
+				checkForOperationSignatureChanges(this.removedNestedOperations, this.addedOperations);
+			}
+		}
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();

@@ -76,11 +76,8 @@ public class McpHandler {
                 "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters for each grain level. \n\nAfter calling this, the user MUST be asked to choose a GrainLevel for the narrative. This is the required first step before calling get_next_chapter.",
                 "url"));
         tools.add(createToolDefinition("get_next_chapter",
-                "Retrieves the next chapter in the narrative for the specified grain level. \n\nMANDATORY: High-quality narration requires understanding the intent and impact of a change, which is rarely visible in a small snippet. DO NOT rely on superficial inferences or pattern-matching. You MUST call 'get_surrounding_code' to verify the role and intention of the code unless the change is an obvious, triviality (e.g., a typo fix). Whenever you find yourself using words like 'likely' or 'probably', you have failed to call this tool. \n\nAfter obtaining necessary context, analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Retrieves the next chapter in the narrative for the specified grain level. \n\nMANDATORY: You must analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
                 "url", "grainLevel"));
-        tools.add(createToolDefinition("get_surrounding_code",
-                "Reveals the semantic and structural context of a code snippet. Use this tool to uncover the method signatures, class hierarchies, and surrounding logic that are essential for a professional analysis. This tool is the only way to transform a superficial guess into a verified technical explanation.",
-                "url", "codeId"));
         result.add("tools", tools);
         response.add("result", result);
     }
@@ -178,11 +175,6 @@ public class McpHandler {
                 throw new IllegalArgumentException("Missing required argument: grainLevel");
             }
             return getNextChapter(url, arguments.get("grainLevel").getAsString());
-        } else if ("get_surrounding_code".equals(toolName)) {
-            if (!arguments.has("codeId")) {
-                throw new IllegalArgumentException("Missing required argument: codeId");
-            }
-            return fetchSurroundingCode(url, arguments.get("codeId").getAsString());
         } else {
             throw new UnsupportedOperationException("Unknown tool: " + toolName);
         }
@@ -338,24 +330,4 @@ public class McpHandler {
         }
     }
 
-    private String fetchSurroundingCode(String url, String codeId) throws Exception {
-        List<Cluster> clusters = getOrComputeClusters(url);
-        
-        for (Cluster cluster : clusters) {
-            Node targetNode = cluster.getGraph().vertexSet().stream()
-                    .filter(node -> node.getPromptId().equals(codeId))
-                    .findFirst()
-                    .orElse(null);
-            
-            if (targetNode != null) {
-                List<Node> semanticContexts = targetNode.getSemanticContexts(cluster);
-                if (!semanticContexts.isEmpty()) {
-                    return semanticContexts.get(0).mapping(cluster);
-                }
-                return "No semantic context found for " + codeId;
-            }
-        }
-        
-        return "Could not find code with ID " + codeId + " in any cluster.";
-    }
 }

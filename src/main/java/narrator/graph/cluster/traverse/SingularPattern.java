@@ -1,6 +1,7 @@
 package narrator.graph.cluster.traverse;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import narrator.graph.Context;
 import narrator.graph.Node;
@@ -28,14 +29,15 @@ public class SingularPattern extends TraversalPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        String basePrompt = node.base(cluster);
-        String mappingPrompt = node.mapping(cluster);
-
         StringBuilder prompt = new StringBuilder();
-        prompt.append("# Subject:\n```\n").append(basePrompt).append("\n```\n");
-        if (!basePrompt.equals(mappingPrompt)) {
-            prompt.append("\nContext:\n```\n").append(mappingPrompt).append("\n```\n");
+        prompt.append("# Subject:\n```\n").append(node.mapping(cluster)).append("\n```\n");
+        
+        // Add immediate semantic context (surrounding code)
+        List<Node> semanticContexts = node.getSemanticContexts(cluster);
+        if (!semanticContexts.isEmpty()) {
+            prompt.append("\nSurrounding:\n```\n").append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
         }
+        
         return prompt.toString();
     }
 

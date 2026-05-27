@@ -109,11 +109,9 @@ public class Narrator {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof TraversalComponent tc) {
-            if (isSemanticLeaf(tc)) {
-                result.add(p);
-                return;
-            }
+        if (p instanceof TraversalComponent tc && isSemanticLeaf(tc)) {
+            result.add(p);
+            return;
         }
 
         if (p instanceof AggregatorPattern agg) {
@@ -150,20 +148,6 @@ public class Narrator {
         return true;
     }
 
-    private boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {
-        Set<String> allowedTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
-        if (allowedTypes == null || tc.getMergeContexts() == null) return false;
-
-        for (Node contextNode : tc.getMergeContexts()) {
-            var tree = contextNode.getTree();
-            if (allowedTypes.contains(tree.getType().name)) return true;
-            for (var parent : tree.getParents()) {
-                if (allowedTypes.contains(parent.getType().name)) return true;
-            }
-        }
-        return false;
-    }
-
     private void narrateComponentGrain(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
         if (visited.contains(p)) return;
         visited.add(p);
@@ -185,5 +169,19 @@ public class Narrator {
         if (p instanceof Leaf) {
             result.add(p);
         }
+    }
+
+    private boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {
+        Set<String> allowedTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
+        if (allowedTypes == null || tc.getMergeContexts() == null) return false;
+
+        for (Node contextNode : tc.getMergeContexts()) {
+            var tree = contextNode.getTree();
+            if (allowedTypes.contains(tree.getType().name)) return true;
+            for (var parent : tree.getParents()) {
+                if (allowedTypes.contains(parent.getType().name)) return true;
+            }
+        }
+        return false;
     }
 }

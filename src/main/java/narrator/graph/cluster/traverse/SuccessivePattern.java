@@ -78,6 +78,26 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         prompt.append(String.join("\n---\n", basePrompts));
         prompt.append("\n```");
 
+        // Add semantic context — pick the smallest tree (most nested context)
+        Node smallestContextNode = null;
+        int smallestTreeSize = Integer.MAX_VALUE;
+        for (Node seqNode : sequence) {
+            List<Node> semanticContexts = seqNode.getSemanticContexts(cluster);
+            for (Node ctx : semanticContexts) {
+                int treeSize = ctx.getTree().getLength();
+                if (treeSize < smallestTreeSize) {
+                    smallestTreeSize = treeSize;
+                    smallestContextNode = ctx;
+                }
+            }
+        }
+
+        if (smallestContextNode != null) {
+            prompt.append("\nSurrounding:\n```\n");
+            prompt.append(smallestContextNode.mapping(cluster));
+            prompt.append("\n```\n");
+        }
+
         List<String> mappingHunks = new ArrayList<>();
         for (Node node : sequence) {
             String base = node.base(cluster);
@@ -88,7 +108,7 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         }
 
         if (!mappingHunks.isEmpty()) {
-            prompt.append("\n\nContext:\n```\n");
+            prompt.append("\nContext:\n```\n");
             prompt.append(String.join("\n---\n", mappingHunks));
             prompt.append("\n```");
         }

@@ -646,9 +646,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if(tree1.getParent().getType().name.equals(LANG1.VARIABLE_DECLARATION) && tree2.getParent().getType().name.equals(LANG2.VARIABLE_DECLARATION)) {
             mappingStore.addMapping(tree1.getParent(), tree2.getParent());
-            Pair<Tree,Tree> const_keywords = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.VAR_KEYWORD,LANG2.VAR_KEYWORD);
-            if(const_keywords != null) {
-                mappingStore.addMapping(const_keywords.first, const_keywords.second);
+            Pair<Tree,Tree> var_keywords = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.VAR_KEYWORD,LANG2.VAR_KEYWORD);
+            if(var_keywords != null) {
+                mappingStore.addMapping(var_keywords.first, var_keywords.second);
             }
             Pair<Tree,Tree> semicolons = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
             if(semicolons != null) {

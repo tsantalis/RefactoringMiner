@@ -100,8 +100,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                     dstOperationNode.getChildren().get(0).getType().name.equals(LANG2.METHOD_DECLARATION)) {
                 dstOperationNode = dstOperationNode.getChildren().get(0);
             }
-            if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(LANG1.METHOD_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.SECONDARY_CONSTRUCTOR) || srcOperationNode.getType().name.equals(LANG1.DECORATED_METHOD) || srcOperationNode.getType().name.equals(LANG1.ANNOTATION_TYPE_MEMBER_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.GETTER) || srcOperationNode.getType().name.equals(LANG1.SETTER) || srcOperationNode.getType().name.equals(LANG1.LEXICAL_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.METHOD_DEFINITION) || srcOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE) || srcOperationNode.getType().name.equals(LANG1.FUNCTION_SIGNATURE) || srcOperationNode.getType().name.equals(LANG1.GENERATOR_FUNCTION_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.PAIR) || srcOperationNode.getType().name.equals(LANG1.FUNCTION_EXPRESSION))) return;
-            if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(LANG2.METHOD_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.SECONDARY_CONSTRUCTOR) || dstOperationNode.getType().name.equals(LANG2.DECORATED_METHOD) || dstOperationNode.getType().name.equals(LANG2.ANNOTATION_TYPE_MEMBER_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.GETTER) || dstOperationNode.getType().name.equals(LANG2.SETTER) || dstOperationNode.getType().name.equals(LANG2.LEXICAL_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.METHOD_DEFINITION) || dstOperationNode.getType().name.equals(LANG2.METHOD_SIGNATURE) || dstOperationNode.getType().name.equals(LANG2.FUNCTION_SIGNATURE) || dstOperationNode.getType().name.equals(LANG2.GENERATOR_FUNCTION_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.PAIR) || dstOperationNode.getType().name.equals(LANG2.FUNCTION_EXPRESSION))) return;
+            if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(LANG1.METHOD_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.SECONDARY_CONSTRUCTOR) || srcOperationNode.getType().name.equals(LANG1.DECORATED_METHOD) || srcOperationNode.getType().name.equals(LANG1.ANNOTATION_TYPE_MEMBER_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.GETTER) || srcOperationNode.getType().name.equals(LANG1.SETTER) || srcOperationNode.getType().name.equals(LANG1.LEXICAL_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.METHOD_DEFINITION) || srcOperationNode.getType().name.equals(LANG1.METHOD_SIGNATURE) || srcOperationNode.getType().name.equals(LANG1.FUNCTION_SIGNATURE) || srcOperationNode.getType().name.equals(LANG1.GENERATOR_FUNCTION_DECLARATION) || srcOperationNode.getType().name.equals(LANG1.PAIR) || srcOperationNode.getType().name.equals(LANG1.FUNCTION_EXPRESSION) || srcOperationNode.getType().name.equals(LANG1.VARIABLE_DECLARATION))) return;
+            if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(LANG2.METHOD_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.SECONDARY_CONSTRUCTOR) || dstOperationNode.getType().name.equals(LANG2.DECORATED_METHOD) || dstOperationNode.getType().name.equals(LANG2.ANNOTATION_TYPE_MEMBER_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.GETTER) || dstOperationNode.getType().name.equals(LANG2.SETTER) || dstOperationNode.getType().name.equals(LANG2.LEXICAL_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.METHOD_DEFINITION) || dstOperationNode.getType().name.equals(LANG2.METHOD_SIGNATURE) || dstOperationNode.getType().name.equals(LANG2.FUNCTION_SIGNATURE) || dstOperationNode.getType().name.equals(LANG2.GENERATOR_FUNCTION_DECLARATION) || dstOperationNode.getType().name.equals(LANG2.PAIR) || dstOperationNode.getType().name.equals(LANG2.FUNCTION_EXPRESSION) || dstOperationNode.getType().name.equals(LANG2.VARIABLE_DECLARATION))) return;
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff(), LANG1, LANG2)
                     .match(srcOperationNode, dstOperationNode, mappingStore);
             mappingStore.addMapping(srcOperationNode, dstOperationNode);
@@ -139,6 +139,42 @@ public class MethodMatcher extends BodyMapperMatcher{
                     }
                 }
                 matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.CONST_KEYWORD,LANG2.CONST_KEYWORD);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SEMICOLON,LANG2.SEMICOLON);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+            }
+            if(srcOperationNode.getType().name.equals(LANG1.VARIABLE_DECLARATION) && dstOperationNode.getType().name.equals(LANG1.VARIABLE_DECLARATION)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.VARIABLE_DECLARATOR,LANG2.VARIABLE_DECLARATOR);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(matched.first,matched.second,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
+                    if (identifiers != null) {
+                        mappingStore.addMapping(identifiers.first, identifiers.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> equals = Helpers.findPairOfType(matched.first,matched.second,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
+                    if (equals != null) {
+                        mappingStore.addMapping(equals.first, equals.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> arrowFunctions = Helpers.findPairOfType(matched.first,matched.second,LANG1.ARROW_FUNCTION,LANG2.ARROW_FUNCTION);
+                    if(arrowFunctions != null) {
+                        mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
+                        BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> functionExpressions = Helpers.findPairOfType(matched.first,matched.second,LANG1.FUNCTION_EXPRESSION,LANG2.FUNCTION_EXPRESSION);
+                    if(functionExpressions != null) {
+                        mappingStore.addMapping(functionExpressions.first, functionExpressions.second);
+                        processMethodSignature(functionExpressions.first, functionExpressions.second, umlOperationBodyMapper, mappingStore);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> typeAnnotations = Helpers.findPairOfType(matched.first,matched.second,LANG1.TYPE_ANNOTATION,LANG2.TYPE_ANNOTATION);
+                    if(typeAnnotations != null) {
+                        mappingStore.addMappingRecursively(typeAnnotations.first, typeAnnotations.second);
+                    }
+                }
+                matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.VAR_KEYWORD,LANG2.VAR_KEYWORD);
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }

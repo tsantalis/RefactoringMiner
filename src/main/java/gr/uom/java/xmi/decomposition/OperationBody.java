@@ -2392,36 +2392,7 @@ public class OperationBody {
 					ISwc4jAstPropName key = keyValueProp.getKey();
 					String name = extractString(key, fileContent);
 					ISwc4jAstExpr expr = keyValueProp.getValue();
-					if(expr instanceof Swc4jAstObjectLit nestedObjectLiteral) {
-						if(nestedObjectLiteral.getProps().isEmpty()) {
-							if(key instanceof Swc4jAstIdentName identName) {
-								VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, null, identName, container, activeVariableDeclarations, fileContent);
-								vd.setAttribute(true);
-								LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
-								UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
-								attribute.setVariableDeclaration(vd);
-								attribute.setVisibility(Visibility.PRIVATE);
-								vd.setInitializer(new AbstractExpression(sourceFolder, filePath, expr, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, typeDeclarations));
-								for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
-									if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
-										attribute.addAnonymousClass(anonymousClass);
-										anonymousClass.addParentContainer(attribute);
-									}
-								}
-								umlClass.addAttribute(attribute);
-							}
-						}
-						else {
-							LocationInfo location = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
-							List<UMLImport> imports = new ArrayList<>();
-							UMLClass nestedClass = new UMLClass(umlClass.getName(), name, location, false, imports);
-							nestedClass.setObject(true);
-							nestedClass.setVisibility(Visibility.PUBLIC);
-							processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, nestedObjectLiteral, nestedClass);
-							addToContainer(container, nestedClass);
-						}
-					}
-					else if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
+					if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 						UMLOperation operation = new UMLOperation(name, location, umlClass.getName());
 						operation.setVisibility(Visibility.PUBLIC);
@@ -2604,6 +2575,24 @@ public class OperationBody {
 				}
 				else {
 					name = callName + "." + name;
+				}
+			}
+			else if(parent instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getLeft() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getProp() instanceof Swc4jAstIdentName ident) {
+				String leftName = ident.getSym();
+				if(name.isEmpty()) {
+					name = leftName;
+				}
+				else {
+					name = leftName + "." + name;
+				}
+			}
+			else if(parent instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getLeft() instanceof Swc4jAstIdent ident) {
+				String leftName = ident.getSym();
+				if(name.isEmpty()) {
+					name = leftName;
+				}
+				else {
+					name = leftName + "." + name;
 				}
 			}
 			parent = parent.getParent();

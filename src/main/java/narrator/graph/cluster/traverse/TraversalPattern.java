@@ -14,7 +14,7 @@ import narrator.graph.cluster.GraphWrapper;
 
 public class TraversalPattern extends GraphWrapper {
 
-    public String extended(Cluster cluster) {
+    public String extended(Cluster cluster, GrainLevel level) {
         return "";
     }
 

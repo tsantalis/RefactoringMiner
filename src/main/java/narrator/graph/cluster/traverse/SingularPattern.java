@@ -42,7 +42,7 @@ public class SingularPattern extends TraversalPattern implements Leaf {
     }
 
     @Override
-    public String extended(Cluster cluster) {
+    public String extended(Cluster cluster, GrainLevel level) {
         return base(cluster);
     }
 }

@@ -238,4 +238,34 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 9,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "3187a788e17f79ad69da509748aeb64cdbac48f0",
+    "url": "https://github.com/chartjs/Chart.js/commit/3187a788e17f79ad69da509748aeb64cdbac48f0",
+    "author": "simonbrunel",
+    "time": "12/18/16 08:46 AM",
+    "refactorings": [{
+        "type": "Rename Variable",
+        "description": "Rename Variable plugins : Inferred to descriptors : Inferred in method public notify(chart, extension, args) from class core.plugin",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable plugin : Inferred to descriptor : Inferred in method public notify(chart, extension, args) from class core.plugin",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter chart : Inferred in method public notify(chart, extension, args) from class core.plugin",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -106,11 +106,11 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
         // Add immediate semantic context (surrounding code)
         List<Node> semanticContexts = useNode.getSemanticContexts(cluster);
         if (!semanticContexts.isEmpty()) {
-            prompt.append("\nSurrounding:\n```\n").append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
+            prompt.append("\n# Surrounding:\n```\n").append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
         }
         
         if (!usedNodes.isEmpty()) {
-            prompt.append("\nContext:\n```\n");
+            prompt.append("\n# Context:\n```\n");
             List<String> mappings = usedNodes.stream()
                     .map(n -> n.mapping(cluster))
                     .toList();

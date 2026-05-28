@@ -99,7 +99,7 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         }
 
         if (smallestContextNode != null) {
-            prompt.append("\nSurrounding:\n```\n");
+            prompt.append("\n# Surrounding:\n```\n");
             prompt.append(smallestContextNode.mapping(cluster));
             prompt.append("\n```\n");
         }
@@ -138,7 +138,7 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         }
 
         if (!mappingHunks.isEmpty()) {
-            prompt.append("\nContext:\n```\n");
+            prompt.append("\n# Context:\n```\n");
             prompt.append(String.join("\n---\n", mappingHunks));
             prompt.append("\n```");
         }

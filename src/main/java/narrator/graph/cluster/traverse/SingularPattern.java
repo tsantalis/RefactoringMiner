@@ -35,7 +35,7 @@ public class SingularPattern extends TraversalPattern implements Leaf {
         // Add immediate semantic context (surrounding code)
         List<Node> semanticContexts = node.getSemanticContexts(cluster);
         if (!semanticContexts.isEmpty()) {
-            prompt.append("\nSurrounding:\n```\n").append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
+            prompt.append("\n# Surrounding:\n```\n").append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
         }
         
         return prompt.toString();

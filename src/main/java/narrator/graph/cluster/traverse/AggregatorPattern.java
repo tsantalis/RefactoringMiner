@@ -54,6 +54,13 @@ public class AggregatorPattern extends TraversalPattern {
         prompt.append(String.join("\n---\n", subjectHunks));
         prompt.append("\n```\n");
 
+        // Add 'Surrounding' section for TraversalComponent with mergeContexts
+        if (this instanceof TraversalComponent tc && tc.getMergeContexts() != null && !tc.getMergeContexts().isEmpty()) {
+            Set<Node> mergeContexts = tc.getMergeContexts();
+            Node firstMergeContext = mergeContexts.iterator().next();
+            prompt.append("\n# Surrounding:\n```\n").append(firstMergeContext.mapping(cluster)).append("\n```\n");
+        }
+
         List<List<Node>> sideGroups = new ArrayList<>();
         Map<Set<Node>, List<Node>> sidePartnerMap = new HashMap<>();
         for (Node n : sides) {
@@ -70,7 +77,7 @@ public class AggregatorPattern extends TraversalPattern {
         }
 
         if (!sideGroups.isEmpty()) {
-            prompt.append("\nContext:\n```\n");
+            prompt.append("\n# Context:\n```\n");
             List<String> contextHunks = new ArrayList<>();
             for (List<Node> group : sideGroups) {
                 Node rep = group.get(0);

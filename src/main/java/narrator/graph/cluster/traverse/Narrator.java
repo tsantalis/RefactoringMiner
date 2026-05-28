@@ -131,7 +131,7 @@ public class Narrator {
         }
     }
 
-    private boolean isSemanticLeaf(TraversalComponent tc) {
+    public boolean isSemanticLeaf(TraversalComponent tc) {
         if (tc.getMergeContexts() == null || tc.getMergeContexts().isEmpty()) return false;
 
         boolean hasSemanticContext = false;
@@ -177,7 +177,7 @@ public class Narrator {
         }
     }
 
-    private boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {
+    public boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {
         Set<String> allowedTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
         if (allowedTypes == null || tc.getMergeContexts() == null) return false;
 

@@ -178,4 +178,48 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 7,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "1cbba830fdef5ac25f997deb5ae0683db9321a79",
+    "url": "https://github.com/chartjs/Chart.js/commit/1cbba830fdef5ac25f997deb5ae0683db9321a79",
+    "author": "benmccann",
+    "time": "5/26/17 08:13 AM",
+    "refactorings": [{
+        "type": "Move Method",
+        "description": "Move Method public parseTime(axis, label) from class scale.time to public parseTime(axis, label) from class helpers.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public determineUnit(minUnit, min, max, maxTicks) from class scale.time to public determineUnit(minUnit, min, max, maxTicks) from class helpers.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public determineStepSize(min, max, unit, maxTicks) from class scale.time to public determineStepSize(min, max, unit, maxTicks) from class helpers.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public generateTicks(options, dataRange, niceRange) from class scale.time to public generateTicksNiceRange(options, dataRange, niceRange) from class helpers.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public Chart.Ticks.generators.time(options, dataRange) from class scale.time to public generateTicks(options, dataRange) from class helpers.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

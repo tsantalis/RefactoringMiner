@@ -244,6 +244,7 @@ public class OperationBody {
 	private VariableDeclarationContainer container;
 	private int bodyHashCode;
 	private List<UMLComment> comments;
+	private static final List<String> jsExtension = List.of("extend", "inherits");
 
 	// constructor for module class
 	public OperationBody(LangCompilationUnit cu, String sourceFolder, String filePath, List<LangASTNode> statements, ModuleContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -1652,7 +1653,7 @@ public class OperationBody {
 				}
 			}
 			else if(expressionStatement.getExpr() instanceof Swc4jAstAssignExpr assignment && assignment.getRight() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
-					memberExpr.getProp() instanceof Swc4jAstIdentName ident && ident.getSym().equals("extend") && objectLiteralArgument(callExpr)) {
+					memberExpr.getProp() instanceof Swc4jAstIdentName ident && jsExtension.contains(ident.getSym()) && objectLiteralArgument(callExpr)) {
 				//jQuery: $.extend(target, object); merges object into target.
 				for(Swc4jAstExprOrSpread arg : callExpr.getArgs()) {
 					if(arg.getExpr() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
@@ -1661,13 +1662,16 @@ public class OperationBody {
 				}
 			}
 			else if(expressionStatement.getExpr() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
-					memberExpr.getProp() instanceof Swc4jAstIdentName ident && ident.getSym().equals("extend") && objectLiteralArgument(callExpr)) {
+					memberExpr.getProp() instanceof Swc4jAstIdentName ident && jsExtension.contains(ident.getSym()) && objectLiteralArgument(callExpr)) {
 				//jQuery: $.extend(target, object); merges object into target.
 				for(Swc4jAstExprOrSpread arg : callExpr.getArgs()) {
 					if(arg.getExpr() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
 						createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 					}
 				}
+			}
+			else if(expressionStatement.getExpr() instanceof Swc4jAstAssignExpr assignment && assignment.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+				createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			}
 			else {
 				StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);

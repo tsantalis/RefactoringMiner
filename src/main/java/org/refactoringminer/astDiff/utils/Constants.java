@@ -453,4 +453,5 @@ public class Constants {
     public final String FUNCTION_EXPRESSION = "function_expression";
     public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
     public final String UPDATE_EXPRESSION = "update_expression";
+    public final String SPREAD_ELEMENT = "spread_element";
 }

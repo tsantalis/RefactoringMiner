@@ -50,8 +50,8 @@ public class Narrator {
         switch (grainLevel) {
             case LEAF -> narrateLeaf(rootPattern, visited, result);
             case USAGE_CHAIN_ROOT -> narrateUsageChainRoot(rootPattern, visited, result);
-            case SEMANTIC_LEAF -> narrateSemanticLeaf(rootPattern, visited, result);
-            case METHOD, CLASS, FILE -> narrateComponentGrain(rootPattern, visited, result, grainLevel);
+            case SEMANTIC_LEAF -> narrateSemanticLeaf(rootPattern, visited, result, false);
+            case METHOD, CLASS, FILE -> narrateComponentGrain(rootPattern, visited, result, grainLevel, false);
         }
         
         return result;
@@ -105,25 +105,28 @@ public class Narrator {
         }
     }
 
-    private void narrateSemanticLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+    private void narrateSemanticLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, boolean onlySemanticLeaves) {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof TraversalComponent tc && isSemanticLeaf(tc)) {
-            result.add(p);
-            return;
-        }
+        boolean isSL = (p instanceof TraversalComponent tc && isSemanticLeaf(tc));
 
         if (p instanceof AggregatorPattern agg) {
             List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
             sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 
             for (TraversalPattern sub : sortedSubs) {
-                narrateSemanticLeaf(sub, visited, result);
+                boolean nextMode = isSL || onlySemanticLeaves;
+                narrateSemanticLeaf(sub, visited, result, nextMode);
             }
         }
 
-        if (p instanceof Leaf) {
+        if (isSL) {
+            result.add(p);
+            return;
+        }
+
+        if (!onlySemanticLeaves && p instanceof Leaf) {
             result.add(p);
         }
     }
@@ -148,25 +151,28 @@ public class Narrator {
         return true;
     }
 
-    private void narrateComponentGrain(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
+    private void narrateComponentGrain(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel, boolean onlyGrainComponents) {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof TraversalComponent tc && matchesGrain(tc, grainLevel)) {
-            result.add(p);
-            return;
-        }
+        boolean isGrainComp = (p instanceof TraversalComponent tc && matchesGrain(tc, grainLevel));
 
         if (p instanceof AggregatorPattern agg) {
             List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
             sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
 
             for (TraversalPattern sub : sortedSubs) {
-                narrateComponentGrain(sub, visited, result, grainLevel);
+                boolean nextMode = isGrainComp || onlyGrainComponents;
+                narrateComponentGrain(sub, visited, result, grainLevel, nextMode);
             }
         }
 
-        if (p instanceof Leaf) {
+        if (isGrainComp) {
+            result.add(p);
+            return;
+        }
+
+        if (!onlyGrainComponents && p instanceof Leaf) {
             result.add(p);
         }
     }

@@ -1671,7 +1671,12 @@ public class OperationBody {
 				}
 			}
 			else if(expressionStatement.getExpr() instanceof Swc4jAstAssignExpr assignment && assignment.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
-				createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				UMLAnonymousClass anonymous = createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				if(anonymous.getOperations().isEmpty()) {
+					StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+					parent.addStatement(child);
+					addStatementInVariableScopes(child);
+				}
 			}
 			else {
 				StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);

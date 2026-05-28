@@ -269,31 +269,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                         if (closing != null) {
                             mappingStore.addMapping(closing.first,closing.second);
                         }
-                        if(object1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && object2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS)) {
-                            Tree arguments1 = object1.getParent();
-                            Tree arguments2 = object2.getParent();
-                            mappingStore.addMapping(arguments1,arguments2);
-                            com.github.gumtreediff.utils.Pair<Tree, Tree> openingParen = Helpers.findPairOfType(arguments1,arguments2, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
-                            if (openingParen != null) {
-                                mappingStore.addMapping(openingParen.first,openingParen.second);
-                            }
-                            com.github.gumtreediff.utils.Pair<Tree, Tree> closingParen = Helpers.findPairOfType(arguments1,arguments2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
-                            if (closingParen != null) {
-                                mappingStore.addMapping(closingParen.first,closingParen.second);
-                            }
-                            Tree call1 = arguments1.getParent();
-                            Tree call2 = arguments2.getParent();
-                            if(call1.getType().name.equals(LANG1.METHOD_INVOCATION) && call2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
-                                mappingStore.addMapping(call1, call2);
-                                if(call1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && call2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
-                                    mappingStore.addMapping(call1.getParent(), call2.getParent());
-                                    com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(call1.getParent(), call2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
-                                    if (semicolons != null) {
-                                        mappingStore.addMapping(semicolons.first, semicolons.second);
-                                    }
-                                }
-                            }
-                        }
+                        processObjectLiteralWithinMethodCall(object1, object2, mappingStore, LANG1, LANG2);
                     }
                 }
                 else if(srcOperationNode.getParent().getType().name.equals(LANG1.ASSIGNMENT_EXPRESSION) && dstOperationNode.getParent().getType().name.equals(LANG1.ASSIGNMENT_EXPRESSION)) {
@@ -443,6 +419,50 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (refactoringProcessor){
                 new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
+            }
+        }
+    }
+
+    public static void processObjectLiteralWithinMethodCall(Tree object1, Tree object2, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+        if(object1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && object2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS)) {
+            Tree arguments1 = object1.getParent();
+            Tree arguments2 = object2.getParent();
+            mappingStore.addMapping(arguments1,arguments2);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> openingParen = Helpers.findPairOfType(arguments1,arguments2, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+            if (openingParen != null) {
+                mappingStore.addMapping(openingParen.first,openingParen.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> closingParen = Helpers.findPairOfType(arguments1,arguments2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+            if (closingParen != null) {
+                mappingStore.addMapping(closingParen.first,closingParen.second);
+            }
+            Tree call1 = arguments1.getParent();
+            Tree call2 = arguments2.getParent();
+            if(call1.getType().name.equals(LANG1.METHOD_INVOCATION) && call2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                mappingStore.addMapping(call1, call2);
+                if(call1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && call2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+                    mappingStore.addMapping(call1.getParent(), call2.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(call1.getParent(), call2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
+                    if (semicolons != null) {
+                        mappingStore.addMapping(semicolons.first, semicolons.second);
+                    }
+                }
+                else if(call1.getParent().getType().name.equals(LANG1.ASSIGNMENT_EXPRESSION) && call2.getParent().getType().name.equals(LANG2.ASSIGNMENT_EXPRESSION)) {
+                    Tree assignment1 = call1.getParent();
+                    Tree assignment2 = call2.getParent();
+                    mappingStore.addMapping(assignment1, assignment2);
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> equals = Helpers.findPairOfType(assignment1, assignment2,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
+                    if (equals != null) {
+                        mappingStore.addMapping(equals.first, equals.second);
+                    }
+                    if(assignment1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && assignment2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+                        mappingStore.addMapping(assignment1.getParent(), assignment2.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(assignment1.getParent(), assignment2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
+                        if (semicolons != null) {
+                            mappingStore.addMapping(semicolons.first, semicolons.second);
+                        }
+                    }
+                }
             }
         }
     }

@@ -1231,10 +1231,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			detectInlineVariableWithinUnmatchedStatements(operation1, operation2);
 			if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && operation1.getAnonymousClassList().size() > 0 && operation2.getAnonymousClassList().size() > 0 &&
 					operation1.getAnonymousClassList().size() == operation2.getAnonymousClassList().size() &&
-					body1.getAllAnonymousClassDeclarations().size() == 0 && body2.getAllAnonymousClassDeclarations().size() == 0) {
+					body1.getAllAnonymousClassDeclarations().size() < operation1.getAnonymousClassList().size() && body2.getAllAnonymousClassDeclarations().size() < operation2.getAnonymousClassList().size()) {
 				for(int i=0; i<operation1.getAnonymousClassList().size(); i++) {
 					UMLAnonymousClass anonymousClass1 = operation1.getAnonymousClassList().get(i);
 					UMLAnonymousClass anonymousClass2 = operation2.getAnonymousClassList().get(i);
+					if(containsAnonymousClassDeclarationObjectForAnonymous(body1.getAllAnonymousClassDeclarations(), anonymousClass1) ||
+							containsAnonymousClassDeclarationObjectForAnonymous(body2.getAllAnonymousClassDeclarations(), anonymousClass2)) {
+						continue;
+					}
 					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 					anonymousClassDiff.process();
 					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -1381,6 +1385,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(operation1.getNestedImports().size() > 0 || operation2.getNestedImports().size() > 0) {
 			this.importListDiff = new UMLImportListDiff(operation1.getNestedImports(), operation2.getNestedImports());
 		}
+	}
+
+	private boolean containsAnonymousClassDeclarationObjectForAnonymous(List<AnonymousClassDeclarationObject> list, UMLAnonymousClass anonymousClass) {
+		for(AnonymousClassDeclarationObject object : list) {
+			if(object.getLocationInfo().equals(anonymousClass.getLocationInfo()))
+				return true;
+		}
+		return false;
 	}
 
 	private void detectExtractVariableWithinUnmatchedStatements(UMLOperation operation1, UMLOperation operation2)

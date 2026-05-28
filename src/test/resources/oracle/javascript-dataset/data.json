@@ -162,4 +162,20 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 6,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "1eeffa3d584cdd8d1f54b7455487ae9b13478ebe",
+    "url": "https://github.com/chartjs/Chart.js/commit/1eeffa3d584cdd8d1f54b7455487ae9b13478ebe",
+    "author": "benmccann",
+    "time": "8/7/17 02:24 PM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private _autoSkip(ticks) extracted from public draw(chartArea) in class core.scale",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

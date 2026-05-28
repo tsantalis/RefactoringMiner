@@ -1651,6 +1651,15 @@ public class OperationBody {
 					((ModuleContainer)container).addNestedOperation(nested);
 				}
 			}
+			else if(expressionStatement.getExpr() instanceof Swc4jAstAssignExpr assignment && assignment.getRight() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
+					memberExpr.getProp() instanceof Swc4jAstIdentName ident && ident.getSym().equals("extend") && objectLiteralArgument(callExpr)) {
+				//jQuery: $.extend(target, object); merges object into target.
+				for(Swc4jAstExprOrSpread arg : callExpr.getArgs()) {
+					if(arg.getExpr() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+						createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					}
+				}
+			}
 			else if(expressionStatement.getExpr() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
 					memberExpr.getProp() instanceof Swc4jAstIdentName ident && ident.getSym().equals("extend") && objectLiteralArgument(callExpr)) {
 				//jQuery: $.extend(target, object); merges object into target.

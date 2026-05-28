@@ -57,6 +57,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for (UMLOperationBodyMapper umlOperationBodyMapper : anonymousClassDiff.getOperationBodyMapperList()) {
                     new MethodMatcher(optimizationData, umlOperationBodyMapper, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 }
+                Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
+                Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);
+                if(srcTypeDeclaration != null && dstTypeDeclaration != null) {
+                    MethodMatcher.processObjectLiteralWithinMethodCall(srcTypeDeclaration, dstTypeDeclaration, mappingStore, LANG1, LANG2);
+                }
             }
         }
         Set<AbstractCodeMapping> mappingSet = bodyMapper.getMappings();

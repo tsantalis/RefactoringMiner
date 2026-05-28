@@ -268,4 +268,20 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 10,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "333f2eba99e29ae643671edbef08a245cae9743c",
+    "url": "https://github.com/chartjs/Chart.js/commit/333f2eba99e29ae643671edbef08a245cae9743c",
+    "author": "xg-wang",
+    "time": "11/29/17 04:52 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public buildScales() renamed to public buildOrUpdateScales() in class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

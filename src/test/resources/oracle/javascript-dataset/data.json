@@ -114,6 +114,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private bindEvents() from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

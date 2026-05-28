@@ -2426,6 +2426,9 @@ public class OperationBody {
 					LocationInfo location = new LocationInfo(sourceFolder, filePath, methodProp.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 					String name = extractString(key, fileContent);
 					UMLOperation nested = new UMLOperation(name, location, umlClass.getName());
+					if(umlClass instanceof UMLAnonymousClass anonymous) {
+						nested.setAnonymousClassContainer(anonymous);
+					}
 					nested.setVisibility(Visibility.PUBLIC);
 					Swc4jAstFunction function = methodProp.getFunction();
 					TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments);
@@ -2438,6 +2441,9 @@ public class OperationBody {
 					if(expr instanceof Swc4jAstArrowExpr arrowExpr) {
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, keyValueProp.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 						UMLOperation operation = new UMLOperation(name, location, umlClass.getName());
+						if(umlClass instanceof UMLAnonymousClass anonymous) {
+							operation.setAnonymousClassContainer(anonymous);
+						}
 						operation.setVisibility(Visibility.PUBLIC);
 						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, null, operation, comments);
 						int startSignatureOffset = keyValueProp.getSpan().getStart();
@@ -2450,6 +2456,9 @@ public class OperationBody {
 						LocationInfo location = new LocationInfo(sourceFolder, filePath, functionExpr.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 						UMLOperation operation = new UMLOperation(name, location, container.getClassName());
 						operation.setVisibility(Visibility.PUBLIC);
+						if(umlClass instanceof UMLAnonymousClass anonymous) {
+							operation.setAnonymousClassContainer(anonymous);
+						}
 						Swc4jAstFunction function = functionExpr.getFunction();
 						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
 						umlClass.addOperation(operation);

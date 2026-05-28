@@ -2732,6 +2732,12 @@ public class UMLModelDiff {
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			addedOperations.addAll(classDiff.getAddedOperations());
 			addedOperations.addAll(classDiff.getAddedNestedOperationsRecursively());
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				Set<UMLAnonymousClassDiff> diffs = mapper.getAnonymousClassDiffs();
+				for(UMLAnonymousClassDiff diff : diffs) {
+					addedOperations.addAll(diff.getAddedOperations());
+				}
+			}
 			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
 				if(ref instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring extractRef = (ExtractOperationRefactoring)ref;
@@ -2771,6 +2777,12 @@ public class UMLModelDiff {
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			removedOperations.addAll(classDiff.getRemovedOperations());
 			removedOperations.addAll(classDiff.getRemovedNestedOperationsRecursively());
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				Set<UMLAnonymousClassDiff> diffs = mapper.getAnonymousClassDiffs();
+				for(UMLAnonymousClassDiff diff : diffs) {
+					removedOperations.addAll(diff.getRemovedOperations());
+				}
+			}
 			for(Refactoring ref : classDiff.getRefactoringsBeforePostProcessing()) {
 				if(ref instanceof InlineOperationRefactoring) {
 					InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;
@@ -6965,7 +6977,7 @@ public class UMLModelDiff {
 
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 					boolean sameClassNameButDifferentFilePath = removedOperation.getClassName().equals(addedOperation.getClassName()) &&
-							!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath());
+							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
@@ -7146,7 +7158,7 @@ public class UMLModelDiff {
 
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 					boolean sameClassNameButDifferentFilePath = removedOperation.getClassName().equals(addedOperation.getClassName()) &&
-							!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath());
+							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
@@ -7588,6 +7600,19 @@ public class UMLModelDiff {
 		for(UMLClassMoveDiff moveDiff : classMoveDiffList) {
 			if(moveDiff.getOriginalClassName().equals(firstMapper.getContainer1().getClassName()) &&
 					moveDiff.getNextClassName().equals(firstMapper.getContainer2().getClassName())) {
+				return true;
+			}
+		}
+		if(firstMapper.getOperation1() != null && firstMapper.getOperation2() != null && firstMapper.getContainer1().getClassName().equals(firstMapper.getContainer2().getClassName())) {
+			UMLAnonymousClass anonymous1 = firstMapper.getOperation1().getAnonymousClassContainer().isPresent() ? firstMapper.getOperation1().getAnonymousClassContainer().get() : null;
+			UMLAnonymousClass anonymous2 = firstMapper.getOperation2().getAnonymousClassContainer().isPresent() ? firstMapper.getOperation2().getAnonymousClassContainer().get() : null;
+			if(anonymous1 != null && anonymous2 == null) {
+				return true;
+			}
+			else if(anonymous1 == null && anonymous2 != null) {
+				return true;
+			}
+			else if(anonymous1 != null && anonymous2 != null && !anonymous1.equals(anonymous2)) {
 				return true;
 			}
 		}
@@ -8401,6 +8426,14 @@ public class UMLModelDiff {
 							return true;
 						}
 					}
+				}
+			}
+			else if(refactoring instanceof RenameOperationRefactoring) {
+				RenameOperationRefactoring renameRefactoring = (RenameOperationRefactoring)refactoring;
+				VariableDeclarationContainer originalOperation = renameRefactoring.getOriginalOperation();
+				VariableDeclarationContainer renamedOperation = renameRefactoring.getRenamedOperation();
+				if(renamedOperation.equals(addedOperation)) {
+					return true;
 				}
 			}
 		}

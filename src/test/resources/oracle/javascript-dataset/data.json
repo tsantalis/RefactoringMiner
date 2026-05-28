@@ -222,4 +222,20 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 8,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "03735563f44e1ae108f83b9c7ee946f8818c92c3",
+    "url": "https://github.com/chartjs/Chart.js/commit/03735563f44e1ae108f83b9c7ee946f8818c92c3",
+    "author": "etimberg",
+    "time": "10/3/16 04:05 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public inLabelRange(mouseX) renamed to public xRange(mouseX) in class element.point",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

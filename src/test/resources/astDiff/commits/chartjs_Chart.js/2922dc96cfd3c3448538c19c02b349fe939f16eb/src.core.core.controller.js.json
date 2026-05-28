@@ -4608,6 +4608,50 @@
   "firstEndPos" : 22518,
   "secondEndPos" : 22827
 }, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 1891,
+  "secondPos" : 1891,
+  "firstEndPos" : 1905,
+  "secondEndPos" : 1905
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "helpers",
+  "secondLabel" : "helpers",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1891,
+  "secondPos" : 1891,
+  "firstEndPos" : 1898,
+  "secondEndPos" : 1898
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1898,
+  "secondPos" : 1898,
+  "firstEndPos" : 1899,
+  "secondEndPos" : 1899
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "extend",
+  "secondLabel" : "extend",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1899,
+  "secondPos" : 1899,
+  "firstEndPos" : 1905,
+  "secondEndPos" : 1905
+}, {
   "firstType" : "arguments",
   "secondType" : "arguments",
   "firstLabel" : "",
@@ -4629,6 +4673,61 @@
   "secondPos" : 1905,
   "firstEndPos" : 1906,
   "secondEndPos" : 1906
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1906,
+  "secondPos" : 1906,
+  "firstEndPos" : 1921,
+  "secondEndPos" : 1921
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Chart",
+  "secondLabel" : "Chart",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1906,
+  "secondPos" : 1906,
+  "firstEndPos" : 1911,
+  "secondEndPos" : 1911
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1911,
+  "secondPos" : 1911,
+  "firstEndPos" : 1912,
+  "secondEndPos" : 1912
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "prototype",
+  "secondLabel" : "prototype",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1912,
+  "secondPos" : 1912,
+  "firstEndPos" : 1921,
+  "secondEndPos" : 1921
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1921,
+  "secondPos" : 1921,
+  "firstEndPos" : 1922,
+  "secondEndPos" : 1922
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

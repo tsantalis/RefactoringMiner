@@ -436,10 +436,20 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (closingParen != null) {
                 mappingStore.addMapping(closingParen.first,closingParen.second);
             }
+            //match first argument if it is not an object
+            if(!arguments1.getChild(1).getType().name.equals(LANG1.OBJECT) && !arguments2.getChild(1).getType().name.equals(LANG2.OBJECT)) {
+                mappingStore.addMappingRecursively(arguments1.getChild(1), arguments2.getChild(1));
+                if(arguments1.getChild(2).getType().name.equals(LANG1.COMMA) && arguments2.getChild(2).getType().name.equals(LANG2.COMMA))
+                    mappingStore.addMapping(arguments1.getChild(2), arguments2.getChild(2));
+            }
             Tree call1 = arguments1.getParent();
             Tree call2 = arguments2.getParent();
             if(call1.getType().name.equals(LANG1.METHOD_INVOCATION) && call2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
                 mappingStore.addMapping(call1, call2);
+                com.github.gumtreediff.utils.Pair<Tree, Tree> memberExpressions = Helpers.findPairOfType(call1, call2, LANG1.MEMBER_EXPRESSION, LANG2.MEMBER_EXPRESSION);
+                if (memberExpressions != null) {
+                    mappingStore.addMappingRecursively(memberExpressions.first,memberExpressions.second);
+                }
                 if(call1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && call2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
                     mappingStore.addMapping(call1.getParent(), call2.getParent());
                     com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(call1.getParent(), call2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
@@ -454,6 +464,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     com.github.gumtreediff.utils.Pair<Tree,Tree> equals = Helpers.findPairOfType(assignment1, assignment2,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
                     if (equals != null) {
                         mappingStore.addMapping(equals.first, equals.second);
+                    }
+                    memberExpressions = Helpers.findPairOfType(assignment1, assignment2, LANG1.MEMBER_EXPRESSION, LANG2.MEMBER_EXPRESSION);
+                    if (memberExpressions != null) {
+                        mappingStore.addMappingRecursively(memberExpressions.first,memberExpressions.second);
                     }
                     if(assignment1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && assignment2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
                         mappingStore.addMapping(assignment1.getParent(), assignment2.getParent());

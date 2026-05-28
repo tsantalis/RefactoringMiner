@@ -60,7 +60,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
                 Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);
                 if(srcTypeDeclaration != null && dstTypeDeclaration != null) {
-                    MethodMatcher.processObjectLiteralWithinMethodCall(srcTypeDeclaration, dstTypeDeclaration, mappingStore, LANG1, LANG2);
+                    Tree object1 = srcTypeDeclaration;
+                    Tree object2 = dstTypeDeclaration;
+                    mappingStore.addMapping(object1,object2);
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(object1,object2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (opening != null) {
+                        mappingStore.addMapping(opening.first,opening.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(object1,object2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (closing != null) {
+                        mappingStore.addMapping(closing.first,closing.second);
+                    }
+                    MethodMatcher.processObjectLiteralWithinMethodCall(object1, object2, mappingStore, LANG1, LANG2);
                 }
             }
         }

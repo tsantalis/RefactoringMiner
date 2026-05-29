@@ -88,8 +88,8 @@ public class Narrator {
         } else if (p instanceof AggregatorPattern agg) {
             List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
             sortedSubs.sort((s1, s2) -> {
-                if (s1.dependsOn(s2)) return -1;
-                if (s2.dependsOn(s1)) return 1;
+                if (s1.dependsOn(s2)) return 1;
+                if (s2.dependsOn(s1)) return -1;
                 return Integer.compare(s2.getDepth(), s1.getDepth());
             });
 

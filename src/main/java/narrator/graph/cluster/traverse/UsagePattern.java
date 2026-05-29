@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
@@ -99,16 +97,17 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
     public String base(Cluster cluster) {
         String subject = useNode.mapping(cluster);
         Set<Node> usedNodes = getUsedNodes();
-        
+
         StringBuilder prompt = new StringBuilder();
         prompt.append("# Subject:\n```\n").append(subject).append("\n```\n");
-        
+
         // Add immediate semantic context (surrounding code)
         List<Node> semanticContexts = useNode.getSemanticContexts(cluster);
         if (!semanticContexts.isEmpty()) {
-            prompt.append("\n# Surrounding:\n```\n").append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
+            prompt.append("\n# Surrounding:\n```\n")
+                    .append(semanticContexts.get(0).mapping(cluster)).append("\n```\n");
         }
-        
+
         if (!usedNodes.isEmpty()) {
             prompt.append("\n# Context:\n```\n");
             List<String> mappings = usedNodes.stream()
@@ -117,7 +116,15 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
             prompt.append(String.join("\n", mappings));
             prompt.append("\n```\n");
         }
-        
+
         return prompt.toString();
+    }
+
+    @Override
+    public String extended(Cluster cluster, GrainLevel level) {
+        if (level.equals(GrainLevel.LEAF)) {
+            return this.base(cluster);
+        }
+        return super.extended(cluster, level);
     }
 }

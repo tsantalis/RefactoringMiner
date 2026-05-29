@@ -4,6 +4,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -79,5 +80,42 @@ public class TraversalPattern extends GraphWrapper {
 
     public List<Node> getSides(Cluster cluster) {
         return List.of();
+    }
+
+    public boolean dependsOn(TraversalPattern p) {
+        List<TraversalPattern> pNarrative = new ArrayList<>();
+        Set<TraversalPattern> visited = new HashSet<>();
+        p.narratePostOrder(visited, pNarrative);
+        return checkDependsOn(pNarrative);
+    }
+
+    private boolean checkDependsOn(List<TraversalPattern> pNarrative) {
+        if (this instanceof UsagePattern usage) {
+            for (TraversalPattern sub : usage.subs) {
+                if (pNarrative.contains(sub)) return true;
+            }
+        }
+        if (this instanceof AggregatorPattern agg) {
+            for (TraversalPattern sub : agg.subs) {
+                if (sub.checkDependsOn(pNarrative)) return true;
+            }
+        }
+        return false;
+    }
+
+    protected void narratePostOrder(Set<TraversalPattern> visited, List<TraversalPattern> result) {
+        if (visited.contains(this)) return;
+        visited.add(this);
+
+        if (this instanceof AggregatorPattern agg) {
+            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
+            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
+
+            for (TraversalPattern sub : sortedSubs) {
+                sub.narratePostOrder(visited, result);
+            }
+        }
+
+        result.add(this);
     }
 }

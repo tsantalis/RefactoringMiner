@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **May 29, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **May 30, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12675  | 13  | 211  | 0.999  | 0.984|
+|**Total**|12678  | 13  | 211  | 0.999  | 0.984|
 |Extract Method|1019  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|257  |  0  |  8  | 1.000  | 0.970|
@@ -54,7 +54,7 @@ As of **May 29, 2026** the precision and recall of RefactoringMiner on this benc
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|127  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|32  |  0  |  1  | 1.000  | 0.970|
-|Parameterize Variable|114  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|117  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|31  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|25  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|445  |  0  | 12  | 1.000  | 0.974|

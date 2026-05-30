@@ -65,12 +65,10 @@ public class TraversalEngine {
             return;
         }
 
-        Set<Node> usedNodes = util.getUsedNodes(node);
-        // TODO: Implement a more robust check: if the node is src which has some mappings 
+        // TODO: Implement a more robust check: if the node is src which has some mappings
         // and its usedNodes are extensions AND all of those extension used nodes are 
         // a mapping of an extension used node for the mapping of the src node.
-        if (node.isSrc() && !util.getMappingTargets(node).isEmpty() &&
-                usedNodes.stream().allMatch(Node::isExtension)) {
+        if (node.isSrc() && !util.getMappingTargets(node).isEmpty()) {
             return;
         }
 
@@ -81,6 +79,7 @@ public class TraversalEngine {
         components.add(usageComponent);
         usagePatterns.put(node, usageComponent);
 
+        Set<Node> usedNodes = util.getUsedNodes(node);
         for (Node usedNode : usedNodes) {
             usageComponent.addEdge(usedNode, node, new Edge(EdgeType.DEF_USE));
             addContext(usedNode, usageComponent);

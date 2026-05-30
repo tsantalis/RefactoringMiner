@@ -1952,6 +1952,16 @@ public class OperationBody {
 						}
 						return;
 					}
+					else if(declarator.getInit().get() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
+							memberExpr.getProp() instanceof Swc4jAstIdentName ident && jsExtension.contains(ident.getSym()) && objectLiteralArgument(callExpr)) {
+						//jQuery: $.extend(target, object); merges object into target.
+						for(Swc4jAstExprOrSpread arg : callExpr.getArgs()) {
+							if(arg.getExpr() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+								createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+							}
+						}
+						return;
+					}
 				}
 			}
 			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);

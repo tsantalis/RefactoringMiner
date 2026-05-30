@@ -1049,6 +1049,7 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		//this is to support the Extract & Move Method scenario
+		Set<UMLOperation> matchingAddedOperations = new LinkedHashSet<>();
 		if(modelDiff != null) {
 			for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
 				String expression = addedOperationInvocation.getExpression();
@@ -1066,18 +1067,43 @@ public abstract class UMLAbstractClassDiff {
 					UMLAnonymousClass anonymous = addedOperation.getAnonymousClassContainer().get();
 					String outerClassName = anonymous.getPackageName();
 					UMLClassBaseDiff baseDiff = modelDiff.getUMLClassDiff(outerClassName);
+					UMLAbstractClass outerClass = modelDiff.findClassInChildModel(outerClassName);
 					if(baseDiff != null) {
 						for(UMLOperation operation : baseDiff.getAddedOperations()) {
 							if(addedOperationInvocation.matchesOperation(operation, addedOperation, this, modelDiff)) {
 								operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
 								operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllCreations());
 								variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
+								matchingAddedOperations.add(operation);
 								break;
+							}
+						}
+					}
+					else if(outerClass != null) {
+						for(UMLOperation operation : outerClass.getOperations()) {
+							if(addedOperationInvocation.matchesOperation(operation, addedOperation, this, modelDiff)) {
+								operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllOperationInvocations());
+								operationInvocationsInMethodsCalledByAddedOperation.addAll(operation.getAllCreations());
+								variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(operation));
+								matchingAddedOperations.add(operation);
+								break;
+							}
+							for(UMLOperation nestedOperation : operation.getNestedOperations()) {
+								if(addedOperationInvocation.matchesOperation(nestedOperation, addedOperation, this, modelDiff)) {
+									operationInvocationsInMethodsCalledByAddedOperation.addAll(nestedOperation.getAllOperationInvocations());
+									operationInvocationsInMethodsCalledByAddedOperation.addAll(nestedOperation.getAllCreations());
+									variableDeclarationsInMethodsCalledByAddedOperation.addAll(getVariableDeclarationNamesInMethodBody(nestedOperation));
+									matchingAddedOperations.add(nestedOperation);
+									break;
+								}
 							}
 						}
 					}
 				}
 			}
+		}
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && matchingAddedOperations.size() > 0) {
+			return true;
 		}
 		Set<AbstractCall> newIntersection = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
 		newIntersection.retainAll(operationInvocationsInMethodsCalledByAddedOperation);

@@ -6756,7 +6756,7 @@ public class UMLModelDiff {
 		for(UMLClass addedClass : addedClasses) {
 			if(!addedClass.implementsInterface(interfaceIntersection) && !addedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
 				addedOperations.addAll(addedClass.getOperations());
-				if(PathFileUtils.isJavaScriptFile(addedClass.getSourceFile())) {
+				if(PathFileUtils.isTypeScriptFile(addedClass.getSourceFile())) {
 					for(UMLOperation op : addedClass.getOperations()) {
 						addedOperations.addAll(op.getNestedOperations());
 						for(UMLAnonymousClass anonymous : op.getAnonymousClassList()) {
@@ -6774,7 +6774,7 @@ public class UMLModelDiff {
 		for(UMLClass removedClass : removedClasses) {
 			if(!removedClass.implementsInterface(interfaceIntersection) && !removedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
 				removedOperations.addAll(removedClass.getOperations());
-				if(PathFileUtils.isJavaScriptFile(removedClass.getSourceFile())) {
+				if(PathFileUtils.isTypeScriptFile(removedClass.getSourceFile())) {
 					for(UMLOperation op : removedClass.getOperations()) {
 						removedOperations.addAll(op.getNestedOperations());
 						for(UMLAnonymousClass anonymous : op.getAnonymousClassList()) {

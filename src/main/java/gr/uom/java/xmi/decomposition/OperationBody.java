@@ -2648,8 +2648,8 @@ public class OperationBody {
 					name = callName + "." + name;
 				}
 			}
-			else if(parent instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getLeft() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getProp() instanceof Swc4jAstIdentName ident) {
-				String leftName = ident.getSym();
+			else if(parent instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getLeft() instanceof Swc4jAstMemberExpr memberExpr) {
+				String leftName = fileContent.substring(memberExpr.getSpan().getStart(), memberExpr.getSpan().getEnd());
 				if(name.isEmpty()) {
 					name = leftName;
 				}

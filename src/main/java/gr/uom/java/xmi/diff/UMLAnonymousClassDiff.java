@@ -273,33 +273,6 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		}
 	}
 
-	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {
-		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
-		List<UMLOperation> addedOperations = new ArrayList<>(this.addedOperations);
-		if(modelDiff != null) {
-			String outerClassName = nextClass.getPackageName();
-			UMLClassBaseDiff baseDiff = modelDiff.getUMLClassDiff(outerClassName);
-			if(baseDiff != null) {
-				addedOperations.addAll(baseDiff.getAddedOperations());
-			}
-		}
-		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
-			UMLOperation addedOperation = addedOperationIterator.next();
-			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, classDiff, modelDiff);
-				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
-				for(ExtractOperationRefactoring refactoring : refs) {
-					refactorings.add(refactoring);
-					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
-					refactorings.addAll(operationBodyMapper.getRefactoringsAfterPostProcessing());
-					mapper.addChildMapper(operationBodyMapper);
-					operationsToBeRemoved.add(addedOperation);
-				}
-			}
-		}
-		this.addedOperations.removeAll(operationsToBeRemoved);
-	}
-
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {

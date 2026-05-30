@@ -4997,4 +4997,136 @@ public abstract class UMLAbstractClassDiff {
 		}
 		return false;
 	}
+
+	protected List<UMLOperationBodyMapper> checkForExtractedOperations() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		Set<UMLOperationBodyMapper> nestedFunctionMappers = new LinkedHashSet<>();
+		List<UMLOperation> outerClassAddedOperations = new ArrayList<>();
+		if(modelDiff != null && getNextClassName().contains(".")) {
+			String outerClassName = getNextClassName().substring(0, getNextClassName().lastIndexOf("."));
+			UMLClassBaseDiff outerClassDiff = modelDiff.getUMLClassDiff(outerClassName);
+			if(outerClassDiff != null) {
+				outerClassAddedOperations.addAll(outerClassDiff.getAddedOperations());
+			}
+		}
+		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
+		allAddedOperations.addAll(outerClassAddedOperations);
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			List<UMLOperation> nestedAddedOperations = new ArrayList<>();
+			if(mapper.getOperation1() != null && mapper.getOperation2() != null && mapper.getOperation2().getNestedOperations().size() > 0) {
+				for(UMLOperation nestedOp : mapper.getOperation2().getNestedOperations()) {
+					if(!mapper.getOperation1().getNestedOperations().contains(nestedOp)) {
+						nestedAddedOperations.add(nestedOp);
+					}
+				}
+			}
+			List<UMLOperation> finalAllAddedOperations = new ArrayList<>(allAddedOperations);
+			if(nestedAddedOperations.size() > 0) {
+				finalAllAddedOperations.addAll(nestedAddedOperations);
+			}
+			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, finalAllAddedOperations, this, modelDiff);
+			List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
+			for(UMLOperation addedOperation : sortedAddedOperations) {
+				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
+				List<ExtractOperationRefactoring> discarded = new ArrayList<>();
+				List<ExtractOperationRefactoring> duplicates = new ArrayList<>();
+				List<ExtractOperationRefactoring> superSets = new ArrayList<>();
+				List<ExtractOperationRefactoring> subSets = new ArrayList<>();
+				if(refs.size() > 1) {
+					for(ExtractOperationRefactoring refactoring : refs) {
+						Set<AbstractCodeMapping> mappings = refactoring.getBodyMapper().getMappings();
+						if(mappings.size() == 1) {
+							AbstractCodeMapping mapping = mappings.iterator().next();
+							if(!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+								AbstractCall call1 = mapping.getFragment1().invocationCoveringEntireFragment();
+								AbstractCall call2 = mapping.getFragment2().invocationCoveringEntireFragment();
+								if(call1 != null && call2 != null && call1.getName().equals(refactoring.getExtractedOperation().getName()) &&
+										call2.getName().equals(refactoring.getExtractedOperation().getName())) {
+									discarded.add(refactoring);
+								}
+							}
+						}
+					}
+				}
+				for(ExtractOperationRefactoring refactoring : refs) {
+					for(Refactoring r : refactorings) {
+						if(r instanceof ExtractOperationRefactoring) {
+							ExtractOperationRefactoring ex = (ExtractOperationRefactoring)r;
+							if(ex.getBodyMapper().getMappings().equals(refactoring.getBodyMapper().getMappings())) {
+								duplicates.add(refactoring);
+							}
+							else if(ex.toString().equals(refactoring.toString()) &&
+									refactoring.getBodyMapper().getMappings().containsAll(ex.getBodyMapper().getMappings())) {
+								superSets.add(refactoring);
+								subSets.add(ex);
+							}
+						}
+					}
+				}
+				if(discarded.equals(refs)) {
+					discarded.clear();
+				}
+				for(ExtractOperationRefactoring refactoring : refs) {
+					if(!discarded.contains(refactoring) && !duplicates.contains(refactoring)) {
+						if(superSets.contains(refactoring)) {
+							this.refactorings.removeAll(subSets);
+						}
+						CompositeStatementObject synchronizedBlock = refactoring.extractedFromSynchronizedBlock();
+						if(synchronizedBlock != null) {
+							refactoring.getBodyMapper().getParentMapper().getNonMappedInnerNodesT1().remove(synchronizedBlock);
+						}
+						refactorings.add(refactoring);
+						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+						if(operationBodyMapper.getOperation1() != null &&
+								operationBodyMapper.getOperation1().getNestedOperations().size() > 0 &&
+								operationBodyMapper.getOperation2() != null &&
+								mapper.getOperation2().getNestedOperations().size() < operationBodyMapper.getOperation1().getNestedOperations().size() &&
+								addedOperation.getNestedOperations().size() > 0) {
+							nestedFunctionMappers.addAll(processNestedOperationsForExtractedMethod(operationBodyMapper.getOperation1(), addedOperation));
+						}
+						extractedOperationMappers.add(operationBodyMapper);
+						mapper.addChildMapper(operationBodyMapper);
+						if(mapper.getChildMappers().size() == 1 && mapper.getContainer1().getJavadoc() != null && mapper.getContainer2().getJavadoc() != null) {
+							UMLOperationDiff signatureDiff = new UMLOperationDiff(operationBodyMapper);
+							mapper.updateJavadocDiff(new UMLJavadocDiff(mapper.getContainer1().getJavadoc(), mapper.getContainer2().getJavadoc(), signatureDiff));
+						}
+						operationsToBeRemoved.add(addedOperation);
+					}
+				}
+			}
+		}
+		operationBodyMapperList.addAll(nestedFunctionMappers);
+		if(extractedOperationMappers.size() > 0) {
+			MappingOptimizer optimizer = new MappingOptimizer(this);
+			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+				optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
+			}
+		}
+		Set<UMLOperationBodyMapper> zeroMappingMappers = new LinkedHashSet<UMLOperationBodyMapper>();
+		for(UMLOperationBodyMapper operationBodyMapper : extractedOperationMappers) {
+			if(operationBodyMapper.getMappings().size() == 0) {
+				operationsToBeRemoved.remove(operationBodyMapper.getContainer2());
+				zeroMappingMappers.add(operationBodyMapper);
+			}
+			else {
+				processMapperRefactorings(operationBodyMapper, refactorings);
+			}
+		}
+		addedOperations.removeAll(operationsToBeRemoved);
+		extractedOperationMappers.removeAll(zeroMappingMappers);
+		return extractedOperationMappers;
+	}
+
+	private Set<UMLOperationBodyMapper> processNestedOperationsForExtractedMethod(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
+		Set<UMLOperationBodyMapper> nestedMappers = new LinkedHashSet<>();
+		for(UMLOperation operation : operation1.getNestedOperations()) {
+			UMLOperation operationWithTheSameSignature = operation2.nestedOperationWithTheSameSignatureIgnoringChangedTypes(operation);
+			if(removedOperations.contains(operation) && operationWithTheSameSignature != null && !mapperListContainsOperation(operation, operationWithTheSameSignature)) {
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation, operationWithTheSameSignature, this);
+				nestedMappers.add(mapper);
+			}
+		}
+		return nestedMappers;
+	}
 }

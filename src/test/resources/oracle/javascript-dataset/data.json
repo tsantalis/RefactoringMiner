@@ -49,6 +49,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable legendOpts : Inferred to chartInstance : Inferred in method public createNewLegendAndAttach(chartInstance, legendOpts) from class core.legend",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable titleOpts : Inferred to chartInstance : Inferred in method public createNewTitleBlockAndAttach(chartInstance, titleOpts) from class core.title",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -239,6 +253,20 @@
     "refactorings": [{
         "type": "Rename Method",
         "description": "Rename Method public inLabelRange(mouseX) renamed to public xRange(mouseX) in class element.point",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter mouseY : Inferred in method public inLabelRange(mouseX, mouseY) from class element.rectangle",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable inRange : Inferred in method public inLabelRange(mouseX, mouseY) from class element.rectangle",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -192,6 +192,10 @@ public class UMLOperationDiff {
 		return parameterListDiff.getParameterDiffList();
 	}
 
+	public Set<Pair<VariableDeclaration, VariableDeclaration>> getCommonParameters() {
+		return parameterListDiff.getCommonParameters();
+	}
+
 	public VariableDeclarationContainer getRemovedOperation() {
 		return removedOperation;
 	}

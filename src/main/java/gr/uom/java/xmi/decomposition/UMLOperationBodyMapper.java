@@ -4661,6 +4661,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public Set<Pair<VariableDeclaration, VariableDeclaration>> getMatchedVariables() {
+		if(matchedVariables.isEmpty() && container1.hasEmptyBody() && container2.hasEmptyBody() && operationSignatureDiff != null) {
+			return operationSignatureDiff.getCommonParameters();
+		}
 		return matchedVariables;
 	}
 

@@ -339,6 +339,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OF_KEYWORD, LANG2.OF_KEYWORD);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -360,6 +364,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONST_KEYWORD, LANG2.CONST_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.VAR_KEYWORD, LANG2.VAR_KEYWORD);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }

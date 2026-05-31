@@ -3393,7 +3393,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, true, mappings);
 				if(refactoringCount < mapping.getRefactorings().size()) {
 					for(Refactoring newRefactoring : mapping.getRefactorings()) {
-						if(newRefactoring instanceof ExtractVariableRefactoring newExtractVariableRefactoring && mapper.getParentMapper() != null) {
+						if(newRefactoring instanceof ExtractVariableRefactoring newExtractVariableRefactoring && mapper.getParentMapper() != null &&
+								mapper.getOperationInvocation() != null && mapper.getOperationInvocation().arguments().contains(newExtractVariableRefactoring.getVariableDeclaration().getVariableName())) {
 							newExtractVariableRefactoring.updateOperationAfter(mapper.getParentMapper().getContainer2());
 						}
 						if(!this.refactorings.contains(newRefactoring)) {

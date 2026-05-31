@@ -319,4 +319,104 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 11,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "35dcfe00b1ae7199f8ed6c3748a72f4700c9876d",
+    "url": "https://github.com/chartjs/Chart.js/commit/35dcfe00b1ae7199f8ed6c3748a72f4700c9876d",
+    "author": "tredston",
+    "time": "4/2/17 08:49 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method public getLabelWidth(label) extracted from public buildTicks() in class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public getLabelCapacity(exampleTime) extracted from public buildTicks() in class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public getPixelForOffset(offset) extracted from public getPixelForValue(value, index, datasetIndex) in class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Method",
+        "description": "Move Method public parseTime(label) from class scale.time to public parseTime(axis, label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter axis : Inferred in method public parseTime(axis, label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable ticks : Inferred in method public getLabelWidth(label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable timeOpts : Inferred in method public parseTime(axis, label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable format : Inferred in method public parseTime(axis, label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable tempFirstLabel : Inferred to exampleLabel : Inferred in method public getLabelCapacity(exampleTime) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable chartData : Inferred in method public determineDataLimits() from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable roundedStart : Inferred to minTimestamp : Inferred in method public buildTicks() from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable leadingUnitBuffer : Inferred to maxTimestamp : Inferred in method public buildTicks() from class scale.time",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable timeOpts : Inferred in method public getLabelWidth(label) from class scale.time",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

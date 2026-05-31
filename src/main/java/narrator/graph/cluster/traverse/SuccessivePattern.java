@@ -73,34 +73,20 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
 
     @Override
     public String base(Cluster cluster) {
-        List<Node> sequence = getSequence(cluster);
-
         StringBuilder prompt = new StringBuilder();
-        prompt.append("# Subject:\n```\n");
 
+        prompt.append("# Subject:\n```\n");
+        List<Node> sequence = getSequence(cluster);
         List<String> basePrompts = sequence.stream()
                 .map(node -> node.base(cluster))
                 .toList();
         prompt.append(String.join("\n---\n", basePrompts));
         prompt.append("\n```");
 
-        // Add semantic context — pick the smallest tree (most nested context)
-        Node smallestContextNode = null;
-        int smallestTreeSize = Integer.MAX_VALUE;
-        for (Node seqNode : sequence) {
-            List<Node> semanticContexts = seqNode.getSemanticContexts(cluster);
-            for (Node ctx : semanticContexts) {
-                int treeSize = ctx.getTree().getLength();
-                if (treeSize < smallestTreeSize) {
-                    smallestTreeSize = treeSize;
-                    smallestContextNode = ctx;
-                }
-            }
-        }
-
-        if (smallestContextNode != null) {
+        Node semanticContext = sequence.get(0).getSemanticContexts(cluster).get(0);
+        if (semanticContext != null) {
             prompt.append("\n# Surrounding:\n```\n");
-            prompt.append(smallestContextNode.mapping(cluster));
+            prompt.append(semanticContext.mapping(cluster));
             prompt.append("\n```\n");
         }
 

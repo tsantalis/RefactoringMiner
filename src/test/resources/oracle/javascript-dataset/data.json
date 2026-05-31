@@ -419,4 +419,27 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 12,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "447ca40a7f8baa2ec55f3388e02cabcfe8cbfadc",
+    "url": "https://github.com/chartjs/Chart.js/commit/447ca40a7f8baa2ec55f3388e02cabcfe8cbfadc",
+    "author": "jcopperfield",
+    "time": "11/14/17 04:33 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method private getStackCount(last) renamed to private _getStacks(last) in class controller.bar",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter name : Inferred in method private getStackIndex(datasetIndex, name) from class controller.bar",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

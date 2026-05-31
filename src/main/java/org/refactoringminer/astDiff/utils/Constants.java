@@ -42,6 +42,7 @@ public class Constants {
 			SWITCH_CASE = "";
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "raise_statement";
+			EMPTY_STATEMENT = "empty_statement";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -77,6 +78,7 @@ public class Constants {
 			SWITCH_CASE = "";
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "throw_expression";
+			EMPTY_STATEMENT = "empty_statement";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -112,6 +114,7 @@ public class Constants {
 			SWITCH_CASE = "switch_case";
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "throw_statement";
+			EMPTY_STATEMENT = "empty_statement";
 		}
 		else {
 			// Java values as default
@@ -148,6 +151,7 @@ public class Constants {
 			SWITCH_CASE = "SwitchCase";
 			ASSIGNMENT = "Assignment";
 			THROW_STATEMENT = "ThrowStatement";
+			EMPTY_STATEMENT = "EmptyStatement";
 		}
 	}
 
@@ -219,7 +223,7 @@ public class Constants {
     public final String CONSTRUCTOR_INVOCATION;
     public final String CONTINUE_STATEMENT = "ContinueStatement";
     public final String DO_STATEMENT;
-    public final String EMPTY_STATEMENT = "EmptyStatement";
+    public final String EMPTY_STATEMENT;
     public final String ENHANCED_FOR_STATEMENT;
     public final String FOR_STATEMENT;
     public final String IF_STATEMENT;

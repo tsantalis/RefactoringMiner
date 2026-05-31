@@ -49,7 +49,10 @@ public class Narrator {
         
         switch (grainLevel) {
             case LEAF -> narrateLeaf(rootPattern, visited, result);
-            case USAGE_CHAIN_ROOT -> narrateUsageChainRoot(rootPattern, visited, result);
+            case USAGE_CHAIN_ROOT -> {
+                Set<UsagePattern> roots = findUsageRoots(rootPattern);
+                narrateUsageChainRoot(rootPattern, visited, result, roots);
+            }
             case SEMANTIC_LEAF -> narrateSemanticLeaf(rootPattern, visited, result);
             case METHOD, CLASS, FILE -> narrateComponentGrain(rootPattern, visited, result, grainLevel);
         }
@@ -79,13 +82,11 @@ public class Narrator {
         }
     }
 
-    private void narrateUsageChainRoot(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
+    private void narrateUsageChainRoot(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, Set<UsagePattern> roots) {
         if (visited.contains(p)) return;
         visited.add(p);
 
-        if (p instanceof UsagePattern usage) {
-            markDescendantsAsVisited(usage, visited);
-        } else if (p instanceof AggregatorPattern agg) {
+        if (p instanceof AggregatorPattern agg) {
             List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
             sortedSubs.sort((s1, s2) -> {
                 if (s1.dependsOn(s2)) return 1;
@@ -94,24 +95,52 @@ public class Narrator {
             });
 
             for (TraversalPattern sub : sortedSubs) {
-                narrateUsageChainRoot(sub, visited, result);
+                narrateUsageChainRoot(sub, visited, result, roots);
             }
         }
 
-        if (p instanceof Leaf) {
+        if (p instanceof UsagePattern usage) {
+            if (roots.contains(usage)) {
+                result.add(usage);
+            }
+        } else if (p instanceof Leaf) {
             result.add(p);
         }
     }
 
     
-    private void markDescendantsAsVisited(AggregatorPattern agg, Set<TraversalPattern> visited) {
-        for (TraversalPattern sub : agg.subs) {
-            if (visited.add(sub)) {
-                if (sub instanceof AggregatorPattern subAgg) {
-                    markDescendantsAsVisited(subAgg, visited);
-                }
+    private Set<UsagePattern> findUsageRoots(TraversalPattern root) {
+        Set<UsagePattern> allUsages = new HashSet<>();
+        collectUsages(root, allUsages);
+        
+        Set<UsagePattern> roots = new HashSet<>();
+        for (UsagePattern usage : allUsages) {
+            if (!isDescendantOfUsage(usage, allUsages)) {
+                roots.add(usage);
             }
         }
+        return roots;
+    }
+
+    private void collectUsages(TraversalPattern p, Set<UsagePattern> usages) {
+        if (p instanceof UsagePattern usage) {
+            usages.add(usage);
+        }
+        if (p instanceof AggregatorPattern agg) {
+            for (TraversalPattern sub : agg.subs) {
+                collectUsages(sub, usages);
+            }
+        }
+    }
+
+    private boolean isDescendantOfUsage(UsagePattern p, Set<UsagePattern> allUsages) {
+        for (UsagePattern other : allUsages) {
+            if (p == other) continue;
+            if (p.dependsOn(other)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void narrateSemanticLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {

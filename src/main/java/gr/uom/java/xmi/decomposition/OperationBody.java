@@ -90,6 +90,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSpreadElement;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstBigInt;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
@@ -1635,6 +1636,26 @@ public class OperationBody {
 				ISwc4jAstAssignTarget assignTarget = assignment.getLeft();
 				String assignTargetString = fileContent.substring(assignTarget.getSpan().getStart(), assignTarget.getSpan().getEnd());
 				String name = functionExpr.getIdent().isPresent() ? functionExpr.getIdent().get().getSym() : assignTargetString;
+				String className = container.getClassName();
+				UMLOperation nested = new UMLOperation(name, location, className);
+				nested.setVisibility(Visibility.PUBLIC);
+				Swc4jAstFunction function = functionExpr.getFunction();
+				TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, nested, comments);
+				if(container instanceof UMLOperation) {
+					((UMLOperation)container).addNestedOperation(nested);
+				}
+				else if(container instanceof LambdaExpressionObject lambda) {
+					if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+						((UMLOperation)lambda.getOwner()).addNestedOperation(nested);
+					}
+				}
+				else if(container instanceof ModuleContainer) {
+					((ModuleContainer)container).addNestedOperation(nested);
+				}
+			}
+			else if(expressionStatement.getExpr() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstParenExpr parenExpr && parenExpr.getExpr() instanceof Swc4jAstFnExpr functionExpr) {
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, functionExpr.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+				String name = functionExpr.getIdent().isPresent() ? functionExpr.getIdent().get().getSym() : container.getName();
 				String className = container.getClassName();
 				UMLOperation nested = new UMLOperation(name, location, className);
 				nested.setVisibility(Visibility.PUBLIC);

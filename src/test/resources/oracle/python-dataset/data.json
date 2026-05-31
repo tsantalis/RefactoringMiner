@@ -4944,9 +4944,9 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable output_size in method protected _build(inputs, sequence_length, initial_state, time_major, mode, return_cell_output, return_output_size, kwargs) from class modules.encoders.rnn_encoders.UnidirectionalRNNEncoder",
+        "description": "Extract Variable output_size in method protected _apply_rnn_encoder_output_layer(output_layer, time_major, hparams, mode, cell_outputs, cell_output_size) from class modules.encoders.rnn_encoders.__module__",
         "comment": "<p>double variable assignment on existing single variable assignment</p><div><div>outputs = nest.map_structure(map_func, cell_outputs) --&gt;<br /><div><div>outputs, output_size = _apply_rnn_encoder_output_layer(</div><div>self._output_layer, time_major, self._output_layer_hparams,</div><div>mode, cell_outputs, self._cell.output_size)</div></div></div></div>",
-        "validation": "CTP",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }],

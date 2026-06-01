@@ -149,12 +149,34 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 						}
 					}
 				}
+				else if(container instanceof UMLOperation operation) {
+					for(UMLImport imp : operation.getNestedImports()) {
+						if(imp.getName().endsWith(name)) {
+							// the identifier is a function name
+							// Direct Method Passing (Point-Free Style)
+							OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+							methodInvocations.add(invocation);
+							break;
+						}
+					}
+				}
 			}
 		}
 		else if(node.getParent() instanceof Swc4jAstKeyValueProp prop && prop.getValue().equals(node)) {
 			String name = node.getSym();
 			if(container instanceof ModuleContainer module) {
 				for(UMLOperation op : module.getNestedOperations()) {
+					if(op.getName().equals(name)) {
+						// the identifier is a function name
+						// Direct Method Passing (Point-Free Style)
+						OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+						methodInvocations.add(invocation);
+						break;
+					}
+				}
+			}
+			else if(container instanceof UMLOperation operation) {
+				for(UMLOperation op : operation.getNestedOperations()) {
 					if(op.getName().equals(name)) {
 						// the identifier is a function name
 						// Direct Method Passing (Point-Free Style)

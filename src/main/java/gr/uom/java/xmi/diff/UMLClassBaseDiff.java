@@ -1492,9 +1492,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
 		Set<UMLOperationBodyMapper> parentMappersToBeOptimized = new LinkedHashSet<UMLOperationBodyMapper>();
+		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
+		allAddedOperations.addAll(getAddedNestedOperations());
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			if((!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty()) && mapper.getChildMappers().size() == 0) {
-				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, this, modelDiff, true);
+				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, allAddedOperations, this, modelDiff, true);
 				List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
 				for(UMLOperation addedOperation : sortedAddedOperations) {
 					List<ExtractOperationRefactoring> refs = detection.check(addedOperation);

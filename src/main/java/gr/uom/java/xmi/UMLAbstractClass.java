@@ -97,6 +97,10 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
         }
 	}
 
+	public Constants getLANG() {
+		return LANG;
+	}
+
 	public void addCompanion(UMLClass companion) {
 		this.companionObjects.add(companion);
 	}

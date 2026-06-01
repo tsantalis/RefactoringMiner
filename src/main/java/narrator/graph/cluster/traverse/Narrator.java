@@ -1,6 +1,7 @@
 package narrator.graph.cluster.traverse;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import narrator.graph.Node;
 import narrator.graph.NodeType;
@@ -48,67 +49,27 @@ public class Narrator {
         Set<TraversalPattern> visited = new HashSet<>();
         
         switch (grainLevel) {
-            case LEAF -> narrateLeaf(rootPattern, visited, result);
+            case LEAF -> traverse(rootPattern, visited, result, pp -> false, pp -> pp instanceof Leaf);
             case USAGE_CHAIN_ROOT -> {
                 Set<UsagePattern> roots = findUsageRoots(rootPattern);
-                narrateUsageChainRoot(rootPattern, visited, result, roots);
+                traverse(rootPattern, visited, result, pp -> false, pp -> {
+                    if (pp instanceof UsagePattern usage) {
+                        return roots.contains(usage);
+                    }
+                    return pp instanceof Leaf;
+                });
             }
-            case SEMANTIC_LEAF -> narrateSemanticLeaf(rootPattern, visited, result);
-            case METHOD, CLASS, FILE -> narrateComponentGrain(rootPattern, visited, result, grainLevel);
+            case SEMANTIC_LEAF -> traverse(rootPattern, visited, result, 
+                pp -> pp instanceof TraversalComponent tc && isSemanticLeaf(tc), 
+                pp -> pp instanceof Leaf);
+            case METHOD, CLASS, FILE -> traverse(rootPattern, visited, result, 
+                pp -> pp instanceof TraversalComponent tc && matchesGrain(tc, grainLevel), 
+                pp -> pp instanceof Leaf);
         }
         
         return result;
     }
 
-    private void narrateLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
-        if (visited.contains(p)) return;
-        visited.add(p);
-
-        if (p instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
-            sortedSubs.sort((s1, s2) -> {
-                if (s1.dependsOn(s2)) return 1;
-                if (s2.dependsOn(s1)) return -1;
-                return Integer.compare(s2.getDepth(), s1.getDepth());
-            });
-
-            for (TraversalPattern sub : sortedSubs) {
-                narrateLeaf(sub, visited, result);
-            }
-        }
-
-        if (p instanceof Leaf) {
-            result.add(p);
-        }
-    }
-
-    private void narrateUsageChainRoot(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, Set<UsagePattern> roots) {
-        if (visited.contains(p)) return;
-        visited.add(p);
-
-        if (p instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
-            sortedSubs.sort((s1, s2) -> {
-                if (s1.dependsOn(s2)) return 1;
-                if (s2.dependsOn(s1)) return -1;
-                return Integer.compare(s2.getDepth(), s1.getDepth());
-            });
-
-            for (TraversalPattern sub : sortedSubs) {
-                narrateUsageChainRoot(sub, visited, result, roots);
-            }
-        }
-
-        if (p instanceof UsagePattern usage) {
-            if (roots.contains(usage)) {
-                result.add(usage);
-            }
-        } else if (p instanceof Leaf) {
-            result.add(p);
-        }
-    }
-
-    
     private Set<UsagePattern> findUsageRoots(TraversalPattern root) {
         Set<UsagePattern> allUsages = new HashSet<>();
         collectUsages(root, allUsages);
@@ -143,33 +104,6 @@ public class Narrator {
         return false;
     }
 
-    private void narrateSemanticLeaf(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result) {
-        if (visited.contains(p)) return;
-        visited.add(p);
-
-        if (p instanceof TraversalComponent tc && isSemanticLeaf(tc)) {
-            result.add(p);
-            return;
-        }
-
-        if (p instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
-            sortedSubs.sort((s1, s2) -> {
-                if (s1.dependsOn(s2)) return 1;
-                if (s2.dependsOn(s1)) return -1;
-                return Integer.compare(s2.getDepth(), s1.getDepth());
-            });
-
-            for (TraversalPattern sub : sortedSubs) {
-                narrateSemanticLeaf(sub, visited, result);
-            }
-        }
-
-        if (p instanceof Leaf) {
-            result.add(p);
-        }
-    }
-
     public boolean isSemanticLeaf(TraversalComponent tc) {
         if (tc.getMergeContexts() == null || tc.getMergeContexts().isEmpty()) return false;
 
@@ -190,33 +124,6 @@ public class Narrator {
         return true;
     }
 
-    private void narrateComponentGrain(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, GrainLevel grainLevel) {
-        if (visited.contains(p)) return;
-        visited.add(p);
-
-        if (p instanceof TraversalComponent tc && matchesGrain(tc, grainLevel)) {
-            result.add(p);
-            return;
-        }
-
-        if (p instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
-            sortedSubs.sort((s1, s2) -> {
-                if (s1.dependsOn(s2)) return 1;
-                if (s2.dependsOn(s1)) return -1;
-                return Integer.compare(s2.getDepth(), s1.getDepth());
-            });
-
-            for (TraversalPattern sub : sortedSubs) {
-                narrateComponentGrain(sub, visited, result, grainLevel);
-            }
-        }
-
-        if (p instanceof Leaf) {
-            result.add(p);
-        }
-    }
-
     public boolean matchesGrain(TraversalComponent tc, GrainLevel grainLevel) {
         Set<String> allowedTypes = GRAIN_LEVEL_TYPES.get(grainLevel);
         if (allowedTypes == null || tc.getMergeContexts() == null) return false;
@@ -229,5 +136,36 @@ public class Narrator {
             }
         }
         return false;
+    }
+
+    private void traverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, Predicate<TraversalPattern> stopPredicate, Predicate<TraversalPattern> leafPredicate) {
+        if (visited.contains(p)) return;
+        visited.add(p);
+
+        if (stopPredicate.test(p)) {
+            result.add(p);
+            return;
+        }
+
+        if (p instanceof AggregatorPattern agg) {
+            List<TraversalPattern> sortedSubs = sortSubs(agg.subs);
+            for (TraversalPattern sub : sortedSubs) {
+                traverse(sub, visited, result, stopPredicate, leafPredicate);
+            }
+        }
+
+        if (leafPredicate.test(p)) {
+            result.add(p);
+        }
+    }
+
+    private List<TraversalPattern> sortSubs(Collection<TraversalPattern> subs) {
+        List<TraversalPattern> sorted = new ArrayList<>(subs);
+        sorted.sort((s1, s2) -> {
+            if (s1.dependsOn(s2)) return 1;
+            if (s2.dependsOn(s1)) return -1;
+            return Integer.compare(s2.getDepth(), s1.getDepth());
+        });
+        return sorted;
     }
 }

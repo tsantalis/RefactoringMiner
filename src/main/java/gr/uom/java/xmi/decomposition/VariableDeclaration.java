@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -116,6 +118,36 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private List<UMLModifier> modifiers;
 	private String actualSignature;
 	private final Constants LANG;
+
+	public VariableDeclaration(String sourceFolder, String filePath, IASTDeclarator declarator, UMLType type,
+			boolean attribute, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.variableName = declarator.getName().toString();
+		this.type = type;
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, declarator,
+				attribute ? CodeElementType.FIELD_DECLARATION : CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.isAttribute = attribute;
+		this.actualSignature = declarator.getRawSignature();
+		this.scope = new VariableScope(filePath, locationInfo.getStartOffset(), locationInfo.getEndOffset());
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, UMLType type,
+			boolean varargs, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		IASTDeclarator declarator = parameter.getDeclarator();
+		this.variableName = declarator != null ? declarator.getName().toString() : "";
+		this.type = type;
+		this.varargsParameter = varargs;
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, parameter,
+				CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.isParameter = true;
+		this.actualSignature = parameter.getRawSignature();
+		this.scope = new VariableScope(filePath, locationInfo.getStartOffset(), locationInfo.getEndOffset());
+	}
 
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,
 							   LangSingleVariableDeclaration param, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {

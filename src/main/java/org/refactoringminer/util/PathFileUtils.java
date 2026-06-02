@@ -4,7 +4,7 @@ import gr.uom.java.xmi.Constants;
 
 public class PathFileUtils {
     public static boolean isSupportedFile(String path){
-        return isJavaFile(path) || isPythonFile(path) || isKotlinFile(path) || isTypeScriptFile(path);
+        return isJavaFile(path) || isPythonFile(path) || isKotlinFile(path) || isTypeScriptFile(path) || isCFile(path) || isCppFile(path);
     }
 
     public static boolean isJavaFile(String path){
@@ -25,6 +25,14 @@ public class PathFileUtils {
 
     public static boolean isJavaScriptFile(String path){
         return path.endsWith(".js");
+    }
+
+    public static boolean isCFile(String path){
+        return path.endsWith(".c");
+    }
+
+    public static boolean isCppFile(String path){
+        return path.endsWith(".cpp") || path.endsWith(".cc") || path.endsWith(".cxx") || path.endsWith(".h") || path.endsWith(".hpp");
     }
 
     public static boolean isLangSupportedFile(String path){

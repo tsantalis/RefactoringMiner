@@ -2,6 +2,8 @@ package gr.uom.java.xmi;
 
 import java.util.List;
 
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
@@ -194,6 +196,42 @@ public class LocationInfo {
 		else {
 			this.endLine = (int) (this.startLine + lines - 1);
 		}
+	}
+
+	public LocationInfo(String sourceFolder, String filePath, IASTNode node, CodeElementType codeElementType, String fileContent) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		// CDT exposes offsets and line numbers through IASTFileLocation, but not columns.
+		IASTFileLocation fileLocation = node.getFileLocation();
+		if(fileLocation != null) {
+			this.startOffset = fileLocation.getNodeOffset();
+			this.length = fileLocation.getNodeLength();
+			this.endOffset = startOffset + length;
+			this.startLine = fileLocation.getStartingLineNumber();
+			this.endLine = fileLocation.getEndingLineNumber();
+			// Columns are derived from the original file content so CodeRange remains UI-friendly.
+			this.startColumn = computeColumn(fileContent, startOffset);
+			this.endColumn = computeColumn(fileContent, Math.max(startOffset, endOffset - 1));
+			this.compilationUnitLength = computeCompilationUnitLength(fileContent);
+		}
+	}
+
+	private int computeColumn(String fileContent, int offset) {
+		if(fileContent == null || fileContent.isEmpty() || offset < 0) {
+			return 0;
+		}
+		int safeOffset = Math.min(offset, fileContent.length());
+		// Columns are 1-based: offset right after a newline becomes column 1.
+		int previousNewLine = fileContent.lastIndexOf('\n', Math.max(0, safeOffset - 1));
+		return safeOffset - previousNewLine;
+	}
+
+	private int computeCompilationUnitLength(String fileContent) {
+		if(fileContent == null || fileContent.isEmpty()) {
+			return 0;
+		}
+		return (int) fileContent.lines().count();
 	}
 
 	public String getSourceFolder() {

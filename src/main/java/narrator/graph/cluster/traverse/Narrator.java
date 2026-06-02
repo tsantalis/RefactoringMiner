@@ -59,11 +59,14 @@ public class Narrator {
                     return pp instanceof Leaf;
                 });
             }
-            case SEMANTIC_LEAF -> traverse(rootPattern, visited, result, 
-                pp -> pp instanceof TraversalComponent tc && isSemanticLeaf(tc), 
+            case SEMANTIC_LEAF -> traverse(rootPattern, visited, result,
+                pp -> pp instanceof TraversalComponent tc && isSemanticLeaf(tc),
                 pp -> pp instanceof Leaf);
-            case METHOD, CLASS, FILE -> traverse(rootPattern, visited, result, 
-                pp -> pp instanceof TraversalComponent tc && matchesGrain(tc, grainLevel), 
+            case SEMANTIC_ROOT -> traverse(rootPattern, visited, result,
+                pp -> pp instanceof TraversalComponent tc && isSemanticRoot(tc),
+                pp -> pp instanceof Leaf);
+            case METHOD, CLASS, FILE -> traverse(rootPattern, visited, result,
+                pp -> pp instanceof TraversalComponent tc && matchesGrain(tc, grainLevel),
                 pp -> pp instanceof Leaf);
         }
         
@@ -119,6 +122,18 @@ public class Narrator {
 
         for (TraversalPattern sub : tc.subs) {
             if (!(sub instanceof Leaf)) return false;
+        }
+
+        return true;
+    }
+
+    public boolean isSemanticRoot(TraversalComponent tc) {
+        if (tc.getMergeContexts() == null || tc.getMergeContexts().isEmpty()) return false;
+
+        for (Node node : tc.getMergeContexts()) {
+            if (node.getNodeType() != NodeType.SEMANTIC_CONTEXT) {
+                return false;
+            }
         }
 
         return true;

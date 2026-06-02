@@ -5027,7 +5027,8 @@ public abstract class UMLAbstractClassDiff {
 		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
 		allAddedOperations.addAll(addedNestedOperations);
 		allAddedOperations.addAll(outerClassAddedOperations);
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs()) {
+		List<UMLOperationBodyMapper> allMappers = getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs();
+		for(UMLOperationBodyMapper mapper : allMappers) {
 			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, allAddedOperations, this, modelDiff);
 			List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
 			for(UMLOperation addedOperation : sortedAddedOperations) {
@@ -5102,7 +5103,7 @@ public abstract class UMLAbstractClassDiff {
 		operationBodyMapperList.addAll(nestedFunctionMappers);
 		if(extractedOperationMappers.size() > 0) {
 			MappingOptimizer optimizer = new MappingOptimizer(this);
-			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			for(UMLOperationBodyMapper mapper : allMappers) {
 				optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 			}
 		}

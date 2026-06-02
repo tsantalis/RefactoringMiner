@@ -63,6 +63,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.KotlinOperationBody;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -571,7 +572,7 @@ public class KotlinFileProcessor {
 					umlConstructor.addParameter(umlParameter);
 				}
 				if (constructor.getBodyBlockExpression() != null) {
-					OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
+					OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
 					umlConstructor.setBody(operationBody);
 				}
 				if (constructor.getDelegationCall() != null) {
@@ -749,7 +750,7 @@ public class KotlinFileProcessor {
 		distributeComments(comments, locationInfo, umlInitializer.getComments());
 		if (initializer.getBody() != null) {
 			if(initializer.getBody() instanceof KtBlockExpression block) {
-				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, block, umlInitializer, attributes, fileContent);
+				OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, block, umlInitializer, attributes, fileContent);
 				umlInitializer.setBody(operationBody);
 			}
 		}
@@ -835,11 +836,11 @@ public class KotlinFileProcessor {
 		KtExpression functionInitializer = function.getInitializer();
 		if (functionInitializer != null) {
 			if(functionInitializer instanceof KtWhenExpression whenExpression) {
-				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, whenExpression, umlOperation, attributes, fileContent);
+				OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, whenExpression, umlOperation, attributes, fileContent);
 				umlOperation.setBody(operationBody);
 			}
 			else if(functionInitializer instanceof KtIfExpression ifExpression) {
-				OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, ifExpression, umlOperation, attributes, fileContent);
+				OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, ifExpression, umlOperation, attributes, fileContent);
 				umlOperation.setBody(operationBody);
 			}
 			else {
@@ -859,7 +860,7 @@ public class KotlinFileProcessor {
 			}
 		}
 		if (function.getBodyBlockExpression() != null) {
-			OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
+			OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
 			umlOperation.setBody(operationBody);
 		}
 		int endSignatureOffset = function.getBodyBlockExpression() != null ?
@@ -1047,7 +1048,7 @@ public class KotlinFileProcessor {
 			umlOperation.setDefaultExpression(defaultExpression);
 		}
 		if (function.getBodyBlockExpression() != null) {
-			OperationBody operationBody = new OperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
+			OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
 			umlOperation.setBody(operationBody);
 		}
 		int endSignatureOffset = function.getBodyBlockExpression() != null ?

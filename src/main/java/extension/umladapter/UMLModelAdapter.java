@@ -17,6 +17,7 @@ import extension.base.LangSupportedEnum;
 import extension.umladapter.processor.UMLAdapterVariableProcessor;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.LangOperationBody;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -134,7 +135,7 @@ public class UMLModelAdapter {
         }
         if (compilationUnit.getStatements().size() > 0) {
             ModuleContainer moduleContainer = new ModuleContainer(locationInfo, moduleClass.getName());
-            OperationBody opBody = new OperationBody(
+            OperationBody opBody = new LangOperationBody(
                     compilationUnit,
                     sourceFolder,
                     filePath,
@@ -256,7 +257,7 @@ public class UMLModelAdapter {
         }
         if (typeDecl.getStatements().size() > 0) {
             ModuleContainer moduleContainer = new ModuleContainer(locationInfo, typeDecl.getName());
-            OperationBody opBody = new OperationBody(
+            OperationBody opBody = new LangOperationBody(
                     typeDecl.getRootCompilationUnit(),
                     sourceFolder,
                     filePath,
@@ -348,7 +349,7 @@ public class UMLModelAdapter {
         }
 
 
-        OperationBody opBody = new OperationBody(
+        OperationBody opBody = new LangOperationBody(
                 methodDecl.getRootCompilationUnit(),
                 sourceFolder,
                 filePath,

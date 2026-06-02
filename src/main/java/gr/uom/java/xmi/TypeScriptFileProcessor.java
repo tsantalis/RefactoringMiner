@@ -48,6 +48,7 @@ import com.github.gumtreediff.tree.TreeContext;
 import extension.umladapter.UMLAdapterUtil;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
+import gr.uom.java.xmi.decomposition.TypeScriptOperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class TypeScriptFileProcessor {
@@ -100,7 +101,7 @@ public class TypeScriptFileProcessor {
 				moduleClass.setModule(true);
 				ModuleContainer moduleContainer = new ModuleContainer(location, moduleName);
 				moduleContainer.addComments(commentList);
-				OperationBody opBody = new OperationBody(
+				OperationBody opBody = new TypeScriptOperationBody(
 						module,
 						sourceFolder,
 						filePath,
@@ -188,7 +189,7 @@ public class TypeScriptFileProcessor {
 	public static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
 			UMLOperation operation, List<UMLComment> comments) {
-		OperationBody.processComments(comments, operation);
+		TypeScriptOperationBody.processComments(comments, operation);
 		Optional<Swc4jAstTsTypeAnn> returnType = function.getReturnType();
 		if(returnType.isPresent()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);
@@ -220,7 +221,7 @@ public class TypeScriptFileProcessor {
 		}
 		Optional<Swc4jAstBlockStmt> body = function.getBody();
 		if(body.isPresent()) {
-			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
+			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
 			operation.setBody(operationBody);
 		}
 		int startSignatureOffset = function.getSpan().getStart();
@@ -236,7 +237,7 @@ public class TypeScriptFileProcessor {
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
-		OperationBody.processComments(comments, operation);
+		TypeScriptOperationBody.processComments(comments, operation);
 		operation.setVisibility(Visibility.PRIVATE);
 		for(ISwc4jAstParamOrTsParamProp param : functionDecl.getParams()) {
 			if(param instanceof Swc4jAstParam p) {
@@ -256,7 +257,7 @@ public class TypeScriptFileProcessor {
 		}
 		Optional<Swc4jAstBlockStmt> body = functionDecl.getBody();
 		if(body.isPresent()) {
-			OperationBody operationBody = new OperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
+			OperationBody operationBody = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), operation, activeVariableDeclarations, fileContent);
 			operation.setBody(operationBody);
 		}
 		int startSignatureOffset = functionDecl.getSpan().getStart();

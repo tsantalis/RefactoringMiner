@@ -80,7 +80,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			}
 		}
 		if(lambda.getBody() instanceof LangBlock) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (LangBlock)lambda.getBody(), this, activeVariableDeclarations, fileContent);
+			this.body = new LangOperationBody(cu, sourceFolder, filePath, (LangBlock)lambda.getBody(), this, activeVariableDeclarations, fileContent);
 		}
 		else if(lambda.getBody() instanceof LangExpression) {
 			for(VariableDeclaration v : parameters) {
@@ -127,7 +127,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			this.parameters.add(parameter);
 		}
 		if(lambda.getBody() instanceof Block) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)lambda.getBody(), this, activeVariableDeclarations, javaFileContent);
+			this.body = new JavaOperationBody(cu, sourceFolder, filePath, (Block)lambda.getBody(), this, activeVariableDeclarations, javaFileContent);
 		}
 		else if(lambda.getBody() instanceof Expression) {
 			for(VariableDeclaration v : parameters) {
@@ -154,7 +154,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.asString = switchCaseBody.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
 		if(switchCaseBody instanceof Block) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
+			this.body = new JavaOperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
 		}
 		else if(switchCaseBody instanceof YieldStatement) {
 			this.owner = owner;
@@ -205,7 +205,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		// TODO process parameters
 		KtBlockExpression lambdaBody = lambda.getBodyExpression();
 		if(lambdaBody != null) {
-			this.body = new OperationBody(ktFile, sourceFolder, filePath, lambdaBody, this, activeVariableDeclarations, fileContent);
+			this.body = new KotlinOperationBody(ktFile, sourceFolder, filePath, lambdaBody, this, activeVariableDeclarations, fileContent);
 		}
 	}
 
@@ -265,7 +265,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			}
 		}
 		else if(body instanceof Swc4jAstBlockStmt blockStatement) {
-			this.body = new OperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
+			this.body = new TypeScriptOperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
 		}
 	}
 

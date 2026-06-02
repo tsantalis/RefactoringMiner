@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
@@ -27,11 +26,8 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
-import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
-import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstTplElement;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
-import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
@@ -39,9 +35,7 @@ import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.ModuleContainer;
-import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLOperation;
@@ -290,7 +284,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		if(node.getProps().isEmpty()) {
 			return super.visitObjectLit(node);
 		}
-		OperationBody.createAnonymousClass(node, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		TypeScriptOperationBody.createAnonymousClass(node, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(sourceFolder, filePath, node, fileContent);
 		anonymousClassDeclarations.add(anonymousObject);
 		return super.visitObjectLit(node);

@@ -27,6 +27,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamespaceDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
+import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.model.ILanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -42,6 +43,7 @@ import com.github.gumtreediff.gen.treesitterng.CppTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
 
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import org.refactoringminer.util.PathFileUtils;
 
 public class CppFileProcessor {
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
@@ -66,6 +68,7 @@ public class CppFileProcessor {
 	public void processCppFile(String filePath, String fileContent, boolean astDiff) {
 		
 		System.out.println("Hello from CppFileProcessor: " + filePath);
+		System.out.println("Analyzing as " + (PathFileUtils.isCFile(filePath) ? "C" : "C++") + " file");
 		
 		if((fileContent.contains(FREE_MARKER_GENERATED) || fileContent.contains(FREE_MARKER_GENERATED_2) || fileContent.contains(ANTLR_GENERATED) ||
 				fileContent.contains(XTEXT_GENERATED) || fileContent.contains(LWJGL_GENERATED) || fileContent.contains(TEST_GENERATOR_GENERATED) ||
@@ -96,7 +99,8 @@ public class CppFileProcessor {
 		IScannerInfo scannerInfo = new ScannerInfo(Map.of(), new String[0]);
 		IncludeFileContentProvider includes = IncludeFileContentProvider.getEmptyFilesProvider();
 		IParserLogService log = new DefaultLogService();
-		return GPPLanguage.getDefault().getASTTranslationUnit(
+		ILanguage language = PathFileUtils.isCFile(filePath) ? GCCLanguage.getDefault() : GPPLanguage.getDefault();
+		return language.getASTTranslationUnit(
 				fileContentObj,
 				scannerInfo,
 				includes,

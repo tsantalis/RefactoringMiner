@@ -442,4 +442,55 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 13,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "4a5b5a0e7eba85ca44f658375cb0c78e6af93e5c",
+    "url": "https://github.com/chartjs/Chart.js/commit/4a5b5a0e7eba85ca44f658375cb0c78e6af93e5c",
+    "author": "simonbrunel",
+    "time": "10/16/16 09:25 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private toBeValidChart() extracted from private toBeChartOfSize() in class mockContext",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private toBeValidChart() extracted from public compare(actual, expected) in class mockContext",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter context : Inferred to context : Inferred in method public Chart.Controller(item, config, instance) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter item : Inferred in method public Chart.Controller(item, config, instance) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter context : Inferred to item : Inferred in method private Chart(item, config) from class core.module.exports",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter expected : Inferred in method public compare(actual, expected) from class mockContext",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

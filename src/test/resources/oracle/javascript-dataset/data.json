@@ -23,14 +23,14 @@
     "time": "11/25/16 07:19 AM",
     "refactorings": [{
         "type": "Extract Method",
-        "description": "Extract Method public createNewLegendAndAttach(chartInstance, legendOpts) extracted from public module.exports(Chart) in class core.legend",
+        "description": "Extract Method public createNewLegendAndAttach(chartInstance, legendOpts) extracted from public beforeInit(chartInstance) in class core.legend",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
         "type": "Extract Method",
-        "description": "Extract Method public createNewTitleBlockAndAttach(chartInstance, titleOpts) extracted from public module.exports(Chart) in class core.title",
+        "description": "Extract Method public createNewTitleBlockAndAttach(chartInstance, titleOpts) extracted from public beforeInit(chartInstance) in class core.title",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

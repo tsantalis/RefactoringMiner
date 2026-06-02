@@ -232,6 +232,20 @@ public abstract class UMLAbstractClassDiff {
 		return operationBodyMapperList;
 	}
 
+	public List<UMLOperationBodyMapper> getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs() {
+		ArrayList<UMLOperationBodyMapper> mappers = new ArrayList<>(operationBodyMapperList);
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+				for(UMLOperationBodyMapper nestedMapper : anonymousDiff.getOperationBodyMapperList()) {
+					if(nestedMapper.nonMappedElementsT1() > 0) {
+						mappers.add(nestedMapper);
+					}
+				}
+			}
+		}
+		return mappers;
+	}
+
 	public List<UMLAttributeDiff> getAttributeDiffList() {
 		return attributeDiffList;
 	}
@@ -5011,21 +5025,11 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
+		allAddedOperations.addAll(addedNestedOperations);
 		allAddedOperations.addAll(outerClassAddedOperations);
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			List<UMLOperation> nestedAddedOperations = new ArrayList<>();
-			if(mapper.getOperation1() != null && mapper.getOperation2() != null && mapper.getOperation2().getNestedOperations().size() > 0) {
-				for(UMLOperation nestedOp : mapper.getOperation2().getNestedOperations()) {
-					if(!mapper.getOperation1().getNestedOperations().contains(nestedOp)) {
-						nestedAddedOperations.add(nestedOp);
-					}
-				}
-			}
-			List<UMLOperation> finalAllAddedOperations = new ArrayList<>(allAddedOperations);
-			if(nestedAddedOperations.size() > 0) {
-				finalAllAddedOperations.addAll(nestedAddedOperations);
-			}
-			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, finalAllAddedOperations, this, modelDiff);
+		List<UMLOperationBodyMapper> allMappers = getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs();
+		for(UMLOperationBodyMapper mapper : allMappers) {
+			ExtractOperationDetection detection = new ExtractOperationDetection(mapper, allAddedOperations, this, modelDiff);
 			List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
 			for(UMLOperation addedOperation : sortedAddedOperations) {
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
@@ -5099,7 +5103,7 @@ public abstract class UMLAbstractClassDiff {
 		operationBodyMapperList.addAll(nestedFunctionMappers);
 		if(extractedOperationMappers.size() > 0) {
 			MappingOptimizer optimizer = new MappingOptimizer(this);
-			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			for(UMLOperationBodyMapper mapper : allMappers) {
 				optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 			}
 		}

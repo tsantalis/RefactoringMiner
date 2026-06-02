@@ -249,6 +249,7 @@ public class MappingOptimizer {
 			List<Boolean> callsExtractedInlinedMethod = new ArrayList<>();
 			List<Boolean> parentMappingFound = new ArrayList<>();
 			List<Boolean> parentIsContainerBody = new ArrayList<>();
+			List<Boolean> returnObjectLiteral = new ArrayList<>();
 			List<Boolean> nestedMapper = new ArrayList<>();
 			List<Boolean> identical = new ArrayList<>();
 			List<Integer> identicalStatementsForCompositeMappings = new ArrayList<>();
@@ -308,6 +309,7 @@ public class MappingOptimizer {
 					exactMappingsNestedUnderCompositeExcludingBlocks.add(0);
 					compositeChildMatchingScores.add(0.0);
 				}
+				returnObjectLiteral.add(mapping.isReturnWithObjectLiteralCoveringEntireBody());
 				callsExtractedInlinedMethod.add(mapper.containsExtractedOrInlinedOperationInvocation(mapping));
 				parentMappingFound.add(mapper.containsParentMapping(mapping));
 				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
@@ -349,6 +351,10 @@ public class MappingOptimizer {
 							break;
 						}
 					}
+					if(mapping.getFragment1().getString().endsWith(LANG1.ASSIGNMENT + r.getBefore() + LANG1.STATEMENT_TERMINATION) && mapping.getFragment2().getString().endsWith(LANG2.ASSIGNMENT + r.getAfter() + LANG2.STATEMENT_TERMINATION)) {
+						replacementFound = true;
+						break;
+					}
 				}
 				replacementCoversEntireStatement.add(replacementFound);
 				boolean containsExtractInlineVariableRefactoring = false;
@@ -383,7 +389,14 @@ public class MappingOptimizer {
 						callerToExtractedMethodHasCompositeReplacement = mappings.get(i).containsCompositeReplacement() != null;
 					}
 				}
-				if(getterCount == 0 && setterCount == 0) {
+				if(!returnObjectLiteral.contains(false)) {
+					//all statements are returning object literal and cover entire method body
+					for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
+						if(callsExtractedInlinedMethod.get(i) == false)
+							indicesToBeRemoved.add(i);
+					}
+				}
+				else if(getterCount == 0 && setterCount == 0) {
 					for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
 						if(callsExtractedInlinedMethod.get(i) == true && !callToExtractedInlinedMethodIsArgument(mappings.get(i), mappers.get(callsExtractedInlinedMethod.indexOf(false))) && mappings.get(i).containsCompositeReplacement() == null) {
 							indicesToBeRemoved.add(i);
@@ -440,6 +453,9 @@ public class MappingOptimizer {
 								mappings.get(parentMappingFound.indexOf(true)).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG2.ASSIGNMENT)) {
 							skip = true;
 							splitDeclaration = true;
+						}
+						if(parentIsContainerBody.get(i) == true && fragment2VariableDeclarations.size() > 0 && mappings.get(i).getFragment1().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG1.ASSIGNMENT)) {
+							skip = true;
 						}
 						if(!skip) {
 							indicesToBeRemoved.add(i);
@@ -512,6 +528,7 @@ public class MappingOptimizer {
 			mapperIterator = mappers.iterator();
 			int index = 0;
 			boolean atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow = 
+					returnObjectLiteral.contains(false) &&
 					atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(mappings, mappers);
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();

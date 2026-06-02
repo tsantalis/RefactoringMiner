@@ -404,6 +404,20 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		return fragment1.toString() + fragment2.toString();
 	}
 
+	public boolean isReturnWithObjectLiteralCoveringEntireBody() {
+		if(fragment1.getString().startsWith("return {") && fragment2.getString().startsWith("return {") &&
+				operation1.getBody() != null && operation2.getBody() != null &&
+				operation1.getBody().getCompositeStatement().getStatements().size() > 0 &&
+				operation2.getBody().getCompositeStatement().getStatements().size() > 0) {
+			AbstractStatement statement1 = operation1.getBody().getCompositeStatement().getStatements().get(0);
+			AbstractStatement statement2 = operation2.getBody().getCompositeStatement().getStatements().get(0);
+			if(fragment1.equals(statement1) && fragment2.equals(statement2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean isFieldAssignmentWithParameter() {
 		boolean fieldAssignmentWithParameter1 = false;
 		for(String parameterName : operation1.getParameterNameList()) {

@@ -245,7 +245,7 @@ public class OperationBody {
 	private VariableDeclarationContainer container;
 	private int bodyHashCode;
 	private List<UMLComment> comments;
-	private static final List<String> jsExtension = List.of("extend", "inherits");
+	private static final List<String> jsExtension = List.of("extend", "inherits", "register");
 
 	// constructor for module class
 	public OperationBody(LangCompilationUnit cu, String sourceFolder, String filePath, List<LangASTNode> statements, ModuleContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {

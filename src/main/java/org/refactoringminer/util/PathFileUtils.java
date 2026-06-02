@@ -55,6 +55,10 @@ public class PathFileUtils {
             return Constants.KOTLIN;
         else if (isTypeScriptFile(path))
             return Constants.TYPESCRIPT;
+        else if (isCFile(path))
+            return Constants.C;
+        else if (isCppFile(path))
+            return Constants.CPP;
         return Constants.JAVA;
     }
 }

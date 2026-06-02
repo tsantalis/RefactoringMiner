@@ -2191,11 +2191,21 @@ public class UMLModelDiff {
 				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pushDownAttribute;
 			}
+			else if(removedAttribute.getLocationInfo().getFilePath().equals(addedAttribute.getLocationInfo().getFilePath()) &&
+					!removedAttribute.getClassName().equals(addedAttribute.getClassName())) {
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
+				MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(attributeDiff);
+				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
+				return moveAttribute;
+			}
 			else if(sourceClassImportsTargetClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
 					targetClassImportsSourceClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
 					getRemovedClass(removedAttribute.getClassName()) != null) {
 				if(!initializerContainsTypeLiteral(addedAttribute, removedAttribute) && instanceAttributeMovedAlongWithMethod(addedAttribute, removedAttribute)) {
-					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList); 
+					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);
 					boolean initializerWithMethodCallReplacement = false;
 					if(attributeDiff.getInitializerMapper().isPresent()) {
 						UMLOperationBodyMapper mapper = attributeDiff.getInitializerMapper().get();

@@ -53,6 +53,7 @@ import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstComputedPropName;
@@ -560,6 +561,7 @@ public class OperationInvocation extends AbstractCall {
 		List<UMLType> parameterTypeList = operation.getParameterTypeList();
 		boolean result = this.numberOfArguments == parameterTypeList.size() ||
 				(parametersWithDefaultValue > 0 && this.numberOfArguments + parametersWithDefaultValue >= parameterTypeList.size()) ||
+				(PathFileUtils.isJavaScriptFile(getLocationInfo().getFilePath()) && this.numberOfArguments + parametersWithDefaultValue == parameterTypeList.size() - 1) ||
 				varArgsMatch(operation, lastInferredArgumentType, parameterTypeList);
 		if(result && classDiff != null) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {

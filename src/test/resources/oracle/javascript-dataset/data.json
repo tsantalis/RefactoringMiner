@@ -427,15 +427,22 @@
     "author": "jcopperfield",
     "time": "11/14/17 04:33 AM",
     "refactorings": [{
-        "type": "Rename Method",
-        "description": "Rename Method private getStackCount(last) renamed to private _getStacks(last) in class controller.bar",
+        "type": "Add Parameter",
+        "description": "Add Parameter name : Inferred in method private getStackIndex(datasetIndex, name) from class controller.bar",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Add Parameter",
-        "description": "Add Parameter name : Inferred in method private getStackIndex(datasetIndex, name) from class controller.bar",
+        "type": "Extract Method",
+        "description": "Extract Method private _getStacks(last) extracted from private getStackCount(last) in class controller.bar",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter last : Inferred in method private getStackCount(last) from class controller.bar",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

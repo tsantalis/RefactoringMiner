@@ -63,6 +63,20 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable opts : Inferred in method public beforeInit(chartInstance) from class core.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable opts : Inferred in method public beforeInit(chartInstance) from class core.title",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -301,6 +315,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable helpers : Inferred in method public module.exports(Chart) from class core.plugin",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -412,9 +433,9 @@
         "validators": null
     }, {
         "type": "Extract Variable",
-        "description": "Extract Variable timeOpts : Inferred in method public getLabelWidth(label) from class scale.time",
+        "description": "Extract Variable timeOpts : Inferred in method public buildTicks() from class scale.time",
         "comment": null,
-        "validation": "FP",
+        "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }],

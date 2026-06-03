@@ -85,7 +85,7 @@ public class TraversalPattern extends GraphWrapper {
     public boolean dependsOn(TraversalPattern p) {
         List<TraversalPattern> pNarrative = new ArrayList<>();
         Set<TraversalPattern> visited = new HashSet<>();
-        p.narratePostOrder(visited, pNarrative);
+        Narrator.traverse(p, visited, pNarrative, pp -> false, pp -> true);
         return checkDependsOn(pNarrative);
     }
 
@@ -101,21 +101,5 @@ public class TraversalPattern extends GraphWrapper {
             }
         }
         return false;
-    }
-
-    protected void narratePostOrder(Set<TraversalPattern> visited, List<TraversalPattern> result) {
-        if (visited.contains(this)) return;
-        visited.add(this);
-
-        if (this instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
-            sortedSubs.sort(Comparator.comparingInt(TraversalPattern::getDepth).reversed());
-
-            for (TraversalPattern sub : sortedSubs) {
-                sub.narratePostOrder(visited, result);
-            }
-        }
-
-        result.add(this);
     }
 }

@@ -153,7 +153,7 @@ public class Narrator {
         return false;
     }
 
-    private void traverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, Predicate<TraversalPattern> stopPredicate, Predicate<TraversalPattern> leafPredicate) {
+    public static void traverse(TraversalPattern p, Set<TraversalPattern> visited, List<TraversalPattern> result, Predicate<TraversalPattern> stopPredicate, Predicate<TraversalPattern> leafPredicate) {
         if (visited.contains(p)) return;
         visited.add(p);
 
@@ -174,7 +174,7 @@ public class Narrator {
         }
     }
 
-    private List<TraversalPattern> sortSubs(Collection<TraversalPattern> subs) {
+    public static List<TraversalPattern> sortSubs(Collection<TraversalPattern> subs) {
         List<TraversalPattern> sorted = new ArrayList<>(subs);
         sorted.sort((s1, s2) -> {
             if (s1.dependsOn(s2)) return 1;

@@ -1431,7 +1431,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(inlinedToExtracted) {
 			MappingOptimizer optimizer = new MappingOptimizer(this);
 			for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
+				int size = refactorings.size();
 				optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+				if(refactorings.size() < size) {
+					//refactoring has been removed
+					for(UMLOperationBodyMapper operationBodyMapper : inlinedOperationMappers) {
+						operationsToBeRemoved.remove(operationBodyMapper.getContainer1());
+					}
+				}
 			}
 		}
 		for(UMLOperationBodyMapper operationBodyMapper : inlinedOperationMappers) {

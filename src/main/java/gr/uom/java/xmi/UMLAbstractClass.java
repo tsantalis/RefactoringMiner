@@ -905,7 +905,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(umlClass.containsOperationWithIdenticalComments(operation) && !operation.hasTestAnnotation()) ||
 						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
-					commonOperations.add(operation);
+					if(!operation.getName().equals("module.exports"))
+						commonOperations.add(operation);
 				}
 				if(umlClass.containsOperationWithIdenticalBodyAndActualSignature(operation) || umlClass.containsSingleStatementWithRenamedCall(this, operation)) {
 					identicalOperations.add(operation);
@@ -953,7 +954,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(this.containsOperationWithIdenticalComments(operation) && !operation.hasTestAnnotation()) ||
 						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
-					commonOperations.add(operation);
+					if(!operation.getName().equals("module.exports"))
+						commonOperations.add(operation);
 				}
 				if(this.containsOperationWithIdenticalBodyAndActualSignature(operation) || this.containsSingleStatementWithRenamedCall(umlClass, operation)) {
 					identicalOperations.add(operation);
@@ -1186,7 +1188,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		for(UMLOperation operation : operations) {
 			totalOperations++;
 			if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-				commonOperations.add(operation);
+				if(!operation.getName().equals("module.exports"))
+					commonOperations.add(operation);
 			}
 			if(umlClass.containsOperationWithIdenticalBodyAndActualSignature(operation) || umlClass.containsSingleStatementWithRenamedCall(this, operation)) {
 				identicalOperations.add(operation);
@@ -1195,7 +1198,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		for(UMLOperation operation : umlClass.operations) {
 			totalOperations++;
 			if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-				commonOperations.add(operation);
+				if(!operation.getName().equals("module.exports"))
+					commonOperations.add(operation);
 			}
 			if(this.containsOperationWithIdenticalBodyAndActualSignature(operation) || this.containsSingleStatementWithRenamedCall(umlClass, operation)) {
 				identicalOperations.add(operation);

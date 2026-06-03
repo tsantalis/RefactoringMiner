@@ -26,8 +26,10 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstNumber;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstTplElement;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
@@ -111,6 +113,28 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 			}
 		}
 		return super.visitVarDeclarator(declarator);
+	}
+
+	public Swc4jAstVisitorResponse visitMemberExpr(Swc4jAstMemberExpr node) {
+		if(node.getParent() instanceof Swc4jAstMemberExpr) {
+			ISwc4jAst parent = node.getParent().getParent();
+			boolean keyValuePropParent = false;
+			while(parent != null) {
+				if(parent instanceof Swc4jAstKeyValueProp) {
+					keyValuePropParent = true;
+					break;
+				}
+				else if(parent instanceof Swc4jAstBlockStmt) {
+					break;
+				}
+				parent = parent.getParent();
+			}
+			if(!keyValuePropParent) {
+				LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.QUALIFIED_NAME, container, fileContent);
+				variables.add(name);
+			}
+		}
+		return super.visitMemberExpr(node);
 	}
 
 	public Swc4jAstVisitorResponse visitIdent(Swc4jAstIdent node) {

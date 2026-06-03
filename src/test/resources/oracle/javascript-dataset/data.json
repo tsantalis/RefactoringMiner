@@ -537,4 +537,104 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 15,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "5196e0506257c3242483c511bb558f3f96023f51",
+    "url": "https://github.com/chartjs/Chart.js/commit/5196e0506257c3242483c511bb558f3f96023f51",
+    "author": "simonbrunel",
+    "time": "6/24/17 01:28 PM",
+    "refactorings": [{
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.each(loopable, callback, self, reverse) from class core.helpers to public each(loopable, fn, thisArg, reverse) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.getValueOrDefault(value, defaultValue) from class core.helpers to public getValueOrDefault(value, defaultValue) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.clear(chart) from class core.helpers to public clear(chart) from class helpers.canvas",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.drawRoundedRectangle(ctx, x, y, width, height, radius) from class core.helpers to public roundedRect(ctx, x, y, width, height, radius) from class helpers.canvas",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.arrayEquals(a0, a1) from class core.helpers to public arrayEquals(a0, a1) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.callback(fn, args, thisArg) from class core.helpers to public callback(fn, args, thisArg) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public helpers.drawPoint(ctx, pointStyle, radius, x, y) renamed to public helpers.canvas.drawPoint(ctx, pointStyle, radius, x, y) in class helpers.canvas",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public helpers.clipArea(ctx, clipArea) renamed to public helpers.canvas.clipArea(ctx, clipArea) in class helpers.canvas",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public helpers.unclipArea(ctx) renamed to public helpers.canvas.unclipArea(ctx) in class helpers.canvas",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public helpers.lineTo(ctx, previous, target, flip) renamed to public helpers.canvas.lineTo(ctx, previous, target, flip) in class helpers.canvas",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class core.canvasHelpers.__module__ moved to helpers.canvas.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter self : Inferred to thisArg : Inferred in method public each(loopable, fn, thisArg, reverse) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter callback : Inferred to fn : Inferred in method public each(loopable, fn, thisArg, reverse) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

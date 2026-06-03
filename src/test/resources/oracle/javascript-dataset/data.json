@@ -521,4 +521,20 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 14,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "4b421a50bfa17f73ac7aa8db7d077e674dbc148d",
+    "url": "https://github.com/chartjs/Chart.js/commit/4b421a50bfa17f73ac7aa8db7d077e674dbc148d",
+    "author": "simonbrunel",
+    "time": "3/18/17 06:08 AM",
+    "refactorings": [{
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public helpers.lineTo(ctx, previous, target, flip) extracted from public draw() in class element.line & moved to class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -7851,6 +7851,16 @@ public class UMLModelDiff {
 			if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
 				return false;
 			}
+			else if(mapper.getContainer1().getName().contains(".") && !mapper.getContainer2().getName().contains(".")) {
+				String name1 = mapper.getContainer1().getName().substring(mapper.getContainer1().getName().lastIndexOf(".")+1, mapper.getContainer1().getName().length());
+				if(name1.equals(mapper.getContainer2().getName()))
+					return false;
+			}
+			else if(!mapper.getContainer1().getName().contains(".") && mapper.getContainer2().getName().contains(".")) {
+				String name2 = mapper.getContainer2().getName().substring(mapper.getContainer2().getName().lastIndexOf(".")+1, mapper.getContainer2().getName().length());
+				if(name2.equals(mapper.getContainer1().getName()))
+					return false;
+			}
 		}
 		return true;
 	}

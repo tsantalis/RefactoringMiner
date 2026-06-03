@@ -112,85 +112,38 @@ public class AggregatorPattern extends TraversalPattern {
 
     public List<Node> getMains(Cluster cluster, GrainLevel level) {
         Narrator narrator = new Narrator(this);
-        List<TraversalPattern> components = narrator.getNarrative(level);
-        
-        Set<TraversalPattern> leavesToExclude = new HashSet<>();
-        for (TraversalPattern p : components) {
-            if (p == this) break;
-            
-            if (p instanceof TraversalComponent tc) {
-                boolean isAtLevel = (level == GrainLevel.SEMANTIC_LEAF) 
-                    ? narrator.isSemanticLeaf(tc) 
-                    : (level == GrainLevel.METHOD || level == GrainLevel.CLASS || level == GrainLevel.FILE) && narrator.matchesGrain(tc, level);
-                
-                if (isAtLevel) {
-                    leavesToExclude.addAll(new Narrator(p).getNarrative(GrainLevel.LEAF));
-                }
-            }
-        }
-
         List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
         if (leaves.isEmpty()) {
             return List.of();
         }
-
+        
         Set<Node> mainsOrdered = new LinkedHashSet<>();
-        Set<Node> sidesSet = new LinkedHashSet<>();
-
         for (TraversalPattern leaf : leaves) {
-            if (leavesToExclude.contains(leaf)) continue;
-            
             for (Node main : leaf.getMains(cluster)) {
-                if (!mainsOrdered.contains(main)) {
-                    sidesSet.remove(main);
-                    mainsOrdered.add(main);
-                }
-            }
-            for (Node side : leaf.getSides(cluster)) {
-                sidesSet.add(side);
+                mainsOrdered.add(main);
             }
         }
-
+        
         return new ArrayList<>(mainsOrdered);
     }
 
     public List<Node> getSides(Cluster cluster, GrainLevel level) {
         Set<Node> mainsSet = new HashSet<>(getMains(cluster, level));
         Narrator narrator = new Narrator(this);
-        List<TraversalPattern> components = narrator.getNarrative(level);
-        
-        Set<TraversalPattern> leavesToExclude = new HashSet<>();
-        for (TraversalPattern p : components) {
-            if (p == this) break;
-            
-            if (p instanceof TraversalComponent tc) {
-                boolean isAtLevel = (level == GrainLevel.SEMANTIC_LEAF) 
-                    ? narrator.isSemanticLeaf(tc) 
-                    : (level == GrainLevel.METHOD || level == GrainLevel.CLASS || level == GrainLevel.FILE) && narrator.matchesGrain(tc, level);
-                
-                if (isAtLevel) {
-                    leavesToExclude.addAll(new Narrator(p).getNarrative(GrainLevel.LEAF));
-                }
-            }
-        }
-
         List<TraversalPattern> leaves = narrator.getNarrative(GrainLevel.LEAF);
         if (leaves.isEmpty()) {
             return List.of();
         }
-
+        
         Set<Node> sidesOrdered = new LinkedHashSet<>();
-
         for (TraversalPattern leaf : leaves) {
-            if (leavesToExclude.contains(leaf)) continue;
-            
             for (Node side : leaf.getSides(cluster)) {
                 if (!mainsSet.contains(side)) {
                     sidesOrdered.add(side);
                 }
             }
         }
-
+        
         return new ArrayList<>(sidesOrdered);
     }
 

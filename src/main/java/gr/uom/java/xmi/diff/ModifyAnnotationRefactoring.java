@@ -2,6 +2,8 @@ package gr.uom.java.xmi.diff;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public abstract class ModifyAnnotationRefactoring extends AnnotationRefactoring {
 	public abstract UMLAnnotation getAnnotationBefore();
@@ -18,9 +20,21 @@ public abstract class ModifyAnnotationRefactoring extends AnnotationRefactoring 
 		String codeElementType = codeElementType(provider);
 		sb.append(" in ").append(codeElementType).append(" ");
 		sb.append(codeElementDescription(provider));
+		String className = null;
+		if(provider instanceof VariableDeclaration) {
+			MethodLevelRefactoring methodLevelRef = (MethodLevelRefactoring)this;
+			VariableDeclarationContainer container = methodLevelRef.getOperationAfter();
+			String elementType = container.getElementType();
+			sb.append(" in " + elementType + " ");
+			sb.append(container.toQualifiedString());
+			className = container.getClassName();
+		}
+		else {
+			className = provider.getClassName();
+		}
 		if(!codeElementType.equals("class")) {
 			sb.append(" from class ");
-			sb.append(provider.getClassName());
+			sb.append(className);
 		}
 		return sb.toString();
 	}

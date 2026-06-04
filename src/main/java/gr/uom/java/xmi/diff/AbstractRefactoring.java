@@ -16,7 +16,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 	public abstract Optional<String> getTemplateParameterBefore();
 	public abstract String getTemplateParameterAfter();
 
-	private static String codeElementType(AnnotationProvider provider) {
+	protected static String codeElementType(AnnotationProvider provider) {
 		if (provider instanceof UMLEnumConstant)
 			return "enum constant";
 		else if (provider instanceof UMLAbstractClass)

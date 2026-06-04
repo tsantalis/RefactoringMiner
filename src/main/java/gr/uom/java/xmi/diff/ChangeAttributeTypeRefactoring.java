@@ -10,10 +10,10 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ChangeAttributeTypeRefactoring extends ChangeTypeRefactoring implements ReferenceBasedRefactoring {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;
@@ -32,6 +32,16 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 		this.attributeDiff = attributeDiff;
 		this.attributeReferences = attributeReferences;
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalAttribute;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return changedTypeAttribute;
 	}
 
 	public void addRelatedRefactoring(Refactoring refactoring) {
@@ -74,19 +84,6 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 	@Override
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
-		VariableDeclaration changedTypeVariableDeclaration = changedTypeAttribute.getVariableDeclaration();
-		boolean qualified = originalVariableDeclaration.equalType(changedTypeVariableDeclaration) && !originalVariableDeclaration.equalQualifiedType(changedTypeVariableDeclaration);
-		sb.append(getName()).append("\t");
-		sb.append(qualified ? originalVariableDeclaration.toQualifiedString() : originalVariableDeclaration.toString());
-		sb.append(" to ");
-		sb.append(qualified ? changedTypeVariableDeclaration.toQualifiedString() : changedTypeVariableDeclaration.toString());
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override

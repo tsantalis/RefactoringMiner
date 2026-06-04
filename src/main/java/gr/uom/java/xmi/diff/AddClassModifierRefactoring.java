@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLModifier;
 
-public class AddClassModifierRefactoring implements Refactoring {
+public class AddClassModifierRefactoring extends ModifierRefactoring implements ClassLevelRefactoring {
 	private String modifier;
 	private UMLAbstractClass classBefore;
 	private UMLAbstractClass classAfter;
@@ -23,7 +23,18 @@ public class AddClassModifierRefactoring implements Refactoring {
 		this.classAfter = classAfter;
 	}
 
-	public UMLModifier getAddedModifier() {
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return classBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return classAfter;
+	}
+
+	@Override
+	public UMLModifier getModifier() {
 		for(UMLModifier m : classAfter.getModifiers()) {
 			if(m.getKeyword().equals(modifier)) {
 				return m;
@@ -32,7 +43,8 @@ public class AddClassModifierRefactoring implements Refactoring {
 		return null;
 	}
 
-	public String getModifier() {
+	@Override
+	public String getModifierAsString() {
 		return modifier;
 	}
 
@@ -84,15 +96,6 @@ public class AddClassModifierRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getClassAfter().getLocationInfo().getFilePath(), getClassAfter().getName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(modifier);
-		sb.append(" in class ");
-		sb.append(classAfter.getName());
-		return sb.toString();
 	}
 
 	@Override

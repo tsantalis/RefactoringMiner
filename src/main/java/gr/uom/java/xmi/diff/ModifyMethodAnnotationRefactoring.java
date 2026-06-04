@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring, ModifyAnnotationRefactoring {
+public class ModifyMethodAnnotationRefactoring extends ModifyAnnotationRefactoring implements MethodLevelRefactoring {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private VariableDeclarationContainer operationBefore;
@@ -24,6 +24,16 @@ public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring
 		this.annotationAfter = annotationAfter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
 	}
 
 	@Override
@@ -94,18 +104,6 @@ public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring
 		return pairs;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotationBefore);
-		sb.append(" to ");
-		sb.append(annotationAfter);
-		sb.append(" in method ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

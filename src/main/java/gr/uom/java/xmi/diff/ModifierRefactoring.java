@@ -4,21 +4,22 @@ import org.refactoringminer.api.Refactoring;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
-import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public abstract class AnnotationRefactoring implements Refactoring {
-	public abstract UMLAnnotation getAnnotation();
+public abstract class ModifierRefactoring implements Refactoring {
+	public abstract UMLModifier getModifier();
+	public abstract String getModifierAsString();
 	public abstract AnnotationProvider getProviderBefore();
 	public abstract AnnotationProvider getProviderAfter();
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(getAnnotation());
+		sb.append(getModifierAsString());
 		AnnotationProvider provider = getName().startsWith("Remove") ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		sb.append(" in ").append(codeElementType).append(" ");

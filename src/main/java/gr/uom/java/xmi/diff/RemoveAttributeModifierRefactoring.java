@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLModifier;
 
-public class RemoveAttributeModifierRefactoring implements Refactoring {
+public class RemoveAttributeModifierRefactoring extends ModifierRefactoring implements AttributeLevelRefactoring {
 	private String modifier;
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;
@@ -24,7 +24,18 @@ public class RemoveAttributeModifierRefactoring implements Refactoring {
 		this.attributeAfter = attributeAfter;
 	}
 
-	public UMLModifier getRemovedModifier() {
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return attributeBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return attributeAfter;
+	}
+
+	@Override
+	public UMLModifier getModifier() {
 		for(UMLModifier m : attributeBefore.getVariableDeclaration().getModifiers()) {
 			if(m.getKeyword().equals(modifier)) {
 				return m;
@@ -33,7 +44,8 @@ public class RemoveAttributeModifierRefactoring implements Refactoring {
 		return null;
 	}
 
-	public String getModifier() {
+	@Override
+	public String getModifierAsString() {
 		return modifier;
 	}
 
@@ -85,22 +97,6 @@ public class RemoveAttributeModifierRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getAttributeAfter().getLocationInfo().getFilePath(), getAttributeAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(modifier);
-		if(attributeBefore instanceof UMLEnumConstant) {
-			sb.append(" in enum constant ");
-		}
-		else {
-			sb.append(" in attribute ");
-		}
-		sb.append(attributeBefore);
-		sb.append(" from class ");
-		sb.append(attributeBefore.getClassName());
-		return sb.toString();
 	}
 
 	@Override

@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
-public class RemoveClassAnnotationRefactoring implements Refactoring, ClassLevelRefactoring, AnnotationRefactoring {
+public class RemoveClassAnnotationRefactoring extends AnnotationRefactoring implements ClassLevelRefactoring {
 	private UMLAnnotation annotation;
 	private UMLAbstractClass classBefore;
 	private UMLAbstractClass classAfter;
@@ -21,6 +21,16 @@ public class RemoveClassAnnotationRefactoring implements Refactoring, ClassLevel
 		this.annotation = annotation;
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return classBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return classAfter;
 	}
 
 	@Override
@@ -81,15 +91,6 @@ public class RemoveClassAnnotationRefactoring implements Refactoring, ClassLevel
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getClassAfter().getLocationInfo().getFilePath(), getClassAfter().getName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		sb.append(" in class ");
-		sb.append(classBefore.getName());
-		return sb.toString();
 	}
 
 	@Override

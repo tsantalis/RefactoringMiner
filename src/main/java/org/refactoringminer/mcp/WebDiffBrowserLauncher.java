@@ -49,7 +49,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 		stopActiveView();
 		if (replacingSamePort) {
-			portProbe.requireAvailable(port);
+			waitForPortAvailable(port);
 		}
 
 		WebDiffView view = factory.create(diff);
@@ -88,6 +88,25 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		} catch (BindException e) {
 			throw new IllegalArgumentException("port is already in use: " + port, e);
 		}
+	}
+
+	private void waitForPortAvailable(int port) throws IOException {
+		long deadline = System.currentTimeMillis() + 5_000;
+		while (System.currentTimeMillis() < deadline) {
+			try (ServerSocket socket = new ServerSocket()) {
+				socket.setReuseAddress(true);
+				socket.bind(new InetSocketAddress(bindHost, port));
+				return;
+			} catch (BindException e) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException interrupted) {
+					Thread.currentThread().interrupt();
+					throw new IOException("interrupted while waiting for port: " + port, interrupted);
+				}
+			}
+		}
+		throw new IOException("port timed out after waiting: " + port);
 	}
 
 	private static WebDiffView defaultView(ProjectASTDiff diff) {

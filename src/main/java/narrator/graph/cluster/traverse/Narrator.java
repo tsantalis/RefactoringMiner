@@ -175,12 +175,82 @@ public class Narrator {
     }
 
     public static List<TraversalPattern> sortSubs(Collection<TraversalPattern> subs) {
-        List<TraversalPattern> sorted = new ArrayList<>(subs);
-        sorted.sort((s1, s2) -> {
-            if (s1.dependsOn(s2)) return 1;
-            if (s2.dependsOn(s1)) return -1;
-            return Integer.compare(s2.getDepth(), s1.getDepth());
-        });
-        return sorted;
+        if (subs == null || subs.isEmpty()) return Collections.emptyList();
+
+        List<TraversalPattern> subList = new ArrayList<>(subs);
+        int n = subList.size();
+        boolean[][] dependsOnMatrix = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    dependsOnMatrix[i][j] = subList.get(i).dependsOn(subList.get(j));
+                }
+            }
+        }
+
+        List<Set<Integer>> groups = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            groups.add(new HashSet<>(Collections.singletonList(i)));
+        }
+
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (int i = 0; i < groups.size(); i++) {
+                for (int j = i + 1; j < groups.size(); j++) {
+                    Set<Integer> g1 = groups.get(i);
+                    Set<Integer> g2 = groups.get(j);
+                    boolean related = false;
+                    for (int idx1 : g1) {
+                        for (int idx2 : g2) {
+                            if (dependsOnMatrix[idx1][idx2] || dependsOnMatrix[idx2][idx1]) {
+                                related = true;
+                                break;
+                            }
+                        }
+                        if (related) break;
+                    }
+                    if (related) {
+                        g1.addAll(g2);
+                        groups.remove(j);
+                        changed = true;
+                        break;
+                    }
+                }
+                if (changed) break;
+            }
+        }
+
+        class Group {
+            List<TraversalPattern> patterns;
+            int maxDepth;
+
+            Group(List<TraversalPattern> patterns) {
+                this.patterns = patterns;
+                this.maxDepth = patterns.stream().mapToInt(TraversalPattern::getDepth).max().orElse(0);
+            }
+        }
+
+        List<Group> sortedGroups = new ArrayList<>();
+        for (Set<Integer> groupIndices : groups) {
+            List<TraversalPattern> groupPatterns = new ArrayList<>();
+            for (int idx : groupIndices) {
+                groupPatterns.add(subList.get(idx));
+            }
+            groupPatterns.sort((s1, s2) -> {
+                if (s1.dependsOn(s2)) return 1;
+                if (s2.dependsOn(s1)) return -1;
+                return Integer.compare(s2.getDepth(), s1.getDepth());
+            });
+            sortedGroups.add(new Group(groupPatterns));
+        }
+
+        sortedGroups.sort((g1, g2) -> Integer.compare(g2.maxDepth, g1.maxDepth));
+
+        List<TraversalPattern> result = new ArrayList<>();
+        for (Group g : sortedGroups) {
+            result.addAll(g.patterns);
+        }
+        return result;
     }
 }

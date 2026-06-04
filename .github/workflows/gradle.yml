@@ -9,6 +9,7 @@ name: Tests
 
 on:
   push:
+    branches: [ "*" ]
   pull_request:
     branches: [ "master" ]
 
@@ -39,7 +40,7 @@ jobs:
 
     - name: Build with Gradle Wrapper
       run: |
-        if [ "${{ github.event_name }}" == 'pull_request' ] || [ -z "$OAuthToken" ]; then
+        if [ "${{ github.event_name }}" == 'pull_request' ]; then
           ./gradlew build -x javadoc -Pnotoken
         else
           ./gradlew build -x javadoc
@@ -79,3 +80,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           event-type: deploy
+
+

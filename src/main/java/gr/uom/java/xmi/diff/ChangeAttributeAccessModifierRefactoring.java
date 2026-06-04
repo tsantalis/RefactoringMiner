@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.Visibility;
 
-public class ChangeAttributeAccessModifierRefactoring implements Refactoring {
+public class ChangeAttributeAccessModifierRefactoring extends ChangeAccessModifierRefactoring implements AttributeLevelRefactoring {
 	private Visibility originalAccessModifier;
 	private Visibility changedAccessModifier;
 	private UMLAttribute attributeBefore;
@@ -25,6 +25,16 @@ public class ChangeAttributeAccessModifierRefactoring implements Refactoring {
 		this.changedAccessModifier = changedAccessModifier;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return attributeBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return attributeAfter;
 	}
 
 	public UMLModifier getOldModifier() {
@@ -101,19 +111,6 @@ public class ChangeAttributeAccessModifierRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getAttributeAfter().getLocationInfo().getFilePath(), getAttributeAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalAccessModifier);
-		sb.append(" to ");
-		sb.append(changedAccessModifier);
-		sb.append(" in attribute ");
-		sb.append(attributeAfter);
-		sb.append(" from class ");
-		sb.append(attributeAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

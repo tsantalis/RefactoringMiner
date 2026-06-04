@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.Optional;
 
 import org.refactoringminer.api.Refactoring;
 import gr.uom.java.xmi.AnnotationProvider;
@@ -12,9 +13,10 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 public abstract class AbstractRefactoring implements Refactoring {
 	public abstract AnnotationProvider getProviderBefore();
 	public abstract AnnotationProvider getProviderAfter();
-	public abstract String getTemplateParameter();
+	public abstract Optional<String> getTemplateParameterBefore();
+	public abstract String getTemplateParameterAfter();
 
-	public static String codeElementType(AnnotationProvider provider) {
+	private static String codeElementType(AnnotationProvider provider) {
 		if (provider instanceof UMLEnumConstant)
 			return "enum constant";
 		else if (provider instanceof UMLAbstractClass)
@@ -29,7 +31,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 		return "attribute";
 	}
 
-	public static String codeElementDescription(AnnotationProvider provider) {
+	private static String codeElementDescription(AnnotationProvider provider) {
 		if (provider instanceof UMLOperation op)
 			return op.toQualifiedString();
 		else if (provider instanceof UMLAbstractClass clazz)
@@ -40,7 +42,11 @@ public abstract class AbstractRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(getTemplateParameter());
+		if(getTemplateParameterBefore().isPresent()) {
+			sb.append(getTemplateParameterBefore().get());
+			sb.append(" to ");
+		}
+		sb.append(getTemplateParameterAfter());
 		AnnotationProvider provider = getName().startsWith("Remove") ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		sb.append(" in ").append(codeElementType).append(" ");

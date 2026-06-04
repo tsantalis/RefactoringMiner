@@ -9,9 +9,9 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLEnumConstant;
 
 public class ModifyAttributeAnnotationRefactoring implements Refactoring, AttributeLevelRefactoring, ModifyAnnotationRefactoring {
 	private UMLAnnotation annotationBefore;
@@ -25,6 +25,16 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring, Attrib
 		this.annotationAfter = annotationAfter;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return attributeBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return attributeAfter;
 	}
 
 	@Override
@@ -96,22 +106,9 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring, Attrib
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotationBefore);
-		sb.append(" to ");
-		sb.append(annotationAfter);
-		if(attributeAfter instanceof UMLEnumConstant) {
-			sb.append(" in enum constant ");
-		}
-		else {
-			sb.append(" in attribute ");
-		}
-		sb.append(attributeAfter);
-		sb.append(" from class ");
-		sb.append(attributeAfter.getClassName());
-		return sb.toString();
+		return toPlainString();
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

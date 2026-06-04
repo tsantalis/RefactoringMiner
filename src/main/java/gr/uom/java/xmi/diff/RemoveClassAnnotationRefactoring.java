@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
@@ -21,6 +22,16 @@ public class RemoveClassAnnotationRefactoring implements Refactoring, ClassLevel
 		this.annotation = annotation;
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return classBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return classAfter;
 	}
 
 	@Override
@@ -84,12 +95,7 @@ public class RemoveClassAnnotationRefactoring implements Refactoring, ClassLevel
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		sb.append(" in class ");
-		sb.append(classBefore.getName());
-		return sb.toString();
+		return toPlainString();
 	}
 
 	@Override

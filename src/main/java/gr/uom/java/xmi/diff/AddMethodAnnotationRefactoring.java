@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
@@ -21,6 +22,16 @@ public class AddMethodAnnotationRefactoring implements MethodLevelRefactoring, A
 		this.annotation = annotation;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
 	}
 
 	@Override
@@ -84,14 +95,7 @@ public class AddMethodAnnotationRefactoring implements MethodLevelRefactoring, A
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		sb.append(" in method ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
+		return toPlainString();
 	}
 
 	@Override

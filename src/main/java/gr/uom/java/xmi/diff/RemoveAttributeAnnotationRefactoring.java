@@ -9,9 +9,9 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLEnumConstant;
 
 public class RemoveAttributeAnnotationRefactoring implements Refactoring, AttributeLevelRefactoring, AnnotationRefactoring {
 	private UMLAnnotation annotation;
@@ -23,6 +23,16 @@ public class RemoveAttributeAnnotationRefactoring implements Refactoring, Attrib
 		this.annotation = annotation;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return attributeBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return attributeAfter;
 	}
 
 	@Override
@@ -86,19 +96,7 @@ public class RemoveAttributeAnnotationRefactoring implements Refactoring, Attrib
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		if(attributeBefore instanceof UMLEnumConstant) {
-			sb.append(" in enum constant ");
-		}
-		else {
-			sb.append(" in attribute ");
-		}
-		sb.append(attributeBefore);
-		sb.append(" from class ");
-		sb.append(attributeBefore.getClassName());
-		return sb.toString();
+		return toPlainString();
 	}
 
 	@Override

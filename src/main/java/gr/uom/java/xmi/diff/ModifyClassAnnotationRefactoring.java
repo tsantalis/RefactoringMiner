@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
@@ -24,6 +25,16 @@ public class ModifyClassAnnotationRefactoring implements Refactoring, ClassLevel
 		this.annotationAfter = annotationAfter;
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return classBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return classAfter;
 	}
 
 	@Override
@@ -95,15 +106,9 @@ public class ModifyClassAnnotationRefactoring implements Refactoring, ClassLevel
 	}
 
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotationBefore);
-		sb.append(" to ");
-		sb.append(annotationAfter);
-		sb.append(" in class ");
-		sb.append(classAfter.getName());
-		return sb.toString();
+		return toPlainString();
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

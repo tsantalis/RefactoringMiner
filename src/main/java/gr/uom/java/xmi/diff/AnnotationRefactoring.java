@@ -8,12 +8,12 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLOperation;
 
-public interface AnnotationRefactoring extends Refactoring {
-	UMLAnnotation getAnnotation();
-	AnnotationProvider getProviderBefore();
-	AnnotationProvider getProviderAfter();
+public abstract class AnnotationRefactoring implements Refactoring {
+	public abstract UMLAnnotation getAnnotation();
+	public abstract AnnotationProvider getProviderBefore();
+	public abstract AnnotationProvider getProviderAfter();
 
-	default String toPlainString() {
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
 		sb.append(getAnnotation());

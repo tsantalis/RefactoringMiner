@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
-public class ModifyClassAnnotationRefactoring implements Refactoring, ClassLevelRefactoring, ModifyAnnotationRefactoring {
+public class ModifyClassAnnotationRefactoring extends ModifyAnnotationRefactoring implements ClassLevelRefactoring {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private UMLAbstractClass classBefore;
@@ -103,10 +102,6 @@ public class ModifyClassAnnotationRefactoring implements Refactoring, ClassLevel
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getClassAfter().getLocationInfo().getFilePath(), getClassAfter().getName()));
 		return pairs;
-	}
-
-	public String toString() {
-		return toPlainString();
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring, ModifyAnnotationRefactoring {
+public class ModifyMethodAnnotationRefactoring extends ModifyAnnotationRefactoring implements MethodLevelRefactoring {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private VariableDeclarationContainer operationBefore;
@@ -102,10 +102,6 @@ public class ModifyMethodAnnotationRefactoring implements MethodLevelRefactoring
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		return toPlainString();
 	}
 
 	@Override

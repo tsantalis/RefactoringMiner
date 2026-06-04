@@ -203,9 +203,12 @@ public class LocationInfo {
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
 		// CDT exposes offsets and line numbers through IASTFileLocation, but not columns.
+		// Asks CDT for the node’s position inside the source file. 
 		IASTFileLocation fileLocation = node.getFileLocation();
 		if(fileLocation != null) {
+			// Stores where node starts
 			this.startOffset = fileLocation.getNodeOffset();
+			// Stores characters belonging to node.
 			this.length = fileLocation.getNodeLength();
 			this.endOffset = startOffset + length;
 			this.startLine = fileLocation.getStartingLineNumber();
@@ -221,9 +224,16 @@ public class LocationInfo {
 		if(fileContent == null || fileContent.isEmpty() || offset < 0) {
 			return 0;
 		}
+		// Prevent searching past the end of the source text.
 		int safeOffset = Math.min(offset, fileContent.length());
-		// Columns are 1-based: offset right after a newline becomes column 1.
-		int previousNewLine = fileContent.lastIndexOf('\n', Math.max(0, safeOffset - 1));
+
+		// Search strictly before the target offset.
+		int searchFrom = safeOffset - 1;
+		int previousLf = fileContent.lastIndexOf('\n', searchFrom);
+		int previousCr = fileContent.lastIndexOf('\r', searchFrom);
+		int previousNewLine = Math.max(previousLf, previousCr);
+
+		// Columns are 1-based.
 		return safeOffset - previousNewLine;
 	}
 

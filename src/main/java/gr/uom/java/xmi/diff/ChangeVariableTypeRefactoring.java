@@ -9,11 +9,12 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ChangeVariableTypeRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
+public class ChangeVariableTypeRefactoring extends ChangeTypeRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private VariableDeclaration originalVariable;
 	private VariableDeclaration changedTypeVariable;
 	private VariableDeclarationContainer operationBefore;
@@ -32,6 +33,16 @@ public class ChangeVariableTypeRefactoring implements MethodLevelRefactoring, Re
 		this.variableReferences = variableReferences;
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalVariable;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return changedTypeVariable;
 	}
 
 	public void addRelatedRefactoring(Refactoring refactoring) {
@@ -74,20 +85,6 @@ public class ChangeVariableTypeRefactoring implements MethodLevelRefactoring, Re
 
 	public boolean isInsideExtractedOrInlinedMethod() {
 		return insideExtractedOrInlinedMethod;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		boolean qualified = originalVariable.equalType(changedTypeVariable) && !originalVariable.equalQualifiedType(changedTypeVariable);
-		sb.append(getName()).append("\t");
-		sb.append(qualified ? originalVariable.toQualifiedString() : originalVariable.toString());
-		sb.append(" to ");
-		sb.append(qualified ? changedTypeVariable.toQualifiedString() : changedTypeVariable.toString());
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

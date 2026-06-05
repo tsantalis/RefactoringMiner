@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.refactoringminer.util.PathFileUtils;
+
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
@@ -28,6 +30,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	private UMLJavadoc javadoc;
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private final Constants LANG;
 	
 	public UMLInitializer(String name, LocationInfo locationInfo, String className) {
 		this.name = name;
@@ -36,6 +39,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 		this.comments = new ArrayList<UMLComment>();
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 		this.anonymousClassContainer = Optional.empty();
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+	}
+
+	public Constants getLANG() {
+		return LANG;
 	}
 
 	public boolean isStatic() {

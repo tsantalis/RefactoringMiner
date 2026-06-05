@@ -33,6 +33,10 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 	}
 
+	public Constants getLANG() {
+		return LANG;
+	}
+
 	public void addParameter(UMLParameter parameter) {
 		this.parameters.add(parameter);
 	}

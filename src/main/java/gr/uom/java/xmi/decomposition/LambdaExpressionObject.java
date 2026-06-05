@@ -65,11 +65,13 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private VariableDeclarationContainer owner;
 	private Optional<StatementObject> switchExpressionCase = Optional.empty();
 	private String asString;
+	private final Constants LANG;
 	
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.owner = owner;
 		this.asString = LangVisitor.stringify(lambda);
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		for (LangASTNode param : lambda.getParameters()) {
 			if(param instanceof LangSingleVariableDeclaration) {
 				VariableDeclaration parameter = new VariableDeclaration(cu, sourceFolder, filePath, (LangSingleVariableDeclaration)param, this, activeVariableDeclarations, fileContent);
@@ -105,6 +107,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.owner = owner;
 		this.asString = lambda.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.hasParentheses = lambda.hasParentheses();
 		List<org.eclipse.jdt.core.dom.VariableDeclaration> params = lambda.parameters();
 		for(org.eclipse.jdt.core.dom.VariableDeclaration param : params) {
@@ -153,6 +156,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.hasParentheses = false;
 		this.asString = switchCaseBody.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		if(switchCaseBody instanceof Block) {
 			this.body = new JavaOperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
 		}
@@ -181,6 +185,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.owner = owner;
 		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
@@ -188,6 +193,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.owner = owner;
 		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
@@ -195,6 +201,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.owner = owner;
 		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
@@ -202,6 +209,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.owner = owner;
 		this.asString = lambda.getText();
 		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		// TODO process parameters
 		KtBlockExpression lambdaBody = lambda.getBodyExpression();
 		if(lambdaBody != null) {
@@ -213,6 +221,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.owner = owner;
 		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		List<ISwc4jAstPat> params = arrowExpression.getParams();
 		for(ISwc4jAstPat param : params) {
 			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(param);
@@ -267,6 +276,10 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		else if(body instanceof Swc4jAstBlockStmt blockStatement) {
 			this.body = new TypeScriptOperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
 		}
+	}
+
+	public Constants getLANG() {
+		return LANG;
 	}
 
 	public VariableDeclarationContainer getOwner() {

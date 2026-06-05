@@ -86,6 +86,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.anonymousClassContainer = Optional.empty();
     }
 
+	public Constants getLANG() {
+		return LANG;
+	}
+
 	public void addNestedOperation(UMLOperation operation) {
 		nestedOperations.add(operation);
 	}

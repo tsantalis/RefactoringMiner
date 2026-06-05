@@ -153,6 +153,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider, Comm
 	String getNonQualifiedClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
+	Constants getLANG();
 	default Optional<UMLAttribute> getPropertyAccessor() {
 		return Optional.empty();
 	}

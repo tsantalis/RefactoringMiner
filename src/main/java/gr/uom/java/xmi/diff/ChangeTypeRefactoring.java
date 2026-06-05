@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public abstract class ChangeTypeRefactoring extends AbstractRefactoring {
@@ -14,6 +13,7 @@ public abstract class ChangeTypeRefactoring extends AbstractRefactoring {
 	public String getTemplateParameterAfter() {
 		return codeElementDescription(getProviderAfter(), qualified());
 	}
+	public boolean addCodeElementDescription() {return false;}
 	
 	private static String codeElementDescription(AnnotationProvider provider, boolean qualified) {
 		if(provider instanceof UMLAttribute attr)
@@ -30,36 +30,5 @@ public abstract class ChangeTypeRefactoring extends AbstractRefactoring {
 			return v1.equalType(v2) && !v1.equalQualifiedType(v2);
 		
 		return false;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		if(getTemplateParameterBefore().isPresent()) {
-			sb.append(getTemplateParameterBefore().get());
-			sb.append(" to ");
-		}
-		sb.append(getTemplateParameterAfter());
-		AnnotationProvider provider = getProviderAfter();
-		String codeElementType = codeElementType(provider);
-		String className = null;
-		if (provider instanceof VariableDeclaration) {
-			MethodLevelRefactoring methodLevelRef = (MethodLevelRefactoring) this;
-			VariableDeclarationContainer container = methodLevelRef.getOperationAfter();
-			String elementType = container.getElementType();
-			sb.append(" in " + elementType + " ");
-			sb.append(container.toQualifiedString());
-			className = container.getClassName();
-		} else {
-			className = provider.getClassName();
-		}
-		if (!codeElementType.equals("class")) {
-			if(provider instanceof UMLAttribute)
-				sb.append(" in class ");
-			else
-				sb.append(" from class ");
-			sb.append(className);
-		}
-		return sb.toString();
 	}
 }

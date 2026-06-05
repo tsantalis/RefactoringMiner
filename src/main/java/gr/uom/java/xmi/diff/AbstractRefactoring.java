@@ -3,6 +3,8 @@ package gr.uom.java.xmi.diff;
 import java.util.Optional;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
+
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -15,6 +17,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 	public abstract AnnotationProvider getProviderAfter();
 	public abstract Optional<String> getTemplateParameterBefore();
 	public abstract String getTemplateParameterAfter();
+	// this method should be overridden by subclasses to return false if code element description is not needed
+	public boolean addCodeElementDescription() {return true;}
 
 	protected static String codeElementType(AnnotationProvider provider) {
 		if (provider instanceof UMLEnumConstant)
@@ -49,8 +53,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 		sb.append(getTemplateParameterAfter());
 		AnnotationProvider provider = getName().startsWith("Remove") ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
-		sb.append(" in ").append(codeElementType).append(" ");
-		sb.append(codeElementDescription(provider));
+		if(addCodeElementDescription()) {
+			sb.append(" in ").append(codeElementType).append(" ");
+			sb.append(codeElementDescription(provider));
+		}
 		String className = null;
 		if (provider instanceof VariableDeclaration) {
 			MethodLevelRefactoring methodLevelRef = (MethodLevelRefactoring) this;
@@ -65,7 +71,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 			className = provider.getClassName();
 		}
 		if (!codeElementType.equals("class")) {
-			sb.append(" from class ");
+			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE))
+				sb.append(" in class ");
+			else
+				sb.append(" from class ");
 			sb.append(className);
 		}
 		return sb.toString();

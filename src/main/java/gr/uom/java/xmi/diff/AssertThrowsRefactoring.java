@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMappingProvider, AssertionRefactoring {
+public class AssertThrowsRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, LeafMappingProvider, AssertionRefactoring {
 	private Set<AbstractCodeMapping> assertThrowsMappings;
 	private AbstractCall assertThrowsCall;
 	private VariableDeclarationContainer operationBefore;
@@ -29,6 +31,27 @@ public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMapp
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.empty();
+	}
+
+	@Override
+	public String getTemplateParameterAfter() {
+		String string = assertThrowsCall.actualString();
+		return string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string;
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -119,19 +142,6 @@ public class AssertThrowsRefactoring implements MethodLevelRefactoring, LeafMapp
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		String string = assertThrowsCall.actualString();
-		sb.append(string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

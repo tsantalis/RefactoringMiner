@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class ChangeReturnTypeRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
+public class ChangeReturnTypeRefactoring extends ChangeTypeRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private UMLType originalType;
 	private UMLType changedType;
 	private VariableDeclarationContainer operationBefore;
@@ -27,6 +27,16 @@ public class ChangeReturnTypeRefactoring implements MethodLevelRefactoring, Refe
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.returnReferences = returnReferences;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalType;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return changedType;
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -55,19 +65,6 @@ public class ChangeReturnTypeRefactoring implements MethodLevelRefactoring, Refe
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return returnReferences;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		boolean qualified = originalType.equals(changedType) && !originalType.equalsQualified(changedType);
-		sb.append(getName()).append("\t");
-		sb.append(qualified ? originalType.toQualifiedString() : originalType.toString());
-		sb.append(" to ");
-		sb.append(qualified ? changedType.toQualifiedString() : changedType.toString());
-		sb.append(" in method ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

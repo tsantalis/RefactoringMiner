@@ -9,6 +9,7 @@ import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
@@ -58,7 +59,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(codeElementDescription(provider));
 		}
 		String className = null;
-		if (provider instanceof VariableDeclaration) {
+		if (provider instanceof VariableDeclaration || provider instanceof UMLType) {
 			MethodLevelRefactoring methodLevelRef = (MethodLevelRefactoring) this;
 			VariableDeclarationContainer container = getName().startsWith("Remove")
 					? methodLevelRef.getOperationBefore()

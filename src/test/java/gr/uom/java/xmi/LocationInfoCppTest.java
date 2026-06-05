@@ -24,6 +24,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class LocationInfoCppTest {
+	private static final String SRC_FOLDER = "src";
+
 	private static final String FILE_PATH = "src/Sample.cpp";
 	private static final String SOURCE = String.join("\n",
 			"class A {",
@@ -36,7 +38,7 @@ class LocationInfoCppTest {
 	void computesOneBasedColumnsForIndentedCppField() throws Exception {
 		IASTNode field = findDeclaration(SOURCE, "int value;");
 
-		LocationInfo location = new LocationInfo("", FILE_PATH, field,
+		LocationInfo location = new LocationInfo(SRC_FOLDER, FILE_PATH, field,
 				LocationInfo.CodeElementType.FIELD_DECLARATION, SOURCE);
 
 		int startOffset = SOURCE.indexOf("int value;");
@@ -54,7 +56,7 @@ class LocationInfoCppTest {
 	void computesEndColumnFromLastCharacterInsideCppNode() throws Exception {
 		IASTNode method = findDeclaration(SOURCE, "void run() {}");
 
-		LocationInfo location = new LocationInfo("", FILE_PATH, method,
+		LocationInfo location = new LocationInfo(SRC_FOLDER, FILE_PATH, method,
 				LocationInfo.CodeElementType.METHOD_DECLARATION, SOURCE);
 
 		int startOffset = SOURCE.indexOf("void run() {}");
@@ -72,7 +74,7 @@ class LocationInfoCppTest {
 		String source = "int value;\n";
 		IASTNode field = findDeclaration(source, "int value;");
 
-		LocationInfo location = new LocationInfo("", FILE_PATH, field,
+		LocationInfo location = new LocationInfo(SRC_FOLDER, FILE_PATH, field,
 				LocationInfo.CodeElementType.FIELD_DECLARATION, source);
 
 		assertEquals(0, location.getStartOffset());
@@ -90,7 +92,7 @@ class LocationInfoCppTest {
 				"};") + lineEnding;
 		IASTNode field = findDeclaration(source, "int value;");
 
-		LocationInfo location = new LocationInfo("", FILE_PATH, field,
+		LocationInfo location = new LocationInfo(SRC_FOLDER, FILE_PATH, field,
 				LocationInfo.CodeElementType.FIELD_DECLARATION, source);
 
 		assertEquals(3, location.getStartColumn());
@@ -102,7 +104,7 @@ class LocationInfoCppTest {
 	void returnsZeroColumnsWhenFileContentIsMissing() throws Exception {
 		IASTNode field = findDeclaration(SOURCE, "int value;");
 
-		LocationInfo location = new LocationInfo("", FILE_PATH, field,
+		LocationInfo location = new LocationInfo(SRC_FOLDER, FILE_PATH, field,
 				LocationInfo.CodeElementType.FIELD_DECLARATION, null);
 
 		assertEquals(0, location.getStartColumn());
@@ -114,24 +116,35 @@ class LocationInfoCppTest {
 	//Search parsed C++ AST for specific declaration and return its node
 	private static IASTNode findDeclaration(String source, String rawSignature) throws CoreException {
 		IASTTranslationUnit translationUnit = parseTranslationUnit(source);
-		IASTNode[] match = new IASTNode[1];
-		ASTVisitor visitor = new ASTVisitor() {
-			{
-				shouldVisitDeclarations = true;
-			}
-
-			@Override
-			public int visit(IASTDeclaration declaration) {
-				if(rawSignature.equals(declaration.getRawSignature())) {
-					match[0] = declaration;
-					return PROCESS_ABORT;
-				}
-				return PROCESS_CONTINUE;
-			}
-		};
+		MyVisitor visitor = new MyVisitor(rawSignature);
+		
 		translationUnit.accept(visitor);
-		assertNotNull(match[0], "Could not find C++ declaration: " + rawSignature);
-		return match[0];
+		assertNotNull(visitor.getMatch(), "Could not find C++ declaration: " + rawSignature);
+		return visitor.getMatch();
+	}
+	
+	private static class MyVisitor extends ASTVisitor {
+		private IASTNode match;
+		private String rawSignature;
+		
+		public MyVisitor (String rawSignature) {
+			this.rawSignature = rawSignature;
+			shouldVisitDeclarations = true;
+		}
+		
+		public IASTNode getMatch() {
+			return match;
+		}
+
+		@Override
+		public int visit(IASTDeclaration declaration) {
+			if(rawSignature.equals(declaration.getRawSignature())) {
+				match = declaration;
+				return PROCESS_ABORT;
+			}
+			return PROCESS_CONTINUE;
+		}
+		
 	}
 
 	//parse C++ src code into AST

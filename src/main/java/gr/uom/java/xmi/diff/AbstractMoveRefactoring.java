@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
@@ -21,16 +22,27 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 		return provider.toString();
 	}
 
+	private static boolean isClass(AnnotationProvider provider) {
+		return provider instanceof UMLAbstractClass;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
 		sb.append(codeElementDescription(getProviderBefore()));
-		sb.append(" from class ");
-		sb.append(getProviderBefore().getClassName());
-		sb.append(" to ");
+		if(!isClass(getProviderBefore())) {
+			sb.append(" from class ");
+			sb.append(getProviderBefore().getClassName());
+		}
+		if(getRefactoringType().equals(RefactoringType.MOVE_CLASS))
+			sb.append(" moved to ");
+		else
+			sb.append(" to ");
 		sb.append(codeElementDescription(getProviderAfter()));
-		sb.append(" from class ");
-		sb.append(getProviderAfter().getClassName());
+		if(!isClass(getProviderAfter())) {
+			sb.append(" from class ");
+			sb.append(getProviderAfter().getClassName());
+		}
 		return sb.toString();
 	}
 }

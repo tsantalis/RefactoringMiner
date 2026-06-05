@@ -133,6 +133,31 @@ docker run --rm -i \
   tsantalis/refactoringminer:latest mcp
 ```
 
+If you intend to use multiple simultaneous browsers on different ports, you must publish each port from the container. For example, to support ports 6789 and 6790:
+
+```bash
+docker run --rm -i \
+  --pull always \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  -p 6789:6789 \
+  -p 6790:6790 \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
+Alternatively, you can publish a range of ports (e.g., 6785 to 6795) to support many simultaneous browsers:
+
+```bash
+docker run --rm -i \
+  --pull always \
+  -v "$PWD:/workspace" \
+  -w /workspace \
+  -p 6785-6795:6785-6795 \
+  -e OAuthToken=$OAuthToken \
+  tsantalis/refactoringminer:latest mcp
+```
+
 The Docker image sets `REFACTORINGMINER_WEBDIFF_BIND_HOST=0.0.0.0` so the published port is reachable from the host. The URL returned to the user still uses `127.0.0.1`.
 
 A Claude Code config can use Docker as the stdio command:
@@ -148,6 +173,51 @@ A Claude Code config can use Docker as the stdio command:
         "-v", "/absolute/path/to/repo:/workspace",
         "-w", "/workspace",
         "-p", "6789:6789",
+        "-e", "OAuthToken",
+        "tsantalis/refactoringminer:latest",
+        "mcp"
+      ]
+    }
+  }
+}
+```
+
+To enable multiple simultaneous browsers in Docker, add additional `-p` arguments to publish the required ports:
+
+```json
+{
+  "mcpServers": {
+    "refactoringminer": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i", "--pull", "always",
+        "-v", "/absolute/path/to/repo:/workspace",
+        "-w", "/workspace",
+        "-p", "6789:6789",
+        "-p", "6790:6790",
+        "-e", "OAuthToken",
+        "tsantalis/refactoringminer:latest",
+        "mcp"
+      ]
+    }
+  }
+}
+```
+
+Or publish a port range:
+
+```json
+{
+  "mcpServers": {
+    "refactoringminer": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i", "--pull", "always",
+        "-v", "/absolute/path/to/repo:/workspace",
+        "-w", "/workspace",
+        "-p", "6785-6795:6785-6795",
         "-e", "OAuthToken",
         "tsantalis/refactoringminer:latest",
         "mcp"

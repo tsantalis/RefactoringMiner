@@ -22,7 +22,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 	}
 
 	private WebDiffBrowserLauncher(String bindHost, String publicHost) {
-		this(WebDiffBrowserLauncher::defaultView, port -> requireAvailablePortStatic(bindHost, port, false), bindHost, publicHost);
+		this(WebDiffBrowserLauncher::defaultView, port -> requireAvailablePort(bindHost, port, false), bindHost, publicHost);
 	}
 
 	WebDiffBrowserLauncher(WebDiffViewFactory factory, PortProbe portProbe) {
@@ -49,7 +49,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 		stopActiveView();
 		if (replacingSamePort) {
-			requireAvailablePortStatic(bindHost, port, true);
+			requireAvailablePort(bindHost, port, true);
 		}
 
 		WebDiffView view = factory.create(diff);
@@ -81,7 +81,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 	}
 
-	private static void requireAvailablePortStatic(String bindHost, int port, boolean reuseAddress) throws IOException {
+	private static void requireAvailablePort(String bindHost, int port, boolean reuseAddress) throws IOException {
 		try (ServerSocket socket = new ServerSocket()) {
 			socket.setReuseAddress(reuseAddress);
 			socket.bind(new InetSocketAddress(bindHost, port));

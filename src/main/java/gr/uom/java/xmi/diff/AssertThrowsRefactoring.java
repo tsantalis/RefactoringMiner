@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -17,7 +16,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertThrowsRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, LeafMappingProvider, AssertionRefactoring {
+public class AssertThrowsRefactoring extends AssertionRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeMapping> assertThrowsMappings;
 	private AbstractCall assertThrowsCall;
 	private VariableDeclarationContainer operationBefore;
@@ -41,17 +40,6 @@ public class AssertThrowsRefactoring extends AbstractRefactoring implements Meth
 	@Override
 	public AnnotationProvider getProviderAfter() {
 		return operationAfter;
-	}
-
-	@Override
-	public Optional<String> getTemplateParameterBefore() {
-		return Optional.empty();
-	}
-
-	@Override
-	public String getTemplateParameterAfter() {
-		String string = assertThrowsCall.actualString();
-		return string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string;
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {

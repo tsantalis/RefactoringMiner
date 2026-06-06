@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -11,9 +12,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
-public class AssumeRefactoring implements MethodLevelRefactoring, AssertionRefactoring {
+public class AssumeRefactoring extends AssertionRefactoring implements MethodLevelRefactoring {
     private Set<AbstractCodeMapping> assumeMappings;
     private AbstractCall assumption;
     private VariableDeclarationContainer operationBefore;
@@ -26,6 +28,22 @@ public class AssumeRefactoring implements MethodLevelRefactoring, AssertionRefac
         this.operationAfter = operationAfter;
     }
 
+    @Override
+    public AnnotationProvider getProviderBefore() {
+        return operationBefore;
+    }
+
+    @Override
+    public AnnotationProvider getProviderAfter() {
+        return operationAfter;
+    }
+
+    @Override
+    public Optional<String> getTemplateParameterBefore() {
+        AbstractCodeMapping mapping = assumeMappings.iterator().next();
+        return Optional.of(mapping.getFragment1().getString());
+    }
+
     public AbstractCall getCall() {
         return assumption;
     }
@@ -34,7 +52,7 @@ public class AssumeRefactoring implements MethodLevelRefactoring, AssertionRefac
         return assumeMappings;
     }
 
-	public VariableDeclarationContainer getOperationBefore() {
+    public VariableDeclarationContainer getOperationBefore() {
         return operationBefore;
     }
 
@@ -96,21 +114,6 @@ public class AssumeRefactoring implements MethodLevelRefactoring, AssertionRefac
                 .setDescription(elementType + " declaration with assumption")
                 .setCodeElement(operationAfter.toString()));
         return ranges;
-    }
-
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getName()).append("\t");
-        AbstractCodeMapping mapping = assumeMappings.iterator().next();
-        sb.append(mapping.getFragment1().getString());
-        sb.append(" to ");
-        String string = assumption.actualString();
-        sb.append(string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string);
-        String elementType = operationAfter.getElementType();
-        sb.append(" in ").append(elementType).append(" ");
-        sb.append(operationAfter.toQualifiedString());
-        sb.append(" from class ").append(operationAfter.getClassName());
-        return sb.toString();
     }
 
     @Override

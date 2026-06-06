@@ -72,7 +72,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 			className = provider.getClassName();
 		}
 		if (!codeElementType.equals("class")) {
-			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE))
+			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE) || getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE))
 				sb.append(" in class ");
 			else
 				sb.append(" from class ");

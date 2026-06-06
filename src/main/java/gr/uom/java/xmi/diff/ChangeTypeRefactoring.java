@@ -26,7 +26,7 @@ public abstract class ChangeTypeRefactoring extends AbstractRefactoring {
 		return provider.toString();
 	}
 
-	private boolean qualified() {
+	protected boolean qualified() {
 		if(getProviderBefore() instanceof UMLAttribute a1 && getProviderAfter() instanceof UMLAttribute a2)
 			return a1.getVariableDeclaration().equalType(a2.getVariableDeclaration()) && !a1.getVariableDeclaration().equalQualifiedType(a2.getVariableDeclaration());
 		else if(getProviderBefore() instanceof VariableDeclaration v1 && getProviderAfter() instanceof VariableDeclaration v2)

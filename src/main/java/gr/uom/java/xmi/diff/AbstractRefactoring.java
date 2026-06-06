@@ -49,7 +49,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		if(getTemplateParameterBefore().isPresent()) {
 			sb.append(getTemplateParameterBefore().get());
-			sb.append(" to ");
+			if(getRefactoringType().equals(RefactoringType.RENAME_METHOD))
+				sb.append(" renamed to ");
+			else
+				sb.append(" to ");
 		}
 		sb.append(getTemplateParameterAfter());
 		AnnotationProvider provider = getName().startsWith("Remove") ? getProviderBefore() : getProviderAfter();
@@ -72,7 +75,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 			className = provider.getClassName();
 		}
 		if (!codeElementType.equals("class")) {
-			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE) || getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE))
+			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE) || getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE) ||
+					getRefactoringType().equals(RefactoringType.RENAME_METHOD))
 				sb.append(" in class ");
 			else
 				sb.append(" from class ");

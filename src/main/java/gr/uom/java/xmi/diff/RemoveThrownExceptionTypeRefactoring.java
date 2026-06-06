@@ -3,7 +3,6 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -13,7 +12,7 @@ import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class RemoveThrownExceptionTypeRefactoring extends AbstractRefactoring implements MethodLevelRefactoring {
+public class RemoveThrownExceptionTypeRefactoring extends ThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
 	private UMLType exceptionType;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
@@ -36,10 +35,6 @@ public class RemoveThrownExceptionTypeRefactoring extends AbstractRefactoring im
 
 	public String getTemplateParameterAfter() {
 		return exceptionType.toString();
-	}
-
-	public Optional<String> getTemplateParameterBefore() {
-		return Optional.empty();
 	}
 
 	public UMLType getExceptionType() {

@@ -13,7 +13,7 @@ import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class ChangeThrownExceptionTypeRefactoring extends AbstractRefactoring implements MethodLevelRefactoring {
+public class ChangeThrownExceptionTypeRefactoring extends ThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
 	private Set<UMLType> originalTypes;
 	private Set<UMLType> changedTypes;
 	private VariableDeclarationContainer operationBefore;

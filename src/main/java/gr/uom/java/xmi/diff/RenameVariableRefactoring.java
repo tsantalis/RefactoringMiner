@@ -8,12 +8,13 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.PrimaryConstructor;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class RenameVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
+public class RenameVariableRefactoring extends ChangeTypeRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private VariableDeclaration originalVariable;
 	private VariableDeclaration renamedVariable;
 	private VariableDeclarationContainer operationBefore;
@@ -34,6 +35,16 @@ public class RenameVariableRefactoring implements MethodLevelRefactoring, Refere
 		this.operationAfter = operationAfter;
 		this.variableReferences = variableReferences;
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalVariable;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return renamedVariable;
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -81,19 +92,6 @@ public class RenameVariableRefactoring implements MethodLevelRefactoring, Refere
 
 	public boolean isInsideExtractedOrInlinedMethod() {
 		return insideExtractedOrInlinedMethod;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalVariable);
-		sb.append(" to ");
-		sb.append(renamedVariable);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

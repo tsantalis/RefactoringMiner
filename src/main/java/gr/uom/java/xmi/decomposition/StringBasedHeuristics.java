@@ -2249,7 +2249,8 @@ public class StringBasedHeuristics {
 		StringBuilder sb = new StringBuilder();
 		for(LeafExpression leaf1 : statement1.getStringLiterals()) {
 			String literal = leaf1.getString();
-			sb.append(literal.substring(1, literal.length()-1));
+			if(literal.startsWith("\"") && literal.endsWith("\""))
+				sb.append(literal.substring(1, literal.length()-1));
 		}
 		String concatenated = sb.toString().replaceAll("\\s+","").replace("\\\"", "\"");
 		for(LeafExpression leaf2 : statement2.getTextBlocks()) {

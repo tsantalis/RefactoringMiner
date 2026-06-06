@@ -937,7 +937,11 @@ public class ReplacementAlgorithm {
 		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE, container1, container2, classDiff);
-		
+
+		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
+			findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
+			findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
+		}
 		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
 			Set<String> infixExpressions1 = convertToStringSet(statement1.getInfixExpressions());
 			String infixExpressionCoveringTheEntireFragment = statement1.infixExpressionCoveringTheEntireFragment();
@@ -1249,8 +1253,6 @@ public class ReplacementAlgorithm {
 			findReplacements(castExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
 			findReplacements(variables1, castExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
 		}
-		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
-		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
 		if(stringLiterals1.size() > 0 && methodInvocationMap2.size() > 0) {
 			for(String stringLiteral1 : stringLiterals1) {

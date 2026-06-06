@@ -3,11 +3,13 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -15,7 +17,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefactoring {
+public class ReplaceAnonymousWithLambdaRefactoring extends AbstractRefactoring implements MethodLevelRefactoring {
 	private UMLAnonymousClass anonymousClass;
 	private LambdaExpressionObject lambda;
 	private AbstractCodeFragment anonymousOwner;
@@ -36,6 +38,25 @@ public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefacto
 		this.operationAfter = operationAfter;
 		this.mappings = mapper.getMappings();
 		this.bodyMapper = mapper;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(anonymousClass.getCodePath());
+	}
+
+	public String getTemplateParameterAfter() {
+		String string = lambda.toString();
+		return string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string;
 	}
 
 	public UMLAnonymousClass getAnonymousClass() {
@@ -120,21 +141,6 @@ public class ReplaceAnonymousWithLambdaRefactoring implements MethodLevelRefacto
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(anonymousClass.getCodePath());
-		sb.append(" with ");
-		String string = lambda.toString();
-		sb.append(string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

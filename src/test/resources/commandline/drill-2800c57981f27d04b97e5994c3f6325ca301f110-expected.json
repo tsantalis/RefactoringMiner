@@ -1305,6 +1305,30 @@
 },
 {
 	"type": "Change Parameter Type",
+	"description": "Change Parameter Type registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 567,
+		"endLine": 567,
+		"startColumn": 36,
+		"endColumn": 83,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "registeredDrillbits : Set<DrillbitEndpoint>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 564,
+		"endLine": 564,
+		"startColumn": 36,
+		"endColumn": 89,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "registeredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}]
+},
+{
+	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/test/java/org/apache/drill/yarn/zk/TestZkRegistry.java",
@@ -1655,6 +1679,48 @@
 		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
 		"description": "changed-type variable declaration",
 		"codeElement": "unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 571,
+		"endLine": 571,
+		"startColumn": 38,
+		"endColumn": 87,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "unregisteredDrillbits : Set<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 575,
+		"endLine": 595,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 568,
+		"endLine": 568,
+		"startColumn": 38,
+		"endColumn": 93,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 572,
+		"endLine": 592,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -2182,6 +2248,24 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 203,
+		"endLine": 203,
+		"startColumn": 9,
+		"endColumn": 78,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 209,
+		"endLine": 209,
+		"startColumn": 5,
+		"endColumn": 25,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -2199,6 +2283,24 @@
 		"startColumn": 9,
 		"endColumn": 78,
 		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 213,
+		"endLine": 213,
+		"startColumn": 9,
+		"endColumn": 78,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 219,
+		"endLine": 219,
+		"startColumn": 5,
+		"endColumn": 25,
+		"codeElementType": "RETURN_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
 }]
@@ -2368,6 +2470,24 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 195,
+		"endLine": 195,
+		"startColumn": 61,
+		"endColumn": 113,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 201,
+		"endLine": 205,
+		"startColumn": 5,
+		"endColumn": 7,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -2384,6 +2504,24 @@
 		"endLine": 196,
 		"startColumn": 9,
 		"endColumn": 69,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 205,
+		"endLine": 205,
+		"startColumn": 61,
+		"endColumn": 113,
+		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 211,
+		"endLine": 215,
+		"startColumn": 5,
+		"endColumn": 7,
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
@@ -2635,6 +2773,15 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 179,
+		"endLine": 190,
+		"startColumn": 5,
+		"endColumn": 7,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -2663,6 +2810,15 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 189,
+		"endLine": 200,
+		"startColumn": 5,
+		"endColumn": 7,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -2686,6 +2842,15 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 122,
+		"endLine": 124,
+		"startColumn": 5,
+		"endColumn": 148,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -2703,6 +2868,15 @@
 		"startColumn": 9,
 		"endColumn": 102,
 		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 132,
+		"endLine": 134,
+		"startColumn": 5,
+		"endColumn": 148,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
 }]
@@ -2901,11 +3075,38 @@
 		"codeElement": "sendingFragsPerDrillBit : Map<DrillbitEndpoint,Integer>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 107,
+		"endLine": 108,
+		"startColumn": 5,
+		"endColumn": 114,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 111,
 		"endLine": 114,
 		"startColumn": 18,
 		"endColumn": 115,
 		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 102,
+		"endLine": 102,
+		"startColumn": 11,
+		"endColumn": 60,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 103,
+		"endLine": 103,
+		"startColumn": 11,
+		"endColumn": 90,
+		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
 }],
@@ -2920,11 +3121,38 @@
 		"codeElement": "sendingFragsPerDrillBit : Map<DrillNode,Integer>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 109,
+		"endLine": 110,
+		"startColumn": 5,
+		"endColumn": 114,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 113,
 		"endLine": 116,
 		"startColumn": 18,
 		"endColumn": 115,
 		"codeElementType": "LAMBDA_EXPRESSION_BODY",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 104,
+		"endLine": 104,
+		"startColumn": 11,
+		"endColumn": 69,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 105,
+		"endLine": 105,
+		"startColumn": 11,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
 }]
@@ -2950,6 +3178,33 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 117,
+		"endLine": 117,
+		"startColumn": 7,
+		"endColumn": 75,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 122,
+		"endLine": 124,
+		"startColumn": 5,
+		"endColumn": 148,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 133,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 77,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -2966,6 +3221,33 @@
 		"endLine": 117,
 		"startColumn": 9,
 		"endColumn": 76,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 127,
+		"endLine": 127,
+		"startColumn": 7,
+		"endColumn": 75,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 132,
+		"endLine": 134,
+		"startColumn": 5,
+		"endColumn": 148,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 143,
+		"endLine": 143,
+		"startColumn": 5,
+		"endColumn": 78,
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
@@ -4862,6 +5144,90 @@
 }]
 },
 {
+	"type": "Remove Parameter Modifier",
+	"description": "Remove Parameter Modifier final in parameter registeredDrillbits : Set<DrillbitEndpoint> in method public drillbitRegistered(registeredDrillbits Set<DrillbitEndpoint>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 567,
+		"endLine": 567,
+		"startColumn": 36,
+		"endColumn": 83,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "registeredDrillbits : Set<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 566,
+		"endLine": 568,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public drillbitRegistered(registeredDrillbits Set<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 564,
+		"endLine": 564,
+		"startColumn": 36,
+		"endColumn": 89,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "variable declaration with removed modifier",
+		"codeElement": "registeredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 563,
+		"endLine": 565,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed variable modifier",
+		"codeElement": "public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Remove Parameter Modifier",
+	"description": "Remove Parameter Modifier final in parameter unregisteredDrillbits : Set<DrillbitEndpoint> in method public drillbitUnregistered(unregisteredDrillbits Set<DrillbitEndpoint>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 571,
+		"endLine": 571,
+		"startColumn": 38,
+		"endColumn": 87,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "unregisteredDrillbits : Set<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 570,
+		"endLine": 605,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public drillbitUnregistered(unregisteredDrillbits Set<DrillbitEndpoint>) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 568,
+		"endLine": 568,
+		"startColumn": 38,
+		"endColumn": 93,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "variable declaration with removed modifier",
+		"codeElement": "unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 567,
+		"endLine": 602,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed variable modifier",
+		"codeElement": "public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
 	"type": "Remove Variable Modifier",
 	"description": "Remove Variable Modifier final in variable currentQueueLeader : String in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
 	"leftSideLocations": [{
@@ -5493,6 +5859,30 @@
 },
 {
 	"type": "Rename Parameter",
+	"description": "Rename Parameter registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 567,
+		"endLine": 567,
+		"startColumn": 36,
+		"endColumn": 83,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "registeredDrillbits : Set<DrillbitEndpoint>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 564,
+		"endLine": 564,
+		"startColumn": 36,
+		"endColumn": 89,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "registeredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}]
+},
+{
+	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/test/java/org/apache/drill/yarn/zk/TestZkRegistry.java",
@@ -5639,6 +6029,48 @@
 		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
 		"description": "renamed variable declaration",
 		"codeElement": "unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 571,
+		"endLine": 571,
+		"startColumn": 38,
+		"endColumn": 87,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "unregisteredDrillbits : Set<DrillbitEndpoint>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 575,
+		"endLine": 595,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 568,
+		"endLine": 568,
+		"startColumn": 38,
+		"endColumn": 93,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
+		"startLine": 572,
+		"endLine": 592,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {

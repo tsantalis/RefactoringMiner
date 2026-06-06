@@ -14,6 +14,6 @@ public class RunWithTwoDirectories {
         String folder2 = projectRoot + "/tmp/v2/";
 
         ProjectASTDiff projectASTDiff = new GitHistoryRefactoringMinerImpl().diffAtDirectories(Path.of(folder1), Path.of(folder2));
-       new WebDiff(projectASTDiff).openInBrowser();
+        new WebDiff(projectASTDiff).openInBrowser();
     }
 }

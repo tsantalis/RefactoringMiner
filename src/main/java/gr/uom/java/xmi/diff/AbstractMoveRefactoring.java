@@ -36,6 +36,8 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_CLASS))
 			sb.append(" moved to ");
+		else if(getName().startsWith("Replace"))
+			sb.append(" with ");
 		else
 			sb.append(" to ");
 		sb.append(codeElementDescription(getProviderAfter()));

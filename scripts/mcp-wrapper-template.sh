@@ -7,9 +7,7 @@
 CONTAINER_NAME="refactoringminer-server"
 
 # Port mapping for the WebDiff server. 
-# Example: 6789:6789. If you want to be able to use different custom ports, 
-# you can map a range like 6785-6795:6785-6795.
-PORT_MAPPING="6789:6789"
+PORT_MAPPING="6785-6795:6785-6795"
 
 # Path on host to mount inside the container. Use absolute path.
 # This is the repository you want the MCP server to analyze.
@@ -39,6 +37,12 @@ if ! docker ps --filter "name=^${CONTAINER_NAME}$" --filter "status=running" | g
         -e OAuthToken=${TOKEN} \
         --entrypoint tail \
         tsantalis/refactoringminer:latest -f /dev/null >/dev/null 2>&1
+fi
+
+# Only clean up orphans if no other active sessions are using the MCP server on the host
+if ! pgrep -f "docker exec .*${CONTAINER_NAME}.*refactoringminer mcp" > /dev/null; then
+    echo "No active sessions found on host. Cleaning up orphans in container..." >&2
+    docker exec ${CONTAINER_NAME} pkill -f "RefactoringMiner-DockerBuild.jar" || true
 fi
 
 # Execute the MCP command in the running container

@@ -2,104 +2,13 @@
 
 RefactoringMiner can also run as a local stdio MCP server. Coding agents can ask it for detected refactorings, intent checks, and local AST diff pages. Results come back as small JSON objects built from the existing RefactoringMiner APIs.
 
-## Build
+## Setup
 
-Use Java 17 or newer, then build the packaged jar:
+RefactoringMiner is recommended to run via Docker to avoid local environment setup and ensure stability.
 
-```bash
-./gradlew shadowJar --no-daemon --console=plain
-```
+### Linux and macOS
 
-The MCP server entrypoint is available from the fat jar:
-
-```bash
-java -jar build/libs/RM-fat.jar mcp
-```
-
-For a startup-only smoke check:
-
-```bash
-java -jar build/libs/RM-fat.jar mcp --smoke
-```
-
-To verify tool discovery with MCP Inspector CLI:
-
-```bash
-npx -y @modelcontextprotocol/inspector --cli --method tools/list --transport stdio \
-  java -jar build/libs/RM-fat.jar mcp
-```
-
-## Manual WebDiff browser check
-
-If you only want to inspect the browser output yourself, run the existing WebDiff CLI directly. The WebDiff server stays attached to that terminal while you use the browser.
-
-```bash
-java -jar build/libs/RM-fat.jar diff --url https://github.com/tsantalis/RefactoringMiner/pull/1234
-```
-
-For a local repository commit:
-
-```bash
-java -jar build/libs/RM-fat.jar diff --repo /absolute/path/to/repo --commit abc123
-```
-
-Open the printed URL, usually:
-
-```text
-http://127.0.0.1:6789
-```
-
-Keep the terminal process alive while inspecting the page. Use the browser's Quit button or stop the terminal process when finished.
-
-## Claude Code and stdio clients
-
-Create `.mcp.json` in the project that should use RefactoringMiner. Use the absolute path to the built RefactoringMiner jar.
-
-```json
-{
-  "mcpServers": {
-    "refactoringminer": {
-      "type": "stdio",
-      "command": "java",
-      "args": [
-        "-jar",
-        "/absolute/path/to/RefactoringMiner/build/libs/RM-fat.jar",
-        "mcp"
-      ]
-    }
-  }
-}
-```
-
-Generic stdio MCP clients should use the same command and arguments:
-
-```text
-command: java
-args: -jar /absolute/path/to/RefactoringMiner/build/libs/RM-fat.jar mcp
-```
-
-Claude Code can load the same file:
-
-```bash
-claude -p --mcp-config .mcp.json --strict-mcp-config \
-  "Use RefactoringMiner to validate whether my current worktree contains the Rename Method refactoring I intended."
-```
-
-One-shot `claude -p` calls work well for analysis and validation tools that only return JSON. For AST diff browser tools, use an interactive Claude Code session so the MCP process, and the local WebDiff server it started, stays alive while you open the returned URL:
-
-```bash
-claude --mcp-config .mcp.json --strict-mcp-config
-```
-
-Then ask Claude Code to call a browser tool, for example:
-
-```text
-Call refactoringminer_diff_worktree with baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
-```
-
-## Docker
-
-To run the MCP server via Docker, use the provided [wrapper script template](./scripts/mcp-wrapper-template.sh). This script is the recommended way to run RefactoringMiner in Docker as it ensures a shared container runs in the background, avoiding the overhead of restarting the container on every call.
+Use the provided [wrapper script template](./scripts/mcp-wrapper-template.sh). This script ensures a shared container runs in the background, avoiding the overhead of restarting the container on every call.
 
 1. Copy the template to your local machine:
    ```bash
@@ -125,7 +34,27 @@ To run the MCP server via Docker, use the provided [wrapper script template](./s
    }
    ```
 
-When using this wrapper, any tool that requires a `repositoryPath` should use the container path (usually `/workspace`), not the host path.
+### Windows
+
+For Windows, you can use a lighter functional config directly in your MCP client configuration without needing a wrapper script:
+
+```json
+ {
+   "mcpServers": {
+     "refactoringminer": {
+       "type": "stdio",
+       "command": "cmd",
+       "args": [
+         "/c",
+         "docker rm -f refactoringminer-server 2>nul && docker run --rm -i --name refactoringminer-server --pull always -v \"C:/absolute/path/to/your/repo:/workspace\" -w /workspace -p 6785-6795:6785-6795 -e OAuthToken=%OAuthToken% tsantalis/refactoringminer:latest mcp"
+       ]
+     }
+   }
+ }
+```
+Replace `C:/absolute/path/to/your/repo` and `%OAuthToken%` with your actual path and token.
+
+When using the Docker setup, any tool that requires a `repositoryPath` should use the container path (usually `/workspace`), not the host path.
 
 Outside Docker, WebDiff binds to `127.0.0.1` by default. These settings can be overridden with environment variables or JVM system properties:
 

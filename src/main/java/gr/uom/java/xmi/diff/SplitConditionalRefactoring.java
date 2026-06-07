@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class SplitConditionalRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
+public class SplitConditionalRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private AbstractCodeFragment originalConditional;
 	private Set<AbstractCodeFragment> splitConditionals;
 	private VariableDeclarationContainer operationBefore;
@@ -28,6 +30,39 @@ public class SplitConditionalRefactoring implements MethodLevelRefactoring, Leaf
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		String conditionalString = originalConditional.getString();
+		String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
+		return Optional.of(oldConditional);
+	}
+
+	public String getTemplateParameterAfter() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		int i = 0;
+		for(AbstractCodeFragment splitConditional : splitConditionals) {
+			String conditionalString = splitConditional.getString();
+			String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
+			sb.append(newConditional);
+			if(i < splitConditionals.size()-1) {
+				sb.append(", ");
+			}
+			i++;
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -114,32 +149,6 @@ public class SplitConditionalRefactoring implements MethodLevelRefactoring, Leaf
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		String conditionalString = originalConditional.getString();
-		String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-		sb.append(oldConditional);
-		sb.append(" to ");
-		sb.append("[");
-		int i = 0;
-		for(AbstractCodeFragment splitConditional : splitConditionals) {
-			conditionalString = splitConditional.getString();
-			String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-			sb.append(newConditional);
-			if(i < splitConditionals.size()-1) {
-				sb.append(", ");
-			}
-			i++;
-		}
-		sb.append("]");
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

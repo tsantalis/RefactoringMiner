@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class MergeConditionalRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
+public class MergeConditionalRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeFragment> mergedConditionals;
 	private AbstractCodeFragment newConditional;
 	private VariableDeclarationContainer operationBefore;
@@ -29,6 +30,39 @@ public class MergeConditionalRefactoring implements MethodLevelRefactoring, Leaf
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		int i = 0;
+		for(AbstractCodeFragment mergedConditional : mergedConditionals) {
+			String conditionalString = mergedConditional.getString();
+			String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
+			sb.append(oldConditional);
+			if(i < mergedConditionals.size()-1) {
+				sb.append(", ");
+			}
+			i++;
+		}
+		sb.append("]");
+		return Optional.of(sb.toString());
+	}
+
+	public String getTemplateParameterAfter() {
+		String conditionalString = newConditional.getString();
+		String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
+		return newConditional;
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -115,32 +149,6 @@ public class MergeConditionalRefactoring implements MethodLevelRefactoring, Leaf
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append("[");
-		int i = 0;
-		for(AbstractCodeFragment mergedConditional : mergedConditionals) {
-			String conditionalString = mergedConditional.getString();
-			String oldConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-			sb.append(oldConditional);
-			if(i < mergedConditionals.size()-1) {
-				sb.append(", ");
-			}
-			i++;
-		}
-		sb.append("]");
-		sb.append(" to ");
-		String conditionalString = newConditional.getString();
-		String newConditional = (conditionalString.contains("\n") ? conditionalString.substring(0, conditionalString.indexOf("\n")) : conditionalString);
-		sb.append(newConditional);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

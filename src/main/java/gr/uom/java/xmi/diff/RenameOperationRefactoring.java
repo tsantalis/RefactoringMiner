@@ -57,8 +57,6 @@ public class RenameOperationRefactoring extends ChangeTypeRefactoring implements
 		return renamedOperation.toQualifiedString();
 	}
 
-	public boolean addCodeElementDescription() {return false;}
-
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
 	}

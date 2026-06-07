@@ -31,9 +31,10 @@ if ! docker ps --filter "name=^${CONTAINER_NAME}$" --filter "status=running" | g
     # Start the container in the background with a command that keeps it alive
     docker run -d \
         --name ${CONTAINER_NAME} \
-        -p ${PORT_MAPPING} \
+        --pull always \
         -v "${HOST_VOLUME_PATH}:${CONTAINER_WORKDIR}" \
         -w ${CONTAINER_WORKDIR} \
+        -p ${PORT_MAPPING} \
         -e OAuthToken=${TOKEN} \
         --entrypoint tail \
         tsantalis/refactoringminer:latest -f /dev/null >/dev/null 2>&1

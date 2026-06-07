@@ -6,6 +6,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
+import gr.uom.java.xmi.PrimaryConstructor;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLOperation;
@@ -33,6 +34,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 				return "parameter";
 			else
 				return "variable";
+		else if (provider instanceof PrimaryConstructor)
+			return "primary constructor";
 		return "attribute";
 	}
 

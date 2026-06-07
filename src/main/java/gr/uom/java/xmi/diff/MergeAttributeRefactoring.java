@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MergeAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class MergeAttributeRefactoring extends ChangeTypeRefactoring implements ReferenceBasedRefactoring {
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
@@ -25,6 +25,24 @@ public class MergeAttributeRefactoring implements Refactoring, ReferenceBasedRef
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeMerges = attributeMerges;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return mergedAttributes.iterator().next();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return newAttribute;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(getMergedVariables().toString());
+	}
+
+	public String getTemplateParameterAfter() {
+		return newAttribute.getVariableDeclaration().toString();
 	}
 
 	public Set<UMLAttribute> getMergedAttributes() {
@@ -57,16 +75,6 @@ public class MergeAttributeRefactoring implements Refactoring, ReferenceBasedRef
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(getMergedVariables());
-		sb.append(" to ");
-		sb.append(newAttribute.getVariableDeclaration());
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override

@@ -103,7 +103,7 @@ RefactoringMiner is recommended to run via Docker to avoid local environment set
 
 ### Linux and macOS
 
-Use the provided [wrapper script template](./scripts/mcp-wrapper-template.sh). This script ensures a shared container runs in the background, avoiding the overhead of restarting the container on every call.
+Use the provided [wrapper script template](../scripts/mcp-wrapper-template.sh). This script ensures a shared container runs in the background, avoiding the overhead of restarting the container on every call.
 
 1. Copy the template to your local machine:
    ```bash

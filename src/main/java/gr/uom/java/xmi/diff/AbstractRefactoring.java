@@ -56,7 +56,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 				sb.append(" renamed to ");
 			else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
-					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP))
+					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||
+					getRefactoringType().equals(RefactoringType.REPLACE_GENERIC_WITH_DIAMOND))
 				sb.append(" with ");
 			else
 				sb.append(" to ");

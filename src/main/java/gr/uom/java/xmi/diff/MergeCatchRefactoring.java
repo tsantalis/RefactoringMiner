@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class MergeCatchRefactoring implements MethodLevelRefactoring {
+public class MergeCatchRefactoring extends AbstractRefactoring implements MethodLevelRefactoring {
 	private Set<AbstractCodeFragment> mergedCatchBlocks;
 	private AbstractCodeFragment newCatchBlock;
 	private VariableDeclarationContainer operationBefore;
@@ -26,6 +27,41 @@ public class MergeCatchRefactoring implements MethodLevelRefactoring {
 		this.newCatchBlock = newCatchBlock;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		int i = 0;
+		for(AbstractCodeFragment mergedCatch : mergedCatchBlocks) {
+			String catchString = mergedCatch.getString();
+			VariableDeclaration exceptionDeclaration = mergedCatch.getVariableDeclarations().get(0);
+			catchString = catchString.replace(exceptionDeclaration.getVariableName() + ")", exceptionDeclaration.getType() + " " +  exceptionDeclaration.getVariableName() + ")");
+			sb.append(catchString);
+			if(i < mergedCatchBlocks.size()-1) {
+				sb.append(", ");
+			}
+			i++;
+		}
+		sb.append("]");
+		return Optional.of(sb.toString());
+	}
+
+	public String getTemplateParameterAfter() {
+		String catchString = newCatchBlock.getString();
+		VariableDeclaration exceptionDeclaration = newCatchBlock.getVariableDeclarations().get(0);
+		catchString = catchString.replace(exceptionDeclaration.getVariableName() + ")", exceptionDeclaration.getType() + " " +  exceptionDeclaration.getVariableName() + ")");
+		return catchString;
 	}
 
 	public Set<AbstractCodeFragment> getMergedCatchBlocks() {
@@ -94,34 +130,6 @@ public class MergeCatchRefactoring implements MethodLevelRefactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append("[");
-		int i = 0;
-		for(AbstractCodeFragment mergedCatch : mergedCatchBlocks) {
-			String catchString = mergedCatch.getString();
-			VariableDeclaration exceptionDeclaration = mergedCatch.getVariableDeclarations().get(0);
-			catchString = catchString.replace(exceptionDeclaration.getVariableName() + ")", exceptionDeclaration.getType() + " " +  exceptionDeclaration.getVariableName() + ")");
-			sb.append(catchString);
-			if(i < mergedCatchBlocks.size()-1) {
-				sb.append(", ");
-			}
-			i++;
-		}
-		sb.append("]");
-		sb.append(" to ");
-		String catchString = newCatchBlock.getString();
-		VariableDeclaration exceptionDeclaration = newCatchBlock.getVariableDeclarations().get(0);
-		catchString = catchString.replace(exceptionDeclaration.getVariableName() + ")", exceptionDeclaration.getType() + " " +  exceptionDeclaration.getVariableName() + ")");
-		sb.append(catchString);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

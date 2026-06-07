@@ -3,18 +3,20 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class ReplaceLoopWithPipelineRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
+public class ReplaceLoopWithPipelineRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeFragment> codeFragmentsBefore;
 	private Set<AbstractCodeFragment> codeFragmentsAfter;
 	private VariableDeclarationContainer operationBefore;
@@ -30,6 +32,35 @@ public class ReplaceLoopWithPipelineRefactoring implements MethodLevelRefactorin
 		this.operationAfter = operationAfter;
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
 		this.nestedStatementMappings = new LinkedHashSet<AbstractCodeMapping>();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		String loop = null;
+		for(AbstractCodeFragment fragment : codeFragmentsBefore) {
+			if(fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+					fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
+					fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
+					fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) {
+				loop = fragment.getString();
+				break;
+			}
+		}
+		return Optional.of(loop);
+	}
+
+	public String getTemplateParameterAfter() {
+		String pipeline = codeFragmentsAfter.iterator().next().getString();
+		return pipeline.contains("\n") ? pipeline.substring(0, pipeline.indexOf("\n")) : pipeline;
 	}
 
 	public void addNestedStatementMapping(AbstractCodeMapping mapping) {
@@ -72,29 +103,6 @@ public class ReplaceLoopWithPipelineRefactoring implements MethodLevelRefactorin
 
 	public Set<AbstractCodeMapping> getNestedStatementMappings() {
 		return nestedStatementMappings;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		for(AbstractCodeFragment fragment : codeFragmentsBefore) {
-			if(fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-					fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-					fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-					fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) {
-				sb.append(fragment.getString());
-				break;
-			}
-		}
-		sb.append(" with ");
-		String pipeline = codeFragmentsAfter.iterator().next().getString();
-		sb.append(pipeline.contains("\n") ? pipeline.substring(0, pipeline.indexOf("\n")) : pipeline);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

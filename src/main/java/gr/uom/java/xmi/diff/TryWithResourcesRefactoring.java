@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
 
-public class TryWithResourcesRefactoring implements MethodLevelRefactoring {
+public class TryWithResourcesRefactoring extends AbstractRefactoring implements MethodLevelRefactoring {
 	private TryStatementObject tryBefore;
 	private TryStatementObject tryAfter;
 	private VariableDeclarationContainer operationBefore;
@@ -26,6 +26,24 @@ public class TryWithResourcesRefactoring implements MethodLevelRefactoring {
 		this.tryAfter = tryAfter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.empty();
+	}
+
+	public String getTemplateParameterAfter() {
+		return tryAfter.toString();
 	}
 
 	public TryStatementObject getTryBefore() {

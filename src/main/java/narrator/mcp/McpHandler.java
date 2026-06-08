@@ -240,11 +240,7 @@ public class McpHandler {
         int currentChapter = progress + 1;
         int totalChapters = chapters.size();
 
-        // Update the HTML page for this chapter with the actual content
         NarrativeHtmlGenerator generator = cacheManager.getHtmlGenerator(url);
-        if (generator != null) {
-            generator.updateChapterContent(level, progress, content);
-        }
 
         StringBuilder output = new StringBuilder();
         output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append(" - GrainLevel: ").append(level).append("]\n\n");
@@ -263,6 +259,7 @@ public class McpHandler {
     }
 
     private String initNarrative(String url) throws Exception {
+        List<Cluster> clusters = getOrComputeClusters(url);
         TraversalPattern root = getOrComputeHierarchy(url);
         if (root == null) {
             return "No changes found to narrate.";
@@ -271,7 +268,7 @@ public class McpHandler {
         Narrator narrator = new Narrator(root);
         cacheManager.putNarrative(url + ":root", narrator);
 
-        NarrativeHtmlGenerator generator = new NarrativeHtmlGenerator(url, narrator);
+        NarrativeHtmlGenerator generator = new NarrativeHtmlGenerator(url, narrator, clusters);
         generator.generateAll();
         cacheManager.putHtmlGenerator(url, generator);
 

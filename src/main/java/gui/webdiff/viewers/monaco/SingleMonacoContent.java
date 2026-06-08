@@ -53,9 +53,20 @@ public class SingleMonacoContent implements Renderable {
     @Override
     public void renderOn(HtmlCanvas html) throws IOException {
         String editorId = "monaco-editor-" + Math.abs(path.hashCode());
+        String scriptSourceId = "java-code-source-" + Math.abs(path.hashCode());
         String comments = filterComments(this.comments, path, isAdded ? PullRequestReviewComment.Side.RIGHT : PullRequestReviewComment.Side.LEFT);
-        String code = "loadSingleMonacoEditor({ id: '" + editorId + "', value: `" + content + "`, language: 'java', " + "comments: " + comments + ", });";
 
+        String monacoHook = """
+            (function() {
+                const rawCode = document.getElementById('%s').textContent;
+                loadSingleMonacoEditor({
+                    id: '%s', 
+                    value: rawCode, 
+                    language: 'java', 
+                    comments: %s 
+                });
+            })();
+            """.formatted(scriptSourceId, editorId, comments);
         html
                 .render(DocType.HTML5)
                 .html(lang("en").class_("h-100"))
@@ -83,10 +94,13 @@ public class SingleMonacoContent implements Renderable {
                 ._div()
                 .div(style("height: 10px; flex-shrink: 0; background:#eee;"))
                 ._div();
-                html.macros().script(code)
-                ._body()
-                ._html();
-
+        html.script(id(scriptSourceId).type("text/plain").style("display:none;"))
+                .write(this.content, false) // false prevents escaping HTML entities like < or > inside the content
+                ._script();
+        html.script(type("text/javascript"))
+                .write("/*<![CDATA[*/" + monacoHook + "/*]]>*/", false)
+                ._script();
+        html._body()._html();
     }
 
     private static class SingleMonacoHeader implements Renderable {

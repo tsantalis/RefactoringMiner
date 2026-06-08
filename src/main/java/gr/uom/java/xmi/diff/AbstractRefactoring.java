@@ -61,8 +61,14 @@ public abstract class AbstractRefactoring implements Refactoring {
 				sb.append(" with ");
 			else if(getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
 					getRefactoringType().equals(RefactoringType.EXTRACT_SUBCLASS) ||
-					getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS))
-				sb.append(" from class ");
+					getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) {
+				if(getTemplateParameterAfter().startsWith("[") && getTemplateParameterAfter().endsWith("]"))
+					sb.append(" from classes ");
+				else
+					sb.append(" from class ");
+			}
+			else if(getRefactoringType().equals(RefactoringType.EXTRACT_INTERFACE))
+				sb.append(" from classes ");
 			else
 				sb.append(" to ");
 		}

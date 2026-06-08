@@ -47,7 +47,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private String actualSignature;
     private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
     private Optional<AbstractStatement> parentStatement;
-	
+    
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes, topLevel);
         if(packageName.equals(""))

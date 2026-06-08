@@ -112,18 +112,6 @@ public class TryWithResourcesRefactoring extends AbstractRefactoring implements 
 		return pairs;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(tryAfter.toString());
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(tryBefore, tryAfter, operationAfter, operationBefore);

@@ -118,7 +118,7 @@ public abstract class UMLAbstractClassDiff {
 	protected Set<Pair<UMLOperationBodyMapper, UMLOperationBodyMapper>> calledBy = new LinkedHashSet<>();
 	private Set<UMLOperationBodyMapper> extractMethodCandidates = new LinkedHashSet<>();
 	private int removedOperationDelegates;
-
+    
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
 		this.LANG1 = PathFileUtils.getLang(originalClass.getLocationInfo().getFilePath());
 		this.LANG2 = PathFileUtils.getLang(nextClass.getLocationInfo().getFilePath());

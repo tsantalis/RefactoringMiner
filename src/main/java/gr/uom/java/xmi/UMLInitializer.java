@@ -31,7 +31,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private final Constants LANG;
-
+    
 	public UMLInitializer(String name, LocationInfo locationInfo, String className) {
 		this.name = name;
 		this.locationInfo = locationInfo;

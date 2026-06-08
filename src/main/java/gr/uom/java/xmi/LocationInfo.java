@@ -203,7 +203,7 @@ public class LocationInfo {
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
 		// CDT exposes offsets and line numbers through IASTFileLocation, but not columns.
-		// Asks CDT for the node’s position inside the source file.
+		// Asks CDT for the node’s position inside the source file. 
 		IASTFileLocation fileLocation = node.getFileLocation();
 		if(fileLocation != null) {
 			// Stores where node starts

@@ -66,7 +66,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private Optional<StatementObject> switchExpressionCase = Optional.empty();
 	private String asString;
 	private final Constants LANG;
-
+    
 	public LambdaExpressionObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangLambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.owner = owner;
 		this.asString = LangVisitor.stringify(lambda);

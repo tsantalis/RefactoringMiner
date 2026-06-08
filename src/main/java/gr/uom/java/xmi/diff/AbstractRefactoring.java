@@ -54,6 +54,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(getTemplateParameterBefore().get());
 			if(getRefactoringType().equals(RefactoringType.RENAME_METHOD))
 				sb.append(" renamed to ");
+			else if(getRefactoringType().equals(RefactoringType.MERGE_CLASS))
+				sb.append(" merged to ");
+			else if(getRefactoringType().equals(RefactoringType.SPLIT_CLASS))
+				sb.append(" split to ");
 			else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||

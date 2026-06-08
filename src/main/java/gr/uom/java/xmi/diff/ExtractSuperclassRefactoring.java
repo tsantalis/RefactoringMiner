@@ -32,6 +32,7 @@ public class ExtractSuperclassRefactoring extends ChangeTypeRefactoring {
 	public AnnotationProvider getProviderAfter() {
 		return extractedClass;
 	}
+
 	@Override
 	public Optional<String> getTemplateParameterBefore() {return Optional.of(extractedClass.toString());}
 

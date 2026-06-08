@@ -6,6 +6,7 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
 import org.eclipse.cdt.core.parser.FileContent;
@@ -50,6 +51,8 @@ public class CppFileProcessor {
 			ScannerInfo scanInfo = new ScannerInfo(new HashMap<>()); // Add macros here if needed
 			IncludeFileContentProvider emptyIncludes = IncludeFileContentProvider.getEmptyFilesProvider();
 	
+			if(filePath.endsWith(".cpp")) {	
+			
 			IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
 				content, 
 				scanInfo, 
@@ -59,6 +62,19 @@ public class CppFileProcessor {
 				new DefaultLogService()
 			);
 			processTranslationUnit(ast);
+		}
+			else if(filePath.endsWith(".c")) {	
+				
+				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
+					content, 
+					scanInfo, 
+					emptyIncludes, 
+					EmptyCIndex.INSTANCE, 
+					GPPLanguage.OPTION_IS_SOURCE_UNIT, 
+					new DefaultLogService()
+				);
+				processTranslationUnit(ast);
+			}
 		}
 		catch(CoreException e) {
 			

@@ -8,8 +8,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorEndifStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorErrorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfdefStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfndefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
@@ -67,8 +78,8 @@ public class CppFileProcessor {
 				GPPLanguage.OPTION_IS_SOURCE_UNIT, 
 				new DefaultLogService()
 			);
-			processMacros(ast);
-			processIncludeDirectives(ast);
+			processPreprocessorStatements(ast);
+			processMacroExpansions(ast);
 			processTranslationUnit(ast);
 		}
 			else if(filePath.endsWith(".c")) {	
@@ -81,8 +92,8 @@ public class CppFileProcessor {
 					GCCLanguage.OPTION_IS_SOURCE_UNIT, 
 					new DefaultLogService()
 				);
-				processMacros(ast);
-				processIncludeDirectives(ast);
+				processPreprocessorStatements(ast);
+				processMacroExpansions(ast);
 				processTranslationUnit(ast);
 			}
 		}
@@ -91,14 +102,54 @@ public class CppFileProcessor {
 		}
 	}
 
-	private void processMacros(IASTTranslationUnit ast) {
-		for(IASTPreprocessorMacroDefinition macroDefinition : ast.getMacroDefinitions()) {
-			
+	private void processPreprocessorStatements(IASTTranslationUnit ast) {
+		for(IASTPreprocessorStatement statement : ast.getAllPreprocessorStatements()) {
+			if(statement instanceof IASTPreprocessorMacroDefinition macroDefinition) {
+				processMacroDefinition(macroDefinition);
+			}
+			else if(statement instanceof IASTPreprocessorIncludeStatement includeStatement) {
+				processIncludeDirective(includeStatement);
+			}
+			else if(statement instanceof IASTPreprocessorUndefStatement undefStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorIfStatement ifStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorIfdefStatement ifdefStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorIfndefStatement ifndefStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorElifStatement elifStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorElseStatement elseStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorEndifStatement endifStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorPragmaStatement pragmaStatement) {
+				
+			}
+			else if(statement instanceof IASTPreprocessorErrorStatement errorStatement) {
+				
+			}
 		}
 	}
 
-	private void processIncludeDirectives(IASTTranslationUnit ast) {
-		for(IASTPreprocessorIncludeStatement includeStatement : ast.getIncludeDirectives()) {
+	private void processMacroDefinition(IASTPreprocessorMacroDefinition macroDefinition) {
+		
+	}
+
+	private void processIncludeDirective(IASTPreprocessorIncludeStatement includeStatement) {
+		
+	}
+
+	private void processMacroExpansions(IASTTranslationUnit ast) {
+		for(IASTPreprocessorMacroExpansion macroExpansion : ast.getMacroExpansions()) {
 			
 		}
 	}

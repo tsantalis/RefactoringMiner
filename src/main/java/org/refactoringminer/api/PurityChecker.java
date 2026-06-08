@@ -71,8 +71,8 @@ public class PurityChecker {
                 break;
             case EXTRACT_VARIABLE:
                 ExtractVariableRefactoring extractVariable = (ExtractVariableRefactoring) refactoring;
-                LANG1 = PathFileUtils.getLang(extractVariable.getOperationBefore().getLocationInfo().getFilePath());
-                LANG2 = PathFileUtils.getLang(extractVariable.getOperationAfter().getLocationInfo().getFilePath());
+                LANG1 = extractVariable.getOperationBefore().getLANG();
+                LANG2 = extractVariable.getOperationAfter().getLANG();
                 result = detectExtractVariablePurity(extractVariable, refactorings, modelDiff);
                 break;
             default:
@@ -173,7 +173,6 @@ public class PurityChecker {
         // then check if the result equals the before-side text. If yes, the mapping is just extraction mechanics.
         // If no candidate expansion matches, the change is semantically different — mark impure.
         String currentVariableName = refactoring.getVariableDeclaration() != null ? refactoring.getVariableDeclaration().getVariableName() : null;
-        // Word-boundary pattern so "isIE" doesn't accidentally match inside "isIECompatible"
         String currentVariablePattern = currentVariableName != null ? "\\b" + Pattern.quote(currentVariableName) + "\\b" : null;
         List<String> unexplainedMappings = new ArrayList<>();
         List<AbstractCodeMapping> allMappings = new ArrayList<>(refactoring.getReferences());

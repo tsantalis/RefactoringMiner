@@ -3,19 +3,20 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class InlineVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring, LeafMappingProvider {
+public class InlineVariableRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring, LeafMappingProvider {
 	private VariableDeclaration variableDeclaration;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
@@ -33,6 +34,24 @@ public class InlineVariableRefactoring implements MethodLevelRefactoring, Refere
 		this.unmatchedStatementReferences = new LinkedHashSet<AbstractCodeFragment>();
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.empty();
+	}
+
+	public String getTemplateParameterAfter() {
+		return variableDeclaration.toString();
 	}
 
 	public void addReference(AbstractCodeMapping mapping) {
@@ -99,18 +118,6 @@ public class InlineVariableRefactoring implements MethodLevelRefactoring, Refere
 
 	public boolean isInsideExtractedOrInlinedMethod() {
 		return insideExtractedOrInlinedMethod;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(variableDeclaration);
-		String elementType = operationBefore.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationBefore.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationBefore.getClassName());
-		return sb.toString();
 	}
 
 	/**

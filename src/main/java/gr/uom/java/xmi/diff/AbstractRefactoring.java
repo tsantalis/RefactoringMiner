@@ -63,7 +63,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 				sb.append(" to ");
 		}
 		sb.append(getTemplateParameterAfter());
-		AnnotationProvider provider = getName().startsWith("Remove") ? getProviderBefore() : getProviderAfter();
+		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline");
+		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		if(addCodeElementDescription()) {
 			sb.append(" in ").append(codeElementType).append(" ");
@@ -72,7 +73,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 		String className = null;
 		if (provider instanceof VariableDeclaration || provider instanceof UMLType) {
 			MethodLevelRefactoring methodLevelRef = (MethodLevelRefactoring) this;
-			VariableDeclarationContainer container = getName().startsWith("Remove")
+			VariableDeclarationContainer container = removeOrInline
 					? methodLevelRef.getOperationBefore()
 					: methodLevelRef.getOperationAfter();
 			String elementType = container.getElementType();

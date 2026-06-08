@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class RenameAttributeRefactoring extends ChangeTypeRefactoring implements ReferenceBasedRefactoring {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute renamedAttribute;
 	private Set<CandidateAttributeRefactoring> attributeRenames;
@@ -59,6 +59,27 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 		}
 	}
 
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalAttribute;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return renamedAttribute;
+	}
+
+	public boolean qualified() {
+		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
+		VariableDeclaration renamedVariableDeclaration = renamedAttribute.getVariableDeclaration();
+		boolean qualified = originalVariableDeclaration.equalType(renamedVariableDeclaration) && !originalVariableDeclaration.equalQualifiedType(renamedVariableDeclaration);
+		if(originalVariableDeclaration.equalType(renamedVariableDeclaration) && originalVariableDeclaration.equalQualifiedType(renamedVariableDeclaration) &&
+				!originalAttribute.toQualifiedString().equals(originalAttribute.toString())) {
+			qualified = true;
+		}
+		return qualified;
+	}
+
 	public UMLAttribute getOriginalAttribute() {
 		return originalAttribute;
 	}
@@ -90,23 +111,6 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
-		VariableDeclaration renamedVariableDeclaration = renamedAttribute.getVariableDeclaration();
-		boolean qualified = originalVariableDeclaration.equalType(renamedVariableDeclaration) && !originalVariableDeclaration.equalQualifiedType(renamedVariableDeclaration);
-		if(originalVariableDeclaration.equalType(renamedVariableDeclaration) && originalVariableDeclaration.equalQualifiedType(renamedVariableDeclaration) &&
-				!originalAttribute.toQualifiedString().equals(originalAttribute.toString())) {
-			qualified = true;
-		}
-		sb.append(qualified ? originalVariableDeclaration.toQualifiedString() : originalVariableDeclaration.toString());
-		sb.append(" to ");
-		sb.append(qualified ? renamedVariableDeclaration.toQualifiedString() : renamedVariableDeclaration.toString());
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override

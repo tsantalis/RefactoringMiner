@@ -3,16 +3,17 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class ChangeThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
+public class ChangeThrownExceptionTypeRefactoring extends ThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
 	private Set<UMLType> originalTypes;
 	private Set<UMLType> changedTypes;
 	private VariableDeclarationContainer operationBefore;
@@ -24,6 +25,24 @@ public class ChangeThrownExceptionTypeRefactoring implements MethodLevelRefactor
 		this.changedTypes = changedTypes;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public String getTemplateParameterAfter() {
+		return changedTypes.size() == 1 ? changedTypes.iterator().next().toString() : changedTypes.toString();
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(originalTypes.size() == 1 ? originalTypes.iterator().next().toString() : originalTypes.toString());
 	}
 
 	public Set<UMLType> getOriginalTypes() {
@@ -92,18 +111,6 @@ public class ChangeThrownExceptionTypeRefactoring implements MethodLevelRefactor
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalTypes.size() == 1 ? originalTypes.iterator().next() : originalTypes);
-		sb.append(" to ");
-		sb.append(changedTypes.size() == 1 ? changedTypes.iterator().next() : changedTypes);
-		sb.append(" in method ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

@@ -3,17 +3,18 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class SplitVariableRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
+public class SplitVariableRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, ReferenceBasedRefactoring {
 	private Set<VariableDeclaration> splitVariables;
 	private VariableDeclaration oldVariable;
 	private VariableDeclarationContainer operationBefore;
@@ -30,6 +31,24 @@ public class SplitVariableRefactoring implements MethodLevelRefactoring, Referen
 		this.operationAfter = operationAfter;
 		this.variableReferences = variableReferences;
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(oldVariable.toString());
+	}
+
+	public String getTemplateParameterAfter() {
+		return getSplitVariables().toString();
 	}
 
 	public Set<VariableDeclaration> getSplitVariables() {
@@ -89,19 +108,6 @@ public class SplitVariableRefactoring implements MethodLevelRefactoring, Referen
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(oldVariable);
-		sb.append(" to ");
-		sb.append(splitVariables);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

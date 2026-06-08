@@ -22,6 +22,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -1229,7 +1230,8 @@ public class VariableReplacementAnalysis {
 								boolean attributeInAddedClass = attributesInAddedClasses.containsKey(addedAttribute.getClassName()) && attributesInAddedClasses.get(addedAttribute.getClassName()).contains(addedAttribute);							
 								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, before, attributeInAddedClass);
 								if(leafExpression != null && !classDiff.getOriginalClass().importsType(after) && !parameterNameList2.contains(after)) {
-									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
+									UMLAbstractClass nextClass = modelDiff !=  null ? modelDiff.findClassInChildModel(addedAttribute.getClassName()) : classDiff.getNextClass();
+									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), nextClass, insideExtractedOrInlinedMethod);
 									if(refactorings.contains(refactoring)) {
 										Iterator<Refactoring> it = refactorings.iterator();
 										while(it.hasNext()) {
@@ -1278,7 +1280,8 @@ public class VariableReplacementAnalysis {
 								boolean attributeInRemovedClass = attributesInRemovedClasses.containsKey(removedAttribute.getClassName()) && attributesInRemovedClasses.get(removedAttribute.getClassName()).contains(removedAttribute);
 								LeafExpression leafExpression = extractInlineCondition(declaration1, replacement, after, attributeInRemovedClass);
 								if(leafExpression != null && !classDiff.getNextClass().importsType(before) && !parameterNameList1.contains(before)) {
-									InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
+									UMLAbstractClass originalClass = modelDiff !=  null ? modelDiff.findClassInParentModel(removedAttribute.getClassName()) : classDiff.getOriginalClass();
+									InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, originalClass, classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 									if(refactorings.contains(refactoring)) {
 										Iterator<Refactoring> it = refactorings.iterator();
 										while(it.hasNext()) {

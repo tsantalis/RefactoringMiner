@@ -10,19 +10,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
-configurations.all {
-    resolutionStrategy {
-        force 'org.eclipse.jetty:jetty-server:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-http:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-servlet:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-util:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-io:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-webapp:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-xml:9.4.48.v20220622'
-        force 'org.eclipse.jetty:jetty-security:9.4.48.v20220622'
-    }
-}
-
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
@@ -83,6 +70,8 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation 'io.joern:eclipse-cdt-core:9.2.100.202507101054+1'
+
     implementation platform("io.modelcontextprotocol.sdk:mcp-bom:1.1.2")
     implementation "io.modelcontextprotocol.sdk:mcp-core"
     implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
@@ -94,6 +83,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.21'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
     implementation 'org.slf4j:slf4j-api:2.0.17'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.32'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.45.0'
     implementation 'org.apache.commons:commons-text:1.15.0'
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
@@ -107,13 +97,7 @@ dependencies {
     implementation 'org.jcommander:jcommander:3.0'
     implementation 'org.jsoup:jsoup:1.22.2'
     implementation 'com.perforce:p4java:2025.2.2917314'
-    implementation 'org.jgrapht:jgrapht-core:1.5.1'
-    implementation 'org.apache.poi:poi-ooxml:5.2.3'
-    implementation 'org.apache.commons:commons-collections4:4.4'
-    implementation 'org.json:json:20171018'
     implementation 'com.google.code.gson:gson:2.11.0'
-    implementation 'com.perforce:p4java:2024.1.2674354'
-    implementation 'dev.langchain4j:langchain4j-open-ai:1.0.0-alpha1'
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
@@ -125,20 +109,14 @@ dependencies {
     testImplementation 'org.glassfish:javax.json:1.1.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
     implementation 'it.unimi.dsi:fastutil:8.5.18'
     implementation 'com.sparkjava:spark-core:2.9.4'
-    implementation 'org.eclipse.jetty:jetty-server:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-http:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-servlet:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-util:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-io:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-webapp:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-xml:9.4.48.v20220622'
-    implementation 'org.eclipse.jetty:jetty-security:9.4.48.v20220622'
     implementation('org.rendersnake:rendersnake:1.9.0') {
         exclude group: 'javax.servlet', module: 'servlet-api'
     }
 }
+
 java {
     withJavadocJar()
     withSourcesJar()
@@ -235,7 +213,6 @@ tasks.register('mcpSmoke', JavaExec) {
         }
     }
 }
-
 
 tasks.register('changeNarratorRestApi', org.springframework.boot.gradle.tasks.bundling.BootJar) {
     group = 'build'

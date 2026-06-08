@@ -922,7 +922,7 @@ public class StringBasedHeuristics {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
-			if(diff2.equals("val ") || diff2.equals("var ")) {
+			if(diff2.equals("val ") || diff2.equals("var ") || diff2.equals("let") || diff2.equals("const")) {
 				return true;
 			}
 		}
@@ -930,7 +930,7 @@ public class StringBasedHeuristics {
 			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS1 = s1.lastIndexOf(commonSuffix);
 			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
-			if(diff1.equals("val ") || diff1.equals("var ")) {
+			if(diff1.equals("val ") || diff1.equals("var ") || diff1.equals("let") || diff1.equals("const")) {
 				return true;
 			}
 		}
@@ -2249,7 +2249,8 @@ public class StringBasedHeuristics {
 		StringBuilder sb = new StringBuilder();
 		for(LeafExpression leaf1 : statement1.getStringLiterals()) {
 			String literal = leaf1.getString();
-			sb.append(literal.substring(1, literal.length()-1));
+			if(literal.startsWith("\"") && literal.endsWith("\""))
+				sb.append(literal.substring(1, literal.length()-1));
 		}
 		String concatenated = sb.toString().replaceAll("\\s+","").replace("\\\"", "\"");
 		for(LeafExpression leaf2 : statement2.getTextBlocks()) {

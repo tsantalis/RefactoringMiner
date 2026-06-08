@@ -7,12 +7,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MoveAttributeRefactoring implements Refactoring {
+public class MoveAttributeRefactoring extends AbstractMoveRefactoring {
 	protected UMLAttribute originalAttribute;
 	protected UMLAttribute movedAttribute;
 	protected Optional<UMLAttributeDiff> attributeDiff;
@@ -30,21 +30,18 @@ public class MoveAttributeRefactoring implements Refactoring {
 		this.attributeDiff = Optional.empty();
 	}
 
-	public Optional<UMLAttributeDiff> getAttributeDiff() {
-		return attributeDiff;
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalAttribute;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(getOriginalAttribute().toQualifiedString());
-		sb.append(" from class ");
-		sb.append(getSourceClassName());
-		sb.append(" to ");
-		sb.append(getMovedAttribute().toQualifiedString());
-		sb.append(" from class ");
-		sb.append(getTargetClassName());
-		return sb.toString();
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return movedAttribute;
+	}
+
+	public Optional<UMLAttributeDiff> getAttributeDiff() {
+		return attributeDiff;
 	}
 
 	public String getName() {

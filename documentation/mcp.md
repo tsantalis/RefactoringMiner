@@ -99,63 +99,57 @@ Call refactoringminer_diff_worktree with baseRef "HEAD", includeUntracked false,
 
 ## Docker
 
-The Docker image can run the MCP server over stdio:
+RefactoringMiner is recommended to run via Docker to avoid local environment setup and ensure stability.
 
-```bash
-docker run --rm -i \
-  --pull always \
-  -e OAuthToken=$OAuthToken \
-  tsantalis/refactoringminer:latest mcp
-```
+### Linux and macOS
 
-Mount a repository when using local worktree or commit tools:
+Use the provided [wrapper script template](../scripts/mcp-wrapper-template.sh). This script ensures a shared container runs in the background:
 
-```bash
-docker run --rm -i \
-  --pull always \
-  -v "$PWD:/workspace" \
-  -w /workspace \
-  -e OAuthToken=$OAuthToken \
-  tsantalis/refactoringminer:latest mcp
-```
+1. Copy the template to your local machine:
+   ```bash
+   cp scripts/mcp-wrapper-template.sh mcp-wrapper.sh
+   ```
+2. Edit `mcp-wrapper.sh` to populate the user configuration variables:
+   - `HOST_VOLUME_PATH`: Absolute path to the repository you want to analyze.
+   - `TOKEN`: Your GitHub OAuth token for private repositories and higher rate limits.
+   - Optional: Adjust `CONTAINER_NAME` or `PORT_MAPPING` as needed.
+3. Make the script executable:
+   ```bash
+   chmod +x mcp-wrapper.sh
+   ```
+4. Use the script as the command for your MCP client. For example, in a `.mcp.json` config:
+   ```json
+   {
+     "mcpServers": {
+       "refactoringminer": {
+         "type": "stdio",
+         "command": "/absolute/path/to/mcp-wrapper.sh"
+       }
+     }
+   }
+   ```
 
-For the command above, worktree and commit tools default to `/workspace` because Docker starts the MCP process there with `-w /workspace`. If you pass `repositoryPath` explicitly, use the container path, not the host path. For example, use `/workspace`, not `C:/RefactoringMiner` or `/Users/me/RefactoringMiner`.
+### Windows
 
-For AST diff browser tools, publish the WebDiff port:
-
-```bash
-docker run --rm -i \
-  --pull always \
-  -v "$PWD:/workspace" \
-  -w /workspace \
-  -p 6789:6789 \
-  -e OAuthToken=$OAuthToken \
-  tsantalis/refactoringminer:latest mcp
-```
-
-The Docker image sets `REFACTORINGMINER_WEBDIFF_BIND_HOST=0.0.0.0` so the published port is reachable from the host. The URL returned to the user still uses `127.0.0.1`.
-
-A Claude Code config can use Docker as the stdio command:
+For Windows, you can use a lighter functional config directly in your MCP client configuration without needing a wrapper script:
 
 ```json
-{
-  "mcpServers": {
-    "refactoringminer": {
-      "type": "stdio",
-      "command": "docker",
-      "args": [
-        "run", "--rm", "-i", "--pull", "always",
-        "-v", "/absolute/path/to/repo:/workspace",
-        "-w", "/workspace",
-        "-p", "6789:6789",
-        "-e", "OAuthToken",
-        "tsantalis/refactoringminer:latest",
-        "mcp"
-      ]
-    }
-  }
-}
+ {
+   "mcpServers": {
+     "refactoringminer": {
+       "type": "stdio",
+       "command": "cmd",
+       "args": [
+         "/c",
+         "docker rm -f refactoringminer-server 2>nul && docker run --rm -i --name refactoringminer-server --pull always -v \"C:/absolute/path/to/your/repo:/workspace\" -w /workspace -p 6785-6795:6785-6795 -e OAuthToken=%OAuthToken% tsantalis/refactoringminer:latest mcp"
+       ]
+     }
+   }
+ }
 ```
+Replace `C:/absolute/path/to/your/repo` and `%OAuthToken%` with your actual path and token.
+
+When using the Docker setup, any tool that requires a `repositoryPath` should use the container path (usually `/workspace`), not the host path.
 
 Outside Docker, WebDiff binds to `127.0.0.1` by default. These settings can be overridden with environment variables or JVM system properties:
 
@@ -250,7 +244,7 @@ MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1`
 
 The returned URL is only available while the MCP server process is still running. If an MCP client starts RefactoringMiner for a single command and immediately exits, the local WebDiff server can disappear before the user opens the URL. Use an interactive client session for browser tools, or use the direct WebDiff CLI when the goal is only manual browser inspection.
 
-Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. MCP-managed WebDiff pages hide the WebDiff Quit button so the MCP server can keep serving later browser-tool calls on the same port. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a summary and warnings. It does not corrupt stdio output or discard the previous view on another port.
+Repeated browser-tool calls replace the active local WebDiff view in the MCP server process. MCP-managed WebDiff pages hide the WebDiff Quit button so the MCP server can keep serving later browser-tool calls. If the requested port is invalid or already occupied by another process, the tool returns an `error` result with a summary and warnings. Each new browser view terminates the previous one, regardless of whether they use the same port.
 
 Example file-content browser request:
 

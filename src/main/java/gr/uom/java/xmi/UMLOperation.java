@@ -86,6 +86,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.anonymousClassContainer = Optional.empty();
     }
 
+	public Constants getLANG() {
+		return LANG;
+	}
+
 	public void addNestedOperation(UMLOperation operation) {
 		nestedOperations.add(operation);
 	}
@@ -1217,7 +1221,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		for(int i=0; i<parameters.size(); i++) {
 			UMLParameter parameter = parameters.get(i);
 			if(parameter.getKind().equals("in")) {
-				if(LANG.equals(Constants.PYTHON))
+				if(LANG.equals(Constants.PYTHON) || PathFileUtils.isJavaScriptFile(locationInfo.getFilePath()))
 					sb.append(parameter.getName());
 				else
 					sb.append(parameter.toQualifiedString());

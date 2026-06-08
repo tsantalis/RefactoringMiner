@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -17,7 +18,7 @@ import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ReplaceGenericWithDiamondRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
+public class ReplaceGenericWithDiamondRefactoring extends AbstractRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private AbstractCodeFragment statementBefore;
 	private AbstractCodeFragment statementAfter;
 	private AbstractCall creationBefore;
@@ -48,6 +49,24 @@ public class ReplaceGenericWithDiamondRefactoring implements MethodLevelRefactor
 		}
 		LeafMapping leafMapping = new LeafMapping(creationBefore.asLeafExpression(), creationAfter.asLeafExpression(), operationBefore, operationAfter);
 		addSubExpressionMapping(leafMapping);
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(extractType(creationBefore));
+	}
+
+	public String getTemplateParameterAfter() {
+		return extractType(creationAfter);
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -160,20 +179,6 @@ public class ReplaceGenericWithDiamondRefactoring implements MethodLevelRefactor
 				&& Objects.equals(statementBefore, other.statementBefore)
 				&& Objects.equals(operationAfter, other.operationAfter)
 				&& Objects.equals(operationBefore, other.operationBefore);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(extractType(creationBefore));
-		sb.append(" with ");
-		sb.append(extractType(creationAfter));
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ").append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	private static String extractType(AbstractCall c) {

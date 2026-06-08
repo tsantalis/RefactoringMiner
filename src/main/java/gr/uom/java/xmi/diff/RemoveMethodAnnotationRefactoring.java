@@ -8,10 +8,11 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class RemoveMethodAnnotationRefactoring implements MethodLevelRefactoring, AnnotationRefactoring {
+public class RemoveMethodAnnotationRefactoring extends AnnotationRefactoring implements MethodLevelRefactoring {
 	private UMLAnnotation annotation;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
@@ -21,6 +22,16 @@ public class RemoveMethodAnnotationRefactoring implements MethodLevelRefactoring
 		this.annotation = annotation;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
 	}
 
 	@Override
@@ -81,17 +92,6 @@ public class RemoveMethodAnnotationRefactoring implements MethodLevelRefactoring
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		sb.append(" in method ");
-		sb.append(operationBefore.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationBefore.getClassName());
-		return sb.toString();
 	}
 
 	@Override

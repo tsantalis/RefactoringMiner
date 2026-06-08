@@ -49,7 +49,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 		}
 		stopActiveView();
 		if (replacingSamePort) {
-			portProbe.requireAvailable(port);
+			requireAvailablePort(bindHost, port);
 		}
 
 		WebDiffView view = factory.create(diff);
@@ -83,7 +83,7 @@ final class WebDiffBrowserLauncher implements DiffBrowserLauncher {
 
 	private static void requireAvailablePort(String bindHost, int port) throws IOException {
 		try (ServerSocket socket = new ServerSocket()) {
-			socket.setReuseAddress(false);
+			socket.setReuseAddress(true);
 			socket.bind(new InetSocketAddress(bindHost, port));
 		} catch (BindException e) {
 			throw new IllegalArgumentException("port is already in use: " + port, e);

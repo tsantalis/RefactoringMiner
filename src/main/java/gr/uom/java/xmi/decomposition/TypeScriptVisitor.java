@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
@@ -28,10 +27,9 @@ import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstRegex;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
-import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstTplElement;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
-import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
@@ -39,9 +37,7 @@ import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.ModuleContainer;
-import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLOperation;
@@ -119,6 +115,28 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return super.visitVarDeclarator(declarator);
 	}
 
+	public Swc4jAstVisitorResponse visitMemberExpr(Swc4jAstMemberExpr node) {
+		if(node.getParent() instanceof Swc4jAstMemberExpr) {
+			ISwc4jAst parent = node.getParent().getParent();
+			boolean keyValuePropParent = false;
+			while(parent != null) {
+				if(parent instanceof Swc4jAstKeyValueProp) {
+					keyValuePropParent = true;
+					break;
+				}
+				else if(parent instanceof Swc4jAstBlockStmt) {
+					break;
+				}
+				parent = parent.getParent();
+			}
+			if(!keyValuePropParent) {
+				LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.QUALIFIED_NAME, container, fileContent);
+				variables.add(name);
+			}
+		}
+		return super.visitMemberExpr(node);
+	}
+
 	public Swc4jAstVisitorResponse visitIdent(Swc4jAstIdent node) {
 		String identifier = node.getSym();
 		if(activeVariableDeclarations.containsKey(identifier)) {
@@ -149,12 +167,34 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 						}
 					}
 				}
+				else if(container instanceof UMLOperation operation) {
+					for(UMLImport imp : operation.getNestedImports()) {
+						if(imp.getName().endsWith(name)) {
+							// the identifier is a function name
+							// Direct Method Passing (Point-Free Style)
+							OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+							methodInvocations.add(invocation);
+							break;
+						}
+					}
+				}
 			}
 		}
 		else if(node.getParent() instanceof Swc4jAstKeyValueProp prop && prop.getValue().equals(node)) {
 			String name = node.getSym();
 			if(container instanceof ModuleContainer module) {
 				for(UMLOperation op : module.getNestedOperations()) {
+					if(op.getName().equals(name)) {
+						// the identifier is a function name
+						// Direct Method Passing (Point-Free Style)
+						OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, node, container, fileContent);
+						methodInvocations.add(invocation);
+						break;
+					}
+				}
+			}
+			else if(container instanceof UMLOperation operation) {
+				for(UMLOperation op : operation.getNestedOperations()) {
 					if(op.getName().equals(name)) {
 						// the identifier is a function name
 						// Direct Method Passing (Point-Free Style)
@@ -268,85 +308,10 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		if(node.getProps().isEmpty()) {
 			return super.visitObjectLit(node);
 		}
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, node.getSpan(), CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
-		UMLAnonymousClass anonymousClass = null;
-		boolean alreadyAdded = false;
-		for(UMLAnonymousClass anonymous : container.getAnonymousClassList()) {
-			if(anonymous.getLocationInfo().equals(location)) {
-				alreadyAdded = true;
-				anonymousClass = anonymous;
-				break;
-			}
-		}
-		if(anonymousClass == null) {
-			List<UMLImport> imports = new ArrayList<>();
-			String codePath = getAnonymousCodePath(node);
-			anonymousClass = new UMLAnonymousClass(container.getClassName(), codePath, codePath, location, imports);
-			OperationBody.processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, container.getComments(), node, anonymousClass);
-		}
-		if(container instanceof LambdaExpressionObject lambda) {
-			VariableDeclarationContainer owner = lambda.getOwner();
-			owner.getAnonymousClassList().add(anonymousClass);
-			while(owner instanceof LambdaExpressionObject parentLambda && parentLambda.getOwner() != null) {
-				parentLambda.getOwner().getAnonymousClassList().add(anonymousClass);
-				owner = parentLambda.getOwner();
-			}
-		}
-		else if(!alreadyAdded) {
-			container.getAnonymousClassList().add(anonymousClass);
-		}
-		if(!anonymousClass.getParentContainers().contains(container))
-			anonymousClass.addParentContainer(container);
+		TypeScriptOperationBody.createAnonymousClass(node, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(sourceFolder, filePath, node, fileContent);
 		anonymousClassDeclarations.add(anonymousObject);
 		return super.visitObjectLit(node);
-	}
-
-	private String getAnonymousCodePath(Swc4jAstObjectLit node) {
-		String name = "";
-		ISwc4jAst parent = node.getParent();
-		while(parent != null) {
-			if(parent instanceof Swc4jAstFnDecl function) {
-				String methodName = function.getIdent().getSym();
-				if(name.isEmpty()) {
-					name = methodName;
-				}
-				else {
-					name = methodName + "." + name;
-				}
-			}
-			else if(parent instanceof Swc4jAstClassMethod function) {
-				String methodName = function.getKey().toString();
-				if(name.isEmpty()) {
-					name = methodName;
-				}
-				else {
-					name = methodName + "." + name;
-				}
-			}
-			else if(parent instanceof Swc4jAstVarDeclarator declarator) {
-				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
-				String fieldName = identifiers.get(0).getId().getSym();
-				if(name.isEmpty()) {
-					name = fieldName;
-				}
-				else {
-					name = fieldName + "." + name;
-				}
-			}
-			else if(parent instanceof Swc4jAstKeyValueProp keyValueProp) {
-				ISwc4jAstPropName key = keyValueProp.getKey();
-				String keyValue = OperationBody.extractString(key, fileContent);
-				if(name.isEmpty()) {
-					name = keyValue;
-				}
-				else {
-					name = keyValue + "." + name;
-				}
-			}
-			parent = parent.getParent();
-		}
-		return name.toString();
 	}
 
 	public List<LeafExpression> getVariables() {

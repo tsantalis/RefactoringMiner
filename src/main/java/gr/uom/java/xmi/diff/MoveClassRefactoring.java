@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveClassRefactoring implements PackageLevelRefactoring {
+public class MoveClassRefactoring extends AbstractMoveRefactoring implements PackageLevelRefactoring {
 	private UMLClass originalClass;
 	private UMLClass movedClass;
 	
@@ -20,13 +21,14 @@ public class MoveClassRefactoring implements PackageLevelRefactoring {
 		this.movedClass = movedClass;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalClass.getName());
-		sb.append(" moved to ");
-		sb.append(movedClass.getName());
-		return sb.toString();
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalClass;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return movedClass;
 	}
 
 	public RenamePattern getRenamePattern() {

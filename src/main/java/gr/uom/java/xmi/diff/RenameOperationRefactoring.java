@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class RenameOperationRefactoring implements MethodLevelRefactoring {
+public class RenameOperationRefactoring extends ChangeTypeRefactoring implements MethodLevelRefactoring {
 	private UMLOperation originalOperation;
 	private UMLOperation renamedOperation;
 	private Set<Replacement> replacements;
@@ -37,25 +39,22 @@ public class RenameOperationRefactoring implements MethodLevelRefactoring {
 		this.callReferences = new HashSet<MethodInvocationReplacement>();
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalOperation.toQualifiedString());
-		sb.append(" renamed to ");
-		sb.append(renamedOperation.toQualifiedString());
-		sb.append(" in class ").append(getClassName());
-		return sb.toString();
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalOperation;
 	}
 
-	private String getClassName() {
-		String sourceClassName = originalOperation.getClassName();
-		String targetClassName = renamedOperation.getClassName();
-		boolean targetIsAnonymousInsideSource = false;
-		if(targetClassName.startsWith(sourceClassName + ".")) {
-			String targetClassNameSuffix = targetClassName.substring(sourceClassName.length() + 1, targetClassName.length());
-			targetIsAnonymousInsideSource = StringDistance.isNumeric(targetClassNameSuffix);
-		}
-		return sourceClassName.equals(targetClassName) || targetIsAnonymousInsideSource ? sourceClassName : targetClassName;
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return renamedOperation;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(originalOperation.toQualifiedString());
+	}
+
+	public String getTemplateParameterAfter() {
+		return renamedOperation.toQualifiedString();
 	}
 
 	public String getName() {

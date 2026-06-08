@@ -3,18 +3,19 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, LeafMappingProvider {
+public class InlineAttributeRefactoring extends AbstractRefactoring implements ReferenceBasedRefactoring, LeafMappingProvider {
 	private UMLAttribute attributeDeclaration;
 	private UMLAbstractClass originalClass;
 	private UMLAbstractClass nextClass;
@@ -30,6 +31,25 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		//this is on purpose, because refactoring description uses nextClass
+		return nextClass;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return nextClass;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.empty();
+	}
+
+	public String getTemplateParameterAfter() {
+		return attributeDeclaration.toString();
 	}
 
 	public void addReference(AbstractCodeMapping mapping) {
@@ -76,15 +96,6 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 
 	public boolean isInsideExtractedOrInlinedMethod() {
 		return insideExtractedOrInlinedMethod;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(attributeDeclaration);
-		sb.append(" in class ");
-		sb.append(nextClass.getName());
-		return sb.toString();
 	}
 
 	/**

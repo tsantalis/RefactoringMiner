@@ -656,8 +656,10 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				UMLType left = null;
 				if(leftEntityName instanceof Swc4jAstIdent ident)
 					left = extractTypeObject(ident.getSym());
-				else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName)
-					left = extractTypeObject((ISwc4jAstTsType)qualifiedName, sourceFolder, filePath, fileContent);
+				else if(leftEntityName instanceof Swc4jAstTsQualifiedName qualifiedName) {
+					String q = qualifiedName(qualifiedName);
+					left = extractTypeObject(q);
+				}
 				UMLType rightType = extractTypeObject(qualified.getRight().getSym());
 				UMLType compositeType = new CompositeType(left, (LeafType) rightType);
 				if(typeArguments.size() > 0)

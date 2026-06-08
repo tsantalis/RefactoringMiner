@@ -6513,6 +6513,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -11321,6 +11335,13 @@
     }, {
         "type": "Move Class",
         "description": "Move Class shark.ReferenceMatcher.IgnoredReferenceMatcher moved to shark.IgnoredReferenceMatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public onProgressUpdate(step Step) renamed to public onAnalysisProgress(step Step) in class shark.OnAnalysisProgressListener.Companion.NO_OP.OnAnalysisProgressListener",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

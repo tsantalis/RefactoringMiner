@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
@@ -17,7 +18,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	}
 	private String qualifiedName;
     private String sourceFile;
-    private String sourceFolder;
     private Visibility visibility;
     private boolean isFinal;
     private boolean isStatic;
@@ -46,43 +46,16 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private List<UMLTypeAlias> typeAliasList;
     private String actualSignature;
     private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
-    
+    private Optional<AbstractStatement> parentStatement;
+
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
-    	super(packageName, name, locationInfo, importedTypes);
+    	super(packageName, name, locationInfo, importedTypes, topLevel);
         if(packageName.equals(""))
         	this.qualifiedName = name;
     	else
     		this.qualifiedName = packageName + "." + name;
         
         this.sourceFile = getSourceFile();
-        this.sourceFolder = "";
-        if(packageName.equals("")) {
-        	int index = sourceFile.indexOf(name);
-        	if(index != -1) {
-    			this.sourceFolder = sourceFile.substring(0, index);
-    		}
-        }
-        else {
-        	if(topLevel) {
-        		int index = sourceFile.indexOf(packageName.replace('.', '/'));
-        		if(index != -1) {
-        			this.sourceFolder = sourceFile.substring(0, index);
-        		}
-        	}
-        	else {
-        		int index = -1;
-        		if(packageName.contains(".")) {
-        			String realPackageName = packageName.substring(0, packageName.lastIndexOf('.'));
-        			index = sourceFile.indexOf(realPackageName.replace('.', '/'));
-        		}
-        		else {
-        			index = sourceFile.indexOf(packageName);
-        		}
-        		if(index != -1) {
-        			this.sourceFolder = sourceFile.substring(0, index);
-        		}
-        	}
-        }
         this.isAbstract = false;
         this.isInterface = false;
         this.topLevel = topLevel;
@@ -93,6 +66,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
         this.typeAliasList = new ArrayList<UMLTypeAlias>();
+        this.parentStatement = Optional.empty();
     }
 
     public String getTypeDeclarationKind() {
@@ -109,6 +83,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	else
     		return "class";
     }
+
+	public void setParentStatement(AbstractStatement s) {
+		this.parentStatement = Optional.of(s);
+	}
+
+	public Optional<AbstractStatement> getParentStatement() {
+		return parentStatement;
+	}
 
 	public ConditionallyCreated getConditionallyCreated() {
 		return conditionallyCreated;
@@ -172,10 +154,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void addTypeParameter(UMLTypeParameter typeParameter) {
 		typeParameters.add(typeParameter);
-	}
-
-	public String getSourceFolder() {
-		return sourceFolder;
 	}
 
 	public String getName() {
@@ -491,8 +469,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	}
 	
 	public double normalizedSourceFolderDistance(UMLClass c) {
-		String s1 = sourceFolder.toLowerCase();
-		String s2 = c.sourceFolder.toLowerCase();
+		String s1 = getSourceFolder().toLowerCase();
+		String s2 = c.getSourceFolder().toLowerCase();
 		if(s1.isEmpty() && s2.isEmpty()) {
 			return 0;
 		}

@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class RemoveVariableAnnotationRefactoring implements MethodLevelRefactoring {
+public class RemoveVariableAnnotationRefactoring extends AnnotationRefactoring implements MethodLevelRefactoring {
 	private UMLAnnotation annotation;
 	private VariableDeclaration variableBefore;
 	private VariableDeclaration variableAfter;
@@ -30,6 +30,16 @@ public class RemoveVariableAnnotationRefactoring implements MethodLevelRefactori
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return variableBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return variableAfter;
 	}
 
 	public UMLAnnotation getAnnotation() {
@@ -112,23 +122,6 @@ public class RemoveVariableAnnotationRefactoring implements MethodLevelRefactori
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(annotation);
-		if(variableBefore.isParameter())
-			sb.append(" in parameter ");
-		else
-			sb.append(" in variable ");
-		sb.append(variableBefore);
-		String elementType = operationBefore.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationBefore.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationBefore.getClassName());
-		return sb.toString();
 	}
 
 	@Override

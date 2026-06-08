@@ -2,6 +2,8 @@ package gr.uom.java.xmi;
 
 import java.util.List;
 
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
@@ -194,6 +196,52 @@ public class LocationInfo {
 		else {
 			this.endLine = (int) (this.startLine + lines - 1);
 		}
+	}
+
+	public LocationInfo(String sourceFolder, String filePath, IASTNode node, CodeElementType codeElementType, String fileContent) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		// CDT exposes offsets and line numbers through IASTFileLocation, but not columns.
+		// Asks CDT for the node’s position inside the source file.
+		IASTFileLocation fileLocation = node.getFileLocation();
+		if(fileLocation != null) {
+			// Stores where node starts
+			this.startOffset = fileLocation.getNodeOffset();
+			// Stores characters belonging to node.
+			this.length = fileLocation.getNodeLength();
+			this.endOffset = startOffset + length;
+			this.startLine = fileLocation.getStartingLineNumber();
+			this.endLine = fileLocation.getEndingLineNumber();
+			// Columns are derived from the original file content so CodeRange remains UI-friendly.
+			this.startColumn = computeColumn(fileContent, startOffset);
+			this.endColumn = computeColumn(fileContent, Math.max(startOffset, endOffset - 1));
+			this.compilationUnitLength = computeCompilationUnitLength(fileContent);
+		}
+	}
+
+	private int computeColumn(String fileContent, int offset) {
+		if(fileContent == null || fileContent.isEmpty() || offset < 0) {
+			return 0;
+		}
+		// Prevent searching past the end of the source text.
+		int safeOffset = Math.min(offset, fileContent.length());
+
+		// Search strictly before the target offset.
+		int searchFrom = safeOffset - 1;
+		int previousLf = fileContent.lastIndexOf('\n', searchFrom);
+		int previousCr = fileContent.lastIndexOf('\r', searchFrom);
+		int previousNewLine = Math.max(previousLf, previousCr);
+
+		// Columns are 1-based.
+		return safeOffset - previousNewLine;
+	}
+
+	private int computeCompilationUnitLength(String fileContent) {
+		if(fileContent == null || fileContent.isEmpty()) {
+			return 0;
+		}
+		return (int) fileContent.lines().count();
 	}
 
 	public String getSourceFolder() {

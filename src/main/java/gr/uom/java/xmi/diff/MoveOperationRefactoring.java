@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class MoveOperationRefactoring implements Refactoring {
+public class MoveOperationRefactoring extends AbstractMoveRefactoring {
 	protected VariableDeclarationContainer originalOperation;
 	protected VariableDeclarationContainer movedOperation;
 	private Set<Replacement> replacements;
@@ -40,17 +40,14 @@ public class MoveOperationRefactoring implements Refactoring {
 		}
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalOperation.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(originalOperation.getClassName());
-		sb.append(" to ");
-		sb.append(movedOperation.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(movedOperation.getClassName());
-		return sb.toString();
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalOperation;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return movedOperation;
 	}
 
 	public String getName() {

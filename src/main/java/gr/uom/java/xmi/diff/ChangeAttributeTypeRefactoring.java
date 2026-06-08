@@ -10,10 +10,10 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ChangeAttributeTypeRefactoring extends ChangeTypeRefactoring implements AttributeLevelRefactoring, ReferenceBasedRefactoring {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;
@@ -34,6 +34,16 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
 	}
 
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalAttribute;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return changedTypeAttribute;
+	}
+
 	public void addRelatedRefactoring(Refactoring refactoring) {
 		this.relatedRefactorings.add(refactoring);
 	}
@@ -42,11 +52,11 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 		return relatedRefactorings;
 	}
 
-	public UMLAttribute getOriginalAttribute() {
+	public UMLAttribute getAttributeBefore() {
 		return originalAttribute;
 	}
 
-	public UMLAttribute getChangedTypeAttribute() {
+	public UMLAttribute getAttributeAfter() {
 		return changedTypeAttribute;
 	}
 
@@ -74,19 +84,6 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 	@Override
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		VariableDeclaration originalVariableDeclaration = originalAttribute.getVariableDeclaration();
-		VariableDeclaration changedTypeVariableDeclaration = changedTypeAttribute.getVariableDeclaration();
-		boolean qualified = originalVariableDeclaration.equalType(changedTypeVariableDeclaration) && !originalVariableDeclaration.equalQualifiedType(changedTypeVariableDeclaration);
-		sb.append(getName()).append("\t");
-		sb.append(qualified ? originalVariableDeclaration.toQualifiedString() : originalVariableDeclaration.toString());
-		sb.append(" to ");
-		sb.append(qualified ? changedTypeVariableDeclaration.toQualifiedString() : changedTypeVariableDeclaration.toString());
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override
@@ -141,14 +138,14 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 	@Override
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		pairs.add(new ImmutablePair<String, String>(getOriginalAttribute().getLocationInfo().getFilePath(), getClassNameBefore()));
+		pairs.add(new ImmutablePair<String, String>(getAttributeBefore().getLocationInfo().getFilePath(), getClassNameBefore()));
 		return pairs;
 	}
 
 	@Override
 	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		pairs.add(new ImmutablePair<String, String>(getChangedTypeAttribute().getLocationInfo().getFilePath(), getClassNameAfter()));
+		pairs.add(new ImmutablePair<String, String>(getAttributeAfter().getLocationInfo().getFilePath(), getClassNameAfter()));
 		return pairs;
 	}
 

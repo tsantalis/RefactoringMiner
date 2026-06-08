@@ -664,6 +664,16 @@
           "type": "REPLACE_PIPELINE_WITH_LOOP",
           "description": "Replace Pipeline With Loop\tbucketsReducer.forEach(entry -> { with do(pq.size() > 0) in method public reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceContext AggregationReduceContext) : List<Bucket> from class org.elasticsearch.search.aggregations.bucket.histogram.InternalVariableWidthHistogram",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tprivate reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceRoundingIdx int, min long, max long, reduceContext AggregationReduceContext) : BucketReduceResult extracted from public get() : InternalAggregation in class org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram.getLeaderReducer.new AggregatorReducer & moved to class org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\ttop : long to top : IteratorAndCurrent<Bucket> in method private reduceBuckets(pq PriorityQueue<IteratorAndCurrent<Bucket>>, reduceRoundingIdx int, min long, max long, reduceContext AggregationReduceContext) : BucketReduceResult from class org.elasticsearch.aggregations.bucket.histogram.InternalAutoDateHistogram",
+          "validation": true
         }
       ]
     },

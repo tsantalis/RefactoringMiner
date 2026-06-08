@@ -14,6 +14,8 @@
 |<img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Python_logo_and_wordmark.svg" alt="Python" width="120"/> | ✅ | ✅ | <ul><li>- [x] Support comments</li><li>- [x] Support version 3.14</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Kotlin_logo_%282021-present%29.svg" alt="Kotlin" width="100"/> | ✅ | ✅ | <ul><li>- [ ] Validate precision/recall</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="30"/> | ✅ | ✅ | <ul><li>- [x] swc4j Parser</li><li>- [ ] Create benchmark</li></ul> |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" alt ="JavaScript" width="30"/> | ✅ | ✅ | <ul><li>- [x] swc4j Parser</li><li>- [ ] Validate precision/recall</li></ul> |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt ="C++" width="30"/> |  |  | <ul><li>- [x] Eclipse CDT Parser</li></ul> |
 
 ### Open source projects using RefactoringMiner diff tool for code reviews:
 [<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)
@@ -30,6 +32,7 @@ Table of Contents
          * [Diff for code moved between different files](#diff-for-code-moved-between-different-files)
          * [On-demand diff generation](#on-demand-diff-generation)
          * [Javadoc and comment reformatting](#javadoc-and-comment-reformatting)
+      * [MCP server](#mcp-server)
    * [Refactoring Support History](documentation/history.md#refactoring-support-history) 
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
@@ -102,6 +105,10 @@ The user can select any pair of files (between modified, added and deleted files
 ### Javadoc and comment reformatting
 Our tool can match Javadoc and inline comments with formatting changes. You can also exclude diffs including only comment formatting changes by adding `--ignore-formatting` in the command-line arguments.
 <img width="1920" height="1080" alt="CommentFormatting" src="https://github.com/user-attachments/assets/f69aabbd-fcce-49e2-a18b-d1a80b1676a8" />
+
+## MCP Server
+<img width="2025" height="1226" alt="claude_cli" src="https://github.com/user-attachments/assets/c7c24ab1-ffea-4249-ac38-ac85fd3509f6" />
+<img width="2350" height="1225" alt="copilot_cli" src="https://github.com/user-attachments/assets/03a93833-b2be-48ce-9982-892825e37272" />
 
 # Supported Refactoring Types
 

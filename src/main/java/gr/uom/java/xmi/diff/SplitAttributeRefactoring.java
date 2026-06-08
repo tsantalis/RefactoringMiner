@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class SplitAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class SplitAttributeRefactoring extends ChangeTypeRefactoring implements ReferenceBasedRefactoring {
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 	private Set<CandidateSplitVariableRefactoring> attributeSplits;
@@ -25,6 +25,24 @@ public class SplitAttributeRefactoring implements Refactoring, ReferenceBasedRef
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeSplits = attributeSplits;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return oldAttribute;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return splitAttributes.iterator().next();
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(oldAttribute.getVariableDeclaration().toString());
+	}
+
+	public String getTemplateParameterAfter() {
+		return getSplitVariables().toString();
 	}
 
 	public UMLAttribute getOldAttribute() {
@@ -59,16 +77,6 @@ public class SplitAttributeRefactoring implements Refactoring, ReferenceBasedRef
 	@Override
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(oldAttribute.getVariableDeclaration());
-		sb.append(" to ");
-		sb.append(getSplitVariables());
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override

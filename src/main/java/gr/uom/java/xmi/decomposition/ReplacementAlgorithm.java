@@ -937,7 +937,11 @@ public class ReplacementAlgorithm {
 		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE, container1, container2, classDiff);
-		
+
+		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
+			findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
+			findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
+		}
 		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
 			Set<String> infixExpressions1 = convertToStringSet(statement1.getInfixExpressions());
 			String infixExpressionCoveringTheEntireFragment = statement1.infixExpressionCoveringTheEntireFragment();
@@ -1249,8 +1253,6 @@ public class ReplacementAlgorithm {
 			findReplacements(castExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
 			findReplacements(variables1, castExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CAST_EXPRESSION, container1, container2, classDiff);
 		}
-		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
-		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
 		if(stringLiterals1.size() > 0 && methodInvocationMap2.size() > 0) {
 			for(String stringLiteral1 : stringLiterals1) {
@@ -6213,7 +6215,7 @@ public class ReplacementAlgorithm {
 		else if(anonymousClassDeclarations1.size() == 0 && anonymousClassDeclarations2.size() == 1 && container2 != null && parentMapper == null) {
 			AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(0);
 			UMLAnonymousClass anonymousClass2 = operationBodyMapper.findAnonymousClass2(anonymousClassDeclaration2);
-			if(anonymousClass2.getOperations().size() == 1) {
+			if(anonymousClass2 != null && anonymousClass2.getOperations().size() == 1) {
 				UMLOperation anonymousClass2Operation = anonymousClass2.getOperations().get(0);
 				if(anonymousClass2Operation.getBody() != null) {
 					List<AbstractStatement> statements = anonymousClass2Operation.getBody().getCompositeStatement().getStatements();
@@ -6239,7 +6241,7 @@ public class ReplacementAlgorithm {
 		else if(anonymousClassDeclarations1.size() == 1 && anonymousClassDeclarations2.size() == 0 && container1 != null && parentMapper == null) {
 			AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(0);
 			UMLAnonymousClass anonymousClass1 = operationBodyMapper.findAnonymousClass1(anonymousClassDeclaration1);
-			if(anonymousClass1.getOperations().size() == 1) {
+			if(anonymousClass1 != null && anonymousClass1.getOperations().size() == 1) {
 				UMLOperation anonymousClass1Operation = anonymousClass1.getOperations().get(0);
 				if(anonymousClass1Operation.getBody() != null) {
 					List<AbstractCodeFragment> statements = anonymousClass1Operation.getBody().getCompositeStatement().getLeaves();
@@ -6309,6 +6311,7 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(anonymousClassDeclarations1.size() >= 1 && container1 != null && lambdas2.size() >= 1 &&
+				lambdas1.size() != lambdas2.size() &&
 				!lambdas1.stream().map(l -> l.toString()).collect(Collectors.toList()).containsAll(lambdas2.stream().map(l -> l.toString()).collect(Collectors.toList()))) {
 			for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 				AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);

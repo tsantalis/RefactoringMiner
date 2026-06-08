@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class RemoveVariableModifierRefactoring implements MethodLevelRefactoring {
+public class RemoveVariableModifierRefactoring extends ModifierRefactoring implements MethodLevelRefactoring {
 	private String modifier;
 	private VariableDeclaration variableBefore;
 	private VariableDeclaration variableAfter;
@@ -32,7 +32,18 @@ public class RemoveVariableModifierRefactoring implements MethodLevelRefactoring
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
-	public UMLModifier getRemovedModifier() {
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return variableBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return variableAfter;
+	}
+
+	@Override
+	public UMLModifier getModifier() {
 		for(UMLModifier m : variableBefore.getModifiers()) {
 			if(m.getKeyword().equals(modifier)) {
 				return m;
@@ -41,7 +52,8 @@ public class RemoveVariableModifierRefactoring implements MethodLevelRefactoring
 		return null;
 	}
 
-	public String getModifier() {
+	@Override
+	public String getModifierAsString() {
 		return modifier;
 	}
 
@@ -118,23 +130,6 @@ public class RemoveVariableModifierRefactoring implements MethodLevelRefactoring
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(modifier);
-		if(variableBefore.isParameter())
-			sb.append(" in parameter ");
-		else
-			sb.append(" in variable ");
-		sb.append(variableBefore);
-		String elementType = operationBefore.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationBefore.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationBefore.getClassName());
-		return sb.toString();
 	}
 
 	@Override

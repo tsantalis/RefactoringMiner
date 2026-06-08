@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class AddThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
+public class AddThrownExceptionTypeRefactoring extends ThrownExceptionTypeRefactoring implements MethodLevelRefactoring {
 	private UMLType exceptionType;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
@@ -21,6 +21,20 @@ public class AddThrownExceptionTypeRefactoring implements MethodLevelRefactoring
 		this.exceptionType = exceptionType;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	public String getTemplateParameterAfter() {
+		return exceptionType.toString();
 	}
 
 	public UMLType getExceptionType() {
@@ -78,17 +92,6 @@ public class AddThrownExceptionTypeRefactoring implements MethodLevelRefactoring
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(exceptionType);
-		sb.append(" in method ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

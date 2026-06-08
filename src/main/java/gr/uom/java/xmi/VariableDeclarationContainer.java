@@ -22,8 +22,8 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
-public interface VariableDeclarationContainer extends LocationInfoProvider {
-	
+public interface VariableDeclarationContainer extends LocationInfoProvider, CommentProvider, AnnotationProvider {
+
 	default List<VariableDeclaration> getAllVariableDeclarations() {
 		OperationBody operationBody = getBody();
 		if(operationBody != null) {
@@ -153,6 +153,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	String getNonQualifiedClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
+	Constants getLANG();
 	default Optional<UMLAttribute> getPropertyAccessor() {
 		return Optional.empty();
 	}
@@ -160,6 +161,13 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		for(UMLAnonymousClass anonymousClass : this.getAnonymousClassList()) {
 			if(anonymousClass.getLocationInfo().equals(anonymousClassDeclaration.getLocationInfo())) {
 				return anonymousClass;
+			}
+		}
+		if(this instanceof UMLOperation operation) {
+			for(UMLOperation nestedOperation : operation.getNestedOperations()) {
+				UMLAnonymousClass anonymousClass = nestedOperation.findAnonymousClass(anonymousClassDeclaration);
+				if(anonymousClass != null)
+					return anonymousClass;
 			}
 		}
 		return null;

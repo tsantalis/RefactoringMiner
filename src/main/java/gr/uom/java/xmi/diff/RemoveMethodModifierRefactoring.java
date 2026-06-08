@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
-public class RemoveMethodModifierRefactoring implements MethodLevelRefactoring {
+public class RemoveMethodModifierRefactoring extends ModifierRefactoring implements MethodLevelRefactoring {
 	private String modifier;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
@@ -24,7 +24,18 @@ public class RemoveMethodModifierRefactoring implements MethodLevelRefactoring {
 		this.operationAfter = operationAfter;
 	}
 
-	public UMLModifier getRemovedModifier() {
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
+	}
+
+	@Override
+	public UMLModifier getModifier() {
 		if(operationBefore instanceof UMLOperation) {
 			for(UMLModifier m : ((UMLOperation)operationBefore).getModifiers()) {
 				if(m.getKeyword().equals(modifier)) {
@@ -35,7 +46,8 @@ public class RemoveMethodModifierRefactoring implements MethodLevelRefactoring {
 		return null;
 	}
 
-	public String getModifier() {
+	@Override
+	public String getModifierAsString() {
 		return modifier;
 	}
 
@@ -87,17 +99,6 @@ public class RemoveMethodModifierRefactoring implements MethodLevelRefactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(modifier);
-		sb.append(" in method ");
-		sb.append(operationBefore.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationBefore.getClassName());
-		return sb.toString();
 	}
 
 	@Override

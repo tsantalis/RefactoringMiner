@@ -35,12 +35,18 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	private List<UMLNamedExport> namedExports = new ArrayList<>();
 	private List<UMLAnonymousClass> anonymousClassList = new ArrayList<>();
 	private Map<String, AbstractStatement> describeMap = new LinkedHashMap<>();
+	private final Constants LANG;
 
 	public ModuleContainer(LocationInfo locationInfo, String name) {
 		this.statementList = new ArrayList<>();
 		this.locationInfo = locationInfo;
 		this.name = name;
 		this.className = name;
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+	}
+
+	public Constants getLANG() {
+		return LANG;
 	}
 
 	public void addStatements(List<AbstractStatement> statements) {
@@ -194,7 +200,6 @@ public class ModuleContainer implements VariableDeclarationContainer {
 
 	@Override
 	public List<AbstractCall> getAllOperationInvocations() {
-		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		List<AbstractCall> list = new ArrayList<>();
 		for(AbstractStatement statement : statementList) {
 			if(statement instanceof CompositeStatementObject) {

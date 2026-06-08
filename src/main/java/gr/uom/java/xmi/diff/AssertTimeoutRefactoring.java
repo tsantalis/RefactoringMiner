@@ -9,13 +9,14 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMappingProvider, AssertionRefactoring {
+public class AssertTimeoutRefactoring extends AssertionRefactoring implements MethodLevelRefactoring, LeafMappingProvider {
 	private Set<AbstractCodeMapping> assertTimeoutMappings;
 	private AbstractCall assertTimeoutCall;
 	private VariableDeclarationContainer operationBefore;
@@ -29,6 +30,16 @@ public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMap
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return operationBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return operationAfter;
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -119,19 +130,6 @@ public class AssertTimeoutRefactoring implements MethodLevelRefactoring, LeafMap
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getOperationAfter().getLocationInfo().getFilePath(), getOperationAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		String string = assertTimeoutCall.actualString();
-		sb.append(string.contains("\n") ? string.substring(0, string.indexOf("\n")) : string);
-		String elementType = operationAfter.getElementType();
-		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter.toQualifiedString());
-		sb.append(" from class ");
-		sb.append(operationAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

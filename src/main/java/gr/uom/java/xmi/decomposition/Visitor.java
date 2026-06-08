@@ -392,7 +392,13 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(NumberLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.NUMBER_LITERAL, container);
+		LeafExpression expression = null;
+		if(node.getParent() instanceof PrefixExpression prefix && prefix.getOperator().equals(PrefixExpression.Operator.MINUS)) {
+			expression = new LeafExpression(cu, sourceFolder, filePath, prefix, CodeElementType.NUMBER_LITERAL, container);
+		}
+		else {
+			expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.NUMBER_LITERAL, container);
+		}
 		numberLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

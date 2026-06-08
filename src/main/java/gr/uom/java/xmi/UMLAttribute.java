@@ -41,6 +41,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private Optional<UMLOperation> customGetter;
 	private Optional<UMLOperation> customSetter;
+	private final Constants LANG;
 
 	public UMLAttribute(String name, UMLType type, LocationInfo locationInfo, String className) {
 		this.locationInfo = locationInfo;
@@ -52,6 +53,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		this.customGetter = Optional.empty();
 		this.customSetter = Optional.empty();
 		this.anonymousClassContainer = Optional.empty();
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+	}
+
+	public Constants getLANG() {
+		return LANG;
 	}
 
 	public void setCustomGetter(UMLOperation getter) {
@@ -216,7 +222,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	}
 
 	public List<AbstractCall> getAllOperationInvocations() {
-		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
 			List<AbstractCall> list = new ArrayList<>(initializer.getMethodInvocations());
@@ -453,7 +458,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		if(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object")) {
 			sb.append(name);
 			return sb.toString();
@@ -468,7 +472,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toQualifiedString() {
 		StringBuilder sb = new StringBuilder();
-		Constants LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		if(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object")) {
 			sb.append(name);
 			return sb.toString();

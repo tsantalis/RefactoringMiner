@@ -42,6 +42,7 @@ public class Constants {
 			SWITCH_CASE = "";
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "raise_statement";
+			EMPTY_STATEMENT = "empty_statement";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -77,6 +78,7 @@ public class Constants {
 			SWITCH_CASE = "";
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "throw_expression";
+			EMPTY_STATEMENT = "empty_statement";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -104,7 +106,7 @@ public class Constants {
 			ANNOTATION_TYPE_DECLARATION = "class_declaration";
 			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
-			METHOD_INVOCATION_ARGUMENTS = "argument_list";
+			METHOD_INVOCATION_ARGUMENTS = "arguments";
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			METHOD_INVOCATION = "call_expression";
@@ -112,6 +114,7 @@ public class Constants {
 			SWITCH_CASE = "switch_case";
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "throw_statement";
+			EMPTY_STATEMENT = "empty_statement";
 		}
 		else {
 			// Java values as default
@@ -148,6 +151,7 @@ public class Constants {
 			SWITCH_CASE = "SwitchCase";
 			ASSIGNMENT = "Assignment";
 			THROW_STATEMENT = "ThrowStatement";
+			EMPTY_STATEMENT = "EmptyStatement";
 		}
 	}
 
@@ -219,7 +223,7 @@ public class Constants {
     public final String CONSTRUCTOR_INVOCATION;
     public final String CONTINUE_STATEMENT = "ContinueStatement";
     public final String DO_STATEMENT;
-    public final String EMPTY_STATEMENT = "EmptyStatement";
+    public final String EMPTY_STATEMENT;
     public final String ENHANCED_FOR_STATEMENT;
     public final String FOR_STATEMENT;
     public final String IF_STATEMENT;
@@ -303,7 +307,11 @@ public class Constants {
     public final String AS_PATTERN = "as_pattern";
     public final String CALL = "call";
     public final String SUBSCRIPT = "subscript";
-    
+    public final String ARROW_PYTHON = "->";
+    public final String TYPE = "type";
+    public final String WITH_STATEMENT = "with_statement";
+    public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
+
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";
     public final String SOURCE_FILE = "source_file"; // This is the root of all trees in Kotlin
@@ -372,6 +380,7 @@ public class Constants {
     public final String SEMICOLON = ";";
     public final String COLON = ":";
     public final String CONST_KEYWORD = "const";
+    public final String VAR_KEYWORD = "var";
     public final String ASYNC_KEYWORD = "async";
     public final String THROW_KEYWORD = "throw";
     public final String LET_KEYWORD = "let";
@@ -396,6 +405,7 @@ public class Constants {
     public final String OBJECT_TYPE = "object_type";
     public final String PROPERTY_SIGNATURE = "property_signature";
     public final String PROPERTY_IDENTIFIER = "property_identifier";
+    public final String PRIVATE_PROPERTY_IDENTIFIER = "private_property_identifier";
     public final String INTERSECTION_TYPE = "intersection_type";
     public final String UNION_TYPE = "union_type";
     public final String GENERIC_TYPE = "generic_type";
@@ -444,4 +454,8 @@ public class Constants {
     public final String OBJECT = "object";
     public final String SHORTHAND_PROPERTY_IDENTIFIER = "shorthand_property_identifier";
     public final String PAIR = "pair";
+    public final String FUNCTION_EXPRESSION = "function_expression";
+    public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
+    public final String UPDATE_EXPRESSION = "update_expression";
+    public final String SPREAD_ELEMENT = "spread_element";
 }

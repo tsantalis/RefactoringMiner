@@ -74,6 +74,7 @@ import com.github.gumtreediff.tree.TreeContext;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.JavaOperationBody;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -1065,7 +1066,7 @@ public class JavaFileProcessor {
 	private void processMethodBody(CompilationUnit cu, String sourceFolder, String sourceFile, MethodDeclaration methodDeclaration, UMLOperation operation, List<UMLAttribute> attributes, String javaFileContent) {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFolder, sourceFile, block, operation, attributes, javaFileContent);
+			OperationBody body = new JavaOperationBody(cu, sourceFolder, sourceFile, block, operation, attributes, javaFileContent);
 			operation.setBody(body);
 		}
 		else {
@@ -1076,7 +1077,7 @@ public class JavaFileProcessor {
 	private void processInitializerBody(CompilationUnit cu, String sourceFolder, String sourceFile, Initializer initializer, UMLInitializer umlInitializer, List<UMLAttribute> attributes, String javaFileContent) {
 		Block block = initializer.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFolder, sourceFile, block, umlInitializer, attributes, javaFileContent);
+			OperationBody body = new JavaOperationBody(cu, sourceFolder, sourceFile, block, umlInitializer, attributes, javaFileContent);
 			umlInitializer.setBody(body);
 		}
 		else {

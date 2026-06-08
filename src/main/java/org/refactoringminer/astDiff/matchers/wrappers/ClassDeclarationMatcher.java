@@ -75,7 +75,11 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
+            if(srcTypeDeclaration == null)
+                srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
             dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
+            if(dstTypeDeclaration == null)
+                dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);
             if(srcTypeDeclaration == null) {
                 Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.PAIR);
                 Tree t2 = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.LEXICAL_DECLARATION);
@@ -551,44 +555,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if(srcTypeDeclaration.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG1.LEXICAL_DECLARATION)) {
             Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.VARIABLE_DECLARATOR,LANG2.VARIABLE_DECLARATOR);
             if(matched != null) {
-                mappingStore.addMapping(matched.first, matched.second);
-                Pair<Tree,Tree> identifiers = Helpers.findPairOfType(matched.first,matched.second,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
-                if (identifiers != null) {
-                    mappingStore.addMapping(identifiers.first, identifiers.second);
-                }
-                Pair<Tree,Tree> equals = Helpers.findPairOfType(matched.first,matched.second,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
-                if (equals != null) {
-                    mappingStore.addMapping(equals.first, equals.second);
-                }
-                Pair<Tree,Tree> arrowFunctions = Helpers.findPairOfType(matched.first,matched.second,LANG1.ARROW_FUNCTION,LANG2.ARROW_FUNCTION);
-                if(arrowFunctions != null) {
-                    mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
-                    BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
-                }
-                Pair<Tree,Tree> typeAnnotations = Helpers.findPairOfType(matched.first,matched.second,LANG1.TYPE_ANNOTATION,LANG2.TYPE_ANNOTATION);
-                if(typeAnnotations != null) {
-                    mappingStore.addMappingRecursively(typeAnnotations.first, typeAnnotations.second);
-                }
-                Pair<Tree,Tree> objects = Helpers.findPairOfType(matched.first,matched.second,LANG1.OBJECT,LANG2.OBJECT);
-                if (objects != null) {
-                    mappingStore.addMapping(objects.first, objects.second);
-                    Pair<Tree,Tree> opening = Helpers.findPairOfType(objects.first,objects.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                    if (opening != null) {
-                        mappingStore.addMapping(opening.first,opening.second);
-                    }
-                    Pair<Tree,Tree> closing = Helpers.findPairOfType(objects.first,objects.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                    if (closing != null) {
-                        mappingStore.addMapping(closing.first,closing.second);
-                    }
-                }
-            }
-            matched = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.CONST_KEYWORD,LANG2.CONST_KEYWORD);
-            if(matched != null) {
-                mappingStore.addMapping(matched.first, matched.second);
-            }
-            matched = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.SEMICOLON,LANG2.SEMICOLON);
-            if(matched != null) {
-                mappingStore.addMapping(matched.first, matched.second);
+                processVariableDeclaratorPair(matched.first, matched.second, mappingStore);
             }
         }
         if (srcTypeDeclaration.getType().name.equals(LANG1.MODULE) && dstTypeDeclaration.getType().name.equals(LANG2.MODULE)) {
@@ -625,9 +592,69 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+        if(srcTypeDeclaration.getType().name.equals(LANG1.OBJECT) && dstTypeDeclaration.getType().name.equals(LANG2.OBJECT)) {
+            if(srcTypeDeclaration.getParent().getType().name.equals(LANG1.VARIABLE_DECLARATOR) && dstTypeDeclaration.getParent().getType().name.equals(LANG2.VARIABLE_DECLARATOR)) {
+                processVariableDeclaratorPair(srcTypeDeclaration.getParent(), dstTypeDeclaration.getParent(), mappingStore);
+            }
+        }
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 
+    }
+
+    private void processVariableDeclaratorPair(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {
+        mappingStore.addMapping(tree1, tree2);
+        Pair<Tree,Tree> identifiers = Helpers.findPairOfType(tree1,tree2,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
+        if (identifiers != null) {
+            mappingStore.addMapping(identifiers.first, identifiers.second);
+        }
+        Pair<Tree,Tree> equals = Helpers.findPairOfType(tree1,tree2,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
+        if (equals != null) {
+            mappingStore.addMapping(equals.first, equals.second);
+        }
+        Pair<Tree,Tree> arrowFunctions = Helpers.findPairOfType(tree1,tree2,LANG1.ARROW_FUNCTION,LANG2.ARROW_FUNCTION);
+        if(arrowFunctions != null) {
+            mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
+            BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
+        }
+        Pair<Tree,Tree> typeAnnotations = Helpers.findPairOfType(tree1,tree2,LANG1.TYPE_ANNOTATION,LANG2.TYPE_ANNOTATION);
+        if(typeAnnotations != null) {
+            mappingStore.addMappingRecursively(typeAnnotations.first, typeAnnotations.second);
+        }
+        Pair<Tree,Tree> objects = Helpers.findPairOfType(tree1,tree2,LANG1.OBJECT,LANG2.OBJECT);
+        if (objects != null) {
+            mappingStore.addMapping(objects.first, objects.second);
+            Pair<Tree,Tree> opening = Helpers.findPairOfType(objects.first,objects.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+            if (opening != null) {
+                mappingStore.addMapping(opening.first,opening.second);
+            }
+            Pair<Tree,Tree> closing = Helpers.findPairOfType(objects.first,objects.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+            if (closing != null) {
+                mappingStore.addMapping(closing.first,closing.second);
+            }
+        }
+        if(tree1.getParent().getType().name.equals(LANG1.LEXICAL_DECLARATION) && tree2.getParent().getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+            mappingStore.addMapping(tree1.getParent(), tree2.getParent());
+            Pair<Tree,Tree> const_keywords = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.CONST_KEYWORD,LANG2.CONST_KEYWORD);
+            if(const_keywords != null) {
+                mappingStore.addMapping(const_keywords.first, const_keywords.second);
+            }
+            Pair<Tree,Tree> semicolons = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
+        }
+        if(tree1.getParent().getType().name.equals(LANG1.VARIABLE_DECLARATION) && tree2.getParent().getType().name.equals(LANG2.VARIABLE_DECLARATION)) {
+            mappingStore.addMapping(tree1.getParent(), tree2.getParent());
+            Pair<Tree,Tree> var_keywords = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.VAR_KEYWORD,LANG2.VAR_KEYWORD);
+            if(var_keywords != null) {
+                mappingStore.addMapping(var_keywords.first, var_keywords.second);
+            }
+            Pair<Tree,Tree> semicolons = Helpers.findPairOfType(tree1.getParent(),tree2.getParent(),LANG1.SEMICOLON,LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
+        }
     }
 
     private void processInterfaceToSuperclassOrOpposite(UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore, Tree srcTypeDeclaration, Tree dstTypeDeclaration) {
@@ -705,10 +732,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Pair<Tree, Tree> extendClauses = Helpers.findPairOfType(classHeritage.first,classHeritage.second, LANG1.EXTENDS_CLAUSE, LANG2.EXTENDS_CLAUSE);
             if(extendClauses != null) {
                 mappingStore.addMapping(extendClauses.first,extendClauses.second);
-            }
-            Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(extendClauses.first,extendClauses.second, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
-            if(extendKeywords != null) {
-                mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+                Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(extendClauses.first,extendClauses.second, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
+                if(extendKeywords != null) {
+                    mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+                }
             }
         }
     }

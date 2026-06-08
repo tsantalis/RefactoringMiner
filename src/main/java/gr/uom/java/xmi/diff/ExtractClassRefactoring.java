@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 
-public class ExtractClassRefactoring implements Refactoring {
+public class ExtractClassRefactoring extends ChangeTypeRefactoring {
 	private UMLClass extractedClass;
 	private UMLClassBaseDiff classDiff;
 	private Map<UMLOperation, UMLOperation> extractedOperations;
@@ -30,13 +30,14 @@ public class ExtractClassRefactoring implements Refactoring {
 		this.attributeOfExtractedClassTypeInOriginalClass = attributeOfExtractedClassType;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(extractedClass);
-		sb.append(" from class ");
-		sb.append(classDiff.getOriginalClass());
-		return sb.toString();
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return extractedClass;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return classDiff.getOriginalClass();
 	}
 
 	public RefactoringType getRefactoringType() {

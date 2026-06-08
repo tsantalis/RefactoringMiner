@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -2235,7 +2236,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					InputStream currentRawFileInputStream = currentRawURL.openStream();
+					URLConnection connection = currentRawURL.openConnection();
+					connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+					InputStream currentRawFileInputStream = connection.getInputStream();
 					String currentRawFile = streamToString(currentRawFileInputStream);
 					List<String> patchLineList = createPatchLines(commitFile);
 					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);

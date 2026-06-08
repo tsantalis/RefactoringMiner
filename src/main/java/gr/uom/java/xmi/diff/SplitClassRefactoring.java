@@ -3,15 +3,17 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLClass;
 
-public class SplitClassRefactoring implements PackageLevelRefactoring {
+public class SplitClassRefactoring extends ChangeTypeRefactoring implements PackageLevelRefactoring {
 	private Set<UMLClass> splitClasses;
 	private UMLClass originalClass;
 	
@@ -24,6 +26,22 @@ public class SplitClassRefactoring implements PackageLevelRefactoring {
 			splitClasses.add(renameDiff.getRenamedClass());
 		}
 	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalClass;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return splitClasses.iterator().next();
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {return Optional.of(originalClass.toString());}
+
+	@Override
+	public String getTemplateParameterAfter() {return splitClasses.toString();}
 
 	public Set<UMLClass> getSplitClasses() {
 		return splitClasses;
@@ -106,16 +124,6 @@ public class SplitClassRefactoring implements PackageLevelRefactoring {
 	@Override
 	public String getMovedClassName() {
 		return splitClasses.iterator().next().getName();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalClass);
-		sb.append(" split to ");
-		sb.append(splitClasses);
-		return sb.toString();
 	}
 
 	@Override

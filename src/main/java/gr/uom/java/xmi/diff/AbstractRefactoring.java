@@ -54,11 +54,25 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(getTemplateParameterBefore().get());
 			if(getRefactoringType().equals(RefactoringType.RENAME_METHOD))
 				sb.append(" renamed to ");
+			else if(getRefactoringType().equals(RefactoringType.MERGE_CLASS))
+				sb.append(" merged to ");
+			else if(getRefactoringType().equals(RefactoringType.SPLIT_CLASS))
+				sb.append(" split to ");
 			else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_GENERIC_WITH_DIAMOND))
 				sb.append(" with ");
+			else if(getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+					getRefactoringType().equals(RefactoringType.EXTRACT_SUBCLASS) ||
+					getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) {
+				if(getTemplateParameterAfter().startsWith("[") && getTemplateParameterAfter().endsWith("]"))
+					sb.append(" from classes ");
+				else
+					sb.append(" from class ");
+			}
+			else if(getRefactoringType().equals(RefactoringType.EXTRACT_INTERFACE))
+				sb.append(" from classes ");
 			else
 				sb.append(" to ");
 		}
@@ -67,7 +81,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		if(addCodeElementDescription()) {
-			sb.append(" in ").append(codeElementType).append(" ");
+			String finalCodeElementType = getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND) ? "type" : codeElementType;
+			sb.append(" in ").append(finalCodeElementType).append(" ");
 			sb.append(codeElementDescription(provider));
 		}
 		String className = null;

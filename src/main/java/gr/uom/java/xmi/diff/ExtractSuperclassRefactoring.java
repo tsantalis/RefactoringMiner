@@ -1,17 +1,18 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class ExtractSuperclassRefactoring implements Refactoring {
+public class ExtractSuperclassRefactoring extends ChangeTypeRefactoring {
 	private UMLClass extractedClass;
 	private Set<UMLClass> subclassSetBefore;
 	private Set<UMLClass> subclassSetAfter;
@@ -22,14 +23,21 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 		this.subclassSetAfter = subclassSetAfter;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(extractedClass);
-		sb.append(" from classes ");
-		sb.append(subclassSetBefore);
-		return sb.toString();
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return subclassSetBefore.iterator().next();
 	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return extractedClass;
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {return Optional.of(extractedClass.toString());}
+
+	@Override
+	public String getTemplateParameterAfter() {return subclassSetBefore.toString();}
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();

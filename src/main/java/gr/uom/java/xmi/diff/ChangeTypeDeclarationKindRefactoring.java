@@ -3,15 +3,16 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 
-public class ChangeTypeDeclarationKindRefactoring implements Refactoring {
+public class ChangeTypeDeclarationKindRefactoring extends AbstractRefactoring implements ClassLevelRefactoring {
 	private String originalTypeDeclarationKind;
 	private String changedTypeDeclarationKind;
 	private UMLAbstractClass classBefore;
@@ -24,6 +25,22 @@ public class ChangeTypeDeclarationKindRefactoring implements Refactoring {
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
 	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return classBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return classAfter;
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {return Optional.of(originalTypeDeclarationKind);}
+
+	@Override
+	public String getTemplateParameterAfter() {return changedTypeDeclarationKind;}
 
 	public String getOriginalTypeDeclarationKind() {
 		return originalTypeDeclarationKind;
@@ -81,17 +98,6 @@ public class ChangeTypeDeclarationKindRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getClassAfter().getLocationInfo().getFilePath(), getClassAfter().getName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalTypeDeclarationKind);
-		sb.append(" to ");
-		sb.append(changedTypeDeclarationKind);
-		sb.append(" in type ");
-		sb.append(classAfter.getName());
-		return sb.toString();
 	}
 
 	@Override

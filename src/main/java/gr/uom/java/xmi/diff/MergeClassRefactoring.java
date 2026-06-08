@@ -3,15 +3,17 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLClass;
 
-public class MergeClassRefactoring implements PackageLevelRefactoring {
+public class MergeClassRefactoring extends ChangeTypeRefactoring implements PackageLevelRefactoring {
 	private Set<UMLClass> mergedClasses;
 	private UMLClass newClass;
 	
@@ -24,6 +26,22 @@ public class MergeClassRefactoring implements PackageLevelRefactoring {
 			mergedClasses.add(renameDiff.getOriginalClass());
 		}
 	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return mergedClasses.iterator().next();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return newClass;
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {return Optional.of(mergedClasses.toString());}
+
+	@Override
+	public String getTemplateParameterAfter() {return newClass.toString();}
 
 	public Set<UMLClass> getMergedClasses() {
 		return mergedClasses;
@@ -77,16 +95,6 @@ public class MergeClassRefactoring implements PackageLevelRefactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(newClass.getLocationInfo().getFilePath(), newClass.getName()));
 		return pairs;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(mergedClasses);
-		sb.append(" merged to ");
-		sb.append(newClass);
-		return sb.toString();
 	}
 
 	@Override

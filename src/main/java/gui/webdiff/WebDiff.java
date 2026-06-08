@@ -21,6 +21,7 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
+import spark.Request;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
@@ -329,26 +330,20 @@ public class WebDiff  {
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
-            DiffViewState state = currentState;
-            int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = state.comparator().getASTDiff(id);
-            Renderable view = new VanillaDiffView(
-                    toolName, state.projectASTDiff().getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
-                    astDiff, id, state.comparator().getNumOfDiffs(), request.pathInfo().split("/")[0],
-                    state.comparator().isMoveDiff(id),
-                    state.projectASTDiff().getFileContentsBefore().get(astDiff.getSrcPath()),
-                    state.projectASTDiff().getFileContentsAfter().get(astDiff.getDstPath()),
-                    false);
-            return render(view);
+            return getVanillaDiff(request);
         });
+        get("/vanilla-diff/:id/", (request, response) -> {
+            return getVanillaDiff(request);
+        });
+
+
         get("/monaco-page/:id", (request, response) -> {
-            DiffViewState state = currentState;
-            int id = Integer.parseInt(request.params(":id"));
-            Renderable view = new MonacoView(
-                    toolName, state.comparator(), request.pathInfo().split("/")[0], id
-            );
-            return render(view);
+            return returnMonacoView(request);
         });
+        get("/monaco-page/:id/", (request, response) -> {
+            return returnMonacoView(request);
+        });
+
         get("/monaco-minimal/:id", (request, response) -> {
             DiffViewState state = currentState;
             int id = Integer.parseInt(request.params(":id"));
@@ -478,6 +473,49 @@ public class WebDiff  {
             view.setDecorate(true);
             return render(view);
         });
+    }
+
+    private String getVanillaDiff(Request request) throws IOException {
+        DiffViewState state = currentState;
+        int id = Integer.parseInt(request.params(":id"));
+        ASTDiff astDiff = state.comparator().getASTDiff(id);
+        Renderable view = new VanillaDiffView(
+                toolName, state.projectASTDiff().getMetaInfo(), astDiff.getSrcPath(),  astDiff.getDstPath(),
+                astDiff, id, state.comparator().getNumOfDiffs(), routePrefix(request),
+                state.comparator().isMoveDiff(id),
+                state.projectASTDiff().getFileContentsBefore().get(astDiff.getSrcPath()),
+                state.projectASTDiff().getFileContentsAfter().get(astDiff.getDstPath()),
+                false);
+        return render(view);
+    }
+
+    private String returnMonacoView(Request request) throws IOException {
+        DiffViewState state = currentState;
+        int id = Integer.parseInt(request.params(":id"));
+        Renderable view = new MonacoView(
+                toolName, state.comparator(), routePrefix(request), id
+        );
+        return render(view);
+    }
+
+    /**
+     * Returns the folder portion of the current request path, with both slashes
+     * intact, e.g. "/monaco-page/5" or "/monaco-page/5/" -> "/monaco-page/".
+     * Used as the Next/Prev route prefix so those links resolve to a full path
+     * (e.g. /monaco-page/6) instead of a bare index (6), which 404s in the
+     * static export where there is no live server to fill in the route.
+     */
+    private static String routePrefix(Request request) {
+        return routePrefix(request.pathInfo());
+    }
+
+    /** Package-private for testing; see {@link #routePrefix(Request)}. */
+    static String routePrefix(String pathInfo) {
+        String path = pathInfo;
+        if (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 1);
+        }
+        return path.substring(0, path.lastIndexOf('/') + 1);
     }
 
     private static String render(Renderable r) throws IOException {

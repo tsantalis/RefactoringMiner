@@ -116,7 +116,7 @@ public class WebExporter {
 
     }
 
-    private String doProperReplacement(String content, int nestingLevel) {
+    String doProperReplacement(String content, int nestingLevel) {
         String baseAddon = (".." + File.separator).repeat(nestingLevel);
         String baseAddonWithResources = baseAddon + resourceFolderNameInFinalExport + File.separator;
         Pattern pattern = Pattern.compile("(?<=\\b(href|src)=['\"])(/?)(?!https:)([^'\"]+)(?=['\"])");
@@ -132,12 +132,28 @@ public class WebExporter {
                 addon = baseAddonWithResources;
             } else {
                 addon = baseAddon;
+                // Page links target a directory we wrote as <page>/index.html.
+                // Point them straight at the file so navigation also works
+                // offline (file://) and on hosts that don't auto-resolve a
+                // directory to its index.html, not just servers that redirect.
+                if (isExportedPageLink(filePath)) {
+                    filePath = filePath + "/index.html";
+                }
             }
             matcher.appendReplacement(result, addon + filePath);
         }
         matcher.appendTail(result);
         content = result.toString();
         return content;
+    }
+
+    /** True if the link targets a page we export as <page>/index.html. */
+    private boolean isExportedPageLink(String filePath) {
+        if (otherPages.contains(filePath)) return true;          // "list", "singleView"
+        for (String viewer : viewers_path) {                     // "monaco-page/<id>", "vanilla-diff/<id>"
+            if (filePath.matches(Pattern.quote(viewer) + "/\\d+")) return true;
+        }
+        return false;
     }
 
     private void exportResources(String destDir, String resourcesPath) {

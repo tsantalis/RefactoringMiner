@@ -61,6 +61,7 @@ import org.eclipse.core.runtime.CoreException;
 
 public class CppFileProcessor {
 	private UMLModel umlModel;
+	private List<IASTPreprocessorMacroExpansion> macroExpansions = new ArrayList<>();
 
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
@@ -169,9 +170,11 @@ public class CppFileProcessor {
 		
 	}
 
-	private void processMacroExpansions(IASTTranslationUnit ast) {
+	void processMacroExpansions(IASTTranslationUnit ast) {
+		//ensure old macros don't stay in list
+		macroExpansions.clear();
 		for(IASTPreprocessorMacroExpansion macroExpansion : ast.getMacroExpansions()) {
-			
+			macroExpansions.add(macroExpansion);
 		}
 	}
 
@@ -192,6 +195,10 @@ public class CppFileProcessor {
 
 	private void processTranslationUnit(IASTTranslationUnit ast) {
 		for(IASTDeclaration declaration : ast.getDeclarations()) {
+			//
+			List<IASTPreprocessorMacroExpansion> relatedMacroExpansions =
+					findMacroExpansionsInDeclaration(declaration);
+
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 				
 			}
@@ -273,5 +280,33 @@ public class CppFileProcessor {
 				//All data members/functions that follow should have this access modifier
 			}
 		}
+	}
+
+	List<IASTPreprocessorMacroExpansion> findMacroExpansionsInDeclaration(IASTDeclaration declaration) {
+		List<IASTPreprocessorMacroExpansion> relatedMacroExpansions = new ArrayList<>();
+		
+		//if declaration location doesn't exist, return an empty list 
+		if(declaration.getFileLocation() == null) {
+			return relatedMacroExpansions;
+		}
+
+		int declarationStart = declaration.getFileLocation().getNodeOffset();
+		int declarationEnd = declarationStart + declaration.getFileLocation().getNodeLength();
+		for(IASTPreprocessorMacroExpansion macroExpansion : macroExpansions) {
+			if(macroExpansion.getFileLocation() == null) {
+				continue;
+			}
+
+			int macroStart = macroExpansion.getFileLocation().getNodeOffset();
+			int macroEnd = macroStart + macroExpansion.getFileLocation().getNodeLength();
+			if(overlaps(declarationStart, declarationEnd, macroStart, macroEnd)) {
+				relatedMacroExpansions.add(macroExpansion);
+			}
+		}
+		return relatedMacroExpansions;
+	}
+
+	private boolean overlaps(int firstStart, int firstEnd, int secondStart, int secondEnd) {
+		return firstStart < secondEnd && secondStart < firstEnd;
 	}
 }

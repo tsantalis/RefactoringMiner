@@ -114,8 +114,12 @@ class LocationInfoCppTest {
 
 
 	//Search parsed C++ AST for specific declaration and return its node
-	private static IASTNode findDeclaration(String source, String rawSignature) throws CoreException {
+	static IASTNode findDeclaration(String source, String rawSignature) throws CoreException {
 		IASTTranslationUnit translationUnit = parseTranslationUnit(source);
+		return findDeclaration(translationUnit, rawSignature);
+	}
+
+	static IASTNode findDeclaration(IASTTranslationUnit translationUnit, String rawSignature) {
 		MyVisitor visitor = new MyVisitor(rawSignature);
 		
 		translationUnit.accept(visitor);
@@ -148,7 +152,7 @@ class LocationInfoCppTest {
 	}
 
 	//parse C++ src code into AST
-	private static IASTTranslationUnit parseTranslationUnit(String source) throws CoreException {
+	static IASTTranslationUnit parseTranslationUnit(String source) throws CoreException {
 		FileContent fileContent = FileContent.create(FILE_PATH, source.toCharArray());
 		IScannerInfo scannerInfo = new ScannerInfo(Map.of(), new String[0]);
 		IncludeFileContentProvider includes = IncludeFileContentProvider.getEmptyFilesProvider();

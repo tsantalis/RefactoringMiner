@@ -2,12 +2,15 @@ package gr.uom.java.xmi;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionStyleMacroParameter;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorEndifStatement;
@@ -16,8 +19,10 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfdefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfndefStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorObjectStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
@@ -141,7 +146,23 @@ public class CppFileProcessor {
 	}
 
 	private void processMacroDefinition(IASTPreprocessorMacroDefinition macroDefinition) {
-		
+		if(!macroDefinition.isActive()) {
+			return;
+		}
+
+		String name = macroDefinition.getName().toString();
+		String expansion = macroDefinition.getExpansion();
+
+		if(macroDefinition instanceof IASTPreprocessorFunctionStyleMacroDefinition functionMacro) {
+			List<String> parameterNames = new ArrayList<>();
+			for(IASTFunctionStyleMacroParameter parameter : functionMacro.getParameters()) {
+				parameterNames.add(parameter.getParameter());
+			}
+			// Function-style macro, e.g., #define SQUARE(x) ((x) * (x))
+		}
+		else if(macroDefinition instanceof IASTPreprocessorObjectStyleMacroDefinition objectMacro) {
+			// Object-style macro, e.g., #define BUFFER_SIZE 1024
+		}
 	}
 
 	private void processIncludeDirective(IASTPreprocessorIncludeStatement includeStatement) {

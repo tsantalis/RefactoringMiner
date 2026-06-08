@@ -3,16 +3,17 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 
-public class EncapsulateAttributeRefactoring implements Refactoring {
+public class EncapsulateAttributeRefactoring extends ChangeTypeRefactoring implements AttributeLevelRefactoring {
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;
 	private UMLOperation addedGetter;
@@ -24,6 +25,26 @@ public class EncapsulateAttributeRefactoring implements Refactoring {
 		this.attributeAfter = attributeAfter;
 		this.addedGetter = addedGetter;
 		this.addedSetter = addedSetter;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return attributeBefore;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return attributeAfter;
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.empty();
+	}
+
+	@Override
+	public String getTemplateParameterAfter() {
+		return attributeAfter.toString();
 	}
 
 	public UMLAttribute getAttributeBefore() {
@@ -92,15 +113,6 @@ public class EncapsulateAttributeRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getAttributeAfter().getLocationInfo().getFilePath(), getAttributeAfter().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(attributeAfter);
-		sb.append(" from class ");
-		sb.append(attributeAfter.getClassName());
-		return sb.toString();
 	}
 
 	@Override

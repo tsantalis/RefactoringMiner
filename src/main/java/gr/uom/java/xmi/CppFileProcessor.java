@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionStyleMacroParameter;
+import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorEndifStatement;
@@ -61,7 +62,17 @@ import org.eclipse.core.runtime.CoreException;
 
 public class CppFileProcessor {
 	private UMLModel umlModel;
-	private List<IASTPreprocessorMacroExpansion> macroExpansions = new ArrayList<>();
+	private List<CppMacroDefinition> macroDefinitions = new ArrayList<>();
+	private List<CppMacroExpansion> macroExpansions = new ArrayList<>();
+
+	
+	record CppMacroDefinition(String name, String kind, List<String> parameters, String expansion,
+			boolean active, int startOffset, int endOffset) {
+	}
+
+	record CppMacroExpansion(String name, String definitionName, List<String> nestedReferences,
+			int startOffset, int endOffset) {
+	}
 
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
@@ -108,7 +119,8 @@ public class CppFileProcessor {
 		}
 	}
 
-	private void processPreprocessorStatements(IASTTranslationUnit ast) {
+	void processPreprocessorStatements(IASTTranslationUnit ast) {
+		macroDefinitions.clear();
 		for(IASTPreprocessorStatement statement : ast.getAllPreprocessorStatements()) {
 			if(statement instanceof IASTPreprocessorMacroDefinition macroDefinition) {
 				processMacroDefinition(macroDefinition);
@@ -147,15 +159,13 @@ public class CppFileProcessor {
 	}
 
 	private void processMacroDefinition(IASTPreprocessorMacroDefinition macroDefinition) {
-		if(!macroDefinition.isActive()) {
-			return;
-		}
-
 		String name = macroDefinition.getName().toString();
 		String expansion = macroDefinition.getExpansion();
+		List<String> parameterNames = new ArrayList<>();
+		String kind ="";
 
 		if(macroDefinition instanceof IASTPreprocessorFunctionStyleMacroDefinition functionMacro) {
-			List<String> parameterNames = new ArrayList<>();
+			kind = "function";
 			for(IASTFunctionStyleMacroParameter parameter : functionMacro.getParameters()) {
 				parameterNames.add(parameter.getParameter());
 			}
@@ -163,7 +173,17 @@ public class CppFileProcessor {
 		}
 		else if(macroDefinition instanceof IASTPreprocessorObjectStyleMacroDefinition objectMacro) {
 			// Object-style macro, e.g., #define BUFFER_SIZE 1024
+			kind = "object";
 		}
+
+		macroDefinitions.add(new CppMacroDefinition(
+				name,
+				kind,
+				parameterNames,
+				expansion,
+				macroDefinition.isActive(),
+				startOffset(macroDefinition),
+				endOffset(macroDefinition)));
 	}
 
 	private void processIncludeDirective(IASTPreprocessorIncludeStatement includeStatement) {
@@ -173,9 +193,33 @@ public class CppFileProcessor {
 	void processMacroExpansions(IASTTranslationUnit ast) {
 		//ensure old macros don't stay in list
 		macroExpansions.clear();
+		//get the macro expansions from the AST
 		for(IASTPreprocessorMacroExpansion macroExpansion : ast.getMacroExpansions()) {
-			macroExpansions.add(macroExpansion);
+			//match them with their respective macro definitions
+			IASTPreprocessorMacroDefinition macroDefinition = macroExpansion.getMacroDefinition();
+			//if the macro definition is not null retrieve its name and handles its nested references
+			String definitionName = macroDefinition != null ? macroDefinition.getName().toString() : "";
+			List<String> nestedReferences = new ArrayList<>();
+			for(IASTName nestedReference : macroExpansion.getNestedMacroReferences()) {
+				nestedReferences.add(nestedReference.toString());
+			}
+			//add the new record to the list
+			macroExpansions.add(new CppMacroExpansion(
+					macroExpansion.getMacroReference().toString(),
+					definitionName,
+					nestedReferences,
+					startOffset(macroExpansion),
+					endOffset(macroExpansion)));
 		}
+	}
+
+	//getters for the Macros lists
+	List<CppMacroDefinition> getMacroDefinitions() {
+		return macroDefinitions;
+	}
+
+	List<CppMacroExpansion> getMacroExpansions() {
+		return macroExpansions;
 	}
 
 	private String[] getIncludePaths(String filePath) {
@@ -195,8 +239,8 @@ public class CppFileProcessor {
 
 	private void processTranslationUnit(IASTTranslationUnit ast) {
 		for(IASTDeclaration declaration : ast.getDeclarations()) {
-			//
-			List<IASTPreprocessorMacroExpansion> relatedMacroExpansions =
+			
+			List<CppMacroExpansion> relatedMacroExpansions =
 					findMacroExpansionsInDeclaration(declaration);
 
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
@@ -282,8 +326,8 @@ public class CppFileProcessor {
 		}
 	}
 
-	List<IASTPreprocessorMacroExpansion> findMacroExpansionsInDeclaration(IASTDeclaration declaration) {
-		List<IASTPreprocessorMacroExpansion> relatedMacroExpansions = new ArrayList<>();
+	List<CppMacroExpansion> findMacroExpansionsInDeclaration(IASTDeclaration declaration) {
+		List<CppMacroExpansion> relatedMacroExpansions = new ArrayList<>();
 		
 		//if declaration location doesn't exist, return an empty list 
 		if(declaration.getFileLocation() == null) {
@@ -292,13 +336,14 @@ public class CppFileProcessor {
 
 		int declarationStart = declaration.getFileLocation().getNodeOffset();
 		int declarationEnd = declarationStart + declaration.getFileLocation().getNodeLength();
-		for(IASTPreprocessorMacroExpansion macroExpansion : macroExpansions) {
-			if(macroExpansion.getFileLocation() == null) {
+		for(CppMacroExpansion macroExpansion : macroExpansions) {
+			// Skip macro expansions without a valid source location.
+			if(macroExpansion.startOffset() < 0 || macroExpansion.endOffset() < 0) {
 				continue;
 			}
 
-			int macroStart = macroExpansion.getFileLocation().getNodeOffset();
-			int macroEnd = macroStart + macroExpansion.getFileLocation().getNodeLength();
+			int macroStart = macroExpansion.startOffset();
+			int macroEnd = macroExpansion.endOffset();
 			if(overlaps(declarationStart, declarationEnd, macroStart, macroEnd)) {
 				relatedMacroExpansions.add(macroExpansion);
 			}
@@ -308,5 +353,15 @@ public class CppFileProcessor {
 
 	private boolean overlaps(int firstStart, int firstEnd, int secondStart, int secondEnd) {
 		return firstStart < secondEnd && secondStart < firstEnd;
+	}
+
+	//Helpers for Offsets Specifically
+	private int startOffset(org.eclipse.cdt.core.dom.ast.IASTNode node) {
+		return node.getFileLocation() != null ? node.getFileLocation().getNodeOffset() : -1;
+	}
+
+	private int endOffset(org.eclipse.cdt.core.dom.ast.IASTNode node) {
+		return node.getFileLocation() != null ?
+				node.getFileLocation().getNodeOffset() + node.getFileLocation().getNodeLength() : -1;
 	}
 }

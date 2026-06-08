@@ -17,6 +17,7 @@ import narrator.graph.cluster.traverse.TraversalEngine;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.graph.cluster.traverse.ReasonType;
 import narrator.graph.cluster.traverse.GrainLevel;
+import narrator.mcp.html.NarrativeHtmlGenerator;
 import org.jgrapht.Graph;
 import java.util.List;
 import java.util.Map;
@@ -73,10 +74,10 @@ public class McpHandler {
         JsonArray tools = new JsonArray();
 
         tools.add(createToolDefinition("init_narrative",
-                "Prepares the narrative for a commit or pull request. Returns an overview of the narrative, including the total number of chapters for each grain level. \n\nAfter calling this, the user MUST be asked to choose a GrainLevel for the narrative. This is the required first step before calling get_next_chapter.",
+                "Prepares the narrative for a commit or pull request and returns an overview of the narrative, including the total number of chapters for each grain level. Additionally, it generates a set of HTML pages, demonstrating the narrative and the chapters in each grain level, and returns the path to their entry page. \n\nReport the path to the entry page and the number of chapter for each grain level, and ask user to choose a GrainLevel for the narrative.",
                 "url"));
         tools.add(createToolDefinition("get_next_chapter",
-                "Retrieves the next chapter in the narrative for the specified grain level. \n\nMANDATORY: You must analyze and explain the content of the current chapter in your response, and always represent the changes as a diff block (using + and -) together with your explanation. Then, ask the user if they would like to proceed to the next chapter using a Yes/No prompt. Do not call this tool in a loop or batch without user confirmation.",
+                "Retrieves the next chapter in the narrative for the specified grain level.\n\nAnalyze and explain the content of the current chapter, and ask user if they would like to proceed to the next chapter.",
                 "url", "grainLevel"));
         result.add("tools", tools);
         response.add("result", result);
@@ -210,47 +211,54 @@ public class McpHandler {
         if (narrator == null) {
             return "No narrative initialized for this URL. Please call init_narrative first.";
         }
-        
+
         int progress = narrator.getProgress(level);
         List<TraversalPattern> chapters = narrator.getNarrative(level);
         if (chapters == null) {
             return "Narrative state lost. Please call init_narrative again.";
         }
-        
+
         if (progress >= chapters.size()) {
             return "[End of Narrative] All chapters for grain level " + level + " have been read.";
         }
-        
+
         TraversalPattern chapterPattern = chapters.get(progress);
         narrator.incrementProgress(level);
-        
+
         List<Cluster> clusters = getOrComputeClusters(url);
         if (clusters.isEmpty()) {
             return "Error: No clusters available to provide context for the chapter.";
         }
-        
+
         Cluster cluster = findClusterForNode(chapterPattern.getLead(), clusters);
 
         if (cluster == null) {
             return "Error: Could not find associated cluster for the current chapter.";
         }
-        
+
         String content = chapterPattern.extended(cluster, level);
         int currentChapter = progress + 1;
         int totalChapters = chapters.size();
-        
+
+        // Update the HTML page for this chapter with the actual content
+        NarrativeHtmlGenerator generator = cacheManager.getHtmlGenerator(url);
+        if (generator != null) {
+            generator.updateChapterContent(level, progress, content);
+        }
+
         StringBuilder output = new StringBuilder();
         output.append("[Chapter ").append(currentChapter).append(" of ").append(totalChapters).append(" - GrainLevel: ").append(level).append("]\n\n");
+        output.append("Professional Diff Page: ").append(generator != null ? generator.getChapterPath(level, progress) : "Not available").append("\n\n");
         output.append(content);
         output.append("\n\n");
-        
+
         if (currentChapter < totalChapters) {
-            output.append("Reminder: Evaluate context, explain changes as a diff, and ask to proceed.");
+            output.append("Reminder: Explain the changes, and ask to proceed.");
         } else {
-            output.append("Reminder: Evaluate context and explain changes as a diff.");
+            output.append("Reminder: Explain the changes.");
             output.append("\n\n[End of Narrative] All chapters for grain level " + level + " have been read. You may now provide your final synthesis and explanation of the commit.");
         }
-        
+
         return output.toString();
     }
 
@@ -262,17 +270,22 @@ public class McpHandler {
 
         Narrator narrator = new Narrator(root);
         cacheManager.putNarrative(url + ":root", narrator);
-        
+
+        NarrativeHtmlGenerator generator = new NarrativeHtmlGenerator(url, narrator);
+        generator.generateAll();
+        cacheManager.putHtmlGenerator(url, generator);
+
         StringBuilder summary = new StringBuilder();
-        summary.append("Narrative initialized. Please choose a GrainLevel to start the narration.\n\n");
+        summary.append("Narrative initialized. A professional HTML report has been generated. \n\n");
+        summary.append("Overview page: ").append(generator.getOverviewPath()).append("\n\n");
         summary.append("Available GrainLevels and their chapter counts:\n");
-        
+
         for (GrainLevel level : GrainLevel.values()) {
             int count = narrator.getNarrative(level).size();
             summary.append("- ").append(level).append(" (").append(level.getDescription()).append("): ").append(count).append(" chapters\n");
         }
-        
-        summary.append("\nUse get_next_chapter with the chosen 'grainLevel' parameter to start.");
+
+        summary.append("\nPlease choose a GrainLevel to start the narration.");
 
         return summary.toString();
     }

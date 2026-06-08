@@ -7,12 +7,14 @@ import narrator.graph.cluster.Cluster;
 import narrator.graph.cluster.traverse.Leaf;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import narrator.graph.cluster.traverse.Narrator;
+import narrator.mcp.html.NarrativeHtmlGenerator;
 
 public class CacheManager {
     private final Map<String, List<Cluster>> clustersCache = new ConcurrentHashMap<>();
     private final Map<String, TraversalPattern> hierarchyCache = new ConcurrentHashMap<>();
 
     private final Map<String, Narrator> narrativesCache = new ConcurrentHashMap<>();
+    private final Map<String, NarrativeHtmlGenerator> htmlGeneratorsCache = new ConcurrentHashMap<>();
 
     public List<Cluster> getClusters(String url) {
         return clustersCache.get(url);
@@ -37,6 +39,14 @@ public class CacheManager {
 
     public void putNarrative(String key, Narrator narrative) {
         narrativesCache.put(key, narrative);
+    }
+
+    public NarrativeHtmlGenerator getHtmlGenerator(String url) {
+        return htmlGeneratorsCache.get(url);
+    }
+
+    public void putHtmlGenerator(String url, NarrativeHtmlGenerator generator) {
+        htmlGeneratorsCache.put(url, generator);
     }
 
     public void clear() {

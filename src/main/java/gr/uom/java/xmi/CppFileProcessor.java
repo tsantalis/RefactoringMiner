@@ -1,6 +1,11 @@
 package gr.uom.java.xmi;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement;
@@ -48,19 +53,22 @@ public class CppFileProcessor {
 	public void processCppFile(String filePath, String fileContent, boolean astDiff) {
 		try {
 			FileContent content = FileContent.create(filePath, fileContent.toCharArray());
-			ScannerInfo scanInfo = new ScannerInfo(new HashMap<>()); // Add macros here if needed
-			IncludeFileContentProvider emptyIncludes = IncludeFileContentProvider.getEmptyFilesProvider();
-	
+			Map<String, String> predefinedMacros = new HashMap<>();
+			ScannerInfo scanInfo = new ScannerInfo(predefinedMacros, getIncludePaths(filePath));
+			IncludeFileContentProvider includeFiles = IncludeFileContentProvider.getSavedFilesProvider();	
+			
 			if(filePath.endsWith(".cpp")) {	
 			
 			IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
 				content, 
 				scanInfo, 
-				emptyIncludes, 
+				includeFiles, 
 				EmptyCIndex.INSTANCE, 
 				GPPLanguage.OPTION_IS_SOURCE_UNIT, 
 				new DefaultLogService()
 			);
+			processMacros(ast);
+			processIncludeDirectives(ast);
 			processTranslationUnit(ast);
 		}
 			else if(filePath.endsWith(".c")) {	
@@ -68,11 +76,13 @@ public class CppFileProcessor {
 				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
 					content, 
 					scanInfo, 
-					emptyIncludes, 
+					includeFiles, 
 					EmptyCIndex.INSTANCE, 
-					GPPLanguage.OPTION_IS_SOURCE_UNIT, 
+					GCCLanguage.OPTION_IS_SOURCE_UNIT, 
 					new DefaultLogService()
 				);
+				processMacros(ast);
+				processIncludeDirectives(ast);
 				processTranslationUnit(ast);
 			}
 		}
@@ -91,6 +101,21 @@ public class CppFileProcessor {
 		for(IASTPreprocessorIncludeStatement includeStatement : ast.getIncludeDirectives()) {
 			
 		}
+	}
+
+	private String[] getIncludePaths(String filePath) {
+		Set<String> includePaths = new LinkedHashSet<>();
+		includePaths.add(".");
+		includePaths.add("include");
+		includePaths.add("src/include");
+		includePaths.add("src");
+
+		Path parent = Paths.get(filePath).normalize().getParent();
+		if(parent != null) {
+			includePaths.add(parent.toString());
+			includePaths.add(parent.resolve("include").toString());
+		}
+		return includePaths.toArray(new String[0]);
 	}
 
 	private void processTranslationUnit(IASTTranslationUnit ast) {

@@ -183,7 +183,7 @@ public class RefactoringPopulator {
 	public static void prepareJavaScriptRefactorings(TestBuilder test, BigInteger flag)
 			throws IOException {
 		List<Root> roots = getJavaScriptRefactorings(flag);
-        
+		
 		for (Root root : roots) {
 			test.project(root.repository, "master").atCommit(root.sha1)
 					.containsOnly(extractRefactorings(root.refactorings));

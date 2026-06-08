@@ -2281,7 +2281,7 @@ public class TestStatementMappings {
 		fileContentsCurrent.put("utils/washroomSearch.ts", contentsV2);
 		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
 		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
-        
+
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 		for (Refactoring ref : modelDiff.getRefactorings()) {
@@ -2314,7 +2314,7 @@ public class TestStatementMappings {
 		fileContentsCurrent.put("gitnexus/src/core/ingestion/export-detection.ts", contentsV2);
 		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
 		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
-        
+		
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 		for (Refactoring ref : modelDiff.getRefactorings()) {

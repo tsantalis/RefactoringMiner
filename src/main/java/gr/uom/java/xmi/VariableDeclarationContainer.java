@@ -23,7 +23,7 @@ import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public interface VariableDeclarationContainer extends LocationInfoProvider, CommentProvider, AnnotationProvider {
-    
+	
 	default List<VariableDeclaration> getAllVariableDeclarations() {
 		OperationBody operationBody = getBody();
 		if(operationBody != null) {

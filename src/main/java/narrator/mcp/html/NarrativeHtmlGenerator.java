@@ -12,11 +12,13 @@ import java.util.*;
 public class NarrativeHtmlGenerator {
     private final String url;
     private final Narrator narrator;
+    private final List<Cluster> clusters;
     private final Path baseDir;
 
-    public NarrativeHtmlGenerator(String url, Narrator narrator) throws IOException {
+    public NarrativeHtmlGenerator(String url, Narrator narrator, List<Cluster> clusters) throws IOException {
         this.url = url;
         this.narrator = narrator;
+        this.clusters = clusters;
         // Create a unique directory in /tmp based on the URL hash
         String urlHash = Integer.toHexString(url.hashCode());
         this.baseDir = Paths.get("/tmp", "narratives", urlHash);
@@ -30,7 +32,10 @@ public class NarrativeHtmlGenerator {
             if (chapters == null) continue;
 
             for (int i = 0; i < chapters.size(); i++) {
-                generateChapterPage(level, i, chapters.get(i));
+                TraversalPattern pattern = chapters.get(i);
+                Cluster cluster = findClusterForPattern(pattern);
+                String content = (cluster != null) ? pattern.extended(cluster, level) : "[No cluster available for this chapter]";
+                generateChapterPage(level, i, content);
             }
         }
 
@@ -42,6 +47,16 @@ public class NarrativeHtmlGenerator {
         // 3. Generate Overview page
         generateOverviewPage();
         return getOverviewPath();
+    }
+
+    private Cluster findClusterForPattern(TraversalPattern pattern) {
+        if (clusters == null || clusters.isEmpty()) return null;
+        for (Cluster cluster : clusters) {
+            if (cluster.getGraph().vertexSet().contains(pattern.getLead())) {
+                return cluster;
+            }
+        }
+        return null;
     }
 
     private void generateOverviewPage() throws IOException {
@@ -86,28 +101,7 @@ public class NarrativeHtmlGenerator {
         writeFile("grain_" + level.name().toLowerCase() + ".html", html.toString());
     }
 
-    private void generateChapterPage(GrainLevel level, int index, TraversalPattern pattern) throws IOException {
-        // Note: In a real scenario, we would need the Cluster here to call pattern.extended(cluster, level)
-        // Since the generator doesn't have all clusters, we might need to pass them or handle it differently.
-        // For now, we will generate a placeholder or assume the content is already processed.
-        // ACTUALLY: The user wants the path returned to "see the changes in a professional diff page".
-        // If the HTML is the diff page, we need the content.
-
-        // Let's assume the content is generated on the fly or passed in.
-        // Since the generator is called during init, we don't have the cluster yet.
-        // WAIT: The user said "the path to its corresponding page must be returned".
-        // This means get_next_chapter should return the path.
-
-        // If we generate all pages at init, we need the cluster content for EVERY chapter.
-        // This might be expensive.
-
-        // Let's reconsider: maybe generate the structure at init, and the content at get_next_chapter?
-        // No, the user said "a procedure which generates a set of clean professional HTMLs" on initialization.
-
-        // To do this at init, we need to compute the clusters.
-        // I'll modify the constructor to take clusters or a way to get them.
-
-        // For now, let's implement the a basic structure. I will update this after seeing how to integrate it.
+    private void generateChapterPage(GrainLevel level, int index, String content) throws IOException {
         StringBuilder html = new StringBuilder();
         html.append("<html><head><title>Chapter ").append(index + 1).append("</title>");
         html.append("<style>body { font-family: sans-serif; margin: 40px; line-height: 1.6; }");
@@ -116,7 +110,7 @@ public class NarrativeHtmlGenerator {
         html.append("<a href='grain_" + level.name().toLowerCase() + ".html'>&larr; Back to Grain Level Overview</a>");
         html.append("<h1>Chapter ").append(index + 1).append(" (").append(level).append(")</h1>");
         html.append("<div class='diff-container'>");
-        html.append("[Diff content will be injected here]");
+        html.append(content);
         html.append("</div>");
         html.append("</body></html>");
 

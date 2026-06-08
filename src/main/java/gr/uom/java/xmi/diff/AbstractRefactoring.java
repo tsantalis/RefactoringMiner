@@ -59,6 +59,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 			else if(getRefactoringType().equals(RefactoringType.SPLIT_CLASS))
 				sb.append(" split to ");
 			else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
+					getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_GENERIC_WITH_DIAMOND))

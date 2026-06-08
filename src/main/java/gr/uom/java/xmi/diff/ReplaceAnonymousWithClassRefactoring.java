@@ -3,16 +3,17 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 
-public class ReplaceAnonymousWithClassRefactoring implements Refactoring {
+public class ReplaceAnonymousWithClassRefactoring extends ChangeTypeRefactoring {
 	private UMLAnonymousClass anonymousClass;
 	private UMLClass addedClass;
 	private UMLAnonymousToClassDiff diff;
@@ -21,6 +22,24 @@ public class ReplaceAnonymousWithClassRefactoring implements Refactoring {
 		this.anonymousClass = anonymousClass;
 		this.addedClass = addedClass;
 		this.diff = diff;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return anonymousClass;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return addedClass;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(anonymousClass.getCodePath());
+	}
+
+	public String getTemplateParameterAfter() {
+		return addedClass.toString();
 	}
 
 	public UMLAnonymousClass getAnonymousClass() {
@@ -33,15 +52,6 @@ public class ReplaceAnonymousWithClassRefactoring implements Refactoring {
 
 	public UMLAnonymousToClassDiff getDiff() {
 		return diff;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(anonymousClass.getCodePath());
-		sb.append(" with ");
-		sb.append(addedClass);
-		return sb.toString();
 	}
 
 	public String getName() {

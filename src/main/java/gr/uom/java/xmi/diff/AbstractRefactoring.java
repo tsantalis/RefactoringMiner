@@ -67,7 +67,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		if(addCodeElementDescription()) {
-			sb.append(" in ").append(codeElementType).append(" ");
+			String finalCodeElementType = getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND) ? "type" : codeElementType;
+			sb.append(" in ").append(finalCodeElementType).append(" ");
 			sb.append(codeElementDescription(provider));
 		}
 		String className = null;

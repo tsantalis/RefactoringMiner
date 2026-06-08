@@ -59,6 +59,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_GENERIC_WITH_DIAMOND))
 				sb.append(" with ");
+			else if(getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+					getRefactoringType().equals(RefactoringType.EXTRACT_SUBCLASS) ||
+					getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS))
+				sb.append(" from class ");
 			else
 				sb.append(" to ");
 		}

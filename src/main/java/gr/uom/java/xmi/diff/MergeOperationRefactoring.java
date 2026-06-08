@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class MergeOperationRefactoring implements Refactoring {
+public class MergeOperationRefactoring extends ChangeTypeRefactoring {
 	private Set<VariableDeclarationContainer> mergedMethods;
 	private Set<UMLOperationBodyMapper> mappers;
 	private VariableDeclarationContainer newMethodAfterMerge;
@@ -29,6 +30,28 @@ public class MergeOperationRefactoring implements Refactoring {
 		this.classNameAfter = classNameAfter;
 		this.mappers = mappers;
 	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return mergedMethods.iterator().next();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return newMethodAfterMerge;
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {
+		Set<String> qualifiedNames = new LinkedHashSet<String>();
+		for(VariableDeclarationContainer container : getMergedMethods()) {
+			qualifiedNames.add(container.toQualifiedString());
+		}
+		return Optional.of(qualifiedNames.toString());
+	}
+
+	@Override
+	public String getTemplateParameterAfter() {return newMethodAfterMerge.toQualifiedString();}
 
 	public Set<VariableDeclarationContainer> getMergedMethods() {
 		return mergedMethods;
@@ -94,20 +117,6 @@ public class MergeOperationRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getNewMethodAfterMerge().getLocationInfo().getFilePath(), getClassNameAfter()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		Set<String> qualifiedNames = new LinkedHashSet<String>();
-		for(VariableDeclarationContainer container : getMergedMethods()) {
-			qualifiedNames.add(container.toQualifiedString());
-		}
-		sb.append(qualifiedNames);
-		sb.append(" to ");
-		sb.append(newMethodAfterMerge.toQualifiedString());
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override

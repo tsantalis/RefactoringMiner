@@ -103,6 +103,8 @@ public abstract class AbstractRefactoring implements Refactoring {
 					getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE) ||
 					getRefactoringType().equals(RefactoringType.SPLIT_ATTRIBUTE) ||
 					getRefactoringType().equals(RefactoringType.MERGE_ATTRIBUTE) ||
+					getRefactoringType().equals(RefactoringType.SPLIT_OPERATION) ||
+					getRefactoringType().equals(RefactoringType.MERGE_OPERATION) ||
 					getRefactoringType().equals(RefactoringType.RENAME_METHOD))
 				sb.append(" in class ");
 			else

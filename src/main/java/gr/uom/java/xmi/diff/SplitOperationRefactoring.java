@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class SplitOperationRefactoring implements Refactoring {
+public class SplitOperationRefactoring extends ChangeTypeRefactoring {
 	private Set<VariableDeclarationContainer> splitMethods;
 	private Set<UMLOperationBodyMapper> mappers;
 	private VariableDeclarationContainer originalMethodBeforeSplit;
@@ -27,6 +28,30 @@ public class SplitOperationRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.mappers = mappers;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalMethodBeforeSplit;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return splitMethods.iterator().next();
+	}
+
+	@Override
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(originalMethodBeforeSplit.toQualifiedString());
+	}
+
+	@Override
+	public String getTemplateParameterAfter() {
+		Set<String> qualifiedNames = new LinkedHashSet<String>();
+		for(VariableDeclarationContainer container : getSplitMethods()) {
+			qualifiedNames.add(container.toQualifiedString());
+		}
+		return qualifiedNames.toString();
 	}
 
 	public Set<VariableDeclarationContainer> getSplitMethods() {
@@ -93,20 +118,6 @@ public class SplitOperationRefactoring implements Refactoring {
 			pairs.add(new ImmutablePair<String, String>(splitMethod.getLocationInfo().getFilePath(), getClassNameAfter()));
 		}
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(originalMethodBeforeSplit.toQualifiedString());
-		sb.append(" to ");
-		Set<String> qualifiedNames = new LinkedHashSet<String>();
-		for(VariableDeclarationContainer container : getSplitMethods()) {
-			qualifiedNames.add(container.toQualifiedString());
-		}
-		sb.append(qualifiedNames);
-		sb.append(" in class ").append(classNameAfter);
-		return sb.toString();
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
@@ -33,7 +34,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class ExtractOperationRefactoring implements Refactoring {
+public class ExtractOperationRefactoring extends ChangeTypeRefactoring {
 	private VariableDeclarationContainer extractedOperation;
 	private VariableDeclarationContainer sourceOperationBeforeExtraction;
 	private VariableDeclarationContainer sourceOperationAfterExtraction;
@@ -90,6 +91,30 @@ public class ExtractOperationRefactoring implements Refactoring {
 			createArgumentMappings(mapping);
 			checkForMatchingCallChain(mapping);
 		}
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return sourceOperationBeforeExtraction;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return extractedOperation;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(extractedOperation.toQualifiedString());
+	}
+
+	public String getTemplateParameterAfter() {
+		return sourceOperationBeforeExtraction.toQualifiedString();
+	}
+
+	public boolean addCodeElementDescription() {
+		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
+			return true;
+		return false;
 	}
 
 	public CompositeStatementObject extractedFromSynchronizedBlock() {
@@ -339,30 +364,6 @@ public class ExtractOperationRefactoring implements Refactoring {
 			index++;
 		}
 		return -1;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(extractedOperation.toQualifiedString());
-		sb.append(" extracted from ");
-		sb.append(sourceOperationBeforeExtraction.toQualifiedString());
-		sb.append(" in class ");
-		sb.append(getClassName());
-		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
-			sb.append(" & moved to class ");
-			sb.append(extractedOperation.getClassName());
-		}
-		return sb.toString();
-	}
-
-	private String getClassName() {
-		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
-			return getSourceOperationBeforeExtraction().getClassName();
-		}
-		String sourceClassName = getSourceOperationBeforeExtraction().getClassName();
-		String targetClassName = getSourceOperationAfterExtraction().getClassName();
-		return sourceClassName.equals(targetClassName) ? sourceClassName : targetClassName;
 	}
 
 	public UMLOperationBodyMapper getBodyMapper() {

@@ -58,9 +58,13 @@ public abstract class AbstractRefactoring implements Refactoring {
 				sb.append(" merged to ");
 			else if(getRefactoringType().equals(RefactoringType.SPLIT_CLASS))
 				sb.append(" split to ");
+			else if(getRefactoringType().equals(RefactoringType.INLINE_OPERATION))
+				sb.append(" inlined to ");
 			else if(getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
 					getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
 				sb.append(" extracted from ");
+			else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
+				sb.append(" moved from class ");
 			else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
 					getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
@@ -81,20 +85,17 @@ public abstract class AbstractRefactoring implements Refactoring {
 				sb.append(" to ");
 		}
 		sb.append(getTemplateParameterAfter());
-		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline");
+		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline") || getName().startsWith("Move And Inline");
 		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		if(addCodeElementDescription()) {
-			String finalCodeElementType = codeElementType;
-			String codeElementDescription = codeElementDescription(provider);
-			if(getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND))
-				finalCodeElementType = "type";
-			else if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
-				finalCodeElementType = "class";
-				codeElementDescription = getProviderBefore().getClassName();
-			}
+			String finalCodeElementType = getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND) ? "type" : codeElementType;
 			sb.append(" in ").append(finalCodeElementType).append(" ");
-			sb.append(codeElementDescription);
+			sb.append(codeElementDescription(provider));
+		}
+		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
+			sb.append(" in class ");
+			sb.append(getProviderBefore().getClassName());
 		}
 		String className = null;
 		if (provider instanceof VariableDeclaration || provider instanceof UMLType) {
@@ -117,13 +118,19 @@ public abstract class AbstractRefactoring implements Refactoring {
 					getRefactoringType().equals(RefactoringType.SPLIT_OPERATION) ||
 					getRefactoringType().equals(RefactoringType.MERGE_OPERATION) ||
 					getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
+					getRefactoringType().equals(RefactoringType.INLINE_OPERATION) ||
 					getRefactoringType().equals(RefactoringType.RENAME_METHOD))
 				sb.append(" in class ");
 			else if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
 				sb.append(" & moved to class ");
+			else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
+				sb.append(" to class ");
 			else
 				sb.append(" from class ");
 			sb.append(className);
+		}
+		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
+			sb.append(" & inlined to ").append(codeElementDescription(provider));
 		}
 		return sb.toString();
 	}

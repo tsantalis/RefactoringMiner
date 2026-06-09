@@ -11,9 +11,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -29,7 +29,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class InlineOperationRefactoring implements Refactoring {
+public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 	private UMLOperation inlinedOperation;
 	private VariableDeclarationContainer targetOperationAfterInline;
 	private VariableDeclarationContainer targetOperationBeforeInline;
@@ -64,6 +64,26 @@ public class InlineOperationRefactoring implements Refactoring {
 			createArgumentMappings(mapping);
 			checkForMatchingCallChain(mapping);
 		}
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return targetOperationAfterInline;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return inlinedOperation;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(inlinedOperation.toQualifiedString());
+	}
+
+	public String getTemplateParameterAfter() {
+		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
+			return inlinedOperation.getClassName();
+		return targetOperationAfterInline.toQualifiedString();
 	}
 
 	private void checkForMatchingCallChain(AbstractCodeMapping mapping) {
@@ -300,31 +320,6 @@ public class InlineOperationRefactoring implements Refactoring {
 			index++;
 		}
 		return -1;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(inlinedOperation.toQualifiedString());
-		if(getRefactoringType().equals(RefactoringType.INLINE_OPERATION)) {
-			sb.append(" inlined to ");
-			sb.append(targetOperationAfterInline.toQualifiedString());
-			sb.append(" in class ");
-			sb.append(getClassName());
-		}
-		else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
-			sb.append(" moved from class ");
-			sb.append(inlinedOperation.getClassName());
-			sb.append(" to class ");
-			sb.append(getTargetOperationAfterInline().getClassName());
-			sb.append(" & inlined to ");
-			sb.append(getTargetOperationAfterInline().toQualifiedString());
-		}
-		return sb.toString();
-	}
-
-	private String getClassName() {
-		return targetOperationAfterInline.getClassName();
 	}
 
 	public String getName() {

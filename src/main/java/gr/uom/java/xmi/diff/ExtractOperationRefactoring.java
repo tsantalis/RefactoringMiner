@@ -111,12 +111,6 @@ public class ExtractOperationRefactoring extends ChangeTypeRefactoring {
 		return sourceOperationBeforeExtraction.toQualifiedString();
 	}
 
-	public boolean addCodeElementDescription() {
-		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
-			return true;
-		return false;
-	}
-
 	public CompositeStatementObject extractedFromSynchronizedBlock() {
 		if(bodyMapper.getParentMapper() != null && extractedOperation.isSynchronized()) {
 			for(CompositeStatementObject unmatched : bodyMapper.getParentMapper().getNonMappedInnerNodesT1()) {

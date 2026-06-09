@@ -43,16 +43,7 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(" in class ");
 			sb.append(getProviderBefore().getClassName());
 		}
-		if(getRefactoringType().equals(RefactoringType.MOVE_CLASS))
-			sb.append(" moved to ");
-		else if(getName().startsWith("Replace"))
-			sb.append(" with ");
-		else if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE))
-			sb.append(" renamed to ");
-		else if(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE))
-			sb.append(" extracted from ");
-		else
-			sb.append(" to ");
+		appendTextBetweenMovedElements(sb);
 		sb.append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderBefore() : getProviderAfter()));
 		if(addClassName(getProviderAfter(), getRefactoringType())) {
 			sb.append(" from class ");
@@ -69,5 +60,18 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(getProviderAfter().getClassName());
 		}
 		return sb.toString();
+	}
+
+	private void appendTextBetweenMovedElements(StringBuilder sb) {
+		if(getRefactoringType().equals(RefactoringType.MOVE_CLASS))
+			sb.append(" moved to ");
+		else if(getName().startsWith("Replace"))
+			sb.append(" with ");
+		else if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE))
+			sb.append(" renamed to ");
+		else if(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE))
+			sb.append(" extracted from ");
+		else
+			sb.append(" to ");
 	}
 }

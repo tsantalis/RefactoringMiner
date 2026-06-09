@@ -52,40 +52,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		if(getTemplateParameterBefore().isPresent()) {
 			sb.append(getTemplateParameterBefore().get());
-			if(getRefactoringType().equals(RefactoringType.RENAME_METHOD) ||
-					getRefactoringType().equals(RefactoringType.RENAME_CLASS))
-				sb.append(" renamed to ");
-			else if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_CLASS))
-				sb.append(" moved and renamed to ");
-			else if(getRefactoringType().equals(RefactoringType.MERGE_CLASS))
-				sb.append(" merged to ");
-			else if(getRefactoringType().equals(RefactoringType.SPLIT_CLASS))
-				sb.append(" split to ");
-			else if(getRefactoringType().equals(RefactoringType.INLINE_OPERATION))
-				sb.append(" inlined to ");
-			else if(getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
-					getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
-				sb.append(" extracted from ");
-			else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
-				sb.append(" moved from class ");
-			else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
-					getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
-					getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
-					getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||
-					getRefactoringType().equals(RefactoringType.REPLACE_GENERIC_WITH_DIAMOND))
-				sb.append(" with ");
-			else if(getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
-					getRefactoringType().equals(RefactoringType.EXTRACT_SUBCLASS) ||
-					getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) {
-				if(getTemplateParameterAfter().startsWith("[") && getTemplateParameterAfter().endsWith("]"))
-					sb.append(" from classes ");
-				else
-					sb.append(" from class ");
-			}
-			else if(getRefactoringType().equals(RefactoringType.EXTRACT_INTERFACE))
-				sb.append(" from classes ");
-			else
-				sb.append(" to ");
+			appendTextForTemplateParameterBefore(sb);
 		}
 		sb.append(getTemplateParameterAfter());
 		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline") || getName().startsWith("Move And Inline");
@@ -118,23 +85,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 			className = provider.getClassName();
 		}
 		if (className != null && !codeElementType.equals("class") && !getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
-			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE) ||
-					getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE) ||
-					getRefactoringType().equals(RefactoringType.SPLIT_ATTRIBUTE) ||
-					getRefactoringType().equals(RefactoringType.MERGE_ATTRIBUTE) ||
-					getRefactoringType().equals(RefactoringType.SPLIT_OPERATION) ||
-					getRefactoringType().equals(RefactoringType.MERGE_OPERATION) ||
-					getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
-					getRefactoringType().equals(RefactoringType.INLINE_OPERATION) ||
-					getRefactoringType().equals(RefactoringType.PARAMETERIZE_TEST) ||
-					getRefactoringType().equals(RefactoringType.RENAME_METHOD))
-				sb.append(" in class ");
-			else if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
-				sb.append(" & moved to class ");
-			else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
-				sb.append(" to class ");
-			else
-				sb.append(" from class ");
+			appendTextForClassName(sb);
 			sb.append(className);
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
@@ -146,5 +97,62 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(codeElementDescription(provider));
 		}
 		return sb.toString();
+	}
+
+	private void appendTextForClassName(StringBuilder sb) {
+		if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE) ||
+				getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE) ||
+				getRefactoringType().equals(RefactoringType.SPLIT_ATTRIBUTE) ||
+				getRefactoringType().equals(RefactoringType.MERGE_ATTRIBUTE) ||
+				getRefactoringType().equals(RefactoringType.SPLIT_OPERATION) ||
+				getRefactoringType().equals(RefactoringType.MERGE_OPERATION) ||
+				getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
+				getRefactoringType().equals(RefactoringType.INLINE_OPERATION) ||
+				getRefactoringType().equals(RefactoringType.PARAMETERIZE_TEST) ||
+				getRefactoringType().equals(RefactoringType.RENAME_METHOD))
+			sb.append(" in class ");
+		else if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
+			sb.append(" & moved to class ");
+		else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
+			sb.append(" to class ");
+		else
+			sb.append(" from class ");
+	}
+
+	private void appendTextForTemplateParameterBefore(StringBuilder sb) {
+		if(getRefactoringType().equals(RefactoringType.RENAME_METHOD) ||
+				getRefactoringType().equals(RefactoringType.RENAME_CLASS))
+			sb.append(" renamed to ");
+		else if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_CLASS))
+			sb.append(" moved and renamed to ");
+		else if(getRefactoringType().equals(RefactoringType.MERGE_CLASS))
+			sb.append(" merged to ");
+		else if(getRefactoringType().equals(RefactoringType.SPLIT_CLASS))
+			sb.append(" split to ");
+		else if(getRefactoringType().equals(RefactoringType.INLINE_OPERATION))
+			sb.append(" inlined to ");
+		else if(getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION) ||
+				getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
+			sb.append(" extracted from ");
+		else if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION))
+			sb.append(" moved from class ");
+		else if(getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA) ||
+				getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
+				getRefactoringType().equals(RefactoringType.REPLACE_LOOP_WITH_PIPELINE) ||
+				getRefactoringType().equals(RefactoringType.REPLACE_PIPELINE_WITH_LOOP) ||
+				getRefactoringType().equals(RefactoringType.REPLACE_GENERIC_WITH_DIAMOND))
+			sb.append(" with ");
+		else if(getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+				getRefactoringType().equals(RefactoringType.EXTRACT_SUBCLASS) ||
+				getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) {
+			if(getTemplateParameterAfter().startsWith("[") && getTemplateParameterAfter().endsWith("]"))
+				sb.append(" from classes ");
+			else
+				sb.append(" from class ");
+		}
+		else if(getRefactoringType().equals(RefactoringType.EXTRACT_INTERFACE))
+			sb.append(" from classes ");
+		else
+			sb.append(" to ");
 	}
 }

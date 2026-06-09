@@ -6,18 +6,28 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLClass;
 
-public class CollapseHierarchyRefactoring implements Refactoring {
+public class CollapseHierarchyRefactoring extends ChangeTypeRefactoring {
 	private UMLClass collapsedClass;
 	private UMLClass superclassAfterCollapse;
 
 	public CollapseHierarchyRefactoring(UMLClass collapsedClass, UMLClass superclassAfterCollapse) {
 		this.collapsedClass = collapsedClass;
 		this.superclassAfterCollapse = superclassAfterCollapse;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return collapsedClass;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return superclassAfterCollapse;
 	}
 
 	private UMLClass getCollapsedClass() {
@@ -68,15 +78,6 @@ public class CollapseHierarchyRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getSuperclassAfterCollapse().getLocationInfo().getFilePath(), getSuperclassAfterCollapse().getName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(collapsedClass);
-		sb.append(" to ");
-		sb.append(superclassAfterCollapse);
-		return sb.toString();
 	}
 
 	@Override

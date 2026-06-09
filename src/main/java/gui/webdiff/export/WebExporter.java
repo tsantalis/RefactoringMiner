@@ -10,8 +10,12 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -31,6 +35,13 @@ public class WebExporter {
             "singleView",
             "list"
     );
+    // Deleted/added files in their list order, used both to generate the
+    // content/<side>/<i> pages and to map their /content?side=&path= links to
+    // those folders. Injected from the comparator in export(); the empty
+    // defaults make doProperReplacement testable without a running server.
+    List<String> deletedFiles = List.of();
+    List<String> addedFiles = List.of();
+    final String contentFolder = "content";
 
     public void setViewers_path(Set<String> viewers_path) {
         this.viewers_path = viewers_path;
@@ -38,6 +49,11 @@ public class WebExporter {
 
     public void setOtherPages(Set<String> otherPages) {
         this.otherPages = otherPages;
+    }
+
+    public void setContentFiles(List<String> deletedFiles, List<String> addedFiles) {
+        this.deletedFiles = deletedFiles;
+        this.addedFiles = addedFiles;
     }
 
     final String baseFolder = "web";
@@ -52,8 +68,11 @@ public class WebExporter {
         if (!exportPath.endsWith(File.separator))
             exportPath += File.separator;
         exportPath = exportPath + baseFolder + File.separator;
+        deletedFiles = new ArrayList<>(webDiff.getComparator().getRemovedFilesName());
+        addedFiles = new ArrayList<>(webDiff.getComparator().getAddedFilesName());
         exportViewers(exportPath);
         exportOthersPages(exportPath);
+        exportContentPages(exportPath);
         exportResources(exportPath + File.separator, resourcePath + webDiff.getResources());
         exportInfo(exportPath);
     }
@@ -97,6 +116,24 @@ public class WebExporter {
         }
     }
 
+    // Deleted/added files have no AST diff and so no /monaco-page/<id> page; the
+    // live server serves them on demand from /content?side=&path=. Materialize
+    // each one as a static page so the export works offline / on GitHub Pages.
+    private void exportContentPages(String exportPath) {
+        exportContentSide(exportPath, "deleted", deletedFiles);
+        exportContentSide(exportPath, "added", addedFiles);
+    }
+
+    private void exportContentSide(String exportPath, String side, List<String> files) {
+        for (int i = 0; i < files.size(); i++) {
+            String encodedPath = URLEncoder.encode(files.get(i), StandardCharsets.UTF_8);
+            String url = String.format("%s:%d/content?side=%s&path=%s", baseURL, webDiff.port, side, encodedPath);
+            // Folder "content/<side>/<i>" sits three levels below the export root,
+            // so export() computes nestingLevel 3 and the right "../../../" prefix.
+            export(exportPath, contentFolder + File.separator + side + File.separator + i, url);
+        }
+    }
+
     private void export(String exportPath, String folderPath, String url) {
         int nestingLevel = folderPath.length() - folderPath.replace(File.separator, "").length() + 1;
         String content = getPage(url);
@@ -132,15 +169,20 @@ public class WebExporter {
                 addon = baseAddonWithResources;
             } else {
                 addon = baseAddon;
-                // Page links target a directory we wrote as <page>/index.html.
-                // Point them straight at the file so navigation also works
-                // offline (file://) and on hosts that don't auto-resolve a
-                // directory to its index.html, not just servers that redirect.
-                if (isExportedPageLink(filePath)) {
+                // Deleted/added links are query-string shaped
+                // (content?side=&path=); rewrite them to the static folder we
+                // generated for that file. Other page links target a directory
+                // we wrote as <page>/index.html, so point them straight at the
+                // file: navigation then works offline (file://) and on hosts
+                // that don't auto-resolve a directory to its index.html.
+                String contentTarget = rewriteContentLink(filePath);
+                if (contentTarget != null) {
+                    filePath = contentTarget;
+                } else if (isExportedPageLink(filePath)) {
                     filePath = filePath + "/index.html";
                 }
             }
-            matcher.appendReplacement(result, addon + filePath);
+            matcher.appendReplacement(result, Matcher.quoteReplacement(addon + filePath));
         }
         matcher.appendTail(result);
         content = result.toString();
@@ -154,6 +196,47 @@ public class WebExporter {
             if (filePath.matches(Pattern.quote(viewer) + "/\\d+")) return true;
         }
         return false;
+    }
+
+    /**
+     * Map a deleted/added link ("content?side=&path=") to the static folder we
+     * exported for that file ("content/<side>/<i>/index.html"), or null if the
+     * link isn't a content link or names a file we didn't export.
+     */
+    String rewriteContentLink(String filePath) {
+        int queryStart = filePath.indexOf('?');
+        if (queryStart < 0 || !filePath.substring(0, queryStart).endsWith(contentFolder)) return null;
+
+        // rendersnake escapes attribute values, so the raw HTML has "&amp;".
+        String query = filePath.substring(queryStart + 1).replace("&amp;", "&");
+        String side = queryParam(query, "side");
+        String rawPath = queryParam(query, "path");
+        if (side == null || rawPath == null) return null;
+
+        // The /content route accepts both deleted/added and left/right.
+        String normalizedSide = "left".equals(side) ? "deleted" : "right".equals(side) ? "added" : side;
+        String path = URLDecoder.decode(rawPath, StandardCharsets.UTF_8);
+        int index;
+        if ("deleted".equals(normalizedSide)) {
+            index = deletedFiles.indexOf(path);
+        } else if ("added".equals(normalizedSide)) {
+            index = addedFiles.indexOf(path);
+        } else {
+            return null;
+        }
+        if (index < 0) return null;
+        return contentFolder + "/" + normalizedSide + "/" + index + "/index.html";
+    }
+
+    /** Read a single parameter out of an already-unescaped query string, URL-decoding nothing. */
+    private static String queryParam(String query, String key) {
+        for (String pair : query.split("&")) {
+            int eq = pair.indexOf('=');
+            if (eq > 0 && pair.substring(0, eq).equals(key)) {
+                return pair.substring(eq + 1);
+            }
+        }
+        return null;
     }
 
     private void exportResources(String destDir, String resourcesPath) {

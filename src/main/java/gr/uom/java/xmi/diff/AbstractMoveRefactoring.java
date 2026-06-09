@@ -7,6 +7,7 @@ import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
 
 public abstract class AbstractMoveRefactoring implements Refactoring {
 	public abstract AnnotationProvider getProviderBefore();
@@ -23,15 +24,23 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 	}
 
 	private static boolean addClassName(AnnotationProvider provider, RefactoringType refactoringType) {
-		return !(provider instanceof UMLAbstractClass) && !refactoringType.equals(RefactoringType.MOVE_RENAME_ATTRIBUTE);
+		return !(provider instanceof UMLAbstractClass) && !refactoringType.equals(RefactoringType.MOVE_RENAME_ATTRIBUTE) &&
+				!refactoringType.equals(RefactoringType.MOVE_CODE) && !refactoringType.equals(RefactoringType.EXTRACT_FIXTURE);
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(codeElementDescription(getProviderBefore()));
+		if(getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
+			sb.append("from ");
+		}
+		sb.append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderAfter() : getProviderBefore()));
 		if(addClassName(getProviderBefore(), getRefactoringType())) {
 			sb.append(" from class ");
+			sb.append(getProviderBefore().getClassName());
+		}
+		else if(getRefactoringType().equals(RefactoringType.MOVE_CODE) && ((MoveCodeRefactoring)this).getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
+			sb.append(" in class ");
 			sb.append(getProviderBefore().getClassName());
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_CLASS))
@@ -40,11 +49,17 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(" with ");
 		else if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE))
 			sb.append(" renamed to ");
+		else if(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE))
+			sb.append(" extracted from ");
 		else
 			sb.append(" to ");
-		sb.append(codeElementDescription(getProviderAfter()));
+		sb.append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderBefore() : getProviderAfter()));
 		if(addClassName(getProviderAfter(), getRefactoringType())) {
 			sb.append(" from class ");
+			sb.append(getProviderAfter().getClassName());
+		}
+		else if(getRefactoringType().equals(RefactoringType.MOVE_CODE) || getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
+			sb.append(" in class ");
 			sb.append(getProviderAfter().getClassName());
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE)) {

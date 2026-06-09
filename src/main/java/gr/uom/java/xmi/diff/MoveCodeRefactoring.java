@@ -8,15 +8,15 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class MoveCodeRefactoring implements Refactoring {
+public class MoveCodeRefactoring extends AbstractMoveRefactoring {
 	public enum Type {
 		MOVE_FROM_REMOVED,
 		MOVE_TO_ADDED,
@@ -43,6 +43,14 @@ public class MoveCodeRefactoring implements Refactoring {
 			this.movedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.movedCodeFragmentsToTargetOperation.add(mapping.getFragment2());
 		}
+	}
+
+	public AnnotationProvider getProviderBefore() {
+		return sourceContainer;
+	}
+
+	public AnnotationProvider getProviderAfter() {
+		return targetContainer;
 	}
 
 	public void updateMapperInfo() {
@@ -163,36 +171,5 @@ public class MoveCodeRefactoring implements Refactoring {
 				&& Objects.equals(movedCodeFragmentsToTargetOperation, other.movedCodeFragmentsToTargetOperation)
 				&& Objects.equals(sourceContainer, other.sourceContainer)
 				&& Objects.equals(targetContainer, other.targetContainer);
-	}
-
-	private String getClassName() {
-		String sourceClassName = getSourceContainer().getClassName();
-		String targetClassName = getTargetContainer().getClassName();
-		return sourceClassName.equals(targetClassName) ? sourceClassName : targetClassName;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		if(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
-			sb.append(targetContainer.toQualifiedString());
-			sb.append(" extracted from ");
-			sb.append(sourceContainer.toQualifiedString());
-			sb.append(" in class ");
-			sb.append(getClassName());
-		}
-		else {
-			sb.append("from ");
-			sb.append(sourceContainer.toQualifiedString());
-			if(moveType.equals(Type.MOVE_BETWEEN_FILES)) {
-				sb.append(" in class ");
-				sb.append(sourceContainer.getClassName());
-			}
-			sb.append(" to ");
-			sb.append(targetContainer.toQualifiedString());
-			sb.append(" in class ");
-			sb.append(getClassName());
-		}
-		return sb.toString();
 	}
 }

@@ -114,7 +114,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(" in " + elementType + " ");
 			sb.append(container.toQualifiedString());
 			className = container.getClassName();
-		} else {
+		} else if (provider != null) {
 			className = provider.getClassName();
 		}
 		if (!codeElementType.equals("class") && !getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {

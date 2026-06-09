@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
@@ -30,12 +29,16 @@ public class MoveSourceFolderRefactoring extends ChangeTypeRefactoring {
 
 	@Override
 	public AnnotationProvider getProviderBefore() {
-		return movedClassesToAnotherSourceFolder.get(0).getOriginalClass();
+		if(!movedClassesToAnotherSourceFolder.isEmpty())
+			return movedClassesToAnotherSourceFolder.get(0).getOriginalClass();
+		return null;
 	}
 
 	@Override
 	public AnnotationProvider getProviderAfter() {
-		return movedClassesToAnotherSourceFolder.get(0).getMovedClass();
+		if(!movedClassesToAnotherSourceFolder.isEmpty())
+			return movedClassesToAnotherSourceFolder.get(0).getMovedClass();
+		return null;
 	}
 
 	public Optional<String> getTemplateParameterBefore() {

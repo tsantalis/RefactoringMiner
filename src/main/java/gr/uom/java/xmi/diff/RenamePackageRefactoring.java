@@ -3,13 +3,15 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class RenamePackageRefactoring implements Refactoring {
+import gr.uom.java.xmi.AnnotationProvider;
+
+public class RenamePackageRefactoring extends ChangeTypeRefactoring {
 
 	private List<PackageLevelRefactoring> moveClassRefactorings;
 	private RenamePattern pattern;
@@ -23,6 +25,26 @@ public class RenamePackageRefactoring implements Refactoring {
 		this.moveClassRefactorings = new ArrayList<PackageLevelRefactoring>();
 		this.moveClassRefactorings.add(moveClassRefactoring);
 		this.pattern = moveClassRefactoring.getRenamePattern();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return moveClassRefactorings.get(0).getOriginalClass();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return moveClassRefactorings.get(0).getMovedClass();
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		String originalPath = pattern.getBefore().endsWith(".") ? pattern.getBefore().substring(0, pattern.getBefore().length()-1) : pattern.getBefore();
+		return Optional.of(originalPath);
+	}
+
+	public String getTemplateParameterAfter() {
+		String movedPath = pattern.getAfter().endsWith(".") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
+		return movedPath;
 	}
 
 	public void addMoveClassRefactoring(PackageLevelRefactoring moveClassRefactoring) {
@@ -55,17 +77,6 @@ public class RenamePackageRefactoring implements Refactoring {
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		String originalPath = pattern.getBefore().endsWith(".") ? pattern.getBefore().substring(0, pattern.getBefore().length()-1) : pattern.getBefore();
-		sb.append(originalPath);
-		sb.append(" to ");
-		String movedPath = pattern.getAfter().endsWith(".") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
-		sb.append(movedPath);
-		return sb.toString();
 	}
 
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {

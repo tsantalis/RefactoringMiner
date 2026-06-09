@@ -3,14 +3,16 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class MergePackageRefactoring implements Refactoring {
+import gr.uom.java.xmi.AnnotationProvider;
+
+public class MergePackageRefactoring extends ChangeTypeRefactoring {
 	private Set<String> mergedPackages;
 	private String newPackage;
 	private Set<RenamePackageRefactoring> renamePackageRefactorings;
@@ -25,6 +27,32 @@ public class MergePackageRefactoring implements Refactoring {
 			}
 			mergedPackages.add(pattern.getBefore());
 		}
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		RenamePackageRefactoring rename = renamePackageRefactorings.iterator().next();
+		return rename.getMoveClassRefactorings().get(0).getOriginalClass();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		RenamePackageRefactoring rename = renamePackageRefactorings.iterator().next();
+		return rename.getMoveClassRefactorings().get(0).getMovedClass();
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		Set<String> mergedPaths = new LinkedHashSet<String>();
+		for(String mergePackage : mergedPackages) {
+			String mergePath = mergePackage.endsWith(".") ? mergePackage.substring(0, mergePackage.length()-1) : mergePackage;
+			mergedPaths.add(mergePath);
+		}
+		return Optional.of(mergedPaths.toString());
+	}
+
+	public String getTemplateParameterAfter() {
+		String newPath = newPackage.endsWith(".") ? newPackage.substring(0, newPackage.length()-1) : newPackage;
+		return newPath;
 	}
 
 	@Override
@@ -83,21 +111,6 @@ public class MergePackageRefactoring implements Refactoring {
 			}
 		}
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		Set<String> mergedPaths = new LinkedHashSet<String>();
-		for(String mergePackage : mergedPackages) {
-			String mergePath = mergePackage.endsWith(".") ? mergePackage.substring(0, mergePackage.length()-1) : mergePackage;
-			mergedPaths.add(mergePath);
-		}
-		sb.append(mergedPaths);
-		sb.append(" to ");
-		String newPath = newPackage.endsWith(".") ? newPackage.substring(0, newPackage.length()-1) : newPackage;
-		sb.append(newPath);
-		return sb.toString();
 	}
 
 	@Override

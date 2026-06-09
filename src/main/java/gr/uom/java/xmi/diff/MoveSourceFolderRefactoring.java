@@ -5,13 +5,16 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class MoveSourceFolderRefactoring implements Refactoring {
+import gr.uom.java.xmi.AnnotationProvider;
+
+public class MoveSourceFolderRefactoring extends ChangeTypeRefactoring {
 	private List<MovedClassToAnotherSourceFolder> movedClassesToAnotherSourceFolder = new ArrayList<MovedClassToAnotherSourceFolder>();
 	private Map<String, String> identicalFilePaths = new HashMap<String, String>();
 	private RenamePattern pattern;
@@ -23,6 +26,26 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 	public MoveSourceFolderRefactoring(MovedClassToAnotherSourceFolder movedClassToAnotherSourceFolder) {
 		this.movedClassesToAnotherSourceFolder.add(movedClassToAnotherSourceFolder);
 		this.pattern = movedClassToAnotherSourceFolder.getRenamePattern();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return movedClassesToAnotherSourceFolder.get(0).getOriginalClass();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return movedClassesToAnotherSourceFolder.get(0).getMovedClass();
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		String originalPath = pattern.getBefore().endsWith("/") ? pattern.getBefore().substring(0, pattern.getBefore().length()-1) : pattern.getBefore();
+		return Optional.of(originalPath);
+	}
+
+	public String getTemplateParameterAfter() {
+		String movedPath = pattern.getAfter().endsWith("/") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
+		return movedPath;
 	}
 
 	public void putIdenticalFilePaths(String filePathBefore, String filePathAfter) {
@@ -43,17 +66,6 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 
 	public RenamePattern getPattern() {
 		return pattern;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		String originalPath = pattern.getBefore().endsWith("/") ? pattern.getBefore().substring(0, pattern.getBefore().length()-1) : pattern.getBefore();
-		sb.append(originalPath);
-		sb.append(" to ");
-		String movedPath = pattern.getAfter().endsWith("/") ? pattern.getAfter().substring(0, pattern.getAfter().length()-1) : pattern.getAfter();
-		sb.append(movedPath);
-		return sb.toString();
 	}
 
 	public String getName() {

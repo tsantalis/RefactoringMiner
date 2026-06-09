@@ -3,14 +3,16 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class SplitPackageRefactoring implements Refactoring {
+import gr.uom.java.xmi.AnnotationProvider;
+
+public class SplitPackageRefactoring extends ChangeTypeRefactoring {
 	private String originalPackage;
 	private Set<String> splitPackages;
 	private Set<RenamePackageRefactoring> renamePackageRefactorings;
@@ -25,6 +27,32 @@ public class SplitPackageRefactoring implements Refactoring {
 			}
 			splitPackages.add(pattern.getAfter());
 		}
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		RenamePackageRefactoring rename = renamePackageRefactorings.iterator().next();
+		return rename.getMoveClassRefactorings().get(0).getOriginalClass();
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		RenamePackageRefactoring rename = renamePackageRefactorings.iterator().next();
+		return rename.getMoveClassRefactorings().get(0).getMovedClass();
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		String originalPath = originalPackage.endsWith(".") ? originalPackage.substring(0, originalPackage.length()-1) : originalPackage;
+		return Optional.of(originalPath);
+	}
+
+	public String getTemplateParameterAfter() {
+		Set<String> splitPaths = new LinkedHashSet<String>();
+		for(String splitPackage : splitPackages) {
+			String splitPath = splitPackage.endsWith(".") ? splitPackage.substring(0, splitPackage.length()-1) : splitPackage;
+			splitPaths.add(splitPath);
+		}
+		return splitPaths.toString();
 	}
 
 	public String getOriginalPackage() {
@@ -95,21 +123,6 @@ public class SplitPackageRefactoring implements Refactoring {
 			}
 		}
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		String originalPath = originalPackage.endsWith(".") ? originalPackage.substring(0, originalPackage.length()-1) : originalPackage;
-		sb.append(originalPath);
-		sb.append(" to ");
-		Set<String> splitPaths = new LinkedHashSet<String>();
-		for(String splitPackage : splitPackages) {
-			String splitPath = splitPackage.endsWith(".") ? splitPackage.substring(0, splitPackage.length()-1) : splitPackage;
-			splitPaths.add(splitPath);
-		}
-		sb.append(splitPaths);
-		return sb.toString();
 	}
 
 	@Override

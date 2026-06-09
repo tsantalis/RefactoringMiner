@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ParameterizeTestRefactoring implements Refactoring {
+public class ParameterizeTestRefactoring extends ChangeTypeRefactoring {
 	private UMLOperation removedOperation;
 	private UMLOperation parameterizedTestOperation;
 	private UMLOperationBodyMapper bodyMapper;
@@ -22,6 +23,24 @@ public class ParameterizeTestRefactoring implements Refactoring {
 		this.bodyMapper = bodyMapper;
 		this.removedOperation = bodyMapper.getOperation1();
 		this.parameterizedTestOperation = bodyMapper.getOperation2();
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return removedOperation;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return parameterizedTestOperation;
+	}
+
+	public Optional<String> getTemplateParameterBefore() {
+		return Optional.of(removedOperation.toQualifiedString());
+	}
+
+	public String getTemplateParameterAfter() {
+		return parameterizedTestOperation.toQualifiedString();
 	}
 
 	public UMLOperationBodyMapper getBodyMapper() {
@@ -76,17 +95,6 @@ public class ParameterizeTestRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getParameterizedTestOperation().getLocationInfo().getFilePath(), getParameterizedTestOperation().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(removedOperation.toQualifiedString());
-		sb.append(" to ");
-		sb.append(parameterizedTestOperation.toQualifiedString());
-		sb.append(" in class ");
-		sb.append(parameterizedTestOperation.getClassName());
-		return sb.toString();
 	}
 
 	@Override

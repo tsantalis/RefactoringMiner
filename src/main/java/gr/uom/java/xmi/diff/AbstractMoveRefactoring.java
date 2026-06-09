@@ -22,15 +22,15 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 		return provider.toString();
 	}
 
-	private static boolean isClass(AnnotationProvider provider) {
-		return provider instanceof UMLAbstractClass;
+	private static boolean addClassName(AnnotationProvider provider, RefactoringType refactoringType) {
+		return !(provider instanceof UMLAbstractClass) && !refactoringType.equals(RefactoringType.MOVE_RENAME_ATTRIBUTE);
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
 		sb.append(codeElementDescription(getProviderBefore()));
-		if(!isClass(getProviderBefore())) {
+		if(addClassName(getProviderBefore(), getRefactoringType())) {
 			sb.append(" from class ");
 			sb.append(getProviderBefore().getClassName());
 		}
@@ -38,11 +38,19 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(" moved to ");
 		else if(getName().startsWith("Replace"))
 			sb.append(" with ");
+		else if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE))
+			sb.append(" renamed to ");
 		else
 			sb.append(" to ");
 		sb.append(codeElementDescription(getProviderAfter()));
-		if(!isClass(getProviderAfter())) {
+		if(addClassName(getProviderAfter(), getRefactoringType())) {
 			sb.append(" from class ");
+			sb.append(getProviderAfter().getClassName());
+		}
+		if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE)) {
+			sb.append(" and moved from class ");
+			sb.append(getProviderBefore().getClassName());
+			sb.append(" to class ");
 			sb.append(getProviderAfter().getClassName());
 		}
 		return sb.toString();

@@ -3,6 +3,8 @@ package gui.webdiff.export;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class WebExporterTest {
@@ -38,14 +40,48 @@ class WebExporterTest {
 	}
 
 	@Test
-	void leavesNonExportedPageLinksAlone() {
+	void rewritesDeletedAndAddedLinksToTheirExportedContentFolders() {
+		WebExporter exporter = new WebExporter(null);
+		// Order here is the order the folders are numbered, mirroring the
+		// comparator's getRemovedFilesName()/getAddedFilesName() ordering.
+		exporter.setContentFiles(List.of("A.java", "src/main/B.java"), List.of("C.java"));
+
+		String html = exporter.doProperReplacement(
+				// rendersnake escapes the "&" in attribute values to "&amp;",
+				// and paths with slashes are URL-encoded (B.java below).
+				"<a href=\"/content?side=deleted&amp;path=A.java\">a</a>"
+						+ "<a href=\"/content?side=deleted&amp;path=src%2Fmain%2FB.java\">b</a>"
+						+ "<a href=\"/content?side=added&amp;path=C.java\">c</a>",
+				MONACO_PAGE_DEPTH);
+
+		assertTrue(html.contains("href=\"../../content/deleted/0/index.html\""), html);
+		assertTrue(html.contains("href=\"../../content/deleted/1/index.html\""), html);
+		assertTrue(html.contains("href=\"../../content/added/0/index.html\""), html);
+	}
+
+	@Test
+	void normalizesLeftRightSidesToDeletedAdded() {
+		WebExporter exporter = new WebExporter(null);
+		exporter.setContentFiles(List.of("A.java"), List.of("C.java"));
+
+		String html = exporter.doProperReplacement(
+				"<a href=\"/content?side=left&amp;path=A.java\">a</a>"
+						+ "<a href=\"/content?side=right&amp;path=C.java\">c</a>",
+				MONACO_PAGE_DEPTH);
+
+		assertTrue(html.contains("href=\"../../content/deleted/0/index.html\""), html);
+		assertTrue(html.contains("href=\"../../content/added/0/index.html\""), html);
+	}
+
+	@Test
+	void leavesUnknownContentLinksAndServerOnlyEndpointsAlone() {
+		// No content files registered, so a /content link names a file we did
+		// not export: leave it as-is rather than pointing at a missing folder.
 		String html = new WebExporter(null).doProperReplacement(
 				"<a href=\"/content?side=deleted&path=A.java\">d</a>"
 						+ "<a href=\"/quit\">q</a>",
 				MONACO_PAGE_DEPTH);
 
-		// The deleted/added content endpoint is not exported here (handled by a
-		// follow-up PR), so its link must be left as-is, not pointed at index.html.
 		assertTrue(html.contains("content?side=deleted&path=A.java"), html);
 		assertFalse(html.contains("A.java/index.html"), html);
 		// quit is a server-only endpoint, not an exported page.

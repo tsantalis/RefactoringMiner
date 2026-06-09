@@ -100,6 +100,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(" in class ");
 			sb.append(getProviderBefore().getClassName());
 		}
+		else if(getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
+			sb.append(" from ");
+			sb.append(codeElementDescription(getProviderBefore()));
+		}
 		String className = null;
 		if (provider instanceof VariableDeclaration || provider instanceof UMLType) {
 			MethodLevelRefactoring methodLevelRef = (MethodLevelRefactoring) this;
@@ -113,7 +117,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 		} else {
 			className = provider.getClassName();
 		}
-		if (!codeElementType.equals("class")) {
+		if (!codeElementType.equals("class") && !getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
 			if(getRefactoringType().equals(RefactoringType.CHANGE_ATTRIBUTE_TYPE) ||
 					getRefactoringType().equals(RefactoringType.RENAME_ATTRIBUTE) ||
 					getRefactoringType().equals(RefactoringType.SPLIT_ATTRIBUTE) ||
@@ -134,7 +138,12 @@ public abstract class AbstractRefactoring implements Refactoring {
 			sb.append(className);
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
-			sb.append(" & inlined to ").append(codeElementDescription(provider));
+			sb.append(" & inlined to ");
+			sb.append(codeElementDescription(provider));
+		}
+		else if(getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
+			sb.append(" to ");
+			sb.append(codeElementDescription(provider));
 		}
 		return sb.toString();
 	}

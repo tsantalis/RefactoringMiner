@@ -7,13 +7,12 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 
-public class MoveAnnotationRefactoring implements Refactoring {
+public class MoveAnnotationRefactoring extends AnnotationRefactoring {
 	private UMLAnnotation originalAnnotation;
 	private UMLAnnotation movedAnnotation;
 	private AnnotationProvider originalAnnotationProvider;
@@ -26,6 +25,23 @@ public class MoveAnnotationRefactoring implements Refactoring {
 		this.originalAnnotationProvider = annotationProviderBefore;
 		this.movedAnnotationProvider = annotationProviderAfter;
 	}
+
+	@Override
+	public UMLAnnotation getAnnotation() {
+		return movedAnnotation;
+	}
+
+	@Override
+	public AnnotationProvider getProviderBefore() {
+		return originalAnnotationProvider;
+	}
+
+	@Override
+	public AnnotationProvider getProviderAfter() {
+		return movedAnnotationProvider;
+	}
+
+	public boolean addCodeElementDescription() {return false;}
 
 	public UMLAnnotation getOriginalAnnotation() {
 		return originalAnnotation;
@@ -83,17 +99,6 @@ public class MoveAnnotationRefactoring implements Refactoring {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		pairs.add(new ImmutablePair<String, String>(getMovedAnnotationProvider().getLocationInfo().getFilePath(), getMovedAnnotationProvider().getClassName()));
 		return pairs;
-	}
-
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(movedAnnotation);
-		sb.append(" from ");
-		sb.append(originalAnnotationProvider);
-		sb.append(" to ");
-		sb.append(movedAnnotationProvider);
-		return sb.toString();
 	}
 
 	@Override

@@ -119,4 +119,35 @@ public class ExtractSuperclassRefactoring extends ChangeTypeRefactoring {
 				.setCodeElement(extractedClass.getName()));
 		return ranges;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((subclassSetBefore == null) ? 0 : subclassSetBefore.hashCode());
+		result = prime * result + ((extractedClass == null) ? 0 : extractedClass.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ExtractSuperclassRefactoring other = (ExtractSuperclassRefactoring) obj;
+		if (subclassSetBefore == null) {
+			if (other.subclassSetBefore != null)
+				return false;
+		} else if (!subclassSetBefore.equals(other.subclassSetBefore))
+			return false;
+		if (extractedClass == null) {
+			if (other.extractedClass != null)
+				return false;
+		} else if (!extractedClass.equals(other.extractedClass))
+			return false;
+		return true;
+	}
 }

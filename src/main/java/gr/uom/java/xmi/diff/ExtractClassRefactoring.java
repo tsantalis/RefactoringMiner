@@ -125,4 +125,35 @@ public class ExtractClassRefactoring extends ChangeTypeRefactoring {
 		}
 		return ranges;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((classDiff.getOriginalClass() == null) ? 0 : classDiff.getOriginalClass().hashCode());
+		result = prime * result + ((extractedClass == null) ? 0 : extractedClass.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ExtractClassRefactoring other = (ExtractClassRefactoring) obj;
+		if (classDiff.getOriginalClass() == null) {
+			if (other.classDiff.getOriginalClass() != null)
+				return false;
+		} else if (!classDiff.getOriginalClass().equals(other.classDiff.getOriginalClass()))
+			return false;
+		if (extractedClass == null) {
+			if (other.extractedClass != null)
+				return false;
+		} else if (!extractedClass.equals(other.extractedClass))
+			return false;
+		return true;
+	}
 }

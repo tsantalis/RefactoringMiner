@@ -32,6 +32,10 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 		return toString(Refactoring.Decorator.PLAIN);
 	}
 
+	public String toHTMLString() {
+		return toString(Refactoring.Decorator.HTML);
+	}
+
 	private String toString(Refactoring.Decorator decorator) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(decorator.BOLD_OPEN).append(getName()).append(decorator.BOLD_CLOSE).append("\t");
@@ -41,27 +45,27 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 		sb.append(decorator.CODE_OPEN).append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderAfter() : getProviderBefore())).append(decorator.CODE_CLOSE);
 		if(addClassName(getProviderBefore(), getRefactoringType())) {
 			sb.append(" from class ");
-			sb.append(getProviderBefore().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderBefore().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		else if(getRefactoringType().equals(RefactoringType.MOVE_CODE) && ((MoveCodeRefactoring)this).getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
 			sb.append(" in class ");
-			sb.append(getProviderBefore().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderBefore().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		appendTextBetweenMovedElements(sb);
 		sb.append(decorator.CODE_OPEN).append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderBefore() : getProviderAfter())).append(decorator.CODE_CLOSE);
 		if(addClassName(getProviderAfter(), getRefactoringType())) {
 			sb.append(" from class ");
-			sb.append(getProviderAfter().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderAfter().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		else if(getRefactoringType().equals(RefactoringType.MOVE_CODE) || getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE)) {
 			sb.append(" in class ");
-			sb.append(getProviderAfter().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderAfter().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE)) {
 			sb.append(" and moved from class ");
-			sb.append(getProviderBefore().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderBefore().getClassName()).append(decorator.LINK_CLOSE);
 			sb.append(" to class ");
-			sb.append(getProviderAfter().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderAfter().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		return sb.toString();
 	}

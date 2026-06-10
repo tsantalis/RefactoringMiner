@@ -51,6 +51,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 		return toString(Refactoring.Decorator.PLAIN);
 	}
 
+	public String toHTMLString() {
+		return toString(Refactoring.Decorator.HTML);
+	}
+
 	private String toString(Refactoring.Decorator decorator) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(decorator.BOLD_OPEN).append(getName()).append(decorator.BOLD_CLOSE).append("\t");
@@ -69,7 +73,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 		}
 		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
 			sb.append(" in class ");
-			sb.append(getProviderBefore().getClassName());
+			sb.append(decorator.LINK_OPEN).append(getProviderBefore().getClassName()).append(decorator.LINK_CLOSE);
 		}
 		else if(getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
 			sb.append(" from ");
@@ -90,7 +94,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 		}
 		if (className != null && !codeElementType.equals("class") && !getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
 			appendTextForClassName(sb);
-			sb.append(className);
+			sb.append(decorator.LINK_OPEN).append(className).append(decorator.LINK_CLOSE);
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
 			sb.append(" & inlined to ");

@@ -204,10 +204,10 @@ public class DirectoryDiffView implements Renderable {
                                 description = srcName + " ⇨ " + nodeInfo.getName();
                                 hoverText = astDiff.getSrcPath() + " ⇨ " + astDiff.getDstPath();
                             }
-                    	}
+                        }
                     }
                     else {
-                    	_checkBox = true;
+                        _checkBox = true;
                         iconPath = "dist/icons8-file-move.svg";
                         iconWidth = 15;
                         iconHeight = 17;
@@ -509,15 +509,15 @@ public class DirectoryDiffView implements Renderable {
         public RefactoringBar(DirComparator comparator) {
             this.refactorings = comparator.getRefactorings();
             for(Refactoring r : refactorings) {
-            	String type = r.getRefactoringType().getDisplayName();
-            	if(refactoringTypeMap.containsKey(type)) {
-            		refactoringTypeMap.get(type).add(r);
-            	}
-            	else {
-            		Set<Refactoring> set = new LinkedHashSet<>();
-            		set.add(r);
-            		refactoringTypeMap.put(type, set);
-            	}
+                String type = r.getRefactoringType().getDisplayName();
+                if(refactoringTypeMap.containsKey(type)) {
+                    refactoringTypeMap.get(type).add(r);
+                }
+                else {
+                    Set<Refactoring> set = new LinkedHashSet<>();
+                    set.add(r);
+                    refactoringTypeMap.put(type, set);
+                }
             }
             int counter = 0;
             for(ASTDiff diff : comparator.getDiffs()) {
@@ -561,117 +561,8 @@ public class DirectoryDiffView implements Renderable {
                         html._div();
                     html.ol(class_("list-group list-group-numbered"));
                         for(Refactoring r : refactorings) {
-                        	Set<ImmutablePair<String, String>> before = r.getInvolvedClassesBeforeRefactoring();
-                        	Set<ImmutablePair<String, String>> after = r.getInvolvedClassesAfterRefactoring();
-                        	Iterator<ImmutablePair<String, String>> beforeIterator = before.iterator();
-                        	ImmutablePair<String, String> beforeIteratorNext = beforeIterator.next();
-                        	String filePathBefore = beforeIteratorNext.left;
-                        	String classNameBefore = beforeIteratorNext.right;
-                        	Iterator<ImmutablePair<String, String>> afterIterator = after.iterator();
-                        	ImmutablePair<String, String> afterIteratorNext = afterIterator.next();
-                        	String filePathAfter = afterIteratorNext.left;
-                        	String classNameAfter = afterIteratorNext.right;
-                        	//for Extract and Move Method and Extract Class take the second
-                        	if((r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) ||
-                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
-                        			r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && afterIterator.hasNext()) {
-                        		afterIteratorNext = afterIterator.next();
-                        		filePathAfter = afterIteratorNext.left;
-                        		classNameAfter = afterIteratorNext.right;
-                        	}
-                        	Pair<String, String> pair = Pair.of(filePathBefore, filePathAfter);
-                        	int id = -1;
-                        	if(filePathPairToDiffId.containsKey(pair)) {
-                        		id = filePathPairToDiffId.get(pair);
-                        	}
-                        	String description = r.toString();
-                        	String displayName = r.getRefactoringType().getDisplayName();
-							String refactoringTypeWithBold = "<b>" + displayName + "</b>";
-                        	description = description.replace(displayName, refactoringTypeWithBold);
-                        	Set<String> processed = new LinkedHashSet<>();
-                        	String openingTag = "<code>";
-							String closingTag = "</code>";
-							if(r instanceof MethodLevelRefactoring) {
-                        		MethodLevelRefactoring ref = (MethodLevelRefactoring)r;
-                        		String operationBefore = ref.getOperationBefore().toString();
-                        		if(operationBefore != null && description.contains(operationBefore) && !processed.contains(operationBefore)) {
-                        			String codeElementTag = openingTag + escape(operationBefore) + closingTag;
-                        			description = description.replace(operationBefore, codeElementTag);
-                        			processed.add(operationBefore);
-                        		}
-                        		String operationAfter = ref.getOperationAfter().toString();
-                        		if(operationAfter != null && description.contains(operationAfter) && !processed.contains(operationAfter)) {
-                        			String codeElementTag = openingTag + escape(operationAfter) + closingTag;
-                        			description = description.replace(operationAfter, codeElementTag);
-                        			processed.add(operationAfter);
-                        		}
-                        	}
-							Map<String, String> toBeReplaced = new LinkedHashMap<>();
-							for(CodeRange range : r.leftSide()) {
-                        		String codeElement = range.getCodeElement();
-                        		if(codeElement != null && codeElement.endsWith("\n")) {
-                        			codeElement = codeElement.substring(0, codeElement.length()-1);
-                        		}
-								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement) && codeElement.length() > 1) {
-                        			String codeElementTag = openingTag + escape(codeElement) + closingTag;
-                        			//description = description.replace(codeElement, codeElementTag);
-                        			toBeReplaced.put(codeElement, codeElementTag);
-                        			processed.add(codeElement);
-                        		}
-                        	}
-                        	for(CodeRange range : r.rightSide()) {
-                        		String codeElement = range.getCodeElement();
-                        		if(codeElement != null && codeElement.endsWith("\n")) {
-                        			codeElement = codeElement.substring(0, codeElement.length()-1);
-                        		}
-								if(codeElement != null && description.contains(codeElement) && !processed.contains(codeElement) && codeElement.length() > 1) {
-                        			String codeElementTag = openingTag + escape(codeElement) + closingTag;
-                        			//description = description.replace(codeElement, codeElementTag);
-                        			toBeReplaced.put(codeElement, codeElementTag);
-                        			processed.add(codeElement);
-                        		}
-                        	}
-                        	List<String> list = new ArrayList<>(toBeReplaced.keySet());
-                        	Collections.sort(list, Comparator.comparing(String::length).reversed());
-                        	String previous = null;
-                        	for(String codeElement : list) {
-                        		if(previous != null && previous.contains(codeElement)) {
-                        			int index = description.indexOf(codeElement);
-                        			boolean skip = false;
-                        			if(index > 6) {
-                        				String s = description.substring(index-6, index);
-                        				if(s.equals(openingTag)) {
-                        					skip = true;
-                        				}
-                        				if(description.length() > index+codeElement.length()) {
-                        					s = description.substring(index+codeElement.length());
-                        					if(s.startsWith(closingTag)) {
-                        						skip = true;
-                        					}
-                        				}
-                        			}
-                        			if(!skip) {
-                        				description = description.replaceFirst(codeElement, toBeReplaced.get(codeElement));
-                        			}
-                        		}
-                        		else {
-                        			description = description.replace(codeElement, toBeReplaced.get(codeElement));
-                        		}
-                        		previous = codeElement;
-                        	}
-                        	if(id != -1) {
-                        		description = processClassNameAfter(classNameAfter, id, description, openingTag, closingTag);
-                        		if(displayName.contains("Class") || displayName.contains("Move") || displayName.contains("Pull Up") || displayName.contains("Push Down") || displayName.contains("Remove")) {
-                        			boolean skip = false;
-                        			if((r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
-                                			r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && classNameAfter.contains(classNameBefore)) {
-                        				skip = true;
-                        			}
-                        			if(!skip) {
-                        				description = processClassNameBefore(classNameBefore, id, description, openingTag, closingTag);
-                        			}
-                        		}
-                        	}
+                            int id = computeId(r);
+                            String description = r.toHTMLString().replace("<a href=\"\">", "<a href=\"" + "/monaco-page/" + id + "\">");
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)
                             ._li();
                         }
@@ -683,36 +574,28 @@ public class DirectoryDiffView implements Renderable {
             ._div();
         }
 
-		private String processClassNameAfter(String classNameAfter, int id, String description, String openingTag, String closingTag) {
-			if(description.contains(openingTag + classNameAfter + closingTag)) {
-				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>";
-				description = description.replace(openingTag + classNameAfter + closingTag, classNameWithLink);
-			}
-			else if(description.contains(classNameAfter)) {
-				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameAfter + "</a>";
-				description = description.replace(classNameAfter, classNameWithLink);
-			}
-			return description;
-		}
-
-		private String processClassNameBefore(String classNameBefore, int id, String description, String openingTag, String closingTag) {
-			if(description.contains(openingTag + classNameBefore + closingTag)) {
-				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>";
-				description = description.replace(openingTag + classNameBefore + closingTag, classNameWithLink);
-			}
-			else if(description.contains(classNameBefore) && !description.contains(">"+classNameBefore)) {
-				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>";
-				description = description.replace(classNameBefore, classNameWithLink);
-			}
-			else if(description.contains(classNameBefore) && !description.contains(">"+classNameBefore+"</a>")) {
-				String classNameWithLink = "<a href=\"" + "/monaco-page/" + id + "\">" + classNameBefore + "</a>";
-				description = description.replaceFirst(classNameBefore, classNameWithLink);
-			}
-			return description;
-		}
-
-        private String escape(String codeElement) {
-            return codeElement.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;");
+        private int computeId(Refactoring r) {
+            Set<ImmutablePair<String, String>> before = r.getInvolvedClassesBeforeRefactoring();
+            Set<ImmutablePair<String, String>> after = r.getInvolvedClassesAfterRefactoring();
+            Iterator<ImmutablePair<String, String>> beforeIterator = before.iterator();
+            ImmutablePair<String, String> beforeIteratorNext = beforeIterator.next();
+            String filePathBefore = beforeIteratorNext.left;
+            Iterator<ImmutablePair<String, String>> afterIterator = after.iterator();
+            ImmutablePair<String, String> afterIteratorNext = afterIterator.next();
+            String filePathAfter = afterIteratorNext.left;
+            //for Extract and Move Method and Extract Class take the second
+            if((r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION) ||
+                    r.getRefactoringType().equals(RefactoringType.EXTRACT_CLASS) ||
+                    r.getRefactoringType().equals(RefactoringType.EXTRACT_SUPERCLASS)) && afterIterator.hasNext()) {
+                afterIteratorNext = afterIterator.next();
+                filePathAfter = afterIteratorNext.left;
+            }
+            Pair<String, String> pair = Pair.of(filePathBefore, filePathAfter);
+            int id = -1;
+            if(filePathPairToDiffId.containsKey(pair)) {
+                id = filePathPairToDiffId.get(pair);
+            }
+            return id;
         }
     }
 }

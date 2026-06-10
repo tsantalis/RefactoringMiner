@@ -91,4 +91,35 @@ public class ReplaceAnonymousWithClassRefactoring extends ChangeTypeRefactoring 
 				.setCodeElement(addedClass.getName()));
 		return ranges;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((anonymousClass == null) ? 0 : anonymousClass.getLocationInfo().hashCode());
+		result = prime * result + ((addedClass == null) ? 0 : addedClass.getLocationInfo().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReplaceAnonymousWithClassRefactoring other = (ReplaceAnonymousWithClassRefactoring) obj;
+		if (anonymousClass == null) {
+			if (other.anonymousClass != null)
+				return false;
+		} else if (!anonymousClass.getLocationInfo().equals(other.anonymousClass.getLocationInfo()))
+			return false;
+		if (addedClass == null) {
+			if (other.addedClass != null)
+				return false;
+		} else if (!addedClass.getLocationInfo().equals(other.addedClass.getLocationInfo()))
+			return false;
+		return true;
+	}
 }

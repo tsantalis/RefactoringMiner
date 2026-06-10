@@ -13,8 +13,8 @@ import org.refactoringminer.api.RefactoringType;
 
 public class RenameClassRefactoring extends ChangeTypeRefactoring {
 
-	private UMLClass originalClass;
-	private UMLClass renamedClass;
+	protected UMLClass originalClass;
+	protected UMLClass renamedClass;
 	
 	public RenameClassRefactoring(UMLClass originalClass,  UMLClass renamedClass) {
 		this.originalClass = originalClass;

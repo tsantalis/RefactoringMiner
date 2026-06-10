@@ -1,34 +1,17 @@
 package gr.uom.java.xmi.diff;
 
-import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class MoveAndRenameClassRefactoring extends RenameClassRefactoring implements PackageLevelRefactoring {
-
-	private UMLClass originalClass;
-	private UMLClass renamedClass;
 	
 	public MoveAndRenameClassRefactoring(UMLClass originalClass,  UMLClass renamedClass) {
 		super(originalClass, renamedClass);
-	}
-
-	@Override
-	public AnnotationProvider getProviderBefore() {
-		return originalClass;
-	}
-
-	@Override
-	public AnnotationProvider getProviderAfter() {
-		return renamedClass;
 	}
 
 	public RenamePattern getRenamePattern() {
@@ -41,48 +24,16 @@ public class MoveAndRenameClassRefactoring extends RenameClassRefactoring implem
 		return new RenamePattern(originalPath, movedPath);
 	}
 
-	public String getName() {
-		return this.getRefactoringType().getDisplayName();
-	}
-
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.MOVE_RENAME_CLASS;
-	}
-
-	public String getOriginalClassName() {
-		return originalClass.getName();
-	}
-
-	public String getRenamedClassName() {
-		return renamedClass.getName();
 	}
 
 	public String getMovedClassName() {
 		return getRenamedClassName();
 	}
 
-	public UMLClass getOriginalClass() {
-		return originalClass;
-	}
-
-	public UMLClass getRenamedClass() {
-		return renamedClass;
-	}
-
 	public UMLClass getMovedClass() {
 		return getRenamedClass();
-	}
-
-	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
-		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		pairs.add(new ImmutablePair<String, String>(getOriginalClass().getLocationInfo().getFilePath(), getOriginalClass().getName()));
-		return pairs;
-	}
-
-	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
-		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		pairs.add(new ImmutablePair<String, String>(getRenamedClass().getLocationInfo().getFilePath(), getRenamedClass().getName()));
-		return pairs;
 	}
 
 	@Override

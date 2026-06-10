@@ -27,7 +27,10 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.refactoringminer.util.PathFileUtils;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstParam;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstBlockStmtOrExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
@@ -275,6 +278,52 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 		else if(body instanceof Swc4jAstBlockStmt blockStatement) {
 			this.body = new TypeScriptOperationBody(sourceFolder, filePath, blockStatement, this, activeVariableDeclarations, fileContent);
+		}
+	}
+
+	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstFnExpr functionExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+		this.owner = owner;
+		this.asString = fileContent.substring(functionExpression.getSpan().getStart(), functionExpression.getSpan().getEnd());
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, functionExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		Swc4jAstFunction function = functionExpression.getFunction();
+		List<Swc4jAstParam> params = function.getParams();
+		for(Swc4jAstParam param : params) {
+			ISwc4jAstPat pat = param.getPat();
+			List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+			List<UMLAttribute> attributes = new ArrayList<>();
+			Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+			if(typeAnnotation != null) {
+				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeAnnotation.getTypeAnn(), 0);
+				for(UMLClass typeDeclaration : typeDeclarations) {
+					if(type.getClassType().equals(typeDeclaration.getNonQualifiedName())) {
+						attributes = new ArrayList<>(typeDeclaration.getAttributes());
+						break;
+					}
+				}
+			}
+			int index = 0;
+			for(Swc4jAstBindingIdent identifier : identifiers) {
+				VariableDeclaration parameter = null;
+				if(identifiers.size() == attributes.size()) {
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, this, activeVariableDeclarations, fileContent);
+				}
+				else {
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+				}
+				this.parameters.add(parameter);
+				if(parameter.getType() != null) {
+					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
+					parameter.setParameter(true);
+					umlParameter.setVariableDeclaration(parameter);
+					umlParameters.add(umlParameter);
+				}
+				index++;
+			}
+		}
+		Optional<Swc4jAstBlockStmt> body = function.getBody();
+		if(body.isPresent()) {
+			this.body = new TypeScriptOperationBody(sourceFolder, filePath, body.get(), this, activeVariableDeclarations, fileContent);
 		}
 	}
 

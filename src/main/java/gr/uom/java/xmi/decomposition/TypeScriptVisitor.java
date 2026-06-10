@@ -13,6 +13,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstBinExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCallExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstCondExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstExprOrSpread;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstFnExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
@@ -212,6 +213,12 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		TernaryOperatorExpression ternary = new TernaryOperatorExpression(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		ternaryOperatorExpressions.add(ternary);
 		return super.visitCondExpr(node);
+	}
+
+	public Swc4jAstVisitorResponse visitFnExpr(Swc4jAstFnExpr node) {
+		LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, node, container, activeVariableDeclarations, fileContent, typeDeclarations);
+		lambdas.add(lambda);
+		return super.visitFnExpr(node);
 	}
 
 	public Swc4jAstVisitorResponse visitArrowExpr(Swc4jAstArrowExpr node) {

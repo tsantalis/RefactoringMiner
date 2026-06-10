@@ -12,14 +12,13 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveAndRenameClassRefactoring extends ChangeTypeRefactoring implements PackageLevelRefactoring {
+public class MoveAndRenameClassRefactoring extends RenameClassRefactoring implements PackageLevelRefactoring {
 
 	private UMLClass originalClass;
 	private UMLClass renamedClass;
 	
 	public MoveAndRenameClassRefactoring(UMLClass originalClass,  UMLClass renamedClass) {
-		this.originalClass = originalClass;
-		this.renamedClass = renamedClass;
+		super(originalClass, renamedClass);
 	}
 
 	@Override

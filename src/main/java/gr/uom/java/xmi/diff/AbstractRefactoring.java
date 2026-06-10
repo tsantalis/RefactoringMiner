@@ -48,20 +48,24 @@ public abstract class AbstractRefactoring implements Refactoring {
 	}
 
 	public String toString() {
+		return toString(Refactoring.Decorator.PLAIN);
+	}
+
+	private String toString(Refactoring.Decorator decorator) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
+		sb.append(decorator.BOLD_OPEN).append(getName()).append(decorator.BOLD_CLOSE).append("\t");
 		if(getTemplateParameterBefore().isPresent()) {
-			sb.append(getTemplateParameterBefore().get());
+			sb.append(decorator.CODE_OPEN).append(getTemplateParameterBefore().get()).append(decorator.CODE_CLOSE);
 			appendTextForTemplateParameterBefore(sb);
 		}
-		sb.append(getTemplateParameterAfter());
+		sb.append(decorator.CODE_OPEN).append(getTemplateParameterAfter()).append(decorator.CODE_CLOSE);
 		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline") || getName().startsWith("Move And Inline");
 		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
 		if(addCodeElementDescription()) {
 			String finalCodeElementType = getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND) ? "type" : codeElementType;
 			sb.append(" in ").append(finalCodeElementType).append(" ");
-			sb.append(codeElementDescription(provider));
+			sb.append(decorator.CODE_OPEN).append(codeElementDescription(provider)).append(decorator.CODE_CLOSE);
 		}
 		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
 			sb.append(" in class ");
@@ -79,7 +83,7 @@ public abstract class AbstractRefactoring implements Refactoring {
 					: methodLevelRef.getOperationAfter();
 			String elementType = container.getElementType();
 			sb.append(" in " + elementType + " ");
-			sb.append(container.toQualifiedString());
+			sb.append(decorator.CODE_OPEN).append(container.toQualifiedString()).append(decorator.CODE_CLOSE);
 			className = container.getClassName();
 		} else if (provider != null) {
 			className = provider.getClassName();

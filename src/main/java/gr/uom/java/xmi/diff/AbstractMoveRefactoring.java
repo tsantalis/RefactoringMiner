@@ -29,12 +29,16 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 	}
 
 	public String toString() {
+		return toString(Refactoring.Decorator.PLAIN);
+	}
+
+	private String toString(Refactoring.Decorator decorator) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
+		sb.append(decorator.BOLD_OPEN).append(getName()).append(decorator.BOLD_CLOSE).append("\t");
 		if(getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
 			sb.append("from ");
 		}
-		sb.append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderAfter() : getProviderBefore()));
+		sb.append(decorator.CODE_OPEN).append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderAfter() : getProviderBefore())).append(decorator.CODE_CLOSE);
 		if(addClassName(getProviderBefore(), getRefactoringType())) {
 			sb.append(" from class ");
 			sb.append(getProviderBefore().getClassName());
@@ -44,7 +48,7 @@ public abstract class AbstractMoveRefactoring implements Refactoring {
 			sb.append(getProviderBefore().getClassName());
 		}
 		appendTextBetweenMovedElements(sb);
-		sb.append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderBefore() : getProviderAfter()));
+		sb.append(decorator.CODE_OPEN).append(codeElementDescription(getRefactoringType().equals(RefactoringType.EXTRACT_FIXTURE) ? getProviderBefore() : getProviderAfter())).append(decorator.CODE_CLOSE);
 		if(addClassName(getProviderAfter(), getRefactoringType())) {
 			sb.append(" from class ");
 			sb.append(getProviderAfter().getClassName());

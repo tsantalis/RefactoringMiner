@@ -9,6 +9,26 @@ import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
 public interface Refactoring extends Serializable, CodeRangeProvider {
 
+	public enum Decorator {
+		PLAIN("", "", "", "", "", "");
+		
+		public final String BOLD_OPEN;
+		public final String BOLD_CLOSE;
+		public final String CODE_OPEN;
+		public final String CODE_CLOSE;
+		public final String LINK_OPEN;
+		public final String LINK_CLOSE;
+		Decorator(String bOLD_OPEN, String bOLD_CLOSE, String cODE_OPEN, String cODE_CLOSE, String lINK_OPEN,
+				String lINK_CLOSE) {
+			BOLD_OPEN = bOLD_OPEN;
+			BOLD_CLOSE = bOLD_CLOSE;
+			CODE_OPEN = cODE_OPEN;
+			CODE_CLOSE = cODE_CLOSE;
+			LINK_OPEN = lINK_OPEN;
+			LINK_CLOSE = lINK_CLOSE;
+		}
+	}
+
 	public RefactoringType getRefactoringType();
 	
 	public String getName();

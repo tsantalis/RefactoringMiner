@@ -7652,6 +7652,19 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				else if(r instanceof ExtractOperationRefactoring extract && r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
+					if(extract.getSourceOperationBeforeExtraction().getClassName().equals(classDiff.getOriginalClassName())) {
+						VariableDeclarationContainer movedOperation = extract.getExtractedOperation();
+						if(movedOperationMap.containsKey(movedOperation.getClassName())) {
+							movedOperationMap.get(movedOperation.getClassName()).add(movedOperation);
+						}
+						else {
+							Set<VariableDeclarationContainer> movedOperations = new LinkedHashSet<>();
+							movedOperations.add(movedOperation);
+							movedOperationMap.put(movedOperation.getClassName(), movedOperations);
+						}
+					}
+				}
 				else if(r instanceof MoveAttributeRefactoring move) {
 					if(move.getOriginalAttribute().getClassName().equals(classDiff.getOriginalClassName())) {
 						UMLAttribute movedAttribute = move.getMovedAttribute();

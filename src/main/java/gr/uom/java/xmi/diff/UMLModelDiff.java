@@ -308,6 +308,8 @@ public class UMLModelDiff {
 
 	public void addUMLClassDiff(UMLClassDiff classDiff) {
 		this.commonClassDiffList.add(classDiff);
+		removedClasses.addAll(classDiff.getRemovedNestedClasses());
+		addedClasses.addAll(classDiff.getAddedNestedClasses());
 	}
 
 	public void addUMLPackageInfoDiff(UMLPackageInfoDiff packageInfoDiff) {

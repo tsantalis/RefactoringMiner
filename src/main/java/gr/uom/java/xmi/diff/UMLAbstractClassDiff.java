@@ -75,6 +75,8 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLOperation> removedOperations;
 	protected List<UMLOperation> addedNestedOperations;
 	protected List<UMLOperation> removedNestedOperations;
+	protected List<UMLClass> removedNestedClasses;
+	protected List<UMLClass> addedNestedClasses;
 	protected List<UMLInitializer> addedInitializers;
 	protected List<UMLInitializer> removedInitializers;
 	protected List<UMLAttribute> addedAttributes;
@@ -126,6 +128,8 @@ public abstract class UMLAbstractClassDiff {
 		this.removedOperations = new ArrayList<UMLOperation>();
 		this.addedNestedOperations = new ArrayList<UMLOperation>();
 		this.removedNestedOperations = new ArrayList<UMLOperation>();
+		this.addedNestedClasses = new ArrayList<UMLClass>();
+		this.removedNestedClasses = new ArrayList<UMLClass>();
 		this.addedInitializers = new ArrayList<UMLInitializer>();
 		this.removedInitializers = new ArrayList<UMLInitializer>();
 		this.addedAttributes = new ArrayList<UMLAttribute>();
@@ -176,6 +180,14 @@ public abstract class UMLAbstractClassDiff {
 
 	public List<UMLOperation> getAddedOperations() {
 		return addedOperations;
+	}
+
+	public List<UMLClass> getRemovedNestedClasses() {
+		return removedNestedClasses;
+	}
+
+	public List<UMLClass> getAddedNestedClasses() {
+		return addedNestedClasses;
 	}
 
 	public List<UMLOperation> getAddedAndExtractedOperations() {
@@ -297,6 +309,8 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		else if(operation1.getNestedClasses().size() <= operation2.getNestedClasses().size()) {
+			this.removedNestedClasses.addAll(operation1.getNestedClasses());
+			this.addedNestedClasses.addAll(operation2.getNestedClasses());
 			for(UMLClass class1 : operation1.getNestedClasses()) {
 				List<UMLClassDiff> nestedClassDiffs = new ArrayList<>();
 				for(UMLClass class2 : operation2.getNestedClasses()) {
@@ -308,6 +322,8 @@ public abstract class UMLAbstractClassDiff {
 				if(nestedClassDiffs.size() == 1) {
 					nestedClassDiffs.get(0).process();
 					this.nestedClassDiffList.add(nestedClassDiffs.get(0));
+					this.removedNestedClasses.remove(class1);
+					this.addedNestedClasses.remove(nestedClassDiffs.get(0).getNextClass());
 				}
 				else {
 					for(UMLClassDiff nested : nestedClassDiffs) {
@@ -317,6 +333,8 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		else if(operation1.getNestedClasses().size() > operation2.getNestedClasses().size()) {
+			this.removedNestedClasses.addAll(operation1.getNestedClasses());
+			this.addedNestedClasses.addAll(operation2.getNestedClasses());
 			for(UMLClass class2 : operation2.getNestedClasses()) {
 				List<UMLClassDiff> nestedClassDiffs = new ArrayList<>();
 				for(UMLClass class1 : operation1.getNestedClasses()) {
@@ -328,6 +346,8 @@ public abstract class UMLAbstractClassDiff {
 				if(nestedClassDiffs.size() == 1) {
 					nestedClassDiffs.get(0).process();
 					this.nestedClassDiffList.add(nestedClassDiffs.get(0));
+					this.removedNestedClasses.remove(nestedClassDiffs.get(0).getOriginalClass());
+					this.addedNestedClasses.remove(class2);
 				}
 				else {
 					for(UMLClassDiff nested : nestedClassDiffs) {
@@ -347,6 +367,8 @@ public abstract class UMLAbstractClassDiff {
 					if(mapping.getFragment1().equals(statement1) && mapping.getFragment2().equals(statement2)) {
 						nested.process();
 						this.nestedClassDiffList.add(nested);
+						this.removedNestedClasses.remove(nested.getOriginalClass());
+						this.addedNestedClasses.remove(nested.getNextClass());
 						return;
 					}
 				}

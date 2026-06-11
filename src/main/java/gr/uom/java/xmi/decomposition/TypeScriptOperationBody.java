@@ -568,6 +568,21 @@ public class TypeScriptOperationBody extends OperationBody {
 						}
 						return;
 					}
+					else if(declarator.getInit().get() instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+						List<UMLImport> imports = new ArrayList<>();
+						String codePath = getAnonymousCodePath(objectLiteral, fileContent);
+						UMLClass umlClass = new UMLClass(container.getClassName(), codePath, location, true, imports);
+						umlClass.setObject(true);
+						umlClass.setVisibility(Visibility.PUBLIC);
+						processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, comments, objectLiteral, umlClass);
+						addToContainer(container, umlClass);
+						StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+						parent.addStatement(child);
+						addStatementInVariableScopes(child);
+						addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+						return;
+					}
 					else if(declarator.getInit().get() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
 							memberExpr.getProp() instanceof Swc4jAstIdentName ident && jsExtension.contains(ident.getSym()) && objectLiteralArgument(callExpr)) {
 						//jQuery: $.extend(target, object); merges object into target.

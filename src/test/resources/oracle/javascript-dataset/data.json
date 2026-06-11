@@ -177,6 +177,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Class",
+        "description": "Rename Class platform.dom.module.exports.typeMap renamed to platform.dom.module.exports.eventTypeMap",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -659,6 +666,22 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter callback : Inferred to fn : Inferred in method public each(loopable, fn, thisArg, reverse) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 16,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "56050dc9b7a17130efdbdcd3b8de46b728f25b84",
+    "url": "https://github.com/chartjs/Chart.js/commit/56050dc9b7a17130efdbdcd3b8de46b728f25b84",
+    "author": "simonbrunel",
+    "time": "7/8/17 12:02 PM",
+    "refactorings": [{
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class core.helpers.module.exports.easingEffects.helpers.easingEffects moved and renamed to helpers.easing.effects",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

@@ -11298,7 +11298,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(Refactoring r : refactorings) {
 				if(r instanceof ExtractVariableRefactoring) {
 					ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
-					if(minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
+					boolean extractedWithinLambda = false;
+					for(UMLOperationBodyMapper lambdaMapper : minStatementMapping.getLambdaMappers()) {
+						if(lambdaMapper.getMappings().containsAll(extract.getReferences())) {
+							extractedWithinLambda = true;
+							break;
+						}
+					}
+					if(!extractedWithinLambda && minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
 						if(ownedByLambda1 == ownedByLambda2) {
 							conflictingMappingFound = true;
 						}

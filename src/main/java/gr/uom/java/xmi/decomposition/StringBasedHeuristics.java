@@ -3585,6 +3585,29 @@ public class StringBasedHeuristics {
 			String OR2 = LANG2.OR.strip();
 			boolean containLogicalOperator = s1.contains(OR1) || s1.contains(AND1) || s2.contains(OR2) || s2.contains(AND2);
 			boolean containsNotOperator = (s1.contains(LANG1.NOT) || s1.contains("!")) != (s2.contains(LANG2.NOT) || s2.contains("!"));
+			if(call1 == null)
+				call1 = statement1.invocationCoveringEntireFragment();
+			if(call2 == null)
+				call2 = statement2.invocationCoveringEntireFragment();
+			if(call1 != null && call2 != null) {
+				boolean logicalOperatorInArgs1 = false;
+				for(String arg : call1.arguments()) {
+					if(arg.contains(OR1) || arg.contains(AND1)) {
+						logicalOperatorInArgs1 = true;
+						break;
+					}
+				}
+				boolean logicalOperatorInArgs2 = false;
+				for(String arg : call2.arguments()) {
+					if(arg.contains(OR2) || arg.contains(AND2)) {
+						logicalOperatorInArgs2 = true;
+						break;
+					}
+				}
+				if(logicalOperatorInArgs1 || logicalOperatorInArgs2) {
+					containLogicalOperator = false;
+				}
+			}
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();

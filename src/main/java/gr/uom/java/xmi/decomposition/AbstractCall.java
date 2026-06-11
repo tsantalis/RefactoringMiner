@@ -1299,6 +1299,22 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 		}
+		if(call.arguments().size() < this.arguments().size()) {
+			for(String s2 : call.arguments()) {
+				if(s2.startsWith("\"") && s2.endsWith("\"") && s2.length() > 2) {
+					String value2 = s2.substring(1, s2.length()-1);
+					for(String s1 : arguments()) {
+						if(s1.startsWith("\"") && s1.endsWith("\"") && s1.length() > 2) {
+							String value1 = s1.substring(1, s1.length()-1);
+							if(value2.contains(value1)) {
+								argumentIntersectionSize++;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 		return argumentIntersectionSize;
 	}
 

@@ -12,6 +12,13 @@
         "validation": "TP",
         "detectionTools": "JSDiffer, RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable type : Inferred in method public buildOrUpdateControllers() from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -103,10 +110,10 @@
     }, {
         "type": "Move And Rename Method",
         "description": "Move And Rename Method public helpers.addResizeListener(node, callback) from class core.helpers to public createResizer(handler) from class platform.dom",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Move And Rename Method public helpers.addResizeListener(node, callback) from class core.helpers to public addResizeListener(node, listener, chart) from class platform.dom<br />seems more appropriate. The method is actually split to&nbsp;createResizer(handler) and&nbsp;addResizeListener(node, listener, chart)</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Move And Rename Method",
         "description": "Move And Rename Method public helpers.removeResizeListener(node) from class core.helpers to public removeResizeListener(node) from class platform.dom",
@@ -131,10 +138,10 @@
     }, {
         "type": "Parameterize Variable",
         "description": "Parameterize Variable notify : Inferred to handler : Inferred in method public createResizer(handler) from class platform.dom",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Move And Rename Method public helpers.addResizeListener(node, callback) from class core.helpers to public addResizeListener(node, listener, chart) from class platform.dom<br />seems more appropriate. The method is actually split to&nbsp;createResizer(handler) and&nbsp;addResizeListener(node, listener, chart)</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Remove Parameter",
         "description": "Remove Parameter callback : Inferred in method public helpers.addResizeListener(node, callback) from class core.helpers",
@@ -145,6 +152,27 @@
     }, {
         "type": "Change Method Access Modifier",
         "description": "Change Method Access Modifier public to private in method private bindEvents() from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method public helpers.addResizeListener(node, callback) from class core.helpers to public addResizeListener(node, listener, chart) from class platform.dom",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter chart : Inferred in method public addResizeListener(node, listener, chart) from class platform.dom",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter listener : Inferred in method public addResizeListener(node, listener, chart) from class platform.dom",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

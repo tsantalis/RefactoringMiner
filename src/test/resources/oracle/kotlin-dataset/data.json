@@ -7414,10 +7414,10 @@
     }, {
         "type": "Inline Method",
         "description": "Inline Method public File.readHprof(block (HeapGraph) -> Unit) inlined to public stripHprof() in class shark.HprofPrimitiveArrayStripperTest",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>fun</span> <span style='color: #008080;'>File</span><span style='color: #000000;'>.readHprof(block: (</span><span style='color: #008080;'>HeapGraph</span><span style='color: #000000;'>) -&gt; </span><span style='color: #008080;'>Unit</span><span style='color: #000000;'>) is deleted</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable hprofFile : Inferred to hprofBytes : Inferred in method public stripHprof() from class shark.HprofPrimitiveArrayStripperTest",

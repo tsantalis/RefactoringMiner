@@ -295,17 +295,17 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **May 29, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **June 11, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2043  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2042  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|137  |  0  |  0  | 1.000  | 1.000|
-|Inline Method|16  |  0  |  0  | 1.000  | 1.000|
+|Inline Method|15  |  0  |  0  | 1.000  | 1.000|
 |Move Method|91  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|

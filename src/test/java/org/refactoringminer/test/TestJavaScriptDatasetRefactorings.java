@@ -55,6 +55,6 @@ public class TestJavaScriptDatasetRefactorings {
 					.or(Refactorings.ChangeMethodAccessModifier.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareJavaScriptRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(73, 1, 0);
+		test.assertExpectationsWithGitHubAPI(92, 1, 0);
 	}
 }

@@ -688,4 +688,146 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 17,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "5ad1b4ade7d78eced9c98c4beb678861a41039b7",
+    "url": "https://github.com/chartjs/Chart.js/commit/5ad1b4ade7d78eced9c98c4beb678861a41039b7",
+    "author": "simonbrunel",
+    "time": "7/19/17 03:04 PM",
+    "refactorings": [{
+        "type": "Inline Variable",
+        "description": "Inline Variable labelCapacity : Inferred in method public getLabelCapacity(exampleTime) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private getPixelForOffset(time) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private getLabelWidth(label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private getLabelCapacity(exampleTime) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private tickFormatFunction(tick, index, ticks) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable data : Inferred in method public getLabelForIndex(index, datasetIndex) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable timeOpts : Inferred in method public getLabelForIndex(index, datasetIndex) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable angle : Inferred in method private getLabelWidth(label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable tickTimestamp : Inferred to time : Inferred in method private tickFormatFunction(tick, index, ticks) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable callback : Inferred to formatter : Inferred in method private tickFormatFunction(tick, index, ticks) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable me : Inferred in method private tickFormatFunction(tick, index, ticks) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable ticks : Inferred to ticksOpts : Inferred in method private getLabelWidth(label) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable innerDimension : Inferred to size : Inferred in method public getValueForPixel(pixel) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable offset : Inferred to time : Inferred in method public getPixelForValue(value, index, datasetIndex) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter offset : Inferred to time : Inferred in method private getPixelForOffset(time) from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable maxTicks : Inferred to capacity : Inferred in method public buildTicks() from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable dataMax : Inferred to max : Inferred in method public buildTicks() from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable formats : Inferred in method public buildTicks() from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable optionStepSize : Inferred in method public buildTicks() from class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

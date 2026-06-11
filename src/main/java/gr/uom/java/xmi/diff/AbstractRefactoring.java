@@ -55,6 +55,10 @@ public abstract class AbstractRefactoring implements Refactoring {
 		return toString(Refactoring.Decorator.HTML);
 	}
 
+	public String toMarkupString() {
+		return toString(Refactoring.Decorator.MARKUP);
+	}
+
 	private String toString(Refactoring.Decorator decorator) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(decorator.BOLD_OPEN).append(getName()).append(decorator.BOLD_CLOSE).append("\t");

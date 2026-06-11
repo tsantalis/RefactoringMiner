@@ -11,7 +11,8 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 
 	public enum Decorator {
 		PLAIN("", "", "", "", "", ""),
-		HTML("<b>", "</b>", "<code>", "</code>", "<a href=\"\">", "</a>");
+		HTML("<b>", "</b>", "<code>", "</code>", "<a href=\"\">", "</a>"),
+		MARKUP("**", "**", "[", "]()", "`", "`"); 
 		
 		public final String BOLD_OPEN;
 		public final String BOLD_CLOSE;
@@ -37,6 +38,8 @@ public interface Refactoring extends Serializable, CodeRangeProvider {
 	public String toString();
 	
 	default String toHTMLString() {return toString();}
+	
+	default String toMarkupString() {return toString();}
 
 	/**
 	 * @return a Set of ImmutablePair where left is the file path of a program element, and right is the qualified name of the class containing the program element

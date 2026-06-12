@@ -329,7 +329,10 @@ public class RefactoringMiner {
 			sb.append("[");
 			int counter = 0;
 			for(Refactoring refactoring : refactoringsAtRevision) {
-				sb.append(refactoring.toJSON());
+				if(url.isEmpty())
+					sb.append(refactoring.toJSON());
+				else
+					sb.append(refactoring.toJSON(url));
 				if(counter < refactoringsAtRevision.size()-1) {
 					sb.append(",");
 				}

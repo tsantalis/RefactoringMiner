@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -220,5 +223,26 @@ public class ReplacementUtil {
 
 	public static boolean isDefaultValue(String argument, Constants LANG) {
 		return argument.equals(LANG.NULL) || argument.equals("0") || argument.equals("1") || argument.equals(LANG.FALSE) || argument.equals(LANG.TRUE);
+	}
+
+	public static String getSHA256Hash(String input) {
+		try {
+			// 1. Initialize the MessageDigest for SHA-256
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			// 2. Convert the input string to a byte array
+			byte[] encodedHash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+			// 3. Convert the byte array to a hexadecimal string
+			StringBuilder hexString = new StringBuilder();
+			for (byte b : encodedHash) {
+				String hex = Integer.toHexString(0xff & b);
+				if (hex.length() == 1) {
+					hexString.append('0');
+				}
+				hexString.append(hex);
+			}
+			return hexString.toString();
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException("SHA-256 algorithm not found", e);
+		}
 	}
 }

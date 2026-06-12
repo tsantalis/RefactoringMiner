@@ -5,13 +5,19 @@ import com.beust.jcommander.Parameter;
 import gui.webdiff.dir.filters.DiffFilterKind;
 import gui.webdiff.dir.filters.DiffFilteringOptions;
 import gui.webdiff.export.WebExporter;
+
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 
@@ -124,6 +130,7 @@ To export the mappings/actions, add --export to the end of the command.
             jsonPathsDir.mkdirs();
         }
 
+        refactoringsToJSON(projectASTDiff.getMetaInfo(), Path.of(jsonPaths, "refactorings.json"), projectASTDiff.getRefactorings());
         //Export mappings/actions
         for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
             String fileNameFromSrcDiff = getFileNameFromSrcDiff(astDiff.getSrcPath());
@@ -133,6 +140,47 @@ To export the mappings/actions, add --export to the end of the command.
             }
             MappingExportModel.exportToFile(new File(jsonPaths, fileNameFromSrcDiff + "_mappings.json"), astDiff.getAllMappings());
             MappingExportModel.exportActions(new File(jsonPaths,fileNameFromSrcDiff + "_actions.txt"), astDiff);
+        }
+    }
+
+    private static void refactoringsToJSON(DiffMetaInfo metaInfo, Path jsonFile, List<Refactoring> refactoringsAtRevision) {
+        if(jsonFile != null) {
+            String url = metaInfo.getUrl() == null ? "" : metaInfo.getUrl();
+            boolean hasBrowsableCloneURL = url.startsWith("https://github.com/") ||
+                    url.startsWith("https://gitlab.com/") ||
+                    url.startsWith("https://bitbucket.org/");
+            StringBuilder sb = new StringBuilder();
+            sb.append("{").append("\n");
+            sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
+            sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");
+            sb.append("[");
+            if(metaInfo.getInfo().contains("#")) {
+                //this is a PR url
+                if(!url.endsWith("/changes"))
+                    url = url + "/changes";
+            }
+            int counter = 0;
+            for(Refactoring refactoring : refactoringsAtRevision) {
+                if(!hasBrowsableCloneURL)
+                    sb.append(refactoring.toJSON());
+                else
+                    sb.append(refactoring.toJSON(url));
+                if(counter < refactoringsAtRevision.size()-1) {
+                    sb.append(",");
+                }
+                sb.append("\n");
+                counter++;
+            }
+            sb.append("]").append("\n");
+            sb.append("}");
+            try {
+                if(Files.notExists(jsonFile)) {
+                    Files.createFile(jsonFile);
+                }
+                Files.write(jsonFile, sb.toString().getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

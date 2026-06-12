@@ -320,7 +320,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		for(String parameter : parameterToArgumentMap.keySet()) {
 			String argument = parameterToArgumentMap.get(parameter);
 			if(!parameter.equals(argument)) {
-				StringBuffer sb = new StringBuffer();
+				StringBuilder sb = new StringBuilder();
 				Pattern p = Pattern.compile(Pattern.quote(parameter));
 				Matcher m = p.matcher(afterReplacements);
 				while(m.find()) {

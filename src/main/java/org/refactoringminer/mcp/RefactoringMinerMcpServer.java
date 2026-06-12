@@ -39,7 +39,7 @@ public final class RefactoringMinerMcpServer {
 	}
 
 	private static boolean isSmoke(String[] args) {
-		return args.length == 1 && Arrays.asList(args).contains(SMOKE_ARG);
+		return Arrays.asList(args).contains(SMOKE_ARG);
 	}
 
 	private static String version() {

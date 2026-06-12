@@ -84,8 +84,9 @@ class RefactoringMinerMcpServiceTest {
 			return diff;
 		}, (repositoryPath, commitId, parentIndex) -> new ProjectASTDiff(Map.of(), Map.of()),
 				(cloneUrl, pullRequestId, timeoutSeconds) -> new ProjectASTDiff(Map.of(), Map.of()),
-				(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()),
-				(diff, port, inputSummary, warnings) -> McpDiffBrowserResult.ok(diff, port, inputSummary, warnings));
+					(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()),
+					(diff, port, inputSummary, warnings, maxRefactorings) ->
+							McpDiffBrowserResult.ok(diff, port, inputSummary, warnings, maxRefactorings));
 		Map<String, String> before = Map.of("src/main/java/A.java", "class A { void f() {} }");
 		Map<String, String> after = Map.of("src/main/java/A.java", "class A { void g() {} }");
 
@@ -106,10 +107,10 @@ class RefactoringMinerMcpServiceTest {
 		RefactoringMinerMcpService service = new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after),
 				(repositoryPath, commitId, parentIndex) -> new ProjectASTDiff(Map.of(), Map.of()),
 				(cloneUrl, pullRequestId, timeoutSeconds) -> new ProjectASTDiff(Map.of(), Map.of()),
-				(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()),
-				(diff, port, inputSummary, warnings) -> {
-					throw new IllegalArgumentException("port must be between 1 and 65535.");
-				});
+					(beforePath, afterPath) -> new ProjectASTDiff(Map.of(), Map.of()),
+					(diff, port, inputSummary, warnings, maxRefactorings) -> {
+						throw new IllegalArgumentException("port must be between 1 and 65535.");
+					});
 
 		McpDiffBrowserResult result = service.diffFileContents(
 				Map.of("src/main/java/A.java", "class A {}"),

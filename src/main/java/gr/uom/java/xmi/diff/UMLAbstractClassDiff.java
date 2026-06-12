@@ -3874,7 +3874,7 @@ public abstract class UMLAbstractClassDiff {
 						if(modelDiff != null && originalClassName.contains(".") && nextClassName.contains(".")) {
 							UMLAbstractClass originalOuterClass = modelDiff.findClassInParentModel(getOriginalClass().getSourceFolder(), originalClassName.substring(0, originalClassName.lastIndexOf(".")));
 							UMLAbstractClass nextOuterClass = modelDiff.findClassInChildModel(getNextClass().getSourceFolder(), nextClassName.substring(0, nextClassName.lastIndexOf(".")));
-							if(originalOuterClass != null && nextOuterClass != null) {
+							if(originalOuterClass != null && nextOuterClass != null && !originalOuterClass.equals(this.originalClass) && !nextOuterClass.equals(this.nextClass)) {
 								UMLOperation op1 = originalOuterClass.operationWithTheSameSignature(removedOperation);
 								UMLOperation op2 = nextOuterClass.operationWithTheSameSignature(addedOperation);
 								if(op1 != null && op2 != null) {

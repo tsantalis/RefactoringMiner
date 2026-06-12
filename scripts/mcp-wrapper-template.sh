@@ -10,11 +10,12 @@ CONTAINER_NAME="refactoringminer-server"
 PORT_MAPPING="6785-6795:6785-6795"
 
 # Path on host to mount inside the container. Use absolute path.
-# This is the repository you want the MCP server to analyze.
+# This can be one repository or a common parent directory containing multiple repositories.
 HOST_VOLUME_PATH="/absolute/path/to/your/repository"
 
 # Path inside the container. Usually /workspace.
-# When using tools, use this path as 'repositoryPath' instead of the host path.
+# For multiple repositories under HOST_VOLUME_PATH, use the MCP source.workingDirectory
+# field as a relative path under this directory.
 CONTAINER_WORKDIR="/workspace"
 
 # Your GitHub OAuth token for private repos and higher rate limits.

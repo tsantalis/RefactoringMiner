@@ -33,7 +33,7 @@ class WebDiffBrowserLauncherTest {
 
 		try {
 			System.setOut(new PrintStream(stdout, true, StandardCharsets.UTF_8));
-			McpDiffBrowserResult result = launcher.launch(projectDiff(), 6790, "test input", List.of());
+			McpDiffBrowserResult result = launcher.launch(projectDiff(), 6790, "test input", List.of(), 20);
 
 			assertEquals("ok", result.status());
 			assertEquals("Starting server: http://127.0.0.1:6790", result.message());
@@ -56,8 +56,8 @@ class WebDiffBrowserLauncherTest {
 		}, port -> {
 		});
 
-		launcher.launch(projectDiff(), 6790, "first", List.of());
-		launcher.launch(projectDiff(), 6791, "second", List.of());
+		launcher.launch(projectDiff(), 6790, "first", List.of(), 20);
+		launcher.launch(projectDiff(), 6791, "second", List.of(), 20);
 
 		assertEquals(2, views.size());
 		assertTrue(views.get(0).terminated);
@@ -78,9 +78,9 @@ class WebDiffBrowserLauncherTest {
 			}
 		});
 
-		launcher.launch(projectDiff(), 6790, "first", List.of());
+		launcher.launch(projectDiff(), 6790, "first", List.of(), 20);
 		IllegalArgumentException occupied = assertThrows(IllegalArgumentException.class,
-				() -> launcher.launch(projectDiff(), 6791, "second", List.of()));
+				() -> launcher.launch(projectDiff(), 6791, "second", List.of(), 20));
 
 		assertTrue(occupied.getMessage().contains("port is already in use"));
 		assertEquals(1, views.size());
@@ -95,7 +95,7 @@ class WebDiffBrowserLauncherTest {
 		WebDiffBrowserLauncher launcher = new WebDiffBrowserLauncher(diff -> failingView, port -> {
 		});
 
-		assertThrows(IllegalStateException.class, () -> launcher.launch(projectDiff(), 6790, "input", List.of()));
+		assertThrows(IllegalStateException.class, () -> launcher.launch(projectDiff(), 6790, "input", List.of(), 20));
 
 		assertTrue(failingView.started);
 		assertTrue(failingView.terminated);
@@ -112,9 +112,9 @@ class WebDiffBrowserLauncherTest {
 				});
 
 		assertThrows(IllegalArgumentException.class,
-				() -> invalidPortLauncher.launch(projectDiff(), 0, "input", List.of()));
+				() -> invalidPortLauncher.launch(projectDiff(), 0, "input", List.of(), 20));
 		IllegalArgumentException occupied = assertThrows(IllegalArgumentException.class,
-				() -> occupiedPortLauncher.launch(projectDiff(), 6790, "input", List.of()));
+				() -> occupiedPortLauncher.launch(projectDiff(), 6790, "input", List.of(), 20));
 
 		assertTrue(occupied.getMessage().contains("port is already in use"));
 	}
@@ -129,7 +129,7 @@ class WebDiffBrowserLauncherTest {
 		}, port -> {
 		});
 
-		launcher.launch(diff, 6790, "input", List.of());
+		launcher.launch(diff, 6790, "input", List.of(), 20);
 
 		assertSame(diff, received.get(0));
 	}
@@ -144,7 +144,7 @@ class WebDiffBrowserLauncherTest {
 		}, port -> {
 		}, "0.0.0.0", "localhost");
 
-		McpDiffBrowserResult result = launcher.launch(projectDiff(), 6790, "input", List.of());
+		McpDiffBrowserResult result = launcher.launch(projectDiff(), 6790, "input", List.of(), 20);
 
 		assertEquals("http://localhost:6790", result.url());
 		assertEquals("Starting server: http://localhost:6790", result.message());

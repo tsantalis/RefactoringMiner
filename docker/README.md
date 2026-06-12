@@ -26,7 +26,7 @@ The Docker image can also run RefactoringMiner's stdio MCP server. This keeps MC
 docker run --rm -i --pull always -e OAuthToken=$OAuthToken tsantalis/refactoringminer:latest mcp
 ```
 
-For local worktree or commit tools, mount the repository into the container:
+For the default `refactoringminer_diff` worktree mode, mount the repository into the container and set it as the working directory:
 
 ```terminal
 docker run --rm -i \
@@ -37,7 +37,7 @@ docker run --rm -i \
   tsantalis/refactoringminer:latest mcp
 ```
 
-For MCP AST diff browser tools, also publish the WebDiff port:
+For MCP AST diff browser use, also publish the WebDiff port:
 
 ```terminal
 docker run --rm -i \
@@ -48,6 +48,8 @@ docker run --rm -i \
   -e OAuthToken=$OAuthToken \
   tsantalis/refactoringminer:latest mcp
 ```
+
+The MCP tools do not accept host repository paths. Mount the desired repository and start the MCP process from the container working directory that should be analyzed, usually `/workspace`. To work with multiple repositories in the same container, mount their common parent directory and use relative `source.workingDirectory` values for local worktree and commit sources.
 
 The Docker image binds WebDiff inside the container to `0.0.0.0`, but returned links still use `http://127.0.0.1:<port>` for the host browser. Override these only if your Docker setup needs a different address:
 

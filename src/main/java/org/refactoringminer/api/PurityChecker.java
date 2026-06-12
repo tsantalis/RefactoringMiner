@@ -174,6 +174,7 @@ public class PurityChecker {
         // If no candidate expansion matches, the change is semantically different — mark impure.
         String currentVariableName = refactoring.getVariableDeclaration() != null ? refactoring.getVariableDeclaration().getVariableName() : null;
         String currentVariablePattern = currentVariableName != null ? "\\b" + Pattern.quote(currentVariableName) + "\\b" : null;
+        Pattern currentVariableRegex = currentVariablePattern != null ? Pattern.compile(currentVariablePattern) : null;
         List<String> unexplainedMappings = new ArrayList<>();
         List<AbstractCodeMapping> allMappings = new ArrayList<>(refactoring.getReferences());
         allMappings.addAll(refactoring.getSubExpressionMappings());
@@ -185,11 +186,11 @@ public class PurityChecker {
             }
 
             // Check if this mapping actually involves the current extracted variable (after-side or its replacements)
-            boolean mappingTouchesCurrentVariable = currentVariablePattern == null || afterFragment.matches(".*" + currentVariablePattern + ".*");
-            if (!mappingTouchesCurrentVariable && currentVariablePattern != null) {
+            boolean mappingTouchesCurrentVariable = currentVariableRegex == null || currentVariableRegex.matcher(afterFragment).find();
+            if (!mappingTouchesCurrentVariable && currentVariableRegex != null) {
                 for (Replacement replacement : mapping.getReplacements()) {
                     String replacementAfter = replacement.getAfter();
-                    if (replacementAfter != null && replacementAfter.matches(".*" + currentVariablePattern + ".*")) {
+                    if (replacementAfter != null && currentVariableRegex.matcher(replacementAfter).find()) {
                         mappingTouchesCurrentVariable = true;
                         break;
                     }

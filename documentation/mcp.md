@@ -94,7 +94,7 @@ claude --mcp-config .mcp.json --strict-mcp-config
 Then ask Claude Code to call a browser tool, for example:
 
 ```text
-Call refactoringminer_diff_worktree with baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
+Call refactoringminer_diff with source "WORKTREE", baseRef "HEAD", includeUntracked false, port 6789. Return only the URL and keep this session open.
 ```
 
 ## Docker
@@ -162,13 +162,15 @@ Outside Docker, WebDiff binds to `127.0.0.1` by default. These settings can be o
 
 Analysis tools report the refactorings RefactoringMiner detects. They return `status`, `summary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `refactorings` list, and `warnings`.
 
-| Tool | Required inputs | Optional inputs |
-|------|-----------------|-----------------|
-| `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
-| `refactoringminer_analyze_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
-| `refactoringminer_analyze_commit` | `commitId` | `repositoryPath`, `parentIndex`, `maxRefactorings` |
-| `refactoringminer_analyze_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `maxRefactorings` |
-| `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings` |
+The primary tool is `refactoringminer_analyze`. It requires a `source` parameter to determine the input source:
+
+| Source | Required inputs | Optional inputs |
+|--------|-----------------|-----------------|
+| `FILE_CONTENTS` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
+| `WORKTREE` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
+| `COMMIT` | `commitId` | `repositoryPath`, `parentIndex`, `maxRefactorings` |
+| `PULL_REQUEST` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `maxRefactorings` |
+| `DIRECTORIES` | `beforePath`, `afterPath` | `maxRefactorings` |
 
 Local paths must be absolute when provided. Worktree and commit tools default `repositoryPath` to the MCP server working directory, which is usually the directory where the agent was started. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep calls small. Analysis tools default to `maxRefactorings=20`; set a higher value when the agent needs more returned detail, or `0` when counts and warnings are enough.
 
@@ -180,13 +182,15 @@ Pull-request tools also default `cloneUrl` from the MCP server working directory
 
 Validation tools let an agent state the refactoring it intended and ask RefactoringMiner whether the detected refactorings match. Validation returns `status`, `summary`, `intent`, `refactoringCount`, `candidateCount`, limited `matches`, limited `candidates`, and `warnings`.
 
-| Tool | Required inputs | Optional inputs |
-|------|-----------------|-----------------|
-| `refactoringminer_validate_file_contents` | `beforeFiles`, `afterFiles`, `intent` | `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
-| `refactoringminer_validate_worktree` | `intent` | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
-| `refactoringminer_validate_commit` | `commitId`, `intent` | `repositoryPath`, `parentIndex`, `maxCandidates` |
-| `refactoringminer_validate_pull_request` | `pullRequestId`, `intent` | `cloneUrl`, `timeoutSeconds`, `maxCandidates` |
-| `refactoringminer_validate_directories` | `beforePath`, `afterPath`, `intent` | `maxCandidates` |
+The primary tool is `refactoringminer_validate`. It requires a `source` parameter and an `intent` object:
+
+| Source | Required inputs | Optional inputs |
+|--------|-----------------|-----------------|
+| `FILE_CONTENTS` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
+| `WORKTREE` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxCandidates` |
+| `COMMIT` | `commitId` | `repositoryPath`, `parentIndex`, `maxCandidates` |
+| `PULL_REQUEST` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `maxCandidates` |
+| `DIRECTORIES` | `beforePath`, `afterPath` | `maxCandidates` |
 
 Validation tools default to `maxCandidates=20`. This only limits what comes back to the MCP client; it does not change the RefactoringMiner detection pass.
 
@@ -227,12 +231,14 @@ Use `maxCandidates` to limit returned matches and candidates. If the result is t
 
 Diff browser tools generate a RefactoringMiner AST diff, start the existing local WebDiff server, and return a localhost URL that the user can open in a browser. They return `status`, `summary`, `message`, `url`, `port`, `inputSummary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `affectedFiles` list, and `warnings`.
 
-| Tool | Required inputs | Optional inputs |
-|------|-----------------|-----------------|
-| `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port` |
-| `refactoringminer_diff_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
-| `refactoringminer_diff_commit` | `commitId` | `repositoryPath`, `parentIndex`, `port` |
-| `refactoringminer_diff_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `port` |
+The primary tool is `refactoringminer_diff`. It requires a `source` parameter (Note: `DIRECTORIES` is not supported):
+
+| Source | Required inputs | Optional inputs |
+|--------|-----------------|-----------------|
+| `FILE_CONTENTS` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port` |
+| `WORKTREE` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
+| `COMMIT` | `commitId` | `repositoryPath`, `parentIndex`, `port` |
+| `PULL_REQUEST` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `port` |
 
 The default port is `6789`. The returned `message` uses the same wording as the WebDiff CLI startup line:
 
@@ -294,10 +300,11 @@ Add `cloneUrl` to the request when the MCP process is not running from the repos
 
 ## Example validation request
 
-For generic MCP clients, call `refactoringminer_validate_file_contents` with arguments like:
+For generic MCP clients, call `refactoringminer_validate` with arguments like:
 
 ```json
 {
+  "source": "FILE_CONTENTS",
   "beforeFiles": {
     "src/main/java/example/Worker.java": "class Worker { void computeTotal() {} }"
   },
@@ -319,7 +326,7 @@ For file-content validation, provide complete parseable Java compilation units w
 Claude Code:
 
 - "Use the RefactoringMiner MCP server to validate that my current worktree in `/path/to/repo` contains the intended `Rename Method` refactoring. Use `HEAD` as the base ref and return the validation status, summary, matches, candidates, and warnings."
-- "Use `refactoringminer_validate_file_contents` with these before/after Java file contents and intent `{ \"type\": \"Extract Method\", \"methodNames\": [\"parseItems\"] }`. Do not infer behavior preservation from the result."
+- "Use `refactoringminer_validate` with source `FILE_CONTENTS`, these before/after Java file contents and intent `{ \"type\": \"Extract Method\", \"methodNames\": [\"parseItems\"] }`. Do not infer behavior preservation from the result."
 
 Codex:
 
@@ -328,11 +335,11 @@ Codex:
 
 Generic MCP clients:
 
-- "Call `refactoringminer_validate_commit` for commit `abc123` with intent `{ \"type\": \"Rename Class\", \"classNames\": [\"OrderService\"] }`."
-- "Call `refactoringminer_validate_pull_request` for PR 1234 with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
-- "Call `refactoringminer_validate_directories` for `/path/to/before` and `/path/to/after` with intent `{ \"type\": \"Extract Method\" }`."
-- "Call `refactoringminer_diff_worktree` and return the local URL."
-- "Call `refactoringminer_diff_pull_request` for PR 1234 and return the startup message and URL."
+- "Call `refactoringminer_validate` with source `COMMIT` for commit `abc123` with intent `{ \"type\": \"Rename Class\", \"classNames\": [\"OrderService\"] }`."
+- "Call `refactoringminer_validate` with source `PULL_REQUEST` for PR 1234 with intent `{ \"type\": \"Move Method\", \"methodNames\": [\"detect\"] }`."
+- "Call `refactoringminer_validate` with source `DIRECTORIES` for `/path/to/before` and `/path/to/after` with intent `{ \"type\": \"Extract Method\" }`."
+- "Call `refactoringminer_diff` with source `WORKTREE` and return the local URL."
+- "Call `refactoringminer_diff` with source `PULL_REQUEST` for PR 1234 and return the startup singularity message and URL."
 
 ## GitHub pull requests
 

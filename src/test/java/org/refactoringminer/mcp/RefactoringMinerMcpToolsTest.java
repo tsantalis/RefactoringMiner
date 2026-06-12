@@ -31,147 +31,84 @@ class RefactoringMinerMcpToolsTest {
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	@Test
-	void fileContentsToolMetadataIsReadOnlyAndNamedForAgents() {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeFileContentsTool(
+	void analyzeToolMetadataIsReadOnlyAndNamedForAgents() {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(
 				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
 
-		assertEquals(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, tool.tool().name());
+		assertEquals(RefactoringMinerMcpTools.ANALYZE, tool.tool().name());
 		assertTrue(tool.tool().description().contains("Find refactorings"));
 		assertTrue(tool.tool().annotations().readOnlyHint());
 		assertFalse(tool.tool().annotations().destructiveHint());
-		assertTrue(tool.tool().inputSchema().required().contains("beforeFiles"));
-		assertTrue(tool.tool().inputSchema().required().contains("afterFiles"));
+		assertTrue(tool.tool().inputSchema().required().contains("source"));
 	}
 
 	@Test
-	void worktreeToolMetadataIsReadOnlyAndDefaultsRepositoryPath() {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeWorktreeTool(
-				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
-
-		assertEquals(RefactoringMinerMcpTools.ANALYZE_WORKTREE, tool.tool().name());
-		assertTrue(tool.tool().description().contains("local modified, added, deleted"));
-		assertTrue(tool.tool().annotations().readOnlyHint());
-		assertFalse(tool.tool().annotations().destructiveHint());
-		assertFalse(tool.tool().inputSchema().required().contains("repositoryPath"));
-	}
-
-	@Test
-	void toolSpecificationsExposeFullReadOnlyV1Surface() {
+	void toolSpecificationsExposeConsolidatedSurface() {
 		SyncToolSpecification[] tools = RefactoringMinerMcpTools.toolSpecifications();
 
-		assertEquals(14, tools.length);
+		assertEquals(3, tools.length);
 		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS.equals(tool.tool().name())));
+				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE.equals(tool.tool().name())));
 		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE_WORKTREE.equals(tool.tool().name())));
+				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE.equals(tool.tool().name())));
 		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE_COMMIT.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE_PULL_REQUEST.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.ANALYZE_DIRECTORIES.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_FILE_CONTENTS.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_WORKTREE.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_COMMIT.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_PULL_REQUEST.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.VALIDATE_DIRECTORIES.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_FILE_CONTENTS.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_WORKTREE.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_COMMIT.equals(tool.tool().name())));
-		assertTrue(java.util.Arrays.stream(tools)
-				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF_PULL_REQUEST.equals(tool.tool().name())));
+				.anyMatch(tool -> RefactoringMinerMcpTools.DIFF.equals(tool.tool().name())));
 		assertTrue(java.util.Arrays.stream(tools).allMatch(tool -> tool.tool().annotations().readOnlyHint()));
 		assertTrue(java.util.Arrays.stream(tools).noneMatch(tool -> tool.tool().annotations().destructiveHint()));
 	}
 
 	@Test
-	void remainingToolMetadataIsReadOnlyAndHasExpectedRequiredInputs() {
+	void toolMetadataIsReadOnlyAndHasExpectedRequiredInputs() {
 		RefactoringMinerMcpService service = fakeService();
-		SyncToolSpecification commitTool = RefactoringMinerMcpTools.analyzeCommitTool(service);
-		SyncToolSpecification pullRequestTool = RefactoringMinerMcpTools.analyzePullRequestTool(service);
-		SyncToolSpecification directoriesTool = RefactoringMinerMcpTools.analyzeDirectoriesTool(service);
+		SyncToolSpecification analyzeTool = RefactoringMinerMcpTools.analyzeTool(service);
+		SyncToolSpecification validateTool = RefactoringMinerMcpTools.validateTool(service);
+		SyncToolSpecification diffTool = RefactoringMinerMcpTools.diffTool(service);
 
-		assertTrue(commitTool.tool().annotations().readOnlyHint());
-		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
-		assertTrue(pullRequestTool.tool().annotations().readOnlyHint());
-		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
-		assertFalse(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
-		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
-		assertTrue(directoriesTool.tool().annotations().readOnlyHint());
-		assertTrue(directoriesTool.tool().inputSchema().required().contains("beforePath"));
-		assertTrue(directoriesTool.tool().inputSchema().required().contains("afterPath"));
+		assertTrue(analyzeTool.tool().annotations().readOnlyHint());
+		assertTrue(analyzeTool.tool().inputSchema().required().contains("source"));
+
+		assertTrue(validateTool.tool().annotations().readOnlyHint());
+		assertTrue(validateTool.tool().inputSchema().required().contains("source"));
+		assertTrue(validateTool.tool().inputSchema().required().contains("intent"));
+
+		assertTrue(diffTool.tool().annotations().readOnlyHint());
+		assertTrue(diffTool.tool().inputSchema().required().contains("source"));
 	}
 
 	@Test
 	void diffBrowserToolMetadataIsReadOnlyAndUsesLocalhostPortDefault() {
 		RefactoringMinerMcpService service = fakeDiffBrowserService();
-		SyncToolSpecification fileTool = RefactoringMinerMcpTools.diffFileContentsTool(service);
-		SyncToolSpecification worktreeTool = RefactoringMinerMcpTools.diffWorktreeTool(service);
-		SyncToolSpecification commitTool = RefactoringMinerMcpTools.diffCommitTool(service);
-		SyncToolSpecification pullRequestTool = RefactoringMinerMcpTools.diffPullRequestTool(service);
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(service);
 
-		for (SyncToolSpecification tool : List.of(fileTool, worktreeTool, commitTool, pullRequestTool)) {
-			assertTrue(tool.tool().annotations().readOnlyHint());
-			assertFalse(tool.tool().annotations().destructiveHint());
-			assertTrue(tool.tool().description().contains("localhost URL"));
-			Object portSchema = tool.tool().inputSchema().properties().get("port");
-			assertTrue(portSchema instanceof Map<?, ?>);
-			assertEquals(6789, ((Map<?, ?>) portSchema).get("default"));
-		}
-		assertTrue(fileTool.tool().inputSchema().required().contains("beforeFiles"));
-		assertTrue(fileTool.tool().inputSchema().required().contains("afterFiles"));
-		assertFalse(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
-		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
-		assertFalse(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
-		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
+		assertTrue(tool.tool().annotations().readOnlyHint());
+		assertFalse(tool.tool().annotations().destructiveHint());
+		assertTrue(tool.tool().description().contains("localhost URL"));
+		Object portSchema = tool.tool().inputSchema().properties().get("port");
+		assertTrue(portSchema instanceof Map<?, ?>);
+		assertEquals(6789, ((Map<?, ?>) portSchema).get("default"));
 	}
 
 	@Test
 	void validationToolMetadataIsReadOnlyAndRequiresIntent() {
 		RefactoringMinerMcpService service = fakeService();
-		SyncToolSpecification fileTool = RefactoringMinerMcpTools.validateFileContentsTool(service);
-		SyncToolSpecification worktreeTool = RefactoringMinerMcpTools.validateWorktreeTool(service);
-		SyncToolSpecification commitTool = RefactoringMinerMcpTools.validateCommitTool(service);
-		SyncToolSpecification pullRequestTool = RefactoringMinerMcpTools.validatePullRequestTool(service);
-		SyncToolSpecification directoriesTool = RefactoringMinerMcpTools.validateDirectoriesTool(service);
+		SyncToolSpecification tool = RefactoringMinerMcpTools.validateTool(service);
 
-		for (SyncToolSpecification tool : List.of(fileTool, worktreeTool, commitTool, pullRequestTool, directoriesTool)) {
-			assertTrue(tool.tool().annotations().readOnlyHint());
-			assertFalse(tool.tool().annotations().destructiveHint());
-			assertTrue(tool.tool().inputSchema().required().contains("intent"));
-		}
-		assertTrue(fileTool.tool().inputSchema().required().contains("beforeFiles"));
-		assertTrue(fileTool.tool().inputSchema().required().contains("afterFiles"));
-		assertFalse(worktreeTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertFalse(commitTool.tool().inputSchema().required().contains("repositoryPath"));
-		assertTrue(commitTool.tool().inputSchema().required().contains("commitId"));
-		assertTrue(pullRequestTool.tool().annotations().openWorldHint());
-		assertFalse(pullRequestTool.tool().inputSchema().required().contains("cloneUrl"));
-		assertTrue(pullRequestTool.tool().inputSchema().required().contains("pullRequestId"));
-		assertTrue(directoriesTool.tool().inputSchema().required().contains("beforePath"));
-		assertTrue(directoriesTool.tool().inputSchema().required().contains("afterPath"));
+		assertTrue(tool.tool().annotations().readOnlyHint());
+		assertFalse(tool.tool().annotations().destructiveHint());
+		assertTrue(tool.tool().inputSchema().required().contains("intent"));
+		assertTrue(tool.tool().inputSchema().required().contains("source"));
 	}
 
 	@Test
-	void fileContentsToolReturnsJsonTextAndStructuredContent() throws Exception {
+	void analyzeFileContentsToolReturnsJsonTextAndStructuredContent() throws Exception {
 		RefactoringMinerMcpService service = new RefactoringMinerMcpService((before, after) -> {
 			ProjectASTDiff diff = new ProjectASTDiff(before, after);
 			diff.setRefactorings(java.util.List.of());
 			return diff;
 		});
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeFileContentsTool(service);
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, Map.of(
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(service);
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "FILE_CONTENTS",
 				"beforeFiles", Map.of("src/main/java/A.java", "class A {}"),
 				"afterFiles", Map.of("src/main/java/A.java", "class A { int x; }"),
 				"maxRefactorings", 5));
@@ -188,10 +125,11 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void fileContentsToolReturnsErrorShapeForInvalidArguments() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeFileContentsTool(
+	void analyzeFileContentsToolReturnsErrorShapeForInvalidArguments() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(
 				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, Map.of(
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "FILE_CONTENTS",
 				"beforeFiles", "not-an-object",
 				"afterFiles", Map.of()));
 
@@ -205,23 +143,26 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void explicitFileContentToolsRejectOversizedInput() throws Exception {
+	void consolidatedToolsRejectOversizedInput() throws Exception {
 		Map<String, String> beforeFiles = Map.of("src/main/java/A.java", "class A { void f() {} }");
 		Map<String, String> afterFiles = Map.of("src/main/java/A.java", "class A { void g() {} }");
 		List<CallToolResult> results = List.of(
-				RefactoringMinerMcpTools.analyzeFileContentsTool(fakeService()).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_FILE_CONTENTS, Map.of(
+				RefactoringMinerMcpTools.analyzeTool(fakeService()).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+								"source", "FILE_CONTENTS",
 								"beforeFiles", beforeFiles,
 								"afterFiles", afterFiles,
 								"maxBytesPerFile", 4))),
-				RefactoringMinerMcpTools.validateFileContentsTool(fakeServiceWithRefactoring()).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_FILE_CONTENTS, Map.of(
+				RefactoringMinerMcpTools.validateTool(fakeServiceWithRefactoring()).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+								"source", "FILE_CONTENTS",
 								"beforeFiles", beforeFiles,
 								"afterFiles", afterFiles,
 								"intent", renameMethodIntent(),
 								"maxBytesPerFile", 4))),
-				RefactoringMinerMcpTools.diffFileContentsTool(fakeDiffBrowserService()).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.DIFF_FILE_CONTENTS, Map.of(
+				RefactoringMinerMcpTools.diffTool(fakeDiffBrowserService()).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+								"source", "FILE_CONTENTS",
 								"beforeFiles", beforeFiles,
 								"afterFiles", afterFiles,
 								"port", 6790,
@@ -237,10 +178,11 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void worktreeToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeWorktreeTool(
+	void analyzeWorktreeToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(
 				new RefactoringMinerMcpService((before, after) -> new ProjectASTDiff(before, after)));
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_WORKTREE, Map.of(
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "WORKTREE",
 				"repositoryPath", "relative/path"));
 
 		CallToolResult result = tool.callHandler().apply(null, request);
@@ -253,9 +195,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void worktreeToolRejectsNegativeMaxRefactorings(@TempDir Path tempDir) throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeWorktreeTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_WORKTREE, Map.of(
+	void analyzeWorktreeToolRejectsNegativeMaxRefactorings(@TempDir Path tempDir) throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "WORKTREE",
 				"repositoryPath", tempDir.toString(),
 				"maxRefactorings", -1));
 
@@ -269,9 +212,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void pullRequestToolReturnsJsonTextAndStructuredContentWithoutNetwork() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzePullRequestTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_PULL_REQUEST, Map.of(
+	void analyzePullRequestToolReturnsJsonTextAndStructuredContentWithoutNetwork() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "PULL_REQUEST",
 				"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
 				"pullRequestId", 1,
 				"timeoutSeconds", 30,
@@ -289,9 +233,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void commitToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeCommitTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_COMMIT, Map.of(
+	void analyzeCommitToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "COMMIT",
 				"repositoryPath", "relative/path",
 				"commitId", "abc123"));
 
@@ -305,9 +250,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void pullRequestToolReturnsErrorShapeForInvalidPullRequestId() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzePullRequestTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_PULL_REQUEST, Map.of(
+	void analyzePullRequestToolReturnsErrorShapeForInvalidPullRequestId() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "PULL_REQUEST",
 				"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
 				"pullRequestId", 0));
 
@@ -321,9 +267,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void directoriesToolReturnsErrorShapeForInvalidBeforePath() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeDirectoriesTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE_DIRECTORIES, Map.of(
+	void analyzeDirectoriesToolReturnsErrorShapeForInvalidBeforePath() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(fakeService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+				"source", "DIRECTORIES",
 				"beforePath", "relative/before",
 				"afterPath", "/tmp/after"));
 
@@ -337,9 +284,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void fileContentsValidationToolReturnsJsonTextAndStructuredContent() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.validateFileContentsTool(fakeServiceWithRefactoring());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_FILE_CONTENTS, Map.of(
+	void validateFileContentsToolReturnsJsonTextAndStructuredContent() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.validateTool(fakeServiceWithRefactoring());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+				"source", "FILE_CONTENTS",
 				"beforeFiles", Map.of("src/main/java/A.java", "class A { void f() {} }"),
 				"afterFiles", Map.of("src/main/java/A.java", "class A { void g() {} }"),
 				"intent", Map.of("type", "Rename Method", "methodNames", List.of("g")),
@@ -365,19 +313,22 @@ class RefactoringMinerMcpToolsTest {
 		Path afterPath = Files.createDirectories(tempDir.resolve("after"));
 
 		List<CallToolResult> results = List.of(
-				RefactoringMinerMcpTools.validateCommitTool(service).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_COMMIT, Map.of(
+				RefactoringMinerMcpTools.validateTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+								"source", "COMMIT",
 								"repositoryPath", tempDir.toString(),
 								"commitId", "abc123",
 								"intent", renameMethodIntent()))),
-				RefactoringMinerMcpTools.validatePullRequestTool(service).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_PULL_REQUEST, Map.of(
+				RefactoringMinerMcpTools.validateTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+								"source", "PULL_REQUEST",
 								"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
 								"pullRequestId", 1,
 								"timeoutSeconds", 30,
 								"intent", renameMethodIntent()))),
-				RefactoringMinerMcpTools.validateDirectoriesTool(service).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_DIRECTORIES, Map.of(
+				RefactoringMinerMcpTools.validateTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+								"source", "DIRECTORIES",
 								"beforePath", beforePath.toString(),
 								"afterPath", afterPath.toString(),
 								"intent", renameMethodIntent()))));
@@ -392,9 +343,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void worktreeValidationToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.validateWorktreeTool(fakeServiceWithRefactoring());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_WORKTREE, Map.of(
+	void validateWorktreeToolReturnsErrorShapeForInvalidRepositoryPath() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.validateTool(fakeServiceWithRefactoring());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+				"source", "WORKTREE",
 				"repositoryPath", "relative/path",
 				"intent", renameMethodIntent()));
 
@@ -408,9 +360,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void fileContentsValidationToolReturnsErrorShapeForInvalidIntentArguments() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.validateFileContentsTool(fakeServiceWithRefactoring());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE_FILE_CONTENTS, Map.of(
+	void validateFileContentsToolReturnsErrorShapeForInvalidIntentArguments() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.validateTool(fakeServiceWithRefactoring());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+				"source", "FILE_CONTENTS",
 				"beforeFiles", Map.of("src/main/java/A.java", "class A { void f() {} }"),
 				"afterFiles", Map.of("src/main/java/A.java", "class A { void g() {} }"),
 				"intent", Map.of("type", "Not A Refactoring")));
@@ -426,9 +379,10 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void fileContentsDiffToolReturnsJsonTextAndStructuredContent() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.diffFileContentsTool(fakeDiffBrowserService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_FILE_CONTENTS, Map.of(
+	void diffFileContentsToolReturnsJsonTextAndStructuredContent() throws Exception {
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeDiffBrowserService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+				"source", "FILE_CONTENTS",
 				"beforeFiles", Map.of("src/main/java/A.java", "class A { void f() {} }"),
 				"afterFiles", Map.of("src/main/java/A.java", "class A { void g() {} }"),
 				"port", 6790));
@@ -446,7 +400,7 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void worktreeDiffToolReturnsJsonTextAndStructuredContentWithoutNetwork(@TempDir Path tempDir) throws Exception {
+	void diffWorktreeToolReturnsJsonTextAndStructuredContentWithoutNetwork(@TempDir Path tempDir) throws Exception {
 		Path repo = tempDir.resolve("repo");
 		try (Git git = Git.init().setDirectory(repo.toFile()).call()) {
 			write(repo, "src/main/java/A.java", "class A { void f() {} }");
@@ -455,8 +409,9 @@ class RefactoringMinerMcpToolsTest {
 					.setCommitter("Test", "test@example.com").call();
 			write(repo, "src/main/java/A.java", "class A { void g() {} }");
 		}
-		SyncToolSpecification tool = RefactoringMinerMcpTools.diffWorktreeTool(fakeDiffBrowserService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_WORKTREE, Map.of(
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeDiffBrowserService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+				"source", "WORKTREE",
 				"repositoryPath", repo.toString(),
 				"baseRef", "HEAD",
 				"port", 6793));
@@ -473,7 +428,7 @@ class RefactoringMinerMcpToolsTest {
 	}
 
 	@Test
-	void worktreeDiffToolDefaultsRepositoryPathToUserDir(@TempDir Path tempDir) throws Exception {
+	void diffWorktreeToolDefaultsRepositoryPathToUserDir(@TempDir Path tempDir) throws Exception {
 		Path repo = tempDir.resolve("repo");
 		try (Git git = Git.init().setDirectory(repo.toFile()).call()) {
 			write(repo, "src/main/java/A.java", "class A { void f() {} }");
@@ -485,8 +440,9 @@ class RefactoringMinerMcpToolsTest {
 		String previousUserDir = System.getProperty("user.dir");
 		try {
 			System.setProperty("user.dir", repo.toString());
-			SyncToolSpecification tool = RefactoringMinerMcpTools.diffWorktreeTool(fakeDiffBrowserService());
-			CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_WORKTREE, Map.of(
+			SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeDiffBrowserService());
+			CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+					"source", "WORKTREE",
 					"baseRef", "HEAD",
 					"port", 6793));
 
@@ -508,13 +464,15 @@ class RefactoringMinerMcpToolsTest {
 		RefactoringMinerMcpService service = fakeDiffBrowserService();
 
 		List<CallToolResult> results = List.of(
-				RefactoringMinerMcpTools.diffCommitTool(service).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.DIFF_COMMIT, Map.of(
+				RefactoringMinerMcpTools.diffTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+								"source", "COMMIT",
 								"repositoryPath", tempDir.toString(),
 								"commitId", "abc123",
 								"port", 6791))),
-				RefactoringMinerMcpTools.diffPullRequestTool(service).callHandler().apply(null,
-						new CallToolRequest(RefactoringMinerMcpTools.DIFF_PULL_REQUEST, Map.of(
+				RefactoringMinerMcpTools.diffTool(service).callHandler().apply(null,
+						new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+								"source", "PULL_REQUEST",
 								"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
 								"pullRequestId", 1,
 								"timeoutSeconds", 30,
@@ -532,8 +490,9 @@ class RefactoringMinerMcpToolsTest {
 
 	@Test
 	void diffBrowserToolReturnsErrorShapeForInvalidPort() throws Exception {
-		SyncToolSpecification tool = RefactoringMinerMcpTools.diffFileContentsTool(fakeDiffBrowserService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF_FILE_CONTENTS, Map.of(
+		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeDiffBrowserService());
+		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+				"source", "FILE_CONTENTS",
 				"beforeFiles", Map.of("src/main/java/A.java", "class A {}"),
 				"afterFiles", Map.of("src/main/java/A.java", "class A { int x; }"),
 				"port", 0));

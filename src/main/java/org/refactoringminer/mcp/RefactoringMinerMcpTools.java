@@ -167,10 +167,12 @@ public final class RefactoringMinerMcpTools {
 			return toCallToolResult(McpValidationResult.error("Invalid source: " + sourceStr, null, List.of("Valid sources are: FILE_CONTENTS, WORKTREE, COMMIT, PULL_REQUEST, DIRECTORIES")));
 		}
 
-		McpRefactoringIntent intent = intentValue(args.get("intent"));
-		int maxCandidates = integerValue(args.get("maxCandidates"), DEFAULT_MAX_CANDIDATES, "maxCandidates");
+        McpRefactoringIntent intent = null;
+        int maxCandidates = DEFAULT_MAX_CANDIDATES;
+        try {
+            intent = intentValue(args.get("intent"));
+            maxCandidates = integerValue(args.get("maxCandidates"), DEFAULT_MAX_CANDIDATES, "maxCandidates");
 
-		try {
 			switch (source) {
 				case FILE_CONTENTS:
 					Map<String, String> bfV = stringMap(args.get("beforeFiles"), "beforeFiles");

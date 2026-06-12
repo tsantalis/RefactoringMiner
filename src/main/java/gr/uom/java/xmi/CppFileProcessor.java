@@ -59,6 +59,7 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTUsingDirective;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTVisibilityLabel;
 import org.eclipse.cdt.internal.core.index.EmptyCIndex;
 import org.eclipse.core.runtime.CoreException;
+import org.refactoringminer.util.PathFileUtils;
 
 public class CppFileProcessor {
 	private UMLModel umlModel;
@@ -84,38 +85,38 @@ public class CppFileProcessor {
 			Map<String, String> predefinedMacros = new HashMap<>();
 			ScannerInfo scanInfo = new ScannerInfo(predefinedMacros, getIncludePaths(filePath));
 			IncludeFileContentProvider includeFiles = IncludeFileContentProvider.getSavedFilesProvider();	
-			
-			if(filePath.endsWith(".cpp")) {	
-			
-			IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
-				content, 
-				scanInfo, 
-				includeFiles, 
-				EmptyCIndex.INSTANCE, 
-				GPPLanguage.OPTION_IS_SOURCE_UNIT, 
-				new DefaultLogService()
-			);
-			processPreprocessorStatements(ast);
-			processMacroExpansions(ast);
-			processTranslationUnit(ast);
-		}
-			else if(filePath.endsWith(".c")) {	
-				
+
+			if(PathFileUtils.isCppFile(filePath)) {	
+
+				IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
+						content, 
+						scanInfo, 
+						includeFiles, 
+						EmptyCIndex.INSTANCE, 
+						GPPLanguage.OPTION_IS_SOURCE_UNIT, 
+						new DefaultLogService()
+						);
+				processPreprocessorStatements(ast);
+				processMacroExpansions(ast);
+				processTranslationUnit(ast);
+			}
+			else if(PathFileUtils.isCFile(filePath)) {	
+
 				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
-					content, 
-					scanInfo, 
-					includeFiles, 
-					EmptyCIndex.INSTANCE, 
-					GCCLanguage.OPTION_IS_SOURCE_UNIT, 
-					new DefaultLogService()
-				);
+						content, 
+						scanInfo, 
+						includeFiles, 
+						EmptyCIndex.INSTANCE, 
+						GCCLanguage.OPTION_IS_SOURCE_UNIT, 
+						new DefaultLogService()
+						);
 				processPreprocessorStatements(ast);
 				processMacroExpansions(ast);
 				processTranslationUnit(ast);
 			}
 		}
 		catch(CoreException e) {
-			
+
 		}
 	}
 

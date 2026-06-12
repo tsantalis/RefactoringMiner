@@ -160,17 +160,21 @@ Outside Docker, WebDiff binds to `127.0.0.1` by default. These settings can be o
 
 ## Analysis tools
 
-Analysis tools report the refactorings RefactoringMiner detects. They return `status`, `summary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `refactorings` list, and `warnings`.
+Analysis tools report the refactorings RefactoringMiner detects. They return `status`, `summary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `refactorings` list, bounded `astDiffs` summaries, and `warnings`.
 
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
-| `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
-| `refactoringminer_analyze_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings` |
-| `refactoringminer_analyze_commit` | `commitId` | `repositoryPath`, `parentIndex`, `maxRefactorings` |
-| `refactoringminer_analyze_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `maxRefactorings` |
-| `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings` |
+| `refactoringminer_analyze_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `maxRefactorings`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_analyze_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `maxRefactorings`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_analyze_commit` | `commitId` | `repositoryPath`, `parentIndex`, `maxRefactorings`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_analyze_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `maxRefactorings`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_analyze_directories` | `beforePath`, `afterPath` | `maxRefactorings`, `maxAstDiffs`, `maxActionsPerAstDiff` |
 
 Local paths must be absolute when provided. Worktree and commit tools default `repositoryPath` to the MCP server working directory, which is usually the directory where the agent was started. File-content maps use repository-relative paths as keys and file contents as values. Explicit file-content tools default to `maxFiles=100` and `maxBytesPerFile=200000` to keep calls small. Analysis tools default to `maxRefactorings=20`; set a higher value when the agent needs more returned detail, or `0` when counts and warnings are enough.
+
+Analysis tools also return compact AST diff summaries by default. `maxAstDiffs` controls how many file-pair summaries are returned, and `maxActionsPerAstDiff` controls how many edit actions are sampled per summary. Set `maxAstDiffs=0` when an agent only needs refactoring counts and warnings.
+
+Each `astDiffs` entry includes `kind` (`standard` or `moved`), before/after file paths, mapping and action counts, per-action counts, and sampled action ranges. Sampled actions include the source-side `filePath`, a real `targetFilePath` when the action points to another file or the destination side, and `moveGroupId` for grouped multi-move actions. Missing node positions use `-1` for offsets and lines. This is intended for agent triage of moved, renamed, extracted, or inlined code without relying only on ordinary Git diff delete/add blocks.
 
 Commit tools first try the GitHub API when the working tree has a GitHub `origin` remote. If the commit is not available from GitHub, they fall back to the local repository. This keeps pushed commits small for MCP clients while still supporting local-only commits.
 
@@ -225,14 +229,14 @@ Use `maxCandidates` to limit returned matches and candidates. If the result is t
 
 ## AST diff browser tools
 
-Diff browser tools generate a RefactoringMiner AST diff, start the existing local WebDiff server, and return a localhost URL that the user can open in a browser. They return `status`, `summary`, `message`, `url`, `port`, `inputSummary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `affectedFiles` list, and `warnings`.
+Diff browser tools generate a RefactoringMiner AST diff, start the existing local WebDiff server, and return a localhost URL that the user can open in a browser. They return `status`, `summary`, `message`, `url`, `port`, `inputSummary`, `refactoringCount`, `astDiffCount`, `moveAstDiffCount`, `filesBefore`, `filesAfter`, a limited `affectedFiles` list, bounded `astDiffs` summaries, and `warnings`.
 
 | Tool | Required inputs | Optional inputs |
 |------|-----------------|-----------------|
-| `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port` |
-| `refactoringminer_diff_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port` |
-| `refactoringminer_diff_commit` | `commitId` | `repositoryPath`, `parentIndex`, `port` |
-| `refactoringminer_diff_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `port` |
+| `refactoringminer_diff_file_contents` | `beforeFiles`, `afterFiles` | `maxFiles`, `maxBytesPerFile`, `port`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_diff_worktree` | None | `repositoryPath`, `baseRef`, `includeUntracked`, `maxFiles`, `maxBytesPerFile`, `port`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_diff_commit` | `commitId` | `repositoryPath`, `parentIndex`, `port`, `maxAstDiffs`, `maxActionsPerAstDiff` |
+| `refactoringminer_diff_pull_request` | `pullRequestId` | `cloneUrl`, `timeoutSeconds`, `port`, `maxAstDiffs`, `maxActionsPerAstDiff` |
 
 The default port is `6789`. The returned `message` uses the same wording as the WebDiff CLI startup line:
 
@@ -241,6 +245,8 @@ Starting server: http://127.0.0.1:6789
 ```
 
 MCP tools do not auto-open the desktop browser. They bind WebDiff to `127.0.0.1` by default and return the URL in the tool result so the user or client can decide when to open it.
+
+Diff browser tools return the same compact `astDiffs` summaries as analysis tools, with the same `maxAstDiffs` and `maxActionsPerAstDiff` controls. Set `maxAstDiffs=0` when the client only needs the WebDiff URL and counts.
 
 The returned URL is only available while the MCP server process is still running. If an MCP client starts RefactoringMiner for a single command and immediately exits, the local WebDiff server can disappear before the user opens the URL. Use an interactive client session for browser tools, or use the direct WebDiff CLI when the goal is only manual browser inspection.
 

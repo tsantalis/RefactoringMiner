@@ -521,7 +521,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tcriterion : AnalysisCriterion in method public main(args String[]) : void from class ta4jexamples.backtesting.SimpleMovingAverageBacktesting",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -3414,9 +3414,19 @@
     }
   }, {
     "type" : "Extract Variable",
+    "description" : "Extract Variable\tresult : String in method public toString() : String from class org.springframework.data.neo4j.repository.query.WhereClause",
+    "purity" : {
+      "purityValue" : "0",
+      "purityValidation" : "-",
+      "purityComment" : "",
+      "mappingState" : "",
+      "validationComment" : ""
+    }
+  }, {
+    "type" : "Extract Variable",
     "description" : "Extract Variable\tpartInfo : PartInfo in method private shouldRenderQuery() : boolean from class org.springframework.data.neo4j.repository.query.StartClause",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -3426,7 +3436,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tvalue : Object in method private renderQuery(values Map<PartInfo,Object>) : String from class org.springframework.data.neo4j.repository.query.StartClause",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -3758,6 +3768,16 @@
   "sha1" : "cd8bd185dc9aa830822d151aefd526890c60dc19",
   "url" : "https://github.com/SlimeKnights/TinkersConstruct/commit/cd8bd185dc9aa830822d151aefd526890c60dc19",
   "refactorings" : [ {
+    "type" : "Extract Variable",
+    "description" : "Extract Variable\tyminInt : int in method public renderStackedFluidCuboid(fluid FluidStack, px double, py double, pz double, pos BlockPos, from BlockPos, to BlockPos, ymin double, ymax double) : void from class slimeknights.tconstruct.library.client.RenderUtil",
+    "purity" : {
+      "purityValue" : "0",
+      "purityValidation" : "-",
+      "purityComment" : "",
+      "mappingState" : "",
+      "validationComment" : ""
+    }
+  }, {
     "type" : "Change Variable Type",
     "description" : "Change Variable Type\tsmeltery : TileSmeltery to smeltery : ISmelteryTankHandler in method public handleServerSafe(netHandler NetHandlerPlayServer) : void from class slimeknights.tconstruct.smeltery.network.SmelteryFluidClicked",
     "purity" : {
@@ -3771,7 +3791,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\ttank : SmelteryTank in method public getCapability(capability Capability<T>, facing EnumFacing) : T from class slimeknights.tconstruct.smeltery.tileentity.TileDrain",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -3916,7 +3936,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\ttank : SmelteryTank in method public renderTileEntityAt(tinkerTank TileTinkerTank, x double, y double, z double, partialTicks float, destroyStage int) : void from class slimeknights.tconstruct.smeltery.client.TinkerTankRenderer",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -3926,7 +3946,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tpos : BlockPos in method public renderTileEntityAt(tinkerTank TileTinkerTank, x double, y double, z double, partialTicks float, destroyStage int) : void from class slimeknights.tconstruct.smeltery.client.TinkerTankRenderer",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -3936,7 +3956,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tstate : IBlockState in method public isFrameBlock(world World, pos BlockPos, type EnumFrameType) : boolean from class slimeknights.tconstruct.smeltery.multiblock.MultiblockTinkerTank",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -5256,7 +5276,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\texpiresIn : long in method private createJsonToken(token Token, scopes String) : JSONObject from class org.restlet.ext.oauth.AccessTokenServerResource",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -6146,7 +6166,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\ttimeFrom : long in method public getBlocksForRoute(routeId AgencyAndId, time long) : List<BlockLocation> from class org.onebusaway.transit_data_federation.impl.blocks.BlockStatusServiceImpl",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -6156,7 +6176,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\ttimeTo : long in method public getBlocksForRoute(routeId AgencyAndId, time long) : List<BlockLocation> from class org.onebusaway.transit_data_federation.impl.blocks.BlockStatusServiceImpl",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -8981,7 +9001,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tstats : ByteSizeRange in method private buildEncodingForTag(records List<CramCompressionRecord>, tagID int) : EncodingDetails from class htsjdk.samtools.cram.build.CompressionHeaderFactory",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -9164,9 +9184,19 @@
     }
   }, {
     "type" : "Extract Variable",
+    "description" : "Extract Variable\tcommandOutput : String in method public getBranchesContaining(revspec String, allBranches boolean) : List<Branch> from class org.jenkinsci.plugins.gitclient.CliGitAPIImpl",
+    "purity" : {
+      "purityValue" : "0",
+      "purityValidation" : "-",
+      "purityComment" : "",
+      "mappingState" : "",
+      "validationComment" : ""
+    }
+  }, {
+    "type" : "Extract Variable",
     "description" : "Extract Variable\tbranchName : String in method private getAllBranchRefs(originBranches boolean) : List<Ref> from class org.jenkinsci.plugins.gitclient.JGitAPIImpl",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -9336,7 +9366,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\twheelCache : CachedBackedWheelCache in method public apply(project Project) : void from class com.linkedin.gradle.python.plugin.WheelFirstPlugin",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -9966,7 +9996,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tdoc : Document in method public selectInputEvent() : void from class org.antlr.intellij.plugin.preview.InputPanel",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -9976,7 +10006,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tinputFileName : String in method public selectFileEvent() : void from class org.antlr.intellij.plugin.preview.InputPanel",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -11111,7 +11141,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tlocalValidHeader : boolean in method public ZooKeeperLogParser(log InputStream) from class com.netflix.exhibitor.core.index.ZooKeeperLogParser",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -11626,7 +11656,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tauthorityName : String in method private loadChoiceAuthorityConfigurations() : void from class org.dspace.content.authority.ChoiceAuthorityServiceImpl",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -11866,7 +11896,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\turibuilder : String in method public SubmissionPanelResource(sd SubmissionPanelRest, utils Utils, rels String...) from class org.dspace.app.rest.model.hateoas.SubmissionPanelResource",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -12431,7 +12461,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tresolved : ResolvedSchemaChange in method private processQueryEvent(event QueryEvent) : void from class com.zendesk.maxwell.MaxwellReplicator",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -14170,7 +14200,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tdownloadStatus : int in method private runInternal() : void from class com.novoda.downloadmanager.lib.DownloadThread",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -14402,7 +14432,7 @@
     "type" : "Extract Variable",
     "description" : "Extract Variable\tmetadataField : MetadataField in method public addMetadata(context Context, dso T, schema String, element String, qualifier String, lang String, values List<String>) : void from class org.dspace.content.DSpaceObjectServiceImpl",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",

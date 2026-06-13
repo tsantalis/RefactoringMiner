@@ -4610,10 +4610,10 @@
     }, {
         "type": "Split Conditional",
         "description": "Split Conditional if(dropout_layer and self._hparams.dropout_strategy != \"item_type\") to [if(positions is None and st == \"item\"), if(dropout_layer and st != \"item_type\")] in method protected _build(positions, sequence_length, mode, kwargs) from class modules.embedders.position_embedders.PositionEmbedder",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>All if statements have an overlapping Extract Variable. There is no Split Conditional<br /><br />if self._hparams.dropout_strategy == 'item_type':<br />if st == 'item_type':<br /><br />if dropout_layer and self._hparams.dropout_strategy != 'item_type':<br />if dropout_layer and st != 'item_type':</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -4820,6 +4820,13 @@
     }, {
         "type": "Pull Up Method",
         "description": "Pull Up Method public default_hparams() from class modules.encoders.rnn_encoders.ForwardRNNEncoder to public default_hparams() from class modules.encoders.encoder_base.EncoderBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Invert Condition",
+        "description": "Invert Condition if((not default_value) or name == \"args\") to if(default_value and name != \"args\") in method protected _parse(hparams, default_hparams) from class hyperparams.HParams",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

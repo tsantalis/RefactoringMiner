@@ -151,7 +151,7 @@ public class LangVisitor implements LangASTVisitor {
         LeafExpression infix = new LeafExpression(cu, sourceFolder, filePath,
                 langInfixExpression, LocationInfo.CodeElementType.INFIX_EXPRESSION, container);
         infixExpressions.add(infix);
-        infixOperators.add(langInfixExpression.getOperator().name());
+        infixOperators.add(langInfixExpression.getOperator().getSymbol());
         LangASTNode leftSide = langInfixExpression.getLeft();
         LangASTNode rightSide = langInfixExpression.getRight();
 
@@ -172,7 +172,7 @@ public class LangVisitor implements LangASTVisitor {
                     LeafExpression syntheticLeaf = new LeafExpression(cu, sourceFolder, filePath,
                             syntheticExpr, LocationInfo.CodeElementType.INFIX_EXPRESSION, container);
                     infixExpressions.add(syntheticLeaf);
-                    infixOperators.add(OperatorEnum.PLUS.name());
+                    infixOperators.add(OperatorEnum.PLUS.getSymbol());
 
                     //System.out.println("Created synthetic: " + LangVisitor.stringify(syntheticExpr));
                 }

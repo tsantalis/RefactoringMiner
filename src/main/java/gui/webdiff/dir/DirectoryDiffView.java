@@ -562,7 +562,8 @@ public class DirectoryDiffView implements Renderable {
                     html.ol(class_("list-group list-group-numbered"));
                         for(Refactoring r : refactorings) {
                             int id = computeId(r);
-                            String description = r.toHTMLString().replace("<a href=\"\">", "<a href=\"" + "/monaco-page/" + id + "\">");
+                            String htmlString = r.toHTMLString();
+							String description = htmlString.replace("<a href=\"\">", "<a href=\"" + "/monaco-page/" + id + "\">");
                             html.li(class_("list-group-item")).write(description, NO_ESCAPE)
                             ._li();
                         }

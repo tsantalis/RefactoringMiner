@@ -78,11 +78,11 @@ public abstract class AbstractRefactoring implements Refactoring {
 		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline") || getName().startsWith("Move And Inline");
 		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
-		String providerDescription = codeElementDescription(provider);
-		if(decorator.equals(Decorator.HTML)) {
-			providerDescription = escapeHTML(providerDescription);
-		}
 		if(addCodeElementDescription()) {
+			String providerDescription = codeElementDescription(provider);
+			if(decorator.equals(Decorator.HTML)) {
+				providerDescription = escapeHTML(providerDescription);
+			}
 			String finalCodeElementType = getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND) ? "type" : codeElementType;
 			sb.append(" in ").append(finalCodeElementType).append(" ");
 			sb.append(decorator.CODE_OPEN).append(providerDescription).append(decorator.CODE_CLOSE);
@@ -122,10 +122,18 @@ public abstract class AbstractRefactoring implements Refactoring {
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
 			sb.append(" & inlined to ");
+			String providerDescription = codeElementDescription(provider);
+			if(decorator.equals(Decorator.HTML)) {
+				providerDescription = escapeHTML(providerDescription);
+			}
 			sb.append(decorator.CODE_OPEN).append(providerDescription).append(decorator.CODE_CLOSE);
 		}
 		else if(getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
 			sb.append(" to ");
+			String providerDescription = codeElementDescription(provider);
+			if(decorator.equals(Decorator.HTML)) {
+				providerDescription = escapeHTML(providerDescription);
+			}
 			sb.append(decorator.CODE_OPEN).append(providerDescription).append(decorator.CODE_CLOSE);
 		}
 		return sb.toString();

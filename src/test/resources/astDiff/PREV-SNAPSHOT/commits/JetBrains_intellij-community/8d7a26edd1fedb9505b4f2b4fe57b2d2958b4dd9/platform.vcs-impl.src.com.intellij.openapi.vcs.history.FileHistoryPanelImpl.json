@@ -56341,28 +56341,6 @@
   "firstEndPos" : 38208,
   "secondEndPos" : 38113
 }, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 38211,
-  "secondPos" : 38116,
-  "firstEndPos" : 38238,
-  "secondEndPos" : 38132
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "getVirtualFile",
-  "secondLabel" : "getVirtualFile",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 38222,
-  "secondPos" : 38116,
-  "firstEndPos" : 38236,
-  "secondEndPos" : 38130
-}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -57220,6 +57198,28 @@
   "secondPos" : 38448,
   "firstEndPos" : 38967,
   "secondEndPos" : 38459
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 38951,
+  "secondPos" : 38116,
+  "firstEndPos" : 38967,
+  "secondEndPos" : 38132
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "getVirtualFile",
+  "secondLabel" : "getVirtualFile",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 38951,
+  "secondPos" : 38116,
+  "firstEndPos" : 38965,
+  "secondEndPos" : 38130
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

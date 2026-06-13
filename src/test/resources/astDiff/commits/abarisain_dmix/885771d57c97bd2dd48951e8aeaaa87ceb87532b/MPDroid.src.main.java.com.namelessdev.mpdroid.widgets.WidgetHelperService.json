@@ -1286,6 +1286,39 @@
   "firstEndPos" : 2042,
   "secondEndPos" : 1659
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 2027,
+  "secondPos" : 1536,
+  "firstEndPos" : 2042,
+  "secondEndPos" : 1561
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 2027,
+  "secondPos" : 1536,
+  "firstEndPos" : 2030,
+  "secondEndPos" : 1549
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "getStatus",
+  "secondLabel" : "getStatus",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 2031,
+  "secondPos" : 1550,
+  "firstEndPos" : 2040,
+  "secondEndPos" : 1559
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "isState",

@@ -74,6 +74,12 @@ public class PurityChecker {
                 LANG2 = extractVariable.getOperationAfter().getLANG();
                 result = detectExtractVariablePurity(extractVariable, refactorings, modelDiff);
                 break;
+            case INLINE_VARIABLE:
+                InlineVariableRefactoring inlineVariable = (InlineVariableRefactoring) refactoring;
+                LANG1 = inlineVariable.getOperationBefore().getLANG();
+                LANG2 = inlineVariable.getOperationAfter().getLANG();
+                result = detectInlineVariablePurity(inlineVariable, refactorings, modelDiff);
+                break;
             default:
                 result = null;
         }
@@ -404,6 +410,223 @@ public class PurityChecker {
 
         // Only unmatched statements remain unexplained
         return new PurityCheckResult(false, "Contains unmatched statements not explained by Extract Variable", purityComment, mappingState);
+    }
+
+    private static PurityCheckResult detectInlineVariablePurity(InlineVariableRefactoring refactoring, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
+        int mappingState = refactoring.getUnmatchedStatementReferences().isEmpty() ? 1 : 2;
+        String purityComment = "";
+
+        HashSet<Replacement> replacementsToCheck = new HashSet<>();
+        for (AbstractCodeMapping mapping : refactoring.getReferences()) {
+            replacementsToCheck.addAll(mapping.getReplacements());
+        }
+        for (LeafMapping mapping : refactoring.getSubExpressionMappings()) {
+            replacementsToCheck.addAll(mapping.getReplacements());
+        }
+
+        List<AbstractCodeFragment> unresolvedUnmatched = new ArrayList<>(refactoring.getUnmatchedStatementReferences());
+
+        if (replacementsToCheck.isEmpty() && unresolvedUnmatched.isEmpty()) {
+            return new PurityCheckResult(true, "No replacement and no unmatched statements", "Identical statements", mappingState);
+        }
+
+        int sizeBefore = replacementsToCheck.size();
+        omitThisPatternReplacements(replacementsToCheck);
+        checkForThisPatternReplacement(replacementsToCheck);
+        omitDiamondReplacements(replacementsToCheck, refactorings);
+        omitEqualStringLiteralsReplacement(replacementsToCheck);
+        omitPrimitiveTypeReplacements(replacementsToCheck);
+        if (replacementsToCheck.size() != sizeBefore) {
+            purityComment += "Tolerable changes in the body\n";
+        }
+
+        Map<String, String> inlineVariablePatterns = new HashMap<>();
+        Set<String> inlineVariableInitializers = new LinkedHashSet<>();
+        Map<String, Set<String>> variableToInitializers = new HashMap<>();
+
+        for (Refactoring r : refactorings) {
+            if (r.getRefactoringType().equals(RefactoringType.INLINE_VARIABLE)) {
+                InlineVariableRefactoring iv = (InlineVariableRefactoring) r;
+                boolean sameOperationBefore = iv.getOperationBefore() != null && refactoring.getOperationBefore() != null &&
+                    iv.getOperationBefore().equals(refactoring.getOperationBefore());
+                boolean sameOperationAfter = iv.getOperationAfter() != null && refactoring.getOperationAfter() != null &&
+                    iv.getOperationAfter().equals(refactoring.getOperationAfter());
+                if (!sameOperationBefore && !sameOperationAfter) {
+                    continue;
+                }
+                VariableDeclaration declaration = iv.getVariableDeclaration();
+                if (declaration != null && declaration.getInitializer() != null) {
+                    String variableName = declaration.getVariableName();
+                    String initializer = declaration.getInitializer().getString();
+                    String argumentizedInitializer = declaration.getInitializer().getArgumentizedString();
+                    if (initializer != null) {
+                        inlineVariablePatterns.put(variableName, initializer);
+                        String normalizedInitializer = initializer.trim();
+                        while (normalizedInitializer.startsWith("(") && normalizedInitializer.endsWith(")") && normalizedInitializer.length() > 1) {
+                            normalizedInitializer = normalizedInitializer.substring(1, normalizedInitializer.length() - 1).trim();
+                        }
+                        inlineVariableInitializers.add(initializer);
+                        inlineVariableInitializers.add(normalizedInitializer);
+                        variableToInitializers.computeIfAbsent(variableName, k -> new LinkedHashSet<>()).add(initializer);
+                        variableToInitializers.get(variableName).add(normalizedInitializer);
+                    }
+                    if (argumentizedInitializer != null) {
+                        String normalizedArgumentizedInitializer = argumentizedInitializer.trim();
+                        while (normalizedArgumentizedInitializer.startsWith("(") && normalizedArgumentizedInitializer.endsWith(")") && normalizedArgumentizedInitializer.length() > 1) {
+                            normalizedArgumentizedInitializer = normalizedArgumentizedInitializer.substring(1, normalizedArgumentizedInitializer.length() - 1).trim();
+                        }
+                        inlineVariableInitializers.add(argumentizedInitializer);
+                        inlineVariableInitializers.add(normalizedArgumentizedInitializer);
+                        variableToInitializers.computeIfAbsent(variableName, k -> new LinkedHashSet<>()).add(argumentizedInitializer);
+                        variableToInitializers.get(variableName).add(normalizedArgumentizedInitializer);
+                    }
+                }
+            }
+        }
+
+        String currentVariableName = refactoring.getVariableDeclaration() != null ? refactoring.getVariableDeclaration().getVariableName() : null;
+        String currentVariablePattern = currentVariableName != null ? "\\b" + Pattern.quote(currentVariableName) + "\\b" : null;
+        Pattern currentVariableRegex = currentVariablePattern != null ? Pattern.compile(currentVariablePattern) : null;
+        List<String> unexplainedMappings = new ArrayList<>();
+        List<AbstractCodeMapping> allMappings = new ArrayList<>(refactoring.getReferences());
+        allMappings.addAll(refactoring.getSubExpressionMappings());
+        for (AbstractCodeMapping mapping : allMappings) {
+            String beforeFragment = mapping.getFragment1() != null ? mapping.getFragment1().getString() : null;
+            String afterFragment = mapping.getFragment2() != null ? mapping.getFragment2().getString() : null;
+            if (beforeFragment == null || afterFragment == null) {
+                continue;
+            }
+
+            boolean mappingTouchesCurrentVariable = currentVariableRegex == null || currentVariableRegex.matcher(beforeFragment).find();
+            if (!mappingTouchesCurrentVariable && currentVariableRegex != null) {
+                for (Replacement replacement : mapping.getReplacements()) {
+                    String replacementBefore = replacement.getBefore();
+                    if (replacementBefore != null && currentVariableRegex.matcher(replacementBefore).find()) {
+                        mappingTouchesCurrentVariable = true;
+                        break;
+                    }
+                }
+            }
+            if (!mappingTouchesCurrentVariable) {
+                continue;
+            }
+
+            String normalizedAfterFragment = afterFragment.trim();
+            while (normalizedAfterFragment.startsWith("(") && normalizedAfterFragment.endsWith(")") && normalizedAfterFragment.length() > 1) {
+                normalizedAfterFragment = normalizedAfterFragment.substring(1, normalizedAfterFragment.length() - 1).trim();
+            }
+
+            Set<String> expandedBeforeCandidates = new LinkedHashSet<>();
+            expandedBeforeCandidates.add(beforeFragment.trim());
+            for (Map.Entry<String, Set<String>> entry : variableToInitializers.entrySet()) {
+                String variableName = entry.getKey();
+                String variablePattern = "\\b" + Pattern.quote(variableName) + "\\b";
+                Set<String> nextCandidates = new LinkedHashSet<>();
+
+                for (String candidate : expandedBeforeCandidates) {
+                    if (!candidate.matches(".*" + variablePattern + ".*")) {
+                        nextCandidates.add(candidate);
+                        continue;
+                    }
+                    for (String initializer : entry.getValue()) {
+                        String replaced = candidate.replaceAll(variablePattern, Matcher.quoteReplacement(initializer));
+                        nextCandidates.add(replaced);
+                    }
+                }
+                expandedBeforeCandidates = nextCandidates;
+                if (expandedBeforeCandidates.size() > 128) {
+                    break;
+                }
+            }
+
+            boolean mappingExplained = false;
+            for (String expandedBefore : expandedBeforeCandidates) {
+                String normalizedExpandedBefore = expandedBefore.trim();
+                while (normalizedExpandedBefore.startsWith("(") && normalizedExpandedBefore.endsWith(")") && normalizedExpandedBefore.length() > 1) {
+                    normalizedExpandedBefore = normalizedExpandedBefore.substring(1, normalizedExpandedBefore.length() - 1).trim();
+                }
+                if (normalizedExpandedBefore.equals(normalizedAfterFragment)) {
+                    mappingExplained = true;
+                    break;
+                }
+            }
+
+            if (!mappingExplained) {
+                unexplainedMappings.add("before=" + beforeFragment + " | after=" + afterFragment);
+            }
+        }
+
+        if (!unexplainedMappings.isEmpty()) {
+            return new PurityCheckResult(false, "Mappings cannot be justified", String.join("\n", unexplainedMappings), mappingState);
+        }
+
+        replacementsToCheck.clear();
+
+        if (!inlineVariableInitializers.isEmpty()) {
+            Set<String> beforeStatements = new LinkedHashSet<>();
+            if (refactoring.getOperationBefore().getBody() != null) {
+                List<AbstractCodeFragment> beforeFragments = new ArrayList<>();
+                beforeFragments.addAll(refactoring.getOperationBefore().getBody().getCompositeStatement().getLeaves());
+                beforeFragments.addAll(refactoring.getOperationBefore().getBody().getCompositeStatement().getInnerNodes());
+                for (AbstractCodeFragment fragment : beforeFragments) {
+                    if (fragment.getString() != null) {
+                        beforeStatements.add(fragment.getString().trim());
+                    }
+                    if (fragment.getArgumentizedString() != null) {
+                        beforeStatements.add(fragment.getArgumentizedString().trim());
+                    }
+                }
+            }
+            List<AbstractCodeFragment> unmatchedToRemove = new ArrayList<>();
+            for (AbstractCodeFragment fragment : unresolvedUnmatched) {
+                String fragmentString = fragment.getString();
+                String fragmentArgumentized = fragment.getArgumentizedString();
+                for (String initializer : inlineVariableInitializers) {
+                    if ((fragmentString != null && fragmentString.contains(initializer)) ||
+                            (fragmentArgumentized != null && fragmentArgumentized.contains(initializer))) {
+                        Set<String> candidates = new LinkedHashSet<>();
+                        if (fragmentString != null) {
+                            candidates.add(fragmentString.trim());
+                        }
+                        if (fragmentArgumentized != null) {
+                            candidates.add(fragmentArgumentized.trim());
+                        }
+                        for (Map.Entry<String, String> entry : inlineVariablePatterns.entrySet()) {
+                            Set<String> nextCandidates = new LinkedHashSet<>();
+                            String initializerPattern = entry.getValue();
+                            String variableName = entry.getKey();
+                            for (String candidate : candidates) {
+                                nextCandidates.add(candidate.replace(initializerPattern, variableName));
+                            }
+                            candidates = nextCandidates;
+                        }
+                        for (String candidate : candidates) {
+                            if (beforeStatements.contains(candidate.trim())) {
+                                unmatchedToRemove.add(fragment);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            unresolvedUnmatched.removeAll(unmatchedToRemove);
+        }
+
+        if (replacementsToCheck.isEmpty() && unresolvedUnmatched.isEmpty()) {
+            String description = purityComment.isEmpty() ? "All changes are within Inline Variable mechanics" : "All replacements have been justified";
+            return new PurityCheckResult(true, description, purityComment, mappingState);
+        }
+
+        if (!replacementsToCheck.isEmpty() && !unresolvedUnmatched.isEmpty()) {
+            return new PurityCheckResult(false, "Contains unexplained replacements and unmatched statements", purityComment, 3);
+        }
+
+        if (!replacementsToCheck.isEmpty()) {
+            return new PurityCheckResult(false, "Replacements cannot be justified", purityComment, mappingState);
+        }
+
+        return new PurityCheckResult(false, "Contains unmatched statements not explained by Inline Variable", purityComment, mappingState);
     }
 
     private static PurityCheckResult detectSplitMethodPurity(SplitOperationRefactoring refactoring, List<Refactoring> refactorings, UMLModelDiff modelDiff) {

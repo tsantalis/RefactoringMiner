@@ -255,6 +255,59 @@ public class PurityChecker {
             return new PurityCheckResult(false, "Mappings cannot be justified", String.join("\n", unexplainedMappings), mappingState);
         }
 
+        if (currentVariableRegex != null && refactoring.getOperationAfter().getBody() != null) {
+            Set<String> mappedAfterStatements = new LinkedHashSet<>();
+            for (AbstractCodeMapping mapping : allMappings) {
+                AbstractCodeFragment fragment = mapping.getFragment2();
+                if (fragment != null) {
+                    if (fragment.getString() != null) {
+                        mappedAfterStatements.add(fragment.getString().trim());
+                    }
+                    if (fragment.getArgumentizedString() != null) {
+                        mappedAfterStatements.add(fragment.getArgumentizedString().trim());
+                    }
+                }
+            }
+
+            List<String> unexplainedAfterUses = new ArrayList<>();
+            for (AbstractCodeFragment fragment : refactoring.getOperationAfter().getBody().getCompositeStatement().getLeaves()) {
+                String fragmentString = fragment.getString();
+                if (fragmentString == null || !currentVariableRegex.matcher(fragmentString).find() || mappedAfterStatements.contains(fragmentString.trim())) {
+                    continue;
+                }
+                if (fragment.getVariableDeclaration(currentVariableName) != null &&
+                        fragment.getVariableDeclaration(currentVariableName).equals(refactoring.getVariableDeclaration())) {
+                    continue;
+                }
+                for (AbstractCall creation : fragment.getCreations()) {
+                    if (currentVariableRegex.matcher(creation.actualString()).find()) {
+                        unexplainedAfterUses.add(fragmentString);
+                        break;
+                    }
+                }
+                if (unexplainedAfterUses.contains(fragmentString)) {
+                    continue;
+                }
+                for (AbstractCall invocation : fragment.getMethodInvocations()) {
+                    if ("add".equals(invocation.getName())) {
+                        for (String argument : invocation.arguments()) {
+                            if (currentVariableRegex.matcher(argument).find()) {
+                                unexplainedAfterUses.add(fragmentString);
+                                break;
+                            }
+                        }
+                    }
+                    if (unexplainedAfterUses.contains(fragmentString)) {
+                        break;
+                    }
+                }
+            }
+
+            if (!unexplainedAfterUses.isEmpty()) {
+                return new PurityCheckResult(false, "Extracted variable is used in new after-side statements", String.join("\n", unexplainedAfterUses), mappingState);
+            }
+        }
+
         // Fragment semantics are verified — clear the replacement set since its entries can be noisy
         // (the same statement-level mapping may carry replacements for all co-extracted variables, not just this one)
         replacementsToCheck.clear();
@@ -339,6 +392,20 @@ public class PurityChecker {
         // Unmatched statement pass: old statements are acceptable if they contain the extracted initializer text
         // (the old assignment is gone because the expression now lives in the new variable declaration)
         if (!extractVariableInitializers.isEmpty()) {
+            Set<String> afterStatements = new LinkedHashSet<>();
+            if (refactoring.getOperationAfter().getBody() != null) {
+                List<AbstractCodeFragment> afterFragments = new ArrayList<>();
+                afterFragments.addAll(refactoring.getOperationAfter().getBody().getCompositeStatement().getLeaves());
+                afterFragments.addAll(refactoring.getOperationAfter().getBody().getCompositeStatement().getInnerNodes());
+                for (AbstractCodeFragment fragment : afterFragments) {
+                    if (fragment.getString() != null) {
+                        afterStatements.add(fragment.getString().trim());
+                    }
+                    if (fragment.getArgumentizedString() != null) {
+                        afterStatements.add(fragment.getArgumentizedString().trim());
+                    }
+                }
+            }
             List<AbstractCodeFragment> unmatchedToRemove = new ArrayList<>();
             for (AbstractCodeFragment fragment : unresolvedUnmatched) {
                 String fragmentString = fragment.getString();
@@ -346,7 +413,26 @@ public class PurityChecker {
                 for (String initializer : extractVariableInitializers) {
                     if ((fragmentString != null && fragmentString.contains(initializer)) ||
                             (fragmentArgumentized != null && fragmentArgumentized.contains(initializer))) {
-                        unmatchedToRemove.add(fragment);
+                        Set<String> candidates = new LinkedHashSet<>();
+                        if (fragmentString != null) {
+                            candidates.add(fragmentString.trim());
+                        }
+                        if (fragmentArgumentized != null) {
+                            candidates.add(fragmentArgumentized.trim());
+                        }
+                        for (Map.Entry<String, String> entry : extractVariablePatterns.entrySet()) {
+                            Set<String> nextCandidates = new LinkedHashSet<>();
+                            for (String candidate : candidates) {
+                                nextCandidates.add(candidate.replace(entry.getKey(), entry.getValue()));
+                            }
+                            candidates = nextCandidates;
+                        }
+                        for (String candidate : candidates) {
+                            if (afterStatements.contains(candidate.trim())) {
+                                unmatchedToRemove.add(fragment);
+                                break;
+                            }
+                        }
                         break;
                     }
                 }

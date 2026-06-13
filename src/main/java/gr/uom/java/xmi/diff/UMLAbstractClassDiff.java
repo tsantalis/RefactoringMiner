@@ -3288,22 +3288,21 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	private void betterMatchForAddedOperation(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperationBodyMapper mapper)
-			throws RefactoringMinerTimedOutException {
-				if(mapper != null && !mapper.getContainer1().getName().toLowerCase().contains(mapper.getContainer2().getName().toLowerCase())) {
-					List<String> representation2 = mapper.getContainer2().stringRepresentation();
-					for(UMLOperation removedOperation : removedOperations) {
-						if(!removedOperation.equals(mapper.getContainer1()) &&
-								removedOperation.getName().toLowerCase().contains(mapper.getContainer2().getName().toLowerCase())) {
-							List<String> representation1 = removedOperation.stringRepresentation();
-							if(representation1.containsAll(representation2)) {
-								UMLOperationBodyMapper newMapper = new UMLOperationBodyMapper(removedOperation, mapper.getOperation2(), this);
-								mapperSet.add(newMapper);
-							}
-						}
+	private void betterMatchForAddedOperation(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperationBodyMapper mapper) throws RefactoringMinerTimedOutException {
+		if(mapper != null && !mapper.getContainer1().getName().toLowerCase().contains(mapper.getContainer2().getName().toLowerCase())) {
+			List<String> representation2 = mapper.getContainer2().stringRepresentation();
+			for(UMLOperation removedOperation : removedOperations) {
+				if(!removedOperation.equals(mapper.getContainer1()) &&
+						removedOperation.getName().toLowerCase().contains(mapper.getContainer2().getName().toLowerCase())) {
+					List<String> representation1 = removedOperation.stringRepresentation();
+					if(representation1.containsAll(representation2)) {
+						UMLOperationBodyMapper newMapper = new UMLOperationBodyMapper(removedOperation, mapper.getOperation2(), this);
+						mapperSet.add(newMapper);
 					}
 				}
 			}
+		}
+	}
 
 	private boolean potentialExtractFixture(UMLOperationBodyMapper mapper) {
 		if(mapper.getContainer2().hasTearDownAnnotation() || mapper.getContainer2().hasSetUpAnnotation()) {
@@ -3684,323 +3683,323 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
-				boolean mapperWithZeroNonMappedStatementsOrIdenticalMethodName = false;
-				for(UMLOperationBodyMapper mapper : mapperSet) {
-					if(mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() != null &&
-							mapper.getContainer1().getBodyHashCode() == mapper.getContainer2().getBodyHashCode()) {
-						return;
-					}
-					if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
-						mapperWithZeroNonMappedStatementsOrIdenticalMethodName = true;
-					}
-					int sum = mapper.getNonMappedLeavesT1().size() + mapper.getNonMappedLeavesT2().size() + mapper.getNonMappedInnerNodesT1().size() + mapper.getNonMappedInnerNodesT2().size();
-					if(sum == 0) {
-						mapperWithZeroNonMappedStatementsOrIdenticalMethodName = true;
-					}
-				}
-				UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
-				List<AbstractCodeMapping> totalMappings = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
-				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-					Set<Replacement> replacements = mapping.getReplacements();
-					for(UMLAttribute attribute : originalClass.getAttributes()) {
-						if(attribute.getVariableDeclaration().getInitializer() != null) {
-							for(Replacement r : replacements) {
-								if(r.getBefore().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer().getString().contains(r.getAfter())) {
-									mapping.setIdenticalWithInlinedVariable(true);
-									break;
-								}
-							}
+		boolean mapperWithZeroNonMappedStatementsOrIdenticalMethodName = false;
+		for(UMLOperationBodyMapper mapper : mapperSet) {
+			if(mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() != null &&
+					mapper.getContainer1().getBodyHashCode() == mapper.getContainer2().getBodyHashCode()) {
+				return;
+			}
+			if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
+				mapperWithZeroNonMappedStatementsOrIdenticalMethodName = true;
+			}
+			int sum = mapper.getNonMappedLeavesT1().size() + mapper.getNonMappedLeavesT2().size() + mapper.getNonMappedInnerNodesT1().size() + mapper.getNonMappedInnerNodesT2().size();
+			if(sum == 0) {
+				mapperWithZeroNonMappedStatementsOrIdenticalMethodName = true;
+			}
+		}
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+		List<AbstractCodeMapping> totalMappings = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			Set<Replacement> replacements = mapping.getReplacements();
+			for(UMLAttribute attribute : originalClass.getAttributes()) {
+				if(attribute.getVariableDeclaration().getInitializer() != null) {
+					for(Replacement r : replacements) {
+						if(r.getBefore().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer().getString().contains(r.getAfter())) {
+							mapping.setIdenticalWithInlinedVariable(true);
+							break;
 						}
 					}
 				}
-				int mappings = operationBodyMapper.mappingsWithoutBlocks();
-				if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && (addedOperation.stringRepresentation().size() > 3 || addedOperation.getAllLambdas().size() > 0)) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null) ||
-						removedOperation.equalSignatureForAbstractMethods(addedOperation)) {
-					boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
-							operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
-							removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
-					boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
-							!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
-					int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
-					List<LeafExpression> literals1 = removedOperation.getAllStringLiterals();
-					List<LeafExpression> literals2 = addedOperation.getAllStringLiterals();
-					if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-							(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff || operationsBeforeOrAfterMatch(removedOperation, addedOperation)) &&
-							(compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
-							removedOperation.testMethodCheck(addedOperation)) {
-						isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
-						isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper);
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-							mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							(isPartOfMethodExtracted(removedOperation, addedOperation) || isPartOfMethodMovedToExistingMethod(removedOperation, addedOperation) ||
-									(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper))) &&
-							removedOperation.testMethodCheck(addedOperation)) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-							mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation) ||
-									(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet))) &&
-							removedOperation.testMethodCheck(addedOperation)) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
-							removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {
-						Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
-						Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();
-						for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
-							List<LeafExpression> stringLiterals1 = fragment1.getStringLiterals();
-							Set<String> lit1 = StringBasedHeuristics.convertToStringSet(stringLiterals1);
-							for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
-								List<LeafExpression> stringLiterals2 = fragment2.getStringLiterals();
-								Set<String> lit2 = StringBasedHeuristics.convertToStringSet(stringLiterals2);
-								Set<String> intersection = new LinkedHashSet<>(lit1);
-								intersection.retainAll(lit2);
-								if(intersection.size() > 0) {
-									LeafMapping mapping = new LeafMapping(fragment1, fragment2,
-											operationBodyMapper.getContainer1(),
-											operationBodyMapper.getContainer2());
-									operationBodyMapper.addMapping(mapping);
-									nonMappedLeavesT1ToBeRemoved.add(fragment1);
-									nonMappedLeavesT2ToBeRemoved.add(fragment2);
-									if(stringLiterals1.size() > stringLiterals2.size()) {
-										for(int i=0; i<stringLiterals2.size(); i++) {
-											List<LeafExpression> leafExpressions1 = fragment1.findExpression(stringLiterals2.get(i).getString());
-											if(leafExpressions1.size() == 1) {
-												LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), stringLiterals2.get(i),
+			}
+		}
+		int mappings = operationBodyMapper.mappingsWithoutBlocks();
+		if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && (addedOperation.stringRepresentation().size() > 3 || addedOperation.getAllLambdas().size() > 0)) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null) ||
+				removedOperation.equalSignatureForAbstractMethods(addedOperation)) {
+			boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
+					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
+					removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
+			boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
+					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			List<LeafExpression> literals1 = removedOperation.getAllStringLiterals();
+			List<LeafExpression> literals2 = addedOperation.getAllStringLiterals();
+			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
+					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || zeroNonMapped || containsAnonymousClassDiff || operationsBeforeOrAfterMatch(removedOperation, addedOperation)) &&
+					(compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) || operationsBeforeAndAfterMatch(removedOperation, addedOperation)) &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
+				isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper);
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					(isPartOfMethodExtracted(removedOperation, addedOperation) || isPartOfMethodMovedToExistingMethod(removedOperation, addedOperation) ||
+							(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper))) &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation) ||
+							(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet))) &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {
+				Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
+				Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();
+				for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+					List<LeafExpression> stringLiterals1 = fragment1.getStringLiterals();
+					Set<String> lit1 = StringBasedHeuristics.convertToStringSet(stringLiterals1);
+					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						List<LeafExpression> stringLiterals2 = fragment2.getStringLiterals();
+						Set<String> lit2 = StringBasedHeuristics.convertToStringSet(stringLiterals2);
+						Set<String> intersection = new LinkedHashSet<>(lit1);
+						intersection.retainAll(lit2);
+						if(intersection.size() > 0) {
+							LeafMapping mapping = new LeafMapping(fragment1, fragment2,
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
+							operationBodyMapper.addMapping(mapping);
+							nonMappedLeavesT1ToBeRemoved.add(fragment1);
+							nonMappedLeavesT2ToBeRemoved.add(fragment2);
+							if(stringLiterals1.size() > stringLiterals2.size()) {
+								for(int i=0; i<stringLiterals2.size(); i++) {
+									List<LeafExpression> leafExpressions1 = fragment1.findExpression(stringLiterals2.get(i).getString());
+									if(leafExpressions1.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), stringLiterals2.get(i),
+												operationBodyMapper.getContainer1(),
+												operationBodyMapper.getContainer2());
+										operationBodyMapper.addMapping(leafMapping);
+									}
+									else if(leafExpressions1.size() == 0) {
+										String stripped2 = stringLiterals2.get(i).getString();
+										if(stripped2.startsWith("\""))
+											stripped2 = stripped2.substring(1);
+										if(stripped2.endsWith("\""))
+											stripped2 = stripped2.substring(0, stripped2.length()-1);
+										stripped2 = stripped2.strip();
+										for(int j=0; j<stringLiterals1.size(); j++) {
+											String stripped1 = stringLiterals1.get(j).getString();
+											if(stripped1.startsWith("\""))
+												stripped1 = stripped1.substring(1);
+											if(stripped1.endsWith("\""))
+												stripped1 = stripped1.substring(0, stripped1.length()-1);
+											stripped1 = stripped1.strip();
+											if(stripped1.equals(stripped2)) {
+												LeafMapping leafMapping = new LeafMapping(stringLiterals1.get(j), stringLiterals2.get(i),
 														operationBodyMapper.getContainer1(),
 														operationBodyMapper.getContainer2());
 												operationBodyMapper.addMapping(leafMapping);
 											}
-											else if(leafExpressions1.size() == 0) {
-												String stripped2 = stringLiterals2.get(i).getString();
-												if(stripped2.startsWith("\""))
-													stripped2 = stripped2.substring(1);
-												if(stripped2.endsWith("\""))
-													stripped2 = stripped2.substring(0, stripped2.length()-1);
-												stripped2 = stripped2.strip();
-												for(int j=0; j<stringLiterals1.size(); j++) {
-													String stripped1 = stringLiterals1.get(j).getString();
-													if(stripped1.startsWith("\""))
-														stripped1 = stripped1.substring(1);
-													if(stripped1.endsWith("\""))
-														stripped1 = stripped1.substring(0, stripped1.length()-1);
-													stripped1 = stripped1.strip();
-													if(stripped1.equals(stripped2)) {
-														LeafMapping leafMapping = new LeafMapping(stringLiterals1.get(j), stringLiterals2.get(i),
-																operationBodyMapper.getContainer1(),
-																operationBodyMapper.getContainer2());
-														operationBodyMapper.addMapping(leafMapping);
-													}
-												}
-											}
-										}
-									}
-								}
-								else if(intersection.size() == 0) {
-									StringBuilder sb1 = new StringBuilder();
-									for(LeafExpression expression : stringLiterals1) {
-										boolean alreadyMapped = false;
-										for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-											if(mapping.getFragment1().equals(expression)) {
-												alreadyMapped = true;
-												break;
-											}
-										}
-										if(!alreadyMapped) {
-											String withoutQuotes = expression.getString();
-											if(withoutQuotes.startsWith("\""))
-												withoutQuotes = withoutQuotes.substring(1);
-											if(withoutQuotes.endsWith("\""))
-												withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
-											sb1.append(withoutQuotes);
-										}
-									}
-									StringBuilder sb2 = new StringBuilder();
-									for(LeafExpression expression : stringLiterals2) {
-										String withoutQuotes = expression.getString();
-										if(withoutQuotes.startsWith("\""))
-											withoutQuotes = withoutQuotes.substring(1);
-										if(withoutQuotes.endsWith("\""))
-											withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
-										sb2.append(withoutQuotes);
-									}
-									if(sb1.toString().equals(sb2.toString())) {
-										//make all combinations, formatting change
-										for(LeafExpression expression1 : stringLiterals1) {
-											boolean alreadyMapped = false;
-											for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-												if(mapping.getFragment1().equals(expression1)) {
-													alreadyMapped = true;
-													break;
-												}
-											}
-											if(!alreadyMapped) {
-												for(LeafExpression expression2 : stringLiterals2) {
-													LeafMapping leafMapping = new LeafMapping(expression1, expression2,
-															operationBodyMapper.getContainer1(),
-															operationBodyMapper.getContainer2());
-													operationBodyMapper.addMapping(leafMapping);
-												}
-											}
 										}
 									}
 								}
 							}
 						}
-						if(operationBodyMapper.getMappings().size() > 0) {
-							operationBodyMapper.getNonMappedLeavesT1().removeAll(nonMappedLeavesT1ToBeRemoved);
-							operationBodyMapper.getNonMappedLeavesT2().removeAll(nonMappedLeavesT2ToBeRemoved);
+						else if(intersection.size() == 0) {
+							StringBuilder sb1 = new StringBuilder();
+							for(LeafExpression expression : stringLiterals1) {
+								boolean alreadyMapped = false;
+								for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+									if(mapping.getFragment1().equals(expression)) {
+										alreadyMapped = true;
+										break;
+									}
+								}
+								if(!alreadyMapped) {
+									String withoutQuotes = expression.getString();
+									if(withoutQuotes.startsWith("\""))
+										withoutQuotes = withoutQuotes.substring(1);
+									if(withoutQuotes.endsWith("\""))
+										withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+									sb1.append(withoutQuotes);
+								}
+							}
+							StringBuilder sb2 = new StringBuilder();
+							for(LeafExpression expression : stringLiterals2) {
+								String withoutQuotes = expression.getString();
+								if(withoutQuotes.startsWith("\""))
+									withoutQuotes = withoutQuotes.substring(1);
+								if(withoutQuotes.endsWith("\""))
+									withoutQuotes = withoutQuotes.substring(0, withoutQuotes.length()-1);
+								sb2.append(withoutQuotes);
+							}
+							if(sb1.toString().equals(sb2.toString())) {
+								//make all combinations, formatting change
+								for(LeafExpression expression1 : stringLiterals1) {
+									boolean alreadyMapped = false;
+									for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+										if(mapping.getFragment1().equals(expression1)) {
+											alreadyMapped = true;
+											break;
+										}
+									}
+									if(!alreadyMapped) {
+										for(LeafExpression expression2 : stringLiterals2) {
+											LeafMapping leafMapping = new LeafMapping(expression1, expression2,
+													operationBodyMapper.getContainer1(),
+													operationBodyMapper.getContainer2());
+											operationBodyMapper.addMapping(leafMapping);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if(operationBodyMapper.getMappings().size() > 0) {
+					operationBodyMapper.getNonMappedLeavesT1().removeAll(nonMappedLeavesT1ToBeRemoved);
+					operationBodyMapper.getNonMappedLeavesT2().removeAll(nonMappedLeavesT2ToBeRemoved);
+					mapperSet.add(operationBodyMapper);
+				}
+			}
+			// in Python only one constructor is allowed
+			else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else {
+				String originalClassName = getOriginalClassName();
+				String nextClassName = getNextClassName();
+				if(modelDiff != null && originalClassName.contains(".") && nextClassName.contains(".")) {
+					UMLAbstractClass originalOuterClass = modelDiff.findClassInParentModel(getOriginalClass().getSourceFolder(), originalClassName.substring(0, originalClassName.lastIndexOf(".")));
+					UMLAbstractClass nextOuterClass = modelDiff.findClassInChildModel(getNextClass().getSourceFolder(), nextClassName.substring(0, nextClassName.lastIndexOf(".")));
+					if(originalOuterClass != null && nextOuterClass != null && !originalOuterClass.equals(this.originalClass) && !nextOuterClass.equals(this.nextClass)) {
+						UMLOperation op1 = originalOuterClass.operationWithTheSameSignature(removedOperation);
+						UMLOperation op2 = nextOuterClass.operationWithTheSameSignature(addedOperation);
+						if(op1 != null && op2 != null) {
 							mapperSet.add(operationBodyMapper);
 						}
 					}
-					// in Python only one constructor is allowed
-					else if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && removedOperation.isConstructor() && addedOperation.isConstructor()) {
+				}
+				if((removedOperation.hasSetUpAnnotation() || removedOperation.getName().equals("setUp")) && (addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp"))) {
+					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
+				}
+				else if((removedOperation.hasTearDownAnnotation() || removedOperation.getName().equals("tearDown")) && (addedOperation.hasTearDownAnnotation() || addedOperation.getName().equals("tearDown"))) {
+					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
+				}
+				else if(allStatementsMappedOrParameterized(operationBodyMapper)) {
+					movedMethodsInDifferentPositionWithinFile.add(operationBodyMapper);
+				}
+				boolean found = false;
+				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
+					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
+					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 						mapperSet.add(operationBodyMapper);
+						found = true;
+						break;
 					}
-					else {
-						String originalClassName = getOriginalClassName();
-						String nextClassName = getNextClassName();
-						if(modelDiff != null && originalClassName.contains(".") && nextClassName.contains(".")) {
-							UMLAbstractClass originalOuterClass = modelDiff.findClassInParentModel(getOriginalClass().getSourceFolder(), originalClassName.substring(0, originalClassName.lastIndexOf(".")));
-							UMLAbstractClass nextOuterClass = modelDiff.findClassInChildModel(getNextClass().getSourceFolder(), nextClassName.substring(0, nextClassName.lastIndexOf(".")));
-							if(originalOuterClass != null && nextOuterClass != null && !originalOuterClass.equals(this.originalClass) && !nextOuterClass.equals(this.nextClass)) {
-								UMLOperation op1 = originalOuterClass.operationWithTheSameSignature(removedOperation);
-								UMLOperation op2 = nextOuterClass.operationWithTheSameSignature(addedOperation);
-								if(op1 != null && op2 != null) {
-									mapperSet.add(operationBodyMapper);
-								}
+				}
+				if(!found) {
+					for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
+						UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+						if(mapper.nonMappedElementsT1() <= 1 && mapper.nonMappedElementsT2() <= 1 &&
+								replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+								replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+							boolean skip = false;
+							if(mapper.getOperation1().equalSignature(operationBodyMapper.getOperation1()) && mapper.getOperation2().equalSignature(operationBodyMapper.getOperation2())) {
+								skip = true;
 							}
-						}
-						if((removedOperation.hasSetUpAnnotation() || removedOperation.getName().equals("setUp")) && (addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp"))) {
-							potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
-						}
-						else if((removedOperation.hasTearDownAnnotation() || removedOperation.getName().equals("tearDown")) && (addedOperation.hasTearDownAnnotation() || addedOperation.getName().equals("tearDown"))) {
-							potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
-						}
-						else if(allStatementsMappedOrParameterized(operationBodyMapper)) {
-							movedMethodsInDifferentPositionWithinFile.add(operationBodyMapper);
-						}
-						boolean found = false;
-						for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
-							UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-							if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
-									replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+							if(!skip) {
 								mapperSet.add(operationBodyMapper);
-								found = true;
 								break;
 							}
 						}
-						if(!found) {
-							for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
-								UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
-								if(mapper.nonMappedElementsT1() <= 1 && mapper.nonMappedElementsT2() <= 1 &&
-										replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
-										replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
-									boolean skip = false;
-									if(mapper.getOperation1().equalSignature(operationBodyMapper.getOperation1()) && mapper.getOperation2().equalSignature(operationBodyMapper.getOperation2())) {
-										skip = true;
-									}
-									if(!skip) {
-										mapperSet.add(operationBodyMapper);
+					}
+				}
+			}
+		}
+		else {
+			boolean found = false;
+			for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
+				UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
+				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+						replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+					mapperSet.add(operationBodyMapper);
+					found = true;
+					break;
+				}
+			}
+			if(!found) {
+				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
+					UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+					if(mapper.nonMappedElementsT1() == 0 && mapper.nonMappedElementsT2() == 0 &&
+							replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+						mapperSet.add(operationBodyMapper);
+						break;
+					}
+				}
+			}
+			if(matchingGetterSetterWithSameRenamePattern(removedOperation, addedOperation) && computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= differenceInPosition) {
+				mapperSet.add(operationBodyMapper);
+			}
+			for(UMLOperationBodyMapper m : movedMethodsInDifferentPositionWithinFile) {
+				int nonMappedElementsT2CallingAddedOperation = operationBodyMapper.nonMappedElementsT2CallingAddedOperation(List.of(m.getContainer2()));
+				if(nonMappedElementsT2CallingAddedOperation > 0) {
+					mapperSet.add(operationBodyMapper);
+				}
+			}
+			for(UMLOperation operation : addedOperations) {
+				int nonMappedElementsT2CallingAddedOperation = operationBodyMapper.nonMappedElementsT2CallingAddedOperation(List.of(operation));
+				boolean nameMatch = operationBodyMapper.getContainer1().getName().contains(operationBodyMapper.getContainer2().getName()) ||
+						operationBodyMapper.getContainer2().getName().contains(operationBodyMapper.getContainer1().getName());
+				if(nameMatch && operationBodyMapper.nonMappedElementsT2() == 1 && nonMappedElementsT2CallingAddedOperation == 1 &&
+						operationBodyMapper.getContainer2().stringRepresentation().size() == 3) {
+					boolean callToNewClass = false;
+					List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
+					if(nonMappedLeavesT2.size() > 0) {
+						AbstractCodeFragment nonMappedLeafT2 = nonMappedLeavesT2.get(0);
+						AbstractCall call = nonMappedLeafT2.invocationCoveringEntireFragment();
+						if(call == null) {
+							call = nonMappedLeafT2.assignmentInvocationCoveringEntireStatement();
+						}
+						if(call != null && call.getExpression() != null) {
+							String expression = call.getExpression();
+							for(UMLAttribute attribute : nextClass.getAttributes()) {
+								if(attribute.getName().equals(expression) && !originalClass.containsAttributeWithName(expression)) {
+									if(modelDiff != null && (modelDiff.findClassInChildModel(attribute.getType().getClassType()) != null || modelDiff.partialModel())) {
+										callToNewClass = true;
 										break;
 									}
 								}
 							}
 						}
 					}
-				}
-				else {
-					boolean found = false;
-					for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
-						UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-						if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
-								replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
-							mapperSet.add(operationBodyMapper);
-							found = true;
-							break;
-						}
-					}
-					if(!found) {
-						for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
-							UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
-							if(mapper.nonMappedElementsT1() == 0 && mapper.nonMappedElementsT2() == 0 &&
-									replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
-									replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
-								mapperSet.add(operationBodyMapper);
-								break;
-							}
-						}
-					}
-					if(matchingGetterSetterWithSameRenamePattern(removedOperation, addedOperation) && computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation) <= differenceInPosition) {
-						mapperSet.add(operationBodyMapper);
-					}
-					for(UMLOperationBodyMapper m : movedMethodsInDifferentPositionWithinFile) {
-						int nonMappedElementsT2CallingAddedOperation = operationBodyMapper.nonMappedElementsT2CallingAddedOperation(List.of(m.getContainer2()));
-						if(nonMappedElementsT2CallingAddedOperation > 0) {
-							mapperSet.add(operationBodyMapper);
-						}
-					}
-					for(UMLOperation operation : addedOperations) {
-						int nonMappedElementsT2CallingAddedOperation = operationBodyMapper.nonMappedElementsT2CallingAddedOperation(List.of(operation));
-						boolean nameMatch = operationBodyMapper.getContainer1().getName().contains(operationBodyMapper.getContainer2().getName()) ||
-								operationBodyMapper.getContainer2().getName().contains(operationBodyMapper.getContainer1().getName());
-						if(nameMatch && operationBodyMapper.nonMappedElementsT2() == 1 && nonMappedElementsT2CallingAddedOperation == 1 &&
-								operationBodyMapper.getContainer2().stringRepresentation().size() == 3) {
-							boolean callToNewClass = false;
-							List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
-							if(nonMappedLeavesT2.size() > 0) {
-								AbstractCodeFragment nonMappedLeafT2 = nonMappedLeavesT2.get(0);
-								AbstractCall call = nonMappedLeafT2.invocationCoveringEntireFragment();
-								if(call == null) {
-									call = nonMappedLeafT2.assignmentInvocationCoveringEntireStatement();
-								}
-								if(call != null && call.getExpression() != null) {
-									String expression = call.getExpression();
-									for(UMLAttribute attribute : nextClass.getAttributes()) {
-										if(attribute.getName().equals(expression) && !originalClass.containsAttributeWithName(expression)) {
-											if(modelDiff != null && (modelDiff.findClassInChildModel(attribute.getType().getClassType()) != null || modelDiff.partialModel())) {
-												callToNewClass = true;
-												break;
-											}
-										}
-									}
-								}
-							}
-							if(!callToNewClass) {
-								mapperSet.add(operationBodyMapper);
-							}
-						}
-					}
-				}
-				if(totalMappings.size() > 0) {
-					int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
-					if(singleUnmatchedStatementCallsAddedOperation(operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
-						mapperSet.add(operationBodyMapper);
-					}
-				}
-				if (mappings == 0 && isPartOfMethodExtracted(removedOperation, addedOperation) && removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
-					int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
-					if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-							mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							removedOperation.testMethodCheck(addedOperation)) {
+					if(!callToNewClass) {
 						mapperSet.add(operationBodyMapper);
 					}
 				}
 			}
+		}
+		if(totalMappings.size() > 0) {
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			if(singleUnmatchedStatementCallsAddedOperation(operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
+				mapperSet.add(operationBodyMapper);
+			}
+		}
+		if (mappings == 0 && isPartOfMethodExtracted(removedOperation, addedOperation) && removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
+		}
+	}
 
 	private boolean relativePositionCheck(int differenceInPosition, int absoluteDifferenceInPosition) {
 		return absoluteDifferenceInPosition <= differenceInPosition || (removedOperations.size() == addedOperations.size() && removedOperations.size() == 1 && !originalClass.isTestClass() && !nextClass.isTestClass()) ||
@@ -4008,42 +4007,42 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation operationInsideAnonymousClass, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
-				UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, operationInsideAnonymousClass, this);
-				int mappings = operationBodyMapper.mappingsWithoutBlocks();
-				if(mappings > 0) {
-					int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
-					if(exactMappings(operationBodyMapper)) {
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, operationInsideAnonymousClass, this);
+		int mappings = operationBodyMapper.mappingsWithoutBlocks();
+		if(mappings > 0) {
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			if(exactMappings(operationBodyMapper)) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+					mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					(isPartOfMethodExtracted(removedOperation, addedOperation) || isPartOfMethodMovedToExistingMethod(removedOperation, addedOperation))) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
+					relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation))) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else {
+				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
+					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
+					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 						mapperSet.add(operationBodyMapper);
-					}
-					else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition)) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-							mappedElementsMoreThanNonMappedT2(mappings, operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							(isPartOfMethodExtracted(removedOperation, addedOperation) || isPartOfMethodMovedToExistingMethod(removedOperation, addedOperation))) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-							mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
-							relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
-							(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation))) {
-						mapperSet.add(operationBodyMapper);
-					}
-					else {
-						for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
-							UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-							if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
-									replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
-								mapperSet.add(operationBodyMapper);
-								break;
-							}
-						}
+						break;
 					}
 				}
 			}
+		}
+	}
 
 	private boolean allStatementsMappedOrParameterized(UMLOperationBodyMapper operationBodyMapper) {
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
@@ -4234,124 +4233,124 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private boolean mappedElementsMoreThanNonMappedT1AndT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
-				List<CompositeReplacement> composites = operationBodyMapper.getCompositeReplacements();
-				int additionallyMatchedStatements1 = 0;
-				int additionallyMatchedStatements2 = 0;
-				for(CompositeReplacement composite : composites) {
-					additionallyMatchedStatements1 += composite.getAdditionallyMatchedStatements1().size();
-					additionallyMatchedStatements2 += composite.getAdditionallyMatchedStatements2().size();
-				}
-				mappings += additionallyMatchedStatements1 + additionallyMatchedStatements2;
-				int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1() - additionallyMatchedStatements1;
-				int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2() - additionallyMatchedStatements2;
-				int exactMappings = operationBodyMapper.exactMatches();
-				if(operationBodyMapper.getContainer1() instanceof UMLOperation && operationBodyMapper.getContainer2() instanceof UMLOperation) {
-					UMLParameter returnParameter1 = ((UMLOperation)operationBodyMapper.getContainer1()).getReturnParameter();
-					UMLParameter returnParameter2 = ((UMLOperation)operationBodyMapper.getContainer2()).getReturnParameter();
-					if(returnParameter1 != null && returnParameter2 != null) {
-						UMLType returnType1 = returnParameter1.getType();
-						UMLType returnType2 = returnParameter2.getType();
-						boolean returnFound = false;
-						if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
-							for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
-								if(fragment1.getString().equals(LANG1.RETURN_STATEMENT)) {
-									returnFound = true;
-									break;
-								}
-							}
-						}
-						if(!returnFound) {
-							for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
-								if(statement2.getVariables().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
-									VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
-									if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
-										nonMappedElementsT2--;
-									}
-								}
-							}
+		List<CompositeReplacement> composites = operationBodyMapper.getCompositeReplacements();
+		int additionallyMatchedStatements1 = 0;
+		int additionallyMatchedStatements2 = 0;
+		for(CompositeReplacement composite : composites) {
+			additionallyMatchedStatements1 += composite.getAdditionallyMatchedStatements1().size();
+			additionallyMatchedStatements2 += composite.getAdditionallyMatchedStatements2().size();
+		}
+		mappings += additionallyMatchedStatements1 + additionallyMatchedStatements2;
+		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1() - additionallyMatchedStatements1;
+		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2() - additionallyMatchedStatements2;
+		int exactMappings = operationBodyMapper.exactMatches();
+		if(operationBodyMapper.getContainer1() instanceof UMLOperation && operationBodyMapper.getContainer2() instanceof UMLOperation) {
+			UMLParameter returnParameter1 = ((UMLOperation)operationBodyMapper.getContainer1()).getReturnParameter();
+			UMLParameter returnParameter2 = ((UMLOperation)operationBodyMapper.getContainer2()).getReturnParameter();
+			if(returnParameter1 != null && returnParameter2 != null) {
+				UMLType returnType1 = returnParameter1.getType();
+				UMLType returnType2 = returnParameter2.getType();
+				boolean returnFound = false;
+				if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
+					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+						if(fragment1.getString().equals(LANG1.RETURN_STATEMENT)) {
+							returnFound = true;
+							break;
 						}
 					}
 				}
-				boolean operationsWithSameName = operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
-						!operationBodyMapper.getContainer1().isConstructor() && !operationBodyMapper.getContainer2().isConstructor();
-				int inExactWhenEntries = 0;
-				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-					if((mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) ||
-							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT)) &&
-							!mapping.getFragment1().getString().replaceAll("\s", "").equals(mapping.getFragment2().getString().replaceAll("\s", ""))) {
-						inExactWhenEntries++;
-					}
-					if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
-						for(Refactoring r : mapping.getRefactorings()) {
-							if(r instanceof InlineVariableRefactoring) {
-								nonMappedElementsT1--;
-								if(operationsWithSameName)
-									mappings++;
-							}
-							else if(r instanceof ExtractVariableRefactoring) {
+				if(!returnFound) {
+					for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						if(statement2.getVariables().size() > 0 && statement2.getString().equals(LANG2.RETURN_SPACE + statement2.getVariables().get(0).getString() + LANG2.STATEMENT_TERMINATION)) {
+							VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
+							if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
 								nonMappedElementsT2--;
-								if(operationsWithSameName)
-									mappings++;
 							}
 						}
 					}
 				}
-				if(inExactWhenEntries > 0 && inExactWhenEntries == operationBodyMapper.getMappings().size()) {
-					return false;
-				}
-				boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
-				boolean migrateToExpected = false;
-				if(!operationBodyMapper.getContainer1().hasTestAnnotation() && operationBodyMapper.getContainer2().hasTestAnnotation()) {
-					AbstractCodeFragment expectedException = null;
-					for(UMLAnnotation annotation : operationBodyMapper.getContainer2().getAnnotations()) {
-						if(annotation.getTypeName().equals("Test")) {
-							for(String key : annotation.getMemberValuePairs().keySet()) {
-								if(key.equals("expected")) {
-									expectedException = annotation.getMemberValuePairs().get(key);
-								}
-							}
-						}
-					}
-					if(expectedException == null) {
-						for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
-							AbstractCall call = fragment2.invocationCoveringEntireFragment();
-							if(call != null && call.getName().equals("expect") && call.arguments().size() == 1) {
-								List<LeafExpression> leafExpressions = fragment2.findExpression(call.arguments().get(0));
-								if(leafExpressions.size() == 1) {
-									expectedException = leafExpressions.get(0);
-								}
-							}
-						}
-					}
-					if(expectedException != null) {
-						for(CompositeStatementObject composite1 : operationBodyMapper.getNonMappedInnerNodesT1()) {
-							if(composite1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
-								for(VariableDeclaration declaration : composite1.getVariableDeclarations()) {
-									if(declaration.getType() != null && expectedException.getString().equals(declaration.getType() + ".class")) {
-										migrateToExpected = true;
-									}
-								}
-							}
-						}
-					}
-				}
-				return operationBodyMapper.getMappings().size() > 100 ||
-						(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
-						(mappings > 0 && identicalFixtureAnnotation) ||
-						(mappings > 0 && migrateToExpected) ||
-						((operationsWithSameName || mappings > 10) && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
-						(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1)) ||
-						(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1) && !(this instanceof UMLClassMoveDiff)) ||
-						(nonMappedElementsT1 == 0 && exactMappings >= Math.floor(nonMappedElementsT2/2.0) && operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
-						(nonMappedElementsT1 <= 1 && exactMappings > 1 && exactMappings >= Math.floor(nonMappedElementsT2/2.0)) ||
-						(nonMappedElementsT2 <= 1 && exactMappings > 1 && exactMappings >= Math.floor(nonMappedElementsT1/2.0)) ||
-						(nonMappedElementsT2 == 0 && exactMappings > 0 && exactMappings >= Math.floor(nonMappedElementsT1/2.0) && operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
-						(nonMappedElementsT2 == 0 && exactMappings > 0 && operationBodyMapper.getParameterNameList1().size() > 0 &&
-							operationBodyMapper.getParameterNameList1().equals(operationBodyMapper.getParameterNameList2()) &&
-							operationBodyMapper.getContainer1().getParameterTypeList().equals(operationBodyMapper.getContainer2().getParameterTypeList()) &&
-							operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
-						(mappings == 1 && nonMappedElementsT1 + nonMappedElementsT2 == 1 && operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()));
 			}
+		}
+		boolean operationsWithSameName = operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()) &&
+				!operationBodyMapper.getContainer1().isConstructor() && !operationBodyMapper.getContainer2().isConstructor();
+		int inExactWhenEntries = 0;
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if((mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) ||
+					mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT)) &&
+					!mapping.getFragment1().getString().replaceAll("\s", "").equals(mapping.getFragment2().getString().replaceAll("\s", ""))) {
+				inExactWhenEntries++;
+			}
+			if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
+				for(Refactoring r : mapping.getRefactorings()) {
+					if(r instanceof InlineVariableRefactoring) {
+						nonMappedElementsT1--;
+						if(operationsWithSameName)
+							mappings++;
+					}
+					else if(r instanceof ExtractVariableRefactoring) {
+						nonMappedElementsT2--;
+						if(operationsWithSameName)
+							mappings++;
+					}
+				}
+			}
+		}
+		if(inExactWhenEntries > 0 && inExactWhenEntries == operationBodyMapper.getMappings().size()) {
+			return false;
+		}
+		boolean identicalFixtureAnnotation = operationBodyMapper.getContainer1().identicalTextFixture(operationBodyMapper.getContainer2());
+		boolean migrateToExpected = false;
+		if(!operationBodyMapper.getContainer1().hasTestAnnotation() && operationBodyMapper.getContainer2().hasTestAnnotation()) {
+			AbstractCodeFragment expectedException = null;
+			for(UMLAnnotation annotation : operationBodyMapper.getContainer2().getAnnotations()) {
+				if(annotation.getTypeName().equals("Test")) {
+					for(String key : annotation.getMemberValuePairs().keySet()) {
+						if(key.equals("expected")) {
+							expectedException = annotation.getMemberValuePairs().get(key);
+						}
+					}
+				}
+			}
+			if(expectedException == null) {
+				for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+					AbstractCall call = fragment2.invocationCoveringEntireFragment();
+					if(call != null && call.getName().equals("expect") && call.arguments().size() == 1) {
+						List<LeafExpression> leafExpressions = fragment2.findExpression(call.arguments().get(0));
+						if(leafExpressions.size() == 1) {
+							expectedException = leafExpressions.get(0);
+						}
+					}
+				}
+			}
+			if(expectedException != null) {
+				for(CompositeStatementObject composite1 : operationBodyMapper.getNonMappedInnerNodesT1()) {
+					if(composite1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+						for(VariableDeclaration declaration : composite1.getVariableDeclarations()) {
+							if(declaration.getType() != null && expectedException.getString().equals(declaration.getType() + ".class")) {
+								migrateToExpected = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return operationBodyMapper.getMappings().size() > 100 ||
+				(mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+				(mappings > 0 && identicalFixtureAnnotation) ||
+				(mappings > 0 && migrateToExpected) ||
+				((operationsWithSameName || mappings > 10) && mappings >= nonMappedElementsT1 && mappings >= nonMappedElementsT2) ||
+				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1)) ||
+				(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && (!operationBodyMapper.involvesTestMethods() || removedOperations.size() == 1 || addedOperations.size() == 1) && !(this instanceof UMLClassMoveDiff)) ||
+				(nonMappedElementsT1 == 0 && exactMappings >= Math.floor(nonMappedElementsT2/2.0) && operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
+				(nonMappedElementsT1 <= 1 && exactMappings > 1 && exactMappings >= Math.floor(nonMappedElementsT2/2.0)) ||
+				(nonMappedElementsT2 <= 1 && exactMappings > 1 && exactMappings >= Math.floor(nonMappedElementsT1/2.0)) ||
+				(nonMappedElementsT2 == 0 && exactMappings > 0 && exactMappings >= Math.floor(nonMappedElementsT1/2.0) && operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
+				(nonMappedElementsT2 == 0 && exactMappings > 0 && operationBodyMapper.getParameterNameList1().size() > 0 &&
+				operationBodyMapper.getParameterNameList1().equals(operationBodyMapper.getParameterNameList2()) &&
+				operationBodyMapper.getContainer1().getParameterTypeList().equals(operationBodyMapper.getContainer2().getParameterTypeList()) &&
+				operationBodyMapper.getContainer1().isConstructor() == operationBodyMapper.getContainer2().isConstructor()) ||
+				(mappings == 1 && nonMappedElementsT1 + nonMappedElementsT2 == 1 && operationBodyMapper.getContainer1().getName().equals(operationBodyMapper.getContainer2().getName()));
+	}
 
 	private boolean mappedElementsMoreThanNonMappedT2(int mappings, UMLOperationBodyMapper operationBodyMapper) {
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();

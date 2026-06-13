@@ -1619,6 +1619,16 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+				if(ref instanceof ExtractVariableRefactoring extract) {
+					for(Replacement r : replacements) {
+						if(extract.getVariableDeclaration().getInitializer() != null &&
+								extract.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
+							if(r.getAfter().equals(extract.getVariableDeclaration().getVariableName())) {
+								temp = ReplacementUtil.performReplacement(temp, r.getBefore(), extract.getVariableDeclaration().getVariableName());
+							}
+						}
+					}
+				}
 			}
 			if(temp.equals(fragment2.getString())) {
 				return true;

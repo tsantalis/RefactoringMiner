@@ -8338,23 +8338,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			boolean swappedVariableDeclarations = false;
-			List<String> declarationNames1 = new ArrayList<>();
-			for(AbstractCodeFragment leaf1 : leaves1) {
-				if(leaf1.getVariableDeclarations().size() > 0) {
-					declarationNames1.add(leaf1.getVariableDeclarations().get(0).getVariableName());
+			if(parentMapper == null) {
+				List<String> declarationNames1 = new ArrayList<>();
+				for(AbstractCodeFragment leaf1 : leaves1) {
+					if(leaf1.getVariableDeclarations().size() > 0) {
+						declarationNames1.add(leaf1.getVariableDeclarations().get(0).getVariableName());
+					}
 				}
-			}
-			List<String> declarationNames2 = new ArrayList<>();
-			for(AbstractCodeFragment leaf2 : leaves2) {
-				if(leaf2.getVariableDeclarations().size() > 0) {
-					declarationNames2.add(leaf2.getVariableDeclarations().get(0).getVariableName());
+				List<String> declarationNames2 = new ArrayList<>();
+				for(AbstractCodeFragment leaf2 : leaves2) {
+					if(leaf2.getVariableDeclarations().size() > 0) {
+						declarationNames2.add(leaf2.getVariableDeclarations().get(0).getVariableName());
+					}
 				}
-			}
-			if(declarationNames1.size() > 0 && declarationNames1.containsAll(declarationNames2) && declarationNames2.containsAll(declarationNames1) && !declarationNames1.equals(declarationNames2)) {
-				swappedVariableDeclarations = true;
-			}
-			else if(declarationNames1.size() > 0 && declarationNames2.size() > 0 && declarationNames1.size() > declarationNames2.size() && declarationNames1.containsAll(declarationNames2) && !declarationNames2.contains(declarationNames1.get(0))) {
-				swappedVariableDeclarations = true;
+				if(declarationNames1.size() > 0 && declarationNames1.containsAll(declarationNames2) && declarationNames2.containsAll(declarationNames1) && !declarationNames1.equals(declarationNames2)) {
+					swappedVariableDeclarations = true;
+				}
+				else if(declarationNames1.size() > 0 && declarationNames2.size() > 0 && declarationNames1.size() > declarationNames2.size() && declarationNames1.containsAll(declarationNames2) && !declarationNames2.contains(declarationNames1.get(0))) {
+					swappedVariableDeclarations = true;
+				}
 			}
 			AbstractCodeMapping startMapping = null;
 			AbstractCodeMapping endMapping = null;
@@ -9035,6 +9037,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				break;
+			}
+		}
+		if(parentMapper != null) {
+			for(Replacement r : mapping.getReplacements()) {
+				for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
+					if(leaf.getVariableDeclaration(r.getAfter()) != null) {
+						mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null, mappings);
+						if(mapping.isIdenticalWithExtractedVariable()) {
+							break;
+						}
+					}
+				}
+				for(AbstractCodeMapping leafMapping : parentMapper.getMappings()) {
+					if(leafMapping instanceof LeafMapping && leafMapping.getFragment2().getVariableDeclaration(r.getAfter()) != null) {
+						mapping.temporaryVariableAssignment(leafMapping.getFragment2(), leaves2, classDiff, parentMapper != null, mappings);
+						if(mapping.isIdenticalWithExtractedVariable()) {
+							break;
+						}
+					}
+				}
 			}
 		}
 		CompositeStatementObject parent2 = mapping.getFragment2().getParent();

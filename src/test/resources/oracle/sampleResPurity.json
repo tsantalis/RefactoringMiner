@@ -574,7 +574,7 @@
   "url" : "https://github.com/ta4j/ta4j/commit/212a7617dfc4044b504b57dee2eb96470952f4b5",
   "refactorings" : [ {
     "type" : "Extract Variable",
-    "description" : "Extract Variable\tentryRule : Rule in method public calculate(entryRule Rule, exitRule Rule, amount Num) : Num from class org.ta4j.core.Backtesting",
+    "description" : "Extract Variable\tentryRule : Rule in method public main(args String[]) : void from class ta4jexamples.backtesting.SimpleMovingAverageRangeBacktesting",
     "purity" : {
       "purityValue" : "1",
       "purityValidation" : "-",
@@ -584,7 +584,7 @@
     }
   }, {
     "type" : "Extract Variable",
-    "description" : "Extract Variable\texitRule : Rule in method public calculate(entryRule Rule, exitRule Rule, amount Num) : Num from class org.ta4j.core.Backtesting",
+    "description" : "Extract Variable\texitRule : Rule in method public main(args String[]) : void from class ta4jexamples.backtesting.SimpleMovingAverageRangeBacktesting",
     "purity" : {
       "purityValue" : "1",
       "purityValidation" : "-",

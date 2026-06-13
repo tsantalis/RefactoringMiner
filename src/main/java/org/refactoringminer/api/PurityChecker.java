@@ -7,7 +7,6 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.*;
-import org.refactoringminer.util.PathFileUtils;
 
 import java.util.*;
 import java.util.regex.Matcher;

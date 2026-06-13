@@ -9042,7 +9042,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(parentMapper != null) {
 			for(Replacement r : new LinkedHashSet<>(mapping.getReplacements())) {
 				for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
-					if(leaf.getVariableDeclaration(r.getAfter()) != null) {
+					if(leaf.getVariableDeclaration(r.getAfter()) != null && !mapping.getFragment2().equals(leaf)) {
 						int refactoringCount = mapping.getRefactorings().size();
 						mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null, mappings);
 						if(refactoringCount < mapping.getRefactorings().size()) {

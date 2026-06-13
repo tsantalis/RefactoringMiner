@@ -63,17 +63,29 @@ public abstract class AbstractRefactoring implements Refactoring {
 		StringBuilder sb = new StringBuilder();
 		sb.append(decorator.BOLD_OPEN).append(getName()).append(decorator.BOLD_CLOSE).append("\t");
 		if(getTemplateParameterBefore().isPresent()) {
-			sb.append(decorator.CODE_OPEN).append(getTemplateParameterBefore().get()).append(decorator.CODE_CLOSE);
+			String templateParameterBefore = getTemplateParameterBefore().get();
+			if(decorator.equals(Decorator.HTML)) {
+				templateParameterBefore = escapeHTML(templateParameterBefore);
+			}
+			sb.append(decorator.CODE_OPEN).append(templateParameterBefore).append(decorator.CODE_CLOSE);
 			appendTextForTemplateParameterBefore(sb);
 		}
-		sb.append(decorator.CODE_OPEN).append(getTemplateParameterAfter()).append(decorator.CODE_CLOSE);
+		String templateParameterAfter = getTemplateParameterAfter();
+		if(decorator.equals(Decorator.HTML)) {
+			templateParameterAfter = escapeHTML(templateParameterAfter);
+		}
+		sb.append(decorator.CODE_OPEN).append(templateParameterAfter).append(decorator.CODE_CLOSE);
 		boolean removeOrInline = getName().startsWith("Remove") || getName().startsWith("Inline") || getName().startsWith("Move And Inline");
 		AnnotationProvider provider = removeOrInline ? getProviderBefore() : getProviderAfter();
 		String codeElementType = codeElementType(provider);
+		String providerDescription = codeElementDescription(provider);
+		if(decorator.equals(Decorator.HTML)) {
+			providerDescription = escapeHTML(providerDescription);
+		}
 		if(addCodeElementDescription()) {
 			String finalCodeElementType = getRefactoringType().equals(RefactoringType.CHANGE_TYPE_DECLARATION_KIND) ? "type" : codeElementType;
 			sb.append(" in ").append(finalCodeElementType).append(" ");
-			sb.append(decorator.CODE_OPEN).append(codeElementDescription(provider)).append(decorator.CODE_CLOSE);
+			sb.append(decorator.CODE_OPEN).append(providerDescription).append(decorator.CODE_CLOSE);
 		}
 		if(getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
 			sb.append(" in class ");
@@ -81,7 +93,11 @@ public abstract class AbstractRefactoring implements Refactoring {
 		}
 		else if(getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
 			sb.append(" from ");
-			sb.append(codeElementDescription(getProviderBefore()));
+			String providerBeforeDescription = codeElementDescription(getProviderBefore());
+			if(decorator.equals(Decorator.HTML)) {
+				providerBeforeDescription = escapeHTML(providerBeforeDescription);
+			}
+			sb.append(decorator.CODE_OPEN).append(providerBeforeDescription).append(decorator.CODE_CLOSE);
 		}
 		String className = null;
 		if (provider instanceof VariableDeclaration || provider instanceof UMLType) {
@@ -91,7 +107,11 @@ public abstract class AbstractRefactoring implements Refactoring {
 					: methodLevelRef.getOperationAfter();
 			String elementType = container.getElementType();
 			sb.append(" in " + elementType + " ");
-			sb.append(decorator.CODE_OPEN).append(container.toQualifiedString()).append(decorator.CODE_CLOSE);
+			String containerDescription = container.toQualifiedString();
+			if(decorator.equals(Decorator.HTML)) {
+				containerDescription = escapeHTML(containerDescription);
+			}
+			sb.append(decorator.CODE_OPEN).append(containerDescription).append(decorator.CODE_CLOSE);
 			className = container.getClassName();
 		} else if (provider != null) {
 			className = provider.getClassName();
@@ -102,13 +122,17 @@ public abstract class AbstractRefactoring implements Refactoring {
 		}
 		if(getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
 			sb.append(" & inlined to ");
-			sb.append(codeElementDescription(provider));
+			sb.append(decorator.CODE_OPEN).append(providerDescription).append(decorator.CODE_CLOSE);
 		}
 		else if(getRefactoringType().equals(RefactoringType.MOVE_ANNOTATION)) {
 			sb.append(" to ");
-			sb.append(codeElementDescription(provider));
+			sb.append(decorator.CODE_OPEN).append(providerDescription).append(decorator.CODE_CLOSE);
 		}
 		return sb.toString();
+	}
+
+	private static String escapeHTML(String codeElement) {
+		return codeElement.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;");
 	}
 
 	private void appendTextForClassName(StringBuilder sb) {

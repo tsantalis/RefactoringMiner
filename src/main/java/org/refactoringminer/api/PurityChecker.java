@@ -255,59 +255,6 @@ public class PurityChecker {
             return new PurityCheckResult(false, "Mappings cannot be justified", String.join("\n", unexplainedMappings), mappingState);
         }
 
-        if (currentVariableRegex != null && refactoring.getOperationAfter().getBody() != null) {
-            Set<String> mappedAfterStatements = new LinkedHashSet<>();
-            for (AbstractCodeMapping mapping : allMappings) {
-                AbstractCodeFragment fragment = mapping.getFragment2();
-                if (fragment != null) {
-                    if (fragment.getString() != null) {
-                        mappedAfterStatements.add(fragment.getString().trim());
-                    }
-                    if (fragment.getArgumentizedString() != null) {
-                        mappedAfterStatements.add(fragment.getArgumentizedString().trim());
-                    }
-                }
-            }
-
-            List<String> unexplainedAfterUses = new ArrayList<>();
-            for (AbstractCodeFragment fragment : refactoring.getOperationAfter().getBody().getCompositeStatement().getLeaves()) {
-                String fragmentString = fragment.getString();
-                if (fragmentString == null || !currentVariableRegex.matcher(fragmentString).find() || mappedAfterStatements.contains(fragmentString.trim())) {
-                    continue;
-                }
-                if (fragment.getVariableDeclaration(currentVariableName) != null &&
-                        fragment.getVariableDeclaration(currentVariableName).equals(refactoring.getVariableDeclaration())) {
-                    continue;
-                }
-                for (AbstractCall creation : fragment.getCreations()) {
-                    if (currentVariableRegex.matcher(creation.actualString()).find()) {
-                        unexplainedAfterUses.add(fragmentString);
-                        break;
-                    }
-                }
-                if (unexplainedAfterUses.contains(fragmentString)) {
-                    continue;
-                }
-                for (AbstractCall invocation : fragment.getMethodInvocations()) {
-                    if ("add".equals(invocation.getName())) {
-                        for (String argument : invocation.arguments()) {
-                            if (currentVariableRegex.matcher(argument).find()) {
-                                unexplainedAfterUses.add(fragmentString);
-                                break;
-                            }
-                        }
-                    }
-                    if (unexplainedAfterUses.contains(fragmentString)) {
-                        break;
-                    }
-                }
-            }
-
-            if (!unexplainedAfterUses.isEmpty()) {
-                return new PurityCheckResult(false, "Extracted variable is used in new after-side statements", String.join("\n", unexplainedAfterUses), mappingState);
-            }
-        }
-
         // Fragment semantics are verified — clear the replacement set since its entries can be noisy
         // (the same statement-level mapping may carry replacements for all co-extracted variables, not just this one)
         replacementsToCheck.clear();

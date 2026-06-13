@@ -9040,10 +9040,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		if(parentMapper != null) {
-			for(Replacement r : mapping.getReplacements()) {
+			for(Replacement r : new LinkedHashSet<>(mapping.getReplacements())) {
 				for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
 					if(leaf.getVariableDeclaration(r.getAfter()) != null) {
+						int refactoringCount = mapping.getRefactorings().size();
 						mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null, mappings);
+						if(refactoringCount < mapping.getRefactorings().size()) {
+							for(Refactoring newRefactoring : mapping.getRefactorings()) {
+								if(newRefactoring instanceof ExtractVariableRefactoring newExtractVariableRefactoring &&
+										this.getOperationInvocation() != null && this.getOperationInvocation().arguments().contains(newExtractVariableRefactoring.getVariableDeclaration().getVariableName())) {
+									newExtractVariableRefactoring.updateOperationAfter(parentMapper.getContainer2());
+								}
+							}
+						}
 						if(mapping.isIdenticalWithExtractedVariable()) {
 							break;
 						}
@@ -9051,7 +9060,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				for(AbstractCodeMapping leafMapping : parentMapper.getMappings()) {
 					if(leafMapping instanceof LeafMapping && leafMapping.getFragment2().getVariableDeclaration(r.getAfter()) != null) {
+						int refactoringCount = mapping.getRefactorings().size();
 						mapping.temporaryVariableAssignment(leafMapping.getFragment2(), leaves2, classDiff, parentMapper != null, mappings);
+						if(refactoringCount < mapping.getRefactorings().size()) {
+							for(Refactoring newRefactoring : mapping.getRefactorings()) {
+								if(newRefactoring instanceof ExtractVariableRefactoring newExtractVariableRefactoring &&
+										this.getOperationInvocation() != null && this.getOperationInvocation().arguments().contains(newExtractVariableRefactoring.getVariableDeclaration().getVariableName())) {
+									newExtractVariableRefactoring.updateOperationAfter(parentMapper.getContainer2());
+								}
+							}
+						}
 						if(mapping.isIdenticalWithExtractedVariable()) {
 							break;
 						}

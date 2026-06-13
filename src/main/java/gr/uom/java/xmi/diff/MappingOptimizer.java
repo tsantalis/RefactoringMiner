@@ -457,7 +457,7 @@ public class MappingOptimizer {
 						if(parentIsContainerBody.get(i) == true && fragment2VariableDeclarations.size() > 0 && mappings.get(i).getFragment1().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + LANG1.ASSIGNMENT)) {
 							skip = true;
 						}
-						if(extractInlineOverlappingRefactoring.get(i) ) {
+						if(extractInlineOverlappingRefactoring.get(i)) {
 							skip = true;
 						}
 						if(!skip) {

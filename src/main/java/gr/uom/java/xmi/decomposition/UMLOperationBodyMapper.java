@@ -9060,7 +9060,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				for(AbstractCodeMapping leafMapping : parentMapper.getMappings()) {
 					if(leafMapping instanceof LeafMapping && leafMapping.getFragment2().getVariableDeclaration(r.getAfter()) != null &&
-							leafMapping.getFragment1().getVariableDeclaration(r.getAfter()) == null) {
+							leafMapping.getFragment1().getVariableDeclaration(r.getAfter()) == null && leafMapping.getFragment2().getVariableDeclarations().size() == 1) {
 						int refactoringCount = mapping.getRefactorings().size();
 						mapping.temporaryVariableAssignment(leafMapping.getFragment2(), leaves2, classDiff, parentMapper != null, mappings);
 						if(refactoringCount < mapping.getRefactorings().size()) {

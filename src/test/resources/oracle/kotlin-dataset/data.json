@@ -9938,6 +9938,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable gcRoot : Inferred in method public clazz(className String, superClassId Long, staticFields List<Pair<String,HeapValue>>, fields List<Pair<String,KClass<HeapValue>>>) : Long from class leakcanary.internal.HprofWriterHelper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

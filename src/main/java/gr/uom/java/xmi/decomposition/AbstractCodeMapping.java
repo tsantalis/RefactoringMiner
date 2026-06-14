@@ -616,10 +616,10 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					if(leaf2.getString().startsWith(initializer.getString() + LANG2.ASSIGNMENT)) {
 						String rightHandSide = null;
 						if(leaf2.getString().endsWith(LANG2.STATEMENT_TERMINATION)) {
-							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf(LANG2.ASSIGNMENT)+1, leaf2.getString().length()-LANG2.STATEMENT_TERMINATION.length());
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), leaf2.getString().length()-LANG2.STATEMENT_TERMINATION.length());
 						}
 						else {
-							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf(LANG2.ASSIGNMENT)+1, leaf2.getString().length());
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), leaf2.getString().length());
 						}
 						if(replacement instanceof VariableReplacementWithMethodInvocation) {
 							VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
@@ -1029,10 +1029,10 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			String variable = tokens[tokens.length-1];
 			String initializer = null;
 			if(argumentizedString.endsWith(LANG2.STATEMENT_TERMINATION)) {
-				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG2.ASSIGNMENT)+1, argumentizedString.length()-LANG2.STATEMENT_TERMINATION.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), argumentizedString.length()-LANG2.STATEMENT_TERMINATION.length());
 			}
 			else {
-				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG2.ASSIGNMENT)+1, argumentizedString.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), argumentizedString.length());
 			}
 			AbstractCall initializerCall = null;
 			for(AbstractCall call : statement.getMethodInvocations()) {
@@ -1457,10 +1457,10 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			String variable = tokens[tokens.length-1];
 			String initializer = null;
 			if(argumentizedString.endsWith(LANG1.STATEMENT_TERMINATION)) {
-				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG1.ASSIGNMENT)+1, argumentizedString.length()-LANG1.STATEMENT_TERMINATION.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), argumentizedString.length()-LANG1.STATEMENT_TERMINATION.length());
 			}
 			else {
-				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG1.ASSIGNMENT)+1, argumentizedString.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), argumentizedString.length());
 			}
 			AbstractCall initializerCall = null;
 			for(AbstractCall call : statement.getMethodInvocations()) {

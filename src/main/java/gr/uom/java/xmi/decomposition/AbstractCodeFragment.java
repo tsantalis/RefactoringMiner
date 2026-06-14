@@ -745,7 +745,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 					return true;
 				}
 				if(statement.startsWith(variables.get(0).getString() + LANG.ASSIGNMENT)) {
-					String suffix = statement.substring(statement.indexOf(LANG.ASSIGNMENT) + 1);
+					String suffix = statement.substring(statement.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length());
 					if(suffix.endsWith(expression + LANG.STATEMENT_TERMINATION)) {
 						int index = suffix.indexOf(expression + LANG.STATEMENT_TERMINATION);
 						String prefix = suffix.substring(0, index);

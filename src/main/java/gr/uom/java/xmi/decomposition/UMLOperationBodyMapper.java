@@ -1700,7 +1700,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return string;
 		}
 		if(string.contains(LANG.ASSIGNMENT)) {
-			String afterAssignment = string.substring(string.indexOf(LANG.ASSIGNMENT) + 1, string.length());
+			String afterAssignment = string.substring(string.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length(), string.length());
 			String initializerLambdaParameter = null;
 			if(string.contains(LANG.LAMBDA_ARROW)) {
 				initializerLambdaParameter = string.substring(0, string.indexOf(LANG.LAMBDA_ARROW));

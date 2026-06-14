@@ -1635,7 +1635,7 @@ public class StringBasedHeuristics {
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
 							if(s1.contains(LANG1.ASSIGNMENT) && !s2.contains(LANG2.ASSIGNMENT) && !s1.startsWith(LANG1.RETURN_SPACE) && s2.startsWith(LANG2.RETURN_SPACE)) {
-								s1 = s1.substring(s1.indexOf(LANG1.ASSIGNMENT) + 1);
+								s1 = s1.substring(s1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length());
 								s2 = s2.substring(LANG2.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
@@ -1664,7 +1664,7 @@ public class StringBasedHeuristics {
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
 							if(s1.contains(LANG1.ASSIGNMENT) && !s2.contains(LANG2.ASSIGNMENT) && !s1.startsWith(LANG1.RETURN_SPACE) && s2.startsWith(LANG2.RETURN_SPACE)) {
-								s1 = s1.substring(s1.indexOf(LANG1.ASSIGNMENT) + 1);
+								s1 = s1.substring(s1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length());
 								s2 = s2.substring(LANG2.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
@@ -2467,8 +2467,8 @@ public class StringBasedHeuristics {
 
 	protected static boolean multiAssignmentWithReorderedVariables(String string1, String string2, Constants LANG1, Constants LANG2) {
 		if(string1.contains(LANG1.ASSIGNMENT) && string2.contains(LANG2.ASSIGNMENT)) {
-			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT)+1, string1.length());
-			String assignment2 = string2.substring(string2.indexOf(LANG2.ASSIGNMENT)+1, string2.length());
+			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), string1.length());
+			String assignment2 = string2.substring(string2.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), string2.length());
 			if(assignment1.equals(assignment2)) {
 				String assignedVariables1 = string1.substring(0, string1.indexOf(LANG1.ASSIGNMENT));
 				String assignedVariables2 = string2.substring(0, string2.indexOf(LANG2.ASSIGNMENT));
@@ -2496,7 +2496,7 @@ public class StringBasedHeuristics {
 		}
 		if(string1.contains(LANG1.ASSIGNMENT) && string1.endsWith(LANG1.STATEMENT_TERMINATION) && string2.startsWith(LANG2.RETURN_SPACE) && string2.endsWith(LANG2.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT)+1, string1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
+			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), string1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
 			String assignment2 = string2.substring(LANG2.RETURN_SPACE.length(), string2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
@@ -2549,7 +2549,7 @@ public class StringBasedHeuristics {
 		else if(string1.startsWith(LANG1.RETURN_SPACE) && string1.endsWith(LANG1.STATEMENT_TERMINATION) && string2.contains(LANG2.ASSIGNMENT) && string2.endsWith(LANG2.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
 			String assignment1 = string1.substring(LANG1.RETURN_SPACE.length(), string1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(string2.indexOf(LANG2.ASSIGNMENT)+1, string2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), string2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -2619,8 +2619,8 @@ public class StringBasedHeuristics {
 			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false, rightHandSideReplacement = false;
 			String variableName1 = string1.substring(0, string1.indexOf(LANG1.ASSIGNMENT));
 			String variableName2 = string2.substring(0, string2.indexOf(LANG2.ASSIGNMENT));
-			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT)+1, string1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(string2.indexOf(LANG2.ASSIGNMENT)+1, string2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
+			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), string1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), string2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
 			boolean fieldInitializationWithParemeter1 = false;
 			boolean fieldInitializationWithParemeter2 = false;
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {

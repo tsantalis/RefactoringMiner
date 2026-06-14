@@ -1385,10 +1385,10 @@ public class VariableReplacementAnalysis {
 								f1.getString().startsWith(LANG1.THIS_DOT + variableDeclaration.getVariableName() + LANG1.ASSIGNMENT)) {
 							String rightHandSide = null;
 							if(f1.getString().endsWith(LANG1.STATEMENT_TERMINATION)) {
-								rightHandSide = f1.getString().substring(f1.getString().indexOf(LANG1.ASSIGNMENT)+1, f1.getString().length()-LANG1.STATEMENT_TERMINATION.length());
+								rightHandSide = f1.getString().substring(f1.getString().indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), f1.getString().length()-LANG1.STATEMENT_TERMINATION.length());
 							}
 							else {
-								rightHandSide = f1.getString().substring(f1.getString().indexOf(LANG1.ASSIGNMENT)+1, f1.getString().length());
+								rightHandSide = f1.getString().substring(f1.getString().indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), f1.getString().length());
 							}
 							if(rightHandSide.equals(replacementAsString)) {
 								List<LeafExpression> subExpressions = f1.findExpression(replacementAsString);
@@ -1403,10 +1403,10 @@ public class VariableReplacementAnalysis {
 								f2.getString().startsWith(LANG2.THIS_DOT + variableDeclaration.getVariableName() + LANG2.ASSIGNMENT)) {
 							String rightHandSide = null;
 							if(f2.getString().endsWith(LANG2.STATEMENT_TERMINATION)) {
-								rightHandSide = f2.getString().substring(f2.getString().indexOf(LANG2.ASSIGNMENT)+1, f2.getString().length()-LANG2.STATEMENT_TERMINATION.length());
+								rightHandSide = f2.getString().substring(f2.getString().indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), f2.getString().length()-LANG2.STATEMENT_TERMINATION.length());
 							}
 							else {
-								rightHandSide = f2.getString().substring(f2.getString().indexOf(LANG2.ASSIGNMENT)+1, f2.getString().length());
+								rightHandSide = f2.getString().substring(f2.getString().indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), f2.getString().length());
 							}
 							if(rightHandSide.equals(replacementAsString)) {
 								List<LeafExpression> subExpressions = f2.findExpression(replacementAsString);
@@ -2234,8 +2234,8 @@ public class VariableReplacementAnalysis {
 			String fragment1 = mapping.getFragment1().getString();
 			String fragment2 = mapping.getFragment2().getString();
 			if(fragment1.contains(LANG1.ASSIGNMENT) && fragment1.endsWith(LANG1.STATEMENT_TERMINATION) && fragment2.contains(LANG2.ASSIGNMENT) && fragment2.endsWith(LANG2.STATEMENT_TERMINATION)) {
-				String value1 = fragment1.substring(fragment1.indexOf(LANG1.ASSIGNMENT)+1, fragment1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
-				String value2 = fragment2.substring(fragment2.indexOf(LANG2.ASSIGNMENT)+1, fragment2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
+				String value1 = fragment1.substring(fragment1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), fragment1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
+				String value2 = fragment2.substring(fragment2.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), fragment2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
 				String attribute1 = PrefixSuffixUtils.normalize(fragment1.substring(0, fragment1.indexOf(LANG1.ASSIGNMENT)), LANG1);
 				String attribute2 = PrefixSuffixUtils.normalize(fragment2.substring(0, fragment2.indexOf(LANG2.ASSIGNMENT)), LANG2);
 				if(value1.equals(attribute1) && classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(attribute1) && classDiff.getNextClass().containsAttributeWithName(attribute1)) {
@@ -2255,8 +2255,8 @@ public class VariableReplacementAnalysis {
 			String fragment1 = mapping.getFragment1().getString();
 			String fragment2 = mapping.getFragment2().getString();
 			if(fragment1.contains(LANG1.ASSIGNMENT) && fragment1.endsWith(LANG1.STATEMENT_TERMINATION) && fragment2.contains(LANG2.ASSIGNMENT) && fragment2.endsWith(LANG2.STATEMENT_TERMINATION)) {
-				String value1 = fragment1.substring(fragment1.indexOf(LANG1.ASSIGNMENT)+1, fragment1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
-				String value2 = fragment2.substring(fragment2.indexOf(LANG2.ASSIGNMENT)+1, fragment2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
+				String value1 = fragment1.substring(fragment1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), fragment1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
+				String value2 = fragment2.substring(fragment2.indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), fragment2.lastIndexOf(LANG2.STATEMENT_TERMINATION));
 				if(parameterNameList1.contains(value1) && parameterNameList2.contains(value1) && operationDiff != null) {
 					for(VariableDeclaration addedParameter : operationDiff.getAddedParameters()) {
 						if(addedParameter.getVariableName().equals(value2)) {

@@ -766,7 +766,7 @@ public class CompositeStatementObject extends AbstractStatement {
 				String firstLine = s.substring(0, s.indexOf("\n"));
 				if(firstLine.contains(LANG.ASSIGNMENT)) {
 					String variable = s.substring(0, s.indexOf(LANG.ASSIGNMENT));
-					String value = s.substring(s.indexOf(LANG.ASSIGNMENT)+1, s.indexOf(LANG.STATEMENT_TERMINATION));
+					String value = s.substring(s.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length(), s.indexOf(LANG.STATEMENT_TERMINATION));
 					if(map.containsKey(value)) {
 						map.get(value).add(variable);
 					}
@@ -788,8 +788,8 @@ public class CompositeStatementObject extends AbstractStatement {
 			if(s.startsWith(LANG.THIS_DOT) && s.endsWith(LANG.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
 				if(firstLine.contains(LANG.ASSIGNMENT)) {
-					String attribute = s.substring(5, s.indexOf(LANG.ASSIGNMENT));
-					String value = s.substring(s.indexOf(LANG.ASSIGNMENT)+1, s.indexOf(LANG.STATEMENT_TERMINATION));
+					String attribute = s.substring(LANG.THIS_DOT.length(), s.indexOf(LANG.ASSIGNMENT));
+					String value = s.substring(s.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length(), s.indexOf(LANG.STATEMENT_TERMINATION));
 					if(map.containsKey(value)) {
 						map.get(value).add(attribute);
 					}

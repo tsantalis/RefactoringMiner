@@ -5883,8 +5883,8 @@ public class ReplacementAlgorithm {
 		if(statement1.getString().startsWith(candidateReplacement.getBefore() + LANG1.ASSIGNMENT) &&
 				statement2.getString().startsWith(candidateReplacement.getAfter() + LANG2.ASSIGNMENT) &&
 				statement1.getString().endsWith(LANG1.STATEMENT_TERMINATION) && statement2.getString().endsWith(LANG2.STATEMENT_TERMINATION)) {
-			String suffix1 = statement1.getString().substring(statement1.getString().indexOf(LANG1.ASSIGNMENT) + 1, statement1.getString().lastIndexOf(LANG1.STATEMENT_TERMINATION));
-			String suffix2 = statement2.getString().substring(statement2.getString().indexOf(LANG2.ASSIGNMENT) + 1, statement2.getString().lastIndexOf(LANG2.STATEMENT_TERMINATION));
+			String suffix1 = statement1.getString().substring(statement1.getString().indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), statement1.getString().lastIndexOf(LANG1.STATEMENT_TERMINATION));
+			String suffix2 = statement2.getString().substring(statement2.getString().indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), statement2.getString().lastIndexOf(LANG2.STATEMENT_TERMINATION));
 			if(suffix1.startsWith(suffix2) || suffix2.startsWith(suffix1)) {
 				return true;
 			}

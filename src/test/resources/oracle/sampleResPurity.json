@@ -26,7 +26,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tjson : byte[] in method public convertRecord(record SinkRecord, type String, client JestClient, ignoreKey boolean, ignoreSchema boolean, topicConfigs Map<String,TopicConfig>, mappings Set<String>) : ESRequest from class io.confluent.connect.elasticsearch.DataConverter",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -346,7 +346,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tindex : Index in method private constructBulk(batch RecordBatch, callback Callback<Response>) : Bulk from class io.confluent.connect.elasticsearch.internals.HttpClient",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -356,7 +356,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\trequests : List<ESRequest> in method private constructBulk(batch RecordBatch, callback Callback<Response>) : Bulk from class io.confluent.connect.elasticsearch.internals.HttpClient",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -2791,7 +2791,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tpureSingleStatisticList : List<PureSingleStatistic> in method private buildSingleBenchmark(solverBenchmarkResult SolverBenchmarkResult, problemBenchmarkResult ProblemBenchmarkResult) : void from class org.optaplanner.benchmark.config.ProblemBenchmarksConfig",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -2951,7 +2951,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tparameterName : String in method protected resolveParams(accessor ParameterAccessor, parameterResolver ParameterResolver) : Map<String,Object> from class org.springframework.data.neo4j.repository.query.GraphQueryMethod",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -4001,7 +4001,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tliquids : SmelteryTank in method protected drawGuiContainerBackgroundLayer(partialTicks float, mouseX int, mouseY int) : void from class slimeknights.tconstruct.smeltery.client.GuiSmeltery",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -4011,7 +4011,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\ttank : SmelteryTank in method protected mouseClicked(mouseX int, mouseY int, mouseButton int) : void from class slimeknights.tconstruct.smeltery.client.GuiSmeltery",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -4031,7 +4031,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tliquids : SmelteryTank in method protected drawGuiContainerBackgroundLayer(partialTicks float, mouseX int, mouseY int) : void from class slimeknights.tconstruct.smeltery.client.GuiTinkerTank",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -4041,7 +4041,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\ttank : SmelteryTank in method protected mouseClicked(mouseX int, mouseY int, mouseButton int) : void from class slimeknights.tconstruct.smeltery.client.GuiTinkerTank",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -4801,7 +4801,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\ttrackingInformation : TrackingInformation in method public trackEvent(eventToken String, parameters Map<String,String>) : void from class com.adeven.adjustio.AdjustIo",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -4831,7 +4831,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\ttrackingInformation : TrackingInformation in method public trackRevenue(amountInCents float, eventToken String, parameters Map<String,String>) : void from class com.adeven.adjustio.AdjustIo",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -5191,7 +5191,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\trest : JsonRepresentation in method public validate(input Representation) : Representation from class org.restlet.ext.oauth.ValidationServerResource",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -5981,7 +5981,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tstateful : Reference in method protected handleAction(action String, scopes String[]) : void from class org.restlet.ext.oauth.AuthPageServerResource",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -7591,7 +7591,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tstate : int[] in method public isDrawableExpired(pTile Drawable) : boolean from class org.osmdroid.tileprovider.ExpirableBitmapDrawable",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -7631,7 +7631,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\ttile : MapTile in method protected putExpiredTileIntoCache(pState MapTileRequestState, pDrawable Drawable) : void from class org.osmdroid.tileprovider.MapTileProviderBase",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -9581,7 +9581,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tpythonExecutable : File in method public findWheel(library String, version String, pythonDetails PythonDetails) : Optional<File> from class com.linkedin.gradle.python.wheel.CachedBackedWheelCache",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -13021,7 +13021,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcreateCharset : String in method public apply(originalSchema Schema) : Schema from class com.zendesk.maxwell.schema.ddl.DatabaseCreate",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -15768,7 +15768,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tsliceContext : ReferenceContext in method private getReferences(slice Slice, header CompressionHeader, validationStringency ValidationStringency) : Map<ReferenceContext,AlignmentSpan> from class htsjdk.samtools.cram.build.ContainerParser",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -16673,7 +16673,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tid : JsArrayString in method public getPickerId() : String from class gwt.material.design.client.ui.MaterialDatePicker",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -17398,7 +17398,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tvalue : Object in method protected readNext() : T from class org.sql2o.PojoResultSetIterator",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -17678,7 +17678,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tmessageList : List<String> in method public containsMessage(level LogLevel, beginsWith String) : Boolean from class com.adeven.adjustio.test.MockLogger",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -18678,7 +18678,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\texpected_pattern1 : String in method public canExtractTablesFromHtml() : void from class fitnesse.testsystems.slim.HtmlTableScannerTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -18688,7 +18688,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\texpected_pattern2 : String in method public canExtractTablesFromHtml() : void from class fitnesse.testsystems.slim.HtmlTableScannerTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -18698,7 +18698,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\texpected_pattern3 : String in method public canExtractTablesFromHtml() : void from class fitnesse.testsystems.slim.HtmlTableScannerTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -22038,7 +22038,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tsProcessDefinition : SProcessDefinitionImpl in method private buildSProcessDefinition(name String, version String) : SProcessDefinition from class org.bonitasoft.engine.bpm.CommonBPMServicesTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -25573,7 +25573,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcallback : PullResponseCallback in method public testListContainers() : void from class com.github.dockerjava.core.command.ListContainersCmdImplTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -25583,7 +25583,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcallback : PullResponseCallback in method public testListContainersWithLabelsFilter() : void from class com.github.dockerjava.core.command.ListContainersCmdImplTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -25633,7 +25633,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcallback : PushResponseCallback in method public pushLatest() : void from class com.github.dockerjava.core.command.PushImageCmdImplTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -25863,7 +25863,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcallback : PullResponseCallback in method private generateEvents() : int from class com.github.dockerjava.core.command.EventsCmdImplTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -25893,7 +25893,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcallback : PullResponseCallback in method public beforeTest() : void from class com.github.dockerjava.client.AbstractDockerClientTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -25923,7 +25923,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tcallback : PullResponseCallback in method public testPullNonExistingImage() : void from class com.github.dockerjava.core.command.PullImageCmdImplTest",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "0",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26903,7 +26903,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tdataTable : DataTable in method public success(dataTables List<DataTable>, response Response) : void from class com.mifos.mifosxdroid.online.ClientDetailsFragment.inflateDataTablesList.getDatatablesOfClient.new Callback<List<DataTable>>",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26943,7 +26943,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tclientDetailsFragment : ClientDetailsFragment in method protected onCreate(savedInstanceState Bundle) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26953,7 +26953,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tloanAccountSummaryFragment : LoanAccountSummaryFragment in method public loadLoanAccountSummary(loanAccountNumber int) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26963,7 +26963,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tsavingsAccountSummaryFragment : SavingsAccountSummaryFragment in method public loadSavingsAccountSummary(savingsAccountNumber int, accountType DepositType) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26973,7 +26973,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tloanRepaymentFragment : LoanRepaymentFragment in method public makeRepayment(loan LoanWithAssociations) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26983,7 +26983,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tloanRepaymentScheduleFragment : LoanRepaymentScheduleFragment in method public loadRepaymentSchedule(loanId int) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -26993,7 +26993,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tloanTransactionsFragment : LoanTransactionsFragment in method public loadLoanTransactions(loanId int) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -27003,7 +27003,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\tsavingsAccountTransactionFragment : SavingsAccountTransactionFragment in method public doTransaction(savingsAccountWithAssociations SavingsAccountWithAssociations, transactionType String, accountType DepositType) : void from class com.mifos.mifosxdroid.online.ClientActivity",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",
@@ -28738,7 +28738,7 @@
     "type" : "Inline Variable",
     "description" : "Inline Variable\ttagCompound : NBTTagCompound in method public onDataPacket(net NetworkManager, pkt SPacketUpdateTileEntity) : void from class com.mrcrayfish.furniture.tileentity.TileEntityStereo",
     "purity" : {
-      "purityValue" : "-",
+      "purityValue" : "1",
       "purityValidation" : "-",
       "purityComment" : "",
       "mappingState" : "",

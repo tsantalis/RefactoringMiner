@@ -1424,7 +1424,7 @@ public class TypeScriptOperationBody extends OperationBody {
 							UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), umlClass.getName());
 							attribute.setVariableDeclaration(vd);
 							attribute.setVisibility(Visibility.PUBLIC);
-							if(!umlClass.getAttributes().contains(attribute)) {
+							if(!umlClass.containsAttributeWithTheSameName(attribute)) {
 								umlClass.addAttribute(attribute);
 							}
 						}

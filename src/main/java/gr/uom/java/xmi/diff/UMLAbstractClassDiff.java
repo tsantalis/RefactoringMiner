@@ -163,6 +163,11 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperation op : addedNestedOperations) {
 			all.addAll(op.getNestedOperations());
 		}
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+				all.addAll(anonymousDiff.getAddedNestedOperations());
+			}
+		}
 		return all;
 	}
 
@@ -174,6 +179,11 @@ public abstract class UMLAbstractClassDiff {
 		List<UMLOperation> all = new ArrayList<>(removedNestedOperations);
 		for(UMLOperation op : removedNestedOperations) {
 			all.addAll(op.getNestedOperations());
+		}
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+				all.addAll(anonymousDiff.getRemovedNestedOperations());
+			}
 		}
 		return all;
 	}

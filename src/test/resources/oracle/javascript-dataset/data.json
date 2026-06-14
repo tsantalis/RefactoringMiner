@@ -573,6 +573,62 @@
     "refactorings": [{
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public helpers.lineTo(ctx, previous, target, flip) extracted from public draw() in class element.line & moved to class core.canvasHelpers",
+        "comment": "<p>Move And Rename Method private lineToPoint(previousPoint, point) from class element.line to public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers</p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Move And Rename Method",
+        "description": "Move And Rename Method private lineToPoint(previousPoint, point) from class element.line to public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable pointVM : Inferred to target : Inferred in method public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier private to public in method public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter ctx : Inferred in method public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter previous : Inferred in method public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter flip : Inferred in method public helpers.lineTo(ctx, previous, target, flip) from class core.canvasHelpers",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter previousPoint : Inferred in method private lineToPoint(previousPoint, point) from class element.line",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter point : Inferred in method private lineToPoint(previousPoint, point) from class element.line",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

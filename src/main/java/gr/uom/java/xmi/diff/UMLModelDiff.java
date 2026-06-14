@@ -8265,7 +8265,13 @@ public class UMLModelDiff {
 		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
 				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
 				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
-		if(exactLeafMappings == 0 && !zeroNonMapped && !identicalStringLiterals && normalizedEditDistance > 0.24) {
+		boolean containsName = false;
+		if(addedOperation.getName().contains(".") && !removedOperation.getName().contains(".")) {
+			String finalPart = addedOperation.getName().substring(addedOperation.getName().lastIndexOf(".")+1, addedOperation.getName().length());
+			if(removedOperation.getName().contains(finalPart))
+				containsName = true;
+		}
+		if(exactLeafMappings == 0 && !zeroNonMapped && !identicalStringLiterals && normalizedEditDistance > 0.24 && !containsName) {
 			return false;
 		}
 		if(exactLeafMappings == 1 && normalizedEditDistance > 0.51 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {
@@ -8643,13 +8649,27 @@ public class UMLModelDiff {
 
 	private void deleteRemovedOperation(UMLOperation operation) {
 		UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
-		if(classDiff != null)
+		if(classDiff != null) {
 			classDiff.getRemovedOperations().remove(operation);
+			classDiff.getRemovedNestedOperations().remove(operation);
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+					anonymousDiff.getRemovedNestedOperations().remove(operation);
+				}
+			}
+		}
 	}
 
 	private void deleteAddedOperation(UMLOperation operation) {
 		UMLClassBaseDiff classDiff = getUMLClassDiff(operation.getClassName());
-		if(classDiff != null)
+		if(classDiff != null) {
 			classDiff.getAddedOperations().remove(operation);
+			classDiff.getAddedNestedOperations().remove(operation);
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
+					anonymousDiff.getAddedNestedOperations().remove(operation);
+				}
+			}
+		}
 	}
 }

@@ -1417,6 +1417,19 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 			else if(member instanceof Swc4jAstConstructor constructor) {
 				UMLOperation nested = TypeScriptFileProcessor.processConstructor(sourceFolder, filePath, constructor, activeVariableDeclarations, fileContent, umlClass.getName(), comments);
+				//JavaScript is a dynamically typed language, assigning a value to a property using this.propertyName inside the constructor automatically creates and initializes that property on the object instance.
+				if(nested.getBody() != null) {
+					for(VariableDeclaration vd : nested.getBody().getAllVariableDeclarations()) {
+						if(vd.isAttribute()) {
+							UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), vd.getLocationInfo(), umlClass.getName());
+							attribute.setVariableDeclaration(vd);
+							attribute.setVisibility(Visibility.PUBLIC);
+							if(!umlClass.getAttributes().contains(attribute)) {
+								umlClass.addAttribute(attribute);
+							}
+						}
+					}
+				}
 				umlClass.addOperation(nested);
 			}
 			else if(member instanceof Swc4jAstClassProp classProperty) {

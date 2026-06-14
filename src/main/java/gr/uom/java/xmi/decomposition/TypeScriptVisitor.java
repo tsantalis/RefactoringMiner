@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstKeyValueProp;
 import com.caoccao.javet.swc4j.ast.enums.Swc4jAstBinaryOp;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstArrowExpr;
@@ -18,6 +19,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstNewExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstThisExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTpl;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsAsExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstUnaryExpr;
@@ -31,6 +33,7 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
 import com.caoccao.javet.swc4j.ast.miscs.Swc4jAstTplElement;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstExprStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
@@ -134,6 +137,11 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 				LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.QUALIFIED_NAME, container, fileContent);
 				variables.add(name);
 			}
+		}
+		else if(node.getParent() instanceof Swc4jAstAssignExpr assignExpr && node.getObj() instanceof Swc4jAstThisExpr && assignExpr.getParent() instanceof Swc4jAstExprStmt exprStatement &&
+				exprStatement.getParent() instanceof Swc4jAstBlockStmt block && block.getParent() instanceof Swc4jAstConstructor) {
+			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, assignExpr, container, activeVariableDeclarations, fileContent, typeDeclarations);
+			variableDeclarations.add(vd);
 		}
 		return super.visitMemberExpr(node);
 	}

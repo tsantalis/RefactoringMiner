@@ -2798,8 +2798,8 @@ public class StringBasedHeuristics {
 			boolean variableRename = false, rightHandSideReplacement = false;
 			String variableName1 = string1.substring(0, string1.indexOf(LANG1.ASSIGNMENT));
 			String variableName2 = string2.substring(0, string2.indexOf(LANG2.ASSIGNMENT));
-			String assignment1 = statement1.getString().substring(statement1.getString().indexOf(LANG1.ASSIGNMENT)+1, statement1.getString().lastIndexOf(LANG1.STATEMENT_TERMINATION));
-			String assignment2 = statement2.getString().substring(statement2.getString().indexOf(LANG2.ASSIGNMENT)+1, statement2.getString().lastIndexOf(LANG2.STATEMENT_TERMINATION));
+			String assignment1 = statement1.getString().substring(statement1.getString().indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), statement1.getString().lastIndexOf(LANG1.STATEMENT_TERMINATION));
+			String assignment2 = statement2.getString().substring(statement2.getString().indexOf(LANG2.ASSIGNMENT) + LANG2.ASSIGNMENT.length(), statement2.getString().lastIndexOf(LANG2.STATEMENT_TERMINATION));
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
 						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(LANG1.THIS_DOT + replacement.getBefore())) &&

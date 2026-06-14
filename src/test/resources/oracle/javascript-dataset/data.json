@@ -357,6 +357,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable method : Inferred in method public notify(chart, extension, args) from class core.plugin",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

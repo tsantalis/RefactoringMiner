@@ -171,7 +171,7 @@ public class CppFileProcessor {
 			else if(statement instanceof IASTPreprocessorElifStatement elifStatement) {
 				//convert char[] to string
 				 value = new String(elifStatement.getCondition());
-				new UMLPreprocessorStatement(locationInfo,Directive.ELIF);
+				new UMLPreprocessorStatement(locationInfo,Directive.ELIF,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorElseStatement elseStatement) {
@@ -184,13 +184,13 @@ public class CppFileProcessor {
 			else if(statement instanceof IASTPreprocessorPragmaStatement pragmaStatement) {
 				//convert char[] to string
 				 value = new String(pragmaStatement.getMessage());
-				new UMLPreprocessorStatement(locationInfo,Directive.PRAGMA);
+				new UMLPreprocessorStatement(locationInfo,Directive.PRAGMA,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorErrorStatement errorStatement) {
 				//convert char[] to string
 				 value = new String(errorStatement.getMessage());
-				new UMLPreprocessorStatement(locationInfo,Directive.ERROR);
+				new UMLPreprocessorStatement(locationInfo,Directive.ERROR,value);
 
 			}
 		}

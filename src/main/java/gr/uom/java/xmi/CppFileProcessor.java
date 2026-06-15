@@ -117,7 +117,7 @@ public class CppFileProcessor {
 		}
 	}
 
-	void processPreprocessorStatements(IASTTranslationUnit ast) {
+	private void processPreprocessorStatements(IASTTranslationUnit ast) {
 		for(IASTPreprocessorStatement statement : ast.getAllPreprocessorStatements()) {
 			LocationInfo locationInfo = new LocationInfo(
 					"",                         // sourceFolder
@@ -126,9 +126,9 @@ public class CppFileProcessor {
 					CodeElementType.PREPROCESSOR_DIRECTIVE,
 					fileContent                 // original file text
 				);	
-			IASTName nameNode = null;
-			String name = "";
-			String value = "";
+			IASTName nameNode;
+			String name;
+			String value;
 			
 			if(statement instanceof IASTPreprocessorMacroDefinition macroDefinition) {
 				 nameNode = macroDefinition.getName();

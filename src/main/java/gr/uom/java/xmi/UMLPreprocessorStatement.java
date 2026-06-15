@@ -38,11 +38,11 @@ public class UMLPreprocessorStatement {
 		}
 		public UMLPreprocessorStatement(LocationInfo location, Directive type, String value) {
 			this(location,type);
-			this.value = Optional.of(value);
+			this.value = value !=null ? Optional.of(value) : Optional.empty();
 	}
 		public UMLPreprocessorStatement(LocationInfo location,Directive type, String value, String name) {
 			this(location,type,value);
-			this.name = Optional.of(name);
+			this.name = name !=null ? Optional.of(name) : Optional.empty();
 		}
 
 		public LocationInfo getLocationInfo() {

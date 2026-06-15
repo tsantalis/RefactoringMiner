@@ -111,8 +111,6 @@ class LocationInfoCppTest {
 		assertEquals(0, location.getEndColumn());
 		assertEquals(0, location.getCompilationUnitLength());
 	}
-
-
 	//Search parsed C++ AST for specific declaration and return its node
 	static IASTNode findDeclaration(String source, String rawSignature) throws CoreException {
 		IASTTranslationUnit translationUnit = parseTranslationUnit(source);

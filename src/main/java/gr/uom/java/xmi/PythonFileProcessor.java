@@ -35,7 +35,7 @@ public class PythonFileProcessor {
 				List<Tree> trees = TreeUtilFunctions.findChildrenByTypeRecursively(treeContext.getRoot(), "comment");
 				List<UMLComment> comments = new ArrayList<UMLComment>();
 				for(Tree t : trees) {
-					String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
+					String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath, Set.of("src", "lib", "tests", ""));
 					LocationInfo location = new LocationInfo(sourceFolder, filePath, t, CodeElementType.LINE_COMMENT, fileContent);
 					UMLComment comment = new UMLComment(t.getLabel(), location);
 					comments.add(comment);

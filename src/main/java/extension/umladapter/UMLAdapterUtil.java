@@ -78,10 +78,8 @@ public class UMLAdapterUtil {
         return paramOffset;
     }
 
-    public static String extractSourceFolder(String filename) {
+    public static String extractSourceFolder(String filename, Set<String> commonSourceFolders) {
         Path path = Paths.get(filename);
-        Set<String> commonSourceFolders = Set.of("src", "lib", "tests", "");
-
 
         // Check for common source folder patterns
         for (int i = 0; i < path.getNameCount() - 1; i++) {
@@ -94,10 +92,11 @@ public class UMLAdapterUtil {
         // Fallback to project root if no source folder found
         return path.getNameCount() > 1 ? path.subpath(0, 1).toString() : "";
     }
+    
 
     // Add this to UMLAdapterUtil.java
     public static String extractPackageName(String filename) {
-        String sourceFolder = extractSourceFolder(filename);
+        String sourceFolder = extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
         return extractPackageName(filename, sourceFolder);
     }
 
@@ -140,7 +139,7 @@ public class UMLAdapterUtil {
         List<UMLImport> umlImports = new ArrayList<>();
 
         // Get source folder and file path for location info
-        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
+        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
         String filepath = UMLAdapterUtil.extractFilePath(filename);
 
         for (LangImportStatement importStmt : compilationUnit.getImports()) {

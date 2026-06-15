@@ -60,6 +60,8 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTVisibilityLabel;
 import org.eclipse.cdt.internal.core.index.EmptyCIndex;
 import org.eclipse.core.runtime.CoreException;
 import org.refactoringminer.util.PathFileUtils;
+import extension.umladapter.UMLAdapterUtil;
+
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
@@ -72,8 +74,7 @@ public class CppFileProcessor {
 	
 	private UMLModel umlModel;
 	
-
-
+	  
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
 	}
@@ -120,7 +121,18 @@ public class CppFileProcessor {
 	private void processPreprocessorStatements(IASTTranslationUnit ast) {
 		for(IASTPreprocessorStatement statement : ast.getAllPreprocessorStatements()) {
 			LocationInfo locationInfo = new LocationInfo(
-					"",                         // sourceFolder
+					UMLAdapterUtil.extractSourceFolder(filePath, 
+							Set.of(
+				            "src",
+				            "source",
+				            "lib",
+				            "include",
+				            "inc",
+				            "test",
+				            "tests",
+				            "unittest",
+				            "unittests"
+				    )),                         // sourceFolder
 					filePath,                   // current C++ file path
 					statement,             // the IASTPreprocessorStatement node
 					CodeElementType.PREPROCESSOR_DIRECTIVE,

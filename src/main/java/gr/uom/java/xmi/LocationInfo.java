@@ -43,15 +43,15 @@ public class LocationInfo {
 		this.endOffset = startOffset + length;
 
 		//lines are 1-based
-		this.startLine = cu.getStartLine();
-		this.endLine = cu.getEndLine();
+		this.startLine = node.getStartLine();
+		this.endLine = node.getEndLine();
 		//columns are 0-based
-		this.startColumn = cu.getStartColumn();
+		this.startColumn = node.getStartColumn();
 		//convert to 1-based
 		if(this.startColumn > 0) {
 			this.startColumn += 1;
 		}
-		this.endColumn = cu.getEndColumn();
+		this.endColumn = node.getEndColumn();
 		//convert to 1-based
 		if(this.endColumn > 0) {
 			this.endColumn += 1;

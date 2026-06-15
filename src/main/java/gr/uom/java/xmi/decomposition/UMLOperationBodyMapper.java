@@ -10922,10 +10922,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						AbstractCodeFragment statementContainingOperationInvocation = statementContainingExtractedOperationInvocation();
 						if(statementContainingOperationInvocation != null) {
+							//this code assumes that the extracted statements should be before the call to the extracted method
 							AbstractCodeMapping newEndMapping = null;
 							for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 								if(mapping.getFragment2().equals(statementContainingOperationInvocation)) {
 									break;
+								}
+								if(mapping.getFragment2().getLocationInfo().getStartLine() > statementContainingOperationInvocation.getLocationInfo().getStartLine()) {
+									newEndMapping = mapping;
+									break;
+								}
+							}
+							if(newEndMapping != null) {
+								return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
+										mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= newEndMapping.getFragment1().getLocationInfo().getStartLine();
+							}
+							//but the extracted statements could be after the call to the extracted method
+							for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+								if(mapping.getFragment2().equals(statementContainingOperationInvocation)) {
+									continue;//continue to the next mapping
 								}
 								if(mapping.getFragment2().getLocationInfo().getStartLine() > statementContainingOperationInvocation.getLocationInfo().getStartLine()) {
 									newEndMapping = mapping;

@@ -200,6 +200,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         new SameModifierMatcher(LANG1, LANG2, LANG1.DATA).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(LANG1, LANG2, LANG1.COMPANION).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(LANG1, LANG2, LANG1.INNER).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        new SameModifierMatcher(LANG1, LANG2, LANG1.VALUE).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         if (classDiff.getTypeParameterDiffList() != null)
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {

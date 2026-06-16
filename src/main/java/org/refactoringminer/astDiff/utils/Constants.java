@@ -214,6 +214,7 @@ public class Constants {
     public final String COMPANION = "companion";
     public final String INFIX = "infix";
     public final String INNER = "inner";
+    public final String VALUE = "value";
 
     public final String METHOD_INVOCATION_ARGUMENTS;
     public final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";

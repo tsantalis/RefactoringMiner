@@ -27,6 +27,7 @@ public class PythonFileProcessor {
 
 	public void processPythonFile(String filePath, String fileContent, boolean astDiff) {
 		try {
+			fileContent = PythonTestFixtureMarkupSanitizer.sanitize(filePath, fileContent);
 			LangSupportedEnum language = LangSupportedEnum.fromFileName(filePath);
 			LangASTNode ast = LangASTUtil.getLangAST(language, fileContent);
 			if (astDiff) {

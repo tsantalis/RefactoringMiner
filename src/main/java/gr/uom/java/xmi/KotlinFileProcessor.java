@@ -758,7 +758,7 @@ public class KotlinFileProcessor {
 	}
 
 	private static UMLOperation processFunctionDeclaration(KtFile ktFile, KtNamedFunction function, String sourceFolder, String filePath, String fileContent, List<UMLAttribute> attributes, List<UMLComment> comments, String className) {
-		String methodName = function.getName();
+		String methodName = function.getName() != null ? function.getName() : "";
 		UMLType receiver = null;
 		if(function.getReceiverTypeReference() != null) {
 			receiver = UMLType.extractTypeObject(ktFile, sourceFolder, filePath, fileContent, function.getReceiverTypeReference(), 0);
@@ -807,7 +807,7 @@ public class KotlinFileProcessor {
 			}
 			umlOperation.setReceiverTypeReference(type);
 		}
-		if(startSignatureOffset == -1) {
+		if(startSignatureOffset == -1 && function.getNameIdentifier() != null) {
 			startSignatureOffset = function.getNameIdentifier().getTextRange().getStartOffset();
 		}
 		if (function.hasDeclaredReturnType()) {
@@ -860,6 +860,9 @@ public class KotlinFileProcessor {
 			}
 		}
 		if (function.getBodyBlockExpression() != null) {
+			if(startSignatureOffset == -1) {
+				startSignatureOffset = function.getBodyBlockExpression().getTextRange().getStartOffset();
+			}
 			OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, function.getBodyBlockExpression(), umlOperation, attributes, fileContent);
 			umlOperation.setBody(operationBody);
 		}

@@ -2,6 +2,8 @@ package gr.uom.java.xmi;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -17,7 +19,8 @@ import org.refactoringminer.util.PathFileUtils;
 import com.caoccao.javet.swc4j.Swc4j;
 
 public class UMLModelASTReader {
-	
+	private static final Pattern FIXTURE_MARKUP = Pattern.compile(
+			"</?(?:warning|weak_warning|error|info|caret|selection|fold|ref|symbolName|lineMarker|TYPO|inject)(?:\\s+[^<>]*)?>");
 	private UMLModel umlModel;
 
 	public UMLModelASTReader(Map<String, String> fileContents, Set<String> repositoryDirectories, boolean astDiff) {
@@ -57,6 +60,10 @@ public class UMLModelASTReader {
 				processor.processJavaFile(filePath, fileContent, astDiff, parser);
 			}
 			else if(PathFileUtils.isPythonFile(filePath)) {
+				Matcher matcher = FIXTURE_MARKUP.matcher(fileContent);
+				if(matcher.find()) {
+					continue;
+				}
 				PythonFileProcessor processor = new PythonFileProcessor(umlModel);
 				processor.processPythonFile(filePath, fileContent, astDiff);
 			}

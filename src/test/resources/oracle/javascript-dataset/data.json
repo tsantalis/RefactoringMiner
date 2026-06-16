@@ -480,6 +480,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public determineStepSize(min, max, unit, maxTicks) extracted from public buildTicks() in class scale.time",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

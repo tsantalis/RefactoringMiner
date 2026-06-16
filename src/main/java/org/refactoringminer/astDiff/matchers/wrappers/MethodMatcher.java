@@ -768,8 +768,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcClassAnnotationTree, dstClassAnnotationTree, mappingStore);
             }
             if(umlOperationDiff.getAnnotationListDiff().getCommonAnnotations().size() > 1 &&
-                    srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.MODIFIERS) &&
-                    dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS)) {
+                    srcClassAnnotationTree.getParent() != null && (srcClassAnnotationTree.getParent().getType().name.equals(LANG1.MODIFIERS) || srcClassAnnotationTree.getParent().getType().name.equals(LANG1.PREFIX_EXPRESSION)) &&
+                    dstClassAnnotationTree.getParent() != null && (dstClassAnnotationTree.getParent().getType().name.equals(LANG2.MODIFIERS) || dstClassAnnotationTree.getParent().getType().name.equals(LANG2.PREFIX_EXPRESSION))) {
                 mappingStore.addMapping(srcClassAnnotationTree.getParent(), dstClassAnnotationTree.getParent());
             }
         }

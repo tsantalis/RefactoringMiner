@@ -703,18 +703,26 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcSubTree == null || dstSubTree == null) return;
         if (srcSubTree.isIsoStructuralTo(dstSubTree))
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
-        if (srcSubTree.getParent().getType().name.equals(LANG1.GENERIC_TYPE) && dstSubTree.getParent().getType().name.equals(LANG2.GENERIC_TYPE)) {
-            if (srcSubTree.getParent().isIsoStructuralTo(dstSubTree.getParent()))
-                mappingStore.addMappingRecursively(srcSubTree.getParent(),dstSubTree.getParent());
+        Tree parent1 = srcSubTree.getParent();
+        Tree parent2 = dstSubTree.getParent();
+        if(parent1.getType().name.equals(LANG1.CONSTRUCTOR_INVOCATION) && parent2.getType().name.equals(LANG2.CONSTRUCTOR_INVOCATION)) {
+            mappingStore.addMappingRecursively(parent1,parent2);
+            if(parent1.getParent().getType().name.equals(LANG1.DELEGATION_SPECIFIER) && parent2.getParent().getType().name.equals(LANG2.DELEGATION_SPECIFIER)) {
+                mappingStore.addMapping(parent1.getParent(), parent2.getParent());
+            }
         }
-        if (srcSubTree.getParent().getType().name.equals(LANG1.IMPLEMENTS_CLAUSE) && dstSubTree.getParent().getType().name.equals(LANG2.IMPLEMENTS_CLAUSE)) {
-            mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
-            Pair<Tree, Tree> implement = Helpers.findPairOfType(srcSubTree.getParent(), dstSubTree.getParent(), LANG1.IMPLEMENTS_KEYWORD, LANG2.IMPLEMENTS_KEYWORD);
+        if (parent1.getType().name.equals(LANG1.GENERIC_TYPE) && parent2.getType().name.equals(LANG2.GENERIC_TYPE)) {
+            if (parent1.isIsoStructuralTo(parent2))
+                mappingStore.addMappingRecursively(parent1,parent2);
+        }
+        if (parent1.getType().name.equals(LANG1.IMPLEMENTS_CLAUSE) && parent2.getType().name.equals(LANG2.IMPLEMENTS_CLAUSE)) {
+            mappingStore.addMapping(parent1, parent2);
+            Pair<Tree, Tree> implement = Helpers.findPairOfType(parent1, parent2, LANG1.IMPLEMENTS_KEYWORD, LANG2.IMPLEMENTS_KEYWORD);
             if (implement != null) {
                 mappingStore.addMapping(implement.first,implement.second);
             }
-            if(srcSubTree.getParent().getParent().getType().name.equals(LANG1.CLASS_HERITAGE) && dstSubTree.getParent().getParent().getType().name.equals(LANG2.CLASS_HERITAGE)) {
-                mappingStore.addMapping(srcSubTree.getParent().getParent(), dstSubTree.getParent().getParent());
+            if(parent1.getParent().getType().name.equals(LANG1.CLASS_HERITAGE) && parent2.getParent().getType().name.equals(LANG2.CLASS_HERITAGE)) {
+                mappingStore.addMapping(parent1.getParent(), parent2.getParent());
             }
         }
     }

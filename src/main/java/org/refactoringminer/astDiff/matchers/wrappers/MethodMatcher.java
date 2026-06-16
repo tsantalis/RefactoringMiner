@@ -436,8 +436,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         if (srcOperationNode != null && dstOperationNode != null && !srcOperationNode.getType().name.equals("ERROR") && !dstOperationNode.getType().name.equals("ERROR")) {
             processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-            if(umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation1().getDefaultExpression() != null &&
-                    umlOperationBodyMapper.getOperation2() != null && umlOperationBodyMapper.getOperation2().getDefaultExpression() != null) {
+            if(umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
                 Tree srcOperationFunctionBody = srcOperationNode.getChild(srcOperationNode.getChildren().size()-1);
                 Tree dstOperationFunctionBody = dstOperationNode.getChild(dstOperationNode.getChildren().size()-1);
                 Tree srcAffectationKeyword = TreeUtilFunctions.findChildByType(srcOperationFunctionBody, LANG1.AFFECTATION_OPERATOR);

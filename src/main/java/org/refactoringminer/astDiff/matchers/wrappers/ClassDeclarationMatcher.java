@@ -495,14 +495,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     }
                     Pair<Tree, Tree> callExpressions = Helpers.findPairOfType(explicitDelegations.first,explicitDelegations.second, LANG1.METHOD_INVOCATION, LANG2.METHOD_INVOCATION);
                     if (callExpressions != null) {
-                        processCallExpressionsInDelegationSpecifiers(mappingStore, callExpressions);
+                        processCallExpressionsInDelegationSpecifiers(mappingStore, callExpressions, LANG1, LANG2);
                     }
                     Pair<Tree, Tree> navigationExpressions = Helpers.findPairOfType(explicitDelegations.first,explicitDelegations.second, LANG1.NAVIGATION_EXPRESSION, LANG2.NAVIGATION_EXPRESSION);
                     if (navigationExpressions != null) {
                         mappingStore.addMapping(navigationExpressions.first,navigationExpressions.second);
                         callExpressions = Helpers.findPairOfType(navigationExpressions.first,navigationExpressions.second, LANG1.METHOD_INVOCATION, LANG2.METHOD_INVOCATION);
                         if (callExpressions != null) {
-                            processCallExpressionsInDelegationSpecifiers(mappingStore, callExpressions);
+                            processCallExpressionsInDelegationSpecifiers(mappingStore, callExpressions, LANG1, LANG2);
                         }
                     }
                 }
@@ -626,7 +626,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
 
     }
 
-    private void processCallExpressionsInDelegationSpecifiers(ExtendedMultiMappingStore mappingStore, Pair<Tree, Tree> callExpressions) {
+    public static void processCallExpressionsInDelegationSpecifiers(ExtendedMultiMappingStore mappingStore, Pair<Tree, Tree> callExpressions, Constants LANG1, Constants LANG2) {
         mappingStore.addMapping(callExpressions.first,callExpressions.second);
         Pair<Tree, Tree> byIdentifiers = Helpers.findPairOfType(callExpressions.first,callExpressions.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
         if(byIdentifiers != null) {

@@ -432,6 +432,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                         }
                     }
                 }
+                //sometimes Kotlin treesitter models initializer blocks as call expressions. Very bad parser!
+                if (srcOperationNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstOperationNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                	ClassDeclarationMatcher.processCallExpressionsInDelegationSpecifiers(mappingStore, new com.github.gumtreediff.utils.Pair<Tree, Tree>(srcOperationNode,dstOperationNode), LANG1, LANG2);
+                }
             }
         }
         if (srcOperationNode != null && dstOperationNode != null && !srcOperationNode.getType().name.equals("ERROR") && !dstOperationNode.getType().name.equals("ERROR")) {

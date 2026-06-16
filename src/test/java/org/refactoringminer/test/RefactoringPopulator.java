@@ -246,7 +246,7 @@ public class RefactoringPopulator {
 		return refactorings;
 	}
 
-	private static List<String> getDeletedCommits() {
+	public static List<String> getDeletedCommits() {
 		List<String> deletedCommits = new ArrayList<String>();
 		String file = EXPECTED_PATH + "deleted_commits.txt";
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {

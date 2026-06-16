@@ -855,12 +855,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (rightTree.getType().name.endsWith("_comment")) {
                 rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
             }
-            if(leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
+            if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
                     leftTree.getParent().getType().name.equals(LANG1.REQUIRED_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
                 leftTree = leftTree.getParent();
                 rightTree = rightTree.getParent();
             }
-            if(leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
+            if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
                     leftTree.getParent().getType().name.equals(LANG1.TYPED_DEFAULT_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.TYPED_DEFAULT_PARAMETER)) {
                 leftTree = leftTree.getParent();
                 rightTree = rightTree.getParent();

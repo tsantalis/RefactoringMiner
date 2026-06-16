@@ -1207,8 +1207,12 @@ public class OperationInvocation extends AbstractCall {
 		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
 			this.methodName = nameReference.getReferencedName();
 		}
-		else if(calleeExpression instanceof KtLambdaExpression lambda) {
+		else if(calleeExpression instanceof KtLambdaExpression) {
 			this.methodName = "lambda";
+		}
+		else if(calleeExpression instanceof KtCallExpression) {
+			//f()() is used to call a function that returns another function
+			this.methodName = "";
 		}
 		this.numberOfArguments = invocation.getValueArguments().size();
 		this.arguments = new ArrayList<String>();

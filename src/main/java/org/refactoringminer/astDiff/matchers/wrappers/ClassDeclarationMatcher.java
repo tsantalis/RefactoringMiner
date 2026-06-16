@@ -353,14 +353,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {
         Tree srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, LANG1.CLASS_BLOCK);
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, LANG2.CLASS_BLOCK);
-        if (srcBlock == null && dstBlock == null) {
-            srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, LANG1.DELEGATION_SPECIFIER);
-            dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, LANG2.DELEGATION_SPECIFIER);
-            if (srcBlock != null && dstBlock != null) {
-                mappingStore.addMappingRecursively(srcBlock, dstBlock);
-                return;
-            }
-        }
         if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_ALIAS_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.TYPE_ALIAS_DECLARATION)) {
             Pair<Tree, Tree> object_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
             if (object_types != null) {
@@ -484,6 +476,37 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(closing.first,closing.second);
                 }
             }
+            //find last delegation specifier
+            if(srcTypeDeclaration.getChildren().size() > 0 && srcTypeDeclaration.getChildren().get(srcTypeDeclaration.getChildren().size()-1).getType().name.equals(LANG1.DELEGATION_SPECIFIER) &&
+                    dstTypeDeclaration.getChildren().size() > 0 && dstTypeDeclaration.getChildren().get(dstTypeDeclaration.getChildren().size()-1).getType().name.equals(LANG2.DELEGATION_SPECIFIER)) {
+                Tree delegationSpecifier1 = srcTypeDeclaration.getChildren().get(srcTypeDeclaration.getChildren().size()-1);
+                Tree delegationSpecifier2 = dstTypeDeclaration.getChildren().get(dstTypeDeclaration.getChildren().size()-1);
+                mappingStore.addMapping(delegationSpecifier1, delegationSpecifier2);
+                Pair<Tree,Tree> explicitDelegations = Helpers.findPairOfType(delegationSpecifier1,delegationSpecifier2, LANG1.EXPLICIT_DELEGATION, LANG2.EXPLICIT_DELEGATION);
+                if (explicitDelegations != null) {
+                    mappingStore.addMapping(explicitDelegations.first,explicitDelegations.second);
+                    Pair<Tree, Tree> delegateKeywords = Helpers.findPairOfType(explicitDelegations.first,explicitDelegations.second, LANG1.DELEGATE_KEYWORD, LANG2.DELEGATE_KEYWORD);
+                    if (delegateKeywords != null) {
+                        mappingStore.addMapping(delegateKeywords.first,delegateKeywords.second);
+                    }
+                    Pair<Tree, Tree> byIdentifiers = Helpers.findPairOfType(explicitDelegations.first,explicitDelegations.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+                    if (byIdentifiers != null) {
+                        mappingStore.addMapping(byIdentifiers.first,byIdentifiers.second);
+                    }
+                    Pair<Tree, Tree> callExpressions = Helpers.findPairOfType(explicitDelegations.first,explicitDelegations.second, LANG1.METHOD_INVOCATION, LANG2.METHOD_INVOCATION);
+                    if (callExpressions != null) {
+                        processCallExpressionsInDelegationSpecifiers(mappingStore, callExpressions);
+                    }
+                    Pair<Tree, Tree> navigationExpressions = Helpers.findPairOfType(explicitDelegations.first,explicitDelegations.second, LANG1.NAVIGATION_EXPRESSION, LANG2.NAVIGATION_EXPRESSION);
+                    if (navigationExpressions != null) {
+                        mappingStore.addMapping(navigationExpressions.first,navigationExpressions.second);
+                        callExpressions = Helpers.findPairOfType(navigationExpressions.first,navigationExpressions.second, LANG1.METHOD_INVOCATION, LANG2.METHOD_INVOCATION);
+                        if (callExpressions != null) {
+                            processCallExpressionsInDelegationSpecifiers(mappingStore, callExpressions);
+                        }
+                    }
+                }
+            }
         }
         if (srcTypeDeclaration.getType().name.equals(LANG1.ENUM_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.ENUM_DECLARATION)) {
             Pair<Tree, Tree> types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ENUM_KEYWORD, LANG2.ENUM_KEYWORD);
@@ -601,6 +624,30 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (srcBlock == null || dstBlock == null) return;
         mappingStore.addMapping(srcBlock, dstBlock);
 
+    }
+
+    private void processCallExpressionsInDelegationSpecifiers(ExtendedMultiMappingStore mappingStore, Pair<Tree, Tree> callExpressions) {
+        mappingStore.addMapping(callExpressions.first,callExpressions.second);
+        Pair<Tree, Tree> byIdentifiers = Helpers.findPairOfType(callExpressions.first,callExpressions.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+        if(byIdentifiers != null) {
+            mappingStore.addMapping(byIdentifiers.first,byIdentifiers.second);
+        }
+        Pair<Tree, Tree> callSuffixes = Helpers.findPairOfType(callExpressions.first,callExpressions.second, LANG1.CALL_SUFFIX, LANG2.CALL_SUFFIX);
+        if (callSuffixes != null) {
+            mappingStore.addMapping(callSuffixes.first,callSuffixes.second);
+            Pair<Tree, Tree> annotatedLambdas = Helpers.findPairOfType(callSuffixes.first,callSuffixes.second, LANG1.ANNOTATED_LAMBDA, LANG2.ANNOTATED_LAMBDA);
+            if (annotatedLambdas != null) {
+                mappingStore.addMapping(annotatedLambdas.first,annotatedLambdas.second);
+                Pair<Tree, Tree> lambdaLiterals = Helpers.findPairOfType(annotatedLambdas.first,annotatedLambdas.second, LANG1.LAMBDA_LITERAL, LANG2.LAMBDA_LITERAL);
+                if (lambdaLiterals != null) {
+                    mappingStore.addMapping(lambdaLiterals.first,lambdaLiterals.second);
+                    Pair<Tree, Tree> statements = Helpers.findPairOfType(lambdaLiterals.first,lambdaLiterals.second, LANG1.STATEMENTS, LANG2.STATEMENTS);
+                    if (statements != null) {
+                        mappingStore.addMapping(statements.first,statements.second);
+                    }
+                }
+            }
+        }
     }
 
     private void processVariableDeclaratorPair(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {

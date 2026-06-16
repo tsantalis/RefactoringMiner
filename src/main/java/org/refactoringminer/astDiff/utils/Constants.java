@@ -328,6 +328,8 @@ public class Constants {
     public final String SECONDARY_CONSTRUCTOR = "secondary_constructor";
     public final String PRIMARY_CONSTRUCTOR = "primary_constructor";
     public final String DELEGATION_SPECIFIER = "delegation_specifier";
+    public final String DELEGATE_KEYWORD = "delegate_keyword";
+    public final String EXPLICIT_DELEGATION = "explicit_delegation";
     public final String AFFECTATION_OPERATOR = "affectation_operator";
     public final String COMPANION_OBJECT = "companion_object";
     public final String OBJECT_DECLARATION = "object_declaration";
@@ -358,6 +360,7 @@ public class Constants {
     public final String CLASS_MODIFIER = "class_modifier";
     public final String AS_EXPRESSION = "as_expression";
     public final String ANNOTATED_LAMBDA = "annotated_lambda";
+    public final String LAMBDA_LITERAL = "lambda_literal";
     public final String ARITHMETIC_OPERATOR = "arithmetic_operator";
     public final String LONG_LITERAL = "long_literal";
     public final String MULT_EXPRESSION = "multiplicative_expression";

@@ -17995,6 +17995,28 @@
   "firstEndPos" : 14221,
   "secondEndPos" : 12706
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "i",
+  "secondLabel" : "i",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 14096,
+  "secondPos" : 12582,
+  "firstEndPos" : 14097,
+  "secondEndPos" : 12583
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "integer_literal",
+  "firstLabel" : "513",
+  "secondLabel" : "513",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 14101,
+  "secondPos" : 12587,
+  "firstEndPos" : 14104,
+  "secondEndPos" : 12590
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

@@ -32,6 +32,12 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(block1, block2);
             }
         }
+        else if(srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.IF_STATEMENT) &&
+        		srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
+        	Tree expression1 = srcStatementNode.getChild(0);
+        	Tree expression2 = dstStatementNode.getChild(0);
+        	handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+        }
     }
 
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {

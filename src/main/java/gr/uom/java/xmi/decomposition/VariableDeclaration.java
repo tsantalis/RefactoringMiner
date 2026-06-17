@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -121,6 +125,57 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private List<UMLModifier> modifiers;
 	private String actualSignature;
 	private final Constants LANG;
+
+	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, String fallbackName,
+			VariableDeclarationContainer container, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = extractCParameterName(parameter, fallbackName);
+		this.initializer = null;
+		this.type = UMLType.extractTypeObject(extractCTypeText(parameter.getDeclSpecifier(), parameter.getDeclarator()));
+		this.varargsParameter = false;
+		int startOffset = locationInfo.getStartOffset();
+		int endOffset = container != null ? container.getLocationInfo().getEndOffset() : locationInfo.getEndOffset();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+		this.actualSignature = locationInfo.getStartOffset() >= 0 && locationInfo.getEndOffset() <= fileContent.length() ?
+				fileContent.substring(locationInfo.getStartOffset(), locationInfo.getEndOffset()) :
+					parameter.getRawSignature();
+	}
+
+	private String extractCParameterName(IASTParameterDeclaration parameter, String fallbackName) {
+		IASTDeclarator declarator = parameter.getDeclarator();
+		if(declarator != null && declarator.getName() != null) {
+			String name = declarator.getName().toString();
+			if(!name.isBlank()) {
+				return name;
+			}
+		}
+		return fallbackName;
+	}
+
+	private String extractCTypeText(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
+		StringBuilder type = new StringBuilder(cleanCTypeText(declSpecifier.getRawSignature()));
+		if(declarator != null) {
+			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
+				type.append(pointerOperator.getRawSignature());
+			}
+		}
+		String typeText = type.toString().trim();
+		return typeText.isEmpty() ? "Object" : typeText;
+	}
+
+	private String cleanCTypeText(String rawType) {
+		if(rawType == null) {
+			return "";
+		}
+		return rawType.replaceAll("\\bstatic\\b", "")
+				.replaceAll("\\bextern\\b", "")
+				.replaceAll("\\binline\\b", "")
+				.trim()
+				.replaceAll("\\s+", " ");
+	}
 
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,
 							   LangSingleVariableDeclaration param, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {

@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -10,8 +11,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionStyleMacroParameter;
 import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorEndifStatement;
@@ -27,6 +34,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorObjectStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
+import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
@@ -65,6 +73,7 @@ import extension.umladapter.UMLAdapterUtil;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class CppFileProcessor {
 	
@@ -73,6 +82,7 @@ public class CppFileProcessor {
 	boolean astDiff;
 	
 	private UMLModel umlModel;
+	private UMLClass moduleClass;
 	
 	  
 	public CppFileProcessor(UMLModel umlModel) {
@@ -80,6 +90,9 @@ public class CppFileProcessor {
 	}
 
 	public void processCppFile(String filePath, String fileContent, boolean astDiff) {
+		this.filePath = filePath;
+		this.fileContent = fileContent;
+		this.astDiff = astDiff;
 		try {
 			FileContent content = FileContent.create(filePath, fileContent.toCharArray());
 			Map<String, String> predefinedMacros = new HashMap<>();
@@ -224,11 +237,10 @@ public class CppFileProcessor {
 	}
 
 	private void processTranslationUnit(IASTTranslationUnit ast) {
+		moduleClass = createModuleClass(ast);
 		for(IASTDeclaration declaration : ast.getDeclarations()) {
-			
-
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
-				
+					
 			}
 			else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
 				
@@ -244,7 +256,8 @@ public class CppFileProcessor {
 				//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			}
 			else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-				
+				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition);
+				moduleClass.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
 				//org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionWithTryBlock is a subclass
@@ -308,6 +321,140 @@ public class CppFileProcessor {
 				//All data members/functions that follow should have this access modifier
 			}
 		}
+		if(!moduleClass.isEmpty()) {
+			this.umlModel.addClass(moduleClass);
+		}
+	}
+
+	private UMLClass createModuleClass(IASTTranslationUnit ast) {
+		String sourceFolder = extractCppSourceFolder();
+		String moduleName = moduleName(filePath);
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, ast, CodeElementType.TYPE_DECLARATION, fileContent);
+		UMLClass umlClass = new UMLClass("", moduleName, locationInfo, true, Collections.emptyList());
+		umlClass.setModule(true);
+		umlClass.setStatic(true);
+		umlClass.setVisibility(Visibility.PUBLIC);
+		umlClass.setActualSignature(moduleName);
+		return umlClass;
+	}
+
+	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition) {
+		//src same for all thus we can run it once at beginning and save it 
+		String sourceFolder = extractCppSourceFolder();
+		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
+		IASTName functionName = declarator.getName();
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
+		//moduleclass can be parameterized module class, umlclass, etc
+		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, moduleClass.getName());
+		operation.setVisibility(Visibility.PUBLIC);
+		//is this how we properly check static modifier?
+		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
+		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
+
+		UMLType returnType = extractCType(functionDefinition.getDeclSpecifier(), declarator);
+		if(returnType != null) {
+			operation.addParameter(new UMLParameter("return", returnType, "return", false));
+		}
+
+		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
+			int index = 0;
+			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
+				//TODO: what is void parameter why do we need this function?
+				if(isVoidParameter(parameter, standardDeclarator.getParameters().length)) {
+					continue;
+				}
+				String parameterName = extractParameterName(parameter, index);
+				UMLType parameterType = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
+				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, operation, fileContent);
+				variableDeclaration.setParameter(true);
+				umlParameter.setVariableDeclaration(variableDeclaration);
+				operation.addParameter(umlParameter);
+				index++;
+			}
+			if(standardDeclarator.takesVarArgs()) {
+				UMLType varargsType = UMLType.extractTypeObject("Object");
+				varargsType.setVarargs();
+				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
+			}
+		}
+
+		operation.setActualSignature(extractActualSignature(functionDefinition));
+		operation.setBody(null);
+		return operation;
+	}
+
+	private boolean isVoidParameter(IASTParameterDeclaration parameter, int parameterCount) {
+		UMLType type = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
+		return parameterCount == 1 &&
+				type != null &&
+				type.toString().equals("void") &&
+				extractParameterName(parameter, 0).equals("arg0");
+	}
+
+	private UMLType extractCType(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
+		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
+		if(declarator != null) {
+			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
+				type.append(pointerOperator.getRawSignature());
+			}
+		}
+		String typeText = type.toString().trim();
+		if(typeText.isEmpty()) {
+			return null;
+		}
+		return UMLType.extractTypeObject(typeText);
+	}
+
+	private String extractParameterName(IASTParameterDeclaration parameter, int index) {
+		IASTDeclarator declarator = parameter.getDeclarator();
+		if(declarator != null && declarator.getName() != null) {
+			String name = declarator.getName().toString();
+			if(!name.isBlank()) {
+				return name;
+			}
+		}
+		return "arg" + index;
+	}
+
+	private String extractActualSignature(CASTFunctionDefinition functionDefinition) {
+		IASTFileLocation functionLocation = functionDefinition.getFileLocation();
+		if(functionLocation == null) {
+			return functionDefinition.getRawSignature();
+		}
+		int start = functionLocation.getNodeOffset();
+		int end = start + functionLocation.getNodeLength();
+		if(functionDefinition.getBody() != null && functionDefinition.getBody().getFileLocation() != null) {
+			end = functionDefinition.getBody().getFileLocation().getNodeOffset() + 1;
+		}
+		start = Math.max(0, Math.min(start, fileContent.length()));
+		end = Math.max(start, Math.min(end, fileContent.length()));
+		return fileContent.substring(start, end);
+	}
+
+	private String cleanTypeText(String rawType) {
+		if(rawType == null) {
+			return "";
+		}
+		return rawType.replaceAll("\\bstatic\\b", "")
+				.replaceAll("\\bextern\\b", "")
+				.replaceAll("\\binline\\b", "")
+				.trim()
+				.replaceAll("\\s+", " ");
+	}
+
+	private String moduleName(String path) {
+		String fileName = Paths.get(path).getFileName().toString();
+		int dot = fileName.lastIndexOf('.');
+		if(dot > 0) {
+			fileName = fileName.substring(0, dot);
+		}
+		return fileName;
+	}
+
+	private String extractCppSourceFolder() {
+		return UMLAdapterUtil.extractSourceFolder(filePath,
+				Set.of("src", "source", "lib", "include", "inc", "test", "tests", "unittest", "unittests"));
 	}
 
 }

@@ -271,6 +271,13 @@ public class JavaToKotlinMigration {
                     mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
             }
         }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.NULL_LITERAL);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NULL_LITERAL);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
     }
 
     private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {

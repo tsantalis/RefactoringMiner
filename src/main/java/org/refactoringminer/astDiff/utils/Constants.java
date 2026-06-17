@@ -37,6 +37,7 @@ public class Constants {
 			METHOD_INVOCATION_ARGUMENTS = "argument_list";
 			STRING_LITERAL = "string";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
+			NULL_LITERAL = "none";
 			METHOD_INVOCATION = "call";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
@@ -73,6 +74,7 @@ public class Constants {
 			METHOD_INVOCATION_ARGUMENTS = "value_arguments";
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal";
+			NULL_LITERAL = "null";
 			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "";
 			SWITCH_CASE = "";
@@ -109,6 +111,7 @@ public class Constants {
 			METHOD_INVOCATION_ARGUMENTS = "arguments";
 			STRING_LITERAL = "string_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
+			NULL_LITERAL = "null_literal";
 			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "switch_case";
@@ -146,6 +149,7 @@ public class Constants {
 			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
 			STRING_LITERAL = "StringLiteral";
 			BOOLEAN_LITERAL = "BooleanLiteral";
+			NULL_LITERAL = "NullLiteral";
 			METHOD_INVOCATION = "MethodInvocation";
 			SWITCH_STATEMENT = "SwitchStatement";
 			SWITCH_CASE = "SwitchCase";
@@ -245,6 +249,7 @@ public class Constants {
     public final String STRING_LITERAL;
     public final String NUMBER_LITERAL = "NumberLiteral";
     public final String BOOLEAN_LITERAL;
+    public final String NULL_LITERAL;
 
     public final String SINGLE_MEMBER_ANNOTATION = "SingleMemberAnnotation"; //@type(Expression), for instance
     public final String MARKER_ANNOTATION = "MarkerAnnotation"; //@Deprecated for instance

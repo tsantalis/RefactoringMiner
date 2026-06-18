@@ -331,7 +331,7 @@ public class CppFileProcessor {
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
-		//moduleclass can be parameterized module class, umlclass, etc
+		//TODO: moduleclass can be parameterized module class, umlclass, etc for C++ - belong to namespace, class or class owner from qualified name
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, moduleClass.getName());
 		operation.setVisibility(Visibility.PUBLIC);
 		//getStorageClass() returns int with the type of storage specifier, then compare with the corresponding int for static 
@@ -346,7 +346,6 @@ public class CppFileProcessor {
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
-				//TODO: what is void parameter why do we need this function?
 				if(isVoidParameter(parameter, standardDeclarator.getParameters().length)) {
 					continue;
 				}
@@ -371,6 +370,8 @@ public class CppFileProcessor {
 		return operation;
 	}
 
+	//If the function has exactly one parameter and that parameter is unnamed void,
+	//skip it because it represents no parameters. ex: void reset(void) {}
 	private boolean isVoidParameter(IASTParameterDeclaration parameter, int parameterCount) {
 		UMLType type = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
 		return parameterCount == 1 &&

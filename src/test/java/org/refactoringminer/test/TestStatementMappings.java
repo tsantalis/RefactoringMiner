@@ -1305,6 +1305,7 @@ public class TestStatementMappings {
 		"https://github.com/apache/kafka.git, d171ff08a70f9fa8065e6661fcc1f3da092d7faf, testRejectMinIsrChangeWhenElrEnabled, true, kafka-d171ff08a70f9fa8065e6661fcc1f3da092d7faf.txt",
 		"https://github.com/apache/flink.git, 583722e721a121fa7a6787fe5acb47949b30454a, testCreateAndReuseFiles, true, flink-583722e721a121fa7a6787fe5acb47949b30454a.txt",
 		"https://github.com/tsantalis/RefactoringMiner.git, 1b15f4a76b5aaad9959866fa10dcd815934e1789, findReplacementsWithExactMatching, true, miner-1b15f4a76b5aaad9959866fa10dcd815934e1789.txt",
+		"https://github.com/JetBrains/intellij-community.git, 15b28eeef2044770b8eb908a141b144d5009b209, run, true, intellij-community-15b28eeef2044770b8eb908a141b144d5009b209.txt"
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

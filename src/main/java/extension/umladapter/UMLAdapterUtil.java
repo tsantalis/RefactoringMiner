@@ -78,6 +78,12 @@ public class UMLAdapterUtil {
         return paramOffset;
     }
 
+    public static final Set<String> DEFAULT_SOURCE_FOLDERS = Set.of("src", "lib", "tests", "");
+
+    public static String extractSourceFolder(String filename) {
+        return extractSourceFolder(filename, DEFAULT_SOURCE_FOLDERS);
+    }
+
     public static String extractSourceFolder(String filename, Set<String> commonSourceFolders) {
         Path path = Paths.get(filename);
 
@@ -96,7 +102,7 @@ public class UMLAdapterUtil {
 
     // Add this to UMLAdapterUtil.java
     public static String extractPackageName(String filename) {
-        String sourceFolder = extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
+        String sourceFolder = extractSourceFolder(filename);
         return extractPackageName(filename, sourceFolder);
     }
 
@@ -139,7 +145,7 @@ public class UMLAdapterUtil {
         List<UMLImport> umlImports = new ArrayList<>();
 
         // Get source folder and file path for location info
-        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
+        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
         String filepath = UMLAdapterUtil.extractFilePath(filename);
 
         for (LangImportStatement importStmt : compilationUnit.getImports()) {

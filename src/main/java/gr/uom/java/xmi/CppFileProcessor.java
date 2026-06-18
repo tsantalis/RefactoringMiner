@@ -144,68 +144,69 @@ public class CppFileProcessor {
 			IASTName nameNode;
 			String name;
 			String value;
+			UMLPreprocessorStatement preprocessorStatement;
 			
 			if(statement instanceof IASTPreprocessorMacroDefinition macroDefinition) {
 				 nameNode = macroDefinition.getName();
 				 name = nameNode.toString();
 				 value = macroDefinition.getExpansion();
-				 new UMLPreprocessorStatement(locationInfo,Directive.DEFINE,name,value);
+				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.DEFINE,name,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorIncludeStatement includeStatement) {
 				 nameNode = includeStatement.getName();
 				 name = nameNode.toString();
 				 value = includeStatement.getPath();
-				 new UMLPreprocessorStatement(locationInfo,Directive.INCLUDE,name,value);
+				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.INCLUDE,name,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorUndefStatement undefStatement) {
 				 nameNode = undefStatement.getMacroName();
 				 name = nameNode.toString();
-				 new UMLPreprocessorStatement(locationInfo,Directive.UNDEF,name);
+				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.UNDEF,name);
 
 			}
 			else if(statement instanceof IASTPreprocessorIfStatement ifStatement) {
 				//convert char[] to string
 				 value = new String(ifStatement.getCondition());
-				 new UMLPreprocessorStatement(locationInfo,Directive.IF,value);
+				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IF,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorIfdefStatement ifdefStatement) {
 				//convert char[] to string
 				 value = new String(ifdefStatement.getCondition());
-				new UMLPreprocessorStatement(locationInfo,Directive.IFDEF,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IFDEF,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorIfndefStatement ifndefStatement) {
 				//convert char[] to string
 				 value = new String(ifndefStatement.getCondition());
-				new UMLPreprocessorStatement(locationInfo,Directive.IFNDEF,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IFNDEF,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorElifStatement elifStatement) {
 				//convert char[] to string
 				 value = new String(elifStatement.getCondition());
-				new UMLPreprocessorStatement(locationInfo,Directive.ELIF,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELIF,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorElseStatement elseStatement) {
-				new UMLPreprocessorStatement(locationInfo,Directive.ELSE);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELSE);
 
 			}
 			else if(statement instanceof IASTPreprocessorEndifStatement endifStatement) {
-				new UMLPreprocessorStatement(locationInfo,Directive.ENDIF);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ENDIF);
 			}
 			else if(statement instanceof IASTPreprocessorPragmaStatement pragmaStatement) {
 				//convert char[] to string
 				 value = new String(pragmaStatement.getMessage());
-				new UMLPreprocessorStatement(locationInfo,Directive.PRAGMA,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.PRAGMA,value);
 
 			}
 			else if(statement instanceof IASTPreprocessorErrorStatement errorStatement) {
 				//convert char[] to string
 				 value = new String(errorStatement.getMessage());
-				new UMLPreprocessorStatement(locationInfo,Directive.ERROR,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ERROR,value);
 
 			}
 		}

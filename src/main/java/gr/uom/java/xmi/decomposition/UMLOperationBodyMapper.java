@@ -12352,7 +12352,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(statement instanceof TryStatementObject tryStatement) {
+			if(statement instanceof TryStatementObject tryStatement && tryStatement.getParent() != null &&
+					tryStatement.getParent().getOwner().isPresent() && tryStatement.getParent().getOwner().get() instanceof LambdaExpressionObject) {
 				boolean result = findFragmentInLambdas(tryStatement.getStatements(), fragment);
 				if(result) {
 					return true;

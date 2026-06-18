@@ -71,15 +71,6 @@ public class MoveSourceFolderRefactoring extends ChangeTypeRefactoring {
 		return pattern;
 	}
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getName()).append("\t");
-		sb.append(getTemplateParameterBefore().get());
-		sb.append(" to ");
-		sb.append(getTemplateParameterAfter());
-		return sb.toString();
-	}
-
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
 	}

@@ -248,7 +248,7 @@ public class CppFileProcessor {
 				//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			}
 			else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition, sourceFolder);
+				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition, sourceFolder, moduleClass);
 				moduleClass.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
@@ -329,14 +329,13 @@ public class CppFileProcessor {
 		return umlClass;
 	}
 
-	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition, String sourceFolder) {
+	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition, String sourceFolder, UMLAbstractClass parentContainer) {
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
-		//TODO: moduleclass can be parameterized module class, umlclass, etc for C++ - belong to namespace, class or class owner from qualified name
-		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, moduleClass.getName());
+		//TODO: module class can be parameterized module class, umlclass, etc for C++ - belong to namespace, class or class owner from qualified name
+		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, parentContainer.getName());
 		operation.setVisibility(Visibility.PUBLIC);
-		//getStorageClass() returns int with the type of storage specifier, then compare with the corresponding int for static 
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
 

@@ -134,18 +134,7 @@ public class CppFileProcessor {
 	private void processPreprocessorStatements(IASTTranslationUnit ast) {
 		for(IASTPreprocessorStatement statement : ast.getAllPreprocessorStatements()) {
 			LocationInfo locationInfo = new LocationInfo(
-					UMLAdapterUtil.extractSourceFolder(filePath, 
-							Set.of(
-				            "src",
-				            "source",
-				            "lib",
-				            "include",
-				            "inc",
-				            "test",
-				            "tests",
-				            "unittest",
-				            "unittests"
-				    )),                         // sourceFolder
+					extractCppSourceFolder(),                         // sourceFolder
 					filePath,                   // current C++ file path
 					statement,             // the IASTPreprocessorStatement node
 					CodeElementType.PREPROCESSOR_DIRECTIVE,
@@ -237,7 +226,8 @@ public class CppFileProcessor {
 	}
 
 	private void processTranslationUnit(IASTTranslationUnit ast) {
-		moduleClass = createModuleClass(ast);
+		String sourceFolder = extractCppSourceFolder();
+		moduleClass = createModuleClass(ast, sourceFolder);
 		for(IASTDeclaration declaration : ast.getDeclarations()) {
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 					
@@ -256,7 +246,7 @@ public class CppFileProcessor {
 				//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			}
 			else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition);
+				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition, sourceFolder);
 				moduleClass.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
@@ -326,8 +316,7 @@ public class CppFileProcessor {
 		}
 	}
 
-	private UMLClass createModuleClass(IASTTranslationUnit ast) {
-		String sourceFolder = extractCppSourceFolder();
+	private UMLClass createModuleClass(IASTTranslationUnit ast, String sourceFolder) {
 		String moduleName = moduleName(filePath);
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, ast, CodeElementType.TYPE_DECLARATION, fileContent);
 		UMLClass umlClass = new UMLClass("", moduleName, locationInfo, true, Collections.emptyList());
@@ -338,9 +327,8 @@ public class CppFileProcessor {
 		return umlClass;
 	}
 
-	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition) {
+	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition, String sourceFolder) {
 		//src same for all thus we can run it once at beginning and save it 
-		String sourceFolder = extractCppSourceFolder();
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);

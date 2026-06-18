@@ -98,7 +98,6 @@ public class UMLAdapterUtil {
         // Fallback to project root if no source folder found
         return path.getNameCount() > 1 ? path.subpath(0, 1).toString() : "";
     }
-    
 
     // Add this to UMLAdapterUtil.java
     public static String extractPackageName(String filename) {

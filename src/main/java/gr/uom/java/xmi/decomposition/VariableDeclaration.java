@@ -109,6 +109,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
+import gr.uom.java.xmi.util.CdtTypeUtil;
 
 public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, AnnotationProvider {
 	private String variableName;
@@ -156,7 +157,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	}
 
 	private String extractCTypeText(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
-		StringBuilder type = new StringBuilder(cleanCTypeText(declSpecifier.getRawSignature()));
+		StringBuilder type = new StringBuilder(CdtTypeUtil.cleanTypeText(declSpecifier.getRawSignature()));
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
 				type.append(pointerOperator.getRawSignature());
@@ -164,17 +165,6 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		String typeText = type.toString().trim();
 		return typeText.isEmpty() ? "Object" : typeText;
-	}
-
-	private String cleanCTypeText(String rawType) {
-		if(rawType == null) {
-			return "";
-		}
-		return rawType.replaceAll("\\bstatic\\b", "")
-				.replaceAll("\\bextern\\b", "")
-				.replaceAll("\\binline\\b", "")
-				.trim()
-				.replaceAll("\\s+", " ");
 	}
 
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,

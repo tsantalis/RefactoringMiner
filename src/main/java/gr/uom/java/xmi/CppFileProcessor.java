@@ -74,6 +74,7 @@ import extension.umladapter.UMLAdapterUtil;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.util.CdtTypeUtil;
 
 public class CppFileProcessor {
 	
@@ -381,7 +382,7 @@ public class CppFileProcessor {
 	}
 
 	private UMLType extractCType(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
-		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
+		StringBuilder type = new StringBuilder(CdtTypeUtil.cleanTypeText(declSpecifier.getRawSignature()));
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
 				type.append(pointerOperator.getRawSignature());
@@ -418,15 +419,6 @@ public class CppFileProcessor {
 		start = Math.max(0, Math.min(start, fileContent.length()));
 		end = Math.max(start, Math.min(end, fileContent.length()));
 		return fileContent.substring(start, end);
-	}
-
-	private String cleanTypeText(String rawType) {
-	    if(rawType == null) {
-	        return "";
-	    }
-	    return rawType.replaceAll("\\b(static|extern|inline|virtual|explicit|friend|constexpr|consteval|constinit|_Noreturn)\\b", "")
-	            .trim()
-	            .replaceAll("\\s+", " ");
 	}
 
 	private String moduleName(String path) {

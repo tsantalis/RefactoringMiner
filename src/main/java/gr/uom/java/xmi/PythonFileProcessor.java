@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -36,7 +35,7 @@ public class PythonFileProcessor {
 				List<Tree> trees = TreeUtilFunctions.findChildrenByTypeRecursively(treeContext.getRoot(), "comment");
 				List<UMLComment> comments = new ArrayList<UMLComment>();
 				for(Tree t : trees) {
-					String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath, Set.of("src", "lib", "tests", ""));
+					String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
 					LocationInfo location = new LocationInfo(sourceFolder, filePath, t, CodeElementType.LINE_COMMENT, fileContent);
 					UMLComment comment = new UMLComment(t.getLabel(), location);
 					comments.add(comment);

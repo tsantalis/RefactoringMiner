@@ -12340,6 +12340,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nestedTryCatch;
 	}
 
+	private boolean findFragmentInLambdas(List<AbstractStatement> compStatements, AbstractCodeFragment fragment) {
+		for(AbstractStatement statement : compStatements) {
+			if(statement.equals(fragment))
+				return true;
+			for(LambdaExpressionObject lambda : statement.getLambdas()) {
+				if(lambda.getBody() != null) {
+					boolean result = findFragmentInLambdas(lambda.getBody().getCompositeStatement().getStatements(), fragment);
+					if(result) {
+						return true;
+					}
+				}
+			}
+			if(statement instanceof TryStatementObject tryStatement) {
+				boolean result = findFragmentInLambdas(tryStatement.getStatements(), fragment);
+				if(result) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private double compositeChildMatchingScore(CompositeStatementObject comp1, CompositeStatementObject comp2, 
 			Optional<ReplacementInfo> replacementInfo, Set<AbstractCodeMapping> mappings,
 			List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
@@ -12369,6 +12391,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : mappings) {
 			if(compStatements1.contains(mapping.getFragment1()) && compStatements2.contains(mapping.getFragment2())) {
 				mappedChildrenSize++;
+			}
+			else if(!compStatements1.contains(mapping.getFragment1()) && compStatements2.contains(mapping.getFragment2())) {
+				if(findFragmentInLambdas(compStatements1, mapping.getFragment1())) {
+					mappedChildrenSize++;
+				}
+			}
+			else if(compStatements1.contains(mapping.getFragment1()) && !compStatements2.contains(mapping.getFragment2())) {
+				if(findFragmentInLambdas(compStatements2, mapping.getFragment2())) {
+					mappedChildrenSize++;
+				}
 			}
 		}
 		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&

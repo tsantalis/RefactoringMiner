@@ -328,14 +328,13 @@ public class CppFileProcessor {
 	}
 
 	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition, String sourceFolder) {
-		//src same for all thus we can run it once at beginning and save it 
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
 		//moduleclass can be parameterized module class, umlclass, etc
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, moduleClass.getName());
 		operation.setVisibility(Visibility.PUBLIC);
-		//is this how we properly check static modifier?
+		//getStorageClass() returns int with the type of storage specifier, then compare with the corresponding int for static 
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
 
@@ -421,14 +420,12 @@ public class CppFileProcessor {
 	}
 
 	private String cleanTypeText(String rawType) {
-		if(rawType == null) {
-			return "";
-		}
-		return rawType.replaceAll("\\bstatic\\b", "")
-				.replaceAll("\\bextern\\b", "")
-				.replaceAll("\\binline\\b", "")
-				.trim()
-				.replaceAll("\\s+", " ");
+	    if(rawType == null) {
+	        return "";
+	    }
+	    return rawType.replaceAll("\\b(static|extern|inline|virtual|explicit|friend|constexpr|consteval|constinit|_Noreturn)\\b", "")
+	            .trim()
+	            .replaceAll("\\s+", " ");
 	}
 
 	private String moduleName(String path) {

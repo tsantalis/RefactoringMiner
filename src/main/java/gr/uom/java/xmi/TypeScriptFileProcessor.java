@@ -1,7 +1,6 @@
 package gr.uom.java.xmi;
 
 import java.io.ByteArrayInputStream;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -93,7 +92,7 @@ public class TypeScriptFileProcessor {
 			if(output.getProgram() instanceof Swc4jAstModule module) {
 				List<ISwc4jAstModuleItem> list = module.getBody();
 				List<UMLImport> imports = new ArrayList<>();
-				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath, Set.of("src", "lib", "tests", ""));
+				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
 				int extensionLength = filePath.endsWith(".tsx") ? 4 : 3;
 				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
 				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);

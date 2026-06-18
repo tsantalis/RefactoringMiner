@@ -98,7 +98,7 @@ public class UMLModelAdapter {
         moduleClass.setRecord(false);
 
         if (!topLevelMethods.isEmpty()) {
-            String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
+            String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
             String filepath = UMLAdapterUtil.extractFilePath(filename);
             for (LangMethodDeclaration method : topLevelMethods) {
                 UMLOperation operation = createUMLOperation(method, moduleClass.getName(),
@@ -120,7 +120,7 @@ public class UMLModelAdapter {
 
     private static UMLClass createModuleClass(LangCompilationUnit compilationUnit, String filename, List<UMLImport> imports, String fileContent) {
         String moduleName = UMLAdapterUtil.extractModuleName(filename);
-        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
+        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
         String filePath = UMLAdapterUtil.extractFilePath(filename);
 
         LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compilationUnit,
@@ -167,7 +167,7 @@ public class UMLModelAdapter {
     public static UMLClass createUMLClass(LangTypeDeclaration typeDecl, String filename, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
         String className = typeDecl.getName();
         String moduleName = UMLAdapterUtil.extractModuleName(filename);
-        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename, Set.of("src", "lib", "tests", ""));
+        String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
         String filePath = UMLAdapterUtil.extractFilePath(filename);
 
         LocationInfo locationInfo = new LocationInfo(sourceFolder,

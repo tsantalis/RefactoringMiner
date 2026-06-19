@@ -109,7 +109,6 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
-import gr.uom.java.xmi.util.CdtTypeUtil;
 
 public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, AnnotationProvider {
 	private String variableName;
@@ -127,15 +126,15 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private String actualSignature;
 	private final Constants LANG;
 
-	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, String fallbackName,
+	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, String parameterName, UMLType parameterType,
 			VariableDeclarationContainer container, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
-		this.variableName = extractCParameterName(parameter, fallbackName);
+		this.variableName = parameterName;
 		this.initializer = null;
-		this.type = UMLType.extractTypeObject(extractCTypeText(parameter.getDeclSpecifier(), parameter.getDeclarator()));
+		this.type = parameterType;
 		this.varargsParameter = false;
 		int startOffset = locationInfo.getStartOffset();
 		int endOffset = container != null ? container.getLocationInfo().getEndOffset() : locationInfo.getEndOffset();
@@ -143,28 +142,6 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = locationInfo.getStartOffset() >= 0 && locationInfo.getEndOffset() <= fileContent.length() ?
 				fileContent.substring(locationInfo.getStartOffset(), locationInfo.getEndOffset()) :
 					parameter.getRawSignature();
-	}
-
-	private String extractCParameterName(IASTParameterDeclaration parameter, String fallbackName) {
-		IASTDeclarator declarator = parameter.getDeclarator();
-		if(declarator != null && declarator.getName() != null) {
-			String name = declarator.getName().toString();
-			if(!name.isBlank()) {
-				return name;
-			}
-		}
-		return fallbackName;
-	}
-
-	private String extractCTypeText(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
-		StringBuilder type = new StringBuilder(CdtTypeUtil.cleanTypeText(declSpecifier.getRawSignature()));
-		if(declarator != null) {
-			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
-				type.append(pointerOperator.getRawSignature());
-			}
-		}
-		String typeText = type.toString().trim();
-		return typeText.isEmpty() ? "Object" : typeText;
 	}
 
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,

@@ -2,11 +2,9 @@ package gr.uom.java.xmi;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,11 +68,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.refactoringminer.util.PathFileUtils;
 import extension.umladapter.UMLAdapterUtil;
 
-
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
-import gr.uom.java.xmi.util.CdtTypeUtil;
 
 public class CppFileProcessor {
 	
@@ -343,7 +339,7 @@ public class CppFileProcessor {
 				String parameterName = extractParameterName(parameter, index);
 				UMLType parameterType = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
 				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
-				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, operation, fileContent);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, parameterType, operation, fileContent);
 				variableDeclaration.setParameter(true);
 				umlParameter.setVariableDeclaration(variableDeclaration);
 				operation.addParameter(umlParameter);
@@ -371,8 +367,17 @@ public class CppFileProcessor {
 				extractParameterName(parameter, 0).equals("arg0");
 	}
 
+	private static String cleanTypeText(String rawType) {
+		if(rawType == null) {
+			return "";
+		}
+		return rawType.replaceAll("\\b(static|extern|inline|virtual|explicit|friend|constexpr|consteval|constinit|_Noreturn)\\b", "")
+				.trim()
+				.replaceAll("\\s+", " ");
+	}
+
 	private UMLType extractCType(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
-		StringBuilder type = new StringBuilder(CdtTypeUtil.cleanTypeText(declSpecifier.getRawSignature()));
+		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
 				type.append(pointerOperator.getRawSignature());
@@ -424,5 +429,4 @@ public class CppFileProcessor {
 		return UMLAdapterUtil.extractSourceFolder(filePath,
 				Set.of("src", "source", "lib", "include", "inc", "test", "tests", "unittest", "unittests"));
 	}
-
 }

@@ -112,12 +112,14 @@ class LocationInfoCppTest {
 		assertEquals(0, location.getCompilationUnitLength());
 	}
 
-
 	//Search parsed C++ AST for specific declaration and return its node
 	private static IASTNode findDeclaration(String source, String rawSignature) throws CoreException {
 		IASTTranslationUnit translationUnit = parseTranslationUnit(source);
+		return findDeclaration(translationUnit, rawSignature);
+	}
+
+	private static IASTNode findDeclaration(IASTTranslationUnit translationUnit, String rawSignature) {
 		MyVisitor visitor = new MyVisitor(rawSignature);
-		
 		translationUnit.accept(visitor);
 		assertNotNull(visitor.getMatch(), "Could not find C++ declaration: " + rawSignature);
 		return visitor.getMatch();
@@ -144,7 +146,6 @@ class LocationInfoCppTest {
 			}
 			return PROCESS_CONTINUE;
 		}
-		
 	}
 
 	//parse C++ src code into AST

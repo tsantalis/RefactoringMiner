@@ -78,10 +78,14 @@ public class UMLAdapterUtil {
         return paramOffset;
     }
 
-    public static String extractSourceFolder(String filename) {
-        Path path = Paths.get(filename);
-        Set<String> commonSourceFolders = Set.of("src", "lib", "tests", "");
+    public static final Set<String> DEFAULT_SOURCE_FOLDERS = Set.of("src", "lib", "tests", "");
 
+    public static String extractSourceFolder(String filename) {
+        return extractSourceFolder(filename, DEFAULT_SOURCE_FOLDERS);
+    }
+
+    public static String extractSourceFolder(String filename, Set<String> commonSourceFolders) {
+        Path path = Paths.get(filename);
 
         // Check for common source folder patterns
         for (int i = 0; i < path.getNameCount() - 1; i++) {

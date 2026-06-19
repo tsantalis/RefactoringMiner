@@ -147,67 +147,57 @@ public class CppFileProcessor {
 			UMLPreprocessorStatement preprocessorStatement;
 			
 			if(statement instanceof IASTPreprocessorMacroDefinition macroDefinition) {
-				 nameNode = macroDefinition.getName();
-				 name = nameNode.toString();
-				 value = macroDefinition.getExpansion();
-				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.DEFINE,name,value);
-
+				nameNode = macroDefinition.getName();
+				name = nameNode.toString();
+				value = macroDefinition.getExpansion();
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.DEFINE,name,value);
 			}
 			else if(statement instanceof IASTPreprocessorIncludeStatement includeStatement) {
-				 nameNode = includeStatement.getName();
-				 name = nameNode.toString();
-				 value = includeStatement.getPath();
-				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.INCLUDE,name,value);
-
+				nameNode = includeStatement.getName();
+				name = nameNode.toString();
+				value = includeStatement.getPath();
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.INCLUDE,name,value);
 			}
 			else if(statement instanceof IASTPreprocessorUndefStatement undefStatement) {
-				 nameNode = undefStatement.getMacroName();
-				 name = nameNode.toString();
-				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.UNDEF,name);
-
+				nameNode = undefStatement.getMacroName();
+				name = nameNode.toString();
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.UNDEF,name);
 			}
 			else if(statement instanceof IASTPreprocessorIfStatement ifStatement) {
 				//convert char[] to string
-				 value = new String(ifStatement.getCondition());
-				 preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IF,value);
-
+				value = new String(ifStatement.getCondition());
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IF,value);
 			}
 			else if(statement instanceof IASTPreprocessorIfdefStatement ifdefStatement) {
 				//convert char[] to string
-				 value = new String(ifdefStatement.getCondition());
+				value = new String(ifdefStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IFDEF,value);
-
 			}
 			else if(statement instanceof IASTPreprocessorIfndefStatement ifndefStatement) {
 				//convert char[] to string
-				 value = new String(ifndefStatement.getCondition());
+				value = new String(ifndefStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.IFNDEF,value);
-
 			}
 			else if(statement instanceof IASTPreprocessorElifStatement elifStatement) {
 				//convert char[] to string
-				 value = new String(elifStatement.getCondition());
+				value = new String(elifStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELIF,value);
-
 			}
 			else if(statement instanceof IASTPreprocessorElseStatement elseStatement) {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELSE);
-
 			}
 			else if(statement instanceof IASTPreprocessorEndifStatement endifStatement) {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ENDIF);
 			}
 			else if(statement instanceof IASTPreprocessorPragmaStatement pragmaStatement) {
 				//convert char[] to string
-				 value = new String(pragmaStatement.getMessage());
+				value = new String(pragmaStatement.getMessage());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.PRAGMA,value);
-
 			}
 			else if(statement instanceof IASTPreprocessorErrorStatement errorStatement) {
 				//convert char[] to string
-				 value = new String(errorStatement.getMessage());
+				value = new String(errorStatement.getMessage());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ERROR,value);
-
 			}
 		}
 	}

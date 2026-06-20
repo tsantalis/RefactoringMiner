@@ -216,6 +216,9 @@ public class StringBasedHeuristics {
 		if(diff1.isEmpty() && diff2.equals("!!")) {
 			return true;
 		}
+		if(diff1.isEmpty() && diff2.startsWith("@")) {
+			return true;
+		}
 		if(diff1.isEmpty() && diff2.equals("toU")) {
 			//url() becomes toUrl()
 			return true;

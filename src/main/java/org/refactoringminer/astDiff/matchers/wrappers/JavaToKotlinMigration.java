@@ -275,8 +275,37 @@ public class JavaToKotlinMigration {
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NULL_LITERAL);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
+            	children1.get(i).setLabel("null");
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
+        }
+        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.DISJUNCTION_EXPRESSION)) {
+        	mappingStore.addMapping(srcStatementNode, dstStatementNode);
+        }
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.EQUALITY_EXPRESSION)) {
+        	mappingStore.addMapping(srcStatementNode, dstStatementNode);
+        }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LOGICAL_OPERATOR, LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
+        Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
+        Tree variableDeclaration = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION);
+        Tree affectationOperator = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AFFECTATION_OPERATOR);
+        if(variableDeclarationFragment != null && variableDeclaration != null && affectationOperator != null) {
+        	variableDeclarationFragment.setLabel("=");
+        	mappingStore.addMapping(variableDeclarationFragment, affectationOperator);
+        }
+        Tree assignment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.ASSIGNMENT);
+        Tree assignableExpression = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
+        if(assignment != null && assignableExpression != null && affectationOperator != null) {
+        	Tree assignmentOperator = TreeUtilFunctions.findChildByType(assignment, LANG1.ASSIGNMENT_OPERATOR);
+        	mappingStore.addMapping(assignmentOperator, affectationOperator);
+        	assignment.setLabel("=");
+        	mappingStore.addMapping(assignment, affectationOperator);
         }
     }
 

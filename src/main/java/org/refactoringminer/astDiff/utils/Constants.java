@@ -369,6 +369,11 @@ public class Constants {
     public final String ARITHMETIC_OPERATOR = "arithmetic_operator";
     public final String LONG_LITERAL = "long_literal";
     public final String MULT_EXPRESSION = "multiplicative_expression";
+    public final String DIRECTLY_ASSIGNABLE_EXPRESSION = "directly_assignable_expression";
+    public final String LOGICAL_OPERATOR = "logical_operator";
+    public final String COMPARISON_OPERATOR = "comparison_operator";
+    public final String DISJUNCTION_EXPRESSION = "disjunction_expression";
+    public final String EQUALITY_EXPRESSION = "equality_expression";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

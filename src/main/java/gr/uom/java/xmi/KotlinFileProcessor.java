@@ -2,7 +2,6 @@ package gr.uom.java.xmi;
 
 import static org.jetbrains.kotlin.lexer.KtTokens.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -54,9 +53,12 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtValueArgumentList;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
+
+import org.refactoringminer.astDiff.visitors.KotlinCompatibleTreeVisitor;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -69,6 +71,7 @@ import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class KotlinFileProcessor {
+	private final static Logger logger = LoggerFactory.getLogger(KotlinFileProcessor.class);
 	private static final Pattern LEAD_WHITE_SPACE_JAVADOC = Pattern.compile("^\s+\\*", Pattern.MULTILINE);
 	private UMLModel umlModel;
 
@@ -154,13 +157,12 @@ public class KotlinFileProcessor {
 		PsiFile psiFile = factory.createFileFromText(filePath, KotlinLanguage.INSTANCE, fileContent);
 		KtFile ktFile = (KtFile)psiFile;
 		if (astDiff) {
-			ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
 			try {
-				TreeContext treeContext = new KotlinTreeSitterNgTreeGenerator().generateFrom().stream(is);
+				TreeContext treeContext = new KotlinCompatibleTreeVisitor(ktFile, fileContent).getTreeContext();
 				this.umlModel.getTreeContextMap().put(filePath, treeContext);
 			}
 			catch(Exception e) {
-
+				logger.warn(String.format("Could not generate Kotlin AST diff tree for %s", filePath), e);
 			}
 		}
 		

@@ -279,31 +279,48 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
-        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.DISJUNCTION_EXPRESSION)) {
+        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.DISJUNCTION_EXPRESSION)) {
         	mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
-        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.EQUALITY_EXPRESSION)) {
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.EQUALITY_EXPRESSION)) {
         	mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);
-        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LOGICAL_OPERATOR, LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LOGICAL_OPERATOR,
+                LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR, LANG2.INFIX_EXPRESSION_OPERATOR);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
-        Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
+        Tree variableDeclarationFragment = srcStatementNode.getType().name.equals(LANG1.VARIABLE_DECLARATION_FRAGMENT) ?
+                srcStatementNode : TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
         Tree variableDeclaration = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION);
-        Tree affectationOperator = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AFFECTATION_OPERATOR);
+        if(variableDeclaration == null) {
+            variableDeclaration = dstStatementNode.getType().name.equals(LANG2.VARIABLE_DECLARATION_FRAGMENT) ?
+                    dstStatementNode : TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION_FRAGMENT);
+        }
+        List<Tree> affectationOperators = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode,
+                LANG2.AFFECTATION_OPERATOR, LANG2.ASSIGNMENT_OPERATOR);
+        Tree affectationOperator = affectationOperators.isEmpty() ? null : affectationOperators.get(0);
+        if(variableDeclaration == null) {
+            List<Tree> variableDeclarationFragments = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.VARIABLE_DECLARATION_FRAGMENT);
+            variableDeclaration = variableDeclarationFragments.isEmpty() ? null : variableDeclarationFragments.get(0);
+        }
         if(variableDeclarationFragment != null && variableDeclaration != null && affectationOperator != null) {
         	variableDeclarationFragment.setLabel("=");
         	mappingStore.addMapping(variableDeclarationFragment, affectationOperator);
         }
         Tree assignment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.ASSIGNMENT);
         Tree assignableExpression = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
+        if(assignableExpression == null) {
+            assignableExpression = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.ASSIGNMENT);
+        }
         if(assignment != null && assignableExpression != null && affectationOperator != null) {
         	Tree assignmentOperator = TreeUtilFunctions.findChildByType(assignment, LANG1.ASSIGNMENT_OPERATOR);
-        	mappingStore.addMapping(assignmentOperator, affectationOperator);
+            if(assignmentOperator != null) {
+                mappingStore.addMapping(assignmentOperator, affectationOperator);
+            }
         	assignment.setLabel("=");
         	mappingStore.addMapping(assignment, affectationOperator);
         }

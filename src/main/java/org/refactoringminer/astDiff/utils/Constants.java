@@ -4,11 +4,12 @@ import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
 	public static boolean isCrossLanguage(Constants LANG1, Constants LANG2) {
-		return !LANG1.TYPE_DECLARATION.equals(LANG2.TYPE_DECLARATION);
+		return !LANG1.LANGUAGE.equals(LANG2.LANGUAGE);
 	}
 
 	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {
+			LANGUAGE = "python";
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";
@@ -46,43 +47,45 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
-			CLASS_BLOCK = "type_body";
-			METHOD_DECLARATION = "function_declaration";
-			SIMPLE_NAME = "simple_identifier";
-			IMPORT_DECLARATION = "import_header";
-			TYPE_DECLARATION = "class_declaration";
-			TYPE_DECLARATION_KIND = "type_keyword";
-			BLOCK_COMMENT = "multiline_comment";
-			LINE_COMMENT = "line_comment";
-			EXPRESSION_STATEMENT = "expression_statement"; // TODO update value
-			TRY_STATEMENT = "try_expression";
-			CATCH_CLAUSE = "catch_block";
-			IF_STATEMENT = "if_expression";
-			WHILE_STATEMENT = "while_statement";
-			DO_STATEMENT = "do_statement";
-			FOR_STATEMENT = "for_statement";
-			ENHANCED_FOR_STATEMENT = "for_statement";
-			PACKAGE_DECLARATION = "package_header";
-			FIELD_DECLARATION = "property_declaration";
-			MODIFIER = "visibility_modifier";
-			INITIALIZER = "anonymous_initializer";
-			CONSTRUCTOR_INVOCATION = "constructor_invocation";
-			ENUM_DECLARATION = "class_declaration";
-			ANNOTATION_TYPE_DECLARATION = "class_declaration";
-			RECORD_DECLARATION = "class_declaration";
-			PREFIX_EXPRESSION = "prefix_expression";
-			METHOD_INVOCATION_ARGUMENTS = "value_arguments";
-			STRING_LITERAL = "string_literal";
-			BOOLEAN_LITERAL = "boolean_literal";
-			NULL_LITERAL = "null";
-			METHOD_INVOCATION = "call_expression";
-			SWITCH_STATEMENT = "";
-			SWITCH_CASE = "";
-			ASSIGNMENT = "assignment";
-			THROW_STATEMENT = "throw_expression";
-			EMPTY_STATEMENT = "empty_statement";
+			LANGUAGE = "kotlin";
+			CLASS_BLOCK = "";
+			METHOD_DECLARATION = "MethodDeclaration";
+			SIMPLE_NAME = "SimpleName";
+			IMPORT_DECLARATION = "ImportDeclaration";
+			TYPE_DECLARATION = "TypeDeclaration";
+			TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
+			BLOCK_COMMENT = "BlockComment";
+			LINE_COMMENT = "LineComment";
+			EXPRESSION_STATEMENT = "ExpressionStatement";
+			TRY_STATEMENT = "TryStatement";
+			CATCH_CLAUSE = "CatchClause";
+			IF_STATEMENT = "IfStatement";
+			WHILE_STATEMENT = "WhileStatement";
+			DO_STATEMENT = "DoStatement";
+			FOR_STATEMENT = "ForStatement";
+			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+			PACKAGE_DECLARATION = "PackageDeclaration";
+			FIELD_DECLARATION = "FieldDeclaration";
+			MODIFIER = "Modifier";
+			INITIALIZER = "Initializer";
+			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
+			ENUM_DECLARATION = "EnumDeclaration";
+			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
+			RECORD_DECLARATION = "RecordDeclaration";
+			PREFIX_EXPRESSION = "PrefixExpression";
+			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+			STRING_LITERAL = "StringLiteral";
+			BOOLEAN_LITERAL = "BooleanLiteral";
+			NULL_LITERAL = "NullLiteral";
+			METHOD_INVOCATION = "MethodInvocation";
+			SWITCH_STATEMENT = "SwitchStatement";
+			SWITCH_CASE = "SwitchCase";
+			ASSIGNMENT = "Assignment";
+			THROW_STATEMENT = "ThrowStatement";
+			EMPTY_STATEMENT = "EmptyStatement";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
+			LANGUAGE = "typescript";
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "identifier";
@@ -120,6 +123,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 		}
 		else {
+			LANGUAGE = "java";
 			// Java values as default
 			CLASS_BLOCK = "";
 			METHOD_DECLARATION = "MethodDeclaration";
@@ -158,6 +162,8 @@ public class Constants {
 			EMPTY_STATEMENT = "EmptyStatement";
 		}
 	}
+
+	private final String LANGUAGE;
 
     // AST node type labels
     public final String ASSIGNMENT;

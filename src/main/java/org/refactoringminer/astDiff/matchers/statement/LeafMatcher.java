@@ -38,6 +38,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Map<Tree,Tree> srcCopy = new HashMap<>();
 		Map<Tree,Tree> dstCopy = new HashMap<>();
 		Pair<Tree, Tree> prunedPair = pruneTrees(src, dst, srcCopy, dstCopy);
+		if (prunedPair.first == null || prunedPair.second == null) return;
 		MappingStore match;
 		try
         {
@@ -197,4 +198,3 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
     }
 
 }
-

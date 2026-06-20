@@ -245,6 +245,7 @@ public class Constants {
     public final String INFIX_EXPRESSION = "InfixExpression";
     public final String LAMBDA_EXPRESSION = "LambdaExpression";
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
+    public final String PREFIX_EXPRESSION_OPERATOR = "PREFIX_EXPRESSION_OPERATOR";
 
     public final String STRING_LITERAL;
     public final String NUMBER_LITERAL = "NumberLiteral";
@@ -372,6 +373,7 @@ public class Constants {
     public final String DIRECTLY_ASSIGNABLE_EXPRESSION = "directly_assignable_expression";
     public final String LOGICAL_OPERATOR = "logical_operator";
     public final String COMPARISON_OPERATOR = "comparison_operator";
+    public final String NOT_PREFIX_OPERATOR = "!";
     public final String DISJUNCTION_EXPRESSION = "disjunction_expression";
     public final String EQUALITY_EXPRESSION = "equality_expression";
     public final String ADDITIVE_EXPRESSION = "additive_expression";

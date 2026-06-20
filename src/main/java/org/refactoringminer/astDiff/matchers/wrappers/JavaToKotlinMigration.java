@@ -302,6 +302,13 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.PREFIX_EXPRESSION_OPERATOR);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NOT_PREFIX_OPERATOR);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
+        }
         List<Tree> nestedInfix1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);
         List<Tree> nestedInfix2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.DISJUNCTION_EXPRESSION, LANG2.EQUALITY_EXPRESSION, LANG2.ADDITIVE_EXPRESSION);
         if(nestedInfix1.size() == nestedInfix2.size()) {
@@ -323,6 +330,17 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(assignmentOperator, affectationOperator);
             assignment.setLabel("=");
             mappingStore.addMapping(assignment, affectationOperator);
+        }
+        //handle case of method invocation converted to navigation expression
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION);
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
+                if(navigationSuffix != null)
+                    mappingStore.addMapping(children1.get(i), navigationSuffix);
+                mappingStore.addMapping(children1.get(i), children2.get(i));
+            }
         }
     }
 

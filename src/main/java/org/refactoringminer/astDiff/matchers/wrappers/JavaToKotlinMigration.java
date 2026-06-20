@@ -33,10 +33,10 @@ public class JavaToKotlinMigration {
             }
         }
         else if(srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.IF_STATEMENT) &&
-        		srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
-        	Tree expression1 = srcStatementNode.getChild(0);
-        	Tree expression2 = dstStatementNode.getChild(0);
-        	handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+                srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
+            Tree expression1 = srcStatementNode.getChild(0);
+            Tree expression2 = dstStatementNode.getChild(0);
+            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
         }
     }
 
@@ -241,7 +241,14 @@ public class JavaToKotlinMigration {
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.STRING_LITERAL);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
-                mappingStore.addMapping(children1.get(i), children2.get(i));
+                if(children2.get(i).getChildren().size() > 0) {
+                    children2.get(i).setLabel(children1.get(i).getLabel());
+                    children2.get(i).getChildren().remove(0);
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                }
+                else {
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                }
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.NUMBER_LITERAL);
@@ -275,15 +282,18 @@ public class JavaToKotlinMigration {
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NULL_LITERAL);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
-            	children1.get(i).setLabel("null");
+                children1.get(i).setLabel("null");
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
         if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.DISJUNCTION_EXPRESSION)) {
-        	mappingStore.addMapping(srcStatementNode, dstStatementNode);
+            mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
         else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.EQUALITY_EXPRESSION)) {
-        	mappingStore.addMapping(srcStatementNode, dstStatementNode);
+            mappingStore.addMapping(srcStatementNode, dstStatementNode);
+        }
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.ADDITIVE_EXPRESSION)) {
+            mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LOGICAL_OPERATOR, LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR);
@@ -292,20 +302,27 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
+        List<Tree> nestedInfix1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);
+        List<Tree> nestedInfix2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.DISJUNCTION_EXPRESSION, LANG2.EQUALITY_EXPRESSION, LANG2.ADDITIVE_EXPRESSION);
+        if(nestedInfix1.size() == nestedInfix2.size()) {
+            for(int i=0; i<nestedInfix1.size(); i++) {
+                mappingStore.addMapping(nestedInfix1.get(i), nestedInfix2.get(i));
+            }
+        }
         Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
         Tree variableDeclaration = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION);
         Tree affectationOperator = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AFFECTATION_OPERATOR);
         if(variableDeclarationFragment != null && variableDeclaration != null && affectationOperator != null) {
-        	variableDeclarationFragment.setLabel("=");
-        	mappingStore.addMapping(variableDeclarationFragment, affectationOperator);
+            variableDeclarationFragment.setLabel("=");
+            mappingStore.addMapping(variableDeclarationFragment, affectationOperator);
         }
         Tree assignment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.ASSIGNMENT);
         Tree assignableExpression = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
         if(assignment != null && assignableExpression != null && affectationOperator != null) {
-        	Tree assignmentOperator = TreeUtilFunctions.findChildByType(assignment, LANG1.ASSIGNMENT_OPERATOR);
-        	mappingStore.addMapping(assignmentOperator, affectationOperator);
-        	assignment.setLabel("=");
-        	mappingStore.addMapping(assignment, affectationOperator);
+            Tree assignmentOperator = TreeUtilFunctions.findChildByType(assignment, LANG1.ASSIGNMENT_OPERATOR);
+            mappingStore.addMapping(assignmentOperator, affectationOperator);
+            assignment.setLabel("=");
+            mappingStore.addMapping(assignment, affectationOperator);
         }
     }
 
@@ -513,7 +530,14 @@ public class JavaToKotlinMigration {
                 }
                 if(stringLiteral2 != null && stringLiteral1.size() == stringLiteral2.size()) {
                     for(int i=0; i<stringLiteral1.size(); i++) {
-                        mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
+                        if(stringLiteral2.get(i).getChildren().size() > 0) {
+                            stringLiteral2.get(i).setLabel(stringLiteral1.get(i).getLabel());
+                            stringLiteral2.get(i).getChildren().remove(0);
+                            mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
+                        }
+                        else {
+                            mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
+                        }
                     }
                 }
                 if(numberLiteral2 != null && numberLiteral1.size() == numberLiteral2.size()) {

@@ -1363,6 +1363,28 @@
   "firstEndPos" : 1831,
   "secondEndPos" : 1642
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "statements",
+  "firstPos" : 1808,
+  "secondPos" : 1625,
+  "firstEndPos" : 1830,
+  "secondEndPos" : 1642
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1808,
+  "secondPos" : 1629,
+  "firstEndPos" : 1830,
+  "secondEndPos" : 1642
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "conn",

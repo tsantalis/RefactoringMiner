@@ -345,6 +345,9 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        if(dstStatementNode.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
+            children2.add(0, dstStatementNode);
+        }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);

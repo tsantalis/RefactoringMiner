@@ -230,6 +230,17 @@
   "firstEndPos" : 3683,
   "secondEndPos" : 3310
 }, {
+  "firstType" : "TypeDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1028,
+  "secondPos" : 979,
+  "firstEndPos" : 3683,
+  "secondEndPos" : 3310
+}, {
   "firstType" : "SingleMemberAnnotation",
   "secondType" : "modifiers",
   "firstLabel" : "",
@@ -273,6 +284,17 @@
   "secondPos" : 952,
   "firstEndPos" : 1053,
   "secondEndPos" : 957
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CustomDispatcherTest",
+  "secondLabel" : "CustomDispatcherTest",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1054,
+  "secondPos" : 958,
+  "firstEndPos" : 1074,
+  "secondEndPos" : 978
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",

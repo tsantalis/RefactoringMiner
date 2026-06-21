@@ -736,6 +736,17 @@
   "firstEndPos" : 26255,
   "secondEndPos" : 23252
 }, {
+  "firstType" : "TypeDeclaration",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2358,
+  "secondPos" : 1979,
+  "firstEndPos" : 26255,
+  "secondEndPos" : 23252
+}, {
   "firstType" : "SingleMemberAnnotation",
   "secondType" : "class_modifier",
   "firstLabel" : "",
@@ -812,6 +823,17 @@
   "secondPos" : 1955,
   "firstEndPos" : 2474,
   "secondEndPos" : 1960
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "MockWebServerTest",
+  "secondLabel" : "MockWebServerTest",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2475,
+  "secondPos" : 1961,
+  "firstEndPos" : 2492,
+  "secondEndPos" : 1978
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",

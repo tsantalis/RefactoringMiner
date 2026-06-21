@@ -353,6 +353,15 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {
         Tree srcBlock = TreeUtilFunctions.findFirstByType(srcTypeDeclaration, LANG1.CLASS_BLOCK);
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, LANG2.CLASS_BLOCK);
+        if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.CLASS_DECLARATION) && dstBlock != null && srcBlock == null) {
+            //handle Java to Kotlin migration
+            mappingStore.addMapping(srcTypeDeclaration, dstBlock);
+            Tree name1 = TreeUtilFunctions.findChildByType(srcTypeDeclaration, LANG1.SIMPLE_NAME);
+            Tree name2 = TreeUtilFunctions.findChildByType(dstTypeDeclaration, LANG2.TYPE_IDENTIFIER);
+            if(name1 != null && name2 != null) {
+                mappingStore.addMapping(name1, name2);
+            }
+        }
         if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_ALIAS_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.TYPE_ALIAS_DECLARATION)) {
             Pair<Tree, Tree> object_types = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.OBJECT_TYPE, LANG2.OBJECT_TYPE);
             if (object_types != null) {

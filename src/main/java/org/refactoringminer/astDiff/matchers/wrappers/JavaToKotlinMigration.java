@@ -342,6 +342,15 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
+        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) &&
+                dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_EXPRESSION)) {
+            Tree jumpExpression = dstStatementNode.getChild(0);
+            Tree firstChild = jumpExpression.getChild(0);
+            if(firstChild.getLabel().equals("return@")) {
+                firstChild.setLabel("return");
+            }
+            mappingStore.addMapping(srcStatementNode, firstChild);
+        }
     }
 
     private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {

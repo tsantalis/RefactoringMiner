@@ -612,7 +612,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				else if((anonymous1.size() == 0 && anonymous2.size() == 1) ||
 						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() == 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0) ||
-						(anonymous1.size() + nestedAnonymous1.size() + 1 == anonymous2.size() + nestedAnonymous2.size() && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0)) {
+						(anonymous1.size() + nestedAnonymous1.size() + 1 == anonymous2.size() + nestedAnonymous2.size() && anonymous2.size() > 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0)) {
 					this.anonymousCollapse = true;
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {

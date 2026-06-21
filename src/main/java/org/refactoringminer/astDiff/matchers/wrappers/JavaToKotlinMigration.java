@@ -76,6 +76,8 @@ public class JavaToKotlinMigration {
                 if (matchedNavs.contains(navExpr2)) continue;
                 String qName2 = getQualifiedNameFromKotlin(navExpr2, LANG2);
                 if (qName1.equals(qName2)) {
+                    navExpr2.setLabel(qName1);
+                    navExpr2.getChildren().clear();
                     mappingStore.addMapping(qualified1, navExpr2);
                     matchedNavs.add(navExpr2);
                     break;

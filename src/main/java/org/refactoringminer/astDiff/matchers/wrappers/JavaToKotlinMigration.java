@@ -334,6 +334,17 @@ public class JavaToKotlinMigration {
         //handle case of method invocation converted to navigation expression
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION);
+        if(children2.size() > 0) {
+            Tree lastChild = children2.get(children2.size()-1);
+            if(lastChild.getChildren().size() > 0) {
+                Tree lastGrandChild = lastChild.getChildren().get(lastChild.getChildren().size()-1);
+                if(lastGrandChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastGrandChild.getChildren().size() > 0 &&
+                        lastGrandChild.getChildren().get(0).getLabel().equals("code")) {
+                    //remove .code on character literals to convert to int
+                    children2.remove(children2.size()-1);
+                }
+            }
+        }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
@@ -483,6 +494,16 @@ public class JavaToKotlinMigration {
             if(args2 != null) {
                 args2 = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
                 mappingStore.addMapping(args1, args2);
+            }
+        }
+        else {
+            //Java side has a method invocation without arguments
+            Tree args2 = TreeUtilFunctions.findChildByType(child2, LANG2.CALL_SUFFIX);
+            if(args2 != null && args2.getChildren().size() > 0) {
+                Tree valueArguments = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                if(valueArguments != null) {
+                    mappingStore.addMapping(child1, valueArguments);
+                }
             }
         }
         Tree receiver1 = TreeUtilFunctions.findChildByType(child1, LANG1.METHOD_INVOCATION_RECEIVER);

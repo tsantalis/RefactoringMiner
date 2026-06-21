@@ -8,11 +8,14 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 
 public class JavaToKotlinMigration {
+    private static final Logger LOG = LoggerFactory.getLogger(JavaToKotlinMigration.class);
 
     public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
         if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
@@ -64,6 +67,18 @@ public class JavaToKotlinMigration {
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
         List<Tree> anonymous1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ANONYMOUS_CLASS_DECLARATION);
         List<Tree> anonymous2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.OBJECT_LITERAL);
+
+        List<Tree> navigationExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION);
+        for (Tree qualified1 : qualifiedNames1) {
+            String qName1 = qualified1.getLabel();
+            for (Tree navExpr2 : navigationExpressions2) {
+                String qName2 = getQualifiedNameFromKotlin(navExpr2, LANG2);
+                if (qName1.equals(qName2)) {
+                    mappingStore.addMapping(qualified1, navExpr2);
+                }
+            }
+        }
+
         List<Tree> lambdas1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.LAMBDA_EXPRESSION);
         List<Tree> lambdas2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ANNOTATED_LAMBDA);
         //remove the simpleName children of anonymous/lambdas from the parent children
@@ -682,5 +697,26 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(matched.first,matched.second.getChild(0));
             }
         }
+    }
+
+    private static String getQualifiedNameFromKotlin(Tree node, Constants LANG2) {
+        if (node == null) return null;
+        if (node.getType().name.equals(LANG2.SIMPLE_NAME)) {
+            return node.getLabel();
+        }
+        if (node.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
+            Tree receiver = node.getChild(0);
+            Tree suffix = TreeUtilFunctions.findChildByType(node, LANG2.NAVIGATION_SUFFIX);
+            if (receiver != null && suffix != null) {
+                Tree suffixName = TreeUtilFunctions.findChildByType(suffix, LANG2.SIMPLE_NAME);
+                if (suffixName != null) {
+                    String receiverName = getQualifiedNameFromKotlin(receiver, LANG2);
+                    if (receiverName != null) {
+                        return receiverName + "." + suffixName.getLabel();
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

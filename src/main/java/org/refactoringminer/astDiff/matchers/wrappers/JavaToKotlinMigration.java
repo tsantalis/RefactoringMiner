@@ -69,12 +69,16 @@ public class JavaToKotlinMigration {
         List<Tree> anonymous2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.OBJECT_LITERAL);
 
         List<Tree> navigationExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION);
+        List<Tree> matchedNavs = new ArrayList<>();
         for (Tree qualified1 : qualifiedNames1) {
             String qName1 = qualified1.getLabel();
             for (Tree navExpr2 : navigationExpressions2) {
+                if (matchedNavs.contains(navExpr2)) continue;
                 String qName2 = getQualifiedNameFromKotlin(navExpr2, LANG2);
                 if (qName1.equals(qName2)) {
                     mappingStore.addMapping(qualified1, navExpr2);
+                    matchedNavs.add(navExpr2);
+                    break;
                 }
             }
         }

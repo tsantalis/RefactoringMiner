@@ -351,6 +351,10 @@ public class JavaToKotlinMigration {
             }
             mappingStore.addMapping(srcStatementNode, firstChild);
         }
+        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION) &&
+                dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD)) {
+            mappingStore.addMapping(srcStatementNode, dstStatementNode.getChild(0));
+        }
     }
 
     private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {

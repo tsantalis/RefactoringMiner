@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -197,36 +198,38 @@ public class JavaToKotlinMigration {
                 }
             }
         }
-        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
+        List<Tree> inv1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
         if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) || srcStatementNode.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
-            children1.add(0, srcStatementNode);
+            inv1.add(0, srcStatementNode);
         }
-        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
+        List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
         if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
-            children2.add(0, dstStatementNode);
+            inv2.add(0, dstStatementNode);
         }
-        removeFromParent(children1, anonymous1, LANG1.METHOD_INVOCATION);
-        removeFromParent(children1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
-        removeFromParent(children2, anonymous2, LANG2.METHOD_INVOCATION);
-        removeFromParent(children1, lambdas1, LANG1.METHOD_INVOCATION);
-        removeFromParent(children1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
-        removeFromParent(children2, lambdas2, LANG2.METHOD_INVOCATION);
-        if(nameCompliance(children1, children2, LANG1, LANG2)) {
-            if(children1.size() <= children2.size()) {
-                for(int i=0; i<children1.size(); i++) {
-                    Tree child1 = children1.get(i);
-                    Tree child2 = children2.get(i);
-                    processPair(mappingStore, child1, child2, LANG1, LANG2);
+        removeFromParent(inv1, anonymous1, LANG1.METHOD_INVOCATION);
+        removeFromParent(inv1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
+        removeFromParent(inv2, anonymous2, LANG2.METHOD_INVOCATION);
+        removeFromParent(inv1, lambdas1, LANG1.METHOD_INVOCATION);
+        removeFromParent(inv1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
+        removeFromParent(inv2, lambdas2, LANG2.METHOD_INVOCATION);
+        List<Tree> invocationsToBeRemoved = new ArrayList<>();
+        if(nameCompliance(inv1, inv2, LANG1, LANG2)) {
+            if(inv1.size() <= inv2.size()) {
+                for(int i=0; i<inv1.size(); i++) {
+                    Tree child1 = inv1.get(i);
+                    Tree child2 = inv2.get(i);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2, invocationsToBeRemoved);
                 }
             }
-            else if(children2.size() < children1.size()) {
-                for(int i=0; i<children2.size(); i++) {
-                    Tree child1 = children1.get(i);
-                    Tree child2 = children2.get(i);
-                    processPair(mappingStore, child1, child2, LANG1, LANG2);
+            else if(inv2.size() < inv1.size()) {
+                for(int i=0; i<inv2.size(); i++) {
+                    Tree child1 = inv1.get(i);
+                    Tree child2 = inv2.get(i);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2, invocationsToBeRemoved);
                 }
             }
         }
+        inv1.removeAll(invocationsToBeRemoved);
         if(castExpressions1.size() > 0) {
             Tree simpleType = castExpressions1.get(0).getChild(0);
             Tree as2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AS_EXPRESSION);
@@ -332,7 +335,7 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(assignment, affectationOperator);
         }
         //handle case of method invocation converted to navigation expression
-        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+        //children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION);
         if(children2.size() > 0) {
             Tree lastChild = children2.get(children2.size()-1);
@@ -348,12 +351,19 @@ public class JavaToKotlinMigration {
         if(dstStatementNode.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
             children2.add(0, dstStatementNode);
         }
-        if(children1.size() == children2.size()) {
-            for(int i=0; i<children1.size(); i++) {
+        Iterator<Tree> iterator2 = children2.iterator();
+        while(iterator2.hasNext()) {
+            Tree t2 = iterator2.next();
+            if(t2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                iterator2.remove();
+            }
+        }
+        if(inv1.size() == children2.size()) {
+            for(int i=0; i<inv1.size(); i++) {
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
                 if(navigationSuffix != null)
-                    mappingStore.addMapping(children1.get(i), navigationSuffix);
-                mappingStore.addMapping(children1.get(i), children2.get(i));
+                    mappingStore.addMapping(inv1.get(i), navigationSuffix);
+                mappingStore.addMapping(inv1.get(i), children2.get(i));
             }
         }
         if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) &&
@@ -489,7 +499,7 @@ public class JavaToKotlinMigration {
         }
     }
 
-    private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2) {
+    private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2, List<Tree> invocationsToBeRemoved) {
         mappingStore.addMapping(child1, child2);
         Tree args1 = TreeUtilFunctions.findChildByType(child1, LANG1.METHOD_INVOCATION_ARGUMENTS);
         if(args1 != null) {
@@ -497,6 +507,7 @@ public class JavaToKotlinMigration {
             if(args2 != null) {
                 args2 = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
                 mappingStore.addMapping(args1, args2);
+                invocationsToBeRemoved.add(child1);
             }
         }
         else {
@@ -506,6 +517,7 @@ public class JavaToKotlinMigration {
                 Tree valueArguments = TreeUtilFunctions.findChildByType(args2, LANG2.METHOD_INVOCATION_ARGUMENTS);
                 if(valueArguments != null) {
                     mappingStore.addMapping(child1, valueArguments);
+                    invocationsToBeRemoved.add(child1);
                 }
             }
         }
@@ -515,6 +527,7 @@ public class JavaToKotlinMigration {
             if(receiver2 != null) {
                 receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
                 mappingStore.addMapping(receiver1, receiver2);
+                invocationsToBeRemoved.add(child1);
             }
         }
         if(child1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
@@ -525,6 +538,7 @@ public class JavaToKotlinMigration {
                     if(receiver2 != null) {
                         receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
                         mappingStore.addMapping(type.getChild(0), receiver2);
+                        invocationsToBeRemoved.add(child1);
                     }
                 }
                 else if(type.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
@@ -532,6 +546,7 @@ public class JavaToKotlinMigration {
                     if(receiver2 != null) {
                         receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
                         mappingStore.addMapping(type.getChild(0), receiver2);
+                        invocationsToBeRemoved.add(child1);
                     }
                 }
             }

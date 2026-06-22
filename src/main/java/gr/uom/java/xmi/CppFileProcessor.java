@@ -102,7 +102,7 @@ public class CppFileProcessor {
 				processPreprocessorStatements(ast.getAllPreprocessorStatements());
 				String sourceFolder = extractCppSourceFolder();
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
-				processTranslationUnit(sourceFolder, moduleClass, ast.getDeclarations());
+				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations());
 				this.umlModel.addClass(moduleClass);
 			}
 			else if(PathFileUtils.isCFile(filePath)) {
@@ -117,7 +117,7 @@ public class CppFileProcessor {
 				processPreprocessorStatements(ast.getAllPreprocessorStatements());
 				String sourceFolder = extractCppSourceFolder();
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
-				processTranslationUnit(sourceFolder, moduleClass, ast.getDeclarations());
+				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations());
 				this.umlModel.addClass(moduleClass);
 			}
 		}
@@ -211,7 +211,7 @@ public class CppFileProcessor {
 		return includePaths.toArray(new String[0]);
 	}
 
-	private void processTranslationUnit(String sourceFolder, UMLAbstractClass parentContainer, IASTDeclaration[] declarations) {
+	private void processDeclarations(String packageName, String sourceFolder, UMLAbstractClass parentContainer, IASTDeclaration[] declarations) {
 		for(IASTDeclaration declaration : declarations) {
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 					
@@ -278,6 +278,11 @@ public class CppFileProcessor {
 			}
 			else if(declaration instanceof CPPASTNamespaceDefinition cppNamespaceDefinition) {
 				//In C++, a namespace is a declarative region that provides a distinct scope to identifiers (such as names of types, functions, variables, and classes) to prevent naming collisions and organize code into logical groups.
+				IASTName name = cppNamespaceDefinition.getName();
+				String namespace = name.getRawSignature();
+				IASTDeclaration[] nameSpaceDeclarations = cppNamespaceDefinition.getDeclarations();
+				String qualifiedNamespace = packageName + "." + namespace;
+				processDeclarations(qualifiedNamespace, sourceFolder, parentContainer, nameSpaceDeclarations);
 			}
 			else if(declaration instanceof CPPASTStaticAssertionDeclaration cppStaticAssertionDeclaration) {
 				//In C++, a static_assert declaration tests a software condition at compile time. If the condition evaluates to false, the compiler stops and issues a compilation error.

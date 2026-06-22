@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -103,6 +105,20 @@ class CppFileProcessorTest {
 		assertNotNull(size.getParametersWithoutReturnType().get(0).getVariableDeclaration());
 	}
 
+	@Test
+	void extractsDotSeparatedQualifiedNamespaceFromCdtBinding() throws Exception {
+		String fileContent = "namespace modern::nested::syntax { int value; }\n";
+		IASTTranslationUnit translationUnit = parseCppTranslationUnit("src/Sample.cpp", fileContent);
+
+		CPPASTNamespaceDefinition modern = (CPPASTNamespaceDefinition) translationUnit.getDeclarations()[0];
+		CPPASTNamespaceDefinition nested = (CPPASTNamespaceDefinition) modern.getDeclarations()[0];
+		CPPASTNamespaceDefinition syntax = (CPPASTNamespaceDefinition) nested.getDeclarations()[0];
+
+		assertEquals("modern", extractQualifiedNamespace(modern, "Sample"));
+		assertEquals("modern.nested", extractQualifiedNamespace(nested, "modern"));
+		assertEquals("modern.nested.syntax", extractQualifiedNamespace(syntax, "modern.nested"));
+	}
+
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()
 				.filter(operation -> operation.getName().equals(name))
@@ -114,5 +130,27 @@ class CppFileProcessorTest {
 		return operation.getParameterTypeList().stream()
 				.map(Object::toString)
 				.toList();
+	}
+
+	private static String extractQualifiedNamespace(CPPASTNamespaceDefinition namespaceDefinition, String namespaceContext) throws Exception {
+		Method method = CppFileProcessor.class.getDeclaredMethod(
+				"extractQualifiedNamespace", CPPASTNamespaceDefinition.class, String.class);
+		method.setAccessible(true);
+		return (String) method.invoke(null, namespaceDefinition, namespaceContext);
+	}
+
+	private static IASTTranslationUnit parseCppTranslationUnit(String filePath, String source) throws CoreException {
+		FileContent fileContent = FileContent.create(filePath, source.toCharArray());
+		IScannerInfo scannerInfo = new ScannerInfo(Map.of(), new String[0]);
+		IncludeFileContentProvider includes = IncludeFileContentProvider.getEmptyFilesProvider();
+		IParserLogService log = new DefaultLogService();
+		ILanguage language = GPPLanguage.getDefault();
+		return language.getASTTranslationUnit(
+				fileContent,
+				scannerInfo,
+				includes,
+				(IIndex) null,
+				ILanguage.OPTION_IS_SOURCE_UNIT,
+				log);
 	}
 }

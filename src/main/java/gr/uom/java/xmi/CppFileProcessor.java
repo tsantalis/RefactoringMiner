@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.DOMException;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
@@ -36,6 +37,8 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.IBinding;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPBinding;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -281,10 +284,8 @@ public class CppFileProcessor {
 			}
 			else if(declaration instanceof CPPASTNamespaceDefinition cppNamespaceDefinition) {
 				//In C++, a namespace is a declarative region that provides a distinct scope to identifiers (such as names of types, functions, variables, and classes) to prevent naming collisions and organize code into logical groups.
-				IASTName name = cppNamespaceDefinition.getName();
-				String namespace = name.getRawSignature();
 				IASTDeclaration[] nameSpaceDeclarations = cppNamespaceDefinition.getDeclarations();
-				String qualifiedNamespace = packageName + "." + namespace;
+				String qualifiedNamespace = extractQualifiedNamespace(cppNamespaceDefinition, packageName);
 				processDeclarations(qualifiedNamespace, sourceFolder, parentContainer, nameSpaceDeclarations);
 			}
 			else if(declaration instanceof CPPASTStaticAssertionDeclaration cppStaticAssertionDeclaration) {
@@ -303,6 +304,26 @@ public class CppFileProcessor {
 				//All data members/functions that follow should have this access modifier
 			}
 		}
+	}
+
+	private static String extractQualifiedNamespace(CPPASTNamespaceDefinition namespaceDefinition, String namespaceContext) {
+		IASTName name = namespaceDefinition.getName();
+		try {
+			IBinding binding = name.resolveBinding();
+			if(binding instanceof ICPPBinding cppBinding) {
+				String[] qualifiedName = cppBinding.getQualifiedName();
+				if(qualifiedName.length > 0) {
+					return String.join(".", qualifiedName);
+				}
+			}
+		}
+		catch(DOMException e) {
+
+		}
+		if(namespaceContext == null || namespaceContext.isBlank()) {
+			return name.getRawSignature();
+		}
+		return namespaceContext + "." + name.getRawSignature();
 	}
 
 	private UMLClass createModuleClass(IASTTranslationUnit ast, String sourceFolder) {

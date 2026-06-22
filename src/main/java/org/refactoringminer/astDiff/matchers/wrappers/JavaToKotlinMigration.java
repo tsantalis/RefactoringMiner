@@ -417,6 +417,7 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf");
         if(callNames1.size() <= callNames2.size()) {
             int matches = 0;
             for(int i=0; i<callNames1.size(); i++) {
@@ -425,10 +426,7 @@ public class JavaToKotlinMigration {
                 if(s1.equals(s2) || s1.contains("." + s2)) {
                     matches++;
                 }
-                else if(s1.equals("url") && s2.equals("toUrl")) {
-                    matches++;
-                }
-                else if(s1.equals("getBytes") && s2.equals("toByteArray")) {
+                else if(synonyms.containsKey(s1) && synonyms.get(s1).equals(s2)) {
                     matches++;
                 }
                 else if(s1.startsWith(s2) || s2.startsWith(s1)) {
@@ -447,10 +445,7 @@ public class JavaToKotlinMigration {
                 if(s1.equals(s2) || s1.contains("." + s2)) {
                     matches++;
                 }
-                else if(s1.equals("url") && s2.equals("toUrl")) {
-                    matches++;
-                }
-                else if(s1.equals("getBytes") && s2.equals("toByteArray")) {
+                else if(synonyms.containsKey(s1) && synonyms.get(s1).equals(s2)) {
                     matches++;
                 }
                 else if(s1.startsWith(s2) || s2.startsWith(s1)) {

@@ -398,6 +398,11 @@
           "type": "SPLIT_METHOD",
           "description": "Split Method\tpublic assumtionViolationInParameters() : void to [public testsAreNotExecutedWhenAssumptionInParametersMethodFails() : void, public testsAreExecutedWhenAssumptionInParametersMethodDoesNotFail() : void] in class org.junit.tests.running.classes.ParameterizedTestTest",
           "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tsuccessResult : Result to result : Result in method public testsAreExecutedWhenAssumptionInParametersMethodDoesNotFail() : void from class org.junit.tests.running.classes.ParameterizedTestTest",
+          "validation": true
         }
       ]
     },

@@ -431,6 +431,9 @@ public class JavaToKotlinMigration {
                 else if(s1.equals("getBytes") && s2.equals("toByteArray")) {
                     matches++;
                 }
+                else if(s1.startsWith(s2) || s2.startsWith(s1)) {
+                    matches++;
+                }
             }
             if(matches == callNames1.size()) {
                 return true;
@@ -448,6 +451,9 @@ public class JavaToKotlinMigration {
                     matches++;
                 }
                 else if(s1.equals("getBytes") && s2.equals("toByteArray")) {
+                    matches++;
+                }
+                else if(s1.startsWith(s2) || s2.startsWith(s1)) {
                     matches++;
                 }
             }

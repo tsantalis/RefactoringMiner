@@ -12693,6 +12693,28 @@
   "firstEndPos" : 10998,
   "secondEndPos" : 2288
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 11001,
+  "secondPos" : 2291,
+  "firstEndPos" : 11193,
+  "secondEndPos" : 2501
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 11001,
+  "secondPos" : 2301,
+  "firstEndPos" : 11011,
+  "secondEndPos" : 2309
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "ReadAction",

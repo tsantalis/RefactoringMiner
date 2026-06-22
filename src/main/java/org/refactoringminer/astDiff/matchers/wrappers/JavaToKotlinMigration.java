@@ -3,6 +3,8 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -456,15 +458,30 @@ public class JavaToKotlinMigration {
                 return true;
             }
         }
-        if(callNames1.size() > callNames2.size() && callNames1.containsAll(callNames2)) {
+        List<String> callNamesReplacedWithSynonyms2 = new ArrayList<>();
+        for(String callName2 : callNames2) {
+            if(synonyms.containsValue(callName2)) {
+                Optional<String> key = synonyms.entrySet().stream()
+                        .filter(entry -> callName2.equals(entry.getValue()))
+                        .map(Map.Entry::getKey)
+                        .findFirst();
+                if(key.isPresent()) {
+                    callNamesReplacedWithSynonyms2.add(key.get());
+                }
+            }
+            else {
+                callNamesReplacedWithSynonyms2.add(callName2);
+            }
+        }
+        if(callNames1.size() > callNames2.size() && callNames1.containsAll(callNamesReplacedWithSynonyms2)) {
             //sort callNames1 based on callNames2
             List<Tree> newChildren1 = new ArrayList<>();
-            for(String s : callNames2) {
+            for(String s : callNamesReplacedWithSynonyms2) {
                 int index = callNames1.indexOf(s);
                 newChildren1.add(children1.get(index));
             }
             for(String s : callNames1) {
-                if(!callNames2.contains(s)) {
+                if(!callNamesReplacedWithSynonyms2.contains(s)) {
                     int index = callNames1.indexOf(s);
                     newChildren1.add(children1.get(index));
                 }

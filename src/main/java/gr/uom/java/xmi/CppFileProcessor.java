@@ -73,15 +73,10 @@ import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class CppFileProcessor {
-	
-	String filePath;
-	String fileContent;
-	boolean astDiff;
-	
+	private String filePath;
+	private String fileContent;
 	private UMLModel umlModel;
-	private UMLClass moduleClass;
-	
-	  
+
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
 	}
@@ -89,38 +84,41 @@ public class CppFileProcessor {
 	public void processCppFile(String filePath, String fileContent, boolean astDiff) {
 		this.filePath = filePath;
 		this.fileContent = fileContent;
-		this.astDiff = astDiff;
 		try {
 			FileContent content = FileContent.create(filePath, fileContent.toCharArray());
 			Map<String, String> predefinedMacros = new HashMap<>();
 			ScannerInfo scanInfo = new ScannerInfo(predefinedMacros, getIncludePaths(filePath));
-			IncludeFileContentProvider includeFiles = IncludeFileContentProvider.getSavedFilesProvider();	
+			IncludeFileContentProvider includeFiles = IncludeFileContentProvider.getSavedFilesProvider();
 
-			if(PathFileUtils.isCppFile(filePath)) {	
-
+			if(PathFileUtils.isCppFile(filePath)) {
 				IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
-						content, 
-						scanInfo, 
-						includeFiles, 
-						EmptyCIndex.INSTANCE, 
-						GPPLanguage.OPTION_IS_SOURCE_UNIT, 
+						content,
+						scanInfo,
+						includeFiles,
+						EmptyCIndex.INSTANCE,
+						GPPLanguage.OPTION_IS_SOURCE_UNIT,
 						new DefaultLogService()
 						);
-				processPreprocessorStatements(ast);
-				processTranslationUnit(ast);
+				processPreprocessorStatements(ast.getAllPreprocessorStatements());
+				String sourceFolder = extractCppSourceFolder();
+				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
+				processTranslationUnit(sourceFolder, moduleClass, ast.getDeclarations());
+				this.umlModel.addClass(moduleClass);
 			}
-			else if(PathFileUtils.isCFile(filePath)) {	
-
+			else if(PathFileUtils.isCFile(filePath)) {
 				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
-						content, 
-						scanInfo, 
-						includeFiles, 
-						EmptyCIndex.INSTANCE, 
-						GCCLanguage.OPTION_IS_SOURCE_UNIT, 
+						content,
+						scanInfo,
+						includeFiles,
+						EmptyCIndex.INSTANCE,
+						GCCLanguage.OPTION_IS_SOURCE_UNIT,
 						new DefaultLogService()
 						);
-				processPreprocessorStatements(ast);
-				processTranslationUnit(ast);
+				processPreprocessorStatements(ast.getAllPreprocessorStatements());
+				String sourceFolder = extractCppSourceFolder();
+				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
+				processTranslationUnit(sourceFolder, moduleClass, ast.getDeclarations());
+				this.umlModel.addClass(moduleClass);
 			}
 		}
 		catch(CoreException e) {
@@ -128,8 +126,8 @@ public class CppFileProcessor {
 		}
 	}
 
-	private void processPreprocessorStatements(IASTTranslationUnit ast) {
-		for(IASTPreprocessorStatement statement : ast.getAllPreprocessorStatements()) {
+	private void processPreprocessorStatements(IASTPreprocessorStatement[] allPreprocessorStatements) {
+		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
 			LocationInfo locationInfo = new LocationInfo(
 					extractCppSourceFolder(),                         // sourceFolder
 					filePath,                   // current C++ file path
@@ -213,10 +211,8 @@ public class CppFileProcessor {
 		return includePaths.toArray(new String[0]);
 	}
 
-	private void processTranslationUnit(IASTTranslationUnit ast) {
-		String sourceFolder = extractCppSourceFolder();
-		moduleClass = createModuleClass(ast, sourceFolder);
-		for(IASTDeclaration declaration : ast.getDeclarations()) {
+	private void processTranslationUnit(String sourceFolder, UMLAbstractClass parentContainer, IASTDeclaration[] declarations) {
+		for(IASTDeclaration declaration : declarations) {
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 					
 			}
@@ -234,8 +230,8 @@ public class CppFileProcessor {
 				//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			}
 			else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition, sourceFolder, moduleClass);
-				moduleClass.addOperation(operation);
+				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition, sourceFolder, parentContainer);
+				parentContainer.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
 				//org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionWithTryBlock is a subclass
@@ -298,9 +294,6 @@ public class CppFileProcessor {
 				//There are exactly three visibility labels in C++: public, private, and protected
 				//All data members/functions that follow should have this access modifier
 			}
-		}
-		if(!moduleClass.isEmpty()) {
-			this.umlModel.addClass(moduleClass);
 		}
 	}
 

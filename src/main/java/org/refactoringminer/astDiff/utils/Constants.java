@@ -377,6 +377,7 @@ public class Constants {
     public final String DISJUNCTION_EXPRESSION = "disjunction_expression";
     public final String EQUALITY_EXPRESSION = "equality_expression";
     public final String ADDITIVE_EXPRESSION = "additive_expression";
+    public final String MULTIPLICATIVE_EXPRESSION = "multiplicative_expression";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

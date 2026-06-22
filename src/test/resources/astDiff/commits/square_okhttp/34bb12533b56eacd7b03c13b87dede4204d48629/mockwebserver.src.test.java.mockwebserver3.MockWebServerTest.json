@@ -2056,6 +2056,17 @@
   "firstEndPos" : 3488,
   "secondEndPos" : 2833
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "multiplicative_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ArrayAccess",
+  "secondParentType" : "indexing_suffix",
+  "firstPos" : 3489,
+  "secondPos" : 2834,
+  "firstEndPos" : 3496,
+  "secondEndPos" : 2841
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "i",
@@ -20172,6 +20183,17 @@
   "secondPos" : 12450,
   "firstEndPos" : 13980,
   "secondEndPos" : 12451
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "multiplicative_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Dimension",
+  "secondParentType" : "value_argument",
+  "firstPos" : 13968,
+  "secondPos" : 12462,
+  "firstEndPos" : 13979,
+  "secondEndPos" : 12473
 }, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",

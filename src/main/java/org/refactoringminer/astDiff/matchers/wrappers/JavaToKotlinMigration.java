@@ -308,13 +308,13 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
             }
         }
-        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.DISJUNCTION_EXPRESSION)) {
+        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.DISJUNCTION_EXPRESSION)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
-        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.EQUALITY_EXPRESSION)) {
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.EQUALITY_EXPRESSION)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
-        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG1.ADDITIVE_EXPRESSION)) {
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.ADDITIVE_EXPRESSION)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);
@@ -332,7 +332,7 @@ public class JavaToKotlinMigration {
             }
         }
         List<Tree> nestedInfix1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);
-        List<Tree> nestedInfix2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.DISJUNCTION_EXPRESSION, LANG2.EQUALITY_EXPRESSION, LANG2.ADDITIVE_EXPRESSION);
+        List<Tree> nestedInfix2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.DISJUNCTION_EXPRESSION, LANG2.EQUALITY_EXPRESSION, LANG2.ADDITIVE_EXPRESSION, LANG2.MULTIPLICATIVE_EXPRESSION);
         if(nestedInfix1.size() == nestedInfix2.size()) {
             for(int i=0; i<nestedInfix1.size(); i++) {
                 mappingStore.addMapping(nestedInfix1.get(i), nestedInfix2.get(i));

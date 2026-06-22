@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,6 +88,7 @@ public class JavaToKotlinMigration {
             }
             children2.removeAll(toBeRemoved2);
         }
+        Map<Tree, Tree> qualifiedNameToNavigationExpression = new LinkedHashMap<>();
         if(qualifiedNames1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree qualified1 : qualifiedNames1) {
@@ -94,10 +96,25 @@ public class JavaToKotlinMigration {
                 for(Tree child2 : children2) {
                     if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
                         toBeRemoved2.add(child2);
+                        if(child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                                !qualifiedNameToNavigationExpression.containsKey(qualified1) &&
+                                !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
+                            Tree lastChild = child2.getParent().getChild(child2.getParent().getChildren().size() - 1);
+                            if(lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastChild.getChildren().size() > 0 &&
+                                    qualifiedType.contains("." + lastChild.getChild(0).getLabel())) {
+                                qualifiedNameToNavigationExpression.put(qualified1, child2.getParent());
+                            }
+                        }
                     }
                 }
             }
             children2.removeAll(toBeRemoved2);
+            for(Tree key : qualifiedNameToNavigationExpression.keySet()) {
+                Tree value = qualifiedNameToNavigationExpression.get(key);
+                value.setLabel(key.getLabel());
+                value.getChildren().clear();
+                mappingStore.addMapping(key, value);
+            }
         }
         if(castExpressions1.size() > 0 && children1.size() != children2.size()) {
             //remove from children1
@@ -356,7 +373,7 @@ public class JavaToKotlinMigration {
         Iterator<Tree> iterator2 = children2.iterator();
         while(iterator2.hasNext()) {
             Tree t2 = iterator2.next();
-            if(t2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            if(t2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) || qualifiedNameToNavigationExpression.containsValue(t2)) {
                 iterator2.remove();
             }
         }

@@ -12363,6 +12363,17 @@
   "firstEndPos" : 10752,
   "secondEndPos" : 2050
 }, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "VfsUtilCore.VFS_SEPARATOR_CHAR",
+  "secondLabel" : "VfsUtilCore.VFS_SEPARATOR_CHAR",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 10754,
+  "secondPos" : 2052,
+  "firstEndPos" : 10784,
+  "secondEndPos" : 2082
+}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "arithmetic_operator",
   "firstLabel" : "+",
@@ -12373,6 +12384,17 @@
   "secondPos" : 2084,
   "firstEndPos" : 10787,
   "secondEndPos" : 2085
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "VfsUtilCore.VFS_SEPARATOR_CHAR",
+  "secondLabel" : "VfsUtilCore.VFS_SEPARATOR_CHAR",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "additive_expression",
+  "firstPos" : 10788,
+  "secondPos" : 2086,
+  "firstEndPos" : 10818,
+  "secondEndPos" : 2116
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",

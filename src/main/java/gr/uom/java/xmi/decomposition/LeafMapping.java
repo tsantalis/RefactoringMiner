@@ -197,18 +197,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					}
 					int identicalNodesCount = 0;
 					for(ReplacementType type : thisReplacementTypesWithoutCommon) {
-						if(type.equals(ReplacementType.STRING_LITERAL) && o.getFragment1().getStringLiterals().equals(o.getFragment2().getStringLiterals()) && o.getFragment1().getStringLiterals().size() > 0) {
+						if(type.equals(ReplacementType.STRING_LITERAL) && o.identicalStringLiterals()) {
 							identicalNodesCount++;
 						}
-						else if(type.equals(ReplacementType.NUMBER_LITERAL) && o.getFragment1().getNumberLiterals().equals(o.getFragment2().getNumberLiterals()) && o.getFragment1().getNumberLiterals().size() > 0) {
+						else if(type.equals(ReplacementType.NUMBER_LITERAL) && o.identicalNumberLiterals()) {
 							identicalNodesCount++;
 						}
 					}
 					for(ReplacementType type : otherReplacementTypesWithoutCommon) {
-						if(type.equals(ReplacementType.STRING_LITERAL) && this.getFragment1().getStringLiterals().equals(this.getFragment2().getStringLiterals()) && this.getFragment1().getStringLiterals().size() > 0) {
+						if(type.equals(ReplacementType.STRING_LITERAL) && this.identicalStringLiterals()) {
 							identicalNodesCount++;
 						}
-						else if(type.equals(ReplacementType.NUMBER_LITERAL) && this.getFragment1().getNumberLiterals().equals(this.getFragment2().getNumberLiterals()) && this.getFragment1().getNumberLiterals().size() > 0) {
+						else if(type.equals(ReplacementType.NUMBER_LITERAL) && this.identicalNumberLiterals()) {
 							identicalNodesCount++;
 						}
 					}
@@ -251,6 +251,28 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						}
 						else if(thisCompositeTypeReplacements != this.getReplacements().size() && otherCompositeTypeReplacements == o.getReplacements().size()) {
 							return 1;
+						}
+					}
+					for(ReplacementType type : intersection) {
+						boolean identicalStringLiterals1 = false;
+						for(Replacement r : this.getReplacements()) {
+							if(r.getType().equals(type) && r.getBefore().contains("\"") && r.getAfter().contains("\"")) {
+								identicalStringLiterals1 = this.identicalStringLiterals();
+								break;
+							}
+						}
+						boolean identicalStringLiterals2 = false;
+						for(Replacement r : o.getReplacements()) {
+							if(r.getType().equals(type) && r.getBefore().contains("\"") && r.getAfter().contains("\"")) {
+								identicalStringLiterals2 = o.identicalStringLiterals();
+								break;
+							}
+						}
+						if(identicalStringLiterals1 != identicalStringLiterals2) {
+							if(identicalStringLiterals1)
+								return -1;
+							else if(identicalStringLiterals2)
+								return 1;
 						}
 					}
 				}
@@ -645,6 +667,40 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	private boolean identicalStringLiterals() {
+		List<LeafExpression> stringLiterals1 = this.getFragment1().getStringLiterals();
+		List<LeafExpression> stringLiterals2 = this.getFragment2().getStringLiterals();
+		if(stringLiterals1.size() > 0 && stringLiterals1.size() == stringLiterals2.size()) {
+			int matches = 0;
+			for(int i=0; i<stringLiterals1.size(); i++) {
+				LeafExpression expr1 = stringLiterals1.get(i);
+				LeafExpression expr2 = stringLiterals2.get(i);
+				if(expr1.getString().equals(expr2.getString())) {
+					matches++;
+				}
+			}
+			return matches == stringLiterals1.size();
+		}
+		return false;
+	}
+
+	private boolean identicalNumberLiterals() {
+		List<LeafExpression> numberLiterals1 = this.getFragment1().getNumberLiterals();
+		List<LeafExpression> numberLiterals2 = this.getFragment2().getNumberLiterals();
+		if(numberLiterals1.size() > 0 && numberLiterals1.size() == numberLiterals2.size()) {
+			int matches = 0;
+			for(int i=0; i<numberLiterals1.size(); i++) {
+				LeafExpression expr1 = numberLiterals1.get(i);
+				LeafExpression expr2 = numberLiterals2.get(i);
+				if(expr1.getString().equals(expr2.getString())) {
+					matches++;
+				}
+			}
+			return matches == numberLiterals1.size();
+		}
+		return false;
 	}
 
 	public List<UMLOperationBodyMapper> nestedLambdaMappers() {

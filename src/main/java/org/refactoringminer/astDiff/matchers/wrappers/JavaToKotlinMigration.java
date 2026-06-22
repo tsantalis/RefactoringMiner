@@ -74,6 +74,7 @@ public class JavaToKotlinMigration {
         removeFromParent(children2, anonymous2, LANG2.SIMPLE_NAME);
         removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
         removeFromParent(children2, lambdas2, LANG2.SIMPLE_NAME);
+        Map<Tree, Tree> qualifiedNameToNavigationExpression = new LinkedHashMap<>();
         if(types1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree type1 : types1) {
@@ -82,13 +83,23 @@ public class JavaToKotlinMigration {
                     for(Tree child2 : children2) {
                         if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
                             toBeRemoved2.add(child2);
+                            if(child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                                    //important: skip qualified types whose parent is a variable declaration statement, because these are replaced with var in Kotlin
+                                    !type1.getParent().getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) &&
+                                    !qualifiedNameToNavigationExpression.containsKey(type1.getChild(0)) &&
+                                    !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
+                                Tree lastChild = child2.getParent().getChild(child2.getParent().getChildren().size() - 1);
+                                if(lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastChild.getChildren().size() > 0 &&
+                                        qualifiedType.contains("." + lastChild.getChild(0).getLabel())) {
+                                    qualifiedNameToNavigationExpression.put(type1.getChild(0), child2.getParent());
+                                }
+                            }
                         }
                     }
                 }
             }
             children2.removeAll(toBeRemoved2);
         }
-        Map<Tree, Tree> qualifiedNameToNavigationExpression = new LinkedHashMap<>();
         if(qualifiedNames1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree qualified1 : qualifiedNames1) {
@@ -109,12 +120,12 @@ public class JavaToKotlinMigration {
                 }
             }
             children2.removeAll(toBeRemoved2);
-            for(Tree key : qualifiedNameToNavigationExpression.keySet()) {
-                Tree value = qualifiedNameToNavigationExpression.get(key);
-                value.setLabel(key.getLabel());
-                value.getChildren().clear();
-                mappingStore.addMapping(key, value);
-            }
+        }
+        for(Tree key : qualifiedNameToNavigationExpression.keySet()) {
+            Tree value = qualifiedNameToNavigationExpression.get(key);
+            value.setLabel(key.getLabel());
+            value.getChildren().clear();
+            mappingStore.addMapping(key, value);
         }
         if(castExpressions1.size() > 0 && children1.size() != children2.size()) {
             //remove from children1
@@ -420,13 +431,16 @@ public class JavaToKotlinMigration {
         for(Tree child2 : children2) {
             Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
             if(receiver2 != null) {
-                receiver2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
-                if(receiver2 != null) {
-                    Tree simpleName = TreeUtilFunctions.findChildByType(receiver2, LANG2.SIMPLE_NAME);
+                Tree navigationSuffix2 = TreeUtilFunctions.findChildByType(receiver2, LANG2.NAVIGATION_SUFFIX);
+                if(navigationSuffix2 != null) {
+                    Tree simpleName = TreeUtilFunctions.findChildByType(navigationSuffix2, LANG2.SIMPLE_NAME);
                     if(simpleName.getChildren().size() > 0)
                         callNames2.add(simpleName.getChild(0).getLabel());
                     else
                         callNames2.add(simpleName.getLabel());
+                }
+                else if(receiver2.getLabel() != null){
+                    callNames2.add(receiver2.getLabel());
                 }
             }
             else {

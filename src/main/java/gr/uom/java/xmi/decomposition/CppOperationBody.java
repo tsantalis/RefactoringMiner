@@ -5,10 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTBreakStatement;
+import org.eclipse.cdt.core.dom.ast.IASTCaseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
+import org.eclipse.cdt.core.dom.ast.IASTContinueStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDoStatement;
+import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement;
+import org.eclipse.cdt.core.dom.ast.IASTForStatement;
+import org.eclipse.cdt.core.dom.ast.IASTGotoStatement;
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement;
+import org.eclipse.cdt.core.dom.ast.IASTLabelStatement;
+import org.eclipse.cdt.core.dom.ast.IASTNullStatement;
+import org.eclipse.cdt.core.dom.ast.IASTProblemStatement;
+import org.eclipse.cdt.core.dom.ast.IASTReturnStatement;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
+import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement;
+import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompoundStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTryBlockStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
+import org.eclipse.cdt.core.dom.ast.gnu.IGNUASTGotoStatement;
 import org.eclipse.jdt.core.dom.Statement;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
@@ -55,6 +78,7 @@ public class CppOperationBody extends OperationBody {
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
 		//https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.cdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcdt%2Fcore%2Fdom%2Fast%2FIASTStatement.html
 		if(statement instanceof IASTCompoundStatement compoundStatement) {
+			// IASTCompoundStatement is the base block API; ICPPASTCompoundStatement is the C++ block form with implicit destructor-name ownership.
 			IASTStatement[] blockStatements = compoundStatement.getStatements();
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, compoundStatement, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);
 			parent.addStatement(child);
@@ -63,11 +87,136 @@ public class CppOperationBody extends OperationBody {
 				processStatement(sourceFolder, filePath, child, blockStatement, fileContent);
 			}
 		}
+		else if(statement instanceof IASTBreakStatement breakStatement) {
+
+		}
+		else if(statement instanceof IASTCaseStatement caseStatement) {
+
+		}
+		else if(statement instanceof IASTContinueStatement continueStatement) {
+
+		}
+		else if(statement instanceof IASTDeclarationStatement declarationStatement) {
+
+		}
+		else if(statement instanceof IASTDefaultStatement defaultStatement) {
+
+		}
+		else if(statement instanceof IASTDoStatement doStatement) {
+
+		}
+		else if(statement instanceof IASTExpressionStatement expressionStatement) {
+
+		}
+		else if(statement instanceof IASTForStatement forStatement) {
+			// IASTForStatement models a generic for loop; ICPPASTForStatement adds C++ condition declarations and implicit destructor names.
+		}
+		else if(statement instanceof IASTGotoStatement gotoStatement) {
+
+		}
 		else if(statement instanceof IASTIfStatement ifStatement) {
+			// IASTIfStatement has a condition expression; ICPPASTIfStatement also supports C++ init-statements, condition declarations, constexpr, and scope.
+						
+		}
+		else if(statement instanceof IASTLabelStatement labelStatement) {
+
+		}
+		else if(statement instanceof IASTNullStatement nullStatement) {
+
+		}
+		else if(statement instanceof IASTProblemStatement problemStatement) {
+
+		}
+		else if(statement instanceof IASTReturnStatement returnStatement) {
+
+		}
+		else if(statement instanceof IASTSwitchStatement switchStatement) {
+			// IASTSwitchStatement uses a controller expression; ICPPASTSwitchStatement also supports C++ init-statements, controller declarations, and scope.
+			
+		}
+		else if(statement instanceof IASTWhileStatement whileStatement) {
+			// IASTWhileStatement uses a condition expression; ICPPASTWhileStatement also supports C++ condition declarations and scope.
+		}
+		else if(statement instanceof ICPPASTCatchHandler catchHandler) {
+
+		}
+		else if(statement instanceof ICPPASTCompoundStatement cppCompoundStatement) {
+			// ICPPASTCompoundStatement is the C++ block form of IASTCompoundStatement and can own implicit destructor names.
+			//C++ objects created in the block may be destroyed automatically at the end of the block, 
+			//even though there is no explicit destructor call in the source:
+			//{
+			//    Widget w;
+			//    doWork();
+			//} // w.~Widget() happens implicitly here
+		}
+		else if(statement instanceof ICPPASTForStatement cppForStatement) {
+			// ICPPASTForStatement is the C++ for-loop form of IASTForStatement with condition declarations and implicit destructor names.
+			//example of what you can do in C++
+			//for (; Widget w = nextWidget(); ) {
+			  //  use(w);
+			//}
+			//Widget w may have destructors that CDT tracks implicitly, even though no destructor call appears directly in the source.
+
 			
 		}
 		else if(statement instanceof ICPPASTIfStatement cppIfStatement) {
-			
+			// ICPPASTIfStatement is the C++ if form of IASTIfStatement with init-statements, condition declarations, constexpr, and scope.
+			//if (int x = getValue(); x > 0) {
+		    //use(x);
+			//}
+			//
+			//int x = getValue(); part is the init-statement.
+			//also supports a condition declaration:
+			//if (Widget w = makeWidget()) {
+			//  use(w);
+			//}
+			//
+			//supports constexpr if:
+			//if constexpr (std::is_integral_v<T>) {
+			//    handleInteger();
+			//} else {
+			//    handleOther();
+			//}
+			//That is a compile-time branch in C++ templates.
+
+		}
+		else if(statement instanceof ICPPASTRangeBasedForStatement rangeBasedForStatement) {
+
+		}
+		else if(statement instanceof ICPPASTSwitchStatement cppSwitchStatement) {
+			// ICPPASTSwitchStatement is the C++ switch form of IASTSwitchStatement with init-statements, controller declarations, and scope.
+			//Covers C++ extras, like an init-statement:
+			//switch (int code = readCode(); code) {
+		    //case 0:
+		    //    break;
+		    //case 1:
+		    //    break;
+			//}
+			//int code = readCode(); runs first. Then code is used as the switch controller. The variable code is scoped to the switch.
+			//
+			//also have a controller declaration:
+			//switch (int code = readCode()) {
+		    //case 0:
+		    //    break;
+		    //case 1:
+		    //    break;
+			//}
+			//Here the controller itself declares code, instead of being only an existing expression.
+		}
+		else if(statement instanceof ICPPASTTryBlockStatement tryBlockStatement) {
+
+		}
+		else if(statement instanceof ICPPASTWhileStatement cppWhileStatement) {
+			// ICPPASTWhileStatement is the C++ while form of IASTWhileStatement with condition declarations and scope.
+			//also covers a C++ condition declaration:
+			//while (std::shared_ptr<Node> node = nextNode()) {
+			//    use(node);
+			//}
+			//Here the condition declares node, initializes it with nextNode(), and then tests whether node converts to true.
+			//use(node) is scoped only wihtin the loop
+		}
+		else if(statement instanceof IGNUASTGotoStatement gnuGotoStatement) {
+
 		}
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
@@ -337,6 +338,48 @@ public class StatementObject extends AbstractStatement {
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
 		this.statement = fileContent.substring(statement.getSpan().getStart(), statement.getSpan().getEnd());
+		if(!this.statement.endsWith("\n")) {
+			this.statement += "\n";
+		}
+		this.actualSignature = this.statement;
+		setDepth(depth);
+	}
+
+	public StatementObject(String sourceFolder, String filePath,
+			IASTStatement statement, int depth, CodeElementType codeElementType,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
+		CppVisitor visitor = new CppVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
+		statement.accept(visitor);
+		this.variables = visitor.getVariables();
+		this.types = visitor.getTypes();
+		this.variableDeclarations = visitor.getVariableDeclarations();
+		this.methodInvocations = visitor.getMethodInvocations();
+		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+		this.textBlocks = visitor.getTextBlocks();
+		this.stringLiterals = visitor.getStringLiterals();
+		this.charLiterals = visitor.getCharLiterals();
+		this.numberLiterals = visitor.getNumberLiterals();
+		this.nullLiterals = visitor.getNullLiterals();
+		this.booleanLiterals = visitor.getBooleanLiterals();
+		this.typeLiterals = visitor.getTypeLiterals();
+		this.creations = visitor.getCreations();
+		this.infixExpressions = visitor.getInfixExpressions();
+		this.assignments = visitor.getAssignments();
+		this.infixOperators = visitor.getInfixOperators();
+		this.arrayAccesses = visitor.getArrayAccesses();
+		this.prefixExpressions = visitor.getPrefixExpressions();
+		this.postfixExpressions = visitor.getPostfixExpressions();
+		this.thisExpressions = visitor.getThisExpressions();
+		this.arguments = visitor.getArguments();
+		this.parenthesizedExpressions = visitor.getParenthesizedExpressions();
+		this.castExpressions = visitor.getCastExpressions();
+		this.instanceofExpressions = visitor.getInstanceofExpressions();
+		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
+		this.lambdas = visitor.getLambdas();
+		this.comprehensions = visitor.getComprehensions();
+		this.statement = statement.getRawSignature();
 		if(!this.statement.endsWith("\n")) {
 			this.statement += "\n";
 		}

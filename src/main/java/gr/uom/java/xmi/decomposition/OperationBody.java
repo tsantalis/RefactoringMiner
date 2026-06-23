@@ -25,6 +25,8 @@ public abstract class OperationBody {
 	protected List<UMLComment> comments;
 
 	protected void addInActiveVariableDeclarations(VariableDeclaration v) {
+		if(v == null)
+			return;
 		if(activeVariableDeclarations.containsKey(v.getVariableName())) {
 			activeVariableDeclarations.get(v.getVariableName()).add(v);
 		}
@@ -36,6 +38,8 @@ public abstract class OperationBody {
 	}
 
 	private void removeFromActiveVariableDeclarations(VariableDeclaration v) {
+		if(v == null)
+			return;
 		if(activeVariableDeclarations.containsKey(v.getVariableName())) {
 			activeVariableDeclarations.get(v.getVariableName()).remove(v);
 		}

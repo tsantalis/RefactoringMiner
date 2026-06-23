@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtElement;
@@ -115,6 +116,15 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public CompositeStatementObject(String sourceFolder, String filePath, ISwc4jAst statement, int depth, CodeElementType codeElementType, String fileContent) {
 		super(new LocationInfo(sourceFolder, filePath, statement.getSpan(), codeElementType, fileContent));
+		this.setDepth(depth);
+		this.statementList = new ArrayList<AbstractStatement>();
+		this.expressionList = new ArrayList<AbstractExpression>();
+		this.variableDeclarations = new ArrayList<VariableDeclaration>();
+		computeActualSignature(fileContent, this.locationInfo.getStartOffset(), this.locationInfo.getEndOffset());
+	}
+
+	public CompositeStatementObject(String sourceFolder, String filePath, IASTStatement statement, int depth, CodeElementType codeElementType, String fileContent) {
+		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
 		this.setDepth(depth);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();

@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
@@ -33,6 +34,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
@@ -70,6 +72,7 @@ import extension.umladapter.UMLAdapterUtil;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
+import gr.uom.java.xmi.decomposition.CppOperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 public class CppFileProcessor {
@@ -99,8 +102,8 @@ public class CppFileProcessor {
 						GPPLanguage.OPTION_IS_SOURCE_UNIT,
 						new DefaultLogService()
 						);
-				processPreprocessorStatements(ast.getAllPreprocessorStatements());
 				String sourceFolder = extractCppSourceFolder();
+				processPreprocessorStatements(sourceFolder, ast.getAllPreprocessorStatements());
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations());
 				this.umlModel.addClass(moduleClass);
@@ -114,8 +117,8 @@ public class CppFileProcessor {
 						GCCLanguage.OPTION_IS_SOURCE_UNIT,
 						new DefaultLogService()
 						);
-				processPreprocessorStatements(ast.getAllPreprocessorStatements());
 				String sourceFolder = extractCppSourceFolder();
+				processPreprocessorStatements(sourceFolder, ast.getAllPreprocessorStatements());
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations());
 				this.umlModel.addClass(moduleClass);
@@ -126,15 +129,15 @@ public class CppFileProcessor {
 		}
 	}
 
-	private void processPreprocessorStatements(IASTPreprocessorStatement[] allPreprocessorStatements) {
+	private void processPreprocessorStatements(String sourceFolder, IASTPreprocessorStatement[] allPreprocessorStatements) {
 		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
 			LocationInfo locationInfo = new LocationInfo(
-					extractCppSourceFolder(),                         // sourceFolder
-					filePath,                   // current C++ file path
-					statement,             // the IASTPreprocessorStatement node
-					CodeElementType.PREPROCESSOR_DIRECTIVE,
-					fileContent                 // original file text
-				);	
+				sourceFolder,
+				filePath,
+				statement,
+				CodeElementType.PREPROCESSOR_DIRECTIVE,
+				fileContent
+			);	
 			IASTName nameNode;
 			String name;
 			String value;
@@ -317,7 +320,6 @@ public class CppFileProcessor {
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
-		//TODO: module class can be parameterized module class, umlclass, etc for C++ - belong to namespace, class or class owner from qualified name
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, parentContainer.getName());
 		operation.setVisibility(Visibility.PUBLIC);
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
@@ -351,7 +353,14 @@ public class CppFileProcessor {
 		}
 
 		operation.setActualSignature(extractActualSignature(functionDefinition));
-		operation.setBody(null);
+		IASTStatement body = functionDefinition.getBody();
+		if(body instanceof IASTCompoundStatement compoundStatement) {
+			CppOperationBody operationBody = new CppOperationBody(sourceFolder, filePath, compoundStatement, operation, parentContainer.getAttributes(), fileContent);
+			operation.setBody(operationBody);
+		}
+		else {
+			//TODO model as default expression
+		}
 		return operation;
 	}
 

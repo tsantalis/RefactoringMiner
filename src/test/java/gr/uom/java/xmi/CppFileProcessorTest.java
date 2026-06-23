@@ -10,6 +10,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
+import org.eclipse.cdt.core.index.IIndex;
+import org.eclipse.cdt.core.model.ILanguage;
+import org.eclipse.cdt.core.parser.DefaultLogService;
+import org.eclipse.cdt.core.parser.FileContent;
+import org.eclipse.cdt.core.parser.IParserLogService;
+import org.eclipse.cdt.core.parser.IScannerInfo;
+import org.eclipse.cdt.core.parser.IncludeFileContentProvider;
+import org.eclipse.cdt.core.parser.ScannerInfo;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTNamespaceDefinition;
+import org.eclipse.core.runtime.CoreException;
 import org.junit.jupiter.api.Test;
 
 class CppFileProcessorTest {

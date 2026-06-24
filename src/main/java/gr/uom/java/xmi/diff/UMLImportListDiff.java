@@ -73,6 +73,8 @@ public class UMLImportListDiff {
 	}
 
 	private UMLImport findMatchingImport(Set<UMLImport> imports, UMLType type) {
+		if(type == null)
+			return null;
 		for(UMLImport imported : imports) {
 			if(imported.getName().endsWith("." + type.getClassType())) {
 				return imported;

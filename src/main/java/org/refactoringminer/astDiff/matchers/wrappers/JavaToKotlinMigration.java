@@ -762,5 +762,9 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(matched.first,matched.second.getChild(0));
             }
         }
+        Tree kotlinFunctionParameters = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS);
+        if(kotlinFunctionParameters != null) {
+        	mappingStore.addMapping(srcOperationNode, kotlinFunctionParameters);
+        }
     }
 }

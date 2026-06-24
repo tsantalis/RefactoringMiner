@@ -36,6 +36,7 @@ import org.jetbrains.kotlin.psi.KtProperty;
 import org.jetbrains.kotlin.psi.KtReferenceExpression;
 import org.jetbrains.kotlin.psi.KtReturnExpression;
 import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
+import org.jetbrains.kotlin.psi.KtStringTemplateEntry;
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeEntry;
@@ -257,6 +258,11 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	private void processStringTemplateExpression(KtStringTemplateExpression expression) {
 		LeafExpression literal = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.STRING_LITERAL, container);
 		stringLiterals.add(literal);
+		for(KtStringTemplateEntry entry : expression.getEntries()) {
+			if(entry.getExpression() != null && entry.getExpression() instanceof KtReferenceExpression referenceExpression) {
+				processReferenceExpression(referenceExpression);
+			}
+		}
 	}
 
 	private void processArrayAccess(KtArrayAccessExpression expression, Object data) {

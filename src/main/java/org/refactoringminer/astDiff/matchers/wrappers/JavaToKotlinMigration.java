@@ -58,10 +58,41 @@ public class JavaToKotlinMigration {
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE);
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
+        List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
+        List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
             //remove .code on character literals to convert to int
             children2.remove(children2.size()-1);
         }
+        //remove from children1 simple names corresponding to interpolated identifiers
+        Iterator<Tree> iter1 = children1.iterator();
+        while(iter1.hasNext()) {
+        	Tree t1 = iter1.next();
+			String name = t1.getLabel();
+        	for(Tree t2 : interpolatedIdentifiers2) {
+        		if(name.equals(t2.getLabel())) {
+        			mappingStore.addMapping(t1, t2);
+        			iter1.remove();
+        			break;
+        		}
+        	}
+        	for(Tree t2 : interpolatedExpressions2) {
+        		List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
+        		for(Tree simpleName2 : simpleNames2) {
+        			if(name.equals(simpleName2.getLabel())) {
+        				mappingStore.addMapping(t1, simpleName2);
+            			iter1.remove();
+            			break;
+        			}
+        			else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
+        				mappingStore.addMapping(t1, simpleName2);
+            			iter1.remove();
+            			break;
+        			}
+        		}
+        	}
+        }
+        removeFromParent(children2, interpolatedExpressions2, LANG2.SIMPLE_NAME);
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> castExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CAST_EXPRESSION);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);

@@ -121,6 +121,34 @@ public class StringBasedHeuristics {
 					if(compatibleDiffs(s1, s2, info, diff1, diff2)) {
 						return true;
 					}
+					if(diff2.contains("$")) {
+						//check for string template
+						String tmp = new String(diff1);
+						for(LeafExpression variable : statement1.getVariables()) {
+							String replacement = "$" + variable.getString();
+							if(diff2.contains(replacement)) {
+								//3 scenarios: front, middle, end
+								String middle = "\" + " + variable.getString() + " + \"";
+								String end = "\" + " + variable.getString();
+								String start = variable.getString() + " + \"";
+								if(tmp.contains(middle)) {
+									tmp = tmp.replace(middle, replacement);
+								}
+								else if(tmp.contains(end)) {
+									tmp = tmp.replace(end, replacement);
+								}
+								else if(tmp.contains(start)) {
+									tmp = tmp.replace(start, replacement);
+								}
+							}
+						}
+						if(tmp.equals(diff2)) {
+							return true;
+						}
+						if(equalAfterParenthesisElimination(tmp, diff2, LANG1, LANG2)) {
+							return true;
+						}
+					}
 				}
 				else if(!commonSuffix.isEmpty() && commonSuffix.length() > 1 && commonPrefix.isEmpty()) {
 					int endIndexS2 = ss2.lastIndexOf(commonSuffix);
@@ -360,6 +388,9 @@ public class StringBasedHeuristics {
 		String updatedS2 = s2.replace("(", "");
 		updatedS2 = updatedS2.replace(")", "");
 		if(updatedS1.equals(updatedS2) || updatedS1.equals(LANG1.RETURN_SPACE + updatedS2) || updatedS2.equals(LANG2.RETURN_SPACE + updatedS1)) {
+			return true;
+		}
+		if(updatedS2.equals(updatedS1 + "\"") || updatedS2.equals("\"" + updatedS1) || updatedS2.equals("\"" + updatedS1 + "\"")) {
 			return true;
 		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(updatedS1, updatedS2);

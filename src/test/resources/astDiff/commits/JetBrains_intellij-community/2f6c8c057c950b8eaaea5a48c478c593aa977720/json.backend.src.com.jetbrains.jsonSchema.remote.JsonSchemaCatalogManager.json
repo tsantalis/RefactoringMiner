@@ -11869,15 +11869,15 @@
   "secondEndPos" : 1715
 }, {
   "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
+  "secondType" : "interpolated_identifier",
   "firstLabel" : "path",
-  "secondLabel" : "entry",
+  "secondLabel" : "path",
   "firstParentType" : "InfixExpression",
-  "secondParentType" : "navigation_expression",
+  "secondParentType" : "string_literal",
   "firstPos" : 10424,
-  "secondPos" : 1699,
+  "secondPos" : 1673,
   "firstEndPos" : 10428,
-  "secondEndPos" : 1704
+  "secondEndPos" : 1677
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "navigation_expression",

@@ -115,7 +115,16 @@ public class CppOperationBody extends OperationBody {
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTDoStatement doStatement) {
-			// composite
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, doStatement, parent.getDepth()+1, CodeElementType.DO_STATEMENT, fileContent);
+			parent.addStatement(child);
+			if(doStatement.getCondition() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, doStatement.getCondition(), CodeElementType.DO_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			if(doStatement.getBody() != null) {
+				processStatement(sourceFolder, filePath, child, doStatement.getBody(), fileContent);
+			}
 		}
 		else if(statement instanceof IASTExpressionStatement expressionStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);

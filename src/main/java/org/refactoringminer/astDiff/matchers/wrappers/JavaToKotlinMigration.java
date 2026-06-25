@@ -704,7 +704,18 @@ public class JavaToKotlinMigration {
         Tree qualifiedName = TreeUtilFunctions.findChildByType(srcImportStatement, LANG1.QUALIFIED_NAME);
         Tree identifier = TreeUtilFunctions.findChildByType(dstImportStatement, LANG1.IMPORT_IDENTIFIER);
         if(qualifiedName != null && identifier != null) {
+            String qualified = "";
+            int i = 0;
+            for(Tree t : identifier.getChildren()) {
+                qualified = qualified + t.getLabel();
+                if(i<identifier.getChildren().size()-1) {
+                    qualified = qualified + ".";
+                }
+                i++;
+            }
+            identifier.setLabel(qualified);
             mappingStore.addMapping(qualifiedName, identifier);
+            identifier.getChildren().clear();
         }
     }
 

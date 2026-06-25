@@ -380,6 +380,7 @@ public class Constants {
     public final String MULTIPLICATIVE_EXPRESSION = "multiplicative_expression";
     public final String INTERPOLATED_IDENTIFIER = "interpolated_identifier";
     public final String INTERPOLATED_EXPRESSION = "interpolated_expression";
+    public final String AT = "at";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

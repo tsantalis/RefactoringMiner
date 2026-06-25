@@ -1236,7 +1236,7 @@ public class OperationInvocation extends AbstractCall {
 				this.methodName = "";
 		}
 		else if(calleeExpression instanceof KtStringTemplateExpression templateExpression) {
-			
+			this.methodName = "";
 		}
 		this.numberOfArguments = invocation.getValueArguments().size();
 		this.arguments = new ArrayList<String>();

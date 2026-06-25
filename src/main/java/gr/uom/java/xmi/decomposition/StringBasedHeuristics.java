@@ -2769,11 +2769,10 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				else if(!replacement.involvesVariable() &&
-						(replacement.getBefore().equals(assignment1) || replacement.getAfter().equals(assignment2)) &&
-						(replacement.getBefore().contains(replacement.getAfter()) || replacement.getAfter().contains(replacement.getBefore()))) {
+				else if(replacementInfo.containsReplacement(ReplacementType.CONDITIONAL) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
-				}
 			}
 			if(inv1 != null && inv2 != null) {
 				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;

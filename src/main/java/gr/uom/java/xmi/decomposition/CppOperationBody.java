@@ -88,31 +88,43 @@ public class CppOperationBody extends OperationBody {
 			}
 		}
 		else if(statement instanceof IASTBreakStatement breakStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, breakStatement, parent.getDepth()+1, CodeElementType.BREAK_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTCaseStatement caseStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, caseStatement, parent.getDepth()+1, CodeElementType.SWITCH_CASE, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTContinueStatement continueStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, continueStatement, parent.getDepth()+1, CodeElementType.CONTINUE_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTDeclarationStatement declarationStatement) {
 
 		}
 		else if(statement instanceof IASTDefaultStatement defaultStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, defaultStatement, parent.getDepth()+1, CodeElementType.SWITCH_CASE, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTDoStatement doStatement) {
 
 		}
 		else if(statement instanceof IASTExpressionStatement expressionStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTForStatement forStatement) {
 			// IASTForStatement models a generic for loop; ICPPASTForStatement adds C++ condition declarations and implicit destructor names.
 		}
 		else if(statement instanceof IASTGotoStatement gotoStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, gotoStatement, parent.getDepth()+1, CodeElementType.GOTO_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTIfStatement ifStatement) {
 			// IASTIfStatement has a condition expression; ICPPASTIfStatement also supports C++ init-statements, condition declarations, constexpr, and scope.
@@ -122,13 +134,19 @@ public class CppOperationBody extends OperationBody {
 
 		}
 		else if(statement instanceof IASTNullStatement nullStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, nullStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTProblemStatement problemStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, problemStatement, parent.getDepth()+1, CodeElementType.PROBLEM_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTReturnStatement returnStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, returnStatement, parent.getDepth()+1, CodeElementType.RETURN_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTSwitchStatement switchStatement) {
 			// IASTSwitchStatement uses a controller expression; ICPPASTSwitchStatement also supports C++ init-statements, controller declarations, and scope.
@@ -216,7 +234,9 @@ public class CppOperationBody extends OperationBody {
 			//use(node) is scoped only wihtin the loop
 		}
 		else if(statement instanceof IGNUASTGotoStatement gnuGotoStatement) {
-
+			StatementObject child = new StatementObject(sourceFolder, filePath, gnuGotoStatement, parent.getDepth()+1, CodeElementType.GOTO_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
 		}
 	}
 }

@@ -43,13 +43,16 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.Type;
+import org.jetbrains.kotlin.psi.KtBinaryExpression;
 import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
+import org.jetbrains.kotlin.psi.KtParenthesizedExpression;
 import org.jetbrains.kotlin.psi.KtSafeQualifiedExpression;
+import org.jetbrains.kotlin.psi.KtStringTemplateExpression;
 import org.jetbrains.kotlin.psi.KtTypeProjection;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.refactoringminer.api.Refactoring;
@@ -1213,6 +1216,27 @@ public class OperationInvocation extends AbstractCall {
 		else if(calleeExpression instanceof KtCallExpression) {
 			//f()() is used to call a function that returns another function
 			this.methodName = "";
+		}
+		else if(calleeExpression instanceof KtParenthesizedExpression parenthesized) {
+			KtExpression expr = parenthesized.getExpression();
+			if(expr instanceof KtBinaryExpression binaryExpr) {
+				KtExpression left = binaryExpr.getLeft();
+				KtExpression right = binaryExpr.getRight();
+				if(left instanceof KtCallExpression leftCall && right instanceof KtCallExpression rightCall) {
+					KtExpression leftCalleeExpression = leftCall.getCalleeExpression();
+					KtExpression rightCalleeExpression = rightCall.getCalleeExpression();
+					if(leftCalleeExpression instanceof KtNameReferenceExpression leftNameReference &&
+							rightCalleeExpression instanceof KtNameReferenceExpression rightNameReference &&
+							leftNameReference.getReferencedName().equals(rightNameReference.getReferencedName())) {
+						this.methodName = leftNameReference.getReferencedName();
+					}
+				}
+			}
+			if(this.methodName == null)
+				this.methodName = "";
+		}
+		else if(calleeExpression instanceof KtStringTemplateExpression templateExpression) {
+			
 		}
 		this.numberOfArguments = invocation.getValueArguments().size();
 		this.arguments = new ArrayList<String>();

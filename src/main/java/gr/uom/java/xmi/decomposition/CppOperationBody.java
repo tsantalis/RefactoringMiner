@@ -142,7 +142,20 @@ public class CppOperationBody extends OperationBody {
 		}
 		else if(statement instanceof IASTIfStatement ifStatement) {
 			// IASTIfStatement has a condition expression; ICPPASTIfStatement also supports C++ init-statements, condition declarations, constexpr, and scope.
-			// composite
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
+			parent.addStatement(child);
+			// TODO: handle ICPPASTIfStatement init-statements and condition declarations after CppVisitor extracts C++ declarations.
+			if(ifStatement.getConditionExpression() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, ifStatement.getConditionExpression(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			if(ifStatement.getThenClause() != null) {
+				processStatement(sourceFolder, filePath, child, ifStatement.getThenClause(), fileContent);
+			}
+			if(ifStatement.getElseClause() != null) {
+				processStatement(sourceFolder, filePath, child, ifStatement.getElseClause(), fileContent);
+			}
 		}
 		else if(statement instanceof IASTLabelStatement labelStatement) {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, labelStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(labelStatement.getName().toString()), fileContent);

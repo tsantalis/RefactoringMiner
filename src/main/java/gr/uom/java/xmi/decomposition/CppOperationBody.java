@@ -145,7 +145,12 @@ public class CppOperationBody extends OperationBody {
 			// composite
 		}
 		else if(statement instanceof IASTLabelStatement labelStatement) {
-			// composite
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, labelStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(labelStatement.getName().toString()), fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			if(labelStatement.getNestedStatement() != null) {
+				processStatement(sourceFolder, filePath, child, labelStatement.getNestedStatement(), fileContent);
+			}
 		}
 		else if(statement instanceof IASTNullStatement nullStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, nullStatement, parent.getDepth()+1, CodeElementType.EMPTY_STATEMENT, container, activeVariableDeclarations, fileContent);

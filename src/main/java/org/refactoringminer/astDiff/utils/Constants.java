@@ -381,6 +381,7 @@ public class Constants {
     public final String INTERPOLATED_IDENTIFIER = "interpolated_identifier";
     public final String INTERPOLATED_EXPRESSION = "interpolated_expression";
     public final String AT = "at";
+    public final String PACKAGE = "package";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

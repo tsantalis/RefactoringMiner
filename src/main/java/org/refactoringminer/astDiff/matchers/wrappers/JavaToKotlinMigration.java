@@ -724,9 +724,11 @@ public class JavaToKotlinMigration {
         Tree packageName = TreeUtilFunctions.findChildByType(srcPackageDeclaration, LANG1.QUALIFIED_NAME);
         if(packageName == null)
             packageName = TreeUtilFunctions.findChildByType(srcPackageDeclaration, LANG1.SIMPLE_NAME);
-        Tree identifier = TreeUtilFunctions.findChildByType(dstPackageDeclaration, LANG1.IMPORT_IDENTIFIER);
+        Tree identifier = TreeUtilFunctions.findChildByType(dstPackageDeclaration, LANG2.IMPORT_IDENTIFIER);
         if(packageName != null && identifier != null) {
-            mappingStore.addMapping(packageName, identifier);
+            mappingStore.addMapping(packageName, identifier.getChild(0));
+            Tree packageKeyword = TreeUtilFunctions.findChildByType(dstPackageDeclaration, LANG2.PACKAGE);
+            dstPackageDeclaration.getChildren().remove(packageKeyword);
         }
     }
 

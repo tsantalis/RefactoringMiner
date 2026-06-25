@@ -472,7 +472,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					break;
 				}
 			}
-			if(getFragment1().getVariableDeclarations().size() == 0 && variableDeclarations.size() == 1 && validReplacements) {
+			if(getFragment1().getVariableDeclarations().size() == 0 && variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null && validReplacements) {
 				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
 				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
 				LeafMapping leafMapping = new LeafMapping(getFragment1(), variableDeclaration.getInitializer(), operation1, operation2);

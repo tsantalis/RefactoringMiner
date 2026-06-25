@@ -4078,7 +4078,8 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer1 != null && invocationCoveringTheEntireStatement2 != null && !(invocationCoveringTheEntireStatement2 instanceof MethodReference) && variableDeclarations2.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")") && s2.indexOf("(") < s2.lastIndexOf(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s2.contains("(") && s2.contains(")") && s2.indexOf("(") < s2.lastIndexOf(")") &&
+				s1.contains(LANG1.OPEN_ARRAY_INITIALIZER) && s1.contains(LANG1.CLOSE_ARRAY_INITIALIZER)) {
 			String args1 = s1.substring(s1.indexOf(LANG1.OPEN_ARRAY_INITIALIZER)+1, s1.lastIndexOf(LANG1.CLOSE_ARRAY_INITIALIZER));
 			String args2 = s2.substring(s2.indexOf("(")+1, s2.lastIndexOf(")"));
 			if(args1.equals(args2)) {
@@ -4099,7 +4100,8 @@ public class ReplacementAlgorithm {
 			}
 		}
 		if(variableDeclarationWithArrayInitializer2 != null && invocationCoveringTheEntireStatement1 != null && !(invocationCoveringTheEntireStatement1 instanceof MethodReference) && variableDeclarations1.isEmpty() &&
-				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")") && s1.indexOf("(") < s1.lastIndexOf(")")) {
+				!containsMethodSignatureOfAnonymousClass(statement1.getString(), LANG1) && !containsMethodSignatureOfAnonymousClass(statement2.getString(), LANG2) && s1.contains("(") && s1.contains(")") && s1.indexOf("(") < s1.lastIndexOf(")") &&
+				s2.contains(LANG1.OPEN_ARRAY_INITIALIZER) && s2.contains(LANG1.CLOSE_ARRAY_INITIALIZER)) {
 			String args1 = s1.substring(s1.indexOf("(")+1, s1.lastIndexOf(")"));
 			String args2 = s2.substring(s2.indexOf(LANG2.OPEN_ARRAY_INITIALIZER)+1, s2.lastIndexOf(LANG2.CLOSE_ARRAY_INITIALIZER));
 			if(args1.equals(args2)) {

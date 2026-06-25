@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
@@ -3398,7 +3399,7 @@ public abstract class UMLAbstractClassDiff {
 		UMLAbstractClass inputDeclaration = nextClass;
 		if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
 			String enumClassLiteral = null;
-			if (annotation.isMarkerAnnotation()) {
+			if (annotation.isMarkerAnnotation() || (Objects.isNull(annotation.getValue()) && Objects.isNull(annotation.getMemberValuePairs().get("value")))) {
 				enumClassLiteral = SourceAnnotation.sanitizeLiteral(getFirstParameterType(addedOperation));
 			} else {
 				AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");

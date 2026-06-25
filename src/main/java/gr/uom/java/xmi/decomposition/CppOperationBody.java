@@ -103,7 +103,11 @@ public class CppOperationBody extends OperationBody {
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTDeclarationStatement declarationStatement) {
-			// leaf
+			StatementObject child = new StatementObject(sourceFolder, filePath, declarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			// TODO: teach CppVisitor to extract C++ local variable declarations so this updates active scope.
+			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 		}
 		else if(statement instanceof IASTDefaultStatement defaultStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, defaultStatement, parent.getDepth()+1, CodeElementType.SWITCH_CASE, container, activeVariableDeclarations, fileContent);
@@ -155,7 +159,16 @@ public class CppOperationBody extends OperationBody {
 		}
 		else if(statement instanceof IASTWhileStatement whileStatement) {
 			// IASTWhileStatement uses a condition expression; ICPPASTWhileStatement also supports C++ condition declarations and scope.
-			// composite
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, whileStatement, parent.getDepth()+1, CodeElementType.WHILE_STATEMENT, fileContent);
+			parent.addStatement(child);
+			if(whileStatement.getCondition() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, whileStatement.getCondition(), CodeElementType.WHILE_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			if(whileStatement.getBody() != null) {
+				processStatement(sourceFolder, filePath, child, whileStatement.getBody(), fileContent);
+			}
 		}
 		else if(statement instanceof ICPPASTCatchHandler catchHandler) {
 			// composite

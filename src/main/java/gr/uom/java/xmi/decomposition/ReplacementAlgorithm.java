@@ -1003,7 +1003,14 @@ public class ReplacementAlgorithm {
 		//perform creation replacements
 		findReplacements(creations1, creations2, replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 
-		findReplacements(variables1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
+		//exclude the variables that are on the left side of an assignment
+		Set<String> variablesToBeConsidered1 = new LinkedHashSet<>(variables1);
+		for(String s : variables1) {
+			if(statement1.getString().startsWith(s + LANG1.ASSIGNMENT)) {
+				variablesToBeConsidered1.remove(s);
+			}
+		}
+		findReplacements(variablesToBeConsidered1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(creations1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(variables1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 		findReplacements(convertLambdasToStringSet(lambdas1), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);

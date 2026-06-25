@@ -2745,7 +2745,7 @@ public class StringBasedHeuristics {
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) &&
-						(assignment1.equals(replacement.getBefore()) || variableName1.equals(replacement.getBefore())) &&
+						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()) &&
 						!referencedParameterForClassInstanceCreationReplacement(replacement, mapper.getContainer1(), mapper.getContainer2()))
 					rightHandSideReplacement = true;

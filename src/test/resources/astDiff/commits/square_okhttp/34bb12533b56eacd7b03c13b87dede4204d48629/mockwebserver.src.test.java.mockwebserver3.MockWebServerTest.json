@@ -30767,15 +30767,26 @@
   "secondEndPos" : 18330
 }, {
   "firstType" : "TryStatement",
-  "secondType" : "statements",
+  "secondType" : "try_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 20271,
   "secondPos" : 17998,
   "firstEndPos" : 20614,
   "secondEndPos" : 18330
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TryStatement",
+  "secondParentType" : "try_expression",
+  "firstPos" : 20275,
+  "secondPos" : 18010,
+  "firstEndPos" : 20379,
+  "secondEndPos" : 18102
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
@@ -31218,15 +31229,26 @@
   "secondEndPos" : 18793
 }, {
   "firstType" : "TryStatement",
-  "secondType" : "statements",
+  "secondType" : "try_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 20685,
   "secondPos" : 18395,
   "firstEndPos" : 21094,
   "secondEndPos" : 18793
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TryStatement",
+  "secondParentType" : "try_expression",
+  "firstPos" : 20689,
+  "secondPos" : 18453,
+  "firstEndPos" : 20849,
+  "secondEndPos" : 18555
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",

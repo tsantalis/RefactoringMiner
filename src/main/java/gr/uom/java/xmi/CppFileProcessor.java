@@ -9,10 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionStyleMacroParameter;
 import org.eclipse.cdt.core.dom.ast.IASTName;
@@ -33,10 +35,12 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorObjectStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -219,10 +223,10 @@ public class CppFileProcessor {
 		Visibility currentVisibility = null;
 		for(IASTDeclaration declaration : declarations) {
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
-					
+				processSimpleDeclaration(packageName, sourceFolder, cppSimpleDeclaration);
 			}
 			else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
-				
+				processSimpleDeclaration(packageName, sourceFolder, cSimpleDeclaration);
 			}
 			else if(declaration instanceof CPPASTAmbiguousSimpleDeclaration cppAmbiguousSimpleDeclaration) {
 				
@@ -235,12 +239,14 @@ public class CppFileProcessor {
 				//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			}
 			else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-				UMLOperation operation = processCFunctionDefinition(cFunctionDefinition, sourceFolder, parentContainer);
+				UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer);
 				parentContainer.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
 				//org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionWithTryBlock is a subclass
 				//Function-Try-Block should be handled similar to Kotlin, which allows functions to have a try-expression as a body
+				UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer);
+				parentContainer.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTAliasDeclaration cppAliasDeclaration) {
 				//A C++ alias declaration (introduced in C++11) uses the using keyword to create a readable, interchangeable synonym for an existing type or template. It is the modern, preferred alternative to typedef.
@@ -328,11 +334,32 @@ public class CppFileProcessor {
 		return umlClass;
 	}
 
-	private UMLOperation processCFunctionDefinition(CASTFunctionDefinition functionDefinition, String sourceFolder, UMLAbstractClass parentContainer) {
+	private void processSimpleDeclaration(String packageName, String sourceFolder, IASTSimpleDeclaration simpleDeclaration) {
+		if(simpleDeclaration.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
+			if(compositeTypeSpecifier.getName() == null) {
+				return;
+			}
+			String className = compositeTypeSpecifier.getName().toString();
+			if(className.isBlank()) {
+				return;
+			}
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
+			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, Collections.emptyList());
+			umlClass.setVisibility(Visibility.PUBLIC);
+			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {
+				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
+			}
+			umlClass.setActualSignature(simpleDeclaration.getRawSignature());
+			processDeclarations(packageName + "." + className, sourceFolder, umlClass, compositeTypeSpecifier.getMembers());
+			this.umlModel.addClass(umlClass);
+		}
+	}
+
+	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer) {
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
-		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, parentContainer.getName());
+		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
 		operation.setVisibility(Visibility.PUBLIC);
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
@@ -420,7 +447,7 @@ public class CppFileProcessor {
 		return "arg" + index;
 	}
 
-	private String extractActualSignature(CASTFunctionDefinition functionDefinition) {
+	private String extractActualSignature(IASTFunctionDefinition functionDefinition) {
 		IASTFileLocation functionLocation = functionDefinition.getFileLocation();
 		if(functionLocation == null) {
 			return functionDefinition.getRawSignature();

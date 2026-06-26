@@ -25,6 +25,7 @@ Table of Contents
 
    * [General info](#general-info)
       * [AST diff features](#ast-diff-features)
+         * [Cross-language diff](#cross-language-diff)
          * [Refactoring-aware tooltips](#refactoring-aware-tooltips)
          * [Refactoring listing with links to diffs](#refactoring-listing-with-links-to-diffs)
          * [Single Page View](#single-page-view)
@@ -78,6 +79,11 @@ Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST)
 You can also use our tool to visualize the diffs in your browser.
 
 ## AST diff features
+
+### Cross-language diff
+A Java method migrated to Kotlin function
+<img width="1883" height="290" alt="JavaToKotlinDiff" src="https://github.com/user-attachments/assets/85a1a72b-d786-4b2f-b23a-b3a78d236579" />
+[A Java test file migrated to Kotlin](https://users.encs.concordia.ca/~nikolaos/diffGallery/MockWebServerTest.html)
 
 ### Refactoring-aware tooltips
 <img width="1920" height="1080" alt="RefactoringAwareTooltips" src="https://github.com/user-attachments/assets/e4e14c4c-a966-46e3-b4c7-6808a0506a9c" />

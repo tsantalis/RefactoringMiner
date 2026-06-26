@@ -144,7 +144,14 @@ public class CppOperationBody extends OperationBody {
 			// IASTIfStatement has a condition expression; ICPPASTIfStatement also supports C++ init-statements, condition declarations, constexpr, and scope.
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
 			parent.addStatement(child);
-			// TODO: handle ICPPASTIfStatement init-statements and condition declarations after CppVisitor extracts C++ declarations.
+			if(ifStatement instanceof ICPPASTIfStatement cppIfStatement) {
+				if(cppIfStatement.getInitializerStatement() != null) {
+					processStatement(sourceFolder, filePath, child, cppIfStatement.getInitializerStatement(), fileContent);
+				}
+				if(cppIfStatement.getConditionDeclaration() != null) {
+					// TODO: teach CppVisitor to extract C++ condition declarations so variables declared in if conditions are scoped to this if statement.
+				}
+			}
 			if(ifStatement.getConditionExpression() != null) {
 				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, ifStatement.getConditionExpression(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
 				child.addExpression(abstractExpression);

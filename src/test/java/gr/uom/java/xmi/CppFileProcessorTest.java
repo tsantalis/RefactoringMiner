@@ -160,6 +160,36 @@ class CppFileProcessorTest {
 		assertTrue(value.getClassName().contains("Widget"));
 	}
 
+	@Test
+	void appliesCppVisibilityLabelsToFunctionDefinitions() {
+		String filePath = "src/widget.cpp";
+		String fileContent = String.join("\n",
+				"class Widget {",
+				"public:",
+				"  int visible() {",
+				"    return 1;",
+				"  }",
+				"protected:",
+				"  int inherited() {",
+				"    return 2;",
+				"  }",
+				"private:",
+				"  int hidden() {",
+				"    return 3;",
+				"  }",
+				"};") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass widget = findClass(model.getClassList(), "Widget");
+		assertEquals(Visibility.PUBLIC, findOperation(widget.getOperations(), "visible").getVisibility());
+		assertEquals(Visibility.PROTECTED, findOperation(widget.getOperations(), "inherited").getVisibility());
+		assertEquals(Visibility.PRIVATE, findOperation(widget.getOperations(), "hidden").getVisibility());
+	}
+
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()
 				.filter(operation -> operation.getName().equals(name))

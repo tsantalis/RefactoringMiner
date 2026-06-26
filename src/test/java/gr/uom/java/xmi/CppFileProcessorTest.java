@@ -103,11 +103,75 @@ class CppFileProcessorTest {
 		assertNotNull(size.getParametersWithoutReturnType().get(0).getVariableDeclaration());
 	}
 
+	@Test
+	void processesCppFunctionDefinitionsIntoNamespaceQualifiedOperations() {
+		String filePath = "src/math.cpp";
+		String fileContent = String.join("\n",
+				"namespace outer {",
+				"namespace inner {",
+				"static inline int add(int lhs, int rhs) {",
+				"  return lhs + rhs;",
+				"}",
+				"}",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "math");
+		assertTrue(moduleClass.isModule());
+
+		UMLOperation add = findOperation(moduleClass.getOperations(), "add");
+		assertTrue(add.getClassName().contains("outer.inner"));
+		assertTrue(add.isStatic());
+		assertTrue(add.isInline());
+		assertEquals("int", add.getReturnParameter().getType().toString());
+		assertEquals(List.of("lhs", "rhs"), add.getParameterNameList());
+		assertEquals(List.of("int", "int"), parameterTypeNames(add));
+	}
+
+	@Test
+	void processesCppClassesUnderNamespaces() {
+		String filePath = "src/widgets.cpp";
+		String fileContent = String.join("\n",
+				"namespace outer {",
+				"namespace inner {",
+				"class Widget {",
+				"public:",
+				"  int value() {",
+				"    return 1;",
+				"  }",
+				"};",
+				"}",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass widget = findClass(model.getClassList(), "Widget");
+		assertTrue(widget.getPackageName().contains("outer.inner"));
+
+		UMLOperation value = findOperation(widget.getOperations(), "value");
+		assertTrue(value.getClassName().contains("outer.inner"));
+		assertTrue(value.getClassName().contains("Widget"));
+	}
+
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()
 				.filter(operation -> operation.getName().equals(name))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected operation: " + name));
+	}
+
+	private static UMLClass findClass(List<UMLClass> classes, String name) {
+		return classes.stream()
+				.filter(umlClass -> umlClass.getName().equals(name) || umlClass.getName().endsWith("." + name))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected class: " + name));
 	}
 
 	private static List<String> parameterTypeNames(UMLOperation operation) {

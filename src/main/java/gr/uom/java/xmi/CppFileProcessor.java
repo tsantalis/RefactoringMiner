@@ -36,6 +36,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -215,6 +216,7 @@ public class CppFileProcessor {
 	}
 
 	private void processDeclarations(String packageName, String sourceFolder, UMLAbstractClass parentContainer, IASTDeclaration[] declarations) {
+		Visibility currentVisibility = null;
 		for(IASTDeclaration declaration : declarations) {
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 					
@@ -301,6 +303,16 @@ public class CppFileProcessor {
 				//In C++, visibility labels (more commonly referred to as access specifiers) are keywords used inside a class or struct to control the accessibility of its data members and functions from external code.
 				//There are exactly three visibility labels in C++: public, private, and protected
 				//All data members/functions that follow should have this access modifier
+				int visibility = cppVisibilityLabel.getVisibility();
+				if(visibility == ICPPASTVisibilityLabel.v_private) {
+					currentVisibility = Visibility.PRIVATE;
+				}
+				else if(visibility == ICPPASTVisibilityLabel.v_public) {
+					currentVisibility = Visibility.PUBLIC;
+				}
+				else if(visibility == ICPPASTVisibilityLabel.v_protected) {
+					currentVisibility = Visibility.PROTECTED;
+				}
 			}
 		}
 	}

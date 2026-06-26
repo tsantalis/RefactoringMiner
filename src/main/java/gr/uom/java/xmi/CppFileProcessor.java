@@ -239,13 +239,13 @@ public class CppFileProcessor {
 				//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			}
 			else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-				UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer);
+				UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility);
 				parentContainer.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
 				//org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionWithTryBlock is a subclass
 				//Function-Try-Block should be handled similar to Kotlin, which allows functions to have a try-expression as a body
-				UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer);
+				UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility);
 				parentContainer.addOperation(operation);
 			}
 			else if(declaration instanceof CPPASTAliasDeclaration cppAliasDeclaration) {
@@ -355,12 +355,12 @@ public class CppFileProcessor {
 		}
 	}
 
-	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer) {
+	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
-		operation.setVisibility(Visibility.PUBLIC);
+		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
 

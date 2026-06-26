@@ -56,7 +56,8 @@ public class JavaToKotlinMigration {
         */
         List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
-        boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE);
+        boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE) &&
+                !firstChild1.getParent().getParent().getType().name.equals(LANG1.CLASS_INSTANCE_CREATION);
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
         List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
         List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
@@ -76,29 +77,31 @@ public class JavaToKotlinMigration {
             }
         }
         //remove from children1 simple names corresponding to interpolated identifiers
-        Iterator<Tree> iter1 = children1.iterator();
-        while(iter1.hasNext()) {
-            Tree t1 = iter1.next();
-            String name = t1.getLabel();
-            for(Tree t2 : interpolatedIdentifiers2) {
-                if(name.equals(t2.getLabel())) {
-                    mappingStore.addMapping(t1, t2);
-                    iter1.remove();
-                    break;
-                }
-            }
-            for(Tree t2 : interpolatedExpressions2) {
-                List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
-                for(Tree simpleName2 : simpleNames2) {
-                    if(name.equals(simpleName2.getLabel())) {
-                        mappingStore.addMapping(t1, simpleName2);
+        if(interpolatedIdentifiers2.size() > 0 || interpolatedExpressions2.size() > 0) {
+            Iterator<Tree> iter1 = children1.iterator();
+            while(iter1.hasNext()) {
+                Tree t1 = iter1.next();
+                String name = t1.getLabel();
+                for(Tree t2 : interpolatedIdentifiers2) {
+                    if(name.equals(t2.getLabel())) {
+                        mappingStore.addMapping(t1, t2);
                         iter1.remove();
                         break;
                     }
-                    else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
-                        mappingStore.addMapping(t1, simpleName2);
-                        iter1.remove();
-                        break;
+                }
+                for(Tree t2 : interpolatedExpressions2) {
+                    List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
+                    for(Tree simpleName2 : simpleNames2) {
+                        if(name.equals(simpleName2.getLabel())) {
+                            mappingStore.addMapping(t1, simpleName2);
+                            iter1.remove();
+                            break;
+                        }
+                        else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
+                            mappingStore.addMapping(t1, simpleName2);
+                            iter1.remove();
+                            break;
+                        }
                     }
                 }
             }
@@ -327,11 +330,9 @@ public class JavaToKotlinMigration {
                 Tree lambda2 = lambdas2.get(i);
                 List<Tree> block1 = TreeUtilFunctions.findChildrenByTypeRecursively(lambda1, LANG1.BLOCK);
                 List<Tree> block2 = TreeUtilFunctions.findChildrenByTypeRecursively(lambda2, LANG2.STATEMENTS);
-                if(block1.size() == block2.size()) {
-                    for(int j=0; j<block1.size(); j++) {
-                        mappingStore.addMapping(block1.get(j), block2.get(j));
-                        mappingStore.addMapping(block1.get(j).getParent(), block2.get(j).getParent());
-                    }
+                if(block1.size() > 0 && block2.size() > 0) {
+                    mappingStore.addMapping(block1.get(0), block2.get(0));
+                    mappingStore.addMapping(block1.get(0).getParent(), block2.get(0).getParent());
                 }
             }
         }

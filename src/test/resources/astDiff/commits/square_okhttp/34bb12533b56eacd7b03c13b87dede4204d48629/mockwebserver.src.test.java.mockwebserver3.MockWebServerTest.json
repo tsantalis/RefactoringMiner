@@ -8777,6 +8777,28 @@
   "firstEndPos" : 7718,
   "secondEndPos" : 6526
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Thread",
+  "secondLabel" : "Thread",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "call_expression",
+  "firstPos" : 7487,
+  "secondPos" : 6305,
+  "firstEndPos" : 7493,
+  "secondEndPos" : 6311
+}, {
+  "firstType" : "LambdaExpression",
+  "secondType" : "lambda_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "annotated_lambda",
+  "firstPos" : 7494,
+  "secondPos" : 6312,
+  "firstEndPos" : 7717,
+  "secondEndPos" : 6520
+}, {
   "firstType" : "Block",
   "secondType" : "statements",
   "firstLabel" : "",
@@ -9128,6 +9150,17 @@
   "secondPos" : 6506,
   "firstEndPos" : 7707,
   "secondEndPos" : 6511
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "start",
+  "secondLabel" : "start",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 7719,
+  "secondPos" : 6521,
+  "firstEndPos" : 7724,
+  "secondEndPos" : 6526
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",

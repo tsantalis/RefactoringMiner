@@ -13122,6 +13122,28 @@
   "firstEndPos" : 11217,
   "secondEndPos" : 2526
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ConditionalExpression",
+  "secondParentType" : "statements",
+  "firstPos" : 11228,
+  "secondPos" : 2534,
+  "firstEndPos" : 11307,
+  "secondEndPos" : 2604
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 11228,
+  "secondPos" : 2545,
+  "firstEndPos" : 11239,
+  "secondEndPos" : 2562
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "VfsUtilCore",
@@ -13143,6 +13165,17 @@
   "secondPos" : 2546,
   "firstEndPos" : 11256,
   "secondEndPos" : 2562
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 11257,
+  "secondPos" : 2562,
+  "firstEndPos" : 11306,
+  "secondEndPos" : 2604
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",

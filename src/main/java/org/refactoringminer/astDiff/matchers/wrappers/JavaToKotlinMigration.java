@@ -290,7 +290,9 @@ public class JavaToKotlinMigration {
         removeFromParent(inv2, anonymous2, LANG2.METHOD_INVOCATION);
         removeFromParent(inv1, lambdas1, LANG1.METHOD_INVOCATION);
         removeFromParent(inv1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
-        removeFromParent(inv2, lambdas2, LANG2.METHOD_INVOCATION);
+        if(!letWithLambda) {
+            removeFromParent(inv2, lambdas2, LANG2.METHOD_INVOCATION);
+        }
         List<Tree> invocationsToBeRemoved = new ArrayList<>();
         if(nameCompliance(inv1, inv2, LANG1, LANG2)) {
             if(inv1.size() <= inv2.size()) {

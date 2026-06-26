@@ -120,7 +120,7 @@ public class CppOperationBody extends OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, doStatement, parent.getDepth()+1, CodeElementType.DO_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(doStatement.getCondition() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, doStatement.getCondition(), CodeElementType.DO_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, doStatement.getCondition(), CodeElementType.DO_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
@@ -138,7 +138,7 @@ public class CppOperationBody extends OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, forStatement, parent.getDepth()+1, CodeElementType.FOR_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(forStatement.getInitializerStatement() instanceof IASTExpressionStatement initializerStatement && initializerStatement.getExpression() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, initializerStatement.getExpression(), CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, initializerStatement.getExpression(), CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			else if(forStatement.getInitializerStatement() != null) {
@@ -151,11 +151,11 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 			if(forStatement.getConditionExpression() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forStatement.getConditionExpression(), CodeElementType.FOR_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forStatement.getConditionExpression(), CodeElementType.FOR_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			if(forStatement.getIterationExpression() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forStatement.getIterationExpression(), CodeElementType.FOR_STATEMENT_UPDATER, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, forStatement.getIterationExpression(), CodeElementType.FOR_STATEMENT_UPDATER, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
@@ -184,7 +184,7 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 			if(ifStatement.getConditionExpression() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, ifStatement.getConditionExpression(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, ifStatement.getConditionExpression(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
@@ -231,7 +231,7 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 			if(switchStatement.getControllerExpression() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, switchStatement.getControllerExpression(), CodeElementType.SWITCH_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, switchStatement.getControllerExpression(), CodeElementType.SWITCH_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
@@ -249,7 +249,7 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 			if(whileStatement.getCondition() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, whileStatement.getCondition(), CodeElementType.WHILE_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent, Collections.emptyList());
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, whileStatement.getCondition(), CodeElementType.WHILE_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);

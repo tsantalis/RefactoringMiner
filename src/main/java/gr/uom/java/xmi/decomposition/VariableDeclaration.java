@@ -127,13 +127,15 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private final Constants LANG;
 
 	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, String parameterName, UMLType parameterType,
-			VariableDeclarationContainer container, String fileContent) {
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = parameterName;
-		this.initializer = null;
+		if(parameter.getDeclarator().getInitializer() != null) {
+			this.initializer = new AbstractExpression(sourceFolder, filePath, parameter.getDeclarator().getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
+		}
 		this.type = parameterType;
 		this.varargsParameter = false;
 		int startOffset = locationInfo.getStartOffset();

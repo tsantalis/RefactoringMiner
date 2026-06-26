@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.cdt.core.dom.ast.IASTExpression;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.jetbrains.kotlin.psi.KtElement;
@@ -206,7 +206,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.lambdaOwner = null;
 	}
 
-	public AbstractExpression(String sourceFolder, String filePath, IASTExpression expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
+	public AbstractExpression(String sourceFolder, String filePath, IASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		super(new LocationInfo(sourceFolder, filePath, expression, codeElementType, fileContent));
 		CppVisitor visitor = new CppVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
 		expression.accept(visitor);

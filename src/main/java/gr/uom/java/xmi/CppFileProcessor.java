@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -378,7 +379,7 @@ public class CppFileProcessor {
 				String parameterName = extractParameterName(parameter, index);
 				UMLType parameterType = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
 				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
-				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, parameterType, operation, fileContent);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, parameterType, operation, new LinkedHashMap<>(), fileContent);
 				variableDeclaration.setParameter(true);
 				umlParameter.setVariableDeclaration(variableDeclaration);
 				operation.addParameter(umlParameter);

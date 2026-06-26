@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
@@ -51,6 +55,20 @@ public class CppVisitor extends ASTVisitor {
 		this.container = container;
 		this.activeVariableDeclarations = activeVariableDeclarations;
 		this.fileContent = fileContent;
+		this.shouldVisitDeclarations = true;
+		this.shouldVisitStatements = true;
+		this.shouldVisitDeclarators = true;
+		this.shouldVisitExpressions = true;
+	}
+
+	public int visit(IASTDeclaration declaration) {
+		if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
+			IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
+			for(IASTDeclarator declarator : declarators) {
+				IASTName name = declarator.getName();
+			}
+		}
+		return super.visit(declaration);
 	}
 
 	public List<LeafExpression> getVariables() {

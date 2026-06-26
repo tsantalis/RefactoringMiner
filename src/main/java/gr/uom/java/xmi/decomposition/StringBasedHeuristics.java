@@ -92,6 +92,31 @@ public class StringBasedHeuristics {
 						temp = temp.replace(argBefore, argAfter);
 				}
 			}
+			if(statement2.getLambdas().size() > 0 && statement1.getLambdas().size() == 0 && methodInvocations2.size() > 0 &&
+					methodInvocations2.get(0).getName().equals("let")) {
+				LambdaExpressionObject lambda2 = statement2.getLambdas().get(0);
+				if(lambda2.getBody() != null) {
+					List<AbstractStatement> statements = lambda2.getBody().getCompositeStatement().getAllStatements();
+					for(AbstractStatement statement : statements) {
+						if(statement1.getString().contains(statement.getString())) {
+							return true;
+						}
+						else if(methodInvocations2.get(0).getExpression() != null && statement.getString().contains("it")) {
+							String letExpression = methodInvocations2.get(0).getExpression();
+							String tmp = new String(statement.getString());
+							tmp = ReplacementUtil.performReplacement(tmp, "it", letExpression);
+							//eliminate formatting differences
+							tmp = tmp.replaceAll("\\R\\s*", "");
+							if(tmp.contains(", ")) {
+								tmp = tmp.replaceAll(",\\s*", ",");
+							}
+							if(statement1.getString().contains(tmp)) {
+								return true;
+							}
+						}
+					}
+				}
+			}
 			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
 				String ss2 = s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());

@@ -13088,4 +13088,92 @@
   "secondPos" : 2487,
   "firstEndPos" : 11184,
   "secondEndPos" : 2492
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "jump_keyword",
+  "firstLabel" : "",
+  "secondLabel" : "return",
+  "firstParentType" : "Block",
+  "secondParentType" : "jump_expression",
+  "firstPos" : 11199,
+  "secondPos" : 2508,
+  "firstEndPos" : 11315,
+  "secondEndPos" : 2514
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 11199,
+  "secondPos" : 2508,
+  "firstEndPos" : 11315,
+  "secondEndPos" : 2606
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "contentRoot",
+  "secondLabel" : "contentRoot",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 11206,
+  "secondPos" : 2515,
+  "firstEndPos" : 11217,
+  "secondEndPos" : 2526
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "VfsUtilCore",
+  "secondLabel" : "VfsUtilCore",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 11228,
+  "secondPos" : 2534,
+  "firstEndPos" : 11239,
+  "secondEndPos" : 2545
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "findRelativePath",
+  "secondLabel" : "findRelativePath",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 11240,
+  "secondPos" : 2546,
+  "firstEndPos" : 11256,
+  "secondEndPos" : 2562
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "contentRoot",
+  "secondLabel" : "it",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 11257,
+  "secondPos" : 2563,
+  "firstEndPos" : 11268,
+  "secondEndPos" : 2565
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "file",
+  "secondLabel" : "file",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 11270,
+  "secondPos" : 2567,
+  "firstEndPos" : 11274,
+  "secondEndPos" : 2571
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "VfsUtilCore.VFS_SEPARATOR_CHAR",
+  "secondLabel" : "VfsUtilCore.VFS_SEPARATOR_CHAR",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 11276,
+  "secondPos" : 2573,
+  "firstEndPos" : 11306,
+  "secondEndPos" : 2603
 } ]

@@ -64,33 +64,44 @@ public class JavaToKotlinMigration {
             //remove .code on character literals to convert to int
             children2.remove(children2.size()-1);
         }
+        Iterator<Tree> iter2 = children2.iterator();
+        boolean letFound = false;
+        while(iter2.hasNext()) {
+            Tree t2 = iter2.next();
+            String name = t2.getLabel();
+            //remove let
+            if(name.equals("let")) {
+                iter2.remove();
+                letFound = true;
+            }
+        }
         //remove from children1 simple names corresponding to interpolated identifiers
         Iterator<Tree> iter1 = children1.iterator();
         while(iter1.hasNext()) {
-        	Tree t1 = iter1.next();
-			String name = t1.getLabel();
-        	for(Tree t2 : interpolatedIdentifiers2) {
-        		if(name.equals(t2.getLabel())) {
-        			mappingStore.addMapping(t1, t2);
-        			iter1.remove();
-        			break;
-        		}
-        	}
-        	for(Tree t2 : interpolatedExpressions2) {
-        		List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
-        		for(Tree simpleName2 : simpleNames2) {
-        			if(name.equals(simpleName2.getLabel())) {
-        				mappingStore.addMapping(t1, simpleName2);
-            			iter1.remove();
-            			break;
-        			}
-        			else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
-        				mappingStore.addMapping(t1, simpleName2);
-            			iter1.remove();
-            			break;
-        			}
-        		}
-        	}
+            Tree t1 = iter1.next();
+            String name = t1.getLabel();
+            for(Tree t2 : interpolatedIdentifiers2) {
+                if(name.equals(t2.getLabel())) {
+                    mappingStore.addMapping(t1, t2);
+                    iter1.remove();
+                    break;
+                }
+            }
+            for(Tree t2 : interpolatedExpressions2) {
+                List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
+                for(Tree simpleName2 : simpleNames2) {
+                    if(name.equals(simpleName2.getLabel())) {
+                        mappingStore.addMapping(t1, simpleName2);
+                        iter1.remove();
+                        break;
+                    }
+                    else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
+                        mappingStore.addMapping(t1, simpleName2);
+                        iter1.remove();
+                        break;
+                    }
+                }
+            }
         }
         removeFromParent(children2, interpolatedExpressions2, LANG2.SIMPLE_NAME);
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
@@ -104,7 +115,10 @@ public class JavaToKotlinMigration {
         removeFromParent(children1, anonymous1, LANG1.SIMPLE_NAME);
         removeFromParent(children2, anonymous2, LANG2.SIMPLE_NAME);
         removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
-        removeFromParent(children2, lambdas2, LANG2.SIMPLE_NAME);
+        boolean letWithLambda = letFound && lambdas2.size() > lambdas1.size();
+        if(!letWithLambda) {
+            removeFromParent(children2, lambdas2, LANG2.SIMPLE_NAME);
+        }
         Map<Tree, Tree> qualifiedNameToNavigationExpression = new LinkedHashMap<>();
         if(types1.size() > 0 && children1.size() != children2.size()) {
             List<Tree> toBeRemoved2 = new ArrayList<>();
@@ -137,7 +151,11 @@ public class JavaToKotlinMigration {
                 String qualifiedType = qualified1.getLabel();
                 for(Tree child2 : children2) {
                     if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
-                        toBeRemoved2.add(child2);
+                        boolean skip = child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                                child2.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION);
+                        if(!skip) {
+                            toBeRemoved2.add(child2);
+                        }
                         if(child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
                                 !qualifiedNameToNavigationExpression.containsKey(qualified1) &&
                                 !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
@@ -777,7 +795,7 @@ public class JavaToKotlinMigration {
         }
         Tree kotlinFunctionParameters = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS);
         if(kotlinFunctionParameters != null) {
-        	mappingStore.addMapping(srcOperationNode, kotlinFunctionParameters);
+            mappingStore.addMapping(srcOperationNode, kotlinFunctionParameters);
         }
     }
 }

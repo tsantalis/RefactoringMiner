@@ -44,6 +44,7 @@ public class Constants {
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "raise_statement";
 			EMPTY_STATEMENT = "empty_statement";
+			PRIMITIVE_TYPE = "primitive_type";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -81,6 +82,7 @@ public class Constants {
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "throw_expression";
 			EMPTY_STATEMENT = "empty_statement";
+			PRIMITIVE_TYPE = "primitive_type";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -118,14 +120,15 @@ public class Constants {
 			ASSIGNMENT = "assignment";
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "empty_statement";
+			PRIMITIVE_TYPE = "primitive_type";
 		}
 		else if(PathFileUtils.isCppFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
 			METHOD_DECLARATION = "function_definition";
-			SIMPLE_NAME = "SimpleName";
+			SIMPLE_NAME = "identifier";
 			IMPORT_DECLARATION = "ImportDeclaration";
 			TYPE_DECLARATION = "class_specifier";
-			TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
+			TYPE_DECLARATION_KIND = "class";
 			BLOCK_COMMENT = "BlockComment";
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
@@ -155,6 +158,7 @@ public class Constants {
 			ASSIGNMENT = "Assignment";
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "EmptyStatement";
+			PRIMITIVE_TYPE = "primitive_type";
 		}
 		else {
 			// Java values as default
@@ -193,6 +197,7 @@ public class Constants {
 			ASSIGNMENT = "Assignment";
 			THROW_STATEMENT = "ThrowStatement";
 			EMPTY_STATEMENT = "EmptyStatement";
+			PRIMITIVE_TYPE = "PrimitiveType";
 		}
 	}
 
@@ -216,7 +221,7 @@ public class Constants {
     public final String EXPRESSION_STATEMENT;
     public final String MODIFIER;
     public final String IMPORT_DECLARATION;
-    public final String PRIMITIVE_TYPE = "PrimitiveType";
+    public final String PRIMITIVE_TYPE;
     public final String TYPE_DECLARATION;
     public final String ENUM_DECLARATION;
     public final String RECORD_DECLARATION;
@@ -524,4 +529,9 @@ public class Constants {
     public final String NAMESPACE = "namespace";
     public final String NAMESPACE_IDENTIFIER = "namespace_identifier";
     public final String NESTED_NAMESPACE_SPECIFIER = "nested_namespace_specifier";
+    public final String FUNCTION_DECLARATOR = "function_declarator";
+    public final String POINTER_DECLARATOR = "pointer_declarator";
+    public final String PARAMETER_LIST = "parameter_list";
+    public final String FIELD_IDENTIFIER = "field_identifier";
+    public final String QUALIFIED_IDENTIFIER = "qualified_identifier";
 }

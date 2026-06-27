@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import java.io.ByteArrayInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -17,7 +18,6 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
-import org.eclipse.cdt.core.dom.ast.IASTFunctionStyleMacroParameter;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
@@ -29,10 +29,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIncludeStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfdefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfndefStatement;
-import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
-import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
-import org.eclipse.cdt.core.dom.ast.IASTPreprocessorObjectStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
@@ -74,6 +71,11 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTVisibilityLabel;
 import org.eclipse.cdt.internal.core.index.EmptyCIndex;
 import org.eclipse.core.runtime.CoreException;
 import org.refactoringminer.util.PathFileUtils;
+
+import com.github.gumtreediff.gen.treesitterng.CTreeSitterNgTreeGenerator;
+import com.github.gumtreediff.gen.treesitterng.CppTreeSitterNgTreeGenerator;
+import com.github.gumtreediff.tree.TreeContext;
+
 import extension.umladapter.UMLAdapterUtil;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -100,6 +102,14 @@ public class CppFileProcessor {
 			IncludeFileContentProvider includeFiles = IncludeFileContentProvider.getSavedFilesProvider();
 
 			if(PathFileUtils.isCppFile(filePath)) {
+				if (astDiff) {
+					ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
+					try {
+						TreeContext treeContext = new CppTreeSitterNgTreeGenerator().generateFrom().stream(is);
+						this.umlModel.getTreeContextMap().put(filePath, treeContext);
+					}
+					catch(Exception e) {}
+				}
 				IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
 						content,
 						scanInfo,
@@ -115,6 +125,14 @@ public class CppFileProcessor {
 				this.umlModel.addClass(moduleClass);
 			}
 			else if(PathFileUtils.isCFile(filePath)) {
+				if (astDiff) {
+					ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
+					try {
+						TreeContext treeContext = new CTreeSitterNgTreeGenerator().generateFrom().stream(is);
+						this.umlModel.getTreeContextMap().put(filePath, treeContext);
+					}
+					catch(Exception e) {}
+				}
 				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
 						content,
 						scanInfo,

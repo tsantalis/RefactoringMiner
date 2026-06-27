@@ -119,6 +119,43 @@ public class Constants {
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "empty_statement";
 		}
+		else if(PathFileUtils.isCppFile(filePath)) {
+			CLASS_BLOCK = "field_declaration_list";
+			METHOD_DECLARATION = "function_definition";
+			SIMPLE_NAME = "SimpleName";
+			IMPORT_DECLARATION = "ImportDeclaration";
+			TYPE_DECLARATION = "class_specifier";
+			TYPE_DECLARATION_KIND = "TYPE_DECLARATION_KIND";
+			BLOCK_COMMENT = "BlockComment";
+			LINE_COMMENT = "comment";
+			EXPRESSION_STATEMENT = "expression_statement";
+			TRY_STATEMENT = "try_statement";
+			CATCH_CLAUSE = "CatchClause";
+			IF_STATEMENT = "if_statement";
+			WHILE_STATEMENT = "while_statement";
+			DO_STATEMENT = "do_statement";
+			FOR_STATEMENT = "for_statement";
+			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+			PACKAGE_DECLARATION = "namespace_definition";
+			FIELD_DECLARATION = "declaration";
+			MODIFIER = "Modifier";
+			INITIALIZER = "Initializer";
+			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
+			ENUM_DECLARATION = "EnumDeclaration";
+			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
+			RECORD_DECLARATION = "RecordDeclaration";
+			PREFIX_EXPRESSION = "PrefixExpression";
+			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+			STRING_LITERAL = "string_literal";
+			BOOLEAN_LITERAL = "boolean_literal";
+			NULL_LITERAL = "NullLiteral";
+			METHOD_INVOCATION = "MethodInvocation";
+			SWITCH_STATEMENT = "switch_statement";
+			SWITCH_CASE = "switch_case";
+			ASSIGNMENT = "Assignment";
+			THROW_STATEMENT = "throw_statement";
+			EMPTY_STATEMENT = "EmptyStatement";
+		}
 		else {
 			// Java values as default
 			CLASS_BLOCK = "";
@@ -480,4 +517,11 @@ public class Constants {
     public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
     public final String UPDATE_EXPRESSION = "update_expression";
     public final String SPREAD_ELEMENT = "spread_element";
+    
+    //C++ specific
+    public final String TRANSLATION_UNIT = "translation_unit"; // This is the root of all trees in C++
+    public final String COMPOUND_STATEMENT = "compound_statement";
+    public final String NAMESPACE = "namespace";
+    public final String NAMESPACE_IDENTIFIER = "namespace_identifier";
+    public final String NESTED_NAMESPACE_SPECIFIER = "nested_namespace_specifier";
 }

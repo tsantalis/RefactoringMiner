@@ -7,9 +7,11 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
-import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
-import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTDeclarationStatement;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -141,9 +143,35 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		int startOffset = locationInfo.getStartOffset();
 		int endOffset = container != null ? container.getLocationInfo().getEndOffset() : locationInfo.getEndOffset();
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
-		this.actualSignature = locationInfo.getStartOffset() >= 0 && locationInfo.getEndOffset() <= fileContent.length() ?
-				fileContent.substring(locationInfo.getStartOffset(), locationInfo.getEndOffset()) :
-					parameter.getRawSignature();
+		this.actualSignature = parameter.getRawSignature();
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, IASTDeclarator declarator,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.VARIABLE_DECLARATION_STATEMENT, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		IASTName name = declarator.getName();
+		this.variableName = name.toString();
+		if(declarator.getInitializer() != null) {
+			this.initializer = new AbstractExpression(sourceFolder, filePath, declarator.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
+		}
+		//IScope scope = CPPVisitor.getContainingScope(declarator);
+		IASTNode scopeNode = getScopeNode(declarator);
+		int startOffset = declarator.getFileLocation().getNodeOffset();
+		int endOffset = scopeNode.getFileLocation().getNodeOffset() + scopeNode.getFileLocation().getNodeLength();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+		this.actualSignature = declarator.getRawSignature();
+	}
+
+	private IASTNode getScopeNode(IASTDeclarator declarator) {
+		if(declarator.getParent() instanceof CPPASTSimpleDeclaration &&
+				declarator.getParent().getParent() instanceof CPPASTDeclarationStatement) {
+			return declarator.getParent().getParent().getParent();
+		}
+		//TODO Handle more scenarios of variable declarations
+		return null;
 	}
 
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,

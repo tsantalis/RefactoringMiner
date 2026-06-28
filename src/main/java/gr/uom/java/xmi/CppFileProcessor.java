@@ -33,6 +33,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorPragmaStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorUndefStatement;
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
@@ -242,10 +243,10 @@ public class CppFileProcessor {
 		Visibility currentVisibility = null;
 		for(IASTDeclaration declaration : declarations) {
 			if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
-				processSimpleDeclaration(packageName, sourceFolder, cppSimpleDeclaration);
+				processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
 			}
 			else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
-				processSimpleDeclaration(packageName, sourceFolder, cSimpleDeclaration);
+				processSimpleDeclaration(cSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
 			}
 			else if(declaration instanceof CPPASTAmbiguousSimpleDeclaration cppAmbiguousSimpleDeclaration) {
 				
@@ -353,8 +354,9 @@ public class CppFileProcessor {
 		return umlClass;
 	}
 
-	private void processSimpleDeclaration(String packageName, String sourceFolder, IASTSimpleDeclaration simpleDeclaration) {
-		if(simpleDeclaration.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
+	private void processSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
+		if(declSpecifier instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
 			if(compositeTypeSpecifier.getName() == null) {
 				return;
 			}
@@ -372,6 +374,21 @@ public class CppFileProcessor {
 			processDeclarations(packageName + "." + className, sourceFolder, umlClass, compositeTypeSpecifier.getMembers());
 			this.umlModel.addClass(umlClass);
 		}
+		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				if(!(declarator instanceof IASTFunctionDeclarator)) {
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
+					String fieldName = declarator.getName().toString();
+					UMLType type = extractType(declSpecifier, declarator);
+					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
+					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, umlAttribute, new LinkedHashMap<>(), fileContent);
+					variableDeclaration.setAttribute(true);
+					umlAttribute.setVariableDeclaration(variableDeclaration);
+					parentContainer.addAttribute(umlAttribute);
+				}
+			}
+		}
 	}
 
 	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
@@ -383,7 +400,7 @@ public class CppFileProcessor {
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
 
-		UMLType returnType = extractCType(functionDefinition.getDeclSpecifier(), declarator);
+		UMLType returnType = extractType(functionDefinition.getDeclSpecifier(), declarator);
 		if(returnType != null) {
 			operation.addParameter(new UMLParameter("return", returnType, "return", false));
 		}
@@ -395,7 +412,7 @@ public class CppFileProcessor {
 					continue;
 				}
 				String parameterName = extractParameterName(parameter, index);
-				UMLType parameterType = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
+				UMLType parameterType = extractType(parameter.getDeclSpecifier(), parameter.getDeclarator());
 				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
 				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, parameterType, operation, new LinkedHashMap<>(), fileContent);
 				variableDeclaration.setParameter(true);
@@ -425,7 +442,7 @@ public class CppFileProcessor {
 	//If the function has exactly one parameter and that parameter is unnamed void,
 	//skip it because it represents no parameters. ex: void reset(void) {}
 	private boolean isVoidParameter(IASTParameterDeclaration parameter, int parameterCount) {
-		UMLType type = extractCType(parameter.getDeclSpecifier(), parameter.getDeclarator());
+		UMLType type = extractType(parameter.getDeclSpecifier(), parameter.getDeclarator());
 		return parameterCount == 1 &&
 				type != null &&
 				type.toString().equals("void") &&
@@ -441,7 +458,7 @@ public class CppFileProcessor {
 				.replaceAll("\\s+", " ");
 	}
 
-	private UMLType extractCType(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
+	private UMLType extractType(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
 		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {

@@ -140,7 +140,7 @@ public class Constants {
 			FOR_STATEMENT = "for_statement";
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "namespace_definition";
-			FIELD_DECLARATION = "declaration";
+			FIELD_DECLARATION = "field_declaration";
 			MODIFIER = "Modifier";
 			INITIALIZER = "Initializer";
 			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
@@ -534,4 +534,7 @@ public class Constants {
     public final String PARAMETER_LIST = "parameter_list";
     public final String FIELD_IDENTIFIER = "field_identifier";
     public final String QUALIFIED_IDENTIFIER = "qualified_identifier";
+    public final String DECLARATION = "declaration";
+    public final String DECLARATION_LIST = "declaration_list"; //when parent is a namespace
+    public final String INIT_DECLARATOR = "init_declarator";
 }

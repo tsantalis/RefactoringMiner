@@ -10,8 +10,11 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTDeclarationStatement;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTNamespaceDefinition;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTranslationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -166,9 +169,19 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	}
 
 	private IASTNode getScopeNode(IASTDeclarator declarator) {
-		if(declarator.getParent() instanceof CPPASTSimpleDeclaration &&
-				declarator.getParent().getParent() instanceof CPPASTDeclarationStatement) {
-			return declarator.getParent().getParent().getParent();
+		if(declarator.getParent() instanceof CPPASTSimpleDeclaration) {
+			if(declarator.getParent().getParent() instanceof CPPASTDeclarationStatement) {
+				return declarator.getParent().getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CPPASTTranslationUnit) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CPPASTCompositeTypeSpecifier) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CPPASTNamespaceDefinition) {
+				return declarator.getParent().getParent();
+			}
 		}
 		//TODO Handle more scenarios of variable declarations
 		return null;

@@ -312,6 +312,10 @@ public class MonacoCore {
             t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.PROGRAM);
             dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.PROGRAM);
         }
+        if(t_outerP == null && dst_outerP == null) {
+            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.TRANSLATION_UNIT);
+            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.TRANSLATION_UNIT);
+        }
         if (t_outerP == null || dst_outerP == null) {
             return false;
         }

@@ -640,6 +640,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (closing != null) {
             mappingStore.addMapping(closing.first,closing.second);
         }
+        int index1 = srcTypeDeclaration.getParent().getChildPosition(srcTypeDeclaration);
+        int index2 = dstTypeDeclaration.getParent().getChildPosition(dstTypeDeclaration);
+        if(srcTypeDeclaration.getParent().getChildren().size() > index1+1 && srcTypeDeclaration.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                dstTypeDeclaration.getParent().getChildren().size() > index2+1 && dstTypeDeclaration.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+            Tree t1 = srcTypeDeclaration.getParent().getChild(index1+1);
+            Tree t2 = dstTypeDeclaration.getParent().getChild(index2+1);
+            mappingStore.addMapping(t1,t2);
+        }
         Tree parent1 = srcTypeDeclaration.getParent();
         Tree parent2 = dstTypeDeclaration.getParent();
         while(parent1 != null && parent2 != null) {

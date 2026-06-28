@@ -20,7 +20,6 @@ import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
-import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorEndifStatement;
@@ -379,7 +378,7 @@ public class CppFileProcessor {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
 					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
 					String fieldName = declarator.getName().toString();
-					UMLType type = extractType(declSpecifier, declarator);
+					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, umlAttribute, new LinkedHashMap<>(), fileContent);
@@ -400,7 +399,7 @@ public class CppFileProcessor {
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
 
-		UMLType returnType = extractType(functionDefinition.getDeclSpecifier(), declarator);
+		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, functionDefinition.getDeclSpecifier(), declarator, 0);
 		if(returnType != null) {
 			operation.addParameter(new UMLParameter("return", returnType, "return", false));
 		}
@@ -408,11 +407,11 @@ public class CppFileProcessor {
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
-				if(isVoidParameter(parameter, standardDeclarator.getParameters().length)) {
+				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
 					continue;
 				}
 				String parameterName = extractParameterName(parameter, index);
-				UMLType parameterType = extractType(parameter.getDeclSpecifier(), parameter.getDeclarator());
+				UMLType parameterType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, parameter.getDeclSpecifier(), parameter.getDeclarator(), 0);
 				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
 				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, parameterType, operation, new LinkedHashMap<>(), fileContent);
 				variableDeclaration.setParameter(true);
@@ -437,39 +436,6 @@ public class CppFileProcessor {
 			//TODO model as default expression
 		}
 		return operation;
-	}
-
-	//If the function has exactly one parameter and that parameter is unnamed void,
-	//skip it because it represents no parameters. ex: void reset(void) {}
-	private boolean isVoidParameter(IASTParameterDeclaration parameter, int parameterCount) {
-		UMLType type = extractType(parameter.getDeclSpecifier(), parameter.getDeclarator());
-		return parameterCount == 1 &&
-				type != null &&
-				type.toString().equals("void") &&
-				extractParameterName(parameter, 0).equals("arg0");
-	}
-
-	private static String cleanTypeText(String rawType) {
-		if(rawType == null) {
-			return "";
-		}
-		return rawType.replaceAll("\\b(static|extern|inline|virtual|explicit|friend|constexpr|consteval|constinit|_Noreturn)\\b", "")
-				.trim()
-				.replaceAll("\\s+", " ");
-	}
-
-	private UMLType extractType(IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
-		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
-		if(declarator != null) {
-			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
-				type.append(pointerOperator.getRawSignature());
-			}
-		}
-		String typeText = type.toString().trim();
-		if(typeText.isEmpty()) {
-			return null;
-		}
-		return UMLType.extractTypeObject(typeText);
 	}
 
 	private String extractParameterName(IASTParameterDeclaration parameter, int index) {

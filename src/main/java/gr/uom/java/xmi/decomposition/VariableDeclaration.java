@@ -18,6 +18,7 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTNamespaceDefinition;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTParameterDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -189,7 +190,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			else if(declarator.getParent().getParent() instanceof CPPASTNamespaceDefinition) {
 				return declarator.getParent().getParent();
 			}
+			else if(declarator.getParent().getParent() instanceof ICPPASTRangeBasedForStatement) {
+				return declarator.getParent().getParent();
+			}
 		}
+		//if the variable is declared in the foreach/range-for header, adjust its scope to the whole loop so body statements can resolve it.
 		else if(declarator.getParent() instanceof CPPASTParameterDeclaration && declarator.getParent().getParent() instanceof CPPASTFunctionDeclarator) {
 			return declarator.getParent().getParent().getParent();
 		}

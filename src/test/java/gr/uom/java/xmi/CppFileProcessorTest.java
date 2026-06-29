@@ -10,6 +10,11 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
+
 class CppFileProcessorTest {
 	@Test
 	void processesCFunctionDefinitionsIntoModuleOperations() {
@@ -188,6 +193,45 @@ class CppFileProcessorTest {
 		assertEquals(Visibility.PUBLIC, findOperation(widget.getOperations(), "visible").getVisibility());
 		assertEquals(Visibility.PROTECTED, findOperation(widget.getOperations(), "inherited").getVisibility());
 		assertEquals(Visibility.PRIVATE, findOperation(widget.getOperations(), "hidden").getVisibility());
+	}
+
+	@Test
+	void processesCppRangeBasedForStatementsAsEnhancedForStatements() {
+		String filePath = "src/ranges.cpp";
+		String fileContent = String.join("\n",
+				"void visit() {",
+				"  int values[3] = {1, 2, 3};",
+				"  for (int value : values) {",
+				"    value += 1;",
+				"  }",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "ranges");
+		UMLOperation visit = findOperation(moduleClass.getOperations(), "visit");
+
+		List<CompositeStatementObject> enhancedForStatements = visit.getBody().getCompositeStatement().getInnerNodes().stream()
+				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT))
+				.toList();
+		assertEquals(1, enhancedForStatements.size());
+
+		CompositeStatementObject enhancedFor = enhancedForStatements.get(0);
+		assertEquals(List.of("value"), enhancedFor.getVariableDeclarations().stream()
+				.map(VariableDeclaration::getVariableName)
+				.toList());
+		assertTrue(enhancedFor.getExpressions().stream()
+				.anyMatch(expression -> expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION)));
+
+		AbstractCodeFragment loopBodyStatement = enhancedFor.getLeaves().stream()
+				.filter(statement -> statement.getString().contains("value += 1"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected range-for body statement"));
+		assertTrue(visit.getVariableDeclarationsInScope(loopBodyStatement.getLocationInfo()).stream()
+				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("value")));
 	}
 
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {

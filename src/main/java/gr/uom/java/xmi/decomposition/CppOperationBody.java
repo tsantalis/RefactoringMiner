@@ -9,17 +9,21 @@ import org.eclipse.cdt.core.dom.ast.IASTBreakStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCaseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTContinueStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement;
 import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement;
 import org.eclipse.cdt.core.dom.ast.IASTForStatement;
 import org.eclipse.cdt.core.dom.ast.IASTGotoStatement;
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement;
 import org.eclipse.cdt.core.dom.ast.IASTLabelStatement;
+import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTNullStatement;
 import org.eclipse.cdt.core.dom.ast.IASTProblemStatement;
 import org.eclipse.cdt.core.dom.ast.IASTReturnStatement;
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
@@ -28,6 +32,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTStructuredBindingDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTryBlockStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
@@ -261,7 +266,20 @@ public class CppOperationBody extends OperationBody {
 			// composite
 		}
 		else if(statement instanceof ICPPASTRangeBasedForStatement rangeBasedForStatement) {
-			// composite
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, rangeBasedForStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, fileContent);
+			parent.addStatement(child);
+			addRangeBasedForDeclaration(sourceFolder, filePath, child, rangeBasedForStatement.getDeclaration(), fileContent);
+			if(rangeBasedForStatement.getInitializerClause() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, rangeBasedForStatement.getInitializerClause(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent);
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			if(rangeBasedForStatement.getBody() != null) {
+				processStatement(sourceFolder, filePath, child, rangeBasedForStatement.getBody(), fileContent);
+			}
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof ICPPASTTryBlockStatement tryBlockStatement) {
 			// composite
@@ -270,6 +288,25 @@ public class CppOperationBody extends OperationBody {
 			StatementObject child = new StatementObject(sourceFolder, filePath, gnuGotoStatement, parent.getDepth()+1, CodeElementType.GOTO_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
+		}
+	}
+	// Normalizes the C++ range-for declaration into the same enhanced-for shape used by other languages:
+	// loop variable declarations plus parameter-name expressions on the loop composite.
+	private void addRangeBasedForDeclaration(String sourceFolder, String filePath, CompositeStatementObject child, IASTDeclaration declaration, String fileContent) {
+		if(declaration instanceof ICPPASTStructuredBindingDeclaration) {
+			AbstractExpression destructuringDeclaration = new AbstractExpression(sourceFolder, filePath, declaration, CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION, container, activeVariableDeclarations, fileContent);
+			child.addExpression(destructuringDeclaration);
+		}
+		else if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent);
+				child.addVariableDeclaration(variableDeclaration);
+				IASTName name = declarator.getName();
+				if(name != null) {
+					AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, name, CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent);
+					child.addExpression(variableDeclarationName);
+				}
+			}
 		}
 	}
 }

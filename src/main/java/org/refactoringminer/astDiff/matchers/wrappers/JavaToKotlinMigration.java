@@ -616,6 +616,12 @@ public class JavaToKotlinMigration {
 
     private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2, List<Tree> invocationsToBeRemoved) {
         mappingStore.addMapping(child1, child2);
+        boolean isFirstChildType = child1.getChildren().size() > 0 && child1.getChild(0).getType().name.equals(LANG1.SIMPLE_TYPE);
+        Tree name1 = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_NAME);
+        Tree name2 = TreeUtilFunctions.findChildByType(child2, LANG2.SIMPLE_NAME);
+        if(!isFirstChildType && name1 != null && name2 != null) {
+            mappingStore.addMapping(name1, name2);
+        }
         Tree args1 = TreeUtilFunctions.findChildByType(child1, LANG1.METHOD_INVOCATION_ARGUMENTS);
         if(args1 != null) {
             Tree args2 = TreeUtilFunctions.findChildByType(child2, LANG2.CALL_SUFFIX);

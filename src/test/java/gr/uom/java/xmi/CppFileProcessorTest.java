@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.TryStatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 class CppFileProcessorTest {
@@ -232,6 +234,53 @@ class CppFileProcessorTest {
 				.orElseThrow(() -> new AssertionError("Expected range-for body statement"));
 		assertTrue(visit.getVariableDeclarationsInScope(loopBodyStatement.getLocationInfo()).stream()
 				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("value")));
+	}
+
+	@Test
+	void processesCppTryStatementsWithCatchClauses() {
+		String filePath = "src/errors.cpp";
+		String fileContent = String.join("\n",
+				"void handle() {",
+				"  try {",
+				"    risky();",
+				"  } catch (const int& ex) {",
+				"    recover(ex);",
+				"  }",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "errors");
+		UMLOperation handle = findOperation(moduleClass.getOperations(), "handle");
+
+		List<CompositeStatementObject> tryStatements = handle.getBody().getCompositeStatement().getInnerNodes().stream()
+				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT))
+				.toList();
+		assertEquals(1, tryStatements.size());
+		TryStatementObject tryStatement = (TryStatementObject) tryStatements.get(0);
+
+		List<CompositeStatementObject> catchClauses = handle.getBody().getCompositeStatement().getInnerNodes().stream()
+				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE))
+				.toList();
+		assertEquals(1, catchClauses.size());
+
+		CompositeStatementObject catchClause = catchClauses.get(0);
+		assertEquals(List.of(catchClause), tryStatement.getCatchClauses());
+		assertTrue(catchClause.getTryContainer().isPresent());
+		assertSame(tryStatement, catchClause.getTryContainer().get());
+		assertEquals(List.of("ex"), catchClause.getVariableDeclarations().stream()
+				.map(VariableDeclaration::getVariableName)
+				.toList());
+
+		AbstractCodeFragment catchBodyStatement = catchClause.getLeaves().stream()
+				.filter(statement -> statement.getString().contains("recover"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected catch body statement"));
+		assertTrue(handle.getVariableDeclarationsInScope(catchBodyStatement.getLocationInfo()).stream()
+				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("ex")));
 	}
 
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {

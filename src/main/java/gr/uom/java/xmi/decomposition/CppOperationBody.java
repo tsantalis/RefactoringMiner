@@ -262,9 +262,6 @@ public class CppOperationBody extends OperationBody {
 				processStatement(sourceFolder, filePath, child, whileStatement.getBody(), fileContent);
 			}
 		}
-		else if(statement instanceof ICPPASTCatchHandler catchHandler) {
-			// composite
-		}
 		else if(statement instanceof ICPPASTRangeBasedForStatement rangeBasedForStatement) {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, rangeBasedForStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, fileContent);
 			parent.addStatement(child);
@@ -282,7 +279,25 @@ public class CppOperationBody extends OperationBody {
 			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof ICPPASTTryBlockStatement tryBlockStatement) {
-			// composite
+			TryStatementObject child = new TryStatementObject(sourceFolder, filePath, tryBlockStatement, parent.getDepth()+1, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processChildStatements(sourceFolder, filePath, child, tryBlockStatement.getTryBody(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+			for(ICPPASTCatchHandler catchHandler : tryBlockStatement.getCatchHandlers()) {
+				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(sourceFolder, filePath, catchHandler, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+				child.addCatchClause(catchClauseStatementObject);
+				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
+				addCatchHandlerDeclaration(sourceFolder, filePath, catchClauseStatementObject, catchHandler.getDeclaration(), fileContent);
+				addStatementInVariableScopes(catchClauseStatementObject);
+				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+				processChildStatements(sourceFolder, filePath, catchClauseStatementObject, catchHandler.getCatchBody(), fileContent);
+				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
+			}
 		}
 		else if(statement instanceof IGNUASTGotoStatement gnuGotoStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, gnuGotoStatement, parent.getDepth()+1, CodeElementType.GOTO_STATEMENT, container, activeVariableDeclarations, fileContent);
@@ -307,6 +322,32 @@ public class CppOperationBody extends OperationBody {
 					child.addExpression(variableDeclarationName);
 				}
 			}
+		}
+	}
+
+	// Take the C++ catch header declaration and attach it to the catch clause node.
+	private void addCatchHandlerDeclaration(String sourceFolder, String filePath, CompositeStatementObject catchClause, IASTDeclaration declaration, String fileContent) {
+		if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				IASTName name = declarator.getName();
+				if(name != null && !name.toString().isEmpty()) {
+					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent);
+					catchClause.addVariableDeclaration(variableDeclaration);
+					AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, name, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
+					catchClause.addExpression(variableDeclarationName);
+				}
+			}
+		}
+	}
+	// Given the body of a try or catch, process its contents under the try/catch node. If it is a block, unwrap the block and process each statement inside
+	private void processChildStatements(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
+		if(statement instanceof IASTCompoundStatement compoundStatement) {
+			for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+				processStatement(sourceFolder, filePath, parent, blockStatement, fileContent);
+			}
+		}
+		else if(statement != null) {
+			processStatement(sourceFolder, filePath, parent, statement, fileContent);
 		}
 	}
 }

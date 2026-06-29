@@ -834,6 +834,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			}
 		}
 		String typeText = type.toString().trim();
+		if(typeText.isEmpty())
+			return null;
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
 		UMLType umlType = UMLType.extractTypeObject(typeText, "<", ">", locationInfo);
 		umlType.arrayDimension += extraDimensions;

@@ -386,8 +386,56 @@ public class CppFileProcessor {
 					umlAttribute.setVariableDeclaration(variableDeclaration);
 					parentContainer.addAttribute(umlAttribute);
 				}
+				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
+					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility);
+					parentContainer.addOperation(operation);
+				}
 			}
 		}
+	}
+
+	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+		IASTName functionName = declarator.getName();
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
+		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
+		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+		operation.setStatic(simpleDeclSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
+		operation.setInline(simpleDeclSpecifier.isInline());
+
+		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, simpleDeclSpecifier, declarator, 0);
+		if(returnType != null) {
+			operation.addParameter(new UMLParameter("return", returnType, "return", false));
+		}
+		else {
+			operation.setConstructor(true);
+		}
+
+		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
+			int index = 0;
+			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
+				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
+					continue;
+				}
+				String parameterName = extractParameterName(parameter, index);
+				UMLType parameterType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, parameter.getDeclSpecifier(), parameter.getDeclarator(), 0);
+				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameter.getDeclSpecifier(), operation, new LinkedHashMap<>(), fileContent);
+				variableDeclaration.setParameter(true);
+				umlParameter.setVariableDeclaration(variableDeclaration);
+				operation.addParameter(umlParameter);
+				index++;
+			}
+			if(standardDeclarator.takesVarArgs()) {
+				UMLType varargsType = UMLType.extractTypeObject("Object");
+				varargsType.setVarargs();
+				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
+			}
+		}
+
+		int start = simpleDeclSpecifier.getFileLocation().getNodeOffset();
+		int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
+		operation.setActualSignature(fileContent.substring(start, end));
+		return operation;
 	}
 
 	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
@@ -402,6 +450,9 @@ public class CppFileProcessor {
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, functionDefinition.getDeclSpecifier(), declarator, 0);
 		if(returnType != null) {
 			operation.addParameter(new UMLParameter("return", returnType, "return", false));
+		}
+		else {
+			operation.setConstructor(true);
 		}
 
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
@@ -459,8 +510,6 @@ public class CppFileProcessor {
 		if(functionDefinition.getBody() != null && functionDefinition.getBody().getFileLocation() != null) {
 			end = functionDefinition.getBody().getFileLocation().getNodeOffset() + 1;
 		}
-		start = Math.max(0, Math.min(start, fileContent.length()));
-		end = Math.max(start, Math.min(end, fileContent.length()));
 		return fileContent.substring(start, end);
 	}
 

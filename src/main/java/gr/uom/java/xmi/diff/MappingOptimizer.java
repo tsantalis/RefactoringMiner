@@ -33,6 +33,7 @@ public class MappingOptimizer {
 	private UMLAbstractClassDiff classDiff;
 	private final Constants LANG1;
 	private final Constants LANG2;
+	private Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
 	
 	public MappingOptimizer(UMLAbstractClassDiff classDiff) {
 		this.classDiff = classDiff;
@@ -559,7 +560,6 @@ public class MappingOptimizer {
 							}
 						}
 						//remove refactorings based on mapping
-						Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
 						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
 						for(Refactoring r : refactoringsAfterPostProcessing) {
 							if(r instanceof ReferenceBasedRefactoring) {
@@ -601,7 +601,6 @@ public class MappingOptimizer {
 				index++;
 			}
 		}
-		Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
 		for(Refactoring ref : refactorings) {
 			if(ref instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;

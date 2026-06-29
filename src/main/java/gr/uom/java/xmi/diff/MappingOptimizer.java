@@ -561,11 +561,17 @@ public class MappingOptimizer {
 						}
 						//remove refactorings based on mapping
 						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
+						Set<Refactoring> otherMapperRefactoringsAfterPostProcessing = new LinkedHashSet<>();
+						for(UMLOperationBodyMapper otherMapper : mappers) {
+							if(!otherMapper.equals(mapper) && otherMapper.getParentMapper() == null) {
+								otherMapperRefactoringsAfterPostProcessing.addAll(otherMapper.getRefactoringsAfterPostProcessing());
+							}
+						}
 						for(Refactoring r : refactoringsAfterPostProcessing) {
 							if(r instanceof ReferenceBasedRefactoring) {
 								ReferenceBasedRefactoring referenceBased = (ReferenceBasedRefactoring)r;
 								Set<AbstractCodeMapping> references = referenceBased.getReferences();
-								if(references.contains(mapping)) {
+								if(references.contains(mapping) && !otherMapperRefactoringsAfterPostProcessing.contains(r)) {
 									refactoringsToBeRemoved.add(r);
 								}
 							}
@@ -825,15 +831,28 @@ public class MappingOptimizer {
 						allReplacementsCoverEntireStatement = true;
 					}
 					if(!allReplacementsCoverEntireStatement) {
-						int minimum = replacementTypeCount.get(0);
-						for(int i=1; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) < minimum && replacementCoversEntireStatement.get(i) == false) {
-								minimum = replacementTypeCount.get(i);
+						double maximumCompositeChildMatchingScore = compositeChildMatchingScores.get(0);
+						for(int i=1; i<compositeChildMatchingScores.size(); i++) {
+							if(compositeChildMatchingScores.get(i) > maximumCompositeChildMatchingScore) {
+								maximumCompositeChildMatchingScore = compositeChildMatchingScores.get(i);
 							}
 						}
-						for(int i=0; i<replacementTypeCount.size(); i++) {
-							if(replacementTypeCount.get(i) > minimum && !extractInlineOverlappingRefactoring.get(i) == true) {
+						for(int i=0; i<compositeChildMatchingScores.size(); i++) {
+							if(compositeChildMatchingScores.get(i) < maximumCompositeChildMatchingScore) {
 								indicesToBeRemoved.add(i);
+							}
+						}
+						if(indicesToBeRemoved.isEmpty()) {
+							int minimum = replacementTypeCount.get(0);
+							for(int i=1; i<replacementTypeCount.size(); i++) {
+								if(replacementTypeCount.get(i) < minimum && replacementCoversEntireStatement.get(i) == false) {
+									minimum = replacementTypeCount.get(i);
+								}
+							}
+							for(int i=0; i<replacementTypeCount.size(); i++) {
+								if(replacementTypeCount.get(i) > minimum && !extractInlineOverlappingRefactoring.get(i) == true) {
+									indicesToBeRemoved.add(i);
+								}
 							}
 						}
 					}

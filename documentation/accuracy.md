@@ -144,11 +144,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **June 2, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **June 29, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3553  | 40  | 75  | 0.989  | 0.979|
+|**Total**|3552  | 40  | 75  | 0.989  | 0.979|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
@@ -172,15 +172,15 @@ As of **June 2, 2026** the precision and recall of RefactoringMiner on this benc
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|293  |  1  |  6  | 0.997  | 0.980|
 |Extract Attribute| 7  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|127  |  0  | 10  | 1.000  | 0.927|
-|Rename Variable|308  |  5  |  6  | 0.984  | 0.981|
+|Inline Variable|126  |  0  | 10  | 1.000  | 0.926|
+|Rename Variable|309  |  5  |  6  | 0.984  | 0.981|
 |Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|59  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|169  |  1  |  6  | 0.994  | 0.966|
-|Change Variable Type|381  |  6  |  2  | 0.984  | 0.995|
+|Change Variable Type|380  |  6  |  2  | 0.984  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|
@@ -234,11 +234,11 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Invert Condition`
 * `Split Parameter`
 
-As of **April 14, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **June 29, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|1128  |  4  |  3  | 0.996  | 0.997|
+|**Total**|1129  |  4  |  3  | 0.996  | 0.997|
 |Extract Method|38  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|13  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -258,7 +258,7 @@ As of **April 14, 2026** the precision and recall of RefactoringMiner on this be
 |Extract And Move Method|15  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|59  |  1  |  0  | 0.983  | 1.000|
 |Inline Variable|21  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|119  |  0  |  1  | 1.000  | 0.992|
+|Rename Variable|120  |  0  |  1  | 1.000  | 0.992|
 |Rename Parameter|139  |  1  |  0  | 0.993  | 1.000|
 |Rename Attribute|28  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 3  |  0  |  0  | 1.000  | 1.000|
@@ -275,8 +275,8 @@ As of **April 14, 2026** the precision and recall of RefactoringMiner on this be
 |Remove Parameter|78  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter|18  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional| 4  |  0  |  0  | 1.000  | 1.000|
-|Invert Condition| 1  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional| 3  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 9  |  0  |  0  | 1.000  | 1.000|
 
 **Important notes**:
@@ -295,11 +295,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **June 11, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **June 29, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2042  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2044  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -318,15 +318,15 @@ As of **June 11, 2026** the precision and recall of RefactoringMiner on this ben
 |Extract Superclass| 9  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 2  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|13  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|22  |  1  |  0  | 0.957  | 1.000|
+|Extract And Move Method|23  |  1  |  0  | 0.958  | 1.000|
 |Move And Inline Method|25  |  0  |  0  | 1.000  | 1.000|
 |Rename Package| 3  |  0  |  0  | 1.000  | 1.000|
 |Move Package| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|17  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|18  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|14  |  1  |  0  | 0.933  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|52  |  1  |  0  | 0.981  | 1.000|
-|Rename Parameter|76  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|53  |  1  |  0  | 0.981  | 1.000|
+|Rename Parameter|77  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|75  |  1  |  0  | 0.987  | 1.000|
 |Merge Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -347,8 +347,8 @@ As of **June 11, 2026** the precision and recall of RefactoringMiner on this ben
 |Remove Class Annotation| 7  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|145  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|112  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|144  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|111  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|34  |  0  |  0  | 1.000  | 1.000|

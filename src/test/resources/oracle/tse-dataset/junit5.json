@@ -1478,12 +1478,12 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\ttargetTypeToUse : Class<?> in method public convert(source Object, targetType Class<?>, context ParameterContext) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
-          "validation": true
+          "validation": false
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tex : Exception to ex : ConversionException in method public convert(source Object, targetType Class<?>, context ParameterContext) : Object from class org.junit.jupiter.params.converter.DefaultArgumentConverter",
-          "validation": true
+          "validation": false
         }
       ]
     },

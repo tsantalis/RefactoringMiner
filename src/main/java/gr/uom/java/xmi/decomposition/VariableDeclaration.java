@@ -6,13 +6,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTDeclarationStatement;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTNamespaceDefinition;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTParameterDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTranslationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -131,25 +134,28 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private String actualSignature;
 	private final Constants LANG;
 
-	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, String parameterName, UMLType parameterType,
+	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, IASTDeclSpecifier declSpecifier,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		IASTDeclarator declarator = parameter.getDeclarator();
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
-		this.variableName = parameterName;
-		if(parameter.getDeclarator().getInitializer() != null) {
-			this.initializer = new AbstractExpression(sourceFolder, filePath, parameter.getDeclarator().getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
+		IASTName name = declarator.getName();
+		this.variableName = name.toString();
+		if(declarator.getInitializer() != null) {
+			this.initializer = new AbstractExpression(sourceFolder, filePath, declarator.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
 		}
-		this.type = parameterType;
+		this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 		this.varargsParameter = false;
+		//IASTNode scopeNode = getScopeNode(declarator);
 		int startOffset = locationInfo.getStartOffset();
 		int endOffset = container != null ? container.getLocationInfo().getEndOffset() : locationInfo.getEndOffset();
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
 		this.actualSignature = parameter.getRawSignature();
 	}
 
-	public VariableDeclaration(String sourceFolder, String filePath, IASTDeclarator declarator,
+	public VariableDeclaration(String sourceFolder, String filePath, IASTDeclarator declarator, IASTDeclSpecifier declSpecifier,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
@@ -160,6 +166,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		if(declarator.getInitializer() != null) {
 			this.initializer = new AbstractExpression(sourceFolder, filePath, declarator.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent);
 		}
+		this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 		//IScope scope = CPPVisitor.getContainingScope(declarator);
 		IASTNode scopeNode = getScopeNode(declarator);
 		int startOffset = declarator.getFileLocation().getNodeOffset();
@@ -182,6 +189,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			else if(declarator.getParent().getParent() instanceof CPPASTNamespaceDefinition) {
 				return declarator.getParent().getParent();
 			}
+		}
+		else if(declarator.getParent() instanceof CPPASTParameterDeclaration && declarator.getParent().getParent() instanceof CPPASTFunctionDeclarator) {
+			return declarator.getParent().getParent().getParent();
 		}
 		//TODO Handle more scenarios of variable declarations
 		return null;

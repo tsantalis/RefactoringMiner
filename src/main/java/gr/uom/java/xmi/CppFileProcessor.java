@@ -381,7 +381,7 @@ public class CppFileProcessor {
 					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, umlAttribute, new LinkedHashMap<>(), fileContent);
+					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 					variableDeclaration.setAttribute(true);
 					umlAttribute.setVariableDeclaration(variableDeclaration);
 					parentContainer.addAttribute(umlAttribute);
@@ -413,7 +413,7 @@ public class CppFileProcessor {
 				String parameterName = extractParameterName(parameter, index);
 				UMLType parameterType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, parameter.getDeclSpecifier(), parameter.getDeclarator(), 0);
 				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
-				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameterName, parameterType, operation, new LinkedHashMap<>(), fileContent);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameter.getDeclSpecifier(), operation, new LinkedHashMap<>(), fileContent);
 				variableDeclaration.setParameter(true);
 				umlParameter.setVariableDeclaration(variableDeclaration);
 				operation.addParameter(umlParameter);

@@ -65,7 +65,7 @@ public class CppVisitor extends ASTVisitor {
 		if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
 			IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
 			for(IASTDeclarator declarator : declarators) {
-				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent);
 				variableDeclarations.add(variableDeclaration);
 			}
 		}

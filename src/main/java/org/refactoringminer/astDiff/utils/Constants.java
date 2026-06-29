@@ -306,6 +306,7 @@ public class Constants {
     public final String TAG_NAME = "TAG_NAME";
 
     public final String SIMPLE_TYPE = "SimpleType";
+    public final String PARAMETERIZED_TYPE = "ParameterizedType";
     public final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
     public final String PREFIX_EXPRESSION;
     public final String INITIALIZER;
@@ -424,6 +425,7 @@ public class Constants {
     public final String INTERPOLATED_EXPRESSION = "interpolated_expression";
     public final String AT = "at";
     public final String PACKAGE = "package";
+    public final String TYPE_ARGUMENTS = "type_arguments";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

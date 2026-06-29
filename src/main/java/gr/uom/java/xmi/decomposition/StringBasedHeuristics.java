@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PathFileUtils;
@@ -230,6 +231,21 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
+				}
+			}
+			if(methodInvocations1.size() > 0 && methodInvocations2.size() > 0 && methodInvocations1.size() == methodInvocations2.size()) {
+				int matches = 0;
+				for(AbstractCall call1 : methodInvocations1) {
+					for(AbstractCall call2 : methodInvocations2) {
+						boolean expressionMatch = (call1.getExpression() != null) == (call2.getExpression() != null);
+						if(call1.toString().equals(call2.toString()) && expressionMatch) {
+							matches++;
+							break;
+						}
+					}
+				}
+				if(matches == methodInvocations1.size()) {
+					return true;
 				}
 			}
 		}

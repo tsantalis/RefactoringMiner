@@ -494,6 +494,7 @@ public class JavaToKotlinMigration {
             }
         }
         List<String> callNames2 = new ArrayList<>();
+        List<Tree> toBeRemoved2 = new ArrayList<>();
         for(Tree child2 : children2) {
             Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
             if(receiver2 != null) {
@@ -514,6 +515,9 @@ public class JavaToKotlinMigration {
                 if(simpleName != null) {
                     callNames2.add(simpleName.getLabel());
                 }
+                else {
+                    toBeRemoved2.add(child2);
+                }
             }
         }
         Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf");
@@ -533,6 +537,7 @@ public class JavaToKotlinMigration {
                 }
             }
             if(matches == callNames1.size()) {
+                children2.removeAll(toBeRemoved2);
                 return true;
             }
         }
@@ -782,6 +787,25 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(type1, type2);
             if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
                 mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
+            }
+        }
+        if(type1 == null && type2 != null) {
+            type1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.PARAMETERIZED_TYPE);
+            if(type1 != null) {
+                mappingStore.addMapping(type1, type2);
+                Tree typeArguments = TreeUtilFunctions.findChildByType(type2, LANG2.TYPE_ARGUMENTS);
+                if(typeArguments != null) {
+                    mappingStore.addMapping(type1, typeArguments);
+                }
+                List<Tree> typeNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(type1, LANG1.SIMPLE_NAME);
+                List<Tree> typeNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(type2, LANG2.TYPE_IDENTIFIER);
+                if(typeNames1.size() == typeNames2.size()) {
+                    for(int i=0; i< typeNames1.size(); i++) {
+                        Tree t1 = typeNames1.get(i);
+                        Tree t2 = typeNames2.get(i);
+                        mappingStore.addMapping(t1, t2);
+                    }
+                }
             }
         }
         Tree name1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_NAME);

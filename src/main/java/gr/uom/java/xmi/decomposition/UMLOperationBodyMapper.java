@@ -922,6 +922,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+				//add when expressions into leaves2
+				for(CompositeStatementObject innerNode2 : innerNodes2) {
+					if(innerNode2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+						for(AbstractExpression expr : innerNode2.getExpressions()) {
+							leaves2.add(expr);
+						}
+					}
+				}
+			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), isomorphic);
 			
 			resetNodes(innerNodes1);
@@ -4427,7 +4437,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
 			for(AbstractCodeFragment statement : new ArrayList<>(leaves1)) {
 				expandAnonymousAndLambdas(statement, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, anonymousClassList1(), codeFragmentOperationMap1, container1, false);
-				if(LANG1.equals(Constants.KOTLIN)) {
+				if(LANG1.equals(Constants.KOTLIN) || LANG2.equals(Constants.TYPESCRIPT)) {
 					for(LambdaExpressionObject lambda : statement.getLambdas()) {
 						expandLambda(lambda, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, codeFragmentOperationMap1, container1, true);
 					}

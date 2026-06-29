@@ -4101,6 +4101,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public attachToDragAndSwipe(recyclerView RecyclerView, dragMoveFlags Int, swipeMoveFlags Int) extracted from protected onCreate(savedInstanceState Bundle) : void in class com.chad.baserecyclerviewadapterhelper.activity.DragAndSwipeUseActivity & moved to class com.chad.library.adapter.base.QuickAdapterHelper.Builder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9723,30 +9730,30 @@
         "type": "Change Return Type",
         "description": "Change Return Type List<LeakProjection> to Map<String,Boolean> in method public retrieveLeakReadStatuses(db SQLiteDatabase, signatures Set<String>) : Map<String,Boolean> from class leakcanary.internal.activity.db.LeakTable",
         "comment": "<p>retrieveLeaksByHash() -&gt;&nbsp;retrieveLeakBySignature()</p>",
-        "validation": "CTP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }, {
         "type": "Rename Method",
         "description": "Rename Method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List<LeakProjection> renamed to public retrieveLeakReadStatuses(db SQLiteDatabase, signatures Set<String>) : Map<String,Boolean> in class leakcanary.internal.activity.db.LeakTable",
-        "comment": null,
-        "validation": "CTP",
+        "comment": "<p>Rename Method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List&lt;LeakProjection&gt; renamed to public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection in class leakcanary.internal.activity.db.LeakTable</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Remove Parameter",
         "description": "Remove Parameter groupHash : String in method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List<LeakProjection> from class leakcanary.internal.activity.db.LeakTable",
-        "comment": null,
-        "validation": "CTP",
+        "comment": "<p>Rename Method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List&lt;LeakProjection&gt; renamed to public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection in class leakcanary.internal.activity.db.LeakTable</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter signatures : Set<String> in method public retrieveLeakReadStatuses(db SQLiteDatabase, signatures Set<String>) : Map<String,Boolean> from class leakcanary.internal.activity.db.LeakTable",
-        "comment": null,
-        "validation": "CTP",
+        "comment": "<p>Rename Method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List&lt;LeakProjection&gt; renamed to public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection in class leakcanary.internal.activity.db.LeakTable</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Remove Parameter",
         "description": "Remove Parameter createdAtTimeMillis : Long in primary constructor LeakProjection(id Long, analysisId Long, classSimpleName String, groupDescription String, createdAtTimeMillis Long, isNew Boolean, isLibraryLeak Boolean) from class leakcanary.internal.activity.db.LeakTable.LeakProjection",
@@ -9827,6 +9834,34 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable leak : Inferred to leakTrace : Inferred in method private View.onLeakTraceSelected(analysis HeapAnalysisSuccess, heapAnalysisId Long, leakTraceIndex Int) from class leakcanary.internal.activity.screen.LeakScreen",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public retrieveLeaksByHash(db SQLiteDatabase, groupHash String) : List<LeakProjection> renamed to public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection in class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter groupHash : String to signature : String in method public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Return Type",
+        "description": "Change Return Type List<LeakProjection> to LeakProjection in method public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection from class leakcanary.internal.activity.db.LeakTable",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable leaks : Inferred to leakTraces : Inferred in method public retrieveLeakBySignature(db SQLiteDatabase, signature String) : LeakProjection from class leakcanary.internal.activity.db.LeakTable",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

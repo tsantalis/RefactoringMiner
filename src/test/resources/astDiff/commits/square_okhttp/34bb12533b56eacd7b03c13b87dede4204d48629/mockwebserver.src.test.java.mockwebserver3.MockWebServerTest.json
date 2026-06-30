@@ -2276,6 +2276,17 @@
   "firstEndPos" : 3587,
   "secondEndPos" : 2916
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"HTTP/1.1 \"",
+  "secondLabel" : "\"HTTP/1.1 \"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 3548,
+  "secondPos" : 2887,
+  "firstEndPos" : 3559,
+  "secondEndPos" : 2896
+}, {
   "firstType" : "SimpleName",
   "secondType" : "interpolated_identifier",
   "firstLabel" : "i",
@@ -2286,6 +2297,17 @@
   "secondPos" : 2897,
   "firstEndPos" : 3563,
   "secondEndPos" : 2898
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\" \"",
+  "secondLabel" : "\" \"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 3566,
+  "secondPos" : 2898,
+  "firstEndPos" : 3569,
+  "secondEndPos" : 2899
 }, {
   "firstType" : "SimpleName",
   "secondType" : "interpolated_identifier",

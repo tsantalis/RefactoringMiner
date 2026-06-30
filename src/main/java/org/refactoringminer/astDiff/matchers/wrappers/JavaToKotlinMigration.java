@@ -354,11 +354,13 @@ public class JavaToKotlinMigration {
                 }
             }
         }
-        else if(children1.size() > children2.size() && interpolatedExpressions2.size() > 0) {
+        else if(children1.size() > children2.size() && (interpolatedExpressions2.size() > 0 || interpolatedIdentifiers2.size() > 0)) {
             List<Tree> stringLiteralsInInterpolatedExpression = new ArrayList<>();
             for(Tree interpolated : interpolatedExpressions2) {
                 stringLiteralsInInterpolatedExpression.addAll(TreeUtilFunctions.findChildrenByTypeRecursively(interpolated, LANG2.STRING_LITERAL));
             }
+            List<Tree> children1ToBeRemoved = new ArrayList<>();
+            List<Tree> children2ToBeRemoved = new ArrayList<>();
             for(int j=0; j<stringLiteralsInInterpolatedExpression.size(); j++) {
                 Tree child2 = stringLiteralsInInterpolatedExpression.get(j);
                 for(int i=0; i<children1.size(); i++) {
@@ -367,7 +369,25 @@ public class JavaToKotlinMigration {
                         child2.setLabel(child1.getLabel());
                         child2.getChildren().remove(0);
                         mappingStore.addMapping(child1, child2);
+                        children1ToBeRemoved.add(child1);
+                        children2ToBeRemoved.add(child2);
                         break;
+                    }
+                }
+            }
+            children1.removeAll(children1ToBeRemoved);
+            children2.removeAll(children2ToBeRemoved);
+            for(int j=0; j<children2.size(); j++) {
+                Tree child2 = children2.get(j);
+                List<Tree> stringContents = TreeUtilFunctions.findChildrenByTypeRecursively(child2,LANG2.STRING_CONTENT);
+                for(int i=0; i<children1.size(); i++) {
+                    Tree child1 = children1.get(i);
+                    for(Tree stringContent : stringContents) {
+                        if(child1.getLabel().equals("\"" + stringContent.getLabel() + "\"")) {
+                            stringContent.setLabel(child1.getLabel());
+                            mappingStore.addMapping(child1, stringContent);
+                            break;
+                        }
                     }
                 }
             }

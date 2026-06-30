@@ -11934,6 +11934,17 @@
   "firstEndPos" : 10150,
   "secondEndPos" : 1411
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"Unable to process invalid path '\"",
+  "secondLabel" : "\"Unable to process invalid path '\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 10096,
+  "secondPos" : 1364,
+  "firstEndPos" : 10130,
+  "secondEndPos" : 1396
+}, {
   "firstType" : "SimpleName",
   "secondType" : "interpolated_identifier",
   "firstLabel" : "filePath",
@@ -11944,6 +11955,17 @@
   "secondPos" : 1397,
   "firstEndPos" : 10141,
   "secondEndPos" : 1405
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"'\"",
+  "secondLabel" : "\"'\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 10144,
+  "secondPos" : 1405,
+  "firstEndPos" : 10147,
+  "secondEndPos" : 1406
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -12165,6 +12187,17 @@
   "firstEndPos" : 10491,
   "secondEndPos" : 1715
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"Unable to process matches for path '\"",
+  "secondLabel" : "\"Unable to process matches for path '\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 10383,
+  "secondPos" : 1636,
+  "firstEndPos" : 10421,
+  "secondEndPos" : 1672
+}, {
   "firstType" : "SimpleName",
   "secondType" : "interpolated_identifier",
   "firstLabel" : "path",
@@ -12175,6 +12208,17 @@
   "secondPos" : 1673,
   "firstEndPos" : 10428,
   "secondEndPos" : 1677
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"' with matcher URL '\"",
+  "secondLabel" : "\"' with matcher URL '\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 10431,
+  "secondPos" : 1677,
+  "firstEndPos" : 10453,
+  "secondEndPos" : 1697
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "navigation_expression",
@@ -12208,6 +12252,17 @@
   "secondPos" : 1705,
   "firstEndPos" : 10478,
   "secondEndPos" : 1708
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"'\"",
+  "secondLabel" : "\"'\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 10483,
+  "secondPos" : 1709,
+  "firstEndPos" : 10486,
+  "secondEndPos" : 1710
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -14299,6 +14354,17 @@
   "firstEndPos" : 12279,
   "secondEndPos" : 3111
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"glob:{\"",
+  "secondLabel" : "\"glob:{\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12224,
+  "secondPos" : 3061,
+  "firstEndPos" : 12232,
+  "secondEndPos" : 3067
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -14375,6 +14441,17 @@
   "secondPos" : 3103,
   "firstEndPos" : 12272,
   "secondEndPos" : 3106
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\"}\"",
+  "secondLabel" : "\"}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12276,
+  "secondPos" : 3108,
+  "firstEndPos" : 12279,
+  "secondEndPos" : 3109
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "control_structure_body",

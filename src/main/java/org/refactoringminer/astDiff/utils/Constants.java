@@ -427,6 +427,7 @@ public class Constants {
     public final String AT = "at";
     public final String PACKAGE = "package";
     public final String TYPE_ARGUMENTS = "type_arguments";
+    public final String STRING_CONTENT = "string_content";
     
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

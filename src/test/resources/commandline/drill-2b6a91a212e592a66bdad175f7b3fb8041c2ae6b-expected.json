@@ -7,6 +7,7 @@
 	"refactorings": [{
 	"type": "Add Parameter",
 	"description": "Add Parameter onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method private generateWorkUnits(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, reader PhysicalPlanReader, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer",
+	"markup": "**Add Parameter** [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fbbea7a821026fdf15f9d6846a900df6427e2e733a03427c7427c700e380ca7bR114) in method [private generateWorkUnits(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, reader PhysicalPlanReader, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : List<QueryWorkUnit>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fbbea7a821026fdf15f9d6846a900df6427e2e733a03427c7427c700e380ca7bR95) from class `org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
 		"startLine": 97,
@@ -40,6 +41,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter onlineEndpoints : Map<DrillbitEndpoint,String> in method protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Add Parameter** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR299) in method [protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR297) from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 294,
@@ -73,6 +75,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter queryRM : QueryResourceManager in method public DistributedQueueParallelizer(memoryPlanning boolean, queryContext QueryContext, queryRM QueryResourceManager) from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Add Parameter** [queryRM : QueryResourceManager](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R53) in method [public DistributedQueueParallelizer(memoryPlanning boolean, queryContext QueryContext, queryRM QueryResourceManager)](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R53) from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 48,
@@ -106,6 +109,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type nodeResourceMap : Map<DrillbitEndpoint,NodeResource> to nodeResourceMap : Map<DrillbitEndpoint,NodeResources> in class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Attribute Type** [nodeResourceMap : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL58) to [nodeResourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR58) in class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 58,
@@ -130,6 +134,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type numVirtualCpu : int to numVirtualCpu : long in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Attribute Type** [numVirtualCpu : int](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL46) to [numVirtualCpu : long](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR47) in class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 46,
@@ -154,6 +159,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL178) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR181) in method `public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 178,
@@ -178,6 +184,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DefaultParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-a207c1e4070dee097cbb09db34bcb60ba7e7b8bceb984473a0ff5c0542e41eeeL54) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-a207c1e4070dee097cbb09db34bcb60ba7e7b8bceb984473a0ff5c0542e41eeeR54) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DefaultParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
 		"startLine": 54,
@@ -202,6 +209,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L82) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R88) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 82,
@@ -262,6 +270,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eL53) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eR53) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.ZKQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
 		"startLine": 53,
@@ -286,6 +295,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL230) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR233) in method `public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 230,
@@ -310,6 +320,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fbbea7a821026fdf15f9d6846a900df6427e2e733a03427c7427c700e380ca7bL82) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fbbea7a821026fdf15f9d6846a900df6427e2e733a03427c7427c700e380ca7bR81) in method `public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>` from class `org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
 		"startLine": 82,
@@ -370,6 +381,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.QueryParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-097b67bad2e070361e717f57fc53dae3ad95cdee8b57b2624034b30d0ec49e3aL61) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-097b67bad2e070361e717f57fc53dae3ad95cdee8b57b2624034b30d0ec49e3aR61) in method `public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit` from class `org.apache.drill.exec.planner.fragment.QueryParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
 		"startLine": 61,
@@ -394,6 +406,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Change Parameter Type** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL203) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR206) in method `public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 203,
@@ -454,6 +467,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type from : Map<String,NodeResources> to from : Map<DrillbitEndpoint,NodeResources> in method public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [from : Map<String,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL106) to [from : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR107) in method `public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources>` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 106,
@@ -496,6 +510,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type nodeLimit : int to nodeLimit : long in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [nodeLimit : int](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L129) to [nodeLimit : long](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R165) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 129,
@@ -556,6 +571,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type nodeResourceMap : Map<DrillbitEndpoint,NodeResource> to nodeResourceMap : Map<DrillbitEndpoint,NodeResources> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [nodeResourceMap : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L129) to [nodeResourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R165) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillbitEndpoint,NodeResources>, nodeLimit long) : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 129,
@@ -598,6 +614,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type numVirtualCpu : int to numVirtualCpu : long in method public NodeResources(memoryInBytes long, numVirtualCpu long) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [numVirtualCpu : int](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL50) to [numVirtualCpu : long](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR51) in method `public NodeResources(memoryInBytes long, numVirtualCpu long)` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 50,
@@ -640,6 +657,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type numVirtualCpu : int to numVirtualCpu : long in method public NodeResources(version int, memoryInBytes long, numVirtualCpu long) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [numVirtualCpu : int](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL57) to [numVirtualCpu : long](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR58) in method `public NodeResources(version int, memoryInBytes long, numVirtualCpu long)` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 57,
@@ -682,6 +700,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type resourceMap : Map<DrillbitEndpoint,NodeResource> to resourceMap : Map<DrillbitEndpoint,NodeResources> in method private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Parameter Type** [resourceMap : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL113) to [resourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR126) in method `private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 113,
@@ -724,6 +743,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type resourceMap : Map<DrillbitEndpoint,NodeResource> to resourceMap : Map<DrillbitEndpoint,NodeResources> in method private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Parameter Type** [resourceMap : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL92) to [resourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR105) in method `private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillbitEndpoint,NodeResources>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 92,
@@ -784,6 +804,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillbitEndpoint,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Parameter Type** [resources : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL179) to [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR193) in method `private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillbitEndpoint,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 179,
@@ -826,6 +847,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type to : Map<String,NodeResources> to to : Map<DrillbitEndpoint,NodeResources> in method public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [to : Map<String,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL105) to [to : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR106) in method `public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources>` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 105,
@@ -886,6 +908,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type List<DrillbitEndpoint> to Map<DrillbitEndpoint,String> in method private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String> from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Return Type** [List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL150) to [Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR163) in method [private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR163) from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 150,
@@ -928,6 +951,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type Map<DrillbitEndpoint,NodeResource> to Map<DrillbitEndpoint,NodeResources> in method public getResourceMap() : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Return Type** [Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL236) to [Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR236) in method [public getResourceMap() : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR236) from class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 236,
@@ -970,6 +994,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type Map<String,NodeResources> to Map<DrillbitEndpoint,NodeResources> in method public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [Map<String,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL105) to [Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR106) in method [public merge(to Map<DrillbitEndpoint,NodeResources>, from Map<DrillbitEndpoint,NodeResources>) : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR106) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 105,
@@ -1012,6 +1037,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type NodeResource to NodeResources in method public create() : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL62) to [NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR139) in method [public create() : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR139) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 62,
@@ -1054,6 +1080,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type NodeResource to NodeResources in method public create(cpu long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL66) to [NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR143) in method [public create(cpu long) : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR143) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 66,
@@ -1096,6 +1123,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type NodeResource to NodeResources in method public create(cpu long, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL70) to [NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR147) in method [public create(cpu long, memory long) : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR147) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 70,
@@ -1138,6 +1166,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type int to long in method public getNumVirtualCpu() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [int](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL81) to [long](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR82) in method [public getNumVirtualCpu() : long](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR82) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 81,
@@ -1180,6 +1209,7 @@
 {
 	"type": "Change Thrown Exception Type",
 	"description": "Change Thrown Exception Type PhysicalOperatorSetupException to ExecutionSetupException in method public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Change Thrown Exception Type** [PhysicalOperatorSetupException](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL178) to [ExecutionSetupException](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR181) in method [public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR180) from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 178,
@@ -1222,6 +1252,7 @@
 {
 	"type": "Change Thrown Exception Type",
 	"description": "Change Thrown Exception Type PhysicalOperatorSetupException to ExecutionSetupException in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Thrown Exception Type** [PhysicalOperatorSetupException](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L82) to [ExecutionSetupException](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R88) in method [public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R73) from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 82,
@@ -1264,6 +1295,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [activeEndpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL202) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR216) in method `public TestSingleMajorFragmentWithGroupByProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 202,
@@ -1342,6 +1374,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [activeEndpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL187) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR201) in method `public TestSingleMajorFragmentWithProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 187,
@@ -1420,6 +1453,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [activeEndpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL217) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR231) in method `public TestTwoMajorFragmentWithSortyProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 217,
@@ -1498,6 +1532,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type cpuPerEndpoint : Function<DrillbitEndpoint,NodeResource> to cpuPerEndpoint : Function<DrillbitEndpoint,NodeResources> in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Variable Type** [cpuPerEndpoint : Function<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL228) to [cpuPerEndpoint : Function<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR228) in method `public computeCpuResources() : void` from class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 228,
@@ -1540,6 +1575,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type endpoints : List<DrillbitEndpoint> to endpoints : Map<DrillbitEndpoint,String> in method private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String> from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [endpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL152) to [endpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR165) in method `private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String>` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 152,
@@ -1582,6 +1618,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type endpoints : List<DrillbitEndpoint> to endpoints : Map<DrillbitEndpoint,String> in method private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void from class org.apache.drill.exec.pop.TestFragmentChecker",
+	"markup": "**Change Variable Type** [endpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c2d57fa386d6978ca4d5baae056d5abc62fc74d2a8a0da0debf7a49662315089L57) to [endpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c2d57fa386d6978ca4d5baae056d5abc62fc74d2a8a0da0debf7a49662315089R57) in method `private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void` from class `org.apache.drill.exec.pop.TestFragmentChecker`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/pop/TestFragmentChecker.java",
 		"startLine": 57,
@@ -1624,6 +1661,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type merge : BinaryOperator<NodeResource> to merge : BinaryOperator<NodeResources> in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Variable Type** [merge : BinaryOperator<NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL221) to [merge : BinaryOperator<NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR221) in method `public computeCpuResources() : void` from class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 221,
@@ -1666,6 +1704,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [resources : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL203) to [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR217) in method `public TestSingleMajorFragmentWithGroupByProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 203,
@@ -1726,6 +1765,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [resources : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL188) to [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR202) in method `public TestSingleMajorFragmentWithProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 188,
@@ -1786,6 +1826,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type resources : Map<DrillbitEndpoint,NodeResource> to resources : Map<DrillbitEndpoint,NodeResources> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Variable Type** [resources : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL218) to [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR232) in method `public TestTwoMajorFragmentWithSortyProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 218,
@@ -1846,6 +1887,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type result : NodeResource to result : NodeResources in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Variable Type** [result : NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL222) to [result : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR222) in method `public computeCpuResources() : void` from class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 222,
@@ -1924,6 +1966,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type totalNodeResources : Map<DrillbitEndpoint,NodeResource> to totalNodeResources : Map<DrillbitEndpoint,NodeResources> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [totalNodeResources : Map<DrillbitEndpoint,NodeResource>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L88) to [totalNodeResources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R94) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 88,
@@ -1966,6 +2009,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable endpoint : DrillbitEndpoint in method protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Extract Variable** [endpoint : DrillbitEndpoint](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR336) in method `protected generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, rootNode Fragment, planningSet PlanningSet, session UserSession, queryContextInfo QueryContextInformation, onlineEndpoints Map<DrillbitEndpoint,String>) : QueryWorkUnit` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 332,
@@ -1999,6 +2043,7 @@
 {
 	"type": "Move Method",
 	"description": "Move Method public create() : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create() : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Move Method** [public create() : NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL62) from class `org.apache.drill.exec.planner.cost.NodeResource` to [public create() : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR139) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 62,
@@ -2023,6 +2068,7 @@
 {
 	"type": "Move Method",
 	"description": "Move Method public create(cpu long) : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create(cpu long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Move Method** [public create(cpu long) : NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL66) from class `org.apache.drill.exec.planner.cost.NodeResource` to [public create(cpu long) : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR143) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 66,
@@ -2047,6 +2093,7 @@
 {
 	"type": "Move Method",
 	"description": "Move Method public create(cpu long, memory long) : NodeResource from class org.apache.drill.exec.planner.cost.NodeResource to public create(cpu long, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Move Method** [public create(cpu long, memory long) : NodeResource](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL70) from class `org.apache.drill.exec.planner.cost.NodeResource` to [public create(cpu long, memory long) : NodeResources](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR147) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 70,
@@ -2071,6 +2118,7 @@
 {
 	"type": "Move Method",
 	"description": "Move Method public toString() : String from class org.apache.drill.exec.planner.cost.NodeResource to public toString() : String from class org.apache.drill.common.DrillNode",
+	"markup": "**Move Method** [public toString() : String](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-f917457ec098b5b0a2cbf44131a3b8ee10b62e8c059f6e5dad44982cdec5a93aL55) from class `org.apache.drill.exec.planner.cost.NodeResource` to [public toString() : String](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-cebea83eeddc2e1061ae1eac8c7998423eee797dd9fa7d76daada02a67c9ec28R79) from class `org.apache.drill.common.DrillNode`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/cost/NodeResource.java",
 		"startLine": 55,
@@ -2095,6 +2143,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL178) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR181) in method `public abstract adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 178,
@@ -2119,6 +2168,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DefaultParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-a207c1e4070dee097cbb09db34bcb60ba7e7b8bceb984473a0ff5c0542e41eeeL54) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-a207c1e4070dee097cbb09db34bcb60ba7e7b8bceb984473a0ff5c0542e41eeeR54) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DefaultParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultParallelizer.java",
 		"startLine": 54,
@@ -2143,6 +2193,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L82) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R88) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 82,
@@ -2203,6 +2254,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eL53) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eR53) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.ZKQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
 		"startLine": 53,
@@ -2227,6 +2279,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL230) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR233) in method `public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 230,
@@ -2251,6 +2304,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpointUUIDs : Map<DrillbitEndpoint,String> in method public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit> from class org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fbbea7a821026fdf15f9d6846a900df6427e2e733a03427c7427c700e380ca7bL82) to [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-fbbea7a821026fdf15f9d6846a900df6427e2e733a03427c7427c700e380ca7bR81) in method `public getSplitFragments(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpointUUIDs Map<DrillbitEndpoint,String>, reader PhysicalPlanReader, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : List<QueryWorkUnit>` from class `org.apache.drill.exec.planner.fragment.contrib.SplittingParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/contrib/SplittingParallelizer.java",
 		"startLine": 82,
@@ -2311,6 +2365,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.QueryParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-097b67bad2e070361e717f57fc53dae3ad95cdee8b57b2624034b30d0ec49e3aL61) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-097b67bad2e070361e717f57fc53dae3ad95cdee8b57b2624034b30d0ec49e3aR61) in method `public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit` from class `org.apache.drill.exec.planner.fragment.QueryParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueryParallelizer.java",
 		"startLine": 61,
@@ -2335,6 +2390,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter activeEndpoints : Collection<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit from class org.apache.drill.exec.planner.fragment.SimpleParallelizer",
+	"markup": "**Rename Parameter** [activeEndpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbL203) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c33d741b433bd812e85124202be5427cb7ee871086d464e65293801a1052ffbbR206) in method `public generateWorkUnit(options OptionList, foremanNode DrillbitEndpoint, queryId QueryId, onlineEndpoints Map<DrillbitEndpoint,String>, rootFragment Fragment, session UserSession, queryContextInfo QueryContextInformation) : QueryWorkUnit` from class `org.apache.drill.exec.planner.fragment.SimpleParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/SimpleParallelizer.java",
 		"startLine": 203,
@@ -2395,6 +2451,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Rename Variable** [activeEndpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL202) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR216) in method `public TestSingleMajorFragmentWithGroupByProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 202,
@@ -2473,6 +2530,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Rename Variable** [activeEndpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL187) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR201) in method `public TestSingleMajorFragmentWithProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 187,
@@ -2551,6 +2609,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable activeEndpoints : List<DrillbitEndpoint> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Rename Variable** [activeEndpoints : List<DrillbitEndpoint>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL217) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2b6a91a212e592a66bdad175f7b3fb8041c2ae6b?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR231) in method `public TestTwoMajorFragmentWithSortyProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 217,

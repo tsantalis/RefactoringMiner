@@ -10,7 +10,6 @@ import org.refactoringminer.RefactoringMiner;
 
 import java.io.File;
 import java.io.FileReader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -147,9 +146,11 @@ public class TestCommandLine {
                 jsonPath
         };
         RefactoringMiner.detectAtGitHubCommit(args);
-        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-" + commit + "-expected.json"));
+        String expectedFilePath = EXPECTED_PATH + "drill-" + commit + "-expected.json";
+        List<String> expected = IOUtils.readLines(new FileReader(expectedFilePath));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         //String content = Files.readString(Path.of(jsonPath));
+        //Files.writeString(Path.of(expectedFilePath), content);
         Assertions.assertEquals(expected, actual);
     }
 
@@ -166,9 +167,11 @@ public class TestCommandLine {
                 jsonPath
         };
         RefactoringMiner.detectAtGitHubPullRequest(args);
-        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-gp-expected.json"));
+        String expectedFilePath = EXPECTED_PATH + "drill-gp-expected.json";
+        List<String> expected = IOUtils.readLines(new FileReader(expectedFilePath));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         //String content = Files.readString(Path.of(jsonPath));
+        //Files.writeString(Path.of(expectedFilePath), content);
         Assertions.assertEquals(expected, actual);
     }
 

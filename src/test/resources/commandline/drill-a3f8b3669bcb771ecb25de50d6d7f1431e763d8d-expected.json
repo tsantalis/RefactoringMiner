@@ -7,6 +7,7 @@
 	"refactorings": [{
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier package to private in attribute private logger : Logger from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Attribute Access Modifier** `package` to `private` in attribute [private logger : Logger](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R50) from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 50,
@@ -31,6 +32,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type bufferedOperators : Multimap<DrillbitEndpoint,PhysicalOperator> to bufferedOperators : Map<DrillNode,List<PhysicalOperator>> in class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"markup": "**Change Attribute Type** [bufferedOperators : Multimap<DrillbitEndpoint,PhysicalOperator>](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eL72) to [bufferedOperators : Map<DrillNode,List<PhysicalOperator>>](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eR74) in class `org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
 		"startLine": 72,
@@ -55,6 +57,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type numVirtualCpu : long to numVirtualCpu : int in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Attribute Type** [numVirtualCpu : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL47) to [numVirtualCpu : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR47) in class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 47,
@@ -79,6 +82,7 @@
 {
 	"type": "Change Class Access Modifier",
 	"description": "Change Class Access Modifier protected to public in class org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder",
+	"markup": "**Change Class Access Modifier** `protected` to `public` in class [org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R69)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Fragment.java",
 		"startLine": 174,
@@ -103,6 +107,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type cpu : long to cpu : int in method public create(cpu int) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [cpu : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL143) to [cpu : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR143) in method `public create(cpu int) : NodeResources` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 143,
@@ -145,6 +150,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type cpu : long to cpu : int in method public create(cpu int, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [cpu : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL147) to [cpu : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR147) in method `public create(cpu int, memory long) : NodeResources` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 147,
@@ -187,6 +193,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type numVirtualCpu : long to numVirtualCpu : int in method public NodeResources(memoryInBytes long, numVirtualCpu int) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [numVirtualCpu : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL51) to [numVirtualCpu : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR51) in method `public NodeResources(memoryInBytes long, numVirtualCpu int)` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 51,
@@ -229,6 +236,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type numVirtualCpu : long to numVirtualCpu : int in method public NodeResources(version int, memoryInBytes long, numVirtualCpu int) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [numVirtualCpu : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL58) to [numVirtualCpu : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR58) in method `public NodeResources(version int, memoryInBytes long, numVirtualCpu int)` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 58,
@@ -271,6 +279,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type long to int in method public getNumVirtualCpu() : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL82) to [int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR82) in method [public getNumVirtualCpu() : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR82) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 82,
@@ -313,6 +322,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type endpointCollectionMap : Map<DrillbitEndpoint,Collection<PhysicalOperator>> to endpointCollectionMap : Map<DrillNode,List<PhysicalOperator>> in method public getNodeMap() : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"markup": "**Change Variable Type** [endpointCollectionMap : Map<DrillbitEndpoint,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eL106) to [endpointCollectionMap : Map<DrillNode,List<PhysicalOperator>>](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eR110) in method `public getNodeMap() : Map<String,Collection<PhysicalOperator>>` from class `org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
 		"startLine": 106,
@@ -355,6 +365,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type entry : Map.Entry<DrillbitEndpoint,Collection<PhysicalOperator>> to entry : Map.Entry<DrillNode,List<PhysicalOperator>> in method public getNodeMap() : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"markup": "**Change Variable Type** [entry : Map.Entry<DrillbitEndpoint,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eL108) to [entry : Map.Entry<DrillNode,List<PhysicalOperator>>](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eR112) in method `public getNodeMap() : Map<String,Collection<PhysicalOperator>>` from class `org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
 		"startLine": 108,
@@ -397,6 +408,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type operatorsMemory : Long to operatorsMemory : long in method public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [operatorsMemory : Long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L70) to [operatorsMemory : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R69) in method `public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 70,
@@ -457,6 +469,7 @@
 {
 	"type": "Extract Superclass",
 	"description": "Extract Superclass org.apache.drill.exec.util.memory.MemoryAllocationUtilities from classes [org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities, org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities]",
+	"markup": "**Extract Superclass** [org.apache.drill.exec.util.memory.MemoryAllocationUtilities](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R31) from classes `[org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities, org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities]`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
 		"startLine": 34,
@@ -508,6 +521,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable node : DrillNode in method private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"markup": "**Extract Variable** [node : DrillNode](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-656b10c4149052c166281951992e0a06961094bdae7793139d9d0ba805e9f99eR82) in method `private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void` from class `org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
 		"startLine": 80,
@@ -541,6 +555,7 @@
 {
 	"type": "Move Class",
 	"description": "Move Class org.apache.drill.exec.planner.fragment.Fragment.BufferedOpFinder moved to org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder",
+	"markup": "**Move Class** [org.apache.drill.exec.planner.fragment.Fragment.BufferedOpFinder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-81cd6f048c1aefaaaa87d48380c0bebcbb0358c60a4d6240e9091e6b224f527cL174) moved to [org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R69)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Fragment.java",
 		"startLine": 174,
@@ -565,6 +580,7 @@
 {
 	"type": "Pull Up Method",
 	"description": "Pull Up Method public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities to public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"markup": "**Pull Up Method** [public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-692132c8a27e118bbd19f6015c47a26c597b588d6b14ec14c8cc85fe88c110f0L108) from class `org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities` to [public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R88) from class `org.apache.drill.exec.util.memory.MemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
 		"startLine": 108,
@@ -589,6 +605,7 @@
 {
 	"type": "Pull Up Method",
 	"description": "Pull Up Method public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities to public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"markup": "**Pull Up Method** [public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0L195) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities` to [public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R88) from class `org.apache.drill.exec.util.memory.MemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
 		"startLine": 195,
@@ -613,6 +630,7 @@
 {
 	"type": "Pull Up Method",
 	"description": "Pull Up Method public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities to public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"markup": "**Pull Up Method** [public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-692132c8a27e118bbd19f6015c47a26c597b588d6b14ec14c8cc85fe88c110f0L134) from class `org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities` to [public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R33) from class `org.apache.drill.exec.util.memory.MemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
 		"startLine": 134,
@@ -637,6 +655,7 @@
 {
 	"type": "Pull Up Method",
 	"description": "Pull Up Method public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities to public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"markup": "**Pull Up Method** [public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0L221) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities` to [public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-f9e522d5c4fc82d37cdc200d7167c5ae84a4ddfc5f42c13f582e93589cdc6b89R33) from class `org.apache.drill.exec.util.memory.MemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
 		"startLine": 221,
@@ -661,6 +680,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute ENDPOINTUUID_FIELD_NUMBER : int to ASSIGNEDENDPOINTUUID_FIELD_NUMBER : int in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"markup": "**Rename Attribute** [ENDPOINTUUID_FIELD_NUMBER : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0L5067) to [ASSIGNEDENDPOINTUUID_FIELD_NUMBER : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0R5067) in class `org.apache.drill.exec.proto.BitControl.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5067,
@@ -685,6 +705,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute MINIMUM_MEMORY_FOR_BUFFER_OPERS : long to minimum_memory_for_buffer_opers : long in class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Rename Attribute** [MINIMUM_MEMORY_FOR_BUFFER_OPERS : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L52) to [minimum_memory_for_buffer_opers : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R52) in class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 52,
@@ -709,6 +730,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute OPTIMAL_MEM_ALLOCATION_FIELD_NUMBER : int to MAX_ALLOCATION_FIELD_NUMBER : int in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"markup": "**Rename Attribute** [OPTIMAL_MEM_ALLOCATION_FIELD_NUMBER : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL22676) to [MAX_ALLOCATION_FIELD_NUMBER : int](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR22676) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 22676,
@@ -733,6 +755,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute endpointUUID : String to assignedEndpointUUID : String in class org.apache.drill.exec.proto.beans.PlanFragment",
+	"markup": "**Rename Attribute** [endpointUUID : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7L69) to [assignedEndpointUUID : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7R69) in class `org.apache.drill.exec.proto.beans.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
 		"startLine": 69,
@@ -757,6 +780,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute endpointUUID_ : java.lang.Object to assignedEndpointUUID_ : java.lang.Object in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"markup": "**Rename Attribute** `endpointUUID_ : java.lang.Object` to `assignedEndpointUUID_ : java.lang.Object` in class `org.apache.drill.exec.proto.BitControl.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5068,
@@ -781,6 +805,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute endpointUUID_ : java.lang.Object to assignedEndpointUUID_ : java.lang.Object in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Attribute** `endpointUUID_ : java.lang.Object` to `assignedEndpointUUID_ : java.lang.Object` in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7130,
@@ -805,6 +830,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute optimalMemAllocation : long to maxAllocation : long in class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"markup": "**Rename Attribute** [optimalMemAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655L60) to [maxAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655R60) in class `org.apache.drill.exec.proto.beans.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
 		"startLine": 60,
@@ -829,6 +855,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute optimalMemAllocation_ : long to maxAllocation_ : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"markup": "**Rename Attribute** [optimalMemAllocation_ : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL22677) to [maxAllocation_ : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR22677) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 22677,
@@ -853,6 +880,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute optimalMemAllocation_ : long to maxAllocation_ : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"markup": "**Rename Attribute** [optimalMemAllocation_ : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL23943) to [maxAllocation_ : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR23943) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 23943,
@@ -877,6 +905,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public clearEndpointUUID() : Builder renamed to public clearAssignedEndpointUUID() : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Method** [public clearEndpointUUID() : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0L7183) renamed to [public clearAssignedEndpointUUID() : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0R7183) in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7183,
@@ -901,6 +930,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public clearOptimalMemAllocation() : Builder renamed to public clearMaxAllocation() : Builder in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"markup": "**Rename Method** [public clearOptimalMemAllocation() : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL23965) renamed to [public clearMaxAllocation() : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR23965) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 23965,
@@ -925,6 +955,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.beans.PlanFragment",
+	"markup": "**Rename Method** [public getEndpointUUID() : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7L275) renamed to [public getAssignedEndpointUUID() : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7R275) in class `org.apache.drill.exec.proto.beans.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
 		"startLine": 275,
@@ -949,6 +980,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUID() : java.lang.String renamed to public getAssignedEndpointUUID() : java.lang.String in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"markup": "**Rename Method** `public getEndpointUUID() : java.lang.String` renamed to `public getAssignedEndpointUUID() : java.lang.String` in class `org.apache.drill.exec.proto.BitControl.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5075,
@@ -973,6 +1005,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUID() : java.lang.String renamed to public getAssignedEndpointUUID() : java.lang.String in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Method** `public getEndpointUUID() : java.lang.String` renamed to `public getAssignedEndpointUUID() : java.lang.String` in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7137,
@@ -997,6 +1030,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUID() : java.lang.String renamed to public getAssignedEndpointUUID() : java.lang.String in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"markup": "**Rename Method** `public getEndpointUUID() : java.lang.String` renamed to `public getAssignedEndpointUUID() : java.lang.String` in class `org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 4499,
@@ -1021,6 +1055,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUIDBytes() : com.google.protobuf.ByteString renamed to public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"markup": "**Rename Method** `public getEndpointUUIDBytes() : com.google.protobuf.ByteString` renamed to `public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString` in class `org.apache.drill.exec.proto.BitControl.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5092,
@@ -1045,6 +1080,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUIDBytes() : com.google.protobuf.ByteString renamed to public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Method** `public getEndpointUUIDBytes() : com.google.protobuf.ByteString` renamed to `public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString` in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7154,
@@ -1069,6 +1105,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUIDBytes() : com.google.protobuf.ByteString renamed to public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"markup": "**Rename Method** `public getEndpointUUIDBytes() : com.google.protobuf.ByteString` renamed to `public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString` in class `org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 4503,
@@ -1093,6 +1130,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"markup": "**Rename Method** [public getOptimalMemAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL22684) renamed to [public getMaxAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR22684) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 22684,
@@ -1117,6 +1155,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"markup": "**Rename Method** [public getOptimalMemAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL23950) renamed to [public getMaxAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR23950) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 23950,
@@ -1141,6 +1180,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfileOrBuilder",
+	"markup": "**Rename Method** [public getOptimalMemAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL22371) renamed to [public getMaxAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR22371) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfileOrBuilder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 22371,
@@ -1165,6 +1205,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"markup": "**Rename Method** [public getOptimalMemAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655L175) renamed to [public getMaxAllocation() : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655R175) in class `org.apache.drill.exec.proto.beans.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
 		"startLine": 175,
@@ -1189,6 +1230,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public hasEndpointUUID() : boolean renamed to public hasAssignedEndpointUUID() : boolean in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"markup": "**Rename Method** [public hasEndpointUUID() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0L5069) renamed to [public hasAssignedEndpointUUID() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0R5069) in class `org.apache.drill.exec.proto.BitControl.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5069,
@@ -1213,6 +1255,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public hasEndpointUUID() : boolean renamed to public hasAssignedEndpointUUID() : boolean in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Method** [public hasEndpointUUID() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0L7131) renamed to [public hasAssignedEndpointUUID() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0R7131) in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7131,
@@ -1237,6 +1280,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public hasEndpointUUID() : boolean renamed to public hasAssignedEndpointUUID() : boolean in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"markup": "**Rename Method** [public hasEndpointUUID() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0L4495) renamed to [public hasAssignedEndpointUUID() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-36fabdf8da005ccc0c5ab0f3fd5652ca555c2fa29924beac93e21a87c20244f0R4495) in class `org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 4495,
@@ -1261,6 +1305,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public hasOptimalMemAllocation() : boolean renamed to public hasMaxAllocation() : boolean in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"markup": "**Rename Method** [public hasOptimalMemAllocation() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL22678) renamed to [public hasMaxAllocation() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR22678) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 22678,
@@ -1285,6 +1330,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public hasOptimalMemAllocation() : boolean renamed to public hasMaxAllocation() : boolean in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"markup": "**Rename Method** [public hasOptimalMemAllocation() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL23944) renamed to [public hasMaxAllocation() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR23944) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 23944,
@@ -1309,6 +1355,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public hasOptimalMemAllocation() : boolean renamed to public hasMaxAllocation() : boolean in class org.apache.drill.exec.proto.UserBitShared.OperatorProfileOrBuilder",
+	"markup": "**Rename Method** [public hasOptimalMemAllocation() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL22367) renamed to [public hasMaxAllocation() : boolean](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR22367) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfileOrBuilder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 22367,
@@ -1333,6 +1380,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public setEndpointUUID(endpointUUID String) : PlanFragment renamed to public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment in class org.apache.drill.exec.proto.beans.PlanFragment",
+	"markup": "**Rename Method** [public setEndpointUUID(endpointUUID String) : PlanFragment](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7L280) renamed to [public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7R280) in class `org.apache.drill.exec.proto.beans.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
 		"startLine": 280,
@@ -1357,6 +1405,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public setEndpointUUID(value java.lang.String) : Builder renamed to public setAssignedEndpointUUID(value java.lang.String) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Method** `public setEndpointUUID(value java.lang.String) : Builder` renamed to `public setAssignedEndpointUUID(value java.lang.String) : Builder` in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7170,
@@ -1381,6 +1430,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public setEndpointUUIDBytes(value com.google.protobuf.ByteString) : Builder renamed to public setAssignedEndpointUUIDBytes(value com.google.protobuf.ByteString) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"markup": "**Rename Method** `public setEndpointUUIDBytes(value com.google.protobuf.ByteString) : Builder` renamed to `public setAssignedEndpointUUIDBytes(value com.google.protobuf.ByteString) : Builder` in class `org.apache.drill.exec.proto.BitControl.PlanFragment.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7192,
@@ -1405,6 +1455,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public setOptimalMemAllocation(optimalMemAllocation long) : OperatorProfile renamed to public setMaxAllocation(maxAllocation long) : OperatorProfile in class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"markup": "**Rename Method** [public setOptimalMemAllocation(optimalMemAllocation long) : OperatorProfile](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655L180) renamed to [public setMaxAllocation(maxAllocation long) : OperatorProfile](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655R180) in class `org.apache.drill.exec.proto.beans.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
 		"startLine": 180,
@@ -1429,6 +1480,7 @@
 {
 	"type": "Rename Method",
 	"description": "Rename Method public setOptimalMemAllocation(value long) : Builder renamed to public setMaxAllocation(value long) : Builder in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"markup": "**Rename Method** [public setOptimalMemAllocation(value long) : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cL23956) renamed to [public setMaxAllocation(value long) : Builder](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-a0d22cd35dd03af6b50c661873f0c4eeeab444a7e43d3b737cae42eefac5ad5cR23956) in class `org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
 		"startLine": 23956,
@@ -1453,6 +1505,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter endpointUUID : String to assignedEndpointUUID : String in method public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment from class org.apache.drill.exec.proto.beans.PlanFragment",
+	"markup": "**Rename Parameter** [endpointUUID : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7L280) to [assignedEndpointUUID : String](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-16e3ffcc8ed2d66297fc036348d32d6d1d77f509a00fd896b34144ddfe52def7R280) in method `public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment` from class `org.apache.drill.exec.proto.beans.PlanFragment`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
 		"startLine": 280,
@@ -1495,6 +1548,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter initialAllocation : long to optimalMemAllocation : long in method public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, optimalMemAllocation long) from class org.apache.drill.exec.ops.OperatorStats",
+	"markup": "**Rename Parameter** [initialAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-0e2c810895bbd947aa1d698683cdf2457865a833bda34b11d184b456732c5348L91) to [optimalMemAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-0e2c810895bbd947aa1d698683cdf2457865a833bda34b11d184b456732c5348R91) in method `public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, optimalMemAllocation long)` from class `org.apache.drill.exec.ops.OperatorStats`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
 		"startLine": 91,
@@ -1537,6 +1591,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter optimalMemAllocation : long to maxAllocation : long in method public setMaxAllocation(maxAllocation long) : OperatorProfile from class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"markup": "**Rename Parameter** [optimalMemAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655L180) to [maxAllocation : long](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-e2a68d075738392d20e9415e6a72decd952f9baf26147cdc7ee8ac71cd99b655R180) in method `public setMaxAllocation(maxAllocation long) : OperatorProfile` from class `org.apache.drill.exec.proto.beans.OperatorProfile`",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
 		"startLine": 180,
@@ -1579,6 +1634,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter other : Object to obj : Object in method public equals(obj Object) : boolean from class org.apache.drill.common.DrillNode",
+	"markup": "**Rename Parameter** [other : Object](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-cebea83eeddc2e1061ae1eac8c7998423eee797dd9fa7d76daada02a67c9ec28L38) to [obj : Object](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-cebea83eeddc2e1061ae1eac8c7998423eee797dd9fa7d76daada02a67c9ec28R38) in method `public equals(obj Object) : boolean` from class `org.apache.drill.common.DrillNode`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
 		"startLine": 38,
@@ -1639,6 +1695,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable otherEndpoint : DrillbitEndpoint to other : DrillbitEndpoint in method public equals(obj Object) : boolean from class org.apache.drill.common.DrillNode",
+	"markup": "**Rename Variable** [otherEndpoint : DrillbitEndpoint](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-cebea83eeddc2e1061ae1eac8c7998423eee797dd9fa7d76daada02a67c9ec28L43) to [other : DrillbitEndpoint](https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d?diff=split#diff-cebea83eeddc2e1061ae1eac8c7998423eee797dd9fa7d76daada02a67c9ec28R45) in method `public equals(obj Object) : boolean` from class `org.apache.drill.common.DrillNode`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
 		"startLine": 43,

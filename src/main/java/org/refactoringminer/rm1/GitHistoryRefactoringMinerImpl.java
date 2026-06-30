@@ -562,12 +562,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	private void downloadAndExtractZipFile(File projectFolder, String cloneURL, String commitId)
-			throws IOException {
+	private void downloadAndExtractZipFile(File projectFolder, String cloneURL, String commitId) throws IOException, URISyntaxException {
 		String downloadLink = extractDownloadLink(cloneURL, commitId);
 		File destinationFile = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + commitId + ".zip");
 		logger.info(String.format("Downloading archive %s", downloadLink));
-		FileUtils.copyURLToFile(new URL(downloadLink), destinationFile);
+		FileUtils.copyURLToFile(new URI(downloadLink).toURL(), destinationFile);
 		logger.info(String.format("Unzipping archive %s", downloadLink));
 		java.util.zip.ZipFile zipFile = new ZipFile(destinationFile);
 		try {
@@ -1390,17 +1389,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
-						currentRawFile = streamToString(currentRawFileInputStream);
+						currentRawFile = fetchRawFileContent(currentRawURL);
 						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-						parentRawFile = streamToString(parentRawFileInputStream);
+						URL parentRawURL = new URI(rawURLInParentCommit).toURL();
+						parentRawFile = fetchRawFileContent(parentRawURL);
 					}
 					if(!filesBefore.containsKey(fileName))
 						filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 				}
-				catch(IOException e) {
+				catch(IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
 			};
@@ -1416,8 +1414,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
-						currentRawFile = streamToString(currentRawFileInputStream);
+						currentRawFile = fetchRawFileContent(currentRawURL);
 					}
 					filesCurrent.put(fileName, currentRawFile);
 				}
@@ -1437,8 +1434,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL rawURL = commitFile.getRawUrl();
-						InputStream rawFileInputStream = rawURL.openStream();
-						parentRawFile = streamToString(rawFileInputStream);
+						parentRawFile = fetchRawFileContent(rawURL);
 					}
 					filesBefore.put(fileName, parentRawFile);
 					if(fileName.contains("/")) {
@@ -1466,13 +1462,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
-						currentRawFile = streamToString(currentRawFileInputStream);
+						currentRawFile = fetchRawFileContent(currentRawURL);
 						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 						String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
 						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-						parentRawFile = streamToString(parentRawFileInputStream);
+						URL parentRawURL = new URI(rawURLInParentCommit).toURL();
+						parentRawFile = fetchRawFileContent(parentRawURL);
 					}
 					if(!filesBefore.containsKey(previousFilename))
 						filesBefore.put(previousFilename, parentRawFile);
@@ -1482,7 +1477,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
 					}
 				}
-				catch(IOException e) {
+				catch(IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
 			};
@@ -1699,11 +1694,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							}
 							else {
 								URL currentRawURL = commitFile.getRawUrl();
-								InputStream currentRawFileInputStream = currentRawURL.openStream();
-								currentRawFile = streamToString(currentRawFileInputStream);
+								currentRawFile = fetchRawFileContent(currentRawURL);
 								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-								parentRawFile = streamToString(parentRawFileInputStream);
+								URL parentRawURL = new URI(rawURLInParentCommit).toURL();
+								parentRawFile = fetchRawFileContent(parentRawURL);
 							}
 							filesBefore.put(fileName, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
@@ -1712,7 +1706,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
 							FileUtils.writeStringToFile(currentFilePath, currentRawFile, StandardCharsets.UTF_8);
 						}
-						catch(IOException e) {
+						catch(IOException | URISyntaxException e) {
 							e.printStackTrace();
 						}
 					};
@@ -1728,8 +1722,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							}
 							else {
 								URL currentRawURL = commitFile.getRawUrl();
-								InputStream currentRawFileInputStream = currentRawURL.openStream();
-								currentRawFile = streamToString(currentRawFileInputStream);
+								currentRawFile = fetchRawFileContent(currentRawURL);
 							}
 							filesCurrent.put(fileName, currentRawFile);
 							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
@@ -1751,8 +1744,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							}
 							else {
 								URL rawURL = commitFile.getRawUrl();
-								InputStream rawFileInputStream = rawURL.openStream();
-								parentRawFile = streamToString(rawFileInputStream);
+								parentRawFile = fetchRawFileContent(rawURL);
 							}
 							filesBefore.put(fileName, parentRawFile);
 							if(fileName.contains("/")) {
@@ -1782,13 +1774,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							}
 							else {
 								URL currentRawURL = commitFile.getRawUrl();
-								InputStream currentRawFileInputStream = currentRawURL.openStream();
-								currentRawFile = streamToString(currentRawFileInputStream);
+								currentRawFile = fetchRawFileContent(currentRawURL);
 								String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 								String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
 								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-								parentRawFile = streamToString(parentRawFileInputStream);
+								URL parentRawURL = new URI(rawURLInParentCommit).toURL();
+								parentRawFile = fetchRawFileContent(parentRawURL);
 							}
 							filesBefore.put(previousFilename, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
@@ -1801,7 +1792,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
 							FileUtils.writeStringToFile(currentFilePath, currentRawFile, StandardCharsets.UTF_8);
 						}
-						catch(IOException e) {
+						catch(IOException | URISyntaxException e) {
 							e.printStackTrace();
 						}
 					};
@@ -2554,8 +2545,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public ProjectASTDiff diffAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws Exception {
 		Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
 		Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
-        // TODO I think this is unncessary in this case. requires @tsantalis verification
-//		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), true);
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), true);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsAfter, repositoryDirectoriesCurrent);
 		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
@@ -2581,7 +2571,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			final String commitId = currentGHCommit.getSHA1();
 			logger.info("Processing {} {} ...", cloneURL, commitId);
 			GHCommit currentCommit = repository.getCommit(commitId);
-	    	List<GHCommit.File> commitFiles = currentCommit.listFiles().toList();
+			List<GHCommit.File> commitFiles = currentCommit.listFiles().toList();
 			//if parents.size() == 0 then currentCommit is the initial commit of the repository, but then all files will have an ADDED status
 			final String parentCommitId = currentCommit.getParents().size() > 0 ? currentCommit.getParents().get(0).getSHA1() : null;
 			Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
@@ -2604,17 +2594,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								}
 								else {
 									URL currentRawURL = commitFile.getRawUrl();
-									InputStream currentRawFileInputStream = currentRawURL.openStream();
-									currentRawFile = streamToString(currentRawFileInputStream);
+									currentRawFile = fetchRawFileContent(currentRawURL);
 									String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-									InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-									parentRawFile = streamToString(parentRawFileInputStream);
+									URL parentRawURL = new URI(rawURLInParentCommit).toURL();
+									parentRawFile = fetchRawFileContent(parentRawURL);
 								}
 								if(!filesBefore.containsKey(fileName))
 									filesBefore.put(fileName, parentRawFile);
 								filesCurrent.put(fileName, currentRawFile);
 							}
-							catch(IOException e) {
+							catch(IOException | URISyntaxException e) {
 								e.printStackTrace();
 							}
 						};
@@ -2630,8 +2619,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								}
 								else {
 									URL currentRawURL = commitFile.getRawUrl();
-									InputStream currentRawFileInputStream = currentRawURL.openStream();
-									currentRawFile = streamToString(currentRawFileInputStream);
+									currentRawFile = fetchRawFileContent(currentRawURL);
 								}
 								filesCurrent.put(fileName, currentRawFile);
 							}
@@ -2651,8 +2639,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								}
 								else {
 									URL rawURL = commitFile.getRawUrl();
-									InputStream rawFileInputStream = rawURL.openStream();
-									parentRawFile = streamToString(rawFileInputStream);
+									parentRawFile = fetchRawFileContent(rawURL);
 								}
 								if(!filesBefore.containsKey(fileName))
 									filesBefore.put(fileName, parentRawFile);
@@ -2681,13 +2668,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								}
 								else {
 									URL currentRawURL = commitFile.getRawUrl();
-									InputStream currentRawFileInputStream = currentRawURL.openStream();
-									currentRawFile = streamToString(currentRawFileInputStream);
+									currentRawFile = fetchRawFileContent(currentRawURL);
 									String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 									String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
 									String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-									InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-									parentRawFile = streamToString(parentRawFileInputStream);
+									URL parentRawURL = new URI(rawURLInParentCommit).toURL();
+									parentRawFile = fetchRawFileContent(parentRawURL);
 								}
 								if(!filesBefore.containsKey(fileName))
 									filesBefore.put(previousFilename, parentRawFile);
@@ -2697,7 +2683,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 									deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
 								}
 							}
-							catch(IOException e) {
+							catch(IOException | URISyntaxException e) {
 								e.printStackTrace();
 							}
 						};

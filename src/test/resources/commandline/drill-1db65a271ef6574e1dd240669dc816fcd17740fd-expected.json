@@ -7,6 +7,7 @@
 	"refactorings": [{
 	"type": "Add Method Annotation",
 	"description": "Add Method Annotation @JsonIgnore in method public getMemoryInGB() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Add Method Annotation** [@JsonIgnore](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR76) in method [public getMemoryInGB() : long](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL54) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 54,
@@ -40,6 +41,7 @@
 {
 	"type": "Add Method Annotation",
 	"description": "Add Method Annotation @JsonIgnore in method public getMemoryInMB() : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Add Method Annotation** [@JsonIgnore](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR71) in method [public getMemoryInMB() : long](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL50) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 50,
@@ -73,6 +75,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable activeEndpointsUUID : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Add Variable Modifier** `final` in variable [activeEndpointsUUID : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR285) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL273) from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 276,
@@ -115,6 +118,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable foreman : Foreman in method public receiveRuntimeFilter(runtimeFilter RuntimeFilterWritable) : void from class org.apache.drill.exec.work.WorkManager.WorkerBee",
+	"markup": "**Add Variable Modifier** `final` in variable [foreman : Foreman](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-a9bc70ff5b2e948b9616121089a2e9e0ba916f67e3a3bfd06fe5043c4f5d1909L394) in method [public receiveRuntimeFilter(runtimeFilter RuntimeFilterWritable) : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-a9bc70ff5b2e948b9616121089a2e9e0ba916f67e3a3bfd06fe5043c4f5d1909L382) from class `org.apache.drill.exec.work.WorkManager.WorkerBee`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
 		"startLine": 394,
@@ -157,6 +161,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable queriesInfo : Map<String,Integer> in method public getRemainingQueries() : Map<String,Integer> from class org.apache.drill.exec.work.WorkManager",
+	"markup": "**Add Variable Modifier** `final` in variable [queriesInfo : Map<String,Integer>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-a9bc70ff5b2e948b9616121089a2e9e0ba916f67e3a3bfd06fe5043c4f5d1909L242) in method [public getRemainingQueries() : Map<String,Integer>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-a9bc70ff5b2e948b9616121089a2e9e0ba916f67e3a3bfd06fe5043c4f5d1909L236) from class `org.apache.drill.exec.work.WorkManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/WorkManager.java",
 		"startLine": 242,
@@ -199,6 +204,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier private to protected in attribute protected client : ZookeeperClient from class org.apache.drill.exec.store.sys.store.ZookeeperPersistentStore",
+	"markup": "**Change Attribute Access Modifier** `private` to `protected` in attribute [protected client : ZookeeperClient](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-dd663ff2ca435006602d918ba53c0a4f2cd8508f8a546dab0a4a68df7322de84R48) from class `org.apache.drill.exec.store.sys.store.ZookeeperPersistentStore`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/store/ZookeeperPersistentStore.java",
 		"startLine": 49,
@@ -223,6 +229,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier private to protected in attribute protected config : PersistentStoreConfig<V> from class org.apache.drill.exec.store.sys.store.ZookeeperPersistentStore",
+	"markup": "**Change Attribute Access Modifier** `private` to `protected` in attribute [protected config : PersistentStoreConfig<V>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-dd663ff2ca435006602d918ba53c0a4f2cd8508f8a546dab0a4a68df7322de84R47) from class `org.apache.drill.exec.store.sys.store.ZookeeperPersistentStore`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/store/ZookeeperPersistentStore.java",
 		"startLine": 48,
@@ -247,6 +254,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier private to public in attribute public MAX_QUERY_MEMORY_PER_NODE_KEY : String from class org.apache.drill.exec.resourcemgr.config.QueryQueueConfigImpl",
+	"markup": "**Change Attribute Access Modifier** `private` to `public` in attribute [public MAX_QUERY_MEMORY_PER_NODE_KEY : String](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-d97ca641f7333e057e4f5b2ba111b4d42e842f99499e9fc16de19e13c1c9d5f1R50) from class `org.apache.drill.exec.resourcemgr.config.QueryQueueConfigImpl`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/QueryQueueConfigImpl.java",
 		"startLine": 50,
@@ -271,6 +279,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type endpointsMap : ConcurrentHashMap<MultiKey,DrillbitEndpoint> to endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Change Attribute Type** [endpointsMap : ConcurrentHashMap<MultiKey,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL78) to [endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR77) in class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 78,
@@ -295,6 +304,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L56) to [QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6R65) in method [public admit() : QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6R65) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 56,
@@ -337,6 +347,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L111) to [QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R223) in method [public admit() : QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R222) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 111,
@@ -379,6 +390,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.QueryResourceManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252L66) to [QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252R97) in method [public admit() : QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252R89) from class `org.apache.drill.exec.work.foreman.rm.QueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
 		"startLine": 66,
@@ -421,6 +433,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to QueryAdmitResponse in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L85) to [QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R96) in method [public admit() : QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R96) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 85,
@@ -463,6 +476,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to boolean in method private enqueue() : boolean from class org.apache.drill.exec.work.foreman.Foreman",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eL491) to [boolean](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eR530) in method [private enqueue() : boolean](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eR525) from class `org.apache.drill.exec.work.foreman.Foreman`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
 		"startLine": 491,
@@ -505,6 +519,7 @@
 {
 	"type": "Change Thrown Exception Type",
 	"description": "Change Thrown Exception Type [QueryQueue.QueueTimeoutException, QueryQueue.QueryQueueException] to [QueueTimeoutException, QueryQueueException] in method public admit() : QueryAdmitResponse from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Change Thrown Exception Type** `[QueryQueue.QueueTimeoutException, QueryQueue.QueryQueueException]` to `[QueueTimeoutException, QueryQueueException]` in method [public admit() : QueryAdmitResponse](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R222) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 111,
@@ -565,6 +580,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type key : MultiKey to bitUUID : String in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [key : MultiKey](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL302) to [bitUUID : String](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR304) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 302,
@@ -643,6 +659,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type newDrillbitSet : Collection<DrillbitEndpoint> to activeEndpointsUUID : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [newDrillbitSet : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL276) to [activeEndpointsUUID : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR285) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 276,
@@ -757,6 +774,7 @@
 {
 	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private memoryInBytes : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Encapsulate Attribute** [private memoryInBytes : long](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL32) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 32,
@@ -790,6 +808,7 @@
 {
 	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private mode : PersistentStoreMode from class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"markup": "**Encapsulate Attribute** [private mode : PersistentStoreMode](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c9ef92b39214da991473e402a23b79cbbef8ce0a54710da589dcfa3e091ffce8L93) from class `org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
 		"startLine": 93,
@@ -823,6 +842,7 @@
 {
 	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private numVirtualCpu : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Encapsulate Attribute** [private numVirtualCpu : int](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL34) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 34,
@@ -856,6 +876,7 @@
 {
 	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private version : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Encapsulate Attribute** [private version : int](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL30) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 30,
@@ -889,6 +910,7 @@
 {
 	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute public id : String from class org.apache.drill.exec.coord.zk.ZKRegistrationHandle",
+	"markup": "**Encapsulate Attribute** [public id : String](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-e1b6574d01d54a82463cfd747731c24a44561e9869147a917884bb36a0c414a7L26) from class `org.apache.drill.exec.coord.zk.ZKRegistrationHandle`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKRegistrationHandle.java",
 		"startLine": 26,
@@ -922,6 +944,7 @@
 {
 	"type": "Extract Attribute",
 	"description": "Extract Attribute private CURRENT_VERSION : int in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Extract Attribute** [private CURRENT_VERSION : int](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR48) in class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 39,
@@ -955,6 +978,7 @@
 {
 	"type": "Extract Method",
 	"description": "Extract Method private reserveAndRunFragments() : void extracted from private startQueryProcessing() : void in class org.apache.drill.exec.work.foreman.Foreman",
+	"markup": "**Extract Method** [private reserveAndRunFragments() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eR508) extracted from [private startQueryProcessing() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eL476) in class `org.apache.drill.exec.work.foreman.Foreman`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
 		"startLine": 476,
@@ -1078,6 +1102,7 @@
 {
 	"type": "Extract Method",
 	"description": "Extract Method private startAdmittedQuery() : void extracted from private startQueryProcessing() : void in class org.apache.drill.exec.work.foreman.Foreman",
+	"markup": "**Extract Method** [private startAdmittedQuery() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eR500) extracted from [private startQueryProcessing() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-09bdc8c818b08648ae50b5bd29ffeffd6406b7dca55f76ac7bf936b44fd6101eL476) in class `org.apache.drill.exec.work.foreman.Foreman`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
 		"startLine": 476,
@@ -1165,6 +1190,7 @@
 {
 	"type": "Extract Method",
 	"description": "Extract Method public NodeResources(version int, memoryInBytes long, numVirtualCpu int) extracted from public NodeResources(memoryInBytes long, numVirtualCpu int) in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Extract Method** [public NodeResources(version int, memoryInBytes long, numVirtualCpu int)](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR54) extracted from [public NodeResources(memoryInBytes long, numVirtualCpu int)](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL36) in class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 36,
@@ -1261,6 +1287,7 @@
 {
 	"type": "Extract Method",
 	"description": "Extract Method public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint> extracted from public getAvailableEndpoints() : Collection<DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Extract Method** [public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR242) extracted from [public getAvailableEndpoints() : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL238) in class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 238,
@@ -1321,6 +1348,7 @@
 {
 	"type": "Extract Method",
 	"description": "Extract Method public mode(mode PersistentStoreMode) : StoreConfigBuilder<V> extracted from public blob() : StoreConfigBuilder<V> in class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"markup": "**Extract Method** [public mode(mode PersistentStoreMode) : StoreConfigBuilder<V>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c9ef92b39214da991473e402a23b79cbbef8ce0a54710da589dcfa3e091ffce8R106) extracted from [public blob() : StoreConfigBuilder<V>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c9ef92b39214da991473e402a23b79cbbef8ce0a54710da589dcfa3e091ffce8L111) in class `org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
 		"startLine": 111,
@@ -1399,6 +1427,7 @@
 {
 	"type": "Extract Method",
 	"description": "Extract Method public mode(mode PersistentStoreMode) : StoreConfigBuilder<V> extracted from public persist() : StoreConfigBuilder<V> in class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
+	"markup": "**Extract Method** [public mode(mode PersistentStoreMode) : StoreConfigBuilder<V>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c9ef92b39214da991473e402a23b79cbbef8ce0a54710da589dcfa3e091ffce8R106) extracted from [public persist() : StoreConfigBuilder<V>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c9ef92b39214da991473e402a23b79cbbef8ce0a54710da589dcfa3e091ffce8L106) in class `org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",
 		"startLine": 106,
@@ -1477,6 +1506,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable unregisteredBit : DrillbitEndpoint in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Extract Variable** [unregisteredBit : DrillbitEndpoint](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR306) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 304,
@@ -1510,6 +1540,7 @@
 {
 	"type": "Merge Variable",
 	"description": "Merge Variable [endpointAddress : String, endpointPort : int, endpoint : DrillbitEndpoint] to endpointToUUID : Map.Entry<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Merge Variable** `[endpointAddress : String, endpointPort : int, endpoint : DrillbitEndpoint]` to [endpointToUUID : Map.Entry<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR299) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL273) from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 294,
@@ -1570,6 +1601,7 @@
 {
 	"type": "Remove Attribute Modifier",
 	"description": "Remove Attribute Modifier final in attribute private memoryInBytes : long from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Remove Attribute Modifier** `final` in attribute [private memoryInBytes : long](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL32) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 32,
@@ -1594,6 +1626,7 @@
 {
 	"type": "Remove Attribute Modifier",
 	"description": "Remove Attribute Modifier final in attribute private numVirtualCpu : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Remove Attribute Modifier** `final` in attribute [private numVirtualCpu : int](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL34) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 34,
@@ -1618,6 +1651,7 @@
 {
 	"type": "Remove Class Modifier",
 	"description": "Remove Class Modifier static in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager",
+	"markup": "**Remove Class Modifier** `static` in class [org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L77)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 77,
@@ -1642,6 +1676,7 @@
 {
 	"type": "Remove Method Annotation",
 	"description": "Remove Method Annotation @Override in method public admit() : void from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Remove Method Annotation** [@Override](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L55) in method [public admit() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L55) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 55,
@@ -1675,6 +1710,7 @@
 {
 	"type": "Remove Method Annotation",
 	"description": "Remove Method Annotation @Override in method public admit() : void from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Remove Method Annotation** [@Override](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L84) in method [public admit() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L84) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 84,
@@ -1708,6 +1744,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute queryContext : QueryContext to context : QueryContext in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Rename Attribute** [queryContext : QueryContext](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L88) to [context : QueryContext](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R173) in class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 88,
@@ -1732,6 +1769,7 @@
 {
 	"type": "Rename Class",
 	"description": "Rename Class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager renamed to org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Rename Class** [org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L77) renamed to [org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R169)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 77,
@@ -1756,6 +1794,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable key : MultiKey to bitUUID : String in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Rename Variable** [key : MultiKey](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL302) to [bitUUID : String](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR304) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 302,
@@ -1834,6 +1873,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable newDrillbitSet : Collection<DrillbitEndpoint> to activeEndpointsUUID : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Rename Variable** [newDrillbitSet : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL276) to [activeEndpointsUUID : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR285) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 276,
@@ -1948,6 +1988,7 @@
 {
 	"type": "Replace Anonymous With Lambda",
 	"description": "Replace Anonymous With Lambda org.apache.drill.exec.coord.zk.ZKClusterCoordinator.updateEndpoints.newDrillbitSet.transform.new Function<ServiceInstance<DrillbitEndpoint>,DrillbitEndpoint> with ServiceInstance::getPayload in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Replace Anonymous With Lambda** [org.apache.drill.exec.coord.zk.ZKClusterCoordinator.updateEndpoints.newDrillbitSet.transform.new Function<ServiceInstance<DrillbitEndpoint>,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL278) with [ServiceInstance::getPayload](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR286) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL273) from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 278,
@@ -1990,6 +2031,7 @@
 {
 	"type": "Replace Generic With Diamond",
 	"description": "Replace Generic With Diamond ConcurrentHashMap<MultiKey,DrillbitEndpoint> with ConcurrentHashMap<> in attribute private endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint> from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Replace Generic With Diamond** [ConcurrentHashMap<MultiKey,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL78) with [ConcurrentHashMap<>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR77) in attribute [private endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/1db65a271ef6574e1dd240669dc816fcd17740fd?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR77) from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 78,

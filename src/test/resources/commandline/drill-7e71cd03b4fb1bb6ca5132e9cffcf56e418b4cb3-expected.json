@@ -7,6 +7,7 @@
 	"refactorings": [{
 	"type": "Add Attribute Modifier",
 	"description": "Add Attribute Modifier final in attribute private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Add Attribute Modifier** `final` in attribute [private queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L40) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 40,
@@ -31,6 +32,7 @@
 {
 	"type": "Add Attribute Modifier",
 	"description": "Add Attribute Modifier final in attribute private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Add Attribute Modifier** `final` in attribute [private queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R62) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 71,
@@ -55,6 +57,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Method Modifier** `static` in method [private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R97) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 211,
@@ -79,6 +82,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method private countBufferingOperators(nodeMap Map<String,Collection<PhysicalOperator>>) : int from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Method Modifier** `static` in method [private countBufferingOperators(nodeMap Map<String,Collection<PhysicalOperator>>) : int](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L125) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 125,
@@ -103,6 +107,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method private getBufferedOps(root FragmentRoot) : List<PhysicalOperator> from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Method Modifier** `static` in method [private getBufferedOps(root FragmentRoot) : List<PhysicalOperator>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L254) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 254,
@@ -127,6 +132,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Method Modifier** `static` in method [private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R123) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 134,
@@ -151,6 +157,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Method Modifier** `static` in method [public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R62) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 246,
@@ -175,6 +182,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Method Modifier** `static` in method [public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 94,
@@ -199,6 +207,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter queryContext : QueryContext in method private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Parameter** [queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R133) in method [private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R123) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 134,
@@ -232,6 +241,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter queryContext : QueryContext in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Parameter** [queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) in method [public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 94,
@@ -265,6 +275,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter rm : QueryResourceManager in method private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Parameter** [rm : QueryResourceManager](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R135) in method [private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R123) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 134,
@@ -298,6 +309,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter rm : QueryResourceManager in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Parameter** [rm : QueryResourceManager](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) in method [public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 94,
@@ -331,6 +343,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter work : QueryWorkUnit in method private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Add Parameter** [work : QueryWorkUnit](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R106) in method [private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R97) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 211,
@@ -364,6 +377,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier protected to private in attribute private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Change Attribute Access Modifier** `protected` to `private` in attribute [private queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R62) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 71,
@@ -388,6 +402,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier protected to private in attribute private queryCost : double from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Change Attribute Access Modifier** `protected` to `private` in attribute [private queryCost : double](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R63) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 74,
@@ -412,6 +427,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier protected to private in attribute private rm : ThrottledResourceManager from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Change Attribute Access Modifier** `protected` to `private` in attribute [private rm : ThrottledResourceManager](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R64) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 70,
@@ -436,6 +452,7 @@
 {
 	"type": "Change Class Access Modifier",
 	"description": "Change Class Access Modifier protected to public in class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities.BufferedOpFinder",
+	"markup": "**Change Class Access Modifier** `protected` to `public` in class [org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities.BufferedOpFinder](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R70)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 229,
@@ -460,6 +477,7 @@
 {
 	"type": "Change Method Access Modifier",
 	"description": "Change Method Access Modifier private to public in method public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Change Method Access Modifier** `private` to `public` in method [public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R62) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 246,
@@ -484,6 +502,7 @@
 {
 	"type": "Change Method Access Modifier",
 	"description": "Change Method Access Modifier private to public in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Change Method Access Modifier** `private` to `public` in method [public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 94,
@@ -508,6 +527,7 @@
 {
 	"type": "Change Method Access Modifier",
 	"description": "Change Method Access Modifier protected to public in method public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Change Method Access Modifier** `protected` to `public` in method [public queryMemoryPerNode() : long](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R89) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 306,
@@ -532,6 +552,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type defn : MinorFragmentDefn to defn : QueryWorkUnit.MinorFragmentDefn in method public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Change Parameter Type** [defn : MinorFragmentDefn](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L247) to [defn : QueryWorkUnit.MinorFragmentDefn](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R63) in method `public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void` from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 247,
@@ -592,6 +613,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type defn : MinorFragmentDefn to defn : QueryWorkUnit.MinorFragmentDefn in method private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Change Variable Type** [defn : MinorFragmentDefn](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L223) to [defn : QueryWorkUnit.MinorFragmentDefn](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R109) in method `private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>>` from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 223,
@@ -634,6 +656,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type entry : Entry<String,Collection<PhysicalOperator>> to entry : Map.Entry<String,Collection<PhysicalOperator>> in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Change Variable Type** [entry : Entry<String,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L116) to [entry : Map.Entry<String,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R57) in method `public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void` from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 116,
@@ -676,6 +699,7 @@
 {
 	"type": "Move And Rename Class",
 	"description": "Move And Rename Class org.apache.drill.exec.util.MemoryAllocationUtilities moved and renamed to org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities",
+	"markup": "**Move And Rename Class** [org.apache.drill.exec.util.MemoryAllocationUtilities](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-26170b326f654a40d1deee8f30c53cbe596ed7ac554b430dbb80510aa9062586L34) moved and renamed to [org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-692132c8a27e118bbd19f6015c47a26c597b588d6b14ec14c8cc85fe88c110f0R34)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/MemoryAllocationUtilities.java",
 		"startLine": 34,
@@ -700,6 +724,7 @@
 {
 	"type": "Move And Rename Class",
 	"description": "Move And Rename Class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator moved and renamed to org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Move And Rename Class** [org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L67) moved and renamed to [org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R40)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 67,
@@ -724,6 +749,7 @@
 {
 	"type": "Move Attribute",
 	"description": "Move Attribute private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultResourceAllocator to private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Move Attribute** [private queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L40) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultResourceAllocator` to [private queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6R38) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 40,
@@ -748,6 +774,7 @@
 {
 	"type": "Move Attribute",
 	"description": "Move Attribute protected queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Move Attribute** [protected queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L71) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator` to [private queryContext : QueryContext](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R62) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 71,
@@ -772,6 +799,7 @@
 {
 	"type": "Move Attribute",
 	"description": "Move Attribute protected queryCost : double from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private queryCost : double from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Move Attribute** [protected queryCost : double](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L74) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator` to [private queryCost : double](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R63) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 74,
@@ -796,6 +824,7 @@
 {
 	"type": "Move Attribute",
 	"description": "Move Attribute protected rm : ThrottledResourceManager from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private rm : ThrottledResourceManager from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Move Attribute** [protected rm : ThrottledResourceManager](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L70) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator` to [private rm : ThrottledResourceManager](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R64) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 70,
@@ -820,6 +849,7 @@
 {
 	"type": "Parameterize Variable",
 	"description": "Parameterize Variable nodeMap : Map<String,Collection<PhysicalOperator>> to nodeMap : Map<String,Collection<PhysicalOperator>> in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"markup": "**Parameterize Variable** [nodeMap : Map<String,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L102) to [nodeMap : Map<String,Collection<PhysicalOperator>>](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-9a5377e34dd599322a8d6aa036021e3cdb96371992e66bda900382c62cc505a0R43) in method `public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void` from class `org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 102,
@@ -880,6 +910,7 @@
 {
 	"type": "Remove Attribute Annotation",
 	"description": "Remove Attribute Annotation @SuppressWarnings(\"unused\") in attribute private rm : DefaultResourceManager from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Remove Attribute Annotation** [@SuppressWarnings(\"unused\")](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L65) in attribute [private rm : DefaultResourceManager](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L66) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 65,
@@ -913,6 +944,7 @@
 {
 	"type": "Remove Class Modifier",
 	"description": "Remove Class Modifier static in class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator",
+	"markup": "**Remove Class Modifier** `static` in class [org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L67)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 67,
@@ -937,6 +969,7 @@
 {
 	"type": "Remove Method Annotation",
 	"description": "Remove Method Annotation @Override in method protected queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Remove Method Annotation** [@Override](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L306) in method [protected queryMemoryPerNode() : long](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L306) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 306,
@@ -970,6 +1003,7 @@
 {
 	"type": "Rename Class",
 	"description": "Rename Class org.apache.drill.exec.planner.fragment.DefaultQueryParallelizer renamed to org.apache.drill.exec.planner.fragment.DefaultParallelizer",
+	"markup": "**Rename Class** [org.apache.drill.exec.planner.fragment.DefaultQueryParallelizer](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-d650da30fce55170c345b9f71e2b622410d87678cb497a0972fe0ba14fb8709bL30) renamed to [org.apache.drill.exec.planner.fragment.DefaultParallelizer](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-a207c1e4070dee097cbb09db34bcb60ba7e7b8bceb984473a0ff5c0542e41eeeR30)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DefaultQueryParallelizer.java",
 		"startLine": 30,
@@ -994,6 +1028,7 @@
 {
 	"type": "Rename Class",
 	"description": "Rename Class org.apache.drill.exec.planner.fragment.QueueQueryParallelizer renamed to org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Rename Class** [org.apache.drill.exec.planner.fragment.QueueQueryParallelizer](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-845a0da14187d0f1fbdddf2a66a8b5cccd2e598c0b48438c19bdfb0818475fa5L37) renamed to [org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer](https://github.com/apache/drill/commit/7e71cd03b4fb1bb6ca5132e9cffcf56e418b4cb3?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R37)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/QueueQueryParallelizer.java",
 		"startLine": 37,

@@ -7,6 +7,7 @@
 	"refactorings": [{
 	"type": "Add Class Modifier",
 	"description": "Add Class Modifier static in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Add Class Modifier** `static` in class [org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L169)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 169,
@@ -31,6 +32,7 @@
 {
 	"type": "Add Method Annotation",
 	"description": "Add Method Annotation @Override in method public updateState(newState QueryRMState) : void from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Add Method Annotation** [@Override](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6R116) in method [public updateState(newState QueryRMState) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L84) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 84,
@@ -64,6 +66,7 @@
 {
 	"type": "Add Method Annotation",
 	"description": "Add Method Annotation @Override in method public updateState(newState QueryRMState) : void from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Add Method Annotation** [@Override](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R369) in method [public updateState(newState QueryRMState) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L282) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 282,
@@ -97,6 +100,7 @@
 {
 	"type": "Add Method Annotation",
 	"description": "Add Method Annotation @Override in method public updateState(state QueryRMState) : void from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Add Method Annotation** [@Override](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5R163) in method [public updateState(state QueryRMState) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L133) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 133,
@@ -130,6 +134,7 @@
 {
 	"type": "Add Method Annotation",
 	"description": "Add Method Annotation @VisibleForTesting in method public getRmPoolTree() : ResourcePoolTree from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Add Method Annotation** [@VisibleForTesting](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R147) in method [public getRmPoolTree() : ResourcePoolTree](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L161) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 161,
@@ -163,6 +168,7 @@
 {
 	"type": "Add Method Modifier",
 	"description": "Add Method Modifier static in method private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String> from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Add Method Modifier** `static` in method [private getEndpoints(totalMinorFragments int, notIn Set<DrillbitEndpoint>) : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL163) from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 163,
@@ -187,6 +193,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter freeResources : boolean in method private acquireLockAndUpdate(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Add Parameter** [freeResources : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R417) in method [private acquireLockAndUpdate(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R415) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 297,
@@ -220,6 +227,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter freeResources : boolean in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Add Parameter** [freeResources : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R279) in method [private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R278) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 199,
@@ -253,6 +261,7 @@
 {
 	"type": "Add Parameter",
 	"description": "Add Parameter unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener",
+	"markup": "**Add Parameter** [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1R510) in method [public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1R509) from class `org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/fragment/FragmentExecutor.java",
 		"startLine": 509,
@@ -286,6 +295,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable UUIDtoEndpoints : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Add Variable Modifier** `final` in variable [UUIDtoEndpoints : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R233) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L234) from class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 236,
@@ -328,6 +338,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable config : DrillConfig in method public build() : ResourceManager from class org.apache.drill.exec.work.foreman.rm.ResourceManagerBuilder",
+	"markup": "**Add Variable Modifier** `final` in variable [config : DrillConfig](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-31dec8a749a93f20aa30156a3f57a60b6b0e3196a4457b682f4d6c38173994f9L64) in method [public build() : ResourceManager](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-31dec8a749a93f20aa30156a3f57a60b6b0e3196a4457b682f4d6c38173994f9L62) from class `org.apache.drill.exec.work.foreman.rm.ResourceManagerBuilder`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ResourceManagerBuilder.java",
 		"startLine": 64,
@@ -370,6 +381,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable coord : ClusterCoordinator in method public build() : ResourceManager from class org.apache.drill.exec.work.foreman.rm.ResourceManagerBuilder",
+	"markup": "**Add Variable Modifier** `final` in variable [coord : ClusterCoordinator](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-31dec8a749a93f20aa30156a3f57a60b6b0e3196a4457b682f4d6c38173994f9L63) in method [public build() : ResourceManager](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-31dec8a749a93f20aa30156a3f57a60b6b0e3196a4457b682f4d6c38173994f9L62) from class `org.apache.drill.exec.work.foreman.rm.ResourceManagerBuilder`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ResourceManagerBuilder.java",
 		"startLine": 63,
@@ -412,6 +424,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable ppr : PhysicalPlanReader in method private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void from class org.apache.drill.exec.pop.TestFragmentChecker",
+	"markup": "**Add Variable Modifier** `final` in variable [ppr : PhysicalPlanReader](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c2d57fa386d6978ca4d5baae056d5abc62fc74d2a8a0da0debf7a49662315089L54) in method [private print(fragmentFile String, bitCount int, expectedFragmentCount int) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c2d57fa386d6978ca4d5baae056d5abc62fc74d2a8a0da0debf7a49662315089L53) from class `org.apache.drill.exec.pop.TestFragmentChecker`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/pop/TestFragmentChecker.java",
 		"startLine": 54,
@@ -454,6 +467,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable queueConfig : QueryQueueConfig in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Add Variable Modifier** `final` in variable [queueConfig : QueryQueueConfig](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L115) in method [public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L73) from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 115,
@@ -496,6 +510,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable registeredBits : Map<DrillbitEndpoint,String> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Add Variable Modifier** `final` in variable [registeredBits : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR292) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL282) from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 294,
@@ -538,6 +553,7 @@
 {
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable unregisteredBits : Map<DrillbitEndpoint,String> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Add Variable Modifier** `final` in variable [unregisteredBits : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR290) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL282) from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 292,
@@ -580,6 +596,7 @@
 {
 	"type": "Change Attribute Access Modifier",
 	"description": "Change Attribute Access Modifier public to private in attribute private cpusPerNode : int from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Change Attribute Access Modifier** `public` to `private` in attribute [private cpusPerNode : int](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R77) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 68,
@@ -604,6 +621,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type bufferedOperators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to bufferedOperators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Attribute Type** [bufferedOperators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L49) to [bufferedOperators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R50) in class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 49,
@@ -628,6 +646,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type endpoints : Collection<DrillbitEndpoint> to endpointsMap : Map<String,DrillbitEndpoint> in class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Change Attribute Type** [endpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L90) to [endpointsMap : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R87) in class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 90,
@@ -652,6 +671,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint> to endpointsMap : Map<String,DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Change Attribute Type** [endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL77) to [endpointsMap : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR73) in class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 77,
@@ -676,6 +696,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type leafQueues : List<QueryQueueConfig> to leafQueues : Map<String,QueryQueueConfig> in class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Change Attribute Type** [leafQueues : List<QueryQueueConfig>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL64) to [leafQueues : Map<String,QueryQueueConfig>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR83) in class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 64,
@@ -700,6 +721,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type nodeResourceMap : Map<DrillbitEndpoint,NodeResources> to nodeResourceMap : Map<DrillNode,NodeResources> in class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Attribute Type** [nodeResourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL58) to [nodeResourceMap : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR58) in class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 58,
@@ -724,6 +746,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type operators : Map<DrillbitEndpoint,Map<PhysicalOperator,Long>> to operators : Map<DrillNode,Map<PhysicalOperator,Long>> in class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Attribute Type** [operators : Map<DrillbitEndpoint,Map<PhysicalOperator,Long>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L51) to [operators : Map<DrillNode,Map<PhysicalOperator,Long>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R52) in class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 51,
@@ -748,6 +771,7 @@
 {
 	"type": "Change Attribute Type",
 	"description": "Change Attribute Type waitQueueThread : WaitQueueThread to waitQueueThread : Thread in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Change Attribute Type** [waitQueueThread : WaitQueueThread](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L70) to [waitQueueThread : Thread](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R79) in class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 70,
@@ -772,6 +796,7 @@
 {
 	"type": "Change Class Access Modifier",
 	"description": "Change Class Access Modifier public to private in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.WaitQueueThread",
+	"markup": "**Change Class Access Modifier** `public` to `private` in class [org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.WaitQueueThread](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L311)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 311,
@@ -796,6 +821,7 @@
 {
 	"type": "Change Method Access Modifier",
 	"description": "Change Method Access Modifier public to private in method private addToWaitingQueue(queryRM QueryResourceManager) : void from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Change Method Access Modifier** `public` to `private` in method [private addToWaitingQueue(queryRM QueryResourceManager) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R206) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 142,
@@ -820,6 +846,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type endpoint : DrillbitEndpoint to endpoint : DrillNode in method public getBufferedOperators(endpoint DrillNode) : List<Pair<PhysicalOperator,Long>> from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Parameter Type** [endpoint : DrillbitEndpoint](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L118) to [endpoint : DrillNode](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R120) in method `public getBufferedOperators(endpoint DrillNode) : List<Pair<PhysicalOperator,Long>>` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 118,
@@ -862,6 +889,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type from : Map<DrillbitEndpoint,NodeResources> to from : Map<DrillNode,NodeResources> in method public merge(to Map<DrillNode,NodeResources>, from Map<DrillNode,NodeResources>) : Map<DrillNode,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [from : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL107) to [from : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR107) in method `public merge(to Map<DrillNode,NodeResources>, from Map<DrillNode,NodeResources>) : Map<DrillNode,NodeResources>` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 107,
@@ -904,6 +932,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type getMemory : Function<Entry<DrillbitEndpoint,Integer>,Long> to getMemory : Function<Entry<DrillNode,Integer>,Long> in method private merge(currFrag Wrapper, minorFragsPerDrillBit Map<DrillNode,Integer>, getMemory Function<Entry<DrillNode,Integer>,Long>) : void from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Parameter Type** [getMemory : Function<Entry<DrillbitEndpoint,Integer>,Long>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L71) to [getMemory : Function<Entry<DrillNode,Integer>,Long>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R72) in method `private merge(currFrag Wrapper, minorFragsPerDrillBit Map<DrillNode,Integer>, getMemory Function<Entry<DrillNode,Integer>,Long>) : void` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 71,
@@ -946,6 +975,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type leafQueues : Collection<QueryQueueConfig> to poolTree : ResourcePoolTree in method public RMConsistentBlobStoreManager(context DrillbitContext, poolTree ResourcePoolTree) from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Change Parameter Type** [leafQueues : Collection<QueryQueueConfig>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L86) to [poolTree : ResourcePoolTree](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R89) in method `public RMConsistentBlobStoreManager(context DrillbitContext, poolTree ResourcePoolTree)` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 86,
@@ -970,6 +1000,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type memoryPerOperator : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to memoryPerOperator : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [memoryPerOperator : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L164) to [memoryPerOperator : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R174) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 164,
@@ -1030,6 +1061,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type minorFragsPerDrillBit : Map<DrillbitEndpoint,Integer> to minorFragsPerDrillBit : Map<DrillNode,Integer> in method private merge(currFrag Wrapper, minorFragsPerDrillBit Map<DrillNode,Integer>, getMemory Function<Entry<DrillNode,Integer>,Long>) : void from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Parameter Type** [minorFragsPerDrillBit : Map<DrillbitEndpoint,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L70) to [minorFragsPerDrillBit : Map<DrillNode,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R71) in method `private merge(currFrag Wrapper, minorFragsPerDrillBit Map<DrillNode,Integer>, getMemory Function<Entry<DrillNode,Integer>,Long>) : void` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 70,
@@ -1072,6 +1104,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type nodeResourceMap : Map<DrillbitEndpoint,NodeResources> to nodeResourceMap : Map<DrillNode,NodeResources> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [nodeResourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L165) to [nodeResourceMap : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R175) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 165,
@@ -1132,6 +1165,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type nodeResourcesMap : Map<DrillbitEndpoint,NodeResources> to nodeResourcesMap : Map<DrillNode,NodeResources> in method private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [nodeResourcesMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L136) to [nodeResourcesMap : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R146) in method `private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 136,
@@ -1174,6 +1208,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type onlineEndpointUUIDs : Map<DrillbitEndpoint,String> to onlineDrillNodeUUIDs : Map<DrillNode,String> in method private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Parameter Type** [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L137) to [onlineDrillNodeUUIDs : Map<DrillNode,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R147) in method `private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 137,
@@ -1216,6 +1251,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredBits : Set<DrillbitEndpoint> to registeredBitsUUID : Map<DrillbitEndpoint,String> in method protected drillbitRegistered(registeredBitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.coord.ClusterCoordinator",
+	"markup": "**Change Parameter Type** [registeredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198L118) to [registeredBitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198R117) in method `protected drillbitRegistered(registeredBitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.coord.ClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/ClusterCoordinator.java",
 		"startLine": 118,
@@ -1258,6 +1294,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.DrillbitStatusListener",
+	"markup": "**Change Parameter Type** [registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bL40) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bR40) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/DrillbitStatusListener.java",
 		"startLine": 40,
@@ -1282,6 +1319,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener",
+	"markup": "**Change Parameter Type** [registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1L506) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1R506) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/fragment/FragmentExecutor.java",
 		"startLine": 506,
@@ -1306,6 +1344,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"markup": "**Change Parameter Type** [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L567) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2R564) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
 		"startLine": 567,
@@ -1330,6 +1369,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener",
+	"markup": "**Change Parameter Type** [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcL117) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcR116) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/test/java/org/apache/drill/yarn/zk/TestZkRegistry.java",
 		"startLine": 117,
@@ -1372,6 +1412,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.ZKRegistry",
+	"markup": "**Change Parameter Type** [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2L303) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2R304) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.ZKRegistry`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKRegistry.java",
 		"startLine": 303,
@@ -1414,6 +1455,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type resourceMap : Map<DrillbitEndpoint,NodeResources> to resourceMap : Map<DrillNode,NodeResources> in method private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillNode,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Parameter Type** [resourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL126) to [resourceMap : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR132) in method `private mockPlanningSet(planningSet PlanningSet, resourceMap Map<DrillNode,NodeResources>, endpoints List<DrillbitEndpoint>) : PlanningSet` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 126,
@@ -1456,6 +1498,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type resourceMap : Map<DrillbitEndpoint,NodeResources> to resourceMap : Map<DrillNode,NodeResources> in method private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillNode,NodeResources>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Parameter Type** [resourceMap : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL105) to [resourceMap : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR111) in method `private mockWrapper(rootFragment Wrapper, resourceMap Map<DrillNode,NodeResources>, endpoints List<DrillbitEndpoint>, originalToMockWrapper Map<Fragment,Wrapper>) : Wrapper` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 105,
@@ -1516,6 +1559,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillNode,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Change Parameter Type** [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL193) to [resources : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR199) in method `private preparePlanningSet(activeEndpoints List<DrillbitEndpoint>, slice_target long, resources Map<DrillNode,NodeResources>, sql String, parallelizer SimpleParallelizer) : PlanningSet` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 193,
@@ -1558,6 +1602,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type to : Map<DrillbitEndpoint,NodeResources> to to : Map<DrillNode,NodeResources> in method public merge(to Map<DrillNode,NodeResources>, from Map<DrillNode,NodeResources>) : Map<DrillNode,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Parameter Type** [to : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL106) to [to : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR106) in method `public merge(to Map<DrillNode,NodeResources>, from Map<DrillNode,NodeResources>) : Map<DrillNode,NodeResources>` from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 106,
@@ -1618,6 +1663,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type unregisteredBits : Set<DrillbitEndpoint> to unregisteredBitsUUID : Map<DrillbitEndpoint,String> in method protected drillbitUnregistered(unregisteredBitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.coord.ClusterCoordinator",
+	"markup": "**Change Parameter Type** [unregisteredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198L112) to [unregisteredBitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198R111) in method `protected drillbitUnregistered(unregisteredBitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.coord.ClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/ClusterCoordinator.java",
 		"startLine": 112,
@@ -1660,6 +1706,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.DrillbitStatusListener",
+	"markup": "**Change Parameter Type** [unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bL34) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bR34) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/DrillbitStatusListener.java",
 		"startLine": 34,
@@ -1684,6 +1731,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"markup": "**Change Parameter Type** [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L571) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2R568) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
 		"startLine": 571,
@@ -1726,6 +1774,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener",
+	"markup": "**Change Parameter Type** [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcL112) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcR111) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/test/java/org/apache/drill/yarn/zk/TestZkRegistry.java",
 		"startLine": 112,
@@ -1768,6 +1817,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.ZKRegistry",
+	"markup": "**Change Parameter Type** [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2L370) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2R371) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.ZKRegistry`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKRegistry.java",
 		"startLine": 370,
@@ -1810,6 +1860,7 @@
 {
 	"type": "Change Parameter Type",
 	"description": "Change Parameter Type waitInterval : int to waitInterval : Integer in method public WaitQueueThread(waitInterval Integer) from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.WaitQueueThread",
+	"markup": "**Change Parameter Type** [waitInterval : int](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L314) to [waitInterval : Integer](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R499) in method `public WaitQueueThread(waitInterval Integer)` from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.WaitQueueThread`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 314,
@@ -1852,6 +1903,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type Map<DrillbitEndpoint,Integer> to Map<DrillNode,Integer> in method private getMinorFragCountPerDrillbit(currFragment Wrapper) : Map<DrillNode,Integer> from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Return Type** [Map<DrillbitEndpoint,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L61) to [Map<DrillNode,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R62) in method [private getMinorFragCountPerDrillbit(currFragment Wrapper) : Map<DrillNode,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R62) from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 61,
@@ -1894,6 +1946,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Return Type** [Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L163) to [Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R173) in method [private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R166) from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 163,
@@ -1936,6 +1989,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type Map<DrillbitEndpoint,NodeResources> to Map<DrillNode,NodeResources> in method public getResourceMap() : Map<DrillNode,NodeResources> from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Return Type** [Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL236) to [Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR236) in method [public getResourceMap() : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR236) from class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 236,
@@ -1978,6 +2032,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type Map<DrillbitEndpoint,NodeResources> to Map<DrillNode,NodeResources> in method public merge(to Map<DrillNode,NodeResources>, from Map<DrillNode,NodeResources>) : Map<DrillNode,NodeResources> from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"markup": "**Change Return Type** [Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bL106) to [Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR106) in method [public merge(to Map<DrillNode,NodeResources>, from Map<DrillNode,NodeResources>) : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-fc895710a10fac24bf5202870cd825811d3c034d46a8f54fa286a1bbe5a7965bR106) from class `org.apache.drill.exec.resourcemgr.NodeResources`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
 		"startLine": 106,
@@ -2020,6 +2075,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to String in method private acquireLockAndUpdate(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L297) to [String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R415) in method [private acquireLockAndUpdate(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R415) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 297,
@@ -2062,6 +2118,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to String in method private freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L156) to [String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R225) in method [private freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R225) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 156,
@@ -2104,6 +2161,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to String in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L199) to [String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R278) in method [private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R278) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 199,
@@ -2146,6 +2204,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to String in method public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMBlobStoreManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41L37) to [String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41R37) in method [public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41R37) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMBlobStoreManager.java",
 		"startLine": 37,
@@ -2188,6 +2247,7 @@
 {
 	"type": "Change Return Type",
 	"description": "Change Return Type void to String in method public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Change Return Type** [void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L193) to [String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R189) in method [public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R188) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 193,
@@ -2230,6 +2290,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type allDrillbits : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to allDrillbits : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [allDrillbits : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L194) to [allDrillbits : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R204) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 194,
@@ -2308,6 +2369,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type bufferedOperatorsPerDrillbit : Map<DrillbitEndpoint,Pair<PhysicalOperator,Long>> to bufferedOperatorsPerDrillbit : Map<DrillNode,Pair<PhysicalOperator,Long>> in method public visitOp(op PhysicalOperator, fragment Wrapper) : Void from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Variable Type** [bufferedOperatorsPerDrillbit : Map<DrillbitEndpoint,Pair<PhysicalOperator,Long>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L134) to [bufferedOperatorsPerDrillbit : Map<DrillNode,Pair<PhysicalOperator,Long>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R136) in method `public visitOp(op PhysicalOperator, fragment Wrapper) : Void` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 134,
@@ -2350,6 +2412,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type cpuPerEndpoint : Function<DrillbitEndpoint,NodeResources> to cpuPerEndpoint : Function<DrillNode,NodeResources> in method public computeCpuResources() : void from class org.apache.drill.exec.planner.fragment.Wrapper",
+	"markup": "**Change Variable Type** [cpuPerEndpoint : Function<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eL228) to [cpuPerEndpoint : Function<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-d45a944a76355ebea1ddecce843b805a81074add2825021749a26bf769c9c51eR228) in method `public computeCpuResources() : void` from class `org.apache.drill.exec.planner.fragment.Wrapper`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Wrapper.java",
 		"startLine": 228,
@@ -2392,6 +2455,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type drillbitEndpointMinorFragMap : Map<DrillbitEndpoint,Integer> to drillbitEndpointMinorFragMap : Map<DrillNode,Integer> in method public visitOp(op PhysicalOperator, fragment Wrapper) : Void from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Variable Type** [drillbitEndpointMinorFragMap : Map<DrillbitEndpoint,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L131) to [drillbitEndpointMinorFragMap : Map<DrillNode,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R133) in method `public visitOp(op PhysicalOperator, fragment Wrapper) : Void` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 131,
@@ -2452,6 +2516,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type memoryAdjustedDrillbits : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to memoryAdjustedDrillbits : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [memoryAdjustedDrillbits : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L178) to [memoryAdjustedDrillbits : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R188) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 178,
@@ -2530,6 +2595,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type memoryAdjustedOperators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to memoryAdjustedOperators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [memoryAdjustedOperators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L123) to [memoryAdjustedOperators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R133) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 123,
@@ -2572,6 +2638,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type newDrillbitSet : Collection<DrillbitEndpoint> to UUIDtoEndpoints : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [newDrillbitSet : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L236) to [UUIDtoEndpoints : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R233) in method `private updateEndpoints() : void` from class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 236,
@@ -2704,6 +2771,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type nodeResource : Map.Entry<DrillbitEndpoint,NodeResources> to nodeResource : Map.Entry<DrillNode,NodeResources> in method private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [nodeResource : Map.Entry<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L139) to [nodeResource : Map.Entry<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R149) in method `private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 139,
@@ -2746,6 +2814,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type onlyMemoryAboveLimitOperators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to onlyMemoryAboveLimitOperators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [onlyMemoryAboveLimitOperators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L167) to [onlyMemoryAboveLimitOperators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R177) in method `private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 167,
@@ -2824,6 +2893,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type operators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>> to operators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [operators : Map<DrillbitEndpoint,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L99) to [operators : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R109) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 99,
@@ -2884,6 +2954,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type queryId : UserBitShared.QueryId to queryIdString : String in method public reserveResources() : boolean from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Change Variable Type** [queryId : UserBitShared.QueryId](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L248) to [queryIdString : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R241) in method `public reserveResources() : boolean` from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 248,
@@ -2926,6 +2997,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type registeredBits : Set<DrillbitEndpoint> to registeredBits : Map<DrillbitEndpoint,String> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [registeredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL294) to [registeredBits : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR292) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 294,
@@ -2986,6 +3058,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type registeredBits : Set<DrillbitEndpoint> to registeredBits : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [registeredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L251) to [registeredBits : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R243) in method `private updateEndpoints() : void` from class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 251,
@@ -3064,6 +3137,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type sendingFragsPerDrillBit : Map<DrillbitEndpoint,Integer> to sendingFragsPerDrillBit : Map<DrillNode,Integer> in method public visitReceivingExchange(exchange Exchange, fragment Wrapper) : Void from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Change Variable Type** [sendingFragsPerDrillBit : Map<DrillbitEndpoint,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35L95) to [sendingFragsPerDrillBit : Map<DrillNode,Integer>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R96) in method `public visitReceivingExchange(exchange Exchange, fragment Wrapper) : Void` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 95,
@@ -3160,6 +3234,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type totalNodeResources : Map<DrillbitEndpoint,NodeResources> to totalNodeResources : Map<DrillNode,NodeResources> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Change Variable Type** [totalNodeResources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L94) to [totalNodeResources : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R104) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 94,
@@ -3256,6 +3331,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type unregisteredBits : Set<DrillbitEndpoint> to unregisteredBits : Map<DrillbitEndpoint,String> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [unregisteredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL292) to [unregisteredBits : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR290) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 292,
@@ -3316,6 +3392,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type unregisteredBits : Set<DrillbitEndpoint> to unregisteredBits : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Change Variable Type** [unregisteredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L247) to [unregisteredBits : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R237) in method `private updateEndpoints() : void` from class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 247,
@@ -3394,6 +3471,7 @@
 {
 	"type": "Change Variable Type",
 	"description": "Change Variable Type unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to unregisteredDrillbits : Set<DrillbitEndpoint> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener",
+	"markup": "**Change Variable Type** [unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1L510) to [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1R513) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/fragment/FragmentExecutor.java",
 		"startLine": 510,
@@ -3436,6 +3514,7 @@
 {
 	"type": "Encapsulate Attribute",
 	"description": "Encapsulate Attribute private currentState : QueryRMState from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Encapsulate Attribute** [private currentState : QueryRMState](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L177) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 177,
@@ -3469,6 +3548,7 @@
 {
 	"type": "Extract Attribute",
 	"description": "Extract Attribute private nodeResourceShare : NodeResources in class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Extract Attribute** [private nodeResourceShare : NodeResources](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR69) in class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 90,
@@ -3538,6 +3618,7 @@
 {
 	"type": "Extract Fixture",
 	"description": "Extract Fixture public setupForAllTests() : void extracted from public TestSingleMajorFragmentWithGroupByProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Extract Fixture** [public setupForAllTests() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR205) extracted from [public TestSingleMajorFragmentWithGroupByProjectAndScan() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL214) in class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 214,
@@ -3580,6 +3661,7 @@
 {
 	"type": "Extract Fixture",
 	"description": "Extract Fixture public setupForAllTests() : void extracted from public TestSingleMajorFragmentWithProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Extract Fixture** [public setupForAllTests() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR205) extracted from [public TestSingleMajorFragmentWithProjectAndScan() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL199) in class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 199,
@@ -3622,6 +3704,7 @@
 {
 	"type": "Extract Fixture",
 	"description": "Extract Fixture public setupForAllTests() : void extracted from public TestTwoMajorFragmentWithSortyProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Extract Fixture** [public setupForAllTests() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR205) extracted from [public TestTwoMajorFragmentWithSortyProjectAndScan() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL229) in class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 229,
@@ -3664,6 +3747,7 @@
 {
 	"type": "Extract Fixture",
 	"description": "Extract Fixture public setupForEachTest() : void extracted from public TestSingleMajorFragmentWithGroupByProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Extract Fixture** [public setupForEachTest() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR210) extracted from [public TestSingleMajorFragmentWithGroupByProjectAndScan() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL214) in class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 214,
@@ -3742,6 +3826,7 @@
 {
 	"type": "Extract Fixture",
 	"description": "Extract Fixture public setupForEachTest() : void extracted from public TestSingleMajorFragmentWithProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Extract Fixture** [public setupForEachTest() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR210) extracted from [public TestSingleMajorFragmentWithProjectAndScan() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL199) in class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 199,
@@ -3820,6 +3905,7 @@
 {
 	"type": "Extract Fixture",
 	"description": "Extract Fixture public setupForEachTest() : void extracted from public TestTwoMajorFragmentWithSortyProjectAndScan() : void in class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Extract Fixture** [public setupForEachTest() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR210) extracted from [public TestTwoMajorFragmentWithSortyProjectAndScan() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL229) in class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 229,
@@ -3898,6 +3984,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable drillEndpointNode : DrillNode in method public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Extract Variable** [drillEndpointNode : DrillNode](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R66) in method `public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 65,
@@ -3931,6 +4018,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable drillEndpointNode : DrillNode in method public visitReceivingExchange(exchange Exchange, fragment Wrapper) : Void from class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"markup": "**Extract Variable** [drillEndpointNode : DrillNode](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-00f9c481b026147eb007aded73a878e57d439fc1f66845aed128159d83f9bd35R103) in method `public visitReceivingExchange(exchange Exchange, fragment Wrapper) : Void` from class `org.apache.drill.exec.planner.fragment.MemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 102,
@@ -3982,6 +4070,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable foreman1Resource : NodeResources in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Extract Variable** [foreman1Resource : NodeResources](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR124) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 100,
@@ -4033,6 +4122,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable foreman2Resource : NodeResources in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Extract Variable** [foreman2Resource : NodeResources](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR130) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 104,
@@ -4084,6 +4174,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable foreman3Resource : NodeResources in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Extract Variable** [foreman3Resource : NodeResources](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR136) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 108,
@@ -4135,6 +4226,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable logString : String in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Extract Variable** [logString : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R309) in method `private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 250,
@@ -4168,6 +4260,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable onlineDrillNodeUUIDs : Map<DrillNode,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Extract Variable** [onlineDrillNodeUUIDs : Map<DrillNode,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R100) in method `public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 94,
@@ -4237,6 +4330,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable queryIdString : String in method public selectQueue(allPools List<ResourcePool>, queryContext QueryContext, maxResourcePerNode NodeResources) : ResourcePool from class org.apache.drill.exec.resourcemgr.config.selectionpolicy.BestFitQueueSelection",
+	"markup": "**Extract Variable** [queryIdString : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-7b7746314a976c86f11b6811010766144f16a94c9e9a1a62f3a3cab0aa5e99b4R74) in method `public selectQueue(allPools List<ResourcePool>, queryContext QueryContext, maxResourcePerNode NodeResources) : ResourcePool` from class `org.apache.drill.exec.resourcemgr.config.selectionpolicy.BestFitQueueSelection`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/BestFitQueueSelection.java",
 		"startLine": 74,
@@ -4288,6 +4382,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable queryIdString : String in method public selectQueue(allPools List<ResourcePool>, queryContext QueryContext, maxResourcePerNode NodeResources) : ResourcePool from class org.apache.drill.exec.resourcemgr.config.selectionpolicy.DefaultQueueSelection",
+	"markup": "**Extract Variable** [queryIdString : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-51519f1e427361ac40126af3452f1a5d15d36e3486529109b5f7346eb2e856b1R43) in method `public selectQueue(allPools List<ResourcePool>, queryContext QueryContext, maxResourcePerNode NodeResources) : ResourcePool` from class `org.apache.drill.exec.resourcemgr.config.selectionpolicy.DefaultQueueSelection`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/DefaultQueueSelection.java",
 		"startLine": 44,
@@ -4339,6 +4434,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable queryIdString : String in method public selectQueue(allPools List<ResourcePool>, queryContext QueryContext, maxResourcePerNode NodeResources) : ResourcePool from class org.apache.drill.exec.resourcemgr.config.selectionpolicy.RandomQueueSelection",
+	"markup": "**Extract Variable** [queryIdString : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-71265972722fb2f6eebf163a63c3f882551a44b419e43777641bb90f7377a7d5R43) in method `public selectQueue(allPools List<ResourcePool>, queryContext QueryContext, maxResourcePerNode NodeResources) : ResourcePool` from class `org.apache.drill.exec.resourcemgr.config.selectionpolicy.RandomQueueSelection`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/RandomQueueSelection.java",
 		"startLine": 48,
@@ -4372,6 +4468,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable queueLeaders : Map<String,String> in method private initializeBlobs(leafQueues Collection<QueryQueueConfig>) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Extract Variable** [queueLeaders : Map<String,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R155) in method `private initializeBlobs(leafQueues Collection<QueryQueueConfig>) : void` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 151,
@@ -4405,6 +4502,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable resourcesMap : Map<String,NodeResources> in method public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Extract Variable** [resourcesMap : Map<String,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R192) in method `public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 196,
@@ -4438,6 +4536,7 @@
 {
 	"type": "Extract Variable",
 	"description": "Extract Variable unregisteredNode : DrillNode in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Extract Variable** [unregisteredNode : DrillNode](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR310) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 310,
@@ -4489,6 +4588,7 @@
 {
 	"type": "Inline Variable",
 	"description": "Inline Variable resourcesMap : Map<String,NodeResources> in method public reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Inline Variable** [resourcesMap : Map<String,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L183) in method `public reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 183,
@@ -4522,6 +4622,7 @@
 {
 	"type": "Localize Parameter",
 	"description": "Localize Parameter unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to unregisteredDrillbits : Set<DrillbitEndpoint> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener",
+	"markup": "**Localize Parameter** [unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1L510) to [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1R513) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/fragment/FragmentExecutor.java",
 		"startLine": 510,
@@ -4564,6 +4665,7 @@
 {
 	"type": "Move Code",
 	"description": "Move Code from public testRMStateBlobSerDe() : void to public testSetup() : void in class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Move Code** from [public testRMStateBlobSerDe() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL132) to [public testSetup() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR91) in class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 132,
@@ -4750,6 +4852,7 @@
 {
 	"type": "Remove Class Annotation",
 	"description": "Remove Class Annotation @Ignore(\"These tests will be ignored until integration with new DistributedResourceManager is done\") in class org.apache.drill.exec.resourcemgr.TestRMConfigLoad",
+	"markup": "**Remove Class Annotation** [@Ignore(\"These tests will be ignored until integration with new DistributedResourceManager is done\")](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-4ac588da73320fe435e80e52ecdef3a3f30bc4343dcef983d8c69e5024de2223L41) in class [org.apache.drill.exec.resourcemgr.TestRMConfigLoad](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-4ac588da73320fe435e80e52ecdef3a3f30bc4343dcef983d8c69e5024de2223L41)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/TestRMConfigLoad.java",
 		"startLine": 41,
@@ -4783,6 +4886,7 @@
 {
 	"type": "Remove Class Modifier",
 	"description": "Remove Class Modifier static in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.WaitQueueThread",
+	"markup": "**Remove Class Modifier** `static` in class [org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.WaitQueueThread](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L311)",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 311,
@@ -4807,6 +4911,7 @@
 {
 	"type": "Remove Method Annotation",
 	"description": "Remove Method Annotation @Override in method public addToWaitingQueue(queryRM QueryResourceManager) : void from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Remove Method Annotation** [@Override](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L142) in method [public addToWaitingQueue(queryRM QueryResourceManager) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L142) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 142,
@@ -4840,6 +4945,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter queryId : UserBitShared.QueryId in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Remove Parameter** [queryId : UserBitShared.QueryId](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L70) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L70) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 70,
@@ -4873,6 +4979,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter queryId : UserBitShared.QueryId in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Remove Parameter** [queryId : UserBitShared.QueryId](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L248) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L248) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 248,
@@ -4906,6 +5013,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter queryId : UserBitShared.QueryId in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.QueryResourceManager",
+	"markup": "**Remove Parameter** [queryId : UserBitShared.QueryId](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252L123) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252L120) from class `org.apache.drill.exec.work.foreman.rm.QueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
 		"startLine": 123,
@@ -4939,6 +5047,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter queryId : UserBitShared.QueryId in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Remove Parameter** [queryId : UserBitShared.QueryId](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L118) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L117) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 118,
@@ -4972,6 +5081,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter selectedQueue : QueryQueueConfig in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
+	"markup": "**Remove Parameter** [selectedQueue : QueryQueueConfig](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L70) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3b65e929444146f843ceebdec972cce2c9913347794789363f2696e3cc1dcc6L70) from class `org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DefaultResourceManager.java",
 		"startLine": 70,
@@ -5005,6 +5115,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter selectedQueue : QueryQueueConfig in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Remove Parameter** [selectedQueue : QueryQueueConfig](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L248) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L248) from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 248,
@@ -5038,6 +5149,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter selectedQueue : QueryQueueConfig in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.QueryResourceManager",
+	"markup": "**Remove Parameter** [selectedQueue : QueryQueueConfig](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252L123) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-f9ea8107e62cfebc9b4808fd9f2a8561db4bed7108e3878a9d5d107caa00d252L120) from class `org.apache.drill.exec.work.foreman.rm.QueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/QueryResourceManager.java",
 		"startLine": 123,
@@ -5071,6 +5183,7 @@
 {
 	"type": "Remove Parameter",
 	"description": "Remove Parameter selectedQueue : QueryQueueConfig in method public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager",
+	"markup": "**Remove Parameter** [selectedQueue : QueryQueueConfig](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L118) in method [public reserveResources(selectedQueue QueryQueueConfig, queryId UserBitShared.QueryId) : boolean](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-757799b242dc91e5e44026cc1fb85c16e098080d08736074950b5c53e5c942c5L117) from class `org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedQueryResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
 		"startLine": 118,
@@ -5104,6 +5217,7 @@
 {
 	"type": "Remove Parameter Modifier",
 	"description": "Remove Parameter Modifier final in parameter registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> in method public drillbitRegistered(registeredDrillbits Set<CoordinationProtos.DrillbitEndpoint>) : void from class org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener",
+	"markup": "**Remove Parameter Modifier** `final` in parameter [registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1L506) in method [public drillbitRegistered(registeredDrillbits Set<CoordinationProtos.DrillbitEndpoint>) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1L505) from class `org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/fragment/FragmentExecutor.java",
 		"startLine": 506,
@@ -5146,6 +5260,7 @@
 {
 	"type": "Remove Parameter Modifier",
 	"description": "Remove Parameter Modifier final in parameter registeredDrillbits : Set<DrillbitEndpoint> in method public drillbitRegistered(registeredDrillbits Set<DrillbitEndpoint>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"markup": "**Remove Parameter Modifier** `final` in parameter [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L567) in method [public drillbitRegistered(registeredDrillbits Set<DrillbitEndpoint>) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L566) from class `org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
 		"startLine": 567,
@@ -5188,6 +5303,7 @@
 {
 	"type": "Remove Parameter Modifier",
 	"description": "Remove Parameter Modifier final in parameter unregisteredDrillbits : Set<DrillbitEndpoint> in method public drillbitUnregistered(unregisteredDrillbits Set<DrillbitEndpoint>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"markup": "**Remove Parameter Modifier** `final` in parameter [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L571) in method [public drillbitUnregistered(unregisteredDrillbits Set<DrillbitEndpoint>) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L570) from class `org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
 		"startLine": 571,
@@ -5230,6 +5346,7 @@
 {
 	"type": "Remove Variable Modifier",
 	"description": "Remove Variable Modifier final in variable currentQueueLeader : String in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Remove Variable Modifier** `final` in variable [currentQueueLeader : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L224) in method [private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L199) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 224,
@@ -5272,6 +5389,7 @@
 {
 	"type": "Remove Variable Modifier",
 	"description": "Remove Variable Modifier final in variable currentState : NodeResources in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Remove Variable Modifier** `final` in variable [currentState : NodeResources](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L265) in method [private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L199) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 265,
@@ -5314,6 +5432,7 @@
 {
 	"type": "Remove Variable Modifier",
 	"description": "Remove Variable Modifier final in variable currentUsage : ForemanResourceUsage in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Remove Variable Modifier** `final` in variable [currentUsage : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L240) in method [private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanNode String) : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L199) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 240,
@@ -5356,6 +5475,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute context : QueryContext to queryContext : QueryContext in class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Rename Attribute** [context : QueryContext](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L173) to [queryContext : QueryContext](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R235) in class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 173,
@@ -5380,6 +5500,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute endpoints : Collection<DrillbitEndpoint> to endpointsMap : Map<String,DrillbitEndpoint> in class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Rename Attribute** [endpoints : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L90) to [endpointsMap : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R87) in class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 90,
@@ -5404,6 +5525,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method private acquireLockAndUpdate(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L298) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R417) in method `private acquireLockAndUpdate(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 298,
@@ -5446,6 +5568,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method private freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L157) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R226) in method `private freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String` from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 157,
@@ -5470,6 +5593,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method private reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : void from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L152) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R219) in method `private reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : void` from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 152,
@@ -5494,6 +5618,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L200) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R279) in method `private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 200,
@@ -5572,6 +5697,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMBlobStoreManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41L38) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41R38) in method `public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMBlobStoreManager.java",
 		"startLine": 38,
@@ -5596,6 +5722,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L195) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R191) in method `public freeResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : String` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 195,
@@ -5638,6 +5765,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method public reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMBlobStoreManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41L35) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-685250a7b47a54ef1414f9bad4026b802a00f94e53af0131bc44b5b39ff9bb41R35) in method `public reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : void` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMBlobStoreManager.java",
 		"startLine": 35,
@@ -5662,6 +5790,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter foremanNode : String to foremanUUID : String in method public reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : void from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Rename Parameter** [foremanNode : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L180) to [foremanUUID : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R184) in method `public reserveResources(queryResourceAssignment Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String) : void` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 180,
@@ -5704,6 +5833,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter leafQueues : Collection<QueryQueueConfig> to poolTree : ResourcePoolTree in method public RMConsistentBlobStoreManager(context DrillbitContext, poolTree ResourcePoolTree) from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Rename Parameter** [leafQueues : Collection<QueryQueueConfig>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L86) to [poolTree : ResourcePoolTree](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R89) in method `public RMConsistentBlobStoreManager(context DrillbitContext, poolTree ResourcePoolTree)` from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 86,
@@ -5728,6 +5858,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter onlineEndpointUUIDs : Map<DrillbitEndpoint,String> to onlineDrillNodeUUIDs : Map<DrillNode,String> in method private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"markup": "**Rename Parameter** [onlineEndpointUUIDs : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731L137) to [onlineDrillNodeUUIDs : Map<DrillNode,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-6e8ac95357904182f048108444573551c6e46c01918762220dd755315af28731R147) in method `private convertToUUID(nodeResourcesMap Map<DrillNode,NodeResources>, onlineDrillNodeUUIDs Map<DrillNode,String>) : Map<String,NodeResources>` from class `org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 137,
@@ -5770,6 +5901,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredBits : Set<DrillbitEndpoint> to registeredBitsUUID : Map<DrillbitEndpoint,String> in method protected drillbitRegistered(registeredBitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.coord.ClusterCoordinator",
+	"markup": "**Rename Parameter** [registeredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198L118) to [registeredBitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198R117) in method `protected drillbitRegistered(registeredBitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.coord.ClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/ClusterCoordinator.java",
 		"startLine": 118,
@@ -5812,6 +5944,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.DrillbitStatusListener",
+	"markup": "**Rename Parameter** [registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bL40) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bR40) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/DrillbitStatusListener.java",
 		"startLine": 40,
@@ -5836,6 +5969,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener",
+	"markup": "**Rename Parameter** [registeredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1L506) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9d0c1f0c24eb9beeca1d0ae24759b7901211bb76df87d19f59266e8af84a65a1R506) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.fragment.FragmentExecutor.FragmentDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/fragment/FragmentExecutor.java",
 		"startLine": 506,
@@ -5860,6 +5994,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"markup": "**Rename Parameter** [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L567) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2R564) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
 		"startLine": 567,
@@ -5884,6 +6019,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener",
+	"markup": "**Rename Parameter** [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcL117) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcR116) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/test/java/org/apache/drill/yarn/zk/TestZkRegistry.java",
 		"startLine": 117,
@@ -5926,6 +6062,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter registeredDrillbits : Set<DrillbitEndpoint> to registeredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.ZKRegistry",
+	"markup": "**Rename Parameter** [registeredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2L303) to [registeredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2R304) in method `public drillbitRegistered(registeredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.ZKRegistry`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKRegistry.java",
 		"startLine": 303,
@@ -5968,6 +6105,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter unregisteredBits : Set<DrillbitEndpoint> to unregisteredBitsUUID : Map<DrillbitEndpoint,String> in method protected drillbitUnregistered(unregisteredBitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.coord.ClusterCoordinator",
+	"markup": "**Rename Parameter** [unregisteredBits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198L112) to [unregisteredBitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-40d6aa0a4e62023bd21bd8bd3474a38d8b85bdda1360e4851458bd644fff9198R111) in method `protected drillbitUnregistered(unregisteredBitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.coord.ClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/ClusterCoordinator.java",
 		"startLine": 112,
@@ -6010,6 +6148,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.DrillbitStatusListener",
+	"markup": "**Rename Parameter** [unregisteredDrillbits : Set<CoordinationProtos.DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bL34) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-dbd5a17161d19ec6057f78872fa7d702bbc420efcd9387432335ec465888067bR34) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/DrillbitStatusListener.java",
 		"startLine": 34,
@@ -6034,6 +6173,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener",
+	"markup": "**Rename Parameter** [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2L571) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-3c3c43ac5e320038bdc99a639f161357aab3b69c9068b91e41213e113dd59ed2R568) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.exec.work.foreman.QueryManager.drillbitStatusListener.new DrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/QueryManager.java",
 		"startLine": 571,
@@ -6076,6 +6216,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener",
+	"markup": "**Rename Parameter** [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcL112) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a42534961730c4bc49930a6e65032ebb1057217b808e6b2e51491023d7dfe2fcR111) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.TestZkRegistry.TestDrillbitStatusListener`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/test/java/org/apache/drill/yarn/zk/TestZkRegistry.java",
 		"startLine": 112,
@@ -6118,6 +6259,7 @@
 {
 	"type": "Rename Parameter",
 	"description": "Rename Parameter unregisteredDrillbits : Set<DrillbitEndpoint> to unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String> in method public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void from class org.apache.drill.yarn.zk.ZKRegistry",
+	"markup": "**Rename Parameter** [unregisteredDrillbits : Set<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2L370) to [unregisteredDrillbitsUUID : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-1e8273a42504c40bea342683d39e92527aa5240c6df804d2f91ab90375024ad2R371) in method `public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void` from class `org.apache.drill.yarn.zk.ZKRegistry`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKRegistry.java",
 		"startLine": 370,
@@ -6160,6 +6302,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable activeEndpointsUUID : Map<String,DrillbitEndpoint> to UUIDtoEndpoints : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Rename Variable** [activeEndpointsUUID : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL285) to [UUIDtoEndpoints : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR283) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 285,
@@ -6292,6 +6435,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable endpointToUUID : Map.Entry<String,DrillbitEndpoint> to endpoint : Map.Entry<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Rename Variable** [endpointToUUID : Map.Entry<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL299) to [endpoint : Map.Entry<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR297) in method `private updateEndpoints() : void` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 299,
@@ -6352,6 +6496,7 @@
 {
 	"type": "Rename Variable",
 	"description": "Rename Variable newDrillbitSet : Collection<DrillbitEndpoint> to UUIDtoEndpoints : Map<String,DrillbitEndpoint> in method private updateEndpoints() : void from class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Rename Variable** [newDrillbitSet : Collection<DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L236) to [UUIDtoEndpoints : Map<String,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R233) in method `private updateEndpoints() : void` from class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 236,
@@ -6484,6 +6629,7 @@
 {
 	"type": "Replace Anonymous With Lambda",
 	"description": "Replace Anonymous With Lambda org.apache.drill.yarn.zk.ZKClusterCoordinator.updateEndpoints.newDrillbitSet.transform.new Function<ServiceInstance<DrillbitEndpoint>,DrillbitEndpoint> with ServiceInstance::getPayload in method private updateEndpoints() : void from class org.apache.drill.yarn.zk.ZKClusterCoordinator",
+	"markup": "**Replace Anonymous With Lambda** [org.apache.drill.yarn.zk.ZKClusterCoordinator.updateEndpoints.newDrillbitSet.transform.new Function<ServiceInstance<DrillbitEndpoint>,DrillbitEndpoint>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L238) with [ServiceInstance::getPayload](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9R234) in method [private updateEndpoints() : void](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-a5ae66217fa5171f5fa14a714de7dd1b421dff87c472c7d95ecab550411d11e9L234) from class `org.apache.drill.yarn.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "drill-yarn/src/main/java/org/apache/drill/yarn/zk/ZKClusterCoordinator.java",
 		"startLine": 238,
@@ -6526,6 +6672,7 @@
 {
 	"type": "Replace Attribute With Variable",
 	"description": "Replace Attribute With Variable endpoint : DrillbitEndpoint to endpoint : DrillbitEndpoint in method public update(handle RegistrationHandle, state State) : RegistrationHandle from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"markup": "**Replace Attribute With Variable** [endpoint : DrillbitEndpoint](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeL74) to [endpoint : DrillbitEndpoint](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c3e9ac9a2e8db9ac5b0c8b8d39fdc4e91080eb50982f52dca52467542ba8e9eeR219) in method `public update(handle RegistrationHandle, state State) : RegistrationHandle` from class `org.apache.drill.exec.coord.zk.ZKClusterCoordinator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 74,
@@ -6586,6 +6733,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute blobsToSerialize : Map<String,RMStateBlob> to blobsToSerialize : Map<String,RMStateBlob> in method public testRMStateBlobSerDe() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Replace Variable With Attribute** [blobsToSerialize : Map<String,RMStateBlob>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL141) to [blobsToSerialize : Map<String,RMStateBlob>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR87) in method `public testRMStateBlobSerDe() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 141,
@@ -6646,6 +6794,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute drillUUID : List<String> to drillUUID : List<String> in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Replace Variable With Attribute** [drillUUID : List<String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL84) to [drillUUID : List<String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR85) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 84,
@@ -6994,6 +7143,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute foreman1 : ForemanResourceUsage to foreman1RsrcUsage : ForemanResourceUsage in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Replace Variable With Attribute** [foreman1 : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL112) to [foreman1RsrcUsage : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR77) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 112,
@@ -7054,6 +7204,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute foreman2 : ForemanResourceUsage to foreman2RsrcUsage : ForemanResourceUsage in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Replace Variable With Attribute** [foreman2 : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL114) to [foreman2RsrcUsage : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR79) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 114,
@@ -7114,6 +7265,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute foreman3 : ForemanResourceUsage to foreman3RsrcUsage : ForemanResourceUsage in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"markup": "**Replace Variable With Attribute** [foreman3 : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dL116) to [foreman3RsrcUsage : ForemanResourceUsage](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-9485e7b5d0250073ebd421406e19915d732bb7091fc8716986e174e1b9dac99dR81) in method `public testSetup() : void` from class `org.apache.drill.exec.resourcemgr.RMBlobManagerTest`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 116,
@@ -7174,6 +7326,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL216) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR92) in method `public TestSingleMajorFragmentWithGroupByProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 216,
@@ -7234,6 +7387,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL201) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR92) in method `public TestSingleMajorFragmentWithProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 201,
@@ -7294,6 +7448,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL231) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR92) in method `public TestTwoMajorFragmentWithSortyProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 231,
@@ -7354,6 +7509,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public setupForEachTest() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL201) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR92) in method `public setupForEachTest() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 201,
@@ -7396,6 +7552,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public setupForEachTest() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL216) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR92) in method `public setupForEachTest() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 216,
@@ -7438,6 +7595,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public setupForEachTest() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL231) to [onlineEndpoints : Map<DrillbitEndpoint,String>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR92) in method `public setupForEachTest() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 231,
@@ -7480,6 +7638,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute queryId : UserBitShared.QueryId to queryIdString : String in method public reserveResources() : boolean from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"markup": "**Replace Variable With Attribute** [queryId : UserBitShared.QueryId](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582L248) to [queryIdString : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-713b6b306ea7d355dd367f699e0c0c270b56e522edaf9cd3a228366bb21d4582R241) in method `public reserveResources() : boolean` from class `org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
 		"startLine": 248,
@@ -7522,6 +7681,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL217) to [resources : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR93) in method `public TestSingleMajorFragmentWithGroupByProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 217,
@@ -7582,6 +7742,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL202) to [resources : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR93) in method `public TestSingleMajorFragmentWithProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 202,
@@ -7642,6 +7803,7 @@
 {
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute resources : Map<DrillbitEndpoint,NodeResources> to resources : Map<DrillNode,NodeResources> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"markup": "**Replace Variable With Attribute** [resources : Map<DrillbitEndpoint,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eL232) to [resources : Map<DrillNode,NodeResources>](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-c22c219bea381ab31a7366e15734515f08e1a627145bdc60725ce8751139a13eR93) in method `public TestTwoMajorFragmentWithSortyProjectAndScan() : void` from class `org.apache.drill.exec.planner.rm.TestMemoryCalculator`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
 		"startLine": 232,
@@ -7702,6 +7864,7 @@
 {
 	"type": "Split Conditional",
 	"description": "Split Conditional if(currentQueueLeader == null || !currentQueueLeader.equals(leaderId)) to [if(!currentQueueLeader.equals(leaderId)), if(currentQueueLeader == null)] in method private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String from class org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager",
+	"markup": "**Split Conditional** [if(currentQueueLeader == null || !currentQueueLeader.equals(leaderId))](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729L226) to `[if(!currentQueueLeader.equals(leaderId)), if(currentQueueLeader == null)]` in method [private updateBlobs(resourcesMap Map<String,NodeResources>, selectedQueue QueryQueueConfig, leaderId String, queryId String, foremanUUID String, freeResources boolean) : String](https://github.com/apache/drill/commit/2800c57981f27d04b97e5994c3f6325ca301f110?diff=split#diff-663b425cb893301234cb3e29ab39e78e137ad56e814b48c4b87b5dd7bbbc2729R278) from class `org.apache.drill.exec.resourcemgr.rmblobmgr.RMConsistentBlobStoreManager`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/rmblobmgr/RMConsistentBlobStoreManager.java",
 		"startLine": 226,

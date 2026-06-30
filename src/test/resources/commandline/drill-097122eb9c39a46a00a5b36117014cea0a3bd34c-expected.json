@@ -7,6 +7,7 @@
 	"refactorings": [{
 	"type": "Extract Method",
 	"description": "Extract Method private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void extracted from public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void in class org.apache.drill.PlanTestBase",
+	"markup": "**Extract Method** [private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void](https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c?diff=split#diff-5744334bb535942e0710c3ab449741bd1648b030fb9ad36f81418b5c640e1843R108) extracted from [public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void](https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c?diff=split#diff-5744334bb535942e0710c3ab449741bd1648b030fb9ad36f81418b5c640e1843L93) in class `org.apache.drill.PlanTestBase`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
 		"startLine": 93,
@@ -283,6 +284,7 @@
 {
 	"type": "Parameterize Attribute",
 	"description": "Parameterize Attribute OPTIQ_FORMAT : String to planFormat : String in method private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void from class org.apache.drill.PlanTestBase",
+	"markup": "**Parameterize Attribute** [OPTIQ_FORMAT : String](https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c?diff=split#diff-5744334bb535942e0710c3ab449741bd1648b030fb9ad36f81418b5c640e1843L50) to [planFormat : String](https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c?diff=split#diff-5744334bb535942e0710c3ab449741bd1648b030fb9ad36f81418b5c640e1843R108) in method `private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void` from class `org.apache.drill.PlanTestBase`",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
 		"startLine": 50,
@@ -325,6 +327,7 @@
 {
 	"type": "Rename Attribute",
 	"description": "Rename Attribute expectedSubStr : String to expectedPattern : String in class org.apache.drill.exec.store.kafka.KafkaFilterPushdownTest",
+	"markup": "**Rename Attribute** [expectedSubStr : String](https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c?diff=split#diff-fae5378aee8e0e439aed4396a37617aa8e7c56aaa6886d8e140d96bfdb249edeL35) to [expectedPattern : String](https://github.com/apache/drill/commit/097122eb9c39a46a00a5b36117014cea0a3bd34c?diff=split#diff-fae5378aee8e0e439aed4396a37617aa8e7c56aaa6886d8e140d96bfdb249edeR35) in class `org.apache.drill.exec.store.kafka.KafkaFilterPushdownTest`",
 	"leftSideLocations": [{
 		"filePath": "contrib/storage-kafka/src/test/java/org/apache/drill/exec/store/kafka/KafkaFilterPushdownTest.java",
 		"startLine": 35,

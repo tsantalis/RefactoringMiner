@@ -82,7 +82,7 @@ You can also use our tool to visualize the diffs in your browser.
 
 ### Cross-language diff
 Java methods migrated to Kotlin functions
-<img width="1897" height="489" alt="JavaToKotlinDiff" src="https://github.com/user-attachments/assets/0b519b11-929d-4689-a16f-f5ed2a1f6e7c" />
+<img width="1851" height="487" alt="JavaToKotlinDiff" src="https://github.com/user-attachments/assets/3ba758d4-b911-4ccc-9c4c-dd5c9e17d6bb" />
 [A Java test file migrated to Kotlin](https://users.encs.concordia.ca/~nikolaos/diffGallery/MockWebServerTest.html)
 
 ### Refactoring-aware tooltips

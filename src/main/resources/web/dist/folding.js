@@ -69,7 +69,7 @@ function setAllFoldings(config, leftEditor, rightEditor) {
     const foldingRangeProvider = {
         provideFoldingRanges: (model, context, token) => {
             if (model.id !== config.id) return;
-            let rangesToFold = createFoldingRanges(getLinesToFold(config, model, 2));
+            let rangesToFold = createFoldingRanges(getLinesToFold(config, model, 0));
             return rangesToFold.map(range => ({
                 start: range.startLineNumber,
                 end: range.endLineNumber,

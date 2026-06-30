@@ -350,6 +350,24 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        else if(children1.size() > children2.size() && interpolatedExpressions2.size() > 0) {
+            List<Tree> stringLiteralsInInterpolatedExpression = new ArrayList<>();
+            for(Tree interpolated : interpolatedExpressions2) {
+                stringLiteralsInInterpolatedExpression.addAll(TreeUtilFunctions.findChildrenByTypeRecursively(interpolated, LANG2.STRING_LITERAL));
+            }
+            for(int j=0; j<stringLiteralsInInterpolatedExpression.size(); j++) {
+                Tree child2 = stringLiteralsInInterpolatedExpression.get(j);
+                for(int i=0; i<children1.size(); i++) {
+                    Tree child1 = children1.get(i);
+                    if(child2.getChildren().size() > 0 && child1.getLabel().equals("\"" + child2.getChild(0).getLabel() + "\"")) {
+                        child2.setLabel(child1.getLabel());
+                        child2.getChildren().remove(0);
+                        mappingStore.addMapping(child1, child2);
+                        break;
+                    }
+                }
+            }
+        }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.NUMBER_LITERAL);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTEGER_LITERAL);
         if(children1.size() == children2.size()) {

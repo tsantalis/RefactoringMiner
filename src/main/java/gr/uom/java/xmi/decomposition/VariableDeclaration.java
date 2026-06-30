@@ -12,7 +12,11 @@ import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTDeclarationStatement;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator;
@@ -195,6 +199,18 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				return declarator.getParent().getParent();
 			}
 			else if(declarator.getParent().getParent() instanceof ICPPASTCatchHandler) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof ICPPASTForStatement) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof ICPPASTIfStatement) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof ICPPASTSwitchStatement) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof ICPPASTWhileStatement) {
 				return declarator.getParent().getParent();
 			}
 		}

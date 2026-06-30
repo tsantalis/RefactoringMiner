@@ -283,6 +283,43 @@ class CppFileProcessorTest {
 				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("ex")));
 	}
 
+	@Test
+	void scopesCppControlStatementDeclarationsToTheirBodies() {
+		String filePath = "src/controls.cpp";
+		String fileContent = String.join("\n",
+				"void controls() {",
+				"  if (int flag = 1) {",
+				"    flag += 1;",
+				"  }",
+				"  while (int item = 1) {",
+				"    item += 1;",
+				"    break;",
+				"  }",
+				"  switch (int code = 1) {",
+				"    case 1:",
+				"      code += 1;",
+				"      break;",
+				"  }",
+				"  for (int i = 0; int keep = i < 1; ++i) {",
+				"    keep += 1;",
+				"  }",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "controls");
+		UMLOperation controls = findOperation(moduleClass.getOperations(), "controls");
+
+		assertVariableInScope(controls, "flag += 1", "flag");
+		assertVariableInScope(controls, "item += 1", "item");
+		assertVariableInScope(controls, "code += 1", "code");
+		assertVariableInScope(controls, "keep += 1", "keep");
+		assertVariableInScope(controls, "keep += 1", "i");
+	}
+
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()
 				.filter(operation -> operation.getName().equals(name))
@@ -301,5 +338,14 @@ class CppFileProcessorTest {
 		return operation.getParameterTypeList().stream()
 				.map(Object::toString)
 				.toList();
+	}
+
+	private static void assertVariableInScope(UMLOperation operation, String statementText, String variableName) {
+		AbstractCodeFragment statement = operation.getBody().getCompositeStatement().getLeaves().stream()
+				.filter(leaf -> leaf.getString().contains(statementText))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected statement: " + statementText));
+		assertTrue(operation.getVariableDeclarationsInScope(statement.getLocationInfo()).stream()
+				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals(variableName)));
 	}
 }

@@ -15,8 +15,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -71,6 +69,7 @@ import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
 import org.refactoringminer.util.GitHubOAuthTokenProvider;
+import org.refactoringminer.util.GitHubRawContentFetcher;
 import org.refactoringminer.util.PathFileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1388,11 +1387,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
-						currentRawFile = streamToString(currentRawFileInputStream);
-						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-						parentRawFile = streamToString(parentRawFileInputStream);
+						currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
+						parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommit(currentRawURL, commitId, parentCommitId));
 					}
 					if(!filesBefore.containsKey(fileName))
 						filesBefore.put(fileName, parentRawFile);
@@ -1413,9 +1409,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						currentRawFile = streamToString(currentRawFileInputStream);
 					}
 					else {
-						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
-						currentRawFile = streamToString(currentRawFileInputStream);
+						currentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 					}
 					filesCurrent.put(fileName, currentRawFile);
 				}
@@ -1434,9 +1428,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						parentRawFile = streamToString(parentRawFileInputStream);
 					}
 					else {
-						URL rawURL = commitFile.getRawUrl();
-						InputStream rawFileInputStream = rawURL.openStream();
-						parentRawFile = streamToString(rawFileInputStream);
+						parentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 					}
 					filesBefore.put(fileName, parentRawFile);
 					if(fileName.contains("/")) {
@@ -1464,13 +1456,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						URL currentRawURL = commitFile.getRawUrl();
-						InputStream currentRawFileInputStream = currentRawURL.openStream();
-						currentRawFile = streamToString(currentRawFileInputStream);
-						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
-						String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-						String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-						InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-						parentRawFile = streamToString(parentRawFileInputStream);
+						currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
+						parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommitAndPath(currentRawURL, commitId, parentCommitId, fileName, previousFilename));
 					}
 					if(!filesBefore.containsKey(previousFilename))
 						filesBefore.put(previousFilename, parentRawFile);
@@ -1489,7 +1476,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public String streamToString(InputStream rawFileInputStream) throws IOException {
-		return EmojiParser.removeAllEmojis(IOUtils.toString(rawFileInputStream, StandardCharsets.UTF_8));
+		return GitHubRawContentFetcher.read(rawFileInputStream);
 	}
 
 	public void detectAtCommitWithGitHubAPI(String cloneURL, String commitId, File rootFolder, RefactoringHandler m) {
@@ -1697,11 +1684,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							}
 							else {
 								URL currentRawURL = commitFile.getRawUrl();
-								InputStream currentRawFileInputStream = currentRawURL.openStream();
-								currentRawFile = streamToString(currentRawFileInputStream);
-								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-								parentRawFile = streamToString(parentRawFileInputStream);
+								currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
+								parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommit(currentRawURL, commitId, parentCommitId));
 							}
 							filesBefore.put(fileName, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
@@ -1725,9 +1709,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								currentRawFile = streamToString(currentRawFileInputStream);
 							}
 							else {
-								URL currentRawURL = commitFile.getRawUrl();
-								InputStream currentRawFileInputStream = currentRawURL.openStream();
-								currentRawFile = streamToString(currentRawFileInputStream);
+								currentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 							}
 							filesCurrent.put(fileName, currentRawFile);
 							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
@@ -1748,9 +1730,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								parentRawFile = streamToString(parentRawFileInputStream);
 							}
 							else {
-								URL rawURL = commitFile.getRawUrl();
-								InputStream rawFileInputStream = rawURL.openStream();
-								parentRawFile = streamToString(rawFileInputStream);
+								parentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 							}
 							filesBefore.put(fileName, parentRawFile);
 							if(fileName.contains("/")) {
@@ -1780,13 +1760,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							}
 							else {
 								URL currentRawURL = commitFile.getRawUrl();
-								InputStream currentRawFileInputStream = currentRawURL.openStream();
-								currentRawFile = streamToString(currentRawFileInputStream);
-								String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
-								String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-								parentRawFile = streamToString(parentRawFileInputStream);
+								currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
+								parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommitAndPath(currentRawURL, commitId, parentCommitId, fileName, previousFilename));
 							}
 							filesBefore.put(previousFilename, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
@@ -2256,13 +2231,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					String currentRawFile = fetchRawFileContent(currentRawURL);
+					String currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile);
 					String parentRawFile;
 					if (patchLineList.isEmpty() && mergeBaseSha != null) {
 						// GitHub omitted the patch (very large diff); fetch the parent file directly at the merge base.
-						URL parentRawURL = new URL(currentRawURL.toString().replace(headSha, mergeBaseSha));
-						parentRawFile = fetchRawFileContent(parentRawURL);
+						parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommit(currentRawURL, headSha, mergeBaseSha));
 					}
 					else {
 						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
@@ -2287,9 +2261,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		else if (commitFile.getStatus().equals("added")) {
 			Runnable r = () -> {
 				try {
-					URL currentRawURL = commitFile.getRawUrl();
-					InputStream currentRawFileInputStream = currentRawURL.openStream();
-					String currentRawFile = streamToString(currentRawFileInputStream);
+					String currentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 					filesCurrent.put(fileName, currentRawFile);
 				}
 				catch(IOException e) {
@@ -2301,9 +2273,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		else if (commitFile.getStatus().equals("removed")) {
 			Runnable r = () -> {
 				try {
-					URL rawURL = commitFile.getRawUrl();
-					InputStream rawFileInputStream = rawURL.openStream();
-					String parentRawFile = streamToString(rawFileInputStream);
+					String parentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 					filesBefore.put(fileName, parentRawFile);
 					if(fileName.contains("/")) {
 						deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
@@ -2321,14 +2291,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				try {
 					String previousFilename = commitFile.getPreviousFilename();
 					URL currentRawURL = commitFile.getRawUrl();
-					String currentRawFile = fetchRawFileContent(currentRawURL);
+					String currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile);
 					String parentRawFile;
 					if (patchLineList.isEmpty() && mergeBaseSha != null) {
 						// GitHub omitted the patch (very large diff); fetch the parent file directly at the merge base.
-						String parentRawURL = currentRawURL.toString().replace(headSha, mergeBaseSha)
-								.replace(encodeRawUrlPath(fileName), encodeRawUrlPath(previousFilename));
-						parentRawFile = fetchRawFileContent(new URL(parentRawURL));
+						parentRawFile = GitHubRawContentFetcher.fetch(
+								GitHubRawContentFetcher.atCommitAndPath(currentRawURL, headSha, mergeBaseSha, fileName, previousFilename));
 					}
 					else {
 						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
@@ -2358,19 +2327,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			};
 			pool.submit(r);
 		}
-	}
-
-	private String fetchRawFileContent(URL rawURL) throws IOException {
-		URLConnection connection = rawURL.openConnection();
-		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-		return streamToString(connection.getInputStream());
-	}
-
-	// Encodes a repository path the way GitHub encodes it inside a raw file URL (slashes become %2F).
-	// URLEncoder maps spaces to '+', whereas GitHub uses %20, so we convert those; a literal '+' in a
-	// path is encoded as %2B by URLEncoder, so this replacement only ever touches encoded spaces.
-	private static String encodeRawUrlPath(String path) {
-		return URLEncoder.encode(path, StandardCharsets.UTF_8).replace("+", "%20");
 	}
 
 	private List<String> createPatchLines(GHPullRequestFileDetail commitFile) {
@@ -2630,11 +2586,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								}
 								else {
 									URL currentRawURL = commitFile.getRawUrl();
-									InputStream currentRawFileInputStream = currentRawURL.openStream();
-									currentRawFile = streamToString(currentRawFileInputStream);
-									String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-									InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-									parentRawFile = streamToString(parentRawFileInputStream);
+									currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
+									parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommit(currentRawURL, commitId, parentCommitId));
 								}
 								if(!filesBefore.containsKey(fileName))
 									filesBefore.put(fileName, parentRawFile);
@@ -2655,9 +2608,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 									currentRawFile = streamToString(currentRawFileInputStream);
 								}
 								else {
-									URL currentRawURL = commitFile.getRawUrl();
-									InputStream currentRawFileInputStream = currentRawURL.openStream();
-									currentRawFile = streamToString(currentRawFileInputStream);
+									currentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 								}
 								filesCurrent.put(fileName, currentRawFile);
 							}
@@ -2676,9 +2627,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 									parentRawFile = streamToString(parentRawFileInputStream);
 								}
 								else {
-									URL rawURL = commitFile.getRawUrl();
-									InputStream rawFileInputStream = rawURL.openStream();
-									parentRawFile = streamToString(rawFileInputStream);
+									parentRawFile = GitHubRawContentFetcher.fetch(commitFile.getRawUrl());
 								}
 								if(!filesBefore.containsKey(fileName))
 									filesBefore.put(fileName, parentRawFile);
@@ -2707,13 +2656,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 								}
 								else {
 									URL currentRawURL = commitFile.getRawUrl();
-									InputStream currentRawFileInputStream = currentRawURL.openStream();
-									currentRawFile = streamToString(currentRawFileInputStream);
-									String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
-									String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-									String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-									InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-									parentRawFile = streamToString(parentRawFileInputStream);
+									currentRawFile = GitHubRawContentFetcher.fetch(currentRawURL);
+									parentRawFile = GitHubRawContentFetcher.fetch(GitHubRawContentFetcher.atCommitAndPath(currentRawURL, commitId, parentCommitId, fileName, previousFilename));
 								}
 								if(!filesBefore.containsKey(fileName))
 									filesBefore.put(previousFilename, parentRawFile);

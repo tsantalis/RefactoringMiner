@@ -13552,6 +13552,17 @@
   "secondEndPos" : 2801
 }, {
   "firstType" : "InfixExpression",
+  "secondType" : "equality_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "when_condition",
+  "firstPos" : 11976,
+  "secondPos" : 2833,
+  "firstEndPos" : 12004,
+  "secondEndPos" : 2859
+}, {
+  "firstType" : "InfixExpression",
   "secondType" : "when_condition",
   "firstLabel" : "",
   "secondLabel" : "",

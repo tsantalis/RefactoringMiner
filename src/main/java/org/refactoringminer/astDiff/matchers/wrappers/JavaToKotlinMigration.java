@@ -394,6 +394,9 @@ public class JavaToKotlinMigration {
         else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.ADDITIVE_EXPRESSION)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.WHEN_CONDITION)) {
+            mappingStore.addMapping(srcStatementNode, dstStatementNode);
+        }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LOGICAL_OPERATOR, LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR);
         if(children1.size() == children2.size()) {
@@ -409,6 +412,9 @@ public class JavaToKotlinMigration {
             }
         }
         List<Tree> nestedInfix1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);
+        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION)) {
+            nestedInfix1.add(srcStatementNode);
+        }
         List<Tree> nestedInfix2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.DISJUNCTION_EXPRESSION, LANG2.EQUALITY_EXPRESSION, LANG2.ADDITIVE_EXPRESSION, LANG2.MULTIPLICATIVE_EXPRESSION);
         if(nestedInfix1.size() == nestedInfix2.size()) {
             for(int i=0; i<nestedInfix1.size(); i++) {

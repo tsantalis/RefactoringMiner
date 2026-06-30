@@ -384,6 +384,7 @@ public class Constants {
     public final String OBJECT_DECLARATION = "object_declaration";
     public final String OBJECT_LITERAL = "object_literal";
     public final String WHEN_ENTRY = "when_entry";
+    public final String WHEN_CONDITION = "when_condition";
     public final String ARROW = "arrow";
     public final String WHEN_EXPRESSION = "when_expression";
     public final String WHEN_SUBJECT = "when_subject";

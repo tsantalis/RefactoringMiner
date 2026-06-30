@@ -12803,6 +12803,28 @@
   "firstEndPos" : 9527,
   "secondEndPos" : 8243
 }, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "prefix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 9525,
+  "secondPos" : 8240,
+  "firstEndPos" : 9527,
+  "secondEndPos" : 8242
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 9525,
+  "secondPos" : 8240,
+  "firstEndPos" : 9526,
+  "secondEndPos" : 8241
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "1",
@@ -15916,6 +15938,28 @@
   "firstEndPos" : 11340,
   "secondEndPos" : 9890
 }, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "prefix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 11338,
+  "secondPos" : 9887,
+  "firstEndPos" : 11340,
+  "secondEndPos" : 9889
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 11338,
+  "secondPos" : 9887,
+  "firstEndPos" : 11339,
+  "secondEndPos" : 9888
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "1",
@@ -16247,26 +16291,26 @@
   "secondEndPos" : 10065
 }, {
   "firstType" : "NumberLiteral",
-  "secondType" : "integer_literal",
+  "secondType" : "long_literal",
   "firstLabel" : "500L",
-  "secondLabel" : "500",
+  "secondLabel" : "500L",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "long_literal",
+  "secondParentType" : "value_argument",
   "firstPos" : 11500,
   "secondPos" : 10053,
   "firstEndPos" : 11504,
-  "secondEndPos" : 10056
+  "secondEndPos" : 10057
 }, {
   "firstType" : "NumberLiteral",
-  "secondType" : "integer_literal",
+  "secondType" : "long_literal",
   "firstLabel" : "1000L",
-  "secondLabel" : "1000",
+  "secondLabel" : "1000L",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "long_literal",
+  "secondParentType" : "value_argument",
   "firstPos" : 11506,
   "secondPos" : 10059,
   "firstEndPos" : 11511,
-  "secondEndPos" : 10063
+  "secondEndPos" : 10064
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
@@ -18039,6 +18083,28 @@
   "firstEndPos" : 12374,
   "secondEndPos" : 10961
 }, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "prefix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 12372,
+  "secondPos" : 10958,
+  "firstEndPos" : 12374,
+  "secondEndPos" : 10960
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 12372,
+  "secondPos" : 10958,
+  "firstEndPos" : 12373,
+  "secondEndPos" : 10959
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "1",
@@ -18370,26 +18436,26 @@
   "secondEndPos" : 11136
 }, {
   "firstType" : "NumberLiteral",
-  "secondType" : "integer_literal",
+  "secondType" : "long_literal",
   "firstLabel" : "500L",
-  "secondLabel" : "500",
+  "secondLabel" : "500L",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "long_literal",
+  "secondParentType" : "value_argument",
   "firstPos" : 12534,
   "secondPos" : 11124,
   "firstEndPos" : 12538,
-  "secondEndPos" : 11127
+  "secondEndPos" : 11128
 }, {
   "firstType" : "NumberLiteral",
-  "secondType" : "integer_literal",
+  "secondType" : "long_literal",
   "firstLabel" : "1000L",
-  "secondLabel" : "1000",
+  "secondLabel" : "1000L",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "long_literal",
+  "secondParentType" : "value_argument",
   "firstPos" : 12540,
   "secondPos" : 11130,
   "firstEndPos" : 12545,
-  "secondEndPos" : 11134
+  "secondEndPos" : 11135
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
@@ -19613,15 +19679,15 @@
   "secondEndPos" : 11756
 }, {
   "firstType" : "NumberLiteral",
-  "secondType" : "integer_literal",
+  "secondType" : "long_literal",
   "firstLabel" : "1000L",
-  "secondLabel" : "1000",
+  "secondLabel" : "1000L",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "long_literal",
+  "secondParentType" : "value_argument",
   "firstPos" : 13188,
   "secondPos" : 11750,
   "firstEndPos" : 13193,
-  "secondEndPos" : 11754
+  "secondEndPos" : 11755
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -22218,6 +22284,28 @@
   "secondPos" : 13409,
   "firstEndPos" : 14936,
   "secondEndPos" : 13413
+}, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "prefix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 14934,
+  "secondPos" : 13410,
+  "firstEndPos" : 14936,
+  "secondEndPos" : 13412
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 14934,
+  "secondPos" : 13410,
+  "firstEndPos" : 14935,
+  "secondEndPos" : 13411
 }, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",

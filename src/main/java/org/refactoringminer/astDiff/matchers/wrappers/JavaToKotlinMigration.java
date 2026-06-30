@@ -376,19 +376,26 @@ public class JavaToKotlinMigration {
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTEGER_LITERAL);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
-                mappingStore.addMapping(children1.get(i), children2.get(i));
-                /*
                 //handle -literal
-                if(children2.get(i).getParent().getType().name.equals(LANG2.PREFIX_EXPRESSION)) {
-                    if(children2.get(i).getParent().getChild(0).getType().name.equals(LANG2.ARITHMETIC_OPERATOR)) {
-                        mappingStore.addMapping(children1.get(i), children2.get(i).getParent());
+                Tree parent1 = children1.get(i).getParent();
+                Tree parent2 = children2.get(i).getParent();
+                if(!parent2.getType().name.equals(LANG2.LONG_LITERAL)) {
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                }
+                if(parent1.getType().name.equals(LANG1.PREFIX_EXPRESSION) && parent2.getType().name.equals(LANG2.PREFIX_EXPRESSION)) {
+                    if(parent2.getChild(0).getType().name.equals(LANG2.ARITHMETIC_OPERATOR)) {
+                        Tree t1 = TreeUtilFunctions.findChildByType(parent1, LANG1.PREFIX_EXPRESSION_OPERATOR);
+                        Tree t2 = TreeUtilFunctions.findChildByType(parent2, LANG1.ARITHMETIC_OPERATOR);
+                        mappingStore.addMapping(t1, t2);
+                        mappingStore.addMapping(parent1, parent2);
                     }
                 }
                 //handle long literal
-                if(children2.get(i).getParent().getType().name.equals(LANG2.LONG_LITERAL)) {
-                    mappingStore.addMapping(children1.get(i), children2.get(i).getParent());
+                if(parent2.getType().name.equals(LANG2.LONG_LITERAL)) {
+                    parent2.setLabel(children1.get(i).getLabel());
+                    parent2.getChildren().clear();
+                    mappingStore.addMapping(children1.get(i), parent2);
                 }
-                */
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.BOOLEAN_LITERAL);

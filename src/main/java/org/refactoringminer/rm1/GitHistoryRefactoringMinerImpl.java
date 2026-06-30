@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -2158,6 +2160,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 			ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
 			int count = 1;
+			String headSha = pullRequest.getHead().getSha();
+			String mergeBaseSha = repository.getCompare(pullRequest.getBase().getSha(), headSha).getMergeBaseCommit().getSHA1();
 			for(GHPullRequestFileDetail commitFile : files) {
 				String fileName = commitFile.getFilename();
 				if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
@@ -2169,7 +2173,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
 							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-							commitFile, fileName);
+							commitFile, fileName, headSha, mergeBaseSha);
 					count++;
 				}
 			}
@@ -2228,22 +2232,32 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return diffs.iterator().next();
 	}
 
+	private String fetchRawFileContent(URL rawURL) throws IOException {
+		URLConnection connection = rawURL.openConnection();
+		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+		return streamToString(connection.getInputStream());
+	}
+
 	private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
 			Map<String, String> renamedFilesHint, Set<String> repositoryDirectoriesBefore,
 			Set<String> repositoryDirectoriesCurrent, Set<String> deletedAndRenamedFileParentDirectories,
-			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName) {
+			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName, String headSha, String mergeBaseSha) {
 		if (commitFile.getStatus().equals("modified")) {
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					URLConnection connection = currentRawURL.openConnection();
-					connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-					InputStream currentRawFileInputStream = connection.getInputStream();
-					String currentRawFile = streamToString(currentRawFileInputStream);
+					String currentRawFile = fetchRawFileContent(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile);
-					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-					String parentRawFile = String.join("\n", parentRawFileLines);
+					String parentRawFile = null;
+					if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
+						URL parentRawURL = new URI(currentRawURL.toString().replace(headSha, mergeBaseSha)).toURL();
+						parentRawFile = fetchRawFileContent(parentRawURL);
+					}
+					else {
+						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						parentRawFile = String.join("\n", parentRawFileLines);
+					}
 					filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					String directory = new String(fileName);
@@ -2253,7 +2267,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						repositoryDirectoriesCurrent.add(directory);
 					}
 				}
-				catch(IOException e) {
+				catch(IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
 			};
@@ -2263,8 +2277,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					InputStream currentRawFileInputStream = currentRawURL.openStream();
-					String currentRawFile = streamToString(currentRawFileInputStream);
+					String currentRawFile = fetchRawFileContent(currentRawURL);
 					filesCurrent.put(fileName, currentRawFile);
 				}
 				catch(IOException e) {
@@ -2277,8 +2290,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Runnable r = () -> {
 				try {
 					URL rawURL = commitFile.getRawUrl();
-					InputStream rawFileInputStream = rawURL.openStream();
-					String parentRawFile = streamToString(rawFileInputStream);
+					String parentRawFile = fetchRawFileContent(rawURL);
 					filesBefore.put(fileName, parentRawFile);
 					if(fileName.contains("/")) {
 						deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
@@ -2296,12 +2308,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				try {
 					String previousFilename = commitFile.getPreviousFilename();
 					URL currentRawURL = commitFile.getRawUrl();
-					InputStream currentRawFileInputStream = currentRawURL.openStream();
-					String currentRawFile = streamToString(currentRawFileInputStream);
+					String currentRawFile = fetchRawFileContent(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile);
-					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-					String parentRawFile = String.join("\n", parentRawFileLines);
+					String parentRawFile;
+					if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
+						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+						String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
+						URL parentRawURL = new URI(currentRawURL.toString().replace(headSha, mergeBaseSha).replace(encodedFileName, encodedPreviousFilename)).toURL();
+						parentRawFile = fetchRawFileContent(parentRawURL);
+					}
+					else {
+						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						parentRawFile = String.join("\n", parentRawFileLines);
+					}
 					filesBefore.put(previousFilename, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					renamedFilesHint.put(previousFilename, fileName);
@@ -2319,7 +2339,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						repositoryDirectoriesBefore.add(directory);
 					}
 				}
-				catch(IOException e) {
+				catch(IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
 			};

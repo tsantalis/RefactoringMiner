@@ -12617,15 +12617,15 @@
   "secondEndPos" : 2116
 }, {
   "firstType" : "Assignment",
-  "secondType" : "affectation_operator",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
   "secondParentType" : "assignment",
   "firstPos" : 10714,
-  "secondPos" : 2021,
+  "secondPos" : 2012,
   "firstEndPos" : 10818,
-  "secondEndPos" : 2022
+  "secondEndPos" : 2020
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",

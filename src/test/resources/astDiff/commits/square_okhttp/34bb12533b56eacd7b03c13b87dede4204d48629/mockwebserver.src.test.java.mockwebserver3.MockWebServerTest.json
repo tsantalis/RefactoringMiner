@@ -1100,15 +1100,15 @@
   "secondEndPos" : 2156
 }, {
   "firstType" : "Assignment",
-  "secondType" : "affectation_operator",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
   "secondParentType" : "assignment",
   "firstPos" : 2680,
-  "secondPos" : 2148,
+  "secondPos" : 2136,
   "firstEndPos" : 2700,
-  "secondEndPos" : 2149
+  "secondEndPos" : 2147
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",

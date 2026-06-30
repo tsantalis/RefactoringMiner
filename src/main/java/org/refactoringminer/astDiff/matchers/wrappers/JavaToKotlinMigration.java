@@ -479,8 +479,7 @@ public class JavaToKotlinMigration {
         if(assignment != null && assignableExpression != null && affectationOperator != null) {
             Tree assignmentOperator = TreeUtilFunctions.findChildByType(assignment, LANG1.ASSIGNMENT_OPERATOR);
             mappingStore.addMapping(assignmentOperator, affectationOperator);
-            assignment.setLabel("=");
-            mappingStore.addMapping(assignment, affectationOperator);
+            mappingStore.addMapping(assignment, assignableExpression);
         }
         //handle case of method invocation converted to navigation expression
         //children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);

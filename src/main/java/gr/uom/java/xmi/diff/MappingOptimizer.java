@@ -563,7 +563,8 @@ public class MappingOptimizer {
 						Set<Refactoring> refactoringsAfterPostProcessing = mapper.getRefactoringsAfterPostProcessing();
 						Set<Refactoring> otherMapperRefactoringsAfterPostProcessing = new LinkedHashSet<>();
 						for(UMLOperationBodyMapper otherMapper : mappers) {
-							if(!otherMapper.equals(mapper) && otherMapper.getParentMapper() == null) {
+							boolean equalMappers = otherMapper.equals(mapper) && otherMapper.getMappings().equals(mapper.getMappings());
+							if(!equalMappers) {
 								otherMapperRefactoringsAfterPostProcessing.addAll(otherMapper.getRefactoringsAfterPostProcessing());
 							}
 						}
@@ -577,7 +578,8 @@ public class MappingOptimizer {
 							}
 							else if(r instanceof InvertConditionRefactoring) {
 								InvertConditionRefactoring invert = (InvertConditionRefactoring)r;
-								if(mapping.getFragment1().equals(invert.getOriginalConditional()) || mapping.getFragment2().equals(invert.getInvertedConditional())) {
+								if(mapping.getFragment1().equals(invert.getOriginalConditional()) && mapping.getFragment2().equals(invert.getInvertedConditional())
+										 && !otherMapperRefactoringsAfterPostProcessing.contains(r)) {
 									refactoringsToBeRemoved.add(r);
 								}
 							}

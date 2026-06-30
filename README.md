@@ -81,8 +81,8 @@ You can also use our tool to visualize the diffs in your browser.
 ## AST diff features
 
 ### Cross-language diff
-A Java method migrated to Kotlin function
-<img width="1883" height="290" alt="JavaToKotlinDiff" src="https://github.com/user-attachments/assets/85a1a72b-d786-4b2f-b23a-b3a78d236579" />
+Java methods migrated to Kotlin functions
+<img width="1897" height="489" alt="JavaToKotlinDiff" src="https://github.com/user-attachments/assets/0b519b11-929d-4689-a16f-f5ed2a1f6e7c" />
 [A Java test file migrated to Kotlin](https://users.encs.concordia.ca/~nikolaos/diffGallery/MockWebServerTest.html)
 
 ### Refactoring-aware tooltips

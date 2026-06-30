@@ -2151,7 +2151,26 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		else {
-			PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
+			List<GHPullRequestFileDetail> files = pullRequest.listFiles().toList();
+			String headSha = pullRequest.getHead().getSha();
+			// GitHub omits the patch of a file when its diff is too large (e.g. thousands of changed lines).
+			// In that case the parent file cannot be reconstructed by reverse-applying the patch, so we fetch
+			// the parent file content directly, anchored at the merge base of the pull request.
+			String mergeBaseSha = null;
+			for(GHPullRequestFileDetail commitFile : files) {
+				if(PathFileUtils.isSupportedFile(commitFile.getFilename()) && commitFile.getPatch() == null) {
+					String status = commitFile.getStatus();
+					if(status.equals("modified") || status.equals("renamed")) {
+						try {
+							mergeBaseSha = repository.getCompare(pullRequest.getBase().getSha(), headSha).getMergeBaseCommit().getSHA1();
+						}
+						catch(IOException e) {
+							logger.warn(String.format("Could not determine merge base for PR %s; files with omitted patches may be incomplete", pullRequestId), e);
+						}
+						break;
+					}
+				}
+			}
 			int changedFiles = pullRequest.getChangedFiles();
 			if(changedFiles == 0) {
 				changedFiles = 10;
@@ -2169,7 +2188,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
 							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-							commitFile, fileName);
+							commitFile, fileName, headSha, mergeBaseSha);
 					count++;
 				}
 			}
@@ -2231,19 +2250,25 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
 			Map<String, String> renamedFilesHint, Set<String> repositoryDirectoriesBefore,
 			Set<String> repositoryDirectoriesCurrent, Set<String> deletedAndRenamedFileParentDirectories,
-			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName) {
+			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName,
+			String headSha, String mergeBaseSha) {
 		if (commitFile.getStatus().equals("modified")) {
 			Runnable r = () -> {
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
-					URLConnection connection = currentRawURL.openConnection();
-					connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-					InputStream currentRawFileInputStream = connection.getInputStream();
-					String currentRawFile = streamToString(currentRawFileInputStream);
+					String currentRawFile = fetchRawFileContent(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile);
-					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-					String parentRawFile = String.join("\n", parentRawFileLines);
+					String parentRawFile;
+					if (patchLineList.isEmpty() && mergeBaseSha != null) {
+						// GitHub omitted the patch (very large diff); fetch the parent file directly at the merge base.
+						URL parentRawURL = new URL(currentRawURL.toString().replace(headSha, mergeBaseSha));
+						parentRawFile = fetchRawFileContent(parentRawURL);
+					}
+					else {
+						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						parentRawFile = String.join("\n", parentRawFileLines);
+					}
 					filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					String directory = new String(fileName);
@@ -2296,12 +2321,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				try {
 					String previousFilename = commitFile.getPreviousFilename();
 					URL currentRawURL = commitFile.getRawUrl();
-					InputStream currentRawFileInputStream = currentRawURL.openStream();
-					String currentRawFile = streamToString(currentRawFileInputStream);
+					String currentRawFile = fetchRawFileContent(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile);
-					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-					String parentRawFile = String.join("\n", parentRawFileLines);
+					String parentRawFile;
+					if (patchLineList.isEmpty() && mergeBaseSha != null) {
+						// GitHub omitted the patch (very large diff); fetch the parent file directly at the merge base.
+						String parentRawURL = currentRawURL.toString().replace(headSha, mergeBaseSha)
+								.replace(encodeRawUrlPath(fileName), encodeRawUrlPath(previousFilename));
+						parentRawFile = fetchRawFileContent(new URL(parentRawURL));
+					}
+					else {
+						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						parentRawFile = String.join("\n", parentRawFileLines);
+					}
 					filesBefore.put(previousFilename, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					renamedFilesHint.put(previousFilename, fileName);
@@ -2325,6 +2358,19 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			};
 			pool.submit(r);
 		}
+	}
+
+	private String fetchRawFileContent(URL rawURL) throws IOException {
+		URLConnection connection = rawURL.openConnection();
+		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+		return streamToString(connection.getInputStream());
+	}
+
+	// Encodes a repository path the way GitHub encodes it inside a raw file URL (slashes become %2F).
+	// URLEncoder maps spaces to '+', whereas GitHub uses %20, so we convert those; a literal '+' in a
+	// path is encoded as %2B by URLEncoder, so this replacement only ever touches encoded spaces.
+	private static String encodeRawUrlPath(String path) {
+		return URLEncoder.encode(path, StandardCharsets.UTF_8).replace("+", "%20");
 	}
 
 	private List<String> createPatchLines(GHPullRequestFileDetail commitFile) {

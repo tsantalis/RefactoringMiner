@@ -2151,6 +2151,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			}
 		}
 		else {
+			//Merge-base of the PR; used to fetch the parent version of files whose patch is omitted by the GitHub API.
+			String mergeBaseCommitId = repository.getCompare(pullRequest.getBase().getSha(), pullRequest.getHead().getSha()).getMergeBaseCommit().getSHA1();
 			PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
 			int changedFiles = pullRequest.getChangedFiles();
 			if(changedFiles == 0) {
@@ -2169,7 +2171,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
 							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
-							commitFile, fileName);
+							repository, mergeBaseCommitId, commitFile, fileName);
 					count++;
 				}
 			}
@@ -2231,7 +2233,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private void multiThreadedFetch(Map<String, String> filesBefore, Map<String, String> filesCurrent,
 			Map<String, String> renamedFilesHint, Set<String> repositoryDirectoriesBefore,
 			Set<String> repositoryDirectoriesCurrent, Set<String> deletedAndRenamedFileParentDirectories,
-			List<String> commitFileNames, ExecutorService pool, GHPullRequestFileDetail commitFile, String fileName) {
+			List<String> commitFileNames, ExecutorService pool, GHRepository repository, String mergeBaseCommitId,
+			GHPullRequestFileDetail commitFile, String fileName) {
 		if (commitFile.getStatus().equals("modified")) {
 			Runnable r = () -> {
 				try {
@@ -2240,10 +2243,19 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 					InputStream currentRawFileInputStream = connection.getInputStream();
 					String currentRawFile = streamToString(currentRawFileInputStream);
-					List<String> patchLineList = createPatchLines(commitFile);
-					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-					String parentRawFile = String.join("\n", parentRawFileLines);
+					String parentRawFile;
+					if(commitFile.getPatch() != null) {
+						List<String> patchLineList = createPatchLines(commitFile);
+						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						parentRawFile = String.join("\n", parentRawFileLines);
+					}
+					else {
+						//GitHub omits the patch for very large diffs; reverse-applying an empty patch would
+						//leave the parent equal to the current file. Fetch the parent version directly instead.
+						InputStream parentRawFileInputStream = repository.getFileContent(fileName, mergeBaseCommitId).read();
+						parentRawFile = streamToString(parentRawFileInputStream);
+					}
 					filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					String directory = new String(fileName);
@@ -2298,10 +2310,19 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					URL currentRawURL = commitFile.getRawUrl();
 					InputStream currentRawFileInputStream = currentRawURL.openStream();
 					String currentRawFile = streamToString(currentRawFileInputStream);
-					List<String> patchLineList = createPatchLines(commitFile);
-					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
-					String parentRawFile = String.join("\n", parentRawFileLines);
+					String parentRawFile;
+					if(commitFile.getPatch() != null) {
+						List<String> patchLineList = createPatchLines(commitFile);
+						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						parentRawFile = String.join("\n", parentRawFileLines);
+					}
+					else {
+						//GitHub omits the patch for very large diffs; fetch the parent version
+						//(under its previous name) directly at the merge-base commit.
+						InputStream parentRawFileInputStream = repository.getFileContent(previousFilename, mergeBaseCommitId).read();
+						parentRawFile = streamToString(parentRawFileInputStream);
+					}
 					filesBefore.put(previousFilename, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
 					renamedFilesHint.put(previousFilename, fileName);

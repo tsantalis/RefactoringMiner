@@ -36,6 +36,7 @@ public class Constants {
 			PREFIX_EXPRESSION = "prefix_expression";
 			METHOD_INVOCATION_ARGUMENTS = "argument_list";
 			STRING_LITERAL = "string";
+			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			NULL_LITERAL = "none";
 			METHOD_INVOCATION = "call";
@@ -74,6 +75,7 @@ public class Constants {
 			PREFIX_EXPRESSION = "prefix_expression";
 			METHOD_INVOCATION_ARGUMENTS = "value_arguments";
 			STRING_LITERAL = "string_literal";
+			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal";
 			NULL_LITERAL = "null";
 			METHOD_INVOCATION = "call_expression";
@@ -112,6 +114,7 @@ public class Constants {
 			PREFIX_EXPRESSION = "prefix_expression";
 			METHOD_INVOCATION_ARGUMENTS = "arguments";
 			STRING_LITERAL = "string_literal";
+			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			NULL_LITERAL = "null_literal";
 			METHOD_INVOCATION = "call_expression";
@@ -150,6 +153,7 @@ public class Constants {
 			PREFIX_EXPRESSION = "PrefixExpression";
 			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
 			STRING_LITERAL = "string_literal";
+			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal";
 			NULL_LITERAL = "NullLiteral";
 			METHOD_INVOCATION = "MethodInvocation";
@@ -189,6 +193,7 @@ public class Constants {
 			PREFIX_EXPRESSION = "PrefixExpression";
 			METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
 			STRING_LITERAL = "StringLiteral";
+			CHARACTER_LITERAL = "CharacterLiteral";
 			BOOLEAN_LITERAL = "BooleanLiteral";
 			NULL_LITERAL = "NullLiteral";
 			METHOD_INVOCATION = "MethodInvocation";
@@ -290,6 +295,7 @@ public class Constants {
     public final String PREFIX_EXPRESSION_OPERATOR = "PREFIX_EXPRESSION_OPERATOR";
 
     public final String STRING_LITERAL;
+    public final String CHARACTER_LITERAL;
     public final String NUMBER_LITERAL = "NumberLiteral";
     public final String BOOLEAN_LITERAL;
     public final String NULL_LITERAL;

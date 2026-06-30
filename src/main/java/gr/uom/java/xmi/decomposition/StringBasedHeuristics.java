@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PathFileUtils;
@@ -67,6 +66,16 @@ public class StringBasedHeuristics {
 			List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 			String temp = new String(s1);
 			for(AbstractCall call : methodInvocations1) {
+				if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 0 && !methodInvocations2.contains(call) &&
+						call.getName().equals("isEmpty") && s2.contains(".isNotEmpty()")) {
+					temp = temp.replace("isEmpty", "isNotEmpty");
+					if(temp.equals(s2)) {
+						return true;
+					}
+					else if(temp.equals(LANG1.NOT + s2)) {
+						return true;
+					}
+				}
 				if(s1.contains(call.actualString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
 					String fieldName = call.getName();
 					if(call.getName().startsWith("get") && call.getName().length() > "get".length()) {

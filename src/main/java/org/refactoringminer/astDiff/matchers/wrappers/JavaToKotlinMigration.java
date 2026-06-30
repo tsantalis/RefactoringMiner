@@ -394,9 +394,6 @@ public class JavaToKotlinMigration {
         else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.ADDITIVE_EXPRESSION)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
-        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.WHEN_CONDITION)) {
-            mappingStore.addMapping(srcStatementNode, dstStatementNode);
-        }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.LOGICAL_OPERATOR, LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR);
         if(children1.size() == children2.size()) {
@@ -535,6 +532,9 @@ public class JavaToKotlinMigration {
                 if(s1.equals(s2) || s1.contains("." + s2)) {
                     matches++;
                 }
+                else if(s1.equals("isEmpty") && s2.equals("isNotEmpty")) {
+                    matches++;
+                }
                 else if(synonyms.containsKey(s1) && synonyms.get(s1).equals(s2)) {
                     matches++;
                 }
@@ -553,6 +553,9 @@ public class JavaToKotlinMigration {
                 String s1 = callNames1.get(i);
                 String s2 = callNames2.get(i);
                 if(s1.equals(s2) || s1.contains("." + s2)) {
+                    matches++;
+                }
+                else if(s1.equals("isEmpty") && s2.equals("isNotEmpty")) {
                     matches++;
                 }
                 else if(synonyms.containsKey(s1) && synonyms.get(s1).equals(s2)) {

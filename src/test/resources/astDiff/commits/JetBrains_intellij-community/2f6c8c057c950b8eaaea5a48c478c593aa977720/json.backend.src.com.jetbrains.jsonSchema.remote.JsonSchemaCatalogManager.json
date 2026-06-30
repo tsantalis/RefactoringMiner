@@ -13826,6 +13826,72 @@
   "firstEndPos" : 12116,
   "secondEndPos" : 2964
 }, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "when_condition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "when_entry",
+  "firstPos" : 12138,
+  "secondPos" : 2977,
+  "firstEndPos" : 12165,
+  "secondEndPos" : 3006
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "when_condition",
+  "firstPos" : 12139,
+  "secondPos" : 2977,
+  "firstEndPos" : 12165,
+  "secondEndPos" : 3006
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 12139,
+  "secondPos" : 3004,
+  "firstEndPos" : 12165,
+  "secondEndPos" : 3006
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 12139,
+  "secondPos" : 2993,
+  "firstEndPos" : 12155,
+  "secondEndPos" : 3004
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "refinedFileMasks",
+  "secondLabel" : "refinedFileMasks",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 12139,
+  "secondPos" : 2977,
+  "firstEndPos" : 12155,
+  "secondEndPos" : 2993
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "isEmpty",
+  "secondLabel" : "isNotEmpty",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 12156,
+  "secondPos" : 2994,
+  "firstEndPos" : 12163,
+  "secondEndPos" : 3004
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

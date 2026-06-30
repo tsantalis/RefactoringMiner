@@ -513,6 +513,11 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(inv1.get(i), children2.get(i));
             }
         }
+        if(inv1.size() == 1 && assignableExpression != null) {
+            Tree navigationSuffix = TreeUtilFunctions.findChildByType(assignableExpression, LANG2.NAVIGATION_SUFFIX);
+            if(navigationSuffix != null)
+                mappingStore.addMapping(inv1.get(0), navigationSuffix);
+        }
         if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) &&
                 dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_EXPRESSION)) {
             Tree jumpExpression = dstStatementNode.getChild(0);

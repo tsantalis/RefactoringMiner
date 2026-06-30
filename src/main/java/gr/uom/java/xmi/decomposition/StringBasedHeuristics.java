@@ -199,6 +199,18 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
+				if(variableDeclarations1.size() == variableDeclarations2.size() && variableDeclarations1.size() > 0) {
+					VariableDeclaration vd1 = variableDeclarations1.get(0);
+					VariableDeclaration vd2 = variableDeclarations2.get(0);
+					if(vd1.getVariableName().equals(vd2.getVariableName()) && vd2.getInitializer() != null) {
+						String initializer = vd2.getInitializer().getString();
+						if(initializer.startsWith(CodeElementType.TRY_STATEMENT.getName()) ||
+								initializer.startsWith(CodeElementType.WHEN_STATEMENT.getName()) ||
+								initializer.startsWith(CodeElementType.IF_STATEMENT.getName())) {
+							return true;
+						}
+					}
+				}
 				if(castExpressions1.size() > 0 && castExpressions2.size() > 0 && castExpressions1.size() == castExpressions2.size()) {
 					String cast1 = castExpressions1.get(0).getString();
 					String cast2 = castExpressions2.get(0).getString();

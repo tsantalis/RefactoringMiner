@@ -76,6 +76,10 @@ public class JavaToKotlinMigration {
                 letFound = true;
             }
         }
+        Tree assignment1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.ASSIGNMENT);
+        if(assignment1 != null && !dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
+            children1.remove(0);
+        }
         //remove from children1 simple names corresponding to interpolated identifiers
         if(interpolatedIdentifiers2.size() > 0 || interpolatedExpressions2.size() > 0) {
             Iterator<Tree> iter1 = children1.iterator();

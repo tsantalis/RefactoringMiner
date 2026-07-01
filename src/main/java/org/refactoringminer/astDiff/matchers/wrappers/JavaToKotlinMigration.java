@@ -755,6 +755,8 @@ public class JavaToKotlinMigration {
     public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore, 
             Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
         Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
+        if(variableDeclaration2 == null)
+            variableDeclaration2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.VARIABLE_DECLARATION);
         if(variableDeclaration2 != null) {
             Tree name1 = TreeUtilFunctions.findChildByType(srcAttr, LANG1.SIMPLE_NAME);
             Tree name2 = TreeUtilFunctions.findChildByType(variableDeclaration2, LANG2.SIMPLE_NAME);
@@ -763,6 +765,25 @@ public class JavaToKotlinMigration {
             }
             Tree type1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.SIMPLE_TYPE);
             Tree type2 = TreeUtilFunctions.findChildByType(variableDeclaration2, LANG2.USER_TYPE);
+            if(type1 != null && type2 != null) {
+                mappingStore.addMapping(type1, type2);
+                if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
+                    mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
+                }
+            }
+            Tree annotation1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.MARKER_ANNOTATION);
+            Tree modifiers2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.MODIFIERS);
+            handleAnnotationMapping(mappingStore, annotation1, modifiers2, LANG1, LANG2);
+        }
+        if(dstAttr.getType().name.equals(LANG2.CLASS_PARAMETER)) {
+            mappingStore.addMapping(srcAttr, dstAttr);
+            Tree name1 = TreeUtilFunctions.findChildByType(srcAttr, LANG1.SIMPLE_NAME);
+            Tree name2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.SIMPLE_NAME);
+            if(name1 != null && name2 != null) {
+                mappingStore.addMapping(name1, name2);
+            }
+            Tree type1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.SIMPLE_TYPE);
+            Tree type2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.USER_TYPE);
             if(type1 != null && type2 != null) {
                 mappingStore.addMapping(type1, type2);
                 if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {

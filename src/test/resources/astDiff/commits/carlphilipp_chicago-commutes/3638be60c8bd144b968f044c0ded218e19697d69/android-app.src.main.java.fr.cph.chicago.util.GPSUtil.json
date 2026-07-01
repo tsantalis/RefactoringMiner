@@ -241,6 +241,17 @@
   "firstEndPos" : 452,
   "secondEndPos" : 1168
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "FASTEST_INTERVAL",
+  "secondLabel" : "FASTEST_INTERVAL",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 471,
+  "secondPos" : 1173,
+  "firstEndPos" : 487,
+  "secondEndPos" : 1189
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "1000",
@@ -285,6 +296,17 @@
   "firstEndPos" : 563,
   "secondEndPos" : 1278
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "MIN_TIME_BW_UPDATES",
+  "secondLabel" : "MIN_TIME_BW_UPDATES",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 582,
+  "secondPos" : 1283,
+  "firstEndPos" : 601,
+  "secondEndPos" : 1302
+}, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// 10 sec",
@@ -317,6 +339,50 @@
   "secondPos" : 308,
   "firstEndPos" : 637,
   "secondEndPos" : 315
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "GoogleApiClient",
+  "secondLabel" : "GoogleApiClient",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 644,
+  "secondPos" : 337,
+  "firstEndPos" : 659,
+  "secondEndPos" : 352
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 644,
+  "secondPos" : 337,
+  "firstEndPos" : 659,
+  "secondEndPos" : 352
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "googleApiClient",
+  "secondLabel" : "googleApiClient",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 660,
+  "secondPos" : 320,
+  "firstEndPos" : 675,
+  "secondEndPos" : 335
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "class_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "primary_constructor",
+  "firstPos" : 660,
+  "secondPos" : 308,
+  "firstEndPos" : 675,
+  "secondEndPos" : 352
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",

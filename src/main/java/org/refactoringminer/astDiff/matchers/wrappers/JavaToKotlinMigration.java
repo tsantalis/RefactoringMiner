@@ -786,12 +786,21 @@ public class JavaToKotlinMigration {
                 List<Tree> numberLiteral2 = null;
                 Tree typeName1 = TreeUtilFunctions.findChildByType(srcClassAnnotationTree, LANG1.SIMPLE_NAME);
                 Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
+                Tree at = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.AT);
+                if(at != null) {
+                    at.setLabel("");
+                    mappingStore.addMapping(srcClassAnnotationTree, at);
+                }
                 if(userType2 == null) {
                     Tree constuctorInvocation2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.CONSTRUCTOR_INVOCATION);
                     if(constuctorInvocation2 != null) {
                         stringLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.STRING_LITERAL);
                         numberLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.INTEGER_LITERAL);
                         userType2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.USER_TYPE);
+                        Tree valueArguments2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                        if(valueArguments2 != null) {
+                            mappingStore.addMapping(srcClassAnnotationTree, valueArguments2);
+                        }
                     }
                 }
                 if(typeName1 != null && userType2 != null && userType2.getChildren().size() > 0) {

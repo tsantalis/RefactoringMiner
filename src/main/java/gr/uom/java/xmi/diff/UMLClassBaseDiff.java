@@ -17,6 +17,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.FunctionType;
 import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.ModuleContainer;
@@ -645,6 +646,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(!moveCodeMappers.contains(caller))
 						moveCodeMappers.add(caller);
 					refactorings.add(ref);
+				}
+			}
+		}
+		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+			for(UMLOperation removedOperation : removedOperations) {
+				if(removedOperation.isConstructor()) {
+					for(UMLInitializer addedInitializer : addedInitializers) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, addedInitializer, this);
+						if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
 				}
 			}
 		}

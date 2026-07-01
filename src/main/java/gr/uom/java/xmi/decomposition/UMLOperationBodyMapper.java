@@ -288,6 +288,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	public UMLOperationBodyMapper(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
+		this.container1 = removedOperation;
+		this.container2 = addedOperation;
+		this.LANG1 = PathFileUtils.getLang(container1.getLocationInfo().getFilePath());
+		this.LANG2 = PathFileUtils.getLang(container2.getLocationInfo().getFilePath());
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		this.parameterNameList1 = container1.getParameterNameList();
+		this.parameterNameList2 = container2.getParameterNameList();
+		this.moveCode = true;
+		OperationBody body1 = removedOperation.getBody();
+		OperationBody body2 = addedOperation.getBody();
+		if(body1 != null && body2 != null) {
+			List<AbstractCodeFragment> leaves1 = new ArrayList<>(body1.getCompositeStatement().getLeaves());
+			List<AbstractCodeFragment> leaves2 = new ArrayList<>(body2.getCompositeStatement().getLeaves());
+			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body2.getCompositeStatement().getInnerNodes());
+			List<CompositeStatementObject> innerNodes2 = new ArrayList<>(body2.getCompositeStatement().getInnerNodes());
+			resetNodes(leaves1);
+			resetNodes(leaves2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			resetNodes(innerNodes1);
+			resetNodes(innerNodes2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
+		}
+	}
+
 	public UMLOperationBodyMapper(UMLOperationBodyMapper mapper1, VariableDeclarationContainer addedOperation, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;

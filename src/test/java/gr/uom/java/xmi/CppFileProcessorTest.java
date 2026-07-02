@@ -214,9 +214,9 @@ class CppFileProcessorTest {
 		processor.processCppFile(filePath, fileContent, false);
 
 		UMLClass moduleClass = findClass(model.getClassList(), "ranges");
-		UMLOperation visit = findOperation(moduleClass.getOperations(), "visit");
+		UMLOperation testedOperation = findOperation(moduleClass.getOperations(), "visit");
 
-		List<CompositeStatementObject> enhancedForStatements = visit.getBody().getCompositeStatement().getInnerNodes().stream()
+		List<CompositeStatementObject> enhancedForStatements = testedOperation.getBody().getCompositeStatement().getInnerNodes().stream()
 				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT))
 				.toList();
 		assertEquals(1, enhancedForStatements.size());
@@ -232,7 +232,7 @@ class CppFileProcessorTest {
 				.filter(statement -> statement.getString().contains("value += 1"))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected range-for body statement"));
-		assertTrue(visit.getVariableDeclarationsInScope(loopBodyStatement.getLocationInfo()).stream()
+		assertTrue(testedOperation.getVariableDeclarationsInScope(loopBodyStatement.getLocationInfo()).stream()
 				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("value")));
 	}
 
@@ -254,15 +254,15 @@ class CppFileProcessorTest {
 		processor.processCppFile(filePath, fileContent, false);
 
 		UMLClass moduleClass = findClass(model.getClassList(), "errors");
-		UMLOperation handle = findOperation(moduleClass.getOperations(), "handle");
+		UMLOperation testedOperation = findOperation(moduleClass.getOperations(), "handle");
 
-		List<CompositeStatementObject> tryStatements = handle.getBody().getCompositeStatement().getInnerNodes().stream()
+		List<CompositeStatementObject> tryStatements = testedOperation.getBody().getCompositeStatement().getInnerNodes().stream()
 				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT))
 				.toList();
 		assertEquals(1, tryStatements.size());
 		TryStatementObject tryStatement = (TryStatementObject) tryStatements.get(0);
 
-		List<CompositeStatementObject> catchClauses = handle.getBody().getCompositeStatement().getInnerNodes().stream()
+		List<CompositeStatementObject> catchClauses = testedOperation.getBody().getCompositeStatement().getInnerNodes().stream()
 				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE))
 				.toList();
 		assertEquals(1, catchClauses.size());
@@ -279,7 +279,7 @@ class CppFileProcessorTest {
 				.filter(statement -> statement.getString().contains("recover"))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected catch body statement"));
-		assertTrue(handle.getVariableDeclarationsInScope(catchBodyStatement.getLocationInfo()).stream()
+		assertTrue(testedOperation.getVariableDeclarationsInScope(catchBodyStatement.getLocationInfo()).stream()
 				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("ex")));
 	}
 

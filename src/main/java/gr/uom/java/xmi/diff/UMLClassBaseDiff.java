@@ -662,6 +662,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+				else {
+					for(UMLAttribute addedAttribute : addedAttributes) {
+						if(addedAttribute.getCustomGetter().isPresent()) {
+							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, addedAttribute.getCustomGetter().get(), this);
+							if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
+								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
+								if(!moveCodeMappers.contains(moveCodeMapper))
+									moveCodeMappers.add(moveCodeMapper);
+								refactorings.add(ref);
+							}
+						}
+					}
+				}
 			}
 		}
 		MappingOptimizer optimizer = new MappingOptimizer(this);

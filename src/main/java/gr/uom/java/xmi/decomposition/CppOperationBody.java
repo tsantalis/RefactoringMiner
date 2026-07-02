@@ -9,25 +9,29 @@ import org.eclipse.cdt.core.dom.ast.IASTBreakStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCaseStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTContinueStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDefaultStatement;
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTDoStatement;
 import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement;
 import org.eclipse.cdt.core.dom.ast.IASTForStatement;
 import org.eclipse.cdt.core.dom.ast.IASTGotoStatement;
 import org.eclipse.cdt.core.dom.ast.IASTIfStatement;
 import org.eclipse.cdt.core.dom.ast.IASTLabelStatement;
+import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTNullStatement;
 import org.eclipse.cdt.core.dom.ast.IASTProblemStatement;
 import org.eclipse.cdt.core.dom.ast.IASTReturnStatement;
+import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
-import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTStructuredBindingDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTryBlockStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
@@ -77,13 +81,9 @@ public class CppOperationBody extends OperationBody {
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
 		//https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.cdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcdt%2Fcore%2Fdom%2Fast%2FIASTStatement.html
 		if(statement instanceof IASTCompoundStatement compoundStatement) {
-			// IASTCompoundStatement is the base block API; ICPPASTCompoundStatement is the C++ block form with implicit destructor-name ownership.
 			IASTStatement[] blockStatements = compoundStatement.getStatements();
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, compoundStatement, parent.getDepth()+1, CodeElementType.BLOCK, fileContent);
 			parent.addStatement(child);
-			if(compoundStatement instanceof ICPPASTCompoundStatement cppCompoundStatement) {
-				// TODO: model cppCompoundStatement.getImplicitDestructorNames() when C++ implicit destructor calls are represented in operation bodies.
-			}
 			addStatementInVariableScopes(child);
 			for(IASTStatement blockStatement : blockStatements) {
 				processStatement(sourceFolder, filePath, child, blockStatement, fileContent);
@@ -108,7 +108,7 @@ public class CppOperationBody extends OperationBody {
 			StatementObject child = new StatementObject(sourceFolder, filePath, declarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
-			// TODO: teach CppVisitor to extract C++ local variable declarations so this updates active scope.
+			// TODO: handle non-simple C++ local declarations such as structured bindings.
 			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 		}
 		else if(statement instanceof IASTDefaultStatement defaultStatement) {
@@ -134,20 +134,19 @@ public class CppOperationBody extends OperationBody {
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTForStatement forStatement) {
-			// IASTForStatement models a generic for loop; ICPPASTForStatement adds C++ condition declarations and implicit destructor names.
+			// IASTForStatement models a generic for loop; ICPPASTForStatement adds C++ condition declarations.
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, forStatement, parent.getDepth()+1, CodeElementType.FOR_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(forStatement.getInitializerStatement() instanceof IASTExpressionStatement initializerStatement && initializerStatement.getExpression() != null) {
 				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, initializerStatement.getExpression(), CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent);
 				child.addExpression(abstractExpression);
 			}
-			else if(forStatement.getInitializerStatement() != null) {
-				// TODO: teach CppVisitor to extract C++ declaration initializers so variables declared in for initializers are scoped to this for statement.
+			else if(forStatement.getInitializerStatement() != null && !addDeclarationStatementExpression(sourceFolder, filePath, child, forStatement.getInitializerStatement(), CodeElementType.FOR_STATEMENT_INITIALIZER, fileContent)) {
 				processStatement(sourceFolder, filePath, child, forStatement.getInitializerStatement(), fileContent);
 			}
 			if(forStatement instanceof ICPPASTForStatement cppForStatement) {
 				if(cppForStatement.getConditionDeclaration() != null) {
-					// TODO: teach CppVisitor to extract C++ condition declarations so variables declared in for conditions are scoped to this for statement.
+					addDeclarationExpression(sourceFolder, filePath, child, cppForStatement.getConditionDeclaration(), CodeElementType.FOR_STATEMENT_CONDITION, fileContent);
 				}
 			}
 			if(forStatement.getConditionExpression() != null) {
@@ -176,11 +175,11 @@ public class CppOperationBody extends OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(ifStatement instanceof ICPPASTIfStatement cppIfStatement) {
-				if(cppIfStatement.getInitializerStatement() != null) {
+				if(cppIfStatement.getInitializerStatement() != null && !addDeclarationStatementExpression(sourceFolder, filePath, child, cppIfStatement.getInitializerStatement(), CodeElementType.IF_STATEMENT_CONDITION, fileContent)) {
 					processStatement(sourceFolder, filePath, child, cppIfStatement.getInitializerStatement(), fileContent);
 				}
 				if(cppIfStatement.getConditionDeclaration() != null) {
-					// TODO: teach CppVisitor to extract C++ condition declarations so variables declared in if conditions are scoped to this if statement.
+					addDeclarationExpression(sourceFolder, filePath, child, cppIfStatement.getConditionDeclaration(), CodeElementType.IF_STATEMENT_CONDITION, fileContent);
 				}
 			}
 			if(ifStatement.getConditionExpression() != null) {
@@ -188,12 +187,15 @@ public class CppOperationBody extends OperationBody {
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			if(ifStatement.getThenClause() != null) {
 				processStatement(sourceFolder, filePath, child, ifStatement.getThenClause(), fileContent);
 			}
 			if(ifStatement.getElseClause() != null) {
 				processStatement(sourceFolder, filePath, child, ifStatement.getElseClause(), fileContent);
 			}
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof IASTLabelStatement labelStatement) {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, labelStatement, parent.getDepth()+1, CodeElementType.LABELED_STATEMENT.setName(labelStatement.getName().toString()), fileContent);
@@ -223,11 +225,11 @@ public class CppOperationBody extends OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, switchStatement, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(switchStatement instanceof ICPPASTSwitchStatement cppSwitchStatement) {
-				if(cppSwitchStatement.getInitializerStatement() != null) {
+				if(cppSwitchStatement.getInitializerStatement() != null && !addDeclarationStatementExpression(sourceFolder, filePath, child, cppSwitchStatement.getInitializerStatement(), CodeElementType.SWITCH_STATEMENT_CONDITION, fileContent)) {
 					processStatement(sourceFolder, filePath, child, cppSwitchStatement.getInitializerStatement(), fileContent);
 				}
 				if(cppSwitchStatement.getControllerDeclaration() != null) {
-					// TODO: teach CppVisitor to extract C++ controller declarations so variables declared in switch controllers are scoped to this switch statement.
+					addDeclarationExpression(sourceFolder, filePath, child, cppSwitchStatement.getControllerDeclaration(), CodeElementType.SWITCH_STATEMENT_CONDITION, fileContent);
 				}
 			}
 			if(switchStatement.getControllerExpression() != null) {
@@ -235,9 +237,12 @@ public class CppOperationBody extends OperationBody {
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			if(switchStatement.getBody() != null) {
 				processStatement(sourceFolder, filePath, child, switchStatement.getBody(), fileContent);
 			}
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof IASTWhileStatement whileStatement) {
 			// IASTWhileStatement uses a condition expression; ICPPASTWhileStatement also supports C++ condition declarations and scope.
@@ -245,7 +250,7 @@ public class CppOperationBody extends OperationBody {
 			parent.addStatement(child);
 			if(whileStatement instanceof ICPPASTWhileStatement cppWhileStatement) {
 				if(cppWhileStatement.getConditionDeclaration() != null) {
-					// TODO: teach CppVisitor to extract C++ condition declarations so variables declared in while conditions are scoped to this while statement.
+					addDeclarationExpression(sourceFolder, filePath, child, cppWhileStatement.getConditionDeclaration(), CodeElementType.WHILE_STATEMENT_CONDITION, fileContent);
 				}
 			}
 			if(whileStatement.getCondition() != null) {
@@ -253,23 +258,114 @@ public class CppOperationBody extends OperationBody {
 				child.addExpression(abstractExpression);
 			}
 			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			if(whileStatement.getBody() != null) {
 				processStatement(sourceFolder, filePath, child, whileStatement.getBody(), fileContent);
 			}
-		}
-		else if(statement instanceof ICPPASTCatchHandler catchHandler) {
-			// composite
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof ICPPASTRangeBasedForStatement rangeBasedForStatement) {
-			// composite
+			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, rangeBasedForStatement, parent.getDepth()+1, CodeElementType.ENHANCED_FOR_STATEMENT, fileContent);
+			parent.addStatement(child);
+			addRangeBasedForDeclaration(sourceFolder, filePath, child, rangeBasedForStatement.getDeclaration(), fileContent);
+			if(rangeBasedForStatement.getInitializerClause() != null) {
+				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, rangeBasedForStatement.getInitializerClause(), CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent);
+				child.addExpression(abstractExpression);
+			}
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			if(rangeBasedForStatement.getBody() != null) {
+				processStatement(sourceFolder, filePath, child, rangeBasedForStatement.getBody(), fileContent);
+			}
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof ICPPASTTryBlockStatement tryBlockStatement) {
-			// composite
+			TryStatementObject child = new TryStatementObject(sourceFolder, filePath, tryBlockStatement, parent.getDepth()+1, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
+			processChildStatements(sourceFolder, filePath, child, tryBlockStatement.getTryBody(), fileContent);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
+			for(ICPPASTCatchHandler catchHandler : tryBlockStatement.getCatchHandlers()) {
+				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(sourceFolder, filePath, catchHandler, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+				child.addCatchClause(catchClauseStatementObject);
+				parent.addStatement(catchClauseStatementObject);
+				catchClauseStatementObject.setTryContainer(child);
+				addCatchHandlerDeclaration(sourceFolder, filePath, catchClauseStatementObject, catchHandler.getDeclaration(), fileContent);
+				addStatementInVariableScopes(catchClauseStatementObject);
+				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+				processChildStatements(sourceFolder, filePath, catchClauseStatementObject, catchHandler.getCatchBody(), fileContent);
+				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
+			}
 		}
 		else if(statement instanceof IGNUASTGotoStatement gnuGotoStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, gnuGotoStatement, parent.getDepth()+1, CodeElementType.GOTO_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
+		}
+	}
+	// Normalizes the C++ range-for declaration into the same enhanced-for shape used by other languages:
+	// loop variable declarations plus parameter-name expressions on the loop composite.
+	private void addRangeBasedForDeclaration(String sourceFolder, String filePath, CompositeStatementObject child, IASTDeclaration declaration, String fileContent) {
+		if(declaration instanceof ICPPASTStructuredBindingDeclaration) {
+			AbstractExpression destructuringDeclaration = new AbstractExpression(sourceFolder, filePath, declaration, CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION, container, activeVariableDeclarations, fileContent);
+			child.addExpression(destructuringDeclaration);
+		}
+		else if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent);
+				child.addVariableDeclaration(variableDeclaration);
+				IASTName name = declarator.getName();
+				if(name != null) {
+					AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, name, CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME, container, activeVariableDeclarations, fileContent);
+					child.addExpression(variableDeclarationName);
+				}
+			}
+		}
+	}
+
+	// Take the C++ catch header declaration and attach it to the catch clause node.
+	private void addCatchHandlerDeclaration(String sourceFolder, String filePath, CompositeStatementObject catchClause, IASTDeclaration declaration, String fileContent) {
+		if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				IASTName name = declarator.getName();
+				if(name != null && !name.toString().isEmpty()) {
+					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent);
+					catchClause.addVariableDeclaration(variableDeclaration);
+					AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, name, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent);
+					catchClause.addExpression(variableDeclarationName);
+				}
+			}
+		}
+	}
+	// Checks whether the statement is a declaration statement, like: int i = 0;
+	private boolean addDeclarationStatementExpression(String sourceFolder, String filePath, CompositeStatementObject child, IASTStatement statement, CodeElementType codeElementType, String fileContent) {
+		if(statement instanceof IASTDeclarationStatement declarationStatement) {
+			addDeclarationExpression(sourceFolder, filePath, child, declarationStatement.getDeclaration(), codeElementType, fileContent);
+			return true;
+		}
+		return false;
+	}
+	// Helper for turning a CDT declaration node into an AbstractExpression.
+	private void addDeclarationExpression(String sourceFolder, String filePath, CompositeStatementObject child, IASTDeclaration declaration, CodeElementType codeElementType, String fileContent) {
+		if(declaration != null) {
+			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, declaration, codeElementType, container, activeVariableDeclarations, fileContent);
+			child.addExpression(abstractExpression);
+		}
+	}
+	// Given the body of a try or catch, process its contents under the try/catch node. If it is a block, unwrap the block and process each statement inside
+	private void processChildStatements(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
+		if(statement instanceof IASTCompoundStatement compoundStatement) {
+			for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+				processStatement(sourceFolder, filePath, parent, blockStatement, fileContent);
+			}
+		}
+		else if(statement != null) {
+			processStatement(sourceFolder, filePath, parent, statement, fileContent);
 		}
 	}
 }

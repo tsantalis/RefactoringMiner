@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTryBlockStatement;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 import org.jetbrains.kotlin.psi.KtFile;
@@ -35,6 +36,11 @@ public class TryStatementObject extends CompositeStatementObject {
 	}
 
 	public TryStatementObject(String sourceFolder, String filePath, Swc4jAstTryStmt statement, int depth, String fileContent) {
+		super(sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, fileContent);
+		this.catchClauses = new ArrayList<CompositeStatementObject>();
+	}
+
+	public TryStatementObject(String sourceFolder, String filePath, ICPPASTTryBlockStatement statement, int depth, String fileContent) {
 		super(sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT, fileContent);
 		this.catchClauses = new ArrayList<CompositeStatementObject>();
 	}

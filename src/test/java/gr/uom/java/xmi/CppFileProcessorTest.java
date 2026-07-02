@@ -3,12 +3,19 @@ package gr.uom.java.xmi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.TryStatementObject;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 class CppFileProcessorTest {
 	@Test
@@ -190,6 +197,129 @@ class CppFileProcessorTest {
 		assertEquals(Visibility.PRIVATE, findOperation(widget.getOperations(), "hidden").getVisibility());
 	}
 
+	@Test
+	void processesCppRangeBasedForStatementsAsEnhancedForStatements() {
+		String filePath = "src/ranges.cpp";
+		String fileContent = String.join("\n",
+				"void visit() {",
+				"  int values[3] = {1, 2, 3};",
+				"  for (int value : values) {",
+				"    value += 1;",
+				"  }",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "ranges");
+		UMLOperation testedOperation = findOperation(moduleClass.getOperations(), "visit");
+
+		List<CompositeStatementObject> enhancedForStatements = testedOperation.getBody().getCompositeStatement().getInnerNodes().stream()
+				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT))
+				.toList();
+		assertEquals(1, enhancedForStatements.size());
+
+		CompositeStatementObject enhancedFor = enhancedForStatements.get(0);
+		assertEquals(List.of("value"), enhancedFor.getVariableDeclarations().stream()
+				.map(VariableDeclaration::getVariableName)
+				.toList());
+		assertTrue(enhancedFor.getExpressions().stream()
+				.anyMatch(expression -> expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_EXPRESSION)));
+
+		AbstractCodeFragment loopBodyStatement = enhancedFor.getLeaves().stream()
+				.filter(statement -> statement.getString().contains("value += 1"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected range-for body statement"));
+		assertTrue(testedOperation.getVariableDeclarationsInScope(loopBodyStatement.getLocationInfo()).stream()
+				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("value")));
+	}
+
+	@Test
+	void processesCppTryStatementsWithCatchClauses() {
+		String filePath = "src/errors.cpp";
+		String fileContent = String.join("\n",
+				"void handle() {",
+				"  try {",
+				"    risky();",
+				"  } catch (const int& ex) {",
+				"    recover(ex);",
+				"  }",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "errors");
+		UMLOperation testedOperation = findOperation(moduleClass.getOperations(), "handle");
+
+		List<CompositeStatementObject> tryStatements = testedOperation.getBody().getCompositeStatement().getInnerNodes().stream()
+				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT))
+				.toList();
+		assertEquals(1, tryStatements.size());
+		TryStatementObject tryStatement = (TryStatementObject) tryStatements.get(0);
+
+		List<CompositeStatementObject> catchClauses = testedOperation.getBody().getCompositeStatement().getInnerNodes().stream()
+				.filter(statement -> statement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE))
+				.toList();
+		assertEquals(1, catchClauses.size());
+
+		CompositeStatementObject catchClause = catchClauses.get(0);
+		assertEquals(List.of(catchClause), tryStatement.getCatchClauses());
+		assertTrue(catchClause.getTryContainer().isPresent());
+		assertSame(tryStatement, catchClause.getTryContainer().get());
+		assertEquals(List.of("ex"), catchClause.getVariableDeclarations().stream()
+				.map(VariableDeclaration::getVariableName)
+				.toList());
+
+		AbstractCodeFragment catchBodyStatement = catchClause.getLeaves().stream()
+				.filter(statement -> statement.getString().contains("recover"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected catch body statement"));
+		assertTrue(testedOperation.getVariableDeclarationsInScope(catchBodyStatement.getLocationInfo()).stream()
+				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals("ex")));
+	}
+
+	@Test
+	void scopesCppControlStatementDeclarationsToTheirBodies() {
+		String filePath = "src/controls.cpp";
+		String fileContent = String.join("\n",
+				"void controls() {",
+				"  if (int flag = 1) {",
+				"    flag += 1;",
+				"  }",
+				"  while (int item = 1) {",
+				"    item += 1;",
+				"    break;",
+				"  }",
+				"  switch (int code = 1) {",
+				"    case 1:",
+				"      code += 1;",
+				"      break;",
+				"  }",
+				"  for (int i = 0; int keep = i < 1; ++i) {",
+				"    keep += 1;",
+				"  }",
+				"}") + "\n";
+
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+
+		processor.processCppFile(filePath, fileContent, false);
+
+		UMLClass moduleClass = findClass(model.getClassList(), "controls");
+		UMLOperation controls = findOperation(moduleClass.getOperations(), "controls");
+
+		assertVariableInScope(controls, "flag += 1", "flag");
+		assertVariableInScope(controls, "item += 1", "item");
+		assertVariableInScope(controls, "code += 1", "code");
+		assertVariableInScope(controls, "keep += 1", "keep");
+		assertVariableInScope(controls, "keep += 1", "i");
+	}
+
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()
 				.filter(operation -> operation.getName().equals(name))
@@ -208,5 +338,14 @@ class CppFileProcessorTest {
 		return operation.getParameterTypeList().stream()
 				.map(Object::toString)
 				.toList();
+	}
+
+	private static void assertVariableInScope(UMLOperation operation, String statementText, String variableName) {
+		AbstractCodeFragment statement = operation.getBody().getCompositeStatement().getLeaves().stream()
+				.filter(leaf -> leaf.getString().contains(statementText))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected statement: " + statementText));
+		assertTrue(operation.getVariableDeclarationsInScope(statement.getLocationInfo()).stream()
+				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals(variableName)));
 	}
 }

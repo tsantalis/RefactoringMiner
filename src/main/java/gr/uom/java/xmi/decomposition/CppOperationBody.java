@@ -307,9 +307,22 @@ public class CppOperationBody extends OperationBody {
 	// Normalizes the C++ range-for declaration into the same enhanced-for shape used by other languages:
 	// loop variable declarations plus parameter-name expressions on the loop composite.
 	private void addRangeBasedForDeclaration(String sourceFolder, String filePath, CompositeStatementObject child, IASTDeclaration declaration, String fileContent) {
-		if(declaration instanceof ICPPASTStructuredBindingDeclaration) {
+		if(declaration instanceof ICPPASTStructuredBindingDeclaration structuredBindingDeclaration) {
 			AbstractExpression destructuringDeclaration = new AbstractExpression(sourceFolder, filePath, declaration, CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION, container, activeVariableDeclarations, fileContent);
 			child.addExpression(destructuringDeclaration);
+			for(IASTDeclarator declarator : structuredBindingDeclaration.getDeclarators()) {
+				VariableDeclaration variableDeclaration =
+			            new VariableDeclaration(
+			                sourceFolder,
+			                filePath,
+			                declarator,
+			                structuredBindingDeclaration.getDeclSpecifier(),
+			                container,
+			                activeVariableDeclarations,
+			                fileContent
+			            );
+		        child.addVariableDeclaration(variableDeclaration);
+			}
 		}
 		else if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {

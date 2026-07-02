@@ -68,6 +68,10 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTemplateSpecialization
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTUsingDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTUsingDirective;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTVisibilityLabel;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTParameterDeclaration;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeTemplateParameter;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateParameter;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplatedTypeTemplateParameter;
 import org.eclipse.cdt.internal.core.index.EmptyCIndex;
 import org.eclipse.core.runtime.CoreException;
 import org.refactoringminer.util.PathFileUtils;
@@ -288,7 +292,7 @@ public class CppFileProcessor {
 				//Explicit template instantiation forces the C++ compiler to generate code for a template with specific arguments. This allows you to split template definitions into separate .h and .cpp files.
 			}
 			else if(declaration instanceof CPPASTTemplateDeclaration cppTemplateDeclaration) {
-				//template declaration
+				processTemplateDeclaration(cppTemplateDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
 			}
 			else if(declaration instanceof CPPASTTemplateSpecialization cppTemplateSpecialization) {
 				//Template specialization allows you to override the generic behavior of a C++ template and define a custom implementation for specific data types or conditions.
@@ -489,6 +493,87 @@ public class CppFileProcessor {
 		return operation;
 	}
 
+	private void processTemplateDeclaration(CPPASTTemplateDeclaration templateDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+		IASTDeclaration nestedDeclaration = templateDeclaration.getDeclaration();
+		if(nestedDeclaration instanceof IASTFunctionDefinition functionDefinition) {
+			UMLOperation operation = processFunctionDefinition(functionDefinition, packageName, sourceFolder, parentContainer, currentVisibility);
+			addTemplateParameters(operation, templateDeclaration, sourceFolder);
+			operation.setActualSignature(templateDeclaration.getRawSignature());
+			parentContainer.addOperation(operation);
+		}
+		else if(nestedDeclaration instanceof IASTSimpleDeclaration simpleDeclaration) {
+			processTemplateSimpleDeclaration(templateDeclaration, simpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
+		}
+	}
+
+	private void processTemplateSimpleDeclaration(CPPASTTemplateDeclaration templateDeclaration, IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
+		if(declSpecifier instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
+			if(compositeTypeSpecifier.getName() == null) {
+				return;
+			}
+			String className = compositeTypeSpecifier.getName().toString();
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
+			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, Collections.emptyList());
+			umlClass.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {
+				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
+			}
+			for(ICPPASTTemplateParameter parameter : templateDeclaration.getTemplateParameters()) {
+				UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
+				if(umlTypeParameter != null) {
+					umlClass.addTypeParameter(umlTypeParameter);
+				}
+			}
+			umlClass.setActualSignature(templateDeclaration.getRawSignature());
+			processDeclarations(packageName + "." + className, sourceFolder, umlClass, compositeTypeSpecifier.getMembers());
+			this.umlModel.addClass(umlClass);
+		}
+		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
+					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility);
+					addTemplateParameters(operation, templateDeclaration, sourceFolder);
+					operation.setActualSignature(templateDeclaration.getRawSignature());
+					parentContainer.addOperation(operation);
+				}
+			}
+		}
+	}
+
+	private void addTemplateParameters(UMLOperation operation, CPPASTTemplateDeclaration templateDeclaration, String sourceFolder) {
+		for(ICPPASTTemplateParameter parameter : templateDeclaration.getTemplateParameters()) {
+			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
+			if(umlTypeParameter != null) {
+				operation.addTypeParameter(umlTypeParameter);
+			}
+		}
+	}
+
+	// Skip unnamed template parameters, such as template <int> class Buffer {};
+	private UMLTypeParameter createTemplateParameter(ICPPASTTemplateParameter parameter, String sourceFolder) {
+		String name = null;
+		// A normal type parameter: typename/class T
+		if(parameter instanceof ICPPASTSimpleTypeTemplateParameter typeParameter && typeParameter.getName() != null) {
+			name = typeParameter.getName().toString();
+		}
+		// A non-type template parameter: int N
+		else if(parameter instanceof ICPPASTParameterDeclaration nonTypeParameter && nonTypeParameter.getDeclarator() != null && nonTypeParameter.getDeclarator().getName() != null) {
+			name = nonTypeParameter.getDeclarator().getName().toString();
+		}
+		// A template-template parameter: template <typename> class Container
+		else if(parameter instanceof ICPPASTTemplatedTypeTemplateParameter templateTemplateParameter && templateTemplateParameter.getName() != null) {
+			name = templateTemplateParameter.getName().toString();
+		}
+		// Unnamed parameters have no UMLTypeParameter name to store.
+		if(name == null || name.isBlank()) {
+			return null;
+		}
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, parameter, CodeElementType.TYPE_PARAMETER, fileContent);
+		return new UMLTypeParameter(name, locationInfo);
+	}
+
+	
 	private String extractParameterName(IASTParameterDeclaration parameter, int index) {
 		IASTDeclarator declarator = parameter.getDeclarator();
 		if(declarator != null && declarator.getName() != null) {

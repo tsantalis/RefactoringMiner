@@ -137,11 +137,7 @@ public class CppOperationBody extends OperationBody {
 			// IASTForStatement models a generic for loop; ICPPASTForStatement adds C++ condition declarations.
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, forStatement, parent.getDepth()+1, CodeElementType.FOR_STATEMENT, fileContent);
 			parent.addStatement(child);
-			if(forStatement.getInitializerStatement() instanceof IASTExpressionStatement initializerStatement && initializerStatement.getExpression() != null) {
-				AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, initializerStatement.getExpression(), CodeElementType.FOR_STATEMENT_INITIALIZER, container, activeVariableDeclarations, fileContent);
-				child.addExpression(abstractExpression);
-			}
-			else if(forStatement.getInitializerStatement() != null && !addDeclarationStatementExpression(sourceFolder, filePath, child, forStatement.getInitializerStatement(), CodeElementType.FOR_STATEMENT_INITIALIZER, fileContent)) {
+			if(forStatement.getInitializerStatement() != null) {
 				processStatement(sourceFolder, filePath, child, forStatement.getInitializerStatement(), fileContent);
 			}
 			if(forStatement instanceof ICPPASTForStatement cppForStatement) {
@@ -175,7 +171,7 @@ public class CppOperationBody extends OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, ifStatement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(ifStatement instanceof ICPPASTIfStatement cppIfStatement) {
-				if(cppIfStatement.getInitializerStatement() != null && !addDeclarationStatementExpression(sourceFolder, filePath, child, cppIfStatement.getInitializerStatement(), CodeElementType.IF_STATEMENT_CONDITION, fileContent)) {
+				if(cppIfStatement.getInitializerStatement() != null) {
 					processStatement(sourceFolder, filePath, child, cppIfStatement.getInitializerStatement(), fileContent);
 				}
 				if(cppIfStatement.getConditionDeclaration() != null) {
@@ -225,7 +221,7 @@ public class CppOperationBody extends OperationBody {
 			CompositeStatementObject child = new CompositeStatementObject(sourceFolder, filePath, switchStatement, parent.getDepth()+1, CodeElementType.SWITCH_STATEMENT, fileContent);
 			parent.addStatement(child);
 			if(switchStatement instanceof ICPPASTSwitchStatement cppSwitchStatement) {
-				if(cppSwitchStatement.getInitializerStatement() != null && !addDeclarationStatementExpression(sourceFolder, filePath, child, cppSwitchStatement.getInitializerStatement(), CodeElementType.SWITCH_STATEMENT_CONDITION, fileContent)) {
+				if(cppSwitchStatement.getInitializerStatement() != null) {
 					processStatement(sourceFolder, filePath, child, cppSwitchStatement.getInitializerStatement(), fileContent);
 				}
 				if(cppSwitchStatement.getControllerDeclaration() != null) {
@@ -341,14 +337,6 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 		}
-	}
-	// Checks whether the statement is a declaration statement, like: int i = 0;
-	private boolean addDeclarationStatementExpression(String sourceFolder, String filePath, CompositeStatementObject child, IASTStatement statement, CodeElementType codeElementType, String fileContent) {
-		if(statement instanceof IASTDeclarationStatement declarationStatement) {
-			addDeclarationExpression(sourceFolder, filePath, child, declarationStatement.getDeclaration(), codeElementType, fileContent);
-			return true;
-		}
-		return false;
 	}
 	// Helper for turning a CDT declaration node into an AbstractExpression.
 	private void addDeclarationExpression(String sourceFolder, String filePath, CompositeStatementObject child, IASTDeclaration declaration, CodeElementType codeElementType, String fileContent) {

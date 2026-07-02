@@ -283,7 +283,12 @@ public class CppOperationBody extends OperationBody {
 			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
 			addAllInActiveVariableDeclarations(variableDeclarations);
-			processChildStatements(sourceFolder, filePath, child, tryBlockStatement.getTryBody(), fileContent);
+			IASTStatement tryBody = tryBlockStatement.getTryBody();
+			if(tryBody instanceof IASTCompoundStatement compoundStatement) {
+				for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+					processStatement(sourceFolder, filePath, child, blockStatement, fileContent);
+				}
+			}
 			removeAllFromActiveVariableDeclarations(variableDeclarations);
 			for(ICPPASTCatchHandler catchHandler : tryBlockStatement.getCatchHandlers()) {
 				CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(sourceFolder, filePath, catchHandler, parent.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
@@ -294,7 +299,12 @@ public class CppOperationBody extends OperationBody {
 				addStatementInVariableScopes(catchClauseStatementObject);
 				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
 				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
-				processChildStatements(sourceFolder, filePath, catchClauseStatementObject, catchHandler.getCatchBody(), fileContent);
+				IASTStatement catchBody = catchHandler.getCatchBody();
+				if(catchBody instanceof IASTCompoundStatement compoundStatement) {
+					for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+						processStatement(sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
+					}
+				}
 				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
 			}
 		}
@@ -356,17 +366,6 @@ public class CppOperationBody extends OperationBody {
 		if(declaration != null) {
 			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, declaration, codeElementType, container, activeVariableDeclarations, fileContent);
 			child.addExpression(abstractExpression);
-		}
-	}
-	// Given the body of a try or catch, process its contents under the try/catch node. If it is a block, unwrap the block and process each statement inside
-	private void processChildStatements(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
-		if(statement instanceof IASTCompoundStatement compoundStatement) {
-			for(IASTStatement blockStatement : compoundStatement.getStatements()) {
-				processStatement(sourceFolder, filePath, parent, blockStatement, fileContent);
-			}
-		}
-		else if(statement != null) {
-			processStatement(sourceFolder, filePath, parent, statement, fileContent);
 		}
 	}
 }

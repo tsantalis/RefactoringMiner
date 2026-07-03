@@ -347,6 +347,48 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
+            else if (srcStatementNode.getType().name.equals(LANG1.ENHANCED_FOR_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.ENHANCED_FOR_STATEMENT)) {
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FOR_KEYWORD, LANG2.FOR_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.COLON, LANG2.COLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                    int index1 = srcStatementNode.getChildPosition(matched.first);
+                    int index2 = dstStatementNode.getChildPosition(matched.second);
+                    if(srcStatementNode.getChildren().size() > index1+1 && srcStatementNode.getChild(index1+1).getType().name.equals(LANG1.SIMPLE_NAME) &&
+                            dstStatementNode.getChildren().size() > index2+1 && dstStatementNode.getChild(index2+1).getType().name.equals(LANG2.SIMPLE_NAME)) {
+                        Tree t1 = srcStatementNode.getChild(index1+1);
+                        Tree t2 = dstStatementNode.getChild(index2+1);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PLACEHOLDER_TYPE_SPECIFIER, LANG2.PLACEHOLDER_TYPE_SPECIFIER);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.STRUCTURED_BINDING_DECLARATOR, LANG2.STRUCTURED_BINDING_DECLARATOR);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PRIMITIVE_TYPE, LANG2.PRIMITIVE_TYPE);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+            }
             else if (srcStatementNode.getType().name.equals(LANG1.FOR_IN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FOR_IN_STATEMENT)) {
                 if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.LABELED) &&
                         dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.LABELED)) {

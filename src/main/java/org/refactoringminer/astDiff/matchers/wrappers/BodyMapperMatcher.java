@@ -149,6 +149,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(matched.first,matched.second);
                     }
                 }
+                if(srcStatementNode.getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
+                    Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
                 if(srcStatementNode.getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
                     Tree srcFirstChild = srcStatementNode.getChild(0);
                     Tree dstFirstChild = dstStatementNode.getChild(0);

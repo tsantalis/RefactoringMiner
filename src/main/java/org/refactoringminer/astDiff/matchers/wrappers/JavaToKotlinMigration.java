@@ -338,6 +338,19 @@ public class JavaToKotlinMigration {
                     mappingStore.addMapping(block1.get(0), block2.get(0));
                     mappingStore.addMapping(block1.get(0).getParent(), block2.get(0).getParent());
                 }
+                Tree fragment1 = TreeUtilFunctions.findChildByType(lambda1, LANG1.VARIABLE_DECLARATION_FRAGMENT);
+                List<Tree> lambdaParameters2 = TreeUtilFunctions.findChildrenByTypeRecursively(lambda2, LANG2.LAMBDA_PARAMETERS);
+                if(fragment1 != null && lambdaParameters2.size() > 0) {
+                    Tree lambdaParameters = lambdaParameters2.get(0);
+                    List<Tree> variableDeclarations = TreeUtilFunctions.findChildrenByTypeRecursively(lambdaParameters, LANG2.VARIABLE_DECLARATION);
+                    if(variableDeclarations.size() > 0) {
+                        Tree simpleName1 = TreeUtilFunctions.findChildByType(fragment1, LANG1.SIMPLE_NAME);
+                        Tree simpleName2 = TreeUtilFunctions.findChildByType(variableDeclarations.get(0), LANG2.SIMPLE_NAME);
+                        if(simpleName1 != null && simpleName2 != null) {
+                            mappingStore.addMapping(simpleName1, simpleName2);
+                        }
+                    }
+                }
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CHARACTER_LITERAL);

@@ -524,6 +524,16 @@ public class JavaToKotlinMigration {
         if(dstStatementNode.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
             children2.add(0, dstStatementNode);
         }
+        if(equalsMismatch) {
+            Iterator<Tree> iterator1 = inv1.iterator();
+            while(iterator1.hasNext()) {
+                Tree t1 = iterator1.next();
+                Tree simpleName = TreeUtilFunctions.findChildByType(t1, LANG1.SIMPLE_NAME);
+                if(simpleName != null && simpleName.getLabel().equals("equals")) {
+                    iterator1.remove();
+                }
+            }
+        }
         Iterator<Tree> iterator2 = children2.iterator();
         while(iterator2.hasNext()) {
             Tree t2 = iterator2.next();

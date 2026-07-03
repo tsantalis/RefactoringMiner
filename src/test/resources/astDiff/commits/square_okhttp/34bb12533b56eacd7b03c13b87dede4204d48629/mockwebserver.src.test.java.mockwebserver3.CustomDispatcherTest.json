@@ -2155,6 +2155,28 @@
   "firstEndPos" : 2545,
   "secondEndPos" : 2215
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 2469,
+  "secondPos" : 2150,
+  "firstEndPos" : 2486,
+  "secondEndPos" : 2162
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 2469,
+  "secondPos" : 2157,
+  "firstEndPos" : 2486,
+  "secondEndPos" : 2162
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "request",

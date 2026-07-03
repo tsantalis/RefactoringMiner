@@ -434,6 +434,10 @@ class CppFileProcessorTest {
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected specialized class"));
 		assertTrue(specializedBox.getActualSignature().contains("class Box<int>"));
+		assertTrue(specializedBox.isTemplateSpecialization());
+		assertTrue(specializedBox.isFullTemplateSpecialization());
+		assertEquals("Box", specializedBox.getTemplateSpecializationName());
+		assertEquals(List.of("int"), specializedBox.getTemplateSpecializationArguments());
 		assertTrue(specializedBox.getTypeParameters().isEmpty());
 		assertEquals("int", findOperation(specializedBox.getOperations(), "value").getReturnParameter().getType().toString());
 
@@ -444,6 +448,40 @@ class CppFileProcessorTest {
 		assertTrue(specializedIdentity.getActualSignature().contains("identity<int>"));
 		assertTrue(specializedIdentity.getTypeParameters().isEmpty());
 		assertEquals("int", specializedIdentity.getReturnParameter().getType().toString());
+	}
+
+	@Test
+	void processesCppPartialTemplateSpecializations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"class Box {",
+				"public:",
+				"  T value(T input) {",
+				"    return input;",
+				"  }",
+				"};",
+				"template <typename T>",
+				"class Box<T*> {",
+				"public:",
+				"  T* value(T* input) {",
+				"    return input;",
+				"  }",
+				"};") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLClass partialBox = model.getClassList().stream()
+				.filter(UMLClass::isTemplateSpecialization)
+				.filter(umlClass -> !umlClass.isFullTemplateSpecialization())
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected partial specialized class"));
+		assertTrue(partialBox.getActualSignature().contains("class Box<T*>"));
+		assertEquals(List.of("T"), partialBox.getTypeParameterNames());
+		assertEquals("Box", partialBox.getTemplateSpecializationName());
+		assertEquals(1, partialBox.getTemplateSpecializationArguments().size());
+		assertEquals("T*", partialBox.getTemplateSpecializationArguments().get(0).replace(" ", ""));
+		assertEquals("T*", findOperation(partialBox.getOperations(), "value").getReturnParameter().getType().toString().replace(" ", ""));
 	}
 
 

@@ -3,10 +3,12 @@ package gr.uom.java.xmi;
 import java.io.ByteArrayInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +21,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
@@ -70,6 +73,7 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTUsingDirective;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTVisibilityLabel;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeTemplateParameter;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateId;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateParameter;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplatedTypeTemplateParameter;
 import org.eclipse.cdt.internal.core.index.EmptyCIndex;
@@ -495,14 +499,14 @@ public class CppFileProcessor {
 	}
 
 	private void processCppTemplateDeclaration(CPPASTTemplateDeclaration templateDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
-		processNestedTemplateDeclaration(templateDeclaration.getDeclaration(), templateDeclaration.getRawSignature(), templateDeclaration.getTemplateParameters(), packageName, sourceFolder, parentContainer, currentVisibility);
+		processNestedTemplateDeclaration(templateDeclaration.getDeclaration(), templateDeclaration.getRawSignature(), templateDeclaration.getTemplateParameters(), false, packageName, sourceFolder, parentContainer, currentVisibility);
 	}
 
 	private void processCppTemplateSpecialization(CPPASTTemplateSpecialization templateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
-		processNestedTemplateDeclaration(templateSpecialization.getDeclaration(), templateSpecialization.getRawSignature(), new ICPPASTTemplateParameter[0], packageName, sourceFolder, parentContainer, currentVisibility);
+		processNestedTemplateDeclaration(templateSpecialization.getDeclaration(), templateSpecialization.getRawSignature(), new ICPPASTTemplateParameter[0], true, packageName, sourceFolder, parentContainer, currentVisibility);
 	}
 
-	private void processNestedTemplateDeclaration(IASTDeclaration nestedDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+	private void processNestedTemplateDeclaration(IASTDeclaration nestedDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, boolean fullTemplateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
 		if(nestedDeclaration instanceof IASTFunctionDefinition functionDefinition) {
 			UMLOperation operation = processFunctionDefinition(functionDefinition, packageName, sourceFolder, parentContainer, currentVisibility);
 			addTemplateParameters(operation, templateParameters, sourceFolder);
@@ -510,16 +514,16 @@ public class CppFileProcessor {
 			parentContainer.addOperation(operation);
 		}
 		else if(nestedDeclaration instanceof IASTSimpleDeclaration simpleDeclaration) {
-			processNestedTemplateSimpleDeclaration(simpleDeclaration, actualSignature, templateParameters, packageName, sourceFolder, parentContainer, currentVisibility);
+			processNestedTemplateSimpleDeclaration(simpleDeclaration, actualSignature, templateParameters, fullTemplateSpecialization, packageName, sourceFolder, parentContainer, currentVisibility);
 		}
 	}
 
-	private void processNestedTemplateSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+	private void processNestedTemplateSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, boolean fullTemplateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
 		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
 		if(declSpecifier instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
 			IASTName name = compositeTypeSpecifier.getName();
 			if(name == null || name.toString().isBlank()) {
-			    return;
+				return;
 			}
 			String className = name.toString();
 			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
@@ -527,6 +531,9 @@ public class CppFileProcessor {
 			umlClass.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
+			}
+			if(name instanceof ICPPASTTemplateId templateId) {
+				umlClass.setTemplateSpecialization(templateId.getTemplateName().toString(), extractTemplateArguments(templateId), fullTemplateSpecialization);
 			}
 			addTemplateParameters(umlClass, templateParameters, sourceFolder);
 			umlClass.setActualSignature(actualSignature);
@@ -543,6 +550,14 @@ public class CppFileProcessor {
 				}
 			}
 		}
+	}
+
+	private List<String> extractTemplateArguments(ICPPASTTemplateId templateId) {
+		List<String> arguments = new ArrayList<>();
+		for(IASTNode argument : templateId.getTemplateArguments()) {
+			arguments.add(argument.getRawSignature());
+		}
+		return arguments;
 	}
 	//add parameters to a class
 	private void addTemplateParameters(UMLClass umlClass, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {

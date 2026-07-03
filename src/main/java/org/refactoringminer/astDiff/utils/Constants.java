@@ -158,7 +158,7 @@ public class Constants {
 			NULL_LITERAL = "NullLiteral";
 			METHOD_INVOCATION = "MethodInvocation";
 			SWITCH_STATEMENT = "switch_statement";
-			SWITCH_CASE = "switch_case";
+			SWITCH_CASE = "case_statement";
 			ASSIGNMENT = "Assignment";
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "EmptyStatement";
@@ -548,4 +548,5 @@ public class Constants {
     public final String DECLARATION = "declaration";
     public final String DECLARATION_LIST = "declaration_list"; //when parent is a namespace
     public final String INIT_DECLARATOR = "init_declarator";
+    public final String CONDITION_CLAUSE = "condition_clause";
 }

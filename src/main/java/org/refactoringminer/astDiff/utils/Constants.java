@@ -141,7 +141,7 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
-			ENHANCED_FOR_STATEMENT = "for_range_loop";
+			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "namespace_definition";
 			FIELD_DECLARATION = "field_declaration";
 			MODIFIER = "Modifier";
@@ -552,4 +552,5 @@ public class Constants {
     public final String CONDITION_CLAUSE = "condition_clause";
     public final String PLACEHOLDER_TYPE_SPECIFIER = "placeholder_type_specifier";
     public final String STRUCTURED_BINDING_DECLARATOR = "structured_binding_declarator";
+    public final String FOR_RANGE_LOOP = "for_range_loop";
 }

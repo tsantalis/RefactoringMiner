@@ -347,7 +347,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             }
-            else if (srcStatementNode.getType().name.equals(LANG1.ENHANCED_FOR_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.ENHANCED_FOR_STATEMENT)) {
+            else if (srcStatementNode.getType().name.equals(LANG1.FOR_RANGE_LOOP) && dstStatementNode.getType().name.equals(LANG2.FOR_RANGE_LOOP)) {
                 Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FOR_KEYWORD, LANG2.FOR_KEYWORD);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);

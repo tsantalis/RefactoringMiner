@@ -40,6 +40,7 @@ import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.IASTTypeId;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
@@ -277,6 +278,7 @@ public class CppFileProcessor {
 			}
 			else if(declaration instanceof CPPASTAliasDeclaration cppAliasDeclaration) {
 				//A C++ alias declaration (introduced in C++11) uses the using keyword to create a readable, interchangeable synonym for an existing type or template. It is the modern, preferred alternative to typedef.
+				processCppAliasDeclaration(cppAliasDeclaration, sourceFolder, parentContainer, null);
 			}
 			else if(declaration instanceof CASTASMDeclaration cASMDeclaration) {
 				//An asm statement (or asm declaration) in C and C++ allows developers to embed raw assembly language source code directly into a high-level program.
@@ -503,7 +505,7 @@ public class CppFileProcessor {
 	}
 
 	private void processCppTemplateSpecialization(CPPASTTemplateSpecialization templateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
-		processNestedTemplateDeclaration(templateSpecialization.getDeclaration(), templateSpecialization.getRawSignature(), new ICPPASTTemplateParameter[0], true, packageName, sourceFolder, parentContainer, currentVisibility);
+		processNestedTemplateDeclaration(templateSpecialization.getDeclaration(), templateSpecialization.getRawSignature(), null, true, packageName, sourceFolder, parentContainer, currentVisibility);
 	}
 
 	private void processNestedTemplateDeclaration(IASTDeclaration nestedDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, boolean fullTemplateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
@@ -513,9 +515,43 @@ public class CppFileProcessor {
 			operation.setActualSignature(actualSignature);
 			parentContainer.addOperation(operation);
 		}
+		else if(nestedDeclaration instanceof CPPASTAliasDeclaration aliasDeclaration) {
+			processCppAliasDeclaration(aliasDeclaration, sourceFolder, parentContainer, templateParameters);
+		}
 		else if(nestedDeclaration instanceof IASTSimpleDeclaration simpleDeclaration) {
 			processNestedTemplateSimpleDeclaration(simpleDeclaration, actualSignature, templateParameters, fullTemplateSpecialization, packageName, sourceFolder, parentContainer, currentVisibility);
 		}
+	}
+
+	private void processCppAliasDeclaration(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters) {
+		if(!(parentContainer instanceof UMLClass umlClass)) {
+			return;
+		}
+		UMLTypeAlias umlTypeAlias = createCppTypeAlias(aliasDeclaration, sourceFolder);
+		if(umlTypeAlias == null) {
+			return;
+		}
+		addTemplateParameters(umlTypeAlias, templateParameters, sourceFolder);
+		umlClass.addTypeAlias(umlTypeAlias);
+	}
+
+	private UMLTypeAlias createCppTypeAlias(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder) {
+		IASTName alias = aliasDeclaration.getAlias();
+		IASTTypeId mappingTypeId = aliasDeclaration.getMappingTypeId();
+		if(alias == null || alias.toString().isBlank() || mappingTypeId == null) {
+			return null;
+		}
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, aliasDeclaration, CodeElementType.TYPE_ALIAS, fileContent);
+		UMLType rightType = null;
+		if(mappingTypeId.getDeclSpecifier() != null) {
+			rightType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, mappingTypeId.getDeclSpecifier(), mappingTypeId.getAbstractDeclarator(), 0);
+		}
+		//if structured extraction can’t model that perfectly, the fallback stores something based on the raw text
+		if(rightType == null) {
+			LocationInfo typeLocationInfo = new LocationInfo(sourceFolder, filePath, mappingTypeId, CodeElementType.TYPE, fileContent);
+			rightType = UMLType.extractTypeObject(UMLType.cleanTypeText(mappingTypeId.getRawSignature()), "<", ">", typeLocationInfo);
+		}
+		return new UMLTypeAlias(alias.toString(), rightType, locationInfo);
 	}
 
 	private void processNestedTemplateSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, boolean fullTemplateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
@@ -580,6 +616,18 @@ public class CppFileProcessor {
 			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
 			if(umlTypeParameter != null) {
 				operation.addTypeParameter(umlTypeParameter);
+			}
+		}
+	}
+	// adds template parameters to a UMLTypeAlias
+	private void addTemplateParameters(UMLTypeAlias typeAlias, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
+		if(templateParameters == null || templateParameters.length == 0) {
+			return;
+		}
+		for(ICPPASTTemplateParameter parameter : templateParameters) {
+			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
+			if(umlTypeParameter != null) {
+				typeAlias.addTypeParameter(umlTypeParameter);
 			}
 		}
 	}

@@ -401,6 +401,41 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void processesCppAliasDeclarations() {
+		String filePath = "src/aliases.cpp";
+		String fileContent = String.join("\n",
+				"using Distance = unsigned long;",
+				"class Box {",
+				"public:",
+				"  using Size = int;",
+				"};") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLTypeAlias distance = findTypeAlias(findClass(model.getClassList(), "aliases"), "Distance");
+		assertEquals("unsigned long", distance.getRightType().toString());
+		assertEquals(CodeElementType.TYPE_ALIAS, distance.getLocationInfo().getCodeElementType());
+
+		UMLTypeAlias size = findTypeAlias(findClass(model.getClassList(), "Box"), "Size");
+		assertEquals("int", size.getRightType().toString());
+		assertEquals(CodeElementType.TYPE_ALIAS, size.getLocationInfo().getCodeElementType());
+	}
+
+	@Test
+	void processesCppTemplateAliasDeclarations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"using Vec = std::vector<T>;") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLTypeAlias vec = findTypeAlias(findClass(model.getClassList(), "templates"), "Vec");
+		assertEquals("std::vector<T>", vec.getRightType().toString());
+		assertEquals("typealias Vec<T> = std::vector<T>", vec.toString());
+	}
+
+	@Test
 	void processesCppTemplateSpecializations() {
 		String filePath = "src/templates.cpp";
 		String fileContent = String.join("\n",
@@ -497,6 +532,13 @@ class CppFileProcessorTest {
 				.filter(umlClass -> umlClass.getName().equals(name) || umlClass.getName().endsWith("." + name))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected class: " + name));
+	}
+
+	private static UMLTypeAlias findTypeAlias(UMLClass umlClass, String name) {
+		return umlClass.getTypeAliasList().stream()
+				.filter(typeAlias -> typeAlias.getName().equals(name))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected type alias: " + name));
 	}
 
 	private static List<String> parameterTypeNames(UMLOperation operation) {

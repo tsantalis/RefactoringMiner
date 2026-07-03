@@ -3069,6 +3069,9 @@ public abstract class UMLAbstractClassDiff {
 								else if(commonTokenCheck) {
 									filteredMapperSet.add(mapper);
 								}
+								else if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
+									filteredMapperSet.add(mapper);
+								}
 							}
 							//cluster mappers based on number of mappings and number of total replacements
 							Set<UMLOperationBodyMapper> filteredMapperSet2 = new LinkedHashSet<UMLOperationBodyMapper>();

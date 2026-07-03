@@ -196,16 +196,18 @@ public class JavaToKotlinMigration {
             }
             children1.removeAll(toBeRemoved1);
         }
-        if(children1.size() != children2.size()) {
+        boolean equalsMismatch = children1.stream().anyMatch(node -> node.getLabel().equals("equals")) &&
+                !children2.stream().anyMatch(node -> node.getLabel().equals("equals"));
+        if(children1.size() != children2.size() || equalsMismatch) {
             List<Tree> toBeRemoved1 = new ArrayList<>();
             for(Tree child1 : children1) {
-                if(child1.getLabel().equals("get")) {
+                if(child1.getLabel().equals("get") || child1.getLabel().equals("equals")) {
                     toBeRemoved1.add(child1);
                 }
             }
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree child2 : children2) {
-                if(child2.getLabel().equals("get")) {
+                if(child2.getLabel().equals("get") || child2.getLabel().equals("equals")) {
                     toBeRemoved2.add(child2);
                 }
             }

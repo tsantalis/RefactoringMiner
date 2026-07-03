@@ -76,7 +76,7 @@ public class StringBasedHeuristics {
 						return true;
 					}
 				}
-				if(s1.contains(call.actualString()) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
+				if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments().size() == 0 && !methodInvocations2.contains(call)) {
 					String fieldName = call.getName();
 					if(call.getName().startsWith("get") && call.getName().length() > "get".length()) {
 						fieldName = call.getName().substring(3, call.getName().length());
@@ -84,7 +84,7 @@ public class StringBasedHeuristics {
 					}
 					temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
 				}
-				else if(s1.contains(call.actualString()) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("set") && call.getName().length() > "set".length()) {
 					String fieldName = call.getName().substring(3, call.getName().length());
 					fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
@@ -94,6 +94,10 @@ public class StringBasedHeuristics {
 					}
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+						call.getName().startsWith("equals")) {
+					temp = ReplacementUtil.performReplacement(temp, ".equals(" + call.arguments.get(0) + ")", " == " + call.arguments.get(0));
+				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().equals("get")) {
 					//Map.get() replaced with square bracket []
 					String argBefore = "(" + call.arguments().get(0) + ")";
@@ -101,6 +105,9 @@ public class StringBasedHeuristics {
 					if(temp.contains(argBefore))
 						temp = temp.replace(argBefore, argAfter);
 				}
+			}
+			if(temp.equals(statement2.getString()) || temp.equals(s2) ) {
+				return true;
 			}
 			if(statement2.getLambdas().size() > 0 && statement1.getLambdas().size() == 0 && methodInvocations2.size() > 0 &&
 					methodInvocations2.get(0).getName().equals("let")) {
@@ -197,6 +204,9 @@ public class StringBasedHeuristics {
 								return true;
 							}
 						}
+					}
+					if(diff2.endsWith(".")) {
+						return true;
 					}
 				}
 				if(variableDeclarations1.size() == variableDeclarations2.size() && variableDeclarations1.size() > 0) {

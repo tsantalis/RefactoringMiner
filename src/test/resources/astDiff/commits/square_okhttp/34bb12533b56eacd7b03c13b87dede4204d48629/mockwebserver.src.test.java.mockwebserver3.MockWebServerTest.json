@@ -35617,6 +35617,94 @@
   "firstEndPos" : 24962,
   "secondEndPos" : 22135
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 22744,
+  "secondPos" : 20212,
+  "firstEndPos" : 22791,
+  "secondEndPos" : 20265
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "statements",
+  "firstPos" : 22744,
+  "secondPos" : 20212,
+  "firstEndPos" : 22790,
+  "secondEndPos" : 20265
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "assumeFalse",
+  "secondLabel" : "assumeFalse",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 22744,
+  "secondPos" : 20224,
+  "firstEndPos" : 22755,
+  "secondEndPos" : 20235
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 22756,
+  "secondPos" : 20235,
+  "firstEndPos" : 22789,
+  "secondEndPos" : 20265
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 22756,
+  "secondPos" : 20236,
+  "firstEndPos" : 22769,
+  "secondEndPos" : 20249
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 22756,
+  "secondPos" : 20247,
+  "firstEndPos" : 22769,
+  "secondEndPos" : 20249
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "getPlatform",
+  "secondLabel" : "getPlatform",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 22756,
+  "secondPos" : 20236,
+  "firstEndPos" : 22767,
+  "secondEndPos" : 20247
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"conscrypt\"",
+  "secondLabel" : "\"conscrypt\"",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 22777,
+  "secondPos" : 20253,
+  "firstEndPos" : 22788,
+  "secondEndPos" : 20264
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
   "firstLabel" : "",

@@ -400,6 +400,52 @@ class CppFileProcessorTest {
 		assertTrue(fixed.getTypeParameters().isEmpty());
 	}
 
+	@Test
+	void processesCppTemplateSpecializations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"class Box {",
+				"public:",
+				"  T value(T input) {",
+				"    return input;",
+				"  }",
+				"};",
+				"template <>",
+				"class Box<int> {",
+				"public:",
+				"  int value(int input) {",
+				"    return input + 1;",
+				"  }",
+				"};",
+				"template <typename T>",
+				"T identity(T value) {",
+				"  return value;",
+				"}",
+				"template <>",
+				"int identity<int>(int value) {",
+				"  return value + 1;",
+				"}") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLClass specializedBox = model.getClassList().stream()
+				.filter(umlClass -> umlClass.getActualSignature() != null && umlClass.getActualSignature().contains("template <>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected specialized class"));
+		assertTrue(specializedBox.getActualSignature().contains("class Box<int>"));
+		assertTrue(specializedBox.getTypeParameters().isEmpty());
+		assertEquals("int", findOperation(specializedBox.getOperations(), "value").getReturnParameter().getType().toString());
+
+		UMLOperation specializedIdentity = findClass(model.getClassList(), "templates").getOperations().stream()
+				.filter(operation -> operation.getActualSignature() != null && operation.getActualSignature().contains("template <>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected specialized function"));
+		assertTrue(specializedIdentity.getActualSignature().contains("identity<int>"));
+		assertTrue(specializedIdentity.getTypeParameters().isEmpty());
+		assertEquals("int", specializedIdentity.getReturnParameter().getType().toString());
+	}
+
 
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()

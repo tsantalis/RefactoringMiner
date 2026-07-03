@@ -292,12 +292,13 @@ public class CppFileProcessor {
 				//Explicit template instantiation forces the C++ compiler to generate code for a template with specific arguments. This allows you to split template definitions into separate .h and .cpp files.
 			}
 			else if(declaration instanceof CPPASTTemplateDeclaration cppTemplateDeclaration) {
-				processTemplateDeclaration(cppTemplateDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
+				processCppTemplateDeclaration(cppTemplateDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
 			}
 			else if(declaration instanceof CPPASTTemplateSpecialization cppTemplateSpecialization) {
 				//Template specialization allows you to override the generic behavior of a C++ template and define a custom implementation for specific data types or conditions.
 				//While primary templates provide a blueprint for all types, specialization handles unique edge cases—such as treating const char* or bool differently for performance or behavioral optimizations.
 				//C++ supports two types of template specialization: Explicit (Full) Specialization and Partial Specialization.
+				processCppTemplateSpecialization(cppTemplateSpecialization, packageName, sourceFolder, parentContainer, currentVisibility);
 			}
 			else if(declaration instanceof CPPASTInitCapture cppInitCapture) {
 				//Init capture (also called generalized lambda capture) was introduced in C++14 to let you declare and initialize new variables directly inside a lambda's capture brackets [...]
@@ -493,39 +494,42 @@ public class CppFileProcessor {
 		return operation;
 	}
 
-	private void processTemplateDeclaration(CPPASTTemplateDeclaration templateDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
-		IASTDeclaration nestedDeclaration = templateDeclaration.getDeclaration();
+	private void processCppTemplateDeclaration(CPPASTTemplateDeclaration templateDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+		processNestedTemplateDeclaration(templateDeclaration.getDeclaration(), templateDeclaration.getRawSignature(), templateDeclaration.getTemplateParameters(), packageName, sourceFolder, parentContainer, currentVisibility);
+	}
+
+	private void processCppTemplateSpecialization(CPPASTTemplateSpecialization templateSpecialization, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+		processNestedTemplateDeclaration(templateSpecialization.getDeclaration(), templateSpecialization.getRawSignature(), new ICPPASTTemplateParameter[0], packageName, sourceFolder, parentContainer, currentVisibility);
+	}
+
+	private void processNestedTemplateDeclaration(IASTDeclaration nestedDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
 		if(nestedDeclaration instanceof IASTFunctionDefinition functionDefinition) {
 			UMLOperation operation = processFunctionDefinition(functionDefinition, packageName, sourceFolder, parentContainer, currentVisibility);
-			addTemplateParameters(operation, templateDeclaration, sourceFolder);
-			operation.setActualSignature(templateDeclaration.getRawSignature());
+			addTemplateParameters(operation, templateParameters, sourceFolder);
+			operation.setActualSignature(actualSignature);
 			parentContainer.addOperation(operation);
 		}
 		else if(nestedDeclaration instanceof IASTSimpleDeclaration simpleDeclaration) {
-			processTemplateSimpleDeclaration(templateDeclaration, simpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility);
+			processNestedTemplateSimpleDeclaration(simpleDeclaration, actualSignature, templateParameters, packageName, sourceFolder, parentContainer, currentVisibility);
 		}
 	}
 
-	private void processTemplateSimpleDeclaration(CPPASTTemplateDeclaration templateDeclaration, IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
+	private void processNestedTemplateSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String actualSignature, ICPPASTTemplateParameter[] templateParameters, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility) {
 		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
 		if(declSpecifier instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
-			if(compositeTypeSpecifier.getName() == null) {
-				return;
+			IASTName name = compositeTypeSpecifier.getName();
+			if(name == null || name.toString().isBlank()) {
+			    return;
 			}
-			String className = compositeTypeSpecifier.getName().toString();
+			String className = name.toString();
 			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
 			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, Collections.emptyList());
 			umlClass.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
 			}
-			for(ICPPASTTemplateParameter parameter : templateDeclaration.getTemplateParameters()) {
-				UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
-				if(umlTypeParameter != null) {
-					umlClass.addTypeParameter(umlTypeParameter);
-				}
-			}
-			umlClass.setActualSignature(templateDeclaration.getRawSignature());
+			addTemplateParameters(umlClass, templateParameters, sourceFolder);
+			umlClass.setActualSignature(actualSignature);
 			processDeclarations(packageName + "." + className, sourceFolder, umlClass, compositeTypeSpecifier.getMembers());
 			this.umlModel.addClass(umlClass);
 		}
@@ -533,16 +537,31 @@ public class CppFileProcessor {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
 				if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
 					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility);
-					addTemplateParameters(operation, templateDeclaration, sourceFolder);
-					operation.setActualSignature(templateDeclaration.getRawSignature());
+					addTemplateParameters(operation, templateParameters, sourceFolder);
+					operation.setActualSignature(actualSignature);
 					parentContainer.addOperation(operation);
 				}
 			}
 		}
 	}
-
-	private void addTemplateParameters(UMLOperation operation, CPPASTTemplateDeclaration templateDeclaration, String sourceFolder) {
-		for(ICPPASTTemplateParameter parameter : templateDeclaration.getTemplateParameters()) {
+	//add parameters to a class
+	private void addTemplateParameters(UMLClass umlClass, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
+		if(templateParameters == null || templateParameters.length == 0) {
+			return;
+		}
+		for(ICPPASTTemplateParameter parameter : templateParameters) {
+			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
+			if(umlTypeParameter != null) {
+				umlClass.addTypeParameter(umlTypeParameter);
+			}
+		}
+	}
+	//add paramteters to an operation
+	private void addTemplateParameters(UMLOperation operation, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
+		if(templateParameters == null || templateParameters.length == 0) {
+			return;
+		}
+		for(ICPPASTTemplateParameter parameter : templateParameters) {
 			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
 			if(umlTypeParameter != null) {
 				operation.addTypeParameter(umlTypeParameter);

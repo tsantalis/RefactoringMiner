@@ -11,6 +11,7 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class CppVisitor extends ASTVisitor {
@@ -59,6 +60,7 @@ public class CppVisitor extends ASTVisitor {
 		this.shouldVisitStatements = true;
 		this.shouldVisitDeclarators = true;
 		this.shouldVisitExpressions = true;
+		this.shouldVisitNames = true;
 	}
 
 	public int visit(IASTDeclaration declaration) {
@@ -70,6 +72,12 @@ public class CppVisitor extends ASTVisitor {
 			}
 		}
 		return super.visit(declaration);
+	}
+
+	public int visit(IASTName name) {
+		LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, name, CodeElementType.SIMPLE_NAME, container, fileContent);
+		variables.add(leafExpression);
+		return super.visit(name);
 	}
 
 	public List<LeafExpression> getVariables() {

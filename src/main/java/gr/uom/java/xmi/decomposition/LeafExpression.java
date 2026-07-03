@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.psi.KtElement;
@@ -51,6 +52,12 @@ public class LeafExpression extends AbstractCodeFragment {
 	public LeafExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
 		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType, fileContent));
 		this.string = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
+		this.container = container;
+	}
+
+	public LeafExpression(String sourceFolder, String filePath, IASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(new LocationInfo(sourceFolder, filePath, expression, codeElementType, fileContent));
+		this.string = expression.getRawSignature();
 		this.container = container;
 	}
 

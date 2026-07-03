@@ -559,6 +559,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if (blocks != null) {
                 mappingStore.addMapping(blocks.first,blocks.second);
             }
+            blocks = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.COMPOUND_STATEMENT, LANG2.COMPOUND_STATEMENT);
+            if (blocks != null) {
+                mappingStore.addMapping(blocks.first,blocks.second);
+                matched = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(blocks.first,blocks.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+            }
             Pair<Tree, Tree> trys = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.TRY_KEYWORD, LANG2.TRY_KEYWORD);
             if (trys != null) {
                 mappingStore.addMapping(trys.first,trys.second);
@@ -648,6 +660,30 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
                 if (types != null) {
                     mappingStore.addMappingRecursively(types.first,types.second);
+                }
+                Pair<Tree,Tree> parameter_lists = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.PARAMETER_LIST,LANG2.PARAMETER_LIST);
+                if (parameter_lists != null) {
+                    mappingStore.addMapping(parameter_lists.first,parameter_lists.second);
+                    opening = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                    if (opening != null) {
+                        mappingStore.addMapping(opening.first,opening.second);
+                    }
+                    closing = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                    if (closing != null) {
+                        mappingStore.addMapping(closing.first,closing.second);
+                    }
+                    Pair<Tree, Tree> parameterDeclarations = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.PARAMETER_DECLARATION, LANG2.PARAMETER_DECLARATION);
+                    if (parameterDeclarations != null) {
+                        mappingStore.addMapping(parameterDeclarations.first,parameterDeclarations.second);
+                        identifiers = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+                        if (identifiers != null) {
+                            mappingStore.addMapping(identifiers.first,identifiers.second);
+                        }
+                        types = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.PRIMITIVE_TYPE, LANG2.PRIMITIVE_TYPE);
+                        if (types != null) {
+                            mappingStore.addMappingRecursively(types.first,types.second);
+                        }
+                    }
                 }
             }
         }

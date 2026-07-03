@@ -136,7 +136,7 @@ public class Constants {
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
-			CATCH_CLAUSE = "CatchClause";
+			CATCH_CLAUSE = "catch_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
@@ -543,6 +543,7 @@ public class Constants {
     public final String FUNCTION_DECLARATOR = "function_declarator";
     public final String POINTER_DECLARATOR = "pointer_declarator";
     public final String PARAMETER_LIST = "parameter_list";
+    public final String PARAMETER_DECLARATION = "parameter_declaration";
     public final String FIELD_IDENTIFIER = "field_identifier";
     public final String QUALIFIED_IDENTIFIER = "qualified_identifier";
     public final String DECLARATION = "declaration";

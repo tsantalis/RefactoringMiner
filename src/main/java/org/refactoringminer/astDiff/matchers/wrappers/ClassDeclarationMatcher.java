@@ -180,6 +180,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.TYPE_DECLARATION_KIND,LANG2.TYPE_DECLARATION_KIND);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
+        matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.STRUCT_KEYWORD,LANG2.STRUCT_KEYWORD);
+        if (matched != null)
+            mappingStore.addMapping(matched.first,matched.second);
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.MODIFIERS,LANG2.MODIFIERS);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
@@ -347,6 +350,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             type = LANG.COMPANION_OBJECT;
         else if (umlClass.isFunctionalInterface())
             type = LANG.METHOD_DECLARATION;
+        else if (umlClass.isStruct())
+            type = LANG.STRUCT_SPECIFIER;
         return type;
     }
 

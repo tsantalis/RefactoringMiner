@@ -368,8 +368,14 @@ public class CppFileProcessor {
 			umlClass.setVisibility(Visibility.PUBLIC);
 			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
+				if(cppCompositeTypeSpecifier.toString().contains("struct")) {
+					umlClass.setStruct(true);
+				}
 			}
-			umlClass.setActualSignature(simpleDeclaration.getRawSignature());
+			String rawSignature = simpleDeclaration.getRawSignature();
+			if(rawSignature.contains("{"))
+				rawSignature = rawSignature.substring(0, rawSignature.indexOf("{") + 1);
+			umlClass.setActualSignature(rawSignature);
 			processDeclarations(packageName + "." + className, sourceFolder, umlClass, compositeTypeSpecifier.getMembers());
 			this.umlModel.addClass(umlClass);
 		}

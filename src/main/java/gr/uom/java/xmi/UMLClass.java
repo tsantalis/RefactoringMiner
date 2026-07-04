@@ -35,6 +35,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isObject;
 	private boolean isTypeAlias;
 	private boolean isFunctionalInterface;
+	private boolean isStruct;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
     private Optional<UMLType> functionType;
@@ -80,6 +81,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "record";
     	else if(isObject)
     		return "object";
+    	else if(isStruct)
+    		return "struct";
     	else
     		return "class";
     }
@@ -294,6 +297,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setTypeAlias(boolean isTypeAlias) {
 		this.isTypeAlias = isTypeAlias;
+	}
+
+	public boolean isStruct() {
+		return isStruct;
+	}
+
+	public void setStruct(boolean isStruct) {
+		this.isStruct = isStruct;
 	}
 
 	public UMLJavadoc getJavadoc() {

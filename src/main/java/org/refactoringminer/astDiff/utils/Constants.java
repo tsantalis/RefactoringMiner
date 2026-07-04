@@ -555,4 +555,5 @@ public class Constants {
     public final String FOR_RANGE_LOOP = "for_range_loop";
     public final String STRUCT_SPECIFIER = "struct_specifier";
     public final String STRUCT_KEYWORD = "struct";
+    public final String POINTER = "*";
 }

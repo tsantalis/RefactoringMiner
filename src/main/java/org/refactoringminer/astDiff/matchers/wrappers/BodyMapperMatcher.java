@@ -585,7 +585,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
                     new KeywordMatcher(LANG1, LANG2, LANG1.JUMP_KEYWORD, LANG2.JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
                 }
-                matchBlocks(srcStatementNode, dstStatementNode, mappingStore);
+                matchBlocks(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             } else if (!srcStatementNode.getType().name.equals(LANG1.BLOCK) && !dstStatementNode.getType().name.equals(LANG2.BLOCK)) {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
@@ -596,7 +596,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
     }
 
-    private void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+    public static void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
         Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.BLOCK, LANG2.BLOCK);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);

@@ -667,6 +667,12 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMapping(closing.first,closing.second);
             }
         }
+        //handle C++ case where the body is try statement
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.TRY_STATEMENT,LANG2.TRY_STATEMENT);
+        if (matched != null) {
+            mappingStore.addMapping(matched.first,matched.second);
+            BodyMapperMatcher.matchBlocks(matched.first, matched.second, mappingStore, LANG1, LANG2);
+        }
         if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFunctionBodyMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);
         }

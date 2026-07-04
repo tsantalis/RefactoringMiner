@@ -62,6 +62,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.TRANSLATION_UNIT)) {
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
             }
+            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.PRIMITIVE_TYPE)) {
+                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
+            }
+            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.PRIMITIVE_TYPE)) {
+                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
+            }
             if (srcOperationNode != null && srcOperationNode.getType().name.endsWith("_comment")) {
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
             }

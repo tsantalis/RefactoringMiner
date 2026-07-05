@@ -7439,6 +7439,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(LANG1.equals(Constants.CPP) && LANG2.equals(Constants.CPP) &&
+					statement1.getParent().equals(container1.getBody().getCompositeStatement()) && statement2.getParent().equals(container2.getBody().getCompositeStatement())) {
+				return compositeChildMatchingScore(statement1, statement2, replacementInfo, mappings, removedOperations, addedOperations);
+			}
 			return -1;
 		}
 		return compositeChildMatchingScore(statement1, statement2, replacementInfo, mappings, removedOperations, addedOperations);

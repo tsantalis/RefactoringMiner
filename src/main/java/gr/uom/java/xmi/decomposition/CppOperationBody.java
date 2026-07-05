@@ -321,17 +321,16 @@ public class CppOperationBody extends OperationBody {
 			AbstractExpression destructuringDeclaration = new AbstractExpression(sourceFolder, filePath, declaration, CodeElementType.ENHANCED_FOR_STATEMENT_DESTRUCTURING_DECLARATION, container, activeVariableDeclarations, fileContent);
 			child.addExpression(destructuringDeclaration);
 			for(IASTDeclarator declarator : structuredBindingDeclaration.getDeclarators()) {
-				VariableDeclaration variableDeclaration =
-			            new VariableDeclaration(
-			                sourceFolder,
-			                filePath,
-			                declarator,
-			                structuredBindingDeclaration.getDeclSpecifier(),
-			                container,
-			                activeVariableDeclarations,
-			                fileContent
-			            );
-		        child.addVariableDeclaration(variableDeclaration);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(
+						sourceFolder,
+						filePath,
+						declarator,
+						structuredBindingDeclaration.getDeclSpecifier(),
+						container,
+						activeVariableDeclarations,
+						fileContent
+						);
+				child.addVariableDeclaration(variableDeclaration);
 			}
 		}
 		else if(declaration instanceof IASTSimpleDeclaration simpleDeclaration) {
@@ -367,5 +366,24 @@ public class CppOperationBody extends OperationBody {
 			AbstractExpression abstractExpression = new AbstractExpression(sourceFolder, filePath, declaration, codeElementType, container, activeVariableDeclarations, fileContent);
 			child.addExpression(abstractExpression);
 		}
+	}
+
+	public void addCatchHandlerToFunction(String sourceFolder, String filePath, ICPPASTCatchHandler catchHandler, String fileContent) {
+		CompositeStatementObject catchClauseStatementObject = new CompositeStatementObject(sourceFolder, filePath, catchHandler, this.compositeStatement.getDepth()+1, CodeElementType.CATCH_CLAUSE, fileContent);
+		//child.addCatchClause(catchClauseStatementObject);
+		this.compositeStatement.addStatement(catchClauseStatementObject);
+		catchClauseStatementObject.setTryContainer(null);
+		addCatchHandlerDeclaration(sourceFolder, filePath, catchClauseStatementObject, catchHandler.getDeclaration(), fileContent);
+		this.activeVariableDeclarations = new HashMap<String, Set<VariableDeclaration>>();
+		addStatementInVariableScopes(catchClauseStatementObject);
+		List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
+		addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
+		IASTStatement catchBody = catchHandler.getCatchBody();
+		if(catchBody instanceof IASTCompoundStatement compoundStatement) {
+			for(IASTStatement blockStatement : compoundStatement.getStatements()) {
+				processStatement(sourceFolder, filePath, catchClauseStatementObject, blockStatement, fileContent);
+			}
+		}
+		removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
 	}
 }

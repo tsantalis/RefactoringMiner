@@ -42,7 +42,9 @@ import org.eclipse.cdt.core.dom.ast.IASTStandardFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -561,9 +563,12 @@ public class CppFileProcessor {
 		if(body instanceof IASTCompoundStatement compoundStatement) {
 			CppOperationBody operationBody = new CppOperationBody(sourceFolder, filePath, compoundStatement, operation, parentContainer.getAttributes(), fileContent);
 			operation.setBody(operationBody);
-		}
-		else {
-			//TODO model as default expression
+			if(functionDefinition instanceof ICPPASTFunctionWithTryBlock withTryBlock) {
+				ICPPASTCatchHandler[] catchHandlers = withTryBlock.getCatchHandlers();
+				for(ICPPASTCatchHandler catchHandler : catchHandlers) {
+					operationBody.addCatchHandlerToFunction(sourceFolder, filePath, catchHandler, fileContent);
+				}
+			}
 		}
 		return operation;
 	}

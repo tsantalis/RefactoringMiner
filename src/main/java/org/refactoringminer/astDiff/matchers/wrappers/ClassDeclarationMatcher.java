@@ -8,6 +8,7 @@ import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLNamedExport;
+import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
@@ -319,6 +320,27 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 else {
                     mappingStore.addMappingRecursively(srcFunctionType, dstFunctionType);
                 }
+            }
+        }
+        if(classDiff.getPreprocessorStatementListDiff().isPresent()) {
+            for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getCommonStatements()) {
+                Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
+                if(!srcStatement.getLabel().isEmpty())
+                    srcStatement = srcStatement.getParent();
+                Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                if(!dstStatement.getLabel().isEmpty())
+                    dstStatement = dstStatement.getParent();
+                mappingStore.addMappingRecursively(srcStatement, dstStatement);
+            }
+            for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getChangedStatements()) {
+                Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
+                if(!srcStatement.getLabel().isEmpty())
+                    srcStatement = srcStatement.getParent();
+                Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                if(!dstStatement.getLabel().isEmpty())
+                    dstStatement = dstStatement.getParent();
+                if(!mappingStore.isSrcMapped(srcStatement) && !mappingStore.isDstMapped(dstStatement))
+                    mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

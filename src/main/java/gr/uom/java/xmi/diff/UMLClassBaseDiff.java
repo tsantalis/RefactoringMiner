@@ -1255,6 +1255,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return commonFunctionType;
 	}
 
+	public Optional<UMLPreprocessorStatementListDiff> getPreprocessorStatementListDiff() {
+		return preprocessorStatementListDiff;
+	}
+
 	public boolean containsOperationWithTheSameSignatureInOriginalClass(UMLOperation operation) {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			if(originalOperation.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation))

@@ -675,6 +675,23 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree t2 = dstTypeDeclaration.getParent().getChild(index2+1);
             mappingStore.addMapping(t1,t2);
         }
+        List<Tree> accessSpecifiers1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcBlock, LANG1.ACCESS_SPECIFIER);
+        List<Tree> accessSpecifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstBlock, LANG2.ACCESS_SPECIFIER);
+        if(accessSpecifiers1.size() == accessSpecifiers2.size()) {
+            for(int i=0; i<accessSpecifiers1.size(); i++) {
+                Tree accessSpecifier1 = accessSpecifiers1.get(i);
+                Tree accessSpecifier2 = accessSpecifiers2.get(i);
+                mappingStore.addMappingRecursively(accessSpecifier1, accessSpecifier2);
+                index1 = accessSpecifier1.getParent().getChildPosition(accessSpecifier1);
+                index2 = accessSpecifier2.getParent().getChildPosition(accessSpecifier2);
+                if(accessSpecifier1.getParent().getChildren().size() > index1+1 && accessSpecifier1.getParent().getChild(index1+1).getType().name.equals(LANG1.COLON) &&
+                        accessSpecifier2.getParent().getChildren().size() > index2+1 && accessSpecifier2.getParent().getChild(index2+1).getType().name.equals(LANG2.COLON)) {
+                    Tree t1 = accessSpecifier1.getParent().getChild(index1+1);
+                    Tree t2 = accessSpecifier2.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+            }
+        }
         Tree parent1 = srcTypeDeclaration.getParent();
         Tree parent2 = dstTypeDeclaration.getParent();
         while(parent1 != null && parent2 != null) {

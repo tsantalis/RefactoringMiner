@@ -556,4 +556,5 @@ public class Constants {
     public final String STRUCT_SPECIFIER = "struct_specifier";
     public final String STRUCT_KEYWORD = "struct";
     public final String POINTER = "*";
+    public final String ACCESS_SPECIFIER = "access_specifier";
 }

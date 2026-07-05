@@ -156,7 +156,7 @@ public class Constants {
 			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal";
 			NULL_LITERAL = "NullLiteral";
-			METHOD_INVOCATION = "MethodInvocation";
+			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "switch_statement";
 			SWITCH_CASE = "case_statement";
 			ASSIGNMENT = "Assignment";

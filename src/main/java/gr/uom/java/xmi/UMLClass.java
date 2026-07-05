@@ -48,6 +48,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private String actualSignature;
     private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
     private Optional<AbstractStatement> parentStatement;
+    private List<UMLPreprocessorStatement> preprocessorStatements;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes, topLevel);
@@ -68,6 +69,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.packageDeclaration = Optional.empty();
         this.typeAliasList = new ArrayList<UMLTypeAlias>();
         this.parentStatement = Optional.empty();
+        this.preprocessorStatements = new ArrayList<UMLPreprocessorStatement>();
     }
 
     public String getTypeDeclarationKind() {
@@ -129,6 +131,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void addTypeAlias(UMLTypeAlias typeAlias) {
 		this.typeAliasList.add(typeAlias);
+	}
+
+	public List<UMLPreprocessorStatement> getPreprocessorStatements() {
+		return preprocessorStatements;
+	}
+
+	public void addPreprocessorStatement(UMLPreprocessorStatement statement) {
+		this.preprocessorStatements.add(statement);
 	}
 
 	public void addSuperTypeCallEntry(AbstractExpression expr) {

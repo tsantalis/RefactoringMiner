@@ -119,8 +119,8 @@ public class CppFileProcessor {
 						new DefaultLogService()
 						);
 				String sourceFolder = extractCppSourceFolder();
-				processPreprocessorStatements(sourceFolder, ast.getAllPreprocessorStatements());
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
+				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
 				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations());
 				this.umlModel.addClass(moduleClass);
 			}
@@ -142,8 +142,8 @@ public class CppFileProcessor {
 						new DefaultLogService()
 						);
 				String sourceFolder = extractCppSourceFolder();
-				processPreprocessorStatements(sourceFolder, ast.getAllPreprocessorStatements());
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
+				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
 				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations());
 				this.umlModel.addClass(moduleClass);
 			}
@@ -153,7 +153,7 @@ public class CppFileProcessor {
 		}
 	}
 
-	private void processPreprocessorStatements(String sourceFolder, IASTPreprocessorStatement[] allPreprocessorStatements) {
+	private void processPreprocessorStatements(String sourceFolder, UMLClass moduleClass, IASTPreprocessorStatement[] allPreprocessorStatements) {
 		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
 			LocationInfo locationInfo = new LocationInfo(
 				sourceFolder,
@@ -165,19 +165,19 @@ public class CppFileProcessor {
 			IASTName nameNode;
 			String name;
 			String value;
-			UMLPreprocessorStatement preprocessorStatement;
+			UMLPreprocessorStatement preprocessorStatement = null;
 			
 			if(statement instanceof IASTPreprocessorMacroDefinition macroDefinition) {
 				nameNode = macroDefinition.getName();
 				name = nameNode.toString();
 				value = macroDefinition.getExpansion();
-				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.DEFINE,name,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.DEFINE,value,name);
 			}
 			else if(statement instanceof IASTPreprocessorIncludeStatement includeStatement) {
 				nameNode = includeStatement.getName();
 				name = nameNode.toString();
 				value = includeStatement.getPath();
-				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.INCLUDE,name,value);
+				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.INCLUDE,value,name);
 			}
 			else if(statement instanceof IASTPreprocessorUndefStatement undefStatement) {
 				nameNode = undefStatement.getMacroName();
@@ -203,12 +203,15 @@ public class CppFileProcessor {
 				//convert char[] to string
 				value = new String(elifStatement.getCondition());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELIF,value);
+				attachRootIf(preprocessorStatement, moduleClass);
 			}
 			else if(statement instanceof IASTPreprocessorElseStatement elseStatement) {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ELSE);
+				attachRootIf(preprocessorStatement, moduleClass);
 			}
 			else if(statement instanceof IASTPreprocessorEndifStatement endifStatement) {
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ENDIF);
+				attachRootIf(preprocessorStatement, moduleClass);
 			}
 			else if(statement instanceof IASTPreprocessorPragmaStatement pragmaStatement) {
 				//convert char[] to string
@@ -219,6 +222,21 @@ public class CppFileProcessor {
 				//convert char[] to string
 				value = new String(errorStatement.getMessage());
 				preprocessorStatement = new UMLPreprocessorStatement(locationInfo,Directive.ERROR,value);
+			}
+			if(preprocessorStatement != null) {
+				moduleClass.addPreprocessorStatement(preprocessorStatement);
+			}
+		}
+	}
+
+	private void attachRootIf(UMLPreprocessorStatement preprocessorStatement, UMLClass moduleClass) {
+		if(moduleClass.getPreprocessorStatements().size() > 0) {
+			for(int i = moduleClass.getPreprocessorStatements().size()-1; i>0; i--) {
+				UMLPreprocessorStatement statement = moduleClass.getPreprocessorStatements().get(i);
+				if(statement.getType().equals(Directive.IF) || statement.getType().equals(Directive.IFDEF) || statement.getType().equals(Directive.IFNDEF)) {
+					preprocessorStatement.setPreviousStatement(statement);
+					break;
+				}
 			}
 		}
 	}

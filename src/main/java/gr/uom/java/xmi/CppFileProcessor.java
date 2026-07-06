@@ -368,6 +368,8 @@ public class CppFileProcessor {
 		else if(declaration instanceof CPPASTExplicitTemplateInstantiation cppTemplateInstantiation) {
 			//templates are typically defined in separate header files (.hpp) and are instantiated as a 'template class'
 			//Explicit template instantiation forces the C++ compiler to generate code for a template with specific arguments. This allows you to split template definitions into separate .h and .cpp files.
+			IASTDeclaration nestedDeclaration = cppTemplateInstantiation.getDeclaration();
+			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration, new ICPPASTTemplateParameter[0]);
 		}
 		else if(declaration instanceof CPPASTTemplateDeclaration cppTemplateDeclaration) {
 			IASTDeclaration nestedDeclaration = cppTemplateDeclaration.getDeclaration();

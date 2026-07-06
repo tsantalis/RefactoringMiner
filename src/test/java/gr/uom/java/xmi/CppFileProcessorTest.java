@@ -479,6 +479,28 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void processesCppTemplateExplicitInstantiation() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"T identity(T value) {",
+				"  return value;",
+				"}",
+				"template int identity<int>(void);") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLOperation instantiatedIdentity = findClass(model.getClassList(), "templates").getOperations().stream()
+				.filter(operation -> operation.getActualSignature() != null && operation.getActualSignature().contains("identity<int>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected explicit template instantiation"));
+
+		assertEquals("identity<int>", instantiatedIdentity.getName());
+		assertEquals("int", instantiatedIdentity.getReturnParameter().getType().toString());
+		assertTrue(instantiatedIdentity.getTypeParameters().isEmpty());
+	}
+	
+	@Test
 	void processesCppPartialTemplateSpecializations() {
 		String filePath = "src/templates.cpp";
 		String fileContent = String.join("\n",

@@ -436,6 +436,34 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void processesCppLinkageSpecificationDeclarations() {
+		String filePath = "src/linkage.cpp";
+		String fileContent = String.join("\n",
+				"extern \"C\" {",
+				"  int declared(int value);",
+				"  int defined(int value) {",
+				"    return value;",
+				"  }",
+				"}",
+				"extern \"C\" int single(int value);") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "linkage");
+
+		UMLOperation declared = findOperation(moduleClass.getOperations(), "declared");
+		assertEquals("int", declared.getReturnParameter().getType().toString());
+		assertEquals(List.of("value"), declared.getParameterNameList());
+
+		UMLOperation defined = findOperation(moduleClass.getOperations(), "defined");
+		assertEquals("int", defined.getReturnParameter().getType().toString());
+		assertNotNull(defined.getBody());
+
+		UMLOperation single = findOperation(moduleClass.getOperations(), "single");
+		assertEquals("int", single.getReturnParameter().getType().toString());
+		assertEquals(List.of("value"), single.getParameterNameList());
+	}
+
+	@Test
 	void processesCppTemplateSpecializations() {
 		String filePath = "src/templates.cpp";
 		String fileContent = String.join("\n",

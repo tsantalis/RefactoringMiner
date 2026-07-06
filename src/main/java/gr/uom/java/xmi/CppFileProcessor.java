@@ -313,6 +313,7 @@ public class CppFileProcessor {
 				//C++ linkage specifications (extern "C") direct the compiler to use specific linkage and calling conventions for different programming languages. By preventing C++ name mangling, it allows seamless calls between C++ and C code.
 				//C++ supports features like function overloading, which requires the compiler to "mangle" (decorate) function names with argument types so the linker can tell them apart.
 				//A C compiler doesn't do this, meaning C++ object code cannot normally find a C library's function. A linkage specification disables C++ mangling for that block of code, ensuring the exact function name is emitted for the linker.
+				processDeclarations(packageName, sourceFolder, parentContainer, cppLinkageSpecification.getDeclarations());
 			}
 			else if(declaration instanceof CPPASTNamespaceAlias cppNamespaceAlias) {
 				//In C++, a namespace alias allows you to create a shorter or alternative name for a long or deeply nested namespace. You define it using the syntax namespace alias_name = existing_namespace;

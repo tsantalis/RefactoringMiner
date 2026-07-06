@@ -136,7 +136,7 @@ public class Constants {
 			LINE_COMMENT = "comment";
 			EXPRESSION_STATEMENT = "expression_statement";
 			TRY_STATEMENT = "try_statement";
-			CATCH_CLAUSE = "CatchClause";
+			CATCH_CLAUSE = "catch_clause";
 			IF_STATEMENT = "if_statement";
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
@@ -156,9 +156,9 @@ public class Constants {
 			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal";
 			NULL_LITERAL = "NullLiteral";
-			METHOD_INVOCATION = "MethodInvocation";
+			METHOD_INVOCATION = "call_expression";
 			SWITCH_STATEMENT = "switch_statement";
-			SWITCH_CASE = "switch_case";
+			SWITCH_CASE = "case_statement";
 			ASSIGNMENT = "Assignment";
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "EmptyStatement";
@@ -543,9 +543,19 @@ public class Constants {
     public final String FUNCTION_DECLARATOR = "function_declarator";
     public final String POINTER_DECLARATOR = "pointer_declarator";
     public final String PARAMETER_LIST = "parameter_list";
+    public final String PARAMETER_DECLARATION = "parameter_declaration";
     public final String FIELD_IDENTIFIER = "field_identifier";
     public final String QUALIFIED_IDENTIFIER = "qualified_identifier";
+    public final String TYPE_QUALIFIER = "type_qualifier";
     public final String DECLARATION = "declaration";
     public final String DECLARATION_LIST = "declaration_list"; //when parent is a namespace
     public final String INIT_DECLARATOR = "init_declarator";
+    public final String CONDITION_CLAUSE = "condition_clause";
+    public final String PLACEHOLDER_TYPE_SPECIFIER = "placeholder_type_specifier";
+    public final String STRUCTURED_BINDING_DECLARATOR = "structured_binding_declarator";
+    public final String FOR_RANGE_LOOP = "for_range_loop";
+    public final String STRUCT_SPECIFIER = "struct_specifier";
+    public final String STRUCT_KEYWORD = "struct";
+    public final String POINTER = "*";
+    public final String ACCESS_SPECIFIER = "access_specifier";
 }

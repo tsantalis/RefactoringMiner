@@ -73,6 +73,13 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.ENUM_CONSTANT_DECLARATION);
         }
+        //handle fields expanded with macro
+        if (srcFieldDeclaration == null && srcAttr.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.EXPRESSION_STATEMENT);
+        }
+        if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.EXPRESSION_STATEMENT);
+        }
         //handle Record Components (SingleVariableDeclaration)
         if (srcFieldDeclaration == null) {
             srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.RECORD_COMPONENT);

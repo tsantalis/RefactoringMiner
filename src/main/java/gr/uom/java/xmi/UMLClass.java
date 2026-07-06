@@ -39,6 +39,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isFullTemplateSpecialization;
 	private String templateSpecializationName;
 	private List<String> templateSpecializationArguments;
+	private boolean isStruct;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
     private Optional<UMLType> functionType;
@@ -51,6 +52,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private String actualSignature;
     private ConditionallyCreated conditionallyCreated = ConditionallyCreated.NO;
     private Optional<AbstractStatement> parentStatement;
+    private List<UMLPreprocessorStatement> preprocessorStatements;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes, topLevel);
@@ -72,6 +74,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.typeAliasList = new ArrayList<UMLTypeAlias>();
         this.templateSpecializationArguments = new ArrayList<>();
         this.parentStatement = Optional.empty();
+        this.preprocessorStatements = new ArrayList<UMLPreprocessorStatement>();
     }
 
     public String getTypeDeclarationKind() {
@@ -85,6 +88,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "record";
     	else if(isObject)
     		return "object";
+    	else if(isStruct)
+    		return "struct";
     	else
     		return "class";
     }
@@ -154,6 +159,12 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.isFullTemplateSpecialization = fullTemplateSpecialization;
 		this.templateSpecializationName = templateSpecializationName;
 		this.templateSpecializationArguments = new ArrayList<>(templateSpecializationArguments);
+	public List<UMLPreprocessorStatement> getPreprocessorStatements() {
+		return preprocessorStatements;
+	}
+
+	public void addPreprocessorStatement(UMLPreprocessorStatement statement) {
+		this.preprocessorStatements.add(statement);
 	}
 
 	public void addSuperTypeCallEntry(AbstractExpression expr) {
@@ -322,6 +333,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setTypeAlias(boolean isTypeAlias) {
 		this.isTypeAlias = isTypeAlias;
+	}
+
+	public boolean isStruct() {
+		return isStruct;
+	}
+
+	public void setStruct(boolean isStruct) {
+		this.isStruct = isStruct;
 	}
 
 	public UMLJavadoc getJavadoc() {

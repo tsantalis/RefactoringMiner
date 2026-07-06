@@ -62,6 +62,12 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.TRANSLATION_UNIT)) {
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
             }
+            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.PRIMITIVE_TYPE)) {
+                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
+            }
+            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.PRIMITIVE_TYPE)) {
+                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
+            }
             if (srcOperationNode != null && srcOperationNode.getType().name.endsWith("_comment")) {
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
             }
@@ -661,6 +667,12 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMapping(closing.first,closing.second);
             }
         }
+        //handle C++ case where the body is try statement
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.TRY_STATEMENT,LANG2.TRY_STATEMENT);
+        if (matched != null) {
+            mappingStore.addMapping(matched.first,matched.second);
+            BodyMapperMatcher.matchBlocks(matched.first, matched.second, mappingStore, LANG1, LANG2);
+        }
         if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFunctionBodyMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);
         }
@@ -759,6 +771,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (matched != null) {
             processFunctionDeclarators(matched.first, matched.second, mappingStore);
         }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.POINTER,LANG2.POINTER);
+        if (matched != null) {
+            mappingStore.addMapping(matched.first,matched.second);
+        }
         com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
         if (primitives != null) {
             mappingStore.addMapping(primitives.first,primitives.second);
@@ -778,6 +794,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         com.github.gumtreediff.utils.Pair<Tree,Tree> qualified_identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.QUALIFIED_IDENTIFIER,LANG2.QUALIFIED_IDENTIFIER);
         if (qualified_identifiers != null) {
             mappingStore.addMappingRecursively(qualified_identifiers.first,qualified_identifiers.second);
+        }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> type_qualifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.TYPE_QUALIFIER,LANG2.TYPE_QUALIFIER);
+        if (type_qualifiers != null) {
+            mappingStore.addMappingRecursively(type_qualifiers.first,type_qualifiers.second);
         }
         com.github.gumtreediff.utils.Pair<Tree,Tree> parameter_lists = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.PARAMETER_LIST,LANG2.PARAMETER_LIST);
         if (parameter_lists != null) {

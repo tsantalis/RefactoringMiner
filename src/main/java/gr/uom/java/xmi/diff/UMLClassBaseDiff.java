@@ -70,7 +70,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<UMLParameterListDiff> primaryConstructorParameterListDiff;
 	private Optional<UMLTypeAliasListDiff> typeAliasListDiff;
 	private Optional<UMLNamedExportListDiff> namedExportListDiff;
+	private Optional<UMLPreprocessorStatementListDiff> preprocessorStatementListDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
+
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
 		this.visibilityChanged = false;
@@ -96,6 +98,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.packageDeclarationJavadocDiff = Optional.empty();
 		}
+		this.preprocessorStatementListDiff = Optional.empty();
 		processImports();
 	}
 
@@ -211,6 +214,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
 				this.namedExportListDiff = Optional.of(diff);
 			}
+		}
+		if(getOriginalClass().getPreprocessorStatements().size() > 0 && getNextClass().getPreprocessorStatements().size() > 0) {
+			UMLPreprocessorStatementListDiff diff = new UMLPreprocessorStatementListDiff(getOriginalClass().getPreprocessorStatements(), getNextClass().getPreprocessorStatements());
+			this.preprocessorStatementListDiff = Optional.of(diff);
 		}
 	}
 
@@ -1246,6 +1253,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<Pair<UMLType, UMLType>> getCommonFunctionType() {
 		return commonFunctionType;
+	}
+
+	public Optional<UMLPreprocessorStatementListDiff> getPreprocessorStatementListDiff() {
+		return preprocessorStatementListDiff;
 	}
 
 	public boolean containsOperationWithTheSameSignatureInOriginalClass(UMLOperation operation) {

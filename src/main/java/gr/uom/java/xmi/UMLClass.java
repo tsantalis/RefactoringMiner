@@ -35,10 +35,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isObject;
 	private boolean isTypeAlias;
 	private boolean isFunctionalInterface;
-	private boolean isTemplateSpecialization;
-	private boolean isFullTemplateSpecialization;
-	private String templateSpecializationName;
-	private List<String> templateSpecializationArguments;
 	private boolean isStruct;
     private List<UMLTypeParameter> typeParameters;
     private Optional<PrimaryConstructor> primaryConstructor;
@@ -72,7 +68,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.packageDeclarationComments = new ArrayList<UMLComment>();
         this.packageDeclaration = Optional.empty();
         this.typeAliasList = new ArrayList<UMLTypeAlias>();
-        this.templateSpecializationArguments = new ArrayList<>();
         this.parentStatement = Optional.empty();
         this.preprocessorStatements = new ArrayList<UMLPreprocessorStatement>();
     }
@@ -138,27 +133,6 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.typeAliasList.add(typeAlias);
 	}
 
-	public boolean isTemplateSpecialization() {
-		return isTemplateSpecialization;
-	}
-
-	public boolean isFullTemplateSpecialization() {
-		return isFullTemplateSpecialization;
-	}
-
-	public String getTemplateSpecializationName() {
-		return templateSpecializationName;
-	}
-
-	public List<String> getTemplateSpecializationArguments() {
-		return templateSpecializationArguments;
-	}
-
-	public void setTemplateSpecialization(String templateSpecializationName, List<String> templateSpecializationArguments, boolean fullTemplateSpecialization) {
-		this.isTemplateSpecialization = true;
-		this.isFullTemplateSpecialization = fullTemplateSpecialization;
-		this.templateSpecializationName = templateSpecializationName;
-		this.templateSpecializationArguments = new ArrayList<>(templateSpecializationArguments);
 	public List<UMLPreprocessorStatement> getPreprocessorStatements() {
 		return preprocessorStatements;
 	}

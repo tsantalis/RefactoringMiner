@@ -795,6 +795,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (qualified_identifiers != null) {
             mappingStore.addMappingRecursively(qualified_identifiers.first,qualified_identifiers.second);
         }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> type_qualifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.TYPE_QUALIFIER,LANG2.TYPE_QUALIFIER);
+        if (type_qualifiers != null) {
+            mappingStore.addMappingRecursively(type_qualifiers.first,type_qualifiers.second);
+        }
         com.github.gumtreediff.utils.Pair<Tree,Tree> parameter_lists = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.PARAMETER_LIST,LANG2.PARAMETER_LIST);
         if (parameter_lists != null) {
             mappingStore.addMapping(parameter_lists.first,parameter_lists.second);

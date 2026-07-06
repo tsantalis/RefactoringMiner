@@ -546,6 +546,7 @@ public class Constants {
     public final String PARAMETER_DECLARATION = "parameter_declaration";
     public final String FIELD_IDENTIFIER = "field_identifier";
     public final String QUALIFIED_IDENTIFIER = "qualified_identifier";
+    public final String TYPE_QUALIFIER = "type_qualifier";
     public final String DECLARATION = "declaration";
     public final String DECLARATION_LIST = "declaration_list"; //when parent is a namespace
     public final String INIT_DECLARATOR = "init_declarator";

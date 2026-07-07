@@ -405,6 +405,29 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void processesCppStructuredBindingDeclarations() {
+		String filePath = "src/bindings.cpp";
+		String fileContent = String.join("\n",
+				"struct Point {",
+				"  int x;",
+				"  int y;",
+				"};",
+				"Point point;",
+				"auto [left, right] = point;") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "bindings");
+
+		UMLAttribute left = findAttribute(moduleClass.getAttributes(), "left");
+		assertEquals("auto", left.getType().toString());
+		assertEquals(CodeElementType.FIELD_DECLARATION, left.getLocationInfo().getCodeElementType());
+
+		UMLAttribute right = findAttribute(moduleClass.getAttributes(), "right");
+		assertEquals("auto", right.getType().toString());
+		assertEquals(CodeElementType.FIELD_DECLARATION, right.getLocationInfo().getCodeElementType());
+	}
+
+	@Test
 	void processesCppUsingDirectivesAsImports() {
 		String filePath = "src/usings.cpp";
 		String fileContent = String.join("\n",

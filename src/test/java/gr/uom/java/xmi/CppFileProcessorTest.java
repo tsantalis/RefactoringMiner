@@ -409,8 +409,10 @@ class CppFileProcessorTest {
 		String filePath = "src/usings.cpp";
 		String fileContent = String.join("\n",
 				"using namespace std;",
+				"using std::string;",
 				"namespace local {",
 				"  using namespace outer::inner;",
+				"  using outer::inner::Thing;",
 				"}") + "\n";
 
 		UMLModel model = processCppModel(filePath, fileContent);
@@ -421,10 +423,20 @@ class CppFileProcessorTest {
 		assertFalse(moduleImport.isStatic());
 		assertEquals(CodeElementType.IMPORT_DECLARATION, moduleImport.getLocationInfo().getCodeElementType());
 
+		UMLImport usingDeclarationImport = findImport(moduleClass, "std.string");
+		assertFalse(usingDeclarationImport.isOnDemand());
+		assertFalse(usingDeclarationImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, usingDeclarationImport.getLocationInfo().getCodeElementType());
+
 		UMLImport namespaceImport = findImport(moduleClass, "outer.inner");
 		assertTrue(namespaceImport.isOnDemand());
 		assertFalse(namespaceImport.isStatic());
 		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceImport.getLocationInfo().getCodeElementType());
+
+		UMLImport namespaceUsingDeclarationImport = findImport(moduleClass, "outer.inner.Thing");
+		assertFalse(namespaceUsingDeclarationImport.isOnDemand());
+		assertFalse(namespaceUsingDeclarationImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceUsingDeclarationImport.getLocationInfo().getCodeElementType());
 	}
 
 	@Test

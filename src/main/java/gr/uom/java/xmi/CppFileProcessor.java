@@ -409,6 +409,7 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
+			processCppUsingDeclaration(cppUsingDeclaration, sourceFolder, parentContainer);
 		}
 		else if(declaration instanceof CPPASTUsingDirective cppUsingDirective) {
 			//In C++, a using directive allows all identifiers within a specific namespace to be used without explicit qualification. It uses the syntax using namespace namespace_name;
@@ -603,6 +604,19 @@ public class CppFileProcessor {
 		String importName = qualifiedName.toString().replace("::", ".");
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, usingDirective, CodeElementType.IMPORT_DECLARATION, fileContent);
 		parentContainer.getImportedTypes().add(new UMLImport(importName, true, false, locationInfo));
+	}
+
+	private void processCppUsingDeclaration(CPPASTUsingDeclaration usingDeclaration, String sourceFolder, UMLAbstractClass parentContainer) {
+		if(!(parentContainer instanceof UMLClass umlClass) || !umlClass.isModule()) {
+			return;
+		}
+		IASTName name = usingDeclaration.getName();
+		if(name == null || name.toString().isBlank()) {
+			return;
+		}
+		String importName = name.toString().replace("::", ".");
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, usingDeclaration, CodeElementType.IMPORT_DECLARATION, fileContent);
+		parentContainer.getImportedTypes().add(new UMLImport(importName, false, false, locationInfo));
 	}
 
 	private void processCppAliasDeclaration(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters) {

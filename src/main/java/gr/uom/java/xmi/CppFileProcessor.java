@@ -378,9 +378,9 @@ public class CppFileProcessor {
 		else if(declaration instanceof CPPASTTemplateSpecialization cppTemplateSpecialization) {
 			//Template specialization allows you to override the generic behavior of a C++ template and define a custom implementation for specific data types or conditions.
 			//While primary templates provide a blueprint for all types, specialization handles unique edge cases—such as treating const char* or bool differently for performance or behavioral optimizations.
-			//C++ supports two types of template specialization: Explicit (Full) Specialization and Partial Specialization.		
+			//C++ supports two types of template specialization: Explicit (Full) Specialization and Partial Specialization.
 			IASTDeclaration nestedDeclaration = cppTemplateSpecialization.getDeclaration();
-			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration, new ICPPASTTemplateParameter[0]);
+			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration, cppTemplateSpecialization.getTemplateParameters());
 		}
 		else if(declaration instanceof CPPASTInitCapture cppInitCapture) {
 			//Init capture (also called generalized lambda capture) was introduced in C++14 to let you declare and initialize new variables directly inside a lambda's capture brackets [...]

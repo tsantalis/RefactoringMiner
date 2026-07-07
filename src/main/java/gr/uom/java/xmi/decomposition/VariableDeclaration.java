@@ -23,6 +23,7 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTNamespaceDefinition;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTParameterDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTSimpleDeclaration;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTemplateDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTTranslationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
@@ -212,6 +213,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			}
 			else if(declarator.getParent().getParent() instanceof ICPPASTWhileStatement) {
 				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CPPASTTemplateDeclaration templateDeclaration) {
+				return templateDeclaration.getParent();
 			}
 		}
 		else if(declarator.getParent() instanceof CPPASTParameterDeclaration && declarator.getParent().getParent() instanceof CPPASTFunctionDeclarator) {

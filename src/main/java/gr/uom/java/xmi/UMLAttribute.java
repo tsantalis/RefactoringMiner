@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer, AnnotationProvider {
+public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer, AnnotationProvider, TypeParameterProvider {
 	private LocationInfo locationInfo;
 	private LocationInfo fieldDeclarationLocationInfo;
 	private String name;
@@ -33,6 +33,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private boolean isStatic;
 	private boolean isTransient;
 	private boolean isVolatile;
+	private List<UMLTypeParameter> typeParameters;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private VariableDeclaration variableDeclaration;
 	private List<UMLAnonymousClass> anonymousClassList;
@@ -50,6 +51,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		this.className = className;
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 		this.comments = new ArrayList<UMLComment>();
+		this.typeParameters = new ArrayList<UMLTypeParameter>();
 		this.customGetter = Optional.empty();
 		this.customSetter = Optional.empty();
 		this.anonymousClassContainer = Optional.empty();
@@ -98,6 +100,22 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public void setType(UMLType type) {
 		this.type = type;
+	}
+
+	public List<UMLTypeParameter> getTypeParameters() {
+		return typeParameters;
+	}
+
+	public List<String> getTypeParameterNames() {
+		List<String> typeParameterNames = new ArrayList<String>();
+		for(UMLTypeParameter typeParameter : typeParameters) {
+			typeParameterNames.add(typeParameter.getName());
+		}
+		return typeParameterNames;
+	}
+
+	public void addTypeParameter(UMLTypeParameter typeParameter) {
+		typeParameters.add(typeParameter);
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
@@ -465,6 +483,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		sb.append(visibility);
 		sb.append(" ");
 		sb.append(name);
+		appendTypeParameters(sb);
 		sb.append(" : ");
 		sb.append(type);
 		return sb.toString();
@@ -481,6 +500,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 			sb.append(" ");
 		}
 		sb.append(name);
+		appendTypeParameters(sb);
 		sb.append(" : ");
 		if(this instanceof UMLEnumConstant) {
 			String string = type.toString();
@@ -500,6 +520,18 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public int compareTo(UMLAttribute attribute) {
 		return this.toString().compareTo(attribute.toString());
+	}
+
+	private void appendTypeParameters(StringBuilder sb) {
+		if(typeParameters.size() > 0) {
+			sb.append("<");
+			for(int i = 0; i < typeParameters.size(); i++) {
+				sb.append(typeParameters.get(i).toString());
+				if(i < typeParameters.size() - 1)
+					sb.append(",");
+			}
+			sb.append(">");
+		}
 	}
 
 	public double normalizedNameDistance(UMLAttribute attribute) {

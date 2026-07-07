@@ -22,6 +22,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTNamedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
@@ -470,7 +471,7 @@ public class CppFileProcessor {
 			this.umlModel.addClass(umlClass);
 			distributeComments(comments, locationInfo, umlClass.getComments());
 		}
-		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
+		else if(declSpecifier instanceof IASTSimpleDeclSpecifier || declSpecifier instanceof IASTNamedTypeSpecifier) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
 					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
@@ -478,14 +479,15 @@ public class CppFileProcessor {
 					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
+					addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
+					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 					variableDeclaration.setAttribute(true);
 					umlAttribute.setVariableDeclaration(variableDeclaration);
 					parentContainer.addAttribute(umlAttribute);
 					distributeComments(comments, locationInfo, umlAttribute.getComments());
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
-					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments);
+					UMLOperation operation = processFunctionDeclSpecifier(declSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments);
 					addTemplateParameters(operation, templateParameters, sourceFolder);
 					parentContainer.addOperation(operation);
 				}
@@ -493,16 +495,16 @@ public class CppFileProcessor {
 		}
 	}
 
-	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments) {
+	private UMLOperation processFunctionDeclSpecifier(IASTDeclSpecifier declSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments) {
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
 		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-		operation.setStatic(simpleDeclSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
-		operation.setInline(simpleDeclSpecifier.isInline());
+		operation.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
+		operation.setInline(declSpecifier.isInline());
 		distributeComments(comments, locationInfo, operation.getComments());
 
-		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, simpleDeclSpecifier, declarator, 0);
+		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 		if(returnType != null) {
 			operation.addParameter(new UMLParameter("return", returnType, "return", false));
 		}
@@ -532,7 +534,7 @@ public class CppFileProcessor {
 			}
 		}
 
-		int start = simpleDeclSpecifier.getFileLocation().getNodeOffset();
+		int start = declSpecifier.getFileLocation().getNodeOffset();
 		int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
 		operation.setActualSignature(fileContent.substring(start, end));
 		return operation;

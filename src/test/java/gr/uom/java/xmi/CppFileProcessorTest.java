@@ -382,6 +382,29 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void processesCppVariableTemplateDeclarations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"constexpr T pi = T(3.1415926535897932385);",
+				"template <typename T, int N>",
+				"T scaled = T(N);") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "templates");
+
+		UMLAttribute pi = findAttribute(moduleClass.getAttributes(), "pi");
+		assertEquals("T", pi.getType().toString());
+		assertEquals(List.of("T"), pi.getTypeParameterNames());
+		assertEquals("public pi<T> : T", pi.toString());
+
+		UMLAttribute scaled = findAttribute(moduleClass.getAttributes(), "scaled");
+		assertEquals("T", scaled.getType().toString());
+		assertEquals(List.of("T", "N"), scaled.getTypeParameterNames());
+		assertEquals("public scaled<T,N> : T", scaled.toString());
+	}
+
+	@Test
 	void processesCppUsingDirectivesAsImports() {
 		String filePath = "src/usings.cpp";
 		String fileContent = String.join("\n",
@@ -549,6 +572,13 @@ class CppFileProcessorTest {
 				.filter(typeAlias -> typeAlias.getName().equals(name))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected type alias: " + name));
+	}
+
+	private static UMLAttribute findAttribute(List<UMLAttribute> attributes, String name) {
+		return attributes.stream()
+				.filter(attribute -> attribute.getName().equals(name))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected attribute: " + name));
 	}
 
 	private static UMLImport findImport(UMLClass umlClass, String name) {

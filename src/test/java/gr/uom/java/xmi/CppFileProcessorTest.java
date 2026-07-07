@@ -410,9 +410,11 @@ class CppFileProcessorTest {
 		String fileContent = String.join("\n",
 				"using namespace std;",
 				"using std::string;",
+				"namespace fs = std::filesystem;",
 				"namespace local {",
 				"  using namespace outer::inner;",
 				"  using outer::inner::Thing;",
+				"  namespace rng = std::ranges;",
 				"}") + "\n";
 
 		UMLModel model = processCppModel(filePath, fileContent);
@@ -428,6 +430,11 @@ class CppFileProcessorTest {
 		assertFalse(usingDeclarationImport.isStatic());
 		assertEquals(CodeElementType.IMPORT_DECLARATION, usingDeclarationImport.getLocationInfo().getCodeElementType());
 
+		UMLImport namespaceAliasImport = findImport(moduleClass, "std.filesystem");
+		assertFalse(namespaceAliasImport.isOnDemand());
+		assertFalse(namespaceAliasImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceAliasImport.getLocationInfo().getCodeElementType());
+
 		UMLImport namespaceImport = findImport(moduleClass, "outer.inner");
 		assertTrue(namespaceImport.isOnDemand());
 		assertFalse(namespaceImport.isStatic());
@@ -437,6 +444,11 @@ class CppFileProcessorTest {
 		assertFalse(namespaceUsingDeclarationImport.isOnDemand());
 		assertFalse(namespaceUsingDeclarationImport.isStatic());
 		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceUsingDeclarationImport.getLocationInfo().getCodeElementType());
+
+		UMLImport nestedNamespaceAliasImport = findImport(moduleClass, "std.ranges");
+		assertFalse(nestedNamespaceAliasImport.isOnDemand());
+		assertFalse(nestedNamespaceAliasImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, nestedNamespaceAliasImport.getLocationInfo().getCodeElementType());
 	}
 
 	@Test

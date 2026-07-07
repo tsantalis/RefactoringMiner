@@ -394,6 +394,7 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTNamespaceAlias cppNamespaceAlias) {
 			//In C++, a namespace alias allows you to create a shorter or alternative name for a long or deeply nested namespace. You define it using the syntax namespace alias_name = existing_namespace;
+			processCppImport(cppNamespaceAlias.getMappingName(), cppNamespaceAlias, sourceFolder, parentContainer, false);
 		}
 		else if(declaration instanceof CPPASTNamespaceDefinition cppNamespaceDefinition) {
 			//In C++, a namespace is a declarative region that provides a distinct scope to identifiers (such as names of types, functions, variables, and classes) to prevent naming collisions and organize code into logical groups.
@@ -410,12 +411,12 @@ public class CppFileProcessor {
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
 			if(parentContainer instanceof UMLClass umlClass && umlClass.isModule()) {
-				processCppUsing(cppUsingDeclaration.getName(), cppUsingDeclaration, sourceFolder, parentContainer, false);
+				processCppImport(cppUsingDeclaration.getName(), cppUsingDeclaration, sourceFolder, parentContainer, false);
 			}
 		}
 		else if(declaration instanceof CPPASTUsingDirective cppUsingDirective) {
 			//In C++, a using directive allows all identifiers within a specific namespace to be used without explicit qualification. It uses the syntax using namespace namespace_name;
-			processCppUsing(cppUsingDirective.getQualifiedName(), cppUsingDirective, sourceFolder, parentContainer, true);
+			processCppImport(cppUsingDirective.getQualifiedName(), cppUsingDirective, sourceFolder, parentContainer, true);
 		}
 		else if(declaration instanceof CPPASTVisibilityLabel cppVisibilityLabel) {
 			//In C++, visibility labels (more commonly referred to as access specifiers) are keywords used inside a class or struct to control the accessibility of its data members and functions from external code.
@@ -598,7 +599,7 @@ public class CppFileProcessor {
 		return operation;
 	}
 
-	private void processCppUsing(IASTName name, IASTDeclaration declaration, String sourceFolder, UMLAbstractClass parentContainer, boolean onDemand) {
+	private void processCppImport(IASTName name, IASTDeclaration declaration, String sourceFolder, UMLAbstractClass parentContainer, boolean onDemand) {
 		if(name == null || name.toString().isBlank()) {
 			return;
 		}

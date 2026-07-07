@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class UMLTypeAlias implements Serializable, LocationInfoProvider {
+public class UMLTypeAlias implements Serializable, LocationInfoProvider, TypeParameterProvider {
 	private LocationInfo locationInfo;
 	private String name;
 	private List<UMLTypeParameter> typeParameters = new ArrayList<>();
@@ -25,6 +25,10 @@ public class UMLTypeAlias implements Serializable, LocationInfoProvider {
 
 	public UMLType getRightType() {
 		return rightType;
+	}
+
+	public List<UMLTypeParameter> getTypeParameters() {
+		return typeParameters;
 	}
 
 	public void addTypeParameter(UMLTypeParameter typeParameter) {

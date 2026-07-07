@@ -634,39 +634,14 @@ public class CppFileProcessor {
 		return new UMLTypeAlias(alias.toString(), rightType, locationInfo);
 	}
 
-	//add parameters to a class
-	private void addTemplateParameters(UMLClass umlClass, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
+	private void addTemplateParameters(TypeParameterProvider provider, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
 		if(templateParameters == null || templateParameters.length == 0) {
 			return;
 		}
 		for(ICPPASTTemplateParameter parameter : templateParameters) {
 			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
 			if(umlTypeParameter != null) {
-				umlClass.addTypeParameter(umlTypeParameter);
-			}
-		}
-	}
-	//add paramteters to an operation
-	private void addTemplateParameters(UMLOperation operation, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
-		if(templateParameters == null || templateParameters.length == 0) {
-			return;
-		}
-		for(ICPPASTTemplateParameter parameter : templateParameters) {
-			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
-			if(umlTypeParameter != null) {
-				operation.addTypeParameter(umlTypeParameter);
-			}
-		}
-	}
-	// adds template parameters to a UMLTypeAlias
-	private void addTemplateParameters(UMLTypeAlias typeAlias, ICPPASTTemplateParameter[] templateParameters, String sourceFolder) {
-		if(templateParameters == null || templateParameters.length == 0) {
-			return;
-		}
-		for(ICPPASTTemplateParameter parameter : templateParameters) {
-			UMLTypeParameter umlTypeParameter = createTemplateParameter(parameter, sourceFolder);
-			if(umlTypeParameter != null) {
-				typeAlias.addTypeParameter(umlTypeParameter);
+				provider.addTypeParameter(umlTypeParameter);
 			}
 		}
 	}

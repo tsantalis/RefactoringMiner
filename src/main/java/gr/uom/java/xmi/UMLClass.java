@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import org.refactoringminer.util.PathFileUtils;
 
-public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
+public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider, TypeParameterProvider {
 	public enum ConditionallyCreated {
 		IF, ELSE, NO;
 	}

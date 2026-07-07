@@ -409,11 +409,13 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
-			processCppUsingDeclaration(cppUsingDeclaration, sourceFolder, parentContainer);
+			if(parentContainer instanceof UMLClass umlClass && umlClass.isModule()) {
+				processCppUsing(cppUsingDeclaration.getName(), cppUsingDeclaration, sourceFolder, parentContainer, false);
+			}
 		}
 		else if(declaration instanceof CPPASTUsingDirective cppUsingDirective) {
 			//In C++, a using directive allows all identifiers within a specific namespace to be used without explicit qualification. It uses the syntax using namespace namespace_name;
-			processCppUsingDirective(cppUsingDirective, sourceFolder, parentContainer);
+			processCppUsing(cppUsingDirective.getQualifiedName(), cppUsingDirective, sourceFolder, parentContainer, true);
 		}
 		else if(declaration instanceof CPPASTVisibilityLabel cppVisibilityLabel) {
 			//In C++, visibility labels (more commonly referred to as access specifiers) are keywords used inside a class or struct to control the accessibility of its data members and functions from external code.
@@ -596,27 +598,13 @@ public class CppFileProcessor {
 		return operation;
 	}
 
-	private void processCppUsingDirective(CPPASTUsingDirective usingDirective, String sourceFolder, UMLAbstractClass parentContainer) {
-		IASTName qualifiedName = usingDirective.getQualifiedName();
-		if(qualifiedName == null || qualifiedName.toString().isBlank()) {
-			return;
-		}
-		String importName = qualifiedName.toString().replace("::", ".");
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, usingDirective, CodeElementType.IMPORT_DECLARATION, fileContent);
-		parentContainer.getImportedTypes().add(new UMLImport(importName, true, false, locationInfo));
-	}
-
-	private void processCppUsingDeclaration(CPPASTUsingDeclaration usingDeclaration, String sourceFolder, UMLAbstractClass parentContainer) {
-		if(!(parentContainer instanceof UMLClass umlClass) || !umlClass.isModule()) {
-			return;
-		}
-		IASTName name = usingDeclaration.getName();
+	private void processCppUsing(IASTName name, IASTDeclaration declaration, String sourceFolder, UMLAbstractClass parentContainer, boolean onDemand) {
 		if(name == null || name.toString().isBlank()) {
 			return;
 		}
 		String importName = name.toString().replace("::", ".");
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, usingDeclaration, CodeElementType.IMPORT_DECLARATION, fileContent);
-		parentContainer.getImportedTypes().add(new UMLImport(importName, false, false, locationInfo));
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declaration, CodeElementType.IMPORT_DECLARATION, fileContent);
+		parentContainer.getImportedTypes().add(new UMLImport(importName, onDemand, false, locationInfo));
 	}
 
 	private void processCppAliasDeclaration(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters) {

@@ -17,6 +17,12 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLModelDiff;
+import gr.uom.java.xmi.diff.UMLOperationDiff;
+import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
+
+
 class CppFileProcessorTest {
 	@Test
 	void processesCFunctionDefinitionsIntoModuleOperations() {
@@ -320,6 +326,210 @@ class CppFileProcessorTest {
 		assertVariableInScope(controls, "keep += 1", "i");
 	}
 
+	@Test
+	void skipsUnnamedCppNonTypeTemplateParameters() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <int>",
+				"class Buffer {};",
+				"template <int>",
+				"int fixed() {",
+				"  return 1;",
+				"}") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLClass buffer = findClass(model.getClassList(), "Buffer");
+		assertTrue(buffer.getTypeParameters().isEmpty());
+
+		UMLOperation fixed = findOperation(findClass(model.getClassList(), "templates").getOperations(), "fixed");
+		assertTrue(fixed.getTypeParameters().isEmpty());
+	}
+
+	@Test
+	void processesCppAliasDeclarations() {
+		String filePath = "src/aliases.cpp";
+		String fileContent = String.join("\n",
+				"using Distance = unsigned long;",
+				"class Box {",
+				"public:",
+				"  using Size = int;",
+				"};") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLTypeAlias distance = findTypeAlias(findClass(model.getClassList(), "aliases"), "Distance");
+		assertEquals("unsigned long", distance.getRightType().toString());
+		assertEquals(CodeElementType.TYPE_ALIAS, distance.getLocationInfo().getCodeElementType());
+
+		UMLTypeAlias size = findTypeAlias(findClass(model.getClassList(), "Box"), "Size");
+		assertEquals("int", size.getRightType().toString());
+		assertEquals(CodeElementType.TYPE_ALIAS, size.getLocationInfo().getCodeElementType());
+	}
+
+	@Test
+	void processesCppTemplateAliasDeclarations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"using Vec = std::vector<T>;") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLTypeAlias vec = findTypeAlias(findClass(model.getClassList(), "templates"), "Vec");
+		assertEquals("std::vector<T>", vec.getRightType().toString());
+		assertEquals("typealias Vec<T> = std::vector<T>", vec.toString());
+	}
+
+	@Test
+	void processesCppUsingDirectivesAsImports() {
+		String filePath = "src/usings.cpp";
+		String fileContent = String.join("\n",
+				"using namespace std;",
+				"namespace local {",
+				"  using namespace outer::inner;",
+				"}") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "usings");
+
+		UMLImport moduleImport = findImport(moduleClass, "std");
+		assertTrue(moduleImport.isOnDemand());
+		assertFalse(moduleImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, moduleImport.getLocationInfo().getCodeElementType());
+
+		UMLImport namespaceImport = findImport(moduleClass, "outer.inner");
+		assertTrue(namespaceImport.isOnDemand());
+		assertFalse(namespaceImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceImport.getLocationInfo().getCodeElementType());
+	}
+
+	@Test
+	void processesCppLinkageSpecificationDeclarations() {
+		String filePath = "src/linkage.cpp";
+		String fileContent = String.join("\n",
+				"extern \"C\" {",
+				"  int declared(int value);",
+				"  int defined(int value) {",
+				"    return value;",
+				"  }",
+				"}",
+				"extern \"C\" int single(int value);") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "linkage");
+
+		UMLOperation declared = findOperation(moduleClass.getOperations(), "declared");
+		assertEquals("int", declared.getReturnParameter().getType().toString());
+		assertEquals(List.of("value"), declared.getParameterNameList());
+
+		UMLOperation defined = findOperation(moduleClass.getOperations(), "defined");
+		assertEquals("int", defined.getReturnParameter().getType().toString());
+		assertNotNull(defined.getBody());
+
+		UMLOperation single = findOperation(moduleClass.getOperations(), "single");
+		assertEquals("int", single.getReturnParameter().getType().toString());
+		assertEquals(List.of("value"), single.getParameterNameList());
+	}
+
+	@Test
+	void processesCppTemplateSpecializations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"class Box {",
+				"public:",
+				"  T value(T input) {",
+				"    return input;",
+				"  }",
+				"};",
+				"template <>",
+				"class Box<int> {",
+				"public:",
+				"  int value(int input) {",
+				"    return input + 1;",
+				"  }",
+				"};",
+				"template <typename T>",
+				"T identity(T value) {",
+				"  return value;",
+				"}",
+				"template <>",
+				"int identity<int>(int value) {",
+				"  return value + 1;",
+				"}") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLClass specializedBox = model.getClassList().stream()
+				.filter(umlClass -> umlClass.getName().contains("Box<int>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected specialized class"));
+		assertTrue(specializedBox.getActualSignature().contains("class Box<int>"));
+		assertTrue(specializedBox.getTypeParameters().isEmpty());
+		assertEquals("int", findOperation(specializedBox.getOperations(), "value").getReturnParameter().getType().toString());
+
+		UMLOperation specializedIdentity = findClass(model.getClassList(), "templates").getOperations().stream()
+				.filter(operation -> operation.getActualSignature() != null && operation.getActualSignature().contains("<int>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected specialized function"));
+		assertTrue(specializedIdentity.getActualSignature().contains("identity<int>"));
+		assertTrue(specializedIdentity.getTypeParameters().isEmpty());
+		assertEquals("int", specializedIdentity.getReturnParameter().getType().toString());
+	}
+
+	@Test
+	void processesCppTemplateExplicitInstantiation() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"T identity(T value) {",
+				"  return value;",
+				"}",
+				"template int identity<int>(void);") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLOperation instantiatedIdentity = findClass(model.getClassList(), "templates").getOperations().stream()
+				.filter(operation -> operation.getActualSignature() != null && operation.getActualSignature().contains("identity<int>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected explicit template instantiation"));
+
+		assertEquals("identity<int>", instantiatedIdentity.getName());
+		assertEquals("int", instantiatedIdentity.getReturnParameter().getType().toString());
+		assertTrue(instantiatedIdentity.getTypeParameters().isEmpty());
+	}
+	
+	@Test
+	void processesCppPartialTemplateSpecializations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"class Box {",
+				"public:",
+				"  T value(T input) {",
+				"    return input;",
+				"  }",
+				"};",
+				"template <typename T>",
+				"class Box<T*> {",
+				"public:",
+				"  T* value(T* input) {",
+				"    return input;",
+				"  }",
+				"};") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		UMLClass partialBox = model.getClassList().stream()
+				.filter(umlClass -> umlClass.getName().contains("Box<T*>"))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected partial specialized class"));
+		assertTrue(partialBox.getActualSignature().contains("class Box<T*>"));
+		assertEquals(List.of("T"), partialBox.getTypeParameterNames());
+		assertEquals("T*", findOperation(partialBox.getOperations(), "value").getReturnParameter().getType().toString().replace(" ", ""));
+	}
+
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {
 		return operations.stream()
 				.filter(operation -> operation.getName().equals(name))
@@ -332,6 +542,20 @@ class CppFileProcessorTest {
 				.filter(umlClass -> umlClass.getName().equals(name) || umlClass.getName().endsWith("." + name))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected class: " + name));
+	}
+
+	private static UMLTypeAlias findTypeAlias(UMLClass umlClass, String name) {
+		return umlClass.getTypeAliasList().stream()
+				.filter(typeAlias -> typeAlias.getName().equals(name))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected type alias: " + name));
+	}
+
+	private static UMLImport findImport(UMLClass umlClass, String name) {
+		return umlClass.getImportedTypes().stream()
+				.filter(umlImport -> umlImport.getName().equals(name))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected import: " + name));
 	}
 
 	private static List<String> parameterTypeNames(UMLOperation operation) {
@@ -347,5 +571,12 @@ class CppFileProcessorTest {
 				.orElseThrow(() -> new AssertionError("Expected statement: " + statementText));
 		assertTrue(operation.getVariableDeclarationsInScope(statement.getLocationInfo()).stream()
 				.anyMatch(variableDeclaration -> variableDeclaration.getVariableName().equals(variableName)));
+	}
+
+	private static UMLModel processCppModel(String filePath, String fileContent) {
+		UMLModel model = new UMLModel(Set.of("src"));
+		CppFileProcessor processor = new CppFileProcessor(model);
+		processor.processCppFile(filePath, fileContent, false);
+		return model;
 	}
 }

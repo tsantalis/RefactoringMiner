@@ -560,6 +560,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public boolean equalReturnParameter(UMLOperation operation) {
 		UMLParameter thisReturnParameter = this.getReturnParameter();
 		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(this.typeParameters.size() == operation.typeParameters.size() && this.typeParameters.size() > 0 && !equalTypeParameters(operation) && thisReturnParameter != null && otherReturnParameter != null) {
+			//check for consistent type parameter rename
+			Map<String, String> map = new LinkedHashMap<>();
+			for(int i=0; i<this.typeParameters.size(); i++) {
+				map.put(this.typeParameters.get(i).toString(), operation.typeParameters.get(i).toString());
+			}
+			if(map.containsKey(thisReturnParameter.getType().toString()) && map.get(thisReturnParameter.getType().toString()).equals(otherReturnParameter.getType().toString())) {
+				return true;
+			}
+		}
 		if(thisReturnParameter != null && otherReturnParameter != null)
 			return thisReturnParameter.equals(otherReturnParameter);
 		else if(thisReturnParameter == null && otherReturnParameter == null)
@@ -1285,7 +1295,28 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalParameterTypes(UMLOperation operation) {
-		return this.getParameterTypeList().equals(operation.getParameterTypeList()) && equalTypeParameters(operation);
+		List<UMLType> thisParameterTypeList = this.getParameterTypeList();
+		List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+		if(this.typeParameters.size() == operation.typeParameters.size() && this.typeParameters.size() > 0 && !equalTypeParameters(operation) &&
+				thisParameterTypeList.size() == otherParameterTypeList.size()) {
+			//check for consistent type parameter rename
+			Map<String, String> map = new LinkedHashMap<>();
+			for(int i=0; i<this.typeParameters.size(); i++) {
+				map.put(this.typeParameters.get(i).toString(), operation.typeParameters.get(i).toString());
+			}
+			int matches = 0;
+			for(int i=0; i<thisParameterTypeList.size(); i++) {
+				UMLType type1 = thisParameterTypeList.get(i);
+				UMLType type2 = otherParameterTypeList.get(i);
+				if(map.containsKey(type1.toString()) && map.get(type1.toString()).equals(type2.toString())) {
+					matches++;
+				}
+			}
+			if(matches > 0 && matches == thisParameterTypeList.size()) {
+				return true;
+			}
+		}
+		return thisParameterTypeList.equals(otherParameterTypeList) && equalTypeParameters(operation);
 	}
 
 	private boolean typeParameterToTypeArgumentMatch(UMLOperation operation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {

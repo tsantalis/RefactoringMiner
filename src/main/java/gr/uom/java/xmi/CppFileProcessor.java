@@ -323,10 +323,10 @@ public class CppFileProcessor {
 	private Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
 			List<UMLComment> comments, Visibility currentVisibility, IASTDeclaration declaration, ICPPASTTemplateParameter[] templateParameters) {
 		if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
-			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, templateParameters, currentVisibility, comments);
+			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 		}
 		else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
-			processSimpleDeclaration(cSimpleDeclaration, packageName, sourceFolder, parentContainer, templateParameters, currentVisibility, comments);
+			processSimpleDeclaration(cSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 		}
 		else if(declaration instanceof CPPASTAmbiguousSimpleDeclaration cppAmbiguousSimpleDeclaration) {
 			
@@ -339,13 +339,13 @@ public class CppFileProcessor {
 			//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 		}
 		else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
-			UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments);
+			UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 			parentContainer.addOperation(operation);
 		}
 		else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
 			//org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionWithTryBlock is a subclass
 			//Function-Try-Block should be handled similar to Kotlin, which allows functions to have a try-expression as a body
-			UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments);
+			UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 			parentContainer.addOperation(operation);
 		}
 		else if(declaration instanceof CPPASTAliasDeclaration cppAliasDeclaration) {
@@ -442,7 +442,7 @@ public class CppFileProcessor {
 		return umlClass;
 	}
 
-	private void processSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters, Visibility currentVisibility, List<UMLComment> comments) {
+	private void processSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
 		if(declSpecifier instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
 			if(compositeTypeSpecifier.getName() == null) {
@@ -485,15 +485,14 @@ public class CppFileProcessor {
 					distributeComments(comments, locationInfo, umlAttribute.getComments());
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
-					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments);
-					addTemplateParameters(operation, templateParameters, sourceFolder);
+					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 					parentContainer.addOperation(operation);
 				}
 			}
 		}
 	}
 
-	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments) {
+	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
@@ -531,6 +530,7 @@ public class CppFileProcessor {
 				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
 			}
 		}
+		addTemplateParameters(operation, templateParameters, sourceFolder);
 
 		int start = simpleDeclSpecifier.getFileLocation().getNodeOffset();
 		int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
@@ -538,7 +538,7 @@ public class CppFileProcessor {
 		return operation;
 	}
 
-	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments) {
+	private UMLOperation processFunctionDefinition(IASTFunctionDefinition functionDefinition, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		IASTFunctionDeclarator declarator = functionDefinition.getDeclarator();
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent);
@@ -577,6 +577,7 @@ public class CppFileProcessor {
 				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
 			}
 		}
+		addTemplateParameters(operation, templateParameters, sourceFolder);
 
 		operation.setActualSignature(extractActualSignature(functionDefinition));
 		IASTStatement body = functionDefinition.getBody();

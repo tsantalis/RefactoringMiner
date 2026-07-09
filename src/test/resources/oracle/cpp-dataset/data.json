@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "repository": "https://github.com/bitcoin/bitcoin.git",
+    "sha1": "fa615bd163ac74c11a8e15ed8513a5b81ed9ef3b",
+    "url": "https://github.com/bitcoin/bitcoin/commit/fa615bd163ac74c11a8e15ed8513a5b81ed9ef3b",
+    "author": "MarcoFalke",
+    "time": "2026-07-06T14:34:10Z",
+    "refactorings": [
+      {
+        "type": "Move Method",
+        "description": "Move Method bool LoadGenesisBlock() from class Chainstate to bool LoadGenesisBlock() from class ChainstateManager",
+        "comment": "LoadGenesisBlock was moved from Chainstate to ChainstateManager. Original linked commit was merge commit 881bb7b355509b8469c92c38b982b92d500f321a, but this entry uses the single-parent commit.",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner-CPP",
+        "validators": "Antonino"
+      }
+    ],
+    "refDiffExecutionTime": 0
+  }
+]

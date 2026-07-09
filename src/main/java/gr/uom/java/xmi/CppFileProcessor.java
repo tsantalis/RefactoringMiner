@@ -340,8 +340,6 @@ public class CppFileProcessor {
 			}
 		}
 		else if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
-			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, templateParameters, currentVisibility, comments);
-		if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 		}
 		else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
@@ -505,14 +503,14 @@ public class CppFileProcessor {
 					distributeComments(comments, locationInfo, umlAttribute.getComments());
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
-					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
+					UMLOperation operation = processFunctionDeclSpecifier(declSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 					parentContainer.addOperation(operation);
 				}
 			}
 		}
 	}
 
-	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
+	private UMLOperation processFunctionDeclSpecifier(IASTDeclSpecifier declSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);

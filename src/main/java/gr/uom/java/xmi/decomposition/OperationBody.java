@@ -24,6 +24,10 @@ public abstract class OperationBody {
 	protected int bodyHashCode;
 	protected List<UMLComment> comments;
 
+	public Map<String, Set<VariableDeclaration>> getActiveVariableDeclarations() {
+		return activeVariableDeclarations;
+	}
+
 	protected void addInActiveVariableDeclarations(VariableDeclaration v) {
 		if(v == null)
 			return;

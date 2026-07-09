@@ -44,6 +44,8 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeId;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
@@ -90,6 +92,7 @@ import extension.umladapter.UMLAdapterUtil;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CppOperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -588,6 +591,19 @@ public class CppFileProcessor {
 				ICPPASTCatchHandler[] catchHandlers = withTryBlock.getCatchHandlers();
 				for(ICPPASTCatchHandler catchHandler : catchHandlers) {
 					operationBody.addCatchHandlerToFunction(sourceFolder, filePath, catchHandler, fileContent);
+				}
+			}
+		}
+		if(functionDefinition instanceof ICPPASTFunctionDefinition cppFunctionDefinition) {
+			ICPPASTConstructorChainInitializer[] initializers = cppFunctionDefinition.getMemberInitializers();
+			for (ICPPASTConstructorChainInitializer initializer : initializers) {
+				// The name of the member or base class being initialized
+				IASTName memberName = initializer.getMemberInitializerId();
+				for(UMLParameter parameter : operation.getParameters()) {
+					if(parameter.getName().equals(memberName.toString())) {
+						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, initializer, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, operation, operation.getBody().getActiveVariableDeclarations(), fileContent);
+						parameter.getVariableDeclaration().setInitializer(expression);
+					}
 				}
 			}
 		}

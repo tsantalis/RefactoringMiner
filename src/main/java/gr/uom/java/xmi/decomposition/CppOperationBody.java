@@ -75,7 +75,7 @@ public class CppOperationBody extends OperationBody {
 				break;
 			}
 		}
-		this.activeVariableDeclarations = null;
+		//this.activeVariableDeclarations = null;
 	}
 
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {

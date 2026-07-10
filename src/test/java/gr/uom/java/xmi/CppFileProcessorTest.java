@@ -17,11 +17,6 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-import gr.uom.java.xmi.diff.UMLClassBaseDiff;
-import gr.uom.java.xmi.diff.UMLModelDiff;
-import gr.uom.java.xmi.diff.UMLOperationDiff;
-import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
-
 
 class CppFileProcessorTest {
 	@Test

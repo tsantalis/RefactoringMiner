@@ -197,6 +197,28 @@
   "firstEndPos" : 99,
   "secondEndPos" : 117
 }, {
+  "firstType" : "explicit",
+  "secondType" : "explicit",
+  "firstLabel" : "explicit",
+  "secondLabel" : "explicit",
+  "firstParentType" : "explicit_function_specifier",
+  "secondParentType" : "explicit_function_specifier",
+  "firstPos" : 50,
+  "secondPos" : 56,
+  "firstEndPos" : 58,
+  "secondEndPos" : 64
+}, {
+  "firstType" : "explicit_function_specifier",
+  "secondType" : "explicit_function_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 50,
+  "secondPos" : 56,
+  "firstEndPos" : 58,
+  "secondEndPos" : 64
+}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
@@ -438,6 +460,17 @@
   "secondPos" : 123,
   "firstEndPos" : 110,
   "secondEndPos" : 128
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "T",
+  "secondLabel" : "Element",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 111,
+  "secondPos" : 129,
+  "firstEndPos" : 112,
+  "secondEndPos" : 136
 }, {
   "firstType" : "reference_declarator",
   "secondType" : "reference_declarator",

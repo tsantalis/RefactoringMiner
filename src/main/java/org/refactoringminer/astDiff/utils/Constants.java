@@ -565,4 +565,5 @@ public class Constants {
     public final String REFERENCE = "&";
     public final String TEMPLATE_KEYWORD = "template";
     public final String TEMPLATE_PARAMETER_LIST = "template_parameter_list";
+    public final String EXPLICIT_FUNCTION_SPECIFIER = "explicit_function_specifier";
 }

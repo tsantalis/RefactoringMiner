@@ -614,6 +614,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (types != null) {
             mappingStore.addMappingRecursively(types.first, types.second);
         }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> typeIdentifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.TYPE_IDENTIFIER,LANG2.TYPE_IDENTIFIER);
+        if (typeIdentifiers != null) {
+            mappingStore.addMappingRecursively(typeIdentifiers.first, typeIdentifiers.second);
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
@@ -808,6 +812,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
         if (primitives != null) {
             mappingStore.addMapping(primitives.first,primitives.second);
+        }
+        com.github.gumtreediff.utils.Pair<Tree, Tree> explicitSpecifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.EXPLICIT_FUNCTION_SPECIFIER,LANG2.EXPLICIT_FUNCTION_SPECIFIER);
+        if (explicitSpecifiers != null) {
+            mappingStore.addMappingRecursively(explicitSpecifiers.first,explicitSpecifiers.second);
         }
     }
 

@@ -2,8 +2,10 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.AbstractMap.SimpleEntry;
 
@@ -11,6 +13,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -78,11 +81,22 @@ public class UMLParameterListDiff {
 			}
 		}
 		//second round match parameters with the same type
+		List<UMLType> thisParameterTypeList = removedOperation.getParameterTypeList();
+		List<UMLType> otherParameterTypeList = addedOperation.getParameterTypeList();
+		Map<String, String> map = new LinkedHashMap<>();
+		if(removedOperation.getTypeParameters().size() == addedOperation.getTypeParameters().size() && removedOperation.getTypeParameters().size() > 0 && !removedOperation.getTypeParameters().equals(addedOperation.getTypeParameters()) &&
+				thisParameterTypeList.size() == otherParameterTypeList.size()) {
+			//check for consistent type parameter rename
+			for(int i=0; i<removedOperation.getTypeParameters().size(); i++) {
+				map.put(removedOperation.getTypeParameters().get(i).toString(), addedOperation.getTypeParameters().get(i).toString());
+			}
+		}
 		for(Iterator<VariableDeclaration> removedParameterIterator = removedParameters.iterator(); removedParameterIterator.hasNext();) {
 			VariableDeclaration removedParameter = removedParameterIterator.next();
 			for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				VariableDeclaration addedParameter = addedParameterIterator.next();
-				if(removedParameter.equalQualifiedType(addedParameter)) {
+				boolean typeParameterRename = removedParameter.getType() != null && addedParameter.getType() != null && map.containsKey(removedParameter.getType().toString()) && map.get(removedParameter.getType().toString()).equals(addedParameter.getType().toString());
+				if(removedParameter.equalQualifiedType(addedParameter) || typeParameterRename) {
 					if(!existsAnotherAddedParameterWithTheSameType(removedOperation, addedOperation, addedParameter)) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
 						if(!parameterDiff.isEmpty()) {

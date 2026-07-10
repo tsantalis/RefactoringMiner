@@ -559,4 +559,5 @@ public class Constants {
     public final String POINTER = "*";
     public final String ACCESS_SPECIFIER = "access_specifier";
     public final String TEMPLATE_DECLARATION = "template_declaration";
+    public final String FIELD_INITIALIZER_LIST = "field_initializer_list";
 }

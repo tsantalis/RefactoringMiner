@@ -147,6 +147,9 @@ public interface VariableDeclarationContainer extends LocationInfoProvider, Comm
 	default List<UMLAnnotation> getAnnotations() {
 		return Collections.emptyList();
 	}
+	default List<UMLTypeParameter> getTypeParameters() {
+		return Collections.emptyList();
+	}
 	String getName();
 	String getElementType();
 	String getClassName();

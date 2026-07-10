@@ -150,7 +150,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 (srcAttr.getType().name.equals(LANG1.PAIR) && dstAttr.getType().name.equals(LANG2.PAIR)) ||
                 (srcAttr.getType().name.equals(LANG1.ENUM_ASSIGNMENT) && dstAttr.getType().name.equals(LANG2.ENUM_ASSIGNMENT)) ||
                 (srcAttr.getType().name.equals(LANG1.SPREAD_ELEMENT) && dstAttr.getType().name.equals(LANG2.SPREAD_ELEMENT)) ||
-                (srcAttr.getType().name.equals(LANG1.INIT_DECLARATOR) && dstAttr.getType().name.equals(LANG2.INIT_DECLARATOR))) {
+                (srcAttr.getType().name.equals(LANG1.INIT_DECLARATOR) && dstAttr.getType().name.equals(LANG2.INIT_DECLARATOR)) ||
+                (srcAttr.getType().name.equals(LANG1.ARRAY_DECLARATOR) && dstAttr.getType().name.equals(LANG2.ARRAY_DECLARATOR)) ||
+                (srcAttr.getType().name.equals(LANG1.FIELD_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.FIELD_IDENTIFIER))) {
             if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
                 int index1 = srcAttr.getParent().getChildPosition(srcAttr);
                 int index2 = dstAttr.getParent().getChildPosition(dstAttr);

@@ -550,6 +550,7 @@ public class Constants {
     public final String DECLARATION = "declaration";
     public final String DECLARATION_LIST = "declaration_list"; //when parent is a namespace
     public final String INIT_DECLARATOR = "init_declarator";
+    public final String ARRAY_DECLARATOR = "array_declarator";
     public final String CONDITION_CLAUSE = "condition_clause";
     public final String PLACEHOLDER_TYPE_SPECIFIER = "placeholder_type_specifier";
     public final String STRUCTURED_BINDING_DECLARATOR = "structured_binding_declarator";

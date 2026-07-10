@@ -47,6 +47,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -476,16 +477,7 @@ public class CppFileProcessor {
 		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
-					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
-					String fieldName = declarator.getName().toString();
-					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
-					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
-					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
-					variableDeclaration.setAttribute(true);
-					umlAttribute.setVariableDeclaration(variableDeclaration);
-					parentContainer.addAttribute(umlAttribute);
-					distributeComments(comments, locationInfo, umlAttribute.getComments());
+					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator);
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
 					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
@@ -493,6 +485,27 @@ public class CppFileProcessor {
 				}
 			}
 		}
+		else if(declSpecifier instanceof ICPPASTNamedTypeSpecifier namedTypeSpecifier) {
+			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
+				if(!(declarator instanceof IASTFunctionDeclarator)) {
+					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator);
+				}
+			}
+		}
+	}
+
+	private void processAttribute(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
+			Visibility currentVisibility, List<UMLComment> comments, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
+		String fieldName = declarator.getName().toString();
+		UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
+		UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
+		umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
+		variableDeclaration.setAttribute(true);
+		umlAttribute.setVariableDeclaration(variableDeclaration);
+		parentContainer.addAttribute(umlAttribute);
+		distributeComments(comments, locationInfo, umlAttribute.getComments());
 	}
 
 	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {

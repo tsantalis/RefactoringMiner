@@ -21,6 +21,83 @@
   "firstEndPos" : 250,
   "secondEndPos" : 329
 }, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 172,
+  "secondPos" : 219,
+  "firstEndPos" : 180,
+  "secondEndPos" : 227
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 180,
+  "secondPos" : 227,
+  "firstEndPos" : 192,
+  "secondEndPos" : 245
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 180,
+  "secondPos" : 227,
+  "firstEndPos" : 181,
+  "secondEndPos" : 228
+}, {
+  "firstType" : "type_parameter_declaration",
+  "secondType" : "type_parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 181,
+  "secondPos" : 228,
+  "firstEndPos" : 191,
+  "secondEndPos" : 244
+}, {
+  "firstType" : "typename",
+  "secondType" : "typename",
+  "firstLabel" : "typename",
+  "secondLabel" : "typename",
+  "firstParentType" : "type_parameter_declaration",
+  "secondParentType" : "type_parameter_declaration",
+  "firstPos" : 181,
+  "secondPos" : 228,
+  "firstEndPos" : 189,
+  "secondEndPos" : 236
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "T",
+  "secondLabel" : "Element",
+  "firstParentType" : "type_parameter_declaration",
+  "secondParentType" : "type_parameter_declaration",
+  "firstPos" : 190,
+  "secondPos" : 237,
+  "firstEndPos" : 191,
+  "secondEndPos" : 244
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 191,
+  "secondPos" : 244,
+  "firstEndPos" : 192,
+  "secondEndPos" : 245
+}, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",
   "firstLabel" : "",

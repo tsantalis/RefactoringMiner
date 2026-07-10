@@ -206,6 +206,20 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         new SameModifierMatcher(LANG1, LANG2, LANG1.INNER).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         new SameModifierMatcher(LANG1, LANG2, LANG1.VALUE).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
+        Tree parent1 = srcTypeDeclaration.getParent();
+        Tree parent2 = dstTypeDeclaration.getParent();
+        if(parent1 != null && parent1.getType().name.equals(LANG1.TEMPLATE_DECLARATION) &&
+                parent2 != null && parent2.getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
+            mappingStore.addMapping(parent1, parent2);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> templates = Helpers.findPairOfType(parent1, parent2,LANG1.TEMPLATE_KEYWORD,LANG2.TEMPLATE_KEYWORD);
+            if (templates != null) {
+                mappingStore.addMapping(templates.first,templates.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> templateParameterLists = Helpers.findPairOfType(parent1, parent2,LANG1.TEMPLATE_PARAMETER_LIST,LANG2.TEMPLATE_PARAMETER_LIST);
+            if (templateParameterLists != null) {
+                mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
+            }
+        }
         if (classDiff.getTypeParameterDiffList() != null)
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, commonTypeParamSet.getLeft().getLocationInfo(), LANG1);

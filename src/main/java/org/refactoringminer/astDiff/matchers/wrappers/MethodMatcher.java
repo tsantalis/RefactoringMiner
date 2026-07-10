@@ -767,9 +767,19 @@ public class MethodMatcher extends BodyMapperMatcher{
     }
 
     private void processTreesContainingFunctionDeclarators(Tree srcOperationNode, Tree dstOperationNode, ExtendedMultiMappingStore mappingStore) {
-        if(srcOperationNode.getParent() != null && srcOperationNode.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) &&
-                dstOperationNode.getParent() != null && dstOperationNode.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
-            mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
+        Tree parent1 = srcOperationNode.getParent();
+        Tree parent2 = dstOperationNode.getParent();
+        if(parent1 != null && parent1.getType().name.equals(LANG1.TEMPLATE_DECLARATION) &&
+                parent2 != null && parent2.getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
+            mappingStore.addMapping(parent1, parent2);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> templates = Helpers.findPairOfType(parent1, parent2,LANG1.TEMPLATE_KEYWORD,LANG2.TEMPLATE_KEYWORD);
+            if (templates != null) {
+                mappingStore.addMapping(templates.first,templates.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> templateParameterLists = Helpers.findPairOfType(parent1, parent2,LANG1.TEMPLATE_PARAMETER_LIST,LANG2.TEMPLATE_PARAMETER_LIST);
+            if (templateParameterLists != null) {
+                mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
+            }
         }
         com.github.gumtreediff.utils.Pair<Tree, Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FUNCTION_DECLARATOR,LANG2.FUNCTION_DECLARATOR);
         if (matched != null) {

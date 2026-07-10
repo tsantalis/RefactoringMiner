@@ -2013,6 +2013,8 @@ public class VariableReplacementAnalysis {
 					variableRenames.add(ref);
 					removedVariables.remove(variableDeclaration1);
 					addedVariables.remove(variableDeclaration2);
+					if(!insideExtractedOrInlinedMethod)
+						matchedVariables.add(Pair.of(variableDeclaration1, variableDeclaration2));
 					getVariableRefactorings(variableDeclaration1, variableDeclaration2, operation1, operation2, allReferences, ref);
 				}
 			}
@@ -2068,6 +2070,8 @@ public class VariableReplacementAnalysis {
 						variableRenames.add(ref);
 						removedVariables.remove(variableDeclaration1);
 						addedVariables.remove(variableDeclaration2);
+						if(!insideExtractedOrInlinedMethod)
+							matchedVariables.add(Pair.of(variableDeclaration1, variableDeclaration2));
 						getVariableRefactorings(variableDeclaration1, variableDeclaration2, operation1, operation2, actualReferences, ref);
 					}
 				}

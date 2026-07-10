@@ -382,7 +382,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree dstBlock = TreeUtilFunctions.findFirstByType(dstTypeDeclaration, LANG2.CLASS_BLOCK);
         if (srcTypeDeclaration.getType().name.equals(LANG1.TYPE_DECLARATION) && dstTypeDeclaration.getType().name.equals(LANG2.CLASS_DECLARATION) && dstBlock != null && srcBlock == null) {
             //handle Java to Kotlin migration
-            mappingStore.addMapping(srcTypeDeclaration, dstBlock);
+            dstTypeDeclaration.getChildren().addAll(dstBlock.getChildren());
+            dstTypeDeclaration.getChildren().remove(dstBlock);
             Tree name1 = TreeUtilFunctions.findChildByType(srcTypeDeclaration, LANG1.SIMPLE_NAME);
             Tree name2 = TreeUtilFunctions.findChildByType(dstTypeDeclaration, LANG2.TYPE_IDENTIFIER);
             if(name1 != null && name2 != null) {

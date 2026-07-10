@@ -362,6 +362,105 @@
   "firstEndPos" : 110,
   "secondEndPos" : 128
 }, {
+  "firstType" : "reference_declarator",
+  "secondType" : "reference_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 113,
+  "secondPos" : 137,
+  "firstEndPos" : 131,
+  "secondEndPos" : 158
+}, {
+  "firstType" : "&",
+  "secondType" : "&",
+  "firstLabel" : "&",
+  "secondLabel" : "&",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "reference_declarator",
+  "firstPos" : 113,
+  "secondPos" : 137,
+  "firstEndPos" : 114,
+  "secondEndPos" : 138
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "reference_declarator",
+  "firstPos" : 114,
+  "secondPos" : 138,
+  "firstEndPos" : 131,
+  "secondEndPos" : 158
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "get_value",
+  "secondLabel" : "read_payload",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 114,
+  "secondPos" : 138,
+  "firstEndPos" : 123,
+  "secondEndPos" : 150
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 123,
+  "secondPos" : 150,
+  "firstEndPos" : 125,
+  "secondEndPos" : 152
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 123,
+  "secondPos" : 150,
+  "firstEndPos" : 124,
+  "secondEndPos" : 151
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 124,
+  "secondPos" : 151,
+  "firstEndPos" : 125,
+  "secondEndPos" : 152
+}, {
+  "firstType" : "const",
+  "secondType" : "const",
+  "firstLabel" : "const",
+  "secondLabel" : "const",
+  "firstParentType" : "type_qualifier",
+  "secondParentType" : "type_qualifier",
+  "firstPos" : 126,
+  "secondPos" : 153,
+  "firstEndPos" : 131,
+  "secondEndPos" : 158
+}, {
+  "firstType" : "type_qualifier",
+  "secondType" : "type_qualifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 126,
+  "secondPos" : 153,
+  "firstEndPos" : 131,
+  "secondEndPos" : 158
+}, {
   "firstType" : "compound_statement",
   "secondType" : "compound_statement",
   "firstLabel" : "",

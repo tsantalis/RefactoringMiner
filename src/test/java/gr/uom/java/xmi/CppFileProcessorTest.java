@@ -377,12 +377,62 @@ class CppFileProcessorTest {
 	}
 
 	@Test
+	void processesCppVariableTemplateDeclarations() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"template <typename T>",
+				"constexpr T pi = T(3.1415926535897932385);",
+				"template <typename T, int N>",
+				"T scaled = T(N);") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "templates");
+
+		UMLAttribute pi = findAttribute(moduleClass.getAttributes(), "pi");
+		assertEquals("T", pi.getType().toString());
+		assertEquals(List.of("T"), pi.getTypeParameterNames());
+		assertEquals("public pi<T> : T", pi.toString());
+
+		UMLAttribute scaled = findAttribute(moduleClass.getAttributes(), "scaled");
+		assertEquals("T", scaled.getType().toString());
+		assertEquals(List.of("T", "N"), scaled.getTypeParameterNames());
+		assertEquals("public scaled<T,N> : T", scaled.toString());
+	}
+
+	@Test
+	void processesCppStructuredBindingDeclarations() {
+		String filePath = "src/bindings.cpp";
+		String fileContent = String.join("\n",
+				"struct Point {",
+				"  int x;",
+				"  int y;",
+				"};",
+				"Point point;",
+				"auto [left, right] = point;") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "bindings");
+
+		UMLAttribute left = findAttribute(moduleClass.getAttributes(), "left");
+		assertEquals("auto", left.getType().toString());
+		assertEquals(CodeElementType.FIELD_DECLARATION, left.getLocationInfo().getCodeElementType());
+
+		UMLAttribute right = findAttribute(moduleClass.getAttributes(), "right");
+		assertEquals("auto", right.getType().toString());
+		assertEquals(CodeElementType.FIELD_DECLARATION, right.getLocationInfo().getCodeElementType());
+	}
+
+	@Test
 	void processesCppUsingDirectivesAsImports() {
 		String filePath = "src/usings.cpp";
 		String fileContent = String.join("\n",
 				"using namespace std;",
+				"using std::string;",
+				"namespace fs = std::filesystem;",
 				"namespace local {",
 				"  using namespace outer::inner;",
+				"  using outer::inner::Thing;",
+				"  namespace rng = std::ranges;",
 				"}") + "\n";
 
 		UMLModel model = processCppModel(filePath, fileContent);
@@ -393,10 +443,30 @@ class CppFileProcessorTest {
 		assertFalse(moduleImport.isStatic());
 		assertEquals(CodeElementType.IMPORT_DECLARATION, moduleImport.getLocationInfo().getCodeElementType());
 
+		UMLImport usingDeclarationImport = findImport(moduleClass, "std.string");
+		assertFalse(usingDeclarationImport.isOnDemand());
+		assertFalse(usingDeclarationImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, usingDeclarationImport.getLocationInfo().getCodeElementType());
+
+		UMLImport namespaceAliasImport = findImport(moduleClass, "std.filesystem");
+		assertFalse(namespaceAliasImport.isOnDemand());
+		assertFalse(namespaceAliasImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceAliasImport.getLocationInfo().getCodeElementType());
+
 		UMLImport namespaceImport = findImport(moduleClass, "outer.inner");
 		assertTrue(namespaceImport.isOnDemand());
 		assertFalse(namespaceImport.isStatic());
 		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceImport.getLocationInfo().getCodeElementType());
+
+		UMLImport namespaceUsingDeclarationImport = findImport(moduleClass, "outer.inner.Thing");
+		assertFalse(namespaceUsingDeclarationImport.isOnDemand());
+		assertFalse(namespaceUsingDeclarationImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, namespaceUsingDeclarationImport.getLocationInfo().getCodeElementType());
+
+		UMLImport nestedNamespaceAliasImport = findImport(moduleClass, "std.ranges");
+		assertFalse(nestedNamespaceAliasImport.isOnDemand());
+		assertFalse(nestedNamespaceAliasImport.isStatic());
+		assertEquals(CodeElementType.IMPORT_DECLARATION, nestedNamespaceAliasImport.getLocationInfo().getCodeElementType());
 	}
 
 	@Test
@@ -544,6 +614,13 @@ class CppFileProcessorTest {
 				.filter(typeAlias -> typeAlias.getName().equals(name))
 				.findFirst()
 				.orElseThrow(() -> new AssertionError("Expected type alias: " + name));
+	}
+
+	private static UMLAttribute findAttribute(List<UMLAttribute> attributes, String name) {
+		return attributes.stream()
+				.filter(attribute -> attribute.getName().equals(name))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Expected attribute: " + name));
 	}
 
 	private static UMLImport findImport(UMLClass umlClass, String name) {

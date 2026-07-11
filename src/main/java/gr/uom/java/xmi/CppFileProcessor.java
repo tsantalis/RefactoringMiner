@@ -22,6 +22,7 @@ import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTNamedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
@@ -400,6 +401,7 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTNamespaceAlias cppNamespaceAlias) {
 			//In C++, a namespace alias allows you to create a shorter or alternative name for a long or deeply nested namespace. You define it using the syntax namespace alias_name = existing_namespace;
+			processCppImport(cppNamespaceAlias.getMappingName(), cppNamespaceAlias, sourceFolder, parentContainer, false);
 		}
 		else if(declaration instanceof CPPASTNamespaceDefinition cppNamespaceDefinition) {
 			//In C++, a namespace is a declarative region that provides a distinct scope to identifiers (such as names of types, functions, variables, and classes) to prevent naming collisions and organize code into logical groups.
@@ -415,10 +417,13 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
+			if(parentContainer instanceof UMLClass umlClass && umlClass.isModule()) {
+				processCppImport(cppUsingDeclaration.getName(), cppUsingDeclaration, sourceFolder, parentContainer, false);
+			}
 		}
 		else if(declaration instanceof CPPASTUsingDirective cppUsingDirective) {
 			//In C++, a using directive allows all identifiers within a specific namespace to be used without explicit qualification. It uses the syntax using namespace namespace_name;
-			processCppUsingDirective(cppUsingDirective, sourceFolder, parentContainer);
+			processCppImport(cppUsingDirective.getQualifiedName(), cppUsingDirective, sourceFolder, parentContainer, true);
 		}
 		else if(declaration instanceof CPPASTVisibilityLabel cppVisibilityLabel) {
 			//In C++, visibility labels (more commonly referred to as access specifiers) are keywords used inside a class or struct to control the accessibility of its data members and functions from external code.
@@ -511,16 +516,16 @@ public class CppFileProcessor {
 		distributeComments(comments, locationInfo, umlAttribute.getComments());
 	}
 
-	private UMLOperation processFunctionDeclSpecifier(IASTSimpleDeclSpecifier simpleDeclSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
+	private UMLOperation processFunctionDeclSpecifier(IASTDeclSpecifier declSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		IASTName functionName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
 		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-		operation.setStatic(simpleDeclSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
-		operation.setInline(simpleDeclSpecifier.isInline());
+		operation.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
+		operation.setInline(declSpecifier.isInline());
 		distributeComments(comments, locationInfo, operation.getComments());
 
-		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, simpleDeclSpecifier, declarator, 0);
+		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 		if(returnType != null) {
 			operation.addParameter(new UMLParameter("return", returnType, "return", false));
 		}
@@ -551,7 +556,7 @@ public class CppFileProcessor {
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 
-		int start = simpleDeclSpecifier.getFileLocation().getNodeOffset();
+		int start = declSpecifier.getFileLocation().getNodeOffset();
 		int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
 		operation.setActualSignature(fileContent.substring(start, end));
 		return operation;
@@ -626,14 +631,13 @@ public class CppFileProcessor {
 		return operation;
 	}
 
-	private void processCppUsingDirective(CPPASTUsingDirective usingDirective, String sourceFolder, UMLAbstractClass parentContainer) {
-		IASTName qualifiedName = usingDirective.getQualifiedName();
-		if(qualifiedName == null || qualifiedName.toString().isBlank()) {
+	private void processCppImport(IASTName name, IASTDeclaration declaration, String sourceFolder, UMLAbstractClass parentContainer, boolean onDemand) {
+		if(name == null || name.toString().isBlank()) {
 			return;
 		}
-		String importName = qualifiedName.toString().replace("::", ".");
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, usingDirective, CodeElementType.IMPORT_DECLARATION, fileContent);
-		parentContainer.getImportedTypes().add(new UMLImport(importName, true, false, locationInfo));
+		String importName = name.toString().replace("::", ".");
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declaration, CodeElementType.IMPORT_DECLARATION, fileContent);
+		parentContainer.getImportedTypes().add(new UMLImport(importName, onDemand, false, locationInfo));
 	}
 
 	private void processCppAliasDeclaration(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters) {

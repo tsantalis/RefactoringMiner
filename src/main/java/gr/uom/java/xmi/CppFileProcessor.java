@@ -651,10 +651,28 @@ public class CppFileProcessor {
 			for (ICPPASTConstructorChainInitializer initializer : initializers) {
 				// The name of the member or base class being initialized
 				IASTName memberName = initializer.getMemberInitializerId();
+				boolean found = false;
 				for(UMLParameter parameter : operation.getParameters()) {
 					if(parameter.getName().equals(memberName.toString())) {
 						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, initializer, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, operation, operation.getBody().getActiveVariableDeclarations(), fileContent);
 						parameter.getVariableDeclaration().setInitializer(expression);
+						found = true;
+						break;
+					}
+				}
+				if(!found) {
+					UMLAttribute attr = parentContainer.attributeWithName(memberName.toString());
+					if(attr != null) {
+						AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, initializer, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, operation, operation.getBody().getActiveVariableDeclarations(), fileContent);
+						Set<VariableDeclaration> candidates = new LinkedHashSet<>();
+						for(UMLParameter parameter : operation.getParameters()) {
+							if(expression.getAllVariables().contains(parameter.getName())) {
+								candidates.add(parameter.getVariableDeclaration());
+							}
+						}
+						if(candidates.size() == 1) {
+							candidates.iterator().next().setInitializer(expression);
+						}
 					}
 				}
 			}

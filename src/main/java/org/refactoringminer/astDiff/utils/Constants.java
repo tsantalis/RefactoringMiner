@@ -561,6 +561,7 @@ public class Constants {
     public final String ACCESS_SPECIFIER = "access_specifier";
     public final String TEMPLATE_DECLARATION = "template_declaration";
     public final String FIELD_INITIALIZER_LIST = "field_initializer_list";
+    public final String FIELD_INITIALIZER = "field_initializer";
     public final String REFERENCE_DECLARATOR = "reference_declarator";
     public final String REFERENCE = "&";
     public final String TEMPLATE_KEYWORD = "template";

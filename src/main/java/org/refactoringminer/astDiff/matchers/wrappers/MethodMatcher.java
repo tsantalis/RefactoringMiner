@@ -807,7 +807,18 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FIELD_INITIALIZER_LIST,LANG2.FIELD_INITIALIZER_LIST);
         if (matched != null) {
-            mappingStore.addMappingRecursively(matched.first,matched.second);
+            if(matched.first.getChildren().size() == matched.second.getChildren().size()) {
+                mappingStore.addMappingRecursively(matched.first,matched.second);
+            }
+            else {
+                mappingStore.addMapping(matched.first,matched.second);
+                com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(matched.first,matched.second,LANG1.COLON,LANG2.COLON);
+                if (colons != null) {
+                    mappingStore.addMapping(colons.first,colons.second);
+                }
+                //List<Tree> initializers1 = TreeUtilFunctions.findChildrenByTypeRecursively(matched.first, LANG1.FIELD_INITIALIZER);
+                //List<Tree> initializers2 = TreeUtilFunctions.findChildrenByTypeRecursively(matched.second, LANG2.FIELD_INITIALIZER);
+            }
         }
         com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
         if (primitives != null) {

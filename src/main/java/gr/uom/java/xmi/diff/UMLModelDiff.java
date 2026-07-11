@@ -3142,6 +3142,9 @@ public class UMLModelDiff {
 	private List<ExtractSuperclassRefactoring> identifyExtractSuperclassRefactorings() throws RefactoringMinerTimedOutException {
 		List<ExtractSuperclassRefactoring> refactorings = new ArrayList<ExtractSuperclassRefactoring>();
 		for(UMLClass addedClass : addedClasses) {
+			if(addedClass.isModule() && addedClass.getAttributes().isEmpty() && addedClass.getOperations().isEmpty()) {
+				continue;
+			}
 			Set<UMLClass> subclassSetBefore = new LinkedHashSet<UMLClass>();
 			Set<UMLClass> subclassSetAfter = new LinkedHashSet<UMLClass>();
 			String addedClassName = addedClass.getName();

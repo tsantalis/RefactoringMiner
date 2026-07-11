@@ -343,7 +343,7 @@ public class CppFileProcessor {
 			//A structured binding declaration is a feature introduced in C++17 that allows you to unpack or decompose a target object into individual named variables.
 			//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 			for(IASTDeclarator declarator : cppStructuredBindingDeclaration.getDeclarators()) {
-				processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, cppStructuredBindingDeclaration.getDeclSpecifier(), declarator);
+				processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, cppStructuredBindingDeclaration.getDeclSpecifier(), declarator, templateParameters);
 			}
 		}
 		else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
@@ -485,7 +485,7 @@ public class CppFileProcessor {
 		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
-					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator);
+					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator, templateParameters);
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
 					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
@@ -496,14 +496,14 @@ public class CppFileProcessor {
 		else if(declSpecifier instanceof ICPPASTNamedTypeSpecifier namedTypeSpecifier) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
-					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator);
+					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator, templateParameters);
 				}
 			}
 		}
 	}
 
 	private void processAttribute(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
-			Visibility currentVisibility, List<UMLComment> comments, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator) {
+			Visibility currentVisibility, List<UMLComment> comments, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, ICPPASTTemplateParameter[] templateParameters) {
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
 		String fieldName = declarator.getName().toString();
 		UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
@@ -512,6 +512,7 @@ public class CppFileProcessor {
 		VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 		variableDeclaration.setAttribute(true);
 		umlAttribute.setVariableDeclaration(variableDeclaration);
+		addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
 		parentContainer.addAttribute(umlAttribute);
 		distributeComments(comments, locationInfo, umlAttribute.getComments());
 	}

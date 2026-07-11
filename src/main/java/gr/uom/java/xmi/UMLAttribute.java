@@ -106,14 +106,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return typeParameters;
 	}
 
-	public List<String> getTypeParameterNames() {
-		List<String> typeParameterNames = new ArrayList<String>();
-		for(UMLTypeParameter typeParameter : typeParameters) {
-			typeParameterNames.add(typeParameter.getName());
-		}
-		return typeParameterNames;
-	}
-
 	public void addTypeParameter(UMLTypeParameter typeParameter) {
 		typeParameters.add(typeParameter);
 	}

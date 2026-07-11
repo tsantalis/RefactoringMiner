@@ -391,12 +391,12 @@ class CppFileProcessorTest {
 		UMLAttribute pi = findAttribute(moduleClass.getAttributes(), "pi");
 		assertEquals("T", pi.getType().toString());
 		assertEquals(List.of("T"), pi.getTypeParameterNames());
-		assertEquals("public pi<T> : T", pi.toString());
+		assertEquals("public pi : T", pi.toString());
 
 		UMLAttribute scaled = findAttribute(moduleClass.getAttributes(), "scaled");
 		assertEquals("T", scaled.getType().toString());
 		assertEquals(List.of("T", "N"), scaled.getTypeParameterNames());
-		assertEquals("public scaled<T,N> : T", scaled.toString());
+		assertEquals("public scaled : T", scaled.toString());
 	}
 
 	@Test

@@ -35,6 +35,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.cdt.core.dom.ast.IASTExpression;
+import org.eclipse.cdt.core.dom.ast.IASTFieldReference;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
+import org.eclipse.cdt.core.dom.ast.IASTInitializerClause;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -1378,6 +1383,25 @@ public class OperationInvocation extends AbstractCall {
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
 				this.typeArguments.add(type);
 			}
+		}
+	}
+
+	public OperationInvocation(String sourceFolder, String filePath, IASTFunctionCallExpression invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container, fileContent);
+		IASTExpression nameExpr = invocation.getFunctionNameExpression();
+		IASTInitializerClause[] arguments = invocation.getArguments();
+		this.arguments = new ArrayList<String>();
+		this.numberOfArguments = arguments.length;
+		for(IASTInitializerClause arg : arguments) {
+			this.arguments.add(arg.getRawSignature());
+		}
+		if (nameExpr instanceof IASTIdExpression) {
+			this.methodName = nameExpr.getRawSignature();
+		}
+		else if(nameExpr instanceof IASTFieldReference fieldReference) {
+			IASTExpression expr = fieldReference.getFieldOwner();
+			this.expression = expr.getRawSignature();
+			this.methodName = fieldReference.getFieldName().toString();
 		}
 	}
 }

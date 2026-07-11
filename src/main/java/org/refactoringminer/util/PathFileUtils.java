@@ -32,7 +32,7 @@ public class PathFileUtils {
     }
 
     public static boolean isCppFile(String path){
-        return path.endsWith(".cpp");
+        return path.endsWith(".cpp") || path.endsWith(".h") || path.endsWith(".hpp");
     }
 
     public static boolean isLangSupportedFile(String path){

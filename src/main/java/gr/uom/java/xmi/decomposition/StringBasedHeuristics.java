@@ -1309,7 +1309,7 @@ public class StringBasedHeuristics {
 	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2) {
 		String trimmedS1 = s1;
 		String trimmedS2 = s2;
-		boolean noPrettyPrint = (LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) || (LANG1.equals(Constants.KOTLIN) && LANG2.equals(Constants.KOTLIN));
+		boolean noPrettyPrint = (LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) || (LANG1.equals(Constants.KOTLIN) && LANG2.equals(Constants.KOTLIN)) || (LANG1.equals(Constants.CPP) && LANG2.equals(Constants.CPP));
 		if(noPrettyPrint) {
 			trimmedS1 = trimmedS1.replaceAll("\s", "");
 			trimmedS2 = trimmedS2.replaceAll("\s", "");

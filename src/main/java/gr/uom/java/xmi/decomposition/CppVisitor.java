@@ -8,6 +8,8 @@ import java.util.Set;
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTExpression;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 
@@ -78,6 +80,14 @@ public class CppVisitor extends ASTVisitor {
 		LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, name, CodeElementType.SIMPLE_NAME, container, fileContent);
 		variables.add(leafExpression);
 		return super.visit(name);
+	}
+
+	public int visit(IASTExpression expression) {
+		if (expression instanceof IASTFunctionCallExpression functionCall) {
+			OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, functionCall, container, fileContent);
+			methodInvocations.add(invocation);
+		}
+		return super.visit(expression);
 	}
 
 	public List<LeafExpression> getVariables() {

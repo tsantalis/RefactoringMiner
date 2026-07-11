@@ -43,12 +43,12 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 
 	public UMLPreprocessorStatement(LocationInfo location, Directive type, String value) {
 		this(location, type);
-		this.value = value != null ? Optional.of(value) : Optional.empty();
+		this.value = value != null && !value.isEmpty() ? Optional.of(value) : Optional.empty();
 	}
 
 	public UMLPreprocessorStatement(LocationInfo location, Directive type, String value, String name) {
 		this(location, type, value);
-		this.name = name != null ? Optional.of(name) : Optional.empty();
+		this.name = name != null && !name.isEmpty() ? Optional.of(name) : Optional.empty();
 	}
 
 	public LocationInfo getLocationInfo() {

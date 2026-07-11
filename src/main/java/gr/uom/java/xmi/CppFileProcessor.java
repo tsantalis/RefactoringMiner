@@ -483,7 +483,7 @@ public class CppFileProcessor {
 					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
+					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 					variableDeclaration.setAttribute(true);
 					umlAttribute.setVariableDeclaration(variableDeclaration);
 					parentContainer.addAttribute(umlAttribute);

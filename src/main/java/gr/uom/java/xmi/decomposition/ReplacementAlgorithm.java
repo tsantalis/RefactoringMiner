@@ -963,7 +963,7 @@ public class ReplacementAlgorithm {
 			for(String infix : infixExpressions2) {
 				for(String variable : tmpVariables2) {
 					if(ReplacementUtil.contains(infix, variable) &&
-							(infix.contains(variable + " > ") || infix.contains(variable + " < ") ||
+							(infix.contains(variable + " > ") || infix.contains(variable + " < ") || infix.contains(variable + " + ") ||
 									infix.contains(variable + " >= ") || infix.contains(variable + " <= ") ||
 									infix.contains(variable + " != ") || infix.contains(variable + " == "))) {
 						variablesToBeRemoved.add(variable);

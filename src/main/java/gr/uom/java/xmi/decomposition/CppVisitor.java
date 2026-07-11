@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
+import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTExpression;
@@ -87,7 +88,58 @@ public class CppVisitor extends ASTVisitor {
 			OperationInvocation invocation = new OperationInvocation(sourceFolder, filePath, functionCall, container, fileContent);
 			methodInvocations.add(invocation);
 		}
+		else if(expression instanceof IASTBinaryExpression binaryExpression) {
+			if(binaryExpression.getOperator() == IASTBinaryExpression.op_assign) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, binaryExpression, CodeElementType.ASSIGNMENT, container, fileContent);
+				assignments.add(leafExpression);
+			}
+			else {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, binaryExpression, CodeElementType.INFIX_EXPRESSION, container, fileContent);
+				infixExpressions.add(leafExpression);
+				infixOperators.add(getOperatorString(binaryExpression));
+			}
+		}
 		return super.visit(expression);
+	}
+
+	public static String getOperatorString(IASTBinaryExpression binaryExpr) {
+		switch (binaryExpr.getOperator()) {
+			case IASTBinaryExpression.op_plus:               return "+";
+			case IASTBinaryExpression.op_minus:              return "-";
+			case IASTBinaryExpression.op_multiply:           return "*";
+			case IASTBinaryExpression.op_divide:             return "/";
+			case IASTBinaryExpression.op_modulo:             return "%";
+			case IASTBinaryExpression.op_assign:             return "=";
+			case IASTBinaryExpression.op_equals:             return "==";
+			case IASTBinaryExpression.op_notequals:          return "!=";
+			case IASTBinaryExpression.op_greaterThan:        return ">";
+			case IASTBinaryExpression.op_greaterEqual:       return ">=";
+			case IASTBinaryExpression.op_lessThan:           return "<";
+			case IASTBinaryExpression.op_lessEqual:          return "<=";
+			case IASTBinaryExpression.op_binaryAnd:          return "&";
+			case IASTBinaryExpression.op_binaryAndAssign:    return "&=";
+			case IASTBinaryExpression.op_binaryOr:           return "|";
+			case IASTBinaryExpression.op_binaryOrAssign:     return "|=";
+			case IASTBinaryExpression.op_binaryXor:          return "^";
+			case IASTBinaryExpression.op_binaryXorAssign:    return "^=";
+			case IASTBinaryExpression.op_logicalAnd:         return "&&";
+			case IASTBinaryExpression.op_logicalOr:          return "||";
+			case IASTBinaryExpression.op_shiftLeft:          return "<<";
+			case IASTBinaryExpression.op_shiftRight:         return ">>";
+			case IASTBinaryExpression.op_shiftLeftAssign:    return "<<=";
+			case IASTBinaryExpression.op_shiftRightAssign:   return ">>=";
+			case IASTBinaryExpression.op_plusAssign:         return "+=";
+			case IASTBinaryExpression.op_minusAssign:        return "-=";
+			case IASTBinaryExpression.op_multiplyAssign:     return "*=";
+			case IASTBinaryExpression.op_divideAssign:       return "/=";
+			case IASTBinaryExpression.op_moduloAssign:       return "%=";
+			case IASTBinaryExpression.op_pmdot:              return ".**";
+			case IASTBinaryExpression.op_pmarrow:            return "->*";
+			case IASTBinaryExpression.op_ellipses:           return "...";
+			case IASTBinaryExpression.op_max:                return ">?";
+			case IASTBinaryExpression.op_min:                return ">?";
+			default:                                         return "unknown";
+		}
 	}
 
 	public List<LeafExpression> getVariables() {

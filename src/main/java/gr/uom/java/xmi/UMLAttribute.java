@@ -483,7 +483,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		sb.append(visibility);
 		sb.append(" ");
 		sb.append(name);
-		appendTypeParameters(sb);
 		sb.append(" : ");
 		sb.append(type);
 		return sb.toString();
@@ -500,7 +499,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 			sb.append(" ");
 		}
 		sb.append(name);
-		appendTypeParameters(sb);
 		sb.append(" : ");
 		if(this instanceof UMLEnumConstant) {
 			String string = type.toString();
@@ -520,18 +518,6 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public int compareTo(UMLAttribute attribute) {
 		return this.toString().compareTo(attribute.toString());
-	}
-
-	private void appendTypeParameters(StringBuilder sb) {
-		if(typeParameters.size() > 0) {
-			sb.append("<");
-			for(int i = 0; i < typeParameters.size(); i++) {
-				sb.append(typeParameters.get(i).toString());
-				if(i < typeParameters.size() - 1)
-					sb.append(",");
-			}
-			sb.append(">");
-		}
 	}
 
 	public double normalizedNameDistance(UMLAttribute attribute) {

@@ -323,23 +323,7 @@ public class CppFileProcessor {
 	
 	private Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
 			List<UMLComment> comments, Visibility currentVisibility, IASTDeclaration declaration, ICPPASTTemplateParameter[] templateParameters) {
-		if(declaration instanceof CPPASTStructuredBindingDeclaration cppStructuredBindingDeclaration) {
-			//A structured binding declaration is a feature introduced in C++17 that allows you to unpack or decompose a target object into individual named variables.
-			//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
-			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, cppStructuredBindingDeclaration.getDeclSpecifier(), null, 0);
-			for(IASTName name : cppStructuredBindingDeclaration.getNames()) {
-				if(name == null || name.toString().isBlank()) {
-					continue;
-				}
-				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, name, CodeElementType.FIELD_DECLARATION, fileContent);
-				UMLAttribute umlAttribute = new UMLAttribute(name.toString(), type, locationInfo, packageName);
-				umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-				addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
-				parentContainer.addAttribute(umlAttribute);
-				distributeComments(comments, locationInfo, umlAttribute.getComments());
-			}
-		}
-		else if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
+		if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
 			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 		}
 		else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
@@ -350,6 +334,10 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CASTAmbiguousSimpleDeclaration cAmbiguousSimpleDeclaration) {
 			
+		}
+		else if(declaration instanceof CPPASTStructuredBindingDeclaration cppStructuredBindingDeclaration) {
+			//A structured binding declaration is a feature introduced in C++17 that allows you to unpack or decompose a target object into individual named variables.
+			//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
 		}
 		else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
 			UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);

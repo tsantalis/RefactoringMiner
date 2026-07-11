@@ -2722,7 +2722,7 @@ public class StringBasedHeuristics {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains(LANG1.ASSIGNMENT) && string1.endsWith(LANG1.STATEMENT_TERMINATION) && string2.contains(LANG2.ASSIGNMENT) && string2.endsWith(LANG2.STATEMENT_TERMINATION)) {
-			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false, rightHandSideReplacement = false;
+			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false, rightHandSideReplacement = false, typeParameterRename = false;
 			String variableName1 = string1.substring(0, string1.indexOf(LANG1.ASSIGNMENT));
 			String variableName2 = string2.substring(0, string2.indexOf(LANG2.ASSIGNMENT));
 			String assignment1 = string1.substring(string1.indexOf(LANG1.ASSIGNMENT) + LANG1.ASSIGNMENT.length(), string1.lastIndexOf(LANG1.STATEMENT_TERMINATION));
@@ -2788,6 +2788,13 @@ public class StringBasedHeuristics {
 					inv2 = invocation2;
 				}
 			}
+			Map<String, String> map = new LinkedHashMap<>();
+			if(mapper.getContainer1().getTypeParameters().size() == mapper.getContainer2().getTypeParameters().size() && mapper.getContainer1().getTypeParameters().size() > 0 && !mapper.getContainer1().getTypeParameters().equals(mapper.getContainer2().getTypeParameters())) {
+				//check for consistent type parameter rename
+				for(int i=0; i<mapper.getContainer1().getTypeParameters().size(); i++) {
+					map.put(mapper.getContainer1().getTypeParameters().get(i).toString(), mapper.getContainer2().getTypeParameters().get(i).toString());
+				}
+			}
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if(replacement.getType().equals(ReplacementType.TYPE)) {
 					typeReplacement = true;
@@ -2845,6 +2852,9 @@ public class StringBasedHeuristics {
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && map.containsKey(replacement.getBefore()) && map.get(replacement.getBefore()).equals(replacement.getAfter())) {
+					typeParameterRename = true;
+				}
 			}
 			if(inv1 != null && inv2 != null) {
 				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;
@@ -2859,7 +2869,15 @@ public class StringBasedHeuristics {
 			if(statement1.getVariableDeclarations().size() == 0 && statement2.getVariableDeclarations().size() == 0 && variableRename && variableName1.startsWith("_") != variableName2.startsWith("_")) {
 				return true;
 			}
-			if(variableRename && rightHandSideReplacement) {
+			if(mapper.getClassDiff() != null && variableRename) {
+				UMLAttribute attr1 = mapper.getClassDiff().findAttributeInOriginalClass(variableName1);
+				UMLAttribute attr2 = mapper.getClassDiff().findAttributeInNextClass(variableName2);
+				if(attr1 != null && attr2 != null && attr1.getType() != null && attr2.getType() != null &&
+						map.containsKey(attr1.getType().toString()) && map.get(attr1.getType().toString()).equals(attr2.getType().toString())) {
+					typeParameterRename = true;
+				}
+			}
+			if(variableRename && rightHandSideReplacement && !typeParameterRename) {
 				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName1);
 				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName2);
 				int commonTokens = 0;

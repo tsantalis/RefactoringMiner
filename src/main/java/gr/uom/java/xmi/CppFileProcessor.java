@@ -475,7 +475,7 @@ public class CppFileProcessor {
 			this.umlModel.addClass(umlClass);
 			distributeComments(comments, locationInfo, umlClass.getComments());
 		}
-		else if(declSpecifier instanceof IASTSimpleDeclSpecifier || declSpecifier instanceof IASTNamedTypeSpecifier) {
+		else if(declSpecifier instanceof IASTSimpleDeclSpecifier simpleDeclSpecifier) {
 			for(IASTDeclarator declarator : simpleDeclaration.getDeclarators()) {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
 					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
@@ -483,7 +483,6 @@ public class CppFileProcessor {
 					UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 					UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 					umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-					addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
 					VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 					variableDeclaration.setAttribute(true);
 					umlAttribute.setVariableDeclaration(variableDeclaration);
@@ -491,7 +490,7 @@ public class CppFileProcessor {
 					distributeComments(comments, locationInfo, umlAttribute.getComments());
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
-					UMLOperation operation = processFunctionDeclSpecifier(declSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
+					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 					parentContainer.addOperation(operation);
 				}
 			}

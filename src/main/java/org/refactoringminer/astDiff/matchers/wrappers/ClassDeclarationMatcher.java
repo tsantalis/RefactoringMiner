@@ -28,6 +28,7 @@ import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -692,18 +693,51 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         List<Tree> accessSpecifiers1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcBlock, LANG1.ACCESS_SPECIFIER);
         List<Tree> accessSpecifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstBlock, LANG2.ACCESS_SPECIFIER);
-        if(accessSpecifiers1.size() == accessSpecifiers2.size()) {
+        List<Tree> matched1 = new ArrayList<Tree>();
+        List<Tree> matched2 = new ArrayList<Tree>();
+        if(accessSpecifiers1.size() <= accessSpecifiers2.size()) {
             for(int i=0; i<accessSpecifiers1.size(); i++) {
                 Tree accessSpecifier1 = accessSpecifiers1.get(i);
-                Tree accessSpecifier2 = accessSpecifiers2.get(i);
-                mappingStore.addMappingRecursively(accessSpecifier1, accessSpecifier2);
-                index1 = accessSpecifier1.getParent().getChildPosition(accessSpecifier1);
-                index2 = accessSpecifier2.getParent().getChildPosition(accessSpecifier2);
-                if(accessSpecifier1.getParent().getChildren().size() > index1+1 && accessSpecifier1.getParent().getChild(index1+1).getType().name.equals(LANG1.COLON) &&
-                        accessSpecifier2.getParent().getChildren().size() > index2+1 && accessSpecifier2.getParent().getChild(index2+1).getType().name.equals(LANG2.COLON)) {
-                    Tree t1 = accessSpecifier1.getParent().getChild(index1+1);
-                    Tree t2 = accessSpecifier2.getParent().getChild(index2+1);
-                    mappingStore.addMapping(t1,t2);
+                for(int j=0; j<accessSpecifiers2.size(); j++) {
+                    Tree accessSpecifier2 = accessSpecifiers2.get(j);
+                    if(accessSpecifier1.getChild(0).getLabel().equals(accessSpecifier2.getChild(0).getLabel()) &&
+                            !matched1.contains(accessSpecifier1) && !matched2.contains(accessSpecifier2)) {
+                        mappingStore.addMappingRecursively(accessSpecifier1, accessSpecifier2);
+                        index1 = accessSpecifier1.getParent().getChildPosition(accessSpecifier1);
+                        index2 = accessSpecifier2.getParent().getChildPosition(accessSpecifier2);
+                        if(accessSpecifier1.getParent().getChildren().size() > index1+1 && accessSpecifier1.getParent().getChild(index1+1).getType().name.equals(LANG1.COLON) &&
+                                accessSpecifier2.getParent().getChildren().size() > index2+1 && accessSpecifier2.getParent().getChild(index2+1).getType().name.equals(LANG2.COLON)) {
+                            Tree t1 = accessSpecifier1.getParent().getChild(index1+1);
+                            Tree t2 = accessSpecifier2.getParent().getChild(index2+1);
+                            mappingStore.addMapping(t1,t2);
+                        }
+                        matched1.add(accessSpecifier1);
+                        matched2.add(accessSpecifier2);
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            for(int j=0; j<accessSpecifiers2.size(); j++) {
+                Tree accessSpecifier2 = accessSpecifiers2.get(j);
+                for(int i=0; i<accessSpecifiers1.size(); i++) {
+                    Tree accessSpecifier1 = accessSpecifiers1.get(i);
+                    if(accessSpecifier1.getChild(0).getLabel().equals(accessSpecifier2.getChild(0).getLabel()) &&
+                            !matched1.contains(accessSpecifier1) && !matched2.contains(accessSpecifier2)) {
+                        mappingStore.addMappingRecursively(accessSpecifier1, accessSpecifier2);
+                        index1 = accessSpecifier1.getParent().getChildPosition(accessSpecifier1);
+                        index2 = accessSpecifier2.getParent().getChildPosition(accessSpecifier2);
+                        if(accessSpecifier1.getParent().getChildren().size() > index1+1 && accessSpecifier1.getParent().getChild(index1+1).getType().name.equals(LANG1.COLON) &&
+                                accessSpecifier2.getParent().getChildren().size() > index2+1 && accessSpecifier2.getParent().getChild(index2+1).getType().name.equals(LANG2.COLON)) {
+                            Tree t1 = accessSpecifier1.getParent().getChild(index1+1);
+                            Tree t2 = accessSpecifier2.getParent().getChild(index2+1);
+                            mappingStore.addMapping(t1,t2);
+                        }
+                        matched1.add(accessSpecifier1);
+                        matched2.add(accessSpecifier2);
+                        break;
+                    }
                 }
             }
         }

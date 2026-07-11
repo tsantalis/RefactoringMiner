@@ -22,7 +22,6 @@ import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
-import org.eclipse.cdt.core.dom.ast.IASTNamedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
@@ -45,6 +44,7 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeId;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTVisibilityLabel;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
@@ -483,6 +483,24 @@ public class CppFileProcessor {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
 				if(cppCompositeTypeSpecifier.toString().contains("struct")) {
 					umlClass.setStruct(true);
+				}
+				ICPPASTBaseSpecifier[] baseSpecifiers = cppCompositeTypeSpecifier.getBaseSpecifiers();
+				int index = 0;
+				for(ICPPASTBaseSpecifier base : baseSpecifiers) {
+					UMLType umlType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, base, null, 0);
+					if(index == 0) {
+						UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
+						umlClass.setSuperclass(umlType);
+						if(umlModel != null)
+							umlModel.addGeneralization(umlGeneralization);
+					}
+					else {
+						UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
+						umlClass.addImplementedInterface(umlType);
+						if(umlModel != null)
+							umlModel.addRealization(umlRealization);
+					}
+					index++;
 				}
 			}
 			addTemplateParameters(umlClass, templateParameters, sourceFolder);

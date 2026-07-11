@@ -182,6 +182,23 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = declarator.getRawSignature();
 	}
 
+	public VariableDeclaration(String sourceFolder, String filePath, IASTName name, IASTDeclSpecifier declSpecifier,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, name, CodeElementType.VARIABLE_DECLARATION_STATEMENT, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = name.toString();
+		this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, null, 0);
+		//IScope scope = CPPVisitor.getContainingScope(declarator);
+		//parent is CPPASTStructuredBindingDeclaration
+		IASTNode scopeNode = name.getParent().getParent();
+		int startOffset = scopeNode.getFileLocation().getNodeOffset();
+		int endOffset = scopeNode.getFileLocation().getNodeOffset() + scopeNode.getFileLocation().getNodeLength();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+		this.actualSignature = name.getRawSignature();
+	}
+
 	private IASTNode getScopeNode(IASTDeclarator declarator) {
 		if(declarator.getParent() instanceof CPPASTSimpleDeclaration) {
 			if(declarator.getParent().getParent() instanceof CPPASTDeclarationStatement) {

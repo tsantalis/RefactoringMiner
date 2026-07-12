@@ -16,6 +16,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 
 
 class CppFileProcessorTest {
@@ -138,6 +139,644 @@ class CppFileProcessorTest {
 		assertEquals("int", add.getReturnParameter().getType().toString());
 		assertEquals(List.of("lhs", "rhs"), add.getParameterNameList());
 		assertEquals(List.of("int", "int"), parameterTypeNames(add));
+	}
+
+	@Test
+	void processesCppDeclarationsInInactivePreprocessorBlocks() {
+		String filePath = "src/features.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_FEATURE)",
+				"namespace feature {",
+				"struct Matcher {",
+				"  bool match() {",
+				"    return true;",
+				"  }",
+				"};",
+				"extern \"C\" {",
+				"  void inactiveBranch() {",
+				"  }",
+				"}",
+				"}",
+				"#endif",
+				"void activeBranch() {",
+				"}") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "features");
+
+		assertEquals(List.of("inactiveBranch", "activeBranch"), moduleClass.getOperations().stream()
+				.map(UMLOperation::getName)
+				.toList());
+		assertEquals(List.of("match"), findClass(model.getClassList(), "Matcher").getOperations().stream()
+				.map(UMLOperation::getName)
+				.toList());
+	}
+
+	@Test
+	void processesCatch2ShapedDeclarationsInInactiveCppBlock() {
+		String filePath = "tests/SelfTest/UsageTests/Matchers.tests.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(CATCH_INTERNAL_CONSTEXPR_MATCHERS_ENABLED)",
+				"namespace {",
+				"struct MatchAllMatcher final : public Catch::Matchers::MatcherGenericBase {",
+				"public:",
+				"  template <typename Any>",
+				"  constexpr bool match(Any&&) const { return true; }",
+				"  std::string describe() const override { return {}; }",
+				"};",
+				"constexpr MatchAllMatcher MatchAll() { return MatchAllMatcher(); }",
+				"}",
+				"#endif") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass matcher = findClass(model.getClassList(), "MatchAllMatcher");
+		UMLOperation match = findOperation(matcher.getOperations(), "match");
+
+		assertEquals(List.of("Any"), match.getTypeParameterNames());
+		assertEquals(1, match.getParameterTypeList().size());
+		assertTrue(match.getParameterTypeList().get(0).toString().contains("Any"));
+		assertNotNull(findOperation(findClass(model.getClassList(), "Matchers.tests").getOperations(), "MatchAll"));
+	}
+
+	@Test
+	void prefersActiveCppOperationOverInactiveSiblingPreprocessorBranch() {
+		String filePath = "src/platform.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_FEATURE)",
+				"int mode() {",
+				"  return 1;",
+				"}",
+				"#else",
+				"int mode() {",
+				"  return 2;",
+				"}",
+				"#endif",
+				"#if defined(UNDEFINED_FEATURE)",
+				"void inactiveOnly() {",
+				"}",
+				"#endif") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "platform");
+
+		// Same-signature definitions in mutually exclusive branches collapse to the active one,
+		// while inactive declarations without an active counterpart are preserved.
+		assertEquals(List.of("mode", "inactiveOnly"), moduleClass.getOperations().stream()
+				.map(UMLOperation::getName)
+				.toList());
+		UMLOperation mode = findOperation(moduleClass.getOperations(), "mode");
+		assertTrue(mode.getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+	}
+
+	@Test
+	void prefersActiveCppOperationWhenActiveBranchComesFirst() {
+		String filePath = "src/active-first.cpp";
+		String fileContent = String.join("\n",
+				"#if 1",
+				"int mode() { return 2; }",
+				"#else",
+				"int mode() { return 1; }",
+				"#endif") + "\n";
+
+		List<UMLOperation> modes = findClass(processCppModel(filePath, fileContent).getClassList(), "active-first").getOperations().stream()
+				.filter(operation -> operation.getName().equals("mode"))
+				.toList();
+
+		assertEquals(1, modes.size());
+		assertTrue(modes.get(0).getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+	}
+
+	@Test
+	void prefersActiveCppOperationWhenSiblingBranchParameterNamesDiffer() {
+		String filePath = "src/buffer.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_FEATURE)",
+				"int total(int c[count]) {",
+				"  return 1;",
+				"}",
+				"#else",
+				"int total(int n[count]) {",
+				"  return 2;",
+				"}",
+				"#endif") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass moduleClass = findClass(model.getClassList(), "buffer");
+
+		// Parameter names differ across sibling branches and appear as substrings of other declarator
+		// tokens, but the modeled identity depends only on the parameter type.
+		assertEquals(List.of("total"), moduleClass.getOperations().stream()
+				.map(UMLOperation::getName)
+				.toList());
+		assertTrue(findOperation(moduleClass.getOperations(), "total").getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+	}
+
+	@Test
+	void normalizesOnlyTopLevelCvQualifiersInCppOperationIdentity() {
+		String filePath = "src/cv-parameters.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"void value(const int input);",
+				"void wrapped(const int (input));",
+				"void state(volatile int input);",
+				"void pointer(int* const input);",
+				"void pointee(const int* input);",
+				"#else",
+				"void value(int input);",
+				"void wrapped(int input);",
+				"void state(int input);",
+				"void pointer(int* input);",
+				"void pointee(int* input);",
+				"#endif") + "\n";
+
+		List<UMLOperation> operations = findClass(processCppModel(filePath, fileContent).getClassList(), "cv-parameters").getOperations();
+
+		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("value")).count());
+		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("wrapped")).count());
+		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("state")).count());
+		assertEquals(1, operations.stream().filter(operation -> operation.getName().equals("pointer")).count());
+		assertEquals(2, operations.stream().filter(operation -> operation.getName().equals("pointee")).count());
+	}
+
+	@Test
+	void prefersActiveCppClassOverInactiveSiblingPreprocessorBranch() {
+		String filePath = "src/config.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_FEATURE)",
+				"struct Settings {",
+				"  int cacheSize;",
+				"};",
+				"#else",
+				"struct Settings {",
+				"  long cacheSize;",
+				"};",
+				"#endif") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		List<UMLClass> settingsClasses = model.getClassList().stream()
+				.filter(umlClass -> umlClass.getName().endsWith("Settings"))
+				.toList();
+		assertEquals(1, settingsClasses.size());
+		assertEquals("long", findAttribute(settingsClasses.get(0).getAttributes(), "cacheSize").getType().toString());
+	}
+
+	@Test
+	void preservesActiveCppVisibilityAcrossInactivePreprocessorAlternatives() {
+		String filePath = "src/widget.cpp";
+		String fileContent = String.join("\n",
+				"class Widget {",
+				"#if 1",
+				"public:",
+				"#else",
+				"private:",
+				"#endif",
+				"  void visible() {",
+				"  }",
+				"};") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+
+		assertEquals(Visibility.PUBLIC, findOperation(findClass(model.getClassList(), "Widget").getOperations(), "visible")
+				.getVisibility());
+	}
+
+	@Test
+	void mergesInactiveOnlyMembersIntoActiveCppSiblingClass() {
+		String filePath = "src/backend.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_PLATFORM)",
+				"struct Backend {",
+				"  int common() { return 1; }",
+				"  void windowsOnly() {}",
+				"};",
+				"#else",
+				"struct Backend {",
+				"  int common() { return 2; }",
+				"  void posixOnly() {}",
+				"};",
+				"#endif") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		List<UMLClass> backends = model.getClassList().stream()
+				.filter(umlClass -> umlClass.getName().equals("Backend") || umlClass.getName().endsWith(".Backend"))
+				.toList();
+
+		assertEquals(1, backends.size(), model.getClassList().stream().map(UMLClass::getName).toList().toString());
+		List<String> operationNames = backends.get(0).getOperations().stream()
+				.map(UMLOperation::getName)
+				.toList();
+		assertEquals(3, operationNames.size());
+		assertEquals(1, operationNames.stream().filter("common"::equals).count());
+		assertTrue(operationNames.containsAll(List.of("common", "windowsOnly", "posixOnly")));
+		assertTrue(findOperation(backends.get(0).getOperations(), "common").getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+	}
+
+	@Test
+	void mergesCppNamespaceSiblingBranchesAtDeclarationGranularity() {
+		String filePath = "src/platform.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_PLATFORM)",
+				"namespace platform {",
+				"  int common() { return 1; }",
+				"  void inactiveOnly() {}",
+				"}",
+				"#else",
+				"namespace platform {",
+				"  int common() { return 2; }",
+				"  void activeOnly() {}",
+				"}",
+				"#endif") + "\n";
+
+		UMLClass moduleClass = findClass(processCppModel(filePath, fileContent).getClassList(), "platform");
+		List<String> operationNames = moduleClass.getOperations().stream()
+				.map(UMLOperation::getName)
+				.toList();
+
+		assertEquals(3, operationNames.size());
+		assertEquals(1, operationNames.stream().filter("common"::equals).count());
+		assertTrue(operationNames.containsAll(List.of("common", "inactiveOnly", "activeOnly")));
+		assertTrue(findOperation(moduleClass.getOperations(), "common").getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+	}
+
+	@Test
+	void doesNotReportChangesForCppSiblingCollisionSelfDiff() throws Exception {
+		String filePath = "src/platform.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_PLATFORM)",
+				"int mode() { return 1; }",
+				"struct Settings { int first; };",
+				"#else",
+				"int mode() { return 2; }",
+				"struct Settings { int second; };",
+				"#endif") + "\n";
+
+		UMLModelDiff diff = processCppModel(filePath, fileContent).diff(processCppModel(filePath, fileContent));
+
+		assertTrue(diff.getRefactorings().isEmpty());
+		assertTrue(diff.getAddedClasses().isEmpty());
+		assertTrue(diff.getRemovedClasses().isEmpty());
+		assertNotNull(diff.getUMLClassDiff("platform"));
+		assertEquals(1, diff.getUMLClassDiff("platform").getOperationBodyMapperList().stream()
+				.filter(mapper -> mapper.getOperation1().getName().equals("mode"))
+				.count());
+	}
+
+	@Test
+	void preservesCppDeclarationDefinitionPairAcrossIndependentConditionals() {
+		String filePath = "src/platform.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"int mode();",
+				"#endif",
+				"#if 1",
+				"int mode() { return 2; }",
+				"#endif") + "\n";
+
+		List<UMLOperation> modes = findClass(processCppModel(filePath, fileContent).getClassList(), "platform").getOperations().stream()
+				.filter(operation -> operation.getName().equals("mode"))
+				.toList();
+
+		assertEquals(2, modes.size());
+		assertEquals(1, modes.stream().filter(operation -> operation.getBody() == null).count());
+		assertEquals(1, modes.stream().filter(operation -> operation.getBody() != null).count());
+	}
+
+	@Test
+	void filtersCppSiblingCollisionsWithinEachClass() {
+		String filePath = "src/containers.cpp";
+		String fileContent = String.join("\n",
+				"class ActiveContainer {",
+				"#if 0",
+				"  int value() { return 1; }",
+				"#else",
+				"  int value() { return 2; }",
+				"#endif",
+				"};",
+				"class InactiveOnlyContainer {",
+				"#if 0",
+				"  int value() { return 3; }",
+				"#endif",
+				"};") + "\n";
+
+		UMLModel model = processCppModel(filePath, fileContent);
+		UMLClass activeContainer = findClass(model.getClassList(), "ActiveContainer");
+		UMLClass inactiveOnlyContainer = findClass(model.getClassList(), "InactiveOnlyContainer");
+
+		assertEquals(1, activeContainer.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
+		assertTrue(findOperation(activeContainer.getOperations(), "value").getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+		assertEquals(1, inactiveOnlyContainer.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
+	}
+
+	@Test
+	void filtersCppSiblingFieldsAtDeclaratorGranularity() {
+		String filePath = "src/fields.cpp";
+		String fileContent = String.join("\n",
+				"struct Fields {",
+				"#if 0",
+				"  int shared, inactiveOnly;",
+				"#else",
+				"  long shared;",
+				"#endif",
+				"};") + "\n";
+
+		UMLClass fields = findClass(processCppModel(filePath, fileContent).getClassList(), "Fields");
+		List<String> attributeNames = fields.getAttributes().stream()
+				.map(UMLAttribute::getName)
+				.toList();
+
+		assertEquals(2, attributeNames.size());
+		assertEquals(1, attributeNames.stream().filter("shared"::equals).count());
+		assertTrue(attributeNames.contains("inactiveOnly"));
+		assertEquals("long", findAttribute(fields.getAttributes(), "shared").getType().toString());
+	}
+
+	@Test
+	void filtersCppUsingDirectivesInSiblingBranches() {
+		String filePath = "src/imports.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"using namespace shared;",
+				"#else",
+				"using namespace shared;",
+				"#endif") + "\n";
+
+		UMLClass moduleClass = findClass(processCppModel(filePath, fileContent).getClassList(), "imports");
+
+		assertEquals(1, moduleClass.getImportedTypes().stream()
+				.filter(umlImport -> umlImport.getName().equals("shared"))
+				.count());
+	}
+
+	@Test
+	void preservesCppSiblingTemplatesWithDifferentTemplateParameters() {
+		String filePath = "src/templates.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"template <typename T>",
+				"void configure(int value) {}",
+				"#else",
+				"template <int N>",
+				"void configure(int value) {}",
+				"#endif") + "\n";
+
+		List<UMLOperation> configureOperations = findClass(processCppModel(filePath, fileContent).getClassList(), "templates").getOperations().stream()
+				.filter(operation -> operation.getName().equals("configure"))
+				.toList();
+
+		assertEquals(2, configureOperations.size());
+		assertTrue(configureOperations.stream().anyMatch(operation -> operation.getTypeParameterNames().contains("T")));
+		assertTrue(configureOperations.stream().anyMatch(operation -> operation.getTypeParameterNames().contains("N")));
+	}
+
+	@Test
+	void preservesCppSiblingFunctionTemplatesWithDifferentParameterKinds() {
+		String filePath = "src/template-kinds.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"template <typename T>",
+				"void configure(int value) {}",
+				"#else",
+				"template <int T>",
+				"void configure(int value) {}",
+				"#endif") + "\n";
+
+		long configureCount = findClass(processCppModel(filePath, fileContent).getClassList(), "template-kinds").getOperations().stream()
+				.filter(operation -> operation.getName().equals("configure"))
+				.count();
+
+		assertEquals(2, configureCount);
+	}
+
+	@Test
+	void prefersActiveCppFunctionTemplateAcrossParameterRenames() {
+		String filePath = "src/template-renames.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"template <typename _Tp>",
+				"int configure(_Tp value) { return 1; }",
+				"#else",
+				"template <typename _Up>",
+				"int configure(_Up value) { return 2; }",
+				"#endif") + "\n";
+
+		List<UMLOperation> configureOperations = findClass(processCppModel(filePath, fileContent).getClassList(), "template-renames").getOperations().stream()
+				.filter(operation -> operation.getName().equals("configure"))
+				.toList();
+
+		assertEquals(1, configureOperations.size());
+		assertTrue(configureOperations.get(0).getBody().getCompositeStatement().getLeaves().stream()
+				.anyMatch(leaf -> leaf.getString().contains("return 2")));
+	}
+
+	@Test
+	void preservesCppFunctionTemplatesWhenNamedParametersOccupyDifferentPositions() {
+		String filePath = "src/template-positions.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"template <typename T, typename>",
+				"void configure(T value) {}",
+				"#else",
+				"template <typename, typename U>",
+				"void configure(U value) {}",
+				"#endif") + "\n";
+
+		long configureCount = findClass(processCppModel(filePath, fileContent).getClassList(), "template-positions").getOperations().stream()
+				.filter(operation -> operation.getName().equals("configure"))
+				.count();
+
+		assertEquals(2, configureCount);
+	}
+
+	@Test
+	void preservesCppSiblingClassTemplatesWithDifferentTemplateParameters() {
+		String filePath = "src/template-classes.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"template <typename T>",
+				"struct Box { T inactiveOnly(); };",
+				"#else",
+				"template <int N>",
+				"struct Box { int activeOnly(); };",
+				"#endif") + "\n";
+
+		List<UMLClass> boxes = processCppModel(filePath, fileContent).getClassList().stream()
+				.filter(umlClass -> umlClass.getName().equals("Box") || umlClass.getName().endsWith(".Box"))
+				.toList();
+
+		assertEquals(2, boxes.size());
+		assertTrue(boxes.stream().anyMatch(umlClass -> umlClass.getTypeParameterNames().contains("T")));
+		assertTrue(boxes.stream().anyMatch(umlClass -> umlClass.getTypeParameterNames().contains("N")));
+	}
+
+	@Test
+	void keepsAlphaRenamedCppClassTemplatesSeparateWithoutMixingMemberTypes() {
+		String filePath = "src/renamed-template-classes.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"template <typename U>",
+				"struct Box { U inactiveValue; };",
+				"#else",
+				"template <typename T>",
+				"struct Box { T activeValue; };",
+				"#endif") + "\n";
+
+		List<UMLClass> boxes = processCppModel(filePath, fileContent).getClassList().stream()
+				.filter(umlClass -> umlClass.getName().equals("Box") || umlClass.getName().endsWith(".Box"))
+				.toList();
+
+		assertEquals(2, boxes.size());
+		assertEquals("U", findAttribute(boxes.stream()
+				.filter(umlClass -> umlClass.getTypeParameterNames().contains("U"))
+				.findFirst().orElseThrow().getAttributes(), "inactiveValue").getType().toString());
+		assertEquals("T", findAttribute(boxes.stream()
+				.filter(umlClass -> umlClass.getTypeParameterNames().contains("T"))
+				.findFirst().orElseThrow().getAttributes(), "activeValue").getType().toString());
+	}
+
+	@Test
+	void keepsVisibilityStateSeparateAcrossMergedCppClassAlternatives() {
+		String filePath = "src/access.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"struct Access {",
+				"public:",
+				"  void inactiveOnly();",
+				"};",
+				"#else",
+				"struct Access {",
+				"private:",
+				"  void activeOnly();",
+				"};",
+				"#endif") + "\n";
+
+		UMLClass access = findClass(processCppModel(filePath, fileContent).getClassList(), "Access");
+
+		assertEquals(Visibility.PRIVATE, findOperation(access.getOperations(), "activeOnly").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "inactiveOnly").getVisibility());
+	}
+
+	@Test
+	void usesPrivateDefaultVisibilityForMergedCppClassAlternative() {
+		String filePath = "src/class-access.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"class Access {",
+				"  void inactiveOnly();",
+				"};",
+				"#else",
+				"class Access {",
+				"public:",
+				"  void activeOnly();",
+				"};",
+				"#endif") + "\n";
+
+		UMLClass access = findClass(processCppModel(filePath, fileContent).getClassList(), "Access");
+
+		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "activeOnly").getVisibility());
+		assertEquals(Visibility.PRIVATE, findOperation(access.getOperations(), "inactiveOnly").getVisibility());
+	}
+
+	@Test
+	void keepsDefaultVisibilitySpecificToEachMergedCppCompositeAlternative() {
+		String filePath = "src/mixed-composite-access.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"struct Access {",
+				"  void inactiveOnly();",
+				"};",
+				"#else",
+				"class Access {",
+				"public:",
+				"  void activeOnly();",
+				"};",
+				"#endif") + "\n";
+
+		UMLClass access = findClass(processCppModel(filePath, fileContent).getClassList(), "Access");
+
+		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "activeOnly").getVisibility());
+		assertEquals(Visibility.PUBLIC, findOperation(access.getOperations(), "inactiveOnly").getVisibility());
+	}
+
+	@Test
+	void preservesCppSiblingMemberFunctionsWithDifferentCvAndRefQualifiers() {
+		String filePath = "src/qualified-members.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"struct Reader {",
+				"  int value() const;",
+				"  int access() &;",
+				"};",
+				"#else",
+				"struct Reader {",
+				"  int value();",
+				"  int access() &&;",
+				"};",
+				"#endif") + "\n";
+
+		UMLClass reader = findClass(processCppModel(filePath, fileContent).getClassList(), "Reader");
+
+		assertEquals(2, reader.getOperations().stream().filter(operation -> operation.getName().equals("value")).count());
+		assertEquals(2, reader.getOperations().stream().filter(operation -> operation.getName().equals("access")).count());
+	}
+
+	@Test
+	void preservesCppSiblingDeclarationsWhenNoBranchIsActive() {
+		String filePath = "src/unselected.cpp";
+		String fileContent = String.join("\n",
+				"#if defined(UNDEFINED_A)",
+				"void mode();",
+				"#elif defined(UNDEFINED_B)",
+				"void mode();",
+				"#endif") + "\n";
+
+		long modeCount = findClass(processCppModel(filePath, fileContent).getClassList(), "unselected").getOperations().stream()
+				.filter(operation -> operation.getName().equals("mode"))
+				.count();
+
+		assertEquals(2, modeCount);
+	}
+
+	@Test
+	void prefersActiveCppOperationWhenOnlyDefaultArgumentDiffers() {
+		String filePath = "src/defaults.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"void configure(int value = 1);",
+				"#else",
+				"void configure(int value = 2);",
+				"#endif") + "\n";
+
+		List<UMLOperation> configureOperations = findClass(processCppModel(filePath, fileContent).getClassList(), "defaults").getOperations().stream()
+				.filter(operation -> operation.getName().equals("configure"))
+				.toList();
+
+		assertEquals(1, configureOperations.size());
+		assertTrue(configureOperations.get(0).getActualSignature().contains("= 2"));
+	}
+
+	@Test
+	void prefersActiveCppAliasOverInactiveSiblingBranch() {
+		String filePath = "src/conditional-alias.cpp";
+		String fileContent = String.join("\n",
+				"#if 0",
+				"using Size = int;",
+				"#else",
+				"using Size = long;",
+				"#endif") + "\n";
+
+		List<UMLTypeAlias> aliases = findClass(processCppModel(filePath, fileContent).getClassList(), "conditional-alias").getTypeAliasList().stream()
+				.filter(alias -> alias.getName().equals("Size"))
+				.toList();
+
+		assertEquals(1, aliases.size());
+		assertEquals("long", aliases.get(0).getRightType().toString());
 	}
 
 	@Test

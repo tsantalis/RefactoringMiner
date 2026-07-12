@@ -159,6 +159,23 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		}
 	}
 
+	void removeOperation(UMLOperation operation) {
+		for(int i = 0; i < operations.size(); i++) {
+			if(operations.get(i) == operation) {
+				operations.remove(i);
+				List<String> signature = operation.getSignatureIdentifiers();
+				Integer instances = operationIdentifierSignatureMap.get(signature);
+				if(instances != null && instances > 1) {
+					operationIdentifierSignatureMap.put(signature, instances - 1);
+				}
+				else {
+					operationIdentifierSignatureMap.remove(signature);
+				}
+				return;
+			}
+		}
+	}
+
 	public void setContainer(ModuleContainer container) {
 		this.container = Optional.of(container);
 	}

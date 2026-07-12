@@ -245,6 +245,13 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 								addOperationBodyMapper(mapper);
 								removedOperations.remove(operation1);
 								addedOperations.remove(operation2);
+								UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(operation1, operation2, this);
+								refactorings.addAll(operationSignatureDiff.getRefactorings());
+								if(!operation1.getName().equals(operation2.getName()) &&
+										!(operation1.isConstructor() && operation2.isConstructor())) {
+									RenameOperationRefactoring rename = new RenameOperationRefactoring(operation1, operation2);
+									refactorings.add(rename);
+								}
 							}
 						}
 					}

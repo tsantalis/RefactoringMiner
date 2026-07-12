@@ -57,6 +57,6 @@ public class TestJavaScriptDatasetRefactorings {
 					.or(Refactorings.MergeConditional.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareJavaScriptRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(121, 1, 0);
+		test.assertExpectationsWithGitHubAPI(122, 1, 0);
 	}
 }

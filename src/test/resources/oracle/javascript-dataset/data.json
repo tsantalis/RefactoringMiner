@@ -1056,4 +1056,92 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 19,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "65a06e473560a4d923ed52d4437c3666662d44a6",
+    "url": "https://github.com/chartjs/Chart.js/commit/65a06e473560a4d923ed52d4437c3666662d44a6",
+    "author": "etimberg",
+    "time": "10/8/16 07:28 AM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method public mergeOpacity(colorString, opacity) extracted from public drawBody(pt, vm, ctx, opacity) in class core.tooltip",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 20,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "6bea15e7cf89003e3a5945a20cf1d2cc5096728e",
+    "url": "https://github.com/chartjs/Chart.js/commit/6bea15e7cf89003e3a5945a20cf1d2cc5096728e",
+    "author": "simonbrunel",
+    "time": "1/9/18 08:12 AM",
+    "refactorings": [{
+        "type": "Move Class",
+        "description": "Move Class core.layoutService.tests.__module__ moved to core.layouts.tests.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable layout : Inferred to layouts : Inferred in module core.controller from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable layout : Inferred to layouts : Inferred in module core.scaleService from class core.scaleService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable layout : Inferred to layouts : Inferred in module plugin.legend from class plugin.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable layout : Inferred to layouts : Inferred in module plugin.title from class plugin.title",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute layout : Inferred to layouts : Inferred in class plugin.title",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute layout : Inferred to layouts : Inferred in class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute layout : Inferred to layouts : Inferred in class core.scaleService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute layout : Inferred to layouts : Inferred in class plugin.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

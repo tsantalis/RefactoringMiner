@@ -767,6 +767,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     if (nested_namespace_specifiers != null) {
                         mappingStore.addMappingRecursively(nested_namespace_specifiers.first,nested_namespace_specifiers.second);
                     }
+                    Pair<Tree,Tree> declaration_lists = Helpers.findPairOfType(parent1,parent2, LANG1.DECLARATION_LIST, LANG2.DECLARATION_LIST);
+                    if (declaration_lists != null) {
+                        mappingStore.addMapping(declaration_lists.first,declaration_lists.second);
+                        opening = Helpers.findPairOfType(declaration_lists.first,declaration_lists.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                        if (opening != null) {
+                            mappingStore.addMapping(opening.first,opening.second);
+                        }
+                        closing = Helpers.findPairOfType(declaration_lists.first,declaration_lists.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                        if (closing != null) {
+                            mappingStore.addMapping(closing.first,closing.second);
+                        }
+                    }
                 }
             }
             else {

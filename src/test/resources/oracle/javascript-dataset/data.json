@@ -1144,4 +1144,43 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 21,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "6ec6a929f06c01c053d75378030724749f50bcc9",
+    "url": "https://github.com/chartjs/Chart.js/commit/6ec6a929f06c01c053d75378030724749f50bcc9",
+    "author": "etimberg",
+    "time": "10/15/16 05:49 PM",
+    "refactorings": [{
+        "type": "Add Parameter",
+        "description": "Add Parameter distanceMetric : Inferred in method public getNearestItems(chart, position, intersect, distanceMetric) from class core.interaction",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
+}, {
+    "id": 22,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "7205ff5e2aa4515bae0c62bb9d8355745837270e",
+    "url": "https://github.com/chartjs/Chart.js/commit/7205ff5e2aa4515bae0c62bb9d8355745837270e",
+    "author": "simonbrunel",
+    "time": "1/27/17 07:32 PM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public onEvent(chartInstance, e) renamed to public afterEvent(chartInstance, e) in class core.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable hoverOptions : Inferred in method private eventHandler(e) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

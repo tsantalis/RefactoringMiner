@@ -900,4 +900,153 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 18,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "5d95280d7b9c910f944ed7e219193a904bb4425b",
+    "url": "https://github.com/chartjs/Chart.js/commit/5d95280d7b9c910f944ed7e219193a904bb4425b",
+    "author": "simonbrunel",
+    "time": "6/25/17 04:54 AM",
+    "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public getValueAtIndexOrDefault(value, index, defaultValue) renamed to public valueAtIndexOrDefault(value, index, defaultValue) in class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Conditional With Ternary",
+        "description": "Replace Conditional With Ternary if(helpers.isNullOrUndef(value)) to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Replace Conditional With Ternary",
+        "description": "Replace Conditional With Ternary if(helpers.isArray(value)) to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Conditional",
+        "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public valueAtIndexOrDefault(value, index, defaultValue) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Merge Conditional",
+        "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public module.exports(Chart) from class helpers.core",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in method public generateLabels(chart) from class controller.doughnut",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable itemOrDefault : Inferred to valueOrDefault : Inferred in method public fit() from class plugin.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public module.exports(Chart) from class core.ticks",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable itemOrDefault : Inferred to valueOrDefault : Inferred in method public draw() from class plugin.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public drawPointLabels(scale) from class scale.radialLinear",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public getBaseModel(tooltipOpts) from class core.tooltip",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private labels : Inferred from class controller.doughnut.module.exports.defaults.doughnut.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in method public generateLabels(chart) from class controller.polarArea",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private legend : Inferred from class controller.polarArea.module.exports.Chart.defaults.polarArea",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private legend : Inferred from class controller.doughnut.module.exports.defaults.doughnut",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public logarithmic(generationOptions, dataRange) from class core.ticks",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public determineDataLimits() from class scale.logarithmic",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public draw() from class scale.radialLinear",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private labels : Inferred from class controller.polarArea.module.exports.Chart.defaults.polarArea.legend",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public parseFontOptions(options) from class core.scale",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -52,9 +52,11 @@ public class TestJavaScriptDatasetRefactorings {
 					.or(Refactorings.EncapsulateAttribute.getValue())
 					.or(Refactorings.InvertCondition.getValue())
 					.or(Refactorings.SplitParameter.getValue())
-					.or(Refactorings.ChangeMethodAccessModifier.getValue());
+					.or(Refactorings.ChangeMethodAccessModifier.getValue())
+					.or(Refactorings.ReplaceConditionalWithTernary.getValue())
+					.or(Refactorings.MergeConditional.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.prepareJavaScriptRefactorings(test, types);
-		test.assertExpectationsWithGitHubAPI(101, 1, 0);
+		test.assertExpectationsWithGitHubAPI(121, 1, 0);
 	}
 }

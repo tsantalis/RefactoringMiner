@@ -11388,6 +11388,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter graph : HeapGraph in method public inspect(graph HeapGraph, reporter ObjectReporter) from class shark.ObjectInspectors.KEYED_WEAK_REFERENCE",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

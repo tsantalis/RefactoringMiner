@@ -146,11 +146,23 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		return super.visitMemberExpr(node);
 	}
 
+	public Swc4jAstVisitorResponse visitThisExpr(Swc4jAstThisExpr node) {
+		if(node.getParent() instanceof Swc4jAstMemberExpr) {
+			LeafExpression varDeclarator = new LeafExpression(sourceFolder, filePath, node.getParent(), CodeElementType.SIMPLE_NAME, container, fileContent);
+			variables.add(varDeclarator);
+		}
+		return super.visitThisExpr(node);
+	}
+
 	public Swc4jAstVisitorResponse visitIdent(Swc4jAstIdent node) {
 		String identifier = node.getSym();
 		if(activeVariableDeclarations.containsKey(identifier)) {
 			LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(name);
+			if(node.getParent() instanceof Swc4jAstMemberExpr && !(node.getParent().getParent() instanceof Swc4jAstCallExpr)) {
+				LeafExpression memberExpr = new LeafExpression(sourceFolder, filePath, node.getParent(), CodeElementType.SIMPLE_NAME, container, fileContent);
+				variables.add(memberExpr);
+			}
 		}
 		else if(node.getParent() instanceof Swc4jAstExprOrSpread expr && expr.getParent() instanceof Swc4jAstCallExpr call && call.getArgs().contains(expr)) {
 			//identifier is argument of call

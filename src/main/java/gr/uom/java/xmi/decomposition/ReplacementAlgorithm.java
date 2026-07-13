@@ -1390,7 +1390,10 @@ public class ReplacementAlgorithm {
 				for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
 					ternaryExpressions2.add(ternary.getExpression());	
 				}
-				findReplacements(methodInvocations1, ternaryExpressions2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CONDITIONAL_EXPRESSION, container1, container2, classDiff);
+				Set<String> newMethodInvocations1 = new LinkedHashSet<>(methodInvocations1);
+				if(assignmentInvocationCoveringTheEntireStatement1 != null)
+					newMethodInvocations1.remove(assignmentInvocationCoveringTheEntireStatement1.actualString());
+				findReplacements(newMethodInvocations1, ternaryExpressions2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CONDITIONAL_EXPRESSION, container1, container2, classDiff);
 			}
 			Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
 			Set<String> tmpVariables1 = new LinkedHashSet<String>();

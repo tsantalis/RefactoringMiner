@@ -1173,6 +1173,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public module.exports(Chart) to public module.exports(Chart) in class helpers.core",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

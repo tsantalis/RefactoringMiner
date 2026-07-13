@@ -9341,7 +9341,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							matchingMappings++;
 						}
 					}
-					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
+					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() <= mappingSet.first().getReplacements().size();
 					boolean differentVariableDeclarationNumber =
 							mappingSet.last().getFragment1().getVariableDeclarations().size() != mappingSet.last().getFragment2().getVariableDeclarations().size() &&
 							leaf.getVariableDeclarations().size() == leaf2.getVariableDeclarations().size();

@@ -1043,7 +1043,8 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean differOnlyInDefaultInitializer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
+	protected static boolean differOnlyInDefaultInitializer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2,
+			AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
 		if(variableDeclarations1.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString())) {
 			Constants LANG1 = PathFileUtils.getLang(variableDeclarations1.get(0).getLocationInfo().getFilePath());
 			Constants LANG2 = PathFileUtils.getLang(variableDeclarations2.get(0).getLocationInfo().getFilePath());
@@ -1077,6 +1078,17 @@ public class StringBasedHeuristics {
 			tmpS1.append(LANG1.STATEMENT_TERMINATION);
 			tmpS2.append(LANG2.STATEMENT_TERMINATION);
 			if(s1.equals(tmpS1.toString()) && s2.equals(tmpS2.toString()) && defaultInitializers == variableDeclarations1.size()) {
+				return true;
+			}
+		}
+		String string1 = statement1.getString();
+		String string2 = statement2.getString();
+		Constants LANG1 = statement1.getLANG();
+		Constants LANG2 = statement2.getLANG();
+		if(string1.contains(LANG1.ASSIGNMENT) && string2.contains(LANG2.ASSIGNMENT)) {
+			String variableName1 = string1.substring(0, string1.indexOf(LANG1.ASSIGNMENT));
+			String variableName2 = string2.substring(0, string2.indexOf(LANG2.ASSIGNMENT));
+			if(variableName1.equals(variableName2) && variableName1.contains(".")) {
 				return true;
 			}
 		}
@@ -1317,6 +1329,9 @@ public class StringBasedHeuristics {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(trimmedS1, trimmedS2);
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			if(commonSuffix.equals(replacement.getAfter() + LANG2.STATEMENT_TERMINATION)) {
+				return false;
+			}
+			if(commonSuffix.equals(replacement.getAfter().replaceAll("\s", "") + LANG2.STATEMENT_TERMINATION)) {
 				return false;
 			}
 		}

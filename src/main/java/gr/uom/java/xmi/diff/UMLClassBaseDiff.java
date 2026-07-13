@@ -372,7 +372,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			if(mapper.getLambdaMappers().size() > 0 && mapper.nonMappedElementsT2() > 0 && mapper.getContainer1().getDefaultExpression() == null && mapper.getContainer2().getDefaultExpression() == null) {
 				for(UMLOperationBodyMapper lambdaMapper : mapper.getLambdaMappers()) {
-					if(lambdaMapper.nonMappedElementsT1() > 0 && !lambdaMapper.equals(mapper)) {
+					if(lambdaMapper.nonMappedElementsT1() > 0) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(lambdaMapper, mapper, this);
 						int invalidMappings = 0;
 						for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
@@ -413,7 +413,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					//support move code from deleted lambda to LambdaMapper
-					if(lambdaMapper.nonMappedElementsT2() > 0 && !lambdaMapper.equals(mapper)) {
+					if(lambdaMapper.nonMappedElementsT2() > 0) {
 						for(AbstractCodeFragment fragment1 : mapper.getNonMappedLeavesT1()) {
 							if(fragment1.getLambdas().size() > 0) {
 								for(LambdaExpressionObject lambda : fragment1.getLambdas()) {
@@ -443,7 +443,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					//support move code from LambdaMapper to added lambda
-					if(lambdaMapper.nonMappedElementsT1() > 0 && !lambdaMapper.equals(mapper)) {
+					if(lambdaMapper.nonMappedElementsT1() > 0) {
 						for(AbstractCodeFragment fragment2 : mapper.getNonMappedLeavesT2()) {
 							if(fragment2.getLambdas().size() > 0) {
 								for(LambdaExpressionObject lambda : fragment2.getLambdas()) {

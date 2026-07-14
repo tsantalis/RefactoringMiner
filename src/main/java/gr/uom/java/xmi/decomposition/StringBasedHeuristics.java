@@ -2881,6 +2881,14 @@ public class StringBasedHeuristics {
 				if(!ternary.getThenExpression().getString().equals(assignment1) && !ternary.getElseExpression().getString().equals(assignment1))
 					rightHandSideReplacement = true;
 			}
+			if(statement1.getVariableDeclarations().size() == 1 && statement2.getVariableDeclarations().size() == 0 &&
+					!statement1.getVariableDeclarations().get(0).getVariableName().equals(variableName2)) {
+				variableRename = true;
+			}
+			else if(statement2.getVariableDeclarations().size() == 1 && statement1.getVariableDeclarations().size() == 0 &&
+					!statement2.getVariableDeclarations().get(0).getVariableName().equals(variableName1)) {
+				variableRename = true;
+			}
 			if(inv1 != null && inv2 != null) {
 				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;
 			}

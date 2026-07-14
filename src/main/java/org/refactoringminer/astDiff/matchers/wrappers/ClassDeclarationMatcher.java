@@ -915,6 +915,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
         Tree parent1 = srcSubTree.getParent();
         Tree parent2 = dstSubTree.getParent();
+        if(parent1.getType().name.equals(LANG1.BASE_CLASS_CLAUSE) && parent2.getType().name.equals(LANG2.BASE_CLASS_CLAUSE)) {
+            mappingStore.addMappingRecursively(parent1,parent2);
+        }
         if(parent1.getType().name.equals(LANG1.CONSTRUCTOR_INVOCATION) && parent2.getType().name.equals(LANG2.CONSTRUCTOR_INVOCATION)) {
             mappingStore.addMappingRecursively(parent1,parent2);
             if(parent1.getParent().getType().name.equals(LANG1.DELEGATION_SPECIFIER) && parent2.getParent().getType().name.equals(LANG2.DELEGATION_SPECIFIER)) {

@@ -219,6 +219,28 @@
   "firstEndPos" : 435,
   "secondEndPos" : 520
 }, {
+  "firstType" : "base_class_clause",
+  "secondType" : "base_class_clause",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 442,
+  "secondPos" : 527,
+  "firstEndPos" : 486,
+  "secondEndPos" : 571
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 442,
+  "secondPos" : 527,
+  "firstEndPos" : 443,
+  "secondEndPos" : 528
+}, {
   "firstType" : "access_specifier",
   "secondType" : "access_specifier",
   "firstLabel" : "",
@@ -240,6 +262,83 @@
   "secondPos" : 529,
   "firstEndPos" : 450,
   "secondEndPos" : 535
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 451,
+  "secondPos" : 536,
+  "firstEndPos" : 486,
+  "secondEndPos" : 571
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "Catch",
+  "secondLabel" : "Catch",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 451,
+  "secondPos" : 536,
+  "firstEndPos" : 456,
+  "secondEndPos" : 541
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 456,
+  "secondPos" : 541,
+  "firstEndPos" : 458,
+  "secondEndPos" : 543
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 458,
+  "secondPos" : 543,
+  "firstEndPos" : 486,
+  "secondEndPos" : 571
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "Matchers",
+  "secondLabel" : "Matchers",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 458,
+  "secondPos" : 543,
+  "firstEndPos" : 466,
+  "secondEndPos" : 551
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 466,
+  "secondPos" : 551,
+  "firstEndPos" : 468,
+  "secondEndPos" : 553
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "MatcherGenericBase",
+  "secondLabel" : "MatcherGenericBase",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 468,
+  "secondPos" : 553,
+  "firstEndPos" : 486,
+  "secondEndPos" : 571
 }, {
   "firstType" : "field_declaration_list",
   "secondType" : "field_declaration_list",

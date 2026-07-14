@@ -583,6 +583,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
 				return ternary;
 			}
+			else if(expressionIsTheRightHandSideOfAssignment(methodInvocation)) {
+				return ternary;
+			}
 			else if(ternary.getLocationInfo().getCodeElementType().equals(CodeElementType.SUPER_CONSTRUCTOR_INVOCATION) ||
 					ternary.getLocationInfo().getCodeElementType().equals(CodeElementType.CONSTRUCTOR_INVOCATION)) {
 				return ternary;

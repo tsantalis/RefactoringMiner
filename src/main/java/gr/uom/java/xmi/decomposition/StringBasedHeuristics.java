@@ -1085,7 +1085,7 @@ public class StringBasedHeuristics {
 		String string2 = statement2.getString();
 		Constants LANG1 = statement1.getLANG();
 		Constants LANG2 = statement2.getLANG();
-		if(string1.contains(LANG1.ASSIGNMENT) && string2.contains(LANG2.ASSIGNMENT)) {
+		if(string1.contains(LANG1.ASSIGNMENT) && string2.contains(LANG2.ASSIGNMENT) && LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
 			String variableName1 = string1.substring(0, string1.indexOf(LANG1.ASSIGNMENT));
 			String variableName2 = string2.substring(0, string2.indexOf(LANG2.ASSIGNMENT));
 			if(variableName1.equals(variableName2) && variableName1.contains(".")) {

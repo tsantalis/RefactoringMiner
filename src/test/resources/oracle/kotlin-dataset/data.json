@@ -9866,6 +9866,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move And Rename Attribute",
+        "description": "Move And Rename Attribute private groupHash : String renamed to public signature : String and moved from class leakcanary.internal.activity.screen.LeakScreen to class leakcanary.internal.activity.db.LeakTable.AllLeaksProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Access Modifier private to public in attribute public signature : String from class leakcanary.internal.activity.db.LeakTable.AllLeaksProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

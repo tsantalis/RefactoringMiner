@@ -1011,8 +1011,8 @@ class CppFileProcessorTest {
 		UMLModel model = processCppModel(filePath, fileContent);
 
 		UMLTypeAlias vec = findTypeAlias(findClass(model.getClassList(), "templates"), "Vec");
-		assertEquals("std::vector<T>", vec.getRightType().toString());
-		assertEquals("typealias Vec<T> = std::vector<T>", vec.toString());
+		assertEquals("std.vector<T>", vec.getRightType().toString());
+		assertEquals("typealias Vec<T> = std.vector<T>", vec.toString());
 	}
 
 	@Test

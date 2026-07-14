@@ -34,11 +34,15 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTStructuredBindingDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTryBlockStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTUsingDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
 import org.eclipse.cdt.core.dom.ast.gnu.IGNUASTGotoStatement;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
@@ -105,11 +109,22 @@ public class CppOperationBody extends OperationBody {
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTDeclarationStatement declarationStatement) {
-			StatementObject child = new StatementObject(sourceFolder, filePath, declarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
-			parent.addStatement(child);
-			addStatementInVariableScopes(child);
-			// TODO: handle non-simple C++ local declarations such as structured bindings.
-			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+			if(declarationStatement.getDeclaration() instanceof ICPPASTUsingDeclaration cppUsingDeclaration) {
+				IASTName name = cppUsingDeclaration.getName();
+				String importName = name.toString().replace("::", ".");
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, cppUsingDeclaration, CodeElementType.IMPORT_DECLARATION, fileContent);
+				UMLImport umlImport = new UMLImport(importName, false, false, locationInfo);
+				if(container instanceof UMLOperation op) {
+					op.addNestedImport(umlImport);
+				}
+			}
+			else {
+				StatementObject child = new StatementObject(sourceFolder, filePath, declarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);
+				parent.addStatement(child);
+				addStatementInVariableScopes(child);
+				// TODO: handle non-simple C++ local declarations such as structured bindings.
+				addAllInActiveVariableDeclarations(child.getVariableDeclarations());
+			}
 		}
 		else if(statement instanceof IASTDefaultStatement defaultStatement) {
 			StatementObject child = new StatementObject(sourceFolder, filePath, defaultStatement, parent.getDepth()+1, CodeElementType.SWITCH_CASE, container, activeVariableDeclarations, fileContent);

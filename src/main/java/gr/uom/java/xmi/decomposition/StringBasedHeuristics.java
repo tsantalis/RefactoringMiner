@@ -2872,7 +2872,9 @@ public class StringBasedHeuristics {
 				}
 			}
 			if(statement1.ternaryOperatorCoveringEntireFragment() != null && statement2.ternaryOperatorCoveringEntireFragment() == null) {
-				rightHandSideReplacement = true;
+				TernaryOperatorExpression ternary = statement1.ternaryOperatorCoveringEntireFragment();
+				if(!ternary.getThenExpression().getString().equals(assignment2) && !ternary.getElseExpression().getString().equals(assignment2))
+					rightHandSideReplacement = true;
 			}
 			if(inv1 != null && inv2 != null) {
 				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;

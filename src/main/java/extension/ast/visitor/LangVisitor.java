@@ -15,6 +15,7 @@ import extension.ast.node.pattern.LangVariablePattern;
 import extension.ast.node.statement.*;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.stringifier.CSharpASTFlattener;
+import extension.ast.stringifier.GoASTFlattener;
 import extension.ast.stringifier.LangASTFlattener;
 import extension.ast.stringifier.PyASTFlattener;
 import gr.uom.java.xmi.LocationInfo;
@@ -994,6 +995,7 @@ public class LangVisitor implements LangASTVisitor {
             printer = switch (cu.getLanguage()) {
                 case PYTHON -> new PyASTFlattener(node);
                 case CSHARP -> new CSharpASTFlattener(node);
+                case GO -> new GoASTFlattener(node);
             };
         } else {
             printer = new PyASTFlattener(node);

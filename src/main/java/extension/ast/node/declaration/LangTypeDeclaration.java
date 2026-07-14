@@ -17,6 +17,7 @@ import java.util.List;
 public class LangTypeDeclaration extends LangDeclaration {
     private String name;
     private List<LangMethodDeclaration> methods = new ArrayList<>();
+    private List<LangSingleVariableDeclaration> fields = new ArrayList<>();
     private List<LangAssignment> classLevelAssignments = new ArrayList<>();
     private List<LangASTNode> statements = new ArrayList<>();
     private List<LangSimpleName> superClassNames = new ArrayList<>();
@@ -67,6 +68,11 @@ public class LangTypeDeclaration extends LangDeclaration {
         addChild(method);
     }
 
+    public void addField(LangSingleVariableDeclaration field) {
+        fields.add(field);
+        addChild(field);
+    }
+
     public void addAssignment(LangAssignment assignment) {
         classLevelAssignments.add(assignment);
         addChild(assignment);
@@ -101,6 +107,14 @@ public class LangTypeDeclaration extends LangDeclaration {
 
     public void setMethods(List<LangMethodDeclaration> methods) {
         this.methods = methods;
+    }
+
+    public List<LangSingleVariableDeclaration> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<LangSingleVariableDeclaration> fields) {
+        this.fields = fields;
     }
 
     public Visibility getVisibility() {

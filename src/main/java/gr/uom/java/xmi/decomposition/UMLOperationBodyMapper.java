@@ -1433,6 +1433,68 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private static List<UMLAnonymousClass> filterBasedOnCodePathContaining(String nameContains, List<UMLAnonymousClass> anonymousClassList) {
+		List<UMLAnonymousClass> filtered = new ArrayList<>();
+		for(UMLAnonymousClass anonymous : anonymousClassList) {
+			if(anonymous.getCodePath().contains(nameContains)) {
+				filtered.add(anonymous);
+			}
+		}
+		return filtered;
+	}
+
+	private static List<UMLAnonymousClass> filterBasedOnCodePathEnding(String nameEnds, List<UMLAnonymousClass> anonymousClassList) {
+		List<UMLAnonymousClass> filtered = new ArrayList<>();
+		for(UMLAnonymousClass anonymous : anonymousClassList) {
+			if(anonymous.getCodePath().endsWith(nameEnds)) {
+				filtered.add(anonymous);
+			}
+		}
+		return filtered;
+	}
+
+	private void processRemainingAnonymousClassesInRandomOrder(UMLAbstractClassDiff classDiff, List<UMLAnonymousClass> anonymousClassList1, List<UMLAnonymousClass> anonymousClassList2) throws RefactoringMinerTimedOutException {
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && anonymousClassList1.size() > 0 && anonymousClassList2.size() > 0) {
+			String nameContains = "._set.";
+			List<UMLAnonymousClass> setAnonymous1 = filterBasedOnCodePathContaining(nameContains, anonymousClassList1);
+			List<UMLAnonymousClass> setAnonymous2 = filterBasedOnCodePathContaining(nameContains, anonymousClassList2);
+			if(setAnonymous2.size() > 0 && setAnonymous1.isEmpty()) {
+				for(UMLAnonymousClass anonymousClass2 : setAnonymous2) {
+					String ending = anonymousClass2.getCodePath().substring(anonymousClass2.getCodePath().indexOf(nameContains) + nameContains.length());
+					List<UMLAnonymousClass> matches = filterBasedOnCodePathEnding(ending, anonymousClassList1);
+					if(matches.size() == 1) {
+						UMLAnonymousClass anonymousClass1 = matches.get(0);
+						boolean alreadyProcessed = false;
+						for(UMLAnonymousClassDiff anonymousClassDiff : this.anonymousClassDiffs) {
+							if(anonymousClassDiff.getOriginalClass().equals(anonymousClass1) && anonymousClassDiff.getNextClass().equals(anonymousClass2)) {
+								alreadyProcessed = true;
+								break;
+							}
+						}
+						if(alreadyProcessed)
+							continue;
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+						anonymousClassDiff.process();
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+						if(matchedOperationMappers.size() > 0 || anonymousClassDiff.getCommonAtrributes().size() > 0) {
+							this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+							this.anonymousClassDiffs.add(anonymousClassDiff);
+							if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+								classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+							}
+							if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+								classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+							}
+							for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+								addAllMappings(mapper.mappings);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private void processRemainingAnonymousClasses(UMLAbstractClassDiff classDiff,
 			List<UMLAnonymousClass> anonymousClassList1, List<AnonymousClassDeclarationObject> allAnonymousClassDeclarations1,
 			List<UMLAnonymousClass> anonymousClassList2, List<AnonymousClassDeclarationObject> allAnonymousClassDeclarations2) throws RefactoringMinerTimedOutException {
@@ -2273,6 +2335,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
 			if(describeMap1.isEmpty() && describeMap2.isEmpty()) {
 				processRemainingAnonymousClasses(classDiff, container1.getAnonymousClassList(), Collections.emptyList(), container2.getAnonymousClassList(), Collections.emptyList());
+				if(container1.getAnonymousClassList().isEmpty() || container2.getAnonymousClassList().isEmpty()) {
+					processRemainingAnonymousClassesInRandomOrder(classDiff, container1.getAnonymousClassListIncludingNested(), container2.getAnonymousClassListIncludingNested());
+				}
 			}
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 				for(Pair<UMLComment, UMLComment> pair : mapper.commentListDiff.getCommonComments()) {

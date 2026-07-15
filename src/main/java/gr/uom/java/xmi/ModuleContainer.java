@@ -182,6 +182,18 @@ public class ModuleContainer implements VariableDeclarationContainer {
 		return anonymousClassList;
 	}
 
+	public List<UMLAnonymousClass> getAnonymousClassListIncludingNested() {
+		List<UMLAnonymousClass> list = new ArrayList<UMLAnonymousClass>(anonymousClassList);
+		for(UMLOperation nested : nestedOperations) {
+			for(UMLAnonymousClass anonymous : nested.getAnonymousClassList()) {
+				if(!list.contains(anonymous)) {
+					list.add(anonymous);
+				}
+			}
+		}
+		return list;
+	}
+
 	@Override
 	public List<LambdaExpressionObject> getAllLambdas() {
 		List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();

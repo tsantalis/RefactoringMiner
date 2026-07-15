@@ -1877,6 +1877,73 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 	*/
 
+	public void detectAtPullRequest(String cloneURL, int pullRequestId, RefactoringHandler handler) {
+		try {
+			GHRepository repository = getGitHubRepository(cloneURL);
+			GHPullRequest pullRequest = repository.getPullRequest(pullRequestId);
+			Map<String, String> filesBefore = new ConcurrentHashMap<String, String>();
+			Map<String, String> filesCurrent = new ConcurrentHashMap<String, String>();
+			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+			Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+			Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+			Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
+			List<String> commitFileNames = new ArrayList<>();
+			PagedIterable<GHPullRequestFileDetail> files = pullRequest.listFiles();
+			int changedFiles = pullRequest.getChangedFiles();
+			if(changedFiles == 0) {
+				changedFiles = 10;
+			}
+			ExecutorService pool = Executors.newFixedThreadPool(changedFiles);
+			int count = 1;
+			String headSha = pullRequest.getHead().getSha();
+			String mergeBaseSha = repository.getCompare(pullRequest.getBase().getSha(), headSha).getMergeBaseCommit().getSHA1();
+			for(GHPullRequestFileDetail commitFile : files) {
+				String fileName = commitFile.getFilename();
+				if (PathFileUtils.isSupportedFile(commitFile.getFilename())) {
+					commitFileNames.add(fileName);
+					logger.info(String.format("Processing file: " + fileName));
+					//sleep every 100 files to avoid HTTP 403 error
+					if (count % 100 == 0) {
+						Thread.sleep(500);
+					}
+					multiThreadedFetch(filesBefore, filesCurrent, renamedFilesHint, repositoryDirectoriesBefore,
+							repositoryDirectoriesCurrent, deletedAndRenamedFileParentDirectories, commitFileNames, pool,
+							commitFile, fileName, headSha, mergeBaseSha);
+					count++;
+				}
+			}
+			pool.shutdown();
+			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+			Map<String, String> filesContentsBefore = new LinkedHashMap<String, String>();
+			Map<String, String> filesContentsCurrent = new LinkedHashMap<String, String>();
+			for(String fileName : commitFileNames) {
+				if(filesBefore.containsKey(fileName)) {
+					filesContentsBefore.put(fileName, filesBefore.get(fileName));
+				}
+				if(filesCurrent.containsKey(fileName)) {
+					filesContentsCurrent.put(fileName, filesCurrent.get(fileName));
+				}
+			}
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(filesContentsBefore, filesContentsCurrent, renamedFilesHint, true);
+			UMLModel currentUMLModel = createModelForASTDiff(filesContentsCurrent, repositoryDirectoriesCurrent);
+			UMLModel parentUMLModel = createModelForASTDiff(filesContentsBefore, repositoryDirectoriesBefore);
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+			refactoringsAtRevision = filter(refactoringsAtRevision);
+			handler.handle(String.valueOf(pullRequestId), refactoringsAtRevision);
+			handler.handleModelDiff(String.valueOf(pullRequestId), refactoringsAtRevision, modelDiff);
+		}
+		catch(RefactoringMinerTimedOutException e) {
+			logger.warn(String.format("Ignored PR %s due to timeout", pullRequestId), e);
+			handler.handleException(String.valueOf(pullRequestId), e);
+		}
+		catch (Exception e) {
+			logger.warn(String.format("Ignored PR %s due to error", pullRequestId), e);
+			handler.handleException(String.valueOf(pullRequestId), e);
+		}
+	}
+
 	@Override
 	public void detectAtPullRequest(String cloneURL, int pullRequestId, RefactoringHandler handler, int timeout) throws IOException {
 		GHRepository repository = getGitHubRepository(cloneURL);

@@ -252,6 +252,105 @@
   "firstEndPos" : 186,
   "secondEndPos" : 146
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "program",
+  "firstPos" : 188,
+  "secondPos" : 147,
+  "firstEndPos" : 7061,
+  "secondEndPos" : 6850
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "assignment_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 188,
+  "secondPos" : 147,
+  "firstEndPos" : 7060,
+  "secondEndPos" : 6849
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 188,
+  "secondPos" : 147,
+  "firstEndPos" : 199,
+  "secondEndPos" : 161
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Chart",
+  "secondLabel" : "module",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 188,
+  "secondPos" : 147,
+  "firstEndPos" : 193,
+  "secondEndPos" : 153
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 193,
+  "secondPos" : 153,
+  "firstEndPos" : 194,
+  "secondEndPos" : 154
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "Ticks",
+  "secondLabel" : "exports",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 194,
+  "secondPos" : 154,
+  "firstEndPos" : 199,
+  "secondEndPos" : 161
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 200,
+  "secondPos" : 162,
+  "firstEndPos" : 201,
+  "secondEndPos" : 163
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_expression",
+  "secondParentType" : "assignment_expression",
+  "firstPos" : 202,
+  "secondPos" : 164,
+  "firstEndPos" : 7060,
+  "secondEndPos" : 6849
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 202,
+  "secondPos" : 164,
+  "firstEndPos" : 203,
+  "secondEndPos" : 165
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "\t\t\n\t\t * Namespace to hold generators for different types of ticks\n\t\t * @namespace Chart.Ticks.generators\n\t\t */",
@@ -9899,6 +9998,17 @@
   "firstEndPos" : 5064,
   "secondEndPos" : 4907
 }, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5064,
+  "secondPos" : 4907,
+  "firstEndPos" : 5065,
+  "secondEndPos" : 4908
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "\t\t\n\t\t * Namespace to hold formatters for different types of ticks\n\t\t * @namespace Chart.Ticks.formatters\n\t\t */",
@@ -14518,4 +14628,26 @@
   "secondPos" : 6846,
   "firstEndPos" : 7057,
   "secondEndPos" : 6847
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 7059,
+  "secondPos" : 6848,
+  "firstEndPos" : 7060,
+  "secondEndPos" : 6849
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 7060,
+  "secondPos" : 6849,
+  "firstEndPos" : 7061,
+  "secondEndPos" : 6850
 } ]

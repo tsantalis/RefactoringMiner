@@ -214,6 +214,24 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
 				this.namedExportListDiff = Optional.of(diff);
 			}
+			List<UMLOperation> nestedOperations1 = new ArrayList<>();
+			for(UMLOperation removedOp : getRemovedOperations()) {
+				nestedOperations1.addAll(removedOp.getNestedOperations());
+			}
+			if(nestedOperations1.size() > 0 && addedOperations.size() > 0) {
+				List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+				for(UMLOperation removedOperation : nestedOperations1) {
+					for(UMLOperation addedOperation : addedOperations) {
+						if(removedOperation.equalSignature(addedOperation)) {
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+							this.addOperationBodyMapper(operationBodyMapper);
+							addedOperationsToBeRemoved.add(addedOperation);
+							break;
+						}
+					}
+				}
+				addedOperations.removeAll(addedOperationsToBeRemoved);
+			}
 		}
 		if(getOriginalClass().getPreprocessorStatements().size() > 0 && getNextClass().getPreprocessorStatements().size() > 0) {
 			UMLPreprocessorStatementListDiff diff = new UMLPreprocessorStatementListDiff(getOriginalClass().getPreprocessorStatements(), getNextClass().getPreprocessorStatements());
@@ -1731,7 +1749,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					boolean matchFound = removedOrAddedOperationWithIdenticalBody(originalOperation, nextOperation, removedOperationsToBeRemoved, addedOperationsToBeRemoved);
 					if(!matchFound) {
-			    		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
 						if(originalOperation.getJavadoc() == null && nextOperation.getJavadoc() != null) {
 							List<UMLJavadoc> list = findUnmatchedJavadocsInMethodBodiesBefore();
 							for(UMLJavadoc doc : list) {
@@ -1742,7 +1760,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								}
 							}
 						}
-			    		this.addOperationBodyMapper(operationBodyMapper);
+						this.addOperationBodyMapper(operationBodyMapper);
 					}
 				}
 			}
@@ -1757,11 +1775,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						finalIndex = lastIndex;
 					}
 					else if(!operation.isConstructor()) {
-	    				double d1 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(index).getReturnParameter().getType());
-	    				double d2 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(lastIndex).getReturnParameter().getType());
-	    				if(d2 < d1) {
-	    					finalIndex = lastIndex;
-	    				}
+						double d1 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(index).getReturnParameter().getType());
+						double d2 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(lastIndex).getReturnParameter().getType());
+						if(d2 < d1) {
+							finalIndex = lastIndex;
+						}
 					}
 				}
 				UMLOperation nextOperation = nextClass.getOperations().get(finalIndex);

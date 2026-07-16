@@ -6118,7 +6118,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int tryWithResources1 = tryWithResourcesCount(innerNodes1);
 		int tryWithResources2 = tryWithResourcesCount(innerNodes2);
 		boolean tryWithResourceMigration = (tryWithResources1 == 0 && tryWithResources2 > 0) || (tryWithResources1 > 0 && tryWithResources2 == 0);
-		processInnerNodes(nonBlocks1, nonBlocks2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
+		processInnerNodes(nonBlocks1, nonBlocks2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, isomorphic, map1, map2);
 		for(AbstractCodeMapping mapping : new LinkedHashSet<>(mappings)) {
 			if(mapping.getFragment1() instanceof CompositeStatementObject && mapping.getFragment2() instanceof CompositeStatementObject &&
 					(innerNodes1.contains(mapping.getFragment1()) || duplicateMapping1(mapping)) && (innerNodes2.contains(mapping.getFragment2()) || duplicateMapping2(mapping))) {
@@ -6295,7 +6295,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		ArrayList<CompositeStatementObject> finalInnerNodes2 = new ArrayList<>(innerNodes2);
 		finalInnerNodes2.removeAll(blocksOfUnmatchedNonBlocks2);
 		int numberOfMappings = mappings.size();
-		processInnerNodes(finalInnerNodes1, finalInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
+		processInnerNodes(finalInnerNodes1, finalInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, isomorphic, map1, map2);
 		List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 		for(int i = numberOfMappings; i < mappings.size(); i++) {
 			innerNodes1.remove(mappings.get(i).getFragment1());
@@ -6351,7 +6351,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
-			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod,
+			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod, boolean isomorphic,
 			Map<String, List<CompositeStatementObject>> map1, Map<String, List<CompositeStatementObject>> map2) throws RefactoringMinerTimedOutException {
 		boolean sameNumberOfInnerNodesInMultiCalledExtractedMethod = innerNodes1.size() == innerNodes2.size() && multipleCallsToExtractedOrInlinedMethod();
 		if(innerNodes1.size() <= innerNodes2.size() && !sameNumberOfInnerNodesInMultiCalledExtractedMethod) {
@@ -6370,7 +6370,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(matchingInnerNodes1.size() > matchingInnerNodes2.size() && matchingInnerNodes2.size() > 0) {
 						int numberOfMappings = mappings.size();
-						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
+						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, isomorphic, map1, map2);
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 						for(int i = numberOfMappings; i < mappings.size(); i++) {
 							AbstractCodeMapping mapping = mappings.get(i);
@@ -6405,7 +6405,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								allUnmatchedNodes2.addAll(innerNodes2);
 								allUnmatchedNodes2.addAll(leaves2);
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
+								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this, isomorphic);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
@@ -6480,7 +6480,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							allUnmatchedNodes2.addAll(innerNodes2);
 							allUnmatchedNodes2.addAll(leaves2);
 							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this, isomorphic);
 							
 							double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 							if(score == 0 && replacements != null) {
@@ -6577,7 +6577,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
 										if(!matchingInnerNode1.equals(statement1)) {
 											ReplacementInfo replacementInfo2 = initializeReplacementInfo(matchingInnerNode1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-											Set<Replacement> replacements2 = findReplacementsWithExactMatching(matchingInnerNode1, statement2, parameterToArgumentMap, replacementInfo2, false, this);
+											Set<Replacement> replacements2 = findReplacementsWithExactMatching(matchingInnerNode1, statement2, parameterToArgumentMap, replacementInfo2, false, this, isomorphic);
 											
 											double score2 = computeScore(matchingInnerNode1, statement2, Optional.of(replacementInfo2), removedOperations, addedOperations, tryWithResourceMigration);
 											if(score2 > 0) {
@@ -6757,7 +6757,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(matchingInnerNodes2.size() > matchingInnerNodes1.size() && matchingInnerNodes1.size() > 0) {
 						int numberOfMappings = mappings.size();
-						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, map1, map2);
+						processInnerNodes(matchingInnerNodes1, matchingInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, isomorphic, map1, map2);
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 						for(int i = numberOfMappings; i < mappings.size(); i++) {
 							AbstractCodeMapping mapping = mappings.get(i);
@@ -6790,7 +6790,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								allUnmatchedNodes2.addAll(innerNodes2);
 								allUnmatchedNodes2.addAll(leaves2);
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
+								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this, isomorphic);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
@@ -6881,7 +6881,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							allUnmatchedNodes2.addAll(innerNodes2);
 							allUnmatchedNodes2.addAll(leaves2);
 							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this, isomorphic);
 							
 							double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 							if(score == 0 && replacements != null) {
@@ -6978,7 +6978,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									for(CompositeStatementObject matchingInnerNode2 : matchingInnerNodes2) {
 										if(!matchingInnerNode2.equals(statement2)) {
 											ReplacementInfo replacementInfo2 = initializeReplacementInfo(statement1, matchingInnerNode2, allUnmatchedNodes1, allUnmatchedNodes2);
-											Set<Replacement> replacements2 = findReplacementsWithExactMatching(statement1, matchingInnerNode2, parameterToArgumentMap, replacementInfo2, false, this);
+											Set<Replacement> replacements2 = findReplacementsWithExactMatching(statement1, matchingInnerNode2, parameterToArgumentMap, replacementInfo2, false, this, isomorphic);
 											
 											double score2 = computeScore(statement1, matchingInnerNode2, Optional.of(replacementInfo2), removedOperations, addedOperations, tryWithResourceMigration);
 											if(score2 > 0) {
@@ -7209,7 +7209,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						allUnmatchedNodes2.addAll(leaves2);
 						ReplacementInfo replacementInfo = initializeReplacementInfo(mapping.getFragment1(), innerNode2, allUnmatchedNodes1, allUnmatchedNodes2);
 						mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
-						boolean commonConditional = commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, mapping.getFragment1(), innerNode2, this);
+						boolean commonConditional = commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, mapping.getFragment1(), innerNode2, this, isomorphic);
 						if(commonConditional) {
 							double score = computeScore((CompositeStatementObject)mapping.getFragment1(), innerNode2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 							if(score > 0) {
@@ -8155,7 +8155,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							int mappingsBefore = mappings.size();
 							int refactoringsBefore = refactorings.size();
 							ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf2, leaves1, leaves2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								if(leaf1.getVariableDeclarations().size() > 0 && leaf2.getVariableDeclarations().size() > 0 && swappedVariableDeclarations) {
@@ -8233,7 +8233,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 									else {
 										TreeMap<Integer, LeafMapping> lineDistanceMap = checkForOtherPossibleMatchesWithLineDistance1(
-												leaves1, leaves2, leaf1, scopedMappingSet, parameterToArgumentMap, equalNumberOfAssertions);
+												leaves1, leaves2, leaf1, scopedMappingSet, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 										LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
 										addMapping(minLineDistanceStatementMapping);
 										leaves2.remove(minLineDistanceStatementMapping.getFragment2());
@@ -8246,7 +8246,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										&& !container2.hasParameterizedTestAnnotation() && leaves2.size() < 2*leaves1.size();
 								boolean mappingWithNestedLambdaMapper = mappingSet.first().getLambdaMappers().size() > 0/* && mappingSet.first().nestedLambdaMappers().size() > 0*/;
 								if(!isTestMethod && !allIdenticalStatementsHaveSameIndex && !mappingWithNestedLambdaMapper)
-									checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
+									checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 								Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
 								Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
 								Set<AbstractCodeMapping> splitToMultipleAssignments = splitToMultipleAssignments(mappingSet);
@@ -8692,7 +8692,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							int mappingsBefore = mappings.size();
 							int refactoringsBefore = refactorings.size();
 							ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf2, leaves1, leaves2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								if(leaf1.getVariableDeclarations().size() > 0 && leaf2.getVariableDeclarations().size() > 0 && swappedVariableDeclarations) {
@@ -8763,7 +8763,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 									else {
 										TreeMap<Integer, LeafMapping> lineDistanceMap = checkForOtherPossibleMatchesWithLineDistance2(
-												leaves1, leaves2, leaf2, scopedMappingSet, parameterToArgumentMap, equalNumberOfAssertions);
+												leaves1, leaves2, leaf2, scopedMappingSet, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 										LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
 										addMapping(minLineDistanceStatementMapping);
 										leaves1.remove(minLineDistanceStatementMapping.getFragment1());
@@ -8812,7 +8812,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											}
 										}
 										else {
-											checkForOtherPossibleMatchesForFragment1(leaves1, leaves2, leaf2, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
+											checkForOtherPossibleMatchesForFragment1(leaves1, leaves2, leaf2, mappingSet, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 											LeafMapping minStatementMapping = mappingSet.first();
 											if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
 												boolean split = checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves1, leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
@@ -9470,7 +9470,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 */
 	private void checkForOtherPossibleMatchesForFragment2(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, TreeSet<LeafMapping> mappingSet,
-			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic)
 			throws RefactoringMinerTimedOutException {
 		LeafMapping first = mappingSet.first();
 		AbstractCodeFragment leaf2 = first.getFragment2();
@@ -9488,7 +9488,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				int mappingsBefore = mappings.size();
 				int refactoringsBefore = refactorings.size();
 				ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
-				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 				if (replacements != null) {
 					int matchingMappings = 0;
 					for(LeafMapping m : mappingSet) {
@@ -9564,7 +9564,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void checkForOtherPossibleMatchesForFragment1(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf2, TreeSet<LeafMapping> mappingSet,
-			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic)
 			throws RefactoringMinerTimedOutException {
 		AbstractCodeFragment leaf1 = mappingSet.first().getFragment1();
 		if(leaf1 instanceof AbstractExpression) {
@@ -9607,7 +9607,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					int mappingsBefore = mappings.size();
 					int refactoringsBefore = refactorings.size();
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
-					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
@@ -9656,7 +9656,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					int mappingsBefore = mappings.size();
 					int refactoringsBefore = refactorings.size();
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
-					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
@@ -9691,7 +9691,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private TreeMap<Integer, LeafMapping> checkForOtherPossibleMatchesWithLineDistance2(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf2, TreeSet<LeafMapping> mappingSet,
-			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic)
 			throws RefactoringMinerTimedOutException {
 		int exactMappingsBefore = 0;
 		int inexactMappingsBefore = 0;
@@ -9744,7 +9744,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
-					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
@@ -9780,7 +9780,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private TreeMap<Integer, LeafMapping> checkForOtherPossibleMatchesWithLineDistance1(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, TreeSet<LeafMapping> mappingSet,
-			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic)
 			throws RefactoringMinerTimedOutException {
 		int exactMappingsBefore = 0;
 		int inexactMappingsBefore = 0;
@@ -9833,7 +9833,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
-					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this, isomorphic);
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);

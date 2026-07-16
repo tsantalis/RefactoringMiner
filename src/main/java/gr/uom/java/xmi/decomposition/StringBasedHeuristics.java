@@ -3667,7 +3667,7 @@ public class StringBasedHeuristics {
 		return conditional;
 	}
 
-	protected static boolean commonConditional(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
+	protected static boolean commonConditional(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper, boolean isomorphic) {
 		Constants LANG1 = mapper.LANG1;
 		Constants LANG2 = mapper.LANG2;
 		Pattern SPLIT_CONDITIONAL_PATTERN = LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON) ? SPLIT_CONDITIONAL_PATTERN_PYTHON : SPLIT_CONDITIONAL_PATTERN_JAVA;
@@ -4008,7 +4008,7 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
-					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2 && ifNodes2.size() - identicalIfNodes2 > 0) {
+					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2 && ifNodes2.size() - identicalIfNodes2 > 0 && !isomorphic) {
 						boolean splitConditional = false;
 						List<LeafMapping> inferredLeafMappings = new ArrayList<LeafMapping>();
 						for(CompositeStatementObject ifNode2 : ifNodes2) {

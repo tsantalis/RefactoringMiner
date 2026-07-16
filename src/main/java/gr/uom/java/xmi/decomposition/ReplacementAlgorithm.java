@@ -260,7 +260,7 @@ public class ReplacementAlgorithm {
 	}
 
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper, boolean isomorphic) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
 		Constants LANG1 = operationBodyMapper.LANG1;
@@ -1211,11 +1211,11 @@ public class ReplacementAlgorithm {
 				String s1 = it1.next();
 				String s2 = it2.next();
 				String strippedText1 = Arrays.stream(s1.split("\\R"))
-                        .map(String::stripLeading)
-                        .collect(Collectors.joining("\n"));
+						.map(String::stripLeading)
+						.collect(Collectors.joining("\n"));
 				String strippedText2 = Arrays.stream(s2.split("\\R"))
-                        .map(String::stripLeading)
-                        .collect(Collectors.joining("\n"));
+						.map(String::stripLeading)
+						.collect(Collectors.joining("\n"));
 				if(strippedText1.equals(strippedText2)) {
 					Replacement replacement = new Replacement(s1, s2, ReplacementType.TEXT_BLOCK);
 					replacementInfo.addReplacement(replacement);
@@ -1838,7 +1838,7 @@ public class ReplacementAlgorithm {
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString(), variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(), variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) ||
 				(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null && creationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null && wrapInMethodCall(s1, s2, methodInvocationMap1, replacementInfo)) ||
-				(containsValidOperatorReplacements(replacementInfo, LANG1, LANG2) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
+				(containsValidOperatorReplacements(replacementInfo, LANG1, LANG2) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper, isomorphic))) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1, statement2, variableDeclarations1, variableDeclarations2, replacementInfo, operationBodyMapper) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo, LANG1, LANG2) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, operationBodyMapper) ||

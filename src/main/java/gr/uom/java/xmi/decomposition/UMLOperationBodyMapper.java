@@ -239,7 +239,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		resetNodes(innerNodes1);
 		resetNodes(innerNodes2);
-		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 		updateNonMappedLeavesT1(leaves1);
 		updateNonMappedLeavesT2(leaves2);
 		nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -276,7 +276,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 			resetNodes(innerNodes1);
 			resetNodes(innerNodes2);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 			updateNonMappedLeavesT1(leaves1);
 			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -315,7 +315,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 			resetNodes(innerNodes1);
 			resetNodes(innerNodes2);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 			updateNonMappedLeavesT1(leaves1);
 			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -349,7 +349,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 			resetNodes(innerNodes1);
 			resetNodes(innerNodes2);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 			
 			//match expressions in inner nodes from T1 with leaves from T2
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
@@ -984,7 +984,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod, isomorphic);
 			
 			if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
 				processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
@@ -1041,7 +1041,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								parent2 = parent2.getParent();
 							}
-							processInnerNodes(nodes1, nodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+							processInnerNodes(nodes1, nodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false, false);
 						}
 					}
 				}
@@ -1344,8 +1344,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 				}
 			}
-			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod(leaves2));
+			boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), isomorphic);
+			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod, isomorphic);
 			leaves1.remove(defaultExpression1);
 			updateNonMappedLeavesT1(leaves1);
 			leaves2.remove(defaultExpression2);
@@ -1373,9 +1375,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(LambdaExpressionObject lambda : lambdas2) {
 				expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 			}
-			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), isomorphic);
 			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod, isomorphic);
 			
 			leaves1.remove(defaultExpression1);
 			updateNonMappedLeavesT1(leaves1);
@@ -1401,9 +1404,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(LambdaExpressionObject lambda : lambdas2) {
 				expandLambda(lambda, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), codeFragmentOperationMap2, operation2, true);
 			}
-			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), isomorphic);
 			boolean containsCallToExtractedMethod = containsCallToExtractedMethod(leaves2);
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod, isomorphic);
 			
 			updateNonMappedLeavesT1(leaves1);
 			leaves2.remove(defaultExpression2);
@@ -2526,7 +2530,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			parentMapper.anonymousClassDiffs.addAll(this.anonymousClassDiffs);
 		}
 		
-		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod(leaves2));
+		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod(leaves2), isomorphic);
 		
 		if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {
 			processStreamAPIStatements(leaves1, leaves2, innerNodes1, streamAPIStatements2);
@@ -3876,7 +3880,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processLeaves(leaves1, leaves2, parameterToArgumentMap2, false);
 				
 				//compare inner nodes from T1 with inner nodes from T2
-				processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap2, false);
+				processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap2, false, false);
 				updateNonMappedLeavesT1(leaves1);
 				updateNonMappedLeavesT2(leaves2);
 				nonMappedInnerNodesT1.addAll(innerNodes1);
@@ -4115,7 +4119,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, parameterToArgumentMap2, false);
 			
 			//compare inner nodes from T1 with inner nodes from T2
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap2, false);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap2, false, false);
 			
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1, LANG1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2, LANG2);
@@ -4191,7 +4195,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			numberOfMappings = this.mappings.size();
-			processInnerNodes(composites1, composites2, leaves1, leaves2, parameterToArgumentMap2, false);
+			processInnerNodes(composites1, composites2, leaves1, leaves2, parameterToArgumentMap2, false, false);
 			mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
 				innerNodes2.remove(mappings.get(i).getFragment2());
@@ -4678,7 +4682,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, parameterToArgumentMap1, false);
 			
 			//compare inner nodes from T1 with inner nodes from T2
-			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap1, false);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap1, false, false);
 			
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1, LANG1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2, LANG2);
@@ -5993,7 +5997,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2,
 			List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
-			Map<String, String> parameterToArgumentMap, boolean containsCallToExtractedMethod) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap, boolean containsCallToExtractedMethod, boolean isomorphic) throws RefactoringMinerTimedOutException {
 		List<CompositeStatementObject> blocks1 = new ArrayList<>();
 		List<CompositeStatementObject> nonBlocks1 = new ArrayList<>();
 		Map<String, List<CompositeStatementObject>> map1 = new LinkedHashMap<>();

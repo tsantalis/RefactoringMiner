@@ -42,6 +42,7 @@ import com.caoccao.javet.swc4j.exceptions.Swc4jCoreException;
 import com.caoccao.javet.swc4j.options.Swc4jParseOptions;
 import com.caoccao.javet.swc4j.outputs.Swc4jParseOutput;
 import com.github.gumtreediff.gen.treesitterng.JavaScriptTreeSitterNgTreeGenerator;
+import com.github.gumtreediff.gen.treesitterng.TsxTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.gen.treesitterng.TypeScriptTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
 
@@ -83,6 +84,9 @@ public class TypeScriptFileProcessor {
 				TreeContext treeContext = null;
 				if(filePath.endsWith(".js")) {
 					treeContext = new JavaScriptTreeSitterNgTreeGenerator().generateFrom().stream(is);
+				}
+				else if(filePath.endsWith(".tsx")) {
+					treeContext = new TsxTreeSitterNgTreeGenerator().generateFrom().stream(is);
 				}
 				else {
 					treeContext = new TypeScriptTreeSitterNgTreeGenerator().generateFrom().stream(is);

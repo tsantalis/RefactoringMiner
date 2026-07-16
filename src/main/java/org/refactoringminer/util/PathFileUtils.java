@@ -20,7 +20,7 @@ public class PathFileUtils {
     }
 
     public static boolean isTypeScriptFile(String path){
-        return path.endsWith(".ts")/* || path.endsWith(".tsx")*/ || path.endsWith(".js");
+        return path.endsWith(".ts") || path.endsWith(".tsx") || path.endsWith(".js");
     }
 
     public static boolean isJavaScriptFile(String path){

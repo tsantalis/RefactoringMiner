@@ -1478,6 +1478,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 						this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 						this.anonymousClassDiffs.add(anonymousClassDiff);
+						anonymousClassList1.remove(anonymousClass1);
+						anonymousClassList2.remove(anonymousClass2);
+						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+							classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+						}
+						if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+							classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+						}
+						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+							addAllMappings(mapper.mappings);
+						}
+					}
+				}
+			}
+			else if(setAnonymous2.isEmpty() && setAnonymous1.size() > 0) {
+				for(UMLAnonymousClass anonymousClass1 : setAnonymous1) {
+					String ending = anonymousClass1.getCodePath().substring(anonymousClass1.getCodePath().indexOf(nameContains) + nameContains.length());
+					List<UMLAnonymousClass> matches = filterBasedOnCodePathEnding(ending, anonymousClassList2);
+					if(matches.size() == 1) {
+						UMLAnonymousClass anonymousClass2 = matches.get(0);
+						boolean alreadyProcessed = false;
+						for(UMLAnonymousClassDiff anonymousClassDiff : this.anonymousClassDiffs) {
+							if(anonymousClassDiff.getOriginalClass().equals(anonymousClass1) && anonymousClassDiff.getNextClass().equals(anonymousClass2)) {
+								alreadyProcessed = true;
+								break;
+							}
+						}
+						if(alreadyProcessed)
+							continue;
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+						anonymousClassDiff.process();
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+						this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+						this.anonymousClassDiffs.add(anonymousClassDiff);
+						anonymousClassList1.remove(anonymousClass1);
+						anonymousClassList2.remove(anonymousClass2);
 						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
 							classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
 						}

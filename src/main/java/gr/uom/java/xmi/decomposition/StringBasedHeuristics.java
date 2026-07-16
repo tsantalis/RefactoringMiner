@@ -4008,7 +4008,8 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
-					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2 && ifNodes2.size() - identicalIfNodes2 > 0 && !isomorphic) {
+					boolean isomorphicControlStructureCheck = statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && isomorphic;
+					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2 && ifNodes2.size() - identicalIfNodes2 > 0 && !isomorphicControlStructureCheck) {
 						boolean splitConditional = false;
 						List<LeafMapping> inferredLeafMappings = new ArrayList<LeafMapping>();
 						for(CompositeStatementObject ifNode2 : ifNodes2) {

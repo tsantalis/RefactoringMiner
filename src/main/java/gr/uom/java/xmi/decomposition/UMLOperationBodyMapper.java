@@ -7726,6 +7726,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(parent1.getParent() == null && parent2.getParent() == null) {
 					return false;
 				}
+				if(parent1.getParent() == null && parent2.getParent() != null) {
+					return false;
+				}
+				if(parent1.getParent() != null && parent2.getParent() == null) {
+					return false;
+				}
 				if(!parent1.getLocationInfo().getCodeElementType().getName().equals(parent2.getLocationInfo().getCodeElementType().getName())) {
 					return false;
 				}

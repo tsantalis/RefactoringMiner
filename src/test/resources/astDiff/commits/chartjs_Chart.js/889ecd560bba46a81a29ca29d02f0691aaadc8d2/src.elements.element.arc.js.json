@@ -450,6 +450,17 @@
   "firstEndPos" : 183,
   "secondEndPos" : 174
 }, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 183,
+  "secondPos" : 174,
+  "firstEndPos" : 184,
+  "secondEndPos" : 175
+}, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
   "firstLabel" : "",
@@ -460,6 +471,17 @@
   "secondPos" : 176,
   "firstEndPos" : 208,
   "secondEndPos" : 204
+}, {
+  "firstType" : "identifier",
+  "secondType" : "member_expression",
+  "firstLabel" : "globalOpts",
+  "secondLabel" : "",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 185,
+  "secondPos" : 176,
+  "firstEndPos" : 195,
+  "secondEndPos" : 191
 }, {
   "firstType" : ".",
   "secondType" : ".",

@@ -182,6 +182,14 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(colons.first, colons.second);
                 }
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.COLON, LANG2.COLON);
+            if(colons != null) {
+                mappingStore.addMapping(colons.first, colons.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> member_expressions = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.MEMBER_EXPRESSION, LANG2.MEMBER_EXPRESSION);
+            if(member_expressions != null) {
+                mappingStore.addMappingRecursively(member_expressions.first, member_expressions.second);
+            }
         }
         mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         if(srcFieldDeclaration != null && srcFieldDeclaration.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstFieldDeclaration != null && dstFieldDeclaration.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {

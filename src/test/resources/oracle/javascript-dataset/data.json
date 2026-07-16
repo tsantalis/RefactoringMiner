@@ -1488,4 +1488,69 @@
         "validators": null
     }],
     "refDiffExecutionTime": 0
+}, {
+    "id": 25,
+    "repository": "https://github.com/chartjs/Chart.js.git",
+    "sha1": "979341ecb094d9c6a95de8a47e7836f01587e7d2",
+    "url": "https://github.com/chartjs/Chart.js/commit/979341ecb094d9c6a95de8a47e7836f01587e7d2",
+    "author": "simonbrunel",
+    "time": "1/27/17 07:32 PM",
+    "refactorings": [{
+        "type": "Extract Method",
+        "description": "Extract Method private updateLayout() extracted from public update(animationDuration, lazy) in class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private drawDatasets(easingValue) extracted from public draw(ease) in class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method private onComplete() extracted from public render(duration, lazy) in class core.controller & moved to class core.controller.render",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter extension : Inferred to hook : Inferred in method public notify(chart, hook, args) from class core.plugin",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter ease : Inferred to easingValue : Inferred in method private drawDatasets(easingValue) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Method Access Modifier",
+        "description": "Change Method Access Modifier public to private in method private updateDatasets() from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable callback : Inferred in method private onComplete() from class core.controller.render",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable onComplete : Inferred in method public render(duration, lazy) from class core.controller",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }],
+    "refDiffExecutionTime": 0
 }]

@@ -1297,6 +1297,21 @@ public class TypeScriptOperationBody extends OperationBody {
 					name = leftName + "." + name;
 				}
 			}
+			else if(parent instanceof Swc4jAstExprOrSpread spread && spread.getParent() instanceof Swc4jAstCallExpr callExpr &&
+					callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr && memberExpr.getProp() instanceof Swc4jAstIdentName identName && identName.getSym().equals("_set") &&
+					callExpr.getArgs().size() > 0) {
+				Swc4jAstExprOrSpread firstArg = callExpr.getArgs().get(0);
+				ISwc4jAstExpr expr = firstArg.getExpr();
+				if(expr instanceof Swc4jAstStr str) {
+					String firstArgString = str.getValue();
+					if(name.isEmpty()) {
+						name = firstArgString;
+					}
+					else {
+						name = firstArgString + "." + name;
+					}
+				}
+			}
 			parent = parent.getParent();
 		}
 		return name.toString();

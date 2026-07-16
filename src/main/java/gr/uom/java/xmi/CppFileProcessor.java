@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -12,9 +13,9 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTComment;
 import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
@@ -102,6 +103,7 @@ public class CppFileProcessor {
 	private String filePath;
 	private String fileContent;
 	private UMLModel umlModel;
+	private CppPreprocessor preprocessor;
 
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
@@ -110,6 +112,7 @@ public class CppFileProcessor {
 	public void processCppFile(String filePath, String fileContent, boolean astDiff) {
 		this.filePath = filePath;
 		this.fileContent = fileContent;
+		this.preprocessor = new CppPreprocessor(this);
 		try {
 			FileContent content = FileContent.create(filePath, fileContent.toCharArray());
 			Map<String, String> predefinedMacros = new HashMap<>();
@@ -130,15 +133,16 @@ public class CppFileProcessor {
 						scanInfo,
 						includeFiles,
 						EmptyCIndex.INSTANCE,
-						GPPLanguage.OPTION_IS_SOURCE_UNIT,
+						GPPLanguage.OPTION_IS_SOURCE_UNIT | GPPLanguage.OPTION_PARSE_INACTIVE_CODE,
 						new DefaultLogService()
 						);
 				String sourceFolder = extractCppSourceFolder();
 				List<UMLComment> comments = extractInternalComments(ast.getComments(), sourceFolder, filePath, fileContent);
 				this.umlModel.getCommentMap().put(filePath, comments);
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
+				preprocessor.buildConditionalBranches(ast.getAllPreprocessorStatements());
 				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
-				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations(), comments, new ICPPASTTemplateParameter[0]);
+				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations(true), comments, new ICPPASTTemplateParameter[0]);
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				//TODO consider assigning comments to individual preprocessor statements
@@ -166,7 +170,7 @@ public class CppFileProcessor {
 				this.umlModel.getCommentMap().put(filePath, comments);
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
-				processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations(), comments, new ICPPASTTemplateParameter[0]);
+				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations(), comments, new ICPPASTTemplateParameter[0]);
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				moduleClass.getComments().addAll(comments);
@@ -318,15 +322,9 @@ public class CppFileProcessor {
 		return includePaths.toArray(new String[0]);
 	}
 
-	private void processDeclarations(String packageName, String sourceFolder, UMLAbstractClass parentContainer, IASTDeclaration[] declarations, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
-		Visibility currentVisibility = null;
-		for(IASTDeclaration declaration : declarations) {
-			currentVisibility = processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, declaration, templateParameters);
-		}
-	}
-	
-	private Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
-			List<UMLComment> comments, Visibility currentVisibility, IASTDeclaration declaration, ICPPASTTemplateParameter[] templateParameters) {
+	public Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
+			List<UMLComment> comments, Visibility currentVisibility, IASTDeclaration declaration, ICPPASTTemplateParameter[] templateParameters,
+			List<IASTDeclaration> inactiveContainerAlternatives) {
 		if(declaration instanceof CPPASTStructuredBindingDeclaration cppStructuredBindingDeclaration) {
 			//A structured binding declaration is a feature introduced in C++17 that allows you to unpack or decompose a target object into individual named variables.
 			//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
@@ -342,15 +340,17 @@ public class CppFileProcessor {
 				variableDeclaration.setAttribute(true);
 				umlAttribute.setVariableDeclaration(variableDeclaration);
 				addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
-				parentContainer.addAttribute(umlAttribute);
+				preprocessor.addAttribute(parentContainer, umlAttribute, name);
 				distributeComments(comments, locationInfo, umlAttribute.getComments());
 			}
 		}
 		else if(declaration instanceof CPPASTSimpleDeclaration cppSimpleDeclaration) {
-			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
+			processSimpleDeclaration(cppSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments,
+					templateParameters, inactiveContainerAlternatives);
 		}
 		else if(declaration instanceof CASTSimpleDeclaration cSimpleDeclaration) {
-			processSimpleDeclaration(cSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
+			processSimpleDeclaration(cSimpleDeclaration, packageName, sourceFolder, parentContainer, currentVisibility, comments,
+					templateParameters, Collections.emptyList());
 		}
 		else if(declaration instanceof CPPASTAmbiguousSimpleDeclaration cppAmbiguousSimpleDeclaration) {
 			
@@ -360,13 +360,13 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CASTFunctionDefinition cFunctionDefinition) {
 			UMLOperation operation = processFunctionDefinition(cFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
-			parentContainer.addOperation(operation);
+			preprocessor.addOperation(parentContainer, operation, cFunctionDefinition, templateParameters);
 		}
 		else if(declaration instanceof CPPASTFunctionDefinition cppFunctionDefinition) {
 			//org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionWithTryBlock is a subclass
 			//Function-Try-Block should be handled similar to Kotlin, which allows functions to have a try-expression as a body
 			UMLOperation operation = processFunctionDefinition(cppFunctionDefinition, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
-			parentContainer.addOperation(operation);
+			preprocessor.addOperation(parentContainer, operation, cppFunctionDefinition, templateParameters);
 		}
 		else if(declaration instanceof CPPASTAliasDeclaration cppAliasDeclaration) {
 			//A C++ alias declaration (introduced in C++11) uses the using keyword to create a readable, interchangeable synonym for an existing type or template. It is the modern, preferred alternative to typedef.
@@ -389,18 +389,21 @@ public class CppFileProcessor {
 			//templates are typically defined in separate header files (.hpp) and are instantiated as a 'template class'
 			//Explicit template instantiation forces the C++ compiler to generate code for a template with specific arguments. This allows you to split template definitions into separate .h and .cpp files.
 			IASTDeclaration nestedDeclaration = cppTemplateInstantiation.getDeclaration();
-			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration, new ICPPASTTemplateParameter[0]);
+			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration,
+					new ICPPASTTemplateParameter[0], Collections.emptyList());
 		}
 		else if(declaration instanceof CPPASTTemplateDeclaration cppTemplateDeclaration) {
 			IASTDeclaration nestedDeclaration = cppTemplateDeclaration.getDeclaration();
-			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration, cppTemplateDeclaration.getTemplateParameters());
+			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration,
+					cppTemplateDeclaration.getTemplateParameters(), preprocessor.unwrapAlternatives(inactiveContainerAlternatives));
 		}
 		else if(declaration instanceof CPPASTTemplateSpecialization cppTemplateSpecialization) {
 			//Template specialization allows you to override the generic behavior of a C++ template and define a custom implementation for specific data types or conditions.
 			//While primary templates provide a blueprint for all types, specialization handles unique edge cases—such as treating const char* or bool differently for performance or behavioral optimizations.
 			//C++ supports two types of template specialization: Explicit (Full) Specialization and Partial Specialization.
 			IASTDeclaration nestedDeclaration = cppTemplateSpecialization.getDeclaration();
-			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration, cppTemplateSpecialization.getTemplateParameters());
+			processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility, nestedDeclaration,
+					cppTemplateSpecialization.getTemplateParameters(), preprocessor.unwrapAlternatives(inactiveContainerAlternatives));
 		}
 		else if(declaration instanceof CPPASTInitCapture cppInitCapture) {
 			//Init capture (also called generalized lambda capture) was introduced in C++14 to let you declare and initialize new variables directly inside a lambda's capture brackets [...]
@@ -409,7 +412,8 @@ public class CppFileProcessor {
 			//C++ linkage specifications (extern "C") direct the compiler to use specific linkage and calling conventions for different programming languages. By preventing C++ name mangling, it allows seamless calls between C++ and C code.
 			//C++ supports features like function overloading, which requires the compiler to "mangle" (decorate) function names with argument types so the linker can tell them apart.
 			//A C compiler doesn't do this, meaning C++ object code cannot normally find a C library's function. A linkage specification disables C++ mangling for that block of code, ensuring the exact function name is emitted for the linker.
-			processDeclarations(packageName, sourceFolder, parentContainer, cppLinkageSpecification.getDeclarations(), comments, templateParameters);
+			preprocessor.processDeclarationGroups(packageName, sourceFolder, parentContainer, declaration, comments,
+					templateParameters, inactiveContainerAlternatives);
 		}
 		else if(declaration instanceof CPPASTNamespaceAlias cppNamespaceAlias) {
 			//In C++, a namespace alias allows you to create a shorter or alternative name for a long or deeply nested namespace. You define it using the syntax namespace alias_name = existing_namespace;
@@ -419,9 +423,9 @@ public class CppFileProcessor {
 			//In C++, a namespace is a declarative region that provides a distinct scope to identifiers (such as names of types, functions, variables, and classes) to prevent naming collisions and organize code into logical groups.
 			IASTName name = cppNamespaceDefinition.getName();
 			String namespace = name.getRawSignature();
-			IASTDeclaration[] nameSpaceDeclarations = cppNamespaceDefinition.getDeclarations();
 			String qualifiedNamespace = packageName + "." + namespace;
-			processDeclarations(qualifiedNamespace, sourceFolder, parentContainer, nameSpaceDeclarations, comments, templateParameters);
+			preprocessor.processDeclarationGroups(qualifiedNamespace, sourceFolder, parentContainer, declaration, comments,
+					templateParameters, inactiveContainerAlternatives);
 		}
 		else if(declaration instanceof CPPASTStaticAssertionDeclaration cppStaticAssertionDeclaration) {
 			//In C++, a static_assert declaration tests a software condition at compile time. If the condition evaluates to false, the compiler stops and issues a compilation error.
@@ -466,7 +470,9 @@ public class CppFileProcessor {
 		return umlClass;
 	}
 
-	private void processSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
+	private void processSimpleDeclaration(IASTSimpleDeclaration simpleDeclaration, String packageName, String sourceFolder,
+			UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments,
+			ICPPASTTemplateParameter[] templateParameters, List<IASTDeclaration> inactiveContainerAlternatives) {
 		IASTDeclSpecifier declSpecifier = simpleDeclaration.getDeclSpecifier();
 		if(declSpecifier instanceof IASTCompositeTypeSpecifier compositeTypeSpecifier) {
 			if(compositeTypeSpecifier.getName() == null) {
@@ -508,7 +514,8 @@ public class CppFileProcessor {
 			if(rawSignature.contains("{"))
 				rawSignature = rawSignature.substring(0, rawSignature.indexOf("{") + 1);
 			umlClass.setActualSignature(rawSignature);
-			processDeclarations(packageName + "." + className, sourceFolder, umlClass, compositeTypeSpecifier.getMembers(), comments, templateParameters);
+			preprocessor.processDeclarationGroups(packageName + "." + className, sourceFolder, umlClass, simpleDeclaration, comments,
+					templateParameters, inactiveContainerAlternatives);
 			this.umlModel.addClass(umlClass);
 			distributeComments(comments, locationInfo, umlClass.getComments());
 		}
@@ -519,7 +526,7 @@ public class CppFileProcessor {
 				}
 				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
 					UMLOperation operation = processFunctionDeclSpecifier(simpleDeclSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
-					parentContainer.addOperation(operation);
+					preprocessor.addOperation(parentContainer, operation, functionDeclarator, templateParameters);
 				}
 			}
 		}
@@ -543,7 +550,7 @@ public class CppFileProcessor {
 		variableDeclaration.setAttribute(true);
 		umlAttribute.setVariableDeclaration(variableDeclaration);
 		addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
-		parentContainer.addAttribute(umlAttribute);
+		preprocessor.addAttribute(parentContainer, umlAttribute, declarator);
 		distributeComments(comments, locationInfo, umlAttribute.getComments());
 	}
 
@@ -686,7 +693,7 @@ public class CppFileProcessor {
 		}
 		String importName = name.toString().replace("::", ".");
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declaration, CodeElementType.IMPORT_DECLARATION, fileContent);
-		parentContainer.getImportedTypes().add(new UMLImport(importName, onDemand, false, locationInfo));
+		preprocessor.addImport(parentContainer, new UMLImport(importName, onDemand, false, locationInfo), declaration);
 	}
 
 	private void processCppAliasDeclaration(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder, UMLAbstractClass parentContainer, ICPPASTTemplateParameter[] templateParameters) {
@@ -698,7 +705,7 @@ public class CppFileProcessor {
 			return;
 		}
 		addTemplateParameters(umlTypeAlias, templateParameters, sourceFolder);
-		umlClass.addTypeAlias(umlTypeAlias);
+		preprocessor.addTypeAlias(umlClass, umlTypeAlias, aliasDeclaration);
 	}
 
 	private UMLTypeAlias createCppTypeAlias(CPPASTAliasDeclaration aliasDeclaration, String sourceFolder) {
@@ -755,7 +762,6 @@ public class CppFileProcessor {
 		return new UMLTypeParameter(name, locationInfo);
 	}
 
-	
 	private String extractParameterName(IASTParameterDeclaration parameter, int index) {
 		IASTDeclarator declarator = parameter.getDeclarator();
 		if(declarator != null && declarator.getName() != null) {

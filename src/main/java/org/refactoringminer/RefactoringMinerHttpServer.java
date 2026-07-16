@@ -75,8 +75,23 @@ public class RefactoringMinerHttpServer implements RefactoringHandler {
 		os.close();
 	}
 
+	private static boolean isInteger(String str) {
+		if (str == null || str.isEmpty()) {
+			return false;
+		}
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
 	private void act() {
-		api.detectRefactorings(this, gitURL, commitId);
+		if(isInteger(commitId))
+			api.detectAtPullRequest(gitURL, Integer.parseInt(commitId), this);
+		else
+			api.detectRefactorings(this, gitURL, commitId);
 	}
 
 	void prepareResponse() {

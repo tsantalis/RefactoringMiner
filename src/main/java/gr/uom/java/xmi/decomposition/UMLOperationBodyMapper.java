@@ -1457,6 +1457,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return filtered;
 	}
 
+	private static List<UMLAnonymousClass> filterBasedOnAttributeAndOperationSignatures(UMLAnonymousClass anonymousClass, List<UMLAnonymousClass> anonymousClassList) {
+		List<UMLAnonymousClass> filtered = new ArrayList<>();
+		for(UMLAnonymousClass anonymous : anonymousClassList) {
+			if(anonymous.hasSameAttributesAndOperations(anonymousClass).isMatch()) {
+				filtered.add(anonymous);
+			}
+		}
+		return filtered;
+	}
+
 	private void processRemainingAnonymousClassesInRandomOrder(UMLAbstractClassDiff classDiff, List<UMLAnonymousClass> anonymousClassList1, List<UMLAnonymousClass> anonymousClassList2) throws RefactoringMinerTimedOutException {
 		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT) && anonymousClassList1.size() > 0 && anonymousClassList2.size() > 0) {
 			String nameContains = "._set.";
@@ -1518,6 +1528,71 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						this.anonymousClassDiffs.add(anonymousClassDiff);
 						anonymousClassList1.remove(anonymousClass1);
 						anonymousClassList2.remove(anonymousClass2);
+						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+							classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+						}
+						if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+							classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+						}
+						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+							addAllMappings(mapper.mappings);
+						}
+					}
+				}
+			}
+			if(anonymousClassList1.toString().equals(anonymousClassList2.toString())) {
+				return;
+			}
+			if(anonymousClassList1.size() <= anonymousClassList2.size()) {
+				for(UMLAnonymousClass anonymousClass1 : anonymousClassList1) {
+					List<UMLAnonymousClass> matches = filterBasedOnAttributeAndOperationSignatures(anonymousClass1, anonymousClassList2);
+					if(matches.size() == 1) {
+						UMLAnonymousClass anonymousClass2 = matches.get(0);
+						boolean alreadyProcessed = false;
+						for(UMLAnonymousClassDiff anonymousClassDiff : this.anonymousClassDiffs) {
+							if(anonymousClassDiff.getOriginalClass().equals(anonymousClass1) && anonymousClassDiff.getNextClass().equals(anonymousClass2)) {
+								alreadyProcessed = true;
+								break;
+							}
+						}
+						if(alreadyProcessed)
+							continue;
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+						anonymousClassDiff.process();
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+						this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+						this.anonymousClassDiffs.add(anonymousClassDiff);
+						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+							classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+						}
+						if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+							classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+						}
+						for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
+							addAllMappings(mapper.mappings);
+						}
+					}
+				}
+			}
+			else if(anonymousClassList1.size() > anonymousClassList2.size()) {
+				for(UMLAnonymousClass anonymousClass2 : anonymousClassList2) {
+					List<UMLAnonymousClass> matches = filterBasedOnAttributeAndOperationSignatures(anonymousClass2, anonymousClassList1);
+					if(matches.size() == 1) {
+						UMLAnonymousClass anonymousClass1 = matches.get(0);
+						boolean alreadyProcessed = false;
+						for(UMLAnonymousClassDiff anonymousClassDiff : this.anonymousClassDiffs) {
+							if(anonymousClassDiff.getOriginalClass().equals(anonymousClass1) && anonymousClassDiff.getNextClass().equals(anonymousClass2)) {
+								alreadyProcessed = true;
+								break;
+							}
+						}
+						if(alreadyProcessed)
+							continue;
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
+						anonymousClassDiff.process();
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+						this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+						this.anonymousClassDiffs.add(anonymousClassDiff);
 						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
 							classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
 						}

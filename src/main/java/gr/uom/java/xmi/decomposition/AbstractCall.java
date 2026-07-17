@@ -930,26 +930,6 @@ public abstract class AbstractCall extends LeafExpression {
 			if(getName().toLowerCase().endsWith(argument.toLowerCase())) {
 				return true;
 			}
-			if(argument.endsWith("s")) {
-				//trim plural
-				String arg = argument.substring(0, argument.length()-1).toLowerCase();
-				if(getName().toLowerCase().endsWith(arg)) {
-					return true;
-				}
-			}
-			String[] tokens = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(argument);
-			for(String token : tokens) {
-				if(getName().toLowerCase().endsWith(token.toLowerCase())) {
-					return true;
-				}
-				if(token.endsWith("s") || token.endsWith("_")) {
-					//trim plural
-					String arg = token.substring(0, token.length()-1).toLowerCase();
-					if(getName().toLowerCase().endsWith(arg)) {
-						return true;
-					}
-				}
-			}
 		}
 		return false;
 	}

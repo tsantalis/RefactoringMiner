@@ -3126,22 +3126,27 @@ public abstract class UMLAbstractClassDiff {
 							}
 							//cluster mappers based on number of mappings and number of total replacements
 							Set<UMLOperationBodyMapper> filteredMapperSet2 = new LinkedHashSet<UMLOperationBodyMapper>();
-							int maxMappings = -1;
-							int minReplacements = Integer.MAX_VALUE;
-							for(UMLOperationBodyMapper mapper : filteredMapperSet) {
-								int mappings = mapper.countMappingsForInternalParameterizedTest();
-								if(mappings > maxMappings) {
-									maxMappings = mappings;
-								}
-								int replacements = mapper.countReplacementsForInternalParameterizedTest();
-								if(replacements < minReplacements) {
-									minReplacements = replacements;
-								}
-								if(mappings == maxMappings && replacements == minReplacements) {
-									filteredMapperSet2.add(mapper);
-								}
-								else if(mappings < maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
-									filteredMapperSet2.add(mapper);
+							if(addedOperation.compositeStatementsControlledByParameter().size() > 0) {
+								filteredMapperSet2.addAll(filteredMapperSet);
+							}
+							else {
+								int maxMappings = -1;
+								int minReplacements = Integer.MAX_VALUE;
+								for(UMLOperationBodyMapper mapper : filteredMapperSet) {
+									int mappings = mapper.countMappingsForInternalParameterizedTest();
+									if(mappings > maxMappings) {
+										maxMappings = mappings;
+									}
+									int replacements = mapper.countReplacementsForInternalParameterizedTest();
+									if(replacements < minReplacements) {
+										minReplacements = replacements;
+									}
+									if(mappings == maxMappings && replacements == minReplacements) {
+										filteredMapperSet2.add(mapper);
+									}
+									else if(mappings < maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
+										filteredMapperSet2.add(mapper);
+									}
 								}
 							}
 							for(UMLOperationBodyMapper mapper : filteredMapperSet2) {

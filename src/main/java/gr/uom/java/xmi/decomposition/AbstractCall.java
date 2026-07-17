@@ -788,10 +788,29 @@ public abstract class AbstractCall extends LeafExpression {
 		if(LANG.equals(Constants.PYTHON)) distance = 0;
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
-				(normalizedNameDistance(call) <= distance || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
+				(normalizedNameDistance(call) <= distance || firstNameTokenChanged(call) || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
 				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration() &&
 				(this.argumentContainsLambda() == call.argumentContainsLambda() || this.identicalName(call));
+	}
+
+	private boolean firstNameTokenChanged(AbstractCall call) {
+		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
+		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
+		if(tokens1.length == tokens2.length) {
+			int commonTokens = 0;
+			int indexOfUnmatched = -1;
+			for(int i=0; i<tokens1.length; i++) {
+				if(tokens1[i].equals(tokens2[i])) {
+					commonTokens++;
+				}
+				else {
+					indexOfUnmatched = i;
+				}
+			}
+			return commonTokens > 0 && commonTokens + 1 == tokens1.length && indexOfUnmatched == 0 && this.arguments.size() == call.arguments.size();
+		}
+		return false;
 	}
 
 	private boolean compatibleName(AbstractCall call, double distance) {

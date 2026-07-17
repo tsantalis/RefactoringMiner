@@ -1532,5 +1532,4 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				a.isNormalAnnotation() &&
 				a.getMemberValuePairs().containsKey("dataProvider");
 	}
-
 }

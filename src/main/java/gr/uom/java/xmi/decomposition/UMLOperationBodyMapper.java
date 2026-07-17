@@ -9107,7 +9107,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 			List<LeafMapping> leafMappings = new ArrayList<LeafMapping>();
 			for(AbstractCodeMapping mapping : mappingSet) {
-				Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapping.getReplacements());
+				Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapping.getReplacements(), this);
 				Integer index = null;
 				int max = -1;
 				for(Integer key : matchingTestParameters.keySet()) {
@@ -9135,7 +9135,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				replacements.addAll(mapping.getReplacements());
 			}
-			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, replacements);
+			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, replacements, this);
 			int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
 			if(max >= 1) {
 				for(LeafMapping leafMapping : leafMappings) {

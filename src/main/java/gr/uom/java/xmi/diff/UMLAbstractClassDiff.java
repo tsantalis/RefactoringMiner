@@ -59,6 +59,7 @@ import gr.uom.java.xmi.decomposition.MethodReference;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
+import gr.uom.java.xmi.decomposition.ReplacementUtil;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.StringBasedHeuristics;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -2158,7 +2159,7 @@ public abstract class UMLAbstractClassDiff {
 		return matchingTestParameters;
 	}
 
-	public static Map<Integer, Integer> matchParamsWithReplacements(List<List<String>> testParameters, List<String> parameterNames, Set<Replacement> replacements) {
+	public static Map<Integer, Integer> matchParamsWithReplacements(List<List<String>> testParameters, List<String> parameterNames, Set<Replacement> replacements, UMLOperationBodyMapper mapper) {
 		Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
 		for(Replacement r : replacements) {
 			if(parameterNames.contains(r.getAfter())) {
@@ -2185,6 +2186,51 @@ public abstract class UMLAbstractClassDiff {
 						String argumentAfter = invocationAfter.arguments().get(i);
 						if(parameterNames.contains(argumentAfter)) {
 							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters);
+						}
+					}
+				}
+			}
+			List<UMLAttribute> originalClassAttributes = new ArrayList<>();
+			if(mapper.getClassDiff() != null) {
+				originalClassAttributes.addAll(mapper.getClassDiff().getOriginalClass().getAttributes());
+			}
+			for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT2()) {
+				for(VariableDeclaration variableDecl : fragment.getVariableDeclarations()) {
+					if(ReplacementUtil.contains(r.getAfter(), variableDecl.getVariableName()) && variableDecl.getInitializer() != null) {
+						List<String> referencedVariables = variableDecl.getInitializer().getAllVariables();
+						for(String variable : referencedVariables) {
+							if(parameterNames.contains(variable)) {
+								//check if r.getBefore() contains any of the testParameters
+								for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
+									List<String> list = testParameters.get(parameterRow);
+									int index = parameterNames.indexOf(variable);
+									if(ReplacementUtil.contains(r.getBefore(), list.get(index))) {
+										Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+										matchingTestParameters.put(parameterRow, previousValue + 1);
+									}
+								}
+								for(UMLAttribute attr : originalClassAttributes) {
+									if(ReplacementUtil.contains(r.getBefore(), attr.getName()) && attr.getVariableDeclaration().getInitializer() != null) {
+										String initializer = attr.getVariableDeclaration().getInitializer().getString();
+										for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
+											List<String> list = testParameters.get(parameterRow);
+											int index = parameterNames.indexOf(variable);
+											if(list.get(index).equals(initializer)) {
+												Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+												matchingTestParameters.put(parameterRow, previousValue + 1);
+											}
+											else {
+												//find match with the longest commit prefix
+												String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(list.get(index), initializer);
+												if(!commonPrefix.isEmpty()) {
+													Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+													matchingTestParameters.put(parameterRow, previousValue + 1);
+												}
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
@@ -3026,8 +3072,13 @@ public abstract class UMLAbstractClassDiff {
 									}
 								}
 								else if(commonTokens.size() > commonTokensInName.size()) {
-									commonTokensInName = commonTokens;
-									filteredMapperSet.clear();
+									if(commonTokens.containsAll(commonTokensInName)) {
+										commonTokenCheck = true;
+									}
+									else {
+										commonTokensInName = commonTokens;
+										filteredMapperSet.clear();
+									}
 								}
 								else if(commonTokensInName.equals(commonTokens)) {
 									commonTokenCheck = true;
@@ -3035,7 +3086,7 @@ public abstract class UMLAbstractClassDiff {
 								if(mapper.getInternalParameterizeTestMultiMappings().size() > 0) {
 									internalParameterizeTest = true;
 								}
-								Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements());
+								Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements(), mapper);
 								if (matchingTestParameters.isEmpty()) {
 									matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
 								}
@@ -4253,6 +4304,26 @@ public abstract class UMLAbstractClassDiff {
 		for(CompositeReplacement composite : composites) {
 			additionallyMatchedStatements1 += composite.getAdditionallyMatchedStatements1().size();
 			additionallyMatchedStatements2 += composite.getAdditionallyMatchedStatements2().size();
+		}
+		Set<AbstractCodeFragment> nonMappedStatementToBeTolerated2 = new LinkedHashSet<>();
+		Set<AbstractCodeFragment> mappedStatementsWithinParameterControlledCompStaments2 = new LinkedHashSet<>();
+		if(operationBodyMapper.getContainer2().hasParameterizedTestAnnotation()) {
+			Set<CompositeStatementObject> compStatementsControlledByParameter = operationBodyMapper.getContainer2().compositeStatementsControlledByParameter();
+			for(CompositeStatementObject compStatement : compStatementsControlledByParameter) {
+				for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+					if(compStatement.getLocationInfo().subsumes(fragment2.getLocationInfo())) {
+						nonMappedStatementToBeTolerated2.add(fragment2);
+					}
+				}
+				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+					if(compStatement.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+						mappedStatementsWithinParameterControlledCompStaments2.add(mapping.getFragment2());
+					}
+				}
+			}
+		}
+		if(mappedStatementsWithinParameterControlledCompStaments2.size() > 0 && nonMappedStatementToBeTolerated2.size() > 0) {
+			return true;
 		}
 		mappings += additionallyMatchedStatements1 + additionallyMatchedStatements2;
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1() - additionallyMatchedStatements1;

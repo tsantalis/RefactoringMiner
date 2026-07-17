@@ -403,4 +403,22 @@ public interface VariableDeclarationContainer extends LocationInfoProvider, Comm
 		}
 		return new LinkedHashMap<String, Set<String>>();
 	}
+
+	default Set<CompositeStatementObject> compositeStatementsControlledByParameter() {
+		Set<CompositeStatementObject> compStatementsControlledByParameter = new LinkedHashSet<CompositeStatementObject>();
+		if(getBody() != null) {
+			for(CompositeStatementObject compStatement : getBody().getCompositeStatement().getInnerNodes()) {
+				//check if compStatement uses one of the method parameters in its conditions
+				for(AbstractExpression expr : compStatement.getExpressions()) {
+					for(VariableDeclaration parameter : getParameterDeclarationList()) {
+						if(expr.getAllVariables().contains(parameter.getVariableName())) {
+							compStatementsControlledByParameter.add(compStatement);
+							break;
+						}
+					}
+				}
+			}
+		}
+		return compStatementsControlledByParameter;
+	}
 }

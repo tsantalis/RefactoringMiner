@@ -809,6 +809,12 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 processArrowFunction(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 return;
             }
+            else if(containsLambdaMapperWithNonMappedLeaves(abstractCodeMapping, srcStatementNode, dstStatementNode)) {
+                for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
+                    processBodyMapper(srcTree, dstTree, lambdaMapper, mappingStore, isPartOfExtractedMethod);
+                }
+                return;
+            }
             else {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 //special handling for multiplication expression following return
@@ -870,7 +876,31 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
         }
+    }
 
+    private boolean containsLambdaMapperWithNonMappedLeaves(AbstractCodeMapping abstractCodeMapping, Tree srcStatementNode, Tree dstStatementNode) {
+        if(abstractCodeMapping.getLambdaMappers().size() > 0 && !srcStatementNode.isIsoStructuralTo(dstStatementNode)) {
+            for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
+                if(lambdaMapper.getParentMapper() !=  null && lambdaMapper.getParentMapper().getParentMapper() != null)
+                    continue;
+                int nonMappedT2 = lambdaMapper.getNonMappedLeavesT2().size();
+                for(AbstractCodeFragment fragment2 : lambdaMapper.getNonMappedLeavesT2()) {
+                    for(UMLOperationBodyMapper childMapper : lambdaMapper.getParentMapper().getChildMappers()) {
+                        if(fragment2.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+                            nonMappedT2--;
+                            break;
+                        }
+                    }
+                    if(fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+                        nonMappedT2--;
+                    }
+                }
+                if(lambdaMapper.getNonMappedLeavesT1().size() > 0 && nonMappedT2 > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static void processArrowFunction(Tree srcStatementNode, Tree dstStatementNode,

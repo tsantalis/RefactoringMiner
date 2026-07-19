@@ -804,9 +804,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         }
         if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
-            if(srcStatementNode.isIsoStructuralTo(dstStatementNode) && srcTree.getType().name.equals(LANG1.MODULE))
-                mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
-            else if(srcStatementNode.getType().name.equals(LANG1.ARROW_FUNCTION) && dstStatementNode.getType().name.equals(LANG2.ARROW_FUNCTION)) {
+            if(srcStatementNode.getType().name.equals(LANG1.ARROW_FUNCTION) && dstStatementNode.getType().name.equals(LANG2.ARROW_FUNCTION)) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 processArrowFunction(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
                 return;

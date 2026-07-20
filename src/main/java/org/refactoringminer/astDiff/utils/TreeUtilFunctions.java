@@ -417,4 +417,38 @@ public class TreeUtilFunctions {
 		}
 		return fieldAnnotation;
 	}
+
+	public static Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> getLineRange(Tree tree, String fileContent) {
+		int startLine = -1, endLine = -1, startLineOffset = -1, endLineOffset = -1;
+
+		int pos = tree.getPos();
+		int endPos = tree.getEndPos();
+
+		int charCount = 0;
+		int lineCount = 1;
+		String[] lines = fileContent.split("\n", -1);
+		for (String line : lines) {
+			int lineStart = charCount;
+			int lineEnd = charCount + line.length() + 1;
+
+			if (pos >= lineStart && pos <= lineEnd) {
+				startLine = lineCount;
+				startLineOffset = pos - lineStart;
+			}
+
+			if (endPos >= lineStart && endPos <= lineEnd) {
+				endLine = lineCount;
+				endLineOffset = endPos - lineStart;
+			}
+
+			if (startLine != -1 && endLine != -1) {
+				break;
+			}
+
+			charCount = lineEnd;
+			lineCount++;
+		}
+
+		return new Pair<>(new Pair<>(startLine, startLineOffset), new Pair<>(endLine, endLineOffset));
+	}
 }

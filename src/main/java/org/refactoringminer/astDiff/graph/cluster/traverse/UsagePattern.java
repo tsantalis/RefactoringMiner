@@ -1,0 +1,121 @@
+package org.refactoringminer.astDiff.graph.cluster.traverse;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import org.refactoringminer.astDiff.graph.Edge;
+import org.refactoringminer.astDiff.graph.EdgeType;
+import org.refactoringminer.astDiff.graph.Node;
+import org.refactoringminer.astDiff.graph.NodeType;
+import org.jgrapht.Graph;
+
+/*
+ * EXTENSION:
+ * - variable declaration changes without any usage change: EXTENSION is using
+ * - method invocations within a variable declaration change: EXTENSION is being used
+ * */
+
+public class UsagePattern extends AggregatorPattern implements Leaf {
+
+    private final HashMap<Node, TraversalPattern> requirements = new HashMap<>();
+    Node useNode;
+
+    UsagePattern(Node node) {
+        nodeType = NodeType.USAGE;
+        addNode(node);
+        useNode = node;
+
+        for (String identifier : node.getIdentifiers()) {
+            this.addIdentifier(identifier);
+        }
+    }
+
+    public void addRequirement(Node node, TraversalPattern requirement) {
+        if (requirement != null) {
+            subs.add(requirement);
+        }
+        requirements.put(node, requirement);
+    }
+
+    public void breakRequirement(Node node) {
+        subs.remove(requirements.get(node));
+        requirements.remove(node);
+    }
+
+    public HashMap<Node, TraversalPattern> getRequirements() {
+        return requirements;
+    }
+
+    @Override
+    public Node getLead() {
+        if (cachedLead == null) {
+            if (!useNode.isExtension()) {
+                cachedLead = useNode;
+            } else {
+                Graph<Node, Edge> graph = getGraph();
+                cachedLead = graph.incomingEdgesOf(useNode).stream()
+                        .filter(edge -> edge.getType().equals(EdgeType.DEF_USE))
+                        .map(graph::getEdgeSource).findFirst().get();
+            }
+        }
+
+        return cachedLead;
+    }
+
+    public Set<Node> getUsedNodes() {
+        return util.getUsedNodes(useNode);
+    }
+
+    @Override
+    public boolean containsNode(Node node) {
+        return this.containsNode(node, new HashSet<>());
+    }
+
+    @Override
+    public Set<Node> vertexSet() {
+        return this.vertexSet(new HashSet<>());
+    }
+
+    public void breakCircularDependencies() {
+        breakCircularDependencies(new ArrayList<>());
+    }
+
+    @Override
+    public List<Node> getMains() {
+        return List.of(useNode);
+    }
+
+    @Override
+    public List<Node> getSides() {
+        return getUsedNodes().stream().toList();
+    }
+
+    @Override
+    public String base() {
+        String subject = useNode.mapping(this.getGraph());
+        Set<Node> usedNodes = getUsedNodes();
+
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("# Subject:\n```\n").append(subject).append("\n```\n");
+
+        // Add immediate semantic context (surrounding code)
+        List<Node> semanticContexts = useNode.getSemanticContexts(this.getGraph());
+        if (!semanticContexts.isEmpty()) {
+            prompt.append("\n# Surrounding:\n```\n")
+                    .append(semanticContexts.get(0).mapping(this.getGraph())).append("\n```\n");
+        }
+
+        if (!usedNodes.isEmpty()) {
+            prompt.append("\n# Context:\n```\n");
+            List<String> mappings = usedNodes.stream()
+                    .map(n -> n.mapping(this.getGraph()))
+                    .toList();
+            prompt.append(String.join("\n", mappings));
+            prompt.append("\n```\n");
+        }
+
+        return prompt.toString();
+    }
+}

@@ -209,12 +209,12 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	public Set<AbstractCodeFragment> findFieldAccessesInChildModel(UMLAttribute attribute) {
+	private Set<AbstractCodeFragment> findFieldAccesses(UMLAttribute attribute, UMLModel umlModel) {
 		Set<AbstractCodeFragment> set = new LinkedHashSet<>();
 		//references within the same class
 		set.addAll(attribute.getVariableDeclaration().getStatementsInScopeUsingVariable());
 		//find references in other classes, through direct field accesses
-		for(UMLClass umlClass : childModel.getClassList()) {
+		for(UMLClass umlClass : umlModel.getClassList()) {
 			for(UMLOperation operation : umlClass.getOperations()) {
 				if(operation.getBody() != null) {
 					for(AbstractStatement statement : operation.getBody().getCompositeStatement().getAllStatements()) {
@@ -243,9 +243,17 @@ public class UMLModelDiff {
 		return set;
 	}
 
-	public List<AbstractCall> findInvocationsInChildModel(UMLOperation operation) {
+	public Set<AbstractCodeFragment> findFieldAccessesInParentModel(UMLAttribute attribute) {
+		return findFieldAccesses(attribute, parentModel);
+	}
+
+	public Set<AbstractCodeFragment> findFieldAccessesInChildModel(UMLAttribute attribute) {
+		return findFieldAccesses(attribute, childModel);
+	}
+
+	private List<AbstractCall> findInvocations(UMLOperation operation, UMLModel umlModel) {
 		List<AbstractCall> invocations = new ArrayList<AbstractCall>();
-		for(UMLClass umlClass : childModel.getClassList()) {
+		for(UMLClass umlClass : umlModel.getClassList()) {
 			UMLClassBaseDiff classDiff = getUMLClassDiff(umlClass.getName());
 			for(UMLOperation context : umlClass.getOperations()) {
 				for(AbstractCall call : context.getAllOperationInvocations()) {
@@ -270,6 +278,14 @@ public class UMLModelDiff {
 			}
 		}
 		return invocations;
+	}
+
+	public List<AbstractCall> findInvocationsInParentModel(UMLOperation operation) {
+		return findInvocations(operation, parentModel);
+	}
+
+	public List<AbstractCall> findInvocationsInChildModel(UMLOperation operation) {
+		return findInvocations(operation, childModel);
 	}
 
 	public void reportAddedClass(UMLClass umlClass) {
@@ -2078,7 +2094,6 @@ public class UMLModelDiff {
 	}
 
 	private void processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
-		ArrayList<UMLOperationBodyMapper> operationBodyMapperList = new ArrayList<>();
 		if(candidates.size() > 1) {
 			TreeMap<Integer, List<MoveAttributeRefactoring>> map = new TreeMap<Integer, List<MoveAttributeRefactoring>>();
 			for(MoveAttributeRefactoring candidate : candidates) {

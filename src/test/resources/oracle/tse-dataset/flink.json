@@ -148,6 +148,21 @@
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tstateFuture : StateFutureImpl<Integer> to stateFuture : InternalStateFuture<OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
           "validation": false
+        },
+        {
+          "type": "RENAME_METHOD",
+          "description": "Rename Method\tpublic handleProcessingRequest(request ProcessingRequest<OUT>, recordContext RecordContext<K,R>) : void renamed to public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> in class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_VARIABLE_TYPE",
+          "description": "Change Variable Type\trequest : ProcessingRequest<OUT> to request : StateRequest<K,IN,OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
+          "validation": true
+        },
+        {
+          "type": "CHANGE_RETURN_TYPE",
+          "description": "Change Return Type\tvoid to InternalStateFuture<OUT> in method public handleRequest(state State, type StateRequestType, payload IN) : InternalStateFuture<OUT> from class org.apache.flink.runtime.asyncprocessing.AsyncExecutionController",
+          "validation": true
         }
       ]
     },

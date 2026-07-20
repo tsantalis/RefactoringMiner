@@ -140,17 +140,14 @@ public class Node {
     if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
       String type = tree.getType().name;
 
-      if (type.equals(constants.TYPE_DECLARATION) || type.equals(
-          constants.METHOD_DECLARATION) || type.equals(
-          constants.ENUM_DECLARATION) || type.equals(
-          constants.RECORD_DECLARATION)) {
+      if (constants.isNamedBlock(type)) {
         Tree name = TreeUtilFunctions.findChildByType(tree, constants.SIMPLE_NAME);
         if (name != null) {
           return name.getLabel();
         }
       }
 
-      if (type.equals(constants.COMPILATION_UNIT)) {
+      if (constants.isRoot(type)) {
         return path;
       }
     }

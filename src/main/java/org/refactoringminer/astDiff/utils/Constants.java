@@ -7,6 +7,23 @@ public class Constants {
 		return !LANG1.TYPE_DECLARATION.equals(LANG2.TYPE_DECLARATION);
 	}
 
+	public boolean isRoot(String treeType) {
+		return treeType.equals(COMPILATION_UNIT) || treeType.equals(PROGRAM) || treeType.equals(MODULE) || treeType.equals(SOURCE_FILE) || treeType.equals(TRANSLATION_UNIT);
+	}
+
+	public boolean isNamedBlock(String treeType) {
+		return treeType.equals(TYPE_DECLARATION) || treeType.equals(ENUM_DECLARATION) || treeType.equals(RECORD_DECLARATION) ||
+				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION) ||
+				treeType.equals(METHOD_DECLARATION);
+	}
+
+	public boolean isMethod(String treeType) {
+		return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
+				treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
+				treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
+				treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) || treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR);
+	}
+
 	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {
 			CLASS_BLOCK = "block";

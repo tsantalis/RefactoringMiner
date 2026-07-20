@@ -16,8 +16,8 @@ public class Narrator {
     static {
         Constants c = new Constants("");
         GRAIN_LEVEL_TYPES.put(GrainLevel.METHOD, Set.of(c.METHOD_DECLARATION));
-        GRAIN_LEVEL_TYPES.put(GrainLevel.CLASS, Set.of(c.TYPE_DECLARATION, c.INTERFACE_DECLARATION, c.ENUM_DECLARATION, c.RECORD_DECLARATION));
-        GRAIN_LEVEL_TYPES.put(GrainLevel.FILE, Set.of(c.COMPILATION_UNIT));
+        GRAIN_LEVEL_TYPES.put(GrainLevel.CLASS, Set.of(c.TYPE_DECLARATION, c.INTERFACE_DECLARATION, c.CLASS_DECLARATION, c.ENUM_DECLARATION, c.RECORD_DECLARATION, c.ANNOTATION_TYPE_DECLARATION));
+        GRAIN_LEVEL_TYPES.put(GrainLevel.FILE, Set.of(c.COMPILATION_UNIT, c.PROGRAM, c.MODULE, c.SOURCE_FILE, c.TRANSLATION_UNIT));
     }
 
     private final TraversalPattern rootPattern;

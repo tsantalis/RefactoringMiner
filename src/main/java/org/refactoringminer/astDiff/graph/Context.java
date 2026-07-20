@@ -148,10 +148,7 @@ public class Context {
 
   public static boolean isLocationContext(String path, String treeType) {
     Constants constants = new Constants(path);
-    if (treeType.equals(constants.COMPILATION_UNIT) || treeType.equals(constants.PROGRAM) || treeType.equals(constants.MODULE) || treeType.equals(constants.SOURCE_FILE) || treeType.equals(constants.TRANSLATION_UNIT) ||
-        treeType.equals(constants.TYPE_DECLARATION) || treeType.equals(constants.ENUM_DECLARATION) || treeType.equals(constants.RECORD_DECLARATION) ||
-        treeType.equals(constants.ANNOTATION_TYPE_DECLARATION) || treeType.equals(constants.INTERFACE_DECLARATION) || treeType.equals(constants.CLASS_DECLARATION) ||
-        treeType.equals(constants.METHOD_DECLARATION)) {
+    if (constants.isRoot(treeType) || constants.isNamedBlock(treeType)) {
       return true;
     }
     return false;

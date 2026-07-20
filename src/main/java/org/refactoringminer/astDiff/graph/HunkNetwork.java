@@ -375,14 +375,13 @@ public class HunkNetwork {
       List<Tree> variableDeclarations = new ArrayList<>();
       for (Tree subTree : subTrees) {
         String subTreeType = subTree.getType().name;
-        if (subTreeType.equals(constants.METHOD_DECLARATION)) {
+        if (constants.isMethod(subTreeType)) {
           methodDeclarations.add(subTree);
         }
         if (subTreeType.equals(constants.FIELD_DECLARATION)) {
           fieldDeclarations.add(subTree);
         }
-        // TODO: investigation: it is only for "Enhanced For" and other parameters will be in variable declarations array
-        if (subTreeType.equals(constants.RECORD_COMPONENT)) {
+        if (subTreeType.equals(constants.SINGLE_VARIABLE_DECLARATION)) {
           parameterDeclarations.add(subTree);
         }
         if (subTreeType.equals(constants.VARIABLE_DECLARATION_STATEMENT)) {

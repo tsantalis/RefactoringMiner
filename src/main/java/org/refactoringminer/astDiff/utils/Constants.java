@@ -12,9 +12,12 @@ public class Constants {
 	}
 
 	public boolean isNamedBlock(String treeType) {
+		return isType(treeType) || isMethod(treeType);
+	}
+
+	public boolean isType(String treeType) {
 		return treeType.equals(TYPE_DECLARATION) || treeType.equals(ENUM_DECLARATION) || treeType.equals(RECORD_DECLARATION) ||
-				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION) ||
-				treeType.equals(METHOD_DECLARATION);
+				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION);
 	}
 
 	public boolean isMethod(String treeType) {

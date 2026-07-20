@@ -724,8 +724,7 @@ public class HunkNetwork {
     parents.addAll(tree.getParents());
     Tree parentClass = parents.stream().filter(parent -> {
       String parentType = parent.getType().name;
-      return parentType.equals(constants.TYPE_DECLARATION) || parentType.equals(
-          constants.ENUM_DECLARATION);
+      return constants.isType(parentType);
     }).findFirst().orElse(null);
     if (parentClass == null) { // there is no need to process def-use when it is out of type
       return null;

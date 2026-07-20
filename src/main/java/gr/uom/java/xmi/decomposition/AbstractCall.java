@@ -788,13 +788,13 @@ public abstract class AbstractCall extends LeafExpression {
 		if(LANG.equals(Constants.PYTHON)) distance = 0;
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
-				(normalizedNameDistance(call) <= distance || firstNameTokenChanged(call) || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
+				(normalizedNameDistance(call) <= distance || commonNameTokensExceptForOne(call) || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
 				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration() &&
 				(this.argumentContainsLambda() == call.argumentContainsLambda() || this.identicalName(call));
 	}
 
-	private boolean firstNameTokenChanged(AbstractCall call) {
+	private boolean commonNameTokensExceptForOne(AbstractCall call) {
 		if(this.getName().equals("assertFalse") && call.getName().equals("assertEquals"))
 			return true;
 		if(this.getName().equals("assertTrue") && call.getName().equals("assertEquals"))
@@ -813,6 +813,25 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 			return commonTokens > 0 && commonTokens + 1 == tokens1.length && indexOfUnmatched == 0 && this.arguments.size() == call.arguments.size();
+		}
+		if(tokens1.length > tokens2.length) {
+			int commonTokens = 0;
+			for(int i=0; i<tokens1.length; i++) {
+				String token1 = tokens1[i];
+				for(int j=0; j<tokens2.length; j++) {
+					String token2 = tokens2[j];
+					if(token1.toLowerCase().equals(token2.toLowerCase())) {
+						commonTokens++;
+						break;
+					}
+					else if(token1.endsWith("es") && !token2.endsWith("es") &&
+							token1.substring(0, token1.length()-2).toLowerCase().equals(token2.toLowerCase())) {
+						commonTokens++;
+						break;
+					}
+				}
+			}
+			return commonTokens > 0 && commonTokens + 1 == tokens1.length;
 		}
 		return false;
 	}

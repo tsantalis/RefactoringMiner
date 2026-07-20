@@ -16,7 +16,6 @@ import org.refactoringminer.astDiff.graph.EdgeType;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.cluster.Cluster;
 import org.jgrapht.Graph;
-import org.refactoringminer.astDiff.utils.Constants;
 
 public class TraversalEngine {
 
@@ -130,10 +129,8 @@ public class TraversalEngine {
     private void addSuccessiveComponents() {
         List<Node> acceptedNodes =
                 graph.vertexSet().stream().filter(node -> {
-                    Constants constants = new Constants(node.getPath());
                     String type = node.getTree().getType().name;
-                    return !type.equals(constants.TYPE_DECLARATION) && !type.equals(
-                            constants.METHOD_DECLARATION);
+                    return !Context.isLocationContext(node.getPath(), type);
                 }).toList();
 
         HashMap<Node, SuccessivePattern> successivePatterns = new HashMap<>();

@@ -94,6 +94,8 @@ dependencies {
     }
     implementation 'org.jcommander:jcommander:3.0'
     implementation 'org.jsoup:jsoup:1.22.2'
+    implementation 'org.jgrapht:jgrapht-core:1.5.3'
+    implementation 'com.google.code.gson:gson:2.14.0'
     implementation 'com.perforce:p4java:2025.2.2917314'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'

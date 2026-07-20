@@ -307,8 +307,6 @@ public class HunkNetwork {
     processExtensions(SrcDst.DST);
     processMapping();
     processSuccession();
-
-    System.out.println(graph.vertexSet().size() + "-" + graph.edgeSet().size());
   }
 
   private void processMapping() {
@@ -826,12 +824,6 @@ public class HunkNetwork {
       List<LeafExpression> useVariables =
           accessFragment.getVariables().stream().filter(variable -> variable.getString()
               .contains(name)).toList();
-
-      // TODO: check for potential false negatives
-      if (useVariables.isEmpty()) {
-        System.out.println(name + "-" + accessFragment.getVariables().stream().map(
-            LeafExpression::getString).toList());
-      }
 
       for (LeafExpression useVariable : useVariables) {
         LocationInfo useVariableLocation = useVariable.getLocationInfo();

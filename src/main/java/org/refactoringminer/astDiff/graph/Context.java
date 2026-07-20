@@ -146,22 +146,15 @@ public class Context {
     return null;
   }
 
-  private static boolean isLocationContext(String path, String treeType) {
+  public static boolean isLocationContext(String path, String treeType) {
     Constants constants = new Constants(path);
-
-    if (treeType.equals(constants.COMPILATION_UNIT)) {
+    if (treeType.equals(constants.COMPILATION_UNIT) || treeType.equals(constants.PROGRAM) || treeType.equals(constants.MODULE) || treeType.equals(constants.SOURCE_FILE) || treeType.equals(constants.TRANSLATION_UNIT) ||
+        treeType.equals(constants.TYPE_DECLARATION) || treeType.equals(constants.ENUM_DECLARATION) || treeType.equals(constants.RECORD_DECLARATION) ||
+        treeType.equals(constants.ANNOTATION_TYPE_DECLARATION) || treeType.equals(constants.INTERFACE_DECLARATION) || treeType.equals(constants.CLASS_DECLARATION) ||
+        treeType.equals(constants.METHOD_DECLARATION)) {
       return true;
     }
-    if (treeType.equals(constants.TYPE_DECLARATION)) {
-      return true;
-    }
-    if (treeType.equals(constants.ENUM_DECLARATION)) {
-      return true;
-    }
-    if (treeType.equals(constants.RECORD_DECLARATION)) {
-      return true;
-    }
-    return treeType.equals(constants.METHOD_DECLARATION);
+    return false;
   }
 
   public static List<Pair<Tree, NodeType>> get(String path, Tree tree) {

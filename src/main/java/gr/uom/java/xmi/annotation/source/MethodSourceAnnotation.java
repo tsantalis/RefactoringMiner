@@ -47,23 +47,13 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         if(sameNameMethods.size() > 0) {
             UMLOperation sourceMethod = sameNameMethods.get(0);
             Optional<VariableDeclaration> returnedVarCandidates = sourceMethod.getBody().getAllVariableDeclarations().stream().filter(v -> sourceMethod.getReturnParameter().getType().equals(v.getType())).findAny();
-            String strLiterals;
-            if (returnedVarCandidates.isPresent()) {
-                Set<AbstractCodeFragment> stmtsUsingVar = returnedVarCandidates.get().getStatementsInScopeUsingVariable();
-                strLiterals = stmtsUsingVar.stream()
-                        .flatMap(stmt -> stmt.getStringLiterals().stream())
-                        .map(str -> str.getString())
-                        .collect(Collectors.joining(System.getProperty("line.separator")));
-            } else {
+            if (returnedVarCandidates.isEmpty()) {
                 Optional<StatementObject> stmtCandidate = sourceMethod.getBody().getCompositeStatement().getStatements().stream()
                         .filter(s -> s instanceof StatementObject)
                         .map(s -> (StatementObject) s)
-                        .filter(s -> s.isLastStatement())
+                        .filter(AbstractCodeFragment::isLastStatement)
                         .findAny();
                 if (stmtCandidate.isPresent()) {
-                    strLiterals = stmtCandidate.get().getStringLiterals().stream()
-                            .map(str -> str.getString())
-                            .collect(Collectors.joining(System.getProperty("line.separator")));
                     AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
                     if(call != null && call.getName().equals("of")) {
                         for(AbstractCall nestedCall : stmtCandidate.get().getMethodInvocations()) {

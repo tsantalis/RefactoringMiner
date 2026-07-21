@@ -16,5 +16,7 @@ line range:49-49==line range:43-43
 package testRouteMatchesWithHostBasedUriWithoutPort() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
 line range:54-54==line range:42-42
 line range:55-55==line range:43-43
+package testStripSchemeWithScheme() : void -> package testStripScheme(uri String, strippedUri String) : void
+line range:67-67==line range:59-59
 package testStripSchemeWithoutScheme() : void -> package testStripScheme(uri String, strippedUri String) : void
 line range:73-73==line range:59-59

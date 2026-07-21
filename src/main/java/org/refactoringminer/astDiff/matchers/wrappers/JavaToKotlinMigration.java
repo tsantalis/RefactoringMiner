@@ -22,6 +22,8 @@ public class JavaToKotlinMigration {
             Tree singleVariableDeclaration1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SINGLE_VARIABLE_DECLARATION);
             if(singleVariableDeclaration1 != null) {
                 handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2);
+                srcStatementNode.getChildren().remove(singleVariableDeclaration1);
+                srcStatementNode.getChildren().addAll(singleVariableDeclaration1.getChildren());
             }
             Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
             Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);

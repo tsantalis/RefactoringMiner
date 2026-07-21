@@ -69,6 +69,8 @@ tasks.processTestResources {
     }
 }
 dependencies {
+    implementation 'io.joern:eclipse-cdt-core:9.2.100.202507101054+1'
+
     implementation platform("io.modelcontextprotocol.sdk:mcp-bom:1.1.2")
     implementation "io.modelcontextprotocol.sdk:mcp-core"
     implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
@@ -76,6 +78,7 @@ dependencies {
     implementation 'com.caoccao.javet:swc4j:2.1.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.1.0'
     implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.1.0'
+    implementation 'com.caoccao.javet:swc4j-windows-x86_64:2.1.0'
     implementation 'org.antlr:antlr4-runtime:4.13.2'
     implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.21'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
@@ -87,11 +90,13 @@ dependencies {
     implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
-    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta6') {
+    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta8') {
         exclude group: 'com.github.gumtreediff', module: 'core'
     }
     implementation 'org.jcommander:jcommander:3.0'
     implementation 'org.jsoup:jsoup:1.22.2'
+    implementation 'org.jgrapht:jgrapht-core:1.5.3'
+    implementation 'com.google.code.gson:gson:2.14.0'
     implementation 'com.perforce:p4java:2025.2.2917314'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'

@@ -1532,4 +1532,29 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				a.isNormalAnnotation() &&
 				a.getMemberValuePairs().containsKey("dataProvider");
 	}
+
+	public boolean commonNameTokensExceptForOne(UMLOperation other) {
+		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
+		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(other.getName());
+		if(tokens1.length > tokens2.length && tokens2.length > 1) {
+			int commonTokens = 0;
+			for(int i=0; i<tokens1.length; i++) {
+				String token1 = tokens1[i];
+				for(int j=0; j<tokens2.length; j++) {
+					String token2 = tokens2[j];
+					if(token1.toLowerCase().equals(token2.toLowerCase())) {
+						commonTokens++;
+						break;
+					}
+					else if(token1.endsWith("es") && !token2.endsWith("es") &&
+							token1.substring(0, token1.length()-2).toLowerCase().equals(token2.toLowerCase())) {
+						commonTokens++;
+						break;
+					}
+				}
+			}
+			return commonTokens > 0 && commonTokens + 1 >= Math.min(tokens1.length, tokens2.length);
+		}
+		return false;
+	}
 }

@@ -1111,7 +1111,8 @@ public class TestStatementMappings {
 		"TestStatementMappings-v1.txt, TestStatementMappings-v2.txt, src-test/org/refactoringminer/test/TestStatementMappings.java, miner-TestStatementMappings.txt",
 		"FileNameCleanerTest-v1.txt, FileNameCleanerTest-v2.txt, src/test/java/org/jabref/logic/util/FileNameCleanerTest.java, jabRef-FileNameCleanerTest.txt",
 		"CopyMoreActionTest-v1.txt, CopyMoreActionTest-v2.txt, jabgui/src/test/java/org/jabref/gui/edit/CopyMoreActionTest.java, jabRef-CopyMoreActionTest.txt",
-		"OOPreFormatterTest-v1.txt, OOPreFormatterTest-v2.txt, jablib/src/test/java/org/jabref/logic/openoffice/style/OOPreFormatterTest.java, jabRef-OOPreFormatterTest.txt"
+		"OOPreFormatterTest-v1.txt, OOPreFormatterTest-v2.txt, jablib/src/test/java/org/jabref/logic/openoffice/style/OOPreFormatterTest.java, jabRef-OOPreFormatterTest.txt",
+		"UriUtilTest-v1.txt, UriUtilTest-v2.txt, multiapps-controller-core/src/test/java/org/cloudfoundry/multiapps/controller/core/util/UriUtilTest.java, multiapps-controller-d013ec6c2750a7fa1c2340deff9677d7ecc437a2.txt"
 	})
 	public void testParameterizedTestMappings(String input1, String input2, String filePath, String expectedOutput) throws Exception {
 		final List<String> actual = new ArrayList<>();

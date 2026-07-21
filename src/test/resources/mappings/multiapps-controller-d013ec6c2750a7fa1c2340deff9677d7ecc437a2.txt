@@ -1,0 +1,20 @@
+package testFindRouteWithPortBasedUri() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
+line range:43-43==line range:45-45
+line range:43-43==line range:45-45
+package testFindRouteWithHostBasedUriWithPort() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
+line range:30-30==line range:45-45
+line range:30-30==line range:45-45
+package testFindRouteWithHostBasedUriWithoutPort() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
+line range:36-36==line range:42-42
+line range:37-37==line range:43-43
+package testRouteMatchesWithPortBasedUri() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
+line range:60-60==line range:42-42
+line range:61-61==line range:43-43
+package testRouteMatchesWithHostBasedUriWithPort() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
+line range:48-48==line range:42-42
+line range:49-49==line range:43-43
+package testRouteMatchesWithHostBasedUriWithoutPort() : void -> package testMatchRoute(uri String, noHostname boolean, shouldMatch boolean) : void
+line range:54-54==line range:42-42
+line range:55-55==line range:43-43
+package testStripSchemeWithoutScheme() : void -> package testStripScheme(uri String, strippedUri String) : void
+line range:73-73==line range:59-59

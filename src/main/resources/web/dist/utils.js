@@ -28,8 +28,16 @@ function getLanguage(config) {
             return "kotlin";
         case "ts":
             return "typescript";
+        case "tsx":
+            return "typescript";
         case "js":
             return "javascript";
+        case "cpp":
+            return "cpp";
+        case "h":
+            return "cpp";
+        case "hpp":
+            return "cpp";
         default:
             return undefined;
     }

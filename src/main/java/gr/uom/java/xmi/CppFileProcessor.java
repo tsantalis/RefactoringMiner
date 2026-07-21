@@ -762,7 +762,7 @@ public class CppFileProcessor {
 		return new UMLTypeParameter(name, locationInfo);
 	}
 
-	private String extractParameterName(IASTParameterDeclaration parameter, int index) {
+	public static String extractParameterName(IASTParameterDeclaration parameter, int index) {
 		IASTDeclarator declarator = parameter.getDeclarator();
 		if(declarator != null && declarator.getName() != null) {
 			String name = declarator.getName().toString();

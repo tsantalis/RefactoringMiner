@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement;
@@ -80,6 +81,36 @@ public class CppOperationBody extends OperationBody {
 			}
 		}
 		//this.activeVariableDeclarations = null;
+	}
+
+	public CppOperationBody(String sourceFolder, String filePath, IASTCompoundStatement methodBody, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, fileContent);
+		this.compositeStatement.setOwner(container);
+		this.comments = container.getComments();
+		this.container = container;
+		this.bodyHashCode = methodBody.getRawSignature().hashCode();
+		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		if(container.isDeclaredInAnonymousClass()) {
+			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
+			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
+				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
+					if(parameterDeclaration.isFinal()) {
+						addInActiveVariableDeclarations(parameterDeclaration);
+					}
+				}
+			}
+		}
+		IASTStatement[] statements = methodBody.getStatements();
+		for(IASTStatement statement : statements) {
+			processStatement(sourceFolder, filePath, compositeStatement, statement, fileContent);
+		}
+		for(AbstractCall invocation : getAllOperationInvocations()) {
+			if(invocation.isAssertion()) {
+				containsAssertion = true;
+				break;
+			}
+		}
 	}
 
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {

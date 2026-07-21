@@ -13,6 +13,7 @@ import org.eclipse.cdt.core.dom.ast.IASTExpression;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -98,6 +99,10 @@ public class CppVisitor extends ASTVisitor {
 				infixExpressions.add(leafExpression);
 				infixOperators.add(getOperatorString(binaryExpression));
 			}
+		}
+		else if(expression instanceof ICPPASTLambdaExpression lambdaExpression) {
+			LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, lambdaExpression, container, activeVariableDeclarations, fileContent);
+			lambdas.add(lambda);
 		}
 		return super.visit(expression);
 	}

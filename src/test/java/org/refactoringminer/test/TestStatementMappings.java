@@ -1227,6 +1227,7 @@ public class TestStatementMappings {
 		"https://github.com/apache/commons-lang.git, 7995aad79fab336a4534a5290fdd760df7f55dde, commons-lang-7995aad79fab336a4534a5290fdd760df7f55dde.txt",
 		////one-to-one method to Parameterized Test
 		"https://github.com/ConsenSys/ethsigner.git, 989241dd872beae0e06903a4751b3efa3767503b, ethsigner-989241dd872beae0e06903a4751b3efa3767503b.txt",
+		"https://github.com/eclipse/corrosion.git, e966a935595cd0e0586ab3c4ea3bcaad8f0d8f89, corrosion-e966a935595cd0e0586ab3c4ea3bcaad8f0d8f89.txt",
 	})
 	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

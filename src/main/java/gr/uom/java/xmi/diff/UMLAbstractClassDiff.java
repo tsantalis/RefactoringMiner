@@ -3267,7 +3267,7 @@ public abstract class UMLAbstractClassDiff {
 								else if(mappings < maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
 									filteredMapperSet2.add(mapper);
 								}
-								else if(mappings == maxMappings && replacements < 2*minReplacements && mapper.getOperation1().commonNameTokensExceptForOne(mapper.getOperation2())) {
+								else if(mappings == maxMappings && replacements <= 2*minReplacements && mapper.getOperation1().commonNameTokensExceptForOne(mapper.getOperation2())) {
 									filteredMapperSet2.add(mapper);
 								}
 							}

@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
@@ -84,6 +85,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.propertyAccessor = Optional.empty();
         this.receiver = Optional.empty();
         this.anonymousClassContainer = Optional.empty();
+    }
+
+	public boolean isVoid() {
+        return getReturnParameter().toQualifiedString().equals("void");
     }
 
 	public Constants getLANG() {
@@ -1565,5 +1570,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return commonTokens > 0 && commonTokens + 1 >= Math.min(tokens1.length, tokens2.length);
 		}
 		return false;
+	}
+
+    public boolean hasMethodSourceAnnotation() {
+        return annotations.stream().anyMatch(MethodSourceAnnotation::isMethodSourceAnnotation);
+    }
+
+	public MethodSourceAnnotation getMethodSourceAnnotation(UMLAbstractClass declaringClass) {
+		Optional<UMLAnnotation> maybeAnnotation = annotations.stream().filter(MethodSourceAnnotation::isMethodSourceAnnotation).findFirst();
+		assert maybeAnnotation.isPresent() : "MethodSource annotation not found, you must guard getMethodSourceAnnotation method invocation with hasMethodSourceAnnotation";
+		UMLAnnotation annotation = maybeAnnotation.get();
+		return new MethodSourceAnnotation(annotation, this, declaringClass);
 	}
 }

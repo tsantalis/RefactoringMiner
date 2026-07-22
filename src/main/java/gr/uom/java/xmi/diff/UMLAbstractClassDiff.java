@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
@@ -3278,6 +3279,7 @@ public abstract class UMLAbstractClassDiff {
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 								detectInlinedTestDataConstants(mapper, addedOperation, parameterValues, parameterNames);
 								UMLOperation removedOperation = mapper.getOperation1();
+								mapCreationsToArguments(operationBodyMapperList, removedOperation, addedOperation, parameterValues, parameterNames);
 								removedOperations.remove(removedOperation);
 								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
 								for(UMLOperation removed : removedOperations) {
@@ -3422,6 +3424,69 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+	}
+
+    private void mapCreationsToArguments(List<UMLOperationBodyMapper> mapper, UMLOperation removedOperation, UMLOperation addedOperation, List<List<String>> parameterValues, List<String> parameterNames) {
+		Map<String, List<LeafExpression>> expressions = new LinkedHashMap();
+		UMLOperation junit4DataProvider = null, junit5MethodSourceParameterizedTest = null;
+		if (addedOperation.hasMethodSourceAnnotation()) {
+			junit5MethodSourceParameterizedTest = addedOperation;
+		}
+		if (removedOperation.hasMethodSourceAnnotation()) {
+			junit5MethodSourceParameterizedTest = removedOperation;
+		}
+		if (addedOperation.hasParametersAnnotation()) {
+			junit4DataProvider = addedOperation;
+		}
+		if (removedOperation.hasParametersAnnotation()) {
+			junit4DataProvider = removedOperation;
+		}
+
+		if (junit5MethodSourceParameterizedTest != null && junit4DataProvider != null) {
+			UMLOperation junit5DataProvider = resolveJunit5DataProvider(junit5MethodSourceParameterizedTest, mapper);
+			OperationBody body = junit5DataProvider.getBody();
+			for (AbstractCall op : body.getAllOperationInvocations()) {
+				if (op.getName().equals("of")) {
+					for (LeafExpression argument : op.getArguments()) {
+						expressions.putIfAbsent(argument.getString(),  new ArrayList<>(List.of(argument)));
+					}
+				}
+			}
+
+			body = junit4DataProvider.getBody();
+			for (AbstractCall op : body.getAllCreations()) {
+				for (LeafExpression argument : op.getArguments()) {
+					expressions.computeIfPresent(argument.getString(), (key, value) -> {
+						value.add(argument);
+						return value;
+					});
+				}
+			}
+		}
+    }
+
+	private UMLOperation resolveJunit5DataProvider(UMLOperation junit5MethodSourceParameterizedTest, List<UMLOperationBodyMapper> mappers) {
+		MethodSourceAnnotation methodSourceAnnotation = junit5MethodSourceParameterizedTest.getMethodSourceAnnotation(nextClass);
+		assert methodSourceAnnotation.getValue().size() == 1;
+		String methodSourceName = methodSourceAnnotation.getValue().get(0);
+		// Try to find DataProvider among mapped operations
+		for (UMLOperationBodyMapper mapper : mappers) {
+			if (mapper.getOperation1().getName().equals(methodSourceName)) {
+				return mapper.getOperation1();
+			}
+			else if (mapper.getOperation2().getName().equals(methodSourceName)) {
+				return mapper.getOperation2();
+			}
+		}
+		// Fallback to homonymous non-void returning methods in test class
+		UMLOperation junit5DataProvider = null;
+		for (UMLOperation op : nextClass.getOperations()) {
+			if (op.getName().equals(methodSourceName) && !op.isVoid()) {
+				junit5DataProvider = op;
+				break;
+			}
+		}
+		return junit5DataProvider;
 	}
 
 	private void processNestedTypeDeclarationStatements(UMLOperation removedOperation, UMLOperation addedOperation) {

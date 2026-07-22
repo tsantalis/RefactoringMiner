@@ -25,12 +25,16 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         List<String> values = getValue();
         if(values.size() > 0) {
             String methodSourceName = values.get(0);
-            processMethodSourceName(operation, declaringClass, methodSourceName);
+            processMethodSourceName(operation, methodSourceName);
         }
     }
 
-    private void processMethodSourceName(UMLOperation operation, UMLAbstractClass declaringClass, String methodSourceName) {
-        List<UMLOperation> sameNameMethods = declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList());
+    public static boolean isMethodSourceAnnotation(UMLAnnotation annotation) {
+        return annotation.getTypeName().equals("MethodSource");
+    }
+
+    private void processMethodSourceName(UMLOperation operation, String methodSourceName) {
+        List<UMLOperation> sameNameMethods = this.declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList());
         for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0; ) {
             for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
                 UMLOperation method = iterator.next();

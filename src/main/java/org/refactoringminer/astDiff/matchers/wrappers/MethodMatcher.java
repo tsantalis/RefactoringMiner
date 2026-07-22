@@ -849,6 +849,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (identifiers != null) {
             mappingStore.addMapping(identifiers.first,identifiers.second);
         }
+        identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.DESTRUCTOR_NAME,LANG2.DESTRUCTOR_NAME);
+        if (identifiers != null) {
+            mappingStore.addMappingRecursively(identifiers.first,identifiers.second);
+        }
         com.github.gumtreediff.utils.Pair<Tree,Tree> qualified_identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.QUALIFIED_IDENTIFIER,LANG2.QUALIFIED_IDENTIFIER);
         if (qualified_identifiers != null) {
             mappingStore.addMappingRecursively(qualified_identifiers.first,qualified_identifiers.second);

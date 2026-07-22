@@ -11,9 +11,11 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTExpression;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
+import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -103,6 +105,36 @@ public class CppVisitor extends ASTVisitor {
 		else if(expression instanceof ICPPASTLambdaExpression lambdaExpression) {
 			LambdaExpressionObject lambda = new LambdaExpressionObject(sourceFolder, filePath, lambdaExpression, container, activeVariableDeclarations, fileContent);
 			lambdas.add(lambda);
+		}
+		else if(expression instanceof ICPPASTNewExpression newExpression) {
+			ObjectCreation invocation = new ObjectCreation(sourceFolder, filePath, newExpression, container, fileContent);
+			creations.add(invocation);
+		}
+		else if(expression instanceof IASTLiteralExpression literal) {
+			if(literal.getKind() == IASTLiteralExpression.lk_string_literal) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, literal, CodeElementType.STRING_LITERAL, container, fileContent);
+				stringLiterals.add(leafExpression);
+			}
+			else if(literal.getKind() == IASTLiteralExpression.lk_integer_constant || literal.getKind() == IASTLiteralExpression.lk_float_constant) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, literal, CodeElementType.NUMBER_LITERAL, container, fileContent);
+				numberLiterals.add(leafExpression);
+			}
+			else if(literal.getKind() == IASTLiteralExpression.lk_false || literal.getKind() == IASTLiteralExpression.lk_true) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, literal, CodeElementType.BOOLEAN_LITERAL, container, fileContent);
+				booleanLiterals.add(leafExpression);
+			}
+			else if(literal.getKind() == IASTLiteralExpression.lk_char_constant) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, literal, CodeElementType.CHAR_LITERAL, container, fileContent);
+				charLiterals.add(leafExpression);
+			}
+			else if(literal.getKind() == IASTLiteralExpression.lk_this) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, literal, CodeElementType.THIS_EXPRESSION, container, fileContent);
+				thisExpressions.add(leafExpression);
+			}
+			else if(literal.getKind() == IASTLiteralExpression.lk_nullptr) {
+				LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, literal, CodeElementType.NULL_LITERAL, container, fileContent);
+				nullLiterals.add(leafExpression);
+			}
 		}
 		return super.visit(expression);
 	}

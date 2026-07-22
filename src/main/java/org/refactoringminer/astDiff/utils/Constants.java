@@ -588,4 +588,5 @@ public class Constants {
     public final String TEMPLATE_PARAMETER_LIST = "template_parameter_list";
     public final String EXPLICIT_FUNCTION_SPECIFIER = "explicit_function_specifier";
     public final String BASE_CLASS_CLAUSE = "base_class_clause";
+    public final String DESTRUCTOR_NAME = "destructor_name";
 }

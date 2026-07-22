@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTInitializer;
+import org.eclipse.cdt.core.dom.ast.IASTInitializerClause;
+import org.eclipse.cdt.core.dom.ast.IASTTypeId;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorInitializer;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -359,6 +365,28 @@ public class ObjectCreation extends AbstractCall {
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, typeArgument, 0);
 				this.typeArguments.add(type);
 			}
+		}
+	}
+
+	public ObjectCreation(String sourceFolder, String filePath, ICPPASTNewExpression invocation, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container, fileContent);
+		IASTTypeId type = invocation.getTypeId();
+		int arrayDimension = 0;
+		if(type.getAbstractDeclarator() instanceof IASTArrayDeclarator arrayDeclarator) {
+			arrayDimension = arrayDeclarator.getArrayModifiers().length;
+		}
+		this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, type.getDeclSpecifier(), type.getAbstractDeclarator(), arrayDimension);
+		this.arguments = new ArrayList<String>();
+		IASTInitializer initializer = invocation.getInitializer();
+		if(initializer instanceof ICPPASTConstructorInitializer constructor) {
+			IASTInitializerClause[] arguments = constructor.getArguments();
+			this.numberOfArguments = arguments.length;
+			for(IASTInitializerClause arg : arguments) {
+				this.arguments.add(arg.getRawSignature());
+			}
+		}
+		if(invocation.isArrayAllocation() && initializer != null) {
+			this.anonymousClassDeclaration = initializer.getRawSignature();
 		}
 	}
 }

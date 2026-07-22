@@ -1,15 +1,15 @@
 template<typename Element>
 class ValueBox {
 public:
-    explicit ValueBox(Element payload) : payload(payload) {
+    explicit ValueBox(Element value) : value(value) {
     }
 
-    Element read_payload() const {
-        return payload;
+    Element get_value() const {
+        return value;
     }
 
 private:
-    Element payload;
+    Element value;
 };
 
 template<typename Element>

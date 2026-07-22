@@ -560,7 +560,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public boolean equalReturnParameter(UMLOperation operation) {
 		UMLParameter thisReturnParameter = this.getReturnParameter();
 		UMLParameter otherReturnParameter = operation.getReturnParameter();
-		if(this.typeParameters.size() == operation.typeParameters.size() && this.typeParameters.size() > 0 && !equalTypeParameters(operation) && thisReturnParameter != null && otherReturnParameter != null) {
+		if(this.typeParameters.size() == operation.typeParameters.size() && this.typeParameters.size() > 0 && !this.typeParameters.equals(operation.typeParameters) && thisReturnParameter != null && otherReturnParameter != null) {
 			//check for consistent type parameter rename
 			Map<String, String> map = new LinkedHashMap<>();
 			for(int i=0; i<this.typeParameters.size(); i++) {
@@ -795,6 +795,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		for(UMLParameter parameter : parameters) {
 			if(parameter.getType().isParameterized()) {
 				params.add(parameter);
+			}
+			for(UMLTypeParameter typeParameter : this.typeParameters) {
+				if(typeParameter.toString().equals(parameter.getType().toString())) {
+					params.add(parameter);
+					break;
+				}
 			}
 		}
 		return params;
@@ -1297,7 +1303,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public boolean equalParameterTypes(UMLOperation operation) {
 		List<UMLType> thisParameterTypeList = this.getParameterTypeList();
 		List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
-		if(this.typeParameters.size() == operation.typeParameters.size() && this.typeParameters.size() > 0 && !equalTypeParameters(operation) &&
+		if(this.typeParameters.size() == operation.typeParameters.size() && this.typeParameters.size() > 0 && !this.typeParameters.equals(operation.typeParameters) &&
 				thisParameterTypeList.size() == otherParameterTypeList.size()) {
 			//check for consistent type parameter rename
 			Map<String, String> map = new LinkedHashMap<>();
@@ -1312,11 +1318,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					matches++;
 				}
 			}
-			if(matches > 0 && matches == thisParameterTypeList.size()) {
+			if((matches > 0 && matches == thisParameterTypeList.size()) || thisParameterTypeList.size() == 0) {
 				return true;
 			}
 		}
-		return thisParameterTypeList.equals(otherParameterTypeList) && equalTypeParameters(operation);
+		return thisParameterTypeList.equals(otherParameterTypeList) && this.typeParameters.equals(operation.typeParameters);
 	}
 
 	private boolean typeParameterToTypeArgumentMatch(UMLOperation operation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {
@@ -1341,7 +1347,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	private boolean equalTypeParameters(UMLOperation operation) {
-		return this.typeParameters.equals(operation.typeParameters);
+		if(!this.typeParameters.equals(operation.typeParameters)) {
+			return this.equalReturnParameter(operation) && this.equalParameterTypes(operation);
+		}
+		return false;
 	}
 
 	private boolean equalParameterNames(UMLOperation operation) {

@@ -413,6 +413,11 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 										type2.getTypeArguments().toString().equals(umlClass.typeParameters.toString())) {
 									renamed++;
 								}
+								boolean b1 = this.typeParameters.stream().anyMatch(p -> type1.toString().equals(p.toString()));
+								boolean b2 = umlClass.typeParameters.stream().anyMatch(p -> type2.toString().equals(p.toString()));
+								if(b1 && b2) {
+									renamed++;
+								}
 							}
 							if(renamed == parameterized1.size()) {
 								return true;

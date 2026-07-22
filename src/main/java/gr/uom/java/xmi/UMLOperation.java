@@ -1347,10 +1347,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	private boolean equalTypeParameters(UMLOperation operation) {
-		if(!this.typeParameters.equals(operation.typeParameters)) {
+		if(!this.typeParameters.equals(operation.typeParameters) && this.typeParameters.size() == operation.typeParameters.size()) {
 			return this.equalReturnParameter(operation) && this.equalParameterTypes(operation);
 		}
-		return false;
+		return this.typeParameters.equals(operation.typeParameters);
 	}
 
 	private boolean equalParameterNames(UMLOperation operation) {

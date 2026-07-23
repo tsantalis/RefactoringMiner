@@ -3995,6 +3995,10 @@ public abstract class UMLAbstractClassDiff {
 					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
 				mapperSet.add(operationBodyMapper);
 			}
+			else if(mappings > 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() &&
+					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper)) {
+				mapperSet.add(operationBodyMapper);
+			}
 			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {
 				Set<AbstractCodeFragment> nonMappedLeavesT1ToBeRemoved = new LinkedHashSet<>();
 				Set<AbstractCodeFragment> nonMappedLeavesT2ToBeRemoved = new LinkedHashSet<>();

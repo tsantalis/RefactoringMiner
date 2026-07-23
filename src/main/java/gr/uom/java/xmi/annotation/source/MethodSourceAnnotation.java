@@ -70,6 +70,7 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                             if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
                                 List<String> resolvedArguments = new ArrayList<>();
                                 List<LeafExpression> leafExpressions = new ArrayList<>();
+                                Set<LocationInfo> claimedLocations = new HashSet<>();
                                 for(String arg : nestedCall.arguments()) {
                                     LeafExpression constantLiteral = resolveConstantLiteral(arg);
                                     if(constantLiteral != null) {
@@ -80,8 +81,10 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                                         resolvedArguments.add(arg);
                                         List<LeafExpression> matches = stmtCandidate.get().findExpression(arg);
                                         for(LeafExpression match : matches) {
-                                            if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo())) {
+                                            if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo()) && !claimedLocations.contains(match.getLocationInfo())) {
                                                 leafExpressions.add(match);
+                                                claimedLocations.add(match.getLocationInfo());
+                                                break;
                                             }
                                         }
                                     }

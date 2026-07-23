@@ -21,9 +21,12 @@ import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NullLiteral;
 import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.QualifiedName;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.Type;
 import org.jetbrains.kotlin.psi.KtCallExpression;
@@ -147,6 +150,17 @@ public class ObjectCreation extends AbstractCall {
 				PrefixExpression prefix = (PrefixExpression) expression;
 				if(prefix.getOperator().equals(PrefixExpression.Operator.MINUS) && prefix.getOperand() instanceof NumberLiteral) {
 					literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.NUMBER_LITERAL, container));
+				}
+			}
+			else if(expression instanceof QualifiedName) {
+				//matches Visitor.visit(QualifiedName)'s classification, so the resulting LeafExpression's
+				//string is directly comparable to the one captured on the JUnit5 side by that visitor
+				QualifiedName qualifiedName = (QualifiedName) expression;
+				Name qualifier = qualifiedName.getQualifier();
+				if(Character.isUpperCase(qualifier.getFullyQualifiedName().charAt(0)) ||
+						(qualifier instanceof SimpleName && !(qualifiedName.getParent() instanceof QualifiedName)) ||
+						(qualifier instanceof QualifiedName && !(qualifiedName.getParent() instanceof QualifiedName))) {
+					literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.QUALIFIED_NAME, container));
 				}
 			}
 		}

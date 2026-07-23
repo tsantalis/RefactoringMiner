@@ -3279,31 +3279,9 @@ public abstract class UMLAbstractClassDiff {
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 								detectInlinedTestDataConstants(mapper, addedOperation, parameterValues, parameterNames);
 								UMLOperation removedOperation = mapper.getOperation1();
-								mapCreationsToArguments(operationBodyMapperList, removedOperation, addedOperation, parameterValues, parameterNames);
 								removedOperations.remove(removedOperation);
 								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
-								for(UMLOperation removed : removedOperations) {
-									if(removed.hasParametersAnnotation()) {
-										List<List<LeafExpression>> parameters2 = getParameterValuesAsLeafExpressions(addedOperation);
-										List<List<LeafExpression>> parameters1 = getParameterValuesAsLeafExpressions(removed);
-										if(parameters1.size() == parameters2.size()) {
-											for(int i=0; i<parameters1.size(); i++) {
-												List<LeafExpression> expressions1 = parameters1.get(i);
-												List<LeafExpression> expressions2 = parameters2.get(i);
-												if(expressions1.size() == expressions2.size()) {
-													for(int j=0; j<expressions1.size(); j++) {
-														LeafExpression expression1 = expressions1.get(j);
-														LeafExpression expression2 = expressions2.get(j);
-														if(expression1.getString().equals(expression2.getString())) {
-															LeafMapping leafMapping = new LeafMapping(expression1, expression2, removed, addedOperation);
-															mapper.addMapping(leafMapping);
-														}
-													}
-												}
-											}
-										}
-									}
-								}
+								mapDataProviderValues(refactoring, addedOperation, removedOperations);
 							}
 							if(overallMaxMatchingTestParameters > -1) {
 								addedOperationIterator.remove();
@@ -3426,67 +3404,72 @@ public abstract class UMLAbstractClassDiff {
 		}
 	}
 
-    private void mapCreationsToArguments(List<UMLOperationBodyMapper> mapper, UMLOperation removedOperation, UMLOperation addedOperation, List<List<String>> parameterValues, List<String> parameterNames) {
-		Map<String, List<LeafExpression>> expressions = new LinkedHashMap();
-		UMLOperation junit4DataProvider = null, junit5MethodSourceParameterizedTest = null;
-		if (addedOperation.hasMethodSourceAnnotation()) {
-			junit5MethodSourceParameterizedTest = addedOperation;
+	//resolves the JUnit4 @Parameters DataProvider and JUnit5 @MethodSource DataProvider methods for
+	//a migrated parameterized test, and maps their literal values onto the ParameterizeTestRefactoring.
+	private void mapDataProviderValues(ParameterizeTestRefactoring refactoring, UMLOperation addedOperation, List<UMLOperation> removedOperations) {
+		if(!addedOperation.hasMethodSourceAnnotation()) {
+			return;
 		}
-		if (removedOperation.hasMethodSourceAnnotation()) {
-			junit5MethodSourceParameterizedTest = removedOperation;
+		MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
+		UMLOperation junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
+		if(junit5DataProvider == null) {
+			return;
 		}
-		if (addedOperation.hasParametersAnnotation()) {
-			junit4DataProvider = addedOperation;
-		}
-		if (removedOperation.hasParametersAnnotation()) {
-			junit4DataProvider = removedOperation;
-		}
-
-		if (junit5MethodSourceParameterizedTest != null && junit4DataProvider != null) {
-			UMLOperation junit5DataProvider = resolveJunit5DataProvider(junit5MethodSourceParameterizedTest, mapper);
-			OperationBody body = junit5DataProvider.getBody();
-			for (AbstractCall op : body.getAllOperationInvocations()) {
-				if (op.getName().equals("of")) {
-					for (LeafExpression argument : op.getArguments()) {
-						expressions.putIfAbsent(argument.getString(),  new ArrayList<>(List.of(argument)));
-					}
-				}
-			}
-
-			body = junit4DataProvider.getBody();
-			for (AbstractCall op : body.getAllCreations()) {
-				for (LeafExpression argument : op.getArguments()) {
-					expressions.computeIfPresent(argument.getString(), (key, value) -> {
-						value.add(argument);
-						return value;
-					});
-				}
-			}
-		}
-    }
-
-	private UMLOperation resolveJunit5DataProvider(UMLOperation junit5MethodSourceParameterizedTest, List<UMLOperationBodyMapper> mappers) {
-		MethodSourceAnnotation methodSourceAnnotation = junit5MethodSourceParameterizedTest.getMethodSourceAnnotation(nextClass);
-		assert methodSourceAnnotation.getValue().size() == 1;
-		String methodSourceName = methodSourceAnnotation.getValue().get(0);
-		// Try to find DataProvider among mapped operations
-		for (UMLOperationBodyMapper mapper : mappers) {
-			if (mapper.getOperation1().getName().equals(methodSourceName)) {
-				return mapper.getOperation1();
-			}
-			else if (mapper.getOperation2().getName().equals(methodSourceName)) {
-				return mapper.getOperation2();
-			}
-		}
-		// Fallback to homonymous non-void returning methods in test class
-		UMLOperation junit5DataProvider = null;
-		for (UMLOperation op : nextClass.getOperations()) {
-			if (op.getName().equals(methodSourceName) && !op.isVoid()) {
-				junit5DataProvider = op;
+		//look provider method up through operationBodyMapperList and only fall back to removedOperations
+		//if no such pairing exists yet
+		UMLOperation junit4DataProvider = null;
+		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
+			if(mapper.getOperation1().getName().equals(junit5DataProvider.getName()) && mapper.getOperation1().hasParametersAnnotation()) {
+				junit4DataProvider = mapper.getOperation1();
 				break;
 			}
 		}
-		return junit5DataProvider;
+		if(junit4DataProvider == null) {
+			for(UMLOperation removed : removedOperations) {
+				if(removed.getName().equals(junit5DataProvider.getName()) && removed.hasParametersAnnotation()) {
+					junit4DataProvider = removed;
+					break;
+				}
+			}
+		}
+		if(junit4DataProvider == null) {
+			return;
+		}
+		refactoring.setDataProvider(junit4DataProvider, junit5DataProvider);
+
+		List<LeafExpression> junit4Literals = new ArrayList<>();
+		for(List<LeafExpression> row : getParameterValuesAsLeafExpressions(junit4DataProvider)) {
+			junit4Literals.addAll(row);
+		}
+
+		//Always include the raw array-literal elements (e.g. `Arrays.asList(new Object[][] {...})`),
+		//which getParameterValuesAsLeafExpressions cannot decompose into structured rows/columns, and
+		//whose top-level literals it misses entirely whenever a nested "of"-named call (e.g. EnumSet.of(...))
+		//is present in a row, since it only follows the first invocation named "of" it finds per row
+		OperationBody body = junit4DataProvider.getBody();
+		if(body != null) {
+			for(AbstractCall creation : body.getAllCreations()) {
+				if(creation instanceof ObjectCreation && ((ObjectCreation)creation).isArray()) {
+					junit4Literals.addAll(((ObjectCreation)creation).getArrayInitializerLiterals());
+				}
+			}
+		}
+
+		Map<String, List<LeafExpression>> junit4LiteralsByValue = new LinkedHashMap<String, List<LeafExpression>>();
+		for(LeafExpression literal : junit4Literals) {
+			junit4LiteralsByValue.computeIfAbsent(literal.getString(), key -> new ArrayList<LeafExpression>()).add(literal);
+		}
+
+		for(List<LeafExpression> row : getParameterValuesAsLeafExpressions(addedOperation)) {
+			for(LeafExpression expression2 : row) {
+				List<LeafExpression> matches = junit4LiteralsByValue.get(expression2.getString());
+				if(matches != null && !matches.isEmpty()) {
+					LeafExpression expression1 = matches.remove(0);
+					LeafMapping leafMapping = new LeafMapping(expression1, expression2, junit4DataProvider, addedOperation);
+					refactoring.addDataMapping(leafMapping);
+				}
+			}
+		}
 	}
 
 	private void processNestedTypeDeclarationStatements(UMLOperation removedOperation, UMLOperation addedOperation) {

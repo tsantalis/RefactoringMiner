@@ -12,17 +12,50 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class ParameterizeTestRefactoring extends ChangeTypeRefactoring {
 	private UMLOperation removedOperation;
 	private UMLOperation parameterizedTestOperation;
 	private UMLOperationBodyMapper bodyMapper;
-	
+	private UMLOperation dataProviderBefore;
+	private UMLOperation dataProviderAfter;
+	private List<LeafMapping> data;
+
 	public ParameterizeTestRefactoring(UMLOperationBodyMapper bodyMapper) {
 		this.bodyMapper = bodyMapper;
 		this.removedOperation = bodyMapper.getOperation1();
 		this.parameterizedTestOperation = bodyMapper.getOperation2();
+		this.data = new ArrayList<LeafMapping>();
+	}
+
+	public UMLOperation getDataProviderBefore() {
+		return dataProviderBefore;
+	}
+
+	public UMLOperation getDataProviderAfter() {
+		return dataProviderAfter;
+	}
+
+	public void setDataProvider(UMLOperation dataProviderBefore, UMLOperation dataProviderAfter) {
+		this.dataProviderBefore = dataProviderBefore;
+		this.dataProviderAfter = dataProviderAfter;
+	}
+
+	public List<LeafMapping> getData() {
+		return data;
+	}
+
+	public void addDataMapping(LeafMapping newLeafMapping) {
+		for(LeafMapping oldLeafMapping : data) {
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) &&
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) {
+				return;
+			}
+		}
+		getBodyMapper().addMapping(newLeafMapping);
+		data.add(newLeafMapping);
 	}
 
 	@Override

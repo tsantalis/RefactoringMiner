@@ -350,6 +350,9 @@ public class StringBasedHeuristics {
 		if(diff1.equals("get")) {
 			return true;
 		}
+		if(diff1.isEmpty() && diff2.endsWith(".")) {
+			return true;
+		}
 		return false;
 	}
 

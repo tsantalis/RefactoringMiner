@@ -2292,6 +2292,63 @@ public class ReplacementAlgorithm {
 				return replacementInfo.getReplacements();
 			}
 		}
+		//match traditional for with while
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT)) {
+			CompositeStatementObject for1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject while2 = (CompositeStatementObject)statement2;
+			List<AbstractExpression> expressions2 = while2.getExpressions();
+			AbstractExpression whileExpression = expressions2.get(expressions2.size()-1);
+			boolean conditionMatched = false;
+			for(AbstractExpression expression1 : for1.getExpressions()) {
+				if(expression1.getString().equals(whileExpression.getString())) {
+					LeafMapping leafMapping = new LeafMapping(expression1, whileExpression, container1, container2);
+					replacementInfo.addSubExpressionMapping(leafMapping);
+					conditionMatched = true;
+					break;
+				}
+			}
+			if(conditionMatched) {
+				for(AbstractExpression expression1 : for1.getExpressions()) {
+					for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
+						if(expression1.getVariableDeclarations().size() == 1 && fragment2.getVariableDeclarations().size() == 1) {
+							VariableDeclaration v1 = expression1.getVariableDeclarations().get(0);
+							VariableDeclaration v2 = fragment2.getVariableDeclarations().get(0);
+							if(v1.getVariableName().equals(v2.getVariableName())) {
+								LeafMapping leafMapping = new LeafMapping(expression1, fragment2, container1, container2);
+								replacementInfo.addSubExpressionMapping(leafMapping);
+								break;
+							}
+						}
+					}
+				}
+				for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
+					for(AbstractCodeFragment fragment2 : replacementInfo.getStatements2()) {
+						if(fragment1.getVariableDeclarations().size() == 1 && fragment2.getVariableDeclarations().size() == 1) {
+							VariableDeclaration v1 = fragment1.getVariableDeclarations().get(0);
+							VariableDeclaration v2 = fragment2.getVariableDeclarations().get(0);
+							if(v1.getVariableName().equals(v2.getVariableName())) {
+								//check if there exist statement mappings within the variable scopes
+								boolean matchFound = false;
+								for(AbstractCodeMapping mapping : mappings) {
+									if(v1.getStatementsInScopeUsingVariable().contains(mapping.getFragment1()) &&
+											v2.getStatementsInScopeUsingVariable().contains(mapping.getFragment2())) {
+										matchFound = true;
+										break;
+									}
+								}
+								if(matchFound) {
+									LeafMapping leafMapping = new LeafMapping(fragment1, fragment2, container1, container2);
+									replacementInfo.addSubExpressionMapping(leafMapping);
+									break;
+								}
+							}
+						}
+					}
+				}
+				return replacementInfo.getReplacements();
+			}
+		}
 		//match while with if
 		/*if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
 				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {

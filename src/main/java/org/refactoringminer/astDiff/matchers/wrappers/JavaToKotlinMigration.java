@@ -56,6 +56,11 @@ public class JavaToKotlinMigration {
         //both trees are now in LANG1
         new LeafMatcher(LANG1, LANG1).match(srcFakeTree, dstFakeTree, tempMapping);
         */
+        if(dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION) && dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD)) {
+            if(dstStatementNode.getChild(0).getLabel().equals("break") || dstStatementNode.getChild(0).getLabel().equals("continue")) {
+                dstStatementNode.getChildren().clear();
+            }
+        }
         List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE) &&
@@ -421,7 +426,7 @@ public class JavaToKotlinMigration {
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.NUMBER_LITERAL);
-        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTEGER_LITERAL);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTEGER_LITERAL, LANG2.FLOAT_LITERAL);
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 //handle -literal

@@ -97,6 +97,17 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
             }
             if (umlJavadocDiff.isEmpty()) return;
             mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
+            if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                if(srcJavaDocNode.getChildren().size() > 0 && srcJavaDocNode.getChild(0).getType().name.equals(LANG1.TAG_ELEMENT) &&
+                        dstJavaDocNode.getType().name.equals(LANG2.BLOCK_COMMENT)) {
+                    mappingStore.addMapping(srcJavaDocNode.getChild(0),dstJavaDocNode);
+                    for(Tree child : srcJavaDocNode.getChild(0).getChildren()) {
+                        if(child.getType().name.equals(LANG1.TEXT_ELEMENT)) {
+                            mappingStore.addMapping(child, dstJavaDocNode);
+                        }
+                    }
+                }
+            }
             UMLJavadocDiff diff = umlJavadocDiff.get();
             if(!diff.getCommonTags().isEmpty() || !diff.getCommonDocElements().isEmpty() || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 MappingStore gtSimpleMappings = new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode);

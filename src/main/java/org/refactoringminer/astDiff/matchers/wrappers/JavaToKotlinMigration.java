@@ -619,7 +619,7 @@ public class JavaToKotlinMigration {
                 }
             }
         }
-        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf");
+        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf", "get", "toHttpUrl");
         if(callNames1.size() <= callNames2.size()) {
             int matches = 0;
             for(int i=0; i<callNames1.size(); i++) {

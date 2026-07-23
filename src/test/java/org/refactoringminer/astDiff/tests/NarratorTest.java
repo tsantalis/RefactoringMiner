@@ -23,7 +23,7 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class TestNarratorOracle {
+public class NarratorTest {
 
     private static final String ORACLE_DATA_PATH = "src/test/resources/oracle/narrator/data.json";
     private static final String EXPECTED_DIR = "src/test/resources/oracle/narrator/expected/";

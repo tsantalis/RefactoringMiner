@@ -16,9 +16,15 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeId;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 import org.eclipse.jdt.core.dom.ArrayCreation;
+import org.eclipse.jdt.core.dom.ArrayInitializer;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
+import org.eclipse.jdt.core.dom.PrefixExpression;
+import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.Type;
 import org.jetbrains.kotlin.psi.KtCallExpression;
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
@@ -64,6 +70,7 @@ public class ObjectCreation extends AbstractCall {
 	private String anonymousClassDeclaration;
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
+	private List<LeafExpression> arrayInitializerLiterals = new ArrayList<LeafExpression>();
 
 	public ObjectCreation(LangCompilationUnit cu, String sourceFolder, String filePath, LangMethodInvocation creation, VariableDeclarationContainer container, String fileContent) {
 		super(cu, sourceFolder, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION, container);
@@ -114,7 +121,39 @@ public class ObjectCreation extends AbstractCall {
 		}
 		if(creation.getInitializer() != null) {
 			this.anonymousClassDeclaration = stringify(creation.getInitializer());
+			collectArrayInitializerLiterals(cu, sourceFolder, filePath, creation.getInitializer(), container, this.arrayInitializerLiterals);
 		}
+	}
+
+	private static void collectArrayInitializerLiterals(CompilationUnit cu, String sourceFolder, String filePath, ArrayInitializer initializer, VariableDeclarationContainer container, List<LeafExpression> literals) {
+		for(Object element : initializer.expressions()) {
+			Expression expression = (Expression) element;
+			if(expression instanceof ArrayInitializer) {
+				collectArrayInitializerLiterals(cu, sourceFolder, filePath, (ArrayInitializer) expression, container, literals);
+			}
+			else if(expression instanceof StringLiteral) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.STRING_LITERAL, container));
+			}
+			else if(expression instanceof NumberLiteral) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.NUMBER_LITERAL, container));
+			}
+			else if(expression instanceof BooleanLiteral) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.BOOLEAN_LITERAL, container));
+			}
+			else if(expression instanceof NullLiteral) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.NULL_LITERAL, container));
+			}
+			else if(expression instanceof PrefixExpression) {
+				PrefixExpression prefix = (PrefixExpression) expression;
+				if(prefix.getOperator().equals(PrefixExpression.Operator.MINUS) && prefix.getOperand() instanceof NumberLiteral) {
+					literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.NUMBER_LITERAL, container));
+				}
+			}
+		}
+	}
+
+	public List<LeafExpression> getArrayInitializerLiterals() {
+		return arrayInitializerLiterals;
 	}
 
 	public String getName() {

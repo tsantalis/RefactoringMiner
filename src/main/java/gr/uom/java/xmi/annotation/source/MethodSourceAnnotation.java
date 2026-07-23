@@ -17,6 +17,7 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
     public static final String ANNOTATION_TYPENAME = "MethodSource";
     private final UMLOperation annotatedOperation;
     private final UMLAbstractClass declaringClass;
+    private UMLOperation resolvedProviderMethod;
 
     public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
         super(annotation, ANNOTATION_TYPENAME);
@@ -31,6 +32,10 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
 
     public static boolean isMethodSourceAnnotation(UMLAnnotation annotation) {
         return annotation.getTypeName().equals("MethodSource");
+    }
+
+    public UMLOperation getResolvedProviderMethod() {
+        return resolvedProviderMethod;
     }
 
     private void processMethodSourceName(UMLOperation operation, String methodSourceName) {
@@ -50,6 +55,7 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
         }
         if(sameNameMethods.size() > 0) {
             UMLOperation sourceMethod = sameNameMethods.get(0);
+            this.resolvedProviderMethod = sourceMethod;
             Optional<VariableDeclaration> returnedVarCandidates = sourceMethod.getBody().getAllVariableDeclarations().stream().filter(v -> sourceMethod.getReturnParameter().getType().equals(v.getType())).findAny();
             if (returnedVarCandidates.isEmpty()) {
                 Optional<StatementObject> stmtCandidate = sourceMethod.getBody().getCompositeStatement().getStatements().stream()

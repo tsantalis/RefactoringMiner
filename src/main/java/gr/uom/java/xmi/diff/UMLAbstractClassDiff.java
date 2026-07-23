@@ -3419,14 +3419,14 @@ public abstract class UMLAbstractClassDiff {
 		//if no such pairing exists yet
 		UMLOperation junit4DataProvider = null;
 		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
-			if(mapper.getOperation1().getName().equals(junit5DataProvider.getName()) && mapper.getOperation1().hasParametersAnnotation()) {
+			if(mapper.getOperation1().hasParametersAnnotation()) {
 				junit4DataProvider = mapper.getOperation1();
 				break;
 			}
 		}
 		if(junit4DataProvider == null) {
 			for(UMLOperation removed : removedOperations) {
-				if(removed.getName().equals(junit5DataProvider.getName()) && removed.hasParametersAnnotation()) {
+				if(removed.hasParametersAnnotation()) {
 					junit4DataProvider = removed;
 					break;
 				}

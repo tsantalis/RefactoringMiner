@@ -2,11 +2,11 @@
   "edges": [
     {
       "sourceId": "cluster-1",
-      "targetId": "SingularPattern-2776-2868-1928143508",
+      "targetId": "SingularPattern-2776-2868-1641477966",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "SingularPattern-2776-2868-1928143508",
+      "sourceId": "SingularPattern-2776-2868-1641477966",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystemProperties.java-SRC-DELETION-2776-2868-MethodDeclaration",
       "type": "EXPANSION"
     },
@@ -27,27 +27,32 @@
     },
     {
       "sourceId": "cluster-2",
-      "targetId": "TraversalComponent-6004-6028-84822932",
+      "targetId": "TraversalComponent-6001-6023-596315934",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "TraversalComponent-6004-6028-84822932",
-      "targetId": "TraversalComponent-6004-6028-705466770",
+      "sourceId": "TraversalComponent-6001-6023-596315934",
+      "targetId": "TraversalComponent-6001-6023-1245768532",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "TraversalComponent-6004-6028-705466770",
-      "targetId": "SingularPattern-6004-6028-1317074081",
+      "sourceId": "TraversalComponent-6001-6023-1245768532",
+      "targetId": "SingularPattern-6001-6023-2115176147",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "SingularPattern-6004-6028-1317074081",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-DELETION-6004-6028-MethodInvocation",
+      "sourceId": "SingularPattern-6001-6023-2115176147",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-ADDITION-6001-6023-QualifiedName",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-DELETION-6004-6028-MethodInvocation",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-6004-6035-MethodInvocation",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-ADDITION-6001-6023-QualifiedName",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-6001-6030-MethodInvocation",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-6001-6030-MethodInvocation",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5891-6031-MethodInvocation",
       "type": "CONTEXT"
     },
     {
@@ -61,16 +66,6 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-6001-6030-MethodInvocation",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5891-6031-MethodInvocation",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5891-6031-MethodInvocation",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5773-6035-MethodDeclaration",
-      "type": "CONTEXT"
-    },
-    {
       "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-5894-6036-MethodInvocation",
       "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5891-6031-MethodInvocation",
       "type": "MAPPING"
@@ -81,8 +76,13 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-5824-6040-Block",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-5773-6040-MethodDeclaration",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5891-6031-MethodInvocation",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5773-6035-MethodDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5773-6035-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-5773-6035-MethodDeclaration",
       "type": "CONTEXT"
     },
     {
@@ -96,8 +96,13 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-5773-6035-MethodDeclaration",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-5773-6040-MethodDeclaration",
       "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-5773-6035-MethodDeclaration",
+      "type": "MAPPING"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-5773-6040-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-1455-6043-TypeDeclaration",
       "type": "CONTEXT"
     },
     {
@@ -106,13 +111,8 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-5773-6040-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-5773-6035-MethodDeclaration",
-      "type": "MAPPING"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-5773-6040-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-1455-6043-TypeDeclaration",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-1455-6038-TypeDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-0-6039-CompilationUnit",
       "type": "CONTEXT"
     },
     {
@@ -126,37 +126,37 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-1455-6038-TypeDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-0-6039-CompilationUnit",
-      "type": "CONTEXT"
-    },
-    {
       "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-LOCATION_CONTEXT-0-6044-CompilationUnit",
       "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-LOCATION_CONTEXT-0-6039-CompilationUnit",
       "type": "MAPPING"
     },
     {
-      "sourceId": "TraversalComponent-6004-6028-705466770",
-      "targetId": "SingularPattern-6001-6023-922114556",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "SingularPattern-6001-6023-922114556",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-ADDITION-6001-6023-QualifiedName",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-ADDITION-6001-6023-QualifiedName",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-SEMANTIC_CONTEXT-6001-6030-MethodInvocation",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-5824-6040-Block",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-5773-6040-MethodDeclaration",
       "type": "CONTEXT"
     },
     {
-      "sourceId": "TraversalComponent-6004-6028-84822932",
-      "targetId": "SingularPattern-5785-5818-1069167749",
+      "sourceId": "TraversalComponent-6001-6023-1245768532",
+      "targetId": "SingularPattern-6004-6028-486612699",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "SingularPattern-5785-5818-1069167749",
+      "sourceId": "SingularPattern-6004-6028-486612699",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-DELETION-6004-6028-MethodInvocation",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-DELETION-6004-6028-MethodInvocation",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-SRC-SEMANTIC_CONTEXT-6004-6035-MethodInvocation",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "TraversalComponent-6001-6023-596315934",
+      "targetId": "SingularPattern-5785-5818-1026146082",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "SingularPattern-5785-5818-1026146082",
       "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-DST_UPDATE-5785-5818-SimpleName",
       "type": "EXPANSION"
     },
@@ -182,26 +182,26 @@
     },
     {
       "sourceId": "cluster-3",
-      "targetId": "TraversalComponent-1208-1272-614326428",
+      "targetId": "TraversalComponent-1275-1375-18513283",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "TraversalComponent-1208-1272-614326428",
-      "targetId": "TraversalComponent-1208-1272-1476749955",
+      "sourceId": "TraversalComponent-1275-1375-18513283",
+      "targetId": "TraversalComponent-1275-1375-1507172141",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "SingularPattern-1208-1272-1362795900",
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "SingularPattern-1275-1375-426125059",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "SingularPattern-1208-1272-1362795900",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1208-1272-FieldDeclaration",
+      "sourceId": "SingularPattern-1275-1375-426125059",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1275-1375-FieldDeclaration",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1208-1272-FieldDeclaration",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1275-1375-FieldDeclaration",
       "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
       "type": "CONTEXT"
     },
@@ -211,32 +211,87 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "UsagePattern-2252-2648-676223424",
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "SingularPattern-3983-4317-1760421163",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-2252-2648-676223424",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "sourceId": "SingularPattern-3983-4317-1760421163",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3983-4317-MethodDeclaration",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-2252-2648-676223424",
-      "targetId": "TraversalComponent-2253-2275-1576251482",
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3983-4317-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "UsagePattern-1739-2249-2137037361",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "TraversalComponent-2253-2275-201473219",
+      "sourceId": "UsagePattern-1739-2249-2137037361",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "TraversalComponent-2253-2275-201473219",
-      "targetId": "SingularPattern-2253-2275-621685839",
+      "sourceId": "UsagePattern-1739-2249-2137037361",
+      "targetId": "SingularPattern-5906-5968-1638864078",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "SingularPattern-2253-2275-621685839",
+      "sourceId": "SingularPattern-5906-5968-1638864078",
+      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5906-5968-MethodDeclaration",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5906-5968-MethodDeclaration",
+      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-1691-10237-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-1691-10237-TypeDeclaration",
+      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-0-10238-CompilationUnit",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-1625-9955-TypeDeclaration",
+      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-1691-10237-TypeDeclaration",
+      "type": "MAPPING"
+    },
+    {
+      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-1625-9955-TypeDeclaration",
+      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-0-9956-CompilationUnit",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-0-9956-CompilationUnit",
+      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-0-10238-CompilationUnit",
+      "type": "MAPPING"
+    },
+    {
+      "sourceId": "UsagePattern-1739-2249-2137037361",
+      "targetId": "TraversalComponent-5906-5968-402137236",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "SingularPattern-5906-5968-1638864078",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "TraversalComponent-2253-2275-1654777626",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "TraversalComponent-2253-2275-1654777626",
+      "targetId": "SingularPattern-2253-2275-1117095516",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "SingularPattern-2253-2275-1117095516",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-2253-2275-QualifiedName",
       "type": "EXPANSION"
     },
@@ -276,32 +331,12 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-1691-10237-TypeDeclaration",
-      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-0-10238-CompilationUnit",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-1625-9955-TypeDeclaration",
-      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-1691-10237-TypeDeclaration",
-      "type": "MAPPING"
-    },
-    {
-      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-1625-9955-TypeDeclaration",
-      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-0-9956-CompilationUnit",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-LOCATION_CONTEXT-0-9956-CompilationUnit",
-      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-0-10238-CompilationUnit",
-      "type": "MAPPING"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-201473219",
-      "targetId": "SingularPattern-2187-2211-1713829682",
+      "sourceId": "TraversalComponent-2253-2275-1654777626",
+      "targetId": "SingularPattern-2187-2211-1704356075",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "SingularPattern-2187-2211-1713829682",
+      "sourceId": "SingularPattern-2187-2211-1704356075",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-DELETION-2187-2211-MethodInvocation",
       "type": "EXPANSION"
     },
@@ -311,34 +346,24 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "UsagePattern-5757-5903-952682100",
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "UsagePattern-5757-5903-186692669",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-5757-5903-952682100",
+      "sourceId": "UsagePattern-5757-5903-186692669",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5757-5903-MethodDeclaration",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-5757-5903-952682100",
-      "targetId": "TraversalComponent-2253-2275-201473219",
+      "sourceId": "UsagePattern-5757-5903-186692669",
+      "targetId": "SingularPattern-5906-5968-1638864078",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-5757-5903-952682100",
-      "targetId": "SingularPattern-5906-5968-1693287472",
+      "sourceId": "UsagePattern-5757-5903-186692669",
+      "targetId": "TraversalComponent-2253-2275-1654777626",
       "type": "EXPANSION"
-    },
-    {
-      "sourceId": "SingularPattern-5906-5968-1693287472",
-      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5906-5968-MethodDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5906-5968-MethodDeclaration",
-      "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-LOCATION_CONTEXT-1691-10237-TypeDeclaration",
-      "type": "CONTEXT"
     },
     {
       "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5757-5903-MethodDeclaration",
@@ -346,328 +371,33 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "TraversalComponent-2253-2275-201473219",
+      "sourceId": "SingularPattern-5906-5968-1638864078",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5757-5903-MethodDeclaration",
       "type": "DEF_USE"
     },
     {
-      "sourceId": "SingularPattern-5906-5968-1693287472",
+      "sourceId": "TraversalComponent-2253-2275-1654777626",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5757-5903-MethodDeclaration",
       "type": "DEF_USE"
     },
     {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "SingularPattern-5906-5968-1693287472",
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "TraversalComponent-4553-4568-1517279794",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-2252-2648-676223424",
-      "targetId": "SingularPattern-5906-5968-1693287472",
+      "sourceId": "TraversalComponent-4553-4568-1517279794",
+      "targetId": "UsagePattern-4553-4568-531318158",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-2252-2648-676223424",
-      "targetId": "SingularPattern-1208-1272-1362795900",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-2252-2648-676223424",
-      "targetId": "SingularPattern-1275-1375-2142756302",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "SingularPattern-1275-1375-2142756302",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1275-1375-FieldDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1275-1375-FieldDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-5906-5968-1693287472",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1208-1272-1362795900",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1275-1375-2142756302",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "UsagePattern-1739-2249-495051504",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-1739-2249-495051504",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-1739-2249-495051504",
-      "targetId": "TraversalComponent-2253-2275-1576251482",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-1739-2249-495051504",
-      "targetId": "SingularPattern-5906-5968-1693287472",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-1739-2249-495051504",
-      "targetId": "SingularPattern-1208-1272-1362795900",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-1739-2249-495051504",
-      "targetId": "SingularPattern-1275-1375-2142756302",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-5906-5968-1693287472",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1208-1272-1362795900",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1275-1375-2142756302",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "SingularPattern-1275-1375-2142756302",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "UsagePattern-3003-3347-453904919",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3003-3347-453904919",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3003-3347-453904919",
-      "targetId": "SingularPattern-3983-4317-1880464366",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "SingularPattern-3983-4317-1880464366",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3983-4317-MethodDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3983-4317-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "UsagePattern-3003-3347-453904919",
-      "targetId": "TraversalComponent-2253-2275-1576251482",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3003-3347-453904919",
-      "targetId": "SingularPattern-1208-1272-1362795900",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3003-3347-453904919",
-      "targetId": "SingularPattern-1275-1375-2142756302",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "SingularPattern-3983-4317-1880464366",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1208-1272-1362795900",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1275-1375-2142756302",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "UsagePattern-3350-3582-760587503",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3350-3582-760587503",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3350-3582-760587503",
-      "targetId": "TraversalComponent-2253-2275-1576251482",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3350-3582-760587503",
-      "targetId": "SingularPattern-1208-1272-1362795900",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-3350-3582-760587503",
-      "targetId": "SingularPattern-1275-1375-2142756302",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1208-1272-1362795900",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1275-1375-2142756302",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "SingularPattern-3983-4317-1880464366",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-1476749955",
-      "targetId": "UsagePattern-2651-3000-160100276",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-2651-3000-160100276",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-2651-3000-160100276",
-      "targetId": "SingularPattern-3983-4317-1880464366",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-2651-3000-160100276",
-      "targetId": "TraversalComponent-2253-2275-1576251482",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-2651-3000-160100276",
-      "targetId": "SingularPattern-1208-1272-1362795900",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-2651-3000-160100276",
-      "targetId": "SingularPattern-1275-1375-2142756302",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
-      "type": "CONTEXT"
-    },
-    {
-      "sourceId": "SingularPattern-3983-4317-1880464366",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1576251482",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1208-1272-1362795900",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "SingularPattern-1275-1375-2142756302",
-      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
-      "type": "DEF_USE"
-    },
-    {
-      "sourceId": "TraversalComponent-1208-1272-614326428",
-      "targetId": "TraversalComponent-2253-2275-1082813187",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1082813187",
-      "targetId": "TraversalComponent-2253-2275-1576251482",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "TraversalComponent-2253-2275-1082813187",
-      "targetId": "TraversalComponent-4553-4568-213731736",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "TraversalComponent-4553-4568-213731736",
-      "targetId": "UsagePattern-4553-4568-1406155863",
-      "type": "EXPANSION"
-    },
-    {
-      "sourceId": "UsagePattern-4553-4568-1406155863",
+      "sourceId": "UsagePattern-4553-4568-531318158",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-DELETION-4553-4568-SimpleName",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-4553-4568-1406155863",
-      "targetId": "TraversalComponent-2253-2275-201473219",
+      "sourceId": "UsagePattern-4553-4568-531318158",
+      "targetId": "TraversalComponent-2253-2275-1654777626",
       "type": "EXPANSION"
     },
     {
@@ -721,23 +451,23 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "TraversalComponent-2253-2275-201473219",
+      "sourceId": "TraversalComponent-2253-2275-1654777626",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-SRC-DELETION-4553-4568-SimpleName",
       "type": "DEF_USE"
     },
     {
-      "sourceId": "TraversalComponent-4553-4568-213731736",
-      "targetId": "UsagePattern-4617-4636-469546821",
+      "sourceId": "TraversalComponent-4553-4568-1517279794",
+      "targetId": "UsagePattern-4617-4636-913476084",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-4617-4636-469546821",
+      "sourceId": "UsagePattern-4617-4636-913476084",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-4617-4636-MethodInvocation",
       "type": "EXPANSION"
     },
     {
-      "sourceId": "UsagePattern-4617-4636-469546821",
-      "targetId": "UsagePattern-5757-5903-952682100",
+      "sourceId": "UsagePattern-4617-4636-913476084",
+      "targetId": "UsagePattern-5757-5903-186692669",
       "type": "EXPANSION"
     },
     {
@@ -746,9 +476,274 @@
       "type": "CONTEXT"
     },
     {
-      "sourceId": "UsagePattern-5757-5903-952682100",
+      "sourceId": "UsagePattern-5757-5903-186692669",
       "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-4617-4636-MethodInvocation",
       "type": "DEF_USE"
+    },
+    {
+      "sourceId": "UsagePattern-1739-2249-2137037361",
+      "targetId": "SingularPattern-1208-1272-1388350970",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "SingularPattern-1208-1272-1388350970",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1208-1272-FieldDeclaration",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1208-1272-FieldDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "UsagePattern-1739-2249-2137037361",
+      "targetId": "SingularPattern-1275-1375-426125059",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "SingularPattern-5906-5968-1638864078",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1208-1272-1388350970",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1275-1375-426125059",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-1739-2249-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "UsagePattern-3350-3582-440403028",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3350-3582-440403028",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3350-3582-440403028",
+      "targetId": "SingularPattern-1208-1272-1388350970",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3350-3582-440403028",
+      "targetId": "TraversalComponent-5906-5968-402137236",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3350-3582-440403028",
+      "targetId": "SingularPattern-1275-1375-426125059",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "SingularPattern-1208-1272-1388350970",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1275-1375-426125059",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3350-3582-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "UsagePattern-3003-3347-1303917408",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3003-3347-1303917408",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3003-3347-1303917408",
+      "targetId": "SingularPattern-3983-4317-1760421163",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3003-3347-1303917408",
+      "targetId": "SingularPattern-1208-1272-1388350970",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3003-3347-1303917408",
+      "targetId": "TraversalComponent-5906-5968-402137236",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-3003-3347-1303917408",
+      "targetId": "SingularPattern-1275-1375-426125059",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "SingularPattern-3983-4317-1760421163",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1208-1272-1388350970",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1275-1375-426125059",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-3003-3347-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "SingularPattern-1208-1272-1388350970",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "UsagePattern-2252-2648-108354923",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2252-2648-108354923",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2252-2648-108354923",
+      "targetId": "SingularPattern-5906-5968-1638864078",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2252-2648-108354923",
+      "targetId": "TraversalComponent-5906-5968-402137236",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2252-2648-108354923",
+      "targetId": "SingularPattern-1208-1272-1388350970",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2252-2648-108354923",
+      "targetId": "SingularPattern-1275-1375-426125059",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "SingularPattern-5906-5968-1638864078",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1208-1272-1388350970",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1275-1375-426125059",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-1507172141",
+      "targetId": "UsagePattern-2651-3000-150634692",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2651-3000-150634692",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2651-3000-150634692",
+      "targetId": "SingularPattern-3983-4317-1760421163",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2651-3000-150634692",
+      "targetId": "SingularPattern-1208-1272-1388350970",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2651-3000-150634692",
+      "targetId": "TraversalComponent-5906-5968-402137236",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "UsagePattern-2651-3000-150634692",
+      "targetId": "SingularPattern-1275-1375-426125059",
+      "type": "EXPANSION"
+    },
+    {
+      "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-LOCATION_CONTEXT-1081-4320-TypeDeclaration",
+      "type": "CONTEXT"
+    },
+    {
+      "sourceId": "SingularPattern-3983-4317-1760421163",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1208-1272-1388350970",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-5906-5968-402137236",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "SingularPattern-1275-1375-426125059",
+      "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2651-3000-MethodDeclaration",
+      "type": "DEF_USE"
+    },
+    {
+      "sourceId": "TraversalComponent-1275-1375-18513283",
+      "targetId": "TraversalComponent-5906-5968-402137236",
+      "type": "EXPANSION"
     },
     {
       "sourceId": "root",
@@ -759,7 +754,7 @@
   "nodes": [
     {
       "aggregatorIds": [
-        "SingularPattern-2776-2868-1928143508"
+        "SingularPattern-2776-2868-1641477966"
       ],
       "content": "LogbackLoggingSystemProperties",
       "descendantSimpleNames": [
@@ -952,7 +947,7 @@
       "aggregatorIds": [
         "cluster-1"
       ],
-      "id": "SingularPattern-2776-2868-1928143508",
+      "id": "SingularPattern-2776-2868-1641477966",
       "identifiers": [
         "getDefaultFileCharset"
       ],
@@ -960,7 +955,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2776-2868-1928143508"
+        "SingularPattern-2776-2868-1641477966"
       ],
       "content": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/LogbackLoggingSystemProperties.java",
       "descendantSimpleNames": [
@@ -1148,7 +1143,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2776-2868-1928143508"
+        "SingularPattern-2776-2868-1641477966"
       ],
       "content": "@Override\n\tprotected Charset getDefaultFileCharset() {\n\t\treturn Charset.defaultCharset();\n\t}",
       "descendantSimpleNames": [
@@ -1183,9 +1178,9 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "fileCharsetWhenNoPropertyUsesUtf8",
       "descendantSimpleNames": [
@@ -1215,9 +1210,9 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "@Test\n\tvoid fileCharsetWhenNoPropertyUsesDefault() {\n\t\tnew LoggingSystemProperties(new MockEnvironment()).apply(null);\n\t\tassertThat(System.getProperty(LoggingSystemProperty.FILE_CHARSET.getEnvironmentVariableName()))\n\t\t\t.isEqualTo(Charset.defaultCharset().name());\n\t}",
       "descendantSimpleNames": [
@@ -1252,16 +1247,8 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-6004-6028-84822932"
-      ],
-      "id": "TraversalComponent-6004-6028-705466770",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
-    },
-    {
-      "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "assertThat(System.getProperty(LoggingSystemProperty.FILE_CHARSET.getEnvironmentVariableName()))\n\t\t\t.isEqualTo(Charset.defaultCharset().name())",
       "descendantSimpleNames": [
@@ -1288,22 +1275,8 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-6004-6028-705466770"
-      ],
-      "id": "SingularPattern-6004-6028-1317074081",
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "TraversalComponent-6004-6028-705466770"
-      ],
-      "id": "SingularPattern-6001-6023-922114556",
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "Charset.defaultCharset().name()",
       "descendantSimpleNames": [
@@ -1325,8 +1298,8 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "{\n\t\tnew LoggingSystemProperties(new MockEnvironment()).apply(null);\n\t\tassertThat(System.getProperty(LoggingSystemProperty.FILE_CHARSET.getEnvironmentVariableName()))\n\t\t\t.isEqualTo(Charset.defaultCharset().name());\n\t}",
       "descendantSimpleNames": [
@@ -1356,7 +1329,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081"
+        "SingularPattern-6004-6028-486612699"
       ],
       "content": "Charset.defaultCharset()",
       "descendantSimpleNames": [
@@ -1378,9 +1351,17 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "cluster-2"
+      ],
+      "id": "TraversalComponent-6001-6023-596315934",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java",
       "descendantSimpleNames": [
@@ -1566,15 +1547,14 @@
     },
     {
       "aggregatorIds": [
-        "cluster-2"
+        "TraversalComponent-6001-6023-1245768532"
       ],
-      "id": "TraversalComponent-6004-6028-84822932",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
+      "id": "SingularPattern-6004-6028-486612699",
+      "nodeType": "SINGULAR"
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-5785-5818-1026146082"
       ],
       "content": "fileCharsetWhenNoPropertyUsesDefault",
       "descendantSimpleNames": [
@@ -1595,9 +1575,9 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "LogbackLoggingSystemPropertiesTests",
       "descendantSimpleNames": [
@@ -1783,9 +1763,9 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java",
       "descendantSimpleNames": [
@@ -1969,8 +1949,16 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556"
+        "TraversalComponent-6001-6023-596315934"
+      ],
+      "id": "TraversalComponent-6001-6023-1245768532",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "assertThat(System.getProperty(LoggingSystemProperty.FILE_CHARSET.getEnvironmentVariableName()))\n\t\t\t.isEqualTo(StandardCharsets.UTF_8.name())",
       "descendantSimpleNames": [
@@ -1995,9 +1983,35 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "TraversalComponent-6001-6023-596315934"
+      ],
+      "id": "SingularPattern-5785-5818-1026146082",
+      "nodeType": "SINGULAR"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-6001-6023-2115176147"
+      ],
+      "content": "StandardCharsets.UTF_8",
+      "descendantSimpleNames": [],
+      "endLine": 137,
+      "endLineOffset": 36,
+      "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-ADDITION-6001-6023-QualifiedName",
+      "length": 23,
+      "nodeType": "ADDITION",
+      "normalizedContent": "StandardCharsets.UTF_8",
+      "path": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java",
+      "srcDst": "DST",
+      "startLine": 137,
+      "startLineOffset": 14,
+      "subs": [],
+      "treeType": "QualifiedName"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "fileCharsetWhenNoPropertyUsesDefault",
       "descendantSimpleNames": [
@@ -2029,35 +2043,9 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6001-6023-922114556"
-      ],
-      "content": "StandardCharsets.UTF_8",
-      "descendantSimpleNames": [],
-      "endLine": 137,
-      "endLineOffset": 36,
-      "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java-DST-ADDITION-6001-6023-QualifiedName",
-      "length": 23,
-      "nodeType": "ADDITION",
-      "normalizedContent": "StandardCharsets.UTF_8",
-      "path": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/LogbackLoggingSystemPropertiesTests.java",
-      "srcDst": "DST",
-      "startLine": 137,
-      "startLineOffset": 14,
-      "subs": [],
-      "treeType": "QualifiedName"
-    },
-    {
-      "aggregatorIds": [
-        "TraversalComponent-6004-6028-84822932"
-      ],
-      "id": "SingularPattern-5785-5818-1069167749",
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "@Test\n\tvoid fileCharsetWhenNoPropertyUsesUtf8() {\n\t\tnew LoggingSystemProperties(new MockEnvironment()).apply(null);\n\t\tassertThat(System.getProperty(LoggingSystemProperty.FILE_CHARSET.getEnvironmentVariableName()))\n\t\t\t.isEqualTo(StandardCharsets.UTF_8.name());\n\t}",
       "descendantSimpleNames": [
@@ -2090,7 +2078,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-5785-5818-1026146082"
       ],
       "content": "fileCharsetWhenNoPropertyUsesUtf8",
       "descendantSimpleNames": [
@@ -2111,8 +2099,15 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556"
+        "TraversalComponent-6001-6023-1245768532"
+      ],
+      "id": "SingularPattern-6001-6023-2115176147",
+      "nodeType": "SINGULAR"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "StandardCharsets.UTF_8.name()",
       "descendantSimpleNames": [
@@ -2132,9 +2127,9 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-6004-6028-1317074081",
-        "SingularPattern-6001-6023-922114556",
-        "SingularPattern-5785-5818-1069167749"
+        "SingularPattern-6004-6028-486612699",
+        "SingularPattern-5785-5818-1026146082",
+        "SingularPattern-6001-6023-2115176147"
       ],
       "content": "LogbackLoggingSystemPropertiesTests",
       "descendantSimpleNames": [
@@ -2325,7 +2320,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2253-2275-621685839"
+        "SingularPattern-2253-2275-1117095516"
       ],
       "content": "StandardCharsets.UTF_8",
       "descendantSimpleNames": [],
@@ -2344,19 +2339,7 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-2651-3000-160100276",
-        "TraversalComponent-1208-1272-1476749955",
-        "UsagePattern-3003-3347-453904919"
-      ],
-      "id": "SingularPattern-3983-4317-1880464366",
-      "identifiers": [
-        "withSystemProperty"
-      ],
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-3003-3347-453904919"
+        "UsagePattern-3003-3347-1303917408"
       ],
       "content": "@Test\n\tvoid fileLogCharsetShouldUseSystemPropertyIfSet() {\n\t\twithSystemProperty(\"FILE_LOG_CHARSET\", StandardCharsets.ISO_8859_1.name(), () -> {\n\t\t\tnew DefaultLogbackConfiguration(null).apply(this.logbackConfigurator);\n\t\t\tassertThat(this.loggerContext.getProperty(\"FILE_LOG_CHARSET\"))\n\t\t\t\t.isEqualTo(StandardCharsets.ISO_8859_1.name());\n\t\t});\n\t}",
       "descendantSimpleNames": [
@@ -2391,53 +2374,20 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-2252-2648-676223424"
+        "TraversalComponent-1275-1375-18513283"
       ],
-      "content": "@Test\n\tvoid consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull() {\n\t\tDefaultLogbackConfiguration logbackConfiguration = spy(new DefaultLogbackConfiguration(null));\n\t\tgiven(logbackConfiguration.getConsole()).willReturn(null);\n\t\tlogbackConfiguration.apply(this.logbackConfigurator);\n\t\tassertThat(this.loggerContext.getProperty(\"CONSOLE_LOG_CHARSET\")).isEqualTo(StandardCharsets.UTF_8.name());\n\t}",
-      "descendantSimpleNames": [
-        "Test",
-        "consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull",
-        "DefaultLogbackConfiguration",
-        "logbackConfiguration",
-        "spy",
-        "DefaultLogbackConfiguration",
-        "given",
-        "logbackConfiguration",
-        "getConsole",
-        "willReturn",
-        "logbackConfiguration",
-        "apply",
-        "logbackConfigurator",
-        "assertThat",
-        "loggerContext",
-        "getProperty",
-        "isEqualTo",
-        "name"
-      ],
-      "endLine": 70,
-      "endLineOffset": 2,
-      "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
-      "identifiers": [
-        "consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull"
-      ],
-      "length": 397,
-      "nodeType": "ADDITION",
-      "normalizedContent": "@Test\nvoid consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull() {\n\tDefaultLogbackConfiguration logbackConfiguration = spy(new DefaultLogbackConfiguration(null));\n\tgiven(logbackConfiguration.getConsole()).willReturn(null);\n\tlogbackConfiguration.apply(this.logbackConfigurator);\n\tassertThat(this.loggerContext.getProperty(\"CONSOLE_LOG_CHARSET\")).isEqualTo(StandardCharsets.UTF_8.name());\n}",
-      "path": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java",
-      "srcDst": "DST",
-      "startLine": 64,
-      "startLineOffset": 1,
-      "subs": [],
-      "treeType": "MethodDeclaration"
+      "id": "TraversalComponent-1275-1375-1507172141",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5906-5968-1693287472",
-        "UsagePattern-4553-4568-1406155863",
-        "SingularPattern-2187-2211-1713829682",
-        "UsagePattern-5757-5903-952682100",
-        "SingularPattern-2253-2275-621685839",
-        "UsagePattern-4617-4636-469546821"
+        "SingularPattern-5906-5968-1638864078",
+        "SingularPattern-2253-2275-1117095516",
+        "UsagePattern-5757-5903-186692669",
+        "SingularPattern-2187-2211-1704356075",
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "DefaultLogbackConfiguration",
       "descendantSimpleNames": [
@@ -2882,43 +2832,62 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-4553-4568-213731736"
+        "UsagePattern-2252-2648-108354923"
       ],
-      "id": "UsagePattern-4553-4568-1406155863",
-      "nodeType": "USAGE"
-    },
-    {
-      "aggregatorIds": [
-        "TraversalComponent-1208-1272-1476749955"
+      "content": "@Test\n\tvoid consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull() {\n\t\tDefaultLogbackConfiguration logbackConfiguration = spy(new DefaultLogbackConfiguration(null));\n\t\tgiven(logbackConfiguration.getConsole()).willReturn(null);\n\t\tlogbackConfiguration.apply(this.logbackConfigurator);\n\t\tassertThat(this.loggerContext.getProperty(\"CONSOLE_LOG_CHARSET\")).isEqualTo(StandardCharsets.UTF_8.name());\n\t}",
+      "descendantSimpleNames": [
+        "Test",
+        "consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull",
+        "DefaultLogbackConfiguration",
+        "logbackConfiguration",
+        "spy",
+        "DefaultLogbackConfiguration",
+        "given",
+        "logbackConfiguration",
+        "getConsole",
+        "willReturn",
+        "logbackConfiguration",
+        "apply",
+        "logbackConfigurator",
+        "assertThat",
+        "loggerContext",
+        "getProperty",
+        "isEqualTo",
+        "name"
       ],
-      "id": "UsagePattern-2252-2648-676223424",
+      "endLine": 70,
+      "endLineOffset": 2,
+      "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java-DST-ADDITION-2252-2648-MethodDeclaration",
       "identifiers": [
         "consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull"
       ],
-      "nodeType": "USAGE"
+      "length": 397,
+      "nodeType": "ADDITION",
+      "normalizedContent": "@Test\nvoid consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull() {\n\tDefaultLogbackConfiguration logbackConfiguration = spy(new DefaultLogbackConfiguration(null));\n\tgiven(logbackConfiguration.getConsole()).willReturn(null);\n\tlogbackConfiguration.apply(this.logbackConfigurator);\n\tassertThat(this.loggerContext.getProperty(\"CONSOLE_LOG_CHARSET\")).isEqualTo(StandardCharsets.UTF_8.name());\n}",
+      "path": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java",
+      "srcDst": "DST",
+      "startLine": 64,
+      "startLineOffset": 1,
+      "subs": [],
+      "treeType": "MethodDeclaration"
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-1208-1272-1476749955"
+        "UsagePattern-5757-5903-186692669",
+        "TraversalComponent-5906-5968-402137236",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-2252-2648-108354923"
       ],
-      "id": "UsagePattern-2651-3000-160100276",
+      "id": "SingularPattern-5906-5968-1638864078",
       "identifiers": [
-        "consoleLogCharsetShouldUseSystemPropertyIfSet"
+        "getConsole"
       ],
-      "nodeType": "USAGE"
+      "nodeType": "SINGULAR"
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-2253-2275-1082813187"
-      ],
-      "id": "TraversalComponent-4553-4568-213731736",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "defaults",
       "descendantSimpleNames": [
@@ -2996,17 +2965,17 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5906-5968-1693287472",
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "UsagePattern-2651-3000-160100276",
-        "SingularPattern-2187-2211-1713829682",
-        "UsagePattern-5757-5903-952682100",
-        "SingularPattern-2253-2275-621685839",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503",
-        "UsagePattern-4617-4636-469546821"
+        "SingularPattern-5906-5968-1638864078",
+        "SingularPattern-2253-2275-1117095516",
+        "UsagePattern-5757-5903-186692669",
+        "SingularPattern-2187-2211-1704356075",
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-4553-4568-531318158",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923"
       ],
       "content": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java",
       "descendantSimpleNames": [
@@ -3448,17 +3417,7 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-1208-1272-1476749955"
-      ],
-      "id": "UsagePattern-1739-2249-495051504",
-      "identifiers": [
-        "consoleLogCharsetShouldUseConsoleCharsetIfConsoleAvailable"
-      ],
-      "nodeType": "USAGE"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-3350-3582-760587503"
+        "UsagePattern-3350-3582-440403028"
       ],
       "content": "@Test\n\tvoid fileLogCharsetShouldDefaultToUtf8() {\n\t\tnew DefaultLogbackConfiguration(null).apply(this.logbackConfigurator);\n\t\tassertThat(this.loggerContext.getProperty(\"FILE_LOG_CHARSET\")).isEqualTo(StandardCharsets.UTF_8.name());\n\t}",
       "descendantSimpleNames": [
@@ -3491,7 +3450,17 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-1208-1272-1362795900"
+        "UsagePattern-5757-5903-186692669",
+        "TraversalComponent-5906-5968-402137236",
+        "UsagePattern-4553-4568-531318158"
+      ],
+      "id": "TraversalComponent-2253-2275-1654777626",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-1208-1272-1388350970"
       ],
       "content": "private final LoggerContext loggerContext = new LoggerContext();",
       "descendantSimpleNames": [
@@ -3517,37 +3486,7 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-2253-2275-201473219"
-      ],
-      "id": "SingularPattern-2187-2211-1713829682",
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "UsagePattern-2651-3000-160100276",
-        "TraversalComponent-1208-1272-1476749955",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503"
-      ],
-      "id": "SingularPattern-1275-1375-2142756302",
-      "identifiers": [
-        "logbackConfigurator"
-      ],
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "TraversalComponent-1208-1272-614326428"
-      ],
-      "id": "TraversalComponent-1208-1272-1476749955",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863"
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "DEFAULT_CHARSET",
       "descendantSimpleNames": [
@@ -3568,7 +3507,25 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-3983-4317-1880464366"
+        "TraversalComponent-5906-5968-402137236"
+      ],
+      "id": "TraversalComponent-4553-4568-1517279794",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
+    },
+    {
+      "aggregatorIds": [
+        "TraversalComponent-1275-1375-1507172141"
+      ],
+      "id": "UsagePattern-2252-2648-108354923",
+      "identifiers": [
+        "consoleLogCharsetShouldDefaultToUtf8WhenConsoleIsNull"
+      ],
+      "nodeType": "USAGE"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-3983-4317-1760421163"
       ],
       "content": "private static void withSystemProperty(String name, String value, Runnable action) {\n\t\tString previous = System.getProperty(name);\n\t\ttry {\n\t\t\tSystem.setProperty(name, value);\n\t\t\taction.run();\n\t\t}\n\t\tfinally {\n\t\t\tif (previous != null) {\n\t\t\t\tSystem.setProperty(name, previous);\n\t\t\t}\n\t\t\telse {\n\t\t\t\tSystem.clearProperty(name);\n\t\t\t}\n\t\t}\n\n\t}",
       "descendantSimpleNames": [
@@ -3617,14 +3574,14 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "SingularPattern-1208-1272-1362795900",
-        "SingularPattern-3983-4317-1880464366",
-        "UsagePattern-2651-3000-160100276",
-        "SingularPattern-1275-1375-2142756302",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503"
+        "SingularPattern-1275-1375-426125059",
+        "UsagePattern-1739-2249-2137037361",
+        "SingularPattern-1208-1272-1388350970",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923",
+        "SingularPattern-3983-4317-1760421163"
       ],
       "content": "core/spring-boot/src/test/java/org/springframework/boot/logging/logback/DefaultLogbackConfigurationTests.java",
       "descendantSimpleNames": [
@@ -3787,23 +3744,8 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "UsagePattern-2651-3000-160100276",
-        "TraversalComponent-1208-1272-1476749955",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503"
-      ],
-      "id": "SingularPattern-1208-1272-1362795900",
-      "identifiers": [
-        "loggerContext"
-      ],
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "putProperty(config, \"CONSOLE_LOG_CHARSET\", \"${CONSOLE_LOG_CHARSET:-\" + DEFAULT_CHARSET + \"}\");",
       "descendantSimpleNames": [
@@ -3825,26 +3767,23 @@
     },
     {
       "aggregatorIds": [
-        "cluster-3"
+        "TraversalComponent-1275-1375-1507172141",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923"
       ],
-      "id": "TraversalComponent-1208-1272-614326428",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
+      "id": "SingularPattern-1275-1375-426125059",
+      "identifiers": [
+        "logbackConfigurator"
+      ],
+      "nodeType": "SINGULAR"
     },
     {
       "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "TraversalComponent-2253-2275-1576251482",
-        "UsagePattern-5757-5903-952682100"
-      ],
-      "id": "TraversalComponent-2253-2275-201473219",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "putProperty(config, \"CONSOLE_LOG_CHARSET\", \"${CONSOLE_LOG_CHARSET:-\" + getConsoleCharset() + \"}\")",
       "descendantSimpleNames": [
@@ -3866,14 +3805,22 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "SingularPattern-1208-1272-1362795900",
-        "SingularPattern-3983-4317-1880464366",
-        "UsagePattern-2651-3000-160100276",
-        "SingularPattern-1275-1375-2142756302",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503"
+        "cluster-3"
+      ],
+      "id": "TraversalComponent-1275-1375-18513283",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-1275-1375-426125059",
+        "UsagePattern-1739-2249-2137037361",
+        "SingularPattern-1208-1272-1388350970",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923",
+        "SingularPattern-3983-4317-1760421163"
       ],
       "content": "DefaultLogbackConfigurationTests",
       "descendantSimpleNames": [
@@ -4036,28 +3983,34 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-2253-2275-1576251482",
-        "UsagePattern-4617-4636-469546821"
+        "TraversalComponent-4553-4568-1517279794"
       ],
-      "id": "UsagePattern-5757-5903-952682100",
+      "id": "UsagePattern-4617-4636-913476084",
+      "nodeType": "USAGE"
+    },
+    {
+      "aggregatorIds": [
+        "TraversalComponent-1275-1375-1507172141"
+      ],
+      "id": "UsagePattern-3350-3582-440403028",
       "identifiers": [
-        "getConsoleCharset"
+        "fileLogCharsetShouldDefaultToUtf8"
       ],
       "nodeType": "USAGE"
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5906-5968-1693287472",
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "UsagePattern-2651-3000-160100276",
-        "SingularPattern-2187-2211-1713829682",
-        "UsagePattern-5757-5903-952682100",
-        "SingularPattern-2253-2275-621685839",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503",
-        "UsagePattern-4617-4636-469546821"
+        "SingularPattern-5906-5968-1638864078",
+        "SingularPattern-2253-2275-1117095516",
+        "UsagePattern-5757-5903-186692669",
+        "SingularPattern-2187-2211-1704356075",
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-4553-4568-531318158",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923"
       ],
       "content": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java",
       "descendantSimpleNames": [
@@ -4486,8 +4439,8 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "defaults",
       "descendantSimpleNames": [
@@ -4565,20 +4518,7 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "TraversalComponent-2253-2275-1576251482",
-        "UsagePattern-5757-5903-952682100"
-      ],
-      "id": "SingularPattern-5906-5968-1693287472",
-      "identifiers": [
-        "getConsole"
-      ],
-      "nodeType": "SINGULAR"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-2651-3000-160100276"
+        "UsagePattern-2651-3000-150634692"
       ],
       "content": "@Test\n\tvoid consoleLogCharsetShouldUseSystemPropertyIfSet() {\n\t\twithSystemProperty(\"CONSOLE_LOG_CHARSET\", StandardCharsets.US_ASCII.name(), () -> {\n\t\t\tnew DefaultLogbackConfiguration(null).apply(this.logbackConfigurator);\n\t\t\tassertThat(this.loggerContext.getProperty(\"CONSOLE_LOG_CHARSET\"))\n\t\t\t\t.isEqualTo(StandardCharsets.US_ASCII.name());\n\t\t});\n\t}",
       "descendantSimpleNames": [
@@ -4613,7 +4553,29 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-5757-5903-952682100"
+        "TraversalComponent-2253-2275-1654777626"
+      ],
+      "id": "SingularPattern-2187-2211-1704356075",
+      "nodeType": "SINGULAR"
+    },
+    {
+      "aggregatorIds": [
+        "TraversalComponent-1275-1375-1507172141",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923"
+      ],
+      "id": "SingularPattern-1208-1272-1388350970",
+      "identifiers": [
+        "loggerContext"
+      ],
+      "nodeType": "SINGULAR"
+    },
+    {
+      "aggregatorIds": [
+        "UsagePattern-5757-5903-186692669"
       ],
       "content": "private String getConsoleCharset() {\n\t\tConsole console = getConsole();\n\t\treturn (console != null) ? console.charset().name() : DEFAULT_CHARSET;\n\t}",
       "descendantSimpleNames": [
@@ -4646,8 +4608,8 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2187-2211-1713829682",
-        "SingularPattern-2253-2275-621685839"
+        "SingularPattern-2253-2275-1117095516",
+        "SingularPattern-2187-2211-1704356075"
       ],
       "content": "Charset.defaultCharset().name()",
       "descendantSimpleNames": [
@@ -4669,7 +4631,7 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-1739-2249-495051504"
+        "UsagePattern-1739-2249-2137037361"
       ],
       "content": "@Test\n\tvoid consoleLogCharsetShouldUseConsoleCharsetIfConsoleAvailable() {\n\t\tDefaultLogbackConfiguration logbackConfiguration = spy(new DefaultLogbackConfiguration(null));\n\t\tConsole console = mock(Console.class);\n\t\tgiven(console.charset()).willReturn(StandardCharsets.UTF_16);\n\t\tgiven(logbackConfiguration.getConsole()).willReturn(console);\n\t\tlogbackConfiguration.apply(this.logbackConfigurator);\n\t\tassertThat(this.loggerContext.getProperty(\"CONSOLE_LOG_CHARSET\")).isEqualTo(StandardCharsets.UTF_16.name());\n\t}",
       "descendantSimpleNames": [
@@ -4719,8 +4681,8 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "{\n\t\tconfig.conversionRule(\"clr\", ColorConverter.class, ColorConverter::new);\n\t\tconfig.conversionRule(\"correlationId\", CorrelationIdConverter.class, CorrelationIdConverter::new);\n\t\tconfig.conversionRule(\"esb\", EnclosedInSquareBracketsConverter.class, EnclosedInSquareBracketsConverter::new);\n\t\tconfig.conversionRule(\"wex\", WhitespaceThrowableProxyConverter.class, WhitespaceThrowableProxyConverter::new);\n\t\tconfig.conversionRule(\"wEx\", ExtendedWhitespaceThrowableProxyConverter.class,\n\t\t\t\tExtendedWhitespaceThrowableProxyConverter::new);\n\t\tputProperty(config, \"CONSOLE_LOG_PATTERN\", CONSOLE_LOG_PATTERN);\n\t\tputProperty(config, \"CONSOLE_LOG_CHARSET\", \"${CONSOLE_LOG_CHARSET:-\" + getConsoleCharset() + \"}\");\n\t\tputProperty(config, \"CONSOLE_LOG_THRESHOLD\", \"${CONSOLE_LOG_THRESHOLD:-TRACE}\");\n\t\tputProperty(config, \"CONSOLE_LOG_STRUCTURED_FORMAT\", \"${CONSOLE_LOG_STRUCTURED_FORMAT:-}\");\n\t\tputProperty(config, \"FILE_LOG_PATTERN\", FILE_LOG_PATTERN);\n\t\tputProperty(config, \"FILE_LOG_CHARSET\", \"${FILE_LOG_CHARSET:-\" + DEFAULT_CHARSET + \"}\");\n\t\tputProperty(config, \"FILE_LOG_THRESHOLD\", \"${FILE_LOG_THRESHOLD:-TRACE}\");\n\t\tputProperty(config, \"FILE_LOG_STRUCTURED_FORMAT\", \"${FILE_LOG_STRUCTURED_FORMAT:-}\");\n\t\tconfig.logger(\"org.apache.catalina.startup.DigesterFactory\", Level.ERROR);\n\t\tconfig.logger(\"org.apache.catalina.util.LifecycleBase\", Level.ERROR);\n\t\tconfig.logger(\"org.apache.coyote.http11.Http11NioProtocol\", Level.WARN);\n\t\tconfig.logger(\"org.apache.sshd.common.util.SecurityUtils\", Level.WARN);\n\t\tconfig.logger(\"org.apache.tomcat.util.net.NioSelectorPool\", Level.WARN);\n\t\tconfig.logger(\"org.eclipse.jetty.util.component.AbstractLifeCycle\", Level.ERROR);\n\t\tconfig.logger(\"org.hibernate.validator.internal.util.Version\", Level.WARN);\n\t\tconfig.logger(\"org.springframework.boot.actuate.endpoint.jmx\", Level.WARN);\n\t}",
       "descendantSimpleNames": [
@@ -4795,7 +4757,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2187-2211-1713829682"
+        "SingularPattern-2187-2211-1704356075"
       ],
       "content": "Charset.defaultCharset()",
       "descendantSimpleNames": [
@@ -4817,8 +4779,8 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "private void defaults(LogbackConfigurator config) {\n\t\tconfig.conversionRule(\"clr\", ColorConverter.class, ColorConverter::new);\n\t\tconfig.conversionRule(\"correlationId\", CorrelationIdConverter.class, CorrelationIdConverter::new);\n\t\tconfig.conversionRule(\"esb\", EnclosedInSquareBracketsConverter.class, EnclosedInSquareBracketsConverter::new);\n\t\tconfig.conversionRule(\"wex\", WhitespaceThrowableProxyConverter.class, WhitespaceThrowableProxyConverter::new);\n\t\tconfig.conversionRule(\"wEx\", ExtendedWhitespaceThrowableProxyConverter.class,\n\t\t\t\tExtendedWhitespaceThrowableProxyConverter::new);\n\t\tputProperty(config, \"CONSOLE_LOG_PATTERN\", CONSOLE_LOG_PATTERN);\n\t\tputProperty(config, \"CONSOLE_LOG_CHARSET\", \"${CONSOLE_LOG_CHARSET:-\" + DEFAULT_CHARSET + \"}\");\n\t\tputProperty(config, \"CONSOLE_LOG_THRESHOLD\", \"${CONSOLE_LOG_THRESHOLD:-TRACE}\");\n\t\tputProperty(config, \"CONSOLE_LOG_STRUCTURED_FORMAT\", \"${CONSOLE_LOG_STRUCTURED_FORMAT:-}\");\n\t\tputProperty(config, \"FILE_LOG_PATTERN\", FILE_LOG_PATTERN);\n\t\tputProperty(config, \"FILE_LOG_CHARSET\", \"${FILE_LOG_CHARSET:-\" + DEFAULT_CHARSET + \"}\");\n\t\tputProperty(config, \"FILE_LOG_THRESHOLD\", \"${FILE_LOG_THRESHOLD:-TRACE}\");\n\t\tputProperty(config, \"FILE_LOG_STRUCTURED_FORMAT\", \"${FILE_LOG_STRUCTURED_FORMAT:-}\");\n\t\tconfig.logger(\"org.apache.catalina.startup.DigesterFactory\", Level.ERROR);\n\t\tconfig.logger(\"org.apache.catalina.util.LifecycleBase\", Level.ERROR);\n\t\tconfig.logger(\"org.apache.coyote.http11.Http11NioProtocol\", Level.WARN);\n\t\tconfig.logger(\"org.apache.sshd.common.util.SecurityUtils\", Level.WARN);\n\t\tconfig.logger(\"org.apache.tomcat.util.net.NioSelectorPool\", Level.WARN);\n\t\tconfig.logger(\"org.eclipse.jetty.util.component.AbstractLifeCycle\", Level.ERROR);\n\t\tconfig.logger(\"org.hibernate.validator.internal.util.Version\", Level.WARN);\n\t\tconfig.logger(\"org.springframework.boot.actuate.endpoint.jmx\", Level.WARN);\n\t}",
       "descendantSimpleNames": [
@@ -4899,7 +4861,7 @@
     },
     {
       "aggregatorIds": [
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084"
       ],
       "content": "getConsoleCharset()",
       "descendantSimpleNames": [
@@ -4920,31 +4882,15 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-1208-1272-1476749955"
+        "TraversalComponent-2253-2275-1654777626"
       ],
-      "id": "UsagePattern-3350-3582-760587503",
-      "identifiers": [
-        "fileLogCharsetShouldDefaultToUtf8"
-      ],
-      "nodeType": "USAGE"
+      "id": "SingularPattern-2253-2275-1117095516",
+      "nodeType": "SINGULAR"
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-2253-2275-1082813187",
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "UsagePattern-2651-3000-160100276",
-        "UsagePattern-3003-3347-453904919",
-        "UsagePattern-3350-3582-760587503"
-      ],
-      "id": "TraversalComponent-2253-2275-1576251482",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
-    },
-    {
-      "aggregatorIds": [
-        "SingularPattern-2187-2211-1713829682",
-        "SingularPattern-2253-2275-621685839"
+        "SingularPattern-2253-2275-1117095516",
+        "SingularPattern-2187-2211-1704356075"
       ],
       "content": "StandardCharsets.UTF_8.name()",
       "descendantSimpleNames": [
@@ -4964,21 +4910,72 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-2253-2275-201473219"
+        "TraversalComponent-1275-1375-1507172141"
       ],
-      "id": "SingularPattern-2253-2275-621685839",
-      "nodeType": "SINGULAR"
+      "id": "UsagePattern-1739-2249-2137037361",
+      "identifiers": [
+        "consoleLogCharsetShouldUseConsoleCharsetIfConsoleAvailable"
+      ],
+      "nodeType": "USAGE"
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5906-5968-1693287472",
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-1739-2249-495051504",
-        "UsagePattern-2252-2648-676223424",
-        "SingularPattern-2187-2211-1713829682",
-        "UsagePattern-5757-5903-952682100",
-        "SingularPattern-2253-2275-621685839",
-        "UsagePattern-4617-4636-469546821"
+        "TraversalComponent-1275-1375-1507172141"
+      ],
+      "id": "UsagePattern-3003-3347-1303917408",
+      "identifiers": [
+        "fileLogCharsetShouldUseSystemPropertyIfSet"
+      ],
+      "nodeType": "USAGE"
+    },
+    {
+      "aggregatorIds": [
+        "TraversalComponent-1275-1375-1507172141"
+      ],
+      "id": "UsagePattern-2651-3000-150634692",
+      "identifiers": [
+        "consoleLogCharsetShouldUseSystemPropertyIfSet"
+      ],
+      "nodeType": "USAGE"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-5906-5968-1638864078"
+      ],
+      "content": "@Nullable Console getConsole() {\n\t\treturn System.console();\n\t}",
+      "descendantSimpleNames": [
+        "Nullable",
+        "Console",
+        "getConsole",
+        "System",
+        "console"
+      ],
+      "endLine": 135,
+      "endLineOffset": 2,
+      "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5906-5968-MethodDeclaration",
+      "identifiers": [
+        "getConsole"
+      ],
+      "length": 63,
+      "nodeType": "ADDITION",
+      "normalizedContent": "@Nullable Console getConsole() {\n\treturn System.console();\n}",
+      "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java",
+      "srcDst": "DST",
+      "startLine": 133,
+      "startLineOffset": 1,
+      "subs": [],
+      "treeType": "MethodDeclaration"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-5906-5968-1638864078",
+        "SingularPattern-2253-2275-1117095516",
+        "UsagePattern-5757-5903-186692669",
+        "SingularPattern-2187-2211-1704356075",
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-4553-4568-531318158",
+        "UsagePattern-2252-2648-108354923"
       ],
       "content": "DefaultLogbackConfiguration",
       "descendantSimpleNames": [
@@ -5407,44 +5404,19 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-5906-5968-1693287472"
+        "UsagePattern-4617-4636-913476084",
+        "TraversalComponent-5906-5968-402137236"
       ],
-      "content": "@Nullable Console getConsole() {\n\t\treturn System.console();\n\t}",
-      "descendantSimpleNames": [
-        "Nullable",
-        "Console",
-        "getConsole",
-        "System",
-        "console"
-      ],
-      "endLine": 135,
-      "endLineOffset": 2,
-      "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java-DST-ADDITION-5906-5968-MethodDeclaration",
+      "id": "UsagePattern-5757-5903-186692669",
       "identifiers": [
-        "getConsole"
+        "getConsoleCharset"
       ],
-      "length": 63,
-      "nodeType": "ADDITION",
-      "normalizedContent": "@Nullable Console getConsole() {\n\treturn System.console();\n}",
-      "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/logback/DefaultLogbackConfiguration.java",
-      "srcDst": "DST",
-      "startLine": 133,
-      "startLineOffset": 1,
-      "subs": [],
-      "treeType": "MethodDeclaration"
+      "nodeType": "USAGE"
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-1208-1272-614326428"
-      ],
-      "id": "TraversalComponent-2253-2275-1082813187",
-      "nodeType": "COMPONENT",
-      "reasonType": "CONTEXT"
-    },
-    {
-      "aggregatorIds": [
-        "UsagePattern-4553-4568-1406155863",
-        "UsagePattern-4617-4636-469546821"
+        "UsagePattern-4617-4636-913476084",
+        "UsagePattern-4553-4568-531318158"
       ],
       "content": "putProperty(config, \"CONSOLE_LOG_CHARSET\", \"${CONSOLE_LOG_CHARSET:-\" + DEFAULT_CHARSET + \"}\")",
       "descendantSimpleNames": [
@@ -5466,8 +5438,8 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2187-2211-1713829682",
-        "SingularPattern-2253-2275-621685839"
+        "SingularPattern-2253-2275-1117095516",
+        "SingularPattern-2187-2211-1704356075"
       ],
       "content": "private static final String DEFAULT_CHARSET = Charset.defaultCharset().name();",
       "descendantSimpleNames": [
@@ -5494,7 +5466,7 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-1275-1375-2142756302"
+        "SingularPattern-1275-1375-426125059"
       ],
       "content": "private final LogbackConfigurator logbackConfigurator = new LogbackConfigurator(this.loggerContext);",
       "descendantSimpleNames": [
@@ -5521,8 +5493,28 @@
     },
     {
       "aggregatorIds": [
-        "SingularPattern-2187-2211-1713829682",
-        "SingularPattern-2253-2275-621685839"
+        "TraversalComponent-1275-1375-18513283",
+        "UsagePattern-1739-2249-2137037361",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692",
+        "UsagePattern-3350-3582-440403028",
+        "UsagePattern-2252-2648-108354923"
+      ],
+      "id": "TraversalComponent-5906-5968-402137236",
+      "nodeType": "COMPONENT",
+      "reasonType": "CONTEXT"
+    },
+    {
+      "aggregatorIds": [
+        "TraversalComponent-4553-4568-1517279794"
+      ],
+      "id": "UsagePattern-4553-4568-531318158",
+      "nodeType": "USAGE"
+    },
+    {
+      "aggregatorIds": [
+        "SingularPattern-2253-2275-1117095516",
+        "SingularPattern-2187-2211-1704356075"
       ],
       "content": "private static final String DEFAULT_CHARSET = StandardCharsets.UTF_8.name();",
       "descendantSimpleNames": [
@@ -5547,20 +5539,15 @@
     },
     {
       "aggregatorIds": [
-        "TraversalComponent-1208-1272-1476749955"
+        "TraversalComponent-1275-1375-1507172141",
+        "UsagePattern-3003-3347-1303917408",
+        "UsagePattern-2651-3000-150634692"
       ],
-      "id": "UsagePattern-3003-3347-453904919",
+      "id": "SingularPattern-3983-4317-1760421163",
       "identifiers": [
-        "fileLogCharsetShouldUseSystemPropertyIfSet"
+        "withSystemProperty"
       ],
-      "nodeType": "USAGE"
-    },
-    {
-      "aggregatorIds": [
-        "TraversalComponent-4553-4568-213731736"
-      ],
-      "id": "UsagePattern-4617-4636-469546821",
-      "nodeType": "USAGE"
+      "nodeType": "SINGULAR"
     },
     {
       "aggregatorIds": [

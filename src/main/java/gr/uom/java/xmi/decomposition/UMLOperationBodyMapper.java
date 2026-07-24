@@ -2730,10 +2730,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(AbstractCodeMapping mapping : mappings) {
 					AbstractCodeFragment fragment1 = mapping.getFragment1();
 					AbstractCodeFragment fragment2 = mapping.getFragment2();
-					if((composite.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) &&
+					if(composite.isLoop() &&
 							(compositeLeaves.contains(fragment2) || containLambdaExpression(compositeLeaves, fragment2) != null)) {
 						AbstractCodeFragment streamAPICallStatement = null;
 						List<AbstractCall> streamAPICalls = null;
@@ -2970,10 +2967,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												break;
 											}
 										}
-										if(comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-												comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-												comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-												comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) {
+										if(comp2.isLoop()) {
 											List<AbstractCodeFragment> compositeLeaves = comp2.getLeaves();
 											for(AbstractCodeMapping m : mappings) {
 												if(!m.equals(mapping)) {
@@ -2999,57 +2993,59 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						CompositeReplacement replacement = new CompositeReplacement(streamAPICallStatement.getString(), composite.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
-						Set<Replacement> replacements = new LinkedHashSet<>();
-						replacements.add(replacement);
-						List<LeafMapping> mappingSet = new ArrayList<>();
-						for(AbstractCodeFragment f : additionallyMatchedStatements2) {
-							if(f.getVariableDeclarations().size() == 0 || f instanceof CompositeStatementObject) {
-								LeafMapping newMapping = createLeafMapping(streamAPICallStatement, f, new LinkedHashMap<String, String>(), false);
-								newMapping.addReplacements(replacements);
-								mappingSet.add(newMapping);
-							}
-						}
-						for(VariableDeclaration lambdaParameter : lambdaParameters) {
-							for(VariableDeclaration compositeParameter : composite.getVariableDeclarations()) {
-								if(lambdaParameter.getVariableName().equals(compositeParameter.getVariableName())) {
-									Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(lambdaParameter, compositeParameter);
-									matchedVariables.add(pair);
+						if(composite.isLoop()) {
+							CompositeReplacement replacement = new CompositeReplacement(streamAPICallStatement.getString(), composite.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
+							Set<Replacement> replacements = new LinkedHashSet<>();
+							replacements.add(replacement);
+							List<LeafMapping> mappingSet = new ArrayList<>();
+							for(AbstractCodeFragment f : additionallyMatchedStatements2) {
+								if(f.getVariableDeclarations().size() == 0 || f instanceof CompositeStatementObject) {
+									LeafMapping newMapping = createLeafMapping(streamAPICallStatement, f, new LinkedHashMap<String, String>(), false);
+									newMapping.addReplacements(replacements);
+									mappingSet.add(newMapping);
 								}
-								else {
-									for(Replacement r : mapping.getReplacements()) {
-										if(r.getBefore().equals(lambdaParameter.getVariableName()) && r.getAfter().equals(compositeParameter.getVariableName())) {
-											Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(lambdaParameter, compositeParameter);
-											matchedVariables.add(pair);
-											break;
+							}
+							for(VariableDeclaration lambdaParameter : lambdaParameters) {
+								for(VariableDeclaration compositeParameter : composite.getVariableDeclarations()) {
+									if(lambdaParameter.getVariableName().equals(compositeParameter.getVariableName())) {
+										Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(lambdaParameter, compositeParameter);
+										matchedVariables.add(pair);
+									}
+									else {
+										for(Replacement r : mapping.getReplacements()) {
+											if(r.getBefore().equals(lambdaParameter.getVariableName()) && r.getAfter().equals(compositeParameter.getVariableName())) {
+												Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(lambdaParameter, compositeParameter);
+												matchedVariables.add(pair);
+												break;
+											}
 										}
 									}
 								}
 							}
-						}
-						int count = 0;
-						if(parentMapper != null) {
-							for(AbstractCodeFragment fragment : additionallyMatchedStatements1) {
-								if(parentMapper.alreadyMatched1(fragment)) {
-									count++;
+							int count = 0;
+							if(parentMapper != null) {
+								for(AbstractCodeFragment fragment : additionallyMatchedStatements1) {
+									if(parentMapper.alreadyMatched1(fragment)) {
+										count++;
+									}
 								}
 							}
-						}
-						boolean allAdditionalMatchedStatementsInParentMapper = count == additionallyMatchedStatements1.size();
-						if(!allAdditionalMatchedStatementsInParentMapper) {
-							ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
-							mappingSet.get(0).addRefactoring(ref);
-							for(AbstractCodeMapping m : this.mappings) {
-								if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
-									ref.addNestedStatementMapping(m);
+							boolean allAdditionalMatchedStatementsInParentMapper = count == additionallyMatchedStatements1.size();
+							if(!allAdditionalMatchedStatementsInParentMapper) {
+								ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
+								mappingSet.get(0).addRefactoring(ref);
+								for(AbstractCodeMapping m : this.mappings) {
+									if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
+										ref.addNestedStatementMapping(m);
+									}
 								}
 							}
+							for(LeafMapping newMapping : mappingSet) {
+								addToMappings(newMapping, new TreeSet<>(mappingSet));
+								leaves1.remove(newMapping.getFragment1());
+							}
+							innerNodeIterator2.remove();
 						}
-						for(LeafMapping newMapping : mappingSet) {
-							addToMappings(newMapping, new TreeSet<>(mappingSet));
-							leaves1.remove(newMapping.getFragment1());
-						}
-						innerNodeIterator2.remove();
 					}
 				}
 			}
@@ -3111,10 +3107,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					if((composite.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-							composite.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) &&
+					if(composite.isLoop() &&
 							(compositeLeaves.contains(fragment1) || containLambdaExpression(compositeLeaves, fragment1) != null) || matchingDeclaration) {
 						AbstractCodeFragment streamAPICallStatement = null;
 						List<AbstractCall> streamAPICalls = null;
@@ -3316,10 +3309,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			AbstractCodeFragment fragment2 = mapping.getFragment2();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 				CompositeStatementObject composite = innerNodeIterator1.next();
-				if((composite.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-						composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-						composite.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-						composite.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) &&
+				if(composite.isLoop() &&
 						composite.getLocationInfo().subsumes(fragment1.getLocationInfo()) &&
 						onlyNestedMappings) {
 					AbstractCodeFragment streamAPICallStatement = null;
@@ -3468,10 +3458,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												break;
 											}
 										}
-										if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-												comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-												comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-												comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) {
+										if(comp1.isLoop()) {
 											List<AbstractCodeFragment> compositeLeaves = comp1.getLeaves();
 											for(AbstractCodeMapping m : mappings) {
 												if(!m.equals(mapping)) {
@@ -3540,10 +3527,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									ref.addNestedStatementMapping(m);
 								}
 							}
-							if(!loop.equals(composite) && (composite.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-									composite.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-									composite.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-									composite.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
+							if(!loop.equals(composite) && composite.isLoop()) {
 								for(AbstractCodeFragment streamAPIStatement : streamAPIStatements2) {
 									if(!streamAPIStatement.equals(streamAPICallStatement)) {
 										if(composite.getExpressions().size() > 0 && streamAPIStatement.getString().startsWith(composite.getExpressions().get(0).getString())) {

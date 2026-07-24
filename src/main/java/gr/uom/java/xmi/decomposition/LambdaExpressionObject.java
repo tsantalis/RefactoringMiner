@@ -339,20 +339,22 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, lambdaExpression, CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		ICPPASTFunctionDeclarator functionDeclarator = lambdaExpression.getDeclarator();
-		int index = 0;
-		for(IASTParameterDeclaration parameter : functionDeclarator.getParameters()) {
-			if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && functionDeclarator.getParameters().length == 1) {
-				continue;
+		if(functionDeclarator != null) {
+			int index = 0;
+			for(IASTParameterDeclaration parameter : functionDeclarator.getParameters()) {
+				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && functionDeclarator.getParameters().length == 1) {
+					continue;
+				}
+				String parameterName = CppFileProcessor.extractParameterName(parameter, index);
+				UMLType parameterType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, parameter.getDeclSpecifier(), parameter.getDeclarator(), 0);
+				UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameter.getDeclSpecifier(), this, activeVariableDeclarations, fileContent);
+				variableDeclaration.setParameter(true);
+				umlParameter.setVariableDeclaration(variableDeclaration);
+				this.parameters.add(variableDeclaration);
+				this.umlParameters.add(umlParameter);
+				index++;
 			}
-			String parameterName = CppFileProcessor.extractParameterName(parameter, index);
-			UMLType parameterType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, parameter.getDeclSpecifier(), parameter.getDeclarator(), 0);
-			UMLParameter umlParameter = new UMLParameter(parameterName, parameterType, "in", false);
-			VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, parameter, parameter.getDeclSpecifier(), this, activeVariableDeclarations, fileContent);
-			variableDeclaration.setParameter(true);
-			umlParameter.setVariableDeclaration(variableDeclaration);
-			this.parameters.add(variableDeclaration);
-			this.umlParameters.add(umlParameter);
-			index++;
 		}
 		IASTCompoundStatement body = lambdaExpression.getBody();
 		if(body != null) {

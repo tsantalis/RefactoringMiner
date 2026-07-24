@@ -392,6 +392,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMappingRecursively(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.BINARY_EXPRESSION, LANG2.BINARY_EXPRESSION);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.METHOD_INVOCATION, LANG2.METHOD_INVOCATION);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FIELD_EXPRESSION, LANG2.FIELD_EXPRESSION);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
                 if (matched != null) {
                     mappingStore.addMappingRecursively(matched.first,matched.second);

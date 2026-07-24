@@ -366,6 +366,23 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(t1,t2);
                 }
             }
+            if(srcOperationNode.getType().name.equals(LANG1.REFERENCE_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.REFERENCE_DECLARATOR)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> references = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.REFERENCE, LANG2.REFERENCE);
+                if (references != null) {
+                    mappingStore.addMapping(references.first,references.second);
+                }
+                if(srcOperationNode.getParent().getType().name.equals(LANG1.FIELD_DECLARATION) && dstOperationNode.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
+                    mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
+                }
+                int index1 = srcOperationNode.getParent().getChildPosition(srcOperationNode);
+                int index2 = dstOperationNode.getParent().getChildPosition(dstOperationNode);
+                if(srcOperationNode.getParent().getChildren().size() > index1+1 && srcOperationNode.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                        dstOperationNode.getParent().getChildren().size() > index2+1 && dstOperationNode.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                    Tree t1 = srcOperationNode.getParent().getChild(index1+1);
+                    Tree t2 = dstOperationNode.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+            }
             if(srcOperationNode.getType().name.equals(LANG1.FUNCTION_SIGNATURE) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_SIGNATURE)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SEMICOLON,LANG2.SEMICOLON);
                 if(matched != null) {

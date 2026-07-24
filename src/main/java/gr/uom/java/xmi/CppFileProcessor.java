@@ -535,6 +535,10 @@ public class CppFileProcessor {
 				if(!(declarator instanceof IASTFunctionDeclarator)) {
 					processAttribute(packageName, sourceFolder, parentContainer, currentVisibility, comments, declSpecifier, declarator, templateParameters);
 				}
+				else if(declarator instanceof IASTFunctionDeclarator functionDeclarator) {
+					UMLOperation operation = processFunctionDeclSpecifier(namedTypeSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
+					preprocessor.addOperation(parentContainer, operation, functionDeclarator, templateParameters);
+				}
 			}
 		}
 	}

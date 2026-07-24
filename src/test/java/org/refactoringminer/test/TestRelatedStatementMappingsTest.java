@@ -9,6 +9,7 @@ import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -525,6 +526,34 @@ public class TestRelatedStatementMappingsTest {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             if (ref instanceof ParameterizeTestRefactoring parameterizedTestRefactoring) {
                 mapperInfo(parameterizedTestRefactoring.getBodyMapper().getMappings(), parameterizedTestRefactoring.getRemovedOperation(), parameterizedTestRefactoring.getParameterizedTestOperation());
+            }
+        });
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "https://github.com/conveyal/r5.git, 62a042e56b21d2e7c919552af39eca34357a82a7, r5-62a042e56b21d2e7c919552af39eca34357a82a7-dataprovider.txt",
+            "https://github.com/apache/directory-ldap-api.git, 8965a541bbeefd49028a5405264e40aed69ac5d0, directory-ldap-api-8965a541bbeefd49028a5405264e40aed69ac5d0-dataprovider.txt",
+            "https://github.com/apache/zookeeper.git, c42c8c94085ed1d94a22158fbdfe2945118a82bc, zookeeper-c42c8c94085ed1d94a22158fbdfe2945118a82bc-dataprovider.txt",
+            "https://github.com/cloudfoundry-incubator/multiapps.git, 82c2cc85b8b7790470c8380b82aad27abffc290b, multiapps-82c2cc85b8b7790470c8380b82aad27abffc290b-dataprovider.txt",
+    })
+    public void testDataProviderLiteralMappings(String url, String commit, String testResultFileName) {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof ParameterizeTestRefactoring parameterizeTestRefactoring) {
+                if (parameterizeTestRefactoring.getDataProviderAfter() != null) {
+                    Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
+                    for (LeafMapping leafMapping : parameterizeTestRefactoring.getData()) {
+                        pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
+                    }
+                    mapperInfo(pairs, parameterizeTestRefactoring.getDataProviderBefore(), parameterizeTestRefactoring.getDataProviderAfter());
+                }
+                for (ParameterizeTestRefactoring.DataProviderOverride override : parameterizeTestRefactoring.getDataProviderOverrides()) {
+                    Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
+                    for (LeafMapping leafMapping : override.getData()) {
+                        pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
+                    }
+                    mapperInfo(pairs, override.getDataProviderBefore(), override.getDataProviderAfter());
+                }
             }
         });
     }

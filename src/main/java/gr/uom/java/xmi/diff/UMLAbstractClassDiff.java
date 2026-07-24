@@ -3406,14 +3406,25 @@ public abstract class UMLAbstractClassDiff {
 
 	//resolves the JUnit4 @Parameters DataProvider and JUnit5 @MethodSource DataProvider methods for
 	//a migrated parameterized test, and maps their literal values onto the ParameterizeTestRefactoring.
-	private void mapDataProviderValues(ParameterizeTestRefactoring refactoring, UMLOperation addedOperation, List<UMLOperation> removedOperations) {
-		if(!addedOperation.hasMethodSourceAnnotation()) {
+	private void mapDataProviderValues(ParameterizeTestRefactoring refactoring, UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
+		ParameterizeTestRefactoring.DataProviderOverride resolved = resolveDataProviderMapping(addedOperation, removedOperations);
+		if(resolved == null) {
 			return;
+		}
+		refactoring.setDataProvider(resolved.getDataProviderBefore(), resolved.getDataProviderAfter());
+		for(LeafMapping leafMapping : resolved.getData()) {
+			refactoring.addDataMapping(leafMapping);
+		}
+	}
+
+	ParameterizeTestRefactoring.DataProviderOverride resolveDataProviderMapping(UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
+		if(!addedOperation.hasMethodSourceAnnotation()) {
+			return null;
 		}
 		MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
 		UMLOperation junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
 		if(junit5DataProvider == null) {
-			return;
+			return null;
 		}
 		//look provider method up through operationBodyMapperList and only fall back to removedOperations
 		//if no such pairing exists yet
@@ -3433,9 +3444,8 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		if(junit4DataProvider == null) {
-			return;
+			return null;
 		}
-		refactoring.setDataProvider(junit4DataProvider, junit5DataProvider);
 
 		List<LeafExpression> junit4Literals = new ArrayList<>();
 		for(List<LeafExpression> row : getParameterValuesAsLeafExpressions(junit4DataProvider)) {
@@ -3460,16 +3470,21 @@ public abstract class UMLAbstractClassDiff {
 			junit4LiteralsByValue.computeIfAbsent(literal.getString(), key -> new ArrayList<LeafExpression>()).add(literal);
 		}
 
+		UMLOperationBodyMapper dataProviderMapper = new UMLOperationBodyMapper(junit4DataProvider, junit5DataProvider, this);
+
+		List<LeafMapping> data = new ArrayList<LeafMapping>();
 		for(List<LeafExpression> row : getParameterValuesAsLeafExpressions(addedOperation)) {
 			for(LeafExpression expression2 : row) {
 				List<LeafExpression> matches = junit4LiteralsByValue.get(expression2.getString());
 				if(matches != null && !matches.isEmpty()) {
 					LeafExpression expression1 = matches.remove(0);
 					LeafMapping leafMapping = new LeafMapping(expression1, expression2, junit4DataProvider, addedOperation);
-					refactoring.addDataMapping(leafMapping);
+					dataProviderMapper.addMapping(leafMapping);
+					data.add(leafMapping);
 				}
 			}
 		}
+		return new ParameterizeTestRefactoring.DataProviderOverride(junit4DataProvider, junit5DataProvider, data, dataProviderMapper);
 	}
 
 	private void processNestedTypeDeclarationStatements(UMLOperation removedOperation, UMLOperation addedOperation) {

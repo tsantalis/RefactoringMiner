@@ -6372,17 +6372,47 @@ public class ReplacementAlgorithm {
 			}
 			else {
 				int numberOfMappings = operationBodyMapper.getMappings().size();
-				for(int i=0; i<lambdas1.size(); i++) {
-					for(int j=0; j<lambdas2.size(); j++) {
+				if(lambdas1.size() < lambdas2.size()) {
+					for(int i=0; i<lambdas1.size(); i++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
-						LambdaExpressionObject lambda2 = lambdas2.get(j);
-						if(lambda1.getSwitchExpressionCase().isPresent() && lambda2.getSwitchExpressionCase().isPresent()) {
-							if(operationBodyMapper.containsMapping(lambda1.getSwitchExpressionCase().get(), lambda2.getSwitchExpressionCase().get())) {
-								processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
-							}
+						List<LambdaExpressionObject> filtered2 = lambdas2.stream().filter(l -> l.getBodyHashCode() == lambda1.getBodyHashCode()).collect(Collectors.toList());
+						if(filtered2.size() == 1) {
+							processLambdas(lambda1, filtered2.get(0), replacementInfo, operationBodyMapper, false);
 						}
 						else {
-							processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
+							for(int j=0; j<lambdas2.size(); j++) {
+								LambdaExpressionObject lambda2 = lambdas2.get(j);
+								if(lambda1.getSwitchExpressionCase().isPresent() && lambda2.getSwitchExpressionCase().isPresent()) {
+									if(operationBodyMapper.containsMapping(lambda1.getSwitchExpressionCase().get(), lambda2.getSwitchExpressionCase().get())) {
+										processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
+									}
+								}
+								else {
+									processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
+								}
+							}
+						}
+					}
+				}
+				else {
+					for(int j=0; j<lambdas2.size(); j++) {
+						LambdaExpressionObject lambda2 = lambdas2.get(j);
+						List<LambdaExpressionObject> filtered1 = lambdas1.stream().filter(l -> l.getBodyHashCode() == lambda2.getBodyHashCode()).collect(Collectors.toList());
+						if(filtered1.size() == 1) {
+							processLambdas(filtered1.get(0), lambda2, replacementInfo, operationBodyMapper, false);
+						}
+						else {
+							for(int i=0; i<lambdas1.size(); i++) {
+								LambdaExpressionObject lambda1 = lambdas1.get(i);
+								if(lambda1.getSwitchExpressionCase().isPresent() && lambda2.getSwitchExpressionCase().isPresent()) {
+									if(operationBodyMapper.containsMapping(lambda1.getSwitchExpressionCase().get(), lambda2.getSwitchExpressionCase().get())) {
+										processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
+									}
+								}
+								else {
+									processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper, false);
+								}
+							}
 						}
 					}
 				}

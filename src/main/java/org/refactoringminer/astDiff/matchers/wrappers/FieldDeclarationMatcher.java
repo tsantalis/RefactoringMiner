@@ -106,6 +106,12 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
             dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
         }
+        if (srcAttr.getType().name.equals(LANG1.SIMPLE_NAME) && srcAttr.getParent().getType().name.equals(LANG1.ENUMERATOR)) {
+            srcAttr = srcAttr.getParent();
+        }
+        if (dstAttr.getType().name.equals(LANG2.SIMPLE_NAME) && dstAttr.getParent().getType().name.equals(LANG2.ENUMERATOR)) {
+        	dstAttr = dstAttr.getParent();
+        }
         new CommentMatcher(optimizationData, umlCommentListDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class
@@ -152,7 +158,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 (srcAttr.getType().name.equals(LANG1.SPREAD_ELEMENT) && dstAttr.getType().name.equals(LANG2.SPREAD_ELEMENT)) ||
                 (srcAttr.getType().name.equals(LANG1.INIT_DECLARATOR) && dstAttr.getType().name.equals(LANG2.INIT_DECLARATOR)) ||
                 (srcAttr.getType().name.equals(LANG1.ARRAY_DECLARATOR) && dstAttr.getType().name.equals(LANG2.ARRAY_DECLARATOR)) ||
-                (srcAttr.getType().name.equals(LANG1.FIELD_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.FIELD_IDENTIFIER))) {
+                (srcAttr.getType().name.equals(LANG1.FIELD_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.FIELD_IDENTIFIER)) ||
+                (srcAttr.getType().name.equals(LANG1.ENUMERATOR) && dstAttr.getType().name.equals(LANG2.ENUMERATOR))) {
             if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
                 int index1 = srcAttr.getParent().getChildPosition(srcAttr);
                 int index2 = dstAttr.getParent().getChildPosition(dstAttr);

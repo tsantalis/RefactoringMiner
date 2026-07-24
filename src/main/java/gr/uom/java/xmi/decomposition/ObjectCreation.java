@@ -74,6 +74,7 @@ public class ObjectCreation extends AbstractCall {
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
 	private List<LeafExpression> arrayInitializerLiterals = new ArrayList<LeafExpression>();
+	private List<List<LeafExpression>> arrayInitializerRows = new ArrayList<List<LeafExpression>>();
 
 	public ObjectCreation(LangCompilationUnit cu, String sourceFolder, String filePath, LangMethodInvocation creation, VariableDeclarationContainer container, String fileContent) {
 		super(cu, sourceFolder, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION, container);
@@ -125,6 +126,33 @@ public class ObjectCreation extends AbstractCall {
 		if(creation.getInitializer() != null) {
 			this.anonymousClassDeclaration = stringify(creation.getInitializer());
 			collectArrayInitializerLiterals(cu, sourceFolder, filePath, creation.getInitializer(), container, this.arrayInitializerLiterals);
+			collectArrayInitializerRows(cu, sourceFolder, filePath, creation.getInitializer(), container, this.arrayInitializerRows);
+		}
+	}
+
+	private static void collectArrayInitializerRows(CompilationUnit cu, String sourceFolder, String filePath, ArrayInitializer initializer, VariableDeclarationContainer container, List<List<LeafExpression>> rows) {
+		boolean nested = false;
+		for(Object element : initializer.expressions()) {
+			if(element instanceof ArrayInitializer) {
+				nested = true;
+				break;
+			}
+		}
+		if(nested) {
+			for(Object element : initializer.expressions()) {
+				if(element instanceof ArrayInitializer) {
+					List<LeafExpression> row = new ArrayList<LeafExpression>();
+					collectArrayInitializerLiterals(cu, sourceFolder, filePath, (ArrayInitializer) element, container, row);
+					rows.add(row);
+				}
+			}
+		}
+		else {
+			List<LeafExpression> row = new ArrayList<LeafExpression>();
+			collectArrayInitializerLiterals(cu, sourceFolder, filePath, initializer, container, row);
+			if(!row.isEmpty()) {
+				rows.add(row);
+			}
 		}
 	}
 
@@ -168,6 +196,10 @@ public class ObjectCreation extends AbstractCall {
 
 	public List<LeafExpression> getArrayInitializerLiterals() {
 		return arrayInitializerLiterals;
+	}
+
+	public List<List<LeafExpression>> getArrayInitializerRows() {
+		return arrayInitializerRows;
 	}
 
 	public String getName() {

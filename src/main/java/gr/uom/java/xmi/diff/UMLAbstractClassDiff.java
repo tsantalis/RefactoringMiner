@@ -19,6 +19,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
+import com.github.difflib.DiffUtils;
+import com.github.difflib.patch.AbstractDelta;
+import com.github.difflib.patch.Patch;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
@@ -3447,35 +3450,36 @@ public abstract class UMLAbstractClassDiff {
 			return null;
 		}
 
-		List<LeafExpression> junit4Literals = new ArrayList<>();
-		for(List<LeafExpression> row : getParameterValuesAsLeafExpressions(junit4DataProvider)) {
-			junit4Literals.addAll(row);
-		}
-
-		//Always include the raw array-literal elements (e.g. `Arrays.asList(new Object[][] {...})`),
-		//which getParameterValuesAsLeafExpressions cannot decompose into structured rows/columns, and
-		//whose top-level literals it misses entirely whenever a nested "of"-named call (e.g. EnumSet.of(...))
-		//is present in a row, since it only follows the first invocation named "of" it finds per row
+		List<List<LeafExpression>> junit4Rows = null;
 		OperationBody body = junit4DataProvider.getBody();
 		if(body != null) {
 			for(AbstractCall creation : body.getAllCreations()) {
 				if(creation instanceof ObjectCreation && ((ObjectCreation)creation).isArray()) {
-					junit4Literals.addAll(((ObjectCreation)creation).getArrayInitializerLiterals());
+					if(junit4Rows == null) {
+						junit4Rows = new ArrayList<List<LeafExpression>>();
+					}
+					junit4Rows.addAll(((ObjectCreation)creation).getArrayInitializerRows());
 				}
 			}
 		}
-
-		Map<String, List<LeafExpression>> junit4LiteralsByValue = new LinkedHashMap<String, List<LeafExpression>>();
-		for(LeafExpression literal : junit4Literals) {
-			junit4LiteralsByValue.computeIfAbsent(literal.getString(), key -> new ArrayList<LeafExpression>()).add(literal);
+		if(junit4Rows == null) {
+			junit4Rows = getParameterValuesAsLeafExpressions(junit4DataProvider);
 		}
+		List<List<LeafExpression>> junit5Rows = getParameterValuesAsLeafExpressions(addedOperation);
 
 		UMLOperationBodyMapper dataProviderMapper = new UMLOperationBodyMapper(junit4DataProvider, junit5DataProvider, this);
 
 		List<LeafMapping> data = new ArrayList<LeafMapping>();
-		for(List<LeafExpression> row : getParameterValuesAsLeafExpressions(addedOperation)) {
-			for(LeafExpression expression2 : row) {
-				List<LeafExpression> matches = junit4LiteralsByValue.get(expression2.getString());
+		//match literals row-by-row (each row is one test case) rather than through one global value pool
+		for(int[] rowPair : alignDataProviderRows(junit4Rows, junit5Rows)) {
+			List<LeafExpression> row1 = junit4Rows.get(rowPair[0]);
+			List<LeafExpression> row2 = junit5Rows.get(rowPair[1]);
+			Map<String, List<LeafExpression>> row1ByValue = new LinkedHashMap<String, List<LeafExpression>>();
+			for(LeafExpression literal : row1) {
+				row1ByValue.computeIfAbsent(literal.getString(), key -> new ArrayList<LeafExpression>()).add(literal);
+			}
+			for(LeafExpression expression2 : row2) {
+				List<LeafExpression> matches = row1ByValue.get(expression2.getString());
 				if(matches != null && !matches.isEmpty()) {
 					LeafExpression expression1 = matches.remove(0);
 					LeafMapping leafMapping = new LeafMapping(expression1, expression2, junit4DataProvider, addedOperation);
@@ -3485,6 +3489,48 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		return new ParameterizeTestRefactoring.DataProviderOverride(junit4DataProvider, junit5DataProvider, data, dataProviderMapper);
+	}
+
+	private List<int[]> alignDataProviderRows(List<List<LeafExpression>> rows1, List<List<LeafExpression>> rows2) {
+		List<String> signatures1 = new ArrayList<String>();
+		for(List<LeafExpression> row : rows1) {
+			signatures1.add(rowSignature(row));
+		}
+		List<String> signatures2 = new ArrayList<String>();
+		for(List<LeafExpression> row : rows2) {
+			signatures2.add(rowSignature(row));
+		}
+		List<int[]> pairs = new ArrayList<int[]>();
+		Patch<String> patch = DiffUtils.diff(signatures1, signatures2);
+		int i = 0, j = 0;
+		for(AbstractDelta<String> delta : patch.getDeltas()) {
+			while(i < delta.getSource().getPosition()) {
+				pairs.add(new int[]{i, j});
+				i++; j++;
+			}
+			int sourceSize = delta.getSource().size();
+			int targetSize = delta.getTarget().size();
+			if(sourceSize == targetSize) {
+				for(int k = 0; k < sourceSize; k++) {
+					pairs.add(new int[]{i + k, j + k});
+				}
+			}
+			i += sourceSize;
+			j += targetSize;
+		}
+		while(i < rows1.size() && j < rows2.size()) {
+			pairs.add(new int[]{i, j});
+			i++; j++;
+		}
+		return pairs;
+	}
+
+	private static String rowSignature(List<LeafExpression> row) {
+		StringBuilder sb = new StringBuilder();
+		for(LeafExpression literal : row) {
+			sb.append(literal.getString()).append('\u0001');
+		}
+		return sb.toString();
 	}
 
 	private void processNestedTypeDeclarationStatements(UMLOperation removedOperation, UMLOperation addedOperation) {

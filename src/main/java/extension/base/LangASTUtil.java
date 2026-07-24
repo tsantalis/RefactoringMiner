@@ -1,9 +1,12 @@
 package extension.base;
 
 import extension.ast.builder.csharp.CSharpASTBuilder;
+import extension.ast.builder.go.GoASTBuilder;
 import extension.ast.builder.python.PyASTBuilder;
 import extension.ast.node.LangASTNode;
 import extension.base.lang.csharp.CSharpParser;
+import extension.base.lang.go.GoLexer;
+import extension.base.lang.go.GoParser;
 import extension.base.lang.python.PythonLexer;
 import extension.base.lang.python.PythonParser;
 import org.antlr.v4.runtime.CharStream;
@@ -30,6 +33,7 @@ public class LangASTUtil {
         return switch (language) {
             case PYTHON -> getCustomPythonAST(new StringReader(content));
             case CSHARP -> getCustomCSharpAST(new StringReader(content));
+            case GO -> getCustomGoAST(new StringReader(content));
             default -> throw new UnsupportedOperationException("Parser not implemented for language: " + language);
         };
 
@@ -68,6 +72,24 @@ public class LangASTUtil {
 
         // Build custom AST
         CSharpASTBuilder astBuilder = new CSharpASTBuilder();
+
+        return astBuilder.build(parseTree);
+    }
+
+
+    public static LangASTNode getCustomGoAST(Reader r) throws IOException {
+
+        // Parse the Go code
+        CharStream input = CharStreams.fromReader(r);
+        GoLexer lexer = new GoLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        GoParser parser = new GoParser(tokens);
+
+        // Get the parse tree
+        GoParser.SourceFileContext parseTree = parser.sourceFile();
+
+        // Build custom AST
+        GoASTBuilder astBuilder = new GoASTBuilder();
 
         return astBuilder.build(parseTree);
     }

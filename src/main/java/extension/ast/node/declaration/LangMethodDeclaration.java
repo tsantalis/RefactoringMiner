@@ -25,7 +25,8 @@ public class LangMethodDeclaration extends LangDeclaration {
     private boolean isNative;
     private boolean isSynchronized;
     private boolean isAsync;
-    private String returnTypeAnnotation;
+    private List<String> returnTypeAnnotations = new ArrayList<>();
+    private String receiverType;
     private List<LangAnnotation> langAnnotations = new ArrayList<>();
     private List<LangComment> comments = new ArrayList<>();
 
@@ -133,11 +134,35 @@ public class LangMethodDeclaration extends LangDeclaration {
     }
 
     public String getReturnTypeAnnotation() {
-        return returnTypeAnnotation;
+        return returnTypeAnnotations.isEmpty() ? null : returnTypeAnnotations.get(0);
     }
 
     public void setReturnTypeAnnotation(String returnTypeAnnotation) {
-        this.returnTypeAnnotation = returnTypeAnnotation;
+        this.returnTypeAnnotations = new ArrayList<>();
+        if (returnTypeAnnotation != null) {
+            this.returnTypeAnnotations.add(returnTypeAnnotation);
+        }
+    }
+
+    public List<String> getReturnTypeAnnotations() {
+        return returnTypeAnnotations;
+    }
+
+    public void addReturnTypeAnnotation(String returnTypeAnnotation) {
+        this.returnTypeAnnotations.add(returnTypeAnnotation);
+    }
+
+    public void setReturnTypeAnnotations(List<String> returnTypeAnnotations) {
+        this.returnTypeAnnotations = returnTypeAnnotations;
+    }
+
+    // Null when the method has no receiver.
+    public String getReceiverType() {
+        return receiverType;
+    }
+
+    public void setReceiverType(String receiverType) {
+        this.receiverType = receiverType;
     }
 
     public String getCleanName() {
@@ -182,7 +207,8 @@ public class LangMethodDeclaration extends LangDeclaration {
                 ", body=" + body +
                 ", visibility=" + visibility +
                 ", cleanName=" + cleanName +
-                ", returnType=" + returnTypeAnnotation +
+                ", returnTypes=" + returnTypeAnnotations +
+                ", receiverType=" + receiverType +
                 ", isAbstract=" + isAbstract +
                 ", langAnnotations=" + langAnnotations +
                 '}';

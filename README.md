@@ -16,6 +16,7 @@
 |<img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="30"/> | ✅ | ✅ | <ul><li>- [x] swc4j Parser</li><li>- [ ] Create benchmark</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" alt ="JavaScript" width="30"/> | ✅ | ✅ | <ul><li>- [x] swc4j Parser</li><li>- [ ] Validate precision/recall</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt ="C++" width="30"/> |  |  | <ul><li>- [x] Eclipse CDT Parser</li></ul> |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Go_Logo_Blue.svg" alt ="Golang" width="60"/> |  |  | <ul><li>- [ ] ANTLR4 Parser</li></ul> |
 
 ### Open source projects using RefactoringMiner diff tool for code reviews:
 [<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)

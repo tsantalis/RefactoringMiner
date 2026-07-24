@@ -592,4 +592,5 @@ public class Constants {
     public final String DESTRUCTOR_NAME = "destructor_name";
     public final String BINARY_EXPRESSION = "binary_expression";
     public final String FIELD_EXPRESSION = "field_expression";
+    public final String SUBSCRIPT_EXPRESSION = "subscript_expression";
 }

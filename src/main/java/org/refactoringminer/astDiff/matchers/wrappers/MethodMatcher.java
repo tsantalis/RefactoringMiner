@@ -757,6 +757,13 @@ public class MethodMatcher extends BodyMapperMatcher{
         if(matched != null) {
             mappingStore.addMapping(matched.first, matched.second);
         }
+        List<Tree> trees1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcOperationNode, LANG1.TYPE_QUALIFIER);
+        List<Tree> trees2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstOperationNode, LANG2.TYPE_QUALIFIER);
+        if(trees1.size() == trees2.size()) {
+            for(int i=0; i<trees1.size(); i++) {
+                mappingStore.addMappingRecursively(trees1.get(i), trees2.get(i));
+            }
+        }
 
         if (umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
             if (umlOperationBodyMapper.getOperation1().isStatic() && umlOperationBodyMapper.getOperation2().isStatic())

@@ -4370,6 +4370,7 @@ public class UMLModelDiff {
 		refactorings.addAll(identifyExtractClassRefactorings(innerClassMoveDiffList));
 		refactorings.addAll(identifyExtractClassRefactorings(classRenameDiffList));
 		inferPushDownRefactorings();
+		checkForSubclassDataProviderOverrides();
 		checkForOperationMovesBetweenCommonClasses();
 		checkForOperationMovesIncludingRemovedAndAddedClasses();
 		checkForMatchedOperationMovesInAddedClasses();
@@ -6855,6 +6856,69 @@ public class UMLModelDiff {
 							deleteAddedOperation(addedOperation);
 						}
 					}
+				}
+			}
+		}
+	}
+
+	//detects subclasses that redeclare their own JUnit4/JUnit5 DataProvider pair for a @ParameterizedTest
+	//method they inherit but do not override - a real JUnit5 pattern where a bare/same-named
+	//@MethodSource is resolved against the runtime test class via Java static-method hiding, so each
+	//subclass can supply its own data for an inherited parameterized test without overriding it
+	private void checkForSubclassDataProviderOverrides() throws RefactoringMinerTimedOutException {
+		List<ParameterizeTestRefactoring> parameterizeTestRefactorings = new ArrayList<ParameterizeTestRefactoring>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof ParameterizeTestRefactoring) {
+				ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) r;
+				if(parameterizeTestRefactoring.getDataProviderAfter() != null) {
+					parameterizeTestRefactorings.add(parameterizeTestRefactoring);
+				}
+			}
+		}
+		if(parameterizeTestRefactorings.isEmpty()) {
+			return;
+		}
+		for(UMLClassDiff subclassDiff : commonClassDiffList) {
+			UMLType superclassType = subclassDiff.getNextClass().getSuperclass();
+			if(superclassType == null) {
+				continue;
+			}
+			UMLClassBaseDiff superclassDiff = getUMLClassDiff(superclassType);
+			if(superclassDiff == null) {
+				//matches(UMLType) only handles an unqualified suffix match; fall back to an exact
+				//name match for a fully-qualified superclass reference (e.g. a cross-package extends)
+				superclassDiff = getUMLClassDiff(superclassType.getClassType());
+			}
+			if(superclassDiff == null) {
+				continue;
+			}
+			for(ParameterizeTestRefactoring parentRefactoring : parameterizeTestRefactorings) {
+				UMLOperation parentTestOperation = parentRefactoring.getParameterizedTestOperation();
+				if(!parentTestOperation.getClassName().equals(superclassDiff.getNextClassName())) {
+					continue;
+				}
+				//compare full signature, not just name: a subclass's own same-named DataProvider
+				//redeclaration (the bare @MethodSource convention) must not be mistaken for a local
+				//override of the (differently-signatured) test method itself
+				boolean locallyOverridden = false;
+				for(UMLOperation op : subclassDiff.getNextClass().getOperations()) {
+					if(op.equalSignature(parentTestOperation)) {
+						locallyOverridden = true;
+						break;
+					}
+				}
+				if(locallyOverridden) {
+					continue;
+				}
+				//resolveDataProviderMapping already builds a standalone UMLOperationBodyMapper for the
+				//pair, reachable via override.getBodyMapper() - it is intentionally not registered in
+				//subclassDiff's own operationBodyMapperList, since doing so makes model-wide cross-class
+				//passes (e.g. consistent-rename inference) misreport it as a genuine method rename
+				//between two methods that only coincidentally share the DataProvider's identity
+				ParameterizeTestRefactoring.DataProviderOverride override =
+						subclassDiff.resolveDataProviderMapping(parentTestOperation, subclassDiff.getRemovedOperations());
+				if(override != null) {
+					parentRefactoring.addDataProviderOverride(override);
 				}
 			}
 		}

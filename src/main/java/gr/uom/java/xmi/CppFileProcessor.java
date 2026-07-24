@@ -17,6 +17,7 @@ import org.eclipse.cdt.core.dom.ast.IASTComment;
 import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier.IASTEnumerator;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
@@ -47,6 +48,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamedTypeSpecifier;
@@ -516,6 +518,50 @@ public class CppFileProcessor {
 			umlClass.setActualSignature(rawSignature);
 			preprocessor.processDeclarationGroups(packageName + "." + className, sourceFolder, umlClass, simpleDeclaration, comments,
 					templateParameters, inactiveContainerAlternatives);
+			this.umlModel.addClass(umlClass);
+			distributeComments(comments, locationInfo, umlClass.getComments());
+		}
+		else if(declSpecifier instanceof ICPPASTEnumerationSpecifier enumSpecifier) {
+			if(enumSpecifier.getName() == null) {
+				return;
+			}
+			String className = enumSpecifier.getName().toString();
+			if(className.isBlank()) {
+				return;
+			}
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, enumSpecifier, CodeElementType.ENUM_DECLARATION, fileContent);
+			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, new ArrayList<>());
+			umlClass.setEnum(true);
+			umlClass.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+			if(enumSpecifier.getBaseType() != null) {
+				UMLType umlType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, enumSpecifier.getBaseType(), null, 0);
+				umlClass.setSuperclass(umlType);
+			}
+			addTemplateParameters(umlClass, templateParameters, sourceFolder);
+			String rawSignature = simpleDeclaration.getRawSignature();
+			if(rawSignature.contains("{"))
+				rawSignature = rawSignature.substring(0, rawSignature.indexOf("{") + 1);
+			umlClass.setActualSignature(rawSignature);
+			preprocessor.processDeclarationGroups(packageName + "." + className, sourceFolder, umlClass, simpleDeclaration, comments,
+					templateParameters, inactiveContainerAlternatives);
+			IASTEnumerator[] enumerators = enumSpecifier.getEnumerators();
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, enumSpecifier, null, 0);
+			for(IASTEnumerator enumerator : enumerators) {
+				IASTName name = enumerator.getName();
+				LocationInfo enumConstantLocation = new LocationInfo(sourceFolder, filePath, name, CodeElementType.ENUM_CONSTANT_DECLARATION, fileContent);
+				UMLEnumConstant umlAttribute = new UMLEnumConstant(name.toString(), type, enumConstantLocation, packageName);
+				umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, name, enumSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
+				variableDeclaration.setEnumConstant(true);
+				if(enumerator.getValue() != null) {
+					AbstractExpression expr = new AbstractExpression(sourceFolder, filePath, enumerator.getValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, umlAttribute, new LinkedHashMap<>(), fileContent);
+					variableDeclaration.setInitializer(expr);
+				}
+				umlAttribute.setVariableDeclaration(variableDeclaration);
+				addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
+				preprocessor.addEnumConstant(parentContainer, umlAttribute, name);
+				distributeComments(comments, locationInfo, umlAttribute.getComments());
+			}
 			this.umlModel.addClass(umlClass);
 			distributeComments(comments, locationInfo, umlClass.getComments());
 		}

@@ -551,6 +551,14 @@ public class CppPreprocessor {
 		}
 	}
 
+	void addEnumConstant(UMLAbstractClass parentContainer, UMLEnumConstant attribute, IASTNode origin) {
+		if(retainModelElement(attribute, origin, parentContainer.getAttributes(), attributeOrigins,
+				(first, second) -> first.getName().equals(second.getName()),
+				inactiveSibling -> removeByIdentity(parentContainer.getAttributes(), inactiveSibling))) {
+			parentContainer.addEnumConstant(attribute);
+		}
+	}
+
 	void addImport(UMLAbstractClass parentContainer, UMLImport umlImport, IASTNode origin) {
 		if(retainModelElement(umlImport, origin, parentContainer.getImportedTypes(), importOrigins, UMLImport::equals,
 				inactiveSibling -> removeByIdentity(parentContainer.getImportedTypes(), inactiveSibling))) {

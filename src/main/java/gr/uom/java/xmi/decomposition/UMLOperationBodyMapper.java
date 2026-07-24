@@ -2993,7 +2993,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						if(composite.isLoop()) {
+						boolean matchedLoop = additionallyMatchedStatements2.stream().anyMatch(statement -> statement instanceof CompositeStatementObject comp && comp.isLoop());
+						if(composite.isLoop() || matchedLoop) {
 							CompositeReplacement replacement = new CompositeReplacement(streamAPICallStatement.getString(), composite.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
 							Set<Replacement> replacements = new LinkedHashSet<>();
 							replacements.add(replacement);

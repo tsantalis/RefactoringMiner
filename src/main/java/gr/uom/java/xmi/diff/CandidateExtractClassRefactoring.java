@@ -32,6 +32,10 @@ public class CandidateExtractClassRefactoring implements Comparable<CandidateExt
 		return false;
 	}
 
+	public boolean sameFileExtract() {
+		return this.refactoring.getExtractedClass().getSourceFile().equals(this.classDiff.getNextClass().getSourceFile());
+	}
+
 	public boolean subclassExtract() {
 		UMLType thisSuperType = this.refactoring.getExtractedClass().getSuperclass();
 		return thisSuperType != null && this.classDiff.getNextClassName().endsWith("." + thisSuperType.getClassType());
@@ -47,22 +51,26 @@ public class CandidateExtractClassRefactoring implements Comparable<CandidateExt
 
 	@Override
 	public int compareTo(CandidateExtractClassRefactoring o) {
+		if(this.sameFileExtract() && !o.sameFileExtract())
+			return -1;
+		else if(!this.sameFileExtract() && o.sameFileExtract())
+			return 1;
 		double sourceFolderDistance1 = this.refactoring.getExtractedClass().normalizedSourceFolderDistance(this.classDiff.getNextClass());
 		double sourceFolderDistance2 = o.refactoring.getExtractedClass().normalizedSourceFolderDistance(o.classDiff.getNextClass());
 		if(sourceFolderDistance1 != sourceFolderDistance2) {
 			return Double.compare(sourceFolderDistance1, sourceFolderDistance2);
 		}
 		else {
-			if(this.innerClassExtract()) {
+			if(this.innerClassExtract() && !o.innerClassExtract()) {
 				return -1;
 			}
-			if(o.innerClassExtract()) {
+			else if(o.innerClassExtract() && !this.innerClassExtract()) {
 				return 1;
 			}
-			if(this.subclassExtract()) {
+			if(this.subclassExtract() && !o.subclassExtract()) {
 				return -1;
 			}
-			if(o.subclassExtract()) {
+			else if(o.subclassExtract() && !this.subclassExtract()) {
 				return 1;
 			}
 			return this.classDiff.compareTo(o.classDiff);

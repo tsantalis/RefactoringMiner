@@ -2933,7 +2933,7 @@ public class UMLModelDiff {
 			}
 			if(!candidates.isEmpty()) {
 				CandidateExtractClassRefactoring firstCandidate = candidates.first();
-				if(firstCandidate.innerClassExtract() || firstCandidate.subclassExtract()) {
+				if(firstCandidate.innerClassExtract() || firstCandidate.subclassExtract() || firstCandidate.sameFileExtract()) {
 					detectSubRefactorings(firstCandidate.getClassDiff(),
 							firstCandidate.getRefactoring().getExtractedClass(),
 							firstCandidate.getRefactoring().getRefactoringType());

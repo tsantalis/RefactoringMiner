@@ -85,6 +85,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "object";
     	else if(isStruct)
     		return "struct";
+    	else if(isTypeAlias)
+    		return "type alias";
     	else
     		return "class";
     }

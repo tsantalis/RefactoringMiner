@@ -179,10 +179,6 @@ public class Node {
     return path;
   }
 
-  public Constants getConstants() {
-    return constants;
-  }
-
   public Tree getRight() {
     Tree parent = tree.getParent();
     if (parent == null) {
@@ -374,8 +370,7 @@ public class Node {
         sb.append("::").append(locationContexts.get(1).getContent());
         for (int i = 2; i < locationContexts.size(); i++) {
           Node n = locationContexts.get(i);
-          String prefix =
-              n.getTree().getType().name.equals(this.getConstants().METHOD_DECLARATION) ? "#" : ".";
+          String prefix = this.constants.isMethod(n.getTree().getType().name) ? "#" : ".";
           sb.append(prefix).append(n.getContent());
         }
       }

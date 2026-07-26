@@ -336258,6 +336258,17 @@
   "firstEndPos" : 109579,
   "secondEndPos" : 109579
 }, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 109584,
+  "secondPos" : 109584,
+  "firstEndPos" : 109681,
+  "secondEndPos" : 109681
+}, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
   "firstLabel" : "PHLWINDOW",
@@ -336279,6 +336290,116 @@
   "secondPos" : 109594,
   "firstEndPos" : 109605,
   "secondEndPos" : 109605
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109608,
+  "secondPos" : 109608,
+  "firstEndPos" : 109609,
+  "secondEndPos" : 109609
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109610,
+  "secondPos" : 109610,
+  "firstEndPos" : 109619,
+  "secondEndPos" : 109619
+}, {
+  "firstType" : "lambda_capture_specifier",
+  "secondType" : "lambda_capture_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109610,
+  "secondPos" : 109610,
+  "firstEndPos" : 109616,
+  "secondEndPos" : 109616
+}, {
+  "firstType" : "[",
+  "secondType" : "[",
+  "firstLabel" : "[",
+  "secondLabel" : "[",
+  "firstParentType" : "lambda_capture_specifier",
+  "secondParentType" : "lambda_capture_specifier",
+  "firstPos" : 109610,
+  "secondPos" : 109610,
+  "firstEndPos" : 109611,
+  "secondEndPos" : 109611
+}, {
+  "firstType" : "this",
+  "secondType" : "this",
+  "firstLabel" : "this",
+  "secondLabel" : "this",
+  "firstParentType" : "lambda_capture_specifier",
+  "secondParentType" : "lambda_capture_specifier",
+  "firstPos" : 109611,
+  "secondPos" : 109611,
+  "firstEndPos" : 109615,
+  "secondEndPos" : 109615
+}, {
+  "firstType" : "]",
+  "secondType" : "]",
+  "firstLabel" : "]",
+  "secondLabel" : "]",
+  "firstParentType" : "lambda_capture_specifier",
+  "secondParentType" : "lambda_capture_specifier",
+  "firstPos" : 109615,
+  "secondPos" : 109615,
+  "firstEndPos" : 109616,
+  "secondEndPos" : 109616
+}, {
+  "firstType" : "-",
+  "secondType" : "-",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109617,
+  "secondPos" : 109617,
+  "firstEndPos" : 109618,
+  "secondEndPos" : 109618
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109618,
+  "secondPos" : 109618,
+  "firstEndPos" : 109619,
+  "secondEndPos" : 109619
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PHLWINDOW",
+  "secondLabel" : "PHLWINDOW",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109620,
+  "secondPos" : 109620,
+  "firstEndPos" : 109629,
+  "secondEndPos" : 109629
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109630,
+  "secondPos" : 109630,
+  "firstEndPos" : 109631,
+  "secondEndPos" : 109631
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -336367,6 +336488,39 @@
   "secondPos" : 109652,
   "firstEndPos" : 109653,
   "secondEndPos" : 109653
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "return",
+  "secondLabel" : "return",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109666,
+  "secondPos" : 109666,
+  "firstEndPos" : 109672,
+  "secondEndPos" : 109672
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109673,
+  "secondPos" : 109673,
+  "firstEndPos" : 109680,
+  "secondEndPos" : 109680
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 109680,
+  "secondPos" : 109680,
+  "firstEndPos" : 109681,
+  "secondEndPos" : 109681
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

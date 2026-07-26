@@ -878,6 +878,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(matched.first,matched.second);
                     }
                 }
+                if(srcStatementNode.getType().name.equals(LANG1.SIMPLE_NAME) && dstStatementNode.getType().name.equals(LANG2.SIMPLE_NAME) && srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.ERROR) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.ERROR) &&
+                        srcStatementNode.getParent().isIsomorphicTo(dstStatementNode.getParent())) {
+                    mappingStore.addMappingRecursively(srcStatementNode.getParent(), dstStatementNode.getParent());
+                }
             }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);

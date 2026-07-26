@@ -40,7 +40,10 @@ import org.eclipse.cdt.core.dom.ast.IASTFieldReference;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
 import org.eclipse.cdt.core.dom.ast.IASTInitializerClause;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeConstructorExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -1405,6 +1408,13 @@ public class OperationInvocation extends AbstractCall {
 			this.methodName = fieldReference.getFieldName().toString();
 		}
 		else if(nameExpr instanceof ICPPASTFunctionCallExpression) {
+			this.methodName = "";
+		}
+		else if(nameExpr instanceof ICPPASTSimpleTypeConstructorExpression constructorExpr) {
+			ICPPASTDeclSpecifier declSpecifier = constructorExpr.getDeclSpecifier();
+			this.methodName = declSpecifier.getRawSignature();
+		}
+		else if(nameExpr instanceof ICPPASTLambdaExpression) {
 			this.methodName = "";
 		}
 	}

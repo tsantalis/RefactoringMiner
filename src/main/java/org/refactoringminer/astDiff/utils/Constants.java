@@ -66,6 +66,7 @@ public class Constants {
 			THROW_STATEMENT = "raise_statement";
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -105,6 +106,7 @@ public class Constants {
 			THROW_STATEMENT = "throw_expression";
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -144,6 +146,7 @@ public class Constants {
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
 		else if(PathFileUtils.isCppFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
@@ -183,6 +186,7 @@ public class Constants {
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "EmptyStatement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
 		else {
 			// Java values as default
@@ -223,6 +227,7 @@ public class Constants {
 			THROW_STATEMENT = "ThrowStatement";
 			EMPTY_STATEMENT = "EmptyStatement";
 			PRIMITIVE_TYPE = "PrimitiveType";
+			CONDITIONAL_EXPRESSION = "ConditionalExpression";
 		}
 	}
 
@@ -306,7 +311,7 @@ public class Constants {
     public final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
     public final String THROW_STATEMENT;
     public final String WHILE_STATEMENT;
-    public final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
+    public final String CONDITIONAL_EXPRESSION;
     public final String CAST_EXPRESSION = "CastExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";

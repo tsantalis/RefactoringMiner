@@ -29,11 +29,11 @@ public class TraversalPattern extends GraphWrapper {
         this.clusterGraph = clusterGraph;
     }
 
-    public static List<MappingGroup> aggregateByMapping(Graph<Node, Edge> graph, Collection<Node> nodes) {
+    public List<MappingGroup> aggregateByMapping(Collection<Node> nodes) {
         Set<Node> allowedNodes = new HashSet<>(nodes);
         for (Node node : nodes) {
-            allowedNodes.addAll(node.getMappingSources(graph));
-            allowedNodes.addAll(node.getMappingTargets(graph));
+            allowedNodes.addAll(node.getMappingSources(clusterGraph));
+            allowedNodes.addAll(node.getMappingTargets(clusterGraph));
         }
 
         List<MappingGroup> result = new ArrayList<>();
@@ -51,13 +51,13 @@ public class TraversalPattern extends GraphWrapper {
                 Node curr = queue.poll();
                 component.add(curr);
 
-                for (Node src : curr.getMappingSources(graph)) {
+                for (Node src : curr.getMappingSources(clusterGraph)) {
                     if (!visited.contains(src)) {
                         visited.add(src);
                         queue.add(src);
                     }
                 }
-                for (Node dst : curr.getMappingTargets(graph)) {
+                for (Node dst : curr.getMappingTargets(clusterGraph)) {
                     if (!visited.contains(dst)) {
                         visited.add(dst);
                         queue.add(dst);
@@ -89,37 +89,37 @@ public class TraversalPattern extends GraphWrapper {
         return narrator;
     }
 
-     public String extended(Graph<Node, Edge> graph, GrainLevel level, List<TraversalPattern> filterPatterns) {
-        return String.join("\n", getElements(graph, filterPatterns).stream().map(NarrativeElement::content).toList());
+     public String extended(List<TraversalPattern> filterPatterns) {
+        return String.join("\n", getElements(filterPatterns).stream().map(NarrativeElement::content).toList());
     }
 
-    public List<NarrativeElement> getElements(Graph<Node, Edge> graph, List<TraversalPattern> filterPatterns) {
+    public List<NarrativeElement> getElements(List<TraversalPattern> filterPatterns) {
         List<Node> aggMains = getMains();
 
         // Merge Mains by Mapping
-        List<MappingGroup> mappingGroups = TraversalPattern.aggregateByMapping(graph, aggMains);
+        List<MappingGroup> mappingGroups = aggregateByMapping(aggMains);
 
         // Get Group Contexts
         Map<MappingGroup, Set<Node>> mappingGroupContexts = new HashMap<>();
         for (MappingGroup mg : mappingGroups) {
             Set<Node> contexts = new HashSet<>();
             for (Node target : mg.targets()) {
-                List<Node> semanticContexts = target.getSemanticContexts(graph);
+                List<Node> semanticContexts = target.getSemanticContexts(clusterGraph);
                 if (!semanticContexts.isEmpty()) {
                     Node semanticContext = semanticContexts.get(0);
                     contexts.add(semanticContext);
-                    contexts.addAll(semanticContext.getMappingSources(graph));
+                    contexts.addAll(semanticContext.getMappingSources(clusterGraph));
                 }
             }
             for (Node source : mg.sources()) {
-                List<Node> semanticContexts = source.getSemanticContexts(graph);
+                List<Node> semanticContexts = source.getSemanticContexts(clusterGraph);
                 if (!semanticContexts.isEmpty()) {
                     Node semanticContext = semanticContexts.get(0);
                     contexts.add(semanticContext);
-                    contexts.addAll(semanticContext.getMappingTargets(graph));
+                    contexts.addAll(semanticContext.getMappingTargets(clusterGraph));
                 }
             }
-            mappingGroupContexts.put(mg, filterLargest(contexts, graph));
+            mappingGroupContexts.put(mg, filterLargest(contexts));
         }
 
         // Merge Groups by Context
@@ -129,11 +129,11 @@ public class TraversalPattern extends GraphWrapper {
             Set<Node> context = entry.getValue();
             boolean merged = false;
             for (MergedGroup mergedGroup : mergedGroups) {
-                if (isCompatible(context, mergedGroup.context, graph)) {
+                if (isCompatible(context, mergedGroup.context)) {
                     mergedGroup.groups.add(mg);
                     Set<Node> union = new HashSet<>(mergedGroup.context);
                     union.addAll(context);
-                    mergedGroup.context = filterLargest(union, graph);
+                    mergedGroup.context = filterLargest(union);
                     merged = true;
                     break;
                 }
@@ -232,14 +232,14 @@ public class TraversalPattern extends GraphWrapper {
             TraversalPattern leaf = leaves.get(i);
             for (Node s : leaf.getSides()) {
                 if (globalSides.contains(s) && !outputtedSides.contains(s)) {
-                    String content = "<dependency>\n    " + s.baseXml(graph).replace("\n", "\n    ") + "\n</dependency>";
+                    String content = "<dependency>\n    " + s.baseXml(clusterGraph).replace("\n", "\n    ") + "\n</dependency>";
                     elements.add(new NarrativeElement(content, content.split("\n").length, NarrativeElement.ElementType.DEPENDENCY));
                     outputtedSides.add(s);
                 }
             }
             for (MergedGroup mg : mergedGroups) {
                 if (groupLatestIndex.get(mg) == i && !outputtedGroups.contains(mg)) {
-                    String content = buildSubChapterXml(mg, graph, leaves, localSidesMap);
+                    String content = buildSubChapterXml(mg, leaves, localSidesMap);
                     elements.add(new NarrativeElement(content, content.split("\n").length, NarrativeElement.ElementType.SUB_CHAPTER));
                     outputtedGroups.add(mg);
                 }
@@ -361,19 +361,19 @@ public class TraversalPattern extends GraphWrapper {
         result.add(p);
     }
 
-    private String buildSubChapterXml(MergedGroup mergedGroup, Graph<Node, Edge> graph, List<TraversalPattern> leaves, Map<MergedGroup, List<Node>> localSidesMap) {
+    private String buildSubChapterXml(MergedGroup mergedGroup, List<TraversalPattern> leaves, Map<MergedGroup, List<Node>> localSidesMap) {
         StringBuilder sb = new StringBuilder();
         sb.append("<sub_chapter>");
 
         for (MappingGroup mg : mergedGroup.groups) {
-            sb.append("\n    ").append(buildXmlMappingHunk(mg.sources(), mg.targets(), graph).replace("\n", "\n    "));
+            sb.append("\n    ").append(buildXmlMappingHunk(mg.sources(), mg.targets()).replace("\n", "\n    "));
         }
 
         if (!mergedGroup.context.isEmpty()) {
             sb.append("\n    <context>");
             Set<String> contextsText = new HashSet<>();
             for (Node context : mergedGroup.context) {
-                contextsText.add(context.mappingXml(graph));
+                contextsText.add(context.mappingXml(clusterGraph));
             }
             sb.append("\n        ").append(String.join("\n        ", contextsText.stream().map(text -> text.replace("\n", "\n        ")).toList()));
             sb.append("\n    </context>");
@@ -383,7 +383,7 @@ public class TraversalPattern extends GraphWrapper {
         if (!localSides.isEmpty()) {
             sb.append("\n    <dependencies>");
             for (Node side : localSides) {
-                sb.append("\n        ").append(side.baseXml(graph).replace("\n", "\n        "));
+                sb.append("\n        ").append(side.baseXml(clusterGraph).replace("\n", "\n        "));
             }
             sb.append("\n    </dependencies>");
         }
@@ -392,29 +392,31 @@ public class TraversalPattern extends GraphWrapper {
         return sb.toString();
     }
 
-    private String buildXmlMappingHunk(List<Node> sources, List<Node> targets, Graph<Node, Edge> graph) {
+    private String buildXmlMappingHunk(List<Node> sources, List<Node> targets) {
         StringBuilder xmlOutput = new StringBuilder();
         xmlOutput.append("<change>");
         if (!sources.isEmpty()) {
             xmlOutput.append("\n    ");
-            xmlOutput.append(String.join("\n    ", sources.stream().map(n -> n.baseXml(graph).replace("\n", "\n    ")).toList()));
+            xmlOutput.append(String.join("\n    ", sources.stream()
+                    .map(n -> n.baseXml(clusterGraph).replace("\n", "\n    ")).toList()));
         }
         if (!targets.isEmpty()) {
             xmlOutput.append("\n    ");
-            xmlOutput.append(String.join("\n    ", targets.stream().map(n -> n.baseXml(graph).replace("\n", "\n    ")).toList()));
+            xmlOutput.append(String.join("\n    ", targets.stream()
+                    .map(n -> n.baseXml(clusterGraph).replace("\n", "\n    ")).toList()));
         }
         xmlOutput.append("\n</change>");
         return xmlOutput.toString();
     }
 
-    private boolean isCompatible(Set<Node> setA, Set<Node> setB, Graph<Node, Edge> graph) {
+    private boolean isCompatible(Set<Node> setA, Set<Node> setB) {
         if (setA.isEmpty() || setB.isEmpty()) return false;
 
         boolean aCoveredByB = true;
         for (Node a : setA) {
             boolean matched = false;
             for (Node b : setB) {
-                if (a.equals(b) || a.getSemanticContexts(graph).contains(b) || b.getSemanticContexts(graph).contains(a)) {
+                if (a.equals(b) || a.getSemanticContexts(clusterGraph).contains(b) || b.getSemanticContexts(clusterGraph).contains(a)) {
                     matched = true;
                     break;
                 }
@@ -429,7 +431,7 @@ public class TraversalPattern extends GraphWrapper {
         for (Node b : setB) {
             boolean matched = false;
             for (Node a : setA) {
-                if (a.equals(b) || a.getSemanticContexts(graph).contains(b) || b.getSemanticContexts(graph).contains(a)) {
+                if (a.equals(b) || a.getSemanticContexts(clusterGraph).contains(b) || b.getSemanticContexts(clusterGraph).contains(a)) {
                     matched = true;
                     break;
                 }
@@ -443,8 +445,9 @@ public class TraversalPattern extends GraphWrapper {
         return aCoveredByB || bCoveredByA;
     }
 
-    private Set<Node> filterLargest(Set<Node> contexts, Graph<Node, Edge> graph) {
-        return contexts.stream().filter(ctx -> ctx.getSemanticContexts(graph).stream().noneMatch(sc -> sc != ctx && contexts.contains(sc))).collect(java.util.stream.Collectors.toSet());
+    private Set<Node> filterLargest(Set<Node> contexts) {
+        return contexts.stream().filter(ctx -> ctx.getSemanticContexts(clusterGraph).stream()
+                .noneMatch(sc -> sc != ctx && contexts.contains(sc))).collect(java.util.stream.Collectors.toSet());
     }
 
     public record MappingGroup(List<Node> sources, List<Node> targets) {

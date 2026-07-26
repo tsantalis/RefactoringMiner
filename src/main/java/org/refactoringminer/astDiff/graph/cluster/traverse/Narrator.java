@@ -214,16 +214,11 @@ public class Narrator {
         List<ChapterUnit> units = new ArrayList<>();
         for (int i = 0; i < chapters.size(); i++) {
             TraversalPattern chapter = chapters.get(i);
-            Graph<Node, Edge> clusterGraph = chapter.getClusterGraph();
-            if (clusterGraph == null) {
-                units.add(new ChapterUnit(String.format("[Chapter %d of %d]: Error: Could not find associated cluster graph.\n\n", i + 1, chapters.size()), 0, i + 1));
-                continue;
-            }
 
             List<TraversalPattern> filterPatterns = i > 0 ? chapters.subList(0, i) : Collections.emptyList();
 
             if (chapter instanceof AggregatorPattern agg) {
-                List<NarrativeElement> elements = agg.getElements(clusterGraph, filterPatterns);
+                List<NarrativeElement> elements = agg.getElements(filterPatterns);
                 int totalLines = elements.stream().mapToInt(NarrativeElement::lineCount).sum();
 
                 if (totalLines > THRESHOLD) {
@@ -233,11 +228,11 @@ public class Narrator {
                         units.add(new ChapterUnit(content, content.split("\n").length, i + 1));
                     }
                 } else {
-                    String content = agg.extended(clusterGraph, level, filterPatterns);
+                    String content = agg.extended(filterPatterns);
                     units.add(new ChapterUnit(content, content.split("\n").length, i + 1));
                 }
             } else {
-                String content = chapter.extended(clusterGraph, level, filterPatterns);
+                String content = chapter.extended(filterPatterns);
                 units.add(new ChapterUnit(content, content.split("\n").length, i + 1));
             }
         }

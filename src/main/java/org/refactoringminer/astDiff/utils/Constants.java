@@ -594,4 +594,5 @@ public class Constants {
     public final String FIELD_EXPRESSION = "field_expression";
     public final String SUBSCRIPT_EXPRESSION = "subscript_expression";
     public final String ENUMERATOR = "enumerator";
+    public final String ELLIPSIS = "...";
 }

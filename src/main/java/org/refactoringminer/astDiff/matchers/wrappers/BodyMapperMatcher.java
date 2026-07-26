@@ -746,6 +746,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     if (closing != null) {
                         mappingStore.addMapping(closing.first,closing.second);
                     }
+                    Pair<Tree, Tree> ellipsis = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.ELLIPSIS, LANG2.ELLIPSIS);
+                    if (ellipsis != null) {
+                        mappingStore.addMapping(ellipsis.first,ellipsis.second);
+                    }
                     Pair<Tree, Tree> parameterDeclarations = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.PARAMETER_DECLARATION, LANG2.PARAMETER_DECLARATION);
                     if (parameterDeclarations != null) {
                         mappingStore.addMapping(parameterDeclarations.first,parameterDeclarations.second);

@@ -5,8 +5,7 @@ import org.refactoringminer.astDiff.graph.Edge;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.cluster.Cluster;
 import org.refactoringminer.astDiff.graph.cluster.Clusterer;
-import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalEngine;
-import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalPattern;
+import org.refactoringminer.astDiff.graph.cluster.traverse.*;
 
 import org.jgrapht.Graph;
 import org.junit.jupiter.api.Assertions;
@@ -73,6 +72,16 @@ public class NarratorTest {
         JsonObject actualHierarchy = Stringifier.hierarchy(patterns);
         String expectedHierarchyPath = EXPECTED_DIR + testCase.repoName + "-" + testCase.sha1 + "-hierarchy.json";
         verifyHierarchy(actualHierarchy, expectedHierarchyPath);
+
+        // --- Test Narrator ---
+        TraversalComponent hierarchyRoot = new TraversalComponent(patterns, ReasonType.CONTEXT);
+        Narrator narrator = hierarchyRoot.getNarrator();
+        List<TraversalPattern> leafNarrative = narrator.getNarrative(GrainLevel.LEAF);
+        for (int i = 0; i < leafNarrative.size(); i++) {
+            for (int j = i + 1; j < leafNarrative.size(); j++) {
+                Assertions.assertFalse(leafNarrative.get(i).dependsOn(leafNarrative.get(j)));
+            }
+        }
     }
 
     private void verifyClusters(JsonArray actual, String expectedPath) throws IOException {

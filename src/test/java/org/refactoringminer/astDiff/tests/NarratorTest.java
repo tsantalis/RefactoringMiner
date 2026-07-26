@@ -73,7 +73,7 @@ public class NarratorTest {
         String expectedHierarchyPath = EXPECTED_DIR + testCase.repoName + "-" + testCase.sha1 + "-hierarchy.json";
         verifyHierarchy(actualHierarchy, expectedHierarchyPath);
 
-        // --- Test Narrator ---
+        // --- Test Narrative ---
         TraversalComponent hierarchyRoot = new TraversalComponent(patterns, ReasonType.CONTEXT);
         Narrator narrator = hierarchyRoot.getNarrator();
         List<TraversalPattern> leafNarrative = narrator.getNarrative(GrainLevel.LEAF);

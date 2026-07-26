@@ -17,7 +17,8 @@ public class Constants {
 
 	public boolean isType(String treeType) {
 		return treeType.equals(TYPE_DECLARATION) || treeType.equals(ENUM_DECLARATION) || treeType.equals(RECORD_DECLARATION) ||
-				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION);
+				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION) ||
+				treeType.equals(OBJECT_DECLARATION) || treeType.equals(STRUCT_SPECIFIER) || treeType.equals(TYPE_ALIAS_DECLARATION) || treeType.equals(NAMESPACE);
 	}
 
 	public boolean isMethod(String treeType) {

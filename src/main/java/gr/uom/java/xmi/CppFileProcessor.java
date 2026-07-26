@@ -49,6 +49,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamedTypeSpecifier;
@@ -612,6 +613,9 @@ public class CppFileProcessor {
 		operation.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(declSpecifier.isInline());
 		distributeComments(comments, locationInfo, operation.getComments());
+		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
+			operation.setConst(cppFunctionDeclarator.isConst());
+		}
 
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
 		if(returnType != null) {
@@ -659,6 +663,9 @@ public class CppFileProcessor {
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());
 		distributeComments(comments, locationInfo, operation.getComments());
+		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
+			operation.setConst(cppFunctionDeclarator.isConst());
+		}
 
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, functionDefinition.getDeclSpecifier(), declarator, 0);
 		if(returnType != null) {

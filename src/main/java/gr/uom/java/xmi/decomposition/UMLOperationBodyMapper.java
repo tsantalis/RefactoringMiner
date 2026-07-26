@@ -821,7 +821,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(classDiff != null) {
 				for(UMLAttribute attribute : classDiff.getOriginalClass().getAttributes()) {
-					if(!operation2.isDeclaredInAnonymousClass() && UMLModelDiff.looksLikeSameType(attribute.getType().getClassType(), operation2.getClassName())) {
+					if(!operation2.isDeclaredInAnonymousClass() && attribute.getType() != null && UMLModelDiff.looksLikeSameType(attribute.getType().getClassType(), operation2.getClassName())) {
 						parameterToArgumentMap1.put(attribute.getName() + ".", "");
 						parameterToArgumentMap2.put(LANG2.THIS_DOT, "");
 					}

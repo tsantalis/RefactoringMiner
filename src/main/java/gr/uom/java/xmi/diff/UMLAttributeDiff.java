@@ -111,11 +111,11 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 			renamed = true;
 		if(!removedAttribute.getVisibility().equals(addedAttribute.getVisibility()))
 			visibilityChanged = true;
-		if(!removedAttribute.getType().equals(addedAttribute.getType()))
+		if(removedAttribute.getType() != null && addedAttribute.getType() != null && !removedAttribute.getType().equals(addedAttribute.getType()))
 			typeChanged = true;
-		else if(!removedAttribute.getType().equalsQualified(addedAttribute.getType()))
+		else if(removedAttribute.getType() != null && addedAttribute.getType() != null && !removedAttribute.getType().equalsQualified(addedAttribute.getType()))
 			qualifiedTypeChanged = true;
-		if(!removedAttribute.getType().toString().equals(addedAttribute.getType().toString()))
+		if(removedAttribute.getType() != null && addedAttribute.getType() != null && !removedAttribute.getType().toString().equals(addedAttribute.getType().toString()))
 			typeChanged = true;
 		if(removedAttribute.isStatic() != addedAttribute.isStatic())
 			staticChanged = true;

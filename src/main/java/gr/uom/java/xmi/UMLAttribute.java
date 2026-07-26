@@ -453,14 +453,26 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
     	
     	if(o instanceof UMLAttribute) {
     		UMLAttribute umlAttribute = (UMLAttribute)o;
+    		if(this.type == null && umlAttribute.type != null)
+    			return false;
+    		if(this.type == null && umlAttribute.type == null) {
+    			return this.name.equals(umlAttribute.name) &&
+    			this.visibility.equals(umlAttribute.visibility);
+    		}
     		return this.name.equals(umlAttribute.name) &&
-			this.visibility.equals(umlAttribute.visibility) &&
-			this.type.equals(umlAttribute.type);
+    				this.visibility.equals(umlAttribute.visibility) &&
+    				this.type.equals(umlAttribute.type);
     	}
     	return false;
 	}
 
 	public boolean equalsQualified(UMLAttribute umlAttribute) {
+		if(this.type == null && umlAttribute.type != null)
+			return false;
+		if(this.type == null && umlAttribute.type == null) {
+			return this.name.equals(umlAttribute.name) &&
+			this.visibility.equals(umlAttribute.visibility);
+		}
 		return this.name.equals(umlAttribute.name) &&
 				this.visibility.equals(umlAttribute.visibility) &&
 				this.type.equalsQualified(umlAttribute.type);

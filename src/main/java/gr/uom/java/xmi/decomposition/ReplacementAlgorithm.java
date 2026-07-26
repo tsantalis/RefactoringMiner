@@ -1171,7 +1171,7 @@ public class ReplacementAlgorithm {
 		if(replacementInfo.getReplacements().size() > 0 && replacementInfo.getReplacements(ReplacementType.VARIABLE_NAME).size() == 0) {
 			boolean atLeastOneUpperCaseVariable1 = false;
 			for(String variable1 : variables1) {
-				if(Character.isUpperCase(variable1.charAt(0))) {
+				if(variable1.length() > 0 && Character.isUpperCase(variable1.charAt(0))) {
 					boolean foundInReplacement = false;
 					for(Replacement r : replacementInfo.getReplacements()) {
 						if(r.getBefore().contains(variable1) && !r.getBefore().equals(variable1)) {
@@ -1185,7 +1185,7 @@ public class ReplacementAlgorithm {
 			}
 			boolean atLeastOneUpperCaseVariable2 = false;
 			for(String variable2 : variables2) {
-				if(Character.isUpperCase(variable2.charAt(0))) {
+				if(variable2.length() > 0 && Character.isUpperCase(variable2.charAt(0))) {
 					boolean foundInReplacement = false;
 					for(Replacement r : replacementInfo.getReplacements()) {
 						if(r.getAfter().contains(variable2) && !r.getAfter().equals(variable2)) {

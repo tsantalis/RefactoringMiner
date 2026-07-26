@@ -14,6 +14,7 @@ import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLinkageSpecification;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateDeclaration;
@@ -233,6 +234,9 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			}
 			else if(declarator.getParent().getParent() instanceof ICPPASTTemplateDeclaration templateDeclaration) {
 				return templateDeclaration.getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof ICPPASTLinkageSpecification) {
+				return declarator.getParent().getParent();
 			}
 		}
 		else if(declarator.getParent() instanceof CPPASTParameterDeclaration && declarator.getParent().getParent() instanceof CPPASTFunctionDeclarator) {

@@ -29,6 +29,19 @@ public class Constants {
 	}
     //    TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name
 
+    public boolean isEmpty(String treeType) {
+        return treeType.equals(EMPTY_STATEMENT);
+    }
+
+    public boolean isImportExport(String treeType) {
+        return treeType.equals(IMPORT_DECLARATION) || treeType.equals(IMPORT_FROM_STATEMENT) || treeType.equals(FUTURE_IMPORT_STATEMENT) ||
+                treeType.equals(RELATIVE_IMPORT) || treeType.equals(IMPORT_LIST) || treeType.equals(IMPORT_IDENTIFIER) ||
+                treeType.equals(EXPORT_STATEMENT) || treeType.equals(NAMESPACE_IMPORT) || treeType.equals(EXPORT_KEYWORD) ||
+                treeType.equals(IMPORT_KEYWORD) || treeType.equals(FROM_KEYWORD) || treeType.equals(IMPORT_STAR) ||
+                treeType.equals(IMPORT_SPECIFIER) || treeType.equals(EXPORT_SPECIFIER) || treeType.equals(EXPORT_CLAUSE) ||
+                treeType.equals(IMPORT_CLAUSE) || treeType.equals(NAMED_IMPORTS);
+    }
+
 	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {
 			CLASS_BLOCK = "block";

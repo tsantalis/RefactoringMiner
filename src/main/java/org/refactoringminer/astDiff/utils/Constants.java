@@ -23,10 +23,11 @@ public class Constants {
 
 	public boolean isMethod(String treeType) {
 		return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
-				treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
-				treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
-				treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) || treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) || treeType.equals(REFERENCE_DECLARATOR);
+                treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
+                treeType.equals(METHOD_DEFINITION) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
+                treeType.equals(REFERENCE_DECLARATOR);
 	}
+    //    TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name
 
 	public Constants(String filePath) {
 		if(PathFileUtils.isPythonFile(filePath)) {

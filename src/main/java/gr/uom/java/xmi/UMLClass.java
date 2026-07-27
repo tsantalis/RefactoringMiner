@@ -340,6 +340,10 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 			this.packageDeclaration = Optional.of(packageDeclaration);
 	}
 
+	public boolean isHeader() {
+		return sourceFile.toLowerCase().endsWith(".hpp") || sourceFile.toLowerCase().endsWith(".h");
+	}
+
     public UMLOperation matchOperation(UMLOperation otherOperation) {
     	ListIterator<UMLOperation> operationIt = operations.listIterator();
     	while(operationIt.hasNext()) {

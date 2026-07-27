@@ -926,7 +926,7 @@ public class UMLModelDiff {
 	}
 
 	private boolean existingInnerClassMove(UMLClass removedClass, UMLClass addedClass) {
-		if(removedClass.getNonQualifiedName().equals(addedClass.getNonQualifiedName())) {
+		if(removedClass.getNonQualifiedName().equals(addedClass.getNonQualifiedName()) && removedClass.isHeader() == addedClass.isHeader()) {
 			for(UMLClassMoveDiff diff : classMoveDiffList) {
 				if(diff.getOriginalClassName().startsWith(removedClass.getName() + ".") && diff.getNextClassName().startsWith(addedClass.getName() + ".")) {
 					return true;

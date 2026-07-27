@@ -10,6 +10,28 @@
   "firstEndPos" : 1174,
   "secondEndPos" : 669
 }, {
+  "firstType" : "class_specifier",
+  "secondType" : "translation_unit",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "translation_unit",
+  "secondParentType" : "",
+  "firstPos" : 138,
+  "secondPos" : 0,
+  "firstEndPos" : 1066,
+  "secondEndPos" : 669
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 169,
+  "secondPos" : 124,
+  "firstEndPos" : 170,
+  "secondEndPos" : 125
+}, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",
   "firstLabel" : "",
@@ -186,6 +208,17 @@
   "firstEndPos" : 281,
   "secondEndPos" : 226
 }, {
+  "firstType" : "field_declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 445,
+  "secondPos" : 279,
+  "firstEndPos" : 592,
+  "secondEndPos" : 426
+}, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
   "firstLabel" : "void",
@@ -207,6 +240,17 @@
   "secondPos" : 284,
   "firstEndPos" : 591,
   "secondEndPos" : 425
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "startAnimation",
+  "secondLabel" : "startAnimation",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 450,
+  "secondPos" : 284,
+  "firstEndPos" : 464,
+  "secondEndPos" : 298
 }, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",
@@ -681,6 +725,28 @@
   "firstEndPos" : 591,
   "secondEndPos" : 425
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 591,
+  "secondPos" : 425,
+  "firstEndPos" : 592,
+  "secondEndPos" : 426
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 598,
+  "secondPos" : 432,
+  "firstEndPos" : 668,
+  "secondEndPos" : 502
+}, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
   "firstLabel" : "void",
@@ -702,6 +768,17 @@
   "secondPos" : 437,
   "firstEndPos" : 667,
   "secondEndPos" : 501
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "setFullscreenFadeAnimation",
+  "secondLabel" : "setFullscreenFadeAnimation",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 603,
+  "secondPos" : 437,
+  "firstEndPos" : 629,
+  "secondEndPos" : 463
 }, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",
@@ -813,6 +890,28 @@
   "firstEndPos" : 667,
   "secondEndPos" : 501
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 667,
+  "secondPos" : 501,
+  "firstEndPos" : 668,
+  "secondEndPos" : 502
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 673,
+  "secondPos" : 507,
+  "firstEndPos" : 735,
+  "secondEndPos" : 569
+}, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
   "firstLabel" : "void",
@@ -834,6 +933,17 @@
   "secondPos" : 512,
   "firstEndPos" : 734,
   "secondEndPos" : 568
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "setFullscreenFloatingFade",
+  "secondLabel" : "setFullscreenFloatingFade",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 678,
+  "secondPos" : 512,
+  "firstEndPos" : 703,
+  "secondEndPos" : 537
 }, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",
@@ -945,6 +1055,28 @@
   "firstEndPos" : 734,
   "secondEndPos" : 568
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 734,
+  "secondPos" : 568,
+  "firstEndPos" : 735,
+  "secondEndPos" : 569
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 740,
+  "secondPos" : 574,
+  "firstEndPos" : 832,
+  "secondEndPos" : 666
+}, {
   "firstType" : "primitive_type",
   "secondType" : "primitive_type",
   "firstLabel" : "void",
@@ -966,6 +1098,17 @@
   "secondPos" : 579,
   "firstEndPos" : 831,
   "secondEndPos" : 665
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "overrideFullscreenFadeAmount",
+  "secondLabel" : "overrideFullscreenFadeAmount",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 745,
+  "secondPos" : 579,
+  "firstEndPos" : 773,
+  "secondEndPos" : 607
 }, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",
@@ -1153,4 +1296,26 @@
   "secondPos" : 664,
   "firstEndPos" : 831,
   "secondEndPos" : 665
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 831,
+  "secondPos" : 665,
+  "firstEndPos" : 832,
+  "secondEndPos" : 666
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 1065,
+  "secondPos" : 667,
+  "firstEndPos" : 1066,
+  "secondEndPos" : 668
 } ]

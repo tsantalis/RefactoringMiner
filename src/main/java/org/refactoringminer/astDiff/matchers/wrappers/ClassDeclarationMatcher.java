@@ -127,6 +127,12 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             srcTypeDeclaration = srcTree;
             dstTypeDeclaration = dstTree;
         }
+        if (srcTypeDeclaration == null && dstTypeDeclaration != null && classDiff.getOriginalClass().isModule()) {
+            srcTypeDeclaration = srcTree;
+        }
+        if (srcTypeDeclaration != null && dstTypeDeclaration == null && classDiff.getNextClass().isModule()) {
+            dstTypeDeclaration = dstTree;
+        }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.ERROR);
             dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.ERROR);

@@ -141,7 +141,7 @@ public class Narrator {
 
     private static boolean matchesGrain(String treeType, Constants constants, GrainLevel grainLevel) {
         return switch (grainLevel) {
-            case METHOD -> constants.isMethod(treeType);
+            case METHOD -> constants.isNamedMethod(treeType);
             case CLASS -> constants.isType(treeType);
             case FILE -> constants.isRoot(treeType);
             default -> false;

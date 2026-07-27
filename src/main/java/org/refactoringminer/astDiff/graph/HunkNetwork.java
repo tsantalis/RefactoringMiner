@@ -373,7 +373,7 @@ public class HunkNetwork {
       List<Tree> variableDeclarations = new ArrayList<>();
       for (Tree subTree : subTrees) {
         String subTreeType = subTree.getType().name;
-        if (constants.isMethod(subTreeType)) {
+        if (constants.isNamedMethod(subTreeType)) {
           methodDeclarations.add(subTree);
         }
         if (subTreeType.equals(constants.FIELD_DECLARATION)) {

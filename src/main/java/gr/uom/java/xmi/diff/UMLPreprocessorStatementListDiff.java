@@ -91,6 +91,30 @@ public class UMLPreprocessorStatementListDiff {
 		}
 		oldStatementsCopy.removeAll(oldToBeRemoved);
 		newStatementsCopy.removeAll(newToBeRemoved);
+		//handles modified include statements, because the parent container is moved
+		for(UMLPreprocessorStatement oldStatement : oldStatementsCopy) {
+			if(oldStatement.getName().isPresent()) {
+				String rawName1 = oldStatement.getName().get();
+				if(rawName1.startsWith("../"))
+					rawName1 = rawName1.replace("../", "");
+				for(UMLPreprocessorStatement newStatement : newStatementsCopy) {
+					if(newStatement.getName().isPresent()) {
+						String rawName2 = newStatement.getName().get();
+						if(rawName2.startsWith("../"))
+							rawName2 = rawName2.replace("../", "");
+						if(rawName1.equals(rawName2) || rawName2.endsWith(rawName1) || rawName1.endsWith(rawName2)) {
+							Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> pair = Pair.of(oldStatement, newStatement);
+							changedStatements.add(pair);
+							oldToBeRemoved.add(oldStatement);
+							newToBeRemoved.add(newStatement);
+							break;
+						}
+					}
+				}
+			}
+		}
+		oldStatementsCopy.removeAll(oldToBeRemoved);
+		newStatementsCopy.removeAll(newToBeRemoved);
 		this.removedStatements = oldStatementsCopy;
 		this.addedStatements = newStatementsCopy;
 	}

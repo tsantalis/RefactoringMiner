@@ -600,4 +600,5 @@ public class Constants {
     public final String SUBSCRIPT_EXPRESSION = "subscript_expression";
     public final String ENUMERATOR = "enumerator";
     public final String ELLIPSIS = "...";
+    public final String STORAGE_CLASS_SPECIFIER = "storage_class_specifier";
 }

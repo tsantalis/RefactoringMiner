@@ -103,6 +103,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             srcStatementNode = srcStatementNode.getParent();
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.FOR_KEYWORD))
             dstStatementNode = dstStatementNode.getParent();
+        if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.SWITCH_KEYWORD))
+            srcStatementNode = srcStatementNode.getParent();
+        if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.SWITCH_KEYWORD))
+            dstStatementNode = dstStatementNode.getParent();
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -791,6 +795,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.TYPE_QUALIFIER)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.MEMBER_EXPRESSION) && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
                 srcStatementNode.getParent().getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
             srcStatementNode = srcStatementNode.getParent().getParent();
@@ -815,6 +822,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.TYPE_QUALIFIER)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.MEMBER_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) &&

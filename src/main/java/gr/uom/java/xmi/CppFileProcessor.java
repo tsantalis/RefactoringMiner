@@ -628,7 +628,8 @@ public class CppFileProcessor {
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
-				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
+				String parameterDeclaratorName = parameter.getDeclarator().getName().toString();
+				if(parameterDeclaratorName.isBlank() && UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
 					continue;
 				}
 				String parameterName = extractParameterName(parameter, index);
@@ -678,7 +679,8 @@ public class CppFileProcessor {
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
-				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
+				String parameterDeclaratorName = parameter.getDeclarator().getName().toString();
+				if(parameterDeclaratorName.isBlank() && UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
 					continue;
 				}
 				String parameterName = extractParameterName(parameter, index);

@@ -13441,6 +13441,83 @@
   "firstEndPos" : 5883,
   "secondEndPos" : 5874
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 5883,
+  "secondPos" : 5874,
+  "firstEndPos" : 5894,
+  "secondEndPos" : 5885
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 5883,
+  "secondPos" : 5874,
+  "firstEndPos" : 5887,
+  "secondEndPos" : 5878
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 5887,
+  "secondPos" : 5878,
+  "firstEndPos" : 5894,
+  "secondEndPos" : 5885
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 5887,
+  "secondPos" : 5878,
+  "firstEndPos" : 5888,
+  "secondEndPos" : 5879
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 5888,
+  "secondPos" : 5879,
+  "firstEndPos" : 5894,
+  "secondEndPos" : 5885
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 5888,
+  "secondPos" : 5879,
+  "firstEndPos" : 5889,
+  "secondEndPos" : 5880
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 5890,
+  "secondPos" : 5881,
+  "firstEndPos" : 5894,
+  "secondEndPos" : 5885
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -15872,6 +15949,83 @@
   "firstEndPos" : 6519,
   "secondEndPos" : 6510
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 6519,
+  "secondPos" : 6510,
+  "firstEndPos" : 6530,
+  "secondEndPos" : 6521
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 6519,
+  "secondPos" : 6510,
+  "firstEndPos" : 6523,
+  "secondEndPos" : 6514
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 6523,
+  "secondPos" : 6514,
+  "firstEndPos" : 6530,
+  "secondEndPos" : 6521
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 6523,
+  "secondPos" : 6514,
+  "firstEndPos" : 6524,
+  "secondEndPos" : 6515
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 6524,
+  "secondPos" : 6515,
+  "firstEndPos" : 6530,
+  "secondEndPos" : 6521
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 6524,
+  "secondPos" : 6515,
+  "firstEndPos" : 6525,
+  "secondEndPos" : 6516
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 6526,
+  "secondPos" : 6517,
+  "firstEndPos" : 6530,
+  "secondEndPos" : 6521
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -18016,6 +18170,83 @@
   "secondPos" : 7115,
   "firstEndPos" : 7125,
   "secondEndPos" : 7116
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 7125,
+  "secondPos" : 7116,
+  "firstEndPos" : 7136,
+  "secondEndPos" : 7127
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 7125,
+  "secondPos" : 7116,
+  "firstEndPos" : 7129,
+  "secondEndPos" : 7120
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 7129,
+  "secondPos" : 7120,
+  "firstEndPos" : 7136,
+  "secondEndPos" : 7127
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 7129,
+  "secondPos" : 7120,
+  "firstEndPos" : 7130,
+  "secondEndPos" : 7121
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 7130,
+  "secondPos" : 7121,
+  "firstEndPos" : 7136,
+  "secondEndPos" : 7127
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 7130,
+  "secondPos" : 7121,
+  "firstEndPos" : 7131,
+  "secondEndPos" : 7122
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 7132,
+  "secondPos" : 7123,
+  "firstEndPos" : 7136,
+  "secondEndPos" : 7127
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -297878,6 +298109,61 @@
   "secondPos" : 88487,
   "firstEndPos" : 88512,
   "secondEndPos" : 88488
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 88512,
+  "secondPos" : 88488,
+  "firstEndPos" : 88524,
+  "secondEndPos" : 88500
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 88512,
+  "secondPos" : 88488,
+  "firstEndPos" : 88516,
+  "secondEndPos" : 88492
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 88516,
+  "secondPos" : 88492,
+  "firstEndPos" : 88524,
+  "secondEndPos" : 88500
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 88516,
+  "secondPos" : 88492,
+  "firstEndPos" : 88517,
+  "secondEndPos" : 88493
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "handle",
+  "secondLabel" : "handle",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 88518,
+  "secondPos" : 88494,
+  "firstEndPos" : 88524,
+  "secondEndPos" : 88500
 }, {
   "firstType" : ")",
   "secondType" : ")",

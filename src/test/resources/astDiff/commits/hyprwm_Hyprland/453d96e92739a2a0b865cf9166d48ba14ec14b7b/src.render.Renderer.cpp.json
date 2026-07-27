@@ -4597,6 +4597,61 @@
   "firstEndPos" : 2819,
   "secondEndPos" : 2819
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 2819,
+  "secondPos" : 2819,
+  "firstEndPos" : 2829,
+  "secondEndPos" : 2829
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 2819,
+  "secondPos" : 2819,
+  "firstEndPos" : 2823,
+  "secondEndPos" : 2823
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 2823,
+  "secondPos" : 2823,
+  "firstEndPos" : 2829,
+  "secondEndPos" : 2829
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 2823,
+  "secondPos" : 2823,
+  "firstEndPos" : 2824,
+  "secondEndPos" : 2824
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 2825,
+  "secondPos" : 2825,
+  "firstEndPos" : 2829,
+  "secondEndPos" : 2829
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -361040,6 +361095,61 @@
   "secondPos" : 125066,
   "firstEndPos" : 125043,
   "secondEndPos" : 125067
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 125043,
+  "secondPos" : 125067,
+  "firstEndPos" : 125053,
+  "secondEndPos" : 125077
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 125043,
+  "secondPos" : 125067,
+  "firstEndPos" : 125047,
+  "secondEndPos" : 125071
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 125047,
+  "secondPos" : 125071,
+  "firstEndPos" : 125053,
+  "secondEndPos" : 125077
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 125047,
+  "secondPos" : 125071,
+  "firstEndPos" : 125048,
+  "secondEndPos" : 125072
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "data",
+  "secondLabel" : "data",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 125049,
+  "secondPos" : 125073,
+  "firstEndPos" : 125053,
+  "secondEndPos" : 125077
 }, {
   "firstType" : ")",
   "secondType" : ")",

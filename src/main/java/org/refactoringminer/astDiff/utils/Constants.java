@@ -3,6 +3,8 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
+    private final String path;
+
 	public static boolean isCrossLanguage(Constants LANG1, Constants LANG2) {
 		return !LANG1.TYPE_DECLARATION.equals(LANG2.TYPE_DECLARATION);
 	}
@@ -22,10 +24,9 @@ public class Constants {
 	}
 
 	public boolean isMethod(String treeType) {
-		return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
-                treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
-                treeType.equals(METHOD_DEFINITION) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
-                treeType.equals(REFERENCE_DECLARATOR);
+		return treeType.equals(METHOD_DECLARATION) || treeType.equals(DECORATED_METHOD) || treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) ||
+                treeType.equals(GETTER) || treeType.equals(SETTER) || treeType.equals(METHOD_DEFINITION) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) ||
+                treeType.equals(FUNCTION_DECLARATOR) || treeType.equals(REFERENCE_DECLARATOR);
 	}
     //    TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name
 
@@ -42,8 +43,14 @@ public class Constants {
                 treeType.equals(IMPORT_CLAUSE) || treeType.equals(NAMED_IMPORTS);
     }
 
+    public boolean isPackageDeclaration(String treeType) {
+        return treeType.equals(PACKAGE_DECLARATION) && !PathFileUtils.isCppFile(path);
+    }
+
 	public Constants(String filePath) {
-		if(PathFileUtils.isPythonFile(filePath)) {
+        path = filePath;
+
+		if(PathFileUtils.isPythonFile(path)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";
@@ -82,7 +89,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
 		}
-		else if(PathFileUtils.isKotlinFile(filePath)) {
+		else if(PathFileUtils.isKotlinFile(path)) {
 			CLASS_BLOCK = "type_body";
 			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "simple_identifier";
@@ -121,7 +128,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
 		}
-		else if(PathFileUtils.isTypeScriptFile(filePath)) {
+		else if(PathFileUtils.isTypeScriptFile(path)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "identifier";
@@ -160,7 +167,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
 		}
-		else if(PathFileUtils.isCppFile(filePath)) {
+		else if(PathFileUtils.isCppFile(path)) {
 			CLASS_BLOCK = "field_declaration_list";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";

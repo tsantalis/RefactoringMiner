@@ -119,9 +119,6 @@ public class HunkNetwork {
 
   private Set<Tree> getValidTrees(String path, Collection<Tree> trees) {
     Constants constants = new Constants(path);
-    Set<String> invalidTypes = new HashSet<>() {{
-      add(constants.PACKAGE_DECLARATION);
-    }};
 
     return trees.stream()
         .filter(addition -> {
@@ -131,7 +128,7 @@ public class HunkNetwork {
           return precedents.stream()
               .noneMatch(precedent -> {
                 String treeType = precedent.getType().name;
-                return constants.isEmpty(treeType) || constants.isImportExport(treeType) || invalidTypes.contains(treeType);
+                return constants.isEmpty(treeType) || constants.isImportExport(treeType) || constants.isPackageDeclaration(treeType);
               });
         }).collect(
             Collectors.toSet());

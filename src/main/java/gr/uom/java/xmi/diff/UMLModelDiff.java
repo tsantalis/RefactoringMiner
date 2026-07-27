@@ -4947,6 +4947,22 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		if(classDiff.hasBothAddedAndRemovedPreprocessorStatements()) {
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof RenameClassRefactoring) {
+					RenameClassRefactoring rename = (RenameClassRefactoring)ref;
+					classDiff.findPreprocessorStatementChanges(rename.getOriginalClass().getSourceFile(), rename.getRenamedClass().getSourceFile());
+				}
+				else if(ref instanceof MoveClassRefactoring) {
+					MoveClassRefactoring move = (MoveClassRefactoring)ref;
+					classDiff.findPreprocessorStatementChanges(move.getOriginalClass().getSourceFile(), move.getMovedClass().getSourceFile());
+				}
+				else if(ref instanceof MoveAndRenameClassRefactoring) {
+					MoveAndRenameClassRefactoring move = (MoveAndRenameClassRefactoring)ref;
+					classDiff.findPreprocessorStatementChanges(move.getOriginalClass().getSourceFile(), move.getMovedClass().getSourceFile());
+				}
+			}
+		}
 	}
 
 	private void detectInterfaceChangesBasedOnTypeChanges(UMLClassBaseDiff classDiff, List<Refactoring> refactorings) {

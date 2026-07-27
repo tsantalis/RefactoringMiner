@@ -95,6 +95,30 @@ public class UMLPreprocessorStatementListDiff {
 		this.addedStatements = newStatementsCopy;
 	}
 
+	private UMLPreprocessorStatement findMatchingStatement(List<UMLPreprocessorStatement> statements, String name) {
+		for(UMLPreprocessorStatement statement : statements) {
+			if(statement.getName().isPresent()) {
+				String rawName = statement.getName().get();
+				if(rawName.startsWith("../"))
+					rawName = rawName.replace("../", "");
+				if(name.endsWith(rawName))
+					return statement;
+			}
+		}
+		return null;
+	}
+
+	public void findPreprocessorStatementChanges(String nameBefore, String nameAfter) {
+		UMLPreprocessorStatement removedStatement = findMatchingStatement(removedStatements, nameBefore);
+		UMLPreprocessorStatement addedStatement = findMatchingStatement(addedStatements, nameAfter);
+		if(removedStatement != null && addedStatement != null) {
+			Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> pair = Pair.of(removedStatement, addedStatement);
+			changedStatements.add(pair);
+			removedStatements.remove(removedStatement);
+			addedStatements.remove(addedStatement);
+		}
+	}
+
 	public List<UMLPreprocessorStatement> getRemovedStatements() {
 		return removedStatements;
 	}

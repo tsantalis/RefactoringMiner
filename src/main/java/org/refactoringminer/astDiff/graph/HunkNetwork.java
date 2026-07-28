@@ -367,7 +367,6 @@ public class HunkNetwork {
 
       for (UMLAttribute attribute : umls.umlAttributes) {
         node.addIdentifier(attribute.getVariableDeclaration().getVariableName());
-
         defUseTargets.addAll(findAccessNodes(attribute.getName(),
                 node.isSrc() ? modelDiff.findFieldAccessesInParentModel(attribute)
                 : modelDiff.findFieldAccessesInChildModel(attribute), node.getSrcDst()));
@@ -375,14 +374,14 @@ public class HunkNetwork {
 
       for (VariableDeclaration variableDeclaration : umls.variableDeclarations) {
         node.addIdentifier(variableDeclaration.getVariableName());
-
         defUseTargets.addAll(findAccessNodes(variableDeclaration.getVariableName(),
                 variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst()));
       }
 
       for (Entry<UMLOperation, Set<VariableDeclaration>> operationParameters : umls.operationParameters.entrySet()) {
         for (VariableDeclaration operationParameter : operationParameters.getValue()) {
-          getArgumentNodes(operationParameters.getKey(), operationParameter, node.getSrcDst());
+          node.addIdentifier(operationParameter.getVariableName());
+          defUseTargets.addAll(getArgumentNodes(operationParameters.getKey(), operationParameter, node.getSrcDst()));
         }
       }
 
@@ -463,21 +462,32 @@ public class HunkNetwork {
     }
   }
 
-  // TODO: find the location of the argument corresponding to the parameter instead of the whole invocation
   private Set<Node> getArgumentNodes(UMLOperation umlOperation, VariableDeclaration parameterDeclaration, SrcDst srcDst) {
     Set<Node> result = new HashSet<>();
 
-//    int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
+    int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
 
-    List<AbstractCall> invocations =
-        srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
+    List<AbstractCall> invocations = srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
             : modelDiff.findInvocationsInChildModel(umlOperation);
     for (AbstractCall invocation : invocations) {
-//      LeafExpression argument = invocation.getArguments().get(parameterIndex);
-//      LocationInfo argumentLocation = argument.getLocationInfo();
       LocationInfo invocationLocation = invocation.getLocationInfo();
-      result.addAll(findOverlappingNodes(invocationLocation.getFilePath(), srcDst,
-              invocationLocation.getStartOffset(), invocationLocation.getEndOffset(), (n) -> !n.isContext() && !n.isExtension()));
+
+      String invocationFileContent = srcDst.equals(SrcDst.SRC) ? srcContents.get(invocationLocation.getFilePath()) : dstContents.get(invocationLocation.getFilePath());
+      String invocationStr = invocationFileContent.substring(invocationLocation.getStartOffset(), invocationLocation.getEndOffset());
+
+      String parameterArgumentStr = invocation.arguments().get(parameterIndex);
+      int argumentIndex = -1;
+      for (int i = 0; i <= parameterIndex; i++) {
+        String argument = invocation.arguments().get(i);
+        if (argument.equals(parameterArgumentStr)) {
+          argumentIndex = invocationStr.indexOf(parameterArgumentStr, argumentIndex + 1);
+        }
+      }
+
+      int startOffset = invocationLocation.getStartOffset() + argumentIndex;
+      int endOffset = startOffset + parameterArgumentStr.length();
+      result.addAll(findOverlappingNodes(invocationLocation.getFilePath(), srcDst, startOffset, endOffset,
+              (n) -> !n.isContext() && !n.isExtension()));
     }
 
     return result;

@@ -482,11 +482,11 @@ public class CppFileProcessor {
 				return;
 			}
 			String className = compositeTypeSpecifier.getName().toString();
-			//handle unnamed struct
-			if(className.isBlank() && !compositeTypeSpecifier.toString().equals("struct")) {
+			//handle unnamed struct and unnamed union
+			if(className.isBlank() && !compositeTypeSpecifier.toString().equals("struct") && !compositeTypeSpecifier.toString().equals("union")) {
 				return;
 			}
-			else if(compositeTypeSpecifier.toString().equals("struct")) {
+			else if(compositeTypeSpecifier.toString().equals("struct") || compositeTypeSpecifier.toString().equals("union")) {
 				IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
 				if(declarators.length == 1) {
 					className = declarators[0].getName().toString();
@@ -499,6 +499,9 @@ public class CppFileProcessor {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
 				if(cppCompositeTypeSpecifier.toString().contains("struct")) {
 					umlClass.setStruct(true);
+				}
+				if(cppCompositeTypeSpecifier.toString().contains("union")) {
+					umlClass.setUnion(true);
 				}
 				ICPPASTBaseSpecifier[] baseSpecifiers = cppCompositeTypeSpecifier.getBaseSpecifiers();
 				int index = 0;

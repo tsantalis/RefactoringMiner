@@ -582,7 +582,9 @@ public class Constants {
     public final String STRUCTURED_BINDING_DECLARATOR = "structured_binding_declarator";
     public final String FOR_RANGE_LOOP = "for_range_loop";
     public final String STRUCT_SPECIFIER = "struct_specifier";
+    public final String UNION_SPECIFIER = "union_specifier";
     public final String STRUCT_KEYWORD = "struct";
+    public final String UNION_KEYWORD = "union";
     public final String POINTER = "*";
     public final String ACCESS_SPECIFIER = "access_specifier";
     public final String TEMPLATE_DECLARATION = "template_declaration";

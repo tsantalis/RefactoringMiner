@@ -677,7 +677,7 @@ public class HunkNetwork {
 
     List<Tree> subTrees = new ArrayList<>();
     subTrees.add(tree);
-    if (isContext) {
+    if (!isContext) {
       subTrees.addAll(tree.getDescendants());
     }
     for (Tree subTree : subTrees) {

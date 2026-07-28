@@ -764,7 +764,7 @@ public class HunkNetwork {
 //          attribute.getParameterDeclarationList()
 //          attribute.getAllVariableDeclarations()
 //          attribute.getJavadoc()
-      LocationInfo attributeLocation = attribute.getLocationInfo();
+      LocationInfo attributeLocation = attribute.getFieldDeclarationLocationInfo();
       if (attributeLocation.getStartOffset() == pos && endPos == attributeLocation.getEndOffset()) {
         umls.umlAttributes.add(attribute);
       }

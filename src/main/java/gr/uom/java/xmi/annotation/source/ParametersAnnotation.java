@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.SourceAnnotation;
@@ -26,24 +25,14 @@ public class ParametersAnnotation extends SourceAnnotation {
 	public ParametersAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
 		super(annotation, annotation.getTypeName().equals(QUALIFIED_ANNOTATION_TYPENAME) ? QUALIFIED_ANNOTATION_TYPENAME : ANNOTATION_TYPENAME);
 		Optional<VariableDeclaration> returnedVarCandidates = operation.getBody().getAllVariableDeclarations().stream().filter(v -> operation.getReturnParameter().getType().equals(v.getType())).findAny();
-		String strLiterals;
-		if (returnedVarCandidates.isPresent()) {
-			Set<AbstractCodeFragment> stmtsUsingVar = returnedVarCandidates.get().getStatementsInScopeUsingVariable();
-			strLiterals = stmtsUsingVar.stream()
-					.flatMap(stmt -> stmt.getStringLiterals().stream())
-					.map(str -> str.getString())
-					.collect(Collectors.joining(System.getProperty("line.separator")));
-		} else {
+        if (returnedVarCandidates.isEmpty()) {
 			Optional<StatementObject> stmtCandidate = operation.getBody().getCompositeStatement().getStatements().stream()
 					.filter(s -> s instanceof StatementObject)
 					.map(s -> (StatementObject) s)
-					.filter(s -> s.isLastStatement())
+					.filter(AbstractCodeFragment::isLastStatement)
 					.findAny();
 			if (stmtCandidate.isPresent()) {
-				strLiterals = stmtCandidate.get().getStringLiterals().stream()
-						.map(str -> str.getString())
-						.collect(Collectors.joining(System.getProperty("line.separator")));
-				AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
+                AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
 				if(call != null) {
 					if(call.getName().equals("of")) {
 						for(AbstractCall nestedCall : stmtCandidate.get().getMethodInvocations()) {

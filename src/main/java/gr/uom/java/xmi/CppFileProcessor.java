@@ -482,8 +482,15 @@ public class CppFileProcessor {
 				return;
 			}
 			String className = compositeTypeSpecifier.getName().toString();
-			if(className.isBlank()) {
+			//handle unnamed struct
+			if(className.isBlank() && !compositeTypeSpecifier.toString().equals("struct")) {
 				return;
+			}
+			else if(compositeTypeSpecifier.toString().equals("struct")) {
+				IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
+				if(declarators.length == 1) {
+					className = declarators[0].getName().toString();
+				}
 			}
 			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
 			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, new ArrayList<>());

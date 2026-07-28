@@ -46,6 +46,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isStrictfp;
 	private boolean isInline;
 	private boolean isConst;
+	private boolean hasDefaultClause;
+	private boolean hasDeleteClause;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private AbstractExpression defaultExpression;
@@ -292,6 +294,22 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setConst(boolean isConst) {
 		this.isConst = isConst;
+	}
+
+	public boolean hasDefaultClause() {
+		return hasDefaultClause;
+	}
+
+	public void setDefaultClause(boolean defaultClause) {
+		this.hasDefaultClause = defaultClause;
+	}
+
+	public boolean hasDeleteClause() {
+		return hasDeleteClause;
+	}
+
+	public void setDeleteClause(boolean deleteClause) {
+		this.hasDeleteClause = deleteClause;
 	}
 
 	public boolean isDeclaredInAnonymousClass() {

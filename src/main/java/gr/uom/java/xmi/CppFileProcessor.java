@@ -720,6 +720,12 @@ public class CppFileProcessor {
 			}
 		}
 		if(functionDefinition instanceof ICPPASTFunctionDefinition cppFunctionDefinition) {
+			if(cppFunctionDefinition.isDeleted()) {
+				operation.setDeleteClause(true);
+			}
+			if(cppFunctionDefinition.isDefaulted()) {
+				operation.setDefaultClause(true);
+			}
 			ICPPASTConstructorChainInitializer[] initializers = cppFunctionDefinition.getMemberInitializers();
 			for (ICPPASTConstructorChainInitializer initializer : initializers) {
 				// The name of the member or base class being initialized

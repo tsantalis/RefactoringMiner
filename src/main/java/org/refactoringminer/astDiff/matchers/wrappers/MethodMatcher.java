@@ -676,6 +676,18 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMapping(closing.first,closing.second);
             }
         }
+        if(umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null && umlOperationBodyMapper.getOperation1().hasDefaultClause() && umlOperationBodyMapper.getOperation2().hasDefaultClause()) {
+            matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.DEFAULT_METHOD_CLAUSE,LANG2.DEFAULT_METHOD_CLAUSE);
+            if (matched != null) {
+                mappingStore.addMappingRecursively(matched.first,matched.second);
+            }
+        }
+        if(umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null && umlOperationBodyMapper.getOperation1().hasDeleteClause() && umlOperationBodyMapper.getOperation2().hasDeleteClause()) {
+            matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.DELETE_METHOD_CLAUSE,LANG2.DELETE_METHOD_CLAUSE);
+            if (matched != null) {
+                mappingStore.addMappingRecursively(matched.first,matched.second);
+            }
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.POINTER_DECLARATOR,LANG2.POINTER_DECLARATOR);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);

@@ -356,6 +356,8 @@ public class HunkNetwork {
       Set<Node> defUseTargets = new HashSet<>();
 
       for (UMLClass umlClass : umls.umlClasses) {
+        for (UMLInitializer initializer : umlClass.getInitializers()) {
+        }
       }
 
       for (UMLOperation operation : umls.umlOperations) {
@@ -461,20 +463,21 @@ public class HunkNetwork {
     }
   }
 
+  // TODO: find the location of the argument corresponding to the parameter instead of the whole invocation
   private Set<Node> getArgumentNodes(UMLOperation umlOperation, VariableDeclaration parameterDeclaration, SrcDst srcDst) {
     Set<Node> result = new HashSet<>();
 
-    int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
+//    int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
 
     List<AbstractCall> invocations =
         srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
             : modelDiff.findInvocationsInChildModel(umlOperation);
     for (AbstractCall invocation : invocations) {
-      LeafExpression argument = invocation.getArguments().get(parameterIndex);
-      LocationInfo argumentLocation = argument.getLocationInfo();
-
-      result.addAll(findOverlappingNodes(invocation.getLocationInfo().getFilePath(), srcDst,
-              argumentLocation.getStartOffset(), argumentLocation.getEndOffset(), (n) -> !n.isContext() && !n.isExtension()));
+//      LeafExpression argument = invocation.getArguments().get(parameterIndex);
+//      LocationInfo argumentLocation = argument.getLocationInfo();
+      LocationInfo invocationLocation = invocation.getLocationInfo();
+      result.addAll(findOverlappingNodes(invocationLocation.getFilePath(), srcDst,
+              invocationLocation.getStartOffset(), invocationLocation.getEndOffset(), (n) -> !n.isContext() && !n.isExtension()));
     }
 
     return result;

@@ -4,14 +4,7 @@ import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
-import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.UMLAnonymousClass;
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLGeneralization;
-import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLRealization;
+import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -359,102 +352,40 @@ public class HunkNetwork {
         continue;
       }
 
-      Tree tree = node.getTree();
+      UMLs umls = getUMLs(node.getTree(), node.getSrcDst(), node.getPath(), node.isContext());
+      Set<Node> defUseTargets = new HashSet<>();
 
-      List<Tree> subTrees = new ArrayList<>();
-      subTrees.add(tree);
-      if (!node.isContext()) {
-        subTrees.addAll(tree.getDescendants());
+      for (UMLClass umlClass : umls.umlClasses) {
       }
 
-      Constants constants = new Constants(node.getPath());
-
-      List<Tree> methodDeclarations = new ArrayList<>();
-      List<Tree> fieldDeclarations = new ArrayList<>();
-      List<Tree> parameterDeclarations = new ArrayList<>();
-      List<Tree> variableDeclarations = new ArrayList<>();
-      for (Tree subTree : subTrees) {
-        String subTreeType = subTree.getType().name;
-        if (constants.isMethod(subTreeType)) {
-          methodDeclarations.add(subTree);
-        }
-        if (subTreeType.equals(constants.FIELD_DECLARATION)) {
-          fieldDeclarations.add(subTree);
-        }
-        if (subTreeType.equals(constants.SINGLE_VARIABLE_DECLARATION)) {
-          parameterDeclarations.add(subTree);
-        }
-        if (subTreeType.equals(constants.VARIABLE_DECLARATION_STATEMENT)) {
-          variableDeclarations.add(subTree);
-        }
-      }
-      if (methodDeclarations.isEmpty() && fieldDeclarations.isEmpty()
-          && parameterDeclarations.isEmpty() && variableDeclarations.isEmpty()) {
-        continue;
-      }
-
-      // prevent having one edge for method and some other for parameters
-      for (Tree methodDeclaration : methodDeclarations) {
-        List<Tree> methodDescendants = methodDeclaration.getDescendants();
-        for (Tree methodDescendant : methodDescendants) {
-          parameterDeclarations.remove(methodDescendant);
-          variableDeclarations.remove(methodDescendant);
-        }
-      }
-
-      for (Tree methodDeclaration : methodDeclarations) {
-        UMLClass umlClass = getUMLClass(node.getPath(), methodDeclaration, node.getSrcDst());
-        if (umlClass == null) {
-          continue;
-        }
-        UMLOperation operation = findUMLOperation(umlClass, methodDeclaration);
-        if (operation == null) {
-          continue;
-        }
-
+      for (UMLOperation operation : umls.umlOperations) {
         node.addIdentifier(operation.getName());
+        defUseTargets.addAll(getInvocationNodes(operation, node.getSrcDst()));
+      }
 
-        Set<Node> invocationNodes = getInvocationNodes(operation, node.getSrcDst());
-        for (Node invocationNode : invocationNodes) {
-          addEdge(node, invocationNode, EdgeType.DEF_USE);
+      for (UMLAttribute attribute : umls.umlAttributes) {
+        node.addIdentifier(attribute.getVariableDeclaration().getVariableName());
+
+        defUseTargets.addAll(findAccessNodes(attribute.getName(),
+                node.isSrc() ? modelDiff.findFieldAccessesInParentModel(attribute)
+                : modelDiff.findFieldAccessesInChildModel(attribute), node.getSrcDst()));
+      }
+
+      for (VariableDeclaration variableDeclaration : umls.variableDeclarations) {
+        node.addIdentifier(variableDeclaration.getVariableName());
+
+        defUseTargets.addAll(findAccessNodes(variableDeclaration.getVariableName(),
+                variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst()));
+      }
+
+      for (Entry<UMLOperation, Set<VariableDeclaration>> operationParameters : umls.operationParameters.entrySet()) {
+        for (VariableDeclaration operationParameter : operationParameters.getValue()) {
+          getArgumentNodes(operationParameters.getKey(), operationParameter, node.getSrcDst());
         }
       }
 
-      for (Tree fieldDeclaration : fieldDeclarations) {
-        UMLAttribute umlAttribute = findUMLAttribute(node.getPath(), fieldDeclaration,
-            node.getSrcDst());
-        if (umlAttribute == null) {
-          continue;
-        }
-
-        node.addIdentifier(umlAttribute.getVariableDeclaration().getVariableName());
-
-        Set<Node> useNodes = findAccessNodes(umlAttribute.getName(),
-            node.isSrc() ? modelDiff.findFieldAccessesInParentModel(umlAttribute)
-                : modelDiff.findFieldAccessesInChildModel(umlAttribute), node.getSrcDst());
-        for (Node useNode : useNodes) {
-          addEdge(node, useNode, EdgeType.DEF_USE);
-        }
-      }
-
-      for (Tree parameterDeclaration : parameterDeclarations) {
-        addVariableDeclarationEdges(node, parameterDeclaration);
-      }
-      List<Tree> methodParameterDeclarations = parameterDeclarations.stream().filter(
-          parameterDeclaration -> parameterDeclaration.getParent().getType().name.equals(
-              constants.METHOD_DECLARATION)).toList();
-      for (Tree methodParameterDeclaration : methodParameterDeclarations) {
-        addParameterArgumentEdges(node, methodParameterDeclaration);
-      }
-
-      for (Tree variableDeclaration : variableDeclarations) {
-        Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(
-            variableDeclaration, constants.VARIABLE_DECLARATION_FRAGMENT);
-        if (variableDeclarationFragment == null) {
-          continue;
-        }
-
-        addVariableDeclarationEdges(node, variableDeclarationFragment);
+      for (Node defUseTarget : defUseTargets) {
+        addEdge(node, defUseTarget, EdgeType.DEF_USE);
       }
     }
   }
@@ -530,56 +461,23 @@ public class HunkNetwork {
     }
   }
 
-  private void addParameterArgumentEdges(Node node, Tree parameterDeclarationTree) {
-    Constants constants = new Constants(node.getPath());
+  private Set<Node> getArgumentNodes(UMLOperation umlOperation, VariableDeclaration parameterDeclaration, SrcDst srcDst) {
+    Set<Node> result = new HashSet<>();
 
-    int parameterIndex = parameterDeclarationTree.getParent().getChildren().stream()
-        .filter(child -> child.getType().name.equals(constants.RECORD_COMPONENT)).toList()
-        .indexOf(parameterDeclarationTree);
-
-    Tree methodRoot = TreeUtilFunctions.getParentUntilType(parameterDeclarationTree,
-        constants.METHOD_DECLARATION);
-    // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
-    if (methodRoot == null) {
-      return;
-    }
-
-    UMLClass umlClass = getUMLClass(node.getPath(), parameterDeclarationTree, node.getSrcDst());
-    if (umlClass == null) {
-      return;
-    }
-
-    UMLOperation umlOperation = findUMLOperation(umlClass, methodRoot);
-    if (umlOperation == null) {
-      return;
-    }
+    int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
 
     List<AbstractCall> invocations =
-        node.isSrc() ? modelDiff.findInvocationsInParentModel(umlOperation)
+        srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
             : modelDiff.findInvocationsInChildModel(umlOperation);
-
     for (AbstractCall invocation : invocations) {
-      Tree invocationRootTree = (node.isSrc() ? srcContexts : dstContexts).get(
-          invocation.getLocationInfo().getFilePath()).getRoot();
-      Tree invocationTree = TreeUtilFunctions.findByLocationInfo(invocationRootTree,
-          invocation.getLocationInfo(),
-          constants);
-      Tree argumentsTree = TreeUtilFunctions.findChildByType(invocationTree,
-          constants.METHOD_INVOCATION_ARGUMENTS);
-      if (argumentsTree == null) {
-        continue;
-      }
+      LeafExpression argument = invocation.getArguments().get(parameterIndex);
+      LocationInfo argumentLocation = argument.getLocationInfo();
 
-      Tree argumentTree = argumentsTree.getChildren().get(parameterIndex);
-      List<Node> argumentNodes = findOverlappingNodes(invocation.getLocationInfo().getFilePath(),
-          node.getSrcDst(),
-          argumentTree.getPos(), argumentTree.getEndPos(),
-          (n) -> !n.isContext() && !n.isExtension());
-
-      for (Node argumentNode : argumentNodes) {
-        addEdge(node, argumentNode, EdgeType.DEF_USE);
-      }
+      result.addAll(findOverlappingNodes(invocation.getLocationInfo().getFilePath(), srcDst,
+              argumentLocation.getStartOffset(), argumentLocation.getEndOffset(), (n) -> !n.isContext() && !n.isExtension()));
     }
+
+    return result;
   }
 
   private void processClassLevelRelations() {
@@ -716,87 +614,6 @@ public class HunkNetwork {
     return classNode;
   }
 
-  private UMLClass getUMLClass(String path, Tree tree, SrcDst srcDst) {
-    Constants constants = new Constants(path);
-
-    List<Tree> parents = new ArrayList<>();
-    parents.add(tree);
-    parents.addAll(tree.getParents());
-    Tree parentClass = parents.stream().filter(parent -> {
-      String parentType = parent.getType().name;
-      return constants.isType(parentType);
-    }).findFirst().orElse(null);
-    if (parentClass == null) { // there is no need to process def-use when it is out of type
-      return null;
-    }
-    Tree parentTypeName = TreeUtilFunctions.findChildByType(parentClass,
-        constants.SIMPLE_NAME);
-    if (parentTypeName == null) {
-      return null;
-    }
-
-    return getUMLClass(localizeTree(tree).path, parentTypeName.getLabel(),
-        srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel());
-  }
-
-  private UMLClass getUMLClass(String path, String className, UMLModel umlModel) {
-    if (path == null) {
-      return null;
-    }
-
-    UMLClass UmlClass = null;
-    for (UMLClass uc : umlModel.getClassList()) {
-      if (uc.getSourceFile().equals(path) && uc.getNonQualifiedName().equals(className)) {
-        UmlClass = uc;
-        break;
-      }
-    }
-
-    return UmlClass;
-  }
-
-  private void addVariableDeclarationEdges(Node node, Tree variableDeclarationTree) {
-    Constants constants = new Constants(node.getPath());
-    Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclarationTree,
-        constants.METHOD_DECLARATION);
-    // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
-    if (methodRoot == null) {
-      return;
-    }
-
-    UMLClass umlClass = getUMLClass(node.getPath(), variableDeclarationTree, node.getSrcDst());
-    if (umlClass == null) {
-      return;
-    }
-
-    UMLOperation umlOperation = findUMLOperation(umlClass, methodRoot);
-    if (umlOperation == null) {
-      return;
-    }
-
-    Optional<VariableDeclaration> foundOperationVariable = umlOperation.getAllVariableDeclarations()
-        .stream()
-        .filter(operationVariable -> {
-          LocationInfo operationVariableLoc = operationVariable.getLocationInfo();
-          return operationVariableLoc.getStartOffset() == variableDeclarationTree.getPos()
-              && variableDeclarationTree.getEndPos()
-              == operationVariableLoc.getEndOffset();
-        }).findFirst();
-    if (foundOperationVariable.isEmpty()) {
-      return;
-    }
-
-    VariableDeclaration variableDeclaration = foundOperationVariable.get();
-
-    node.addIdentifier(variableDeclaration.getVariableName());
-
-    Set<Node> useNodes = findAccessNodes(variableDeclaration.getVariableName(),
-        variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst());
-    for (Node useNode : useNodes) {
-      addEdge(node, useNode, EdgeType.DEF_USE);
-    }
-  }
-
   private Set<Node> getInvocationNodes(UMLOperation operation, SrcDst srcDst) {
     Set<Node> result = new HashSet<>();
 
@@ -835,39 +652,6 @@ public class HunkNetwork {
     return result;
   }
 
-  private LocationInfo findClosestLocationInfo(LocationInfo subject,
-      List<LocationInfo> candidates) {
-    int pos = subject.getStartOffset();
-    int endPos = subject.getEndOffset();
-
-    List<LocationInfo> sameFileCandidates =
-        candidates.stream()
-            .filter(candidate -> subject.getFilePath().equals(candidate.getFilePath()))
-            .toList();
-    if (!sameFileCandidates.isEmpty()) {
-      LocationInfo closestLocationInfo = null;
-
-      int shortestDistance = Integer.MAX_VALUE;
-      for (LocationInfo candidate : sameFileCandidates) {
-        if (endPos >= candidate.getStartOffset() && candidate.getEndOffset() >= pos) {
-          return candidate;
-        }
-
-        int distance =
-            endPos < candidate.getStartOffset() ? candidate.getStartOffset() - endPos :
-                pos - candidate.getEndOffset();
-        if (distance < shortestDistance) {
-          shortestDistance = distance;
-          closestLocationInfo = candidate;
-        }
-      }
-
-      return closestLocationInfo;
-    }
-
-    return candidates.get(0);
-  }
-
   private List<Node> findOverlappingNodes(String path, SrcDst srcDst, int pos, int endPos,
       Predicate<Node> filter) {
     List<Node> result = new ArrayList<>();
@@ -884,45 +668,146 @@ public class HunkNetwork {
     return result;
   }
 
-  private UMLOperation findUMLOperation(UMLClass umlClass, Tree methodDeclaration) {
-    List<UMLOperation> operations = new ArrayList<>(umlClass.getOperations());
-    for (UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
-      operations.addAll(anonymousClass.getOperations());
-    }
+  private UMLs getUMLs(Tree tree, SrcDst srcDst, String path, boolean isContext) {
+    UMLs umls = new UMLs(srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel(),
+            new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashMap<>());
 
-    for (UMLOperation operation : operations) {
-      LocationInfo operationLoc = operation.getLocationInfo();
-      if (operationLoc.getStartOffset() == methodDeclaration.getPos()
-          && methodDeclaration.getEndPos() == operationLoc.getEndOffset()) {
-        return operation;
+    List<Tree> subTrees = new ArrayList<>();
+    subTrees.add(tree);
+    if (isContext) {
+      subTrees.addAll(tree.getDescendants());
+    }
+    for (Tree subTree : subTrees) {
+      int pos = subTree.getPos();
+      int endPos = subTree.getEndPos();
+
+      for (UMLClass umlClass : umls.umlModel.getClassList()) {
+        getUMLs(path, pos, endPos, umlClass, umls);
       }
     }
 
-    return null;
+    return umls;
   }
 
-  private UMLAttribute findUMLAttribute(String path, Tree fieldDeclaration, SrcDst srcDst) {
-    UMLClass umlClass = getUMLClass(path, fieldDeclaration, srcDst);
-    if (umlClass == null) {
-      return null;
+  private void getUMLs(String path, int pos, int endPos, UMLClass umlClass, UMLs umls) {
+//        umlClass.getPreprocessorStatements()
+//        umlClass.getTypeAliasList()
+//        umlClass.getTypeParameters()
+//        umlClass.getCompanionObjects()
+//        umlClass.getEnumConstants()
+//        umlClass.getSuperTypeCallEntries()
+//        umlClass.getImplementedInterfaces()
+//        umlClass.getImportedTypes()
+//        umlClass.getInitializers()
+//        umlClass.getPermittedTypes()
+//        umlClass.getComments()
+//        umlClass.getJavadoc()
+    LocationInfo classLocation = umlClass.getLocationInfo();
+    if (!path.equals(classLocation.getFilePath())) {
+      return;
     }
 
-    List<UMLAttribute> attributes = new ArrayList<>(umlClass.getAttributes());
-    for (UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
-      attributes.addAll(anonymousClass.getAttributes());
+    if (classLocation.getStartOffset() == pos && endPos == classLocation.getEndOffset()) {
+      umls.umlClasses.add(umlClass);
     }
 
-    UMLAttribute result = null;
-    for (UMLAttribute attribute : attributes) {
-      LocationInfo attrLoc = attribute.getFieldDeclarationLocationInfo();
-      if (fieldDeclaration.getPos() == attrLoc.getStartOffset()
-          && fieldDeclaration.getEndPos() == attrLoc.getEndOffset()) {
-        result = attribute;
-        break;
+    getUMLs(path, pos, endPos, (UMLAbstractClass) umlClass, umls);
+  }
+
+  private void getUMLs(String path, int pos, int endPos, UMLAnonymousClass anonymousClass, UMLs umls) {
+//    anonymousClass.getParentContainers()
+//    anonymousClass.getAnonymousClassList()
+//    anonymousClass.getComments()
+//    anonymousClass.getCompanionObjects()
+//    anonymousClass.getEnumConstants()
+//    anonymousClass.getImplementedInterfaces()
+//    anonymousClass.getImportedTypes()
+//    anonymousClass.getInitializers()
+//    anonymousClass.getPermittedTypes()
+    LocationInfo anonymousClassLocation = anonymousClass.getLocationInfo();
+    if (!path.equals(anonymousClassLocation.getFilePath())) {
+      return;
+    }
+
+    getUMLs(path, pos, endPos, (UMLAbstractClass) anonymousClass, umls);
+  }
+
+  private void getUMLs(String path, int pos, int endPos, UMLAbstractClass umlClass, UMLs umls) {
+    for (UMLAnonymousClass umlAnonymousClass : umlClass.getAnonymousClassList()) {
+      getUMLs(path, pos, endPos, umlAnonymousClass, umls);
+    }
+
+    for (UMLOperation operation : umlClass.getOperations()) {
+      getUMLs(path, pos, endPos, operation, umls);
+    }
+
+    for (UMLAttribute attribute : umlClass.getAttributes()) {
+//          attribute.getAllCreations()
+//          attribute.getAllLambdas()
+//          attribute.getAllOperationInvocations()
+//          attribute.getAllStringLiterals()
+//          attribute.getAllVariables()
+//          attribute.getComments()
+//          attribute.getParameterDeclarationList()
+//          attribute.getAllVariableDeclarations()
+//          attribute.getJavadoc()
+      LocationInfo attributeLocation = attribute.getLocationInfo();
+      if (attributeLocation.getStartOffset() == pos && endPos == attributeLocation.getEndOffset()) {
+        umls.umlAttributes.add(attribute);
+      }
+
+      for (UMLAnonymousClass umlAnonymousClass : attribute.getAnonymousClassList()) {
+        getUMLs(path, pos, endPos, umlAnonymousClass, umls);
+      }
+    }
+  }
+
+  private void getUMLs(String path, int pos, int endPos, UMLOperation umlOperation, UMLs umls) {
+//          operation.getAllCreations()
+//          operation.getAllLambdas()
+//          operation.getAllOperationInvocations()
+//          operation.getAllOperationInvocations()
+//          operation.getAllStringLiterals()
+//          operation.getAllVariables()
+//          operation.getNestedImports()
+//          operation.getParameters()
+//          operation.getComments()
+//          operation.getJavadoc()
+    LocationInfo operationLocation = umlOperation.getLocationInfo();
+    if (!path.equals(operationLocation.getFilePath())) {
+      return;
+    }
+
+    if (operationLocation.getStartOffset() == pos && endPos == operationLocation.getEndOffset()) {
+      umls.umlOperations.add(umlOperation);
+    }
+
+    for (VariableDeclaration variableDeclaration : umlOperation.getAllVariableDeclarations()) {
+      LocationInfo variableLocation = variableDeclaration.getLocationInfo();
+      if (variableLocation.getStartOffset() == pos && endPos == variableLocation.getEndOffset()) {
+        umls.variableDeclarations.add(variableDeclaration);
       }
     }
 
-    return result;
+    for (VariableDeclaration parameterDeclaration : umlOperation.getParameterDeclarationList()) {
+      LocationInfo parameterLocation = parameterDeclaration.getLocationInfo();
+      if (parameterLocation.getStartOffset() == pos && endPos == parameterLocation.getEndOffset()) {
+        umls.operationParameters.putIfAbsent(umlOperation, new HashSet<>());
+        umls.operationParameters.get(umlOperation).add(parameterDeclaration);
+      }
+    }
+
+    for (UMLOperation nestedOperation : umlOperation.getNestedOperations()) {
+      getUMLs(path, pos, endPos, nestedOperation, umls);
+    }
+
+    for (UMLClass nestedClass : umlOperation.getNestedClasses()) {
+      getUMLs(path, pos, endPos, nestedClass, umls);
+    }
+
+    for (UMLAnonymousClass umlAnonymousClass : umlOperation.getAnonymousClassList()) {
+      getUMLs(path, pos, endPos, umlAnonymousClass, umls);
+    }
   }
 
   private void processSuccession() {
@@ -947,4 +832,7 @@ public class HunkNetwork {
   private record TreeLocation(SrcDst srcDst, String path) {}
 
   private record NodeTrees(Node node, Set<Tree> trees) {}
+
+  private record UMLs(UMLModel umlModel, Set<UMLClass> umlClasses, Set<UMLOperation> umlOperations, Set<UMLAttribute> umlAttributes,
+                      Set<VariableDeclaration> variableDeclarations, Map<UMLOperation, Set<VariableDeclaration>> operationParameters) {}
 }

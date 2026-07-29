@@ -3,6 +3,7 @@ package org.refactoringminer.test;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
@@ -15,6 +16,7 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.*;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assume;
@@ -23,7 +25,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -35,6 +39,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.refactoringminer.utils.Assertions.assertHasSameElementsAs;
 import static org.refactoringminer.test.TestJavadocDiff.generateClassDiff;
@@ -534,28 +539,72 @@ public class TestRelatedStatementMappingsTest {
     @CsvSource({
             "https://github.com/conveyal/r5.git, 62a042e56b21d2e7c919552af39eca34357a82a7, r5-62a042e56b21d2e7c919552af39eca34357a82a7-dataprovider.txt",
             "https://github.com/apache/directory-ldap-api.git, 8965a541bbeefd49028a5405264e40aed69ac5d0, directory-ldap-api-8965a541bbeefd49028a5405264e40aed69ac5d0-dataprovider.txt",
-//            "https://github.com/apache/zookeeper.git, c42c8c94085ed1d94a22158fbdfe2945118a82bc, zookeeper-c42c8c94085ed1d94a22158fbdfe2945118a82bc-dataprovider.txt", //FIXME: slow test 46 seconds in Mac M4
-//            "https://github.com/cloudfoundry-incubator/multiapps.git, 82c2cc85b8b7790470c8380b82aad27abffc290b, multiapps-82c2cc85b8b7790470c8380b82aad27abffc290b-dataprovider.txt", //FIXME: slow test 120 seconds in Mac M4
     })
     public void testDataProviderLiteralMappings(String url, String commit, String testResultFileName) {
-        testRefactoringMappings(url, commit, testResultFileName, ref -> {
-            if (ref instanceof ParameterizeTestRefactoring parameterizeTestRefactoring) {
-                if (parameterizeTestRefactoring.getDataProviderAfter() != null) {
-                    Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
-                    for (LeafMapping leafMapping : parameterizeTestRefactoring.getData()) {
-                        pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
-                    }
-                    mapperInfo(pairs, parameterizeTestRefactoring.getDataProviderBefore(), parameterizeTestRefactoring.getDataProviderAfter());
+        testRefactoringMappings(url, commit, testResultFileName, this::checkDataProviderLiteralMapping);
+    }
+
+    static Stream<Arguments> testDataProviderLiteralMappingsForFiles() {
+        return Stream.of(Arguments.of(
+                Map.of("DescriptorHandlerTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorHandlerTest.java",
+                        "DescriptorHandlerTestV3", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v3/DescriptorHandlerTest.java",
+                        "DescriptorParserTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorParserTest.java",
+                        "DescriptorParserTestV3", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v3/DescriptorParserTest.java",
+                        "PlatformMergerTest", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/mergers/PlatformMergerTest.java",
+                        "SchemaValidatorTest", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/schema/SchemaValidatorTest.java"),
+                "multiapps-82c2cc85b8b7790470c8380b82aad27abffc290b-dataprovider.txt"
+                ),
+                Arguments.of(Map.of("PortAssignmentTest", "zookeeper-server/src/test/java/org/apache/zookeeper/PortAssignmentTest.java",
+                        "RemoveWatchesTest", "zookeeper-server/src/test/java/org/apache/zookeeper/RemoveWatchesTest.java",
+                        "EagerACLFilterTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/EagerACLFilterTest.java",
+                        "QuorumRequestPipelineTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/QuorumRequestPipelineTest.java",
+                        "ReconfigDuringLeaderSyncTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/ReconfigDuringLeaderSyncTest.java",
+                        "UnifiedServerSocketModeDetectionTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/UnifiedServerSocketModeDetectionTest.java",
+                        "WatchLeakTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/WatchLeakTest.java",
+                        "WatchManagerTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/watch/WatchManagerTest.java",
+                        "MultiOperationTest", "zookeeper-server/src/test/java/org/apache/zookeeper/test/MultiOperationTest.java",
+                        "ObserverMasterTest", "zookeeper-server/src/test/java/org/apache/zookeeper/test/ObserverMasterTest.java"),
+                "zookeeper-c42c8c94085ed1d94a22158fbdfe2945118a82bc-dataprovider.txt")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void testDataProviderLiteralMappingsForFiles(Map<String, String> filePathsByCacheName, String testResultFileName) throws Exception {
+        Map<String, String> fileContentsBefore = new LinkedHashMap<>();
+        Map<String, String> fileContentsCurrent = new LinkedHashMap<>();
+        for (Map.Entry<String, String> entry : filePathsByCacheName.entrySet()) {
+            String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + entry.getKey() + "-v1.txt"));
+            String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + entry.getKey() + "-v2.txt"));
+            fileContentsBefore.put(entry.getValue(), contentsV1);
+            fileContentsCurrent.put(entry.getValue(), contentsV2);
+        }
+        UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<>());
+        UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<>());
+        UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+        for (Refactoring ref : modelDiff.getRefactorings()) {
+            checkDataProviderLiteralMapping(ref);
+        }
+        assertion(testResultFileName);
+    }
+
+    private void checkDataProviderLiteralMapping(Refactoring ref) {
+        if (ref instanceof ParameterizeTestRefactoring parameterizeTestRefactoring) {
+            if (parameterizeTestRefactoring.getDataProviderAfter() != null) {
+                Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
+                for (LeafMapping leafMapping : parameterizeTestRefactoring.getData()) {
+                    pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
                 }
-                for (ParameterizeTestRefactoring.DataProviderOverride override : parameterizeTestRefactoring.getDataProviderOverrides()) {
-                    Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
-                    for (LeafMapping leafMapping : override.getData()) {
-                        pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
-                    }
-                    mapperInfo(pairs, override.getDataProviderBefore(), override.getDataProviderAfter());
-                }
+                mapperInfo(pairs, parameterizeTestRefactoring.getDataProviderBefore(), parameterizeTestRefactoring.getDataProviderAfter());
             }
-        });
+            for (ParameterizeTestRefactoring.DataProviderOverride override : parameterizeTestRefactoring.getDataProviderOverrides()) {
+                Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
+                for (LeafMapping leafMapping : override.getData()) {
+                    pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
+                }
+                mapperInfo(pairs, override.getDataProviderBefore(), override.getDataProviderAfter());
+            }
+        }
     }
 
     @BeforeEach

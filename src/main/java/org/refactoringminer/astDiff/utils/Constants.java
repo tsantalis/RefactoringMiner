@@ -24,7 +24,9 @@ public class Constants {
 		return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
 				treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
 				treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
-				treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) || treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) || treeType.equals(REFERENCE_DECLARATOR);
+				treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) ||
+				treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
+				treeType.equals(REFERENCE_DECLARATOR) || treeType.equals(FRIEND_DECLARATION);
 	}
 
 	public Constants(String filePath) {
@@ -606,4 +608,6 @@ public class Constants {
     public final String STORAGE_CLASS_SPECIFIER = "storage_class_specifier";
     public final String DEFAULT_METHOD_CLAUSE = "default_method_clause";
     public final String DELETE_METHOD_CLAUSE = "delete_method_clause";
+    public final String OPERATOR_NAME = "operator_name";
+    public final String FRIEND_DECLARATION = "friend_declaration";
 }

@@ -701,6 +701,13 @@ public class MethodMatcher extends BodyMapperMatcher{
         if(srcOperationNode.getType().name.equals(LANG1.FUNCTION_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
             processFunctionDeclarators(srcOperationNode, dstOperationNode, mappingStore);
         }
+        if(srcOperationNode.getType().name.equals(LANG1.FRIEND_DECLARATION) && dstOperationNode.getType().name.equals(LANG2.FRIEND_DECLARATION)) {
+            com.github.gumtreediff.utils.Pair<Tree,Tree> definitions = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.METHOD_DECLARATION,LANG2.METHOD_DECLARATION);
+            if(definitions != null) {
+                mappingStore.addMapping(definitions.first, definitions.second);
+                processMethodSignature(definitions.first, definitions.second, umlOperationBodyMapper, mappingStore);
+            }
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.CLASS_BLOCK,LANG2.CLASS_BLOCK);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
@@ -898,6 +905,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             mappingStore.addMapping(identifiers.first,identifiers.second);
         }
         identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.DESTRUCTOR_NAME,LANG2.DESTRUCTOR_NAME);
+        if (identifiers != null) {
+            mappingStore.addMappingRecursively(identifiers.first,identifiers.second);
+        }
+        identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.OPERATOR_NAME,LANG2.OPERATOR_NAME);
         if (identifiers != null) {
             mappingStore.addMappingRecursively(identifiers.first,identifiers.second);
         }

@@ -638,6 +638,7 @@ public class CppFileProcessor {
 		distributeComments(comments, locationInfo, operation.getComments());
 		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
 			operation.setConst(cppFunctionDeclarator.isConst());
+			operation.setPureVirtual(cppFunctionDeclarator.isPureVirtual());
 		}
 
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
@@ -689,6 +690,7 @@ public class CppFileProcessor {
 		distributeComments(comments, locationInfo, operation.getComments());
 		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
 			operation.setConst(cppFunctionDeclarator.isConst());
+			operation.setPureVirtual(cppFunctionDeclarator.isPureVirtual());
 		}
 
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, functionDefinition.getDeclSpecifier(), declarator, 0);

@@ -29,6 +29,8 @@ public class UMLsGenerator {
       int pos = subTree.getPos();
       int endPos = subTree.getEndPos();
 
+//      umls.umlModel.getModuleList()
+//      umls.umlModel.getPackageInfoList()
       for (UMLClass umlClass : umls.umlModel.getClassList()) {
         getUMLs(path, pos, endPos, umlClass, umls);
       }

@@ -1053,6 +1053,9 @@ public class StringBasedHeuristics {
 			if(diff1.equals("auto") && diff2.equals("const auto&")) {
 				return true;
 			}
+			else if(diff1.equals("const auto&") && diff2.equals("auto")) {
+				return true;
+			}
 		}
 		return false;
 	}

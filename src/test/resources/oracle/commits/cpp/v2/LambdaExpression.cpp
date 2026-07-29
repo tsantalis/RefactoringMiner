@@ -11,5 +11,7 @@ int main() {
         std::cout << x * multiplierX << " ";
     });
 
+    int speed = 80;
+    std::string status = speed > 65 ? "Speeding" : "Normal";
     return 0;
 }

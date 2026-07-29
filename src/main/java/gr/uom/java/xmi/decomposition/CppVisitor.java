@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression;
+import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTExpression;
@@ -109,6 +110,10 @@ public class CppVisitor extends ASTVisitor {
 		else if(expression instanceof ICPPASTNewExpression newExpression) {
 			ObjectCreation invocation = new ObjectCreation(sourceFolder, filePath, newExpression, container, fileContent);
 			creations.add(invocation);
+		}
+		else if(expression instanceof IASTConditionalExpression conditionalExpression) {
+			TernaryOperatorExpression ternary = new TernaryOperatorExpression(sourceFolder, filePath, conditionalExpression, container, activeVariableDeclarations, fileContent);
+			ternaryOperatorExpressions.add(ternary);
 		}
 		else if(expression instanceof IASTLiteralExpression literal) {
 			if(literal.getKind() == IASTLiteralExpression.lk_string_literal) {

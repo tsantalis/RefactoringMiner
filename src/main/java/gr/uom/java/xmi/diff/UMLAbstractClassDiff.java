@@ -4057,7 +4057,8 @@ public abstract class UMLAbstractClassDiff {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappings > 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() &&
-					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper)) {
+					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
+					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || operationsBeforeOrAfterMatch(removedOperation, addedOperation))) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {

@@ -585,6 +585,7 @@ public class Constants {
     public final String UNION_SPECIFIER = "union_specifier";
     public final String STRUCT_KEYWORD = "struct";
     public final String UNION_KEYWORD = "union";
+    public final String FRIEND_KEYWORD = "friend";
     public final String POINTER = "*";
     public final String ACCESS_SPECIFIER = "access_specifier";
     public final String TEMPLATE_DECLARATION = "template_declaration";

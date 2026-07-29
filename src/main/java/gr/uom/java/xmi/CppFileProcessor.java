@@ -48,6 +48,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTElaboratedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
@@ -531,6 +532,18 @@ public class CppFileProcessor {
 					templateParameters, inactiveContainerAlternatives);
 			this.umlModel.addClass(umlClass);
 			distributeComments(comments, locationInfo, umlClass.getComments());
+		}
+		else if(declSpecifier instanceof ICPPASTElaboratedTypeSpecifier elaboratedTypeSpecifier) {
+			//forward declaration: class, struct, union, enum
+			// struct SReadableWaiter;
+			// class CWLSurfaceResource;
+			//friend class F;
+			IASTName name = elaboratedTypeSpecifier.getName();
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
+			String[] tokens = elaboratedTypeSpecifier.toString().split("\s");
+			UMLForwardDeclaration decl = new UMLForwardDeclaration(locationInfo, tokens.length > 1 ? tokens[0] : "", name.toString(), elaboratedTypeSpecifier.isFriend());
+			if(parentContainer instanceof UMLClass)
+				((UMLClass)parentContainer).addForwardDeclaration(decl);
 		}
 		else if(declSpecifier instanceof ICPPASTEnumerationSpecifier enumSpecifier) {
 			if(enumSpecifier.getName() == null) {

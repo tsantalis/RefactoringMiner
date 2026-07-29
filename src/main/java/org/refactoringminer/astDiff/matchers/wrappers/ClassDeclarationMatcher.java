@@ -7,6 +7,7 @@ import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLForwardDeclaration;
 import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLType;
@@ -376,6 +377,27 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     dstStatement = dstStatement.getParent();
                 if(!mappingStore.isSrcMapped(srcStatement) && !mappingStore.isDstMapped(dstStatement))
                     mappingStore.addMappingRecursively(srcStatement, dstStatement);
+            }
+        }
+        if(classDiff.getForwardDeclarationListDiff().isPresent()) {
+            for (org.apache.commons.lang3.tuple.Pair<UMLForwardDeclaration, UMLForwardDeclaration> statementPair : classDiff.getForwardDeclarationListDiff().get().getCommonDeclarations()) {
+                Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
+                if(srcStatement.getType().name.equals(LANG1.FRIEND_KEYWORD))
+                    srcStatement = srcStatement.getParent();
+                Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                if(dstStatement.getType().name.equals(LANG2.FRIEND_KEYWORD))
+                    dstStatement = dstStatement.getParent();
+                mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                if(srcStatement.getParent() != null && dstStatement.getParent() != null) {
+                    int index1 = srcStatement.getParent().getChildPosition(srcStatement);
+                    int index2 = dstStatement.getParent().getChildPosition(dstStatement);
+                    if(srcStatement.getParent().getChildren().size() > index1+1 && srcStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                            dstStatement.getParent().getChildren().size() > index2+1 && dstStatement.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+1);
+                        Tree t2 = dstStatement.getParent().getChild(index2+1);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                }
             }
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

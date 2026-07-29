@@ -10,6 +10,15 @@ int main() {
     std::for_each(numbers.begin(), numbers.end(), [multiplier](int n) {
         std::cout << n * multiplier << " ";
     });
+    
+    int speed = 80;
+    std::string status;
+
+    if (speed > 65) {
+        status = "Speeding";
+    } else {
+        status = "Normal";
+    }
 
     return 0;
 }

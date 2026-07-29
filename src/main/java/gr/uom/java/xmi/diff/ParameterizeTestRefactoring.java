@@ -12,17 +12,106 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class ParameterizeTestRefactoring extends ChangeTypeRefactoring {
 	private UMLOperation removedOperation;
 	private UMLOperation parameterizedTestOperation;
 	private UMLOperationBodyMapper bodyMapper;
-	
+	private UMLOperation dataProviderBefore;
+	private UMLOperation dataProviderAfter;
+	private List<LeafMapping> data;
+	private List<DataProviderOverride> dataProviderOverrides;
+
 	public ParameterizeTestRefactoring(UMLOperationBodyMapper bodyMapper) {
 		this.bodyMapper = bodyMapper;
 		this.removedOperation = bodyMapper.getOperation1();
 		this.parameterizedTestOperation = bodyMapper.getOperation2();
+		this.data = new ArrayList<LeafMapping>();
+		this.dataProviderOverrides = new ArrayList<DataProviderOverride>();
+	}
+
+	public UMLOperation getDataProviderBefore() {
+		return dataProviderBefore;
+	}
+
+	public UMLOperation getDataProviderAfter() {
+		return dataProviderAfter;
+	}
+
+	public void setDataProvider(UMLOperation dataProviderBefore, UMLOperation dataProviderAfter) {
+		this.dataProviderBefore = dataProviderBefore;
+		this.dataProviderAfter = dataProviderAfter;
+	}
+
+	public List<LeafMapping> getData() {
+		return data;
+	}
+
+	public void addDataMapping(LeafMapping newLeafMapping) {
+		for(LeafMapping oldLeafMapping : data) {
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) &&
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) {
+				return;
+			}
+		}
+		getBodyMapper().addMapping(newLeafMapping);
+		data.add(newLeafMapping);
+	}
+
+	/**
+	 * A data provider pairing supplied by a subclass that inherits {@link #parameterizedTestOperation}
+	 * without overriding it (e.g. a subclass redeclaring a same-named static @MethodSource provider,
+	 * relying on JUnit5 resolving it against the runtime test class via Java static-method hiding).
+	 */
+	public static class DataProviderOverride {
+		private final UMLOperation dataProviderBefore;
+		private final UMLOperation dataProviderAfter;
+		private final List<LeafMapping> data;
+		private final UMLOperationBodyMapper bodyMapper;
+
+		/**
+		 * @param bodyMapper a standalone mapper for (dataProviderBefore, dataProviderAfter), already
+		 * populated with {@code data}. Deliberately NOT registered in the subclass's own
+		 * operationBodyMapperList by the caller: doing so makes it visible to model-wide cross-class
+		 * passes (e.g. consistent-rename inference), which then misreport it as a genuine
+		 * Rename/Change Return Type/Remove Annotation refactoring between two methods that only
+		 * happen to share the DataProvider's identity, not an actual rename.
+		 */
+		public DataProviderOverride(UMLOperation dataProviderBefore, UMLOperation dataProviderAfter, List<LeafMapping> data, UMLOperationBodyMapper bodyMapper) {
+			this.dataProviderBefore = dataProviderBefore;
+			this.dataProviderAfter = dataProviderAfter;
+			this.data = data;
+			this.bodyMapper = bodyMapper;
+		}
+
+		public UMLOperation getDataProviderBefore() {
+			return dataProviderBefore;
+		}
+
+		public UMLOperation getDataProviderAfter() {
+			return dataProviderAfter;
+		}
+
+		public List<LeafMapping> getData() {
+			return data;
+		}
+
+		public UMLOperationBodyMapper getBodyMapper() {
+			return bodyMapper;
+		}
+	}
+
+	public List<DataProviderOverride> getDataProviderOverrides() {
+		return dataProviderOverrides;
+	}
+
+	public void addDataProviderOverride(DataProviderOverride override) {
+		for(LeafMapping leafMapping : override.getData()) {
+			getBodyMapper().addMapping(leafMapping);
+		}
+		dataProviderOverrides.add(override);
 	}
 
 	@Override

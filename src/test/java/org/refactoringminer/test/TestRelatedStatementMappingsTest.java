@@ -9,6 +9,7 @@ import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -504,27 +505,55 @@ public class TestRelatedStatementMappingsTest {
         });
     }
 
-    @Disabled("All collected cases are edge cases that are not detected by the current implementation")
     @ParameterizedTest
     @CsvSource({
             //Parameterize Test with Framework support
             ////Extract Common Logic from Multiple Test Methods
-            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt", //FIXME: JUnit 4 parameterization not supported, Nikos: there is no refactoring, the parameters are for new test
-            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt", //FIXME: MethodSource not supported, Nikos: regular expressions passed as parameters have been refactored
-            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt", //FIXME: MethodSource not supported, Nikos: the test is using a switch-case to execute a different method based on the parameter value
-            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt", //FIXME: TestNG not supported, Nikos: 3 tests parameterized into testCheckTerminationForFiles + newly added tests
-            "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt", //FIXME: JUnit 4 parameterization not supported
+//            "https://github.com/aws/aws-sdk-java-v2.git, 4236a962dc0ca45149845317caa144a1ba768c5f, aws-sdk-java-v2-4236a962dc0ca45149845317caa144a1ba768c5f.txt", //FIXME: JUnit 4 parameterization not supported, Nikos: there is no refactoring, the parameters are for new test
+            "https://github.com/Atrox/haikunatorjava.git, 42679988419b68dd51f0a7b3c045536b3c5ef37b, haikunatorjava-42679988419b68dd51f0a7b3c045536b3c5ef37b.txt",
+            "https://github.com/opentripplanner/OpenTripPlanner.git, 1abed1191c2df7a747ef21cd3b669c14d54c3011, OpenTripPlanner-1abed1191c2df7a747ef21cd3b669c14d54c3011.txt",
+//            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt", //FIXME: TestNG not supported, Nikos: 3 tests parameterized into testCheckTerminationForFiles + newly added tests
+//            "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt", //FIXME: JUnit 4 parameterization not supported
+            "https://github.com/spring-projects/spring-boot.git, 16439ad6e364267033b8b157f3608b46c654dffa, spring-boot-16439ad6e364267033b8b157f3608b46c654dffa.txt",
             ////Add Parameterized Test
-            "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt", //TODO: Should test addition of parameterized test be supported?
+//            "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt", //TODO: Should test addition of parameterized test be supported?
             ////Merge Data Provider
-            "https://github.com/samtools/htsjdk.git, 17c4b9d29dc0ee7573d32e7364d36fc92e4b2493, htsjdk-17c4b9d29dc0ee7573d32e7364d36fc92e4b2493.txt", //FIXME: Merge Data Provider not supported
+//            "https://github.com/samtools/htsjdk.git, 17c4b9d29dc0ee7573d32e7364d36fc92e4b2493, htsjdk-17c4b9d29dc0ee7573d32e7364d36fc92e4b2493.txt", //FIXME: Merge Data Provider not supported
             ////Multiple data and multiple algorithms become parameterized test with inheritance and fixture overrides
-            "https://github.com/apache/hadoop.git, 4d01dbda508691beb07a4c8bfe113ec568166ddc, hadoop-4d01dbda508691beb07a4c8bfe113ec568166ddc.txt", //FIXME: JUnit 4 parameterization not supported
+//            "https://github.com/apache/hadoop.git, 4d01dbda508691beb07a4c8bfe113ec568166ddc, hadoop-4d01dbda508691beb07a4c8bfe113ec568166ddc.txt", //FIXME: JUnit 4 parameterization not supported
     })
     public void testParameterizedTestMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, ref -> {
             if (ref instanceof ParameterizeTestRefactoring parameterizedTestRefactoring) {
                 mapperInfo(parameterizedTestRefactoring.getBodyMapper().getMappings(), parameterizedTestRefactoring.getRemovedOperation(), parameterizedTestRefactoring.getParameterizedTestOperation());
+            }
+        });
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "https://github.com/conveyal/r5.git, 62a042e56b21d2e7c919552af39eca34357a82a7, r5-62a042e56b21d2e7c919552af39eca34357a82a7-dataprovider.txt",
+            "https://github.com/apache/directory-ldap-api.git, 8965a541bbeefd49028a5405264e40aed69ac5d0, directory-ldap-api-8965a541bbeefd49028a5405264e40aed69ac5d0-dataprovider.txt",
+//            "https://github.com/apache/zookeeper.git, c42c8c94085ed1d94a22158fbdfe2945118a82bc, zookeeper-c42c8c94085ed1d94a22158fbdfe2945118a82bc-dataprovider.txt", //FIXME: slow test 46 seconds in Mac M4
+//            "https://github.com/cloudfoundry-incubator/multiapps.git, 82c2cc85b8b7790470c8380b82aad27abffc290b, multiapps-82c2cc85b8b7790470c8380b82aad27abffc290b-dataprovider.txt", //FIXME: slow test 120 seconds in Mac M4
+    })
+    public void testDataProviderLiteralMappings(String url, String commit, String testResultFileName) {
+        testRefactoringMappings(url, commit, testResultFileName, ref -> {
+            if (ref instanceof ParameterizeTestRefactoring parameterizeTestRefactoring) {
+                if (parameterizeTestRefactoring.getDataProviderAfter() != null) {
+                    Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
+                    for (LeafMapping leafMapping : parameterizeTestRefactoring.getData()) {
+                        pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
+                    }
+                    mapperInfo(pairs, parameterizeTestRefactoring.getDataProviderBefore(), parameterizeTestRefactoring.getDataProviderAfter());
+                }
+                for (ParameterizeTestRefactoring.DataProviderOverride override : parameterizeTestRefactoring.getDataProviderOverrides()) {
+                    Set<Pair<LeafExpression, LeafExpression>> pairs = new LinkedHashSet<>();
+                    for (LeafMapping leafMapping : override.getData()) {
+                        pairs.add(Pair.of((LeafExpression) leafMapping.getFragment1(), (LeafExpression) leafMapping.getFragment2()));
+                    }
+                    mapperInfo(pairs, override.getDataProviderBefore(), override.getDataProviderAfter());
+                }
             }
         });
     }

@@ -18,6 +18,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
+import com.github.difflib.DiffUtils;
+import com.github.difflib.patch.AbstractDelta;
+import com.github.difflib.patch.Patch;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
@@ -3280,28 +3284,7 @@ public abstract class UMLAbstractClassDiff {
 								UMLOperation removedOperation = mapper.getOperation1();
 								removedOperations.remove(removedOperation);
 								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
-								for(UMLOperation removed : removedOperations) {
-									if(removed.hasParametersAnnotation()) {
-										List<List<LeafExpression>> parameters2 = getParameterValuesAsLeafExpressions(addedOperation);
-										List<List<LeafExpression>> parameters1 = getParameterValuesAsLeafExpressions(removed);
-										if(parameters1.size() == parameters2.size()) {
-											for(int i=0; i<parameters1.size(); i++) {
-												List<LeafExpression> expressions1 = parameters1.get(i);
-												List<LeafExpression> expressions2 = parameters2.get(i);
-												if(expressions1.size() == expressions2.size()) {
-													for(int j=0; j<expressions1.size(); j++) {
-														LeafExpression expression1 = expressions1.get(j);
-														LeafExpression expression2 = expressions2.get(j);
-														if(expression1.getString().equals(expression2.getString())) {
-															LeafMapping leafMapping = new LeafMapping(expression1, expression2, removed, addedOperation);
-															mapper.addMapping(leafMapping);
-														}
-													}
-												}
-											}
-										}
-									}
-								}
+								mapDataProviderValues(refactoring, addedOperation, removedOperations);
 							}
 							if(overallMaxMatchingTestParameters > -1) {
 								addedOperationIterator.remove();
@@ -3422,6 +3405,132 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+	}
+
+	//resolves the JUnit4 @Parameters DataProvider and JUnit5 @MethodSource DataProvider methods for
+	//a migrated parameterized test, and maps their literal values onto the ParameterizeTestRefactoring.
+	private void mapDataProviderValues(ParameterizeTestRefactoring refactoring, UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
+		ParameterizeTestRefactoring.DataProviderOverride resolved = resolveDataProviderMapping(addedOperation, removedOperations);
+		if(resolved == null) {
+			return;
+		}
+		refactoring.setDataProvider(resolved.getDataProviderBefore(), resolved.getDataProviderAfter());
+		for(LeafMapping leafMapping : resolved.getData()) {
+			refactoring.addDataMapping(leafMapping);
+		}
+	}
+
+	ParameterizeTestRefactoring.DataProviderOverride resolveDataProviderMapping(UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
+		if(!addedOperation.hasMethodSourceAnnotation()) {
+			return null;
+		}
+		MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
+		UMLOperation junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
+		if(junit5DataProvider == null) {
+			return null;
+		}
+		//look provider method up through operationBodyMapperList and only fall back to removedOperations
+		//if no such pairing exists yet
+		UMLOperation junit4DataProvider = null;
+		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
+			if(mapper.getOperation1().hasParametersAnnotation()) {
+				junit4DataProvider = mapper.getOperation1();
+				break;
+			}
+		}
+		if(junit4DataProvider == null) {
+			for(UMLOperation removed : removedOperations) {
+				if(removed.hasParametersAnnotation()) {
+					junit4DataProvider = removed;
+					break;
+				}
+			}
+		}
+		if(junit4DataProvider == null) {
+			return null;
+		}
+
+		List<List<LeafExpression>> junit4Rows = null;
+		OperationBody body = junit4DataProvider.getBody();
+		if(body != null) {
+			for(AbstractCall creation : body.getAllCreations()) {
+				if(creation instanceof ObjectCreation && ((ObjectCreation)creation).isArray()) {
+					if(junit4Rows == null) {
+						junit4Rows = new ArrayList<List<LeafExpression>>();
+					}
+					junit4Rows.addAll(((ObjectCreation)creation).getArrayInitializerRows());
+				}
+			}
+		}
+		if(junit4Rows == null) {
+			junit4Rows = getParameterValuesAsLeafExpressions(junit4DataProvider);
+		}
+		List<List<LeafExpression>> junit5Rows = getParameterValuesAsLeafExpressions(addedOperation);
+
+		UMLOperationBodyMapper dataProviderMapper = new UMLOperationBodyMapper(junit4DataProvider, junit5DataProvider, this);
+
+		List<LeafMapping> data = new ArrayList<LeafMapping>();
+		//match literals row-by-row (each row is one test case) rather than through one global value pool
+		for(int[] rowPair : alignDataProviderRows(junit4Rows, junit5Rows)) {
+			List<LeafExpression> row1 = junit4Rows.get(rowPair[0]);
+			List<LeafExpression> row2 = junit5Rows.get(rowPair[1]);
+			Map<String, List<LeafExpression>> row1ByValue = new LinkedHashMap<String, List<LeafExpression>>();
+			for(LeafExpression literal : row1) {
+				row1ByValue.computeIfAbsent(literal.getString(), key -> new ArrayList<LeafExpression>()).add(literal);
+			}
+			for(LeafExpression expression2 : row2) {
+				List<LeafExpression> matches = row1ByValue.get(expression2.getString());
+				if(matches != null && !matches.isEmpty()) {
+					LeafExpression expression1 = matches.remove(0);
+					LeafMapping leafMapping = new LeafMapping(expression1, expression2, junit4DataProvider, addedOperation);
+					dataProviderMapper.addMapping(leafMapping);
+					data.add(leafMapping);
+				}
+			}
+		}
+		return new ParameterizeTestRefactoring.DataProviderOverride(junit4DataProvider, junit5DataProvider, data, dataProviderMapper);
+	}
+
+	private List<int[]> alignDataProviderRows(List<List<LeafExpression>> rows1, List<List<LeafExpression>> rows2) {
+		List<String> signatures1 = new ArrayList<String>();
+		for(List<LeafExpression> row : rows1) {
+			signatures1.add(rowSignature(row));
+		}
+		List<String> signatures2 = new ArrayList<String>();
+		for(List<LeafExpression> row : rows2) {
+			signatures2.add(rowSignature(row));
+		}
+		List<int[]> pairs = new ArrayList<int[]>();
+		Patch<String> patch = DiffUtils.diff(signatures1, signatures2);
+		int i = 0, j = 0;
+		for(AbstractDelta<String> delta : patch.getDeltas()) {
+			while(i < delta.getSource().getPosition()) {
+				pairs.add(new int[]{i, j});
+				i++; j++;
+			}
+			int sourceSize = delta.getSource().size();
+			int targetSize = delta.getTarget().size();
+			if(sourceSize == targetSize) {
+				for(int k = 0; k < sourceSize; k++) {
+					pairs.add(new int[]{i + k, j + k});
+				}
+			}
+			i += sourceSize;
+			j += targetSize;
+		}
+		while(i < rows1.size() && j < rows2.size()) {
+			pairs.add(new int[]{i, j});
+			i++; j++;
+		}
+		return pairs;
+	}
+
+	private static String rowSignature(List<LeafExpression> row) {
+		StringBuilder sb = new StringBuilder();
+		for(LeafExpression literal : row) {
+			sb.append(literal.getString()).append('\u0001');
+		}
+		return sb.toString();
 	}
 
 	private void processNestedTypeDeclarationStatements(UMLOperation removedOperation, UMLOperation addedOperation) {
@@ -3945,6 +4054,11 @@ public abstract class UMLAbstractClassDiff {
 			}
 			else if(absoluteDifferenceInPosition == 0 && !removedOperation.isConstructor() && !addedOperation.isConstructor() &&
 					removedOperation.getName().equals(addedOperation.getName()) && operationBodyMapper.exactMatches() > 0) {
+				mapperSet.add(operationBodyMapper);
+			}
+			else if(mappings > 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() &&
+					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
+					(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) || operationsBeforeOrAfterMatch(removedOperation, addedOperation))) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappings == 0 && removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation() && literalIntersectionOrFormatting(literals1, literals2)) {

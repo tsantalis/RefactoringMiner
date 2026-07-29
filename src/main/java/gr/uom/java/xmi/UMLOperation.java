@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
@@ -24,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -46,6 +48,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isStrictfp;
 	private boolean isInline;
 	private boolean isConst;
+	private boolean hasDefaultClause;
+	private boolean hasDeleteClause;
+	private boolean isPureVirtual;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private AbstractExpression defaultExpression;
@@ -86,6 +91,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.receiver = Optional.empty();
         this.anonymousClassContainer = Optional.empty();
     }
+
+	public boolean isVoid() {
+		UMLParameter returnParameter = getReturnParameter();
+		if (Objects.isNull(returnParameter)) {
+			return false;
+		}
+		return returnParameter.toQualifiedString().equals("void");
+	}
+
+	public boolean isForwardDeclaration() {
+		return LANG.equals(Constants.CPP) && operationBody == null && !hasDefaultClause && !hasDeleteClause && !isPureVirtual;
+	}
 
 	public Constants getLANG() {
 		return LANG;
@@ -292,6 +309,30 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setConst(boolean isConst) {
 		this.isConst = isConst;
+	}
+
+	public boolean hasDefaultClause() {
+		return hasDefaultClause;
+	}
+
+	public void setDefaultClause(boolean defaultClause) {
+		this.hasDefaultClause = defaultClause;
+	}
+
+	public boolean hasDeleteClause() {
+		return hasDeleteClause;
+	}
+
+	public void setDeleteClause(boolean deleteClause) {
+		this.hasDeleteClause = deleteClause;
+	}
+
+	public boolean isPureVirtual() {
+		return isPureVirtual;
+	}
+
+	public void setPureVirtual(boolean isPureVirtual) {
+		this.isPureVirtual = isPureVirtual;
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
@@ -699,6 +740,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.isFinal == operation.isFinal &&
 				this.isStatic == operation.isStatic &&
 				this.parameters.equals(operation.parameters) &&
@@ -711,6 +753,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.isAbstract != operation.isAbstract)
 			return false;
 		if(this.isConst != operation.isConst)
+			return false;
+		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
 		/*if(this.isStatic != operation.isStatic)
 			return false;
@@ -737,6 +781,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 		if(this.isConst != operation.isConst)
 			return false;
+		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
+			return false;
 		/*if(this.isStatic != operation.isStatic)
 			return false;
 		if(this.isFinal != operation.isFinal)
@@ -761,6 +807,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.isAbstract != operation.isAbstract)
 			return false;
 		if(this.isConst != operation.isConst)
+			return false;
+		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
 		/*if(this.isStatic != operation.isStatic)
 			return false;
@@ -1059,7 +1107,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public boolean equalsIgnoringParentClassTypeParameterChange(UMLOperation operation, UMLTypeParameterListDiff typeParameterListDiff) {
 		if(this.name.equals(operation.name) &&
-				this.isAbstract == operation.isAbstract && this.isConst == operation.isConst && equalTypeParameters(operation)) {
+				this.isAbstract == operation.isAbstract &&
+				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
+				equalTypeParameters(operation)) {
 			Set<UMLTypeParameterDiff> set = typeParameterListDiff.getTypeParameterDiffs();
 			UMLParameter thisReturnParameter = this.getReturnParameter();
 			UMLParameter otherReturnParameter = operation.getReturnParameter();
@@ -1095,6 +1146,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return this.name.equals(operation.name) &&
 				equalReturnParameter(operation) &&
 				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
 	}
@@ -1105,6 +1157,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return this.name.equals(operation.name) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
@@ -1118,6 +1171,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
@@ -1138,6 +1192,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
@@ -1152,6 +1207,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			this.visibility.equals(operation.visibility) &&
 			this.isAbstract == operation.isAbstract &&
 			this.isConst == operation.isConst &&
+			this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 			thisEmptyBody == otherEmptyBody &&
 			this.getParameterTypeList().equals(operation.getParameterTypeList());
 	}
@@ -1162,6 +1218,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				equalTypeParameters(operation)) {
 			UMLParameter thisReturnParameter = this.getReturnParameter();
 			UMLParameter otherReturnParameter = operation.getReturnParameter();
@@ -1194,6 +1251,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		result = prime * result + ((className == null) ? 0 : className.hashCode());
 		result = prime * result + (isAbstract ? 1231 : 1237);
 		result = prime * result + (isConst ? 1231 : 1237);
+		result = prime * result + (isForwardDeclaration() ? 1231 : 1237);
 		result = prime * result + (thisEmptyBody ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((getParameterTypeList() == null) ? 0 : getParameterTypeList().hashCode());
@@ -1588,5 +1646,16 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return commonTokens > 0 && commonTokens + 1 >= Math.min(tokens1.length, tokens2.length);
 		}
 		return false;
+	}
+
+    public boolean hasMethodSourceAnnotation() {
+        return annotations.stream().anyMatch(MethodSourceAnnotation::isMethodSourceAnnotation);
+    }
+
+	public MethodSourceAnnotation getMethodSourceAnnotation(UMLAbstractClass declaringClass) {
+		Optional<UMLAnnotation> maybeAnnotation = annotations.stream().filter(MethodSourceAnnotation::isMethodSourceAnnotation).findFirst();
+		assert maybeAnnotation.isPresent() : "MethodSource annotation not found, you must guard getMethodSourceAnnotation method invocation with hasMethodSourceAnnotation";
+		UMLAnnotation annotation = maybeAnnotation.get();
+		return new MethodSourceAnnotation(annotation, this, declaringClass);
 	}
 }

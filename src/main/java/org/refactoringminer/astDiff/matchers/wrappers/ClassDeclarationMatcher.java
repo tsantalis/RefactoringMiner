@@ -7,6 +7,7 @@ import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLForwardDeclaration;
 import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLType;
@@ -160,6 +161,27 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(matched.first,matched.second);
                 }
             }
+            if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.FIELD_DECLARATION)
+                    && dstTypeDeclaration.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.FIELD_IDENTIFIER,LANG2.FIELD_IDENTIFIER);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+            }
+            if(srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
+                int index1 = srcTypeDeclaration.getParent().getChildPosition(srcTypeDeclaration);
+                int index2 = dstTypeDeclaration.getParent().getChildPosition(dstTypeDeclaration);
+                if(srcTypeDeclaration.getParent().getChildren().size() > index1+1 && srcTypeDeclaration.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                        dstTypeDeclaration.getParent().getChildren().size() > index2+1 && dstTypeDeclaration.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                    Tree t1 = srcTypeDeclaration.getParent().getChild(index1+1);
+                    Tree t2 = dstTypeDeclaration.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+            }
         }
 
         if(classDiff.getOriginalClass().isFunctionalInterface() && classDiff.getNextClass().isFunctionalInterface()) {
@@ -189,6 +211,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.STRUCT_KEYWORD,LANG2.STRUCT_KEYWORD);
+        if (matched != null)
+            mappingStore.addMapping(matched.first,matched.second);
+        matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.UNION_KEYWORD,LANG2.UNION_KEYWORD);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.MODIFIERS,LANG2.MODIFIERS);
@@ -364,6 +389,27 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
         }
+        if(classDiff.getForwardDeclarationListDiff().isPresent()) {
+            for (org.apache.commons.lang3.tuple.Pair<UMLForwardDeclaration, UMLForwardDeclaration> statementPair : classDiff.getForwardDeclarationListDiff().get().getCommonDeclarations()) {
+                Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
+                if(srcStatement.getType().name.equals(LANG1.FRIEND_KEYWORD))
+                    srcStatement = srcStatement.getParent();
+                Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                if(dstStatement.getType().name.equals(LANG2.FRIEND_KEYWORD))
+                    dstStatement = dstStatement.getParent();
+                mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                if(srcStatement.getParent() != null && dstStatement.getParent() != null) {
+                    int index1 = srcStatement.getParent().getChildPosition(srcStatement);
+                    int index2 = dstStatement.getParent().getChildPosition(dstStatement);
+                    if(srcStatement.getParent().getChildren().size() > index1+1 && srcStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                            dstStatement.getParent().getChildren().size() > index2+1 && dstStatement.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+1);
+                        Tree t2 = dstStatement.getParent().getChild(index2+1);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                }
+            }
+        }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
@@ -395,6 +441,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             type = LANG.METHOD_DECLARATION;
         else if (umlClass.isStruct())
             type = LANG.STRUCT_SPECIFIER;
+        else if (umlClass.isUnion())
+            type = LANG.UNION_SPECIFIER;
         return type;
     }
 

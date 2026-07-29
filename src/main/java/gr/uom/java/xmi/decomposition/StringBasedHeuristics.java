@@ -1043,6 +1043,20 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		if(commonSuffix.length() > 0 && commonPrefix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(diff1.equals("auto") && diff2.equals("const auto&")) {
+				return true;
+			}
+			else if(diff1.equals("const auto&") && diff2.equals("auto")) {
+				return true;
+			}
+		}
 		return false;
 	}
 

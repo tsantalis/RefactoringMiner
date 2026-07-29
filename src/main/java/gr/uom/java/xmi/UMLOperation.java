@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -88,7 +89,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
     }
 
 	public boolean isVoid() {
-        return getReturnParameter().toQualifiedString().equals("void");
+		UMLParameter returnParameter = getReturnParameter();
+		if (Objects.isNull(returnParameter)) {
+			return false;
+		}
+		return returnParameter.toQualifiedString().equals("void");
     }
 
 	public Constants getLANG() {

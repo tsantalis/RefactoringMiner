@@ -170,7 +170,7 @@ public class Constants {
 			MODIFIER = "Modifier";
 			INITIALIZER = "Initializer";
 			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
-			ENUM_DECLARATION = "EnumDeclaration";
+			ENUM_DECLARATION = "enum_specifier";
 			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
 			RECORD_DECLARATION = "RecordDeclaration";
 			PREFIX_EXPRESSION = "PrefixExpression";

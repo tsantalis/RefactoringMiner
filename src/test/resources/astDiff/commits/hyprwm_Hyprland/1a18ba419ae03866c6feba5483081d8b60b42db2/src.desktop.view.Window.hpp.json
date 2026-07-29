@@ -1616,6 +1616,61 @@
   "firstEndPos" : 953,
   "secondEndPos" : 1052
 }, {
+  "firstType" : "enum_specifier",
+  "secondType" : "enum_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 981,
+  "secondPos" : 1080,
+  "firstEndPos" : 1008,
+  "secondEndPos" : 1107
+}, {
+  "firstType" : "enum",
+  "secondType" : "enum",
+  "firstLabel" : "enum",
+  "secondLabel" : "enum",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 981,
+  "secondPos" : 1080,
+  "firstEndPos" : 985,
+  "secondEndPos" : 1084
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "eFocusReason",
+  "secondLabel" : "eFocusReason",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 986,
+  "secondPos" : 1085,
+  "firstEndPos" : 998,
+  "secondEndPos" : 1097
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "uint8_t",
+  "secondLabel" : "uint8_t",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 1001,
+  "secondPos" : 1100,
+  "firstEndPos" : 1008,
+  "secondEndPos" : 1107
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 1008,
+  "secondPos" : 1107,
+  "firstEndPos" : 1009,
+  "secondEndPos" : 1108
+}, {
   "firstType" : "namespace_definition",
   "secondType" : "namespace_definition",
   "firstLabel" : "",
@@ -2672,6 +2727,17 @@
   "firstEndPos" : 1673,
   "secondEndPos" : 1772
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 1673,
+  "secondPos" : 1772,
+  "firstEndPos" : 1674,
+  "secondEndPos" : 1773
+}, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",
   "firstLabel" : "",
@@ -3607,6 +3673,17 @@
   "firstEndPos" : 2149,
   "secondEndPos" : 2248
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 2149,
+  "secondPos" : 2248,
+  "firstEndPos" : 2150,
+  "secondEndPos" : 2249
+}, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",
   "firstLabel" : "",
@@ -4278,6 +4355,17 @@
   "firstEndPos" : 2532,
   "secondEndPos" : 2631
 }, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 2532,
+  "secondPos" : 2631,
+  "firstEndPos" : 2533,
+  "secondEndPos" : 2632
+}, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",
   "firstLabel" : "",
@@ -4618,6 +4706,17 @@
   "secondPos" : 2904,
   "firstEndPos" : 2806,
   "secondEndPos" : 2905
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 2806,
+  "secondPos" : 2905,
+  "firstEndPos" : 2807,
+  "secondEndPos" : 2906
 }, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",
@@ -5454,6 +5553,17 @@
   "secondPos" : 3250,
   "firstEndPos" : 3152,
   "secondEndPos" : 3251
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 3152,
+  "secondPos" : 3251,
+  "firstEndPos" : 3153,
+  "secondEndPos" : 3252
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",

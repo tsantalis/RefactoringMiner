@@ -153,7 +153,7 @@ public class UMLModelDiff {
 		return refactorings;
 	}
 
-	public UMLAbstractClass findClassInParentModel(String sourceFolder, String className) {
+	public UMLClass findClassInParentModel(String sourceFolder, String className) {
 		for(UMLClass umlClass : parentModel.getClassList()) {
 			if(umlClass.getName().equals(className) && umlClass.getSourceFolder().equals(sourceFolder)) {
 				return umlClass;
@@ -167,7 +167,7 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	public UMLAbstractClass findClassInParentModel(String className) {
+	public UMLClass findClassInParentModel(String className) {
 		for(UMLClass umlClass : parentModel.getClassList()) {
 			if(umlClass.getName().equals(className) || umlClass.getName().equals(className + ".__module__")) {
 				return umlClass;
@@ -181,7 +181,7 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	public UMLAbstractClass findClassInChildModel(String sourceFolder, String className) {
+	public UMLClass findClassInChildModel(String sourceFolder, String className) {
 		for(UMLClass umlClass : childModel.getClassList()) {
 			if(umlClass.getName().equals(className) && umlClass.getSourceFolder().equals(sourceFolder)) {
 				return umlClass;
@@ -195,7 +195,7 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	public UMLAbstractClass findClassInChildModel(String className) {
+	public UMLClass findClassInChildModel(String className) {
 		for(UMLClass umlClass : childModel.getClassList()) {
 			if(umlClass.getName().equals(className) || umlClass.getName().equals(className + ".__module__")) {
 				return umlClass;

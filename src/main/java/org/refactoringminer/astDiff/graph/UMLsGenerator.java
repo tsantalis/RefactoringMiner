@@ -18,7 +18,8 @@ public class UMLsGenerator {
   }
 
   public UMLs getUMLs(Tree tree, SrcDst srcDst, String path, boolean isContext) {
-    UMLs umls = new UMLs(srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashMap<>());
+    UMLs umls = new UMLs(srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel(),
+            new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashMap<>());
 
     List<Tree> subTrees = new ArrayList<>();
     subTrees.add(tree);
@@ -92,7 +93,6 @@ public class UMLsGenerator {
     }
 
     for (UMLAttribute attribute : umlClass.getAttributes()) {
-//          attribute.getAllCreations()
 //          attribute.getAllLambdas()
 //          attribute.getAllOperationInvocations()
 //          attribute.getAllStringLiterals()
@@ -113,9 +113,7 @@ public class UMLsGenerator {
   }
 
   private void getUMLs(String path, int pos, int endPos, UMLOperation umlOperation, UMLs umls) {
-//          operation.getAllCreations()
 //          operation.getAllLambdas()
-//          operation.getAllOperationInvocations()
 //          operation.getAllOperationInvocations()
 //          operation.getAllStringLiterals()
 //          operation.getAllVariables()

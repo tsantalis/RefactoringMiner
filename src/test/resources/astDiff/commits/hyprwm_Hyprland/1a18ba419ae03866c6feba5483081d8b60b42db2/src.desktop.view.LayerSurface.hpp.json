@@ -4520,6 +4520,39 @@
   "firstEndPos" : 2837,
   "secondEndPos" : 3605
 }, {
+  "firstType" : "operator_name",
+  "secondType" : "operator_name",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 2795,
+  "secondPos" : 3563,
+  "firstEndPos" : 2805,
+  "secondEndPos" : 3573
+}, {
+  "firstType" : "operator",
+  "secondType" : "operator",
+  "firstLabel" : "operator",
+  "secondLabel" : "operator",
+  "firstParentType" : "operator_name",
+  "secondParentType" : "operator_name",
+  "firstPos" : 2795,
+  "secondPos" : 3563,
+  "firstEndPos" : 2803,
+  "secondEndPos" : 3571
+}, {
+  "firstType" : "==",
+  "secondType" : "==",
+  "firstLabel" : "==",
+  "secondLabel" : "==",
+  "firstParentType" : "operator_name",
+  "secondParentType" : "operator_name",
+  "firstPos" : 2803,
+  "secondPos" : 3571,
+  "firstEndPos" : 2805,
+  "secondEndPos" : 3573
+}, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",
   "firstLabel" : "",

@@ -955,6 +955,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(closing.first,closing.second);
                 }
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> explicitSpecifiers = Helpers.findPairOfType(parent1,parent2,LANG1.EXPLICIT_FUNCTION_SPECIFIER,LANG2.EXPLICIT_FUNCTION_SPECIFIER);
+            if (explicitSpecifiers != null) {
+                mappingStore.addMappingRecursively(explicitSpecifiers.first,explicitSpecifiers.second);
+            }
         }
         if(parent1.getType().name.equals(LANG1.DECLARATION) && parent2.getType().name.equals(LANG2.DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);
@@ -967,6 +971,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (primitives != null) {
                 mappingStore.addMapping(primitives.first,primitives.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> explicitSpecifiers = Helpers.findPairOfType(parent1,parent2,LANG1.EXPLICIT_FUNCTION_SPECIFIER,LANG2.EXPLICIT_FUNCTION_SPECIFIER);
+            if (explicitSpecifiers != null) {
+                mappingStore.addMappingRecursively(explicitSpecifiers.first,explicitSpecifiers.second);
+            }
         }
         else if(parent1.getType().name.equals(LANG1.FIELD_DECLARATION) && parent2.getType().name.equals(LANG2.FIELD_DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);
@@ -978,6 +986,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(parent1,parent2,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
             if (primitives != null) {
                 mappingStore.addMapping(primitives.first,primitives.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> explicitSpecifiers = Helpers.findPairOfType(parent1,parent2,LANG1.EXPLICIT_FUNCTION_SPECIFIER,LANG2.EXPLICIT_FUNCTION_SPECIFIER);
+            if (explicitSpecifiers != null) {
+                mappingStore.addMappingRecursively(explicitSpecifiers.first,explicitSpecifiers.second);
             }
         }
     }

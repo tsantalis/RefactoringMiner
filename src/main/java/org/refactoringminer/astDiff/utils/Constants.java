@@ -610,4 +610,6 @@ public class Constants {
     public final String DELETE_METHOD_CLAUSE = "delete_method_clause";
     public final String OPERATOR_NAME = "operator_name";
     public final String FRIEND_DECLARATION = "friend_declaration";
+    public final String TRAILING_RETURN_TYPE = "trailing_return_type";
+    public final String TEMPLATE_TYPE = "template_type";
 }

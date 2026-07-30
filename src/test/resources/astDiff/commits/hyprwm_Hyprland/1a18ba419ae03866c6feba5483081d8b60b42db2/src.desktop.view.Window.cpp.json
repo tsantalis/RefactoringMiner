@@ -118260,6 +118260,83 @@
   "firstEndPos" : 38611,
   "secondEndPos" : 38306
 }, {
+  "firstType" : "template_type",
+  "secondType" : "template_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 38612,
+  "secondPos" : 38307,
+  "firstEndPos" : 38629,
+  "secondEndPos" : 38324
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PHLANIMVAR",
+  "secondLabel" : "PHLANIMVAR",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 38612,
+  "secondPos" : 38307,
+  "firstEndPos" : 38622,
+  "secondEndPos" : 38317
+}, {
+  "firstType" : "template_argument_list",
+  "secondType" : "template_argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 38622,
+  "secondPos" : 38317,
+  "firstEndPos" : 38629,
+  "secondEndPos" : 38324
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 38622,
+  "secondPos" : 38317,
+  "firstEndPos" : 38623,
+  "secondEndPos" : 38318
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "float",
+  "secondLabel" : "float",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 38623,
+  "secondPos" : 38318,
+  "firstEndPos" : 38628,
+  "secondEndPos" : 38323
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 38623,
+  "secondPos" : 38318,
+  "firstEndPos" : 38628,
+  "secondEndPos" : 38323
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 38628,
+  "secondPos" : 38323,
+  "firstEndPos" : 38629,
+  "secondEndPos" : 38324
+}, {
   "firstType" : "reference_declarator",
   "secondType" : "reference_declarator",
   "firstLabel" : "",

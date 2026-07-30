@@ -4289,6 +4289,83 @@
   "firstEndPos" : 1957,
   "secondEndPos" : 1981
 }, {
+  "firstType" : "template_type",
+  "secondType" : "template_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1958,
+  "secondPos" : 1982,
+  "firstEndPos" : 1989,
+  "secondEndPos" : 2013
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "WP",
+  "secondLabel" : "WP",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 1958,
+  "secondPos" : 1982,
+  "firstEndPos" : 1960,
+  "secondEndPos" : 1984
+}, {
+  "firstType" : "template_argument_list",
+  "secondType" : "template_argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 1960,
+  "secondPos" : 1984,
+  "firstEndPos" : 1989,
+  "secondEndPos" : 2013
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 1960,
+  "secondPos" : 1984,
+  "firstEndPos" : 1961,
+  "secondEndPos" : 1985
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 1961,
+  "secondPos" : 1985,
+  "firstEndPos" : 1988,
+  "secondEndPos" : 2012
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CDRMSyncobjTimelineResource",
+  "secondLabel" : "CDRMSyncobjTimelineResource",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 1961,
+  "secondPos" : 1985,
+  "firstEndPos" : 1988,
+  "secondEndPos" : 2012
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 1988,
+  "secondPos" : 2012,
+  "firstEndPos" : 1989,
+  "secondEndPos" : 2013
+}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",

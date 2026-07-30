@@ -421,10 +421,31 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                         Tree t2 = dstStatement.getParent().getChild(index2+1);
                         mappingStore.addMappingRecursively(t1,t2);
                     }
-                    if(srcStatement.getParent().getChildren().size() > index1+2 && srcStatement.getParent().getChild(index1+2).getType().name.equals(LANG1.SEMICOLON) &&
-                            dstStatement.getParent().getChildren().size() > index2+2 && dstStatement.getParent().getChild(index2+2).getType().name.equals(LANG2.SEMICOLON)) {
-                        Tree t1 = srcStatement.getParent().getChild(index1+2);
-                        Tree t2 = dstStatement.getParent().getChild(index2+2);
+                    int second = 2;
+                    if(srcStatement.getParent().getChildren().size() > index1+second && srcStatement.getParent().getChild(index1+second).getType().name.equals(LANG1.EQUAL_OPERATOR) &&
+                            dstStatement.getParent().getChildren().size() > index2+second && dstStatement.getParent().getChild(index2+second).getType().name.equals(LANG2.EQUAL_OPERATOR)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+second);
+                        Tree t2 = dstStatement.getParent().getChild(index2+second);
+                        mappingStore.addMappingRecursively(t1,t2);
+                    }
+                    int third = 3;
+                    if(srcStatement.getParent().getChildren().size() > index1+third && srcStatement.getParent().getChild(index1+third).getType().name.equals(LANG1.SIMPLE_NAME) &&
+                            dstStatement.getParent().getChildren().size() > index2+third && dstStatement.getParent().getChild(index2+third).getType().name.equals(LANG2.SIMPLE_NAME)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+third);
+                        Tree t2 = dstStatement.getParent().getChild(index2+third);
+                        mappingStore.addMappingRecursively(t1,t2);
+                    }
+                    if(srcStatement.getParent().getChildren().size() > index1+second && srcStatement.getParent().getChild(index1+second).getType().name.equals(LANG1.SEMICOLON) &&
+                            dstStatement.getParent().getChildren().size() > index2+second && dstStatement.getParent().getChild(index2+second).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+second);
+                        Tree t2 = dstStatement.getParent().getChild(index2+second);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                    int fourth = 4;
+                    if(srcStatement.getParent().getChildren().size() > index1+fourth && srcStatement.getParent().getChild(index1+fourth).getType().name.equals(LANG1.SEMICOLON) &&
+                            dstStatement.getParent().getChildren().size() > index2+fourth && dstStatement.getParent().getChild(index2+fourth).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+fourth);
+                        Tree t2 = dstStatement.getParent().getChild(index2+fourth);
                         mappingStore.addMapping(t1,t2);
                     }
                 }

@@ -3343,6 +3343,39 @@
   "firstEndPos" : 1864,
   "secondEndPos" : 1883
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1867,
+  "secondPos" : 1886,
+  "firstEndPos" : 1868,
+  "secondEndPos" : 1887
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GGML_SCHED_PRIO_NORMAL",
+  "secondLabel" : "GGML_SCHED_PRIO_NORMAL",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1869,
+  "secondPos" : 1888,
+  "firstEndPos" : 1891,
+  "secondEndPos" : 1910
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1891,
+  "secondPos" : 1910,
+  "firstEndPos" : 1892,
+  "secondEndPos" : 1911
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// Scheduling prio : (0 - normal, 1 - medium, 2 - high, 3 - realtime)",
@@ -26894,6 +26927,39 @@
   "firstEndPos" : 20422,
   "secondEndPos" : 20441
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20423,
+  "secondPos" : 20442,
+  "firstEndPos" : 20424,
+  "secondEndPos" : 20443
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LLAMA_SPLIT_MODE_LAYER",
+  "secondLabel" : "LLAMA_SPLIT_MODE_LAYER",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20425,
+  "secondPos" : 20444,
+  "firstEndPos" : 20447,
+  "secondEndPos" : 20466
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20447,
+  "secondPos" : 20466,
+  "firstEndPos" : 20448,
+  "secondEndPos" : 20467
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// how to split the model across GPUs",
@@ -27290,6 +27356,39 @@
   "firstEndPos" : 20784,
   "secondEndPos" : 20889
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20785,
+  "secondPos" : 20890,
+  "firstEndPos" : 20786,
+  "secondEndPos" : 20891
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LLAMA_ROPE_SCALING_TYPE_UNSPECIFIED",
+  "secondLabel" : "LLAMA_ROPE_SCALING_TYPE_UNSPECIFIED",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20787,
+  "secondPos" : 20892,
+  "firstEndPos" : 20822,
+  "secondEndPos" : 20927
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20822,
+  "secondPos" : 20927,
+  "firstEndPos" : 20823,
+  "secondEndPos" : 20928
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -27344,6 +27443,39 @@
   "secondPos" : 20962,
   "firstEndPos" : 20869,
   "secondEndPos" : 20974
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20875,
+  "secondPos" : 20980,
+  "firstEndPos" : 20876,
+  "secondEndPos" : 20981
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LLAMA_POOLING_TYPE_UNSPECIFIED",
+  "secondLabel" : "LLAMA_POOLING_TYPE_UNSPECIFIED",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20877,
+  "secondPos" : 20982,
+  "firstEndPos" : 20907,
+  "secondEndPos" : 21012
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20907,
+  "secondPos" : 21012,
+  "firstEndPos" : 20908,
+  "secondEndPos" : 21013
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -27411,6 +27543,39 @@
   "firstEndPos" : 20987,
   "secondEndPos" : 21092
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20991,
+  "secondPos" : 21096,
+  "firstEndPos" : 20992,
+  "secondEndPos" : 21097
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LLAMA_ATTENTION_TYPE_UNSPECIFIED",
+  "secondLabel" : "LLAMA_ATTENTION_TYPE_UNSPECIFIED",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 20993,
+  "secondPos" : 21098,
+  "firstEndPos" : 21025,
+  "secondEndPos" : 21130
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 21025,
+  "secondPos" : 21130,
+  "firstEndPos" : 21026,
+  "secondEndPos" : 21131
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// attention type for embeddings",
@@ -27476,6 +27641,39 @@
   "secondPos" : 21198,
   "firstEndPos" : 21108,
   "secondEndPos" : 21213
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 21111,
+  "secondPos" : 21216,
+  "firstEndPos" : 21112,
+  "secondEndPos" : 21217
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LLAMA_FLASH_ATTN_TYPE_AUTO",
+  "secondLabel" : "LLAMA_FLASH_ATTN_TYPE_AUTO",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 21113,
+  "secondPos" : 21218,
+  "firstEndPos" : 21139,
+  "secondEndPos" : 21244
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 21139,
+  "secondPos" : 21244,
+  "firstEndPos" : 21140,
+  "secondEndPos" : 21245
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -34912,6 +35110,39 @@
   "secondPos" : 28272,
   "firstEndPos" : 28396,
   "secondEndPos" : 28281
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 28397,
+  "secondPos" : 28282,
+  "firstEndPos" : 28398,
+  "secondEndPos" : 28283
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GGML_OPT_OPTIMIZER_TYPE_ADAMW",
+  "secondLabel" : "GGML_OPT_OPTIMIZER_TYPE_ADAMW",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 28399,
+  "secondPos" : 28284,
+  "firstEndPos" : 28428,
+  "secondEndPos" : 28313
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 28428,
+  "secondPos" : 28313,
+  "firstEndPos" : 28429,
+  "secondEndPos" : 28314
 }, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",

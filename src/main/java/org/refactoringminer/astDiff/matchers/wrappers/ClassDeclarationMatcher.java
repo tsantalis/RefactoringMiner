@@ -407,6 +407,19 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                         Tree t2 = dstStatement.getParent().getChild(index2+1);
                         mappingStore.addMapping(t1,t2);
                     }
+                    if(srcStatement.getParent().getChildren().size() > index1+1 && srcStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.FUNCTION_DECLARATOR) &&
+                            dstStatement.getParent().getChildren().size() > index2+1 && dstStatement.getParent().getChild(index2+1).getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
+                        mappingStore.addMapping(srcStatement.getParent(), dstStatement.getParent());
+                        Tree t1 = srcStatement.getParent().getChild(index1+1);
+                        Tree t2 = dstStatement.getParent().getChild(index2+1);
+                        mappingStore.addMappingRecursively(t1,t2);
+                    }
+                    if(srcStatement.getParent().getChildren().size() > index1+2 && srcStatement.getParent().getChild(index1+2).getType().name.equals(LANG1.SEMICOLON) &&
+                            dstStatement.getParent().getChildren().size() > index2+2 && dstStatement.getParent().getChild(index2+2).getType().name.equals(LANG2.SEMICOLON)) {
+                        Tree t1 = srcStatement.getParent().getChild(index1+2);
+                        Tree t2 = dstStatement.getParent().getChild(index2+2);
+                        mappingStore.addMapping(t1,t2);
+                    }
                 }
             }
         }

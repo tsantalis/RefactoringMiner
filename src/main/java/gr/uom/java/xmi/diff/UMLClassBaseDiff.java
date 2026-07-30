@@ -99,6 +99,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.packageDeclarationJavadocDiff = Optional.empty();
 		}
+		this.typeAliasListDiff = Optional.empty();
+		this.primaryConstructorParameterListDiff = Optional.empty();
 		this.preprocessorStatementListDiff = Optional.empty();
 		this.forwardDeclarationListDiff = Optional.empty();
 		processImports();
@@ -180,9 +182,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(getOriginalClass().getTypeAliasList().size() > 0 && getNextClass().getTypeAliasList().size() > 0) {
 			UMLTypeAliasListDiff typeAliasListDiff = new UMLTypeAliasListDiff(getOriginalClass().getTypeAliasList(), getNextClass().getTypeAliasList());
 			this.typeAliasListDiff = Optional.of(typeAliasListDiff);
-		}
-		else {
-			this.typeAliasListDiff = Optional.empty();
 		}
 		processInitializers();
 		processModifiers();
@@ -335,9 +334,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				Refactoring r = new RemoveParameterRefactoring(removedParameter, getOriginalClass().getPrimaryConstructor().get(), getNextClass().getPrimaryConstructor().get());
 				this.refactorings.add(r);
 			}
-		}
-		else {
-			this.primaryConstructorParameterListDiff = Optional.empty();
 		}
 	}
 

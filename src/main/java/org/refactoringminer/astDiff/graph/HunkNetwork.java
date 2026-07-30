@@ -518,11 +518,11 @@ public class HunkNetwork {
         creations.addAll(umlAttribute.getAllCreations());
       }
 
-      Set<UMLClass> createdClasses = new HashSet<>();
+      Set<UMLAbstractClass> createdClasses = new HashSet<>();
 
       for (AbstractCall creation : creations) {
         String createdClassName = creation.getName();
-        UMLClass createdClass = node.isSrc() ?
+        UMLAbstractClass createdClass = node.isSrc() ?
                 modelDiff.findClassInParentModel(createdClassName) : modelDiff.findClassInChildModel(createdClassName);
         if (createdClass == null) {
           continue;
@@ -533,7 +533,7 @@ public class HunkNetwork {
 
       Set<Node> classNodes = new HashSet<>();
 
-      for (UMLClass createdClass : createdClasses) {
+      for (UMLAbstractClass createdClass : createdClasses) {
         Node classNode = getClassNode(createdClass, node.getSrcDst());
         if (classNode == null) {
           continue;
@@ -564,7 +564,7 @@ public class HunkNetwork {
         continue;
       }
 
-      UMLClass parentClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(generalization.getParent())
+      UMLAbstractClass parentClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(generalization.getParent())
               : modelDiff.findClassInChildModel(generalization.getParent());
       if (parentClass == null) {
         continue;
@@ -590,7 +590,7 @@ public class HunkNetwork {
         continue;
       }
 
-      UMLClass parentClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(realization.getSupplier())
+      UMLAbstractClass parentClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(realization.getSupplier())
               : modelDiff.findClassInChildModel(realization.getSupplier());
       if (parentClass == null) {
         continue;
@@ -606,7 +606,7 @@ public class HunkNetwork {
   }
 
   @Nullable
-  private Node getClassNode(UMLClass umlClass, SrcDst srcDst) {
+  private Node getClassNode(UMLAbstractClass umlClass, SrcDst srcDst) {
     Optional<Node> optionalClassNode = graph.vertexSet().stream().filter(node -> !node.isExtension()
             && node.getSrcDst().equals(srcDst) && node.umls != null && node.umls.umlClasses.contains(umlClass)).findFirst();
     if (optionalClassNode.isEmpty()) {

@@ -146,6 +146,8 @@ public class UMLModelAdapter {
             );
             moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
             moduleClass.setContainer(moduleContainer);
+            moduleClass.getOperations().addAll(moduleContainer.getNestedOperations());
+            moduleClass.getAttributes().addAll(moduleContainer.getNestedAttributes());
         }
         // add compilation unit comments to moduleClass
         for (LangComment compilationUnitLevelComment : compilationUnit.getComments()) {
@@ -268,6 +270,8 @@ public class UMLModelAdapter {
             );
             moduleContainer.addStatements(opBody.getCompositeStatement().getStatements());
             umlClass.setContainer(moduleContainer);
+            umlClass.getOperations().addAll(moduleContainer.getNestedOperations());
+            umlClass.getAttributes().addAll(moduleContainer.getNestedAttributes());
         }
         distributeComments(comments, locationInfo, umlClass.getComments());
         return umlClass;

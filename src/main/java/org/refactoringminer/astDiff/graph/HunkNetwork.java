@@ -4,14 +4,7 @@ import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
-import gr.uom.java.xmi.LocationInfo;
-import gr.uom.java.xmi.UMLAnonymousClass;
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLGeneralization;
-import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.UMLOperation;
-import gr.uom.java.xmi.UMLRealization;
+import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -41,6 +34,7 @@ public class HunkNetwork {
   private final Graph<Node, Edge> graph;
   private final HashMap<String, Node> nodeMap = new HashMap<>();
   private final UMLModelDiff modelDiff;
+  private final UMLsGenerator umlsGenerator;
   private final Map<String, String> srcContents;
   private final Map<String, String> dstContents;
   private final Map<String, TreeContext> srcContexts;
@@ -54,6 +48,7 @@ public class HunkNetwork {
     graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true)
         .allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
     this.modelDiff = modelDiff;
+    this.umlsGenerator = new UMLsGenerator(modelDiff);
     this.srcContents = srcContents;
     this.dstContents = dstContents;
     this.srcContexts = srcContexts;
@@ -223,6 +218,7 @@ public class HunkNetwork {
 
     graph.addVertex(node);
     nodeMap.put(node.getId(), node);
+    node.setUMLs(umlsGenerator.getUMLs(node.getTree(), node.getSrcDst(), node.getPath(), false));
 
     addNodeContexts(node);
 
@@ -245,6 +241,8 @@ public class HunkNetwork {
 
       Node contextNode = nodeMap.get(potentialContextId);
       contextNode.addDiffs(node.getDiffs());
+      contextNode.setUMLs(umlsGenerator.getUMLs(contextNode.getTree(), contextNode.getSrcDst(), contextNode.getPath(), true));
+
       injectContextNode(contextNode);
     }
 
@@ -353,112 +351,55 @@ public class HunkNetwork {
   }
 
   private void processDefUse() {
-    List<Node> nodes = graph.vertexSet().stream().toList();
+    List<Node> nodes = graph.vertexSet().stream().filter(node -> !node.isExtension()).toList();
     for (Node node : nodes) {
+      // This method is only for subclass relations (operations, attributes, and below), so the only LOCATION_CONTEXT
+      // which could contribute to this method would be method which will be handled by the potential
+      // SEMANTIC_CONTEXT with the same method tree. So no need to handle LOCATION_CONTEXT here
       if (node.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
         continue;
       }
 
-      Tree tree = node.getTree();
-
-      List<Tree> subTrees = new ArrayList<>();
-      subTrees.add(tree);
-      if (!node.isContext()) {
-        subTrees.addAll(tree.getDescendants());
-      }
-
-      Constants constants = new Constants(node.getPath());
-
-      List<Tree> methodDeclarations = new ArrayList<>();
-      List<Tree> fieldDeclarations = new ArrayList<>();
-      List<Tree> parameterDeclarations = new ArrayList<>();
-      List<Tree> variableDeclarations = new ArrayList<>();
-      for (Tree subTree : subTrees) {
-        String subTreeType = subTree.getType().name;
-        if (constants.isMethod(subTreeType)) {
-          methodDeclarations.add(subTree);
-        }
-        if (subTreeType.equals(constants.FIELD_DECLARATION)) {
-          fieldDeclarations.add(subTree);
-        }
-        if (subTreeType.equals(constants.SINGLE_VARIABLE_DECLARATION)) {
-          parameterDeclarations.add(subTree);
-        }
-        if (subTreeType.equals(constants.VARIABLE_DECLARATION_STATEMENT)) {
-          variableDeclarations.add(subTree);
-        }
-      }
-      if (methodDeclarations.isEmpty() && fieldDeclarations.isEmpty()
-          && parameterDeclarations.isEmpty() && variableDeclarations.isEmpty()) {
+      UMLs umls = node.getUMLs();
+      if (umls == null) {
         continue;
       }
 
-      // prevent having one edge for method and some other for parameters
-      for (Tree methodDeclaration : methodDeclarations) {
-        List<Tree> methodDescendants = methodDeclaration.getDescendants();
-        for (Tree methodDescendant : methodDescendants) {
-          parameterDeclarations.remove(methodDescendant);
-          variableDeclarations.remove(methodDescendant);
-        }
-      }
+      Set<Node> defUseTargets = new HashSet<>();
 
-      for (Tree methodDeclaration : methodDeclarations) {
-        UMLClass umlClass = getUMLClass(node.getPath(), methodDeclaration, node.getSrcDst());
-        if (umlClass == null) {
-          continue;
-        }
-        UMLOperation operation = findUMLOperation(umlClass, methodDeclaration);
-        if (operation == null) {
-          continue;
-        }
-
+      for (UMLOperation operation : umls.umlOperations) {
         node.addIdentifier(operation.getName());
+        defUseTargets.addAll(getInvocationNodes(operation, node.getSrcDst()));
+      }
 
-        Set<Node> invocationNodes = getInvocationNodes(operation, node.getSrcDst());
-        for (Node invocationNode : invocationNodes) {
-          addEdge(node, invocationNode, EdgeType.DEF_USE);
+      for (UMLAttribute attribute : umls.umlAttributes) {
+        node.addIdentifier(attribute.getVariableDeclaration().getVariableName());
+        defUseTargets.addAll(findAccessNodes(attribute.getName(),
+                node.isSrc() ? modelDiff.findFieldAccessesInParentModel(attribute)
+                : modelDiff.findFieldAccessesInChildModel(attribute), node.getSrcDst()));
+      }
+
+      for (VariableDeclaration variableDeclaration : umls.variableDeclarations) {
+        node.addIdentifier(variableDeclaration.getVariableName());
+        defUseTargets.addAll(findAccessNodes(variableDeclaration.getVariableName(),
+                variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst()));
+      }
+
+      for (Entry<UMLOperation, Set<VariableDeclaration>> operationParameters : umls.operationParameters.entrySet()) {
+        for (VariableDeclaration operationParameter : operationParameters.getValue()) {
+          node.addIdentifier(operationParameter.getVariableName());
+          defUseTargets.addAll(getArgumentNodes(operationParameters.getKey(), operationParameter, node.getSrcDst()));
         }
       }
 
-      for (Tree fieldDeclaration : fieldDeclarations) {
-        UMLAttribute umlAttribute = findUMLAttribute(node.getPath(), fieldDeclaration,
-            node.getSrcDst());
-        if (umlAttribute == null) {
-          continue;
-        }
-
-        node.addIdentifier(umlAttribute.getVariableDeclaration().getVariableName());
-
-        Set<Node> useNodes = findAccessNodes(umlAttribute.getName(),
-            node.isSrc() ? modelDiff.findFieldAccessesInParentModel(umlAttribute)
-                : modelDiff.findFieldAccessesInChildModel(umlAttribute), node.getSrcDst());
-        for (Node useNode : useNodes) {
-          addEdge(node, useNode, EdgeType.DEF_USE);
-        }
-      }
-
-      for (Tree parameterDeclaration : parameterDeclarations) {
-        addVariableDeclarationEdges(node, parameterDeclaration);
-      }
-      List<Tree> methodParameterDeclarations = parameterDeclarations.stream().filter(
-          parameterDeclaration -> parameterDeclaration.getParent().getType().name.equals(
-              constants.METHOD_DECLARATION)).toList();
-      for (Tree methodParameterDeclaration : methodParameterDeclarations) {
-        addParameterArgumentEdges(node, methodParameterDeclaration);
-      }
-
-      for (Tree variableDeclaration : variableDeclarations) {
-        Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(
-            variableDeclaration, constants.VARIABLE_DECLARATION_FRAGMENT);
-        if (variableDeclarationFragment == null) {
-          continue;
-        }
-
-        addVariableDeclarationEdges(node, variableDeclarationFragment);
+      for (Node defUseTarget : defUseTargets) {
+        addEdge(node, defUseTarget, EdgeType.DEF_USE);
       }
     }
   }
 
+  // TODO: recursive extensions (from a non-extension to a non-extension OR to a terminal)
+  // TODO: forward extensions (being used) in addition to the current backward extension (using)
   private void processExtensions(SrcDst srcDst) {
     HashMap<Node, Set<Node>> nodesExtensions = new HashMap<>();
 
@@ -516,8 +457,7 @@ public class HunkNetwork {
 
     Tree usedRootTree = (srcDst.equals(SrcDst.SRC) ? srcContexts : dstContexts).get(
         usedLocation.getFilePath()).getRoot();
-    Constants constants = new Constants(usedLocation.getFilePath());
-    Tree usedTree = TreeUtilFunctions.findByLocationInfo(usedRootTree, usedLocation, constants);
+    Tree usedTree = TreeUtilFunctions.findByLocationInfo(usedRootTree, usedLocation, new Constants(usedLocation.getFilePath()));
     if (treeTransformer != null) {
       usedTree = treeTransformer.apply(usedTree);
     }
@@ -530,96 +470,78 @@ public class HunkNetwork {
     }
   }
 
-  private void addParameterArgumentEdges(Node node, Tree parameterDeclarationTree) {
-    Constants constants = new Constants(node.getPath());
+  private Set<Node> getArgumentNodes(UMLOperation umlOperation, VariableDeclaration parameterDeclaration, SrcDst srcDst) {
+    Set<Node> result = new HashSet<>();
 
-    int parameterIndex = parameterDeclarationTree.getParent().getChildren().stream()
-        .filter(child -> child.getType().name.equals(constants.RECORD_COMPONENT)).toList()
-        .indexOf(parameterDeclarationTree);
+    int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
 
-    Tree methodRoot = TreeUtilFunctions.getParentUntilType(parameterDeclarationTree,
-        constants.METHOD_DECLARATION);
-    // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
-    if (methodRoot == null) {
-      return;
-    }
-
-    UMLClass umlClass = getUMLClass(node.getPath(), parameterDeclarationTree, node.getSrcDst());
-    if (umlClass == null) {
-      return;
-    }
-
-    UMLOperation umlOperation = findUMLOperation(umlClass, methodRoot);
-    if (umlOperation == null) {
-      return;
-    }
-
-    List<AbstractCall> invocations =
-        node.isSrc() ? modelDiff.findInvocationsInParentModel(umlOperation)
+    List<AbstractCall> invocations = srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
             : modelDiff.findInvocationsInChildModel(umlOperation);
-
     for (AbstractCall invocation : invocations) {
-      Tree invocationRootTree = (node.isSrc() ? srcContexts : dstContexts).get(
-          invocation.getLocationInfo().getFilePath()).getRoot();
-      Tree invocationTree = TreeUtilFunctions.findByLocationInfo(invocationRootTree,
-          invocation.getLocationInfo(),
-          constants);
-      Tree argumentsTree = TreeUtilFunctions.findChildByType(invocationTree,
-          constants.METHOD_INVOCATION_ARGUMENTS);
-      if (argumentsTree == null) {
-        continue;
+      LocationInfo invocationLocation = invocation.getLocationInfo();
+
+      String invocationFileContent = srcDst.equals(SrcDst.SRC) ? srcContents.get(invocationLocation.getFilePath()) : dstContents.get(invocationLocation.getFilePath());
+      String invocationStr = invocationFileContent.substring(invocationLocation.getStartOffset(), invocationLocation.getEndOffset());
+
+      String parameterArgumentStr = invocation.arguments().get(parameterIndex);
+      int argumentIndex = -1;
+      for (int i = 0; i <= parameterIndex; i++) {
+        String argument = invocation.arguments().get(i);
+        if (argument.equals(parameterArgumentStr)) {
+          argumentIndex = invocationStr.indexOf(parameterArgumentStr, argumentIndex + 1);
+        }
       }
 
-      Tree argumentTree = argumentsTree.getChildren().get(parameterIndex);
-      List<Node> argumentNodes = findOverlappingNodes(invocation.getLocationInfo().getFilePath(),
-          node.getSrcDst(),
-          argumentTree.getPos(), argumentTree.getEndPos(),
-          (n) -> !n.isContext() && !n.isExtension());
-
-      for (Node argumentNode : argumentNodes) {
-        addEdge(node, argumentNode, EdgeType.DEF_USE);
-      }
+      int startOffset = invocationLocation.getStartOffset() + argumentIndex;
+      int endOffset = startOffset + parameterArgumentStr.length();
+      result.addAll(findOverlappingNodes(invocationLocation.getFilePath(), srcDst, startOffset, endOffset,
+              (n) -> !n.isContext() && !n.isExtension()));
     }
+
+    return result;
   }
 
   private void processClassLevelRelations() {
     // Class Instance Creation
-    List<Node> nodes = graph.vertexSet().stream()
-        .filter(node -> !node.isContext() && !node.isExtension()).toList();
+    List<Node> nodes = graph.vertexSet().stream().filter(node -> !node.isContext() && !node.isExtension()).toList();
     for (Node node : nodes) {
-      Tree tree = node.getTree();
-      List<Tree> subTrees = new ArrayList<>(tree.getDescendants());
-      subTrees.add(tree);
+      if (node.umls == null) {
+        continue;
+      }
 
-      Constants constants = new Constants(node.getPath());
+      Set<AbstractCall> creations = new HashSet<>();
 
-      List<Tree> classInstanceCreations =
-          subTrees.stream().filter(subTree -> subTree.getType().name.equals(
-              constants.CLASS_INSTANCE_CREATION)).toList();
-      for (Tree classInstanceCreation : classInstanceCreations) {
-        Tree instantiatedClassTypeTree = TreeUtilFunctions.findChildByType(classInstanceCreation,
-            constants.SIMPLE_TYPE);
-        if (instantiatedClassTypeTree == null) {
-          continue;
-        }
-        Tree instantiatedClassNameTree = TreeUtilFunctions.findChildByType(
-            instantiatedClassTypeTree,
-            constants.SIMPLE_NAME);
-        if (instantiatedClassNameTree == null) {
-          continue;
-        }
+      for (UMLOperation umlOperation : node.umls.umlOperations) {
+        creations.addAll(umlOperation.getAllCreations());
+      }
+      for (UMLAttribute umlAttribute : node.umls.umlAttributes) {
+        creations.addAll(umlAttribute.getAllCreations());
+      }
 
-        UMLClass instantiatedClass = getUMLClass(instantiatedClassNameTree.getLabel(),
-            node.isSrc() ? modelDiff.getParentModel() : modelDiff.getChildModel());
-        if (instantiatedClass == null) {
+      Set<UMLAbstractClass> createdClasses = new HashSet<>();
+
+      for (AbstractCall creation : creations) {
+        String createdClassName = creation.getName();
+        UMLAbstractClass createdClass = node.isSrc() ?
+                modelDiff.findClassInParentModel(createdClassName) : modelDiff.findClassInChildModel(createdClassName);
+        if (createdClass == null) {
           continue;
         }
 
-        Node classNode = getClassNode(instantiatedClass, node.getSrcDst());
-        if (classNode == null || classNode.equals(node)) {
+        createdClasses.add(createdClass);
+      }
+
+      Set<Node> classNodes = new HashSet<>();
+
+      for (UMLAbstractClass createdClass : createdClasses) {
+        Node classNode = getClassNode(createdClass, node.getSrcDst());
+        if (classNode == null) {
           continue;
         }
+        classNodes.add(classNode);
+      }
 
+      for (Node classNode : classNodes) {
         addEdge(classNode, node, EdgeType.DEF_USE);
       }
     }
@@ -634,7 +556,6 @@ public class HunkNetwork {
   private void processGeneralizations(SrcDst srcDst) {
     UMLModel umlModel =
         srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
-
     for (UMLGeneralization generalization : umlModel.getGeneralizationList()) {
       UMLClass child = generalization.getChild();
 
@@ -643,7 +564,8 @@ public class HunkNetwork {
         continue;
       }
 
-      UMLClass parentClass = getUMLClass(generalization.getParent(), umlModel);
+      UMLAbstractClass parentClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(generalization.getParent())
+              : modelDiff.findClassInChildModel(generalization.getParent());
       if (parentClass == null) {
         continue;
       }
@@ -660,7 +582,6 @@ public class HunkNetwork {
   private void processRealizations(SrcDst srcDst) {
     UMLModel umlModel =
         srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
-
     for (UMLRealization realization : umlModel.getRealizationList()) {
       UMLClass child = realization.getClient();
 
@@ -669,7 +590,8 @@ public class HunkNetwork {
         continue;
       }
 
-      UMLClass parentClass = getUMLClass(realization.getSupplier(), umlModel);
+      UMLAbstractClass parentClass = srcDst.equals(SrcDst.SRC) ? modelDiff.findClassInParentModel(realization.getSupplier())
+              : modelDiff.findClassInChildModel(realization.getSupplier());
       if (parentClass == null) {
         continue;
       }
@@ -684,117 +606,17 @@ public class HunkNetwork {
   }
 
   @Nullable
-  private UMLClass getUMLClass(String className, UMLModel model) {
-//    List<UMLImport> contextImportedTypes = contextClass.getImportedTypes().stream()
-//        .filter(importedType -> importedType.getName().endsWith(targetClassName))
-//        .toList();
-//    String targetQualifiedName = contextImportedTypes.isEmpty() ?
-//        contextClass.getPackageName() + "." + targetClassName : contextImportedTypes.get(0).getName();
-//    Optional<UMLClass> targetWithQualifiedName = model.getClassList().stream()
-//        .filter(c -> c.getName().equals(targetQualifiedName)).findFirst();
-//    if (targetWithQualifiedName.isPresent()) {
-//      return targetWithQualifiedName.get();
-//    }
-    return model.getClassList().stream().filter(c -> c.getName().endsWith(className)).findFirst()
-        .orElse(null);
-  }
-
-  @Nullable
-  private Node getClassNode(UMLClass umlClass, SrcDst srcDst) {
-    LocationInfo classLocation = umlClass.getLocationInfo();
-    List<Node> classNodes = findOverlappingNodes(classLocation.getFilePath(), srcDst,
-        classLocation.getStartOffset(), classLocation.getEndOffset(),
-        (n) -> !n.isExtension() && n.getTree().getPos() == classLocation.getStartOffset()
-            && n.getTree().getEndPos() == classLocation.getEndOffset());
-    if (classNodes.isEmpty()) {
+  private Node getClassNode(UMLAbstractClass umlClass, SrcDst srcDst) {
+    Optional<Node> optionalClassNode = graph.vertexSet().stream().filter(node -> !node.isExtension()
+            && node.getSrcDst().equals(srcDst) && node.umls != null && node.umls.umlClasses.contains(umlClass)).findFirst();
+    if (optionalClassNode.isEmpty()) {
       return null;
     }
 
-    Node classNode = classNodes.get(0);
+    Node classNode = optionalClassNode.get();
     classNode.addIdentifier(umlClass.getNonQualifiedName());
 
     return classNode;
-  }
-
-  private UMLClass getUMLClass(String path, Tree tree, SrcDst srcDst) {
-    Constants constants = new Constants(path);
-
-    List<Tree> parents = new ArrayList<>();
-    parents.add(tree);
-    parents.addAll(tree.getParents());
-    Tree parentClass = parents.stream().filter(parent -> {
-      String parentType = parent.getType().name;
-      return constants.isType(parentType);
-    }).findFirst().orElse(null);
-    if (parentClass == null) { // there is no need to process def-use when it is out of type
-      return null;
-    }
-    Tree parentTypeName = TreeUtilFunctions.findChildByType(parentClass,
-        constants.SIMPLE_NAME);
-    if (parentTypeName == null) {
-      return null;
-    }
-
-    return getUMLClass(localizeTree(tree).path, parentTypeName.getLabel(),
-        srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel());
-  }
-
-  private UMLClass getUMLClass(String path, String className, UMLModel umlModel) {
-    if (path == null) {
-      return null;
-    }
-
-    UMLClass UmlClass = null;
-    for (UMLClass uc : umlModel.getClassList()) {
-      if (uc.getSourceFile().equals(path) && uc.getNonQualifiedName().equals(className)) {
-        UmlClass = uc;
-        break;
-      }
-    }
-
-    return UmlClass;
-  }
-
-  private void addVariableDeclarationEdges(Node node, Tree variableDeclarationTree) {
-    Constants constants = new Constants(node.getPath());
-    Tree methodRoot = TreeUtilFunctions.getParentUntilType(variableDeclarationTree,
-        constants.METHOD_DECLARATION);
-    // https://github.com/elastic/elasticsearch/commit/e0a458441cff9a4242cd93f4c02f06d72f2d63c4#diff-9b7bef16de393901cd8c75e73d2fb03afb90a10f1de191b7174275bbd8e71bd8L38
-    if (methodRoot == null) {
-      return;
-    }
-
-    UMLClass umlClass = getUMLClass(node.getPath(), variableDeclarationTree, node.getSrcDst());
-    if (umlClass == null) {
-      return;
-    }
-
-    UMLOperation umlOperation = findUMLOperation(umlClass, methodRoot);
-    if (umlOperation == null) {
-      return;
-    }
-
-    Optional<VariableDeclaration> foundOperationVariable = umlOperation.getAllVariableDeclarations()
-        .stream()
-        .filter(operationVariable -> {
-          LocationInfo operationVariableLoc = operationVariable.getLocationInfo();
-          return operationVariableLoc.getStartOffset() == variableDeclarationTree.getPos()
-              && variableDeclarationTree.getEndPos()
-              == operationVariableLoc.getEndOffset();
-        }).findFirst();
-    if (foundOperationVariable.isEmpty()) {
-      return;
-    }
-
-    VariableDeclaration variableDeclaration = foundOperationVariable.get();
-
-    node.addIdentifier(variableDeclaration.getVariableName());
-
-    Set<Node> useNodes = findAccessNodes(variableDeclaration.getVariableName(),
-        variableDeclaration.getScope().getStatementsInScopeUsingVariable(), node.getSrcDst());
-    for (Node useNode : useNodes) {
-      addEdge(node, useNode, EdgeType.DEF_USE);
-    }
   }
 
   private Set<Node> getInvocationNodes(UMLOperation operation, SrcDst srcDst) {
@@ -835,39 +657,6 @@ public class HunkNetwork {
     return result;
   }
 
-  private LocationInfo findClosestLocationInfo(LocationInfo subject,
-      List<LocationInfo> candidates) {
-    int pos = subject.getStartOffset();
-    int endPos = subject.getEndOffset();
-
-    List<LocationInfo> sameFileCandidates =
-        candidates.stream()
-            .filter(candidate -> subject.getFilePath().equals(candidate.getFilePath()))
-            .toList();
-    if (!sameFileCandidates.isEmpty()) {
-      LocationInfo closestLocationInfo = null;
-
-      int shortestDistance = Integer.MAX_VALUE;
-      for (LocationInfo candidate : sameFileCandidates) {
-        if (endPos >= candidate.getStartOffset() && candidate.getEndOffset() >= pos) {
-          return candidate;
-        }
-
-        int distance =
-            endPos < candidate.getStartOffset() ? candidate.getStartOffset() - endPos :
-                pos - candidate.getEndOffset();
-        if (distance < shortestDistance) {
-          shortestDistance = distance;
-          closestLocationInfo = candidate;
-        }
-      }
-
-      return closestLocationInfo;
-    }
-
-    return candidates.get(0);
-  }
-
   private List<Node> findOverlappingNodes(String path, SrcDst srcDst, int pos, int endPos,
       Predicate<Node> filter) {
     List<Node> result = new ArrayList<>();
@@ -878,47 +667,6 @@ public class HunkNetwork {
           && tree.getPos() <= endPos && pos <= tree.getEndPos() && (filter == null
           || filter.test(node))) {
         result.add(node);
-      }
-    }
-
-    return result;
-  }
-
-  private UMLOperation findUMLOperation(UMLClass umlClass, Tree methodDeclaration) {
-    List<UMLOperation> operations = new ArrayList<>(umlClass.getOperations());
-    for (UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
-      operations.addAll(anonymousClass.getOperations());
-    }
-
-    for (UMLOperation operation : operations) {
-      LocationInfo operationLoc = operation.getLocationInfo();
-      if (operationLoc.getStartOffset() == methodDeclaration.getPos()
-          && methodDeclaration.getEndPos() == operationLoc.getEndOffset()) {
-        return operation;
-      }
-    }
-
-    return null;
-  }
-
-  private UMLAttribute findUMLAttribute(String path, Tree fieldDeclaration, SrcDst srcDst) {
-    UMLClass umlClass = getUMLClass(path, fieldDeclaration, srcDst);
-    if (umlClass == null) {
-      return null;
-    }
-
-    List<UMLAttribute> attributes = new ArrayList<>(umlClass.getAttributes());
-    for (UMLAnonymousClass anonymousClass : umlClass.getAnonymousClassList()) {
-      attributes.addAll(anonymousClass.getAttributes());
-    }
-
-    UMLAttribute result = null;
-    for (UMLAttribute attribute : attributes) {
-      LocationInfo attrLoc = attribute.getFieldDeclarationLocationInfo();
-      if (fieldDeclaration.getPos() == attrLoc.getStartOffset()
-          && fieldDeclaration.getEndPos() == attrLoc.getEndOffset()) {
-        result = attribute;
-        break;
       }
     }
 

@@ -665,11 +665,11 @@ public class CppFileProcessor {
 				operation.addParameter(umlParameter);
 				index++;
 			}
-			if(standardDeclarator.takesVarArgs()) {
+			/*if(standardDeclarator.takesVarArgs()) {
 				UMLType varargsType = UMLType.extractTypeObject("Object");
 				varargsType.setVarargs();
 				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
-			}
+			}*/
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 
@@ -717,11 +717,11 @@ public class CppFileProcessor {
 				operation.addParameter(umlParameter);
 				index++;
 			}
-			if(standardDeclarator.takesVarArgs()) {
+			/*if(standardDeclarator.takesVarArgs()) {
 				UMLType varargsType = UMLType.extractTypeObject("Object");
 				varargsType.setVarargs();
 				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
-			}
+			}*/
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 

@@ -44,6 +44,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeConstructorExpression;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTUnaryExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -1416,6 +1417,9 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(nameExpr instanceof ICPPASTLambdaExpression) {
 			this.methodName = "";
+		}
+		else if(nameExpr instanceof ICPPASTUnaryExpression unary) {
+			this.methodName = unary.getOperand().getRawSignature();
 		}
 	}
 }

@@ -539,6 +539,7 @@ public class TestRelatedStatementMappingsTest {
     @CsvSource({
             "https://github.com/conveyal/r5.git, 62a042e56b21d2e7c919552af39eca34357a82a7, r5-62a042e56b21d2e7c919552af39eca34357a82a7-dataprovider.txt",
             "https://github.com/apache/directory-ldap-api.git, 8965a541bbeefd49028a5405264e40aed69ac5d0, directory-ldap-api-8965a541bbeefd49028a5405264e40aed69ac5d0-dataprovider.txt",
+            "https://github.com/greenjoe/lambdaFromString.git, 0cbf3774c6f508c21cbb789bfe285117499f1e31, lambdaFromString-0cbf3774c6f508c21cbb789bfe285117499f1e31-dataprovider.txt",
     })
     public void testDataProviderLiteralMappings(String url, String commit, String testResultFileName) {
         testRefactoringMappings(url, commit, testResultFileName, this::checkDataProviderLiteralMapping);

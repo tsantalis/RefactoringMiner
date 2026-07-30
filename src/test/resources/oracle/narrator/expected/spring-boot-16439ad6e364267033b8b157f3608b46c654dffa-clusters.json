@@ -3,12 +3,17 @@
         "edges": [
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-EXTENSION-1265-1365-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-914-2098-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-EXTENSION-1265-1365-MethodDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6956-7005-VariableDeclarationStatement",
                 "type": "DEF_USE"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-EXTENSION-1265-1365-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-914-2098-TypeDeclaration",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-914-2098-TypeDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-0-2099-CompilationUnit",
                 "type": "CONTEXT"
             },
             {
@@ -25,11 +30,6 @@
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6956-7005-VariableDeclarationStatement",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
                 "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-914-2098-TypeDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-0-2099-CompilationUnit",
-                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-EXTENSION-21801-21901-MethodDeclaration",
@@ -83,7 +83,7 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1599-1783-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
@@ -98,42 +98,12 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1599-1783-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-914-2073-TypeDeclaration",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-0-2074-CompilationUnit",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13057-13414-MethodDeclaration",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13057-13414-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13417-13802-MethodDeclaration",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13057-13414-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13417-13802-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13417-13802-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
@@ -145,6 +115,36 @@
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-16350-17100-MethodDeclaration",
                 "type": "MAPPING"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13057-13414-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13417-13802-MethodDeclaration",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13057-13414-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13417-13802-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13417-13802-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13057-13414-MethodDeclaration",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
+                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1491-1596-MethodDeclaration",
@@ -163,7 +163,7 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-EXTENSION-4133-4179-FieldDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
@@ -178,7 +178,7 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-EXTENSION-4133-4179-FieldDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-13805-14303-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-12841-13054-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
@@ -197,13 +197,28 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4911-5425-MethodDeclaration",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13973-14009-InfixExpression",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14030-ExpressionStatement",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13451-13610-MethodDeclaration",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-0-41353-CompilationUnit",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4911-5425-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
@@ -217,28 +232,8 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13790-ExpressionStatement",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-13613-14092-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13789-MethodInvocation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13790-ExpressionStatement",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13748-13760-SimpleName",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13789-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13704-13723-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-16350-17100-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
@@ -252,28 +247,23 @@
                 "type": "DEF_USE"
             },
             {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13704-13723-SingleVariableDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13748-13760-SimpleName",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13789-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-14071-14083-SimpleName",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-14050-14084-MethodInvocation",
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-16350-17100-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13633-13646-MarkerAnnotation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13911-13952-InfixExpression",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14030-ExpressionStatement",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-13613-14092-MethodDeclaration",
                 "type": "CONTEXT"
             },
             {
@@ -287,74 +277,9 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13911-13952-InfixExpression",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13451-13610-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-17103-17399-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-17212-17396-ExpressionStatement",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-17103-17399-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-17250-17298-InfixExpression",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-17212-17395-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-4279-4482-Javadoc",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4454-4478-TagElement",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-4279-4482-Javadoc",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-14095-16347-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-14095-16347-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-16350-17100-MethodDeclaration",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14030-ExpressionStatement",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13973-14009-InfixExpression",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13613-13631-MarkerAnnotation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13613-13631-MarkerAnnotation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13633-13646-MarkerAnnotation",
-                "type": "SUCCESSION"
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4881-4908-FieldDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13973-14009-InfixExpression",
+                "type": "DEF_USE"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4881-4908-FieldDeclaration",
@@ -373,12 +298,12 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4881-4908-FieldDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13911-13952-InfixExpression",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-17330-17373-InfixExpression",
                 "type": "DEF_USE"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4881-4908-FieldDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-17330-17373-InfixExpression",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13911-13952-InfixExpression",
                 "type": "DEF_USE"
             },
             {
@@ -387,13 +312,43 @@
                 "type": "DEF_USE"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4881-4908-FieldDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13973-14009-InfixExpression",
-                "type": "DEF_USE"
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13911-13952-InfixExpression",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
+                "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-13613-14092-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-17250-17298-InfixExpression",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-17212-17395-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13790-ExpressionStatement",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13789-MethodInvocation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13729-13790-ExpressionStatement",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14030-ExpressionStatement",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13613-13631-MarkerAnnotation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13613-13631-MarkerAnnotation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13633-13646-MarkerAnnotation",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13633-13646-MarkerAnnotation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13613-14092-MethodDeclaration",
                 "type": "CONTEXT"
             },
             {
@@ -407,7 +362,52 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14984-15010-StringLiteral",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-13911-13952-InfixExpression",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-14095-16347-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-14095-16347-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-16350-17100-MethodDeclaration",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-17103-17399-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-17212-17396-ExpressionStatement",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-17103-17399-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-13613-14092-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-4279-4482-Javadoc",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-4279-41352-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-4454-4478-TagElement",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-4279-4482-Javadoc",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14921-14952-StringLiteral",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14883-15032-MethodInvocation",
                 "type": "CONTEXT"
             },
@@ -419,36 +419,6 @@
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14883-15032-MethodInvocation",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-14774-15036-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14610-14629-StringLiteral",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
-                "type": "MAPPING"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14306-14771-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-14774-15036-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-14774-15036-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-17103-17399-MethodDeclaration",
-                "type": "MAPPING"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14921-14952-StringLiteral",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14883-15032-MethodInvocation",
                 "type": "CONTEXT"
             },
             {
@@ -477,28 +447,18 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SRC_MOVE-14645-14671-StringLiteral",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
-                "type": "MAPPING"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SRC_MOVE-14645-14671-StringLiteral",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14610-14629-StringLiteral",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14693-14763-MethodInvocation",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-14050-14084-MethodInvocation",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-13802-14029-MethodInvocation",
                 "type": "MAPPING"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14693-14763-MethodInvocation",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14306-14771-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14714-14762-QualifiedName",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14693-14763-MethodInvocation",
                 "type": "CONTEXT"
             },
             {
@@ -517,6 +477,31 @@
                 "type": "CONTEXT"
             },
             {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14693-14763-MethodInvocation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-SEMANTIC_CONTEXT-14050-14084-MethodInvocation",
+                "type": "MAPPING"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14693-14763-MethodInvocation",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14306-14771-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14714-14762-QualifiedName",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14693-14763-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SRC_MOVE-14645-14671-StringLiteral",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
+                "type": "MAPPING"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SRC_MOVE-14645-14671-StringLiteral",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14560-14584-StringLiteral",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14484-14672-MethodInvocation",
                 "type": "CONTEXT"
@@ -527,14 +512,24 @@
                 "type": "MAPPING"
             },
             {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1368-1488-MethodDeclaration",
-                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-914-2073-TypeDeclaration",
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-14774-15036-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-3773-38989-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-LOCATION_CONTEXT-14774-15036-MethodDeclaration",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-LOCATION_CONTEXT-17103-17399-MethodDeclaration",
+                "type": "MAPPING"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-DELETION-14984-15010-StringLiteral",
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-SRC-SEMANTIC_CONTEXT-14883-15032-MethodInvocation",
                 "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1368-1488-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5131-5283-IfStatement",
-                "type": "DEF_USE"
+                "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-914-2073-TypeDeclaration",
+                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1368-1488-MethodDeclaration",
@@ -543,7 +538,7 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1368-1488-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5510-5652-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5131-5283-IfStatement",
                 "type": "DEF_USE"
             },
             {
@@ -552,14 +547,9 @@
                 "type": "DEF_USE"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5131-5283-IfStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5131-5283-IfStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
-                "type": "CONTEXT"
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-SRC-EXTENSION-1368-1488-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5510-5652-IfStatement",
+                "type": "DEF_USE"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5655-5792-IfStatement",
@@ -577,6 +567,26 @@
                 "type": "MAPPING"
             },
             {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5131-5283-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5131-5283-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
+                "type": "CONTEXT"
+            },
+            {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5510-5652-IfStatement",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5655-5792-IfStatement",
                 "type": "SUCCESSION"
@@ -592,14 +602,9 @@
                 "type": "MAPPING"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
-                "type": "CONTEXT"
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5655-5792-IfStatement",
+                "type": "DEF_USE"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
@@ -608,7 +613,7 @@
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5655-5792-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
                 "type": "DEF_USE"
             },
             {
@@ -618,7 +623,12 @@
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5286-5433-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5795-5823-ExpressionStatement",
                 "type": "DEF_USE"
             },
             {
@@ -628,13 +638,8 @@
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5795-5823-ExpressionStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
-                "type": "DEF_USE"
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
+                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
@@ -642,23 +647,18 @@
                 "type": "DEF_USE"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-EXTENSION-5055-5084-VariableDeclarationFragment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5510-5652-IfStatement",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
                 "type": "SUCCESSION"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
                 "type": "MAPPING"
             },
             {
@@ -677,19 +677,29 @@
                 "type": "SUCCESSION"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5510-5652-IfStatement",
                 "type": "SUCCESSION"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5436-5469-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5472-5507-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "type": "MAPPING"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "MAPPING"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-4979-6106-MethodDeclaration",
+                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-DELETION-5088-5128-ExpressionStatement",
@@ -707,22 +717,52 @@
                 "type": "MAPPING"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "MAPPING"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-4979-6106-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5221-5428-FieldDeclaration",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-3481-3755-Javadoc",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5221-5428-FieldDeclaration",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-3711-3735-TagElement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-3481-3755-Javadoc",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8816-8868-ReturnStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-8734-8871-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8823-8867-MethodInvocation",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8816-8868-ReturnStatement",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8855-8866-SimpleName",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8823-8867-MethodInvocation",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "type": "DEF_USE"
             },
@@ -739,106 +779,6 @@
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8855-8866-SimpleName",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-8734-8871-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8855-8866-SimpleName",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8823-8867-MethodInvocation",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
                 "type": "DEF_USE"
             },
             {
@@ -850,86 +790,6 @@
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6886-6953-LineComment",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
                 "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6519-6587-LineComment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6590-6882-EnhancedForStatement",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6519-6587-LineComment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4081-4247-FieldDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4081-4247-FieldDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4081-4247-FieldDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4250-4399-FieldDeclaration",
-                "type": "SUCCESSION"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4250-4399-FieldDeclaration",
@@ -959,6 +819,121 @@
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4402-4612-FieldDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4615-4840-FieldDeclaration",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-8734-8871-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8855-8866-SimpleName",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8769-8792-SingleVariableDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5017-5218-FieldDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5017-5218-FieldDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5017-5218-FieldDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5221-5428-FieldDeclaration",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5221-5428-FieldDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5221-5428-FieldDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6519-6587-LineComment",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6590-6882-EnhancedForStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6519-6587-LineComment",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6437-6516-LineComment",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6437-6516-LineComment",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6519-6587-LineComment",
                 "type": "SUCCESSION"
             },
             {
@@ -992,18 +967,58 @@
                 "type": "SUCCESSION"
             },
             {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
+                "type": "CONTEXT"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7056-7112-VariableDeclarationStatement",
+                "type": "SUCCESSION"
+            },
+            {
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7008-7053-VariableDeclarationStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
+                "type": "DEF_USE"
+            },
+            {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-1368-1513-MethodDeclaration",
                 "targetId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-LOCATION_CONTEXT-914-2098-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-1368-1513-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-1368-1513-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
@@ -1013,32 +1028,12 @@
             },
             {
                 "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
-                "type": "DEF_USE"
-            },
-            {
-                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
+                "type": "DEF_USE"
+            },
+            {
+                "sourceId": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/TestLog4J2LoggingSystem.java-DST-ADDITION-1414-1437-SingleVariableDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
@@ -1047,44 +1042,19 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5017-5218-FieldDeclaration",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4081-4247-FieldDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5017-5218-FieldDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5221-5428-FieldDeclaration",
-                "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-5017-5218-FieldDeclaration",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4081-4247-FieldDeclaration",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "type": "DEF_USE"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6437-6516-LineComment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-6387-7433-Block",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6437-6516-LineComment",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6519-6587-LineComment",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4081-4247-FieldDeclaration",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-4250-4399-FieldDeclaration",
                 "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-8734-8871-MethodDeclaration",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8816-8868-ReturnStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8734-8871-MethodDeclaration",
-                "type": "CONTEXT"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8823-8867-MethodInvocation",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-8816-8868-ReturnStatement",
-                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-6328-7433-MethodDeclaration",
@@ -1092,13 +1062,13 @@
                 "type": "CONTEXT"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-3481-3755-Javadoc",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-LOCATION_CONTEXT-3481-23655-TypeDeclaration",
-                "type": "CONTEXT"
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5971-6056-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6590-6882-EnhancedForStatement",
+                "type": "MAPPING"
             },
             {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-3711-3735-TagElement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-SEMANTIC_CONTEXT-3481-3755-Javadoc",
+                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5971-6056-IfStatement",
+                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
                 "type": "CONTEXT"
             },
             {
@@ -1120,16 +1090,6 @@
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5826-5968-VariableDeclarationStatement",
                 "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5971-6056-IfStatement",
                 "type": "SUCCESSION"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5971-6056-IfStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-6590-6882-EnhancedForStatement",
-                "type": "MAPPING"
-            },
-            {
-                "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SRC_MOVE-5971-6056-IfStatement",
-                "targetId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-SEMANTIC_CONTEXT-5038-6106-Block",
-                "type": "CONTEXT"
             },
             {
                 "sourceId": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-SRC-LOCATION_CONTEXT-4979-6106-MethodDeclaration",
@@ -3271,6 +3231,20 @@
                 "startLineOffset": 2,
                 "subs": [
                     {
+                        "endLine": 167,
+                        "endLineOffset": 4,
+                        "length": 88,
+                        "startLine": 165,
+                        "startLineOffset": 3
+                    },
+                    {
+                        "endLine": 164,
+                        "endLineOffset": 50,
+                        "length": 15,
+                        "startLine": 164,
+                        "startLineOffset": 36
+                    },
+                    {
                         "endLine": 164,
                         "endLineOffset": 66,
                         "length": 31,
@@ -3279,10 +3253,24 @@
                     },
                     {
                         "endLine": 163,
-                        "endLineOffset": 22,
-                        "length": 16,
+                        "endLineOffset": 100,
+                        "length": 76,
                         "startLine": 163,
-                        "startLineOffset": 7
+                        "startLineOffset": 25
+                    },
+                    {
+                        "endLine": 168,
+                        "endLineOffset": 3,
+                        "length": 193,
+                        "startLine": 163,
+                        "startLineOffset": 102
+                    },
+                    {
+                        "endLine": 164,
+                        "endLineOffset": 95,
+                        "length": 93,
+                        "startLine": 164,
+                        "startLineOffset": 3
                     },
                     {
                         "endLine": 164,
@@ -3300,38 +3288,10 @@
                     },
                     {
                         "endLine": 163,
-                        "endLineOffset": 100,
-                        "length": 76,
+                        "endLineOffset": 22,
+                        "length": 16,
                         "startLine": 163,
-                        "startLineOffset": 25
-                    },
-                    {
-                        "endLine": 164,
-                        "endLineOffset": 50,
-                        "length": 15,
-                        "startLine": 164,
-                        "startLineOffset": 36
-                    },
-                    {
-                        "endLine": 167,
-                        "endLineOffset": 4,
-                        "length": 88,
-                        "startLine": 165,
-                        "startLineOffset": 3
-                    },
-                    {
-                        "endLine": 164,
-                        "endLineOffset": 95,
-                        "length": 93,
-                        "startLine": 164,
-                        "startLineOffset": 3
-                    },
-                    {
-                        "endLine": 168,
-                        "endLineOffset": 3,
-                        "length": 193,
-                        "startLine": 163,
-                        "startLineOffset": 102
+                        "startLineOffset": 7
                     }
                 ],
                 "treeType": "EnhancedForStatement"
@@ -5143,6 +5103,13 @@
                 "subs": [
                     {
                         "endLine": 142,
+                        "endLineOffset": 70,
+                        "length": 17,
+                        "startLine": 142,
+                        "startLineOffset": 54
+                    },
+                    {
+                        "endLine": 142,
                         "endLineOffset": 53,
                         "length": 15,
                         "startLine": 142,
@@ -5157,13 +5124,6 @@
                     },
                     {
                         "endLine": 142,
-                        "endLineOffset": 53,
-                        "length": 15,
-                        "startLine": 142,
-                        "startLineOffset": 39
-                    },
-                    {
-                        "endLine": 142,
                         "endLineOffset": 71,
                         "length": 37,
                         "startLine": 142,
@@ -5171,10 +5131,10 @@
                     },
                     {
                         "endLine": 142,
-                        "endLineOffset": 70,
-                        "length": 17,
+                        "endLineOffset": 53,
+                        "length": 15,
                         "startLine": 142,
-                        "startLineOffset": 54
+                        "startLineOffset": 39
                     }
                 ],
                 "treeType": "VariableDeclarationStatement"
@@ -7109,6 +7069,9 @@
                 "endLine": 177,
                 "endLineOffset": 57,
                 "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7327-7382-ExpressionStatement",
+                "identifiers": [
+                    "e"
+                ],
                 "length": 56,
                 "nodeType": "ADDITION",
                 "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java",
@@ -7118,10 +7081,17 @@
                 "subs": [
                     {
                         "endLine": 177,
-                        "endLineOffset": 55,
-                        "length": 35,
+                        "endLineOffset": 56,
+                        "length": 55,
                         "startLine": 177,
-                        "startLineOffset": 21
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 177,
+                        "endLineOffset": 54,
+                        "length": 13,
+                        "startLine": 177,
+                        "startLineOffset": 42
                     },
                     {
                         "endLine": 177,
@@ -7139,13 +7109,6 @@
                     },
                     {
                         "endLine": 177,
-                        "endLineOffset": 54,
-                        "length": 13,
-                        "startLine": 177,
-                        "startLineOffset": 42
-                    },
-                    {
-                        "endLine": 177,
                         "endLineOffset": 23,
                         "length": 2,
                         "startLine": 177,
@@ -7153,15 +7116,15 @@
                     },
                     {
                         "endLine": 177,
-                        "endLineOffset": 12,
-                        "length": 11,
+                        "endLineOffset": 55,
+                        "length": 35,
                         "startLine": 177,
-                        "startLineOffset": 2
+                        "startLineOffset": 21
                     },
                     {
                         "endLine": 177,
-                        "endLineOffset": 56,
-                        "length": 55,
+                        "endLineOffset": 12,
+                        "length": 11,
                         "startLine": 177,
                         "startLineOffset": 2
                     }
@@ -7267,6 +7230,8 @@
                 "endLineOffset": 2,
                 "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7436-8507-MethodDeclaration",
                 "identifiers": [
+                    "extensions",
+                    "classLoader",
                     "getStandardConfigExtensions"
                 ],
                 "length": 1072,
@@ -7277,137 +7242,11 @@
                 "startLineOffset": 1,
                 "subs": [
                     {
-                        "endLine": 197,
-                        "endLineOffset": 110,
-                        "length": 105,
-                        "startLine": 197,
-                        "startLineOffset": 6
-                    },
-                    {
-                        "endLine": 198,
-                        "endLineOffset": 32,
-                        "length": 11,
-                        "startLine": 198,
-                        "startLineOffset": 22
-                    },
-                    {
-                        "endLine": 197,
-                        "endLineOffset": 56,
-                        "length": 51,
-                        "startLine": 197,
-                        "startLineOffset": 6
-                    },
-                    {
-                        "endLine": 192,
-                        "endLineOffset": 3,
-                        "length": 176,
-                        "startLine": 189,
-                        "startLineOffset": 2
-                    },
-                    {
                         "endLine": 191,
-                        "endLineOffset": 31,
-                        "length": 14,
+                        "endLineOffset": 13,
+                        "length": 11,
                         "startLine": 191,
-                        "startLineOffset": 18
-                    },
-                    {
-                        "endLine": 197,
-                        "endLineOffset": 55,
-                        "length": 33,
-                        "startLine": 197,
-                        "startLineOffset": 23
-                    },
-                    {
-                        "endLine": 201,
-                        "endLineOffset": 12,
-                        "length": 11,
-                        "startLine": 201,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 182,
-                        "endLineOffset": 21,
-                        "length": 13,
-                        "startLine": 182,
-                        "startLineOffset": 9
-                    },
-                    {
-                        "endLine": 199,
-                        "endLineOffset": 3,
-                        "length": 168,
-                        "startLine": 197,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 194,
-                        "endLineOffset": 67,
-                        "length": 61,
-                        "startLine": 194,
-                        "startLineOffset": 7
-                    },
-                    {
-                        "endLine": 201,
-                        "endLineOffset": 23,
-                        "length": 7,
-                        "startLine": 201,
-                        "startLineOffset": 17
-                    },
-                    {
-                        "endLine": 195,
-                        "endLineOffset": 32,
-                        "length": 11,
-                        "startLine": 195,
-                        "startLineOffset": 22
-                    },
-                    {
-                        "endLine": 197,
-                        "endLineOffset": 110,
-                        "length": 51,
-                        "startLine": 197,
-                        "startLineOffset": 60
-                    },
-                    {
-                        "endLine": 201,
-                        "endLineOffset": 25,
-                        "length": 24,
-                        "startLine": 201,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 192,
-                        "endLineOffset": 3,
-                        "length": 40,
-                        "startLine": 190,
-                        "startLineOffset": 70
-                    },
-                    {
-                        "endLine": 198,
-                        "endLineOffset": 41,
-                        "length": 8,
-                        "startLine": 198,
-                        "startLineOffset": 34
-                    },
-                    {
-                        "endLine": 193,
-                        "endLineOffset": 90,
-                        "length": 85,
-                        "startLine": 193,
-                        "startLineOffset": 6
-                    },
-                    {
-                        "endLine": 196,
-                        "endLineOffset": 3,
-                        "length": 216,
-                        "startLine": 193,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 202,
-                        "endLineOffset": 20,
-                        "length": 19,
-                        "startLine": 202,
-                        "startLineOffset": 2
+                        "startLineOffset": 3
                     },
                     {
                         "endLine": 183,
@@ -7417,44 +7256,23 @@
                         "startLineOffset": 2
                     },
                     {
-                        "endLine": 191,
-                        "endLineOffset": 33,
-                        "length": 31,
-                        "startLine": 191,
-                        "startLineOffset": 3
-                    },
-                    {
-                        "endLine": 198,
-                        "endLineOffset": 49,
-                        "length": 7,
-                        "startLine": 198,
-                        "startLineOffset": 43
-                    },
-                    {
-                        "endLine": 194,
-                        "endLineOffset": 66,
-                        "length": 43,
-                        "startLine": 194,
-                        "startLineOffset": 24
-                    },
-                    {
-                        "endLine": 203,
-                        "endLineOffset": 2,
-                        "length": 1021,
-                        "startLine": 182,
-                        "startLineOffset": 52
-                    },
-                    {
-                        "endLine": 185,
-                        "endLineOffset": 65,
-                        "length": 64,
-                        "startLine": 185,
+                        "endLine": 196,
+                        "endLineOffset": 3,
+                        "length": 216,
+                        "startLine": 193,
                         "startLineOffset": 2
                     },
                     {
-                        "endLine": 194,
-                        "endLineOffset": 67,
-                        "length": 153,
+                        "endLine": 201,
+                        "endLineOffset": 25,
+                        "length": 24,
+                        "startLine": 201,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 193,
+                        "endLineOffset": 90,
+                        "length": 85,
                         "startLine": 193,
                         "startLineOffset": 6
                     },
@@ -7466,11 +7284,11 @@
                         "startLineOffset": 43
                     },
                     {
-                        "endLine": 191,
-                        "endLineOffset": 13,
-                        "length": 11,
-                        "startLine": 191,
-                        "startLineOffset": 3
+                        "endLine": 197,
+                        "endLineOffset": 110,
+                        "length": 105,
+                        "startLine": 197,
+                        "startLineOffset": 6
                     },
                     {
                         "endLine": 190,
@@ -7480,11 +7298,158 @@
                         "startLineOffset": 6
                     },
                     {
+                        "endLine": 194,
+                        "endLineOffset": 66,
+                        "length": 43,
+                        "startLine": 194,
+                        "startLineOffset": 24
+                    },
+                    {
+                        "endLine": 182,
+                        "endLineOffset": 21,
+                        "length": 13,
+                        "startLine": 182,
+                        "startLineOffset": 9
+                    },
+                    {
+                        "endLine": 202,
+                        "endLineOffset": 20,
+                        "length": 19,
+                        "startLine": 202,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 199,
+                        "endLineOffset": 3,
+                        "length": 168,
+                        "startLine": 197,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 201,
+                        "endLineOffset": 23,
+                        "length": 7,
+                        "startLine": 201,
+                        "startLineOffset": 17
+                    },
+                    {
+                        "endLine": 192,
+                        "endLineOffset": 3,
+                        "length": 40,
+                        "startLine": 190,
+                        "startLineOffset": 70
+                    },
+                    {
                         "endLine": 195,
                         "endLineOffset": 41,
                         "length": 8,
                         "startLine": 195,
                         "startLineOffset": 34
+                    },
+                    {
+                        "endLine": 198,
+                        "endLineOffset": 32,
+                        "length": 11,
+                        "startLine": 198,
+                        "startLineOffset": 22
+                    },
+                    {
+                        "endLine": 197,
+                        "endLineOffset": 55,
+                        "length": 33,
+                        "startLine": 197,
+                        "startLineOffset": 23
+                    },
+                    {
+                        "endLine": 194,
+                        "endLineOffset": 67,
+                        "length": 61,
+                        "startLine": 194,
+                        "startLineOffset": 7
+                    },
+                    {
+                        "endLine": 191,
+                        "endLineOffset": 33,
+                        "length": 31,
+                        "startLine": 191,
+                        "startLineOffset": 3
+                    },
+                    {
+                        "endLine": 185,
+                        "endLineOffset": 65,
+                        "length": 64,
+                        "startLine": 185,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 201,
+                        "endLineOffset": 12,
+                        "length": 11,
+                        "startLine": 201,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 198,
+                        "endLineOffset": 49,
+                        "length": 7,
+                        "startLine": 198,
+                        "startLineOffset": 43
+                    },
+                    {
+                        "endLine": 198,
+                        "endLineOffset": 41,
+                        "length": 8,
+                        "startLine": 198,
+                        "startLineOffset": 34
+                    },
+                    {
+                        "endLine": 194,
+                        "endLineOffset": 67,
+                        "length": 153,
+                        "startLine": 193,
+                        "startLineOffset": 6
+                    },
+                    {
+                        "endLine": 197,
+                        "endLineOffset": 110,
+                        "length": 51,
+                        "startLine": 197,
+                        "startLineOffset": 60
+                    },
+                    {
+                        "endLine": 197,
+                        "endLineOffset": 56,
+                        "length": 51,
+                        "startLine": 197,
+                        "startLineOffset": 6
+                    },
+                    {
+                        "endLine": 203,
+                        "endLineOffset": 2,
+                        "length": 1021,
+                        "startLine": 182,
+                        "startLineOffset": 52
+                    },
+                    {
+                        "endLine": 191,
+                        "endLineOffset": 31,
+                        "length": 14,
+                        "startLine": 191,
+                        "startLineOffset": 18
+                    },
+                    {
+                        "endLine": 192,
+                        "endLineOffset": 3,
+                        "length": 176,
+                        "startLine": 189,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 195,
+                        "endLineOffset": 32,
+                        "length": 11,
+                        "startLine": 195,
+                        "startLineOffset": 22
                     }
                 ],
                 "treeType": "MethodDeclaration"
@@ -8689,7 +8654,10 @@
                 "endLineOffset": 2,
                 "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-8510-8731-MethodDeclaration",
                 "identifiers": [
-                    "areClassesAvailable"
+                    "areClassesAvailable",
+                    "classLoader",
+                    "classNames",
+                    "className"
                 ],
                 "length": 222,
                 "nodeType": "ADDITION",
@@ -10592,22 +10560,6 @@
             },
             {
                 "aggregatorIds": [],
-                "content": "\"custom-log4j2.properties\"",
-                "descendantSimpleNames": [],
-                "endLine": 318,
-                "endLineOffset": 105,
-                "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
-                "length": 27,
-                "nodeType": "DST_MOVE",
-                "path": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java",
-                "srcDst": "DST",
-                "startLine": 318,
-                "startLineOffset": 79,
-                "subs": [],
-                "treeType": "StringLiteral"
-            },
-            {
-                "aggregatorIds": [],
                 "content": "\"log4j2\" + this.contextName + \".xml\"",
                 "descendantSimpleNames": [
                     "contextName"
@@ -10623,6 +10575,22 @@
                 "startLineOffset": 67,
                 "subs": [],
                 "treeType": "InfixExpression"
+            },
+            {
+                "aggregatorIds": [],
+                "content": "\"custom-log4j2.properties\"",
+                "descendantSimpleNames": [],
+                "endLine": 318,
+                "endLineOffset": 105,
+                "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-DST_MOVE-13878-13904-StringLiteral",
+                "length": 27,
+                "nodeType": "DST_MOVE",
+                "path": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java",
+                "srcDst": "DST",
+                "startLine": 318,
+                "startLineOffset": 79,
+                "subs": [],
+                "treeType": "StringLiteral"
             },
             {
                 "aggregatorIds": [],
@@ -12729,6 +12697,22 @@
             },
             {
                 "aggregatorIds": [],
+                "content": "@author Piotr P. Karwasz",
+                "descendantSimpleNames": [],
+                "endLine": 86,
+                "endLineOffset": 27,
+                "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-3711-3735-TagElement",
+                "length": 25,
+                "nodeType": "ADDITION",
+                "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java",
+                "srcDst": "DST",
+                "startLine": 86,
+                "startLineOffset": 3,
+                "subs": [],
+                "treeType": "TagElement"
+            },
+            {
+                "aggregatorIds": [],
                 "content": "extensions.forEach((e) -> locations.add(\"log4j2-test\" + e));",
                 "descendantSimpleNames": [
                     "extensions",
@@ -12741,6 +12725,9 @@
                 "endLine": 175,
                 "endLineOffset": 62,
                 "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7192-7252-ExpressionStatement",
+                "identifiers": [
+                    "e"
+                ],
                 "length": 61,
                 "nodeType": "ADDITION",
                 "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java",
@@ -12750,6 +12737,27 @@
                 "subs": [
                     {
                         "endLine": 175,
+                        "endLineOffset": 61,
+                        "length": 60,
+                        "startLine": 175,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 175,
+                        "endLineOffset": 59,
+                        "length": 18,
+                        "startLine": 175,
+                        "startLineOffset": 42
+                    },
+                    {
+                        "endLine": 175,
+                        "endLineOffset": 60,
+                        "length": 40,
+                        "startLine": 175,
+                        "startLineOffset": 21
+                    },
+                    {
+                        "endLine": 175,
                         "endLineOffset": 23,
                         "length": 2,
                         "startLine": 175,
@@ -12757,8 +12765,8 @@
                     },
                     {
                         "endLine": 175,
-                        "endLineOffset": 61,
-                        "length": 60,
+                        "endLineOffset": 12,
+                        "length": 11,
                         "startLine": 175,
                         "startLineOffset": 2
                     },
@@ -12775,46 +12783,9 @@
                         "length": 40,
                         "startLine": 175,
                         "startLineOffset": 21
-                    },
-                    {
-                        "endLine": 175,
-                        "endLineOffset": 60,
-                        "length": 40,
-                        "startLine": 175,
-                        "startLineOffset": 21
-                    },
-                    {
-                        "endLine": 175,
-                        "endLineOffset": 12,
-                        "length": 11,
-                        "startLine": 175,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 175,
-                        "endLineOffset": 59,
-                        "length": 18,
-                        "startLine": 175,
-                        "startLineOffset": 42
                     }
                 ],
                 "treeType": "ExpressionStatement"
-            },
-            {
-                "aggregatorIds": [],
-                "content": "@author Piotr P. Karwasz",
-                "descendantSimpleNames": [],
-                "endLine": 86,
-                "endLineOffset": 27,
-                "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-3711-3735-TagElement",
-                "length": 25,
-                "nodeType": "ADDITION",
-                "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java",
-                "srcDst": "DST",
-                "startLine": 86,
-                "startLineOffset": 3,
-                "subs": [],
-                "treeType": "TagElement"
             },
             {
                 "aggregatorIds": [],
@@ -12923,6 +12894,11 @@
                 "endLineOffset": 2,
                 "id": "core/spring-boot/src/test/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystemTests.java-DST-ADDITION-16350-17100-MethodDeclaration",
                 "identifiers": [
+                    "s",
+                    "expected",
+                    "expectedSuffixes",
+                    "availableClasses",
+                    "locations",
                     "standardConfigLocations"
                 ],
                 "length": 751,
@@ -12933,20 +12909,6 @@
                 "startLineOffset": 1,
                 "subs": [
                     {
-                        "endLine": 365,
-                        "endLineOffset": 59,
-                        "length": 30,
-                        "startLine": 365,
-                        "startLineOffset": 30
-                    },
-                    {
-                        "endLine": 363,
-                        "endLineOffset": 19,
-                        "length": 19,
-                        "startLine": 363,
-                        "startLineOffset": 1
-                    },
-                    {
                         "endLine": 375,
                         "endLineOffset": 2,
                         "length": 625,
@@ -12954,17 +12916,10 @@
                         "startLineOffset": 92
                     },
                     {
-                        "endLine": 373,
-                        "endLineOffset": 62,
-                        "length": 61,
-                        "startLine": 373,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 371,
-                        "endLineOffset": 67,
-                        "length": 66,
-                        "startLine": 371,
+                        "endLine": 367,
+                        "endLineOffset": 71,
+                        "length": 70,
+                        "startLine": 367,
                         "startLineOffset": 2
                     },
                     {
@@ -12976,23 +12931,100 @@
                     },
                     {
                         "endLine": 366,
-                        "endLineOffset": 54,
-                        "length": 17,
+                        "endLineOffset": 62,
+                        "length": 8,
                         "startLine": 366,
-                        "startLineOffset": 38
-                    },
-                    {
-                        "endLine": 367,
-                        "endLineOffset": 71,
-                        "length": 70,
-                        "startLine": 367,
-                        "startLineOffset": 2
+                        "startLineOffset": 55
                     },
                     {
                         "endLine": 367,
                         "endLineOffset": 10,
                         "length": 9,
                         "startLine": 367,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 363,
+                        "endLineOffset": 19,
+                        "length": 19,
+                        "startLine": 363,
+                        "startLineOffset": 1
+                    },
+                    {
+                        "endLine": 365,
+                        "endLineOffset": 90,
+                        "length": 30,
+                        "startLine": 365,
+                        "startLineOffset": 61
+                    },
+                    {
+                        "endLine": 368,
+                        "endLineOffset": 61,
+                        "length": 60,
+                        "startLine": 368,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 373,
+                        "endLineOffset": 62,
+                        "length": 61,
+                        "startLine": 373,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 372,
+                        "endLineOffset": 81,
+                        "length": 80,
+                        "startLine": 372,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 371,
+                        "endLineOffset": 67,
+                        "length": 66,
+                        "startLine": 371,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 367,
+                        "endLineOffset": 70,
+                        "length": 60,
+                        "startLine": 367,
+                        "startLineOffset": 11
+                    },
+                    {
+                        "endLine": 374,
+                        "endLineOffset": 58,
+                        "length": 9,
+                        "startLine": 374,
+                        "startLineOffset": 50
+                    },
+                    {
+                        "endLine": 366,
+                        "endLineOffset": 76,
+                        "length": 14,
+                        "startLine": 366,
+                        "startLineOffset": 63
+                    },
+                    {
+                        "endLine": 365,
+                        "endLineOffset": 59,
+                        "length": 30,
+                        "startLine": 365,
+                        "startLineOffset": 30
+                    },
+                    {
+                        "endLine": 370,
+                        "endLineOffset": 86,
+                        "length": 85,
+                        "startLine": 370,
+                        "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 369,
+                        "endLineOffset": 44,
+                        "length": 43,
+                        "startLine": 369,
                         "startLineOffset": 2
                     },
                     {
@@ -13003,60 +13035,11 @@
                         "startLineOffset": 38
                     },
                     {
-                        "endLine": 367,
-                        "endLineOffset": 70,
-                        "length": 60,
-                        "startLine": 367,
-                        "startLineOffset": 11
-                    },
-                    {
-                        "endLine": 365,
-                        "endLineOffset": 90,
-                        "length": 30,
-                        "startLine": 365,
-                        "startLineOffset": 61
-                    },
-                    {
                         "endLine": 366,
-                        "endLineOffset": 62,
-                        "length": 8,
+                        "endLineOffset": 54,
+                        "length": 17,
                         "startLine": 366,
-                        "startLineOffset": 55
-                    },
-                    {
-                        "endLine": 372,
-                        "endLineOffset": 81,
-                        "length": 80,
-                        "startLine": 372,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 370,
-                        "endLineOffset": 86,
-                        "length": 85,
-                        "startLine": 370,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 366,
-                        "endLineOffset": 76,
-                        "length": 14,
-                        "startLine": 366,
-                        "startLineOffset": 63
-                    },
-                    {
-                        "endLine": 369,
-                        "endLineOffset": 44,
-                        "length": 43,
-                        "startLine": 369,
-                        "startLineOffset": 2
-                    },
-                    {
-                        "endLine": 368,
-                        "endLineOffset": 61,
-                        "length": 60,
-                        "startLine": 368,
-                        "startLineOffset": 2
+                        "startLineOffset": 38
                     },
                     {
                         "endLine": 364,
@@ -13064,13 +13047,6 @@
                         "length": 14,
                         "startLine": 364,
                         "startLineOffset": 1
-                    },
-                    {
-                        "endLine": 374,
-                        "endLineOffset": 58,
-                        "length": 9,
-                        "startLine": 374,
-                        "startLineOffset": 50
                     }
                 ],
                 "treeType": "MethodDeclaration"
@@ -13108,6 +13084,9 @@
                 "endLine": 176,
                 "endLineOffset": 71,
                 "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7255-7324-ExpressionStatement",
+                "identifiers": [
+                    "e"
+                ],
                 "length": 70,
                 "nodeType": "ADDITION",
                 "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java",
@@ -13439,10 +13418,10 @@
                 "subs": [
                     {
                         "endLine": 136,
-                        "endLineOffset": 60,
-                        "length": 13,
+                        "endLineOffset": 46,
+                        "length": 14,
                         "startLine": 136,
-                        "startLineOffset": 48
+                        "startLineOffset": 33
                     },
                     {
                         "endLine": 136,
@@ -13453,6 +13432,13 @@
                     },
                     {
                         "endLine": 135,
+                        "endLineOffset": 74,
+                        "length": 69,
+                        "startLine": 135,
+                        "startLineOffset": 6
+                    },
+                    {
+                        "endLine": 135,
                         "endLineOffset": 73,
                         "length": 51,
                         "startLine": 135,
@@ -13460,17 +13446,10 @@
                     },
                     {
                         "endLine": 136,
-                        "endLineOffset": 46,
-                        "length": 14,
+                        "endLineOffset": 60,
+                        "length": 13,
                         "startLine": 136,
-                        "startLineOffset": 33
-                    },
-                    {
-                        "endLine": 135,
-                        "endLineOffset": 74,
-                        "length": 69,
-                        "startLine": 135,
-                        "startLineOffset": 6
+                        "startLineOffset": 48
                     }
                 ],
                 "treeType": "IfStatement"
@@ -13524,6 +13503,9 @@
                 "endLine": 174,
                 "endLineOffset": 76,
                 "id": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java-DST-ADDITION-7115-7189-ExpressionStatement",
+                "identifiers": [
+                    "e"
+                ],
                 "length": 75,
                 "nodeType": "ADDITION",
                 "path": "core/spring-boot/src/main/java/org/springframework/boot/logging/log4j2/Log4J2LoggingSystem.java",
@@ -13612,17 +13594,17 @@
                 "subs": [
                     {
                         "endLine": 126,
-                        "endLineOffset": 40,
-                        "length": 25,
-                        "startLine": 126,
-                        "startLineOffset": 16
-                    },
-                    {
-                        "endLine": 126,
                         "endLineOffset": 41,
                         "length": 40,
                         "startLine": 126,
                         "startLineOffset": 2
+                    },
+                    {
+                        "endLine": 126,
+                        "endLineOffset": 40,
+                        "length": 25,
+                        "startLine": 126,
+                        "startLineOffset": 16
                     }
                 ],
                 "treeType": "ExpressionStatement"
@@ -14946,11 +14928,11 @@
                 "startLineOffset": 2,
                 "subs": [
                     {
-                        "endLine": 139,
-                        "endLineOffset": 31,
-                        "length": 10,
-                        "startLine": 139,
-                        "startLineOffset": 22
+                        "endLine": 138,
+                        "endLineOffset": 69,
+                        "length": 64,
+                        "startLine": 138,
+                        "startLineOffset": 6
                     },
                     {
                         "endLine": 139,
@@ -14960,25 +14942,25 @@
                         "startLineOffset": 33
                     },
                     {
-                        "endLine": 138,
-                        "endLineOffset": 68,
-                        "length": 46,
-                        "startLine": 138,
-                        "startLineOffset": 23
-                    },
-                    {
-                        "endLine": 138,
-                        "endLineOffset": 69,
-                        "length": 64,
-                        "startLine": 138,
-                        "startLineOffset": 6
-                    },
-                    {
                         "endLine": 139,
                         "endLineOffset": 60,
                         "length": 13,
                         "startLine": 139,
                         "startLineOffset": 48
+                    },
+                    {
+                        "endLine": 139,
+                        "endLineOffset": 31,
+                        "length": 10,
+                        "startLine": 139,
+                        "startLineOffset": 22
+                    },
+                    {
+                        "endLine": 138,
+                        "endLineOffset": 68,
+                        "length": 46,
+                        "startLine": 138,
+                        "startLineOffset": 23
                     }
                 ],
                 "treeType": "IfStatement"
@@ -15013,17 +14995,10 @@
                 "subs": [
                     {
                         "endLine": 324,
-                        "endLineOffset": 95,
-                        "length": 13,
+                        "endLineOffset": 67,
+                        "length": 14,
                         "startLine": 324,
-                        "startLineOffset": 83
-                    },
-                    {
-                        "endLine": 318,
-                        "endLineOffset": 6,
-                        "length": 6,
-                        "startLine": 318,
-                        "startLineOffset": 1
+                        "startLineOffset": 54
                     },
                     {
                         "endLine": 321,
@@ -15034,59 +15009,17 @@
                     },
                     {
                         "endLine": 324,
-                        "endLineOffset": 81,
+                        "endLineOffset": 52,
                         "length": 13,
                         "startLine": 324,
-                        "startLineOffset": 69
-                    },
-                    {
-                        "endLine": 322,
-                        "endLineOffset": 102,
-                        "length": 25,
-                        "startLine": 322,
-                        "startLineOffset": 78
-                    },
-                    {
-                        "endLine": 321,
-                        "endLineOffset": 22,
-                        "length": 19,
-                        "startLine": 321,
-                        "startLineOffset": 4
+                        "startLineOffset": 40
                     },
                     {
                         "endLine": 323,
-                        "endLineOffset": 22,
-                        "length": 19,
-                        "startLine": 323,
-                        "startLineOffset": 4
-                    },
-                    {
-                        "endLine": 325,
-                        "endLineOffset": 2,
-                        "length": 433,
-                        "startLine": 319,
-                        "startLineOffset": 60
-                    },
-                    {
-                        "endLine": 324,
-                        "endLineOffset": 23,
-                        "length": 20,
-                        "startLine": 324,
-                        "startLineOffset": 4
-                    },
-                    {
-                        "endLine": 321,
-                        "endLineOffset": 32,
-                        "length": 29,
-                        "startLine": 321,
-                        "startLineOffset": 4
-                    },
-                    {
-                        "endLine": 323,
-                        "endLineOffset": 80,
+                        "endLineOffset": 99,
                         "length": 18,
                         "startLine": 323,
-                        "startLineOffset": 63
+                        "startLineOffset": 82
                     },
                     {
                         "endLine": 320,
@@ -15097,10 +15030,24 @@
                     },
                     {
                         "endLine": 324,
-                        "endLineOffset": 52,
-                        "length": 13,
+                        "endLineOffset": 38,
+                        "length": 14,
                         "startLine": 324,
-                        "startLineOffset": 40
+                        "startLineOffset": 25
+                    },
+                    {
+                        "endLine": 323,
+                        "endLineOffset": 80,
+                        "length": 18,
+                        "startLine": 323,
+                        "startLineOffset": 63
+                    },
+                    {
+                        "endLine": 322,
+                        "endLineOffset": 102,
+                        "length": 25,
+                        "startLine": 322,
+                        "startLineOffset": 78
                     },
                     {
                         "endLine": 323,
@@ -15110,6 +15057,20 @@
                         "startLineOffset": 24
                     },
                     {
+                        "endLine": 321,
+                        "endLineOffset": 32,
+                        "length": 29,
+                        "startLine": 321,
+                        "startLineOffset": 4
+                    },
+                    {
+                        "endLine": 324,
+                        "endLineOffset": 95,
+                        "length": 13,
+                        "startLine": 324,
+                        "startLineOffset": 83
+                    },
+                    {
                         "endLine": 323,
                         "endLineOffset": 61,
                         "length": 19,
@@ -15117,25 +15078,46 @@
                         "startLineOffset": 43
                     },
                     {
+                        "endLine": 325,
+                        "endLineOffset": 2,
+                        "length": 433,
+                        "startLine": 319,
+                        "startLineOffset": 60
+                    },
+                    {
+                        "endLine": 318,
+                        "endLineOffset": 6,
+                        "length": 6,
+                        "startLine": 318,
+                        "startLineOffset": 1
+                    },
+                    {
                         "endLine": 324,
-                        "endLineOffset": 67,
-                        "length": 14,
+                        "endLineOffset": 23,
+                        "length": 20,
                         "startLine": 324,
-                        "startLineOffset": 54
+                        "startLineOffset": 4
                     },
                     {
                         "endLine": 323,
-                        "endLineOffset": 99,
-                        "length": 18,
+                        "endLineOffset": 22,
+                        "length": 19,
                         "startLine": 323,
-                        "startLineOffset": 82
+                        "startLineOffset": 4
+                    },
+                    {
+                        "endLine": 321,
+                        "endLineOffset": 22,
+                        "length": 19,
+                        "startLine": 321,
+                        "startLineOffset": 4
                     },
                     {
                         "endLine": 324,
-                        "endLineOffset": 38,
-                        "length": 14,
+                        "endLineOffset": 81,
+                        "length": 13,
                         "startLine": 324,
-                        "startLineOffset": 25
+                        "startLineOffset": 69
                     }
                 ],
                 "treeType": "MethodDeclaration"
@@ -15167,32 +15149,11 @@
                 "startLineOffset": 1,
                 "subs": [
                     {
-                        "endLine": 314,
-                        "endLineOffset": 41,
-                        "length": 18,
-                        "startLine": 314,
-                        "startLineOffset": 24
-                    },
-                    {
-                        "endLine": 316,
-                        "endLineOffset": 2,
-                        "length": 331,
-                        "startLine": 311,
-                        "startLineOffset": 49
-                    },
-                    {
-                        "endLine": 314,
-                        "endLineOffset": 81,
-                        "length": 20,
-                        "startLine": 314,
-                        "startLineOffset": 62
-                    },
-                    {
-                        "endLine": 314,
-                        "endLineOffset": 96,
-                        "length": 14,
-                        "startLine": 314,
-                        "startLineOffset": 83
+                        "endLine": 315,
+                        "endLineOffset": 30,
+                        "length": 13,
+                        "startLine": 315,
+                        "startLineOffset": 18
                     },
                     {
                         "endLine": 314,
@@ -15202,11 +15163,11 @@
                         "startLineOffset": 43
                     },
                     {
-                        "endLine": 315,
-                        "endLineOffset": 30,
-                        "length": 13,
-                        "startLine": 315,
-                        "startLineOffset": 18
+                        "endLine": 314,
+                        "endLineOffset": 41,
+                        "length": 18,
+                        "startLine": 314,
+                        "startLineOffset": 24
                     },
                     {
                         "endLine": 310,
@@ -15214,6 +15175,34 @@
                         "length": 6,
                         "startLine": 310,
                         "startLineOffset": 1
+                    },
+                    {
+                        "endLine": 314,
+                        "endLineOffset": 96,
+                        "length": 14,
+                        "startLine": 314,
+                        "startLineOffset": 83
+                    },
+                    {
+                        "endLine": 313,
+                        "endLineOffset": 102,
+                        "length": 25,
+                        "startLine": 313,
+                        "startLineOffset": 78
+                    },
+                    {
+                        "endLine": 314,
+                        "endLineOffset": 22,
+                        "length": 19,
+                        "startLine": 314,
+                        "startLineOffset": 4
+                    },
+                    {
+                        "endLine": 314,
+                        "endLineOffset": 81,
+                        "length": 20,
+                        "startLine": 314,
+                        "startLineOffset": 62
                     },
                     {
                         "endLine": 315,
@@ -15230,18 +15219,11 @@
                         "startLineOffset": 38
                     },
                     {
-                        "endLine": 313,
-                        "endLineOffset": 102,
-                        "length": 25,
-                        "startLine": 313,
-                        "startLineOffset": 78
-                    },
-                    {
-                        "endLine": 314,
-                        "endLineOffset": 22,
-                        "length": 19,
-                        "startLine": 314,
-                        "startLineOffset": 4
+                        "endLine": 316,
+                        "endLineOffset": 2,
+                        "length": 331,
+                        "startLine": 311,
+                        "startLineOffset": 49
                     }
                 ],
                 "treeType": "MethodDeclaration"

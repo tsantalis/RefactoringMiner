@@ -534,7 +534,7 @@ public class HunkNetwork {
       Set<Node> classNodes = new HashSet<>();
 
       for (UMLClass createdClass : createdClasses) {
-        Node classNode = getClassNode(createdClass);
+        Node classNode = getClassNode(createdClass, node.getSrcDst());
         if (classNode == null) {
           continue;
         }
@@ -559,7 +559,7 @@ public class HunkNetwork {
     for (UMLGeneralization generalization : umlModel.getGeneralizationList()) {
       UMLClass child = generalization.getChild();
 
-      Node childClassNode = getClassNode(child);
+      Node childClassNode = getClassNode(child, srcDst);
       if (childClassNode == null) {
         continue;
       }
@@ -570,7 +570,7 @@ public class HunkNetwork {
         continue;
       }
 
-      Node parentClassNode = getClassNode(parentClass);
+      Node parentClassNode = getClassNode(parentClass, srcDst);
       if (parentClassNode == null) {
         continue;
       }
@@ -585,7 +585,7 @@ public class HunkNetwork {
     for (UMLRealization realization : umlModel.getRealizationList()) {
       UMLClass child = realization.getClient();
 
-      Node childClassNode = getClassNode(child);
+      Node childClassNode = getClassNode(child, srcDst);
       if (childClassNode == null) {
         continue;
       }
@@ -596,7 +596,7 @@ public class HunkNetwork {
         continue;
       }
 
-      Node parentClassNode = getClassNode(parentClass);
+      Node parentClassNode = getClassNode(parentClass, srcDst);
       if (parentClassNode == null) {
         continue;
       }
@@ -606,9 +606,9 @@ public class HunkNetwork {
   }
 
   @Nullable
-  private Node getClassNode(UMLClass umlClass) {
-    Optional<Node> optionalClassNode = graph.vertexSet().stream().filter(node ->
-            !node.isExtension() && node.umls != null && node.umls.umlClasses.contains(umlClass)).findFirst();
+  private Node getClassNode(UMLClass umlClass, SrcDst srcDst) {
+    Optional<Node> optionalClassNode = graph.vertexSet().stream().filter(node -> !node.isExtension()
+            && node.getSrcDst().equals(srcDst) && node.umls != null && node.umls.umlClasses.contains(umlClass)).findFirst();
     if (optionalClassNode.isEmpty()) {
       return null;
     }

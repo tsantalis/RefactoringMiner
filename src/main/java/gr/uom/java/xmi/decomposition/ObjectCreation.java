@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.NullLiteral;
 import org.eclipse.jdt.core.dom.NumberLiteral;
@@ -191,6 +192,9 @@ public class ObjectCreation extends AbstractCall {
 						(qualifier instanceof QualifiedName && !(qualifiedName.getParent() instanceof QualifiedName))) {
 					literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.QUALIFIED_NAME, container));
 				}
+			}
+			else if(expression instanceof MethodInvocation) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.METHOD_INVOCATION, container));
 			}
 		}
 	}

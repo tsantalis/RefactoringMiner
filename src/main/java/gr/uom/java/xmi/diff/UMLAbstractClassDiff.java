@@ -3453,12 +3453,19 @@ public abstract class UMLAbstractClassDiff {
 		List<List<LeafExpression>> junit4Rows = null;
 		OperationBody body = junit4DataProvider.getBody();
 		if(body != null) {
+			List<ObjectCreation> arrayCreations = new ArrayList<ObjectCreation>();
 			for(AbstractCall creation : body.getAllCreations()) {
 				if(creation instanceof ObjectCreation && ((ObjectCreation)creation).isArray()) {
+					arrayCreations.add((ObjectCreation)creation);
+				}
+			}
+			for(ObjectCreation creation : arrayCreations) {
+				boolean nestedInAnotherArrayCreation = arrayCreations.stream().anyMatch(other -> other != creation && other.getLocationInfo().subsumes(creation.getLocationInfo()));
+				if(!nestedInAnotherArrayCreation) {
 					if(junit4Rows == null) {
 						junit4Rows = new ArrayList<List<LeafExpression>>();
 					}
-					junit4Rows.addAll(((ObjectCreation)creation).getArrayInitializerRows());
+					junit4Rows.addAll(creation.getArrayInitializerRows());
 				}
 			}
 		}

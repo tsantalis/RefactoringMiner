@@ -649,10 +649,18 @@ class TestParameterizeTestRefactoring {
         private static List<List<LeafExpression>> computeBeforeRows(UMLOperation dataProviderBefore, UMLClassBaseDiff classDiff) {
             OperationBody body = dataProviderBefore.getBody();
             if (body != null) {
-                List<List<LeafExpression>> rows = new ArrayList<>();
+                List<ObjectCreation> arrayCreations = new ArrayList<>();
                 for (AbstractCall creation : body.getAllCreations()) {
                     if (creation instanceof ObjectCreation && ((ObjectCreation) creation).isArray()) {
-                        rows.addAll(((ObjectCreation) creation).getArrayInitializerRows());
+                        arrayCreations.add((ObjectCreation) creation);
+                    }
+                }
+                List<List<LeafExpression>> rows = new ArrayList<>();
+                for (ObjectCreation creation : arrayCreations) {
+                    boolean nestedInAnotherArrayCreation = arrayCreations.stream()
+                            .anyMatch(other -> other != creation && other.getLocationInfo().subsumes(creation.getLocationInfo()));
+                    if (!nestedInAnotherArrayCreation) {
+                        rows.addAll(creation.getArrayInitializerRows());
                     }
                 }
                 if (!rows.isEmpty()) {

@@ -196,6 +196,15 @@ public class ObjectCreation extends AbstractCall {
 			else if(expression instanceof MethodInvocation) {
 				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.METHOD_INVOCATION, container));
 			}
+			else if(expression instanceof ArrayCreation) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.ARRAY_CREATION, container));
+			}
+			else if(expression instanceof ClassInstanceCreation) {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.CLASS_INSTANCE_CREATION, container));
+			}
+			else {
+				literals.add(new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.EXPRESSION, container));
+			}
 		}
 	}
 

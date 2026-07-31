@@ -71,19 +71,23 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                                 List<String> resolvedArguments = new ArrayList<>();
                                 List<LeafExpression> leafExpressions = new ArrayList<>();
                                 Set<LocationInfo> claimedLocations = new HashSet<>();
+                                List<LocationInfo> resolvedArgumentSpans = new ArrayList<>();
                                 for(String arg : nestedCall.arguments()) {
                                     LeafExpression constantLiteral = resolveConstantLiteral(arg);
                                     if(constantLiteral != null) {
                                         resolvedArguments.add(constantLiteral.getString());
                                         leafExpressions.add(constantLiteral);
+                                        resolvedArgumentSpans.add(constantLiteral.getLocationInfo());
                                     }
                                     else {
                                         resolvedArguments.add(arg);
                                         List<LeafExpression> matches = stmtCandidate.get().findExpression(arg);
                                         for(LeafExpression match : matches) {
-                                            if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo()) && !claimedLocations.contains(match.getLocationInfo())) {
+                                            boolean nestedInEarlierArgument = resolvedArgumentSpans.stream().anyMatch(span -> span.subsumes(match.getLocationInfo()));
+                                            if(nestedCall.getLocationInfo().subsumes(match.getLocationInfo()) && !claimedLocations.contains(match.getLocationInfo()) && !nestedInEarlierArgument) {
                                                 leafExpressions.add(match);
                                                 claimedLocations.add(match.getLocationInfo());
+                                                resolvedArgumentSpans.add(match.getLocationInfo());
                                                 break;
                                             }
                                         }

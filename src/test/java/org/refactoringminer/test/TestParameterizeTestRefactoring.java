@@ -1,10 +1,16 @@
 package org.refactoringminer.test;
 
 import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.ObjectCreation;
+import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.*;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.builder.Builder;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -14,16 +20,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.refactoringminer.api.ModelDiffRefactoringHandler;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,8 +45,12 @@ import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.function.Function;
@@ -550,6 +564,207 @@ class TestParameterizeTestRefactoring {
             UMLModelDiff diff = originalModel.diff(newModel);
             List<Refactoring> refactorings = diff.getRefactorings();
             return refactorings;
+        }
+    }
+
+    @Nested
+    class TestDataProviderMatchedLiterals {
+        private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
+        private static final String CACHED_CONTENT_PATH = System.getProperty("user.dir") + "/src/test/resources/mappings/";
+
+        private record MatchedPair(LeafMapping mapping, int colBefore, int colAfter) {}
+        // providerKey distinguishes which DataProvider (before/after) pair a row index belongs to
+        private record TestCaseGroup(String providerKey, int rowBeforeIndex, int rowAfterIndex, List<MatchedPair> matches) {}
+
+        private static Stream<Arguments> dataProviderRefactoringCases() {
+            List<Arguments> cases = new ArrayList<>();
+            cases.add(Arguments.of("r5", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/conveyal/r5.git", "62a042e56b21d2e7c919552af39eca34357a82a7")));
+            cases.add(Arguments.of("directory-ldap-api", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/apache/directory-ldap-api.git", "8965a541bbeefd49028a5405264e40aed69ac5d0")));
+            cases.add(Arguments.of("lambdaFromString", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/greenjoe/lambdaFromString.git", "0cbf3774c6f508c21cbb789bfe285117499f1e31")));
+            cases.add(Arguments.of("haikunatorjava", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/Atrox/haikunatorjava.git", "42679988419b68dd51f0a7b3c045536b3c5ef37b")));
+            cases.add(Arguments.of("OpenTripPlanner", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/opentripplanner/OpenTripPlanner.git", "1abed1191c2df7a747ef21cd3b669c14d54c3011")));
+            cases.add(Arguments.of("spring-boot", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/spring-projects/spring-boot.git", "16439ad6e364267033b8b157f3608b46c654dffa")));
+            cases.add(Arguments.of("zookeeper", (ThrowingSupplier<UMLModelDiff>) TestDataProviderMatchedLiterals::zookeeperModelDiff));
+            cases.add(Arguments.of("multiapps", (ThrowingSupplier<UMLModelDiff>) TestDataProviderMatchedLiterals::multiappsModelDiff));
+            cases.add(Arguments.of("SmartCSV.fx", (ThrowingSupplier<UMLModelDiff>) () ->
+                    modelDiffFromGitHub("https://github.com/frosch95/SmartCSV.fx.git", "f41979960b3844215175838de1cb6d215cd1cb47")));
+            return cases.stream();
+        }
+
+        private static UMLModelDiff modelDiffFromGitHub(String url, String commit) {
+            UMLModelDiff[] holder = new UMLModelDiff[1];
+            new GitHistoryRefactoringMinerImpl().detectAtCommitWithGitHubAPI(url, commit, new File(REPOS),
+                    (ModelDiffRefactoringHandler) (commitId, refactoringsAtRevision, modelDiff) -> holder[0] = modelDiff);
+            return holder[0];
+        }
+
+        private static UMLModelDiff zookeeperModelDiff() throws Exception {
+            Map<String, String> filePathsByCacheName = new LinkedHashMap<>();
+            filePathsByCacheName.put("PortAssignmentTest", "zookeeper-server/src/test/java/org/apache/zookeeper/PortAssignmentTest.java");
+            filePathsByCacheName.put("RemoveWatchesTest", "zookeeper-server/src/test/java/org/apache/zookeeper/RemoveWatchesTest.java");
+            filePathsByCacheName.put("EagerACLFilterTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/EagerACLFilterTest.java");
+            filePathsByCacheName.put("QuorumRequestPipelineTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/QuorumRequestPipelineTest.java");
+            filePathsByCacheName.put("ReconfigDuringLeaderSyncTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/ReconfigDuringLeaderSyncTest.java");
+            filePathsByCacheName.put("UnifiedServerSocketModeDetectionTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/UnifiedServerSocketModeDetectionTest.java");
+            filePathsByCacheName.put("WatchLeakTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/WatchLeakTest.java");
+            filePathsByCacheName.put("WatchManagerTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/watch/WatchManagerTest.java");
+            filePathsByCacheName.put("MultiOperationTest", "zookeeper-server/src/test/java/org/apache/zookeeper/test/MultiOperationTest.java");
+            filePathsByCacheName.put("ObserverMasterTest", "zookeeper-server/src/test/java/org/apache/zookeeper/test/ObserverMasterTest.java");
+            return cachedModelDiff(filePathsByCacheName);
+        }
+
+        private static UMLModelDiff multiappsModelDiff() throws Exception {
+            Map<String, String> filePathsByCacheName = new LinkedHashMap<>();
+            filePathsByCacheName.put("DescriptorHandlerTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorHandlerTest.java");
+            filePathsByCacheName.put("DescriptorHandlerTestV3", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v3/DescriptorHandlerTest.java");
+            filePathsByCacheName.put("DescriptorParserTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorParserTest.java");
+            filePathsByCacheName.put("DescriptorParserTestV3", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v3/DescriptorParserTest.java");
+            filePathsByCacheName.put("PlatformMergerTest", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/mergers/PlatformMergerTest.java");
+            filePathsByCacheName.put("SchemaValidatorTest", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/schema/SchemaValidatorTest.java");
+            return cachedModelDiff(filePathsByCacheName);
+        }
+
+        private static UMLModelDiff cachedModelDiff(Map<String, String> filePathsByCacheName) throws Exception {
+            Map<String, String> fileContentsBefore = new LinkedHashMap<>();
+            Map<String, String> fileContentsCurrent = new LinkedHashMap<>();
+            for (Map.Entry<String, String> entry : filePathsByCacheName.entrySet()) {
+                String contentsV1 = FileUtils.readFileToString(new File(CACHED_CONTENT_PATH + entry.getKey() + "-v1.txt"));
+                String contentsV2 = FileUtils.readFileToString(new File(CACHED_CONTENT_PATH + entry.getKey() + "-v2.txt"));
+                fileContentsBefore.put(entry.getValue(), contentsV1);
+                fileContentsCurrent.put(entry.getValue(), contentsV2);
+            }
+            UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<>());
+            UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<>());
+            return parentUMLModel.diff(currentUMLModel);
+        }
+
+        // Mirrors UMLAbstractClassDiff.resolveDataProviderMapping's before-side row detection: prefer a literal
+        // Object[][]/Arrays.asList(new Object[][]{...}) array initializer, falling back to annotation-driven parsing.
+        private static List<List<LeafExpression>> computeBeforeRows(UMLOperation dataProviderBefore, UMLClassBaseDiff classDiff) {
+            OperationBody body = dataProviderBefore.getBody();
+            if (body != null) {
+                List<List<LeafExpression>> rows = new ArrayList<>();
+                for (AbstractCall creation : body.getAllCreations()) {
+                    if (creation instanceof ObjectCreation && ((ObjectCreation) creation).isArray()) {
+                        rows.addAll(((ObjectCreation) creation).getArrayInitializerRows());
+                    }
+                }
+                if (!rows.isEmpty()) {
+                    return rows;
+                }
+            }
+            return classDiff.getParameterValuesAsLeafExpressions(dataProviderBefore);
+        }
+
+        private static List<List<LeafExpression>> computeAfterRows(UMLClassBaseDiff classDiff, UMLOperation parameterizedTestOperation) {
+            return classDiff.getParameterValuesAsLeafExpressions(parameterizedTestOperation);
+        }
+
+        private static int[] locate(LeafExpression target, List<List<LeafExpression>> rows) {
+            for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
+                List<LeafExpression> row = rows.get(rowIndex);
+                for (int colIndex = 0; colIndex < row.size(); colIndex++) {
+                    if (Objects.equals(row.get(colIndex).getLocationInfo(), target.getLocationInfo())) {
+                        return new int[]{rowIndex, colIndex};
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Groups a flat matched-literal list into test cases
+        private static List<TestCaseGroup> groupByTestCase(String providerKey, List<LeafMapping> data, List<List<LeafExpression>> rowsBefore, List<List<LeafExpression>> rowsAfter) {
+            record RowKey(int rowBeforeIndex, int rowAfterIndex) {}
+            Map<RowKey, List<MatchedPair>> grouped = new LinkedHashMap<>();
+            for (LeafMapping mapping : data) {
+                int[] before = locate((LeafExpression) mapping.getFragment1(), rowsBefore);
+                int[] after = locate((LeafExpression) mapping.getFragment2(), rowsAfter);
+                assertNotNull(before, "Could not locate matched literal " + mapping.getFragment1().getLocationInfo() + " in recomputed before-rows");
+                assertNotNull(after, "Could not locate matched literal " + mapping.getFragment2().getLocationInfo() + " in recomputed after-rows");
+                grouped.computeIfAbsent(new RowKey(before[0], after[0]), key -> new ArrayList<>())
+                        .add(new MatchedPair(mapping, before[1], after[1]));
+            }
+            List<TestCaseGroup> groups = new ArrayList<>();
+            for (Map.Entry<RowKey, List<MatchedPair>> entry : grouped.entrySet()) {
+                groups.add(new TestCaseGroup(providerKey, entry.getKey().rowBeforeIndex(), entry.getKey().rowAfterIndex(), entry.getValue()));
+            }
+            return groups;
+        }
+
+        private static List<TestCaseGroup> collectTestCaseGroups(UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+            List<TestCaseGroup> groups = new ArrayList<>();
+            for (Refactoring refactoring : modelDiff.getRefactorings()) {
+                if (!(refactoring instanceof ParameterizeTestRefactoring)) {
+                    continue;
+                }
+                ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
+                UMLOperation parameterizedTestOperation = parameterizeTestRefactoring.getParameterizedTestOperation();
+                if (parameterizeTestRefactoring.getDataProviderAfter() != null) {
+                    UMLOperation dataProviderBefore = parameterizeTestRefactoring.getDataProviderBefore();
+                    UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(parameterizedTestOperation.getClassName());
+                    if (classDiff != null) {
+                        List<List<LeafExpression>> rowsBefore = computeBeforeRows(dataProviderBefore, classDiff);
+                        List<List<LeafExpression>> rowsAfter = computeAfterRows(classDiff, parameterizedTestOperation);
+                        String providerKey = dataProviderBefore.getLocationInfo() + "->" + parameterizeTestRefactoring.getDataProviderAfter().getLocationInfo();
+                        groups.addAll(groupByTestCase(providerKey, parameterizeTestRefactoring.getData(), rowsBefore, rowsAfter));
+                    }
+                }
+                for (ParameterizeTestRefactoring.DataProviderOverride override : parameterizeTestRefactoring.getDataProviderOverrides()) {
+                    UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(override.getDataProviderAfter().getClassName());
+                    if (classDiff != null) {
+                        List<List<LeafExpression>> rowsBefore = computeBeforeRows(override.getDataProviderBefore(), classDiff);
+                        List<List<LeafExpression>> rowsAfter = computeAfterRows(classDiff, parameterizedTestOperation);
+                        String providerKey = override.getDataProviderBefore().getLocationInfo() + "->" + override.getDataProviderAfter().getLocationInfo();
+                        groups.addAll(groupByTestCase(providerKey, override.getData(), rowsBefore, rowsAfter));
+                    }
+                }
+            }
+            return groups;
+        }
+
+
+        @ParameterizedTest
+        @MethodSource("dataProviderRefactoringCases")
+        void testMatchedParameterCountPerTestCase(String label, ThrowingSupplier<UMLModelDiff> modelDiffSupplier) throws Throwable {
+            List<TestCaseGroup> groups = collectTestCaseGroups(modelDiffSupplier.get());
+            Map<List<Object>, Integer> rowAfterByBefore = new HashMap<>();
+            Map<List<Object>, Integer> rowBeforeByAfter = new HashMap<>();
+            for (TestCaseGroup group : groups) {
+                Integer previousAfter = rowAfterByBefore.putIfAbsent(List.of(group.providerKey(), group.rowBeforeIndex()), group.rowAfterIndex());
+                assertTrue(previousAfter == null || previousAfter.equals(group.rowAfterIndex()),
+                        label + ": before-row " + group.rowBeforeIndex() + " (" + group.providerKey()
+                                + ") has matched literals split across more than one after test case");
+                Integer previousBefore = rowBeforeByAfter.putIfAbsent(List.of(group.providerKey(), group.rowAfterIndex()), group.rowBeforeIndex());
+                assertTrue(previousBefore == null || previousBefore.equals(group.rowBeforeIndex()),
+                        label + ": after-row " + group.rowAfterIndex() + " (" + group.providerKey()
+                                + ") has matched literals split across more than one before test case");
+            }
+        }
+
+        @ParameterizedTest
+        @MethodSource("dataProviderRefactoringCases")
+        void testMatchedParameterIndexPerTestCase(String label, ThrowingSupplier<UMLModelDiff> modelDiffSupplier) throws Throwable {
+            List<TestCaseGroup> groups = collectTestCaseGroups(modelDiffSupplier.get());
+            for (TestCaseGroup group : groups) {
+                List<MatchedPair> sortedByBeforeColumn = new ArrayList<>(group.matches());
+                sortedByBeforeColumn.sort(Comparator.comparingInt(MatchedPair::colBefore));
+                for (int i = 1; i < sortedByBeforeColumn.size(); i++) {
+                    MatchedPair previous = sortedByBeforeColumn.get(i - 1);
+                    MatchedPair current = sortedByBeforeColumn.get(i);
+                    assertTrue(previous.colAfter() < current.colAfter(), label + ": matched parameter order differs - "
+                            + previous.mapping().getFragment1().getString() + "(" + previous.mapping().getFragment1().getLocationInfo() + ") -> "
+                            + previous.mapping().getFragment2().getString() + "(" + previous.mapping().getFragment2().getLocationInfo() + ")"
+                            + " should come before "
+                            + current.mapping().getFragment1().getString() + "(" + current.mapping().getFragment1().getLocationInfo() + ") -> "
+                            + current.mapping().getFragment2().getString() + "(" + current.mapping().getFragment2().getLocationInfo() + ")");
+                }
+            }
         }
     }
 

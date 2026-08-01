@@ -111,6 +111,7 @@ import extension.ast.node.expression.LangFieldAccess;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.statement.LangBlock;
+import extension.ast.node.statement.LangIfStatement;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
@@ -386,6 +387,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				}
 				LangASTNode scopeNode = parent;
 				int endOffset = scopeNode.getStartChar() + scopeNode.getLength();
+				if(scopeNode instanceof LangBlock && scopeNode.getParent() instanceof LangIfStatement) {
+					scopeNode = scopeNode.getParent().getParent();
+					startOffset = scopeNode.getStartChar();
+					endOffset = scopeNode.getStartChar() + scopeNode.getLength();
+				}
 				if(endOffset > fileContent.length()) {
 					endOffset = fileContent.length();
 				}

@@ -3833,7 +3833,7 @@ public abstract class UMLAbstractClassDiff {
 							// +1 to include the closing curly bracket
 							String methodBody = comment.substring(bodyStartOffset, bodyEndOffset + 1);
 							if(PathFileUtils.isJavaFile(nextClassComment.getLocationInfo().getFilePath())) {
-								ASTNode methodBodyBlock = JavaFileProcessor.processBlock(methodBody);
+								ASTNode methodBodyBlock = JavaFileProcessor.processJavaBlock(methodBody);
 								if(methodBodyBlock != null) {
 									int methodBodyHashCode = stringify(methodBodyBlock).hashCode();
 									if(methodBodyHashCode == removedOperation.getBodyHashCode()) {

@@ -23,6 +23,7 @@ import gr.uom.java.xmi.decomposition.*;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -338,6 +339,11 @@ public class LangVisitor implements LangASTVisitor {
                 VariableDeclaration varDecl = new VariableDeclaration(cu, sourceFolder, filePath,
                         langAssignment, container, varName, activeVariableDeclarations, fileContent);
                 variableDeclarations.add(varDecl);
+                if(varDecl.getScope().getEndOffset() == container.getLocationInfo().getEndOffset()) {
+                    Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
+                    list.add(varDecl);
+                    activeVariableDeclarations.put(varName, list);
+                }
             }
         }
         else if(langAssignment.getLeftSide() instanceof LangTupleLiteral tuple) {
@@ -348,6 +354,11 @@ public class LangVisitor implements LangASTVisitor {
                         VariableDeclaration varDecl = new VariableDeclaration(cu, sourceFolder, filePath,
                                 langAssignment, container, varName, activeVariableDeclarations, fileContent);
                         variableDeclarations.add(varDecl);
+                        if(varDecl.getScope().getEndOffset() == container.getLocationInfo().getEndOffset()) {
+                            Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
+                            list.add(varDecl);
+                            activeVariableDeclarations.put(varName, list);
+                        }
                     }
                 }
                 // TODO handle scenarios, where element is not SimpleName
@@ -363,12 +374,16 @@ public class LangVisitor implements LangASTVisitor {
             Set<VariableDeclaration> variables = activeVariableDeclarations.get(varName);
             boolean attribute = false;
             boolean parameter = false;
+            boolean local = false;
             for(VariableDeclaration variable : variables) {
                 if(variable.isAttribute())
                     attribute = true;
                 if(variable.isParameter())
                     parameter = true;
+                if(!variable.isAttribute() && !variable.isParameter())
+                    local = true;
             }
+            if(local) return true;
             return attribute && !parameter;
         }
     }

@@ -130,7 +130,7 @@ public class JavaFileProcessor {
 		}
 	}
 
-	public static ASTNode processBlock(String methodBody) {
+	public static ASTNode processJavaBlock(String methodBody) {
 		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
 		Map<String, String> options = JavaCore.getOptions();
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);

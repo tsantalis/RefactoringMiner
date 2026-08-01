@@ -3193,13 +3193,15 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean variableDeclarationsWithEverythingReplaced(List<VariableDeclaration> variableDeclarations1,
-			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2) {
+			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
 		if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 			boolean typeReplacement = false, variableRename = false, initializerReplacement = false, nullInitializer = false, zeroArgumentClassInstantiation = false, classInstantiationArgumentReplacement = false;
-			UMLType type1 = variableDeclarations1.get(0).getType();
-			UMLType type2 = variableDeclarations2.get(0).getType();
-			AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
-			AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
+			VariableDeclaration v1 = variableDeclarations1.get(0);
+			VariableDeclaration v2 = variableDeclarations2.get(0);
+			UMLType type1 = v1.getType();
+			UMLType type2 = v2.getType();
+			AbstractExpression initializer1 = v1.getInitializer();
+			AbstractExpression initializer2 = v2.getInitializer();
 			if(initializer1 == null && initializer2 == null) {
 				nullInitializer = true;
 			}
@@ -3234,8 +3236,8 @@ public class StringBasedHeuristics {
 						type2 != null && type2.toQualifiedString().equals(replacement.getAfter()))
 					typeReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-						variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
-						variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
+						v1.getVariableName().equals(replacement.getBefore()) &&
+						v2.getVariableName().equals(replacement.getAfter()))
 					variableRename = true;
 				else if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
 						initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
@@ -3245,7 +3247,12 @@ public class StringBasedHeuristics {
 			if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				boolean thisInitializer = initializer1 != null && initializer1.getExpression().startsWith(LANG1.THIS_DOT) &&
 						initializer2 != null && initializer2.getExpression().startsWith(LANG2.THIS_DOT);
-				if(!thisInitializer) {
+				boolean functionLevelScope = container1.getBody() != null && container2.getBody() != null &&
+						!v1.isParameter() && !v2.isParameter() &&
+						v1.getLocationInfo().getFilePath().equals(v2.getLocationInfo().getFilePath()) &&
+						v1.getScope().getEndOffset() == container1.getBody().getCompositeStatement().getLocationInfo().getEndOffset() &&
+						v2.getScope().getEndOffset() == container2.getBody().getCompositeStatement().getLocationInfo().getEndOffset();
+				if(!thisInitializer && !functionLevelScope) {
 					return true;
 				}
 			}

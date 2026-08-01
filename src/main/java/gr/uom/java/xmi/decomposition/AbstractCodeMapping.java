@@ -662,6 +662,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
 			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod, Set<AbstractCodeMapping> currentMappings) throws RefactoringMinerTimedOutException {
+		if(statement.getVariableDeclarations().size() > 1) {
+			String variableDeclarations = statement.getVariableDeclarations().toString();
+			variableDeclarations = variableDeclarations.replace("[", "(").replace("]", ")");
+			//avoid processing extract variable, when multiple variables are assigned in statement
+			if(statement.getString().startsWith(variableDeclarations + LANG2.ASSIGNMENT)) {
+				return;
+			}
+		}
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();

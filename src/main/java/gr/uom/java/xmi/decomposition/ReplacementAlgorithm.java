@@ -1913,7 +1913,7 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
-			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
+			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2, container1, container2) &&
 					!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 					!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 					!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
@@ -2477,7 +2477,7 @@ public class ReplacementAlgorithm {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
 							(!containsInArguments(assignmentInvocationCoveringTheEntireStatement1, key1) || operationBodyMapper.parentMapperContainsMapping(statement1))) {
-						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
+						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2, container1, container2) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 								!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 							return null;
@@ -3205,7 +3205,7 @@ public class ReplacementAlgorithm {
 							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
-							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
+							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2, container1, container2) &&
 									invocationCoveringTheEntireStatement2.arguments().contains(invocation1.getExpression()) &&
 									!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -3274,7 +3274,7 @@ public class ReplacementAlgorithm {
 							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 									invocation2.actualString(), invocationCoveringTheEntireStatement1, invocation2, ReplacementType.METHOD_INVOCATION);
 							replacementInfo.addReplacement(replacement);
-							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2) &&
+							if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo, LANG1, LANG2, container1, container2) &&
 									invocationCoveringTheEntireStatement1.arguments().contains(invocation2.getExpression()) &&
 									!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 									!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -5211,6 +5211,12 @@ public class ReplacementAlgorithm {
 		if(v1 != null && v2 != null) {
 			boolean variableDeclarationMismatch = false;
 			for(AbstractCodeMapping mapping : mappings) {
+				boolean functionLevelScope = mapping.getOperation1().getBody() != null && mapping.getOperation2().getBody() != null &&
+						!v1.isParameter() && !v2.isParameter() &&
+						statement1.getLANG().equals(Constants.PYTHON) && statement2.getLANG().equals(Constants.PYTHON) &&
+						v1.getLocationInfo().getFilePath().equals(v2.getLocationInfo().getFilePath()) &&
+						v1.getScope().getEndOffset() == mapping.getOperation1().getBody().getCompositeStatement().getLocationInfo().getEndOffset() &&
+						v2.getScope().getEndOffset() == mapping.getOperation2().getBody().getCompositeStatement().getLocationInfo().getEndOffset();
 				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
 				List<VariableDeclaration> variableDeclarations2 = mapping.getFragment2().getVariableDeclarations();
 				if(variableDeclarations1.contains(v1) &&
@@ -5233,7 +5239,7 @@ public class ReplacementAlgorithm {
 						CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
 						containsMapping = comp1.contains(mapping.getFragment1()) && comp2.contains(mapping.getFragment2());
 					}
-					if(containsMapping) {
+					if(containsMapping && !functionLevelScope) {
 						if(VariableReplacementAnalysis.bothFragmentsUseVariable(v1, mapping)) {
 							VariableDeclaration otherV1 = mapping.getFragment1().getVariableDeclaration(v1.getVariableName());
 							if(otherV1 != null) {

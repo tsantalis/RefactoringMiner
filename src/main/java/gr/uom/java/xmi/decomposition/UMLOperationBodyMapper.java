@@ -16,7 +16,7 @@ import gr.uom.java.xmi.ModuleContainer;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
-import static gr.uom.java.xmi.JavaFileProcessor.processBlock;
+import static gr.uom.java.xmi.JavaFileProcessor.processJavaBlock;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
@@ -2068,7 +2068,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					text = text.substring(2);
 				}
 				text = text.trim();
-				ASTNode node = processBlock(text);
+				ASTNode node = processJavaBlock(text);
 				if(node != null) {
 					String nodeAsString = stringify(node);
 					Set<AbstractCodeFragment> matchingNodes1 = new LinkedHashSet<AbstractCodeFragment>();
@@ -2092,7 +2092,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					text = text.substring(2);
 				}
 				text = text.trim();
-				ASTNode node = processBlock(text);
+				ASTNode node = processJavaBlock(text);
 				if(node != null) {
 					String nodeAsString = stringify(node);
 					Set<AbstractCodeFragment> matchingNodes2 = new LinkedHashSet<AbstractCodeFragment>();

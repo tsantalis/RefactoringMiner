@@ -1748,7 +1748,7 @@ public class ReplacementAlgorithm {
 								String signature1 = parent1.getSignature();
 								String signature2 = parent2.getSignature();
 								if(signature1.equals(signature2)) {
-									LeafMapping leafMapping = operationBodyMapper.createLeafMapping(statement1, fragment2, parameterToArgumentMap, equalNumberOfAssertions);
+									LeafMapping leafMapping = operationBodyMapper.createLeafMapping(statement1, fragment2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 									mappingsToBeAdded.add(leafMapping);
 									break;
 								}
@@ -1895,7 +1895,7 @@ public class ReplacementAlgorithm {
 													List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 													List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 													if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
-														LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
+														LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 														operationBodyMapper.addMapping(mapping);
 													}
 													argumentMatched = true;
@@ -2889,7 +2889,7 @@ public class ReplacementAlgorithm {
 									if(leafExpressions2.size() == 1) {
 										List<LeafExpression> leafExpressions1 = statement1.findExpression(argument1);
 										if(leafExpressions1.size() == 1) {
-											LeafMapping leafMapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
+											LeafMapping leafMapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 											operationBodyMapper.addMapping(leafMapping);
 										}
 									}
@@ -4293,7 +4293,7 @@ public class ReplacementAlgorithm {
 									List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 									List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 									if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
-										LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
+										LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 										operationBodyMapper.addMapping(mapping);
 										additionallyMatchedStatements1.add(fragment1);
 									}
@@ -4347,7 +4347,7 @@ public class ReplacementAlgorithm {
 															List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 															List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 															if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
-																LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
+																LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
 																operationBodyMapper.addMapping(mapping);
 																additionallyMatchedStatements1.add(fragment1);
 															}
@@ -6186,7 +6186,7 @@ public class ReplacementAlgorithm {
 													for(VariableDeclaration variableDeclaration : variableDeclarations) {
 														AbstractExpression initializer = variableDeclaration.getInitializer();
 														if(initializer != null && initializer.getString().equals(lambdaExpression.getString())) {
-															LeafMapping mapping = operationBodyMapper.createLeafMapping(initializer, lambdaExpression, parameterToArgumentMap, false);
+															LeafMapping mapping = operationBodyMapper.createLeafMapping(initializer, lambdaExpression, parameterToArgumentMap, false, false);
 															operationBodyMapper.addMapping(mapping);
 															String before = argument.substring(lambdaArrow.length());
 															String after = parameterName + supplierGet;

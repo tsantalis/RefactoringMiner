@@ -34,6 +34,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	private boolean identicalPreviousAndNextStatement;
 	private boolean identicalNextStatement;
 	private boolean equalNumberOfAssertions;
+	private boolean isomorphic;
 	private boolean ifParentWithIdenticalElse;
 	private boolean ifParentWithIdenticalThen;
 	private boolean isKeyword;
@@ -84,6 +85,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 
 	public void setEqualNumberOfAssertions(boolean equalNumberOfAssertions) {
 		this.equalNumberOfAssertions = equalNumberOfAssertions;
+	}
+
+	public void setIsomorphic(boolean isomorphic) {
+		this.isomorphic = isomorphic;
 	}
 
 	public void setExtractedStatements(Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements) {
@@ -1113,7 +1118,25 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(LANG1.TRY)) {
 					return true;
 				}
-				return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
+				boolean multipleVarDeclarations = false;
+				if(getFragment1().getAssignments().size() == 1 && getFragment2().getAssignments().size() == 1 && !isomorphic) {
+					String assignment1 = getFragment1().getAssignments().get(0).getString();
+					String assignedVar1 = assignment1.contains(LANG1.ASSIGNMENT) ? assignment1.substring(0, assignment1.indexOf(LANG1.ASSIGNMENT)) : null;
+					String assignment2 = getFragment2().getAssignments().get(0).getString();
+					String assignedVar2 = assignment2.contains(LANG2.ASSIGNMENT) ? assignment2.substring(0, assignment2.indexOf(LANG2.ASSIGNMENT)) : null;
+					if(assignedVar1 != null && assignedVar2 != null) {
+						Map<String, Set<VariableDeclaration>> map1 = this.getOperation1().variableDeclarationMap();
+						Map<String, Set<VariableDeclaration>> map2 = this.getOperation2().variableDeclarationMap();
+						if(map1.containsKey(assignedVar1) && map2.containsKey(assignedVar2)) {
+							if(map1.get(assignedVar1).size() > 1 && map2.get(assignedVar2).size() > 1) {
+								multipleVarDeclarations = true;
+							}
+						}
+					}
+				}
+				if(!multipleVarDeclarations) {
+					return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
+				}
 			}
 		}
 		return false;

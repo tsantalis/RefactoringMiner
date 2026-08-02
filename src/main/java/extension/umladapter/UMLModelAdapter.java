@@ -261,6 +261,10 @@ public class UMLModelAdapter {
         umlClass.setAnnotation(typeDecl.isAnnotation());
         umlClass.setEnum(typeDecl.isEnum());
         umlClass.setRecord(typeDecl.isRecord());
+        // Go has no class keyword: a non-interface type declaration is a struct, not a class.
+        if (LangSupportedEnum.GO.equals(LangSupportedEnum.fromFileName(filePath)) && !typeDecl.isInterface()) {
+            umlClass.setStruct(true);
+        }
 
         for (LangMethodDeclaration methodDecl : typeDecl.getMethods()) {
             UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filePath, fileContent, comments, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()));

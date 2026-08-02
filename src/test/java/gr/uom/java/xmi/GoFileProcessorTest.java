@@ -37,6 +37,8 @@ class GoFileProcessorTest {
 		assertEquals(2, classes.size());
 
 		UMLClass userClass = classes.stream().filter(c -> c.getName().endsWith(".User")).findFirst().orElseThrow();
+		// Go has no class keyword: a struct type declaration is a struct, not a class.
+		assertTrue(userClass.isStruct());
 		assertEquals(2, userClass.getAttributes().size());
 		assertEquals(List.of("Name", "Age"), userClass.getAttributes().stream()
 				.map(UMLAttribute::getName).collect(Collectors.toList()));

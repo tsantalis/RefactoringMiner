@@ -612,4 +612,5 @@ public class Constants {
     public final String FRIEND_DECLARATION = "friend_declaration";
     public final String TRAILING_RETURN_TYPE = "trailing_return_type";
     public final String TEMPLATE_TYPE = "template_type";
+    public final String TEMPLATE_FUNCTION = "template_function";
 }

@@ -1132,6 +1132,116 @@
   "firstEndPos" : 313,
   "secondEndPos" : 313
 }, {
+  "firstType" : "template_function",
+  "secondType" : "template_function",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 255,
+  "secondPos" : 255,
+  "firstEndPos" : 277,
+  "secondEndPos" : 277
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "opt",
+  "secondLabel" : "opt",
+  "firstParentType" : "template_function",
+  "secondParentType" : "template_function",
+  "firstPos" : 255,
+  "secondPos" : 255,
+  "firstEndPos" : 258,
+  "secondEndPos" : 258
+}, {
+  "firstType" : "template_argument_list",
+  "secondType" : "template_argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_function",
+  "secondParentType" : "template_function",
+  "firstPos" : 258,
+  "secondPos" : 258,
+  "firstEndPos" : 277,
+  "secondEndPos" : 277
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 258,
+  "secondPos" : 258,
+  "firstEndPos" : 259,
+  "secondEndPos" : 259
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 259,
+  "secondPos" : 259,
+  "firstEndPos" : 276,
+  "secondEndPos" : 276
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 259,
+  "secondPos" : 259,
+  "firstEndPos" : 276,
+  "secondEndPos" : 276
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "Values",
+  "secondLabel" : "Values",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 259,
+  "secondPos" : 259,
+  "firstEndPos" : 265,
+  "secondEndPos" : 265
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 265,
+  "secondPos" : 265,
+  "firstEndPos" : 267,
+  "secondEndPos" : 267
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "OptionMap",
+  "secondLabel" : "OptionMap",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 267,
+  "secondPos" : 267,
+  "firstEndPos" : 276,
+  "secondEndPos" : 276
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 276,
+  "secondPos" : 276,
+  "firstEndPos" : 277,
+  "secondEndPos" : 277
+}, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",
   "firstLabel" : "",

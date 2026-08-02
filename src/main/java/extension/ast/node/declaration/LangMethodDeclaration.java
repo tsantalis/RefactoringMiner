@@ -26,7 +26,7 @@ public class LangMethodDeclaration extends LangDeclaration {
     private boolean isSynchronized;
     private boolean isAsync;
     private List<String> returnTypeAnnotations = new ArrayList<>();
-    private String receiverType;
+    private LangSingleVariableDeclaration receiver;
     private List<LangAnnotation> langAnnotations = new ArrayList<>();
     private List<LangComment> comments = new ArrayList<>();
 
@@ -156,13 +156,23 @@ public class LangMethodDeclaration extends LangDeclaration {
         this.returnTypeAnnotations = returnTypeAnnotations;
     }
 
-    // Null when the method has no receiver.
-    public String getReceiverType() {
-        return receiverType;
+    // Null when the method has no receiver (e.g. `func (c *Counter) Increment()` vs. a plain
+    // top-level function). Modeled as a full LangSingleVariableDeclaration, same as a formal
+    // parameter, since the receiver carries both a name and a type and Go code refers to it by
+    // that name inside the method body.
+    public LangSingleVariableDeclaration getReceiver() {
+        return receiver;
     }
 
-    public void setReceiverType(String receiverType) {
-        this.receiverType = receiverType;
+    public void setReceiver(LangSingleVariableDeclaration receiver) {
+        this.receiver = receiver;
+        if (receiver != null) {
+            addChild(receiver);
+        }
+    }
+
+    public String getReceiverType() {
+        return receiver != null ? receiver.getTypeAnnotationText() : null;
     }
 
     public String getCleanName() {
@@ -208,7 +218,7 @@ public class LangMethodDeclaration extends LangDeclaration {
                 ", visibility=" + visibility +
                 ", cleanName=" + cleanName +
                 ", returnTypes=" + returnTypeAnnotations +
-                ", receiverType=" + receiverType +
+                ", receiver=" + receiver +
                 ", isAbstract=" + isAbstract +
                 ", langAnnotations=" + langAnnotations +
                 '}';

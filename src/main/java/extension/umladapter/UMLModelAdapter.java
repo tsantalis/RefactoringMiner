@@ -103,12 +103,12 @@ public class UMLModelAdapter {
             String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
             String filepath = UMLAdapterUtil.extractFilePath(filename);
             for (LangMethodDeclaration method : topLevelMethods) {
-                UMLClass receiverClass = resolveReceiverClass(method, classesByTypeName);
-                UMLClass targetClass = receiverClass != null ? receiverClass : moduleClass;
+                UMLClass receiverType = resolveReceiverType(method, classesByTypeName);
+                UMLClass targetClass = receiverType != null ? receiverType : moduleClass;
                 UMLOperation operation = createUMLOperation(method, targetClass.getName(),
                         sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(targetClass.getFieldDeclarationMap().values()));
-                if (receiverClass != null) {
-                    operation.setReceiver(UMLType.extractTypeObject(receiverClass.getName()));
+                if (receiverType != null) {
+                    operation.setReceiver(UMLType.extractTypeObject(receiverType.getName()));
                 }
                 targetClass.addOperation(operation);
             }
@@ -125,12 +125,12 @@ public class UMLModelAdapter {
         }
     }
 
-    private static UMLClass resolveReceiverClass(LangMethodDeclaration method, Map<String, UMLClass> classesByTypeName) {
-        String receiverType = method.getReceiverType();
-        if (receiverType == null) {
+    private static UMLClass resolveReceiverType(LangMethodDeclaration method, Map<String, UMLClass> classesByTypeName) {
+        String receiverTypeName = method.getReceiverType();
+        if (receiverTypeName == null) {
             return null;
         }
-        String bareTypeName = receiverType.startsWith("*") ? receiverType.substring(1) : receiverType;
+        String bareTypeName = receiverTypeName.startsWith("*") ? receiverTypeName.substring(1) : receiverTypeName;
         return classesByTypeName.get(bareTypeName);
     }
 

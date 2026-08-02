@@ -41,7 +41,7 @@ public class GoDeclarationASTBuilder extends GoBaseASTBuilder {
         LangMethodDeclaration method = LangASTNodeFactory.createMethodDeclaration(name, ctx, parameters, body);
         applyReturnTypes(method, signature.result());
         applyVisibility(method, name);
-        method.setReceiverType(receiverTypeText(ctx.receiver()));
+        method.setReceiver(buildReceiver(ctx.receiver()));
         return method;
     }
 
@@ -126,12 +126,26 @@ public class GoDeclarationASTBuilder extends GoBaseASTBuilder {
         return type;
     }
 
-    private String receiverTypeText(GoParser.ReceiverContext receiver) {
+    // The receiver is a single parameter section preceding the method name (`func (c *Counter) Increment()`),
+    // so it is built the same way as a regular parameter (buildParameters) instead of just capturing its
+    // type text: the receiver name is a real identifier that Go code uses to refer to the receiver inside
+    // the method body (e.g. `c.n`), not just decoration on the type.
+    private LangSingleVariableDeclaration buildReceiver(GoParser.ReceiverContext receiver) {
         List<GoParser.ParameterDeclContext> decls = receiver.parameters().parameterDecl();
         if (decls.isEmpty()) {
             return null;
         }
-        return decls.get(0).type_().getText();
+        GoParser.ParameterDeclContext decl = decls.get(0);
+        String typeText = decl.type_().getText();
+        // The receiver name is optional (`func (Counter) String() string`); "_" mirrors Go's own
+        // blank identifier for "receiver value not referenced by name".
+        String name = decl.identifierList() != null ? decl.identifierList().IDENTIFIER(0).getText() : "_";
+
+        LangSingleVariableDeclaration receiverDecl = LangASTNodeFactory.createSingleVariableDeclaration(name, null, decl);
+        receiverDecl.setTypeAnnotationText(typeText);
+        TypeObjectEnum mapped = TypeObjectEnum.fromType(typeText);
+        receiverDecl.setTypeAnnotation(mapped != null ? mapped : TypeObjectEnum.OBJECT);
+        return receiverDecl;
     }
 
     private void applyReturnTypes(LangMethodDeclaration method, GoParser.ResultContext result) {

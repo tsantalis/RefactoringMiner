@@ -1959,6 +1959,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable events in method public prepare_string(dist, digits, exact, tol, show_mask, str_events) from class distribution.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable event_length in method public to_string(digits, exact, tol, show_mask, str_events) from class npjdist.JointDistribution",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -4321,6 +4335,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable node_text in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable lines in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -5459,6 +5487,20 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable new_shape in method protected _mlp_transform(inputs, output_size, activation_fn) from class modules.connectors.connectors.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable dist_instance in method protected _build(distribution, batch_size, trans, ds_name, kwargs) from class modules.connectors.connectors.StochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable dist_instance in method protected _build(distribution, batch_size, trans, ds_name, kwargs) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -7567,6 +7609,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable embedding in method public get_embedding(hparams, init_value, vocab_size, variable_scope, mode) from class modules.embedders.embedder_utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7868,6 +7917,20 @@
     }, {
         "type": "Inline Variable",
         "description": "Inline Variable embedded_inputs in method protected _build(inputs, sequence_length, initial_state_fw, initial_state_bw, use_embedding, kwargs) from class modules.encoders.rnn_encoders.BidirectionalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable vocab_size to emb_dim in method public test_encode() from class modules.encoders.rnn_encoders_test.BidirectionalRNNEncoderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable vocab_size to emb_dim in method public test_encode() from class modules.encoders.rnn_encoders_test.UnidirectionalRNNEncoderTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9367,6 +9430,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable results in method protected _build(inputs, kwargs) from class modules.encoders.rnn_encoders.ForwardRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9615,6 +9685,13 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method protected _make_length_fn() renamed to protected _make_bucket_length_fn() in class data.data.multi_aligned_data.MultiAlignedData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable max_seq_length in method protected _make_processor(dataset_hparams, data_spec, chained, name_prefix) from class data.data.mono_text_data.MonoTextData",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

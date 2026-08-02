@@ -437,7 +437,7 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
-			if(parentContainer instanceof UMLClass umlClass && umlClass.isModule()) {
+			if(parentContainer instanceof UMLClass) {
 				processCppImport(cppUsingDeclaration.getName(), cppUsingDeclaration, sourceFolder, parentContainer, false);
 			}
 		}

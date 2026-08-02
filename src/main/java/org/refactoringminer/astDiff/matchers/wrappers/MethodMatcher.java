@@ -853,6 +853,13 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
             }
         }
+        List<Tree> trees1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcOperationNode, LANG1.STORAGE_CLASS_SPECIFIER);
+        List<Tree> trees2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstOperationNode, LANG2.STORAGE_CLASS_SPECIFIER);
+        if(trees1.size() == trees2.size()) {
+            for(int i=0; i<trees1.size(); i++) {
+                mappingStore.addMappingRecursively(trees1.get(i), trees2.get(i));
+            }
+        }
         com.github.gumtreediff.utils.Pair<Tree, Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.FUNCTION_DECLARATOR,LANG2.FUNCTION_DECLARATOR);
         if (matched != null) {
             processFunctionDeclarators(matched.first, matched.second, mappingStore);

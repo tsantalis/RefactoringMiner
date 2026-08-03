@@ -1072,8 +1072,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
-				if(variable.endsWith(replacement.getAfter()) &&	(initializer.equals(replacement.getBefore()) ||
-						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()) || creationMatch)) {
+				if((variable.endsWith(replacement.getAfter()) || replacement.getAfter().endsWith(variable + ")")) && (initializer.equals(replacement.getBefore()) ||
+						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()) || creationMatch || replacement.getBefore().contains(initializer))) {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {

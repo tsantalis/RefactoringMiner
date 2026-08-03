@@ -6911,6 +6911,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract And Move Method",
+        "description": "Extract And Move Method public notifyHalt() : void extracted from private update(currentKM InternalKieModule, newReleaseId ReleaseId) : Results in class org.drools.compiler.kie.builder.impl.KieContainerImpl & moved to class org.drools.core.impl.StatefulKnowledgeSessionImpl",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 13908
 }, {
@@ -19869,16 +19876,16 @@
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public getIncludes() : List<String> extracted from public getIncludes() : List in class org.eclipse.jetty.maven.plugin.ScanTargetPattern & moved to class org.eclipse.jetty.maven.plugin.ScanPattern",
         "comment": "<p>its a move method</p>",
-        "validation": "FP",
-        "detectionTools": "RD-2x",
-        "validators": "Ameya"
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RD-2x",
+        "validators": "Nikos, Ameya"
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public getExcludes() : List<String> extracted from public getExcludes() : List in class org.eclipse.jetty.maven.plugin.ScanTargetPattern & moved to class org.eclipse.jetty.maven.plugin.ScanPattern",
         "comment": "<p>Same pattern its actually a move method</p>",
-        "validation": "FP",
-        "detectionTools": "RD-2x",
-        "validators": "Ameya"
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner, RD-2x",
+        "validators": "Nikos, Ameya"
     }, {
         "type": "Add Method Annotation",
         "description": "Add Method Annotation @Override in method public onPathWatchEvents(events List<PathWatchEvent>) : void from class org.eclipse.jetty.maven.plugin.JettyRunWarExplodedMojo.configureScanner.scanner",

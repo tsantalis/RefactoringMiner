@@ -6557,6 +6557,12 @@ public class UMLModelDiff {
 
 	private boolean conflictingExpression(AbstractCall invocation, UMLOperation addedOperation, Map<String, Set<VariableDeclaration>> variableDeclarationMap, Map<String, VariableDeclaration> childFieldDeclarationMap) {
 		String expression = invocation.getExpression();
+		if(expression != null && expression.startsWith(invocation.getLANG().THIS_DOT)) {
+			expression = expression.substring(invocation.getLANG().THIS_DOT.length());
+		}
+		if(expression != null && expression.startsWith("((") && expression.contains(")")) {
+			expression = expression.substring(2, expression.indexOf(")"));
+		}
 		if(expression != null && variableDeclarationMap.containsKey(expression)) {
 			Set<VariableDeclaration> variableDeclarations = variableDeclarationMap.get(expression);
 			UMLClassBaseDiff classDiff = getUMLClassDiff(addedOperation.getClassName());

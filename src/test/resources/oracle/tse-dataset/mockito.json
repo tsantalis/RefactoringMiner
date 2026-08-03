@@ -407,6 +407,16 @@
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tprivate checkDependency(classLoader ClassLoader, pureMockitoAPIClass String) : void from class org.mockitointegration.NoByteCodeDependenciesTest to public checkLoadability(className String) : void from class org.mockitointegration.ClassLoadabilityChecker",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic create() : Location extracted from public toInvocation() : Invocation in class org.mockito.internal.invocation.InvocationBuilder & moved to class org.mockito.internal.debugging.LocationFactory",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic create() : Location extracted from private createInvocation(mock Object, invokedMethod Method, arguments Object[], realMethod RealMethod, settings MockCreationSettings) : InterceptedInvocation in class org.mockito.internal.invocation.DefaultInvocationFactory & moved to class org.mockito.internal.debugging.LocationFactory",
+          "validation": true
         }
       ]
     },

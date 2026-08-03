@@ -386,6 +386,9 @@ public class OperationInvocation extends AbstractCall {
     	}
     	List<UMLType> inferredArgumentTypes = new ArrayList<UMLType>();
     	for(String arg : arguments) {
+    		if(arg != null && arg.startsWith(LANG.THIS_DOT)) {
+    			arg = arg.substring(LANG.THIS_DOT.length());
+    		}
     		int indexOfOpeningParenthesis = arg.indexOf("(");
     		int indexOfOpeningSquareBracket = arg.indexOf("[");
     		boolean openingParenthesisBeforeSquareBracket = false;

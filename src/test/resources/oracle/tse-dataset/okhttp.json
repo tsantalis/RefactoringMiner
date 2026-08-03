@@ -832,6 +832,11 @@
           "type": "MOVE_CODE",
           "description": "Move Code\tfrom public test(component Component) : UrlComponentEncodingTester to private testUri(codePoint int, codePointString String, encoding Encoding, component Component) : void in class okhttp3.UrlComponentEncodingTester",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic canonicalize(s String) : String extracted from private testParseAlreadyEncoded(codePoint int, encoding Encoding, component Component) : void in class okhttp3.UrlComponentEncodingTester & moved to class okhttp3.UrlComponentEncodingTester.Component",
+          "validation": true
         }
       ]
     },

@@ -238,7 +238,13 @@
           "validation": true
         }
       ],
-      "baseline": []
+      "baseline": [
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic newStreamId(streamType StreamType) : long extracted from public newRequest(frame HeadersFrame, listener Stream.Client.Listener) : CompletableFuture<Stream> in class org.eclipse.jetty.http3.client.internal.HTTP3SessionClient & moved to class org.eclipse.jetty.http3.client.internal.ClientHTTP3Session",
+          "validation": true
+        }
+      ]
     },
     {
       "repository": "https://github.com/eclipse/jetty.project.git",

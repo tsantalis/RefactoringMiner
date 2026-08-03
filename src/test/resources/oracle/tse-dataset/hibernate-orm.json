@@ -630,7 +630,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic addAuxiliaryDatabaseObjects(javaType JavaType<?>, columnSize Size, database Database, context JdbcTypeIndicators) : void extracted from public resolve() : Resolution<?> in class org.hibernate.mapping.BasicValue & moved to class org.hibernate.type.descriptor.jdbc.JdbcType",
-          "validation": false
+          "validation": true
         }
       ],
       "baseline": []

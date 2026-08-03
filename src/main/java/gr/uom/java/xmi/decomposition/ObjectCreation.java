@@ -61,6 +61,7 @@ import extension.ast.node.expression.LangMethodInvocation;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.unit.LangCompilationUnit;
 import extension.ast.visitor.LangVisitor;
+import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLType;
@@ -330,7 +331,8 @@ public class ObjectCreation extends AbstractCall {
 
 	public String actualString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("new ");
+		if(!LANG.equals(Constants.PYTHON))
+			sb.append("new ");
 		sb.append(super.actualString());
 		return sb.toString();
 	}

@@ -1049,10 +1049,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					break;
 				}
 			}
+			List<AbstractCall> matchingCalls = new ArrayList<AbstractCall>();
 			for(AbstractCall call : statement.getCreations()) {
 				if(initializer.equals(call.actualString())) {
 					initializerCall = call;
 					break;
+				}
+				if(initializer.contains(call.actualString())) {
+					matchingCalls.add(call);
 				}
 			}
 			for(Replacement replacement : getReplacements()) {
@@ -1072,8 +1076,18 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+				else if(matchingCalls.size() > 0 && statement.getVariableDeclarations().isEmpty() &&
+						!replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) && !replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION)) {
+					int matches = 0;
+					for(AbstractCall matchingCall : matchingCalls) {
+						if(replacement.getBefore().contains(matchingCall.actualString())) {
+							matches++;
+						}
+					}
+					creationMatch = matches == matchingCalls.size();
+				}
 				if((variable.endsWith(replacement.getAfter()) || replacement.getAfter().endsWith(variable + ")")) && (initializer.equals(replacement.getBefore()) ||
-						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()) || creationMatch || replacement.getBefore().contains(initializer))) {
+						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()) || creationMatch)) {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {

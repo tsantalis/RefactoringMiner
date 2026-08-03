@@ -53,6 +53,7 @@ public class CppVisitor extends ASTVisitor {
 	private List<LeafExpression> castExpressions = new ArrayList<>();
 	private List<LeafExpression> instanceofExpressions = new ArrayList<>();
 	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
+	private List<LeafExpression> tupleLiterals = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
@@ -282,6 +283,10 @@ public class CppVisitor extends ASTVisitor {
 
 	public List<LeafExpression> getPatternInstanceofExpressions() {
 		return patternInstanceofExpressions;
+	}
+
+	public List<LeafExpression> getTupleLiterals() {
+		return tupleLiterals;
 	}
 
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {

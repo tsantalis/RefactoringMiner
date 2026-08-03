@@ -210,6 +210,11 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
+	public List<LeafExpression> getTupleLiterals() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
 		return Collections.emptyList();
 	}

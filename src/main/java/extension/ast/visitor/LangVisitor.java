@@ -58,7 +58,8 @@ public class LangVisitor implements LangASTVisitor {
     private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
     private List<LeafExpression> castExpressions = new ArrayList<>();
     private List<LeafExpression> instanceofExpressions = new ArrayList<>();
-	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
+    private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
+    private List<LeafExpression> tupleLiterals = new ArrayList<>();
     private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
     private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
     private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
@@ -478,6 +479,9 @@ public class LangVisitor implements LangASTVisitor {
     @Override
     public void visit(LangTupleLiteral langTupleLiteral) {
         // Process tuple elements: (1, 2, variable)
+        LeafExpression tupleLiteral = new LeafExpression(cu, sourceFolder, filePath,
+                langTupleLiteral, LocationInfo.CodeElementType.TUPLE_LITERAL, container);
+        tupleLiterals.add(tupleLiteral);
         for (LangASTNode element : langTupleLiteral.getElements()) {
             element.accept(this);
         }
@@ -802,7 +806,7 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangComprehensionExpression langComprehensionExpression) {
-    	ComprehensionExpression comprehensionExpression = new ComprehensionExpression(cu, sourceFolder, filePath,
+        ComprehensionExpression comprehensionExpression = new ComprehensionExpression(cu, sourceFolder, filePath,
                 langComprehensionExpression, container, activeVariableDeclarations, fileContent);
         if (langComprehensionExpression.getExpression() != null) {
             langComprehensionExpression.getExpression().accept(this);
@@ -972,6 +976,10 @@ public class LangVisitor implements LangASTVisitor {
     public List<LeafExpression> getCastExpressions() {
         return castExpressions;
     }
+
+	public List<LeafExpression> getTupleLiterals() {
+		return tupleLiterals;
+	}
 
 	public List<LeafExpression> getInstanceofExpressions() {
 		return instanceofExpressions;

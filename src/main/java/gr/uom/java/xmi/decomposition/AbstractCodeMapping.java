@@ -1061,6 +1061,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 			for(Replacement replacement : getReplacements()) {
 				boolean creationMatch = false;
+				boolean variableReplacementInExtactedOrInlinedMethod = replacement instanceof VariableReplacementWithMethodInvocation r && r.getDirection().equals(Direction.VARIABLE_TO_INVOCATION) && insideExtractedOrInlinedMethod;
+				if(variableReplacementInExtactedOrInlinedMethod)
+					continue;
 				if(replacement.getBefore().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation && statement.getVariableDeclarations().isEmpty() &&
 						!replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) && !replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION)) {
 					ObjectCreation creation = (ObjectCreation)initializerCall;

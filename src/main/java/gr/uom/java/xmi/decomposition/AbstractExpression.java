@@ -53,6 +53,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<LeafExpression> castExpressions;
 	private List<LeafExpression> instanceofExpressions;
 	private List<LeafExpression> patternInstanceofExpressions;
+	private List<LeafExpression> tupleLiterals;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
 	private List<ComprehensionExpression> comprehensions;
@@ -86,6 +87,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.castExpressions = visitor.getCastExpressions();
 		this.instanceofExpressions = visitor.getInstanceofExpressions();
 		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.tupleLiterals = visitor.getTupleLiterals();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
@@ -123,6 +125,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.castExpressions = visitor.getCastExpressions();
 		this.instanceofExpressions = visitor.getInstanceofExpressions();
 		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.tupleLiterals = visitor.getTupleLiterals();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
@@ -160,6 +163,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.castExpressions = visitor.getCastExpressions();
 		this.instanceofExpressions = visitor.getInstanceofExpressions();
 		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.tupleLiterals = visitor.getTupleLiterals();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
@@ -198,6 +202,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.castExpressions = visitor.getCastExpressions();
 		this.instanceofExpressions = visitor.getInstanceofExpressions();
 		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.tupleLiterals = visitor.getTupleLiterals();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
@@ -235,6 +240,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.castExpressions = visitor.getCastExpressions();
 		this.instanceofExpressions = visitor.getInstanceofExpressions();
 		this.patternInstanceofExpressions = visitor.getPatternInstanceofExpressions();
+		this.tupleLiterals = visitor.getTupleLiterals();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
@@ -497,6 +503,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<LeafExpression> getPatternInstanceofExpressions() {
 		return patternInstanceofExpressions;
+	}
+
+	@Override
+	public List<LeafExpression> getTupleLiterals() {
+		return tupleLiterals;
 	}
 
 	@Override

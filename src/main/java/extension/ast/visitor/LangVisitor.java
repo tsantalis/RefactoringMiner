@@ -380,7 +380,7 @@ public class LangVisitor implements LangASTVisitor {
                     attribute = true;
                 if(variable.isParameter())
                     parameter = true;
-                if(!variable.isAttribute() && !variable.isParameter())
+                if(!variable.isAttribute() && !variable.isParameter() && !variable.isDeclaredInIfElseStatement())
                     local = true;
             }
             if(local) return true;

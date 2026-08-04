@@ -26,7 +26,7 @@ public class Constants {
 				treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
 				treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) ||
 				treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
-				treeType.equals(REFERENCE_DECLARATOR) || treeType.equals(FRIEND_DECLARATION);
+				treeType.equals(REFERENCE_DECLARATOR) || treeType.equals(POINTER_DECLARATOR) || treeType.equals(FRIEND_DECLARATION);
 	}
 
 	public Constants(String filePath) {

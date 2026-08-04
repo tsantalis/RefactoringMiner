@@ -905,7 +905,8 @@ public class ReplacementAlgorithm {
 		
 		Set<String> numberLiterals1 = convertToStringSet(statement1.getNumberLiterals());
 		Set<String> numberLiterals2 = convertToStringSet(statement2.getNumberLiterals());
-		removeCommonElements(numberLiterals1, numberLiterals2);
+		if(statement1.getNumberLiterals().size() == statement2.getNumberLiterals().size())
+			removeCommonElements(numberLiterals1, numberLiterals2);
 		
 		Set<String> booleanLiterals1 = convertToStringSet(statement1.getBooleanLiterals());
 		Set<String> booleanLiterals2 = convertToStringSet(statement2.getBooleanLiterals());
@@ -1227,7 +1228,7 @@ public class ReplacementAlgorithm {
 		findReplacements(charLiterals1, charLiterals2, replacementInfo, ReplacementType.CHAR_LITERAL, container1, container2, classDiff);
 		findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL, container1, container2, classDiff);
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
-				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {
+				(!statement1.getString().endsWith(LANG1.ASSIGNMENT + "0" + LANG1.STATEMENT_TERMINATION) || (statement1.getString().endsWith(LANG1.ASSIGNMENT + "0" + LANG1.STATEMENT_TERMINATION) && statement2.getString().endsWith(".length" + LANG2.STATEMENT_TERMINATION)))) {
 			findReplacements(numberLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL, container1, container2, classDiff);
 			if(variables1.size() > 0 && numberLiterals2.size() > 0 && statement1.getString().contains(LANG1.ASSIGNMENT + variables1.iterator().next()) && statement2.getString().contains(LANG2.ASSIGNMENT + numberLiterals2.iterator().next()) &&
 					!statement2.getString().endsWith(LANG2.ASSIGNMENT + numberLiterals2.iterator().next() + LANG2.STATEMENT_TERMINATION)) {

@@ -773,9 +773,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         if (reference_declarators != null) {
                             mappingStore.addMappingRecursively(reference_declarators.first,reference_declarators.second);
                         }
+                        reference_declarators = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.ABSTRACT_REFERENCE_DECLARATOR, LANG2.ABSTRACT_REFERENCE_DECLARATOR);
+                        if (reference_declarators != null) {
+                            mappingStore.addMappingRecursively(reference_declarators.first,reference_declarators.second);
+                        }
                         Pair<Tree, Tree> qualified_identifiers = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.QUALIFIED_IDENTIFIER, LANG2.QUALIFIED_IDENTIFIER);
                         if (qualified_identifiers != null) {
                             mappingStore.addMappingRecursively(qualified_identifiers.first,qualified_identifiers.second);
+                        }
+                        Pair<Tree, Tree> type_identifiers = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.TYPE_IDENTIFIER, LANG2.TYPE_IDENTIFIER);
+                        if (type_identifiers != null) {
+                            mappingStore.addMappingRecursively(type_identifiers.first,type_identifiers.second);
                         }
                     }
                 }

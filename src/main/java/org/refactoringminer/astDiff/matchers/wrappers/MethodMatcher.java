@@ -946,6 +946,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (closing != null) {
                 mappingStore.addMapping(closing.first,closing.second);
             }
+            //handle varargs parameter
+            com.github.gumtreediff.utils.Pair<Tree,Tree> ellipsis = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.ELLIPSIS, LANG2.ELLIPSIS);
+            if (ellipsis != null) {
+                mappingStore.addMapping(ellipsis.first,ellipsis.second);
+            }
         }
         com.github.gumtreediff.utils.Pair<Tree,Tree> trailing_return_types = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.TRAILING_RETURN_TYPE,LANG2.TRAILING_RETURN_TYPE);
         if (trailing_return_types != null) {

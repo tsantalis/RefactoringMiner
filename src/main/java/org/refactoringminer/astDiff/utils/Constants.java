@@ -606,7 +606,7 @@ public class Constants {
     public final String FIELD_EXPRESSION = "field_expression";
     public final String SUBSCRIPT_EXPRESSION = "subscript_expression";
     public final String ENUMERATOR = "enumerator";
-    public final String ELLIPSIS = "...";
+    public final String ELLIPSIS = "ellipsis";
     public final String STORAGE_CLASS_SPECIFIER = "storage_class_specifier";
     public final String DEFAULT_METHOD_CLAUSE = "default_method_clause";
     public final String DELETE_METHOD_CLAUSE = "delete_method_clause";

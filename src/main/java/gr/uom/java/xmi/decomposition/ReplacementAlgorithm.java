@@ -905,7 +905,8 @@ public class ReplacementAlgorithm {
 		
 		Set<String> numberLiterals1 = convertToStringSet(statement1.getNumberLiterals());
 		Set<String> numberLiterals2 = convertToStringSet(statement2.getNumberLiterals());
-		if(statement1.getNumberLiterals().size() == statement2.getNumberLiterals().size())
+		boolean skipRemoval = numberLiterals1.equals(numberLiterals2) && statement1.getNumberLiterals().size() != statement2.getNumberLiterals().size();
+		if(!skipRemoval)
 			removeCommonElements(numberLiterals1, numberLiterals2);
 		
 		Set<String> booleanLiterals1 = convertToStringSet(statement1.getBooleanLiterals());

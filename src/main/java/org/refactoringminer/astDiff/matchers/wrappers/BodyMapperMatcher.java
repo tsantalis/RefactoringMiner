@@ -222,6 +222,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(elifs.first,elifs.second);
                     }
                 }
+                List<Tree> elseIfs1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ELSE_IF);
+                List<Tree> elseIfs2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ELSE_IF);
+                if(elseIfs1.size() == elseIfs2.size()) {
+                    for(int i=0; i<elseIfs1.size(); i++) {
+                        mappingStore.addMapping(elseIfs1.get(i), elseIfs2.get(i));
+                        Pair<Tree, Tree> elifs = Helpers.findPairOfType(elseIfs1.get(i), elseIfs2.get(i), LANG1.ELIF_KEYWORD, LANG2.ELIF_KEYWORD);
+                        if (elifs != null) {
+                            mappingStore.addMapping(elifs.first,elifs.second);
+                        }
+                    }
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELSE, LANG2.ELSE);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);

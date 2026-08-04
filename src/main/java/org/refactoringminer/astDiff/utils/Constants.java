@@ -394,6 +394,7 @@ public class Constants {
     public final String TYPE = "type";
     public final String WITH_STATEMENT = "with_statement";
     public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
+    public final String TUPLE_PATTERN = "tuple_pattern";
     
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";

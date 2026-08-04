@@ -143,7 +143,7 @@ public class Context {
     if (treeType.equals(constants.ASSERT_STATEMENT)) {
       return List.of(constants.BLOCK, constants.METHOD_DECLARATION);
     }
-    if (treeType.equals(constants.ELLIPSIS)) {
+    if (treeType.equals("ellipsis")) {
       return List.of(constants.SUBSCRIPT);
     }
     if (treeType.equals("slice")) {

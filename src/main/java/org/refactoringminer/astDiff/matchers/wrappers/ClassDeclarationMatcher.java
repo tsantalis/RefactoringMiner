@@ -207,6 +207,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.TYPE_IDENTIFIER,LANG2.TYPE_IDENTIFIER);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
+        matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.QUALIFIED_IDENTIFIER,LANG2.QUALIFIED_IDENTIFIER);
+        if (matched != null)
+            mappingStore.addMappingRecursively(matched.first,matched.second);
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.TYPE_DECLARATION_KIND,LANG2.TYPE_DECLARATION_KIND);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);

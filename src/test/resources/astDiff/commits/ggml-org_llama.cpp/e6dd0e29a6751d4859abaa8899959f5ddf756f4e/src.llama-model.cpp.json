@@ -111286,6 +111286,50 @@
   "firstEndPos" : 47274,
   "secondEndPos" : 47293
 }, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 47275,
+  "secondPos" : 47294,
+  "firstEndPos" : 47292,
+  "secondEndPos" : 47311
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "llama_model",
+  "secondLabel" : "llama_model",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 47275,
+  "secondPos" : 47294,
+  "firstEndPos" : 47286,
+  "secondEndPos" : 47305
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 47286,
+  "secondPos" : 47305,
+  "firstEndPos" : 47288,
+  "secondEndPos" : 47307
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "impl",
+  "secondLabel" : "impl",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 47288,
+  "secondPos" : 47307,
+  "firstEndPos" : 47292,
+  "secondEndPos" : 47311
+}, {
   "firstType" : "field_declaration_list",
   "secondType" : "field_declaration_list",
   "firstLabel" : "",

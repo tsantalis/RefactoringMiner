@@ -617,4 +617,6 @@ public class Constants {
     public final String TEMPLATE_FUNCTION = "template_function";
     public final String VIRTUAL_KEYWORD = "virtual";
     public final String VIRTUAL_SPECIFIER = "virtual_specifier";
+    public final String NOEXCEPT_KEYWORD = "noexcept";
+    public final String OPERATOR_CAST = "operator_cast";
 }

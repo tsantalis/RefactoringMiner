@@ -685,6 +685,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
         }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.OPERATOR_CAST,LANG2.OPERATOR_CAST);
+        if (matched != null) {
+            mappingStore.addMappingRecursively(matched.first,matched.second);
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.COMPOUND_STATEMENT,LANG2.COMPOUND_STATEMENT);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);
@@ -959,6 +963,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         com.github.gumtreediff.utils.Pair<Tree,Tree> virtual_specifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.VIRTUAL_SPECIFIER,LANG2.VIRTUAL_SPECIFIER);
         if (virtual_specifiers != null) {
             mappingStore.addMappingRecursively(virtual_specifiers.first,virtual_specifiers.second);
+        }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> noexcept = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.NOEXCEPT_KEYWORD,LANG2.NOEXCEPT_KEYWORD);
+        if (noexcept != null) {
+            mappingStore.addMapping(noexcept.first,noexcept.second);
         }
         com.github.gumtreediff.utils.Pair<Tree,Tree> parameter_lists = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.PARAMETER_LIST,LANG2.PARAMETER_LIST);
         if (parameter_lists != null) {

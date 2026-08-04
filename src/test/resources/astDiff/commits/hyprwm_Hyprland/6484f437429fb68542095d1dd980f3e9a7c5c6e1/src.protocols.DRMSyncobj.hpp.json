@@ -2177,6 +2177,83 @@
   "firstEndPos" : 1054,
   "secondEndPos" : 1078
 }, {
+  "firstType" : "operator_cast",
+  "secondType" : "operator_cast",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 996,
+  "secondPos" : 1020,
+  "firstEndPos" : 1017,
+  "secondEndPos" : 1041
+}, {
+  "firstType" : "operator",
+  "secondType" : "operator",
+  "firstLabel" : "operator",
+  "secondLabel" : "operator",
+  "firstParentType" : "operator_cast",
+  "secondParentType" : "operator_cast",
+  "firstPos" : 996,
+  "secondPos" : 1020,
+  "firstEndPos" : 1004,
+  "secondEndPos" : 1028
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "bool",
+  "secondLabel" : "bool",
+  "firstParentType" : "operator_cast",
+  "secondParentType" : "operator_cast",
+  "firstPos" : 1005,
+  "secondPos" : 1029,
+  "firstEndPos" : 1009,
+  "secondEndPos" : 1033
+}, {
+  "firstType" : "abstract_function_declarator",
+  "secondType" : "abstract_function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "operator_cast",
+  "secondParentType" : "operator_cast",
+  "firstPos" : 1009,
+  "secondPos" : 1033,
+  "firstEndPos" : 1017,
+  "secondEndPos" : 1041
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "abstract_function_declarator",
+  "secondParentType" : "abstract_function_declarator",
+  "firstPos" : 1009,
+  "secondPos" : 1033,
+  "firstEndPos" : 1011,
+  "secondEndPos" : 1035
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 1009,
+  "secondPos" : 1033,
+  "firstEndPos" : 1010,
+  "secondEndPos" : 1034
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 1010,
+  "secondPos" : 1034,
+  "firstEndPos" : 1011,
+  "secondEndPos" : 1035
+}, {
   "firstType" : "const",
   "secondType" : "const",
   "firstLabel" : "const",

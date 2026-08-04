@@ -1019,6 +1019,14 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals("?")) {
 				return true;
 			}
+			else if(diff1.equals("...") && diff2.equals("::")) {
+				//Python-specific
+				//a = np.ravel(a)[..., np.newaxis] vs. a = np.ravel(a)[:, np.newaxis]
+				return true;
+			}
+			else if(diff1.equals("::") && diff2.equals("...")) {
+				return true;
+			}
 			else {
 				String replaceWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
 				String replaceWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");

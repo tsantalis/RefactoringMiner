@@ -16,6 +16,7 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.Optional;
 
@@ -109,7 +110,7 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                 }
             }
             UMLJavadocDiff diff = umlJavadocDiff.get();
-            if(!diff.getCommonTags().isEmpty() || !diff.getCommonDocElements().isEmpty() || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
+            if(PathFileUtils.isJavaFile(srcUMLJavaDoc.getLocationInfo().getFilePath()) && PathFileUtils.isJavaFile(dstUMLJavaDoc.getLocationInfo().getFilePath()) && (!diff.getCommonTags().isEmpty() || !diff.getCommonDocElements().isEmpty() || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty())) {
                 MappingStore gtSimpleMappings = new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode);
                 mappingStore.add(gtSimpleMappings);
                 for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {

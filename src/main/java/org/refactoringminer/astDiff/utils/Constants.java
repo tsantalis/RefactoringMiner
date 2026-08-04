@@ -615,4 +615,6 @@ public class Constants {
     public final String TRAILING_RETURN_TYPE = "trailing_return_type";
     public final String TEMPLATE_TYPE = "template_type";
     public final String TEMPLATE_FUNCTION = "template_function";
+    public final String VIRTUAL_KEYWORD = "virtual";
+    public final String VIRTUAL_SPECIFIER = "virtual_specifier";
 }

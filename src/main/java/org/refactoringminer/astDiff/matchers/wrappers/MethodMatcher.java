@@ -968,6 +968,14 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (ellipsis != null) {
                 mappingStore.addMapping(ellipsis.first,ellipsis.second);
             }
+            //handle void parameter
+            com.github.gumtreediff.utils.Pair<Tree,Tree> parameter_declarations = Helpers.findPairOfType(parameter_lists.first,parameter_lists.second, LANG1.PARAMETER_DECLARATION, LANG2.PARAMETER_DECLARATION);
+            if(parameter_declarations != null) {
+                if(parameter_declarations.first.getChildren().size() > 0 && parameter_declarations.second.getChildren().size() > 0 &&
+                        parameter_declarations.first.getChild(0).getLabel().equals("void") && parameter_declarations.second.getChild(0).getLabel().equals("void")) {
+                    mappingStore.addMappingRecursively(parameter_declarations.first, parameter_declarations.second);
+                }
+            }
         }
         com.github.gumtreediff.utils.Pair<Tree,Tree> trailing_return_types = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.TRAILING_RETURN_TYPE,LANG2.TRAILING_RETURN_TYPE);
         if (trailing_return_types != null) {

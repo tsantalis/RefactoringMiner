@@ -494,6 +494,28 @@
   "firstEndPos" : 192,
   "secondEndPos" : 211
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 192,
+  "secondPos" : 211,
+  "firstEndPos" : 196,
+  "secondEndPos" : 215
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 192,
+  "secondPos" : 211,
+  "firstEndPos" : 196,
+  "secondEndPos" : 215
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -29192,6 +29214,28 @@
   "secondPos" : 10703,
   "firstEndPos" : 8879,
   "secondEndPos" : 10704
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 8879,
+  "secondPos" : 10704,
+  "firstEndPos" : 8883,
+  "secondEndPos" : 10708
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 8879,
+  "secondPos" : 10704,
+  "firstEndPos" : 8883,
+  "secondEndPos" : 10708
 }, {
   "firstType" : ")",
   "secondType" : ")",

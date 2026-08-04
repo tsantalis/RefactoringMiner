@@ -5,10 +5,7 @@ import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class UMLsGenerator {
   private UMLModelDiff modelDiff;
@@ -101,8 +98,15 @@ public class UMLsGenerator {
 //          attribute.getParameterDeclarationList()
 //          attribute.getAllVariableDeclarations()
 //          attribute.getJavadoc()
-      LocationInfo attributeLocation = attribute.getFieldDeclarationLocationInfo();
-      if (attributeLocation.getStartOffset() == pos && endPos == attributeLocation.getEndOffset()) {
+      Set<LocationInfo> attributeLocations = new HashSet<>();
+      attributeLocations.add(attribute.getLocationInfo());
+      attributeLocations.add(attribute.getVariableDeclaration().getLocationInfo());
+      if (attribute.getFieldDeclarationLocationInfo() != null) {
+        attributeLocations.add(attribute.getFieldDeclarationLocationInfo());
+      }
+
+      if (attributeLocations.stream()
+              .anyMatch(al -> al.getStartOffset() == pos && endPos == al.getEndOffset())) {
         umls.umlAttributes.add(attribute);
       }
 

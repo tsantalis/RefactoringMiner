@@ -3,6 +3,8 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.util.PathFileUtils;
 
 public class Constants {
+    private final String path;
+
 	public static boolean isCrossLanguage(Constants LANG1, Constants LANG2) {
 		return !LANG1.TYPE_DECLARATION.equals(LANG2.TYPE_DECLARATION);
 	}
@@ -12,24 +14,51 @@ public class Constants {
 	}
 
 	public boolean isNamedBlock(String treeType) {
-		return isType(treeType) || isMethod(treeType);
+		return isType(treeType) || isNamedMethod(treeType);
 	}
 
 	public boolean isType(String treeType) {
 		return treeType.equals(TYPE_DECLARATION) || treeType.equals(ENUM_DECLARATION) || treeType.equals(RECORD_DECLARATION) ||
-				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION);
+				treeType.equals(ANNOTATION_TYPE_DECLARATION) || treeType.equals(INTERFACE_DECLARATION) || treeType.equals(CLASS_DECLARATION) ||
+				treeType.equals(OBJECT_DECLARATION) || treeType.equals(STRUCT_SPECIFIER) || treeType.equals(TYPE_ALIAS_DECLARATION) || treeType.equals(NAMESPACE);
 	}
 
-	public boolean isMethod(String treeType) {
-		return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
-				treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
-				treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
-				treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) ||
-				treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
-				treeType.equals(REFERENCE_DECLARATOR) || treeType.equals(POINTER_DECLARATOR) || treeType.equals(FRIEND_DECLARATION);
-	}
+    public boolean isMethod(String treeType) {
+        return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) ||
+                treeType.equals(METHOD_SIGNATURE) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
+                treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
+                treeType.equals(FRIEND_DECLARATION);
+    }
+
+    // TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name (VARIABLE_DECLARATION)
+    // TODO: METHOD_SIGNATURE && FUNCTION_SIGNATURE have the name, but not the block.
+    public boolean isNamedMethod(String treeType) {
+        return treeType.equals(METHOD_DECLARATION) || treeType.equals(DECORATED_METHOD) || treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) ||
+                treeType.equals(GETTER) || treeType.equals(SETTER) || treeType.equals(METHOD_DEFINITION) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) ||
+                treeType.equals(FUNCTION_DECLARATOR) || treeType.equals(REFERENCE_DECLARATOR);
+    }
+
+    private boolean isEmpty(String treeType) {
+        return treeType.equals(EMPTY_STATEMENT);
+    }
+
+    private boolean isImportExport(String treeType) {
+        return treeType.equals(IMPORT_DECLARATION) || treeType.equals(IMPORT_FROM_STATEMENT) || treeType.equals(FUTURE_IMPORT_STATEMENT) ||
+                treeType.equals(RELATIVE_IMPORT) || treeType.equals(IMPORT_LIST) || treeType.equals(IMPORT_IDENTIFIER) ||
+                treeType.equals(EXPORT_STATEMENT) || treeType.equals(NAMESPACE_IMPORT) || treeType.equals(EXPORT_KEYWORD) ||
+                treeType.equals(IMPORT_KEYWORD) || treeType.equals(FROM_KEYWORD) || treeType.equals(IMPORT_STAR) ||
+                treeType.equals(IMPORT_SPECIFIER) || treeType.equals(EXPORT_SPECIFIER) || treeType.equals(EXPORT_CLAUSE) ||
+                treeType.equals(IMPORT_CLAUSE) || treeType.equals(NAMED_IMPORTS);
+    }
+
+    public boolean isSemanticallyInsignificant(String treeType) {
+        return (treeType.equals(PACKAGE_DECLARATION) && !PathFileUtils.isCppFile(path)) ||
+                isEmpty(treeType) || isImportExport(treeType);
+    }
 
 	public Constants(String filePath) {
+        path = filePath;
+
 		if(PathFileUtils.isPythonFile(filePath)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";
@@ -395,7 +424,7 @@ public class Constants {
     public final String WITH_STATEMENT = "with_statement";
     public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
     public final String TUPLE_PATTERN = "tuple_pattern";
-    
+
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";
     public final String SOURCE_FILE = "source_file"; // This is the root of all trees in Kotlin

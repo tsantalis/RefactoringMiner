@@ -379,7 +379,7 @@ public class Node {
         sb.append("::").append(locationContexts.get(1).getContent());
         for (int i = 2; i < locationContexts.size(); i++) {
           Node n = locationContexts.get(i);
-          String prefix = this.constants.isMethod(n.getTree().getType().name) ? "#" : ".";
+          String prefix = this.constants.isNamedMethod(n.getTree().getType().name) ? "#" : ".";
           sb.append(prefix).append(n.getContent());
         }
       }

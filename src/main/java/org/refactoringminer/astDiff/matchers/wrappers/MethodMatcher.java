@@ -1003,6 +1003,17 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         Tree parent1 = functionDeclarator1.getParent();
         Tree parent2 = functionDeclarator2.getParent();
+        if(parent1.getType().name.equals(LANG2.ERROR) && parent2.getType().name.equals(LANG2.ERROR)) {
+            if(parent1.isIsomorphicTo(parent2))
+                mappingStore.addMappingRecursively(parent1,parent2);
+            else
+                mappingStore.addMapping(parent1,parent2);
+            if(parent1.getParent().getType().name.equals(LANG1.POINTER_DECLARATOR) && parent2.getParent().getType().name.equals(LANG2.POINTER_DECLARATOR)) {
+                if(parent1.getParent().isIsomorphicTo(parent2.getParent())) {
+                    mappingStore.addMappingRecursively(parent1.getParent(),parent2.getParent());
+                }
+            }
+        }
         if(parent1.getType().name.equals(LANG2.FIELD_DECLARATION) && parent2.getType().name.equals(LANG2.DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);
             identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.FIELD_IDENTIFIER,LANG2.SIMPLE_NAME);

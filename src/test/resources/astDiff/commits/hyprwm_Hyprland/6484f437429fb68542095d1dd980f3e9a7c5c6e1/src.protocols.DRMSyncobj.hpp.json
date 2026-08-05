@@ -1088,6 +1088,17 @@
   "firstEndPos" : 500,
   "secondEndPos" : 524
 }, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "uint64_t",
+  "secondLabel" : "uint64_t",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 501,
+  "secondPos" : 525,
+  "firstEndPos" : 509,
+  "secondEndPos" : 533
+}, {
   "firstType" : "reference_declarator",
   "secondType" : "reference_declarator",
   "firstLabel" : "",

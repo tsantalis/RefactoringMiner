@@ -2056,6 +2056,17 @@
   "firstEndPos" : 751,
   "secondEndPos" : 1007
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "eViewType",
+  "secondLabel" : "eViewType",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 752,
+  "secondPos" : 1008,
+  "firstEndPos" : 761,
+  "secondEndPos" : 1017
+}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
@@ -2286,6 +2297,116 @@
   "secondPos" : 1169,
   "firstEndPos" : 858,
   "secondEndPos" : 1176
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 859,
+  "secondPos" : 1177,
+  "firstEndPos" : 878,
+  "secondEndPos" : 1196
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "std",
+  "secondLabel" : "std",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 859,
+  "secondPos" : 1177,
+  "firstEndPos" : 862,
+  "secondEndPos" : 1180
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 862,
+  "secondPos" : 1180,
+  "firstEndPos" : 864,
+  "secondEndPos" : 1182
+}, {
+  "firstType" : "template_type",
+  "secondType" : "template_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 864,
+  "secondPos" : 1182,
+  "firstEndPos" : 878,
+  "secondEndPos" : 1196
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "optional",
+  "secondLabel" : "optional",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 864,
+  "secondPos" : 1182,
+  "firstEndPos" : 872,
+  "secondEndPos" : 1190
+}, {
+  "firstType" : "template_argument_list",
+  "secondType" : "template_argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 872,
+  "secondPos" : 1190,
+  "firstEndPos" : 878,
+  "secondEndPos" : 1196
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 872,
+  "secondPos" : 1190,
+  "firstEndPos" : 873,
+  "secondEndPos" : 1191
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 873,
+  "secondPos" : 1191,
+  "firstEndPos" : 877,
+  "secondEndPos" : 1195
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CBox",
+  "secondLabel" : "CBox",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 873,
+  "secondPos" : 1191,
+  "firstEndPos" : 877,
+  "secondEndPos" : 1195
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 877,
+  "secondPos" : 1195,
+  "firstEndPos" : 878,
+  "secondEndPos" : 1196
 }, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
@@ -2518,6 +2639,116 @@
   "firstEndPos" : 980,
   "secondEndPos" : 1360
 }, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 981,
+  "secondPos" : 1361,
+  "firstEndPos" : 1000,
+  "secondEndPos" : 1380
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "std",
+  "secondLabel" : "std",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 981,
+  "secondPos" : 1361,
+  "firstEndPos" : 984,
+  "secondEndPos" : 1364
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 984,
+  "secondPos" : 1364,
+  "firstEndPos" : 986,
+  "secondEndPos" : 1366
+}, {
+  "firstType" : "template_type",
+  "secondType" : "template_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 986,
+  "secondPos" : 1366,
+  "firstEndPos" : 1000,
+  "secondEndPos" : 1380
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "optional",
+  "secondLabel" : "optional",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 986,
+  "secondPos" : 1366,
+  "firstEndPos" : 994,
+  "secondEndPos" : 1374
+}, {
+  "firstType" : "template_argument_list",
+  "secondType" : "template_argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_type",
+  "secondParentType" : "template_type",
+  "firstPos" : 994,
+  "secondPos" : 1374,
+  "firstEndPos" : 1000,
+  "secondEndPos" : 1380
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 994,
+  "secondPos" : 1374,
+  "firstEndPos" : 995,
+  "secondEndPos" : 1375
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 995,
+  "secondPos" : 1375,
+  "firstEndPos" : 999,
+  "secondEndPos" : 1379
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CBox",
+  "secondLabel" : "CBox",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 995,
+  "secondPos" : 1375,
+  "firstEndPos" : 999,
+  "secondEndPos" : 1379
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 999,
+  "secondPos" : 1379,
+  "firstEndPos" : 1000,
+  "secondEndPos" : 1380
+}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
@@ -2627,6 +2858,17 @@
   "secondPos" : 1449,
   "firstEndPos" : 1045,
   "secondEndPos" : 1456
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Vector2D",
+  "secondLabel" : "Vector2D",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1046,
+  "secondPos" : 1457,
+  "firstEndPos" : 1054,
+  "secondEndPos" : 1465
 }, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
@@ -2782,6 +3024,17 @@
   "firstEndPos" : 1129,
   "secondEndPos" : 1562
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Vector2D",
+  "secondLabel" : "Vector2D",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1130,
+  "secondPos" : 1563,
+  "firstEndPos" : 1138,
+  "secondEndPos" : 1571
+}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
@@ -2935,6 +3188,17 @@
   "secondPos" : 1657,
   "firstEndPos" : 1209,
   "secondEndPos" : 1664
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CBox",
+  "secondLabel" : "CBox",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1210,
+  "secondPos" : 1665,
+  "firstEndPos" : 1214,
+  "secondEndPos" : 1669
 }, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",

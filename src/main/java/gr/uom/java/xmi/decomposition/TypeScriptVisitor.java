@@ -77,6 +77,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 	private List<LeafExpression> castExpressions = new ArrayList<>();
 	private List<LeafExpression> instanceofExpressions = new ArrayList<>();
 	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
+	private List<LeafExpression> tupleLiterals = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
@@ -439,6 +440,10 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 
 	public List<LeafExpression> getPatternInstanceofExpressions() {
 		return patternInstanceofExpressions;
+	}
+
+	public List<LeafExpression> getTupleLiterals() {
+		return tupleLiterals;
 	}
 
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {

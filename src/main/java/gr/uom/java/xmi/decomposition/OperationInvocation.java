@@ -44,6 +44,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeConstructorExpression;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTUnaryExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -385,6 +386,9 @@ public class OperationInvocation extends AbstractCall {
     	}
     	List<UMLType> inferredArgumentTypes = new ArrayList<UMLType>();
     	for(String arg : arguments) {
+    		if(arg != null && arg.startsWith(LANG.THIS_DOT)) {
+    			arg = arg.substring(LANG.THIS_DOT.length());
+    		}
     		int indexOfOpeningParenthesis = arg.indexOf("(");
     		int indexOfOpeningSquareBracket = arg.indexOf("[");
     		boolean openingParenthesisBeforeSquareBracket = false;
@@ -1416,6 +1420,9 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(nameExpr instanceof ICPPASTLambdaExpression) {
 			this.methodName = "";
+		}
+		else if(nameExpr instanceof ICPPASTUnaryExpression unary) {
+			this.methodName = unary.getOperand().getRawSignature();
 		}
 	}
 }

@@ -1610,10 +1610,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter alphabet to sample_space in method public reorder(outcomes, pmf, sample_space, index) from class helpers.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Variable sample_space is parameterized.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public reorder(pmf, outcomes, alphabet, index) from class npscalardist.__module__ to public reorder(outcomes, pmf, sample_space, index) from class helpers.__module__",
@@ -1694,6 +1694,20 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute _alphabet_set to _sample_space_set in class npdist.Distribution",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable sample_space to sample_space in method public reorder(outcomes, pmf, sample_space, index) from class helpers.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter alphabet in method public reorder(pmf, outcomes, alphabet, index) from class npscalardist.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -1941,6 +1955,20 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter show_mask in method public prepare_string(dist, digits, exact, tol, show_mask, str_events) from class distribution.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable events in method public prepare_string(dist, digits, exact, tol, show_mask, str_events) from class distribution.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable event_length in method public to_string(digits, exact, tol, show_mask, str_events) from class npjdist.JointDistribution",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -2434,10 +2462,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter eventspace to alphabet in method public reorder(pmf, events, alphabet, index) from class npdist.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>A parameter with the same name is converted to local variable.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter eventspace to alphabet in method protected _make_distribution(pmf, events, alphabet, base, sparse) from class npdist.__module__",
@@ -2473,6 +2501,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter alphabet in method public reorder(pmf, events, alphabet, index) from class npdist.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter eventspace to eventspace in method public reorder(pmf, events, alphabet, index) from class npdist.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -2492,10 +2534,10 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter subdivisions to locs in method public clamped_indexes(pmf, locs) from class math.pmfops.__module__",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Variable locs is parameterized.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable lower in method public clamped_indexes(pmf, locs) from class math.pmfops.__module__",
@@ -2510,6 +2552,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable locs to locs in method public clamped_indexes(pmf, locs) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter subdivisions in method public clamped_indexes(pmf, subdivisions) from class math.pmfops.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -4261,13 +4317,34 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter filename in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
+        "comment": "<p>A local variable with the same name is parameterized.</p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter pipe in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Add Parameter",
-        "description": "Add Parameter pipe in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable filename to filename in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable node_text in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable lines in method public view(stream_spec, detail, filename, pipe, kwargs) from class _view.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -5414,6 +5491,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable dist_instance in method protected _build(distribution, batch_size, trans, ds_name, kwargs) from class modules.connectors.connectors.StochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable dist_instance in method protected _build(distribution, batch_size, trans, ds_name, kwargs) from class modules.connectors.connectors.ReparameterizedStochasticConnector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -5542,6 +5633,13 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method public file_based_convert_examples_to_features(examples, label_list, max_seq_length, tokenizer, output_file) renamed to public convert_examples_to_features_and_output_to_files(examples, label_list, max_seq_length, tokenizer, output_file) in class bert.utils.data_utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type tokenizer : tokenization.FullTokenizer to tokenizer : BERTTokenizer in method public main() from class bert.prepare_data.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -6782,10 +6880,24 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter batch_size in method protected _init_cache(memory, memory_attention_bias, beam_search_decoding, batch_size) from class modules.decoders.transformer_decoders.TransformerDecoder",
+        "comment": "<p>A local variable with the same name is parameterized.</p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable batch_size to batch_size in method protected _init_cache(memory, memory_attention_bias, beam_search_decoding, batch_size) from class modules.decoders.transformer_decoders.TransformerDecoder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable batch_size to batch_size in method protected _shape(batch_size, from_shape) from class modules.decoders.transformer_decoders.TransformerDecoder._init_cache",
+        "comment": "<p>This is a nested method that already had batch_size as parameter.</p>",
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7273,10 +7385,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable paddings to key_attention_bias in method public multihead_attention(queries, keys, keys_padding, causality, num_heads, num_units, dropout_rate, scope) from class core.layers.__module__",
-        "comment": null,
-        "validation": "CTP",
+        "comment": "<p>very ambiguous</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -7493,6 +7605,13 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter mode in method public get_embedding(hparams, init_value, vocab_size, variable_scope, mode) from class modules.embedders.embedder_utils.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable embedding in method public get_embedding(hparams, init_value, vocab_size, variable_scope, mode) from class modules.embedders.embedder_utils.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -7798,6 +7917,20 @@
     }, {
         "type": "Inline Variable",
         "description": "Inline Variable embedded_inputs in method protected _build(inputs, sequence_length, initial_state_fw, initial_state_bw, use_embedding, kwargs) from class modules.encoders.rnn_encoders.BidirectionalRNNEncoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable vocab_size to emb_dim in method public test_encode() from class modules.encoders.rnn_encoders_test.BidirectionalRNNEncoderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable vocab_size to emb_dim in method public test_encode() from class modules.encoders.rnn_encoders_test.UnidirectionalRNNEncoderTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -8289,6 +8422,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type agent : DeepQNetwork to agent : NatureDQNAgent in module cartpole.__module__ from class cartpole.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -8338,10 +8478,10 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter max_decoding_length in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>A local variable with the same name is parameterized.</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter output_time_major in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
@@ -8429,6 +8569,13 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected _test_outputs(decoder, outputs, final_state, sequence_lengths, test_mode) extracted from public test_decode_train() in class modules.decoders.rnn_decoders_test.BasicRNNDecoderTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable max_decoding_length to max_decoding_length in method protected _build(initial_state, max_decoding_length, output_time_major, decoding_strategy, inputs, sequence_length, input_time_major, embedding, start_tokens, end_token, softmax_temperature, helper, mode, kwargs) from class modules.decoders.rnn_decoder_base.RNNDecoderBase",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -8913,6 +9060,13 @@
         "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type data_provider : PairedDataProvider to data_provider : ParallelDataProvider in method protected _make_data_provider(src_dataset, tgt_dataset) from class data.databases.paired_text_database.PairedTextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9059,10 +9213,10 @@
     }, {
         "type": "Replace Attribute With Variable",
         "description": "Replace Attribute With Variable _hparams to parsed_hparams in method public __init__(hparams, default_hparams, allow_new_hparam) from class hyperparams.HParams",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._hparams = </span><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._parse(hparams, default_hparams)</span></div></div><p>becomes (the initializer is extracted to local variable parsed_params, then self._hparams is replaced with __setattr__('_hparams', parsed_hparams)</p><div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #000000;'>parsed_hparams = </span><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._parse(hparams, hparams)</span></div><div><span style='color: #0000ff;'>super</span><span style='color: #000000;'>(HParams, </span><span style='color: #0000ff;'>self</span><span style='color: #000000;'>).__setattr__(</span><span style='color: #a31515;'>'_hparams'</span><span style='color: #000000;'>, parsed_hparams)</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method protected _parse_value(name, value) extracted from public __setattr__(name, value) in class hyperparams.HParams",
@@ -9094,6 +9248,20 @@
     }, {
         "type": "Encapsulate Attribute",
         "description": "Encapsulate Attribute _dataset from class data.database.TextDataBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method protected _parse_value(name, value) extracted from protected _parse(hparams, default_hparams) in class hyperparams.HParams",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable parsed_hparams in method public __init__(hparams, default_hparams, allow_new_hparam) from class hyperparams.HParams",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9258,6 +9426,13 @@
     }, {
         "type": "Rename Attribute",
         "description": "Rename Attribute _variables to _trainable_variables in class modules.module_base.ModuleBase",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable results in method protected _build(inputs, kwargs) from class modules.encoders.rnn_encoders.ForwardRNNEncoder",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9510,6 +9685,13 @@
     }, {
         "type": "Rename Method",
         "description": "Rename Method protected _make_length_fn() renamed to protected _make_bucket_length_fn() in class data.data.multi_aligned_data.MultiAlignedData",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable max_seq_length in method protected _make_processor(dataset_hparams, data_spec, chained, name_prefix) from class data.data.mono_text_data.MonoTextData",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

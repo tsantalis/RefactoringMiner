@@ -104,6 +104,8 @@ line range:102-105==line range:21-24
 line range:95-107==line range:14-26
 line range:119-124==line range:38-43
 line range:111-129==line range:30-48
+kotlin -> public createImportResolver(config ImportResolutionConfig) : ImportResolverFn
+line range:103-124==line range:28-34
 public resolveDartImport(rawImportPath string, filePath string, ctx ResolveCtx) : ImportResult -> public dartPackageStrategy(rawImportPath Inferred, _filePath Inferred, ctx Inferred) : ImportResolverStrategy
 line range:17-17==line range:17-17
 line range:24-24==line range:24-24
@@ -144,3 +146,17 @@ line range:24-26==line range:21-23
 line range:20-27==line range:17-24
 line range:17-29==line range:14-26
 line range:15-30==line range:12-27
+kotlin -> kotlin
+line range:44-101==line range:45-102
+line range:103-124==line range:104-125
+line range:120-120==line range:121-121
+line range:121-121==line range:122-122
+line range:122-122==line range:123-123
+line range:120-120==line range:121-121
+line range:121-121==line range:122-122
+line range:120-120==line range:121-121
+line range:121-121==line range:122-122
+line range:122-122==line range:123-123
+line range:120-120==line range:121-121
+line range:121-121==line range:122-122
+line range:119-123==line range:120-124

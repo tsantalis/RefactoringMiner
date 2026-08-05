@@ -31482,15 +31482,246 @@
   "secondEndPos" : 24844
 }, {
   "firstType" : "function_definition",
-  "secondType" : "decorated_definition",
+  "secondType" : "function_definition",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 20509,
-  "secondPos" : 21607,
+  "secondPos" : 20503,
   "firstEndPos" : 21137,
-  "secondEndPos" : 22179
+  "secondEndPos" : 21239
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "test_required_attributes",
+  "secondLabel" : "test_both_attributes_omitted",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 20513,
+  "secondPos" : 20507,
+  "firstEndPos" : 20537,
+  "secondEndPos" : 20535
+}, {
+  "firstType" : "parameters",
+  "secondType" : "parameters",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 20537,
+  "secondPos" : 20535,
+  "firstEndPos" : 20543,
+  "secondEndPos" : 20541
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "self",
+  "secondLabel" : "self",
+  "firstParentType" : "parameters",
+  "secondParentType" : "parameters",
+  "firstPos" : 20538,
+  "secondPos" : 20536,
+  "firstEndPos" : 20542,
+  "secondEndPos" : 20540
+}, {
+  "firstType" : "block",
+  "secondType" : "block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 20553,
+  "secondPos" : 20551,
+  "firstEndPos" : 21137,
+  "secondEndPos" : 21239
+}, {
+  "firstType" : "class_definition",
+  "secondType" : "class_definition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 20553,
+  "secondPos" : 20551,
+  "firstEndPos" : 20621,
+  "secondEndPos" : 20619
+}, {
+  "firstType" : "class",
+  "secondType" : "class",
+  "firstLabel" : "class",
+  "secondLabel" : "class",
+  "firstParentType" : "class_definition",
+  "secondParentType" : "class_definition",
+  "firstPos" : 20553,
+  "secondPos" : 20551,
+  "firstEndPos" : 20558,
+  "secondEndPos" : 20556
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Model",
+  "secondLabel" : "Model",
+  "firstParentType" : "class_definition",
+  "secondParentType" : "class_definition",
+  "firstPos" : 20559,
+  "secondPos" : 20557,
+  "firstEndPos" : 20564,
+  "secondEndPos" : 20562
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_definition",
+  "secondParentType" : "class_definition",
+  "firstPos" : 20564,
+  "secondPos" : 20562,
+  "firstEndPos" : 20578,
+  "secondEndPos" : 20576
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 20565,
+  "secondPos" : 20563,
+  "firstEndPos" : 20577,
+  "secondEndPos" : 20575
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "models",
+  "secondLabel" : "models",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 20565,
+  "secondPos" : 20563,
+  "firstEndPos" : 20571,
+  "secondEndPos" : 20569
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "Model",
+  "secondLabel" : "Model",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 20572,
+  "secondPos" : 20570,
+  "firstEndPos" : 20577,
+  "secondEndPos" : 20575
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 20592,
+  "secondPos" : 20590,
+  "firstEndPos" : 20621,
+  "secondEndPos" : 20619
+}, {
+  "firstType" : "block",
+  "secondType" : "block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_definition",
+  "secondParentType" : "class_definition",
+  "firstPos" : 20592,
+  "secondPos" : 20590,
+  "firstEndPos" : 20621,
+  "secondEndPos" : 20619
+}, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "block",
+  "secondParentType" : "block",
+  "firstPos" : 20592,
+  "secondPos" : 20590,
+  "firstEndPos" : 20621,
+  "secondEndPos" : 20619
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "field",
+  "secondLabel" : "field",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 20592,
+  "secondPos" : 20590,
+  "firstEndPos" : 20597,
+  "secondEndPos" : 20595
+}, {
+  "firstType" : "assignment_operator_literal",
+  "secondType" : "assignment_operator_literal",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 20598,
+  "secondPos" : 20596,
+  "firstEndPos" : 20599,
+  "secondEndPos" : 20597
+}, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 20600,
+  "secondPos" : 20598,
+  "firstEndPos" : 20621,
+  "secondEndPos" : 20619
+}, {
+  "firstType" : "attribute",
+  "secondType" : "attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 20600,
+  "secondPos" : 20598,
+  "firstEndPos" : 20619,
+  "secondEndPos" : 20617
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "models",
+  "secondLabel" : "models",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 20600,
+  "secondPos" : 20598,
+  "firstEndPos" : 20606,
+  "secondEndPos" : 20604
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DecimalField",
+  "secondLabel" : "DecimalField",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 20607,
+  "secondPos" : 20605,
+  "firstEndPos" : 20619,
+  "secondEndPos" : 20617
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 20619,
+  "secondPos" : 20617,
+  "firstEndPos" : 20621,
+  "secondEndPos" : 20619
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -31499,9 +31730,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 20631,
-  "secondPos" : 21809,
+  "secondPos" : 20629,
   "firstEndPos" : 20669,
-  "secondEndPos" : 21847
+  "secondEndPos" : 20667
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -31510,9 +31741,9 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 20631,
-  "secondPos" : 21809,
+  "secondPos" : 20629,
   "firstEndPos" : 20669,
-  "secondEndPos" : 21847
+  "secondEndPos" : 20667
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31521,9 +31752,9 @@
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 20631,
-  "secondPos" : 21809,
+  "secondPos" : 20629,
   "firstEndPos" : 20636,
-  "secondEndPos" : 21814
+  "secondEndPos" : 20634
 }, {
   "firstType" : "assignment_operator_literal",
   "secondType" : "assignment_operator_literal",
@@ -31532,9 +31763,9 @@
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 20637,
-  "secondPos" : 21815,
+  "secondPos" : 20635,
   "firstEndPos" : 20638,
-  "secondEndPos" : 21816
+  "secondEndPos" : 20636
 }, {
   "firstType" : "call",
   "secondType" : "call",
@@ -31543,9 +31774,9 @@
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 20639,
-  "secondPos" : 21817,
+  "secondPos" : 20637,
   "firstEndPos" : 20669,
-  "secondEndPos" : 21847
+  "secondEndPos" : 20667
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -31554,9 +31785,9 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20639,
-  "secondPos" : 21817,
+  "secondPos" : 20637,
   "firstEndPos" : 20660,
-  "secondEndPos" : 21838
+  "secondEndPos" : 20658
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -31565,9 +31796,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20639,
-  "secondPos" : 21817,
+  "secondPos" : 20637,
   "firstEndPos" : 20650,
-  "secondEndPos" : 21828
+  "secondEndPos" : 20648
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31576,9 +31807,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20639,
-  "secondPos" : 21817,
+  "secondPos" : 20637,
   "firstEndPos" : 20644,
-  "secondEndPos" : 21822
+  "secondEndPos" : 20642
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31587,9 +31818,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20645,
-  "secondPos" : 21823,
+  "secondPos" : 20643,
   "firstEndPos" : 20650,
-  "secondEndPos" : 21828
+  "secondEndPos" : 20648
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31598,9 +31829,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20651,
-  "secondPos" : 21829,
+  "secondPos" : 20649,
   "firstEndPos" : 20660,
-  "secondEndPos" : 21838
+  "secondEndPos" : 20658
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
@@ -31609,9 +31840,9 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20660,
-  "secondPos" : 21838,
+  "secondPos" : 20658,
   "firstEndPos" : 20669,
-  "secondEndPos" : 21847
+  "secondEndPos" : 20667
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -31620,9 +31851,9 @@
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 20661,
-  "secondPos" : 21839,
+  "secondPos" : 20659,
   "firstEndPos" : 20668,
-  "secondEndPos" : 21846
+  "secondEndPos" : 20666
 }, {
   "firstType" : "call",
   "secondType" : "call",
@@ -31631,9 +31862,9 @@
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 20678,
-  "secondPos" : 21856,
+  "secondPos" : 21198,
   "firstEndPos" : 21137,
-  "secondEndPos" : 22179
+  "secondEndPos" : 21239
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -31642,9 +31873,9 @@
   "firstParentType" : "block",
   "secondParentType" : "block",
   "firstPos" : 20678,
-  "secondPos" : 21856,
+  "secondPos" : 21198,
   "firstEndPos" : 21137,
-  "secondEndPos" : 22179
+  "secondEndPos" : 21239
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -31653,9 +31884,9 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20678,
-  "secondPos" : 21856,
+  "secondPos" : 21198,
   "firstEndPos" : 20694,
-  "secondEndPos" : 21872
+  "secondEndPos" : 21214
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31664,9 +31895,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20678,
-  "secondPos" : 21856,
+  "secondPos" : 21198,
   "firstEndPos" : 20682,
-  "secondEndPos" : 21860
+  "secondEndPos" : 21202
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31675,9 +31906,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20683,
-  "secondPos" : 21861,
+  "secondPos" : 21203,
   "firstEndPos" : 20694,
-  "secondEndPos" : 21872
+  "secondEndPos" : 21214
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
@@ -31686,9 +31917,9 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20694,
-  "secondPos" : 21872,
+  "secondPos" : 21214,
   "firstEndPos" : 21137,
-  "secondEndPos" : 22179
+  "secondEndPos" : 21239
 }, {
   "firstType" : "call",
   "secondType" : "call",
@@ -31697,9 +31928,9 @@
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 20708,
-  "secondPos" : 21886,
+  "secondPos" : 21215,
   "firstEndPos" : 20721,
-  "secondEndPos" : 21899
+  "secondEndPos" : 21228
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -31708,9 +31939,9 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20708,
-  "secondPos" : 21886,
+  "secondPos" : 21215,
   "firstEndPos" : 20719,
-  "secondEndPos" : 21897
+  "secondEndPos" : 21226
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31719,9 +31950,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20708,
-  "secondPos" : 21886,
+  "secondPos" : 21215,
   "firstEndPos" : 20713,
-  "secondEndPos" : 21891
+  "secondEndPos" : 21220
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31730,9 +31961,9 @@
   "firstParentType" : "attribute",
   "secondParentType" : "attribute",
   "firstPos" : 20714,
-  "secondPos" : 21892,
+  "secondPos" : 21221,
   "firstEndPos" : 20719,
-  "secondEndPos" : 21897
+  "secondEndPos" : 21226
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
@@ -31741,20 +31972,20 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20719,
-  "secondPos" : 21897,
+  "secondPos" : 21226,
   "firstEndPos" : 20721,
-  "secondEndPos" : 21899
+  "secondEndPos" : 21228
 }, {
   "firstType" : "list",
   "secondType" : "list",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "argument_list",
-  "secondParentType" : "argument_list",
+  "secondParentType" : "assignment",
   "firstPos" : 20735,
-  "secondPos" : 21913,
+  "secondPos" : 20798,
   "firstEndPos" : 21126,
-  "secondEndPos" : 22168
+  "secondEndPos" : 21189
 }, {
   "firstType" : "call",
   "secondType" : "call",
@@ -31763,9 +31994,9 @@
   "firstParentType" : "list",
   "secondParentType" : "list",
   "firstPos" : 20753,
-  "secondPos" : 21931,
+  "secondPos" : 20816,
   "firstEndPos" : 20925,
-  "secondEndPos" : 22153
+  "secondEndPos" : 20988
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31774,9 +32005,9 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20753,
-  "secondPos" : 21931,
+  "secondPos" : 20816,
   "firstEndPos" : 20758,
-  "secondEndPos" : 21936
+  "secondEndPos" : 20821
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
@@ -31785,9 +32016,20 @@
   "firstParentType" : "call",
   "secondParentType" : "call",
   "firstPos" : 20758,
-  "secondPos" : 21936,
+  "secondPos" : 20821,
   "firstEndPos" : 20925,
-  "secondEndPos" : 22153
+  "secondEndPos" : 20988
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"DecimalFields must define a 'decimal_places' attribute.\"",
+  "secondLabel" : "\"DecimalFields must define a 'decimal_places' attribute.\"",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 20780,
+  "secondPos" : 20843,
+  "firstEndPos" : 20837,
+  "secondEndPos" : 20900
 }, {
   "firstType" : "keyword_argument",
   "secondType" : "keyword_argument",
@@ -31796,9 +32038,9 @@
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 20859,
-  "secondPos" : 22087,
+  "secondPos" : 20922,
   "firstEndPos" : 20868,
-  "secondEndPos" : 22096
+  "secondEndPos" : 20931
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31807,9 +32049,9 @@
   "firstParentType" : "keyword_argument",
   "secondParentType" : "keyword_argument",
   "firstPos" : 20859,
-  "secondPos" : 22087,
+  "secondPos" : 20922,
   "firstEndPos" : 20862,
-  "secondEndPos" : 22090
+  "secondEndPos" : 20925
 }, {
   "firstType" : "assignment_operator_literal",
   "secondType" : "assignment_operator_literal",
@@ -31818,9 +32060,9 @@
   "firstParentType" : "keyword_argument",
   "secondParentType" : "keyword_argument",
   "firstPos" : 20862,
-  "secondPos" : 22090,
+  "secondPos" : 20925,
   "firstEndPos" : 20863,
-  "secondEndPos" : 22091
+  "secondEndPos" : 20926
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31829,9 +32071,9 @@
   "firstParentType" : "keyword_argument",
   "secondParentType" : "keyword_argument",
   "firstPos" : 20863,
-  "secondPos" : 22091,
+  "secondPos" : 20926,
   "firstEndPos" : 20868,
-  "secondEndPos" : 22096
+  "secondEndPos" : 20931
 }, {
   "firstType" : "keyword_argument",
   "secondType" : "keyword_argument",
@@ -31840,9 +32082,9 @@
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 20890,
-  "secondPos" : 22118,
+  "secondPos" : 20953,
   "firstEndPos" : 20906,
-  "secondEndPos" : 22134
+  "secondEndPos" : 20969
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -31851,9 +32093,9 @@
   "firstParentType" : "keyword_argument",
   "secondParentType" : "keyword_argument",
   "firstPos" : 20890,
-  "secondPos" : 22118,
+  "secondPos" : 20953,
   "firstEndPos" : 20892,
-  "secondEndPos" : 22120
+  "secondEndPos" : 20955
 }, {
   "firstType" : "assignment_operator_literal",
   "secondType" : "assignment_operator_literal",
@@ -31862,20 +32104,20 @@
   "firstParentType" : "keyword_argument",
   "secondParentType" : "keyword_argument",
   "firstPos" : 20892,
-  "secondPos" : 22120,
+  "secondPos" : 20955,
   "firstEndPos" : 20893,
-  "secondEndPos" : 22121
+  "secondEndPos" : 20956
 }, {
   "firstType" : "string",
   "secondType" : "string",
   "firstLabel" : "\"fields.E130\"",
-  "secondLabel" : "\"fields.E135\"",
+  "secondLabel" : "\"fields.E130\"",
   "firstParentType" : "keyword_argument",
   "secondParentType" : "keyword_argument",
   "firstPos" : 20893,
-  "secondPos" : 22121,
+  "secondPos" : 20956,
   "firstEndPos" : 20906,
-  "secondEndPos" : 22134
+  "secondEndPos" : 20969
 }, {
   "firstType" : "call",
   "secondType" : "call",

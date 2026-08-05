@@ -547,6 +547,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<LeafExpression> getTupleLiterals() {
+		List<LeafExpression> typeLiterals = new ArrayList<>();
+		for(AbstractExpression expression : expressionList) {
+			typeLiterals.addAll(expression.getTupleLiterals());
+		}
+		return typeLiterals;
+	}
+
+	@Override
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
 		List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 		for(AbstractExpression expression : expressionList) {

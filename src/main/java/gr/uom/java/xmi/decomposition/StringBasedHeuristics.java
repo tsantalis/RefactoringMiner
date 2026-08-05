@@ -1019,6 +1019,14 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals("?")) {
 				return true;
 			}
+			else if(diff1.equals("...") && diff2.equals("::")) {
+				//Python-specific
+				//a = np.ravel(a)[..., np.newaxis] vs. a = np.ravel(a)[:, np.newaxis]
+				return true;
+			}
+			else if(diff1.equals("::") && diff2.equals("...")) {
+				return true;
+			}
 			else {
 				String replaceWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
 				String replaceWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
@@ -1040,6 +1048,20 @@ public class StringBasedHeuristics {
 			int endIndexS1 = s1.lastIndexOf(commonSuffix);
 			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
 			if(diff1.equals("val ") || diff1.equals("var ") || diff1.equals("let") || diff1.equals("const")) {
+				return true;
+			}
+		}
+		if(commonSuffix.length() > 0 && commonPrefix.isEmpty()) {
+			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS1 = s1.lastIndexOf(commonSuffix);
+			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+			int endIndexS2 = s2.lastIndexOf(commonSuffix);
+			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+			if(diff1.equals("auto") && diff2.equals("const auto&")) {
+				return true;
+			}
+			else if(diff1.equals("const auto&") && diff2.equals("auto")) {
 				return true;
 			}
 		}
@@ -2841,6 +2863,10 @@ public class StringBasedHeuristics {
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()) &&
@@ -3179,13 +3205,15 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean variableDeclarationsWithEverythingReplaced(List<VariableDeclaration> variableDeclarations1,
-			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2) {
+			List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo, Constants LANG1, Constants LANG2, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
 		if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
 			boolean typeReplacement = false, variableRename = false, initializerReplacement = false, nullInitializer = false, zeroArgumentClassInstantiation = false, classInstantiationArgumentReplacement = false;
-			UMLType type1 = variableDeclarations1.get(0).getType();
-			UMLType type2 = variableDeclarations2.get(0).getType();
-			AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
-			AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
+			VariableDeclaration v1 = variableDeclarations1.get(0);
+			VariableDeclaration v2 = variableDeclarations2.get(0);
+			UMLType type1 = v1.getType();
+			UMLType type2 = v2.getType();
+			AbstractExpression initializer1 = v1.getInitializer();
+			AbstractExpression initializer2 = v2.getInitializer();
 			if(initializer1 == null && initializer2 == null) {
 				nullInitializer = true;
 			}
@@ -3220,8 +3248,8 @@ public class StringBasedHeuristics {
 						type2 != null && type2.toQualifiedString().equals(replacement.getAfter()))
 					typeReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-						variableDeclarations1.get(0).getVariableName().equals(replacement.getBefore()) &&
-						variableDeclarations2.get(0).getVariableName().equals(replacement.getAfter()))
+						v1.getVariableName().equals(replacement.getBefore()) &&
+						v2.getVariableName().equals(replacement.getAfter()))
 					variableRename = true;
 				else if(initializer1 != null && initializer1.getExpression().equals(replacement.getBefore()) &&
 						initializer2 != null && initializer2.getExpression().equals(replacement.getAfter())) {
@@ -3231,7 +3259,12 @@ public class StringBasedHeuristics {
 			if((LANG1.equals(Constants.PYTHON) || LANG2.equals(Constants.PYTHON)) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				boolean thisInitializer = initializer1 != null && initializer1.getExpression().startsWith(LANG1.THIS_DOT) &&
 						initializer2 != null && initializer2.getExpression().startsWith(LANG2.THIS_DOT);
-				if(!thisInitializer) {
+				boolean functionLevelScope = container1.getBody() != null && container2.getBody() != null &&
+						!v1.isParameter() && !v2.isParameter() &&
+						v1.getLocationInfo().getFilePath().equals(v2.getLocationInfo().getFilePath()) &&
+						v1.getScope().getEndOffset() == container1.getBody().getCompositeStatement().getLocationInfo().getEndOffset() &&
+						v2.getScope().getEndOffset() == container2.getBody().getCompositeStatement().getLocationInfo().getEndOffset();
+				if(!thisInitializer && !functionLevelScope) {
 					return true;
 				}
 			}

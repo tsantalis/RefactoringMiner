@@ -6,6 +6,8 @@ import java.util.Set;
 
 import extension.ast.node.expression.LangTernaryExpression;
 import extension.ast.node.unit.LangCompilationUnit;
+
+import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 
@@ -52,6 +54,13 @@ public class TernaryOperatorExpression extends LeafExpression {
 		this.condition = new AbstractExpression(sourceFolder, filePath, expression.getTest(), CodeElementType.TERNARY_OPERATOR_CONDITION, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		this.thenExpression = new AbstractExpression(sourceFolder, filePath, expression.getCons(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
 		this.elseExpression = new AbstractExpression(sourceFolder, filePath, expression.getAlt(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, activeVariableDeclarations, fileContent, typeDeclarations);
+	}
+
+	public TernaryOperatorExpression(String sourceFolder, String filePath, IASTConditionalExpression expression, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		super(sourceFolder, filePath, expression, CodeElementType.TERNARY_OPERATOR, container, fileContent);
+		this.condition = new AbstractExpression(sourceFolder, filePath, expression.getLogicalConditionExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container, activeVariableDeclarations, fileContent);
+		this.thenExpression = new AbstractExpression(sourceFolder, filePath, expression.getPositiveResultExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, activeVariableDeclarations, fileContent);
+		this.elseExpression = new AbstractExpression(sourceFolder, filePath, expression.getNegativeResultExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, activeVariableDeclarations, fileContent);
 	}
 
 	public LeafExpression asLeafExpression() {

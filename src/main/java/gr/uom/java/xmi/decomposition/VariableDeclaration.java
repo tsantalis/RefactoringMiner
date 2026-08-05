@@ -111,6 +111,8 @@ import extension.ast.node.expression.LangFieldAccess;
 import extension.ast.node.expression.LangSimpleName;
 import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.statement.LangBlock;
+import extension.ast.node.statement.LangExpressionStatement;
+import extension.ast.node.statement.LangIfStatement;
 import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
@@ -141,6 +143,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private List<UMLModifier> modifiers;
 	private String actualSignature;
 	private final Constants LANG;
+	private boolean declaredInIfElseStatement;
 
 	public VariableDeclaration(String sourceFolder, String filePath, IASTParameterDeclaration parameter, IASTDeclSpecifier declSpecifier,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
@@ -386,6 +389,26 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				}
 				LangASTNode scopeNode = parent;
 				int endOffset = scopeNode.getStartChar() + scopeNode.getLength();
+				if(scopeNode instanceof LangBlock && scopeNode.getParent() instanceof LangIfStatement ifStatement) {
+					scopeNode = scopeNode.getParent().getParent();
+					startOffset = scopeNode.getStartChar();
+					endOffset = scopeNode.getStartChar() + scopeNode.getLength();
+					boolean variableWithSameNameDefinedInElseBranch = false;
+					if(ifStatement.getElseBody() != null) {
+						List<LangASTNode> elseChildren = ifStatement.getElseBody().getChildren();
+						for(LangASTNode child : elseChildren) {
+							if(child instanceof LangExpressionStatement expressionStatement &&
+									expressionStatement.getExpression() instanceof LangAssignment elseAssignment &&
+									elseAssignment.getLeftSide() instanceof LangSimpleName simpleName &&
+									simpleName.getIdentifier().equals(variableName)) {
+								variableWithSameNameDefinedInElseBranch = true;
+							}
+						}
+					}
+					if(!activeVariableDeclarations.containsKey(variableName) && variableWithSameNameDefinedInElseBranch) {
+						declaredInIfElseStatement = true;
+					}
+				}
 				if(endOffset > fileContent.length()) {
 					endOffset = fileContent.length();
 				}
@@ -670,6 +693,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public List<UMLModifier> getModifiers() {
 		return modifiers;
+	}
+
+	public boolean isDeclaredInIfElseStatement() {
+		return declaredInIfElseStatement;
 	}
 
 	@Override

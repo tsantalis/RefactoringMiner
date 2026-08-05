@@ -48,6 +48,7 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorChainInitializer;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTElaboratedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
@@ -436,7 +437,7 @@ public class CppFileProcessor {
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
-			if(parentContainer instanceof UMLClass umlClass && umlClass.isModule()) {
+			if(parentContainer instanceof UMLClass) {
 				processCppImport(cppUsingDeclaration.getName(), cppUsingDeclaration, sourceFolder, parentContainer, false);
 			}
 		}
@@ -482,8 +483,15 @@ public class CppFileProcessor {
 				return;
 			}
 			String className = compositeTypeSpecifier.getName().toString();
-			if(className.isBlank()) {
+			//handle unnamed struct and unnamed union
+			if(className.isBlank() && !compositeTypeSpecifier.toString().equals("struct") && !compositeTypeSpecifier.toString().equals("union")) {
 				return;
+			}
+			else if(compositeTypeSpecifier.toString().equals("struct") || compositeTypeSpecifier.toString().equals("union")) {
+				IASTDeclarator[] declarators = simpleDeclaration.getDeclarators();
+				if(declarators.length == 1) {
+					className = declarators[0].getName().toString();
+				}
 			}
 			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
 			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, new ArrayList<>());
@@ -492,6 +500,9 @@ public class CppFileProcessor {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
 				if(cppCompositeTypeSpecifier.toString().contains("struct")) {
 					umlClass.setStruct(true);
+				}
+				if(cppCompositeTypeSpecifier.toString().contains("union")) {
+					umlClass.setUnion(true);
 				}
 				ICPPASTBaseSpecifier[] baseSpecifiers = cppCompositeTypeSpecifier.getBaseSpecifiers();
 				int index = 0;
@@ -521,6 +532,18 @@ public class CppFileProcessor {
 					templateParameters, inactiveContainerAlternatives);
 			this.umlModel.addClass(umlClass);
 			distributeComments(comments, locationInfo, umlClass.getComments());
+		}
+		else if(declSpecifier instanceof ICPPASTElaboratedTypeSpecifier elaboratedTypeSpecifier) {
+			//forward declaration: class, struct, union, enum
+			// struct SReadableWaiter;
+			// class CWLSurfaceResource;
+			//friend class F;
+			IASTName name = elaboratedTypeSpecifier.getName();
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
+			String[] tokens = elaboratedTypeSpecifier.toString().split("\s");
+			UMLForwardDeclaration decl = new UMLForwardDeclaration(locationInfo, tokens.length > 1 ? tokens[0] : "", name.toString(), elaboratedTypeSpecifier.isFriend());
+			if(parentContainer instanceof UMLClass)
+				((UMLClass)parentContainer).addForwardDeclaration(decl);
 		}
 		else if(declSpecifier instanceof ICPPASTEnumerationSpecifier enumSpecifier) {
 			if(enumSpecifier.getName() == null) {
@@ -615,6 +638,7 @@ public class CppFileProcessor {
 		distributeComments(comments, locationInfo, operation.getComments());
 		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
 			operation.setConst(cppFunctionDeclarator.isConst());
+			operation.setPureVirtual(cppFunctionDeclarator.isPureVirtual());
 		}
 
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
@@ -628,7 +652,8 @@ public class CppFileProcessor {
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
-				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
+				String parameterDeclaratorName = parameter.getDeclarator().getName().toString();
+				if(parameterDeclaratorName.isBlank() && UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
 					continue;
 				}
 				String parameterName = extractParameterName(parameter, index);
@@ -640,11 +665,11 @@ public class CppFileProcessor {
 				operation.addParameter(umlParameter);
 				index++;
 			}
-			if(standardDeclarator.takesVarArgs()) {
+			/*if(standardDeclarator.takesVarArgs()) {
 				UMLType varargsType = UMLType.extractTypeObject("Object");
 				varargsType.setVarargs();
 				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
-			}
+			}*/
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 
@@ -665,6 +690,7 @@ public class CppFileProcessor {
 		distributeComments(comments, locationInfo, operation.getComments());
 		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
 			operation.setConst(cppFunctionDeclarator.isConst());
+			operation.setPureVirtual(cppFunctionDeclarator.isPureVirtual());
 		}
 
 		UMLType returnType = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, functionDefinition.getDeclSpecifier(), declarator, 0);
@@ -678,7 +704,8 @@ public class CppFileProcessor {
 		if(declarator instanceof IASTStandardFunctionDeclarator standardDeclarator) {
 			int index = 0;
 			for(IASTParameterDeclaration parameter : standardDeclarator.getParameters()) {
-				if(UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
+				String parameterDeclaratorName = parameter.getDeclarator().getName().toString();
+				if(parameterDeclaratorName.isBlank() && UMLType.cleanTypeText(parameter.getDeclSpecifier().getRawSignature()).equals("void") && standardDeclarator.getParameters().length == 1) {
 					continue;
 				}
 				String parameterName = extractParameterName(parameter, index);
@@ -690,11 +717,11 @@ public class CppFileProcessor {
 				operation.addParameter(umlParameter);
 				index++;
 			}
-			if(standardDeclarator.takesVarArgs()) {
+			/*if(standardDeclarator.takesVarArgs()) {
 				UMLType varargsType = UMLType.extractTypeObject("Object");
 				varargsType.setVarargs();
 				operation.addParameter(new UMLParameter("varargs", varargsType, "in", true));
-			}
+			}*/
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 
@@ -711,6 +738,12 @@ public class CppFileProcessor {
 			}
 		}
 		if(functionDefinition instanceof ICPPASTFunctionDefinition cppFunctionDefinition) {
+			if(cppFunctionDefinition.isDeleted()) {
+				operation.setDeleteClause(true);
+			}
+			if(cppFunctionDefinition.isDefaulted()) {
+				operation.setDefaultClause(true);
+			}
 			ICPPASTConstructorChainInitializer[] initializers = cppFunctionDefinition.getMemberInitializers();
 			for (ICPPASTConstructorChainInitializer initializer : initializers) {
 				// The name of the member or base class being initialized

@@ -23,6 +23,7 @@ import gr.uom.java.xmi.decomposition.*;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +58,8 @@ public class LangVisitor implements LangASTVisitor {
     private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
     private List<LeafExpression> castExpressions = new ArrayList<>();
     private List<LeafExpression> instanceofExpressions = new ArrayList<>();
-	private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
+    private List<LeafExpression> patternInstanceofExpressions = new ArrayList<>();
+    private List<LeafExpression> tupleLiterals = new ArrayList<>();
     private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
     private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
     private List<ComprehensionExpression> comprehensions = new ArrayList<ComprehensionExpression>();
@@ -338,6 +340,11 @@ public class LangVisitor implements LangASTVisitor {
                 VariableDeclaration varDecl = new VariableDeclaration(cu, sourceFolder, filePath,
                         langAssignment, container, varName, activeVariableDeclarations, fileContent);
                 variableDeclarations.add(varDecl);
+                if(varDecl.getScope().getEndOffset() == container.getLocationInfo().getEndOffset()) {
+                    Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
+                    list.add(varDecl);
+                    activeVariableDeclarations.put(varName, list);
+                }
             }
         }
         else if(langAssignment.getLeftSide() instanceof LangTupleLiteral tuple) {
@@ -348,6 +355,11 @@ public class LangVisitor implements LangASTVisitor {
                         VariableDeclaration varDecl = new VariableDeclaration(cu, sourceFolder, filePath,
                                 langAssignment, container, varName, activeVariableDeclarations, fileContent);
                         variableDeclarations.add(varDecl);
+                        if(varDecl.getScope().getEndOffset() == container.getLocationInfo().getEndOffset()) {
+                            Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
+                            list.add(varDecl);
+                            activeVariableDeclarations.put(varName, list);
+                        }
                     }
                 }
                 // TODO handle scenarios, where element is not SimpleName
@@ -363,12 +375,16 @@ public class LangVisitor implements LangASTVisitor {
             Set<VariableDeclaration> variables = activeVariableDeclarations.get(varName);
             boolean attribute = false;
             boolean parameter = false;
+            boolean local = false;
             for(VariableDeclaration variable : variables) {
                 if(variable.isAttribute())
                     attribute = true;
                 if(variable.isParameter())
                     parameter = true;
+                if(!variable.isAttribute() && !variable.isParameter() && !variable.isDeclaredInIfElseStatement())
+                    local = true;
             }
+            if(local) return true;
             return attribute && !parameter;
         }
     }
@@ -463,6 +479,9 @@ public class LangVisitor implements LangASTVisitor {
     @Override
     public void visit(LangTupleLiteral langTupleLiteral) {
         // Process tuple elements: (1, 2, variable)
+        LeafExpression tupleLiteral = new LeafExpression(cu, sourceFolder, filePath,
+                langTupleLiteral, LocationInfo.CodeElementType.TUPLE_LITERAL, container);
+        tupleLiterals.add(tupleLiteral);
         for (LangASTNode element : langTupleLiteral.getElements()) {
             element.accept(this);
         }
@@ -787,7 +806,7 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangComprehensionExpression langComprehensionExpression) {
-    	ComprehensionExpression comprehensionExpression = new ComprehensionExpression(cu, sourceFolder, filePath,
+        ComprehensionExpression comprehensionExpression = new ComprehensionExpression(cu, sourceFolder, filePath,
                 langComprehensionExpression, container, activeVariableDeclarations, fileContent);
         if (langComprehensionExpression.getExpression() != null) {
             langComprehensionExpression.getExpression().accept(this);
@@ -957,6 +976,10 @@ public class LangVisitor implements LangASTVisitor {
     public List<LeafExpression> getCastExpressions() {
         return castExpressions;
     }
+
+	public List<LeafExpression> getTupleLiterals() {
+		return tupleLiterals;
+	}
 
 	public List<LeafExpression> getInstanceofExpressions() {
 		return instanceofExpressions;

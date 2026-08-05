@@ -34,6 +34,7 @@ public class Node {
   private final Set<String> identifiers = new HashSet<>();
   private final NodeType nodeType;
   private final Set<ASTDiff> diffs = new HashSet<>();
+  @Nullable UMLs umls = null;
 
   public Node(String fileContent, String path, SrcDst srcDst, Tree tree,
       @Nullable Set<Node> subs, NodeType nodeType) {
@@ -70,6 +71,14 @@ public class Node {
       return;
     }
     this.diffs.add(diff);
+  }
+
+  public UMLs getUMLs() {
+    return umls;
+  }
+
+  public void setUMLs(UMLs umls) {
+    this.umls = umls;
   }
 
   public Set<ASTDiff> getDiffs() {

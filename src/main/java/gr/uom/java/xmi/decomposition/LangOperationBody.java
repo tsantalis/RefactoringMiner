@@ -383,6 +383,9 @@ public class LangOperationBody extends OperationBody {
 			if(container instanceof UMLOperation) {
 				((UMLOperation)container).addNestedOperation(nested);
 			}
+			else if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedOperation(nested);
+			}
 		}
 		else if(statement instanceof LangTypeDeclaration) {
 			LangTypeDeclaration typeDecl = (LangTypeDeclaration)statement;
@@ -397,7 +400,10 @@ public class LangOperationBody extends OperationBody {
 					nestedClass.setConditionallyCreated(ConditionallyCreated.ELSE);
 				}
 			}
-			if(container instanceof ModuleContainer) {
+			if(container instanceof UMLOperation) {
+				((UMLOperation)container).addNestedClass(nestedClass);
+			}
+			else if(container instanceof ModuleContainer) {
 				((ModuleContainer)container).addNestedClass(nestedClass);
 			}
 		}

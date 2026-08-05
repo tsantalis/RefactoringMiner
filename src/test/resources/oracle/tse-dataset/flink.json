@@ -1389,6 +1389,26 @@
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tisMemoryDecouplingEnabled : boolean in method public getMinMaxNetworkBuffersPerResultPartition(configuredNetworkBuffersPerChannel int, numFloatingBuffersPerGate int, sortShuffleMinParallelism int, sortShuffleMinBuffers int, numSubpartitions int, enableTieredStorage boolean, enableMemoryDecoupling boolean, tieredStoreExclusiveBuffers int, tieredStorageMinBuffersPerResultPartition int, type ResultPartitionType) : Tuple3<Integer,Integer,Integer> from class org.apache.flink.runtime.shuffle.NettyShuffleUtils",
           "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : TestingBufferPool extracted from package testFairConsumptionRemoteChannels() : void in class org.apache.flink.runtime.io.network.partition.InputGateFairnessTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool.Builder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : TestingBufferPool extracted from package setup() : void in class org.apache.flink.runtime.io.network.netty.NettyMessageClientDecoderDelegateTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool.Builder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : TestingBufferPool extracted from package setup() : void in class org.apache.flink.runtime.io.network.netty.NettyMessageClientSideSerializationTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool.Builder",
+          "validation": true
+        },
+        {
+          "type": "EXTRACT_AND_MOVE_OPERATION",
+          "description": "Extract And Move Method\tpublic build() : TestingBufferPool extracted from package testDoNotFailHandlerOnSingleChannelFailure() : void in class org.apache.flink.runtime.io.network.netty.CreditBasedPartitionRequestClientHandlerTest & moved to class org.apache.flink.runtime.io.network.buffer.TestingBufferPool.Builder",
+          "validation": true
         }
       ]
     },

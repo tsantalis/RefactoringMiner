@@ -24,8 +24,12 @@ public class Constants {
 	}
 
     public boolean isMethod(String treeType) {
-        return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_SIGNATURE) ||
-                treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) || treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION);
+        return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
+                treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
+                treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
+                treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) ||
+                treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
+                treeType.equals(REFERENCE_DECLARATOR) || treeType.equals(POINTER_DECLARATOR) || treeType.equals(FRIEND_DECLARATION);
     }
 
     // TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name (VARIABLE_DECLARATION)
@@ -94,8 +98,9 @@ public class Constants {
 			THROW_STATEMENT = "raise_statement";
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
-		else if(PathFileUtils.isKotlinFile(path)) {
+		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
 			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "simple_identifier";
@@ -133,8 +138,9 @@ public class Constants {
 			THROW_STATEMENT = "throw_expression";
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
-		else if(PathFileUtils.isTypeScriptFile(path)) {
+		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_declaration";
 			SIMPLE_NAME = "identifier";
@@ -172,8 +178,9 @@ public class Constants {
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
-		else if(PathFileUtils.isCppFile(path)) {
+		else if(PathFileUtils.isCppFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";
@@ -195,7 +202,7 @@ public class Constants {
 			MODIFIER = "Modifier";
 			INITIALIZER = "Initializer";
 			CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
-			ENUM_DECLARATION = "EnumDeclaration";
+			ENUM_DECLARATION = "enum_specifier";
 			ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
 			RECORD_DECLARATION = "RecordDeclaration";
 			PREFIX_EXPRESSION = "PrefixExpression";
@@ -211,6 +218,7 @@ public class Constants {
 			THROW_STATEMENT = "throw_statement";
 			EMPTY_STATEMENT = "EmptyStatement";
 			PRIMITIVE_TYPE = "primitive_type";
+			CONDITIONAL_EXPRESSION = "conditional_expression";
 		}
 		else {
 			// Java values as default
@@ -251,6 +259,7 @@ public class Constants {
 			THROW_STATEMENT = "ThrowStatement";
 			EMPTY_STATEMENT = "EmptyStatement";
 			PRIMITIVE_TYPE = "PrimitiveType";
+			CONDITIONAL_EXPRESSION = "ConditionalExpression";
 		}
 	}
 
@@ -334,7 +343,7 @@ public class Constants {
     public final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
     public final String THROW_STATEMENT;
     public final String WHILE_STATEMENT;
-    public final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
+    public final String CONDITIONAL_EXPRESSION;
     public final String CAST_EXPRESSION = "CastExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";
@@ -415,7 +424,8 @@ public class Constants {
     public final String TYPE = "type";
     public final String WITH_STATEMENT = "with_statement";
     public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
-    
+    public final String TUPLE_PATTERN = "tuple_pattern";
+
     //Kotlin Specific
     public final String FUNCTION_BODY = "function_body";
     public final String SOURCE_FILE = "source_file"; // This is the root of all trees in Kotlin
@@ -605,13 +615,17 @@ public class Constants {
     public final String STRUCTURED_BINDING_DECLARATOR = "structured_binding_declarator";
     public final String FOR_RANGE_LOOP = "for_range_loop";
     public final String STRUCT_SPECIFIER = "struct_specifier";
+    public final String UNION_SPECIFIER = "union_specifier";
     public final String STRUCT_KEYWORD = "struct";
+    public final String UNION_KEYWORD = "union";
+    public final String FRIEND_KEYWORD = "friend";
     public final String POINTER = "*";
     public final String ACCESS_SPECIFIER = "access_specifier";
     public final String TEMPLATE_DECLARATION = "template_declaration";
     public final String FIELD_INITIALIZER_LIST = "field_initializer_list";
     public final String FIELD_INITIALIZER = "field_initializer";
     public final String REFERENCE_DECLARATOR = "reference_declarator";
+    public final String ABSTRACT_REFERENCE_DECLARATOR = "abstract_reference_declarator";
     public final String REFERENCE = "&";
     public final String TEMPLATE_KEYWORD = "template";
     public final String TEMPLATE_PARAMETER_LIST = "template_parameter_list";
@@ -622,4 +636,17 @@ public class Constants {
     public final String FIELD_EXPRESSION = "field_expression";
     public final String SUBSCRIPT_EXPRESSION = "subscript_expression";
     public final String ENUMERATOR = "enumerator";
+    public final String ELLIPSIS = "...";
+    public final String STORAGE_CLASS_SPECIFIER = "storage_class_specifier";
+    public final String DEFAULT_METHOD_CLAUSE = "default_method_clause";
+    public final String DELETE_METHOD_CLAUSE = "delete_method_clause";
+    public final String OPERATOR_NAME = "operator_name";
+    public final String FRIEND_DECLARATION = "friend_declaration";
+    public final String TRAILING_RETURN_TYPE = "trailing_return_type";
+    public final String TEMPLATE_TYPE = "template_type";
+    public final String TEMPLATE_FUNCTION = "template_function";
+    public final String VIRTUAL_KEYWORD = "virtual";
+    public final String VIRTUAL_SPECIFIER = "virtual_specifier";
+    public final String NOEXCEPT = "noexcept";
+    public final String OPERATOR_CAST = "operator_cast";
 }

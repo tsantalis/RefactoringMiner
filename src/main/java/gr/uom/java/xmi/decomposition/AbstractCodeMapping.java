@@ -662,6 +662,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
 			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod, Set<AbstractCodeMapping> currentMappings) throws RefactoringMinerTimedOutException {
+		if(statement.getVariableDeclarations().size() > 1) {
+			String variableDeclarations = statement.getVariableDeclarations().toString();
+			variableDeclarations = variableDeclarations.replace("[", "(").replace("]", ")");
+			//avoid processing extract variable, when multiple variables are assigned in statement
+			if(statement.getString().startsWith(variableDeclarations + LANG2.ASSIGNMENT)) {
+				return;
+			}
+		}
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
@@ -1041,14 +1049,21 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					break;
 				}
 			}
+			List<AbstractCall> matchingCalls = new ArrayList<AbstractCall>();
 			for(AbstractCall call : statement.getCreations()) {
 				if(initializer.equals(call.actualString())) {
 					initializerCall = call;
 					break;
 				}
+				if(initializer.contains(call.actualString())) {
+					matchingCalls.add(call);
+				}
 			}
 			for(Replacement replacement : getReplacements()) {
 				boolean creationMatch = false;
+				boolean variableReplacementInExtactedOrInlinedMethod = replacement instanceof VariableReplacementWithMethodInvocation r && r.getDirection().equals(Direction.VARIABLE_TO_INVOCATION) && insideExtractedOrInlinedMethod;
+				if(variableReplacementInExtactedOrInlinedMethod)
+					continue;
 				if(replacement.getBefore().startsWith("new ") && initializerCall != null && initializerCall instanceof ObjectCreation && statement.getVariableDeclarations().isEmpty() &&
 						!replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) && !replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION)) {
 					ObjectCreation creation = (ObjectCreation)initializerCall;
@@ -1064,7 +1079,17 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
-				if(variable.endsWith(replacement.getAfter()) &&	(initializer.equals(replacement.getBefore()) ||
+				else if(matchingCalls.size() > 0 && statement.getVariableDeclarations().isEmpty() &&
+						!replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) && !replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION)) {
+					int matches = 0;
+					for(AbstractCall matchingCall : matchingCalls) {
+						if(replacement.getBefore().contains(matchingCall.actualString())) {
+							matches++;
+						}
+					}
+					creationMatch = matches == matchingCalls.size();
+				}
+				if((variable.endsWith(replacement.getAfter()) || replacement.getAfter().endsWith(variable + ")")) && (initializer.equals(replacement.getBefore()) ||
 						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()) || creationMatch)) {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
@@ -2161,7 +2186,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
 				if(variableDeclaration.getInitializer() != null && initializer.findExpression(variableDeclaration.getVariableName()).size() > 0) {
 					List<LeafExpression> leafExpressions1 = getFragment1().findExpression(input);
-					if(leafExpressions1.size() > 0 && variableDeclaration.getInitializer().findExpression(input).size() > 0) {
+					if(leafExpressions1.size() > 0 && variableDeclaration.getInitializer().findExpression(input).size() > 0 && !variableDeclaration.getVariableName().equals(input)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						boolean found = false;
 						for(Refactoring r : refactorings) {

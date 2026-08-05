@@ -176,6 +176,19 @@ public class UnifiedModelDiffRefactoringsMatcher {
                     }
                 );
             }
+            else if (refactoring instanceof ParameterizeTestRefactoring) {
+                //a subclass's own DataProvider override lives in a different file than the inherited
+                //@ParameterizedTest method ParameterizeTestRefactoring is scoped to, we mirror the other cross-file refactorings above
+                ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
+                for (ParameterizeTestRefactoring.DataProviderOverride override : parameterizeTestRefactoring.getDataProviderOverrides()) {
+                    UMLOperationBodyMapper overrideBodyMapper = override.getBodyMapper();
+                    String srcPath = overrideBodyMapper.getContainer1().getLocationInfo().getFilePath();
+                    String dstPath = overrideBodyMapper.getContainer2().getLocationInfo().getFilePath();
+                    Constants LANG1 = new Constants(srcPath);
+                    Constants LANG2 = new Constants(dstPath);
+                    findDiffsAndApplyMatcher(srcPath, dstPath, new MethodMatcher(overrideBodyMapper, false, LANG1, LANG2));
+                }
+            }
         }
     }
 

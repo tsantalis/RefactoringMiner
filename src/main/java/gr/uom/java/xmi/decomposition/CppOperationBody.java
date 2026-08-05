@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTBreakStatement;
 import org.eclipse.cdt.core.dom.ast.IASTCaseStatement;
+import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTContinueStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
@@ -29,6 +31,7 @@ import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
@@ -49,6 +52,8 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class CppOperationBody extends OperationBody {
 
+	private List<IASTSimpleDeclaration> nestedSimpleDeclarations = new ArrayList<IASTSimpleDeclaration>();
+	
 	public CppOperationBody(String sourceFolder, String filePath, IASTCompoundStatement methodBody, VariableDeclarationContainer container, List<UMLAttribute> attributes, String fileContent) {
 		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
@@ -113,6 +118,10 @@ public class CppOperationBody extends OperationBody {
 		}
 	}
 
+	public List<IASTSimpleDeclaration> getNestedSimpleDeclarations() {
+		return nestedSimpleDeclarations;
+	}
+
 	private void processStatement(String sourceFolder, String filePath, CompositeStatementObject parent, IASTStatement statement, String fileContent) {
 		//https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.cdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcdt%2Fcore%2Fdom%2Fast%2FIASTStatement.html
 		if(statement instanceof IASTCompoundStatement compoundStatement) {
@@ -148,6 +157,10 @@ public class CppOperationBody extends OperationBody {
 				if(container instanceof UMLOperation op) {
 					op.addNestedImport(umlImport);
 				}
+			}
+			else if(declarationStatement.getDeclaration() instanceof IASTSimpleDeclaration simpleDeclaration &&
+					(simpleDeclaration.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier || simpleDeclaration.getDeclSpecifier() instanceof ICPPASTEnumerationSpecifier)) {
+				nestedSimpleDeclarations.add(simpleDeclaration);
 			}
 			else {
 				StatementObject child = new StatementObject(sourceFolder, filePath, declarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);

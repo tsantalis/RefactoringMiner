@@ -736,6 +736,11 @@ public class CppFileProcessor {
 					operationBody.addCatchHandlerToFunction(sourceFolder, filePath, catchHandler, fileContent);
 				}
 			}
+			for(IASTSimpleDeclaration simpleDeclaration : operationBody.getNestedSimpleDeclarations()) {
+				processSimpleDeclaration(simpleDeclaration, className + "." + functionName.toString(), sourceFolder, parentContainer, currentVisibility, comments, templateParameters, Collections.emptyList());
+			}
+			//clear after processing to avoid keeping AST nodes in memory
+			operationBody.getNestedSimpleDeclarations().clear();
 		}
 		if(functionDefinition instanceof ICPPASTFunctionDefinition cppFunctionDefinition) {
 			if(cppFunctionDefinition.isDeleted()) {

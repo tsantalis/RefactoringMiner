@@ -19766,6 +19766,248 @@
   "firstEndPos" : 22035,
   "secondEndPos" : 22401
 }, {
+  "firstType" : "declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 22040,
+  "secondPos" : 22406,
+  "firstEndPos" : 22393,
+  "secondEndPos" : 22759
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 22050,
+  "secondPos" : 22416,
+  "firstEndPos" : 22068,
+  "secondEndPos" : 22434
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 22050,
+  "secondPos" : 22416,
+  "firstEndPos" : 22056,
+  "secondEndPos" : 22422
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_model",
+  "secondLabel" : "llama_model",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 22057,
+  "secondPos" : 22423,
+  "firstEndPos" : 22068,
+  "secondEndPos" : 22434
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 22069,
+  "secondPos" : 22435,
+  "firstEndPos" : 22392,
+  "secondEndPos" : 22758
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22069,
+  "secondPos" : 22435,
+  "firstEndPos" : 22070,
+  "secondEndPos" : 22436
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22071,
+  "secondPos" : 22437,
+  "firstEndPos" : 22392,
+  "secondEndPos" : 22758
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_model_init_from_user",
+  "secondLabel" : "llama_model_init_from_user",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 22071,
+  "secondPos" : 22437,
+  "firstEndPos" : 22097,
+  "secondEndPos" : 22463
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 22097,
+  "secondPos" : 22463,
+  "firstEndPos" : 22392,
+  "secondEndPos" : 22758
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22097,
+  "secondPos" : 22463,
+  "firstEndPos" : 22098,
+  "secondEndPos" : 22464
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22119,
+  "secondPos" : 22485,
+  "firstEndPos" : 22149,
+  "secondEndPos" : 22515
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22119,
+  "secondPos" : 22485,
+  "firstEndPos" : 22138,
+  "secondEndPos" : 22504
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 22119,
+  "secondPos" : 22485,
+  "firstEndPos" : 22125,
+  "secondEndPos" : 22491
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "gguf_context",
+  "secondLabel" : "gguf_context",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 22126,
+  "secondPos" : 22492,
+  "firstEndPos" : 22138,
+  "secondEndPos" : 22504
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22139,
+  "secondPos" : 22505,
+  "firstEndPos" : 22149,
+  "secondEndPos" : 22515
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22139,
+  "secondPos" : 22505,
+  "firstEndPos" : 22140,
+  "secondEndPos" : 22506
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "metadata",
+  "secondLabel" : "metadata",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22141,
+  "secondPos" : 22507,
+  "firstEndPos" : 22149,
+  "secondEndPos" : 22515
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22149,
+  "secondPos" : 22515,
+  "firstEndPos" : 22150,
+  "secondEndPos" : 22516
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22161,
+  "secondPos" : 22527,
+  "firstEndPos" : 22208,
+  "secondEndPos" : 22574
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_set_tensor_data_t",
+  "secondLabel" : "llama_model_set_tensor_data_t",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22161,
+  "secondPos" : 22527,
+  "firstEndPos" : 22190,
+  "secondEndPos" : 22556
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "set_tensor_data",
+  "secondLabel" : "set_tensor_data",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22193,
+  "secondPos" : 22559,
+  "firstEndPos" : 22208,
+  "secondEndPos" : 22574
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22208,
+  "secondPos" : 22574,
+  "firstEndPos" : 22209,
+  "secondEndPos" : 22575
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// function to initialize tensor data with",
@@ -19777,6 +20019,72 @@
   "firstEndPos" : 22255,
   "secondEndPos" : 22621
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22291,
+  "secondPos" : 22657,
+  "firstEndPos" : 22316,
+  "secondEndPos" : 22682
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "void",
+  "secondLabel" : "void",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22291,
+  "secondPos" : 22657,
+  "firstEndPos" : 22295,
+  "secondEndPos" : 22661
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22296,
+  "secondPos" : 22662,
+  "firstEndPos" : 22316,
+  "secondEndPos" : 22682
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22296,
+  "secondPos" : 22662,
+  "firstEndPos" : 22297,
+  "secondEndPos" : 22663
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "set_tensor_data_ud",
+  "secondLabel" : "set_tensor_data_ud",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22298,
+  "secondPos" : 22664,
+  "firstEndPos" : 22316,
+  "secondEndPos" : 22682
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22316,
+  "secondPos" : 22682,
+  "firstEndPos" : 22317,
+  "secondEndPos" : 22683
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// userdata for function",
@@ -19787,6 +20095,105 @@
   "secondPos" : 22684,
   "firstEndPos" : 22342,
   "secondEndPos" : 22708
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22357,
+  "secondPos" : 22723,
+  "firstEndPos" : 22391,
+  "secondEndPos" : 22757
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22357,
+  "secondPos" : 22723,
+  "firstEndPos" : 22382,
+  "secondEndPos" : 22748
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 22357,
+  "secondPos" : 22723,
+  "firstEndPos" : 22363,
+  "secondEndPos" : 22729
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_params",
+  "secondLabel" : "llama_model_params",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 22364,
+  "secondPos" : 22730,
+  "firstEndPos" : 22382,
+  "secondEndPos" : 22748
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "params",
+  "secondLabel" : "params",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22385,
+  "secondPos" : 22751,
+  "firstEndPos" : 22391,
+  "secondEndPos" : 22757
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22391,
+  "secondPos" : 22757,
+  "firstEndPos" : 22392,
+  "secondEndPos" : 22758
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 22392,
+  "secondPos" : 22758,
+  "firstEndPos" : 22393,
+  "secondEndPos" : 22759
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 22399,
+  "secondPos" : 22765,
+  "firstEndPos" : 64169,
+  "secondEndPos" : 64535
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DEPRECATED",
+  "secondLabel" : "DEPRECATED",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 22399,
+  "secondPos" : 22765,
+  "firstEndPos" : 22409,
+  "secondEndPos" : 22775
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -19821,6 +20228,270 @@
   "firstEndPos" : 22868,
   "secondEndPos" : 23234
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 22873,
+  "secondPos" : 23239,
+  "firstEndPos" : 23035,
+  "secondEndPos" : 23401
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22883,
+  "secondPos" : 23249,
+  "firstEndPos" : 22901,
+  "secondEndPos" : 23267
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 22883,
+  "secondPos" : 23249,
+  "firstEndPos" : 22889,
+  "secondEndPos" : 23255
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_model",
+  "secondLabel" : "llama_model",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 22890,
+  "secondPos" : 23256,
+  "firstEndPos" : 22901,
+  "secondEndPos" : 23267
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22902,
+  "secondPos" : 23268,
+  "firstEndPos" : 23035,
+  "secondEndPos" : 23401
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22902,
+  "secondPos" : 23268,
+  "firstEndPos" : 22903,
+  "secondEndPos" : 23269
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22904,
+  "secondPos" : 23270,
+  "firstEndPos" : 23035,
+  "secondEndPos" : 23401
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_model_load_from_file",
+  "secondLabel" : "llama_model_load_from_file",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 22904,
+  "secondPos" : 23270,
+  "firstEndPos" : 22930,
+  "secondEndPos" : 23296
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 22930,
+  "secondPos" : 23296,
+  "firstEndPos" : 23035,
+  "secondEndPos" : 23401
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22930,
+  "secondPos" : 23296,
+  "firstEndPos" : 22931,
+  "secondEndPos" : 23297
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22961,
+  "secondPos" : 23327,
+  "firstEndPos" : 22984,
+  "secondEndPos" : 23350
+}, {
+  "firstType" : "const",
+  "secondType" : "const",
+  "firstLabel" : "const",
+  "secondLabel" : "const",
+  "firstParentType" : "type_qualifier",
+  "secondParentType" : "type_qualifier",
+  "firstPos" : 22961,
+  "secondPos" : 23327,
+  "firstEndPos" : 22966,
+  "secondEndPos" : 23332
+}, {
+  "firstType" : "type_qualifier",
+  "secondType" : "type_qualifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22961,
+  "secondPos" : 23327,
+  "firstEndPos" : 22966,
+  "secondEndPos" : 23332
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "char",
+  "secondLabel" : "char",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22967,
+  "secondPos" : 23333,
+  "firstEndPos" : 22971,
+  "secondEndPos" : 23337
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 22972,
+  "secondPos" : 23338,
+  "firstEndPos" : 22984,
+  "secondEndPos" : 23350
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22972,
+  "secondPos" : 23338,
+  "firstEndPos" : 22973,
+  "secondEndPos" : 23339
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "path_model",
+  "secondLabel" : "path_model",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 22974,
+  "secondPos" : 23340,
+  "firstEndPos" : 22984,
+  "secondEndPos" : 23350
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 22984,
+  "secondPos" : 23350,
+  "firstEndPos" : 22985,
+  "secondEndPos" : 23351
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 23000,
+  "secondPos" : 23366,
+  "firstEndPos" : 23034,
+  "secondEndPos" : 23400
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 23000,
+  "secondPos" : 23366,
+  "firstEndPos" : 23025,
+  "secondEndPos" : 23391
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 23000,
+  "secondPos" : 23366,
+  "firstEndPos" : 23006,
+  "secondEndPos" : 23372
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_params",
+  "secondLabel" : "llama_model_params",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 23007,
+  "secondPos" : 23373,
+  "firstEndPos" : 23025,
+  "secondEndPos" : 23391
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "params",
+  "secondLabel" : "params",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 23028,
+  "secondPos" : 23394,
+  "firstEndPos" : 23034,
+  "secondEndPos" : 23400
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 23034,
+  "secondPos" : 23400,
+  "firstEndPos" : 23035,
+  "secondEndPos" : 23401
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// Load a model from an open FILE pointer",
@@ -19831,6 +20502,50 @@
   "secondPos" : 23408,
   "firstEndPos" : 23083,
   "secondEndPos" : 23449
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 23098,
+  "secondPos" : 23464,
+  "firstEndPos" : 64056,
+  "secondEndPos" : 64422
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 23098,
+  "secondPos" : 23464,
+  "firstEndPos" : 23116,
+  "secondEndPos" : 23482
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 23098,
+  "secondPos" : 23464,
+  "firstEndPos" : 23104,
+  "secondEndPos" : 23470
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model",
+  "secondLabel" : "llama_model",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 23105,
+  "secondPos" : 23471,
+  "firstEndPos" : 23116,
+  "secondEndPos" : 23482
 }, {
   "firstType" : "pointer_declarator",
   "secondType" : "pointer_declarator",
@@ -74370,6 +75085,50 @@
   "firstEndPos" : 64056,
   "secondEndPos" : 64422
 }, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 64389,
+  "secondPos" : 64755,
+  "firstEndPos" : 64447,
+  "secondEndPos" : 64813
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 64405,
+  "secondPos" : 64771,
+  "firstEndPos" : 64411,
+  "secondEndPos" : 64777
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_clone",
+  "secondLabel" : "llama_sampler_clone",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 64428,
+  "secondPos" : 64794,
+  "firstEndPos" : 64447,
+  "secondEndPos" : 64813
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 64692,
+  "secondPos" : 65058,
+  "firstEndPos" : 65620,
+  "secondEndPos" : 65986
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// llama_sampler_chain",
@@ -74391,6 +75150,28 @@
   "secondPos" : 65092,
   "firstEndPos" : 64803,
   "secondEndPos" : 65169
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 64819,
+  "secondPos" : 65185,
+  "firstEndPos" : 64825,
+  "secondEndPos" : 65191
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_chain_init",
+  "secondLabel" : "llama_sampler_chain_init",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 64842,
+  "secondPos" : 65208,
+  "firstEndPos" : 64866,
+  "secondEndPos" : 65232
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74447,6 +75228,39 @@
   "firstEndPos" : 65402,
   "secondEndPos" : 65768
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 65417,
+  "secondPos" : 65783,
+  "firstEndPos" : 65423,
+  "secondEndPos" : 65789
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_chain_get",
+  "secondLabel" : "llama_sampler_chain_get",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 65440,
+  "secondPos" : 65806,
+  "firstEndPos" : 65463,
+  "secondEndPos" : 65829
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 65658,
+  "secondPos" : 66024,
+  "firstEndPos" : 66362,
+  "secondEndPos" : 66728
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// after removing a sampler, the chain will no longer own it, and it will not be freed when the chain is freed",
@@ -74457,6 +75271,28 @@
   "secondPos" : 66031,
   "firstEndPos" : 65775,
   "secondEndPos" : 66141
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 65790,
+  "secondPos" : 66156,
+  "firstEndPos" : 65796,
+  "secondEndPos" : 66162
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_chain_remove",
+  "secondLabel" : "llama_sampler_chain_remove",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 65813,
+  "secondPos" : 66179,
+  "firstEndPos" : 65839,
+  "secondEndPos" : 66205
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74469,6 +75305,28 @@
   "firstEndPos" : 65912,
   "secondEndPos" : 66278
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 65928,
+  "secondPos" : 66294,
+  "firstEndPos" : 65934,
+  "secondEndPos" : 66300
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_greedy",
+  "secondLabel" : "llama_sampler_init_greedy",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 65951,
+  "secondPos" : 66317,
+  "firstEndPos" : 65976,
+  "secondEndPos" : 66342
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// seed == LLAMA_DEFAULT_SEED to use a random seed.",
@@ -74479,6 +75337,28 @@
   "secondPos" : 66355,
   "firstEndPos" : 66041,
   "secondEndPos" : 66407
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66056,
+  "secondPos" : 66422,
+  "firstEndPos" : 66062,
+  "secondEndPos" : 66428
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_dist",
+  "secondLabel" : "llama_sampler_init_dist",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66079,
+  "secondPos" : 66445,
+  "firstEndPos" : 66102,
+  "secondEndPos" : 66468
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74502,6 +75382,39 @@
   "firstEndPos" : 66300,
   "secondEndPos" : 66666
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66315,
+  "secondPos" : 66681,
+  "firstEndPos" : 66321,
+  "secondEndPos" : 66687
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_top_k",
+  "secondLabel" : "llama_sampler_init_top_k",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66338,
+  "secondPos" : 66704,
+  "firstEndPos" : 66362,
+  "secondEndPos" : 66728
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 66379,
+  "secondPos" : 66745,
+  "firstEndPos" : 66585,
+  "secondEndPos" : 66951
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Nucleus sampling described in academic paper \"The Curious Case of Neural Text Degeneration\" https://arxiv.org/abs/1904.09751",
@@ -74512,6 +75425,39 @@
   "secondPos" : 66752,
   "firstEndPos" : 66523,
   "secondEndPos" : 66889
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66538,
+  "secondPos" : 66904,
+  "firstEndPos" : 66544,
+  "secondEndPos" : 66910
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_top_p",
+  "secondLabel" : "llama_sampler_init_top_p",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66561,
+  "secondPos" : 66927,
+  "firstEndPos" : 66585,
+  "secondEndPos" : 66951
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 66619,
+  "secondPos" : 66985,
+  "firstEndPos" : 66783,
+  "secondEndPos" : 67149
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74524,6 +75470,39 @@
   "firstEndPos" : 66721,
   "secondEndPos" : 67087
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66736,
+  "secondPos" : 67102,
+  "firstEndPos" : 66742,
+  "secondEndPos" : 67108
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_min_p",
+  "secondLabel" : "llama_sampler_init_min_p",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66759,
+  "secondPos" : 67125,
+  "firstEndPos" : 66783,
+  "secondEndPos" : 67149
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 66817,
+  "secondPos" : 67183,
+  "firstEndPos" : 66997,
+  "secondEndPos" : 67363
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Locally Typical Sampling implementation described in the paper https://arxiv.org/abs/2202.00666.",
@@ -74534,6 +75513,39 @@
   "secondPos" : 67190,
   "firstEndPos" : 66933,
   "secondEndPos" : 67299
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66948,
+  "secondPos" : 67314,
+  "firstEndPos" : 66954,
+  "secondEndPos" : 67320
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_typical",
+  "secondLabel" : "llama_sampler_init_typical",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 66971,
+  "secondPos" : 67337,
+  "firstEndPos" : 66997,
+  "secondEndPos" : 67363
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 67029,
+  "secondPos" : 67395,
+  "firstEndPos" : 67233,
+  "secondEndPos" : 67599
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74546,6 +75558,39 @@
   "firstEndPos" : 67172,
   "secondEndPos" : 67538
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67187,
+  "secondPos" : 67553,
+  "firstEndPos" : 67193,
+  "secondEndPos" : 67559
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_temp",
+  "secondLabel" : "llama_sampler_init_temp",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67210,
+  "secondPos" : 67576,
+  "firstEndPos" : 67233,
+  "secondEndPos" : 67599
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 67251,
+  "secondPos" : 67617,
+  "firstEndPos" : 67444,
+  "secondEndPos" : 67810
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Dynamic temperature implementation (a.k.a. entropy) described in the paper https://arxiv.org/abs/2309.02772.",
@@ -74556,6 +75601,39 @@
   "secondPos" : 67624,
   "firstEndPos" : 67379,
   "secondEndPos" : 67745
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67394,
+  "secondPos" : 67760,
+  "firstEndPos" : 67400,
+  "secondEndPos" : 67766
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_temp_ext",
+  "secondLabel" : "llama_sampler_init_temp_ext",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67417,
+  "secondPos" : 67783,
+  "firstEndPos" : 67444,
+  "secondEndPos" : 67810
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 67489,
+  "secondPos" : 67855,
+  "firstEndPos" : 67657,
+  "secondEndPos" : 68023
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74568,6 +75646,39 @@
   "firstEndPos" : 67597,
   "secondEndPos" : 67963
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67612,
+  "secondPos" : 67978,
+  "firstEndPos" : 67618,
+  "secondEndPos" : 67984
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_xtc",
+  "secondLabel" : "llama_sampler_init_xtc",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67635,
+  "secondPos" : 68001,
+  "firstEndPos" : 67657,
+  "secondEndPos" : 68023
+}, {
+  "firstType" : "ERROR",
+  "secondType" : "ERROR",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 67723,
+  "secondPos" : 68089,
+  "firstEndPos" : 79094,
+  "secondEndPos" : 79460
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Top n sigma sampling as described in academic paper \"Top-nσ: Not All Logits Are You Need\" https://arxiv.org/pdf/2411.07641",
@@ -74578,6 +75689,28 @@
   "secondPos" : 68096,
   "firstEndPos" : 67866,
   "secondEndPos" : 68232
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67880,
+  "secondPos" : 68246,
+  "firstEndPos" : 67886,
+  "secondEndPos" : 68252
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_top_n_sigma",
+  "secondLabel" : "llama_sampler_init_top_n_sigma",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 67903,
+  "secondPos" : 68269,
+  "firstEndPos" : 67933,
+  "secondEndPos" : 68299
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74645,6 +75778,28 @@
   "firstEndPos" : 69319,
   "secondEndPos" : 69685
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 69334,
+  "secondPos" : 69700,
+  "firstEndPos" : 69340,
+  "secondEndPos" : 69706
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_mirostat",
+  "secondLabel" : "llama_sampler_init_mirostat",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 69357,
+  "secondPos" : 69723,
+  "firstEndPos" : 69384,
+  "secondEndPos" : 69750
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Mirostat 2.0 algorithm described in the paper https://arxiv.org/abs/2007.14966. Uses tokens instead of words.",
@@ -74700,6 +75855,28 @@
   "firstEndPos" : 70656,
   "secondEndPos" : 71022
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 70671,
+  "secondPos" : 71037,
+  "firstEndPos" : 70677,
+  "secondEndPos" : 71043
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_mirostat_v2",
+  "secondLabel" : "llama_sampler_init_mirostat_v2",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 70694,
+  "secondPos" : 71060,
+  "firstEndPos" : 70724,
+  "secondEndPos" : 71090
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Initializes a GBNF grammar, see grammars/README.md for details.",
@@ -74744,6 +75921,39 @@
   "firstEndPos" : 71255,
   "secondEndPos" : 71621
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 71270,
+  "secondPos" : 71636,
+  "firstEndPos" : 71276,
+  "secondEndPos" : 71642
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_grammar",
+  "secondLabel" : "llama_sampler_init_grammar",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 71293,
+  "secondPos" : 71659,
+  "firstEndPos" : 71319,
+  "secondEndPos" : 71685
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DEPRECATED",
+  "secondLabel" : "DEPRECATED",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 71478,
+  "secondPos" : 71844,
+  "firstEndPos" : 71488,
+  "secondEndPos" : 71854
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// @details Lazy grammar sampler, introduced in https://github.com/ggml-org/llama.cpp/pull/9639",
@@ -74777,6 +75987,28 @@
   "firstEndPos" : 72496,
   "secondEndPos" : 72862
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 72511,
+  "secondPos" : 72877,
+  "firstEndPos" : 72517,
+  "secondEndPos" : 72883
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_grammar_lazy_patterns",
+  "secondLabel" : "llama_sampler_init_grammar_lazy_patterns",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 72534,
+  "secondPos" : 72900,
+  "firstEndPos" : 72574,
+  "secondEndPos" : 72940
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/// NOTE: Avoid using on the full vocabulary as searching for repeated tokens can become slow. For example, apply top-k or top-p sampling first.",
@@ -74787,6 +76019,28 @@
   "secondPos" : 73304,
   "firstEndPos" : 73082,
   "secondEndPos" : 73448
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 73097,
+  "secondPos" : 73463,
+  "firstEndPos" : 73103,
+  "secondEndPos" : 73469
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_penalties",
+  "secondLabel" : "llama_sampler_init_penalties",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 73120,
+  "secondPos" : 73486,
+  "firstEndPos" : 73148,
+  "secondEndPos" : 73514
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -74842,6 +76096,28 @@
   "secondPos" : 73873,
   "firstEndPos" : 73731,
   "secondEndPos" : 74097
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 73746,
+  "secondPos" : 74112,
+  "firstEndPos" : 73752,
+  "secondEndPos" : 74118
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_dry",
+  "secondLabel" : "llama_sampler_init_dry",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 73769,
+  "secondPos" : 74135,
+  "firstEndPos" : 73791,
+  "secondEndPos" : 74157
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -75085,6 +76361,50 @@
   "firstEndPos" : 75452,
   "secondEndPos" : 75818
 }, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 75467,
+  "secondPos" : 75833,
+  "firstEndPos" : 75473,
+  "secondEndPos" : 75839
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_adaptive_p",
+  "secondLabel" : "llama_sampler_init_adaptive_p",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 75490,
+  "secondPos" : 75856,
+  "firstEndPos" : 75519,
+  "secondEndPos" : 75885
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 75675,
+  "secondPos" : 76041,
+  "firstEndPos" : 75681,
+  "secondEndPos" : 76047
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_logit_bias",
+  "secondLabel" : "llama_sampler_init_logit_bias",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 75698,
+  "secondPos" : 76064,
+  "firstEndPos" : 75727,
+  "secondEndPos" : 76093
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// this sampler is meant to be used for fill-in-the-middle infilling",
@@ -75315,6 +76635,28 @@
   "secondPos" : 76877,
   "firstEndPos" : 76513,
   "secondEndPos" : 76879
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 76528,
+  "secondPos" : 76894,
+  "firstEndPos" : 76534,
+  "secondEndPos" : 76900
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "llama_sampler_init_infill",
+  "secondLabel" : "llama_sampler_init_infill",
+  "firstParentType" : "ERROR",
+  "secondParentType" : "ERROR",
+  "firstPos" : 76551,
+  "secondPos" : 76917,
+  "firstEndPos" : 76576,
+  "secondEndPos" : 76942
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

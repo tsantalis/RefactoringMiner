@@ -59,7 +59,7 @@ public class Constants {
 	public Constants(String filePath) {
         path = filePath;
 
-		if(PathFileUtils.isPythonFile(path)) {
+		if(PathFileUtils.isPythonFile(filePath)) {
 			CLASS_BLOCK = "block";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";

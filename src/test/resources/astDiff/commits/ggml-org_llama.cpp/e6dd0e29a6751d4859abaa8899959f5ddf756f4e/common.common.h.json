@@ -2617,6 +2617,17 @@
   "firstEndPos" : 1454,
   "secondEndPos" : 1473
 }, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 1460,
+  "secondPos" : 1479,
+  "firstEndPos" : 1492,
+  "secondEndPos" : 1511
+}, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
   "firstLabel" : "",
@@ -2649,6 +2660,39 @@
   "secondPos" : 1486,
   "firstEndPos" : 1485,
   "secondEndPos" : 1504
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1486,
+  "secondPos" : 1505,
+  "firstEndPos" : 1491,
+  "secondEndPos" : 1510
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 1486,
+  "secondPos" : 1505,
+  "firstEndPos" : 1487,
+  "secondEndPos" : 1506
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "ptr",
+  "secondLabel" : "ptr",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 1488,
+  "secondPos" : 1507,
+  "firstEndPos" : 1491,
+  "secondEndPos" : 1510
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -63336,6 +63380,17 @@
   "secondPos" : 41100,
   "firstEndPos" : 41216,
   "secondEndPos" : 41101
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 41221,
+  "secondPos" : 41106,
+  "firstEndPos" : 41233,
+  "secondEndPos" : 41118
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",

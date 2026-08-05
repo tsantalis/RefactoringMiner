@@ -21,7 +21,8 @@ public class Context {
           constants.CLASS_INSTANCE_CREATION, constants.EXPRESSION_STATEMENT, constants.IF_STATEMENT,
           constants.RETURN_STATEMENT, constants.SUPER_CONSTRUCTOR_INVOCATION,
           constants.FIELD_DECLARATION, constants.TAG_ELEMENT, constants.ENHANCED_FOR_STATEMENT,
-          constants.RECORD_COMPONENT, constants.METHOD_DECLARATION, constants.METHOD_DECLARATION);
+          constants.RECORD_COMPONENT, constants.METHOD_DECLARATION, constants.METHOD_DECLARATION,
+          constants.SUBSCRIPT, "binary_operator", constants.ARGUMENT_LIST, constants.PARAMETERS);
     }
     if (treeType.equals(constants.RECORD_COMPONENT)) {
       return List.of(constants.METHOD_DECLARATION);
@@ -148,6 +149,10 @@ public class Context {
     }
     if (treeType.equals("slice")) {
       return List.of(constants.SUBSCRIPT);
+    }
+    if (treeType.equals("integer")) {
+      return List.of(constants.ARGUMENT_LIST, constants.METHOD_INVOCATION, "binary_operator",
+              constants.EXPRESSION_STATEMENT, constants.METHOD_DECLARATION, constants.SUBSCRIPT);
     }
     return null;
   }

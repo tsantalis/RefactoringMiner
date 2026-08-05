@@ -96227,6 +96227,39 @@
   "firstEndPos" : 39558,
   "secondEndPos" : 39622
 }, {
+  "firstType" : "pointer_expression",
+  "secondType" : "pointer_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_range_loop",
+  "secondParentType" : "for_range_loop",
+  "firstPos" : 39559,
+  "secondPos" : 39623,
+  "firstEndPos" : 39572,
+  "secondEndPos" : 39636
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 39559,
+  "secondPos" : 39623,
+  "firstEndPos" : 39560,
+  "secondEndPos" : 39624
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "imatrix_data",
+  "secondLabel" : "imatrix_data",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 39560,
+  "secondPos" : 39624,
+  "firstEndPos" : 39572,
+  "secondEndPos" : 39636
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -108821,6 +108854,39 @@
   "secondPos" : 43483,
   "firstEndPos" : 43423,
   "secondEndPos" : 43487
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_range_loop",
+  "secondParentType" : "for_range_loop",
+  "firstPos" : 43424,
+  "secondPos" : 43488,
+  "firstEndPos" : 43428,
+  "secondEndPos" : 43492
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 43424,
+  "secondPos" : 43488,
+  "firstEndPos" : 43425,
+  "secondEndPos" : 43489
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "it",
+  "secondLabel" : "it",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 43426,
+  "secondPos" : 43490,
+  "firstEndPos" : 43428,
+  "secondEndPos" : 43492
 }, {
   "firstType" : ":",
   "secondType" : ":",

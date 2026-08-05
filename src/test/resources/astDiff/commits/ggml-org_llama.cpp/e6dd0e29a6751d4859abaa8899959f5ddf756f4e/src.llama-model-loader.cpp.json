@@ -127489,6 +127489,39 @@
   "firstEndPos" : 46315,
   "secondEndPos" : 45875
 }, {
+  "firstType" : "pointer_expression",
+  "secondType" : "pointer_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_range_loop",
+  "secondParentType" : "for_range_loop",
+  "firstPos" : 46316,
+  "secondPos" : 45876,
+  "firstEndPos" : 46326,
+  "secondEndPos" : 45886
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 46316,
+  "secondPos" : 45876,
+  "firstEndPos" : 46317,
+  "secondEndPos" : 45877
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "buft_list",
+  "secondLabel" : "buft_list",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 46317,
+  "secondPos" : 45877,
+  "firstEndPos" : 46326,
+  "secondEndPos" : 45886
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -192587,6 +192620,39 @@
   "firstEndPos" : 71564,
   "secondEndPos" : 71124
 }, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_range_loop",
+  "secondParentType" : "for_range_loop",
+  "firstPos" : 71565,
+  "secondPos" : 71125,
+  "firstEndPos" : 71572,
+  "secondEndPos" : 71132
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 71565,
+  "secondPos" : 71125,
+  "firstEndPos" : 71566,
+  "secondEndPos" : 71126
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "event",
+  "secondLabel" : "event",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 71567,
+  "secondPos" : 71127,
+  "firstEndPos" : 71572,
+  "secondEndPos" : 71132
+}, {
   "firstType" : ":",
   "secondType" : ":",
   "firstLabel" : ":",
@@ -192883,6 +192949,39 @@
   "secondPos" : 71247,
   "firstEndPos" : 71691,
   "secondEndPos" : 71251
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_range_loop",
+  "secondParentType" : "for_range_loop",
+  "firstPos" : 71692,
+  "secondPos" : 71252,
+  "firstEndPos" : 71697,
+  "secondEndPos" : 71257
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 71692,
+  "secondPos" : 71252,
+  "firstEndPos" : 71693,
+  "secondEndPos" : 71253
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "buf",
+  "secondLabel" : "buf",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 71694,
+  "secondPos" : 71254,
+  "firstEndPos" : 71697,
+  "secondEndPos" : 71257
 }, {
   "firstType" : ":",
   "secondType" : ":",

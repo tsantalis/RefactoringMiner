@@ -649,4 +649,5 @@ public class Constants {
     public final String NOEXCEPT = "noexcept";
     public final String OPERATOR_CAST = "operator_cast";
     public final String TEMPLATE_INSTANTIATION = "template_instantiation";
+    public final String POINTER_EXPRESSION = "pointer_expression";
 }

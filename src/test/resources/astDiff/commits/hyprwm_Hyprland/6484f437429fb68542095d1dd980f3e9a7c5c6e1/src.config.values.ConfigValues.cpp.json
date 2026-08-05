@@ -1869,6 +1869,39 @@
   "firstEndPos" : 394,
   "secondEndPos" : 394
 }, {
+  "firstType" : "pointer_expression",
+  "secondType" : "pointer_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_range_loop",
+  "secondParentType" : "for_range_loop",
+  "firstPos" : 395,
+  "secondPos" : 395,
+  "firstEndPos" : 397,
+  "secondEndPos" : 397
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 395,
+  "secondPos" : 395,
+  "firstEndPos" : 396,
+  "secondEndPos" : 396
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "x",
+  "secondLabel" : "x",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 396,
+  "secondPos" : 396,
+  "firstEndPos" : 397,
+  "secondEndPos" : 397
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",

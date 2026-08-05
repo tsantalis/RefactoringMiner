@@ -1095,6 +1095,17 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (templateTypes != null) {
                 mappingStore.addMappingRecursively(templateTypes.first,templateTypes.second);
             }
+            if(parent1.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) && parent2.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
+                mappingStore.addMapping(parent1.getParent(),parent2.getParent());
+                com.github.gumtreediff.utils.Pair<Tree, Tree> templates = Helpers.findPairOfType(parent1.getParent(), parent2.getParent(),LANG1.TEMPLATE_KEYWORD,LANG2.TEMPLATE_KEYWORD);
+                if (templates != null) {
+                    mappingStore.addMapping(templates.first,templates.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree, Tree> templateParameterLists = Helpers.findPairOfType(parent1.getParent(), parent2.getParent(),LANG1.TEMPLATE_PARAMETER_LIST,LANG2.TEMPLATE_PARAMETER_LIST);
+                if (templateParameterLists != null) {
+                    mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
+                }
+            }
         }
         else if(parent1.getType().name.equals(LANG1.FIELD_DECLARATION) && parent2.getType().name.equals(LANG2.FIELD_DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);

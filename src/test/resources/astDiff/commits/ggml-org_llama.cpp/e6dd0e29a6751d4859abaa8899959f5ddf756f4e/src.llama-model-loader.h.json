@@ -9569,6 +9569,50 @@
   "firstEndPos" : 4112,
   "secondEndPos" : 4112
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 4680,
+  "secondPos" : 4664,
+  "firstEndPos" : 4842,
+  "secondEndPos" : 4826
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 4680,
+  "secondPos" : 4664,
+  "firstEndPos" : 4688,
+  "secondEndPos" : 4672
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 4688,
+  "secondPos" : 4672,
+  "firstEndPos" : 4700,
+  "secondEndPos" : 4684
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 4688,
+  "secondPos" : 4672,
+  "firstEndPos" : 4689,
+  "secondEndPos" : 4673
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -9601,6 +9645,17 @@
   "secondPos" : 4682,
   "firstEndPos" : 4699,
   "secondEndPos" : 4683
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 4699,
+  "secondPos" : 4683,
+  "firstEndPos" : 4700,
+  "secondEndPos" : 4684
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -10251,6 +10306,50 @@
   "firstEndPos" : 4842,
   "secondEndPos" : 4826
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 4848,
+  "secondPos" : 4832,
+  "firstEndPos" : 5002,
+  "secondEndPos" : 4986
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 4848,
+  "secondPos" : 4832,
+  "firstEndPos" : 4856,
+  "secondEndPos" : 4840
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 4856,
+  "secondPos" : 4840,
+  "firstEndPos" : 4868,
+  "secondEndPos" : 4852
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 4856,
+  "secondPos" : 4840,
+  "firstEndPos" : 4857,
+  "secondEndPos" : 4841
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -10283,6 +10382,17 @@
   "secondPos" : 4850,
   "firstEndPos" : 4867,
   "secondEndPos" : 4851
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 4867,
+  "secondPos" : 4851,
+  "firstEndPos" : 4868,
+  "secondEndPos" : 4852
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -10878,6 +10988,50 @@
   "firstEndPos" : 5002,
   "secondEndPos" : 4986
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5008,
+  "secondPos" : 4992,
+  "firstEndPos" : 5118,
+  "secondEndPos" : 5102
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5008,
+  "secondPos" : 4992,
+  "firstEndPos" : 5016,
+  "secondEndPos" : 5000
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5016,
+  "secondPos" : 5000,
+  "firstEndPos" : 5028,
+  "secondEndPos" : 5012
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5016,
+  "secondPos" : 5000,
+  "firstEndPos" : 5017,
+  "secondEndPos" : 5001
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -10910,6 +11064,17 @@
   "secondPos" : 5010,
   "firstEndPos" : 5027,
   "secondEndPos" : 5011
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5027,
+  "secondPos" : 5011,
+  "firstEndPos" : 5028,
+  "secondEndPos" : 5012
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -11340,6 +11505,50 @@
   "firstEndPos" : 5118,
   "secondEndPos" : 5102
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5124,
+  "secondPos" : 5108,
+  "firstEndPos" : 5254,
+  "secondEndPos" : 5238
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5124,
+  "secondPos" : 5108,
+  "firstEndPos" : 5132,
+  "secondEndPos" : 5116
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5132,
+  "secondPos" : 5116,
+  "firstEndPos" : 5158,
+  "secondEndPos" : 5142
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5132,
+  "secondPos" : 5116,
+  "firstEndPos" : 5133,
+  "secondEndPos" : 5117
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -11373,6 +11582,17 @@
   "firstEndPos" : 5143,
   "secondEndPos" : 5127
 }, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5143,
+  "secondPos" : 5127,
+  "firstEndPos" : 5144,
+  "secondEndPos" : 5128
+}, {
   "firstType" : "parameter_declaration",
   "secondType" : "parameter_declaration",
   "firstLabel" : "",
@@ -11405,6 +11625,17 @@
   "secondPos" : 5136,
   "firstEndPos" : 5157,
   "secondEndPos" : 5141
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5157,
+  "secondPos" : 5141,
+  "firstEndPos" : 5158,
+  "secondEndPos" : 5142
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -11868,6 +12099,50 @@
   "firstEndPos" : 5254,
   "secondEndPos" : 5238
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5260,
+  "secondPos" : 5244,
+  "firstEndPos" : 5349,
+  "secondEndPos" : 5333
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5260,
+  "secondPos" : 5244,
+  "firstEndPos" : 5268,
+  "secondEndPos" : 5252
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5268,
+  "secondPos" : 5252,
+  "firstEndPos" : 5280,
+  "secondEndPos" : 5264
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5268,
+  "secondPos" : 5252,
+  "firstEndPos" : 5269,
+  "secondEndPos" : 5253
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -11900,6 +12175,17 @@
   "secondPos" : 5262,
   "firstEndPos" : 5279,
   "secondEndPos" : 5263
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5279,
+  "secondPos" : 5263,
+  "firstEndPos" : 5280,
+  "secondEndPos" : 5264
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -12176,6 +12462,50 @@
   "firstEndPos" : 5349,
   "secondEndPos" : 5333
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5355,
+  "secondPos" : 5339,
+  "firstEndPos" : 5452,
+  "secondEndPos" : 5436
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5355,
+  "secondPos" : 5339,
+  "firstEndPos" : 5363,
+  "secondEndPos" : 5347
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5363,
+  "secondPos" : 5347,
+  "firstEndPos" : 5375,
+  "secondEndPos" : 5359
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5363,
+  "secondPos" : 5347,
+  "firstEndPos" : 5364,
+  "secondEndPos" : 5348
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -12208,6 +12538,17 @@
   "secondPos" : 5357,
   "firstEndPos" : 5374,
   "secondEndPos" : 5358
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5374,
+  "secondPos" : 5358,
+  "firstEndPos" : 5375,
+  "secondEndPos" : 5359
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -12539,6 +12880,50 @@
   "firstEndPos" : 5452,
   "secondEndPos" : 5436
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5458,
+  "secondPos" : 5442,
+  "firstEndPos" : 5547,
+  "secondEndPos" : 5531
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5458,
+  "secondPos" : 5442,
+  "firstEndPos" : 5466,
+  "secondEndPos" : 5450
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5466,
+  "secondPos" : 5450,
+  "firstEndPos" : 5478,
+  "secondEndPos" : 5462
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5466,
+  "secondPos" : 5450,
+  "firstEndPos" : 5467,
+  "secondEndPos" : 5451
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -12571,6 +12956,17 @@
   "secondPos" : 5460,
   "firstEndPos" : 5477,
   "secondEndPos" : 5461
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5477,
+  "secondPos" : 5461,
+  "firstEndPos" : 5478,
+  "secondEndPos" : 5462
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -12847,6 +13243,50 @@
   "firstEndPos" : 5547,
   "secondEndPos" : 5531
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5553,
+  "secondPos" : 5537,
+  "firstEndPos" : 5702,
+  "secondEndPos" : 5686
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5553,
+  "secondPos" : 5537,
+  "firstEndPos" : 5561,
+  "secondEndPos" : 5545
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5561,
+  "secondPos" : 5545,
+  "firstEndPos" : 5587,
+  "secondEndPos" : 5571
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5561,
+  "secondPos" : 5545,
+  "firstEndPos" : 5562,
+  "secondEndPos" : 5546
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -12880,6 +13320,17 @@
   "firstEndPos" : 5572,
   "secondEndPos" : 5556
 }, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5572,
+  "secondPos" : 5556,
+  "firstEndPos" : 5573,
+  "secondEndPos" : 5557
+}, {
   "firstType" : "parameter_declaration",
   "secondType" : "parameter_declaration",
   "firstLabel" : "",
@@ -12912,6 +13363,17 @@
   "secondPos" : 5565,
   "firstEndPos" : 5586,
   "secondEndPos" : 5570
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5586,
+  "secondPos" : 5570,
+  "firstEndPos" : 5587,
+  "secondEndPos" : 5571
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",
@@ -13419,6 +13881,50 @@
   "firstEndPos" : 5702,
   "secondEndPos" : 5686
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5708,
+  "secondPos" : 5692,
+  "firstEndPos" : 5816,
+  "secondEndPos" : 5800
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5708,
+  "secondPos" : 5692,
+  "firstEndPos" : 5716,
+  "secondEndPos" : 5700
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 5716,
+  "secondPos" : 5700,
+  "firstEndPos" : 5728,
+  "secondEndPos" : 5712
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5716,
+  "secondPos" : 5700,
+  "firstEndPos" : 5717,
+  "secondEndPos" : 5701
+}, {
   "firstType" : "type_parameter_declaration",
   "secondType" : "type_parameter_declaration",
   "firstLabel" : "",
@@ -13451,6 +13957,17 @@
   "secondPos" : 5710,
   "firstEndPos" : 5727,
   "secondEndPos" : 5711
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_parameter_list",
+  "secondParentType" : "template_parameter_list",
+  "firstPos" : 5727,
+  "secondPos" : 5711,
+  "firstEndPos" : 5728,
+  "secondEndPos" : 5712
 }, {
   "firstType" : "declaration",
   "secondType" : "declaration",

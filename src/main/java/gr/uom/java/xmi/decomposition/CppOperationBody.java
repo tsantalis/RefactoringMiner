@@ -30,6 +30,7 @@ import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTArrayDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCatchHandler;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
@@ -159,7 +160,8 @@ public class CppOperationBody extends OperationBody {
 				}
 			}
 			else if(declarationStatement.getDeclaration() instanceof IASTSimpleDeclaration simpleDeclaration &&
-					(simpleDeclaration.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier || simpleDeclaration.getDeclSpecifier() instanceof ICPPASTEnumerationSpecifier)) {
+					(simpleDeclaration.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier || simpleDeclaration.getDeclSpecifier() instanceof ICPPASTEnumerationSpecifier) &&
+					!(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof ICPPASTArrayDeclarator)) {
 				nestedSimpleDeclarations.add(simpleDeclaration);
 			}
 			else {

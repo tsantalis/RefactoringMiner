@@ -24,12 +24,10 @@ public class Constants {
 	}
 
     public boolean isMethod(String treeType) {
-        return treeType.equals(METHOD_DECLARATION) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(DECORATED_METHOD) ||
-                treeType.equals(ANNOTATION_TYPE_MEMBER_DECLARATION) || treeType.equals(GETTER) || treeType.equals(SETTER) ||
-                treeType.equals(LEXICAL_DECLARATION) || treeType.equals(METHOD_DEFINITION) || treeType.equals(METHOD_SIGNATURE) ||
-                treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(GENERATOR_FUNCTION_DECLARATION) || treeType.equals(PAIR) ||
-                treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(FUNCTION_DECLARATOR) ||
-                treeType.equals(REFERENCE_DECLARATOR) || treeType.equals(POINTER_DECLARATOR) || treeType.equals(FRIEND_DECLARATION);
+        return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) ||
+                treeType.equals(METHOD_SIGNATURE) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
+                treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
+                treeType.equals(FRIEND_DECLARATION);
     }
 
     // TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name (VARIABLE_DECLARATION)
@@ -40,11 +38,11 @@ public class Constants {
                 treeType.equals(FUNCTION_DECLARATOR) || treeType.equals(REFERENCE_DECLARATOR);
     }
 
-    public boolean isEmpty(String treeType) {
+    private boolean isEmpty(String treeType) {
         return treeType.equals(EMPTY_STATEMENT);
     }
 
-    public boolean isImportExport(String treeType) {
+    private boolean isImportExport(String treeType) {
         return treeType.equals(IMPORT_DECLARATION) || treeType.equals(IMPORT_FROM_STATEMENT) || treeType.equals(FUTURE_IMPORT_STATEMENT) ||
                 treeType.equals(RELATIVE_IMPORT) || treeType.equals(IMPORT_LIST) || treeType.equals(IMPORT_IDENTIFIER) ||
                 treeType.equals(EXPORT_STATEMENT) || treeType.equals(NAMESPACE_IMPORT) || treeType.equals(EXPORT_KEYWORD) ||
@@ -53,8 +51,9 @@ public class Constants {
                 treeType.equals(IMPORT_CLAUSE) || treeType.equals(NAMED_IMPORTS);
     }
 
-    public boolean isPackageDeclaration(String treeType) {
-        return treeType.equals(PACKAGE_DECLARATION) && !PathFileUtils.isCppFile(path);
+    public boolean isSemanticallyInsignificant(String treeType) {
+        return (treeType.equals(PACKAGE_DECLARATION) && !PathFileUtils.isCppFile(path)) ||
+                isEmpty(treeType) || isImportExport(treeType);
     }
 
 	public Constants(String filePath) {

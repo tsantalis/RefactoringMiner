@@ -123,7 +123,7 @@ public class HunkNetwork {
           return precedents.stream()
               .noneMatch(precedent -> {
                 String treeType = precedent.getType().name;
-                return constants.isEmpty(treeType) || constants.isImportExport(treeType) || constants.isPackageDeclaration(treeType);
+                return constants.isSemanticallyInsignificant(treeType);
               });
         }).collect(
             Collectors.toSet());

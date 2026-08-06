@@ -397,9 +397,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
                 if(srcStatement.getType().name.equals(LANG1.FRIEND_KEYWORD))
                     srcStatement = srcStatement.getParent();
+                if(srcStatement.getType().name.equals(LANG1.STRUCT_KEYWORD))
+                    srcStatement = TreeUtilFunctions.getParentUntilType(srcStatement, LANG1.METHOD_DECLARATION);
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
                 if(dstStatement.getType().name.equals(LANG2.FRIEND_KEYWORD))
                     dstStatement = dstStatement.getParent();
+                if(dstStatement.getType().name.equals(LANG2.STRUCT_KEYWORD))
+                    dstStatement = TreeUtilFunctions.getParentUntilType(dstStatement, LANG2.METHOD_DECLARATION);
                 mappingStore.addMappingRecursively(srcStatement, dstStatement);
                 if(srcStatement.getParent() != null && dstStatement.getParent() != null) {
                     mappingStore.addMapping(srcStatement.getParent(), dstStatement.getParent());

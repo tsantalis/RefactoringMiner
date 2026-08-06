@@ -545,6 +545,9 @@ public class CppFileProcessor {
 			if(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof IASTFunctionDeclarator functionDeclarator) {
 				fullName = fullName + "." + functionDeclarator.getName().toString();
 			}
+			else if(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof IASTDeclarator declarator && declarator.getName() != null && !declarator.getName().toString().isBlank()) {
+				fullName = fullName + "." + declarator.getName().toString();
+			}
 			String type = tokens.length > 1 ? tokens[0] : "";
 			if(tokens[0].equals("const"))
 				type = type + " " + tokens[1];

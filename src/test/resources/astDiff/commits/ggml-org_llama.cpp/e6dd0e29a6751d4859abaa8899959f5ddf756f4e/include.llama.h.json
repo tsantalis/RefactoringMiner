@@ -15179,6 +15179,72 @@
   "firstEndPos" : 16126,
   "secondEndPos" : 16492
 }, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 16135,
+  "secondPos" : 16501,
+  "firstEndPos" : 16157,
+  "secondEndPos" : 16523
+}, {
+  "firstType" : "enum_specifier",
+  "secondType" : "enum_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 16135,
+  "secondPos" : 16501,
+  "firstEndPos" : 16149,
+  "secondEndPos" : 16515
+}, {
+  "firstType" : "enum",
+  "secondType" : "enum",
+  "firstLabel" : "enum",
+  "secondLabel" : "enum",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 16135,
+  "secondPos" : 16501,
+  "firstEndPos" : 16139,
+  "secondEndPos" : 16505
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ggml_type",
+  "secondLabel" : "ggml_type",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 16140,
+  "secondPos" : 16506,
+  "firstEndPos" : 16149,
+  "secondEndPos" : 16515
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "type_v",
+  "secondLabel" : "type_v",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 16150,
+  "secondPos" : 16516,
+  "firstEndPos" : 16156,
+  "secondEndPos" : 16522
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 16156,
+  "secondPos" : 16522,
+  "firstEndPos" : 16157,
+  "secondEndPos" : 16523
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// data type for V cache [EXPERIMENTAL]",
@@ -16828,6 +16894,72 @@
   "secondPos" : 19060,
   "firstEndPos" : 18715,
   "secondEndPos" : 19081
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 18724,
+  "secondPos" : 19090,
+  "firstEndPos" : 18760,
+  "secondEndPos" : 19126
+}, {
+  "firstType" : "enum_specifier",
+  "secondType" : "enum_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 18724,
+  "secondPos" : 19090,
+  "firstEndPos" : 18738,
+  "secondEndPos" : 19104
+}, {
+  "firstType" : "enum",
+  "secondType" : "enum",
+  "firstLabel" : "enum",
+  "secondLabel" : "enum",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 18724,
+  "secondPos" : 19090,
+  "firstEndPos" : 18728,
+  "secondEndPos" : 19094
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ggml_type",
+  "secondLabel" : "ggml_type",
+  "firstParentType" : "enum_specifier",
+  "secondParentType" : "enum_specifier",
+  "firstPos" : 18729,
+  "secondPos" : 19095,
+  "firstEndPos" : 18738,
+  "secondEndPos" : 19104
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "token_embedding_type",
+  "secondLabel" : "token_embedding_type",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 18739,
+  "secondPos" : 19105,
+  "firstEndPos" : 18759,
+  "secondEndPos" : 19125
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 18759,
+  "secondPos" : 19125,
+  "firstEndPos" : 18760,
+  "secondEndPos" : 19126
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

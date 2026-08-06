@@ -407,6 +407,25 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(srcOperationNode.getParent().getType().name.equals(LANG1.FIELD_DECLARATION) && dstOperationNode.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
                     mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
                 }
+                else if(srcOperationNode.getParent().getType().name.equals(LANG1.DECLARATION) && dstOperationNode.getParent().getType().name.equals(LANG2.DECLARATION)) {
+                    mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> type_qualifiers = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TYPE_QUALIFIER,LANG2.TYPE_QUALIFIER);
+                    if (type_qualifiers != null) {
+                        mappingStore.addMappingRecursively(type_qualifiers.first,type_qualifiers.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> type_identifiers = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TYPE_IDENTIFIER,LANG2.TYPE_IDENTIFIER);
+                    if (type_identifiers != null) {
+                        mappingStore.addMappingRecursively(type_identifiers.first,type_identifiers.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> primitive_types = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
+                    if (primitive_types != null) {
+                        mappingStore.addMappingRecursively(primitive_types.first,primitive_types.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> errors = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.ERROR,LANG2.ERROR);
+                    if (errors != null) {
+                        mappingStore.addMappingRecursively(errors.first,errors.second);
+                    }
+                }
                 int index1 = srcOperationNode.getParent().getChildPosition(srcOperationNode);
                 int index2 = dstOperationNode.getParent().getChildPosition(dstOperationNode);
                 if(srcOperationNode.getParent().getChildren().size() > index1+1 && srcOperationNode.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&

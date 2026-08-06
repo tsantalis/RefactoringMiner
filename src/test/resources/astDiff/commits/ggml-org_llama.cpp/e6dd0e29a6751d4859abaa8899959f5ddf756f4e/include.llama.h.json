@@ -12638,6 +12638,83 @@
   "firstEndPos" : 11967,
   "secondEndPos" : 12481
 }, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 11968,
+  "secondPos" : 12482,
+  "firstEndPos" : 12007,
+  "secondEndPos" : 12521
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 11968,
+  "secondPos" : 12482,
+  "firstEndPos" : 11974,
+  "secondEndPos" : 12488
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_tensor_buft_override",
+  "secondLabel" : "llama_model_tensor_buft_override",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 11975,
+  "secondPos" : 12489,
+  "firstEndPos" : 12007,
+  "secondEndPos" : 12521
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 12008,
+  "secondPos" : 12522,
+  "firstEndPos" : 12031,
+  "secondEndPos" : 12545
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 12008,
+  "secondPos" : 12522,
+  "firstEndPos" : 12009,
+  "secondEndPos" : 12523
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "tensor_buft_overrides",
+  "secondLabel" : "tensor_buft_overrides",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 12010,
+  "secondPos" : 12524,
+  "firstEndPos" : 12031,
+  "secondEndPos" : 12545
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 12031,
+  "secondPos" : 12545,
+  "firstEndPos" : 12032,
+  "secondEndPos" : 12546
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -13121,6 +13198,83 @@
   "secondPos" : 13527,
   "firstEndPos" : 12951,
   "secondEndPos" : 13532
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 12952,
+  "secondPos" : 13533,
+  "firstEndPos" : 12982,
+  "secondEndPos" : 13563
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 12952,
+  "secondPos" : 13533,
+  "firstEndPos" : 12958,
+  "secondEndPos" : 13539
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_kv_override",
+  "secondLabel" : "llama_model_kv_override",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 12959,
+  "secondPos" : 13540,
+  "firstEndPos" : 12982,
+  "secondEndPos" : 13563
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 12983,
+  "secondPos" : 13564,
+  "firstEndPos" : 12997,
+  "secondEndPos" : 13578
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 12983,
+  "secondPos" : 13564,
+  "firstEndPos" : 12984,
+  "secondEndPos" : 13565
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "kv_overrides",
+  "secondLabel" : "kv_overrides",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 12985,
+  "secondPos" : 13566,
+  "firstEndPos" : 12997,
+  "secondEndPos" : 13578
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 12997,
+  "secondPos" : 13578,
+  "firstEndPos" : 12998,
+  "secondEndPos" : 13579
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -17335,6 +17489,83 @@
   "firstEndPos" : 19556,
   "secondEndPos" : 19922
 }, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19557,
+  "secondPos" : 19923,
+  "firstEndPos" : 19588,
+  "secondEndPos" : 19954
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 19557,
+  "secondPos" : 19923,
+  "firstEndPos" : 19563,
+  "secondEndPos" : 19929
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_imatrix_data",
+  "secondLabel" : "llama_model_imatrix_data",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 19564,
+  "secondPos" : 19930,
+  "firstEndPos" : 19588,
+  "secondEndPos" : 19954
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19589,
+  "secondPos" : 19955,
+  "firstEndPos" : 19598,
+  "secondEndPos" : 19964
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 19589,
+  "secondPos" : 19955,
+  "firstEndPos" : 19590,
+  "secondEndPos" : 19956
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "imatrix",
+  "secondLabel" : "imatrix",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 19591,
+  "secondPos" : 19957,
+  "firstEndPos" : 19598,
+  "secondEndPos" : 19964
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19598,
+  "secondPos" : 19964,
+  "firstEndPos" : 19599,
+  "secondEndPos" : 19965
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// pointer to importance matrix data",
@@ -17379,6 +17610,83 @@
   "firstEndPos" : 19661,
   "secondEndPos" : 20027
 }, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19662,
+  "secondPos" : 20028,
+  "firstEndPos" : 19692,
+  "secondEndPos" : 20058
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 19662,
+  "secondPos" : 20028,
+  "firstEndPos" : 19668,
+  "secondEndPos" : 20034
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_kv_override",
+  "secondLabel" : "llama_model_kv_override",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 19669,
+  "secondPos" : 20035,
+  "firstEndPos" : 19692,
+  "secondEndPos" : 20058
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19693,
+  "secondPos" : 20059,
+  "firstEndPos" : 19707,
+  "secondEndPos" : 20073
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 19693,
+  "secondPos" : 20059,
+  "firstEndPos" : 19694,
+  "secondEndPos" : 20060
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "kv_overrides",
+  "secondLabel" : "kv_overrides",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 19695,
+  "secondPos" : 20061,
+  "firstEndPos" : 19707,
+  "secondEndPos" : 20073
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19707,
+  "secondPos" : 20073,
+  "firstEndPos" : 19708,
+  "secondEndPos" : 20074
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// pointer to kv overrides",
@@ -17422,6 +17730,83 @@
   "secondPos" : 20117,
   "firstEndPos" : 19756,
   "secondEndPos" : 20122
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19757,
+  "secondPos" : 20123,
+  "firstEndPos" : 19791,
+  "secondEndPos" : 20157
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 19757,
+  "secondPos" : 20123,
+  "firstEndPos" : 19763,
+  "secondEndPos" : 20129
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_tensor_override",
+  "secondLabel" : "llama_model_tensor_override",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 19764,
+  "secondPos" : 20130,
+  "firstEndPos" : 19791,
+  "secondEndPos" : 20157
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19792,
+  "secondPos" : 20158,
+  "firstEndPos" : 19806,
+  "secondEndPos" : 20172
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 19792,
+  "secondPos" : 20158,
+  "firstEndPos" : 19793,
+  "secondEndPos" : 20159
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "tt_overrides",
+  "secondLabel" : "tt_overrides",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 19794,
+  "secondPos" : 20160,
+  "firstEndPos" : 19806,
+  "secondEndPos" : 20172
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 19806,
+  "secondPos" : 20172,
+  "firstEndPos" : 19807,
+  "secondEndPos" : 20173
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

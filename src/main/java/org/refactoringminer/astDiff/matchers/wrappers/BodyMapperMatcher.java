@@ -245,6 +245,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONSTEXPR, LANG2.CONSTEXPR);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
                 Pair<Tree, Tree> conditionClauses = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONDITION_CLAUSE, LANG2.CONDITION_CLAUSE);
                 if (conditionClauses != null) {
                     mappingStore.addMapping(conditionClauses.first,conditionClauses.second);

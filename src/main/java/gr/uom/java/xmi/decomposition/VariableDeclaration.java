@@ -907,9 +907,19 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 					}
 				}
 				else if(variable.getString().equals(variableName) || (isAttribute && variable.getString().equals(LANG.THIS_DOT + variableName))) {
-					scope.addStatementUsingVariable(statement);
-					matchFound = true;
-					break;
+					boolean isDeclarationVariable = false;
+					//This is a python-specific handling to avoid considering variable declarations/assignments as variable accesses
+					for(VariableDeclaration vd : statement.getVariableDeclarations()) {
+						if(vd.getLocationInfo().getStartOffset() == variable.getLocationInfo().getStartOffset()) {
+							isDeclarationVariable = true;
+							break;
+						}
+					}
+					if(!isDeclarationVariable) {
+						scope.addStatementUsingVariable(statement);
+						matchFound = true;
+						break;
+					}
 				}
 			}
 			if(!matchFound) {

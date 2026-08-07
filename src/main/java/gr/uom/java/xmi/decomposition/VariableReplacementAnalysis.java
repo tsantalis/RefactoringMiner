@@ -805,6 +805,34 @@ public class VariableReplacementAnalysis {
 		}
 		Set<AbstractCodeFragment> statementsInScope1 = removedVariable.getStatementsInScopeUsingVariable();
 		Set<AbstractCodeFragment> statementsInScope2 = addedVariable.getStatementsInScopeUsingVariable();
+		if(operation1 instanceof UMLOperation op1 && operation2 instanceof UMLOperation op2 &&
+				op1.getNestedOperations().size() > 0 && op2.getNestedOperations().size() > 0) {
+			for(UMLOperation nestedOp1 : op1.getNestedOperations()) {
+				for(UMLOperation nestedOp2 : op2.getNestedOperations()) {
+					if(nestedOp1.getBody() != null && nestedOp2.getBody() != null && nestedOp1.equalSignature(nestedOp2)) {
+						List<AbstractStatement> allStatements1 = nestedOp1.getBody().getCompositeStatement().getAllStatements();
+						List<AbstractStatement> allStatements2 = nestedOp2.getBody().getCompositeStatement().getAllStatements();
+						boolean match1 = false;
+						for(AbstractCodeFragment fragment1 : statementsInScope1) {
+							if(allStatements1.contains(fragment1)) {
+								match1 = true;
+								break;
+							}
+						}
+						boolean match2 = false;
+						for(AbstractCodeFragment fragment2 : statementsInScope2) {
+							if(allStatements2.contains(fragment2)) {
+								match2 = true;
+								break;
+							}
+						}
+						if(match1 && match2) {
+							return true;
+						}
+					}
+				}
+			}
+		}
 		for(AbstractCodeMapping mapping : mappings) {
 			if(statementsInScope1.contains(mapping.getFragment1()) && statementsInScope2.contains(mapping.getFragment2())) {
 				return true;

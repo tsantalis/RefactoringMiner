@@ -3285,11 +3285,11 @@ public abstract class UMLAbstractClassDiff {
 								removedOperations.remove(removedOperation);
 								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
 								mapDataProviderValues(refactoring, addedOperation, removedOperations);
-								if(mapperSet.size() == 1) {
+								if(mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
 									this.addOperationBodyMapper(mapper);
 								}
 							}
-							if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1) {
+							if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
 								addedOperationIterator.remove();
 							}
 						}

@@ -103788,6 +103788,13 @@
         "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Code",
+        "description": "Move Code from public DefaultHeaders(keyComparator Comparator<? super T>, valueComparator Comparator<? super T>, hashCodeGenerator HashCodeGenerator<T>, valueConverter ValueConverter<T>, nameConverter NameConverter<T>, bucketSize int, initialMapSize int) to public add(headers Headers<? extends T>) : Headers<T> in class io.netty.handler.codec.DefaultHeaders",
+        "comment": null,
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 2532
 }, {

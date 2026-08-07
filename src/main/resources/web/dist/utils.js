@@ -38,6 +38,8 @@ function getLanguage(config) {
             return "cpp";
         case "hpp":
             return "cpp";
+        case "cc":
+            return "cpp";
         default:
             return undefined;
     }

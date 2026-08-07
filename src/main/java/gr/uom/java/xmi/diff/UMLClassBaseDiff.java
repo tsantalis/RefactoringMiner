@@ -609,7 +609,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.nonMappedElementsT2() > 0) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, mapper, this);
-						if(moveCodeMapper.mappingsWithoutBlocks() >= 2) {
+						boolean removedParameterizedAnnotation = moveCodeMapper.mappingsWithoutBlocks() > 0 && this.annotationListDiff.getRemovedAnnotations().size() > 0 && this.annotationListDiff.getRemovedAnnotations().toString().contains("@RunWith(Parameterized.class)");
+						if(moveCodeMapper.mappingsWithoutBlocks() > 2 || removedParameterizedAnnotation) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED);
 							if(!moveCodeMappers.contains(moveCodeMapper))
 								moveCodeMappers.add(moveCodeMapper);

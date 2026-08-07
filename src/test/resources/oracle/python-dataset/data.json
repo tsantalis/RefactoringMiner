@@ -6895,7 +6895,7 @@
         "type": "Parameterize Variable",
         "description": "Parameterize Variable batch_size to batch_size in method protected _shape(batch_size, from_shape) from class modules.decoders.transformer_decoders.TransformerDecoder._init_cache",
         "comment": "<p>This is a nested method that already had batch_size as parameter.</p>",
-        "validation": "CTP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }],

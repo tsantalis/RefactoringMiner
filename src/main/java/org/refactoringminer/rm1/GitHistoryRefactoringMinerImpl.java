@@ -1677,10 +1677,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		List<String> commitFileNames = new ArrayList<>();
 		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.isEmpty() ? 1 : commitFiles.size());
+		int count = 1;
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
 			if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
 				commitFileNames.add(fileName);
+				logger.info(String.format("Processing file: " + fileName));
+				//sleep every 100 files to avoid HTTP 403 error
+				if (count % 100 == 0) {
+					Thread.sleep(500);
+				}
 				if (commitFile.getStatus().equals("modified")) {
 					Runnable r = () -> {
 						try {
@@ -1798,6 +1804,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					};
 					pool.submit(r);
 				}
+				count++;
 			}
 		}
 		pool.shutdown();

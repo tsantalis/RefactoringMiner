@@ -148,6 +148,10 @@ public abstract class OperationBody {
 		for(String variableName : activeVariableDeclarations.keySet()) {
 			Set<VariableDeclaration> variableDeclarations = activeVariableDeclarations.get(variableName);
 			for(VariableDeclaration variableDeclaration : variableDeclarations) {
+				if(statement.getLocationInfo().subsumes(variableDeclaration.getLocationInfo())) {
+					//Python-specific handling, avoids adding the statement that declares/assigns the variable into the variable's scope
+					continue;
+				}
 				boolean localVariableWithSameName = false;
 				if(variableDeclaration.isAttribute() && variableDeclarations.size() > 1) {
 					localVariableWithSameName = true;

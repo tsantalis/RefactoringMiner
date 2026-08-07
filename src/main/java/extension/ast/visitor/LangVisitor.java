@@ -341,9 +341,14 @@ public class LangVisitor implements LangASTVisitor {
                         langAssignment, container, varName, activeVariableDeclarations, fileContent);
                 variableDeclarations.add(varDecl);
                 if(varDecl.getScope().getEndOffset() == container.getLocationInfo().getEndOffset()) {
-                    Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
-                    list.add(varDecl);
-                    activeVariableDeclarations.put(varName, list);
+                    if(activeVariableDeclarations.containsKey(varName)) {
+                        activeVariableDeclarations.get(varName).add(varDecl);
+                    }
+                    else {
+                        Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
+                        list.add(varDecl);
+                        activeVariableDeclarations.put(varName, list);
+                    }
                 }
             }
         }
@@ -356,9 +361,14 @@ public class LangVisitor implements LangASTVisitor {
                                 langAssignment, container, varName, activeVariableDeclarations, fileContent);
                         variableDeclarations.add(varDecl);
                         if(varDecl.getScope().getEndOffset() == container.getLocationInfo().getEndOffset()) {
-                            Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
-                            list.add(varDecl);
-                            activeVariableDeclarations.put(varName, list);
+                            if(activeVariableDeclarations.containsKey(varName)) {
+                                activeVariableDeclarations.get(varName).add(varDecl);
+                            }
+                            else {
+                                Set<VariableDeclaration> list = new LinkedHashSet<VariableDeclaration>();
+                                list.add(varDecl);
+                                activeVariableDeclarations.put(varName, list);
+                            }
                         }
                     }
                 }

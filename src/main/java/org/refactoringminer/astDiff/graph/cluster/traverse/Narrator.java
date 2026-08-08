@@ -7,13 +7,14 @@ import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Narrator {
     public static final int THRESHOLD = 1000;
 
     private final TraversalPattern rootPattern;
     private final Map<GrainLevel, List<TraversalPattern>> cache = new HashMap<>();
-    private final Map<GrainLevel, List<String>> flatCache = new HashMap<>();
+    private final Map<GrainLevel, List<ChapterUnit>> flatCache = new HashMap<>();
     private final Map<GrainLevel, Integer> progressMap = new HashMap<>();
 
     public Narrator(TraversalPattern rootPattern) {
@@ -204,7 +205,7 @@ public class Narrator {
         }
     }
 
-    public List<String> getFlatChapters(GrainLevel level) {
+    public List<ChapterUnit> getFlatChapters(GrainLevel level) {
         if (flatCache.containsKey(level)) {
             return flatCache.get(level);
         }
@@ -226,16 +227,32 @@ public class Narrator {
                 if (totalLines > THRESHOLD) {
                     List<List<NarrativeElement>> splits = createBalancedSplits(elements);
                     for (int s = 0; s < splits.size(); s++) {
-                        String content = String.join("\n", splits.get(s).stream().map(NarrativeElement::content).toList());
-                        units.add(new ChapterUnit(content, content.split("\n").length, i + 1));
+                        ChapterUnit chu = new ChapterUnit();
+                        for (NarrativeElement ne : splits.get(0)) {
+                            chu.append(ne.content());
+                            chu.addMains(ne.mains());
+                            chu.addSides(ne.sides());
+                        }
+
+                        units.add(chu);
                     }
                 } else {
-                    String content = agg.extended(filterPatterns);
-                    units.add(new ChapterUnit(content, content.split("\n").length, i + 1));
+                    ChapterUnit chu = new ChapterUnit();
+                    for (NarrativeElement ne : elements) {
+                        chu.append(ne.content());
+                        chu.addMains(ne.mains());
+                        chu.addSides(ne.sides());
+                    }
+
+                    units.add(chu);
                 }
             } else {
-                String content = chapter.extended(filterPatterns);
-                units.add(new ChapterUnit(content, content.split("\n").length, i + 1));
+                ChapterUnit chu = new ChapterUnit();
+                chu.append(chapter.extended(filterPatterns));
+                chu.addMains(new HashSet<>(chapter.getMains()));
+                chu.addSides(new HashSet<>(chapter.getSides()));
+
+                units.add(chu);
             }
         }
 
@@ -245,14 +262,14 @@ public class Narrator {
         int currentSum = 0;
 
         for (ChapterUnit unit : units) {
-            if (currentGroup.isEmpty() || (currentSum + unit.lines <= THRESHOLD)) {
+            if (currentGroup.isEmpty() || (currentSum + unit.lines() <= THRESHOLD)) {
                 currentGroup.add(unit);
-                currentSum += unit.lines;
+                currentSum += unit.lines();
             } else {
                 mergedGroups.add(currentGroup);
                 currentGroup = new ArrayList<>();
                 currentGroup.add(unit);
-                currentSum = unit.lines;
+                currentSum = unit.lines();
             }
         }
         if (!currentGroup.isEmpty()) {
@@ -260,13 +277,20 @@ public class Narrator {
         }
 
         // 3. Final formatting
-        List<String> flatChapters = new ArrayList<>();
+        List<ChapterUnit> flatGroups = new ArrayList<>();
         for (List<ChapterUnit> group : mergedGroups) {
-            flatChapters.add(String.join("\n", group.stream().map(subGroup -> subGroup.content).toList()));
+            ChapterUnit chu = new ChapterUnit();
+            for (ChapterUnit unit : group) {
+                chu.append(unit.contents);
+                chu.addMains(unit.mains);
+                chu.addSides(unit.sides);
+            }
+
+            flatGroups.add(chu);
         }
 
-        flatCache.put(level, flatChapters);
-        return flatChapters;
+        flatCache.put(level, flatGroups);
+        return flatGroups;
     }
 
     private List<List<NarrativeElement>> createBalancedSplits(List<NarrativeElement> elements) {
@@ -369,7 +393,43 @@ public class Narrator {
         return result;
     }
 
-    private record ChapterUnit(String content, int lines, int originalIdx) {
+    public static class ChapterUnit {
+        private List<String> contents = new ArrayList<>();
+        private Set<Node> mains = new HashSet<>();
+        private Set<Node> sides = new HashSet<>();
+
+        public void append(String content) {
+            contents.add(content);
+        }
+
+        void append(List<String> contents) {
+            this.contents.addAll(contents);
+        }
+
+        public String getContent() {
+            return String.join("\n", contents);
+        }
+
+        public Set<Node> getMains() {
+            return mains;
+        }
+
+        void addMains(Set<Node> mains) {
+            this.mains.addAll(mains);
+            this.sides = this.sides.stream().filter(side -> !this.mains.contains(side)).collect(Collectors.toSet());
+        }
+
+        public Set<Node> getSides() {
+            return sides;
+        }
+
+        void addSides(Set<Node> sides) {
+            this.sides.addAll(sides.stream().filter(side -> !this.mains.contains(side)).toList());
+        }
+
+        public int lines() {
+            return getContent().split("\n").length;
+        }
     }
 
 }

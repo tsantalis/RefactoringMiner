@@ -13,6 +13,8 @@ import extension.ast.visitor.LangASTVisitor;
 public class LangSingleVariableDeclaration extends LangDeclaration {
     private LangSimpleName langSimpleName;
     private TypeObjectEnum typeAnnotation;
+    // Raw declared type text; null when unused.
+    private String typeAnnotationText;
     private LangASTNode defaultValue;
     private boolean hasTypeAnnotation;
     private boolean isVarArgs;
@@ -71,6 +73,14 @@ public class LangSingleVariableDeclaration extends LangDeclaration {
 
     public void setTypeAnnotation(TypeObjectEnum typeAnnotation) {
         this.typeAnnotation = typeAnnotation;
+    }
+
+    public String getTypeAnnotationText() {
+        return typeAnnotationText;
+    }
+
+    public void setTypeAnnotationText(String typeAnnotationText) {
+        this.typeAnnotationText = typeAnnotationText;
     }
 
     public boolean hasTypeAnnotation() {
@@ -134,6 +144,7 @@ public class LangSingleVariableDeclaration extends LangDeclaration {
         return "LangSingleVariableDeclaration{" +
                 "langSimpleName=" + langSimpleName +
                 ", typeAnnotation=" + typeAnnotation +
+                ", typeAnnotationText=" + typeAnnotationText +
                 ", defaultValue=" + defaultValue +
                 ", hasTypeAnnotation=" + hasTypeAnnotation +
                 ", isVarArgs=" + isVarArgs +

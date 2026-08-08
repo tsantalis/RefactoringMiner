@@ -25,7 +25,8 @@ public class LangMethodDeclaration extends LangDeclaration {
     private boolean isNative;
     private boolean isSynchronized;
     private boolean isAsync;
-    private String returnTypeAnnotation;
+    private List<String> returnTypeAnnotations = new ArrayList<>();
+    private LangSingleVariableDeclaration receiver;
     private List<LangAnnotation> langAnnotations = new ArrayList<>();
     private List<LangComment> comments = new ArrayList<>();
 
@@ -133,11 +134,45 @@ public class LangMethodDeclaration extends LangDeclaration {
     }
 
     public String getReturnTypeAnnotation() {
-        return returnTypeAnnotation;
+        return returnTypeAnnotations.isEmpty() ? null : returnTypeAnnotations.get(0);
     }
 
     public void setReturnTypeAnnotation(String returnTypeAnnotation) {
-        this.returnTypeAnnotation = returnTypeAnnotation;
+        this.returnTypeAnnotations = new ArrayList<>();
+        if (returnTypeAnnotation != null) {
+            this.returnTypeAnnotations.add(returnTypeAnnotation);
+        }
+    }
+
+    public List<String> getReturnTypeAnnotations() {
+        return returnTypeAnnotations;
+    }
+
+    public void addReturnTypeAnnotation(String returnTypeAnnotation) {
+        this.returnTypeAnnotations.add(returnTypeAnnotation);
+    }
+
+    public void setReturnTypeAnnotations(List<String> returnTypeAnnotations) {
+        this.returnTypeAnnotations = returnTypeAnnotations;
+    }
+
+    // Null when the method has no receiver (e.g. `func (c *Counter) Increment()` vs. a plain
+    // top-level function). Modeled as a full LangSingleVariableDeclaration, same as a formal
+    // parameter, since the receiver carries both a name and a type and Go code refers to it by
+    // that name inside the method body.
+    public LangSingleVariableDeclaration getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(LangSingleVariableDeclaration receiver) {
+        this.receiver = receiver;
+        if (receiver != null) {
+            addChild(receiver);
+        }
+    }
+
+    public String getReceiverType() {
+        return receiver != null ? receiver.getTypeAnnotationText() : null;
     }
 
     public String getCleanName() {
@@ -182,7 +217,8 @@ public class LangMethodDeclaration extends LangDeclaration {
                 ", body=" + body +
                 ", visibility=" + visibility +
                 ", cleanName=" + cleanName +
-                ", returnType=" + returnTypeAnnotation +
+                ", returnTypes=" + returnTypeAnnotations +
+                ", receiver=" + receiver +
                 ", isAbstract=" + isAbstract +
                 ", langAnnotations=" + langAnnotations +
                 '}';

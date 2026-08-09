@@ -1,5 +1,7 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.github.gumtreediff.utils.Pair;
+
 /* Created by pourya on 2022-12-30 11:35 a.m. */
 public class URLHelper{
     public static String clean(String url)
@@ -83,6 +85,16 @@ public class URLHelper{
 		int end = nthIndexOf(url,'/',7);
 		if (end == -1) end = url.length();
 		return url.substring(start+1, end);
+	}
+
+	public static Pair<String, String> getCommitRange(String url) {
+		url = removeAdditionalPart(url);
+
+		int compareIndex = url.indexOf("/compare/");
+		String rangePart = url.substring(compareIndex + 9); // length of "/compare/"
+		String[] commits = rangePart.split("\\.\\.\\.");
+
+		return new Pair<>(commits[0], commits[1]);
 	}
 
 	public static String shortenCommit(String commit) {

@@ -5767,6 +5767,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return replacements;
 	}
 
+	public Set<String> getRightSideReplacements() {
+		Set<String> replacements = new LinkedHashSet<String>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			for(Replacement r : mapping.getReplacements()) {
+				replacements.add(r.getAfter());
+			}
+		}
+		return replacements;
+	}
+
 	public List<Set<AbstractCodeMapping>> getInternalParameterizeTestMultiMappings() {
 		return internalParameterizeTestMultiMappings;
 	}
@@ -13515,6 +13525,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return matchCount == this.mappings.size();
 		}
 		return false;
+	}
+
+	public boolean equalMappingHashCodesT2(UMLOperationBodyMapper other) {
+		return this.mappingHashcodesT2.equals(other.mappingHashcodesT2) && this.getRightSideReplacements().equals(other.getRightSideReplacements());
 	}
 
 	public Set<VariableDeclaration> getRemovedVariables() {

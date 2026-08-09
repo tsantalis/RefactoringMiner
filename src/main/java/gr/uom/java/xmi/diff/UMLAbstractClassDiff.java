@@ -3176,6 +3176,12 @@ public abstract class UMLAbstractClassDiff {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
+							int mappersWithIdenticalRightSide = 0;
+							for(UMLOperationBodyMapper mapper : mapperSet) {
+								if(mapper.equalMappingHashCodesT2(mapperSet.first())) {
+									mappersWithIdenticalRightSide++;
+								}
+							}
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;
 							Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();
@@ -3185,6 +3191,10 @@ public abstract class UMLAbstractClassDiff {
 								Set<String> commonTokens = new LinkedHashSet<>();
 								String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer1().getName());
 								String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer2().getName());
+								if(tokens1.length >= 1 && tokens2.length >= 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
+									tokens1 = mapper.getContainer1().getName().split("_");
+									tokens2 = mapper.getContainer2().getName().split("_");
+								}
 								boolean commonTokenCheck = false;
 								for(String token1 : tokens1) {
 									for(String token2 : tokens2) {
@@ -3195,7 +3205,7 @@ public abstract class UMLAbstractClassDiff {
 								}
 								if(commonTokensInName == null) {
 									commonTokensInName = commonTokens;
-									if(Arrays.equals(tokens1, tokens2) || Arrays.equals(commonTokens.toArray(), tokens2)) {
+									if(Arrays.equals(tokens1, tokens2) || Arrays.equals(commonTokens.toArray(), tokens2) || mappersWithIdenticalRightSide == mapperSet.size()) {
 										commonTokenCheck = true;
 									}
 								}

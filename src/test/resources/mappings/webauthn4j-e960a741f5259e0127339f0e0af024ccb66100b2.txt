@@ -1,0 +1,35 @@
+package validate_with_invalid_CN_certificate_test() : void -> package validate_with_invalid_certificate_parameterized_test(principal String) : void
+line range:78-78==line range:87-87
+line range:79-79==line range:88-88
+line range:81-81==line range:90-90
+line range:82-84==line range:91-93
+line range:83-83==line range:92-92
+line range:80-80==line range:89-89
+package validate_with_invalid_OU_certificate_test() : void -> package validate_with_invalid_certificate_parameterized_test(principal String) : void
+line range:100-100==line range:87-87
+line range:101-101==line range:88-88
+line range:104-104==line range:90-90
+line range:105-107==line range:91-93
+line range:106-106==line range:92-92
+line range:102-103==line range:89-89
+package validate_with_invalid_O_certificate_test() : void -> package validate_with_invalid_certificate_parameterized_test(principal String) : void
+line range:89-89==line range:87-87
+line range:90-90==line range:88-88
+line range:92-92==line range:90-90
+line range:93-95==line range:91-93
+line range:94-94==line range:92-92
+line range:91-91==line range:89-89
+package validate_with_invalid_C_certificate_test() : void -> package validate_with_invalid_certificate_parameterized_test(principal String) : void
+line range:112-112==line range:87-87
+line range:113-113==line range:88-88
+line range:116-116==line range:90-90
+line range:117-119==line range:91-93
+line range:118-118==line range:92-92
+line range:114-115==line range:89-89
+package validate_with_invalid_basicConstraints_certificate_test() : void -> package validate_with_invalid_certificate_parameterized_test(principal String) : void
+line range:124-124==line range:87-87
+line range:125-125==line range:88-88
+line range:128-128==line range:90-90
+line range:129-131==line range:91-93
+line range:130-130==line range:92-92
+line range:126-127==line range:89-89

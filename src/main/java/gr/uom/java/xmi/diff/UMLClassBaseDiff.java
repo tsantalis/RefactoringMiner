@@ -239,7 +239,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			this.preprocessorStatementListDiff = Optional.of(diff);
 		}
 		if(getOriginalClass().getForwardDeclarations().size() > 0 && getNextClass().getForwardDeclarations().size() > 0) {
-			UMLForwardDeclarationListDiff diff = new UMLForwardDeclarationListDiff(getOriginalClass().getForwardDeclarations(), getNextClass().getForwardDeclarations());
+			UMLForwardDeclarationListDiff diff = new UMLForwardDeclarationListDiff(getOriginalClass().getForwardDeclarations(), getNextClass().getForwardDeclarations(), this);
 			this.forwardDeclarationListDiff = Optional.of(diff);
 		}
 	}

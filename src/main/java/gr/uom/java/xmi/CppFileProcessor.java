@@ -539,12 +539,14 @@ public class CppFileProcessor {
 			// struct SReadableWaiter;
 			// class CWLSurfaceResource;
 			//friend class F;
+			UMLOperation operation = null;
 			IASTName name = elaboratedTypeSpecifier.getName();
 			String fullName = name.toString();
 			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
 			String[] tokens = elaboratedTypeSpecifier.toString().split("\s");
 			if(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof IASTFunctionDeclarator functionDeclarator) {
 				fullName = fullName + "." + functionDeclarator.getName().toString();
+				operation = processFunctionDeclSpecifier(elaboratedTypeSpecifier, functionDeclarator, packageName, sourceFolder, parentContainer, currentVisibility, comments, templateParameters);
 			}
 			else if(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof ICPPASTDeclarator declarator && declarator.getName() != null && !declarator.getName().toString().isBlank()) {
 				fullName = fullName + "." + declarator.getName().toString();
@@ -553,6 +555,9 @@ public class CppFileProcessor {
 			if(tokens[0].equals("const"))
 				type = type + " " + tokens[1];
 			UMLForwardDeclaration decl = new UMLForwardDeclaration(locationInfo, type, fullName, elaboratedTypeSpecifier.isFriend());
+			if(operation != null) {
+				decl.setFunction(operation);
+			}
 			if(parentContainer instanceof UMLClass)
 				((UMLClass)parentContainer).addForwardDeclaration(decl);
 		}

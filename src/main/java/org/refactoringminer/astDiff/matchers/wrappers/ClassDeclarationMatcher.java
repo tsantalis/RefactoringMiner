@@ -14,9 +14,11 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLForwardDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportListDiff;
 import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
@@ -393,7 +395,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             }
         }
         if(classDiff.getForwardDeclarationListDiff().isPresent()) {
-            for (org.apache.commons.lang3.tuple.Pair<UMLForwardDeclaration, UMLForwardDeclaration> statementPair : classDiff.getForwardDeclarationListDiff().get().getCommonDeclarations()) {
+            UMLForwardDeclarationListDiff umlForwardDeclarationListDiff = classDiff.getForwardDeclarationListDiff().get();
+            for (org.apache.commons.lang3.tuple.Pair<UMLForwardDeclaration, UMLForwardDeclaration> statementPair : umlForwardDeclarationListDiff.getCommonDeclarations()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
                 if(srcStatement.getType().name.equals(LANG1.FRIEND_KEYWORD))
                     srcStatement = srcStatement.getParent();
@@ -469,6 +472,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                         mappingStore.addMapping(t1,t2);
                     }
                 }
+            }
+            for(UMLOperationBodyMapper umlOperationBodyMapper : umlForwardDeclarationListDiff.getOperationBodyMapperList()) {
+                new MethodMatcher(optimizationData, umlOperationBodyMapper, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
             }
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

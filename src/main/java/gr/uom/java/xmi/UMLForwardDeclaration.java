@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
 
 import gr.uom.java.xmi.diff.CodeRange;
 
@@ -10,12 +11,22 @@ public class UMLForwardDeclaration implements Serializable, LocationInfoProvider
 	private String type;
 	private String name;
 	private boolean isFriend;
+	private Optional<UMLOperation> function;
 
 	public UMLForwardDeclaration(LocationInfo location, String type, String name, boolean isFriend) {
 		this.location = location;
 		this.type = type;
 		this.name = name;
 		this.isFriend = isFriend;
+		this.function = Optional.empty();
+	}
+
+	public Optional<UMLOperation> getFunction() {
+		return function;
+	}
+
+	public void setFunction(UMLOperation function) {
+		this.function = Optional.of(function);
 	}
 
 	@Override

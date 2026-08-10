@@ -5,6 +5,7 @@ import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
+import gr.uom.java.xmi.diff.UMLParameterDiff;
 import gr.uom.java.xmi.diff.UMLTypeParameterListDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
@@ -534,7 +535,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             }
             new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod, LANG1, LANG2).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-            processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getMatchedVariables(), mappingStore);
+            processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             if (refactoringProcessor){
                 new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
@@ -1275,114 +1276,128 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
     }
 
-    private void processMethodParameters(Tree srcTree, Tree dstTree, Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables, ExtendedMultiMappingStore mappingStore) {
+    private void processMethodParameters(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
+        Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = umlOperationBodyMapper.getMatchedVariables();
         for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> matchedPair: matchedVariables) {
             VariableDeclaration leftVarDecl = matchedPair.getLeft();
             VariableDeclaration rightVarDecl = matchedPair.getRight();
-            Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo(),LANG1);
-            Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo(),LANG2);
-            if (leftTree == null || rightTree == null) return;
-            if (leftTree.getType().name.endsWith("_comment")) {
-                leftTree = TreeUtilFunctions.findByLocationInfo(srcTree, leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
+            processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
+        }
+        if(umlOperationBodyMapper.getContainer1().getBody() == null && umlOperationBodyMapper.getContainer2().getBody() == null && umlOperationBodyMapper.getOperationSignatureDiff().isPresent()) {
+            UMLOperationDiff operationDiff = umlOperationBodyMapper.getOperationSignatureDiff().get();
+            for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
+                VariableDeclaration leftVarDecl = parameterDiff.getRemovedParameter();
+                VariableDeclaration rightVarDecl = parameterDiff.getAddedParameter();
+                processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
             }
-            if (rightTree.getType().name.endsWith("_comment")) {
-                rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
+        }
+    }
+
+    private void processParameterPair(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore,
+            VariableDeclaration leftVarDecl, VariableDeclaration rightVarDecl) {
+        Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo(),LANG1);
+        Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo(),LANG2);
+        if (leftTree == null || rightTree == null) return;
+        if (leftTree.getType().name.endsWith("_comment")) {
+            leftTree = TreeUtilFunctions.findByLocationInfo(srcTree, leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
+        }
+        if (rightTree.getType().name.endsWith("_comment")) {
+            rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
+        }
+        if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
+                leftTree.getParent().getType().name.equals(LANG1.REQUIRED_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
+            leftTree = leftTree.getParent();
+            rightTree = rightTree.getParent();
+        }
+        if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
+                leftTree.getParent().getType().name.equals(LANG1.TYPED_DEFAULT_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.TYPED_DEFAULT_PARAMETER)) {
+            leftTree = leftTree.getParent();
+            rightTree = rightTree.getParent();
+        }
+        if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
+            if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
+                mappingStore.addMappingRecursively(leftTree, rightTree);
+            else if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2);
             }
-            if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
-                    leftTree.getParent().getType().name.equals(LANG1.REQUIRED_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
-                leftTree = leftTree.getParent();
-                rightTree = rightTree.getParent();
+            else {
+                new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);
+                mappingStore.addMapping(leftTree,rightTree);
             }
-            if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
-                    leftTree.getParent().getType().name.equals(LANG1.TYPED_DEFAULT_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.TYPED_DEFAULT_PARAMETER)) {
-                leftTree = leftTree.getParent();
-                rightTree = rightTree.getParent();
-            }
-            if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
-                if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
-                    mappingStore.addMappingRecursively(leftTree, rightTree);
-                else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                    JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2);
+            if(leftTree.getParent() != null && rightTree.getParent() != null) {
+                int index1 = leftTree.getParent().getChildPosition(leftTree);
+                int index2 = rightTree.getParent().getChildPosition(rightTree);
+                if(leftTree.getParent().getChildren().size() > index1+1 && leftTree.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        rightTree.getParent().getChildren().size() > index2+1 && rightTree.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = leftTree.getParent().getChild(index1+1);
+                    Tree t2 = rightTree.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
                 }
+                if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
+                    mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_DOUBLE,LANG2.SPLAT_DOUBLE);
+                    if(matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
+                if(leftTree.getParent().getType().name.equals(LANG1.LIST_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.LIST_SPLAT_PATTERN)) {
+                    mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_SINGLE,LANG2.SPLAT_SINGLE);
+                    if(matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
+                if(leftTree.getParent().getType().name.equals(LANG1.OBJECT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.OBJECT_PATTERN)) {
+                    mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    Tree requiredParameter1 = leftTree.getParent().getParent();
+                    Tree requiredParameter2 = rightTree.getParent().getParent();
+                    if(requiredParameter1 != null && requiredParameter2 != null && requiredParameter1.getType().name.equals(LANG1.REQUIRED_PARAMETER) && requiredParameter2.getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
+                        mappingStore.addMapping(requiredParameter1,requiredParameter2);
+                        if(requiredParameter1.getChildren().size() > 1 && requiredParameter2.getChildren().size() > 1 &&
+                                requiredParameter1.getChild(1).getType().name.equals(LANG1.TYPE_ANNOTATION) && requiredParameter2.getChild(1).getType().name.equals(LANG2.TYPE_ANNOTATION)) {
+                            mappingStore.addMappingRecursively(requiredParameter1.getChild(1), requiredParameter2.getChild(1));
+                        }
+                    }
+                }
+            }
+            if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
+                Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
+                Tree rightParameter = TreeUtilFunctions.findByLocationInfo(rightTree.getParent(), rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
+                if (TreeUtilFunctions.isIsomorphicTo(leftParameter, rightParameter))
+                    mappingStore.addMappingRecursively(leftParameter, rightParameter);
                 else {
-                    new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);
-                    mappingStore.addMapping(leftTree,rightTree);
+                    new LeafMatcher(LANG1, LANG2).match(leftParameter,rightParameter,mappingStore);
+                    mappingStore.addMapping(leftParameter,rightParameter);
                 }
-                if(leftTree.getParent() != null && rightTree.getParent() != null) {
-                    int index1 = leftTree.getParent().getChildPosition(leftTree);
-                    int index2 = rightTree.getParent().getChildPosition(rightTree);
-                    if(leftTree.getParent().getChildren().size() > index1+1 && leftTree.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
-                            rightTree.getParent().getChildren().size() > index2+1 && rightTree.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
-                        Tree t1 = leftTree.getParent().getChild(index1+1);
-                        Tree t2 = rightTree.getParent().getChild(index2+1);
-                        mappingStore.addMapping(t1,t2);
-                    }
-                    if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
-                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_DOUBLE,LANG2.SPLAT_DOUBLE);
-                        if(matched != null) {
-                            mappingStore.addMapping(matched.first,matched.second);
-                        }
-                    }
-                    if(leftTree.getParent().getType().name.equals(LANG1.LIST_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.LIST_SPLAT_PATTERN)) {
-                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_SINGLE,LANG2.SPLAT_SINGLE);
-                        if(matched != null) {
-                            mappingStore.addMapping(matched.first,matched.second);
-                        }
-                    }
-                    if(leftTree.getParent().getType().name.equals(LANG1.OBJECT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.OBJECT_PATTERN)) {
-                        mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                        if (matched != null) {
-                            mappingStore.addMapping(matched.first,matched.second);
-                        }
-                        matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                        if (matched != null) {
-                            mappingStore.addMapping(matched.first,matched.second);
-                        }
-                        Tree requiredParameter1 = leftTree.getParent().getParent();
-                        Tree requiredParameter2 = rightTree.getParent().getParent();
-                        if(requiredParameter1 != null && requiredParameter2 != null && requiredParameter1.getType().name.equals(LANG1.REQUIRED_PARAMETER) && requiredParameter2.getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
-                            mappingStore.addMapping(requiredParameter1,requiredParameter2);
-                            if(requiredParameter1.getChildren().size() > 1 && requiredParameter2.getChildren().size() > 1 &&
-                                    requiredParameter1.getChild(1).getType().name.equals(LANG1.TYPE_ANNOTATION) && requiredParameter2.getChild(1).getType().name.equals(LANG2.TYPE_ANNOTATION)) {
-                                mappingStore.addMappingRecursively(requiredParameter1.getChild(1), requiredParameter2.getChild(1));
-                            }
-                        }
-                    }
+            }
+            if(leftVarDecl.getInitializer() != null && rightVarDecl.getInitializer() != null) {
+                Tree leftInitializerTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getInitializer().getLocationInfo(),LANG1);
+                Tree rightInitializerTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getInitializer().getLocationInfo(),LANG2);
+                if (leftInitializerTree == null || rightInitializerTree == null) return;
+                if (TreeUtilFunctions.isIsomorphicTo(leftInitializerTree, rightInitializerTree))
+                    mappingStore.addMappingRecursively(leftInitializerTree, rightInitializerTree);
+                else {
+                    new LeafMatcher(LANG1, LANG2).match(leftInitializerTree, rightInitializerTree,mappingStore);
+                    mappingStore.addMapping(leftInitializerTree, rightInitializerTree);
                 }
-                if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
-                    Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
-                    Tree rightParameter = TreeUtilFunctions.findByLocationInfo(rightTree.getParent(), rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
-                    if (TreeUtilFunctions.isIsomorphicTo(leftParameter, rightParameter))
-                        mappingStore.addMappingRecursively(leftParameter, rightParameter);
-                    else {
-                        new LeafMatcher(LANG1, LANG2).match(leftParameter,rightParameter,mappingStore);
-                        mappingStore.addMapping(leftParameter,rightParameter);
-                    }
+                if(leftInitializerTree.getParent().getType().name.equals(LANG1.DEFAULT_PARAMETER) && rightInitializerTree.getParent().getType().name.equals(LANG2.DEFAULT_PARAMETER)) {
+                    mappingStore.addMapping(leftInitializerTree.getParent(), rightInitializerTree.getParent());
                 }
-                if(leftVarDecl.getInitializer() != null && rightVarDecl.getInitializer() != null) {
-                    Tree leftInitializerTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getInitializer().getLocationInfo(),LANG1);
-                    Tree rightInitializerTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getInitializer().getLocationInfo(),LANG2);
-                    if (leftInitializerTree == null || rightInitializerTree == null) return;
-                    if (TreeUtilFunctions.isIsomorphicTo(leftInitializerTree, rightInitializerTree))
-                        mappingStore.addMappingRecursively(leftInitializerTree, rightInitializerTree);
-                    else {
-                        new LeafMatcher(LANG1, LANG2).match(leftInitializerTree, rightInitializerTree,mappingStore);
-                        mappingStore.addMapping(leftInitializerTree, rightInitializerTree);
-                    }
-                    if(leftInitializerTree.getParent().getType().name.equals(LANG1.DEFAULT_PARAMETER) && rightInitializerTree.getParent().getType().name.equals(LANG2.DEFAULT_PARAMETER)) {
-                        mappingStore.addMapping(leftInitializerTree.getParent(), rightInitializerTree.getParent());
-                    }
-                    int leftPosition = leftInitializerTree.positionInParent();
-                    int rightPosition = rightInitializerTree.positionInParent();
-                    if(leftPosition > 0 && rightPosition > 0) {
-                        Tree previousLeft = leftInitializerTree.getParent().getChild(leftPosition-1);
-                        Tree previousRight = rightInitializerTree.getParent().getChild(rightPosition-1);
-                        if(previousLeft.getType().name.equals(LANG1.AFFECTATION_OPERATOR) && previousRight.getType().name.equals(LANG2.AFFECTATION_OPERATOR)) {
-                            mappingStore.addMapping(previousLeft, previousRight);
-                        }
+                int leftPosition = leftInitializerTree.positionInParent();
+                int rightPosition = rightInitializerTree.positionInParent();
+                if(leftPosition > 0 && rightPosition > 0) {
+                    Tree previousLeft = leftInitializerTree.getParent().getChild(leftPosition-1);
+                    Tree previousRight = rightInitializerTree.getParent().getChild(rightPosition-1);
+                    if(previousLeft.getType().name.equals(LANG1.AFFECTATION_OPERATOR) && previousRight.getType().name.equals(LANG2.AFFECTATION_OPERATOR)) {
+                        mappingStore.addMapping(previousLeft, previousRight);
                     }
                 }
             }

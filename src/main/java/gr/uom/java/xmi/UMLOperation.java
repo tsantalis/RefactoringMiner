@@ -703,7 +703,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				equalReturnParameter = true;
 			}
 		}
-		return this.name.equals(operation.name) && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter;
+		boolean equalName = this.name.equals(operation.name);
+		if(this.name.contains("::") && !operation.name.contains("::")) {
+			String lastName = this.name.substring(this.name.lastIndexOf("::") + 2, this.name.length());
+			if(operation.name.equals(lastName))
+				equalName = true;
+		}
+		else if(!this.name.contains("::") && operation.name.contains("::")) {
+			String lastName = operation.name.substring(operation.name.lastIndexOf("::") + 2, operation.name.length());
+			if(this.name.equals(lastName))
+				equalName = true;
+		}
+		return equalName && equalTypeParameters(operation) && (equalParameterTypes || compatibleParameterTypes) && equalReturnParameter;
 	}
 
 	public boolean equalSignatureRelaxedReturnType(UMLOperation operation) {

@@ -1407,6 +1407,94 @@
   "firstEndPos" : 523,
   "secondEndPos" : 523
 }, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 528,
+  "secondPos" : 528,
+  "firstEndPos" : 575,
+  "secondEndPos" : 549
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "bool",
+  "secondLabel" : "bool",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 528,
+  "secondPos" : 528,
+  "firstEndPos" : 532,
+  "secondEndPos" : 532
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 533,
+  "secondPos" : 533,
+  "firstEndPos" : 574,
+  "secondEndPos" : 548
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "checkMonitors",
+  "secondLabel" : "checkMonitors",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 533,
+  "secondPos" : 533,
+  "firstEndPos" : 546,
+  "secondEndPos" : 546
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 546,
+  "secondPos" : 546,
+  "firstEndPos" : 574,
+  "secondEndPos" : 548
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 546,
+  "secondPos" : 546,
+  "firstEndPos" : 547,
+  "secondEndPos" : 547
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 573,
+  "secondPos" : 547,
+  "firstEndPos" : 574,
+  "secondEndPos" : 548
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 574,
+  "secondPos" : 548,
+  "firstEndPos" : 575,
+  "secondEndPos" : 549
+}, {
   "firstType" : "friend_declaration",
   "secondType" : "friend_declaration",
   "firstLabel" : "",

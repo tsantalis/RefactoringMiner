@@ -368,7 +368,18 @@ public class OperationInvocation extends AbstractCall {
 		if(this.methodName.equals(LANG.THIS) && operation.getClassName().equals(callerOperation.getClassName()) && operationName.equals(callerOperation.getName())) {
     		constructorCall = true;
     	}
-    	if(!this.methodName.equals(operationName) && !constructorCall) {
+    	boolean equalName = this.methodName.equals(operationName);
+		if(this.methodName.contains("::") && !operationName.contains("::")) {
+			String lastName = this.methodName.substring(this.methodName.lastIndexOf("::") + 2, this.methodName.length());
+			if(operationName.equals(lastName))
+				equalName = true;
+		}
+		else if(!this.methodName.contains("::") && operationName.contains("::")) {
+			String lastName = operationName.substring(operationName.lastIndexOf("::") + 2, operationName.length());
+			if(this.methodName.equals(lastName))
+				equalName = true;
+		}
+		if(!equalName && !constructorCall) {
     		return false;
     	}
     	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();

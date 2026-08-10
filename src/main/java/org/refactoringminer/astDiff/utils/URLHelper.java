@@ -1,6 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 /* Created by pourya on 2022-12-30 11:35 a.m. */
 public class URLHelper{
@@ -87,14 +87,14 @@ public class URLHelper{
 		return url.substring(start+1, end);
 	}
 
-	public static ImmutablePair<String, String> getCommitRange(String url) {
+	public static Pair<String, String> getCommitPairFromGitHubCompareURL(String url) {
 		url = removeAdditionalPart(url);
 
 		int compareIndex = url.indexOf("/compare/");
 		String rangePart = url.substring(compareIndex + 9); // length of "/compare/"
 		String[] commits = rangePart.split("\\.\\.\\.");
 
-		return new ImmutablePair<>(commits[0], commits[1]);
+		return new Pair.of(commits[0], commits[1]);
 	}
 
 	public static String shortenCommit(String commit) {

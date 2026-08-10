@@ -94,7 +94,7 @@ public class URLHelper{
 		String rangePart = url.substring(compareIndex + 9); // length of "/compare/"
 		String[] commits = rangePart.split("\\.\\.\\.");
 
-		return new Pair.of(commits[0], commits[1]);
+		return Pair.of(commits[0], commits[1]);
 	}
 
 	public static String shortenCommit(String commit) {

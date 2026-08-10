@@ -658,7 +658,8 @@ public class OperationInvocation extends AbstractCall {
     }
 
 	private static boolean exactlyMatchingArgumentType(UMLType parameterType, UMLType argumentType) {
-		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString());
+		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString())
+				|| parameterType.toString().equals(argumentType.toString() + "&") || parameterType.toString().equals("const " + argumentType.toString() + "&");
 	}
 
 	private static String handleNumber(String argument) {
@@ -694,6 +695,9 @@ public class OperationInvocation extends AbstractCall {
     	if(type instanceof InferredType || parameterType instanceof InferredType)
     		return true;
     	if(parameterType.getClassType().length() == 1) {
+    		return true;
+    	}
+    	if(parameterType.toString().equals(type.toString() + "&") || parameterType.toString().equals("const " + type.toString() + "&")) {
     		return true;
     	}
     	if(type2.equals("var")) {

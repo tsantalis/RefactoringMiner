@@ -15,6 +15,7 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.*;
 
@@ -540,7 +541,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
             }
-            ClassDeclarationMatcher.handleParentNamespace(srcOperationNode, dstOperationNode, mappingStore, LANG1, LANG2);
+            if(PathFileUtils.isCppFile(umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath()) &&
+                    umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath().equals(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath())) {
+                ClassDeclarationMatcher.handleParentNamespace(srcOperationNode, dstOperationNode, mappingStore, LANG1, LANG2);
+            }
         }
     }
 

@@ -140,8 +140,7 @@ public class HunkNetwork {
           continue;
         }
 
-        if (object.path.equals(subject.path) && object.tree.getPos() <= subject.tree.getPos()
-            && subject.tree.getEndPos() <= object.tree.getEndPos()) {
+        if (subject.tree.getParents().contains(object.tree)) {
           isParent = false;
           break;
         }

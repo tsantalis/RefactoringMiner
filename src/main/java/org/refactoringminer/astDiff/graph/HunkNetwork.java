@@ -157,8 +157,7 @@ public class HunkNetwork {
           continue;
         }
 
-        if (parent.path.equals(importTree.path) && parent.tree.getPos() <= importTree.tree.getPos()
-            && importTree.tree.getEndPos() <= parent.tree.getEndPos()) {
+        if (importTree.tree.getParents().contains(parent.tree)) {
           result.get(parent).add(importTree);
         }
       }

@@ -540,6 +540,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
             }
+            ClassDeclarationMatcher.handleParentNamespace(srcOperationNode, dstOperationNode, mappingStore, LANG1, LANG2);
         }
     }
 

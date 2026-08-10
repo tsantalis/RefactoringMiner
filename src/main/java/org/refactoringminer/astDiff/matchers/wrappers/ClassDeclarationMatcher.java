@@ -862,16 +862,20 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+        handleParentNamespace(srcTypeDeclaration, dstTypeDeclaration, mappingStore, LANG1, LANG2);
+    }
+
+    public static void handleParentNamespace(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
         Tree parent1 = srcTypeDeclaration.getParent();
         Tree parent2 = dstTypeDeclaration.getParent();
         while(parent1 != null && parent2 != null) {
             if(parent1.getType().equals(parent2.getType())) {
                 mappingStore.addMapping(parent1, parent2);
-                opening = Helpers.findPairOfType(parent1,parent2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                Pair<Tree, Tree> opening = Helpers.findPairOfType(parent1,parent2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
                 if (opening != null) {
                     mappingStore.addMapping(opening.first,opening.second);
                 }
-                closing = Helpers.findPairOfType(parent1,parent2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                Pair<Tree, Tree> closing = Helpers.findPairOfType(parent1,parent2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
                 if (closing != null) {
                     mappingStore.addMapping(closing.first,closing.second);
                 }

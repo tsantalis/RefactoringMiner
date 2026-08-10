@@ -2035,6 +2035,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return commitURL;
 	}
 
+	public static String extractCompareURL(String cloneURL, String startCommitId, String endCommitId) {
+		int indexOfDotGit = cloneURL.length();
+		if(cloneURL.endsWith(".git")) {
+			indexOfDotGit = cloneURL.indexOf(".git");
+		}
+		else if(cloneURL.endsWith("/")) {
+			indexOfDotGit = cloneURL.length() - 1;
+		}
+		String commitResource = "/";
+		if(cloneURL.startsWith(GITHUB_URL) || cloneURL.startsWith(GITLAB_URL)) {
+			commitResource = "/compare/";
+		}
+		String commitURL = cloneURL.substring(0, indexOfDotGit) + commitResource + startCommitId + "..." + endCommitId;
+		return commitURL;
+	}
+
 	private static String extractDownloadLink(String cloneURL, String commitId) {
 		int indexOfDotGit = cloneURL.length();
 		if(cloneURL.endsWith(".git")) {
@@ -2744,8 +2760,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
 		ProjectASTDiff diff = differ.getProjectASTDiff();
 		diff.setMetaInfo(new DiffMetaInfo(
-				extractRepositoryName(gitURL) + " " + URLHelper.shortenCommit(startCommit) + ".." + URLHelper.shortenCommit(endCommit),
-				extractCommitURL(gitURL, endCommit)));
+				extractRepositoryName(gitURL) + " " + URLHelper.shortenCommit(startCommit) + "..." + URLHelper.shortenCommit(endCommit),
+				extractCompareURL(gitURL, startCommit, endCommit)));
 		return diff;
 	}
 }

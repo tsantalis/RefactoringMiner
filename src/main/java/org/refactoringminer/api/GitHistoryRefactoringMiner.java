@@ -249,6 +249,18 @@ public interface GitHistoryRefactoringMiner {
 	ProjectASTDiff diffAtCommitRange(String gitURL, String startCommit, String endCommit) throws Exception;
 
 	/**
+	 * Generate the AST diff for a GitHub Compare.
+	 *
+	 * @param gitURL The git URL of the repository. e.g., for GitHub Compare URL
+	 * https://github.com/bazelbuild/bazel/compare/66a577385539887743bd99b9239b9b70fc55b4f8...b5b551dc2d0117b577506ba69286b243bde181a0
+	 * gitURL should be https://github.com/bazelbuild/bazel.git
+	 * @param startCommit The SHA key that identifies the start commit. This can be a sha1 ID (for a commit, tag etc) or a direct tag name
+	 * @param endCommit The SHA key that identifies the end commit. This can be a sha1 ID (for a commit, tag etc) or a direct tag name
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit) throws Exception;
+
+	/**
 	 * Generate the AST diff for the specified file contents. 
 	 * 
 	 * @param fileContentsBefore A map where the keys are file paths, and the values are the corresponding file contents.

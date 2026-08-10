@@ -61,6 +61,7 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.kohsuke.github.*;
+import org.kohsuke.github.GHCompare.Commit;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -2682,5 +2683,69 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore, new LinkedHashSet<>(orderedFilesBefore));
 			}
 		}
+	}
+
+	public ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit) throws Exception {
+		GHRepository repository = getGitHubRepository(gitURL);
+		GHCompare compare = repository.getCompare(startCommit, endCommit);
+		PagedIterable<Commit> commits = compare.listCommits();
+		//List<GHCommit.File> changedFiles = Arrays.asList(compare.getFiles());
+		
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		for(GHCommit currentGHCommit : commits) {
+			final String commitId = currentGHCommit.getSHA1();
+			logger.info("Processing {} {} ...", gitURL, commitId);
+			GHCommit currentCommit = repository.getCommit(commitId);
+			List<GHCommit.File> commitFiles = currentCommit.listFiles().toList();
+			//if parents.size() == 0 then currentCommit is the initial commit of the repository, but then all files will have an ADDED status
+			final String parentCommitId = currentCommit.getParents().size() > 0 ? currentCommit.getParents().get(0).getSHA1() : null;
+			Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
+			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+			List<String> commitFileNames = new ArrayList<>();
+			ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
+			for (GHCommit.File commitFile : commitFiles) {
+				String fileName = commitFile.getFileName();
+				if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
+					commitFileNames.add(fileName);
+					logger.info(String.format("Processing file: " + fileName));
+					multiThreadedFetch(commitFileNames, fileContentsBefore, fileContentsCurrent, renamedFilesHint,
+							repository, commitId, parentCommitId, deletedAndRenamedFileParentDirectories, pool, commitFile,
+							fileName);
+				}
+			}
+			pool.shutdown();
+			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+			List<String> orderedFilesBefore = new ArrayList<>();
+			List<String> orderedFilesCurrent = new ArrayList<>();
+			for(String fileName : commitFileNames) {
+				if(fileContentsBefore.containsKey(fileName)) {
+					orderedFilesBefore.add(fileName);
+				}
+				if(fileContentsCurrent.containsKey(fileName)) {
+					orderedFilesCurrent.add(fileName);
+				}
+			}
+			repositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent, new LinkedHashSet<>(orderedFilesCurrent));
+			//repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
+			//allRepositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent);
+			if(parentCommitId != null) {
+				GHCommit parentCommit = repository.getCommit(parentCommitId);
+				repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore, new LinkedHashSet<>(orderedFilesBefore));
+			}
+		}
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
+		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+		ProjectASTDiff diff = differ.getProjectASTDiff();
+		diff.setMetaInfo(new DiffMetaInfo(
+				extractRepositoryName(gitURL) + " " + URLHelper.shortenCommit(startCommit) + ".." + URLHelper.shortenCommit(endCommit),
+				extractCommitURL(gitURL, endCommit)));
+		return diff;
 	}
 }

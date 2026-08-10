@@ -186,6 +186,74 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
+	public ProjectASTDiff diffAtCommitRangeStateToState(String gitURL, String startCommit, String endCommit) throws Exception {
+		GHRepository repository = getGitHubRepository(gitURL);
+		List<GHCommit.File> changedFiles = Arrays.asList(repository.getCompare(startCommit, endCommit).getFiles());
+
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<>();
+		Map<String, String> renamedFilesHint = new HashMap<>();
+
+		for (GHCommit.File commitFile : changedFiles) {
+			String fileName = commitFile.getFileName();
+			if (!PathFileUtils.isSupportedFile(fileName)) continue;
+
+			String prevFileName = commitFile.getPreviousFilename();
+			if (prevFileName != null) {
+				renamedFilesHint.put(prevFileName, fileName);
+			}
+
+			// Content at start state
+			String pathBefore = prevFileName != null ? prevFileName : fileName;
+			try {
+				fileContentsBefore.put(pathBefore, streamToString(repository.getFileContent(pathBefore, startCommit).read()));
+			} catch (Exception e) {
+				logger.warn("Could not fetch content for {} at commit {}", pathBefore, startCommit);
+			}
+
+			// Content at end state
+			try {
+				fileContentsCurrent.put(fileName, streamToString(repository.getFileContent(fileName, endCommit).read()));
+			} catch (Exception e) {
+				logger.warn("Could not fetch content for {} at commit {}", fileName, endCommit);
+			}
+
+			// Track directories for UML models
+			if (fileName.contains("/")) {
+				String dir = fileName.substring(0, fileName.lastIndexOf("/"));
+				repositoryDirectoriesCurrent.add(dir);
+				while (dir.contains("/")) {
+					dir = dir.substring(0, dir.lastIndexOf("/"));
+					repositoryDirectoriesCurrent.add(dir);
+				}
+			}
+			if (pathBefore.contains("/")) {
+				String dir = pathBefore.substring(0, pathBefore.lastIndexOf("/"));
+				repositoryDirectoriesBefore.add(dir);
+				while (dir.contains("/")) {
+					dir = dir.substring(0, dir.lastIndexOf("/"));
+					repositoryDirectoriesBefore.add(dir);
+				}
+			}
+		}
+
+		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
+		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+		ProjectASTDiff diff = differ.getProjectASTDiff();
+
+		diff.setMetaInfo(new DiffMetaInfo(
+				extractRepositoryName(gitURL) + " " + URLHelper.shortenCommit(startCommit) + ".." + URLHelper.shortenCommit(endCommit),
+				extractCommitURL(gitURL, endCommit)));
+
+		return diff;
+	}
+
 	protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, RevCommit currentCommit) throws Exception {
 		if (currentCommit.getParentCount() == 0) {
 			UMLModelDiff modelDiff = new UMLModelDiff(createModel(Collections.emptyMap(), Collections.emptySet()), createModel(Collections.emptyMap(), Collections.emptySet()));

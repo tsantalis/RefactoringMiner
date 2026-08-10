@@ -249,6 +249,16 @@ public interface GitHistoryRefactoringMiner {
 	ProjectASTDiff diffAtCommitRange(String gitURL, String startCommit, String endCommit) throws Exception;
 
 	/**
+	 * Generate the AST diff for two states (commits).
+	 *
+	 * @param gitURL The git URL of the repository.
+	 * @param startCommit The SHA key that identifies the start commit.
+	 * @param endCommit The SHA key that identifies the end commit.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	ProjectASTDiff diffAtCommitRangeStateToState(String gitURL, String startCommit, String endCommit) throws Exception;
+
+	/**
 	 * Generate the AST diff for the specified file contents. 
 	 * 
 	 * @param fileContentsBefore A map where the keys are file paths, and the values are the corresponding file contents.

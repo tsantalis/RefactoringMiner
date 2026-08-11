@@ -704,6 +704,9 @@ public class OperationInvocation extends AbstractCall {
     	if(parameterType.toString().equals(type.toString() + "&") || parameterType.toString().equals("const " + type.toString() + "&") || parameterType.toString().equals("const " + type.toString())) {
     		return true;
     	}
+    	if(type1.startsWith("int") && type2.startsWith("int")) {
+    		return true;
+    	}
     	if(type2.equals("auto") || type2.equals("auto*")) {
     		return true;
     	}

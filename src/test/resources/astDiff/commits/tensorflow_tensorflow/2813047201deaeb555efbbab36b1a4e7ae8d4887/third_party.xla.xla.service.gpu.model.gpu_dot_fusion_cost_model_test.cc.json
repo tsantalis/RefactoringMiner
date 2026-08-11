@@ -19645,6 +19645,39 @@
   "firstEndPos" : 11953,
   "secondEndPos" : 12070
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// We support 4D and higher rank GEMMs to handle multi-dimensional batching",
+  "secondLabel" : "// We support 4D and higher rank GEMMs to handle multi-dimensional batching",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 11955,
+  "secondPos" : 12072,
+  "firstEndPos" : 12030,
+  "secondEndPos" : 12147
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// (such as having independent head and batch dimensions in multi-head",
+  "secondLabel" : "// (such as having independent head and batch dimensions in multi-head",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 12031,
+  "secondPos" : 12148,
+  "firstEndPos" : 12101,
+  "secondEndPos" : 12218
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// attention workloads) without requiring explicit reshape or flattening ops.",
+  "secondLabel" : "// attention workloads) without requiring explicit reshape or flattening ops.",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 12102,
+  "secondPos" : 12219,
+  "firstEndPos" : 12179,
+  "secondEndPos" : 12296
+}, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",
   "firstLabel" : "",
@@ -21800,6 +21833,28 @@
   "secondPos" : 13348,
   "firstEndPos" : 13232,
   "secondEndPos" : 13349
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// TODO(b/501002656): Remove this test once we support transposes in the dot",
+  "secondLabel" : "// TODO(b/501002656): Remove this test once we support transposes in the dot",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 13234,
+  "secondPos" : 13351,
+  "firstEndPos" : 13310,
+  "secondEndPos" : 13427
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// fusion cost model.",
+  "secondLabel" : "// fusion cost model.",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 13311,
+  "secondPos" : 13428,
+  "firstEndPos" : 13332,
+  "secondEndPos" : 13449
 }, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",

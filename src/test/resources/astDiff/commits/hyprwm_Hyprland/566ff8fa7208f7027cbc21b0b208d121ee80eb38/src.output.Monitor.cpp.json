@@ -4108,6 +4108,94 @@
   "secondLabel" : "",
   "firstParentType" : "translation_unit",
   "secondParentType" : "translation_unit",
+  "firstPos" : 2603,
+  "secondPos" : 2603,
+  "firstEndPos" : 2641,
+  "secondEndPos" : 2641
+}, {
+  "firstType" : "using",
+  "secondType" : "using",
+  "firstLabel" : "using",
+  "secondLabel" : "using",
+  "firstParentType" : "using_declaration",
+  "secondParentType" : "using_declaration",
+  "firstPos" : 2603,
+  "secondPos" : 2603,
+  "firstEndPos" : 2608,
+  "secondEndPos" : 2608
+}, {
+  "firstType" : "enum",
+  "secondType" : "enum",
+  "firstLabel" : "enum",
+  "secondLabel" : "enum",
+  "firstParentType" : "using_declaration",
+  "secondParentType" : "using_declaration",
+  "firstPos" : 2609,
+  "secondPos" : 2609,
+  "firstEndPos" : 2613,
+  "secondEndPos" : 2613
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "using_declaration",
+  "secondParentType" : "using_declaration",
+  "firstPos" : 2614,
+  "secondPos" : 2614,
+  "firstEndPos" : 2640,
+  "secondEndPos" : 2640
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "NContentType",
+  "secondLabel" : "NContentType",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 2614,
+  "secondPos" : 2614,
+  "firstEndPos" : 2626,
+  "secondEndPos" : 2626
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 2626,
+  "secondPos" : 2626,
+  "firstEndPos" : 2628,
+  "secondEndPos" : 2628
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "eContentType",
+  "secondLabel" : "eContentType",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 2628,
+  "secondPos" : 2628,
+  "firstEndPos" : 2640,
+  "secondEndPos" : 2640
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "using_declaration",
+  "secondParentType" : "using_declaration",
+  "firstPos" : 2640,
+  "secondPos" : 2640,
+  "firstEndPos" : 2641,
+  "secondEndPos" : 2641
+}, {
+  "firstType" : "using_declaration",
+  "secondType" : "using_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "translation_unit",
+  "secondParentType" : "translation_unit",
   "firstPos" : 2642,
   "secondPos" : 2642,
   "firstEndPos" : 2675,
@@ -270191,6 +270279,17 @@
   "secondPos" : 99842,
   "firstEndPos" : 99768,
   "secondEndPos" : 99843
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 100225,
+  "secondPos" : 100300,
+  "firstEndPos" : 100226,
+  "secondEndPos" : 100301
 }, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",

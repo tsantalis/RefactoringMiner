@@ -51,6 +51,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private Optional<AbstractStatement> parentStatement;
     private List<UMLPreprocessorStatement> preprocessorStatements;
     private List<UMLForwardDeclaration> forwardDeclarations;
+    private List<UMLProblemDeclaration> problemDeclarations;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes, topLevel);
@@ -73,6 +74,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.parentStatement = Optional.empty();
         this.preprocessorStatements = new ArrayList<UMLPreprocessorStatement>();
         this.forwardDeclarations = new ArrayList<UMLForwardDeclaration>();
+        this.problemDeclarations = new ArrayList<UMLProblemDeclaration>();
     }
 
     public String getTypeDeclarationKind() {
@@ -146,6 +148,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void addForwardDeclaration(UMLForwardDeclaration statement) {
 		this.forwardDeclarations.add(statement);
+	}
+
+	public void addProblemDeclaration(UMLProblemDeclaration decl) {
+		this.problemDeclarations.add(decl);
+	}
+
+	public List<UMLProblemDeclaration> getProblemDeclarations() {
+		return problemDeclarations;
 	}
 
 	public void addSuperTypeCallEntry(AbstractExpression expr) {

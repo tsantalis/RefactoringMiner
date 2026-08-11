@@ -1,0 +1,67 @@
+package gr.uom.java.xmi;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import gr.uom.java.xmi.diff.CodeRange;
+
+public class UMLProblemDeclaration implements Serializable, LocationInfoProvider, CommentProvider {
+	private String packageName;
+	private String sourceFolder;
+	private LocationInfo location;
+	private String signature;
+	private String fullText;
+	private List<UMLComment> comments;
+
+	public UMLProblemDeclaration(String packageName, String sourceFolder, LocationInfo location, String signature, String fullText) {
+		this.packageName = packageName;
+		this.sourceFolder = sourceFolder;
+		this.location = location;
+		this.signature = signature;
+		this.fullText = fullText;
+		this.comments = new ArrayList<UMLComment>();
+	}
+
+	public String getFullText() {
+		return fullText;
+	}
+
+	public String toString() {
+		return packageName + "." + signature;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(packageName, signature, sourceFolder);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UMLProblemDeclaration other = (UMLProblemDeclaration) obj;
+		return Objects.equals(packageName, other.packageName) && Objects.equals(signature, other.signature)
+				&& Objects.equals(sourceFolder, other.sourceFolder);
+	}
+
+	@Override
+	public List<UMLComment> getComments() {
+		return comments;
+	}
+
+	@Override
+	public LocationInfo getLocationInfo() {
+		return location;
+	}
+
+	@Override
+	public CodeRange codeRange() {
+		return location.codeRange();
+	}
+}

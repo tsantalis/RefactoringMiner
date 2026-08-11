@@ -10,6 +10,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLForwardDeclaration;
 import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLPreprocessorStatement;
+import gr.uom.java.xmi.UMLProblemDeclaration;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
@@ -21,6 +22,7 @@ import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLForwardDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportListDiff;
+import gr.uom.java.xmi.diff.UMLProblemDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
 
 import org.refactoringminer.astDiff.models.OptimizationData;
@@ -502,6 +504,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             }
             for(UMLOperationBodyMapper umlOperationBodyMapper : umlForwardDeclarationListDiff.getOperationBodyMapperList()) {
                 new MethodMatcher(optimizationData, umlOperationBodyMapper, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+            }
+        }
+        if(classDiff.getProblemDeclarationListDiff().isPresent()) {
+            UMLProblemDeclarationListDiff umlProblemDeclarationListDiff = classDiff.getProblemDeclarationListDiff().get();
+            for (org.apache.commons.lang3.tuple.Pair<UMLProblemDeclaration, UMLProblemDeclaration> statementPair : umlProblemDeclarationListDiff.getCommonDeclarations()) {
+                Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
+                Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);

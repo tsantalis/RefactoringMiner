@@ -389,6 +389,13 @@ public class CppFileProcessor {
 		else if(declaration instanceof CPPASTProblemDeclaration cppProblemDeclaration) {
 			//The CPPASTProblemDeclaration is an internal class in Eclipse CDT that represents a syntax error or unresolved code construct within the C/C++ Abstract Syntax Tree (AST).
 			//When the CDT parser encounters unrecognized code, it captures the issue inside this declaration so parsing can continue.
+			LocationInfo location = new LocationInfo(sourceFolder, filePath, cppProblemDeclaration, CodeElementType.PROBLEM_DECLARATION, fileContent);
+			String raw = cppProblemDeclaration.getRawSignature();
+			String signature = raw.lines().findFirst().orElse(raw);
+			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw);
+			distributeComments(comments, location, problemDeclaration.getComments());
+			if(parentContainer instanceof UMLClass)
+				((UMLClass)parentContainer).addProblemDeclaration(problemDeclaration);
 		}
 		else if(declaration instanceof CPPASTExplicitTemplateInstantiation cppTemplateInstantiation) {
 			//templates are typically defined in separate header files (.hpp) and are instantiated as a 'template class'

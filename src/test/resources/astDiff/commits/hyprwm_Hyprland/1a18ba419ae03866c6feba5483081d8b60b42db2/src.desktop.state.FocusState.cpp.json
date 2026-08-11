@@ -4982,6 +4982,72 @@
   "firstEndPos" : 2327,
   "secondEndPos" : 2317
 }, {
+  "firstType" : "return_statement",
+  "secondType" : "return_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 2339,
+  "secondPos" : 2329,
+  "firstEndPos" : 2349,
+  "secondEndPos" : 2339
+}, {
+  "firstType" : "return",
+  "secondType" : "return",
+  "firstLabel" : "return",
+  "secondLabel" : "return",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 2339,
+  "secondPos" : 2329,
+  "firstEndPos" : 2345,
+  "secondEndPos" : 2335
+}, {
+  "firstType" : "initializer_list",
+  "secondType" : "initializer_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 2346,
+  "secondPos" : 2336,
+  "firstEndPos" : 2348,
+  "secondEndPos" : 2338
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 2346,
+  "secondPos" : 2336,
+  "firstEndPos" : 2347,
+  "secondEndPos" : 2337
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 2347,
+  "secondPos" : 2337,
+  "firstEndPos" : 2348,
+  "secondEndPos" : 2338
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 2348,
+  "secondPos" : 2338,
+  "firstEndPos" : 2349,
+  "secondEndPos" : 2339
+}, {
   "firstType" : "}",
   "secondType" : "}",
   "firstLabel" : "}",

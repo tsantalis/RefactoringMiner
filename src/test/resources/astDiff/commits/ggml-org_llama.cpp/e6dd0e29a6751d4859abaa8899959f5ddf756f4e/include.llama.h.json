@@ -9701,6 +9701,17 @@
   "firstEndPos" : 8673,
   "secondEndPos" : 9187
 }, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 8479,
+  "secondPos" : 8993,
+  "firstEndPos" : 8486,
+  "secondEndPos" : 9000
+}, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
   "firstLabel" : "",
@@ -9932,6 +9943,28 @@
   "firstEndPos" : 8655,
   "secondEndPos" : 9169
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_token_data",
+  "secondLabel" : "llama_token_data",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 8656,
+  "secondPos" : 9170,
+  "firstEndPos" : 8672,
+  "secondEndPos" : 9186
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 8672,
+  "secondPos" : 9186,
+  "firstEndPos" : 8673,
+  "secondEndPos" : 9187
+}, {
   "firstType" : "type_definition",
   "secondType" : "type_definition",
   "firstLabel" : "",
@@ -9942,6 +9975,17 @@
   "secondPos" : 9193,
   "firstEndPos" : 9076,
   "secondEndPos" : 9590
+}, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 8679,
+  "secondPos" : 9193,
+  "firstEndPos" : 8686,
+  "secondEndPos" : 9200
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
@@ -10250,6 +10294,28 @@
   "secondPos" : 9565,
   "firstEndPos" : 9052,
   "secondEndPos" : 9566
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_token_data_array",
+  "secondLabel" : "llama_token_data_array",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 9053,
+  "secondPos" : 9567,
+  "firstEndPos" : 9075,
+  "secondEndPos" : 9589
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 9075,
+  "secondPos" : 9589,
+  "firstEndPos" : 9076,
+  "secondEndPos" : 9590
 }, {
   "firstType" : "type_definition",
   "secondType" : "type_definition",
@@ -10602,6 +10668,17 @@
   "secondPos" : 10682,
   "firstEndPos" : 10465,
   "secondEndPos" : 10979
+}, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 10168,
+  "secondPos" : 10682,
+  "firstEndPos" : 10175,
+  "secondEndPos" : 10689
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
@@ -11141,6 +11218,28 @@
   "secondPos" : 10965,
   "firstEndPos" : 10452,
   "secondEndPos" : 10966
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_batch",
+  "secondLabel" : "llama_batch",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 10453,
+  "secondPos" : 10967,
+  "firstEndPos" : 10464,
+  "secondEndPos" : 10978
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 10464,
+  "secondPos" : 10978,
+  "firstEndPos" : 10465,
+  "secondEndPos" : 10979
 }, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",
@@ -16884,6 +16983,17 @@
   "firstEndPos" : 19981,
   "secondEndPos" : 20347
 }, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 18317,
+  "secondPos" : 18683,
+  "firstEndPos" : 18324,
+  "secondEndPos" : 18690
+}, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
   "firstLabel" : "",
@@ -18028,6 +18138,28 @@
   "firstEndPos" : 19952,
   "secondEndPos" : 20318
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_quantize_params",
+  "secondLabel" : "llama_model_quantize_params",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 19953,
+  "secondPos" : 20319,
+  "firstEndPos" : 19980,
+  "secondEndPos" : 20346
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 19980,
+  "secondPos" : 20346,
+  "firstEndPos" : 19981,
+  "secondEndPos" : 20347
+}, {
   "firstType" : "type_definition",
   "secondType" : "type_definition",
   "firstLabel" : "",
@@ -18038,6 +18170,17 @@
   "secondPos" : 20353,
   "firstEndPos" : 20091,
   "secondEndPos" : 20457
+}, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 19987,
+  "secondPos" : 20353,
+  "firstEndPos" : 19994,
+  "secondEndPos" : 20360
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
@@ -18193,6 +18336,28 @@
   "firstEndPos" : 20073,
   "secondEndPos" : 20439
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_logit_bias",
+  "secondLabel" : "llama_logit_bias",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20074,
+  "secondPos" : 20440,
+  "firstEndPos" : 20090,
+  "secondEndPos" : 20456
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20090,
+  "secondPos" : 20456,
+  "firstEndPos" : 20091,
+  "secondEndPos" : 20457
+}, {
   "firstType" : "type_definition",
   "secondType" : "type_definition",
   "firstLabel" : "",
@@ -18203,6 +18368,17 @@
   "secondPos" : 20463,
   "firstEndPos" : 20238,
   "secondEndPos" : 20604
+}, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20097,
+  "secondPos" : 20463,
+  "firstEndPos" : 20104,
+  "secondEndPos" : 20470
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
@@ -18325,6 +18501,28 @@
   "firstEndPos" : 20210,
   "secondEndPos" : 20576
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_sampler_chain_params",
+  "secondLabel" : "llama_sampler_chain_params",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20211,
+  "secondPos" : 20577,
+  "firstEndPos" : 20237,
+  "secondEndPos" : 20603
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20237,
+  "secondPos" : 20603,
+  "firstEndPos" : 20238,
+  "secondEndPos" : 20604
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// used in chat template",
@@ -18346,6 +18544,17 @@
   "secondPos" : 20639,
   "firstEndPos" : 20391,
   "secondEndPos" : 20757
+}, {
+  "firstType" : "typedef",
+  "secondType" : "typedef",
+  "firstLabel" : "typedef",
+  "secondLabel" : "typedef",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20273,
+  "secondPos" : 20639,
+  "firstEndPos" : 20280,
+  "secondEndPos" : 20646
 }, {
   "firstType" : "struct_specifier",
   "secondType" : "struct_specifier",
@@ -18588,6 +18797,28 @@
   "secondPos" : 20736,
   "firstEndPos" : 20371,
   "secondEndPos" : 20737
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_chat_message",
+  "secondLabel" : "llama_chat_message",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20372,
+  "secondPos" : 20738,
+  "firstEndPos" : 20390,
+  "secondEndPos" : 20756
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 20390,
+  "secondPos" : 20756,
+  "firstEndPos" : 20391,
+  "secondEndPos" : 20757
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

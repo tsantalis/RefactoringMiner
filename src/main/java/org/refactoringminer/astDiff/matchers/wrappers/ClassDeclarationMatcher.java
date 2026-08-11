@@ -174,6 +174,21 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(matched.first,matched.second);
                 }
             }
+            if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.TYPE_DEFINITION)
+                    && dstTypeDeclaration.getParent().getType().name.equals(LANG2.TYPE_DEFINITION)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.TYPEDEF,LANG2.TYPEDEF);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(), LANG1.TYPE_IDENTIFIER, LANG2.TYPE_IDENTIFIER);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+            }
             if(srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
                 int index1 = srcTypeDeclaration.getParent().getChildPosition(srcTypeDeclaration);
                 int index2 = dstTypeDeclaration.getParent().getChildPosition(dstTypeDeclaration);

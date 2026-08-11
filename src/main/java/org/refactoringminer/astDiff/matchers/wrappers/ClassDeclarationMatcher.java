@@ -869,7 +869,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree parent1 = srcTypeDeclaration.getParent();
         Tree parent2 = dstTypeDeclaration.getParent();
         while(parent1 != null && parent2 != null) {
-            if(parent1.getType().equals(parent2.getType())) {
+            boolean methodBody1 = srcTypeDeclaration.getParent().getParent() != null && srcTypeDeclaration.getParent().getParent().getType().name.equals(LANG1.METHOD_DECLARATION);
+            boolean methodBody2 = dstTypeDeclaration.getParent().getParent() != null && dstTypeDeclaration.getParent().getParent().getType().name.equals(LANG2.METHOD_DECLARATION);
+            if(!methodBody1 && !methodBody2 && parent1.getType().equals(parent2.getType())) {
                 mappingStore.addMapping(parent1, parent2);
                 Pair<Tree, Tree> opening = Helpers.findPairOfType(parent1,parent2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
                 if (opening != null) {

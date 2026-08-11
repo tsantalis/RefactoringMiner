@@ -159,6 +159,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 (srcAttr.getType().name.equals(LANG1.INIT_DECLARATOR) && dstAttr.getType().name.equals(LANG2.INIT_DECLARATOR)) ||
                 (srcAttr.getType().name.equals(LANG1.ARRAY_DECLARATOR) && dstAttr.getType().name.equals(LANG2.ARRAY_DECLARATOR)) ||
                 (srcAttr.getType().name.equals(LANG1.FIELD_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.FIELD_IDENTIFIER)) ||
+                (srcAttr.getType().name.equals(LANG1.TYPE_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.TYPE_IDENTIFIER)) ||
                 (srcAttr.getType().name.equals(LANG1.ENUMERATOR) && dstAttr.getType().name.equals(LANG2.ENUMERATOR))) {
             if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
                 int index1 = srcAttr.getParent().getChildPosition(srcAttr);
@@ -174,6 +175,29 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                     Tree t1 = srcAttr.getParent().getChild(index1+1);
                     Tree t2 = dstAttr.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
+                }
+                if(srcAttr.getParent().getType().name.equals(LANG1.TYPE_DEFINITION) && dstAttr.getParent().getType().name.equals(LANG2.TYPE_DEFINITION)) {
+                    mappingStore.addMapping(srcAttr.getParent(), dstAttr.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(),LANG1.TYPEDEF,LANG2.TYPEDEF);
+                    if(matched != null) {
+                        mappingStore.addMapping(matched.first, matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.TYPE_IDENTIFIER, LANG2.TYPE_IDENTIFIER);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.PRIMITIVE_TYPE, LANG2.PRIMITIVE_TYPE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.QUALIFIED_IDENTIFIER, LANG2.QUALIFIED_IDENTIFIER);
+                    if (matched != null) {
+                        mappingStore.addMappingRecursively(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
                 }
             }
             mappingStore.addMapping(srcAttr, dstAttr);

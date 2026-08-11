@@ -2331,6 +2331,83 @@
   "firstEndPos" : 1434,
   "secondEndPos" : 1434
 }, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 1435,
+  "secondPos" : 1435,
+  "firstEndPos" : 1456,
+  "secondEndPos" : 1456
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 1435,
+  "secondPos" : 1435,
+  "firstEndPos" : 1441,
+  "secondEndPos" : 1441
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_memory_i",
+  "secondLabel" : "llama_memory_i",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 1442,
+  "secondPos" : 1442,
+  "firstEndPos" : 1456,
+  "secondEndPos" : 1456
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 1457,
+  "secondPos" : 1457,
+  "firstEndPos" : 1473,
+  "secondEndPos" : 1473
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 1457,
+  "secondPos" : 1457,
+  "firstEndPos" : 1458,
+  "secondEndPos" : 1458
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_memory_t",
+  "secondLabel" : "llama_memory_t",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 1459,
+  "secondPos" : 1459,
+  "firstEndPos" : 1473,
+  "secondEndPos" : 1473
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "type_definition",
+  "secondParentType" : "type_definition",
+  "firstPos" : 1473,
+  "secondPos" : 1473,
+  "firstEndPos" : 1474,
+  "secondEndPos" : 1474
+}, {
   "firstType" : "typedef",
   "secondType" : "typedef",
   "firstLabel" : "typedef",

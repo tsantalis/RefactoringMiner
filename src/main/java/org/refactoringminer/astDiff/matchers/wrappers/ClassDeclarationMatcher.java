@@ -419,6 +419,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     srcStatement = srcStatement.getParent();
                 else if(srcStatement.getType().name.equals(LANG1.TYPE_QUALIFIER))
                     srcStatement = srcStatement.getParent();
+                else if(srcStatement.getType().name.equals(LANG1.TYPEDEF))
+                    srcStatement = srcStatement.getParent();
                 else if(srcStatement.getType().name.equals(LANG1.STRUCT_KEYWORD))
                     srcStatement = TreeUtilFunctions.getParentUntilType(srcStatement, LANG1.METHOD_DECLARATION);
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
@@ -427,6 +429,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 else if(dstStatement.getType().name.equals(LANG2.ERROR))
                     dstStatement = dstStatement.getParent();
                 else if(dstStatement.getType().name.equals(LANG2.TYPE_QUALIFIER))
+                    dstStatement = dstStatement.getParent();
+                else if(dstStatement.getType().name.equals(LANG2.TYPEDEF))
                     dstStatement = dstStatement.getParent();
                 else if(dstStatement.getType().name.equals(LANG2.STRUCT_KEYWORD))
                     dstStatement = TreeUtilFunctions.getParentUntilType(dstStatement, LANG2.METHOD_DECLARATION);

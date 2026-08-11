@@ -653,4 +653,5 @@ public class Constants {
     public final String CONSTEXPR = "constexpr";
     public final String TYPE_DEFINITION = "type_definition";
     public final String TYPEDEF = "typedef";
+    public final String PARENTHESIZED_DECLARATOR = "parenthesized_declarator";
 }

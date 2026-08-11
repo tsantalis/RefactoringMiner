@@ -178,6 +178,27 @@ public class LocationInfo {
 		}
 	}
 
+	public LocationInfo(String sourceFolder, String filePath, int startOffset, int length, int endOffset, CodeElementType codeElementType, String fileContent) {
+		this.sourceFolder = sourceFolder;
+		this.filePath = filePath;
+		this.codeElementType = codeElementType;
+		this.startOffset = startOffset;
+		this.length = length;
+		this.endOffset = endOffset;
+		//compute start-line
+		String text = fileContent.substring(0, this.startOffset);
+		long lines = text.lines().count();
+		this.startLine = (int) lines;
+		String text2 = fileContent.substring(this.startOffset, this.endOffset);
+		long lines2 = text2.lines().count();
+		if(lines2 == 0) {
+			this.endLine = this.startLine;
+		}
+		else {
+			this.endLine = (int) (this.startLine + lines2 - 1);
+		}
+	}
+
 	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;

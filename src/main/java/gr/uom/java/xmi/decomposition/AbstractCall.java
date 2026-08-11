@@ -100,6 +100,10 @@ public abstract class AbstractCall extends LeafExpression {
 		super(locationInfo);
 	}
 
+	protected AbstractCall(String string, LocationInfo locationInfo) {
+		super(string, locationInfo);
+	}
+
 	boolean isAssumeCall() {
 		return getName().startsWith("assume");
 	}

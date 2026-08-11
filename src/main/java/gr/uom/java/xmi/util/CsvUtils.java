@@ -13,7 +13,7 @@ public class CsvUtils {
         if(s.contains("'") && !s.contains("''")) {
         	String[] tokens = s.split("'");
         	for (String token : tokens) {
-        		if(!token.equals("\"") && !token.matches("\s*,\s*")) {
+        		if(!token.equals("\"") && !token.matches("\\s*,\\s*")) {
         			parameters.add(token);
         		}
         	}

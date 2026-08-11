@@ -1,9 +1,12 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression;
@@ -11,21 +14,27 @@ import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTExpression;
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.IASTLiteralExpression;
 import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTProblemStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class CppVisitor extends ASTVisitor {
+	private static final Pattern WITHOUT_INVOKER = Pattern.compile("(::)?\\b(?!if|while|for|switch|catch|return\\b)[a-zA-Z_][a-zA-Z0-9_]*\\s*\\(");
+	private static final Pattern WITH_INVOKER = Pattern.compile("(\\b[a-zA-Z_][a-zA-Z0-9_]*|::)(\\.|->|::)([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(");
 	private String sourceFolder;
 	private String filePath;
 	private VariableDeclarationContainer container;
-	private Map<String, Set<VariableDeclaration>> activeVariableDeclarations; 
+	private Map<String, Set<VariableDeclaration>> activeVariableDeclarations;
 	private final String fileContent;
 	
 	private List<LeafExpression> variables = new ArrayList<>();
@@ -68,6 +77,7 @@ public class CppVisitor extends ASTVisitor {
 		this.shouldVisitStatements = true;
 		this.shouldVisitDeclarators = true;
 		this.shouldVisitExpressions = true;
+		this.shouldVisitProblems = true;
 		this.shouldVisitNames = true;
 	}
 
@@ -86,6 +96,94 @@ public class CppVisitor extends ASTVisitor {
 		LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, name, CodeElementType.SIMPLE_NAME, container, fileContent);
 		variables.add(leafExpression);
 		return super.visit(name);
+	}
+
+	private Map<String, OperationInvocation> extractAllMethodCalls(int startOffset, String input, Pattern pattern) {
+		Map<String, OperationInvocation> results = new LinkedHashMap<>();
+		if (input == null || input.isEmpty()) return results;
+		Matcher matcher = pattern.matcher(input);
+
+		int searchIdx = 0;
+		while (matcher.find(searchIdx)) {
+			int startOfCall = matcher.start();
+			int openParenIdx = matcher.end() - 1; // Index of the opening '('
+			String beforeParenthesis = input.substring(startOfCall, openParenIdx);
+
+			// Find the true matching closing parenthesis
+			int closeParenIdx = findMatchingParenthesis(input, openParenIdx);
+
+			if (closeParenIdx != -1) {
+				// Extract the full method call
+				String fullCall = input.substring(startOfCall, closeParenIdx + 1);
+				int start = startOffset + startOfCall;
+				int end = startOffset + closeParenIdx + 1;
+				int length = end - start;
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, start, length, end, CodeElementType.METHOD_INVOCATION, fileContent);
+				String expression = null;
+				String name = beforeParenthesis;
+				if(beforeParenthesis.contains("::")) {
+					expression = beforeParenthesis.substring(0, beforeParenthesis.lastIndexOf("::"));
+					name = beforeParenthesis.substring(beforeParenthesis.lastIndexOf("::") + 2, beforeParenthesis.length());
+				}
+				else if(beforeParenthesis.contains("->")) {
+					expression = beforeParenthesis.substring(0, beforeParenthesis.lastIndexOf("->"));
+					name = beforeParenthesis.substring(beforeParenthesis.lastIndexOf("->") + 2, beforeParenthesis.length());
+				}
+				else if(beforeParenthesis.contains(".")) {
+					expression = beforeParenthesis.substring(0, beforeParenthesis.lastIndexOf("."));
+					name = beforeParenthesis.substring(beforeParenthesis.lastIndexOf(".") + 1, beforeParenthesis.length());
+				}
+				String arguments = input.substring(openParenIdx + 1, closeParenIdx);
+				String[] args = arguments.length() > 0 ? arguments.split("\\s*,\\s*") : new String[] {};
+				OperationInvocation invocation = new OperationInvocation(fullCall, location, container, name, expression, args);
+				results.put(fullCall, invocation);
+				// Advance search index just past the opening token to catch nested calls inside this one
+				searchIdx = matcher.start() + 1;
+			} else {
+				searchIdx = matcher.end();
+			}
+		}
+		return results;
+	}
+
+	private static int findMatchingParenthesis(String str, int openIdx) {
+		int counter = 0;
+		for (int i = openIdx; i < str.length(); i++) {
+			if (str.charAt(i) == '(') {
+				counter++;
+			} else if (str.charAt(i) == ')') {
+				counter--;
+				if (counter == 0) {
+					return i; // Found the matching closing parenthesis
+				}
+			}
+		}
+		return -1; // Unmatched parenthesis
+	}
+
+	public int visit(IASTStatement statement) {
+		if(statement instanceof IASTProblemStatement problem) {
+			IASTFileLocation fileLocation = problem.getFileLocation();
+			int startOffset = fileLocation.getNodeOffset();
+			Map<String, OperationInvocation> calls = extractAllMethodCalls(startOffset, problem.getRawSignature(), WITH_INVOKER);
+			Map<String, OperationInvocation> callsWithout = extractAllMethodCalls(startOffset, problem.getRawSignature(), WITHOUT_INVOKER);
+			Map<String, OperationInvocation> toAdd = new LinkedHashMap<>();
+			for(String call : callsWithout.keySet()) {
+				boolean found = false;
+				for(String previous : calls.keySet()) {
+					if(previous.contains(call)) {
+						found = true;
+						break;
+					}
+				}
+				if(!found) {
+					toAdd.put(call, callsWithout.get(call));
+				}
+			}
+			methodInvocations.addAll(calls.values());
+			methodInvocations.addAll(toAdd.values());
+		}
+		return super.visit(statement);
 	}
 
 	public int visit(IASTExpression expression) {

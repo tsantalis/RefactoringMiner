@@ -726,6 +726,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (typeIdentifiers != null) {
             mappingStore.addMappingRecursively(typeIdentifiers.first, typeIdentifiers.second);
         }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> struct_specifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.STRUCT_SPECIFIER,LANG2.STRUCT_SPECIFIER);
+        if (struct_specifiers != null) {
+            mappingStore.addMappingRecursively(struct_specifiers.first, struct_specifiers.second);
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);

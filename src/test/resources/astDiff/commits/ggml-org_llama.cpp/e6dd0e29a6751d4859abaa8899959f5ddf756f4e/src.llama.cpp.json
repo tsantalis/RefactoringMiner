@@ -31129,6 +31129,39 @@
   "firstEndPos" : 12717,
   "secondEndPos" : 13539
 }, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 12718,
+  "secondPos" : 13540,
+  "firstEndPos" : 12736,
+  "secondEndPos" : 13558
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 12718,
+  "secondPos" : 13540,
+  "firstEndPos" : 12724,
+  "secondEndPos" : 13546
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model",
+  "secondLabel" : "llama_model",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 12725,
+  "secondPos" : 13547,
+  "firstEndPos" : 12736,
+  "secondEndPos" : 13558
+}, {
   "firstType" : "pointer_declarator",
   "secondType" : "pointer_declarator",
   "firstLabel" : "",

@@ -512,8 +512,28 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             for (org.apache.commons.lang3.tuple.Pair<UMLProblemDeclaration, UMLProblemDeclaration> statementPair : umlProblemDeclarationListDiff.getCommonDeclarations()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                if(srcStatement != null && dstStatement != null)
-                    mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                if(srcStatement != null && dstStatement != null) {
+                    if(srcStatement.isIsomorphicTo(dstStatement)) {
+                        mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                    }
+                    else if(srcStatement.getChildren().size() > 0 && dstStatement.getChildren().size() > 0 && srcStatement.getChildren().get(0).getType().name.equals(LANG1.FUNCTION_DECLARATOR) && dstStatement.getChildren().get(0).getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
+                        mappingStore.addMapping(srcStatement, dstStatement);
+                        mappingStore.addMappingRecursively(srcStatement.getChildren().get(0), dstStatement.getChildren().get(0));
+                        if(srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1 && srcStatement.getChildren().get(1).getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatement.getChildren().get(1).getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
+                            Tree srcBlock = srcStatement.getChildren().get(1);
+                            Tree dstBlock = dstStatement.getChildren().get(1);
+                            mappingStore.addMapping(srcBlock, dstBlock);
+                            matched = Helpers.findPairOfType(srcBlock,dstBlock, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                            if (matched != null) {
+                                mappingStore.addMapping(matched.first,matched.second);
+                            }
+                            matched = Helpers.findPairOfType(srcBlock,dstBlock, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                            if (matched != null) {
+                                mappingStore.addMapping(matched.first,matched.second);
+                            }
+                        }
+                    }
+                }
                 UMLCommentListDiff diff = new UMLCommentListDiff(statementPair.getLeft().getComments(), statementPair.getRight().getComments());
                 new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
             }

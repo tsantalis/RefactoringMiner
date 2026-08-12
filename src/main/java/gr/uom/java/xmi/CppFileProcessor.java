@@ -391,8 +391,9 @@ public class CppFileProcessor {
 			//When the CDT parser encounters unrecognized code, it captures the issue inside this declaration so parsing can continue.
 			LocationInfo location = new LocationInfo(sourceFolder, filePath, cppProblemDeclaration, CodeElementType.PROBLEM_DECLARATION, fileContent);
 			String raw = cppProblemDeclaration.getRawSignature();
-			String signature = raw.contains("{") ? raw.substring(0, raw.indexOf("{")) : raw.lines().findFirst().orElse(raw);
-			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw);
+			boolean isFunctionDefinition = raw.contains("{") && !raw.contains("{.") && !raw.contains("{}");
+			String signature = isFunctionDefinition ? raw.substring(0, raw.indexOf("{")) : raw.lines().findFirst().orElse(raw);
+			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw, isFunctionDefinition);
 			distributeComments(comments, location, problemDeclaration.getComments());
 			if(parentContainer instanceof UMLClass)
 				((UMLClass)parentContainer).addProblemDeclaration(problemDeclaration);

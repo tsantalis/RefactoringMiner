@@ -512,7 +512,24 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             for (org.apache.commons.lang3.tuple.Pair<UMLProblemDeclaration, UMLProblemDeclaration> statementPair : umlProblemDeclarationListDiff.getCommonDeclarations()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                if(statementPair.getLeft().isFunctionDefinition() && statementPair.getRight().isFunctionDefinition() && !srcStatement.getType().name.equals(LANG1.METHOD_DECLARATION) && !dstStatement.getType().name.equals(LANG2.METHOD_DECLARATION)) {
+                    Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatement, LANG1.METHOD_DECLARATION);
+                    Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatement, LANG2.METHOD_DECLARATION);
+                    if(tmpSrcStatement != null) srcStatement = tmpSrcStatement;
+                    if(tmpDstStatement != null) dstStatement = tmpDstStatement;
+                }
                 if(srcStatement != null && dstStatement != null) {
+                    if(srcStatement.getParent().getType().name.equals(LANG1.DECLARATION_LIST) && dstStatement.getParent().getType().name.equals(LANG2.DECLARATION_LIST)) {
+                        mappingStore.addMappingRecursively(srcStatement.getParent(), dstStatement.getParent());
+                        matched = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                        if (matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                        matched = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                        if (matched != null) {
+                            mappingStore.addMapping(matched.first,matched.second);
+                        }
+                    }
                     if(srcStatement.isIsomorphicTo(dstStatement)) {
                         mappingStore.addMappingRecursively(srcStatement, dstStatement);
                     }

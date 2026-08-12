@@ -13,15 +13,21 @@ public class UMLProblemDeclaration implements Serializable, LocationInfoProvider
 	private LocationInfo location;
 	private String signature;
 	private String fullText;
+	private boolean functionDefinition;
 	private List<UMLComment> comments;
 
-	public UMLProblemDeclaration(String packageName, String sourceFolder, LocationInfo location, String signature, String fullText) {
+	public UMLProblemDeclaration(String packageName, String sourceFolder, LocationInfo location, String signature, String fullText, boolean functionDefinition) {
 		this.packageName = packageName;
 		this.sourceFolder = sourceFolder;
 		this.location = location;
 		this.signature = signature;
 		this.fullText = fullText;
+		this.functionDefinition = functionDefinition;
 		this.comments = new ArrayList<UMLComment>();
+	}
+
+	public boolean isFunctionDefinition() {
+		return functionDefinition;
 	}
 
 	public String getFullText() {

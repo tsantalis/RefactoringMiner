@@ -234,12 +234,10 @@ public class HunkNetwork {
   }
 
   private void injectContextNode(Node contextNode) {
-    List<Node> descendantNodes = graph.vertexSet().stream()
-        .filter(node -> node.isDescendantOf(contextNode))
-        .toList();
+    List<Node> descendantNodes = graph.vertexSet().stream().filter(node -> node.getSrcDst().equals(contextNode.getSrcDst()) &&
+            node.getPath().equals(contextNode.getPath()) && node.isDescendantOf(contextNode)).toList();
     List<Node> immediateDescendants = descendantNodes.stream().filter(
-            subject -> descendantNodes.stream().noneMatch(subject::isDescendantOf))
-        .toList();
+            subject -> descendantNodes.stream().noneMatch(subject::isDescendantOf)).toList();
     for (Node immediateDescendant : immediateDescendants) {
       Optional<Edge> contextEdge = graph.outgoingEdgesOf(immediateDescendant).stream()
           .filter(edge -> edge.getType().equals(EdgeType.CONTEXT)).findFirst();
@@ -252,11 +250,10 @@ public class HunkNetwork {
       }
     }
 
-    List<Node> predecessors = graph.vertexSet().stream().filter(contextNode::isDescendantOf)
-        .toList();
+    List<Node> predecessors = graph.vertexSet().stream().filter(node -> node.getSrcDst().equals(contextNode.getSrcDst())
+            && node.getPath().equals(contextNode.getPath()) && contextNode.isDescendantOf(node)).toList();
     Optional<Node> immediatePredecessor = predecessors.stream().filter(
-            subject -> predecessors.stream().noneMatch(object -> object.isDescendantOf(subject)))
-        .findFirst();
+            subject -> predecessors.stream().noneMatch(object -> object.isDescendantOf(subject))).findFirst();
     if (immediatePredecessor.isPresent()) {
       Optional<Edge> existingEdge = graph.getAllEdges(contextNode, immediatePredecessor.get())
           .stream()

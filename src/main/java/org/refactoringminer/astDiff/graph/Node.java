@@ -98,13 +98,22 @@ public class Node {
   }
 
   public boolean isDescendantOf(Node node) {
-    return (this.getTree().equals(node.getTree()) && this.nodeType.equals(NodeType.SEMANTIC_CONTEXT)
-        && node.getNodeType().equals(NodeType.LOCATION_CONTEXT)) || Node.isDescendantOf(this.getTree(), node.getTree());
+    return (this.getTree().equals(node.getTree()) && this.nodeType.equals(NodeType.SEMANTIC_CONTEXT) && node.getNodeType().equals(NodeType.LOCATION_CONTEXT))
+            || Node.isDescendantOf(this.srcDst, this.path, this.tree, node.srcDst, node.path, node.tree);
   }
 
-  public static boolean isDescendantOf(Tree examinee, Tree of) {
-    return (of.getPos() <= examinee.getPos() && examinee.getEndPos() <= of.getEndPos()) ||
-            (of.getPos() == examinee.getPos() && examinee.getEndPos() == of.getEndPos() && examinee.getParents().contains(of));
+  public static boolean isDescendantOf(SrcDst examineeSrcDst, String examineePath, Tree examineeTree,
+                                       SrcDst ofSrcDst, String ofPath, Tree ofTree) {
+    if (!examineeSrcDst.equals(ofSrcDst) || !examineePath.equals(ofPath)) {
+      return false;
+    }
+
+    if ((ofTree.getPos() < examineeTree.getPos() && examineeTree.getEndPos() <= ofTree.getEndPos()) ||
+            (ofTree.getPos() <= examineeTree.getPos() && examineeTree.getEndPos() < ofTree.getEndPos())) {
+      return true;
+    }
+
+    return ofTree.getPos() == examineeTree.getPos() && examineeTree.getEndPos() == ofTree.getEndPos() && examineeTree.getParents().contains(ofTree);
   }
 
   public void addIdentifier(String identifier) {

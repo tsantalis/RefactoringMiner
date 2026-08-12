@@ -2258,11 +2258,12 @@ public abstract class UMLAbstractClassDiff {
 		return matchingTestParameters;
 	}
 
-	private void detectInlinedTestDataConstants(UMLOperationBodyMapper mapper, UMLOperation addedOperation,
+	private void detectDataProviderRowLinks(UMLOperationBodyMapper mapper, ParameterizeTestRefactoring refactoring, UMLOperation addedOperation,
 			List<List<String>> parameterValues, List<String> parameterNames) {
 		UMLAbstractClass originalClass = getOriginalClass();
 		List<List<LeafExpression>> parameterValuesAsLeafExpressions = getParameterValuesAsLeafExpressions(addedOperation);
-		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+		//snapshot the mappings before iterating, since refactoring.addDataMapping() below mutates mapper's underlying mapping set
+		for(AbstractCodeMapping mapping : new ArrayList<AbstractCodeMapping>(mapper.getMappings())) {
 			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapping.getReplacements(), mapper, originalClass);
 			Integer index = null;
 			int max = -1;
@@ -2304,40 +2305,53 @@ public abstract class UMLAbstractClassDiff {
 				}
 				for(String candidate : candidateConstantNames) {
 					UMLAttribute removedAttribute = findConstantAttribute(candidate, originalClass);
-					if(removedAttribute == null) {
-						continue;
-					}
-					AbstractExpression initializer = removedAttribute.getVariableDeclaration().getInitializer();
-					String resolvedValue = initializer.getString();
-					for(LeafExpression rowValue : rowValues) {
-						if(!rowValue.getString().equals(resolvedValue)) {
-							continue;
-						}
-						List<LeafExpression> attributeLiterals = new ArrayList<LeafExpression>();
-						attributeLiterals.addAll(initializer.getStringLiterals());
-						attributeLiterals.addAll(initializer.getNumberLiterals());
-						attributeLiterals.addAll(initializer.getBooleanLiterals());
-						attributeLiterals.addAll(initializer.getNullLiterals());
-						if(attributeLiterals.isEmpty()) {
-							continue;
-						}
-						InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, originalClass, getNextClass(), false);
-						if(refactorings.contains(refactoring)) {
-							for(Refactoring ref : refactorings) {
-								if(ref.equals(refactoring)) {
-									InlineAttributeRefactoring existing = (InlineAttributeRefactoring)ref;
-									existing.addReference(mapping);
-									existing.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
-									break;
+					if(removedAttribute != null) {
+						AbstractExpression initializer = removedAttribute.getVariableDeclaration().getInitializer();
+						String resolvedValue = initializer.getString();
+						for(LeafExpression rowValue : rowValues) {
+							if(!rowValue.getString().equals(resolvedValue)) {
+								continue;
+							}
+							List<LeafExpression> attributeLiterals = new ArrayList<LeafExpression>();
+							attributeLiterals.addAll(initializer.getStringLiterals());
+							attributeLiterals.addAll(initializer.getNumberLiterals());
+							attributeLiterals.addAll(initializer.getBooleanLiterals());
+							attributeLiterals.addAll(initializer.getNullLiterals());
+							if(attributeLiterals.isEmpty()) {
+								continue;
+							}
+							InlineAttributeRefactoring inlineAttributeRefactoring = new InlineAttributeRefactoring(removedAttribute, originalClass, getNextClass(), false);
+							if(refactorings.contains(inlineAttributeRefactoring)) {
+								for(Refactoring ref : refactorings) {
+									if(ref.equals(inlineAttributeRefactoring)) {
+										InlineAttributeRefactoring existing = (InlineAttributeRefactoring)ref;
+										existing.addReference(mapping);
+										existing.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
+										break;
+									}
 								}
 							}
+							else {
+								inlineAttributeRefactoring.addReference(mapping);
+								inlineAttributeRefactoring.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
+								refactorings.add(inlineAttributeRefactoring);
+							}
+							break;
 						}
-						else {
-							refactoring.addReference(mapping);
-							refactoring.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
-							refactorings.add(refactoring);
+					}
+					else {
+						String sanitizedCandidate = sanitizeStringLiteral(candidate);
+						for(LeafExpression rowValue : rowValues) {
+							if(!rowValue.getString().equals(candidate) && !rowValue.getString().equals(sanitizedCandidate)) {
+								continue;
+							}
+							List<LeafExpression> oldLiteralMatches = mapping.getFragment1().findExpression(candidate);
+							if(oldLiteralMatches.isEmpty()) {
+								continue;
+							}
+							refactoring.addDataMapping(new LeafMapping(oldLiteralMatches.get(0), rowValue, mapper.getOperation1(), addedOperation));
+							break;
 						}
-						break;
 					}
 				}
 			}
@@ -3293,7 +3307,7 @@ public abstract class UMLAbstractClassDiff {
 								refactorings.add(refactoring);
 								mapper.computeRefactoringsWithinBody();
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
-								detectInlinedTestDataConstants(mapper, addedOperation, parameterValues, parameterNames);
+								detectDataProviderRowLinks(mapper, refactoring, addedOperation, parameterValues, parameterNames);
 								UMLOperation removedOperation = mapper.getOperation1();
 								removedOperations.remove(removedOperation);
 								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest

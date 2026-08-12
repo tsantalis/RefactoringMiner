@@ -99,8 +99,12 @@ public class Node {
 
   public boolean isDescendantOf(Node node) {
     return (this.getTree().equals(node.getTree()) && this.nodeType.equals(NodeType.SEMANTIC_CONTEXT)
-        && node.getNodeType().equals(NodeType.LOCATION_CONTEXT)) || this.getTree().getParents()
-        .contains(node.getTree());
+        && node.getNodeType().equals(NodeType.LOCATION_CONTEXT)) || Node.isDescendantOf(this.getTree(), node.getTree());
+  }
+
+  public static boolean isDescendantOf(Tree examinee, Tree of) {
+    return (of.getPos() <= examinee.getPos() && examinee.getEndPos() <= of.getEndPos()) ||
+            (of.getPos() == examinee.getPos() && examinee.getEndPos() == of.getEndPos() && examinee.getParents().contains(of));
   }
 
   public void addIdentifier(String identifier) {

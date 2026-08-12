@@ -512,7 +512,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             for (org.apache.commons.lang3.tuple.Pair<UMLProblemDeclaration, UMLProblemDeclaration> statementPair : umlProblemDeclarationListDiff.getCommonDeclarations()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                if(srcStatement != null && dstStatement != null)
+                    mappingStore.addMappingRecursively(srcStatement, dstStatement);
                 UMLCommentListDiff diff = new UMLCommentListDiff(statementPair.getLeft().getComments(), statementPair.getRight().getComments());
                 new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
             }

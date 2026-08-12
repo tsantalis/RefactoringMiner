@@ -98,6 +98,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
+			NUMBER_LITERAL = "number_literal";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -138,6 +139,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
+			NUMBER_LITERAL = "number_literal";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -178,6 +180,7 @@ public class Constants {
 			EMPTY_STATEMENT = "empty_statement";
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
+			NUMBER_LITERAL = "number_literal";
 		}
 		else if(PathFileUtils.isCppFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
@@ -218,6 +221,7 @@ public class Constants {
 			EMPTY_STATEMENT = "EmptyStatement";
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
+			NUMBER_LITERAL = "number_literal";
 		}
 		else {
 			// Java values as default
@@ -259,6 +263,7 @@ public class Constants {
 			EMPTY_STATEMENT = "EmptyStatement";
 			PRIMITIVE_TYPE = "PrimitiveType";
 			CONDITIONAL_EXPRESSION = "ConditionalExpression";
+			NUMBER_LITERAL = "NumberLiteral";
 		}
 	}
 
@@ -352,7 +357,7 @@ public class Constants {
 
     public final String STRING_LITERAL;
     public final String CHARACTER_LITERAL;
-    public final String NUMBER_LITERAL = "NumberLiteral";
+    public final String NUMBER_LITERAL;
     public final String BOOLEAN_LITERAL;
     public final String NULL_LITERAL;
 

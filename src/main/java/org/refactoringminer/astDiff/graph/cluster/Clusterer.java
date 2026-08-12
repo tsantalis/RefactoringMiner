@@ -24,68 +24,55 @@ public class Clusterer {
 
     private void cluster() {
         Set<Node> nodes = graph.vertexSet();
-
-        int clusterIndex = 0;
-        for (Node source : nodes) {
-            for (Node target : nodes) {
-                if (source.equals(target)) {
-                    continue;
-                }
-
-                Set<Edge> edges = graph.getAllEdges(source, target);
-                if (edges.isEmpty()) {
-                    continue;
-                }
-
-                Cluster cluster = new Cluster();
-                for (Edge edge : edges) {
-                    cluster.addEdge(source, target, edge);
-                }
-
-                String sourceClusterId = nodeToCluster.get(source);
-                String targetClusterId = nodeToCluster.get(target);
-
-                if (sourceClusterId != null) {
-                    cluster.merge(clusters.get(sourceClusterId));
-                }
-                if (targetClusterId != null) {
-                    cluster.merge(clusters.get(targetClusterId));
-                }
-
-                String clusterIndexStr = String.valueOf(clusterIndex);
-
-                clusters.put(clusterIndexStr, cluster);
-
-                nodeToCluster.put(source, clusterIndexStr);
-                nodeToCluster.put(target, clusterIndexStr);
-                overrideClustersNodes(sourceClusterId, clusterIndexStr);
-                overrideClustersNodes(targetClusterId, clusterIndexStr);
-
-                clusters.remove(sourceClusterId);
-                clusters.remove(targetClusterId);
-
-                clusterIndex++;
-            }
+        Map<Node, Node> parent = new HashMap<>();
+        for (Node node : nodes) {
+            parent.put(node, node);
         }
 
-        for (Node node : graph.vertexSet()) {
-            if (!nodeToCluster.containsKey(node)) {
-                clusters.put(String.valueOf(clusterIndex), new Cluster(node));
-                nodeToCluster.put(node, String.valueOf(clusterIndex));
-                clusterIndex++;
+        for (Edge edge : graph.edgeSet()) {
+            union(parent, graph.getEdgeSource(edge), graph.getEdgeTarget(edge));
+        }
+
+        Map<Node, String> rootToId = new HashMap<>();
+        int[] clusterIndexWrapper = {0};
+        for (Node node : nodes) {
+            Node root = find(parent, node);
+            String id = rootToId.computeIfAbsent(root, r -> {
+                String newId = String.valueOf(clusterIndexWrapper[0]++);
+                Cluster cluster = new Cluster();
+                clusters.put(newId, cluster);
+                return newId;
+            });
+            nodeToCluster.put(node, id);
+            clusters.get(id).addNode(node);
+        }
+
+        for (Edge edge : graph.edgeSet()) {
+            Node source = graph.getEdgeSource(edge);
+            Node target = graph.getEdgeTarget(edge);
+            String sourceId = nodeToCluster.get(source);
+            String targetId = nodeToCluster.get(target);
+
+            if (sourceId != null && sourceId.equals(targetId)) {
+                clusters.get(sourceId).addEdge(source, target, edge);
             }
         }
     }
 
-    private void overrideClustersNodes(String source, String target) {
-        if (source == null) {
-            return;
+    private Node find(Map<Node, Node> parent, Node i) {
+        if (parent.get(i).equals(i)) {
+            return i;
         }
+        Node root = find(parent, parent.get(i));
+        parent.put(i, root);
+        return root;
+    }
 
-        List<Node> sourceClusterNodes = nodeToCluster.entrySet().stream()
-                .filter(entry -> entry.getValue().equals(source)).map(Map.Entry::getKey).toList();
-        for (Node node : sourceClusterNodes) {
-            nodeToCluster.put(node, target);
+    private void union(Map<Node, Node> parent, Node i, Node j) {
+        Node rootI = find(parent, i);
+        Node rootJ = find(parent, j);
+        if (!rootI.equals(rootJ)) {
+            parent.put(rootI, rootJ);
         }
     }
 

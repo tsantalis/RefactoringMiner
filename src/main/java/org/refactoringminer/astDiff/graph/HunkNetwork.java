@@ -462,6 +462,11 @@ public class HunkNetwork {
     List<AbstractCall> invocations = srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
             : modelDiff.findInvocationsInChildModel(umlOperation);
     for (AbstractCall invocation : invocations) {
+      // Passing callback through method reference does not have arguments
+      if (parameterIndex >= invocation.arguments().size()) {
+        continue;
+      }
+
       LocationInfo invocationLocation = invocation.getLocationInfo();
 
       String invocationFileContent = srcDst.equals(SrcDst.SRC) ? srcContents.get(invocationLocation.getFilePath()) : dstContents.get(invocationLocation.getFilePath());

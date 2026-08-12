@@ -125,7 +125,7 @@ public class HunkNetwork {
           continue;
         }
 
-        if (Node.isDescendantOf(subject.tree, object.tree)) {
+        if (Node.isDescendantOf(subject.srcDst, subject.path, subject.tree, object.srcDst, object.path, object.tree)) {
           isParent = false;
           break;
         }
@@ -142,7 +142,7 @@ public class HunkNetwork {
           continue;
         }
 
-        if (Node.isDescendantOf(importTree.tree, parent.tree)) {
+        if (Node.isDescendantOf(importTree.srcDst, importTree.path, importTree.tree, parent.srcDst, parent.path, parent.tree)) {
           result.get(parent).add(importTree);
         }
       }

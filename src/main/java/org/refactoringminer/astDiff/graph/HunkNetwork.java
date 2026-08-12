@@ -234,8 +234,7 @@ public class HunkNetwork {
   }
 
   private void injectContextNode(Node contextNode) {
-    List<Node> descendantNodes = graph.vertexSet().stream().filter(node -> node.getSrcDst().equals(contextNode.getSrcDst()) &&
-            node.getPath().equals(contextNode.getPath()) && node.isDescendantOf(contextNode)).toList();
+    List<Node> descendantNodes = graph.vertexSet().stream().filter(node -> node.isDescendantOf(contextNode)).toList();
     List<Node> immediateDescendants = descendantNodes.stream().filter(
             subject -> descendantNodes.stream().noneMatch(subject::isDescendantOf)).toList();
     for (Node immediateDescendant : immediateDescendants) {
@@ -250,8 +249,7 @@ public class HunkNetwork {
       }
     }
 
-    List<Node> predecessors = graph.vertexSet().stream().filter(node -> node.getSrcDst().equals(contextNode.getSrcDst())
-            && node.getPath().equals(contextNode.getPath()) && contextNode.isDescendantOf(node)).toList();
+    List<Node> predecessors = graph.vertexSet().stream().filter(contextNode::isDescendantOf).toList();
     Optional<Node> immediatePredecessor = predecessors.stream().filter(
             subject -> predecessors.stream().noneMatch(object -> object.isDescendantOf(subject))).findFirst();
     if (immediatePredecessor.isPresent()) {

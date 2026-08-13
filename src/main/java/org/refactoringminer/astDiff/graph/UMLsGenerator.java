@@ -171,7 +171,7 @@ public class UMLsGenerator {
     int originalEndOffset = locationInfo.getEndOffset();
     String trimmedContent = fileContent.substring(originalStartOffset, originalEndOffset).trim();
 
-    int trimmedStartOffset = fileContent.indexOf(trimmedContent);
+    int trimmedStartOffset = fileContent.indexOf(trimmedContent, originalStartOffset);
     int trimmedEndOffset = trimmedStartOffset + trimmedContent.length();
 
     return (originalStartOffset == pos && originalEndOffset == endPos) || (trimmedStartOffset == pos && trimmedEndOffset == endPos);

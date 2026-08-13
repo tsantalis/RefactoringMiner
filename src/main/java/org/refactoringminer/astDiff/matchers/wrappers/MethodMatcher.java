@@ -1132,6 +1132,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(closing.first,closing.second);
                 }
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> virtuals = Helpers.findPairOfType(parent1,parent2,LANG1.VIRTUAL_KEYWORD,LANG2.VIRTUAL_KEYWORD);
+            if (virtuals != null) {
+                mappingStore.addMapping(virtuals.first,virtuals.second);
+            }
             com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(parent1,parent2,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
             if (primitives != null) {
                 mappingStore.addMapping(primitives.first,primitives.second);
@@ -1159,6 +1163,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree lastChild2 = parent2.getChild(parent2.getChildren().size()-1);
             if(lastChild1.getType().name.equals(LANG1.SEMICOLON) && lastChild2.getType().name.equals(LANG2.SEMICOLON)) {
                 mappingStore.addMapping(lastChild1,lastChild2);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> virtuals = Helpers.findPairOfType(parent1,parent2,LANG1.VIRTUAL_KEYWORD,LANG2.VIRTUAL_KEYWORD);
+            if (virtuals != null) {
+                mappingStore.addMapping(virtuals.first,virtuals.second);
             }
             com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(parent1,parent2,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
             if (primitives != null) {
@@ -1198,6 +1206,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             Tree lastChild2 = parent2.getChild(parent2.getChildren().size()-1);
             if(lastChild1.getType().name.equals(LANG1.SEMICOLON) && lastChild2.getType().name.equals(LANG2.SEMICOLON)) {
                 mappingStore.addMapping(lastChild1,lastChild2);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> virtuals = Helpers.findPairOfType(parent1,parent2,LANG1.VIRTUAL_KEYWORD,LANG2.VIRTUAL_KEYWORD);
+            if (virtuals != null) {
+                mappingStore.addMapping(virtuals.first,virtuals.second);
             }
             com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(parent1,parent2,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
             if (primitives != null) {

@@ -48,7 +48,7 @@ public class HunkNetwork {
     graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true)
         .allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
     this.modelDiff = modelDiff;
-    this.umlsGenerator = new UMLsGenerator(modelDiff);
+    this.umlsGenerator = new UMLsGenerator(modelDiff, srcContents, dstContents);
     this.srcContents = srcContents;
     this.dstContents = dstContents;
     this.srcContexts = srcContexts;
@@ -100,18 +100,15 @@ public class HunkNetwork {
   private Set<Tree> getValidTrees(String path, Collection<Tree> trees) {
     Constants constants = new Constants(path);
 
-    return trees.stream()
-        .filter(addition -> {
-          HashSet<Tree> precedents = new HashSet<>(addition.getParents());
-          precedents.add(addition);
+    return trees.stream().filter(addition -> {
+      HashSet<Tree> precedents = new HashSet<>(addition.getParents());
+      precedents.add(addition);
 
-          return precedents.stream()
-              .noneMatch(precedent -> {
-                String treeType = precedent.getType().name;
-                return constants.isSemanticallyInsignificant(treeType);
-              });
-        }).collect(
-            Collectors.toSet());
+      return precedents.stream().noneMatch(precedent -> {
+        String treeType = precedent.getType().name;
+        return constants.isSemanticallyInsignificant(treeType);
+      });
+    }).collect(Collectors.toSet());
   }
 
   private HashMap<ImportTree, Set<ImportTree>> aggregateTrees(Set<ImportTree> importTrees) {
@@ -489,16 +486,16 @@ public class HunkNetwork {
     // Class Instance Creation
     List<Node> nodes = graph.vertexSet().stream().filter(node -> !node.isContext() && !node.isExtension()).toList();
     for (Node node : nodes) {
-      if (node.umls == null) {
+      if (node.getUMLs() == null) {
         continue;
       }
 
       Set<AbstractCall> creations = new HashSet<>();
 
-      for (UMLOperation umlOperation : node.umls.umlOperations) {
+      for (UMLOperation umlOperation : node.getUMLs().umlOperations) {
         creations.addAll(umlOperation.getAllCreations());
       }
-      for (UMLAttribute umlAttribute : node.umls.umlAttributes) {
+      for (UMLAttribute umlAttribute : node.getUMLs().umlAttributes) {
         creations.addAll(umlAttribute.getAllCreations());
       }
 
@@ -592,7 +589,7 @@ public class HunkNetwork {
   @Nullable
   private Node getClassNode(UMLAbstractClass umlClass, SrcDst srcDst) {
     Optional<Node> optionalClassNode = graph.vertexSet().stream().filter(node -> !node.isExtension()
-            && node.getSrcDst().equals(srcDst) && node.umls != null && node.umls.umlClasses.contains(umlClass)).findFirst();
+            && node.getSrcDst().equals(srcDst) && node.getUMLs() != null && node.getUMLs().umlClasses.contains(umlClass)).findFirst();
     if (optionalClassNode.isEmpty()) {
       return null;
     }

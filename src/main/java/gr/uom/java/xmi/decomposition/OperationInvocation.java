@@ -638,8 +638,15 @@ public class OperationInvocation extends AbstractCall {
 				}
 			}
 		}
-		if(result && operation instanceof UMLOperation && ((UMLOperation) operation).isStatic()) {
+		if(result && operation instanceof UMLOperation op && op.isStatic()) {
 			if(expression != null) {
+				if(callerOperation instanceof UMLOperation callerOp) {
+					for(UMLImport imp : callerOp.getNestedImports()) {
+						if(imp.getAlias().isPresent() && expression.equals(imp.getAlias().get())) {
+							return true;
+						}
+					}
+				}
 				return operation.getClassName().endsWith("." + expression) || operation.getClassName().equals(expression) || expression.equals(LANG.THIS);
 			}
 			else if(classDiff != null) {

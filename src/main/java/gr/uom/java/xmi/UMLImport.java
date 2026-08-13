@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Optional;
 
 import gr.uom.java.xmi.diff.CodeRange;
 
@@ -10,12 +11,22 @@ public class UMLImport implements Serializable, LocationInfoProvider {
 	private boolean isOnDemand;
 	private boolean isStatic;
 	private LocationInfo locationInfo;
+	private Optional<String> alias;
 
 	public UMLImport(String name, boolean isOnDemand, boolean isStatic, LocationInfo locationInfo) {
 		this.name = name;
 		this.isOnDemand = isOnDemand;
 		this.isStatic = isStatic;
 		this.locationInfo = locationInfo;
+		this.alias = Optional.empty();
+	}
+
+	public Optional<String> getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = Optional.of(alias);
 	}
 
 	public LocationInfo getLocationInfo() {

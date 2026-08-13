@@ -184,6 +184,9 @@ public class UMLAdapterUtil {
                             filepath,
                             item,
                             LocationInfo.CodeElementType.IMPORT_DECLARATION));
+                    if(item.getAlias() != null) {
+                        umlImport.setAlias(item.getAlias());
+                    }
                     umlImports.add(umlImport);
                 }
             }
@@ -196,6 +199,9 @@ public class UMLAdapterUtil {
                             filepath,
                             item,
                             LocationInfo.CodeElementType.IMPORT_DECLARATION));
+                    if(item.getAlias() != null) {
+                        umlImport.setAlias(item.getAlias());
+                    }
                     umlImports.add(umlImport);
                 }
             }

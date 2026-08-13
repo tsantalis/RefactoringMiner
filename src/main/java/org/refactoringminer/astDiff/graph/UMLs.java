@@ -1,29 +1,16 @@
 package org.refactoringminer.astDiff.graph;
 
-import gr.uom.java.xmi.UMLAttribute;
-import gr.uom.java.xmi.UMLClass;
-import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class UMLs {
-    public UMLModel umlModel;
-    public Set<UMLClass> umlClasses;
-    public Set<UMLOperation> umlOperations;
-    public Set<UMLAttribute> umlAttributes;
-    public Set<VariableDeclaration> variableDeclarations;
-    public Map<UMLOperation, Set<VariableDeclaration>> operationParameters;
+    public Set<UMLClass> umlClasses = new HashSet<>();
+    public Set<UMLOperation> umlOperations = new HashSet<>();
+    public Set<UMLAttribute> umlAttributes = new HashSet<>();
+    public Set<VariableDeclaration> variableDeclarations = new HashSet<>();
+    public Map<UMLOperation, Set<VariableDeclaration>> operationParameters = new HashMap<>();
 
-    UMLs(UMLModel umlModel, Set<UMLClass> umlClasses, Set<UMLOperation> umlOperations, Set<UMLAttribute> umlAttributes,
-                      Set<VariableDeclaration> variableDeclarations, Map<UMLOperation, Set<VariableDeclaration>> operationParameters) {
-      this.umlModel = umlModel;
-      this.umlClasses = umlClasses;
-      this.umlOperations = umlOperations;
-      this.umlAttributes = umlAttributes;
-      this.variableDeclarations = variableDeclarations;
-      this.operationParameters = operationParameters;
-    }
+    UMLs() {}
   }

@@ -2183,7 +2183,7 @@ public abstract class UMLAbstractClassDiff {
 		for(Replacement r : replacements) {
 			if(parameterNames.contains(r.getAfter())) {
 				String before = r.getBefore();
-				matchParamsWithReplacement(before, testParameters, matchingTestParameters, originalClass);
+				matchParamsWithReplacement(before, testParameters, matchingTestParameters, originalClass, parameterNames.indexOf(r.getAfter()));
 			}
 			if(r instanceof MethodInvocationReplacement) {
 				MethodInvocationReplacement m = (MethodInvocationReplacement)r;
@@ -2194,7 +2194,7 @@ public abstract class UMLAbstractClassDiff {
 						String argumentBefore = invocationBefore.arguments().get(i);
 						String argumentAfter = invocationAfter.arguments().get(i);
 						if(parameterNames.contains(argumentAfter)) {
-							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass);
+							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass, parameterNames.indexOf(argumentAfter));
 						}
 					}
 				}
@@ -2204,7 +2204,7 @@ public abstract class UMLAbstractClassDiff {
 						String argumentBefore = invocationBefore.arguments().get(i);
 						String argumentAfter = invocationAfter.arguments().get(i);
 						if(parameterNames.contains(argumentAfter)) {
-							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass);
+							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass, parameterNames.indexOf(argumentAfter));
 						}
 					}
 				}
@@ -2377,20 +2377,36 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private static void matchParamsWithReplacement(String before, List<List<String>> testParameters, Map<Integer, Integer> matchingTestParameters, UMLAbstractClass originalClass) {
+		matchParamsWithReplacement(before, testParameters, matchingTestParameters, originalClass, -1);
+	}
+
+	private static void matchParamsWithReplacement(String before, List<List<String>> testParameters, Map<Integer, Integer> matchingTestParameters, UMLAbstractClass originalClass, int parameterIndex) {
 		String paramsWithoutDoubleQuotes = sanitizeStringLiteral(before);
 		String resolvedConstantValue = resolveConstantLiteralValue(before, originalClass);
 		String resolvedConstantValueWithoutDoubleQuotes = resolvedConstantValue != null ? sanitizeStringLiteral(resolvedConstantValue) : null;
 		for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
-			if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes) ||
-					testParameters.get(parameterRow).contains(before) ||
+			List<String> row = testParameters.get(parameterRow);
+			if (parameterIndex >= 0 && parameterIndex < row.size()) {
+				String value = row.get(parameterIndex);
+				if (value.equals(paramsWithoutDoubleQuotes) || value.equals(before) ||
+						(resolvedConstantValue != null &&
+								(value.equals(resolvedConstantValue) || value.equals(resolvedConstantValueWithoutDoubleQuotes)))) {
+					Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+					matchingTestParameters.put(parameterRow, previousValue + 1);
+					continue;
+				}
+			}
+			else if (row.contains(paramsWithoutDoubleQuotes) ||
+					row.contains(before) ||
 					(resolvedConstantValue != null &&
-							(testParameters.get(parameterRow).contains(resolvedConstantValue) ||
-							testParameters.get(parameterRow).contains(resolvedConstantValueWithoutDoubleQuotes)))) {
+							(row.contains(resolvedConstantValue) ||
+							row.contains(resolvedConstantValueWithoutDoubleQuotes)))) {
 				Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 				matchingTestParameters.put(parameterRow, previousValue + 1);
+				continue;
 			}
-			else if (paramsWithoutDoubleQuotes.contains(".")) {
-				for(String s : testParameters.get(parameterRow)) {
+			if (paramsWithoutDoubleQuotes.contains(".")) {
+				for(String s : row) {
 					if(paramsWithoutDoubleQuotes.endsWith("." + s)) {
 						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 						matchingTestParameters.put(parameterRow, previousValue + 1);

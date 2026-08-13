@@ -659,4 +659,6 @@ public class Constants {
     public final String TYPE_DEFINITION = "type_definition";
     public final String TYPEDEF = "typedef";
     public final String PARENTHESIZED_DECLARATOR = "parenthesized_declarator";
+    public final String OPTIONAL_PARAMETER_DECLARATION = "optional_parameter_declaration";
+    public final String AUTO = "auto";
 }

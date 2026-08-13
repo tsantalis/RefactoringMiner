@@ -714,6 +714,17 @@
   "firstEndPos" : 427,
   "secondEndPos" : 665
 }, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 371,
+  "secondPos" : 568,
+  "firstEndPos" : 372,
+  "secondEndPos" : 569
+}, {
   "firstType" : "access_specifier",
   "secondType" : "access_specifier",
   "firstLabel" : "",
@@ -736,6 +747,28 @@
   "firstEndPos" : 379,
   "secondEndPos" : 576
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "IView",
+  "secondLabel" : "IView",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 380,
+  "secondPos" : 585,
+  "firstEndPos" : 385,
+  "secondEndPos" : 590
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 385,
+  "secondPos" : 590,
+  "firstEndPos" : 386,
+  "secondEndPos" : 591
+}, {
   "firstType" : "access_specifier",
   "secondType" : "access_specifier",
   "firstLabel" : "",
@@ -757,6 +790,28 @@
   "secondPos" : 592,
   "firstEndPos" : 393,
   "secondEndPos" : 598
+}, {
+  "firstType" : "virtual",
+  "secondType" : "virtual",
+  "firstLabel" : "virtual",
+  "secondLabel" : "virtual",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 394,
+  "secondPos" : 599,
+  "firstEndPos" : 401,
+  "secondEndPos" : 606
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CGeometricMovableAnimated",
+  "secondLabel" : "CGeometricMovableAnimated",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 402,
+  "secondPos" : 607,
+  "firstEndPos" : 427,
+  "secondEndPos" : 632
 }, {
   "firstType" : "field_declaration_list",
   "secondType" : "field_declaration_list",

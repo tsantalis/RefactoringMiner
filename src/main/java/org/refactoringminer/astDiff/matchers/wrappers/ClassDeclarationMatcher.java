@@ -1121,7 +1121,37 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree parent1 = srcSubTree.getParent();
         Tree parent2 = dstSubTree.getParent();
         if(parent1.getType().name.equals(LANG1.BASE_CLASS_CLAUSE) && parent2.getType().name.equals(LANG2.BASE_CLASS_CLAUSE)) {
-            mappingStore.addMappingRecursively(parent1,parent2);
+            if(parent1.isIsoStructuralTo(parent2)) {
+                mappingStore.addMappingRecursively(parent1,parent2);
+            }
+            else {
+                mappingStore.addMapping(parent1,parent2);
+                Pair<Tree,Tree> colons = Helpers.findPairOfType(parent1, parent2, LANG1.COLON,LANG2.COLON);
+                if(colons != null) {
+                    mappingStore.addMapping(colons.first, colons.second);
+                }
+                if(srcSubTree.getType().name.equals(LANG1.ACCESS_SPECIFIER))
+                    srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree, left.getLocationInfo(), LANG1, LANG1.TYPE_IDENTIFIER);
+                if(dstSubTree.getType().name.equals(LANG2.ACCESS_SPECIFIER))
+                    dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, right.getLocationInfo(), LANG2, LANG2.TYPE_IDENTIFIER);
+                if(srcSubTree != null && dstSubTree != null) {
+                    mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+                    int index1 = parent1.getChildPosition(srcSubTree);
+                    int index2 = parent2.getChildPosition(dstSubTree);
+                    if(parent1.getChildren().size() > index1+1 && parent1.getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                            parent2.getChildren().size() > index2+1 && parent2.getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                        Tree t1 = parent1.getChild(index1+1);
+                        Tree t2 = parent2.getChild(index2+1);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                    if(index1 > 0 && parent1.getChild(index1-1).getType().name.equals(LANG1.VIRTUAL_KEYWORD) &&
+                            index2 > 0 && parent2.getChild(index2-1).getType().name.equals(LANG2.VIRTUAL_KEYWORD)) {
+                        Tree t1 = parent1.getChild(index1-1);
+                        Tree t2 = parent2.getChild(index2-1);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                }
+            }
         }
         if(parent1.getType().name.equals(LANG1.CONSTRUCTOR_INVOCATION) && parent2.getType().name.equals(LANG2.CONSTRUCTOR_INVOCATION)) {
             mappingStore.addMappingRecursively(parent1,parent2);

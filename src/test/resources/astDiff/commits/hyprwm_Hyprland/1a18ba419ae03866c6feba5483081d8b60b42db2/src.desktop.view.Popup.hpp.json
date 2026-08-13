@@ -747,6 +747,17 @@
   "firstEndPos" : 409,
   "secondEndPos" : 665
 }, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 368,
+  "secondPos" : 583,
+  "firstEndPos" : 369,
+  "secondEndPos" : 584
+}, {
   "firstType" : "access_specifier",
   "secondType" : "access_specifier",
   "firstLabel" : "",
@@ -769,6 +780,28 @@
   "firstEndPos" : 376,
   "secondEndPos" : 591
 }, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "IView",
+  "secondLabel" : "IView",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 377,
+  "secondPos" : 600,
+  "firstEndPos" : 382,
+  "secondEndPos" : 605
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 382,
+  "secondPos" : 605,
+  "firstEndPos" : 383,
+  "secondEndPos" : 606
+}, {
   "firstType" : "access_specifier",
   "secondType" : "access_specifier",
   "firstLabel" : "",
@@ -790,6 +823,28 @@
   "secondPos" : 607,
   "firstEndPos" : 390,
   "secondEndPos" : 613
+}, {
+  "firstType" : "virtual",
+  "secondType" : "virtual",
+  "firstLabel" : "virtual",
+  "secondLabel" : "virtual",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 391,
+  "secondPos" : 614,
+  "firstEndPos" : 398,
+  "secondEndPos" : 621
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "IGeometric",
+  "secondLabel" : "IGeometric",
+  "firstParentType" : "base_class_clause",
+  "secondParentType" : "base_class_clause",
+  "firstPos" : 399,
+  "secondPos" : 622,
+  "firstEndPos" : 409,
+  "secondEndPos" : 632
 }, {
   "firstType" : "field_declaration_list",
   "secondType" : "field_declaration_list",

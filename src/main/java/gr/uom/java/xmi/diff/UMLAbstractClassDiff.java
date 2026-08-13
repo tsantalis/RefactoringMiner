@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import com.github.difflib.DiffUtils;
@@ -2342,7 +2344,8 @@ public abstract class UMLAbstractClassDiff {
 					else {
 						String sanitizedCandidate = sanitizeStringLiteral(candidate);
 						for(LeafExpression rowValue : rowValues) {
-							if(!rowValue.getString().equals(candidate) && !rowValue.getString().equals(sanitizedCandidate)) {
+							if(!rowValue.getString().equals(candidate) && !rowValue.getString().equals(sanitizedCandidate)
+									&& !expressionsMatchIgnoringCallPrefix(candidate, rowValue.getString())) {
 								continue;
 							}
 							List<LeafExpression> oldLiteralMatches = mapping.getFragment1().findExpression(candidate);
@@ -2354,6 +2357,36 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 				}
+			}
+		}
+		//an old local variable whose initializer got manually inlined into a provider row (e.g. "List<Import> expected
+		//= ImmutableList.of(...)" replaced by a same-named parameter "expected") leaves the old declaration statement
+		//entirely unmapped - it has no counterpart on the new side to reach via mapper.getMappings() above - so look
+		//for such declarations directly and link them via an exact (call-prefix-normalized) match against whichever
+		//row's column value they correspond to, requiring the match to be unique across rows
+		for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT1()) {
+			for(VariableDeclaration variableDecl : fragment.getVariableDeclarations()) {
+				String name = variableDecl.getVariableName();
+				AbstractExpression initializer = variableDecl.getInitializer();
+				if(!parameterNames.contains(name) || initializer == null) {
+					continue;
+				}
+				int column = parameterNames.indexOf(name);
+				String initializerText = initializer.getString();
+				List<LeafExpression> matchingRowValues = new ArrayList<LeafExpression>();
+				for(List<LeafExpression> row : parameterValuesAsLeafExpressions) {
+					if(column < row.size() && expressionsMatchIgnoringCallPrefix(initializerText, row.get(column).getString())) {
+						matchingRowValues.add(row.get(column));
+					}
+				}
+				if(matchingRowValues.size() != 1) {
+					continue;
+				}
+				List<LeafExpression> oldLiteralMatches = fragment.findExpression(initializerText);
+				if(oldLiteralMatches.isEmpty()) {
+					continue;
+				}
+				refactoring.addDataMapping(new LeafMapping(oldLiteralMatches.get(0), matchingRowValues.get(0), mapper.getOperation1(), addedOperation));
 			}
 		}
 	}
@@ -2390,7 +2423,8 @@ public abstract class UMLAbstractClassDiff {
 				String value = row.get(parameterIndex);
 				if (value.equals(paramsWithoutDoubleQuotes) || value.equals(before) ||
 						(resolvedConstantValue != null &&
-								(value.equals(resolvedConstantValue) || value.equals(resolvedConstantValueWithoutDoubleQuotes)))) {
+								(value.equals(resolvedConstantValue) || value.equals(resolvedConstantValueWithoutDoubleQuotes))) ||
+						expressionsMatchIgnoringCallPrefix(before, value)) {
 					Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 					matchingTestParameters.put(parameterRow, previousValue + 1);
 					continue;
@@ -2425,6 +2459,29 @@ public abstract class UMLAbstractClassDiff {
 			//return expression.substring(expression.lastIndexOf('.') + 1);
 		}
 		return expression;
+	}
+
+	private static final Pattern CALL_PREFIX_PATTERN = Pattern.compile("^[A-Za-z_$][A-Za-z0-9_$.]*(\\(.*\\))$", Pattern.DOTALL);
+
+	//strips a leading "qualifier.methodName" call prefix, keeping only the parenthesized argument list -
+	//e.g. "ImmutableList.of(A, B, C)" and "List.of(A, B, C)" both reduce to "(A, B, C)". Returns null when
+	//the text isn't a single top-level call (no argument list to compare)
+	private static String stripCallPrefix(String text) {
+		Matcher matcher = CALL_PREFIX_PATTERN.matcher(text);
+		return matcher.matches() ? matcher.group(1) : null;
+	}
+
+	//two differently-named factory/wrapper calls (e.g. List.of(...) vs ImmutableList.of(...), introduced when a
+	//local variable's initializer is manually inlined into a provider row) are treated as the same value when their
+	//argument lists are verbatim identical - this only ignores the call's own qualifier/method name, never the
+	//arguments themselves, so it stays exact-match in spirit rather than a fuzzy/partial correspondence
+	private static boolean expressionsMatchIgnoringCallPrefix(String a, String b) {
+		if(a.equals(b)) {
+			return true;
+		}
+		String argsA = stripCallPrefix(a);
+		String argsB = stripCallPrefix(b);
+		return argsA != null && argsA.equals(argsB);
 	}
 
 	public boolean containsExtractOperationRefactoring(VariableDeclarationContainer sourceOperationBeforeExtraction, UMLOperation extractedOperation) {

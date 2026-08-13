@@ -65,10 +65,18 @@ public class MethodMatcher extends BodyMapperMatcher{
                 dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
             }
             if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.PRIMITIVE_TYPE)) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
+                Tree tmpSrcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
+                if(tmpSrcOperationNode != null)
+                    srcOperationNode = tmpSrcOperationNode;
+                else
+                    srcOperationNode = TreeUtilFunctions.getParentUntilType(srcOperationNode, LANG1.METHOD_DECLARATION);
             }
             if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.PRIMITIVE_TYPE)) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
+                Tree tmpDstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
+                if(tmpDstOperationNode != null)
+                    dstOperationNode = tmpDstOperationNode;
+                else
+                    dstOperationNode = TreeUtilFunctions.getParentUntilType(dstOperationNode, LANG2.METHOD_DECLARATION);
             }
             if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.TYPE_IDENTIFIER)) {
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
@@ -599,8 +607,9 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
             }
+            boolean isMovedMethod = refactoringProcessor && !umlOperationBodyMapper.getContainer1().getClassName().equals(umlOperationBodyMapper.getContainer2().getClassName());
             if(PathFileUtils.isCppFile(umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath()) &&
-                    umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath().equals(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath())) {
+                    umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath().equals(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath()) && !isMovedMethod) {
                 ClassDeclarationMatcher.handleParentNamespace(srcOperationNode, dstOperationNode, mappingStore, LANG1, LANG2);
             }
         }

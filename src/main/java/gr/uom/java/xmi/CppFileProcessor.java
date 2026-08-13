@@ -641,15 +641,19 @@ public class CppFileProcessor {
 			Visibility currentVisibility, List<UMLComment> comments, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, ICPPASTTemplateParameter[] templateParameters) {
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
 		String fieldName = declarator.getName().toString();
-		UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
-		UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
-		umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-		VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
-		variableDeclaration.setAttribute(true);
-		umlAttribute.setVariableDeclaration(variableDeclaration);
-		addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
-		preprocessor.addAttribute(parentContainer, umlAttribute, declarator);
-		distributeComments(comments, locationInfo, umlAttribute.getComments());
+		if(fieldName.isEmpty() && declarator.getNestedDeclarator() != null)
+			fieldName = declarator.getNestedDeclarator().getRawSignature();
+		if(!fieldName.isEmpty()) {
+			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
+			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
+			umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
+			variableDeclaration.setAttribute(true);
+			umlAttribute.setVariableDeclaration(variableDeclaration);
+			addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
+			preprocessor.addAttribute(parentContainer, umlAttribute, declarator);
+			distributeComments(comments, locationInfo, umlAttribute.getComments());
+		}
 	}
 
 	private UMLOperation processFunctionDeclSpecifier(IASTDeclSpecifier declSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {

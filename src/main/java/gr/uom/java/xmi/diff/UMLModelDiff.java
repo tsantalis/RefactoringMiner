@@ -7112,61 +7112,7 @@ public class UMLModelDiff {
 							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
-						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
-						if(umlClassDiff == null) {
-							umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
-						}
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, umlClassDiff);
-						processedOperationPairs.add(pair);
-						int mappings = operationBodyMapper.mappingsWithoutBlocks();
-						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
-								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
-								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
-							int exactMatches = operationBodyMapper.exactMatchesWithoutLeafExpressions();
-							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
-							for(AbstractCodeMapping mapping : exactMappings) {
-								String fragment1 = mapping.getFragment1().getString();
-								if(RETURN_NUMBER_LITERAL.matcher(fragment1).matches()) {
-									exactMatches--;
-								}
-							}
-							if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
-								mapperList.add(operationBodyMapper);
-							}
-							else if(operationBodyMapperMap.containsKey(exactMatches)) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
-								mapperList.add(operationBodyMapper);
-							}
-							else {
-								List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
-								mapperList.add(operationBodyMapper);
-								operationBodyMapperMap.put(exactMatches, mapperList);
-							}
-						}
-						else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {
-							Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
-							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
-								boolean skip = false;
-								if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
-										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation)
-										|| umlClassDiff.getInterfaceListDiff().getAddedTypes().size() > 0)) {
-									skip = true;
-								}
-								if(!skip) {
-									int exactMatches = 0;
-									if(operationBodyMapperMap.containsKey(exactMatches)) {
-										List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
-										mapperList.add(operationBodyMapper);
-									}
-									else {
-										List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
-										mapperList.add(operationBodyMapper);
-										operationBodyMapperMap.put(exactMatches, mapperList);
-									}
-								}
-							}
-						}
+						processMethodPair(removedOperations, addedOperations, removedOperation, addedOperation, operationBodyMapperMap, pair);
 					}
 				}
 				if(!operationBodyMapperMap.isEmpty()) {
@@ -7293,61 +7239,7 @@ public class UMLModelDiff {
 							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
-						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
-						if(umlClassDiff == null) {
-							umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
-						}
-						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, umlClassDiff);
-						processedOperationPairs.add(pair);
-						int mappings = operationBodyMapper.mappingsWithoutBlocks();
-						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
-								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
-								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
-							int exactMatches = operationBodyMapper.exactMatchesWithoutLeafExpressions();
-							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
-							for(AbstractCodeMapping mapping : exactMappings) {
-								String fragment1 = mapping.getFragment1().getString();
-								if(RETURN_NUMBER_LITERAL.matcher(fragment1).matches()) {
-									exactMatches--;
-								}
-							}
-							if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
-								mapperList.add(operationBodyMapper);
-							}
-							else if(operationBodyMapperMap.containsKey(exactMatches)) {
-								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
-								mapperList.add(operationBodyMapper);
-							}
-							else {
-								List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
-								mapperList.add(operationBodyMapper);
-								operationBodyMapperMap.put(exactMatches, mapperList);
-							}
-						}
-						else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {							
-							Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
-							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
-								boolean skip = false;
-								if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
-										|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation)
-										|| umlClassDiff.getInterfaceListDiff().getAddedTypes().size() > 0)) {
-									skip = true;
-								}
-								if(!skip) {
-									int exactMatches = 0;
-									if(operationBodyMapperMap.containsKey(exactMatches)) {
-										List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
-										mapperList.add(operationBodyMapper);
-									}
-									else {
-										List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
-										mapperList.add(operationBodyMapper);
-										operationBodyMapperMap.put(exactMatches, mapperList);
-									}
-								}
-							}
-						}
+						processMethodPair(removedOperations, addedOperations, removedOperation, addedOperation, operationBodyMapperMap, pair);
 					}
 				}
 				if(!operationBodyMapperMap.isEmpty()) {
@@ -7407,6 +7299,68 @@ public class UMLModelDiff {
 						createRefactoring(removedOperation, 
 								newAddedOperation != null ? newAddedOperation : addedOperation,
 								newMapper != null ? newMapper : firstMapper, filteredFirstMappers.size() > 1);
+					}
+				}
+			}
+		}
+	}
+
+	private void processMethodPair(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
+			UMLOperation removedOperation, UMLOperation addedOperation,
+			TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap,
+			Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair)
+			throws RefactoringMinerTimedOutException {
+		UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
+		if(umlClassDiff == null) {
+			umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
+		}
+		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, umlClassDiff);
+		processedOperationPairs.add(pair);
+		int mappings = operationBodyMapper.mappingsWithoutBlocks();
+		if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
+				(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
+				(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
+			int exactMatches = operationBodyMapper.exactMatchesWithoutLeafExpressions();
+			List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
+			for(AbstractCodeMapping mapping : exactMappings) {
+				String fragment1 = mapping.getFragment1().getString();
+				if(RETURN_NUMBER_LITERAL.matcher(fragment1).matches()) {
+					exactMatches--;
+				}
+			}
+			if(!partialModel() && operationBodyMapperMap.size() > 0 && operationBodyMapperMap.lastKey() > exactMatches && operationBodyMapperMap.lastEntry().getValue().get(0).mappingsWithoutBlocks() < mappings) {
+				List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(operationBodyMapperMap.lastKey());
+				mapperList.add(operationBodyMapper);
+			}
+			else if(operationBodyMapperMap.containsKey(exactMatches)) {
+				List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+				mapperList.add(operationBodyMapper);
+			}
+			else {
+				List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
+				mapperList.add(operationBodyMapper);
+				operationBodyMapperMap.put(exactMatches, mapperList);
+			}
+		}
+		else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {
+			Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
+			if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
+				boolean skip = false;
+				if(umlClassDiff != null && (umlClassDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)
+						|| umlClassDiff.getNextClass().containsOperationWithTheSameSignatureRelaxedReturnType(addedOperation)
+						|| umlClassDiff.getInterfaceListDiff().getAddedTypes().size() > 0)) {
+					skip = true;
+				}
+				if(!skip) {
+					int exactMatches = 0;
+					if(operationBodyMapperMap.containsKey(exactMatches)) {
+						List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+						mapperList.add(operationBodyMapper);
+					}
+					else {
+						List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
+						mapperList.add(operationBodyMapper);
+						operationBodyMapperMap.put(exactMatches, mapperList);
 					}
 				}
 			}

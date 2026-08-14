@@ -42558,6 +42558,17 @@
   "firstEndPos" : 21494,
   "secondEndPos" : 22361
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "allocator",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 21495,
+  "secondPos" : 22362,
+  "firstEndPos" : 21506,
+  "secondEndPos" : 22371
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -42931,6 +42942,17 @@
   "secondPos" : 22475,
   "firstEndPos" : 21627,
   "secondEndPos" : 22490
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "client",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 21610,
+  "secondPos" : 22475,
+  "firstEndPos" : 21618,
+  "secondEndPos" : 22481
 }, {
   "firstType" : "->",
   "secondType" : "->",
@@ -51764,17 +51786,6 @@
   "secondPos" : 25423,
   "firstEndPos" : 24596,
   "secondEndPos" : 25424
-}, {
-  "firstType" : "function_definition",
-  "secondType" : "function_definition",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "compound_statement",
-  "secondParentType" : "compound_statement",
-  "firstPos" : 24599,
-  "secondPos" : 25427,
-  "firstEndPos" : 24824,
-  "secondEndPos" : 25652
 }, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",

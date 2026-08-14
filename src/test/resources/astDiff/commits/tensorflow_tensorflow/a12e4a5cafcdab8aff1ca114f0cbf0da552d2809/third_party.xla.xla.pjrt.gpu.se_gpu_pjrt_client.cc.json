@@ -46210,17 +46210,6 @@
   "firstEndPos" : 21933,
   "secondEndPos" : 21994
 }, {
-  "firstType" : "ERROR",
-  "secondType" : "ERROR",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "compound_statement",
-  "secondParentType" : "compound_statement",
-  "firstPos" : 21936,
-  "secondPos" : 21997,
-  "firstEndPos" : 22295,
-  "secondEndPos" : 22356
-}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
@@ -91651,6 +91640,17 @@
   "firstEndPos" : 43862,
   "secondEndPos" : 42059
 }, {
+  "firstType" : "field_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "WaitForAllocation",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 43811,
+  "secondPos" : 42021,
+  "firstEndPos" : 43841,
+  "secondEndPos" : 42038
+}, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
   "firstLabel" : "",
@@ -94367,6 +94367,17 @@
   "secondPos" : 43411,
   "firstEndPos" : 45341,
   "secondEndPos" : 43594
+}, {
+  "firstType" : "field_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "AllocateAndRecordEvent",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 45214,
+  "secondPos" : 43411,
+  "firstEndPos" : 45249,
+  "secondEndPos" : 43433
 }, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",

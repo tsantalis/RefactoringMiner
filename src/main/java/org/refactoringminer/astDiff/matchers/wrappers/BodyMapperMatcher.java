@@ -835,13 +835,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 
             }
             else {
-                while(srcStatementNode.getParent() != null && !srcStatementNode.getType().name.endsWith("_statement")) {
+                while(srcStatementNode.getParent() != null && !srcStatementNode.getType().name.endsWith("_statement") && (!srcStatementNode.getType().name.equals(LANG1.FUNCTION_DECLARATOR) || srcStatementNode.getParent().getType().name.equals(LANG1.FUNCTION_DECLARATOR))) {
                     srcStatementNode = srcStatementNode.getParent();
                 }
-                while(dstStatementNode.getParent() != null && !dstStatementNode.getType().name.endsWith("_statement")) {
+                while(dstStatementNode.getParent() != null && !dstStatementNode.getType().name.endsWith("_statement") && (!dstStatementNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR) || dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_DECLARATOR))) {
                     dstStatementNode = dstStatementNode.getParent();
                 }
-                if(srcStatementNode.getType().name.equals(dstStatementNode.getType().name) && srcStatementNode.isIsoStructuralTo(dstStatementNode)) {
+                if(srcStatementNode.getType().name.equals(dstStatementNode.getType().name)) {
                     mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
                     if(srcStatementNode.getParent().getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatementNode.getParent().getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
                         mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());

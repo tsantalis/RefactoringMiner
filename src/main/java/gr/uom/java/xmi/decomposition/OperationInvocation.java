@@ -642,7 +642,10 @@ public class OperationInvocation extends AbstractCall {
 			if(expression != null) {
 				if(callerOperation instanceof UMLOperation callerOp) {
 					for(UMLImport imp : callerOp.getNestedImports()) {
-						if(imp.getAlias().isPresent() && expression.equals(imp.getAlias().get())) {
+						if(imp.getAlias().isPresent() && expression.equals(imp.getAlias().get()) && importMatch(imp, operation)) {
+							return true;
+						}
+						if(importMatch(imp, operation)) {
 							return true;
 						}
 					}
@@ -666,7 +669,20 @@ public class OperationInvocation extends AbstractCall {
 			return true;
 		}
 		return result;
-    }
+	}
+
+	private static boolean importMatch(UMLImport imp, VariableDeclarationContainer operation) {
+		if(operation.getClassName().endsWith(".__module__")) {
+			String classNameWithoutModule = operation.getClassName().substring(0, operation.getClassName().indexOf(".__module__"));
+			if(imp.getName().endsWith("." + classNameWithoutModule)) {
+				return true;
+			}
+		}
+		else if(imp.getName().endsWith("." + operation.getClassName())) {
+			return true;
+		}
+		return false;
+	}
 
 	private static boolean exactlyMatchingArgumentType(UMLType parameterType, UMLType argumentType) {
 		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString())

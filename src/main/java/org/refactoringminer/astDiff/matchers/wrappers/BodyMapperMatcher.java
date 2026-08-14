@@ -841,6 +841,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 while(dstStatementNode.getParent() != null && !dstStatementNode.getType().name.endsWith("_statement") && (!dstStatementNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR) || dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_DECLARATOR))) {
                     dstStatementNode = dstStatementNode.getParent();
                 }
+                if(srcStatementNode.getParent().getType().name.equals(LANG1.ERROR) && dstStatementNode.getParent().getType().name.equals(LANG2.ERROR)) {
+                    srcStatementNode = srcStatementNode.getParent();
+                    dstStatementNode = dstStatementNode.getParent();
+                }
                 if(srcStatementNode.getType().name.equals(dstStatementNode.getType().name)) {
                     mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
                     if(srcStatementNode.getParent().getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatementNode.getParent().getType().name.equals(LANG2.COMPOUND_STATEMENT)) {

@@ -7119,7 +7119,7 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, umlClassDiff);
 						processedOperationPairs.add(pair);
 						int mappings = operationBodyMapper.mappingsWithoutBlocks();
-						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation) ||
+						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
 								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
 								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
 							int exactMatches = operationBodyMapper.exactMatchesWithoutLeafExpressions();
@@ -7144,7 +7144,7 @@ public class UMLModelDiff {
 								operationBodyMapperMap.put(exactMatches, mapperList);
 							}
 						}
-						else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {							
+						else if(mappings == 0 && removedOperation.getBody() == null && addedOperation.getBody() == null) {
 							Set<MethodInvocationReplacement> replacements = findMethodInvocationReplacementWithMatchingSignatures(removedOperation, addedOperation);
 							if(exactMatchingMethodInvocationReplacements(replacements, removedOperation, addedOperation)) {
 								boolean skip = false;
@@ -7303,7 +7303,7 @@ public class UMLModelDiff {
 						if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||
 								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation, addedOperations, umlClassDiff)) ||
 								(mappings > 0 && isPartOfMethodInlined(removedOperation, addedOperation, removedOperations, umlClassDiff) && removedOperation.getName().equals(addedOperation.getName()))) {
-							int exactMatches = operationBodyMapper.exactMatches();
+							int exactMatches = operationBodyMapper.exactMatchesWithoutLeafExpressions();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
 								String fragment1 = mapping.getFragment1().getString();

@@ -14,6 +14,7 @@ import gr.uom.java.xmi.UMLProblemDeclaration;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -33,6 +34,7 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -335,6 +337,52 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 matched = findPairOfType(srcSubTree,dstSubTree,LANG1.CONSTRUCTOR_KEYWORD,LANG2.CONSTRUCTOR_KEYWORD);
                 if (matched != null)
                     mappingStore.addMapping(matched.first,matched.second);
+            }
+        }
+        if(classDiff.getOriginalClass().getSuperTypeCallEntries().size() > 0 && classDiff.getNextClass().getSuperTypeCallEntries().size() > 0 &&
+                classDiff.getOriginalClass().getSuperTypeCallEntries().size() == classDiff.getNextClass().getSuperTypeCallEntries().size() &&
+                PathFileUtils.isCppFile(classDiff.getOriginalClass().getSourceFile()) && PathFileUtils.isCppFile(classDiff.getNextClass().getSourceFile())) {
+            for(int i=0; i<classDiff.getOriginalClass().getSuperTypeCallEntries().size(); i++) {
+                AbstractExpression expr1 = classDiff.getOriginalClass().getSuperTypeCallEntries().get(i);
+                AbstractExpression expr2 = classDiff.getNextClass().getSuperTypeCallEntries().get(i);
+                Tree srcSuperConstructorCall = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, expr1.getLocationInfo(), LANG1);
+                Tree dstSuperConstructorCall = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, expr2.getLocationInfo(), LANG2);
+                if(srcSuperConstructorCall.getType().name.equals(LANG1.FIELD_INITIALIZER) && dstSuperConstructorCall.getType().name.equals(LANG2.FIELD_INITIALIZER) && !srcSuperConstructorCall.isIsomorphicTo(dstSuperConstructorCall)) {
+                    Tree argList1 = TreeUtilFunctions.findChildByType(srcSuperConstructorCall, LANG1.ARGUMENT_LIST);
+                    Tree argList2 = TreeUtilFunctions.findChildByType(dstSuperConstructorCall, LANG2.ARGUMENT_LIST);
+                    Pair<Tree, Tree> opening = Helpers.findPairOfType(argList1,argList2, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                    if (opening != null) {
+                        mappingStore.addMapping(opening.first,opening.second);
+                    }
+                    Pair<Tree, Tree> closing = Helpers.findPairOfType(argList1,argList2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                    if (closing != null) {
+                        mappingStore.addMapping(closing.first,closing.second);
+                    }
+                    if(argList2.getChildren().size() < argList1.getChildren().size()) {
+                        for(int j=0; j<argList2.getChildren().size(); j++) {
+                            Tree child1 = argList1.getChild(j);
+                            Tree child2 = argList2.getChild(j);
+                            if(child1.isIsomorphicTo(child2)) {
+                                mappingStore.addMappingRecursively(child1, child2);
+                            }
+                            else {
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        for(int j=0; j<argList1.getChildren().size(); j++) {
+                            Tree child1 = argList1.getChild(j);
+                            Tree child2 = argList2.getChild(j);
+                            if(child1.isIsomorphicTo(child2)) {
+                                mappingStore.addMappingRecursively(child1, child2);
+                            }
+                            else {
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
         if (classDiff.getCommonFunctionType().isPresent()) {

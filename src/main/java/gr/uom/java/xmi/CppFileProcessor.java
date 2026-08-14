@@ -804,6 +804,12 @@ public class CppFileProcessor {
 							candidates.iterator().next().setInitializer(expression);
 						}
 					}
+					else {
+						//this is a super constructor call
+						AbstractExpression callEntry = new AbstractExpression(sourceFolder, filePath, initializer, CodeElementType.SUPER_TYPE_CALL_ENTRY, operation, operation.getBody().getActiveVariableDeclarations(), fileContent);
+						if(parentContainer instanceof UMLClass)
+							((UMLClass)parentContainer).addSuperTypeCallEntry(callEntry);
+					}
 				}
 			}
 		}

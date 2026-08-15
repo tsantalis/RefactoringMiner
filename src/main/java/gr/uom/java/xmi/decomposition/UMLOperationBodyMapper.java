@@ -385,6 +385,48 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count == small.size();
 	}
 
+	private static boolean matchingParent(List<AbstractStatement> allStatements, AbstractStatement statement1, List<String> list1, int indexOfSubList) {
+		CompositeStatementObject parent = statement1.getParent();
+		int index = indexOfSubList;
+		while(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent = parent.getParent();
+			index--;
+		}
+		if(parent == null) {
+			return true;
+		}
+		if(index > 2 && (parent.getString().equals(list1.get(index-1)) || parent.getString().equals(list1.get(index-2)))) {
+			return true;
+		}
+		else {
+			//return false, only if a next statement in allStatements has identical parent
+			boolean currentFound = false;
+			boolean nextFound = false;
+			for(AbstractStatement statement : allStatements) {
+				if(statement.equals(statement1)) {
+					currentFound = true;
+					continue;
+				}
+				if(currentFound && statement.getString().equals(statement1.getString())) {
+					nextFound = true;
+					parent = statement.getParent();
+					index = indexOfSubList;
+					while(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+						parent = parent.getParent();
+						index--;
+					}
+					if(index > 1 && parent != null && parent.getString().equals(list1.get(index-1))) {
+						return false;
+					}
+				}
+			}
+			if(!nextFound) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
@@ -413,6 +455,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							list2.remove(0);
 							list2.remove(list2.size()-1);
 							int indexOfSubList = Collections.indexOfSubList(list1, list2);
+							List<String> originalList2 = new ArrayList<String>(list2);
 							if(indexOfSubList >= 0) {
 								while(list2.contains("}")) {
 									list2.remove("}");
@@ -435,7 +478,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												index++;
 											}
 										}
-										else if(statement1.getString().equals(list1.get(indexOfSubList))) {
+										else if(statement1.getString().equals(list1.get(indexOfSubList)) && matchingParent(allStatements, statement1, list1, indexOfSubList)) {
 											firstFound = true;
 											subSet.add(statement1);
 											index++;
@@ -452,6 +495,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											subSet.add(statement1);
 										}
 										index++;
+									}
+									if(subSet.size() % list2.size() == 0) {
+										List<String> subList1 = list1.subList(indexOfSubList+index, list1.size());
+										int newIndexOfSubList = Collections.indexOfSubList(subList1, originalList2);
+										if(newIndexOfSubList >= 0) {
+											indexOfSubList = indexOfSubList+index+newIndexOfSubList;
+										}
 									}
 								}
 								extractedStatements.put(addedOperation, subSet);

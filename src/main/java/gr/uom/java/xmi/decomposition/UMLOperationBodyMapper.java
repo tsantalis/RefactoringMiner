@@ -7335,13 +7335,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				UMLOperation matchingOperation = null;
 				if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
-					List<String> fragmentStringRepresentation = ((CompositeStatementObject)mapping.getFragment1()).stringRepresentation();
+					List<String> fragmentStringRepresentation1 = ((CompositeStatementObject)mapping.getFragment1()).stringRepresentation();
+					List<String> fragmentStringRepresentation2 = ((CompositeStatementObject)mapping.getFragment2()).stringRepresentation();
+					if(fragmentStringRepresentation1.equals(fragmentStringRepresentation2)) {
+						return false;
+					}
 					List<String> operationStringRepresentation = matchingOperation.stringRepresentation();
 					for(int index = 0; index<operationStringRepresentation.size(); index++) {
-						if(operationStringRepresentation.get(index).equals(fragmentStringRepresentation.get(0)) &&
-								operationStringRepresentation.size() >= index + fragmentStringRepresentation.size()) {
-							List<String> subList = operationStringRepresentation.subList(index, index + fragmentStringRepresentation.size());
-							if(subList.equals(fragmentStringRepresentation)) {
+						if(operationStringRepresentation.get(index).equals(fragmentStringRepresentation1.get(0)) &&
+								operationStringRepresentation.size() >= index + fragmentStringRepresentation1.size()) {
+							List<String> subList = operationStringRepresentation.subList(index, index + fragmentStringRepresentation1.size());
+							if(subList.equals(fragmentStringRepresentation1)) {
 								return true;
 							}
 						}

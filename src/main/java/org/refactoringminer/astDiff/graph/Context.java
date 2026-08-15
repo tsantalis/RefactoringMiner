@@ -154,6 +154,9 @@ public class Context {
       return List.of(constants.ARGUMENT_LIST, constants.METHOD_INVOCATION, "binary_operator",
               constants.EXPRESSION_STATEMENT, constants.METHOD_DECLARATION, constants.SUBSCRIPT);
     }
+    if (treeType.equals("keyword_argument")) {
+      return List.of(constants.CALL, constants.EXPRESSION_STATEMENT);
+    }
     return null;
   }
 

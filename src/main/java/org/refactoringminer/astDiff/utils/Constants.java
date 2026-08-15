@@ -44,11 +44,10 @@ public class Constants {
 
     private boolean isImportExport(String treeType) {
         return treeType.equals(IMPORT_DECLARATION) || treeType.equals(IMPORT_FROM_STATEMENT) || treeType.equals(FUTURE_IMPORT_STATEMENT) ||
-                treeType.equals(RELATIVE_IMPORT) || treeType.equals(IMPORT_LIST) || treeType.equals(IMPORT_IDENTIFIER) ||
-                treeType.equals(EXPORT_STATEMENT) || treeType.equals(NAMESPACE_IMPORT) || treeType.equals(EXPORT_KEYWORD) ||
-                treeType.equals(IMPORT_KEYWORD) || treeType.equals(FROM_KEYWORD) || treeType.equals(IMPORT_STAR) ||
-                treeType.equals(IMPORT_SPECIFIER) || treeType.equals(EXPORT_SPECIFIER) || treeType.equals(EXPORT_CLAUSE) ||
-                treeType.equals(IMPORT_CLAUSE) || treeType.equals(NAMED_IMPORTS);
+                treeType.equals(RELATIVE_IMPORT) || treeType.equals(IMPORT_LIST) || treeType.equals(EXPORT_STATEMENT) ||
+                treeType.equals(NAMESPACE_IMPORT) || treeType.equals(EXPORT_KEYWORD) || treeType.equals(IMPORT_KEYWORD) ||
+                treeType.equals(FROM_KEYWORD) || treeType.equals(IMPORT_STAR) || treeType.equals(IMPORT_SPECIFIER) ||
+                treeType.equals(EXPORT_SPECIFIER) || treeType.equals(EXPORT_CLAUSE) || treeType.equals(IMPORT_CLAUSE) || treeType.equals(NAMED_IMPORTS);
     }
 
     public boolean isSemanticallyInsignificant(String treeType) {
@@ -498,7 +497,7 @@ public class Constants {
     public final String TYPE_ARGUMENTS = "type_arguments";
     public final String STRING_CONTENT = "string_content";
     public final String LAMBDA_PARAMETERS = "lambda_parameters";
-    
+
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";
     public final String STATEMENT_BLOCK = "statement_block";
@@ -596,7 +595,7 @@ public class Constants {
     public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
     public final String UPDATE_EXPRESSION = "update_expression";
     public final String SPREAD_ELEMENT = "spread_element";
-    
+
     //C++ specific
     public final String TRANSLATION_UNIT = "translation_unit"; // This is the root of all trees in C++
     public final String COMPOUND_STATEMENT = "compound_statement";

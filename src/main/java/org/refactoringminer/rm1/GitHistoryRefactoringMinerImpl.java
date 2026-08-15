@@ -2329,7 +2329,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				try {
 					URL currentRawURL = commitFile.getRawUrl();
 					String currentRawFile = fetchRawFileContent(currentRawURL);
-					List<String> patchLineList = createPatchLines(commitFile);
+					List<String> patchLineList = createPatchLines(commitFile.getPatch());
 					String parentRawFile = null;
 					if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
 						URL parentRawURL = new URI(currentRawURL.toString().replace(headSha, mergeBaseSha)).toURL();
@@ -2391,7 +2391,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					String previousFilename = commitFile.getPreviousFilename();
 					URL currentRawURL = commitFile.getRawUrl();
 					String currentRawFile = fetchRawFileContent(currentRawURL);
-					List<String> patchLineList = createPatchLines(commitFile);
+					List<String> patchLineList = createPatchLines(commitFile.getPatch());
 					String parentRawFile;
 					if(patchLineList.isEmpty() && commitFile.getChanges() > 0) {
 						String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
@@ -2429,30 +2429,28 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
-	private List<String> createPatchLines(GHPullRequestFileDetail commitFile) {
-		String patch = commitFile.getPatch();
+	private List<String> createPatchLines(String patch) {
 		if(patch != null) {
 			String[] patchLines = patch.split("\\n");
 			List<String> patchLineList = new ArrayList<String>();
 			patchLineList.add("+++");
-            for (String raw : patchLines) {
-                String line = raw.replace("\r", ""); // guard against CRLF
-
-                // Only treat as a hunk header if it *starts* with "@@ ".
-                if (line.startsWith("@@ ")) {
-                    // Find the *closing* "@@" of the header and keep up to there.
-                    int close = line.indexOf("@@", 3); // start searching after the initial "@@ "
-                    if (close != -1) {
-                        patchLineList.add(line.substring(0, close + 2));
-                    } else {
-                        // Malformed header: keep the line untouched rather than corrupting it
-                        patchLineList.add(line);
-                    }
-                } else {
-                    // Normal diff/content line (may contain "@@" in the middle—leave it alone)
-                    patchLineList.add(line);
-                }
-            }
+			for (String raw : patchLines) {
+				String line = raw.replace("\r", ""); // guard against CRLF
+				// Only treat as a hunk header if it *starts* with "@@ ".
+				if (line.startsWith("@@ ")) {
+					// Find the *closing* "@@" of the header and keep up to there.
+					int close = line.indexOf("@@", 3); // start searching after the initial "@@ "
+					if (close != -1) {
+						patchLineList.add(line.substring(0, close + 2));
+					} else {
+						// Malformed header: keep the line untouched rather than corrupting it
+						patchLineList.add(line);
+					}
+				} else {
+					// Normal diff/content line (may contain "@@" in the middle—leave it alone)
+					patchLineList.add(line);
+				}
+			}
 			return patchLineList;
 		}
 		return Collections.emptyList();
@@ -2704,13 +2702,47 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit) throws Exception {
 		GHRepository repository = getGitHubRepository(gitURL);
 		GHCompare compare = repository.getCompare(startCommit, endCommit);
+		Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+		Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+		Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+		List<String> commitFileNames = new ArrayList<>();
+		List<GHCommit.File> commitFiles = Arrays.asList(compare.getFiles());
+		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
+		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
+		int count = 1;
+		for (GHCommit.File commitFile : commitFiles) {
+			String fileName = commitFile.getFileName();
+			if (PathFileUtils.isSupportedFile(commitFile.getFileName())) {
+				commitFileNames.add(fileName);
+				logger.info(String.format("Processing file: " + fileName));
+				//sleep every 100 files to avoid HTTP 403 error
+				if (count % 100 == 0) {
+					Thread.sleep(500);
+				}
+				multiThreadedFetchWithPatch(commitFileNames, fileContentsBefore, fileContentsCurrent, renamedFilesHint,
+						deletedAndRenamedFileParentDirectories, pool, commitFile, fileName);
+				count++;
+			}
+		}
+		pool.shutdown();
+		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		LinkedHashSet<String> orderedFilesBefore = new LinkedHashSet<>();
+		LinkedHashSet<String> orderedFilesCurrent = new LinkedHashSet<>();
+		for (String fileName : commitFileNames) {
+			if (fileContentsBefore.containsKey(fileName)) {
+				orderedFilesBefore.add(fileName);
+			}
+			if (fileContentsCurrent.containsKey(fileName)) {
+				orderedFilesCurrent.add(fileName);
+			}
+		}
+		addDirectoryPaths(repositoryDirectoriesBefore, orderedFilesBefore);
+		addDirectoryPaths(repositoryDirectoriesCurrent, orderedFilesCurrent);
+		repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
+		/*
 		PagedIterable<Commit> commits = compare.listCommits();
-		//List<GHCommit.File> changedFiles = Arrays.asList(compare.getFiles());
-		
-		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
 		for(GHCommit currentGHCommit : commits) {
 			final String commitId = currentGHCommit.getSHA1();
 			logger.info("Processing {} {} ...", gitURL, commitId);
@@ -2752,6 +2784,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore, new LinkedHashSet<>(orderedFilesBefore));
 			}
 		}
+		*/
 		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap(), false);
 		UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 		UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
@@ -2763,5 +2796,89 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				extractRepositoryName(gitURL) + " " + URLHelper.shortenCommit(startCommit) + "..." + URLHelper.shortenCommit(endCommit),
 				extractCompareURL(gitURL, startCommit, endCommit)));
 		return diff;
+	}
+
+	private void multiThreadedFetchWithPatch(List<String> commitFileNames,
+			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
+			Set<String> deletedAndRenamedFileParentDirectories, ExecutorService pool, GHCommit.File commitFile, String fileName) {
+		if (commitFile.getStatus().equals("modified")) {
+			Runnable r = () -> {
+				try {
+					String currentRawFile = null;
+					String parentRawFile = null;
+					URL currentRawURL = commitFile.getRawUrl();
+					currentRawFile = fetchRawFileContent(currentRawURL);
+					List<String> patchLineList = createPatchLines(commitFile.getPatch());
+					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+					parentRawFile = String.join("\n", parentRawFileLines);
+					if(!filesBefore.containsKey(fileName))
+						filesBefore.put(fileName, parentRawFile);
+					filesCurrent.put(fileName, currentRawFile);
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+			};
+			pool.submit(r);
+		}
+		else if (commitFile.getStatus().equals("added")) {
+			Runnable r = () -> {
+				try {
+					String currentRawFile = null;
+					URL currentRawURL = commitFile.getRawUrl();
+					currentRawFile = fetchRawFileContent(currentRawURL);
+					filesCurrent.put(fileName, currentRawFile);
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+			};
+			pool.submit(r);
+		}
+		else if (commitFile.getStatus().equals("removed")) {
+			Runnable r = () -> {
+				try {
+					String parentRawFile = null;
+					URL rawURL = commitFile.getRawUrl();
+					parentRawFile = fetchRawFileContent(rawURL);
+					filesBefore.put(fileName, parentRawFile);
+					if(fileName.contains("/")) {
+						deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
+					}
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+			};
+			pool.submit(r);
+		}
+		else if (commitFile.getStatus().equals("renamed")) {
+			commitFileNames.add(commitFile.getPreviousFilename());
+			Runnable r = () -> {
+				try {
+					String previousFilename = commitFile.getPreviousFilename();
+					String currentRawFile = null;
+					String parentRawFile = null;
+					URL currentRawURL = commitFile.getRawUrl();
+					currentRawFile = fetchRawFileContent(currentRawURL);
+					List<String> patchLineList = createPatchLines(commitFile.getPatch());
+					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
+					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+					parentRawFile = String.join("\n", parentRawFileLines);
+					if(!filesBefore.containsKey(previousFilename))
+						filesBefore.put(previousFilename, parentRawFile);
+					filesCurrent.put(fileName, currentRawFile);
+					renamedFilesHint.put(previousFilename, fileName);
+					if(previousFilename.contains("/")) {
+						deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
+					}
+				}
+				catch(IOException e) {
+					e.printStackTrace();
+				}
+			};
+			pool.submit(r);
+		}
 	}
 }

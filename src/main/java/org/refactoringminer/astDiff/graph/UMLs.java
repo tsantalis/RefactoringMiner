@@ -10,7 +10,7 @@ public class UMLs {
     public Set<UMLOperation> umlOperations = new HashSet<>();
     public Set<UMLAttribute> umlAttributes = new HashSet<>();
     public Set<VariableDeclaration> variableDeclarations = new HashSet<>();
-    public Map<UMLOperation, Set<VariableDeclaration>> operationParameters = new HashMap<>();
+    public Map<UMLOperation, Set<VariableDeclaration>> operationParameters = new IdentityHashMap<>();
 
     UMLs() {}
   }

@@ -4042,7 +4042,7 @@ public abstract class UMLAbstractClassDiff {
 				removedOperation.equalSignatureForAbstractMethods(addedOperation)) {
 			boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
-					removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
+					removedOperation.hasTestAnnotation() && (addedOperation.hasTestAnnotation() || addedOperation.hasParameterizedTestAnnotation());
 			boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
 					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);

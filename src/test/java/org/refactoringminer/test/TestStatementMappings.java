@@ -1232,6 +1232,7 @@ public class TestStatementMappings {
 		"https://github.com/eclipse/corrosion.git, e966a935595cd0e0586ab3c4ea3bcaad8f0d8f89, corrosion-e966a935595cd0e0586ab3c4ea3bcaad8f0d8f89.txt",
 		"https://github.com/webauthn4j/webauthn4j.git, e960a741f5259e0127339f0e0af024ccb66100b2, webauthn4j-e960a741f5259e0127339f0e0af024ccb66100b2.txt",
 		"https://github.com/xlate/staedi.git, 97ccd83c5e33aa8b81056dc2ee690fdf8547c952, staedi-97ccd83c5e33aa8b81056dc2ee690fdf8547c952.txt",
+		"https://github.com/xlate/staedi.git, f8b4a918ed30812635aa15e357bec7ef6f3c786d, staedi-f8b4a918ed30812635aa15e357bec7ef6f3c786d.txt",
 	})
 	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

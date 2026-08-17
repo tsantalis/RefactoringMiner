@@ -9,27 +9,56 @@ import java.util.List;
 public class CsvUtils {
     public static List<String> extractParametersFromCsv(String s) {
         List<String> parameters = new ArrayList<>();
-        //fix for arguments with single quotes
-        if(s.contains("'") && !s.contains("''")) {
-        	String[] tokens = s.split("'");
-        	for (String token : tokens) {
-        		if(!token.equals("\"") && !token.matches("\\s*,\\s*")) {
-        			parameters.add(token);
-        		}
-        	}
-        }
-        else {
-            String[] tokens = s.split(",");
-	        for (String token : tokens) {
-	            String trimmed = token.trim();
-	            if (trimmed.startsWith("\"")) {
-	                trimmed = trimmed.substring(1, trimmed.length());
-	            }
-	            if (trimmed.endsWith("\"")) {
-	                trimmed = trimmed.substring(0, trimmed.length() - 1);
-	            }
-	            parameters.add(trimmed);
-	        }
+        int i = 0;
+        int n = s.length();
+        while (true) {
+            while (i < n && Character.isWhitespace(s.charAt(i))) {
+                i++;
+            }
+            String field;
+            if (i < n && s.charAt(i) == '\'') {
+                StringBuilder field1 = new StringBuilder();
+                i++; //skip opening quote
+                while (i < n) {
+                    char c = s.charAt(i);
+                    if (c == '\'') {
+                        //two consecutive single quotes inside a quoted field is an escaped literal quote
+                        if (i + 1 < n && s.charAt(i + 1) == '\'') {
+                            field1.append('\'');
+                            i += 2;
+                            continue;
+                        }
+                        i++; //skip closing quote
+                        break;
+                    }
+                    field1.append(c);
+                    i++;
+                }
+                //skip any (whitespace) content between the closing quote and the next comma
+                while (i < n && s.charAt(i) != ',') {
+                    i++;
+                }
+                field = field1.toString();
+            }
+            else {
+                int start = i;
+                while (i < n && s.charAt(i) != ',') {
+                    i++;
+                }
+                String trimmed = s.substring(start, i).trim();
+                if (trimmed.startsWith("\"")) {
+                    trimmed = trimmed.substring(1);
+                }
+                if (trimmed.endsWith("\"")) {
+                    trimmed = trimmed.substring(0, trimmed.length() - 1);
+                }
+                field = trimmed;
+            }
+            parameters.add(field);
+            if (i >= n) {
+                break;
+            }
+            i++; //skip the comma separator
         }
         return parameters;
     }

@@ -3724,6 +3724,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Push Down Method",
+        "description": "Push Down Method public onBindViewHolder(holder TrailingViewHolder, loadState LoadState) from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter to public onBindViewHolder(holder TrailingLoadStateVH, loadState LoadState) from class com.chad.library.adapter.base.loadState.trailing.DefaultTrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type holder : TrailingViewHolder to holder : TrailingLoadStateVH in method public onBindViewHolder(holder TrailingLoadStateVH, loadState LoadState) from class com.chad.library.adapter.base.loadState.trailing.DefaultTrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Modifier",
+        "description": "Remove Method Modifier final in method public onBindViewHolder(holder TrailingViewHolder, loadState LoadState) from class com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

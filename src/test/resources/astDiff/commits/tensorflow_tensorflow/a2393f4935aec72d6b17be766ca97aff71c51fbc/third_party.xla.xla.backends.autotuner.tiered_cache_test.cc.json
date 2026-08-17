@@ -6676,6 +6676,149 @@
   "firstEndPos" : 3585,
   "secondEndPos" : 5189
 }, {
+  "firstType" : "function_definition",
+  "secondType" : "function_definition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 3587,
+  "secondPos" : 5191,
+  "firstEndPos" : 5688,
+  "secondEndPos" : 6919
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 3587,
+  "secondPos" : 5191,
+  "firstEndPos" : 3635,
+  "secondEndPos" : 5245
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "TEST_F",
+  "secondLabel" : "TEST_F",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 3587,
+  "secondPos" : 5191,
+  "firstEndPos" : 3593,
+  "secondEndPos" : 5197
+}, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 3593,
+  "secondPos" : 5197,
+  "firstEndPos" : 3635,
+  "secondEndPos" : 5245
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3593,
+  "secondPos" : 5197,
+  "firstEndPos" : 3594,
+  "secondEndPos" : 5198
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3594,
+  "secondPos" : 5198,
+  "firstEndPos" : 3609,
+  "secondEndPos" : 5213
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "TieredCacheTest",
+  "secondLabel" : "TieredCacheTest",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 3594,
+  "secondPos" : 5198,
+  "firstEndPos" : 3609,
+  "secondEndPos" : 5213
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3609,
+  "secondPos" : 5213,
+  "firstEndPos" : 3610,
+  "secondEndPos" : 5214
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3611,
+  "secondPos" : 5215,
+  "firstEndPos" : 3634,
+  "secondEndPos" : 5244
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PropagationOnLookupMiss",
+  "secondLabel" : "PromotesToHotterTierOnColdHit",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 3611,
+  "secondPos" : 5215,
+  "firstEndPos" : 3634,
+  "secondEndPos" : 5244
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3634,
+  "secondPos" : 5244,
+  "firstEndPos" : 3635,
+  "secondEndPos" : 5245
+}, {
+  "firstType" : "compound_statement",
+  "secondType" : "compound_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 3636,
+  "secondPos" : 5246,
+  "firstEndPos" : 5688,
+  "secondEndPos" : 6919
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 3636,
+  "secondPos" : 5246,
+  "firstEndPos" : 3637,
+  "secondEndPos" : 5247
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -6939,6 +7082,17 @@
   "secondPos" : 5365,
   "firstEndPos" : 3756,
   "secondEndPos" : 5366
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// 1. Populate the persistent DirectoryCache directly.",
+  "secondLabel" : "// 1. Populate only the persistent directory tier.",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 3976,
+  "secondPos" : 5584,
+  "firstEndPos" : 4030,
+  "secondEndPos" : 5634
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7412,6 +7566,17 @@
   "secondPos" : 6398,
   "firstEndPos" : 5067,
   "secondEndPos" : 6399
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 5687,
+  "secondPos" : 6918,
+  "firstEndPos" : 5688,
+  "secondEndPos" : 6919
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

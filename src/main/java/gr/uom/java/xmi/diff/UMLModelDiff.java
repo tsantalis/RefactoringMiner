@@ -3264,8 +3264,9 @@ public class UMLModelDiff {
 				Set<UMLType> parameterTypeIntersection = new LinkedHashSet<>(removedParameterTypeList);
 				List<UMLType> addedParameterTypeList = addedOperation.getParameterTypeList();
 				parameterTypeIntersection.retainAll(addedParameterTypeList);
+				boolean equalParameterNames = removedOperation.getParameterNameList().equals(addedOperation.getParameterNameList()) && removedOperation.getParameterNameList().size() > 0;
 				boolean parameterTypeCompatible = parameterTypeIntersection.size() > 0 || addedParameterTypeList.size() == 0 || removedParameterTypeList.size() == 0;
-				if(removedOperation.equalSignature(addedOperation) || (mappings > 0 && parameterTypeCompatible && mappedElementsMoreThanNonMappedT1AndT2(mappings, mapper))) {
+				if(removedOperation.equalSignature(addedOperation) || equalParameterNames || (mappings > 0 && parameterTypeCompatible && mappedElementsMoreThanNonMappedT1AndT2(mappings, mapper))) {
 					if(!parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 						classDiff.getRemovedOperations().remove(removedOperation);
 					}

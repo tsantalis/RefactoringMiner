@@ -38466,6 +38466,105 @@
   "firstEndPos" : 16399,
   "secondEndPos" : 10714
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 16399,
+  "secondPos" : 10714,
+  "firstEndPos" : 16428,
+  "secondEndPos" : 10743
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PjRtMemorySpace",
+  "secondLabel" : "PjRtMemorySpace",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 16399,
+  "secondPos" : 10714,
+  "firstEndPos" : 16414,
+  "secondEndPos" : 10729
+}, {
+  "firstType" : "pointer_declarator",
+  "secondType" : "pointer_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 16414,
+  "secondPos" : 10729,
+  "firstEndPos" : 16428,
+  "secondEndPos" : 10743
+}, {
+  "firstType" : "*",
+  "secondType" : "*",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 16414,
+  "secondPos" : 10729,
+  "firstEndPos" : 16415,
+  "secondEndPos" : 10730
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "memory_space",
+  "secondLabel" : "memory_space",
+  "firstParentType" : "pointer_declarator",
+  "secondParentType" : "pointer_declarator",
+  "firstPos" : 16416,
+  "secondPos" : 10731,
+  "firstEndPos" : 16428,
+  "secondEndPos" : 10743
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 16428,
+  "secondPos" : 10743,
+  "firstEndPos" : 16429,
+  "secondEndPos" : 10744
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 16455,
+  "secondPos" : 10770,
+  "firstEndPos" : 16483,
+  "secondEndPos" : 10798
+}, {
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
+  "firstLabel" : "size_t",
+  "secondLabel" : "size_t",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 16455,
+  "secondPos" : 10770,
+  "firstEndPos" : 16461,
+  "secondEndPos" : 10776
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "on_device_bytes_count",
+  "secondLabel" : "on_device_bytes_count",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 16462,
+  "secondPos" : 10777,
+  "firstEndPos" : 16483,
+  "secondEndPos" : 10798
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",

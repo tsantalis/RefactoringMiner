@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
@@ -110,7 +109,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             srcAttr = srcAttr.getParent();
         }
         if (dstAttr.getType().name.equals(LANG2.SIMPLE_NAME) && dstAttr.getParent().getType().name.equals(LANG2.ENUMERATOR)) {
-        	dstAttr = dstAttr.getParent();
+            dstAttr = dstAttr.getParent();
         }
         new CommentMatcher(optimizationData, umlCommentListDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
@@ -126,6 +125,11 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+            }
+            boolean isMovedAttribute = !srcUMLAttribute.getClassName().equals(dstUMLAttribute.getClassName());
+            if(PathFileUtils.isCppFile(srcUMLAttribute.getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(dstUMLAttribute.getLocationInfo().getFilePath()) &&
+                    srcUMLAttribute.getLocationInfo().getFilePath().equals(dstUMLAttribute.getLocationInfo().getFilePath()) && !isMovedAttribute) {
+                ClassDeclarationMatcher.handleParentNamespace(srcAttr, dstAttr, mappingStore, LANG1, LANG2);
             }
             return;
         }
@@ -273,6 +277,11 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             if (srcVarDeclaration != null && dstVarDeclaration != null)
                 if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
                     mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
+        }
+        boolean isMovedAttribute = !srcUMLAttribute.getClassName().equals(dstUMLAttribute.getClassName());
+        if(PathFileUtils.isCppFile(srcUMLAttribute.getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(dstUMLAttribute.getLocationInfo().getFilePath()) &&
+                srcUMLAttribute.getLocationInfo().getFilePath().equals(dstUMLAttribute.getLocationInfo().getFilePath()) && !isMovedAttribute) {
+            ClassDeclarationMatcher.handleParentNamespace(srcAttr, dstAttr, mappingStore, LANG1, LANG2);
         }
     }
 

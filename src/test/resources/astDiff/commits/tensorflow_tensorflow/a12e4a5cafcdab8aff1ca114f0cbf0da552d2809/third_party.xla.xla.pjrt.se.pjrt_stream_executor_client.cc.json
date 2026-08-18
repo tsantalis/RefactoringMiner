@@ -252581,6 +252581,50 @@
   "firstEndPos" : 98652,
   "secondEndPos" : 99773
 }, {
+  "firstType" : "namespace_definition",
+  "secondType" : "namespace_definition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 98654,
+  "secondPos" : 99775,
+  "firstEndPos" : 98743,
+  "secondEndPos" : 99864
+}, {
+  "firstType" : "namespace",
+  "secondType" : "namespace",
+  "firstLabel" : "namespace",
+  "secondLabel" : "namespace",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 98654,
+  "secondPos" : 99775,
+  "firstEndPos" : 98663,
+  "secondEndPos" : 99784
+}, {
+  "firstType" : "declaration_list",
+  "secondType" : "declaration_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 98664,
+  "secondPos" : 99785,
+  "firstEndPos" : 98743,
+  "secondEndPos" : 99864
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 98664,
+  "secondPos" : 99785,
+  "firstEndPos" : 98665,
+  "secondEndPos" : 99786
+}, {
   "firstType" : "declaration",
   "secondType" : "declaration",
   "firstLabel" : "",
@@ -252745,6 +252789,17 @@
   "secondPos" : 99860,
   "firstEndPos" : 98740,
   "secondEndPos" : 99861
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 98742,
+  "secondPos" : 99863,
+  "firstEndPos" : 98743,
+  "secondEndPos" : 99864
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

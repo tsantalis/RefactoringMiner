@@ -1016,6 +1016,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             boolean methodBody2 = dstTypeDeclaration.getParent().getParent() != null && dstTypeDeclaration.getParent().getParent().getType().name.equals(LANG2.METHOD_DECLARATION);
             if(!methodBody1 && !methodBody2 && parent1.getType().equals(parent2.getType())) {
                 mappingStore.addMapping(parent1, parent2);
+                Pair<Tree, Tree> semicolons = Helpers.findPairOfType(parent1,parent2, LANG1.SEMICOLON, LANG2.SEMICOLON);
+                if (semicolons != null) {
+                    mappingStore.addMapping(semicolons.first,semicolons.second);
+                }
                 Pair<Tree, Tree> opening = Helpers.findPairOfType(parent1,parent2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
                 if (opening != null) {
                     mappingStore.addMapping(opening.first,opening.second);

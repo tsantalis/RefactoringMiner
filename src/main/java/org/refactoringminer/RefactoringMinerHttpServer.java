@@ -184,7 +184,7 @@ public class RefactoringMinerHttpServer implements RefactoringHandler {
 		sb.append("{");
 		sb.append("\t").append("\"").append("repository").append("\"").append(": ").append("\"").append(gitURL).append("\"").append(",").append("\n");
 		sb.append("\t").append("\"").append("sha1").append("\"").append(": ").append("\"").append(currentCommitId).append("\"").append(",").append("\n");
-		String url = isInteger(currentCommitId) ? GitHistoryRefactoringMinerImpl.extractPullRequestURL(gitURL, Integer.parseInt(currentCommitId)) + "changes/" :
+		String url = isInteger(currentCommitId) ? GitHistoryRefactoringMinerImpl.extractPullRequestURL(gitURL, Integer.parseInt(currentCommitId)) + "/changes/" :
 			GitHistoryRefactoringMinerImpl.extractCommitURL(gitURL, currentCommitId);
 		sb.append("\t").append("\"").append("url").append("\"").append(": ").append("\"").append(url).append("\"").append(",").append("\n");
 		sb.append("\t").append("\"").append("refactorings").append("\"").append(": ");

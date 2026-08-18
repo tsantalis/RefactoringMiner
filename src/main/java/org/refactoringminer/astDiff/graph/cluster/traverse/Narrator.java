@@ -229,9 +229,9 @@ public class Narrator {
                     for (List<NarrativeElement> split : splits) {
                         ChapterUnit chu = new ChapterUnit();
                         for (NarrativeElement ne : split) {
-                            chu.append(ne.content());
-                            chu.addMains(ne.mains());
-                            chu.addSides(ne.sides());
+                            chu.append(ne.getContent());
+                            chu.addMains(ne.getMains());
+                            chu.addSides(ne.getSides());
                         }
 
                         units.add(chu);
@@ -239,9 +239,9 @@ public class Narrator {
                 } else {
                     ChapterUnit chu = new ChapterUnit();
                     for (NarrativeElement ne : elements) {
-                        chu.append(ne.content());
-                        chu.addMains(ne.mains());
-                        chu.addSides(ne.sides());
+                        chu.append(ne.getContent());
+                        chu.addMains(ne.getMains());
+                        chu.addSides(ne.getSides());
                     }
 
                     units.add(chu);
@@ -481,5 +481,4 @@ public class Narrator {
             return getContent().split("\n").length;
         }
     }
-
 }

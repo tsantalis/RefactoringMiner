@@ -10,7 +10,6 @@ import org.refactoringminer.astDiff.graph.cluster.GraphWrapper;
 import org.jgrapht.Graph;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TraversalPattern extends GraphWrapper {
     protected Graph<Node, Edge> clusterGraph;
@@ -21,10 +20,6 @@ public class TraversalPattern extends GraphWrapper {
     protected Node cachedLead = null;
     protected NodeType nodeType;
     private List<TraversalPattern> cachedFlatten = null;
-
-    public Graph<Node, Edge> getClusterGraph() {
-        return clusterGraph;
-    }
 
     public void setClusterGraph(Graph<Node, Edge> clusterGraph) {
         this.clusterGraph = clusterGraph;
@@ -90,17 +85,16 @@ public class TraversalPattern extends GraphWrapper {
         return narrator;
     }
 
-     public String extended(List<TraversalPattern> filterPatterns) {
-        return String.join("\n", getElements(filterPatterns).stream().map(NarrativeElement::content).toList());
+    public String extended(List<TraversalPattern> filterPatterns) {
+        return String.join("\n", getElements(filterPatterns).stream().map(NarrativeElement::getContent).toList());
     }
 
     public List<NarrativeElement> getElements(List<TraversalPattern> filterPatterns) {
         List<Node> aggMains = getMains();
 
-        // Merge Mains by Mapping
         List<MappingGroup> mappingGroups = aggregateByMapping(aggMains);
 
-        // Get Group Contexts
+        // Merge Groups by Context
         Map<MappingGroup, Set<Node>> mappingGroupContexts = new HashMap<>();
         for (MappingGroup mg : mappingGroups) {
             Set<Node> contexts = new HashSet<>();
@@ -122,8 +116,6 @@ public class TraversalPattern extends GraphWrapper {
             }
             mappingGroupContexts.put(mg, filterLargest(contexts));
         }
-
-        // Merge Groups by Context
         List<MergedGroup> mergedGroups = new ArrayList<>();
         for (Map.Entry<MappingGroup, Set<Node>> entry : mappingGroupContexts.entrySet()) {
             MappingGroup mg = entry.getKey();
@@ -148,7 +140,6 @@ public class TraversalPattern extends GraphWrapper {
 
         List<TraversalPattern> leaves = this.getNarrator().getNarrative(GrainLevel.LEAF);
 
-        // Side to Mains Mappings
         Set<Node> allMains = new HashSet<>(aggMains);
         if (filterPatterns != null) {
             for (TraversalPattern fp : filterPatterns) {
@@ -173,13 +164,10 @@ public class TraversalPattern extends GraphWrapper {
             }
         }
 
-        // Main to Group Mappings (Each Main Maps to Only 1 Group)
         Map<Node, MergedGroup> mainToGroup = new HashMap<>();
         for (MergedGroup mg : mergedGroups) {
             for (Node n : mg.nodes()) mainToGroup.put(n, mg);
         }
-
-        // Identify Group Dependencies
         Set<Node> globalSides = new HashSet<>();
         Map<MergedGroup, List<Node>> localSidesMap = new HashMap<>();
         for (Map.Entry<Node, Set<Node>> entry : sideToMains.entrySet()) {
@@ -203,22 +191,16 @@ public class TraversalPattern extends GraphWrapper {
         Map<MergedGroup, Integer> groupLatestIndex = new HashMap<>();
         for (MergedGroup mg : mergedGroups) {
             int maxIdx = -1;
-            for (MappingGroup group : mg.groups) {
-                for (Node n : group.sources()) {
-                    for (int i = leaves.size() - 1; i >= 0; i--) {
-                        if (leaves.get(i).getMains().contains(n)) {
-                            maxIdx = Math.max(maxIdx, i);
-                        }
-                    }
-                }
-                for (Node n : group.targets()) {
-                    for (int i = leaves.size() - 1; i >= 0; i--) {
-                        if (leaves.get(i).getMains().contains(n)) {
-                            maxIdx = Math.max(maxIdx, i);
-                        }
+
+            for (Node n : mg.nodes()) {
+                for (int i = leaves.size() - 1; i >= 0; i--) {
+                    if (leaves.get(i).getMains().contains(n)) {
+                        maxIdx = Math.max(maxIdx, i);
+                        break;
                     }
                 }
             }
+
             groupLatestIndex.put(mg, maxIdx);
         }
 
@@ -231,7 +213,7 @@ public class TraversalPattern extends GraphWrapper {
             for (Node s : leaf.getSides()) {
                 if (globalSides.contains(s) && !outputtedSides.contains(s)) {
                     String content = "<dependency>\n    " + s.baseXml(clusterGraph).replace("\n", "\n    ") + "\n</dependency>";
-                    elements.add(new NarrativeElement(content, NarrativeElement.ElementType.DEPENDENCY, Set.of(s), new HashSet<>()));
+                    elements.add(new NarrativeElement(content, Set.of(s), clusterGraph));
                     outputtedSides.add(s);
                 }
             }
@@ -239,10 +221,7 @@ public class TraversalPattern extends GraphWrapper {
                 if (groupLatestIndex.get(mg) == i && !outputtedGroups.contains(mg)) {
                     String content = buildSubChapterXml(mg, leaves, localSidesMap);
                     Set<Node> mgMains = mg.nodes();
-                    Set<Node> mgSides = sideToMains.entrySet().stream()
-                            .filter(entry -> mgMains.stream().anyMatch(mgMain -> entry.getValue().contains(mgMain)))
-                            .map(Map.Entry::getKey).collect(Collectors.toSet());
-                    elements.add(new NarrativeElement(content, NarrativeElement.ElementType.SUB_CHAPTER, mgMains, mgSides));
+                    elements.add(new NarrativeElement(content, mgMains, clusterGraph));
                     outputtedGroups.add(mg);
                 }
             }
@@ -470,7 +449,7 @@ public class TraversalPattern extends GraphWrapper {
             this.context = context;
         }
 
-        public  Set<Node> nodes() {
+        public Set<Node> nodes() {
             Set<Node> result = new HashSet<>();
             for (MappingGroup group : groups) {
                 result.addAll(group.nodes());

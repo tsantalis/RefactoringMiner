@@ -47,8 +47,13 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         for (String key : providedKeys) {
             AbstractExpression annotationParameterValue = memberValuePairs.get(key);
             List<LeafExpression> literals = extractLiterals(annotationParameterValue, key);
+            boolean numeric = numberKeys.contains(key);
             for (LeafExpression literal : literals) {
-                testParameters.add(Collections.singletonList(sanitizeLiteral(literal.getString())));
+                String value = sanitizeLiteral(literal.getString());
+                if (numeric) {
+                    value = stripNumericSuffix(value);
+                }
+                testParameters.add(Collections.singletonList(value));
                 testParameterLeafExpressions.add(Collections.singletonList(literal));
             }
         }

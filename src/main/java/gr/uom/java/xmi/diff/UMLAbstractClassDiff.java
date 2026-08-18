@@ -2345,7 +2345,8 @@ public abstract class UMLAbstractClassDiff {
 						String sanitizedCandidate = sanitizeStringLiteral(candidate);
 						for(LeafExpression rowValue : rowValues) {
 							if(!rowValue.getString().equals(candidate) && !rowValue.getString().equals(sanitizedCandidate)
-									&& !expressionsMatchIgnoringCallPrefix(candidate, rowValue.getString())) {
+									&& !expressionsMatchIgnoringCallPrefix(candidate, rowValue.getString())
+									&& !SourceAnnotation.stripNumericSuffix(rowValue.getString()).equals(sanitizedCandidate)) {
 								continue;
 							}
 							List<LeafExpression> oldLiteralMatches = mapping.getFragment1().findExpression(candidate);

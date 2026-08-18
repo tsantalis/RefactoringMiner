@@ -47,6 +47,18 @@ public abstract class SourceAnnotation {
         return literal;
     }
 
+    private static final java.util.regex.Pattern NUMERIC_BODY = java.util.regex.Pattern.compile("-?\\d+(\\.\\d+)?");
+
+    public static String stripNumericSuffix(String literal) {
+        if (literal.length() > 0 && "lLfFdD".indexOf(literal.charAt(literal.length() - 1)) >= 0) {
+            String body = literal.substring(0, literal.length() - 1);
+            if (NUMERIC_BODY.matcher(body).matches()) {
+                return body;
+            }
+        }
+        return literal;
+    }
+
     public List<List<String>> getTestParameters() {
         return testParameters;
     }

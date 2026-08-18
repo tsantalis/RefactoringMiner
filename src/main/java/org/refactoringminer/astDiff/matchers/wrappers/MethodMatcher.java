@@ -818,6 +818,13 @@ public class MethodMatcher extends BodyMapperMatcher{
             mappingStore.addMapping(matched.first,matched.second);
             processTreesContainingFunctionDeclarators(matched.first,matched.second, mappingStore);
         }
+        if(srcOperationNode.getType().name.equals(LANG1.REFERENCE_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
+            mappingStore.addMapping(srcOperationNode, dstOperationNode);
+            Tree functionDeclarator1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.FUNCTION_DECLARATOR);
+            if(functionDeclarator1 != null) {
+                processFunctionDeclarators(functionDeclarator1, dstOperationNode, mappingStore);
+            }
+        }
         com.github.gumtreediff.utils.Pair<Tree,Tree> qualified_identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.QUALIFIED_IDENTIFIER,LANG2.QUALIFIED_IDENTIFIER);
         if (qualified_identifiers != null) {
             mappingStore.addMappingRecursively(qualified_identifiers.first,qualified_identifiers.second);
@@ -999,6 +1006,15 @@ public class MethodMatcher extends BodyMapperMatcher{
             matched = Helpers.findPairOfType(referenceDeclarators.first,referenceDeclarators.second,LANG1.FUNCTION_DECLARATOR,LANG2.FUNCTION_DECLARATOR);
             if (matched != null) {
                 processFunctionDeclarators(matched.first, matched.second, mappingStore);
+            }
+        }
+        Tree t1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.REFERENCE_DECLARATOR);
+        Tree t2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG1.FUNCTION_DECLARATOR);
+        if(t1 != null && t2 != null) {
+            mappingStore.addMapping(t1, t2);
+            Tree functionDeclarator1 = TreeUtilFunctions.findChildByType(t1, LANG1.FUNCTION_DECLARATOR);
+            if(functionDeclarator1 != null) {
+                processFunctionDeclarators(functionDeclarator1, t2, mappingStore);
             }
         }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.POINTER,LANG2.POINTER);

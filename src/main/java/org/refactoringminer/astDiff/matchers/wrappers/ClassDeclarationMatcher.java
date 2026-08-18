@@ -592,6 +592,12 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if(tmpSrcStatement != null) srcStatement = tmpSrcStatement;
             if(tmpDstStatement != null) dstStatement = tmpDstStatement;
         }
+        if(statementPair.getLeft().isFunctionDeclarator() && statementPair.getRight().isFunctionDeclarator() && !srcStatement.getType().name.equals(LANG1.FUNCTION_DECLARATOR) && !dstStatement.getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
+            Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatement, LANG1.FUNCTION_DECLARATOR);
+            Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatement, LANG2.FUNCTION_DECLARATOR);
+            if(tmpSrcStatement != null) srcStatement = tmpSrcStatement;
+            if(tmpDstStatement != null) dstStatement = tmpDstStatement;
+        }
         if(srcStatement != null && dstStatement != null) {
             if(srcStatement.getParent().getType().name.equals(LANG1.DECLARATION_LIST) && dstStatement.getParent().getType().name.equals(LANG2.DECLARATION_LIST)) {
                 mappingStore.addMappingRecursively(srcStatement.getParent(), dstStatement.getParent());

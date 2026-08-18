@@ -391,9 +391,15 @@ public class CppFileProcessor {
 			//When the CDT parser encounters unrecognized code, it captures the issue inside this declaration so parsing can continue.
 			LocationInfo location = new LocationInfo(sourceFolder, filePath, cppProblemDeclaration, CodeElementType.PROBLEM_DECLARATION, fileContent);
 			String raw = cppProblemDeclaration.getRawSignature();
+			boolean isFunctionDeclarator = false;
 			boolean isFunctionDefinition = raw.contains("{") && !raw.contains("{.") && !raw.contains("{}");
 			String signature = isFunctionDefinition ? raw.substring(0, raw.indexOf("{")) : raw.lines().findFirst().orElse(raw);
-			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw, isFunctionDefinition);
+			if(signature.equals(")")) {
+				String targetLine = fileContent.lines().skip(location.getStartLine()-1).findFirst().orElse(")");
+				signature = targetLine.strip();
+				isFunctionDeclarator = true;
+			}
+			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw, isFunctionDefinition, isFunctionDeclarator);
 			distributeComments(comments, location, problemDeclaration.getComments());
 			if(parentContainer instanceof UMLClass)
 				((UMLClass)parentContainer).addProblemDeclaration(problemDeclaration);
@@ -645,14 +651,19 @@ public class CppFileProcessor {
 			fieldName = declarator.getNestedDeclarator().getRawSignature();
 		if(!fieldName.isEmpty()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, declSpecifier, declarator, 0);
-			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
-			umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-			VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
-			variableDeclaration.setAttribute(true);
-			umlAttribute.setVariableDeclaration(variableDeclaration);
-			addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
-			preprocessor.addAttribute(parentContainer, umlAttribute, declarator);
-			distributeComments(comments, locationInfo, umlAttribute.getComments());
+			boolean allUpperCase = type != null ? type.toString().equals(type.toString().toUpperCase()) : false;
+			//avoid creating an attribute when type seems like a preprocessor function call, e.g., ABSL_EXCLUSIVE_LOCKS_REQUIRED
+			boolean skip = allUpperCase && parentContainer.containsAttributeWithName(fieldName);
+			if(!skip) {
+				UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
+				umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
+				variableDeclaration.setAttribute(true);
+				umlAttribute.setVariableDeclaration(variableDeclaration);
+				addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
+				preprocessor.addAttribute(parentContainer, umlAttribute, declarator);
+				distributeComments(comments, locationInfo, umlAttribute.getComments());
+			}
 		}
 	}
 

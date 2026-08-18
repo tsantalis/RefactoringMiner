@@ -226,9 +226,9 @@ public class Narrator {
 
                 if (totalLines > THRESHOLD) {
                     List<List<NarrativeElement>> splits = createBalancedSplits(elements);
-                    for (int s = 0; s < splits.size(); s++) {
+                    for (List<NarrativeElement> split : splits) {
                         ChapterUnit chu = new ChapterUnit();
-                        for (NarrativeElement ne : splits.get(0)) {
+                        for (NarrativeElement ne : split) {
                             chu.append(ne.content());
                             chu.addMains(ne.mains());
                             chu.addSides(ne.sides());
@@ -295,39 +295,89 @@ public class Narrator {
 
     private List<List<NarrativeElement>> createBalancedSplits(List<NarrativeElement> elements) {
         int totalLines = elements.stream().mapToInt(NarrativeElement::lineCount).sum();
-        if (totalLines <= THRESHOLD) return List.of(elements);
-        for (int n = 2; n <= elements.size(); n++) {
-            List<List<NarrativeElement>> splits = splitIntoN(elements, n);
-            boolean anyBelow = splits.stream().anyMatch(s -> s.stream().mapToInt(NarrativeElement::lineCount).sum() <= THRESHOLD);
-            if (anyBelow) return splits;
+        if (totalLines <= THRESHOLD) {
+            return List.of(elements);
         }
-        return List.of(elements);
+
+        int n = (int) Math.ceil((double) totalLines / THRESHOLD);
+        n = Math.min(n, elements.size());
+
+        return splitIntoN(elements, n);
     }
 
     private List<List<NarrativeElement>> splitIntoN(List<NarrativeElement> elements, int n) {
-        List<List<NarrativeElement>> splits = new ArrayList<>();
-        int totalLines = elements.stream().mapToInt(NarrativeElement::lineCount).sum();
-        double target = (double) totalLines / n;
-        int currentStart = 0;
-        for (int i = 0; i < n - 1; i++) {
-            int bestEnd = currentStart;
-            double minDiff = Double.MAX_VALUE;
-            double currentSum = 0;
-            for (int j = currentStart; j < elements.size(); j++) {
-                currentSum += elements.get(j).lineCount();
-                double diff = Math.abs(currentSum - target);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    bestEnd = j + 1;
-                } else {
-                    break;
+        if (elements == null || elements.isEmpty()) return Collections.emptyList();
+        if (n <= 1) return List.of(elements);
+
+        int low = 0;
+        int high = 0;
+        for (NarrativeElement e : elements) {
+            low = Math.max(low, e.lineCount());
+            high += e.lineCount();
+        }
+
+        int optimalMaxSum = high;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (canSplitIntoN(elements, n, mid)) {
+                optimalMaxSum = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        List<List<NarrativeElement>> result = new ArrayList<>();
+        List<NarrativeElement> currentSplit = new ArrayList<>();
+        int currentSum = 0;
+
+        for (NarrativeElement e : elements) {
+            if (!currentSplit.isEmpty() && currentSum + e.lineCount() > optimalMaxSum) {
+                result.add(currentSplit);
+                currentSplit = new ArrayList<>();
+                currentSum = 0;
+            }
+            currentSplit.add(e);
+            currentSum += e.lineCount();
+        }
+        if (!currentSplit.isEmpty()) {
+            result.add(currentSplit);
+        }
+
+        while (result.size() < n) {
+            int bestSplitIdx = -1;
+            int maxElements = 0;
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).size() > maxElements && result.get(i).size() > 1) {
+                    maxElements = result.get(i).size();
+                    bestSplitIdx = i;
                 }
             }
-            splits.add(new ArrayList<>(elements.subList(currentStart, bestEnd)));
-            currentStart = bestEnd;
+
+            if (bestSplitIdx == -1) break;
+
+            List<NarrativeElement> toSplit = result.remove(bestSplitIdx);
+            int mid = toSplit.size() / 2;
+            result.add(bestSplitIdx, new ArrayList<>(toSplit.subList(0, mid)));
+            result.add(bestSplitIdx + 1, new ArrayList<>(toSplit.subList(mid, toSplit.size())));
         }
-        splits.add(new ArrayList<>(elements.subList(currentStart, elements.size())));
-        return splits;
+
+        return result;
+    }
+
+    private boolean canSplitIntoN(List<NarrativeElement> elements, int n, int maxSum) {
+        int count = 1;
+        int currentSum = 0;
+        for (NarrativeElement e : elements) {
+            if (currentSum + e.lineCount() > maxSum) {
+                count++;
+                currentSum = e.lineCount();
+                if (count > n) return false;
+            } else {
+                currentSum += e.lineCount();
+            }
+        }
+        return true;
     }
 
     public int getProgress(GrainLevel grainLevel) {

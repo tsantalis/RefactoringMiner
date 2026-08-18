@@ -2392,6 +2392,20 @@ public abstract class UMLAbstractClassDiff {
 		}
 	}
 
+	private static boolean hasParameterFieldAnnotation(UMLAbstractClass originalClass) {
+		if(originalClass == null) {
+			return false;
+		}
+		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			for(UMLAnnotation annotation : attribute.getAnnotations()) {
+				if(annotation.getTypeName().equals("Parameter") || annotation.getTypeName().equals("Parameterized.Parameter")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private static UMLAttribute findConstantAttribute(String name, UMLAbstractClass originalClass) {
 		if(originalClass == null) {
 			return null;
@@ -3578,6 +3592,14 @@ public abstract class UMLAbstractClassDiff {
 		}
 		if(junit4Rows == null) {
 			junit4Rows = getParameterValuesAsLeafExpressions(junit4DataProvider);
+		}
+		if(junit4Rows.size() == 1 && junit4Rows.get(0).size() > 1 && hasParameterFieldAnnotation(getOriginalClass())) {
+			List<LeafExpression> flattened = junit4Rows.get(0);
+			List<List<LeafExpression>> resplit = new ArrayList<List<LeafExpression>>();
+			for(LeafExpression element : flattened) {
+				resplit.add(Collections.singletonList(element));
+			}
+			junit4Rows = resplit;
 		}
 		List<List<LeafExpression>> junit5Rows = getParameterValuesAsLeafExpressions(addedOperation);
 		if(junit5Rows.isEmpty()) {

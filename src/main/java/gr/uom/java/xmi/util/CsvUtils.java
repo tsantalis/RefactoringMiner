@@ -8,6 +8,9 @@ import java.util.List;
 
 public class CsvUtils {
     public static List<String> extractParametersFromCsv(String s) {
+        if (s.length() >= 2 && s.startsWith("\"") && s.endsWith("\"")) {
+            s = s.substring(1, s.length() - 1);
+        }
         List<String> parameters = new ArrayList<>();
         int i = 0;
         int n = s.length();

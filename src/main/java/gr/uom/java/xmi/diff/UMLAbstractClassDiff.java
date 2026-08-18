@@ -3525,13 +3525,16 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	ParameterizeTestRefactoring.DataProviderOverride resolveDataProviderMapping(UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
-		if(!addedOperation.hasMethodSourceAnnotation()) {
-			return null;
+		UMLOperation junit5DataProvider;
+		if(addedOperation.hasMethodSourceAnnotation()) {
+			MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
+			junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
+			if(junit5DataProvider == null) {
+				return null;
+			}
 		}
-		MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
-		UMLOperation junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
-		if(junit5DataProvider == null) {
-			return null;
+		else {
+			junit5DataProvider = addedOperation;
 		}
 		//look provider method up through operationBodyMapperList and only fall back to removedOperations
 		//if no such pairing exists yet
@@ -3577,6 +3580,10 @@ public abstract class UMLAbstractClassDiff {
 			junit4Rows = getParameterValuesAsLeafExpressions(junit4DataProvider);
 		}
 		List<List<LeafExpression>> junit5Rows = getParameterValuesAsLeafExpressions(addedOperation);
+		if(junit5Rows.isEmpty()) {
+			//Optimize when there is no embedded data to align against
+			return null;
+		}
 
 		UMLOperationBodyMapper dataProviderMapper = new UMLOperationBodyMapper(junit4DataProvider, junit5DataProvider, this);
 

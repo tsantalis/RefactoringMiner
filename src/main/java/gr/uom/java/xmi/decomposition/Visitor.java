@@ -220,6 +220,19 @@ public class Visitor extends ASTVisitor {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getVariableDeclarations().add(variableDeclaration);
 			}
+			//a "bare" array initializer used directly as a variable's initializer (e.g.
+			//"Object[][] tests = {{"a"}, {"b"}};") is semantically equivalent to an explicit
+			//"new Object[][]{{"a"}, {"b"}}", but JDT does not wrap it in an ArrayCreation node, so it
+			//would otherwise never be represented as an array ObjectCreation. Mirror visit(ArrayCreation)
+			//here so callers like resolveDataProviderMapping see both forms the same way
+			if(node.getInitializer() instanceof ArrayInitializer) {
+				ObjectCreation creation = new ObjectCreation(cu, sourceFolder, filePath, (ArrayInitializer) node.getInitializer(), variableDeclaration.getType(), container, javaFileContent);
+				creations.add(creation);
+				if(current.getUserObject() != null) {
+					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+					anonymous.getCreations().add(creation);
+				}
+			}
 		}
 		return super.visit(node);
 	}

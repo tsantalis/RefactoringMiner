@@ -132,6 +132,22 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
+	//represents a "bare" array initializer used directly as a variable's initializer
+	//(e.g. "Object[][] tests = {{"a"}, {"b"}};"), which Java treats as equivalent to an explicit
+	//"new Object[][]{{"a"}, {"b"}}" but which JDT does NOT wrap in an ArrayCreation node - so this
+	//constructor mirrors the ArrayCreation-based one above, sourcing its type from the enclosing
+	//variable declaration instead of from an ArrayCreation node's own getType()
+	public ObjectCreation(CompilationUnit cu, String sourceFolder, String filePath, ArrayInitializer initializer, UMLType declaredType, VariableDeclarationContainer container, String javaFileContent) {
+		super(cu, sourceFolder, filePath, initializer, CodeElementType.ARRAY_CREATION, container);
+		this.isArray = true;
+		this.type = declaredType;
+		this.numberOfArguments = 0;
+		this.arguments = new ArrayList<String>();
+		this.anonymousClassDeclaration = stringify(initializer);
+		collectArrayInitializerLiterals(cu, sourceFolder, filePath, initializer, container, this.arrayInitializerLiterals);
+		collectArrayInitializerRows(cu, sourceFolder, filePath, initializer, container, this.arrayInitializerRows);
+	}
+
 	private static void collectArrayInitializerRows(CompilationUnit cu, String sourceFolder, String filePath, ArrayInitializer initializer, VariableDeclarationContainer container, List<List<LeafExpression>> rows) {
 		boolean nested = false;
 		for(Object element : initializer.expressions()) {

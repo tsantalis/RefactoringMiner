@@ -53,8 +53,10 @@ public class UMLModelAdapter {
             List<UMLImport> imports = extractUMLImports(compilationUnit, filename);
             List<UMLComment> comments = model.getCommentMap().containsKey(filename) ? model.getCommentMap().get(filename) : new ArrayList<>();
 
+            Map<String, UMLClass> classesByTypeName = new HashMap<>();
             for (LangTypeDeclaration typeDecl : compilationUnit.getTypes()) {
                 UMLClass umlClass = createUMLClass(typeDecl, filename, imports, fileContent, comments);
+                classesByTypeName.put(typeDecl.getName(), umlClass);
                 if (!typeDecl.getSuperClassNames().isEmpty()) {
                     String packageName = UMLAdapterUtil.extractPackageName(filename);
                     LangSimpleName primarySuperClassRaw = typeDecl.getSuperClassNames().get(0);
@@ -78,12 +80,12 @@ public class UMLModelAdapter {
             // Handle top level methods
             if (compilationUnit.getMethods().size() > 0 || compilationUnit.getComments().size() > 0 || comments.size() > 0 ||
                     compilationUnit.getImports().size() > 0 || compilationUnit.getStatements().size() > 0){
-                handleTopLevelMethods(model, filename, compilationUnit, imports, fileContent, comments);
+                handleTopLevelMethods(model, filename, compilationUnit, imports, fileContent, comments, classesByTypeName);
             }
         }
     }
 
-    private static void handleTopLevelMethods(UMLModel model, String filename, LangCompilationUnit compilationUnit, List<UMLImport> imports, String fileContent, List<UMLComment> comments) {
+    private static void handleTopLevelMethods(UMLModel model, String filename, LangCompilationUnit compilationUnit, List<UMLImport> imports, String fileContent, List<UMLComment> comments, Map<String, UMLClass> classesByTypeName) {
         List<LangMethodDeclaration> topLevelMethods = compilationUnit.getMethods();
         UMLClass moduleClass = createModuleClass(compilationUnit, filename, imports, fileContent);
 
@@ -101,9 +103,14 @@ public class UMLModelAdapter {
             String sourceFolder = UMLAdapterUtil.extractSourceFolder(filename);
             String filepath = UMLAdapterUtil.extractFilePath(filename);
             for (LangMethodDeclaration method : topLevelMethods) {
-                UMLOperation operation = createUMLOperation(method, moduleClass.getName(),
-                        sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(moduleClass.getFieldDeclarationMap().values()));
-                moduleClass.addOperation(operation);
+                UMLClass receiverType = resolveReceiverType(method, classesByTypeName);
+                UMLClass targetClass = receiverType != null ? receiverType : moduleClass;
+                UMLOperation operation = createUMLOperation(method, targetClass.getName(),
+                        sourceFolder, filepath, fileContent, comments, convertToVariableDeclarationMap(targetClass.getFieldDeclarationMap().values()));
+                if (receiverType != null) {
+                    operation.setReceiver(UMLType.extractTypeObject(receiverType.getName()));
+                }
+                targetClass.addOperation(operation);
             }
         }
         distributeComments(comments, moduleClass.getLocationInfo(), moduleClass.getComments());
@@ -116,6 +123,15 @@ public class UMLModelAdapter {
                 model.addClass(nestedClass);
             }
         }
+    }
+
+    private static UMLClass resolveReceiverType(LangMethodDeclaration method, Map<String, UMLClass> classesByTypeName) {
+        String receiverTypeName = method.getReceiverType();
+        if (receiverTypeName == null) {
+            return null;
+        }
+        String bareTypeName = receiverTypeName.startsWith("*") ? receiverTypeName.substring(1) : receiverTypeName;
+        return classesByTypeName.get(bareTypeName);
     }
 
     private static UMLClass createModuleClass(LangCompilationUnit compilationUnit, String filename, List<UMLImport> imports, String fileContent) {
@@ -220,6 +236,10 @@ public class UMLModelAdapter {
         for (LangAssignment classLevelAssignment: typeDecl.getClassLevelAssignments()){
             processClassLevelAssignmentForAttribute(umlClass, classLevelAssignment, sourceFolder, filePath, fileContent);
         }
+        // Handle bare field declarations as attributes
+        for (LangSingleVariableDeclaration field : typeDecl.getFields()) {
+            processFieldDeclarationForAttribute(typeDecl, field, umlClass, sourceFolder, filePath, fileContent);
+        }
         for (LangComment classLevelComment: typeDecl.getComments()) {
             if(classLevelComment.isDocComment()) {
                 LocationInfo docLocationInfo = new LocationInfo(sourceFolder, filePath, classLevelComment, CodeElementType.JAVADOC);
@@ -243,6 +263,10 @@ public class UMLModelAdapter {
         umlClass.setAnnotation(typeDecl.isAnnotation());
         umlClass.setEnum(typeDecl.isEnum());
         umlClass.setRecord(typeDecl.isRecord());
+        // Go has no class keyword: a non-interface type declaration is a struct, not a class.
+        if (LangSupportedEnum.GO.equals(LangSupportedEnum.fromFileName(filePath)) && !typeDecl.isInterface()) {
+            umlClass.setStruct(true);
+        }
 
         for (LangMethodDeclaration methodDecl : typeDecl.getMethods()) {
             UMLOperation umlOperation = createUMLOperation(methodDecl, umlClass.getName(), sourceFolder, filePath, fileContent, comments, convertToVariableDeclarationMap(umlClass.getFieldDeclarationMap().values()));
@@ -471,6 +495,42 @@ public class UMLModelAdapter {
                 }
             }
         }
+    }
+
+    private static void processFieldDeclarationForAttribute(LangTypeDeclaration typeDecl, LangSingleVariableDeclaration field, UMLClass umlClass,
+                                               String sourceFolder, String filePath, String fileContent) {
+        String attributeName = field.getLangSimpleName().getIdentifier();
+
+        VariableDeclaration variableDeclaration = new VariableDeclaration(
+                typeDecl.getRootCompilationUnit(),
+                sourceFolder,
+                filePath,
+                field,
+                null,
+                new HashMap<>(),
+                fileContent
+        );
+
+        LocationInfo attributeLocationInfo = new LocationInfo(
+                field.getRootCompilationUnit(),
+                sourceFolder,
+                filePath,
+                field,
+                LocationInfo.CodeElementType.FIELD_DECLARATION
+        );
+        UMLAttribute attribute = new UMLAttribute(
+                attributeName,
+                variableDeclaration.getType(),
+                attributeLocationInfo,
+                umlClass.getName()
+        );
+
+        attribute.setVariableDeclaration(variableDeclaration);
+        attribute.setVisibility(Visibility.PUBLIC);
+        attribute.setFinal(false);
+        attribute.setStatic(false);
+
+        umlClass.addAttribute(attribute);
     }
 
     private static void processClassLevelAssignmentForAttribute(UMLClass typeDeclaration, LangAssignment assignment,

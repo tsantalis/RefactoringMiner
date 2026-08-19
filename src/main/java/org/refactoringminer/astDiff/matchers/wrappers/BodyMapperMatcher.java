@@ -958,6 +958,43 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 return;
             }
             else if(containsLambdaMapperWithNonMappedLeaves(abstractCodeMapping, srcStatementNode, dstStatementNode)) {
+                mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                Pair<Tree,Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.SEMICOLON,LANG2.SEMICOLON);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.METHOD_INVOCATION,LANG2.METHOD_INVOCATION);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                    Pair<Tree,Tree> argument_lists = Helpers.findPairOfType(matched.first, matched.second,LANG1.ARGUMENT_LIST,LANG2.ARGUMENT_LIST);
+                    if(argument_lists != null) {
+                        mappingStore.addMapping(argument_lists.first, argument_lists.second);
+                        Pair<Tree, Tree> opening = Helpers.findPairOfType(argument_lists.first, argument_lists.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                        if (opening != null) {
+                            mappingStore.addMapping(opening.first,opening.second);
+                        }
+                        Pair<Tree, Tree> closing = Helpers.findPairOfType(argument_lists.first, argument_lists.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                        if (closing != null) {
+                            mappingStore.addMapping(closing.first,closing.second);
+                        }
+                        Pair<Tree, Tree> lambdas = Helpers.findPairOfType(argument_lists.first, argument_lists.second, LANG1.LAMBDA_EXPRESSION, LANG2.LAMBDA_EXPRESSION);
+                        if (lambdas != null) {
+                            mappingStore.addMapping(lambdas.first,lambdas.second);
+                            Pair<Tree, Tree> lambda_specifiers = Helpers.findPairOfType(lambdas.first,lambdas.second, LANG1.LAMBDA_CAPTURE_SPECIFIER, LANG2.LAMBDA_CAPTURE_SPECIFIER);
+                            if(lambda_specifiers != null) {
+                                mappingStore.addMappingRecursively(lambda_specifiers.first,lambda_specifiers.second);
+                            }
+                            Pair<Tree, Tree> function_declarators = Helpers.findPairOfType(lambdas.first,lambdas.second, LANG1.ABSTRACT_FUNCTION_DECLARATOR, LANG2.ABSTRACT_FUNCTION_DECLARATOR);
+                            if(function_declarators != null) {
+                                mappingStore.addMappingRecursively(function_declarators.first,function_declarators.second);
+                            }
+                        }
+                    }
+                    Pair<Tree,Tree> field_expressions = Helpers.findPairOfType(matched.first, matched.second,LANG1.FIELD_EXPRESSION,LANG2.FIELD_EXPRESSION);
+                    if(field_expressions != null) {
+                        mappingStore.addMappingRecursively(field_expressions.first, field_expressions.second);
+                    }
+                }
                 for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
                     processBodyMapper(srcTree, dstTree, lambdaMapper, mappingStore, isPartOfExtractedMethod);
                 }

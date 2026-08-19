@@ -98,6 +98,7 @@ public class Constants {
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
+			LAMBDA_EXPRESSION = "lambda_expression";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -139,6 +140,7 @@ public class Constants {
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
+			LAMBDA_EXPRESSION = "lambda_expression";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -180,6 +182,7 @@ public class Constants {
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
+			LAMBDA_EXPRESSION = "lambda_expression";
 		}
 		else if(PathFileUtils.isCppFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
@@ -221,6 +224,7 @@ public class Constants {
 			PRIMITIVE_TYPE = "primitive_type";
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
+			LAMBDA_EXPRESSION = "lambda_expression";
 		}
 		else {
 			// Java values as default
@@ -263,6 +267,7 @@ public class Constants {
 			PRIMITIVE_TYPE = "PrimitiveType";
 			CONDITIONAL_EXPRESSION = "ConditionalExpression";
 			NUMBER_LITERAL = "NumberLiteral";
+			LAMBDA_EXPRESSION = "LambdaExpression";
 		}
 	}
 
@@ -350,7 +355,7 @@ public class Constants {
     public final String CAST_EXPRESSION = "CastExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";
-    public final String LAMBDA_EXPRESSION = "LambdaExpression";
+    public final String LAMBDA_EXPRESSION;
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
     public final String PREFIX_EXPRESSION_OPERATOR = "PREFIX_EXPRESSION_OPERATOR";
 
@@ -661,4 +666,6 @@ public class Constants {
     public final String OPTIONAL_PARAMETER_DECLARATION = "optional_parameter_declaration";
     public final String AUTO = "auto";
     public final String REF_QUALIFIER = "ref_qualifier";
+    public final String LAMBDA_CAPTURE_SPECIFIER = "lambda_capture_specifier";
+    public final String ABSTRACT_FUNCTION_DECLARATOR = "abstract_function_declarator";
 }

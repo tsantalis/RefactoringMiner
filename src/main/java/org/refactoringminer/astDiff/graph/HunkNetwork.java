@@ -32,7 +32,8 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 public class HunkNetwork {
 
   private final Graph<Node, Edge> graph;
-  private final HashMap<String, Node> nodeMap = new HashMap<>();
+  private final Map<String, Node> idNodeMap = new HashMap<>();
+  private final Map<String, Node> promptIdNodeMap = new HashMap<>();
   private final UMLModelDiff modelDiff;
   private final UMLsGenerator umlsGenerator;
   private final Map<String, String> srcContents;
@@ -154,12 +155,12 @@ public class HunkNetwork {
       Set<ImportTree> subs = entry.getValue();
       String fileContent = getFileContent(parent.srcDst, parent.path);
       Set<Node> subsNode = subs.stream().map(sub -> {
-        Node subNode = new Node(fileContent, sub.path, parent.srcDst, sub.tree, null, sub.type);
+        Node subNode = new Node(fileContent, sub.path, parent.srcDst, sub.tree, null, sub.type, null);
         subNode.addDiff(sub.diff);
         return subNode;
       }).collect(Collectors.toSet());
 
-      Node parentNode = new Node(fileContent, parent.path, parent.srcDst, parent.tree, subsNode, parent.type);
+      Node parentNode = new Node(fileContent, parent.path, parent.srcDst, parent.tree, subsNode, parent.type, promptIdNodeMap);
       parentNode.addDiff(parent.diff);
 
       return parentNode;
@@ -172,15 +173,15 @@ public class HunkNetwork {
     String path = (extendedNode.isSrc() ? srcContexts : dstContexts).entrySet().stream()
             .filter(e -> e.getValue().getRoot().equals(extensionRoot)).findFirst().get().getKey();
 
-    Node node = new Node(getFileContent(extendedNode.getSrcDst(), path), path, extendedNode.getSrcDst(), extensionTree,
-            null, NodeType.EXTENSION);
+    Node node = new Node(getFileContent(extendedNode.getSrcDst(), path), path, extendedNode.getSrcDst(),
+            extensionTree, null, NodeType.EXTENSION, promptIdNodeMap);
     node.addDiffs(extendedNode.getDiffs());
     return addNode(node);
   }
 
   private Node addNode(Node node) {
-    if (nodeMap.containsKey(node.getId())) {
-      Node existingNode = nodeMap.get(node.getId());
+    if (idNodeMap.containsKey(node.getId())) {
+      Node existingNode = idNodeMap.get(node.getId());
 
       existingNode.addDiffs(node.getDiffs());
       if (existingNode.getSubs() != null && node.getSubs() != null) {
@@ -198,7 +199,8 @@ public class HunkNetwork {
     }
 
     graph.addVertex(node);
-    nodeMap.put(node.getId(), node);
+    idNodeMap.put(node.getId(), node);
+    promptIdNodeMap.put(node.getPromptId(), node);
     node.setUMLs(umlsGenerator.getUMLs(node.getTree(), node.getSrcDst(), node.getPath(), false));
 
     addNodeContexts(node);
@@ -214,13 +216,14 @@ public class HunkNetwork {
     for (Pair<Tree, NodeType> context : contexts) {
       String potentialContextId = Node.formatId(path, srcDst, context.second, context.first);
 
-      if (!nodeMap.containsKey(potentialContextId)) {
-        Node contextNode = new Node(node.getFileContent(), path, srcDst, context.first, null, context.second);
+      if (!idNodeMap.containsKey(potentialContextId)) {
+        Node contextNode = new Node(node.getFileContent(), path, srcDst, context.first, null, context.second, promptIdNodeMap);
         graph.addVertex(contextNode);
-        nodeMap.put(contextNode.getId(), contextNode);
+        idNodeMap.put(contextNode.getId(), contextNode);
+        promptIdNodeMap.put(contextNode.getPromptId(), contextNode);
       }
 
-      Node contextNode = nodeMap.get(potentialContextId);
+      Node contextNode = idNodeMap.get(potentialContextId);
       contextNode.addDiffs(node.getDiffs());
       contextNode.setUMLs(umlsGenerator.getUMLs(contextNode.getTree(), contextNode.getSrcDst(), contextNode.getPath(), true));
 

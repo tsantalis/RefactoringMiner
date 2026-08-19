@@ -503,6 +503,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(t1,t2);
                 }
             }
+            if(srcOperationNode.getType().name.equals(LANG1.METHOD_DECLARATION) && dstOperationNode.getType().name.equals(LANG2.METHOD_DECLARATION)) {
+                int index1 = srcOperationNode.getParent().getChildPosition(srcOperationNode);
+                int index2 = dstOperationNode.getParent().getChildPosition(dstOperationNode);
+                if(srcOperationNode.getParent().getChildren().size() > index1+1 && srcOperationNode.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                        dstOperationNode.getParent().getChildren().size() > index2+1 && dstOperationNode.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                    Tree t1 = srcOperationNode.getParent().getChild(index1+1);
+                    Tree t2 = dstOperationNode.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+            }
             if(srcOperationNode.getType().name.equals(LANG1.FUNCTION_SIGNATURE) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_SIGNATURE)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SEMICOLON,LANG2.SEMICOLON);
                 if(matched != null) {

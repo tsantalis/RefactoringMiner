@@ -631,6 +631,24 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     }
                 }
             }
+            else if(srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1 && srcStatement.getChildren().get(1).getType().name.equals(LANG1.FUNCTION_DECLARATOR) && dstStatement.getChildren().get(1).getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
+                mappingStore.addMapping(srcStatement, dstStatement);
+                mappingStore.addMappingRecursively(srcStatement.getChildren().get(0), dstStatement.getChildren().get(0));
+                mappingStore.addMappingRecursively(srcStatement.getChildren().get(1), dstStatement.getChildren().get(1));
+                if(srcStatement.getChildren().size() > 2 && dstStatement.getChildren().size() > 2 && srcStatement.getChildren().get(2).getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatement.getChildren().get(2).getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
+                    Tree srcBlock = srcStatement.getChildren().get(2);
+                    Tree dstBlock = dstStatement.getChildren().get(2);
+                    mappingStore.addMapping(srcBlock, dstBlock);
+                    matched = Helpers.findPairOfType(srcBlock,dstBlock, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcBlock,dstBlock, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
+            }
         }
         UMLCommentListDiff diff = new UMLCommentListDiff(statementPair.getLeft().getComments(), statementPair.getRight().getComments());
         new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);

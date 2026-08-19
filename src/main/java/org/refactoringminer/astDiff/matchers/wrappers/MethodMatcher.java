@@ -1117,6 +1117,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (trailing_return_types != null) {
             mappingStore.addMappingRecursively(trailing_return_types.first,trailing_return_types.second);
         }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> ref_qualifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.REF_QUALIFIER,LANG2.REF_QUALIFIER);
+        if (ref_qualifiers != null) {
+            mappingStore.addMappingRecursively(ref_qualifiers.first,ref_qualifiers.second);
+        }
         Tree parent1 = functionDeclarator1.getParent();
         Tree parent2 = functionDeclarator2.getParent();
         if(parent1.getType().name.equals(LANG1.ERROR) && parent2.getType().name.equals(LANG2.ERROR)) {

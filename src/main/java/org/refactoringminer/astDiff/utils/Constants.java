@@ -660,4 +660,5 @@ public class Constants {
     public final String PARENTHESIZED_DECLARATOR = "parenthesized_declarator";
     public final String OPTIONAL_PARAMETER_DECLARATION = "optional_parameter_declaration";
     public final String AUTO = "auto";
+    public final String REF_QUALIFIER = "ref_qualifier";
 }

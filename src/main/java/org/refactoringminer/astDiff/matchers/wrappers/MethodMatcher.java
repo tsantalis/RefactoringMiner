@@ -607,7 +607,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
             }
-            boolean isMovedMethod = refactoringProcessor && !umlOperationBodyMapper.getContainer1().getClassName().equals(umlOperationBodyMapper.getContainer2().getClassName());
+            boolean isMovedMethod = !umlOperationBodyMapper.getContainer1().getClassName().equals(umlOperationBodyMapper.getContainer2().getClassName());
             if(PathFileUtils.isCppFile(umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath()) &&
                     umlOperationBodyMapper.getContainer1().getLocationInfo().getFilePath().equals(umlOperationBodyMapper.getContainer2().getLocationInfo().getFilePath()) && !isMovedMethod) {
                 ClassDeclarationMatcher.handleParentNamespace(srcOperationNode, dstOperationNode, mappingStore, LANG1, LANG2);

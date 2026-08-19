@@ -38,9 +38,8 @@ public class Node {
   private UMLs umls = null;
 
   public Node(String fileContent, String path, SrcDst srcDst, Tree tree,
-      @Nullable Set<Node> subs, NodeType nodeType) {
+      @Nullable Set<Node> subs, NodeType nodeType, @Nullable Map<String, Node> promptIdNodeMap) {
     this.id = formatId(path, srcDst, nodeType, tree);
-    this.promptId = generateShortId();
     this.fileContent = fileContent;
     this.path = path;
     this.constants = new Constants(path);
@@ -48,6 +47,12 @@ public class Node {
     this.tree = tree;
     this.subs = subs;
     this.nodeType = nodeType;
+
+    String promptId = generateShortId();
+    while (promptIdNodeMap != null && promptIdNodeMap.containsKey(promptId)) {
+      promptId = generateShortId();
+    }
+    this.promptId = promptId;
   }
 
   public static String formatId(String path, SrcDst srcDst, NodeType nodeType, Tree tree) {

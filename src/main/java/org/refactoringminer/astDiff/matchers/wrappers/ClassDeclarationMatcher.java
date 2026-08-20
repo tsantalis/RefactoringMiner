@@ -451,10 +451,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if(classDiff.getPreprocessorStatementListDiff().isPresent()) {
             for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getCommonStatements()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
-                if(!srcStatement.getLabel().isEmpty())
+                if(!srcStatement.getLabel().isEmpty() && !srcStatement.getLabel().equals("#endif"))
                     srcStatement = srcStatement.getParent();
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                if(!dstStatement.getLabel().isEmpty())
+                if(!dstStatement.getLabel().isEmpty() && !dstStatement.getLabel().equals("#endif"))
                     dstStatement = dstStatement.getParent();
                 //make sure the preprocessor statement is matched, because TreeSitter puts nested statements under the preprocessor statement, while Eclipse CDT parser does not do the same
                 if(srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1) {
@@ -462,6 +462,11 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
                 if(srcStatement.getChildren().size() > 0 && dstStatement.getChildren().size() > 0) {
                     mappingStore.addMapping(srcStatement.getChild(0), dstStatement.getChild(0));
+                }
+                if(srcStatement.getChildren().size() == 0 && dstStatement.getChildren().size() == 0) {
+                    //this is #endif
+                    mappingStore.addMapping(srcStatement, dstStatement);
+                    mappingStore.addMappingRecursively(srcStatement.getParent(), dstStatement.getParent());
                 }
                 mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }

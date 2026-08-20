@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,5 +20,10 @@ public class NullSourceAnnotation extends SourceAnnotation implements MarkerAnno
     @Override
     public List<List<String>> getTestParameters() {
         return Collections.singletonList(Collections.singletonList("null"));
+    }
+
+    @Override
+    public List<List<LeafExpression>> getTestParameterLeafExpressions() {
+        return Collections.singletonList(Collections.singletonList(new LeafExpression("null", annotation.getLocationInfo())));
     }
 }

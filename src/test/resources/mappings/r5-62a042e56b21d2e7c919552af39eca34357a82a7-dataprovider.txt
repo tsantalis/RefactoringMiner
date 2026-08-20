@@ -1,3 +1,5 @@
+public testFirstAngle() : void -> public testAngles(angle int, wktlineString String) : void
+line range:103-103==line range:59-59
 public data() : Collection<Object[]> -> public data() : Stream<Arguments>
 line range:61-61==line range:24-24
 line range:61-61==line range:24-24
@@ -49,6 +51,8 @@ line range:85-85==line range:47-47
 line range:85-85==line range:47-47
 line range:86-86==line range:48-48
 line range:86-86==line range:48-48
+public testLastAngle() : void -> public testRoadAngles(startAngle int, middleAngle int, endAngle int, wktlineString String) : void
+line range:531-531==line range:468-468
 public data() : Collection<Object[]> -> public data() : Stream<Arguments>
 line range:49-49==line range:43-43
 line range:49-49==line range:43-43
@@ -1682,6 +1686,8 @@ line range:457-457==line range:450-450
 line range:457-457==line range:450-450
 line range:457-457==line range:450-450
 line range:457-457==line range:450-450
+public testFirstAngle() : void -> public testRoadAngles(startAngle int, middleAngle int, endAngle int, wktlineString String) : void
+line range:476-476==line range:465-465
 public data() : Collection<Object[]> -> public data() : Stream<Arguments>
 line range:49-49==line range:43-43
 line range:49-49==line range:43-43
@@ -3315,6 +3321,12 @@ line range:457-457==line range:450-450
 line range:457-457==line range:450-450
 line range:457-457==line range:450-450
 line range:457-457==line range:450-450
+public testParam() : void -> public testParam(name String, tags String, expectedForwardFlags EnumSet<EdgeStore.EdgeFlag>, expectedBackwardFlags EnumSet<EdgeStore.EdgeFlag>) : void
+line range:134-134==line range:121-121
+line range:136-136==line range:122-122
+line range:139-139==line range:123-123
+line range:142-142==line range:124-124
+line range:143-143==line range:125-125
 public data() : Collection<Object[]> -> public data() : Stream<Arguments>
 line range:71-71==line range:52-52
 line range:72-72==line range:53-53

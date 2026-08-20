@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gr.uom.java.xmi.annotation.source.MethodSourceAnnotation;
 import com.github.difflib.DiffUtils;
@@ -2183,7 +2185,7 @@ public abstract class UMLAbstractClassDiff {
 		for(Replacement r : replacements) {
 			if(parameterNames.contains(r.getAfter())) {
 				String before = r.getBefore();
-				matchParamsWithReplacement(before, testParameters, matchingTestParameters, originalClass);
+				matchParamsWithReplacement(before, testParameters, matchingTestParameters, originalClass, parameterNames.indexOf(r.getAfter()));
 			}
 			if(r instanceof MethodInvocationReplacement) {
 				MethodInvocationReplacement m = (MethodInvocationReplacement)r;
@@ -2194,7 +2196,7 @@ public abstract class UMLAbstractClassDiff {
 						String argumentBefore = invocationBefore.arguments().get(i);
 						String argumentAfter = invocationAfter.arguments().get(i);
 						if(parameterNames.contains(argumentAfter)) {
-							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass);
+							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass, parameterNames.indexOf(argumentAfter));
 						}
 					}
 				}
@@ -2204,7 +2206,7 @@ public abstract class UMLAbstractClassDiff {
 						String argumentBefore = invocationBefore.arguments().get(i);
 						String argumentAfter = invocationAfter.arguments().get(i);
 						if(parameterNames.contains(argumentAfter)) {
-							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass);
+							matchParamsWithReplacement(argumentBefore, testParameters, matchingTestParameters, originalClass, parameterNames.indexOf(argumentAfter));
 						}
 					}
 				}
@@ -2258,11 +2260,12 @@ public abstract class UMLAbstractClassDiff {
 		return matchingTestParameters;
 	}
 
-	private void detectInlinedTestDataConstants(UMLOperationBodyMapper mapper, UMLOperation addedOperation,
+	private void detectDataProviderRowLinks(UMLOperationBodyMapper mapper, ParameterizeTestRefactoring refactoring, UMLOperation addedOperation,
 			List<List<String>> parameterValues, List<String> parameterNames) {
 		UMLAbstractClass originalClass = getOriginalClass();
 		List<List<LeafExpression>> parameterValuesAsLeafExpressions = getParameterValuesAsLeafExpressions(addedOperation);
-		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+		//snapshot the mappings before iterating, since refactoring.addDataMapping() below mutates mapper's underlying mapping set
+		for(AbstractCodeMapping mapping : new ArrayList<AbstractCodeMapping>(mapper.getMappings())) {
 			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapping.getReplacements(), mapper, originalClass);
 			Integer index = null;
 			int max = -1;
@@ -2304,44 +2307,103 @@ public abstract class UMLAbstractClassDiff {
 				}
 				for(String candidate : candidateConstantNames) {
 					UMLAttribute removedAttribute = findConstantAttribute(candidate, originalClass);
-					if(removedAttribute == null) {
-						continue;
-					}
-					AbstractExpression initializer = removedAttribute.getVariableDeclaration().getInitializer();
-					String resolvedValue = initializer.getString();
-					for(LeafExpression rowValue : rowValues) {
-						if(!rowValue.getString().equals(resolvedValue)) {
-							continue;
-						}
-						List<LeafExpression> attributeLiterals = new ArrayList<LeafExpression>();
-						attributeLiterals.addAll(initializer.getStringLiterals());
-						attributeLiterals.addAll(initializer.getNumberLiterals());
-						attributeLiterals.addAll(initializer.getBooleanLiterals());
-						attributeLiterals.addAll(initializer.getNullLiterals());
-						if(attributeLiterals.isEmpty()) {
-							continue;
-						}
-						InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, originalClass, getNextClass(), false);
-						if(refactorings.contains(refactoring)) {
-							for(Refactoring ref : refactorings) {
-								if(ref.equals(refactoring)) {
-									InlineAttributeRefactoring existing = (InlineAttributeRefactoring)ref;
-									existing.addReference(mapping);
-									existing.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
-									break;
+					if(removedAttribute != null) {
+						AbstractExpression initializer = removedAttribute.getVariableDeclaration().getInitializer();
+						String resolvedValue = initializer.getString();
+						for(LeafExpression rowValue : rowValues) {
+							if(!rowValue.getString().equals(resolvedValue)) {
+								continue;
+							}
+							List<LeafExpression> attributeLiterals = new ArrayList<LeafExpression>();
+							attributeLiterals.addAll(initializer.getStringLiterals());
+							attributeLiterals.addAll(initializer.getNumberLiterals());
+							attributeLiterals.addAll(initializer.getBooleanLiterals());
+							attributeLiterals.addAll(initializer.getNullLiterals());
+							if(attributeLiterals.isEmpty()) {
+								continue;
+							}
+							InlineAttributeRefactoring inlineAttributeRefactoring = new InlineAttributeRefactoring(removedAttribute, originalClass, getNextClass(), false);
+							if(refactorings.contains(inlineAttributeRefactoring)) {
+								for(Refactoring ref : refactorings) {
+									if(ref.equals(inlineAttributeRefactoring)) {
+										InlineAttributeRefactoring existing = (InlineAttributeRefactoring)ref;
+										existing.addReference(mapping);
+										existing.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
+										break;
+									}
 								}
 							}
+							else {
+								inlineAttributeRefactoring.addReference(mapping);
+								inlineAttributeRefactoring.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
+								refactorings.add(inlineAttributeRefactoring);
+							}
+							break;
 						}
-						else {
-							refactoring.addReference(mapping);
-							refactoring.addSubExpressionMapping(new LeafMapping(attributeLiterals.get(0), rowValue, mapper.getOperation1(), addedOperation));
-							refactorings.add(refactoring);
+					}
+					else {
+						String sanitizedCandidate = sanitizeStringLiteral(candidate);
+						for(LeafExpression rowValue : rowValues) {
+							if(!rowValue.getString().equals(candidate) && !rowValue.getString().equals(sanitizedCandidate)
+									&& !expressionsMatchIgnoringCallPrefix(candidate, rowValue.getString())
+									&& !SourceAnnotation.stripNumericSuffix(rowValue.getString()).equals(sanitizedCandidate)) {
+								continue;
+							}
+							List<LeafExpression> oldLiteralMatches = mapping.getFragment1().findExpression(candidate);
+							if(oldLiteralMatches.isEmpty()) {
+								continue;
+							}
+							refactoring.addDataMapping(new LeafMapping(oldLiteralMatches.get(0), rowValue, mapper.getOperation1(), addedOperation));
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
+		//an old local variable whose initializer got manually inlined into a provider row (e.g. "List<Import> expected
+		//= ImmutableList.of(...)" replaced by a same-named parameter "expected") leaves the old declaration statement
+		//entirely unmapped - it has no counterpart on the new side to reach via mapper.getMappings() above - so look
+		//for such declarations directly and link them via an exact (call-prefix-normalized) match against whichever
+		//row's column value they correspond to, requiring the match to be unique across rows
+		for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT1()) {
+			for(VariableDeclaration variableDecl : fragment.getVariableDeclarations()) {
+				String name = variableDecl.getVariableName();
+				AbstractExpression initializer = variableDecl.getInitializer();
+				if(!parameterNames.contains(name) || initializer == null) {
+					continue;
+				}
+				int column = parameterNames.indexOf(name);
+				String initializerText = initializer.getString();
+				List<LeafExpression> matchingRowValues = new ArrayList<LeafExpression>();
+				for(List<LeafExpression> row : parameterValuesAsLeafExpressions) {
+					if(column < row.size() && expressionsMatchIgnoringCallPrefix(initializerText, row.get(column).getString())) {
+						matchingRowValues.add(row.get(column));
+					}
+				}
+				if(matchingRowValues.size() != 1) {
+					continue;
+				}
+				List<LeafExpression> oldLiteralMatches = fragment.findExpression(initializerText);
+				if(oldLiteralMatches.isEmpty()) {
+					continue;
+				}
+				refactoring.addDataMapping(new LeafMapping(oldLiteralMatches.get(0), matchingRowValues.get(0), mapper.getOperation1(), addedOperation));
+			}
+		}
+	}
+
+	private static boolean hasParameterFieldAnnotation(UMLAbstractClass originalClass) {
+		if(originalClass == null) {
+			return false;
+		}
+		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			for(UMLAnnotation annotation : attribute.getAnnotations()) {
+				if(annotation.getTypeName().equals("Parameter") || annotation.getTypeName().equals("Parameterized.Parameter")) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private static UMLAttribute findConstantAttribute(String name, UMLAbstractClass originalClass) {
@@ -2363,20 +2425,37 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private static void matchParamsWithReplacement(String before, List<List<String>> testParameters, Map<Integer, Integer> matchingTestParameters, UMLAbstractClass originalClass) {
+		matchParamsWithReplacement(before, testParameters, matchingTestParameters, originalClass, -1);
+	}
+
+	private static void matchParamsWithReplacement(String before, List<List<String>> testParameters, Map<Integer, Integer> matchingTestParameters, UMLAbstractClass originalClass, int parameterIndex) {
 		String paramsWithoutDoubleQuotes = sanitizeStringLiteral(before);
 		String resolvedConstantValue = resolveConstantLiteralValue(before, originalClass);
 		String resolvedConstantValueWithoutDoubleQuotes = resolvedConstantValue != null ? sanitizeStringLiteral(resolvedConstantValue) : null;
 		for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
-			if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes) ||
-					testParameters.get(parameterRow).contains(before) ||
+			List<String> row = testParameters.get(parameterRow);
+			if (parameterIndex >= 0 && parameterIndex < row.size()) {
+				String value = row.get(parameterIndex);
+				if (value.equals(paramsWithoutDoubleQuotes) || value.equals(before) ||
+						(resolvedConstantValue != null &&
+								(value.equals(resolvedConstantValue) || value.equals(resolvedConstantValueWithoutDoubleQuotes))) ||
+						expressionsMatchIgnoringCallPrefix(before, value)) {
+					Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+					matchingTestParameters.put(parameterRow, previousValue + 1);
+					continue;
+				}
+			}
+			else if (row.contains(paramsWithoutDoubleQuotes) ||
+					row.contains(before) ||
 					(resolvedConstantValue != null &&
-							(testParameters.get(parameterRow).contains(resolvedConstantValue) ||
-							testParameters.get(parameterRow).contains(resolvedConstantValueWithoutDoubleQuotes)))) {
+							(row.contains(resolvedConstantValue) ||
+							row.contains(resolvedConstantValueWithoutDoubleQuotes)))) {
 				Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 				matchingTestParameters.put(parameterRow, previousValue + 1);
+				continue;
 			}
-			else if (paramsWithoutDoubleQuotes.contains(".")) {
-				for(String s : testParameters.get(parameterRow)) {
+			if (paramsWithoutDoubleQuotes.contains(".")) {
+				for(String s : row) {
 					if(paramsWithoutDoubleQuotes.endsWith("." + s)) {
 						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
 						matchingTestParameters.put(parameterRow, previousValue + 1);
@@ -2395,6 +2474,29 @@ public abstract class UMLAbstractClassDiff {
 			//return expression.substring(expression.lastIndexOf('.') + 1);
 		}
 		return expression;
+	}
+
+	private static final Pattern CALL_PREFIX_PATTERN = Pattern.compile("^[A-Za-z_$][A-Za-z0-9_$.]*(\\(.*\\))$", Pattern.DOTALL);
+
+	//strips a leading "qualifier.methodName" call prefix, keeping only the parenthesized argument list -
+	//e.g. "ImmutableList.of(A, B, C)" and "List.of(A, B, C)" both reduce to "(A, B, C)". Returns null when
+	//the text isn't a single top-level call (no argument list to compare)
+	private static String stripCallPrefix(String text) {
+		Matcher matcher = CALL_PREFIX_PATTERN.matcher(text);
+		return matcher.matches() ? matcher.group(1) : null;
+	}
+
+	//two differently-named factory/wrapper calls (e.g. List.of(...) vs ImmutableList.of(...), introduced when a
+	//local variable's initializer is manually inlined into a provider row) are treated as the same value when their
+	//argument lists are verbatim identical - this only ignores the call's own qualifier/method name, never the
+	//arguments themselves, so it stays exact-match in spirit rather than a fuzzy/partial correspondence
+	private static boolean expressionsMatchIgnoringCallPrefix(String a, String b) {
+		if(a.equals(b)) {
+			return true;
+		}
+		String argsA = stripCallPrefix(a);
+		String argsB = stripCallPrefix(b);
+		return argsA != null && argsA.equals(argsB);
 	}
 
 	public boolean containsExtractOperationRefactoring(VariableDeclarationContainer sourceOperationBeforeExtraction, UMLOperation extractedOperation) {
@@ -3293,7 +3395,7 @@ public abstract class UMLAbstractClassDiff {
 								refactorings.add(refactoring);
 								mapper.computeRefactoringsWithinBody();
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
-								detectInlinedTestDataConstants(mapper, addedOperation, parameterValues, parameterNames);
+								detectDataProviderRowLinks(mapper, refactoring, addedOperation, parameterValues, parameterNames);
 								UMLOperation removedOperation = mapper.getOperation1();
 								removedOperations.remove(removedOperation);
 								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
@@ -3437,13 +3539,16 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	ParameterizeTestRefactoring.DataProviderOverride resolveDataProviderMapping(UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
-		if(!addedOperation.hasMethodSourceAnnotation()) {
-			return null;
+		UMLOperation junit5DataProvider;
+		if(addedOperation.hasMethodSourceAnnotation()) {
+			MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
+			junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
+			if(junit5DataProvider == null) {
+				return null;
+			}
 		}
-		MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
-		UMLOperation junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
-		if(junit5DataProvider == null) {
-			return null;
+		else {
+			junit5DataProvider = addedOperation;
 		}
 		//look provider method up through operationBodyMapperList and only fall back to removedOperations
 		//if no such pairing exists yet
@@ -3488,7 +3593,19 @@ public abstract class UMLAbstractClassDiff {
 		if(junit4Rows == null) {
 			junit4Rows = getParameterValuesAsLeafExpressions(junit4DataProvider);
 		}
+		if(junit4Rows.size() == 1 && junit4Rows.get(0).size() > 1 && hasParameterFieldAnnotation(getOriginalClass())) {
+			List<LeafExpression> flattened = junit4Rows.get(0);
+			List<List<LeafExpression>> resplit = new ArrayList<List<LeafExpression>>();
+			for(LeafExpression element : flattened) {
+				resplit.add(Collections.singletonList(element));
+			}
+			junit4Rows = resplit;
+		}
 		List<List<LeafExpression>> junit5Rows = getParameterValuesAsLeafExpressions(addedOperation);
+		if(junit5Rows.isEmpty()) {
+			//Optimize when there is no embedded data to align against
+			return null;
+		}
 
 		UMLOperationBodyMapper dataProviderMapper = new UMLOperationBodyMapper(junit4DataProvider, junit5DataProvider, this);
 

@@ -28,16 +28,34 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
     );
 
     private List<LeafExpression> extractLiterals(AbstractExpression annotationParameterValue, String memberKey) {
+        List<LeafExpression> baseLiterals;
         if (numberKeys.contains(memberKey)) {
-            return annotationParameterValue.getNumberLiterals();
+            baseLiterals = annotationParameterValue.getNumberLiterals();
         } else if (stringKeys.contains(memberKey)) {
-            return annotationParameterValue.getStringLiterals();
+            baseLiterals = annotationParameterValue.getStringLiterals();
         } else if (memberKey.equals("booleans")) {
-            return annotationParameterValue.getBooleanLiterals();
+            baseLiterals = annotationParameterValue.getBooleanLiterals();
         } else if (memberKey.equals("classes")) {
-            return annotationParameterValue.getTypeLiterals();
+            baseLiterals = annotationParameterValue.getTypeLiterals();
+        } else {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+        List<LeafExpression> infixExpressions = annotationParameterValue.getInfixExpressions();
+        if (infixExpressions.isEmpty()) {
+            return baseLiterals;
+        }
+        List<LeafExpression> combined = new ArrayList<>();
+        for (LeafExpression literal : baseLiterals) {
+            boolean subsumedByInfix = infixExpressions.stream()
+                    .anyMatch(infix -> infix.getLocationInfo().subsumes(literal.getLocationInfo())
+                            && !infix.getLocationInfo().equals(literal.getLocationInfo()));
+            if (!subsumedByInfix) {
+                combined.add(literal);
+            }
+        }
+        combined.addAll(infixExpressions);
+        combined.sort(Comparator.comparingInt(le -> le.getLocationInfo().getStartOffset()));
+        return combined;
     }
 
     public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
@@ -47,8 +65,13 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         for (String key : providedKeys) {
             AbstractExpression annotationParameterValue = memberValuePairs.get(key);
             List<LeafExpression> literals = extractLiterals(annotationParameterValue, key);
+            boolean numeric = numberKeys.contains(key);
             for (LeafExpression literal : literals) {
-                testParameters.add(Collections.singletonList(sanitizeLiteral(literal.getString())));
+                String value = sanitizeLiteral(literal.getString());
+                if (numeric) {
+                    value = stripNumericSuffix(value);
+                }
+                testParameters.add(Collections.singletonList(value));
                 testParameterLeafExpressions.add(Collections.singletonList(literal));
             }
         }

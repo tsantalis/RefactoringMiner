@@ -66,8 +66,16 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                 if (stmtCandidate.isPresent()) {
                     AbstractCall call = stmtCandidate.get().invocationCoveringEntireFragment();
                     if(call != null && call.getName().equals("of")) {
+                        List<AbstractCall> rowCallCandidates = new ArrayList<>();
                         for(AbstractCall nestedCall : stmtCandidate.get().getMethodInvocations()) {
                             if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
+                                rowCallCandidates.add(nestedCall);
+                            }
+                        }
+                        for(AbstractCall nestedCall : rowCallCandidates) {
+                            boolean nestedInAnotherRowCall = rowCallCandidates.stream()
+                                    .anyMatch(other -> other != nestedCall && other.getLocationInfo().subsumes(nestedCall.getLocationInfo()));
+                            if(!nestedInAnotherRowCall) {
                                 List<String> resolvedArguments = new ArrayList<>();
                                 List<LeafExpression> leafExpressions = new ArrayList<>();
                                 Set<LocationInfo> claimedLocations = new HashSet<>();

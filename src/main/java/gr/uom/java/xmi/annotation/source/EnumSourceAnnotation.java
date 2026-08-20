@@ -7,7 +7,6 @@ import gr.uom.java.xmi.annotation.MarkerAnnotation;
 import gr.uom.java.xmi.annotation.NormalAnnotation;
 import gr.uom.java.xmi.annotation.SingleMemberAnnotation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,18 +21,18 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
                 if ((mode.equals("EXCLUDE") || mode.equals("Mode.EXCLUDE") || mode.equals("EnumSource.Mode.EXCLUDE")) && enumClassDeclaration != null) {
                     for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
                         if (!isExcluded(annotation, constant)) {
-                            testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
+                            addConstantRow(constant);
                         }
                     }
                 } else {
-                    testParameters.addAll(extractIncludedNames(annotation));
+                    addIncludedNameRows(annotation);
                 }
             } else {
-                testParameters.addAll(extractIncludedNames(annotation));
+                addIncludedNameRows(annotation);
             }
         } else if (enumClassDeclaration != null) {
             for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
-                testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
+                addConstantRow(constant);
             }
         }
     }
@@ -42,12 +41,16 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
         return annotation.getMemberValuePairs().get("names").getStringLiterals().contains(constant.getName());
     }
 
-    private static List<List<String>> extractIncludedNames(UMLAnnotation annotation) {
-        List<List<String>> includedValues = new ArrayList<>();
+    private void addConstantRow(UMLEnumConstant constant) {
+        testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
+        testParameterLeafExpressions.add(Collections.singletonList(new LeafExpression(sanitizeLiteral(constant.getName()), constant.getLocationInfo())));
+    }
+
+    private void addIncludedNameRows(UMLAnnotation annotation) {
         for (LeafExpression expression : annotation.getMemberValuePairs().get("names").getStringLiterals()) {
-            includedValues.add(Collections.singletonList(sanitizeLiteral(expression.getString())));
+            testParameters.add(Collections.singletonList(sanitizeLiteral(expression.getString())));
+            testParameterLeafExpressions.add(Collections.singletonList(expression));
         }
-        return includedValues;
     }
 
     @Override

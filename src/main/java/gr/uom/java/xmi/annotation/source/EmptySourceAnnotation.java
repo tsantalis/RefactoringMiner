@@ -5,6 +5,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.annotation.MarkerAnnotation;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 
 import java.util.Collections;
 
@@ -17,19 +18,20 @@ public class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnn
 
     public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass, String typeName) {
         super(annotation, typeName);
+        String sentinel;
         switch (operation.getParametersWithoutReturnType().get(0).getType().toQualifiedString()) {
             case "List":
             case "Collection":
             case "Set":
             case "Map":
-                testParameters.add(Collections.singletonList("{}"));
+                sentinel = "{}";
                 break;
             case "Boolean":
             case "boolean":
-                testParameters.add(Collections.singletonList("false"));
+                sentinel = "false";
                 break;
             case "String":
-                testParameters.add(Collections.singletonList(""));
+                sentinel = "";
                 break;
             case "Long":
             case "long":
@@ -43,8 +45,14 @@ public class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnn
             case "double":
             case "Float":
             case "float":
-                testParameters.add(Collections.singletonList("0"));
+                sentinel = "0";
                 break;
+            default:
+                sentinel = null;
+        }
+        if (sentinel != null) {
+            testParameters.add(Collections.singletonList(sentinel));
+            testParameterLeafExpressions.add(Collections.singletonList(new LeafExpression(sentinel, annotation.getLocationInfo())));
         }
     }
 }

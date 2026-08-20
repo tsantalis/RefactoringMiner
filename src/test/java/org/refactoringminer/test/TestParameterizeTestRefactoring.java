@@ -620,10 +620,24 @@ class TestParameterizeTestRefactoring {
             "https://github.com/apache/directory-ldap-api.git, 8965a541bbeefd49028a5405264e40aed69ac5d0, directory-ldap-api-8965a541bbeefd49028a5405264e40aed69ac5d0-dataprovider.txt",
             "https://github.com/greenjoe/lambdaFromString.git, 0cbf3774c6f508c21cbb789bfe285117499f1e31, lambdaFromString-0cbf3774c6f508c21cbb789bfe285117499f1e31-dataprovider.txt",
             "https://github.com/frosch95/SmartCSV.fx.git, f41979960b3844215175838de1cb6d215cd1cb47, SmartCSV.fx-f41979960b3844215175838de1cb6d215cd1cb47-dataprovider.txt",
+            "https://github.com/xlate/staedi.git, a9c75b4820b3eed7ce575b50bc28dc80c2b828fe, staedi-a9c75b4820b3eed7ce575b50bc28dc80c2b828fe-data-mappings.txt",
+            "https://github.com/Ekryd/sortpom.git, 7de865527033e53fe84739b53aae1f03ea3dbd86, sortpom-7de865527033e53fe84739b53aae1f03ea3dbd86-data-mappings.txt",
+            "https://github.com/everit-org/json-schema.git, 99757463fb05e30e44852aacb1a15a84fc85ab60, json-schema-99757463fb05e30e44852aacb1a15a84fc85ab60-data-mappings.txt",
+            "https://github.com/marschall/threeten-jpa.git, 57eb534d759f86efd690a925f8911483a007492d, threeten-jpa-57eb534d759f86efd690a925f8911483a007492d-data-mappings.txt",
+            "https://github.com/openstreetmap/josm.git, b4ea5d0eb69c83bc59ff1f13aec9381e5488ddcd, josm-b4ea5d0eb69c83bc59ff1f13aec9381e5488ddcd-data-mappings.txt",
+//            "https://github.com/oVirt/ovirt-engine.git, 6dfe227784af553f7840b0ffdc269e0cac2b57b9, ovirt-engine-6dfe227784af553f7840b0ffdc269e0cac2b57b9-data-mappings.txt", //FIXME: Too slow
+            "https://github.com/SquidDev/Cobalt.git, 49f5d3bb7e28c9e6563e484275c74bee203a88e4, Cobalt-49f5d3bb7e28c9e6563e484275c74bee203a88e4-data-mappings.txt",
+            "https://github.com/jenkinsci/config-driven-pipeline-plugin.git, 18d572c473b647547b8c9eaf9ae6c095e2dbbf70, config-driven-pipeline-plugin-18d572c473b647547b8c9eaf9ae6c095e2dbbf70-data-mappings.txt",
+            "https://github.com/nicolascouvrat/javaimports.git, f4f2ca62b0fedaf458fafa8a6b8c7b956c443621, javaimports-f4f2ca62b0fedaf458fafa8a6b8c7b956c443621-data-mappings.txt",
     })
     public void testDataProviderLiteralMappings(String url, String commit, String testResultFileName) {
         miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), (ModelDiffRefactoringHandler) (commitId, refactoringsAtRevision, modelDiff) -> {
-            refactoringsAtRevision.forEach(this::checkDataProviderLiteralMapping);
+            for (Refactoring refactoring : refactoringsAtRevision) {
+                if (refactoring instanceof ParameterizeTestRefactoring parameterizedTestRefactoring) {
+                    mapperInfo(parameterizedTestRefactoring.getBodyMapper().getMappings(), parameterizedTestRefactoring.getRemovedOperation(), parameterizedTestRefactoring.getParameterizedTestOperation());
+                }
+                checkDataProviderLiteralMapping(refactoring);
+            }
             checkDataProviderRowConsistency(modelDiff);
         });
         assertion(testResultFileName);

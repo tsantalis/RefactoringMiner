@@ -12,7 +12,7 @@ plugins {
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
-        : '3.1.4'
+        : '3.1.5'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -75,29 +75,29 @@ dependencies {
     implementation "io.modelcontextprotocol.sdk:mcp-core"
     implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
     implementation 'com.vdurmont:emoji-java:5.1.1'
-    implementation 'com.caoccao.javet:swc4j:2.1.0'
-    implementation 'com.caoccao.javet:swc4j-macos-arm64:2.1.0'
-    implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.1.0'
-    implementation 'com.caoccao.javet:swc4j-windows-x86_64:2.1.0'
+    implementation 'com.caoccao.javet:swc4j:2.2.0'
+    implementation 'com.caoccao.javet:swc4j-macos-arm64:2.2.0'
+    implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.2.0'
+    implementation 'com.caoccao.javet:swc4j-windows-x86_64:2.2.0'
     implementation 'org.antlr:antlr4-runtime:4.13.2'
-    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.3.21'
+    implementation 'org.jetbrains.kotlin:kotlin-compiler-embeddable:2.4.10'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.1.202505221210-r'
-    implementation 'org.slf4j:slf4j-api:2.0.17'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.5.32'
-    implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.45.0'
+    implementation 'org.slf4j:slf4j-api:2.0.18'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.6.3'
+    implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.46.0'
     implementation 'org.apache.commons:commons-text:1.15.0'
     implementation 'org.kohsuke:github-api:1.330'
-    implementation 'io.github.java-diff-utils:java-diff-utils:4.16'
+    implementation 'io.github.java-diff-utils:java-diff-utils:4.17'
     implementation 'com.github.gumtreediff:core:3.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
     implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0-beta8') {
         exclude group: 'com.github.gumtreediff', module: 'core'
     }
     implementation 'org.jcommander:jcommander:3.0'
-    implementation 'org.jsoup:jsoup:1.22.2'
+    implementation 'org.jsoup:jsoup:1.23.1'
     implementation 'org.jgrapht:jgrapht-core:1.5.3'
     implementation 'com.google.code.gson:gson:2.14.0'
-    implementation 'com.perforce:p4java:2025.2.2917314'
+    implementation 'com.perforce:p4java:2026.1.2989454'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
@@ -107,7 +107,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation 'it.unimi.dsi:fastutil:8.5.18'
+    implementation 'it.unimi.dsi:fastutil:8.5.19'
     implementation 'com.sparkjava:spark-core:2.9.4'
     implementation('org.rendersnake:rendersnake:1.9.0') {
         exclude group: 'javax.servlet', module: 'servlet-api'
@@ -132,7 +132,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.4")
+  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.5")
 
   pom {
     name = "Refactoring Miner"

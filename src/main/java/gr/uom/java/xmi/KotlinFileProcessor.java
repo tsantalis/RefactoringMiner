@@ -523,7 +523,7 @@ public class KotlinFileProcessor {
 				UMLInitializer umlInitializer = processInitializer(ktFile, initializer, sourceFolder, filePath, fileContent, umlClass.getAttributes(), comments, umlClass.getNonQualifiedName(), umlClass.getName());
 				umlClass.addInitializer(umlInitializer);
 			}
-			for(KtSecondaryConstructor constructor : classBody.getSecondaryConstructors$psi_api()) {
+			for(KtSecondaryConstructor constructor : classBody.getSecondaryConstructors$org_jetbrains_kotlin_psi_api()) {
 				LocationInfo constructorLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, constructor, CodeElementType.METHOD_DECLARATION);
 				UMLOperation umlConstructor = new UMLOperation(umlClass.getNonQualifiedName(), constructorLocationInfo, umlClass.getName());
 				umlConstructor.setConstructor(true);

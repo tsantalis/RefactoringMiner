@@ -392,6 +392,7 @@ public class CppFileProcessor {
 			LocationInfo location = new LocationInfo(sourceFolder, filePath, cppProblemDeclaration, CodeElementType.PROBLEM_DECLARATION, fileContent);
 			String raw = cppProblemDeclaration.getRawSignature();
 			boolean isFunctionDeclarator = false;
+			boolean isClassDeclaration = false;
 			boolean isFunctionDefinition = raw.contains("{") && !raw.contains("{.") && !raw.contains("{}");
 			String signature = isFunctionDefinition ? raw.substring(0, raw.indexOf("{")) : raw.lines().findFirst().orElse(raw);
 			if(signature.equals(")")) {
@@ -399,7 +400,10 @@ public class CppFileProcessor {
 				signature = targetLine.strip();
 				isFunctionDeclarator = true;
 			}
-			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw, isFunctionDefinition, isFunctionDeclarator);
+			else if(signature.contains("class ")) {
+				isClassDeclaration = true;
+			}
+			UMLProblemDeclaration problemDeclaration = new UMLProblemDeclaration(packageName, sourceFolder, location, signature, raw, isFunctionDefinition, isFunctionDeclarator, isClassDeclaration);
 			distributeComments(comments, location, problemDeclaration.getComments());
 			if(parentContainer instanceof UMLClass)
 				((UMLClass)parentContainer).addProblemDeclaration(problemDeclaration);

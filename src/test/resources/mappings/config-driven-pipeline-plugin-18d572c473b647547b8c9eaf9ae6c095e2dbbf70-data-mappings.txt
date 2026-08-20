@@ -1,0 +1,26 @@
+package cannotFindKeyReturnsNull() : void -> package cannotFindKey(testCase String, keyToFind String, configurationContents String) : void
+line range:33-33==line range:38-38
+package findStringKeyOutOfNullConfigReturnsNull() : void -> package cannotFindKey(testCase String, keyToFind String, configurationContents String) : void
+line range:28-28==line range:38-38
+package findNullKeyOutOfConfigReturnsNull() : void -> package cannotFindKey(testCase String, keyToFind String, configurationContents String) : void
+line range:23-23==line range:38-38
+package foundFirstKey() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:44-46==line range:60-60
+package foundKeyWithEquals() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:79-81==line range:60-60
+package foundLastKey() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:51-53==line range:60-60
+package findFirstKeyWithNoNewLine() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:38-39==line range:60-60
+package foundKeyWithTicksAroundKey() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:65-67==line range:60-60
+package foundLastKeyWithEquals() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:86-88==line range:60-60
+package foundKeyWithQuotesAroundKey() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:58-60==line range:60-60
+package foundLastKeyWithSpacesAroundEquals() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:100-102==line range:60-60
+package foundKeyWithSpacesAroundEquals() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:93-95==line range:60-60
+package foundKeyWithTicksAroundKeyAndManySpaces() : void -> package findKey(keyToFind String, configurationContents String) : void
+line range:72-74==line range:60-60

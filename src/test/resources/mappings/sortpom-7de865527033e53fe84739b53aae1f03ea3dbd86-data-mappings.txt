@@ -1,0 +1,15 @@
+public formattingXmlWithNewlineShouldResultInOneLineBreakAtEnd() : void -> package formattingXmlWithLineEndingsShouldResultInOneLineBreakAtEnd(lineSeparator String) : void
+line range:13-13==line range:15-15
+line range:20-20==line range:22-22
+line range:14-18==line range:16-20
+line range:21-21==line range:23-24
+public formattingXmlWithCRShouldResultInOneLineBreakAtEnd() : void -> package formattingXmlWithLineEndingsShouldResultInOneLineBreakAtEnd(lineSeparator String) : void
+line range:26-26==line range:15-15
+line range:33-33==line range:22-22
+line range:27-31==line range:16-20
+line range:34-34==line range:23-24
+public formattingXmlWithCRNLShouldResultInOneLineBreakAtEnd() : void -> package formattingXmlWithLineEndingsShouldResultInOneLineBreakAtEnd(lineSeparator String) : void
+line range:39-39==line range:15-15
+line range:46-46==line range:22-22
+line range:40-44==line range:16-20
+line range:47-47==line range:23-24

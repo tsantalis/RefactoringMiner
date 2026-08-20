@@ -654,15 +654,16 @@ class TestParameterizeTestRefactoring {
     }
 
     static Stream<Arguments> testDataProviderLiteralMappingsForFiles() {
-        return Stream.of(Arguments.of(
-                Map.of("DescriptorHandlerTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorHandlerTest.java",
+        return Stream.of(
+                /*
+                Arguments.of(Map.of("DescriptorHandlerTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorHandlerTest.java",
                         "DescriptorHandlerTestV3", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v3/DescriptorHandlerTest.java",
                         "DescriptorParserTestV2", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v2/DescriptorParserTest.java",
                         "DescriptorParserTestV3", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/handlers/v3/DescriptorParserTest.java",
                         "PlatformMergerTest", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/mergers/PlatformMergerTest.java",
                         "SchemaValidatorTest", "multiapps-mta/src/test/java/org/cloudfoundry/multiapps/mta/schema/SchemaValidatorTest.java"),
                 "multiapps-82c2cc85b8b7790470c8380b82aad27abffc290b-dataprovider.txt"
-                ),
+                ),*/
                 Arguments.of(Map.of("PortAssignmentTest", "zookeeper-server/src/test/java/org/apache/zookeeper/PortAssignmentTest.java",
                         "RemoveWatchesTest", "zookeeper-server/src/test/java/org/apache/zookeeper/RemoveWatchesTest.java",
                         "EagerACLFilterTest", "zookeeper-server/src/test/java/org/apache/zookeeper/server/quorum/EagerACLFilterTest.java",

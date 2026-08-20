@@ -366,3 +366,40 @@ As of **June 29, 2026** the precision and recall of RefactoringMiner on this ben
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
 |Move Code| 4  |  0  |  0  | 1.000  | 1.000|
+
+## JavaScript Benchmark
+**Source**: Mosabbir Khan Shiblu, "JsDiffer: Refactoring Detection in JavaScript," Master's thesis, Department of Computer Science and Software Engineering, Concordia University, November 2022. 
+
+**Properties**: 25 commits from project Chart.js
+
+**Commit dates**: between 2016-2017
+
+**File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/javascript-dataset/data.json)
+
+The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
+As of **August 19, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+
+| Refactoring Type | TP | FP | FN | Precision | Recall |
+|:-----------------------|-----------:|--------:|--------:|--------:|--------:|
+|**Total**|177  |  4  |  0  | 0.978  | 1.000|
+|Extract Method|25  |  0  |  0  | 1.000  | 1.000|
+|Rename Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|10  |  0  |  0  | 1.000  | 1.000|
+|Move Method| 6  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Method|13  |  0  |  0  | 1.000  | 1.000|
+|Move Class| 2  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract And Move Method| 1  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|22  |  2  |  0  | 0.917  | 1.000|
+|Inline Variable|10  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|36  |  2  |  0  | 0.947  | 1.000|
+|Rename Parameter| 7  |  0  |  0  | 1.000  | 1.000|
+|Rename Attribute| 4  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable| 3  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 2  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|14  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter| 5  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier| 8  |  0  |  0  | 1.000  | 1.000|
+|Merge Conditional| 3  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 2  |  0  |  0  | 1.000  | 1.000|
+|Replace Conditional With Ternary| 2  |  0  |  0  | 1.000  | 1.000|

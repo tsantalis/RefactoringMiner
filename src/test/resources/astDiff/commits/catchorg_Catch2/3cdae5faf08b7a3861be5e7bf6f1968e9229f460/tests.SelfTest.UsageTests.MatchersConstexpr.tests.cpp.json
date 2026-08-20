@@ -142,6 +142,72 @@
   "firstEndPos" : 1633,
   "secondEndPos" : 2132
 }, {
+  "firstType" : "#if",
+  "secondType" : "#if",
+  "firstLabel" : "#if",
+  "secondLabel" : "#if",
+  "firstParentType" : "preproc_if",
+  "secondParentType" : "preproc_if",
+  "firstPos" : 339,
+  "secondPos" : 424,
+  "firstEndPos" : 342,
+  "secondEndPos" : 427
+}, {
+  "firstType" : "preproc_defined",
+  "secondType" : "preproc_defined",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "preproc_if",
+  "secondParentType" : "preproc_if",
+  "firstPos" : 343,
+  "secondPos" : 428,
+  "firstEndPos" : 395,
+  "secondEndPos" : 480
+}, {
+  "firstType" : "defined",
+  "secondType" : "defined",
+  "firstLabel" : "defined",
+  "secondLabel" : "defined",
+  "firstParentType" : "preproc_defined",
+  "secondParentType" : "preproc_defined",
+  "firstPos" : 343,
+  "secondPos" : 428,
+  "firstEndPos" : 350,
+  "secondEndPos" : 435
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "preproc_defined",
+  "secondParentType" : "preproc_defined",
+  "firstPos" : 350,
+  "secondPos" : 435,
+  "firstEndPos" : 351,
+  "secondEndPos" : 436
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "CATCH_INTERNAL_CONSTEXPR_MATCHERS_ENABLED",
+  "secondLabel" : "CATCH_INTERNAL_CONSTEXPR_MATCHERS_ENABLED",
+  "firstParentType" : "preproc_defined",
+  "secondParentType" : "preproc_defined",
+  "firstPos" : 352,
+  "secondPos" : 437,
+  "firstEndPos" : 393,
+  "secondEndPos" : 478
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "preproc_defined",
+  "secondParentType" : "preproc_defined",
+  "firstPos" : 394,
+  "secondPos" : 479,
+  "firstEndPos" : 395,
+  "secondEndPos" : 480
+}, {
   "firstType" : "namespace_definition",
   "secondType" : "namespace_definition",
   "firstLabel" : "",

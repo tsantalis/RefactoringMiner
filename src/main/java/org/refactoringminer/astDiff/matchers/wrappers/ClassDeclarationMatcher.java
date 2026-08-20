@@ -456,6 +456,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
                 if(!dstStatement.getLabel().isEmpty())
                     dstStatement = dstStatement.getParent();
+                //make sure the preprocessor statement is matched, because TreeSitter puts nested statements under the preprocessor statement, while Eclipse CDT parser does not do the same
+                if(srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1) {
+                    mappingStore.addMappingRecursively(srcStatement.getChild(1), dstStatement.getChild(1));
+                }
+                if(srcStatement.getChildren().size() > 0 && dstStatement.getChildren().size() > 0) {
+                    mappingStore.addMapping(srcStatement.getChild(0), dstStatement.getChild(0));
+                }
                 mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
             for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getChangedStatements()) {

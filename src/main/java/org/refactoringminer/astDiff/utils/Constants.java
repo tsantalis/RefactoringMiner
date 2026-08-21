@@ -668,4 +668,5 @@ public class Constants {
     public final String REF_QUALIFIER = "ref_qualifier";
     public final String LAMBDA_CAPTURE_SPECIFIER = "lambda_capture_specifier";
     public final String ABSTRACT_FUNCTION_DECLARATOR = "abstract_function_declarator";
+    public final String PREPROC_IFDEF = "preproc_ifdef";
 }

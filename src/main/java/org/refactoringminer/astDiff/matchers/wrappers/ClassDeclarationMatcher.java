@@ -623,6 +623,21 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(matched.first,matched.second);
                 }
             }
+            else if(srcStatement.getParent().getType().name.equals(LANG1.PREPROC_IFDEF) && dstStatement.getParent().getType().name.equals(LANG2.PREPROC_IFDEF)) {
+                processIsomorphicChildren(srcStatement.getParent().getChildren(), dstStatement.getParent().getChildren(), mappingStore, srcStatement, dstStatement);
+                Tree namespace1 = TreeUtilFunctions.findChildByType(srcStatement.getParent(), LANG1.PACKAGE_DECLARATION);
+                Tree namespace2 = TreeUtilFunctions.findChildByType(dstStatement.getParent(), LANG2.PACKAGE_DECLARATION);
+                if(namespace1 != null && namespace2 != null) {
+                    mappingStore.addMapping(namespace1, namespace2);
+                    processNamespaceDefinitions(namespace1, namespace2, mappingStore, LANG1, LANG2);
+                    Pair<Tree,Tree> declaration_lists = Helpers.findPairOfType(namespace1, namespace2, LANG1.DECLARATION_LIST, LANG2.DECLARATION_LIST);
+                    if (declaration_lists != null) {
+                        List<Tree> children1 = declaration_lists.first.getChildren();
+                        List<Tree> children2 = declaration_lists.second.getChildren();
+                        processIsomorphicChildren(children1, children2, mappingStore, srcStatement, dstStatement);
+                    }
+                }
+            }
             if(srcStatement.isIsomorphicTo(dstStatement)) {
                 mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
@@ -664,6 +679,32 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         UMLCommentListDiff diff = new UMLCommentListDiff(statementPair.getLeft().getComments(), statementPair.getRight().getComments());
         new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+    }
+
+    private void processIsomorphicChildren(List<Tree> children1, List<Tree> children2,
+            ExtendedMultiMappingStore mappingStore, Tree srcStatement, Tree dstStatement) {
+        if(children1.size() <= children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                Tree child1 = children1.get(i);
+                Tree child2 = children2.get(i);
+                if(child1.getPos() >= srcStatement.getPos() && child2.getPos() >= dstStatement.getPos()) {
+                    if(child1.isIsomorphicTo(child2)) {
+                        mappingStore.addMappingRecursively(child1, child2);
+                    }
+                }
+            }
+        }
+        else {
+            for(int i=0; i<children2.size(); i++) {
+                Tree child2 = children2.get(i);
+                Tree child1 = children1.get(i);
+                if(child1.getPos() >= srcStatement.getPos() && child2.getPos() >= dstStatement.getPos()) {
+                    if(child1.isIsomorphicTo(child2)) {
+                        mappingStore.addMappingRecursively(child1, child2);
+                    }
+                }
+            }
+        }
     }
 
     private String astType(UMLClass umlClass, Constants LANG) {
@@ -1061,38 +1102,43 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if (closing != null) {
                     mappingStore.addMapping(closing.first,closing.second);
                 }
-                if(parent1.getType().name.equals(LANG1.PACKAGE_DECLARATION) && parent2.getType().name.equals(LANG2.PACKAGE_DECLARATION)) {
-                    Pair<Tree,Tree> namespaces = Helpers.findPairOfType(parent1,parent2, LANG1.NAMESPACE, LANG2.NAMESPACE);
-                    if (namespaces != null) {
-                        mappingStore.addMapping(namespaces.first,namespaces.second);
-                    }
-                    Pair<Tree,Tree> namespace_identifiers = Helpers.findPairOfType(parent1,parent2, LANG1.NAMESPACE_IDENTIFIER, LANG2.NAMESPACE_IDENTIFIER);
-                    if (namespace_identifiers != null) {
-                        mappingStore.addMapping(namespace_identifiers.first,namespace_identifiers.second);
-                    }
-                    Pair<Tree,Tree> nested_namespace_specifiers = Helpers.findPairOfType(parent1,parent2, LANG1.NESTED_NAMESPACE_SPECIFIER, LANG2.NESTED_NAMESPACE_SPECIFIER);
-                    if (nested_namespace_specifiers != null) {
-                        mappingStore.addMappingRecursively(nested_namespace_specifiers.first,nested_namespace_specifiers.second);
-                    }
-                    Pair<Tree,Tree> declaration_lists = Helpers.findPairOfType(parent1,parent2, LANG1.DECLARATION_LIST, LANG2.DECLARATION_LIST);
-                    if (declaration_lists != null) {
-                        mappingStore.addMapping(declaration_lists.first,declaration_lists.second);
-                        opening = Helpers.findPairOfType(declaration_lists.first,declaration_lists.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                        if (opening != null) {
-                            mappingStore.addMapping(opening.first,opening.second);
-                        }
-                        closing = Helpers.findPairOfType(declaration_lists.first,declaration_lists.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                        if (closing != null) {
-                            mappingStore.addMapping(closing.first,closing.second);
-                        }
-                    }
-                }
+                processNamespaceDefinitions(parent1, parent2, mappingStore, LANG1, LANG2);
             }
             else {
                 break;
             }
             parent1 = parent1.getParent();
             parent2 = parent2.getParent();
+        }
+    }
+
+    private static void processNamespaceDefinitions(Tree parent1, Tree parent2, ExtendedMultiMappingStore mappingStore,
+            Constants LANG1, Constants LANG2) {
+        if(parent1.getType().name.equals(LANG1.PACKAGE_DECLARATION) && parent2.getType().name.equals(LANG2.PACKAGE_DECLARATION)) {
+            Pair<Tree,Tree> namespaces = Helpers.findPairOfType(parent1,parent2, LANG1.NAMESPACE, LANG2.NAMESPACE);
+            if (namespaces != null) {
+                mappingStore.addMapping(namespaces.first,namespaces.second);
+            }
+            Pair<Tree,Tree> namespace_identifiers = Helpers.findPairOfType(parent1,parent2, LANG1.NAMESPACE_IDENTIFIER, LANG2.NAMESPACE_IDENTIFIER);
+            if (namespace_identifiers != null) {
+                mappingStore.addMapping(namespace_identifiers.first,namespace_identifiers.second);
+            }
+            Pair<Tree,Tree> nested_namespace_specifiers = Helpers.findPairOfType(parent1,parent2, LANG1.NESTED_NAMESPACE_SPECIFIER, LANG2.NESTED_NAMESPACE_SPECIFIER);
+            if (nested_namespace_specifiers != null) {
+                mappingStore.addMappingRecursively(nested_namespace_specifiers.first,nested_namespace_specifiers.second);
+            }
+            Pair<Tree,Tree> declaration_lists = Helpers.findPairOfType(parent1,parent2, LANG1.DECLARATION_LIST, LANG2.DECLARATION_LIST);
+            if (declaration_lists != null) {
+                mappingStore.addMapping(declaration_lists.first,declaration_lists.second);
+                Pair<Tree, Tree> opening = Helpers.findPairOfType(declaration_lists.first,declaration_lists.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                Pair<Tree, Tree> closing = Helpers.findPairOfType(declaration_lists.first,declaration_lists.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
         }
     }
 

@@ -418,7 +418,7 @@ public class TreeUtilFunctions {
 		return fieldAnnotation;
 	}
 
-	public static Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> getLineRange(Tree tree, String fileContent) {
+	public static LineRange getLineRange(Tree tree, String fileContent) {
 		int startLine = -1, endLine = -1, startLineOffset = -1, endLineOffset = -1;
 
 		int pos = tree.getPos();
@@ -449,6 +449,8 @@ public class TreeUtilFunctions {
 			lineCount++;
 		}
 
-		return new Pair<>(new Pair<>(startLine, startLineOffset), new Pair<>(endLine, endLineOffset));
+		return new LineRange(startLine, startLineOffset, endLine, endLineOffset);
 	}
+
+	public record LineRange(int startLine, int startLineOffset, int endLine, int endLineOffset) {}
 }

@@ -5,7 +5,6 @@ import static org.refactoringminer.astDiff.graph.NodeType.DELETION;
 import static org.refactoringminer.astDiff.graph.NodeType.EXTENSION;
 
 import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.utils.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -193,10 +192,8 @@ public class Node {
       return content;
     }
 
-    Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(tree, fileContent);
-    int baseIndentLen = lineRange.first.second;
-
-    return " ".repeat(baseIndentLen) + getContent();
+    TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(tree, fileContent);
+    return " ".repeat(lineRange.startLineOffset()) + getContent();
   }
 
   public String getFileContent() {
@@ -226,6 +223,20 @@ public class Node {
     return nodeIndex < parentChildren.size() - 1 ? parentChildren.get(nodeIndex + 1) : null;
   }
 
+  // A hunk may be smaller than a line, so it is overlap in such cases
+  public boolean overlapLine(String path, String side, int line) {
+    if (!this.getPath().equals(path)) {
+      return false;
+    }
+
+    if (("LEFT".equals(side) && !this.isSrc()) || ("RIGHT".equals(side) && !this.isDst())) {
+      return false;
+    }
+
+    TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(this.getTree(), this.getFileContent());
+    return line >= lineRange.startLine() && line <= lineRange.endLine();
+  }
+
   public JsonObject stringify() {
     JsonObject nodeObj = new JsonObject();
 
@@ -252,15 +263,11 @@ public class Node {
       nodeObj.add("identifiers", identifiersArr);
     }
 
-    Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> lineRange = TreeUtilFunctions.getLineRange(
-        this.getTree(),
-        this.getFileContent());
-    Pair<Integer, Integer> startLineRange = lineRange.first;
-    nodeObj.addProperty("startLine", startLineRange.first);
-    nodeObj.addProperty("startLineOffset", startLineRange.second);
-    Pair<Integer, Integer> endLineRange = lineRange.second;
-    nodeObj.addProperty("endLine", endLineRange.first);
-    nodeObj.addProperty("endLineOffset", endLineRange.second);
+    TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(this.getTree(), this.getFileContent());
+    nodeObj.addProperty("startLine", lineRange.startLine());
+    nodeObj.addProperty("startLineOffset", lineRange.startLineOffset());
+    nodeObj.addProperty("endLine", lineRange.endLine());
+    nodeObj.addProperty("endLineOffset", lineRange.endLineOffset());
     nodeObj.addProperty("length", this.getTree().getEndPos() - this.getTree().getPos() + 1);
 
     if (this.getSubs() != null) {
@@ -269,14 +276,11 @@ public class Node {
         JsonObject exceptionObj = new JsonObject();
 
         Tree subTree = sub.getTree();
-        Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> exceptionLineRange =
-            TreeUtilFunctions.getLineRange(subTree, this.getFileContent());
-        Pair<Integer, Integer> startExceptionRange = exceptionLineRange.first;
-        exceptionObj.addProperty("startLine", startExceptionRange.first);
-        exceptionObj.addProperty("startLineOffset", startExceptionRange.second);
-        Pair<Integer, Integer> endExceptionRange = exceptionLineRange.second;
-        exceptionObj.addProperty("endLine", endExceptionRange.first);
-        exceptionObj.addProperty("endLineOffset", endExceptionRange.second);
+        TreeUtilFunctions.LineRange exceptionLineRange = TreeUtilFunctions.getLineRange(subTree, this.getFileContent());
+        exceptionObj.addProperty("startLine", exceptionLineRange.startLine());
+        exceptionObj.addProperty("startLineOffset", exceptionLineRange.startLineOffset());
+        exceptionObj.addProperty("endLine", exceptionLineRange.endLine());
+        exceptionObj.addProperty("endLineOffset", exceptionLineRange.endLineOffset());
         exceptionObj.addProperty("length", subTree.getEndPos() - subTree.getPos() + 1);
 
         subsArr.add(exceptionObj);

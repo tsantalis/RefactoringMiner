@@ -612,21 +612,23 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if(tmpDstStatement != null) dstStatement = tmpDstStatement;
         }
         if(srcStatement != null && dstStatement != null) {
-            if(srcStatement.getParent().getType().name.equals(LANG1.DECLARATION_LIST) && dstStatement.getParent().getType().name.equals(LANG2.DECLARATION_LIST)) {
-                mappingStore.addMappingRecursively(srcStatement.getParent(), dstStatement.getParent());
-                matched = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+            Tree parent1 = srcStatement.getParent();
+            Tree parent2 = dstStatement.getParent();
+            if(parent1.getType().name.equals(LANG1.DECLARATION_LIST) && parent2.getType().name.equals(LANG2.DECLARATION_LIST)) {
+                mappingStore.addMappingRecursively(parent1, parent2);
+                matched = Helpers.findPairOfType(parent1, parent2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
-                matched = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                matched = Helpers.findPairOfType(parent1, parent2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
             }
-            else if(srcStatement.getParent().getType().name.equals(LANG1.PREPROC_IFDEF) && dstStatement.getParent().getType().name.equals(LANG2.PREPROC_IFDEF)) {
-                processIsomorphicChildren(srcStatement.getParent().getChildren(), dstStatement.getParent().getChildren(), mappingStore, srcStatement, dstStatement);
-                Tree namespace1 = TreeUtilFunctions.findChildByType(srcStatement.getParent(), LANG1.PACKAGE_DECLARATION);
-                Tree namespace2 = TreeUtilFunctions.findChildByType(dstStatement.getParent(), LANG2.PACKAGE_DECLARATION);
+            else if(parent1.getType().name.equals(LANG1.PREPROC_IFDEF) && parent2.getType().name.equals(LANG2.PREPROC_IFDEF)) {
+                processIsomorphicChildren(parent1.getChildren(), parent2.getChildren(), mappingStore, srcStatement, dstStatement);
+                Tree namespace1 = TreeUtilFunctions.findChildByType(parent1, LANG1.PACKAGE_DECLARATION);
+                Tree namespace2 = TreeUtilFunctions.findChildByType(parent2, LANG2.PACKAGE_DECLARATION);
                 if(namespace1 != null && namespace2 != null) {
                     mappingStore.addMapping(namespace1, namespace2);
                     processNamespaceDefinitions(namespace1, namespace2, mappingStore, LANG1, LANG2);

@@ -129,7 +129,8 @@ public class CompositeStatementObject extends AbstractStatement {
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();
 		this.variableDeclarations = new ArrayList<VariableDeclaration>();
-		computeActualSignature(fileContent, this.locationInfo.getStartOffset(), this.locationInfo.getEndOffset());
+		this.actualSignature = statement.getRawSignature().contains("{") ? statement.getRawSignature().substring(0, statement.getRawSignature().indexOf("{") + 1) : statement.getRawSignature();
+		//computeActualSignature(fileContent, this.locationInfo.getStartOffset(), this.locationInfo.getEndOffset());
 	}
 
 	public void setOwner(VariableDeclarationContainer container) {

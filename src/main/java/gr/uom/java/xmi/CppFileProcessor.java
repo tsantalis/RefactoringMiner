@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -57,7 +58,9 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
+import org.eclipse.cdt.core.index.IIndexFileLocation;
 import org.eclipse.cdt.core.parser.DefaultLogService;
+import org.eclipse.cdt.core.parser.ExtendedScannerInfo;
 import org.eclipse.cdt.core.parser.FileContent;
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider;
 import org.eclipse.cdt.core.parser.ScannerInfo;
@@ -89,6 +92,9 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeTemplateParameter;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateParameter;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplatedTypeTemplateParameter;
 import org.eclipse.cdt.internal.core.index.EmptyCIndex;
+import org.eclipse.cdt.internal.core.parser.IMacroDictionary;
+import org.eclipse.cdt.internal.core.parser.scanner.InternalFileContent;
+import org.eclipse.cdt.internal.core.parser.scanner.InternalFileContentProvider;
 import org.eclipse.core.runtime.CoreException;
 import org.refactoringminer.util.PathFileUtils;
 
@@ -121,8 +127,24 @@ public class CppFileProcessor {
 		try {
 			FileContent content = FileContent.create(filePath, fileContent.toCharArray());
 			Map<String, String> predefinedMacros = new HashMap<>();
-			ScannerInfo scanInfo = new ScannerInfo(predefinedMacros, getIncludePaths(filePath));
-			IncludeFileContentProvider includeFiles = IncludeFileContentProvider.getSavedFilesProvider();
+			ScannerInfo scanInfo = new ExtendedScannerInfo(predefinedMacros, getIncludePaths(filePath));
+			//IncludeFileContentProvider includeProvider = IncludeFileContentProvider.getSavedFilesProvider();
+			IncludeFileContentProvider includeProvider = new InternalFileContentProvider() {
+				@Override
+				public InternalFileContent getContentForInclusion(String path, IMacroDictionary macroDictionary) {
+					File file = new File(path);
+					if (file.exists()) {
+						return (InternalFileContent) FileContent.createForExternalFileLocation(path);
+					}
+					return null;
+				}
+
+				@Override
+				public InternalFileContent getContentForInclusion(IIndexFileLocation location, String astPath) {
+					return (InternalFileContent) FileContent.createForExternalFileLocation(astPath);
+				}
+			};
+			int options = GPPLanguage.OPTION_IS_SOURCE_UNIT | GPPLanguage.OPTION_PARSE_INACTIVE_CODE | GPPLanguage.OPTION_NO_IMAGE_LOCATIONS;
 
 			if(PathFileUtils.isCppFile(filePath)) {
 				if (astDiff) {
@@ -136,9 +158,9 @@ public class CppFileProcessor {
 				IASTTranslationUnit ast = GPPLanguage.getDefault().getASTTranslationUnit(
 						content,
 						scanInfo,
-						includeFiles,
+						includeProvider,
 						EmptyCIndex.INSTANCE,
-						GPPLanguage.OPTION_IS_SOURCE_UNIT | GPPLanguage.OPTION_PARSE_INACTIVE_CODE,
+						options,
 						new DefaultLogService()
 						);
 				String sourceFolder = extractCppSourceFolder();
@@ -165,9 +187,9 @@ public class CppFileProcessor {
 				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
 						content,
 						scanInfo,
-						includeFiles,
+						includeProvider,
 						EmptyCIndex.INSTANCE,
-						GCCLanguage.OPTION_IS_SOURCE_UNIT,
+						options,
 						new DefaultLogService()
 						);
 				String sourceFolder = extractCppSourceFolder();
@@ -315,7 +337,15 @@ public class CppFileProcessor {
 	private String[] getIncludePaths(String filePath) {
 		Set<String> includePaths = new LinkedHashSet<>();
 		includePaths.add(".");
-		includePaths.add("include");
+		//includePaths.add(System.getProperty("user.dir") + "/include");
+		/*
+		if(this.fileContent.contains("#include \"gtest/")) {
+			includePaths.add(System.getProperty("user.dir") + "/include/gtest");
+		}
+		if(this.fileContent.contains("#include \"gmock/")) {
+			includePaths.add(System.getProperty("user.dir") + "/include/gmock");
+		}
+		*/
 		includePaths.add("src/include");
 		includePaths.add("src");
 
@@ -716,9 +746,9 @@ public class CppFileProcessor {
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 
-		int start = declSpecifier.getFileLocation().getNodeOffset();
-		int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
-		operation.setActualSignature(fileContent.substring(start, end));
+		//int start = declSpecifier.getFileLocation().getNodeOffset();
+		//int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
+		operation.setActualSignature(declarator.getRawSignature());
 		return operation;
 	}
 
@@ -768,7 +798,8 @@ public class CppFileProcessor {
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
 
-		operation.setActualSignature(extractActualSignature(functionDefinition));
+		String actualSignature = functionDefinition.getRawSignature().contains("{") ? functionDefinition.getRawSignature().substring(0, functionDefinition.getRawSignature().indexOf("{") + 1) : functionDefinition.getRawSignature();
+		operation.setActualSignature(actualSignature);
 		IASTStatement body = functionDefinition.getBody();
 		if(body instanceof IASTCompoundStatement compoundStatement) {
 			CppOperationBody operationBody = new CppOperationBody(sourceFolder, filePath, compoundStatement, operation, parentContainer.getAttributes(), fileContent);
@@ -915,19 +946,6 @@ public class CppFileProcessor {
 			}
 		}
 		return "arg" + index;
-	}
-
-	private String extractActualSignature(IASTFunctionDefinition functionDefinition) {
-		IASTFileLocation functionLocation = functionDefinition.getFileLocation();
-		if(functionLocation == null) {
-			return functionDefinition.getRawSignature();
-		}
-		int start = functionLocation.getNodeOffset();
-		int end = start + functionLocation.getNodeLength();
-		if(functionDefinition.getBody() != null && functionDefinition.getBody().getFileLocation() != null) {
-			end = functionDefinition.getBody().getFileLocation().getNodeOffset() + 1;
-		}
-		return fileContent.substring(start, end);
 	}
 
 	private String moduleName(String path) {

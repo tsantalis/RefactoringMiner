@@ -1322,6 +1322,8 @@ public class MethodMatcher extends BodyMapperMatcher{
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : umlTypeParameterListDiff.getCommonTypeParameters()) {
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTree, commonTypeParamSet.getLeft().getLocationInfo(), LANG1);
             Tree dstTypeParam = TreeUtilFunctions.findByLocationInfo(dstTree, commonTypeParamSet.getRight().getLocationInfo(), LANG2);
+            if(srcTypeParam == null || dstTypeParam == null)
+                continue;
             mappingStore.addMappingRecursively(srcTypeParam,dstTypeParam);
             if (srcTypeParam.getParent().getType().name.equals(LANG1.TYPE_PARAMETERS) && dstTypeParam.getParent().getType().name.equals(LANG2.TYPE_PARAMETERS)) {
                 mappingStore.addMapping(srcTypeParam.getParent(), dstTypeParam.getParent());

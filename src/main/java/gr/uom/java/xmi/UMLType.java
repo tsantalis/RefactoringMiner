@@ -283,7 +283,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 				arrayDimension++;
 			}
 		}
-		if(qualifiedName.contains(openingTag) && qualifiedName.contains(closingTag) &&
+		if(qualifiedName.contains(openingTag) && qualifiedName.contains(closingTag) && !qualifiedName.contains(">=") && !qualifiedName.contains("<=") &&
 				!closingTagBeforeOpeningTag(qualifiedName.substring(qualifiedName.indexOf(openingTag)+1, qualifiedName.lastIndexOf(closingTag)), openingTag, closingTag)) {
 			String typeArguments = qualifiedName.substring(qualifiedName.indexOf(openingTag)+1, qualifiedName.lastIndexOf(closingTag));
 			parameterized = true;
@@ -294,7 +294,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 					sb.append(charAt);
 				}
 				else {
-					if(sb.length() > 0 && equalOpeningClosingTags(sb.toString(), openingTag, closingTag)) {
+					String s = sb.toString();
+					if(sb.length() > 0 && equalOpeningClosingTags(s, openingTag, closingTag) && !closingTagBeforeOpeningTag(s, openingTag, closingTag)) {
 						typeArgumentDecomposition.add(extractTypeObject(sb.toString(), openingTag, closingTag, location));
 						sb = new StringBuilder();
 					}

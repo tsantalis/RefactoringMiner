@@ -3,7 +3,9 @@ package gr.uom.java.xmi;
 import java.util.List;
 
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
+import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
@@ -223,9 +225,21 @@ public class LocationInfo {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
-		// CDT exposes offsets and line numbers through IASTFileLocation, but not columns.
-		// Asks CDT for the node’s position inside the source file. 
-		IASTFileLocation fileLocation = node.getFileLocation();
+		IASTNodeLocation[] locations = node.getNodeLocations();
+		if (locations.length == 1 && locations[0] instanceof IASTMacroExpansionLocation) {
+			IASTMacroExpansionLocation macroLoc = (IASTMacroExpansionLocation) locations[0];
+			//macroLoc.asFileLocation()
+			//macroLoc.getExpansion().getFileLocation()
+			//macroLoc.getExpansion().getMacroReference().getFileLocation()
+			//macroLoc.getExpansion().getMacroDefinition().getName().getImageLocation()
+			init(fileContent, macroLoc.asFileLocation());
+		}
+		else {
+			init(fileContent, node.getFileLocation());
+		}
+	}
+
+	private void init(String fileContent, IASTFileLocation fileLocation) {
 		if(fileLocation != null) {
 			// Stores where node starts
 			this.startOffset = fileLocation.getNodeOffset();

@@ -41,11 +41,13 @@ public class EnumConstantsMatcher extends OptimizationAwareMatcher {
             Tree srcEnumConstant = TreeUtilFunctions.findByLocationInfo(srcTree,locationInfo1,LANG1);
             Tree dstEnumConstant = TreeUtilFunctions.findByLocationInfo(dstTree,locationInfo2,LANG2);
             if (srcEnumConstant == null || srcEnumConstant.getType().name.endsWith("_comment")) {
-            	srcEnumConstant = TreeUtilFunctions.findByLocationInfo(srcTree, locationInfo1, LANG1, LANG1.ENUM_ENTRY);
+                srcEnumConstant = TreeUtilFunctions.findByLocationInfo(srcTree, locationInfo1, LANG1, LANG1.ENUM_ENTRY);
             }
             if (dstEnumConstant == null || dstEnumConstant.getType().name.endsWith("_comment")) {
-            	dstEnumConstant = TreeUtilFunctions.findByLocationInfo(dstTree, locationInfo2, LANG2, LANG2.ENUM_ENTRY);
+                dstEnumConstant = TreeUtilFunctions.findByLocationInfo(dstTree, locationInfo2, LANG2, LANG2.ENUM_ENTRY);
             }
+            if(srcEnumConstant == null || dstEnumConstant == null)
+                continue;
             new LeafMatcher(LANG1, LANG2).match(srcEnumConstant,dstEnumConstant,mappingStore);
             new FieldDeclarationMatcher(
                     optimizationData,

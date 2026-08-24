@@ -1205,6 +1205,12 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+			else if(declaration1.getLANG().equals(Constants.CPP) && declaration2.getLANG().equals(Constants.CPP) &&
+					!declaration1.equalType(declaration2) && declaration1.equalInitializer(declaration2)) {
+				Replacement replacement = new Replacement(declaration1.getType().toString(), declaration2.getType().toString(), ReplacementType.TYPE);
+				replacementInfo.addReplacement(replacement);
+				return true;
+			}
 		}
 		return false;
 	}

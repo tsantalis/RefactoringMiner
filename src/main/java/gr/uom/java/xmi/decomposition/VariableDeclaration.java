@@ -651,6 +651,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return scope;
 	}
 
+	public Constants getLANG() {
+		return LANG;
+	}
+
 	public boolean isLocalVariable() {
 		return !isParameter && !isAttribute && !isEnumConstant;
 	}
@@ -868,6 +872,16 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public boolean equalVariableDeclarationType(VariableDeclaration other) {
 		return this.locationInfo.getCodeElementType().equals(other.locationInfo.getCodeElementType());
+	}
+
+	public boolean equalInitializer(VariableDeclaration other) {
+		if(this.getInitializer() == null && other.getInitializer() == null) {
+			return true;
+		}
+		else if(this.getInitializer() != null && other.getInitializer() != null) {
+			return this.getInitializer().getString().equals(other.getInitializer().getString());
+		}
+		return false;
 	}
 
 	public boolean equalType(VariableDeclaration other) {

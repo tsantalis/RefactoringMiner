@@ -470,10 +470,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(srcStatement != null && dstStatement != null && srcStatement.getChildren().size() == 0 && dstStatement.getChildren().size() == 0) {
                     //this is #endif
                     mappingStore.addMapping(srcStatement, dstStatement);
-                    mappingStore.addMappingRecursively(srcStatement.getParent(), dstStatement.getParent());
                 }
-                if(srcStatement != null && dstStatement != null)
+                boolean ifDef = srcStatement.getType().name.equals(LANG1.PREPROC_IFDEF) && dstStatement.getType().name.equals(LANG2.PREPROC_IFDEF) &&
+                        (classDiff.getPreprocessorStatementListDiff().get().getAddedStatements().size() > 0 || classDiff.getPreprocessorStatementListDiff().get().getRemovedStatements().size() > 0);
+                if(srcStatement != null && dstStatement != null && !ifDef)
                     mappingStore.addMappingRecursively(srcStatement, dstStatement);
+                else
+                    mappingStore.addMapping(srcStatement, dstStatement);
             }
             for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getChangedStatements()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);

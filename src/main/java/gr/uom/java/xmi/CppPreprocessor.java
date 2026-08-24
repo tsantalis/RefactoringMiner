@@ -82,7 +82,11 @@ public class CppPreprocessor {
 			List<DeclarationGroup> declarationGroups, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		List<IASTDeclaration> allDeclarations = new ArrayList<>();
 		for(DeclarationGroup group : declarationGroups) {
-			Collections.addAll(allDeclarations, group.declarations);
+			for(IASTDeclaration declaration : group.declarations) {
+				if(fileProcessor.shouldProcessDeclaration(declaration)) {
+					allDeclarations.add(declaration);
+				}
+			}
 		}
 		Map<IASTDeclaration, List<IASTDeclaration>> alternatives = new IdentityHashMap<>();
 		Set<IASTDeclaration> mergedInactiveContainers = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -90,7 +94,7 @@ public class CppPreprocessor {
 		for(DeclarationGroup group : declarationGroups) {
 			Visibility currentVisibility = group.initialVisibility;
 			for(IASTDeclaration declaration : group.declarations) {
-				if(!mergedInactiveContainers.contains(declaration)) {
+				if(fileProcessor.shouldProcessDeclaration(declaration) && !mergedInactiveContainers.contains(declaration)) {
 					currentVisibility = fileProcessor.processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility,
 							declaration, templateParameters, alternatives.getOrDefault(declaration, Collections.emptyList()));
 				}

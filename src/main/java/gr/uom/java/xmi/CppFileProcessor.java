@@ -5,7 +5,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -146,7 +145,10 @@ public class CppFileProcessor {
 					return (InternalFileContent) FileContent.createForExternalFileLocation(astPath);
 				}
 			};
-			int options = GPPLanguage.OPTION_IS_SOURCE_UNIT | GPPLanguage.OPTION_PARSE_INACTIVE_CODE | GPPLanguage.OPTION_NO_IMAGE_LOCATIONS;
+			int options = GPPLanguage.OPTION_IS_SOURCE_UNIT | GPPLanguage.OPTION_PARSE_INACTIVE_CODE;
+			if(!astDiff) {
+				options |= GPPLanguage.OPTION_NO_IMAGE_LOCATIONS;
+			}
 
 			if(PathFileUtils.isCppFile(filePath)) {
 				if (astDiff) {
@@ -171,9 +173,8 @@ public class CppFileProcessor {
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				preprocessor.buildConditionalBranches(ast.getAllPreprocessorStatements());
 				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
-				IASTDeclaration[] declarations = ast.getDeclarations(true);
-				IASTDeclaration[] declarationsWithinFile = Arrays.stream(declarations).filter(d -> d.getFileLocation().toString().startsWith(filePath)).toArray(IASTDeclaration[]::new);
-				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, declarationsWithinFile, comments, new ICPPASTTemplateParameter[0]);
+				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass,
+						ast.getDeclarations(true), comments, new ICPPASTTemplateParameter[0]);
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				//TODO consider assigning comments to individual preprocessor statements
@@ -201,7 +202,8 @@ public class CppFileProcessor {
 				this.umlModel.getCommentMap().put(filePath, comments);
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
-				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations(), comments, new ICPPASTTemplateParameter[0]);
+				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass,
+						ast.getDeclarations(), comments, new ICPPASTTemplateParameter[0]);
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				moduleClass.getComments().addAll(comments);
@@ -215,6 +217,9 @@ public class CppFileProcessor {
 	private List<UMLComment> extractInternalComments(IASTComment[] astComments, String sourceFolder, String sourceFile, String fileContent) {
 		List<UMLComment> comments = new ArrayList<UMLComment>();
 		for(IASTComment comment : astComments) {
+			if(!comment.isPartOfTranslationUnitFile()) {
+				continue;
+			}
 			LocationInfo locationInfo = null;
 			if(comment.isBlockComment()) {
 				locationInfo = new LocationInfo(sourceFolder, sourceFile, comment, CodeElementType.BLOCK_COMMENT, fileContent);
@@ -252,6 +257,9 @@ public class CppFileProcessor {
 
 	private void processPreprocessorStatements(String sourceFolder, UMLClass moduleClass, IASTPreprocessorStatement[] allPreprocessorStatements) {
 		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
+			if(!statement.isPartOfTranslationUnitFile()) {
+				continue;
+			}
 			LocationInfo locationInfo = new LocationInfo(
 				sourceFolder,
 				filePath,
@@ -364,6 +372,9 @@ public class CppFileProcessor {
 	public Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
 			List<UMLComment> comments, Visibility currentVisibility, IASTDeclaration declaration, ICPPASTTemplateParameter[] templateParameters,
 			List<IASTDeclaration> inactiveContainerAlternatives) {
+		if(!shouldProcessDeclaration(declaration)) {
+			return currentVisibility;
+		}
 		if(declaration instanceof CPPASTStructuredBindingDeclaration cppStructuredBindingDeclaration) {
 			//A structured binding declaration is a feature introduced in C++17 that allows you to unpack or decompose a target object into individual named variables.
 			//Similar to destructuring or unpacking in languages like JavaScript and Python, it directly binds specified identifiers to the sub-objects, members, or elements of an initializer.
@@ -514,6 +525,10 @@ public class CppFileProcessor {
 			}
 		}
 		return currentVisibility;
+	}
+
+	boolean shouldProcessDeclaration(IASTDeclaration declaration) {
+		return declaration.isPartOfTranslationUnitFile() || declaration instanceof ICPPASTVisibilityLabel;
 	}
 
 	private UMLClass createModuleClass(IASTTranslationUnit ast, String sourceFolder) {

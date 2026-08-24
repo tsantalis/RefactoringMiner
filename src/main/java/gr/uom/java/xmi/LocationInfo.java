@@ -3,9 +3,11 @@ package gr.uom.java.xmi;
 import java.util.List;
 
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTImageLocation;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
@@ -227,16 +229,33 @@ public class LocationInfo {
 		this.codeElementType = codeElementType;
 		IASTNodeLocation[] locations = node.getNodeLocations();
 		if (locations.length == 1 && locations[0] instanceof IASTMacroExpansionLocation) {
-			IASTMacroExpansionLocation macroLoc = (IASTMacroExpansionLocation) locations[0];
-			//macroLoc.asFileLocation()
-			//macroLoc.getExpansion().getFileLocation()
-			//macroLoc.getExpansion().getMacroReference().getFileLocation()
-			//macroLoc.getExpansion().getMacroDefinition().getName().getImageLocation()
-			init(fileContent, macroLoc.asFileLocation());
+			IASTMacroExpansionLocation macroLocation = (IASTMacroExpansionLocation) locations[0];
+			IASTImageLocation imageLocation = getImageLocation(node);
+			if(isSourceMacroArgument(node, imageLocation)) {
+				init(fileContent, imageLocation);
+			}
+			else {
+				init(fileContent, macroLocation.asFileLocation());
+			}
 		}
 		else {
 			init(fileContent, node.getFileLocation());
 		}
+	}
+
+	private IASTImageLocation getImageLocation(IASTNode node) {
+		if(node instanceof org.eclipse.cdt.internal.core.dom.parser.ASTNode astNode) {
+			return astNode.getImageLocation();
+		}
+		return null;
+	}
+
+	private boolean isSourceMacroArgument(IASTNode node, IASTImageLocation imageLocation) {
+		if(imageLocation == null || imageLocation.getLocationKind() != IASTImageLocation.ARGUMENT_TO_MACRO_EXPANSION) {
+			return false;
+		}
+		IASTTranslationUnit translationUnit = node.getTranslationUnit();
+		return translationUnit != null && translationUnit.getFilePath().equals(imageLocation.getFileName());
 	}
 
 	private void init(String fileContent, IASTFileLocation fileLocation) {
@@ -248,11 +267,38 @@ public class LocationInfo {
 			this.endOffset = startOffset + length;
 			this.startLine = fileLocation.getStartingLineNumber();
 			this.endLine = fileLocation.getEndingLineNumber();
+			if(this.startLine <= 0) {
+				this.startLine = computeLine(fileContent, startOffset);
+			}
+			if(this.endLine <= 0) {
+				this.endLine = computeLine(fileContent, Math.max(startOffset, endOffset - 1));
+			}
 			// Columns are derived from the original file content so CodeRange remains UI-friendly.
 			this.startColumn = computeColumn(fileContent, startOffset);
 			this.endColumn = computeColumn(fileContent, Math.max(startOffset, endOffset - 1));
 			this.compilationUnitLength = computeCompilationUnitLength(fileContent);
 		}
+	}
+
+	private int computeLine(String fileContent, int offset) {
+		if(fileContent == null || fileContent.isEmpty() || offset < 0) {
+			return 0;
+		}
+		int safeOffset = Math.min(offset, fileContent.length());
+		int line = 1;
+		for(int i = 0; i < safeOffset; i++) {
+			char character = fileContent.charAt(i);
+			if(character == '\r') {
+				line++;
+				if(i + 1 < safeOffset && fileContent.charAt(i + 1) == '\n') {
+					i++;
+				}
+			}
+			else if(character == '\n') {
+				line++;
+			}
+		}
+		return line;
 	}
 
 	private int computeColumn(String fileContent, int offset) {

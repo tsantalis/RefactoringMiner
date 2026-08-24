@@ -470,6 +470,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(srcStatement != null && dstStatement != null && srcStatement.getChildren().size() == 0 && dstStatement.getChildren().size() == 0) {
                     //this is #endif
                     mappingStore.addMapping(srcStatement, dstStatement);
+                    if(srcStatement.getParent().getType().name.equals(LANG1.PREPROC_CALL) && dstStatement.getParent().getType().name.equals(LANG2.PREPROC_CALL)) {
+                        mappingStore.addMappingRecursively(srcStatement.getParent(), dstStatement.getParent());
+                    }
                 }
                 boolean ifDef = srcStatement.getType().name.equals(LANG1.PREPROC_IFDEF) && dstStatement.getType().name.equals(LANG2.PREPROC_IFDEF) &&
                         (classDiff.getPreprocessorStatementListDiff().get().getAddedStatements().size() > 0 || classDiff.getPreprocessorStatementListDiff().get().getRemovedStatements().size() > 0);

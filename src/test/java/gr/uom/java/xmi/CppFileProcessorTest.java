@@ -6,12 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLPreprocessorStatement.Directive;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.TryStatementObject;
@@ -1232,6 +1238,109 @@ class CppFileProcessorTest {
 		assertTrue(partialBox.getActualSignature().contains("class Box<T*>"));
 		assertEquals(List.of("T"), partialBox.getTypeParameterNames());
 		assertEquals("T*", findOperation(partialBox.getOperations(), "value").getReturnParameter().getType().toString().replace(" ", ""));
+	}
+
+	@Test
+	void preservesMacroArgumentLocationsDuringAstDiffProcessing() {
+		String filePath = "src/assertions.cpp";
+		String fileContent = String.join("\n",
+				"#define ASSERT_EQ(lhs, rhs) if ((lhs) == (rhs)) {}",
+				"void run() {",
+				"  ASSERT_EQ(foo(), bar());",
+				"}") + "\n";
+		UMLModel model = new UMLModel(Set.of("src"));
+
+		new CppFileProcessor(model).processCppFile(filePath, fileContent, true);
+
+		UMLOperation run = findOperation(findClass(model.getClassList(), "assertions").getOperations(), "run");
+		List<LocationInfo> invocationLocations = run.getAllOperationInvocations().stream()
+				.map(AbstractCall::getLocationInfo)
+				.toList();
+		assertContainsLocation(invocationLocations, fileContent.indexOf("foo()"), "foo()".length());
+		assertContainsLocation(invocationLocations, fileContent.indexOf("bar()"), "bar()".length());
+	}
+
+	@Test
+	void excludesIncludedHeaderNodesFromSourceModel(@TempDir Path tempDir) throws IOException {
+		Files.writeString(tempDir.resolve("fixture.h"), String.join("\n",
+				"// HEADER_SENTINEL",
+				"class HeaderOnly {",
+				"public:",
+				"  void hidden() {}",
+				"};",
+				"#define DECLARE_SOURCE_FUNCTION(name) void name() {}") + "\n");
+		String fileContent = String.join("\n",
+				"#include \"fixture.h\"",
+				"// SOURCE_SENTINEL",
+				"DECLARE_SOURCE_FUNCTION(sourceFunction)") + "\n";
+		String filePath = tempDir.resolve("sample.cpp").toString();
+		UMLModel model = new UMLModel(Set.of());
+
+		new CppFileProcessor(model).processCppFile(filePath, fileContent, false);
+
+		assertFalse(model.getClassList().stream()
+				.anyMatch(umlClass -> umlClass.getName().equals("HeaderOnly") || umlClass.getName().endsWith(".HeaderOnly")));
+		UMLClass moduleClass = findClass(model.getClassList(), "sample");
+		assertNotNull(findOperation(moduleClass.getOperations(), "sourceFunction"));
+		assertEquals(List.of(Directive.INCLUDE), moduleClass.getPreprocessorStatements().stream()
+				.map(UMLPreprocessorStatement::getType)
+				.toList());
+		assertFalse(model.getCommentMap().values().stream()
+				.flatMap(List::stream)
+				.anyMatch(comment -> comment.getText().contains("HEADER_SENTINEL")));
+		assertFalse(model.getClassList().stream()
+				.flatMap(umlClass -> umlClass.getComments().stream())
+				.anyMatch(comment -> comment.getText().contains("HEADER_SENTINEL")));
+	}
+
+	@Test
+	void excludesIncludedHeaderNodesNestedInsideNamespace(@TempDir Path tempDir) throws IOException {
+		Files.writeString(tempDir.resolve("nested.h"), String.join("\n",
+				"class HeaderNested {",
+				"public:",
+				"  void hidden() {}",
+				"};") + "\n");
+		String fileContent = String.join("\n",
+				"namespace Wrapper {",
+				"#include \"nested.h\"",
+				"void visible() {}",
+				"}") + "\n";
+		String filePath = tempDir.resolve("sample.cpp").toString();
+		UMLModel model = new UMLModel(Set.of());
+
+		new CppFileProcessor(model).processCppFile(filePath, fileContent, false);
+
+		assertFalse(model.getClassList().stream()
+				.anyMatch(umlClass -> umlClass.getName().equals("HeaderNested") ||
+						umlClass.getName().endsWith(".HeaderNested")));
+		assertNotNull(findOperation(findClass(model.getClassList(), "sample").getOperations(), "visible"));
+	}
+
+	@Test
+	void preservesIncludedAccessLabelForFollowingSourceMember(@TempDir Path tempDir) throws IOException {
+		Files.writeString(tempDir.resolve("public.inc"), "public:\n");
+		String fileContent = String.join("\n",
+				"class Container {",
+				"private:",
+				"#include \"public.inc\"",
+				"void visible();",
+				"};") + "\n";
+		String filePath = tempDir.resolve("sample.cpp").toString();
+		UMLModel model = new UMLModel(Set.of());
+
+		new CppFileProcessor(model).processCppFile(filePath, fileContent, false);
+
+		UMLOperation visible = findOperation(findClass(model.getClassList(), "Container").getOperations(), "visible");
+		assertEquals(Visibility.PUBLIC, visible.getVisibility());
+	}
+
+	private static void assertContainsLocation(List<LocationInfo> locations, int startOffset, int length) {
+		assertTrue(locations.stream().anyMatch(location ->
+				location.getStartOffset() == startOffset && location.getLength() == length),
+				() -> "Expected location [" + startOffset + ", " + (startOffset + length) + ") but found " +
+						locations.stream()
+								.map(location -> "[" + location.getStartOffset() + ", " + location.getEndOffset() + ")")
+								.toList());
 	}
 
 	private static UMLOperation findOperation(List<UMLOperation> operations, String name) {

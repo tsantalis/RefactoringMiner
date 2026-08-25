@@ -237,8 +237,8 @@ public class LocationInfo {
 	}
 
 	private boolean initFromMacroNodeLocations(String fileContent, IASTNodeLocation[] locations) {
-		IASTFileLocation startLocation = null;
-		IASTFileLocation endLocation = null;
+		IASTFileLocation earliestFileLocation = null;
+		IASTFileLocation latestFileLocation = null;
 		boolean hasMacroLocation = false;
 		int startOffset = Integer.MAX_VALUE;
 		int endOffset = Integer.MIN_VALUE;
@@ -250,17 +250,17 @@ public class LocationInfo {
 				int locationEnd = locationStart + fileLocation.getNodeLength();
 				if(locationStart < startOffset) {
 					startOffset = locationStart;
-					startLocation = fileLocation;
+					earliestFileLocation = fileLocation;
 				}
 				if(locationEnd > endOffset) {
 					endOffset = locationEnd;
-					endLocation = fileLocation;
+					latestFileLocation = fileLocation;
 				}
 			}
 		}
-		if(hasMacroLocation && startLocation != null && endLocation != null && endOffset >= startOffset) {
+		if(hasMacroLocation && earliestFileLocation != null && latestFileLocation != null && endOffset >= startOffset) {
 			init(fileContent, startOffset, endOffset - startOffset,
-					startLocation.getStartingLineNumber(), endLocation.getEndingLineNumber());
+					earliestFileLocation.getStartingLineNumber(), latestFileLocation.getEndingLineNumber());
 			return true;
 		}
 		return false;

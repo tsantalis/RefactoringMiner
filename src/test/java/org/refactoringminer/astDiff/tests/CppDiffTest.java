@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFinalFilePath;
@@ -11,16 +12,23 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.getProjectDiffLocal
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.github.gumtreediff.actions.TreeClassifier;
+import com.github.gumtreediff.tree.Tree;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.api.io.TempDir;
+import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
@@ -34,6 +42,126 @@ import net.joshka.junit.json.params.JsonFileSource;
 public class CppDiffTest {
 	public static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits/cpp";
 	public static final String MAPPING_PATH = System.getProperty("user.dir") + "/src/test/resources/astDiff/cpp";
+
+	@Test
+	void doesNotMarkUnchangedShiftedMacroTestBodyAsChanged(@TempDir Path tempDir) throws IOException {
+		Path before = tempDir.resolve("before");
+		Path after = tempDir.resolve("after");
+		Files.createDirectories(before.resolve("src"));
+		Files.createDirectories(after.resolve("src"));
+		String beforeCode = String.join("\n",
+				"#define TEST(suite, name) void suite##_##name()",
+				"#define EXPECT_EQ(lhs, rhs) if (!((lhs) == (rhs))) return",
+				"#define EXPECT_THAT(lhs, rhs) if (!(lhs)) return",
+				"#define ElementsAreArray(values) values",
+				"#define ArrayFloatNear(values) values",
+				"",
+				"TEST(DynamicUpdateSliceOpTest, SimpleTestF32InPlaceInput) {",
+				"  int model = 0;",
+				"  const int kInplaceInputTensorIdx = 0;",
+				"  const int kInplaceOutputTensorIdx = 0;",
+				"  EXPECT_THAT(model, ElementsAreArray(ArrayFloatNear({1, 2, 3})));",
+				"  EXPECT_EQ(kInplaceOutputTensorIdx, kInplaceInputTensorIdx);",
+				"}",
+				"",
+				"TEST(DynamicUpdateSliceOpTest, SimpleTestF16InPlaceInput) {",
+				"  int model = 0;",
+				"  const int kInplaceInputTensorIdx = 0;",
+				"  const int kInplaceOutputTensorIdx = 0;",
+				"  EXPECT_THAT(model, ElementsAreArray(ArrayFloatNear({1, 2, 3})));",
+				"  EXPECT_EQ(kInplaceOutputTensorIdx, kInplaceInputTensorIdx);",
+				"}") + "\n";
+		String afterCode = String.join("\n",
+				"#define TEST(suite, name) void suite##_##name()",
+				"#define EXPECT_EQ(lhs, rhs) if (!((lhs) == (rhs))) return",
+				"#define EXPECT_THAT(lhs, rhs) if (!(lhs)) return",
+				"#define ElementsAreArray(values) values",
+				"#define ArrayFloatNear(values) values",
+				"",
+				"void helper() {",
+				"}",
+				"",
+				"TEST(DynamicUpdateSliceOpTest, SimpleTestF32InPlaceInput) {",
+				"  int model = 0;",
+				"  const int kInplaceInputTensorIdx = 0;",
+				"  const int kInplaceOutputTensorIdx = 0;",
+				"  EXPECT_THAT(model, ElementsAreArray(ArrayFloatNear({1, 2, 3})));",
+				"  EXPECT_EQ(kInplaceOutputTensorIdx, kInplaceInputTensorIdx);",
+				"}",
+				"",
+				"TEST(DynamicUpdateSliceOpTest, SimpleTestF16InPlaceInput) {",
+				"  int model = 0;",
+				"  const int kInplaceInputTensorIdx = 0;",
+				"  const int kInplaceOutputTensorIdx = 0;",
+				"  EXPECT_THAT(model, ElementsAreArray(ArrayFloatNear({1, 2, 3})));",
+				"  EXPECT_EQ(kInplaceOutputTensorIdx, kInplaceInputTensorIdx);",
+				"}") + "\n";
+		Files.writeString(before.resolve("src/sample.cc"), beforeCode, StandardCharsets.UTF_8);
+		Files.writeString(after.resolve("src/sample.cc"), afterCode, StandardCharsets.UTF_8);
+
+		Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtDirectories(before, after).getDiffSet();
+		ASTDiff astDiff = astDiffs.stream()
+				.filter(diff -> diff.getSrcPath().equals("src/sample.cc"))
+				.findFirst()
+				.orElseThrow();
+		TreeClassifier classifier = astDiff.createRootNodesClassifier();
+		int testStart = beforeCode.indexOf("TEST(DynamicUpdateSliceOpTest, SimpleTestF32InPlaceInput)");
+		int testEnd = beforeCode.indexOf("}", testStart) + 1;
+
+		assertTrue(noTreeInRange(classifier.getUpdatedSrcs(), testStart, testEnd),
+				"Unexpected updates in unchanged macro test body");
+		assertTrue(noTreeInRange(classifier.getMovedSrcs(), testStart, testEnd),
+				"Unexpected moves in unchanged macro test body");
+		assertTrue(noTreeInRange(((ExtendedTreeClassifier) classifier).getMultiMapSrc().keySet(), testStart, testEnd),
+				"Unexpected multi-moves in unchanged macro test body");
+	}
+
+	@Test
+	void marksActuallyReorderedMacroTestBodyAsMoved(@TempDir Path tempDir) throws IOException {
+		Path before = tempDir.resolve("before");
+		Path after = tempDir.resolve("after");
+		Files.createDirectories(before.resolve("src"));
+		Files.createDirectories(after.resolve("src"));
+		String beforeCode = String.join("\n",
+				"#define TEST(suite, name) void suite##_##name()",
+				"",
+				"TEST(SampleTest, FirstCase) {",
+				"  int first = 1;",
+				"}",
+				"",
+				"TEST(SampleTest, SecondCase) {",
+				"  int second = 2;",
+				"}") + "\n";
+		String afterCode = String.join("\n",
+				"#define TEST(suite, name) void suite##_##name()",
+				"",
+				"TEST(SampleTest, SecondCase) {",
+				"  int second = 2;",
+				"}",
+				"",
+				"TEST(SampleTest, FirstCase) {",
+				"  int first = 1;",
+				"}") + "\n";
+		Files.writeString(before.resolve("src/sample.cc"), beforeCode, StandardCharsets.UTF_8);
+		Files.writeString(after.resolve("src/sample.cc"), afterCode, StandardCharsets.UTF_8);
+
+		Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtDirectories(before, after).getDiffSet();
+		ASTDiff astDiff = astDiffs.stream()
+				.filter(diff -> diff.getSrcPath().equals("src/sample.cc"))
+				.findFirst()
+				.orElseThrow();
+		TreeClassifier classifier = astDiff.createRootNodesClassifier();
+		int firstTestStart = beforeCode.indexOf("TEST(SampleTest, FirstCase)");
+		int firstTestEnd = beforeCode.indexOf("}", firstTestStart) + 1;
+
+		assertTrue(!noTreeInRange(classifier.getMovedSrcs(), firstTestStart, firstTestEnd)
+						|| !noTreeInRange(((ExtendedTreeClassifier) classifier).getMultiMapSrc().keySet(), firstTestStart, firstTestEnd),
+				"Actually reordered macro test body should still be reported as moved");
+	}
+
+	private static boolean noTreeInRange(Collection<Tree> trees, int start, int end) {
+		return trees.stream().noneMatch(tree -> tree.getPos() >= start && tree.getEndPos() <= end);
+	}
 
 	@Test
 	public void testSubTreeMappings() throws JsonProcessingException {

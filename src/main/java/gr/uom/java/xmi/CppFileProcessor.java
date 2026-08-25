@@ -338,7 +338,7 @@ public class CppFileProcessor {
 	private String[] getIncludePaths(String filePath) {
 		Set<String> includePaths = new LinkedHashSet<>();
 		includePaths.add(".");
-		//includePaths.add(System.getProperty("user.dir") + "/include");
+		includePaths.add(System.getProperty("user.dir") + "/include");
 		/*
 		if(this.fileContent.contains("#include \"gtest/")) {
 			includePaths.add(System.getProperty("user.dir") + "/include/gtest");

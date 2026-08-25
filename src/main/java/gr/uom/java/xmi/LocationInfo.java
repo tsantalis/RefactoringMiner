@@ -226,33 +226,55 @@ public class LocationInfo {
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
 		IASTNodeLocation[] locations = node.getNodeLocations();
-		if (locations.length == 1 && locations[0] instanceof IASTMacroExpansionLocation) {
-			IASTMacroExpansionLocation macroLoc = (IASTMacroExpansionLocation) locations[0];
-			//macroLoc.asFileLocation()
-			//macroLoc.getExpansion().getFileLocation()
-			//macroLoc.getExpansion().getMacroReference().getFileLocation()
-			//macroLoc.getExpansion().getMacroDefinition().getName().getImageLocation()
-			init(fileContent, macroLoc.asFileLocation());
+		if(initFromMacroNodeLocations(fileContent, locations)) {
+			return;
 		}
-		else {
-			init(fileContent, node.getFileLocation());
+		IASTFileLocation fileLocation = node.getFileLocation();
+		if(fileLocation != null) {
+			init(fileContent, fileLocation.getNodeOffset(), fileLocation.getNodeLength(),
+					fileLocation.getStartingLineNumber(), fileLocation.getEndingLineNumber());
 		}
 	}
 
-	private void init(String fileContent, IASTFileLocation fileLocation) {
-		if(fileLocation != null) {
-			// Stores where node starts
-			this.startOffset = fileLocation.getNodeOffset();
-			// Stores characters belonging to node.
-			this.length = fileLocation.getNodeLength();
-			this.endOffset = startOffset + length;
-			this.startLine = fileLocation.getStartingLineNumber();
-			this.endLine = fileLocation.getEndingLineNumber();
-			// Columns are derived from the original file content so CodeRange remains UI-friendly.
-			this.startColumn = computeColumn(fileContent, startOffset);
-			this.endColumn = computeColumn(fileContent, Math.max(startOffset, endOffset - 1));
-			this.compilationUnitLength = computeCompilationUnitLength(fileContent);
+	private boolean initFromMacroNodeLocations(String fileContent, IASTNodeLocation[] locations) {
+		IASTFileLocation startLocation = null;
+		IASTFileLocation endLocation = null;
+		boolean hasMacroLocation = false;
+		int startOffset = Integer.MAX_VALUE;
+		int endOffset = Integer.MIN_VALUE;
+		for(IASTNodeLocation location : locations) {
+			hasMacroLocation |= location instanceof IASTMacroExpansionLocation;
+			IASTFileLocation fileLocation = location.asFileLocation();
+			if(fileLocation != null) {
+				int locationStart = fileLocation.getNodeOffset();
+				int locationEnd = locationStart + fileLocation.getNodeLength();
+				if(locationStart < startOffset) {
+					startOffset = locationStart;
+					startLocation = fileLocation;
+				}
+				if(locationEnd > endOffset) {
+					endOffset = locationEnd;
+					endLocation = fileLocation;
+				}
+			}
 		}
+		if(hasMacroLocation && startLocation != null && endLocation != null && endOffset >= startOffset) {
+			init(fileContent, startOffset, endOffset - startOffset,
+					startLocation.getStartingLineNumber(), endLocation.getEndingLineNumber());
+			return true;
+		}
+		return false;
+	}
+
+	private void init(String fileContent, int startOffset, int length, int startLine, int endLine) {
+		this.startOffset = startOffset;
+		this.length = length;
+		this.endOffset = startOffset + length;
+		this.startLine = startLine;
+		this.endLine = endLine;
+		this.startColumn = computeColumn(fileContent, startOffset);
+		this.endColumn = computeColumn(fileContent, Math.max(startOffset, endOffset - 1));
+		this.compilationUnitLength = computeCompilationUnitLength(fileContent);
 	}
 
 	private int computeColumn(String fileContent, int offset) {

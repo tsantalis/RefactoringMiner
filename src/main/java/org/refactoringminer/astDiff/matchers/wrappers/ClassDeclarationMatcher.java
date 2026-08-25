@@ -455,10 +455,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if(classDiff.getPreprocessorStatementListDiff().isPresent()) {
             for (org.apache.commons.lang3.tuple.Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> statementPair : classDiff.getPreprocessorStatementListDiff().get().getCommonStatements()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
-                if(srcStatement != null && !srcStatement.getLabel().isEmpty() && !srcStatement.getLabel().equals("#endif"))
+                if(srcStatement != null && !srcStatement.getLabel().isEmpty() && !srcStatement.getType().name.equals("#endif"))
                     srcStatement = srcStatement.getParent();
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                if(dstStatement != null && !dstStatement.getLabel().isEmpty() && !dstStatement.getLabel().equals("#endif"))
+                if(dstStatement != null && !dstStatement.getLabel().isEmpty() && !dstStatement.getType().name.equals("#endif"))
                     dstStatement = dstStatement.getParent();
                 //make sure the preprocessor statement is matched, because TreeSitter puts nested statements under the preprocessor statement, while Eclipse CDT parser does not do the same
                 if(srcStatement != null && dstStatement != null && srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1) {

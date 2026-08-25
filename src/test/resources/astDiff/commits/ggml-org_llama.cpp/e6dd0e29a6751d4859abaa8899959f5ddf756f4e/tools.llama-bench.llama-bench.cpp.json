@@ -1264,6 +1264,17 @@
   "firstEndPos" : 604,
   "secondEndPos" : 621
 }, {
+  "firstType" : "#endif",
+  "secondType" : "#endif",
+  "firstLabel" : "#    endif",
+  "secondLabel" : "#    endif",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 605,
+  "secondPos" : 622,
+  "firstEndPos" : 615,
+  "secondEndPos" : 632
+}, {
   "firstType" : "preproc_include",
   "secondType" : "preproc_include",
   "firstLabel" : "",

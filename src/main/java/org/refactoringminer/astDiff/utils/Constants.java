@@ -670,4 +670,5 @@ public class Constants {
     public final String ABSTRACT_FUNCTION_DECLARATOR = "abstract_function_declarator";
     public final String PREPROC_IFDEF = "preproc_ifdef";
     public final String PREPROC_CALL = "preproc_call";
+    public final String ENDIF = "#endif";
 }

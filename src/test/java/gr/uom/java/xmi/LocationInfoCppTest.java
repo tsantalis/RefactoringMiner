@@ -2,12 +2,15 @@ package gr.uom.java.xmi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
+import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.model.ILanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
@@ -111,6 +114,40 @@ class LocationInfoCppTest {
 		assertEquals(0, location.getEndColumn());
 		assertEquals(0, location.getCompilationUnitLength());
 	}
+	@Test
+	void mapsMixedMacroExpansionLocationsToOriginalCppSourceSpan() throws Exception {
+		String source = String.join("\n",
+				"#define TEST(suite, name) void suite##_##name()",
+				"",
+				"TEST(DynamicUpdateSliceOpTest, SimpleTestF32InPlaceInput) {",
+				"  int value = 1;",
+				"}") + "\n";
+		IASTNode function = findDeclaration(source, String.join("\n",
+				"TEST(DynamicUpdateSliceOpTest, SimpleTestF32InPlaceInput) {",
+				"  int value = 1;",
+				"}"));
+
+		boolean hasMacroExpansionLocation = false;
+		for(IASTNodeLocation nodeLocation : function.getNodeLocations()) {
+			if(nodeLocation instanceof IASTMacroExpansionLocation) {
+				hasMacroExpansionLocation = true;
+			}
+		}
+
+		LocationInfo location = new LocationInfo(SRC_FOLDER, FILE_PATH, function,
+				LocationInfo.CodeElementType.METHOD_DECLARATION, source);
+
+		int startOffset = source.indexOf("TEST(DynamicUpdateSliceOpTest, SimpleTestF32InPlaceInput)");
+		int endOffset = source.indexOf("}", startOffset) + 1;
+		assertTrue(function.getNodeLocations().length > 1);
+		assertTrue(hasMacroExpansionLocation);
+		assertEquals(startOffset, location.getStartOffset());
+		assertEquals(endOffset, location.getEndOffset());
+		assertEquals(3, location.getStartLine());
+		assertEquals(5, location.getEndLine());
+		assertEquals(1, location.getStartColumn());
+		assertEquals(1, location.getEndColumn());
+	}
 
 	//Search parsed C++ AST for specific declaration and return its node
 	private static IASTNode findDeclaration(String source, String rawSignature) throws CoreException {
@@ -124,7 +161,6 @@ class LocationInfoCppTest {
 		assertNotNull(visitor.getMatch(), "Could not find C++ declaration: " + rawSignature);
 		return visitor.getMatch();
 	}
-	
 	private static class MyVisitor extends ASTVisitor {
 		private IASTNode match;
 		private String rawSignature;

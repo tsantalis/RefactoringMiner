@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.actions.classifier;
 
 import com.github.gumtreediff.actions.model.*;
 import com.github.gumtreediff.tree.Tree;
-import org.refactoringminer.astDiff.actions.classifier.ExtendedAbstractITreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MoveIn;
 import org.refactoringminer.astDiff.actions.model.MoveOut;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
@@ -61,9 +60,9 @@ public class ExtendedOnlyRootsClassifier extends ExtendedAbstractITreeClassifier
             else if (a instanceof MultiMove)
             {
                 srcMmTrees.computeIfAbsent(a.getNode(), k -> new ArrayList<>()).add(a);
-                for (Tree tree : astDiff.getAllMappings().getDsts(a.getNode())) {
-                    dstMmTrees.computeIfAbsent(tree, k -> new ArrayList<>()).add(a);
-                }
+                Tree dstTree = ((MultiMove) a).getParent();
+                if (dstTree != null)
+                    dstMmTrees.computeIfAbsent(dstTree, k -> new ArrayList<>()).add(a);
             }
             else if (a instanceof MoveIn)
             {

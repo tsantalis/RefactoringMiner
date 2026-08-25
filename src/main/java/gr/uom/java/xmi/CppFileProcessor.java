@@ -5,6 +5,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -170,7 +171,9 @@ public class CppFileProcessor {
 				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
 				preprocessor.buildConditionalBranches(ast.getAllPreprocessorStatements());
 				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
-				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, ast.getDeclarations(true), comments, new ICPPASTTemplateParameter[0]);
+				IASTDeclaration[] declarations = ast.getDeclarations(true);
+				IASTDeclaration[] declarationsWithinFile = Arrays.stream(declarations).filter(d -> d.getFileLocation().toString().startsWith(filePath)).toArray(IASTDeclaration[]::new);
+				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass, declarationsWithinFile, comments, new ICPPASTTemplateParameter[0]);
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				//TODO consider assigning comments to individual preprocessor statements

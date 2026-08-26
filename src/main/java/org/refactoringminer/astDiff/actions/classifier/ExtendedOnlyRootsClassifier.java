@@ -9,7 +9,6 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,9 +59,9 @@ public class ExtendedOnlyRootsClassifier extends ExtendedAbstractITreeClassifier
             else if (a instanceof MultiMove)
             {
                 srcMmTrees.computeIfAbsent(a.getNode(), k -> new ArrayList<>()).add(a);
-                Tree dstTree = ((MultiMove) a).getParent();
-                if (dstTree != null)
-                    dstMmTrees.computeIfAbsent(dstTree, k -> new ArrayList<>()).add(a);
+                for (Tree tree : astDiff.getAllMappings().getDsts(a.getNode())) {
+                    dstMmTrees.computeIfAbsent(tree, k -> new ArrayList<>()).add(a);
+                }
             }
             else if (a instanceof MoveIn)
             {

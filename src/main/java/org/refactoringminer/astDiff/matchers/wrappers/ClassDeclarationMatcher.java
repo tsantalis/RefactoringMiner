@@ -639,7 +639,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
             else if(parent1.getType().name.equals(LANG1.PREPROC_IFDEF) && parent2.getType().name.equals(LANG2.PREPROC_IFDEF)) {
-                processIsomorphicChildren(parent1.getChildren(), parent2.getChildren(), mappingStore, srcStatement, dstStatement);
+                processIsomorphicChildren(parent1, parent2, mappingStore);
                 Tree namespace1 = TreeUtilFunctions.findChildByType(parent1, LANG1.PACKAGE_DECLARATION);
                 Tree namespace2 = TreeUtilFunctions.findChildByType(parent2, LANG2.PACKAGE_DECLARATION);
                 if(namespace1 != null && namespace2 != null) {
@@ -647,9 +647,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     processNamespaceDefinitions(namespace1, namespace2, mappingStore, LANG1, LANG2);
                     Pair<Tree,Tree> declaration_lists = Helpers.findPairOfType(namespace1, namespace2, LANG1.DECLARATION_LIST, LANG2.DECLARATION_LIST);
                     if (declaration_lists != null) {
-                        List<Tree> children1 = declaration_lists.first.getChildren();
-                        List<Tree> children2 = declaration_lists.second.getChildren();
-                        processIsomorphicChildren(children1, children2, mappingStore, srcStatement, dstStatement);
+                        processIsomorphicChildren(declaration_lists.first, declaration_lists.second, mappingStore);
                     }
                 }
             }
@@ -671,6 +669,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     if (matched != null) {
                         mappingStore.addMapping(matched.first,matched.second);
                     }
+                    processIsomorphicChildren(srcBlock, dstBlock, mappingStore);
                 }
             }
             else if(srcStatement.getChildren().size() > 1 && dstStatement.getChildren().size() > 1 && srcStatement.getChildren().get(1).getType().name.equals(LANG1.FUNCTION_DECLARATOR) && dstStatement.getChildren().get(1).getType().name.equals(LANG2.FUNCTION_DECLARATOR)) {
@@ -689,6 +688,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     if (matched != null) {
                         mappingStore.addMapping(matched.first,matched.second);
                     }
+                    processIsomorphicChildren(srcBlock, dstBlock, mappingStore);
                 }
             }
         }
@@ -696,26 +696,36 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         new CommentMatcher(optimizationData, diff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
     }
 
-    private void processIsomorphicChildren(List<Tree> children1, List<Tree> children2,
-            ExtendedMultiMappingStore mappingStore, Tree srcStatement, Tree dstStatement) {
-        if(children1.size() <= children2.size()) {
-            for(int i=0; i<children1.size(); i++) {
-                Tree child1 = children1.get(i);
-                Tree child2 = children2.get(i);
-                if(child1.getPos() >= srcStatement.getPos() && child2.getPos() >= dstStatement.getPos()) {
-                    if(child1.isIsomorphicTo(child2)) {
+    private void processIsomorphicChildren(Tree srcBlock, Tree dstBlock, ExtendedMultiMappingStore mappingStore) {
+        if(srcBlock.getChildren().size() == dstBlock.getChildren().size()) {
+            for(int i=0; i<srcBlock.getChildren().size(); i++) {
+                Tree child1 = srcBlock.getChildren().get(i);
+                Tree child2 = dstBlock.getChildren().get(i);
+                if(child1.getType().name.equals(child2.getType().name)) {
+                    mappingStore.addMappingRecursively(child1, child2);
+                }
+            }
+        }
+        else if(srcBlock.getChildren().size() < dstBlock.getChildren().size()) {
+            for(int i=0; i<srcBlock.getChildren().size(); i++) {
+                Tree child1 = srcBlock.getChildren().get(i);
+                for(int j=i; j<dstBlock.getChildren().size(); j++) {
+                    Tree child2 = dstBlock.getChildren().get(j);
+                    if(child1.getType().name.equals(child2.getType().name) && child1.isIsomorphicTo(child2)) {
                         mappingStore.addMappingRecursively(child1, child2);
+                        break;
                     }
                 }
             }
         }
-        else {
-            for(int i=0; i<children2.size(); i++) {
-                Tree child2 = children2.get(i);
-                Tree child1 = children1.get(i);
-                if(child1.getPos() >= srcStatement.getPos() && child2.getPos() >= dstStatement.getPos()) {
-                    if(child1.isIsomorphicTo(child2)) {
+        else if(srcBlock.getChildren().size() > dstBlock.getChildren().size()) {
+            for(int j=0; j<dstBlock.getChildren().size(); j++) {
+                Tree child2 = dstBlock.getChildren().get(j);
+                for(int i=j; i<srcBlock.getChildren().size(); i++) {
+                    Tree child1 = srcBlock.getChildren().get(i);
+                    if(child1.getType().name.equals(child2.getType().name) && child1.isIsomorphicTo(child2)) {
                         mappingStore.addMappingRecursively(child1, child2);
+                        break;
                     }
                 }
             }

@@ -444520,17 +444520,6 @@
   "firstEndPos" : 183724,
   "secondEndPos" : 183854
 }, {
-  "firstType" : "preproc_if",
-  "secondType" : "preproc_if",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "preproc_ifdef",
-  "secondParentType" : "preproc_ifdef",
-  "firstPos" : 183979,
-  "secondPos" : 212142,
-  "firstEndPos" : 185939,
-  "secondEndPos" : 217727
-}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// Matches a string equal to str.",
@@ -444607,17 +444596,6 @@
   "secondPos" : 183793,
   "firstEndPos" : 185729,
   "secondEndPos" : 183854
-}, {
-  "firstType" : "#endif",
-  "secondType" : "#endif",
-  "firstLabel" : "#endif",
-  "secondLabel" : "#endif",
-  "firstParentType" : "preproc_if",
-  "secondParentType" : "preproc_if",
-  "firstPos" : 185933,
-  "secondPos" : 215603,
-  "firstEndPos" : 185939,
-  "secondEndPos" : 215609
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -498321,17 +498299,6 @@
   "firstEndPos" : 219560,
   "secondEndPos" : 217727
 }, {
-  "firstType" : "preproc_if",
-  "secondType" : "preproc_if",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "preproc_ifdef",
-  "secondParentType" : "compound_statement",
-  "firstPos" : 213975,
-  "secondPos" : 215414,
-  "firstEndPos" : 219560,
-  "secondEndPos" : 215609
-}, {
   "firstType" : "#if",
   "secondType" : "#if",
   "firstLabel" : "#if",
@@ -507352,17 +507319,6 @@
   "firstEndPos" : 217442,
   "secondEndPos" : 215609
 }, {
-  "firstType" : "#endif",
-  "secondType" : "#endif",
-  "firstLabel" : "#endif",
-  "secondLabel" : "#endif",
-  "firstParentType" : "preproc_if",
-  "secondParentType" : "preproc_if",
-  "firstPos" : 217436,
-  "secondPos" : 217721,
-  "firstEndPos" : 217442,
-  "secondEndPos" : 217727
-}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -511707,17 +511663,6 @@
   "secondPos" : 217721,
   "firstEndPos" : 219560,
   "secondEndPos" : 217727
-}, {
-  "firstType" : "#endif",
-  "secondType" : "#endif",
-  "firstLabel" : "#endif",
-  "secondLabel" : "#endif",
-  "firstParentType" : "preproc_if",
-  "secondParentType" : "preproc_ifdef",
-  "firstPos" : 219554,
-  "secondPos" : 229905,
-  "firstEndPos" : 219560,
-  "secondEndPos" : 229911
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

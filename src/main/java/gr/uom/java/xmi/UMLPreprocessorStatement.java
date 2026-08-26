@@ -91,7 +91,7 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, type, previous);
+		return Objects.hash(name, type, value, previous);
 	}
 
 	@Override
@@ -103,6 +103,6 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 		if (getClass() != obj.getClass())
 			return false;
 		UMLPreprocessorStatement other = (UMLPreprocessorStatement) obj;
-		return Objects.equals(name, other.name) && type == other.type && Objects.equals(previous, other.previous);
+		return Objects.equals(name, other.name) && type == other.type && Objects.equals(value, other.value) && Objects.equals(previous, other.previous);
 	}
 }

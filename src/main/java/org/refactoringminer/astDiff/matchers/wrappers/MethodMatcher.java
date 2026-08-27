@@ -1156,6 +1156,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMapping(templates.first,templates.second);
             }
         }
+        if(parent1.getType().name.equals(LANG1.METHOD_DECLARATION) && parent2.getType().name.equals(LANG2.METHOD_DECLARATION)) {
+            com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(parent1,parent2,LANG1.VIRTUAL_KEYWORD,LANG2.VIRTUAL_KEYWORD);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            matched = Helpers.findPairOfType(parent1,parent2,LANG1.PURE_VIRTUAL_CLAUSE,LANG2.PURE_VIRTUAL_CLAUSE);
+            if (matched != null) {
+                mappingStore.addMappingRecursively(matched.first,matched.second);
+            }
+        }
         if(parent1.getType().name.equals(LANG1.FIELD_DECLARATION) && parent2.getType().name.equals(LANG2.DECLARATION)) {
             mappingStore.addMapping(parent1,parent2);
             identifiers = Helpers.findPairOfType(functionDeclarator1,functionDeclarator2,LANG1.FIELD_IDENTIFIER,LANG2.SIMPLE_NAME);

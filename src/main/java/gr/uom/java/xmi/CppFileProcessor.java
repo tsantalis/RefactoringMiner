@@ -21,7 +21,6 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier.IASTEnumerator;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
-import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
@@ -349,15 +348,10 @@ public class CppFileProcessor {
 	private String[] getIncludePaths(String filePath) {
 		Set<String> includePaths = new LinkedHashSet<>();
 		includePaths.add(".");
-		//includePaths.add(System.getProperty("user.dir") + "/include");
-		/*
-		if(this.fileContent.contains("#include \"gtest/")) {
-			includePaths.add(System.getProperty("user.dir") + "/include/gtest");
+		if(this.fileContent.contains("#include \"gtest/") || this.fileContent.contains("#include \"gmock/") ||
+			this.fileContent.contains("#include <gtest/") || this.fileContent.contains("#include <gmock/")) {
+			includePaths.add(System.getProperty("user.dir") + "/include");
 		}
-		if(this.fileContent.contains("#include \"gmock/")) {
-			includePaths.add(System.getProperty("user.dir") + "/include/gmock");
-		}
-		*/
 		includePaths.add("src/include");
 		includePaths.add("src");
 

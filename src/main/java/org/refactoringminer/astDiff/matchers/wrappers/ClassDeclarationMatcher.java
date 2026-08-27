@@ -21,6 +21,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
+import gr.uom.java.xmi.diff.UMLClassRenameDiff;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLForwardDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportDiff;
@@ -36,6 +37,7 @@ import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.util.PathFileUtils;
+import org.refactoringminer.util.PrefixSuffixUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -590,6 +592,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 processProblemDeclarationPair(statementPair, srcTypeDeclaration, dstTypeDeclaration, srcTree, dstTree, mappingStore);
             }
         }
+        Pair<Tree, Tree> attribute_declarations = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ATTRIBUTE_DECLARATION, LANG2.ATTRIBUTE_DECLARATION);
+        if(attribute_declarations != null) {
+            mappingStore.addMappingRecursively(attribute_declarations.first, attribute_declarations.second);
+        }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
@@ -1102,9 +1108,54 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
-        if(!(baseClassDiff instanceof UMLClassMoveDiff)) {
+        int childCount1 = 0;
+        if(srcTypeDeclaration.getParent() != null) {
+            for(Tree child : srcTypeDeclaration.getParent().getChildren()) {
+                if(child.getType().name.equals(LANG1.OPENING_CURLY_BRACE) || child.getType().name.equals(LANG1.CLOSING_CURLY_BRACE) || child.getType().name.equals(LANG1.SEMICOLON)) {
+                    continue;
+                }
+                childCount1++;
+            }
+        }
+        int childCount2 = 0;
+        if(dstTypeDeclaration.getParent() != null) {
+            for(Tree child : dstTypeDeclaration.getParent().getChildren()) {
+                if(child.getType().name.equals(LANG2.OPENING_CURLY_BRACE) || child.getType().name.equals(LANG2.CLOSING_CURLY_BRACE) || child.getType().name.equals(LANG2.SEMICOLON)) {
+                    continue;
+                }
+                childCount2++;
+            }
+        }
+        boolean parentNamespaceContainsOnlyClass = childCount1 == childCount2 && childCount1 == 1;
+        boolean movedAndRenamed = baseClassDiff instanceof UMLClassRenameDiff && !baseClassDiff.getOriginalClass().getSourceFile().equals(baseClassDiff.getNextClass().getSourceFile()) && !parentNamespaceContainsOnlyClass;
+        boolean moved = baseClassDiff instanceof UMLClassMoveDiff && !baseClassDiff.getOriginalClass().getSourceFile().equals(baseClassDiff.getNextClass().getSourceFile()) && !parentNamespaceContainsOnlyClass;
+        boolean movedToNestedNameSpace = movedToNestedNamespace(baseClassDiff.getOriginalClass().getPackageName(), baseClassDiff.getNextClass().getPackageName());
+        if(!moved && !movedAndRenamed && !movedToNestedNameSpace) {
             handleParentNamespace(srcTypeDeclaration, dstTypeDeclaration, mappingStore, LANG1, LANG2);
         }
+    }
+
+    private static boolean movedToNestedNamespace(String s1, String s2) {
+        if(s1.equals(s2)) {
+            return false;
+        }
+        String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+        String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+        if(!commonPrefix.isEmpty()) {
+            int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+            int endIndexS1 = s1.lastIndexOf(commonSuffix);
+            String diff1 = beginIndexS1 > endIndexS1 ? "" : s1.substring(beginIndexS1, endIndexS1);
+            int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+            int endIndexS2 = s2.lastIndexOf(commonSuffix);
+            String diff2 = beginIndexS2 > endIndexS2 ? "" : s2.substring(beginIndexS2, endIndexS2);
+            if(diff1.isEmpty() && diff2.equals(".")) {
+                return true;
+            }
+            else if(diff1.isEmpty() && diff2.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void handleParentNamespace(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
@@ -1126,6 +1177,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 Pair<Tree, Tree> closing = Helpers.findPairOfType(parent1,parent2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
                 if (closing != null) {
                     mappingStore.addMapping(closing.first,closing.second);
+                }
+                if(parent1.getType().name.equals(LANG1.ERROR) && parent2.getType().name.equals(LANG2.ERROR)) {
+                    mappingStore.addMappingRecursively(parent1, parent2);
                 }
                 processNamespaceDefinitions(parent1, parent2, mappingStore, LANG1, LANG2);
             }

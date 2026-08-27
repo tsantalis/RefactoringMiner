@@ -648,6 +648,7 @@ public class Constants {
     public final String STORAGE_CLASS_SPECIFIER = "storage_class_specifier";
     public final String DEFAULT_METHOD_CLAUSE = "default_method_clause";
     public final String DELETE_METHOD_CLAUSE = "delete_method_clause";
+    public final String PURE_VIRTUAL_CLAUSE = "pure_virtual_clause";
     public final String OPERATOR_NAME = "operator_name";
     public final String FRIEND_DECLARATION = "friend_declaration";
     public final String TRAILING_RETURN_TYPE = "trailing_return_type";
@@ -671,4 +672,5 @@ public class Constants {
     public final String PREPROC_IFDEF = "preproc_ifdef";
     public final String PREPROC_CALL = "preproc_call";
     public final String ENDIF = "#endif";
+    public final String ATTRIBUTE_DECLARATION = "attribute_declaration";
 }

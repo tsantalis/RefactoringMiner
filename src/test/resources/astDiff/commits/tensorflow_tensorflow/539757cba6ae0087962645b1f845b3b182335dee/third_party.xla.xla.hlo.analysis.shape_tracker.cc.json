@@ -12763,6 +12763,50 @@
   "secondType" : "struct_specifier",
   "firstLabel" : "",
   "secondLabel" : "",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 7071,
+  "secondPos" : 3987,
+  "firstEndPos" : 7445,
+  "secondEndPos" : 5132
+}, {
+  "firstType" : "field_declaration_list",
+  "secondType" : "field_declaration_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 7104,
+  "secondPos" : 4019,
+  "firstEndPos" : 7445,
+  "secondEndPos" : 5132
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 7104,
+  "secondPos" : 4019,
+  "firstEndPos" : 7105,
+  "secondEndPos" : 4020
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 7130,
+  "secondPos" : 4023,
+  "firstEndPos" : 7252,
+  "secondEndPos" : 4145
+}, {
+  "firstType" : "struct_specifier",
+  "secondType" : "struct_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "field_declaration",
   "secondParentType" : "field_declaration",
   "firstPos" : 7130,
@@ -13275,6 +13319,17 @@
   "secondPos" : 5129,
   "firstEndPos" : 7351,
   "secondEndPos" : 5130
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 7444,
+  "secondPos" : 5131,
+  "firstEndPos" : 7445,
+  "secondEndPos" : 5132
 }, {
   "firstType" : ";",
   "secondType" : ";",

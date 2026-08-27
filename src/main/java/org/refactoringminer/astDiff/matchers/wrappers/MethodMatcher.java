@@ -1503,6 +1503,12 @@ public class MethodMatcher extends BodyMapperMatcher{
                     Tree t2 = rightTree.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
                 }
+                if(leftTree.getParent().getChildren().size() > index1+2 && leftTree.getParent().getChild(index1+2).getType().name.equals(LANG1.COMMA) &&
+                        rightTree.getParent().getChildren().size() > index2+2 && rightTree.getParent().getChild(index2+2).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = leftTree.getParent().getChild(index1+2);
+                    Tree t2 = rightTree.getParent().getChild(index2+2);
+                    mappingStore.addMapping(t1,t2);
+                }
                 if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
                     mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
                     com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_DOUBLE,LANG2.SPLAT_DOUBLE);

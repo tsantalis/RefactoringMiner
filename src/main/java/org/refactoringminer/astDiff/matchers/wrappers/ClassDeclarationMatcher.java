@@ -255,6 +255,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.MODIFIERS,LANG2.MODIFIERS);
         if (matched != null)
             mappingStore.addMapping(matched.first,matched.second);
+        Pair<Tree, Tree> templateTypes = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.TEMPLATE_TYPE,LANG2.TEMPLATE_TYPE);
+        if (templateTypes != null) {
+            mappingStore.addMappingRecursively(templateTypes.first,templateTypes.second);
+        }
 
         if (classDiff.getOriginalClass().isStatic() && classDiff.getNextClass().isStatic())
             new SameModifierMatcher(LANG1, LANG2, LANG1.STATIC).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);

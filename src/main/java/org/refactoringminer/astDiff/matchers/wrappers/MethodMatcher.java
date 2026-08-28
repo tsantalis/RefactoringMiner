@@ -1318,6 +1318,10 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (qualifiedIdentifiers != null) {
                 mappingStore.addMappingRecursively(qualifiedIdentifiers.first,qualifiedIdentifiers.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> dependentTypes = Helpers.findPairOfType(parent1,parent2, LANG1.DEPENDENT_TYPE, LANG2.DEPENDENT_TYPE);
+            if (dependentTypes != null) {
+                mappingStore.addMappingRecursively(dependentTypes.first,dependentTypes.second);
+            }
             com.github.gumtreediff.utils.Pair<Tree, Tree> explicitSpecifiers = Helpers.findPairOfType(parent1,parent2,LANG1.EXPLICIT_FUNCTION_SPECIFIER,LANG2.EXPLICIT_FUNCTION_SPECIFIER);
             if (explicitSpecifiers != null) {
                 mappingStore.addMappingRecursively(explicitSpecifiers.first,explicitSpecifiers.second);

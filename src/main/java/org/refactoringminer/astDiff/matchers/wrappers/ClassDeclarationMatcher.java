@@ -527,6 +527,21 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMappingRecursively(srcStatement, dstStatement);
                     if(srcStatement.getParent() != null && dstStatement.getParent() != null) {
                         mappingStore.addMapping(srcStatement.getParent(), dstStatement.getParent());
+                        if(srcStatement.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) && dstStatement.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
+                            Pair<Tree, Tree> templates = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(),LANG1.TEMPLATE_KEYWORD,LANG2.TEMPLATE_KEYWORD);
+                            if (templates != null) {
+                                mappingStore.addMapping(templates.first,templates.second);
+                            }
+                            Pair<Tree, Tree> templateParameterLists = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(),LANG1.TEMPLATE_PARAMETER_LIST,LANG2.TEMPLATE_PARAMETER_LIST);
+                            if (templateParameterLists != null) {
+                                mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
+                            }
+                        }
+                        if(srcStatement.getParent().getType().name.equals(LANG1.DECLARATION_LIST) && dstStatement.getParent().getType().name.equals(LANG2.DECLARATION_LIST) &&
+                                srcStatement.getParent().getParent().getType().name.equals(LANG1.PACKAGE_DECLARATION) && dstStatement.getParent().getParent().getType().name.equals(LANG2.PACKAGE_DECLARATION)) {
+                            mappingStore.addMapping(srcStatement.getParent().getParent(), dstStatement.getParent().getParent());
+                            processNamespaceDefinitions(srcStatement.getParent().getParent(), dstStatement.getParent().getParent(), mappingStore, LANG1, LANG2);
+                        }
                         int index1 = srcStatement.getParent().getChildPosition(srcStatement);
                         int index2 = dstStatement.getParent().getChildPosition(dstStatement);
                         if(srcStatement.getParent().getChildren().size() > index1+1 && srcStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&

@@ -1528,6 +1528,39 @@
   "firstEndPos" : 889,
   "secondEndPos" : 988
 }, {
+  "firstType" : "namespace_definition",
+  "secondType" : "namespace_definition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "translation_unit",
+  "secondParentType" : "translation_unit",
+  "firstPos" : 891,
+  "secondPos" : 990,
+  "firstEndPos" : 955,
+  "secondEndPos" : 1054
+}, {
+  "firstType" : "namespace",
+  "secondType" : "namespace",
+  "firstLabel" : "namespace",
+  "secondLabel" : "namespace",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 891,
+  "secondPos" : 990,
+  "firstEndPos" : 900,
+  "secondEndPos" : 999
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "Layout",
+  "secondLabel" : "Layout",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 901,
+  "secondPos" : 1000,
+  "firstEndPos" : 907,
+  "secondEndPos" : 1006
+}, {
   "firstType" : "declaration_list",
   "secondType" : "declaration_list",
   "firstLabel" : "",
@@ -1538,6 +1571,17 @@
   "secondPos" : 1007,
   "firstEndPos" : 955,
   "secondEndPos" : 1054
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 908,
+  "secondPos" : 1007,
+  "firstEndPos" : 909,
+  "secondEndPos" : 1008
 }, {
   "firstType" : "class_specifier",
   "secondType" : "class_specifier",
@@ -1626,6 +1670,17 @@
   "secondPos" : 1051,
   "firstEndPos" : 953,
   "secondEndPos" : 1052
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 954,
+  "secondPos" : 1053,
+  "firstEndPos" : 955,
+  "secondEndPos" : 1054
 }, {
   "firstType" : "enum_specifier",
   "secondType" : "enum_specifier",

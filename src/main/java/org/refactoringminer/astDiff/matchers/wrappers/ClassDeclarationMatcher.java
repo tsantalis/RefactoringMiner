@@ -1468,6 +1468,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree, typeAliasPair.getRight().getLocationInfo(), LANG2);
             if (srcSubTree == null || dstSubTree == null) return;
             mappingStore.addMappingRecursively(srcSubTree,dstSubTree);
+            if(srcSubTree.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) && dstSubTree.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
+                mappingStore.addMapping(srcSubTree.getParent(), dstSubTree.getParent());
+                Pair<Tree, Tree> templates = Helpers.findPairOfType(srcSubTree.getParent(), dstSubTree.getParent(),LANG1.TEMPLATE_KEYWORD,LANG2.TEMPLATE_KEYWORD);
+                if (templates != null) {
+                    mappingStore.addMapping(templates.first,templates.second);
+                }
+                Pair<Tree, Tree> templateParameterLists = Helpers.findPairOfType(srcSubTree.getParent(), dstSubTree.getParent(),LANG1.TEMPLATE_PARAMETER_LIST,LANG2.TEMPLATE_PARAMETER_LIST);
+                if (templateParameterLists != null) {
+                    mappingStore.addMappingRecursively(templateParameterLists.first,templateParameterLists.second);
+                }
+            }
         }
     }
 

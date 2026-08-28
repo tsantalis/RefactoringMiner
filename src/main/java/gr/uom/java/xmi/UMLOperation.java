@@ -51,6 +51,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean hasDefaultClause;
 	private boolean hasDeleteClause;
 	private boolean isPureVirtual;
+	private boolean isExplicit;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private AbstractExpression defaultExpression;
@@ -333,6 +334,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setPureVirtual(boolean isPureVirtual) {
 		this.isPureVirtual = isPureVirtual;
+	}
+
+	public boolean isExplicit() {
+		return isExplicit;
+	}
+
+	public void setExplicit(boolean isExplicit) {
+		this.isExplicit = isExplicit;
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
@@ -751,6 +760,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.isFinal == operation.isFinal &&
 				this.isStatic == operation.isStatic &&
@@ -764,6 +774,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.isAbstract != operation.isAbstract)
 			return false;
 		if(this.isConst != operation.isConst)
+			return false;
+		if(this.isExplicit != operation.isExplicit)
 			return false;
 		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
@@ -792,6 +804,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 		if(this.isConst != operation.isConst)
 			return false;
+		if(this.isExplicit != operation.isExplicit)
+			return false;
 		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
 		/*if(this.isStatic != operation.isStatic)
@@ -818,6 +832,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.isAbstract != operation.isAbstract)
 			return false;
 		if(this.isConst != operation.isConst)
+			return false;
+		if(this.isExplicit != operation.isExplicit)
 			return false;
 		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
@@ -1120,6 +1136,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.name.equals(operation.name) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				equalTypeParameters(operation)) {
 			Set<UMLTypeParameterDiff> set = typeParameterListDiff.getTypeParameterDiffs();
@@ -1157,6 +1174,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return this.name.equals(operation.name) &&
 				equalReturnParameter(operation) &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
@@ -1168,6 +1186,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return this.name.equals(operation.name) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
@@ -1182,6 +1201,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
@@ -1203,6 +1223,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
@@ -1218,6 +1239,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			this.visibility.equals(operation.visibility) &&
 			this.isAbstract == operation.isAbstract &&
 			this.isConst == operation.isConst &&
+			this.isExplicit == operation.isExplicit &&
 			this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 			thisEmptyBody == otherEmptyBody &&
 			this.getParameterTypeList().equals(operation.getParameterTypeList());
@@ -1229,6 +1251,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
+				this.isExplicit == operation.isExplicit &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				equalTypeParameters(operation)) {
 			UMLParameter thisReturnParameter = this.getReturnParameter();
@@ -1262,6 +1285,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		result = prime * result + ((className == null) ? 0 : className.hashCode());
 		result = prime * result + (isAbstract ? 1231 : 1237);
 		result = prime * result + (isConst ? 1231 : 1237);
+		result = prime * result + (isExplicit ? 1231 : 1237);
 		result = prime * result + (isForwardDeclaration() ? 1231 : 1237);
 		result = prime * result + (thisEmptyBody ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());

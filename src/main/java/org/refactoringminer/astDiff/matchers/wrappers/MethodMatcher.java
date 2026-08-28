@@ -835,6 +835,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                 processFunctionDeclarators(functionDeclarator1, dstOperationNode, mappingStore);
             }
         }
+        com.github.gumtreediff.utils.Pair<Tree,Tree> placeholder_type_specifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.PLACEHOLDER_TYPE_SPECIFIER, LANG2.PLACEHOLDER_TYPE_SPECIFIER);
+        if (placeholder_type_specifiers != null) {
+            mappingStore.addMappingRecursively(placeholder_type_specifiers.first,placeholder_type_specifiers.second);
+        }
         com.github.gumtreediff.utils.Pair<Tree,Tree> qualified_identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.QUALIFIED_IDENTIFIER,LANG2.QUALIFIED_IDENTIFIER);
         if (qualified_identifiers != null) {
             mappingStore.addMappingRecursively(qualified_identifiers.first,qualified_identifiers.second);

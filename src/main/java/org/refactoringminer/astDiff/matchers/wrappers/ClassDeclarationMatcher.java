@@ -955,6 +955,22 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             if(types != null) {
                 mappingStore.addMapping(types.first, types.second);
             }
+            Pair<Tree, Tree> colons = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.COLON, LANG2.COLON);
+            if(colons != null) {
+                mappingStore.addMapping(colons.first, colons.second);
+            }
+            Pair<Tree, Tree> enumerator_lists = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ENUMERATOR_LIST, LANG2.ENUMERATOR_LIST);
+            if(enumerator_lists != null) {
+                mappingStore.addMapping(enumerator_lists.first, enumerator_lists.second);
+                com.github.gumtreediff.utils.Pair<Tree, Tree> opening = Helpers.findPairOfType(enumerator_lists.first, enumerator_lists.second, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                if (opening != null) {
+                    mappingStore.addMapping(opening.first,opening.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree, Tree> closing = Helpers.findPairOfType(enumerator_lists.first, enumerator_lists.second, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                if (closing != null) {
+                    mappingStore.addMapping(closing.first,closing.second);
+                }
+            }
             Pair<Tree, Tree> blocks = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ENUM_BODY, LANG2.ENUM_BODY);
             if(blocks != null) {
                 mappingStore.addMapping(blocks.first, blocks.second);

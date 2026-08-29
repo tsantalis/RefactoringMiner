@@ -649,7 +649,8 @@ public class CppFileProcessor {
 			preprocessor.processDeclarationGroups(packageName + "." + className, sourceFolder, umlClass, simpleDeclaration, comments,
 					templateParameters, inactiveContainerAlternatives);
 			IASTEnumerator[] enumerators = enumSpecifier.getEnumerators();
-			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, enumSpecifier, null, 0);
+			//no LocationInfo is attached on purpose, since this type is shared by all enum constants and does not correspond to a single program element
+			UMLType type = UMLType.extractTypeObject(className);
 			for(IASTEnumerator enumerator : enumerators) {
 				IASTName name = enumerator.getName();
 				LocationInfo enumConstantLocation = new LocationInfo(sourceFolder, filePath, name, CodeElementType.ENUM_CONSTANT_DECLARATION, fileContent);

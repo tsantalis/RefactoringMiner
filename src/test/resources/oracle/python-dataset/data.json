@@ -7838,10 +7838,10 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable w_pop in method public add(record, weight) from class utils.average_recorder._SingleAverageRecorder",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Statement mapping proves there is no variable extraction:</p><div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._sum -= </span><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._q.popleft()</span></div></div><div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._sum -= </span><span style='color: #0000ff;'>self</span><span style='color: #000000;'>._q.popleft() * w_pop</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {

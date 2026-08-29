@@ -4061,7 +4061,7 @@ public class ReplacementAlgorithm {
 			if(v1Type != null && v2Type != null) {
 				if(v1Type.getArrayDimension() == 1 && v2Type.containsTypeArgument(v1Type.getClassType()) &&
 						creationCoveringTheEntireStatement1.isArray() && !creationCoveringTheEntireStatement2.isArray() &&
-						initializer1 != null && initializer2 != null &&
+						initializer1 != null && initializer2 != null && initializer1.contains("[") && initializer1.contains("]") &&
 						initializer1.substring(initializer1.indexOf("[")+1, initializer1.lastIndexOf("]")).equals(initializer2.substring(initializer2.indexOf("(")+1, initializer2.lastIndexOf(")")))) {
 					r = new ObjectCreationReplacement(initializer1, initializer2,
 							creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);
@@ -4070,7 +4070,7 @@ public class ReplacementAlgorithm {
 				}
 				if(v2Type.getArrayDimension() == 1 && v1Type.containsTypeArgument(v2Type.getClassType()) &&
 						!creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray() &&
-						initializer1 != null && initializer2 != null &&
+						initializer1 != null && initializer2 != null && initializer2.contains("[") && initializer2.contains("]") &&
 						initializer1.substring(initializer1.indexOf("(")+1, initializer1.lastIndexOf(")")).equals(initializer2.substring(initializer2.indexOf("[")+1, initializer2.lastIndexOf("]")))) {
 					r = new ObjectCreationReplacement(initializer1, initializer2,
 							creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.ARRAY_CREATION_REPLACED_WITH_DATA_STRUCTURE_CREATION);

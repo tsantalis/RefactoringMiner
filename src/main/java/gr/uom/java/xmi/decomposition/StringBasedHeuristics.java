@@ -1065,6 +1065,14 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		if((s1.contains("+=") && s2.contains("+=")) || (s1.contains("-=") && s2.contains("-="))) {
+			if(s1.equals(commonPrefix + LANG1.STATEMENT_TERMINATION) && commonSuffix.equals(LANG1.STATEMENT_TERMINATION)) {
+				return true;
+			}
+			else if(s2.equals(commonPrefix + LANG2.STATEMENT_TERMINATION) && commonSuffix.equals(LANG2.STATEMENT_TERMINATION)) {
+				return true;
+			}
+		}
 		return false;
 	}
 

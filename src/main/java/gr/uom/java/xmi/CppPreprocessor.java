@@ -53,6 +53,7 @@ public class CppPreprocessor {
 	private final Map<UMLAttribute, IASTNode> attributeOrigins = new IdentityHashMap<>();
 	private final Map<UMLImport, IASTNode> importOrigins = new IdentityHashMap<>();
 	private final Map<UMLTypeAlias, IASTNode> typeAliasOrigins = new IdentityHashMap<>();
+	private final Map<UMLForwardDeclaration, IASTNode> forwardDeclarationOrigins = new IdentityHashMap<>();
 
 	public CppPreprocessor(CppFileProcessor fileProcessor) {
 		this.fileProcessor = fileProcessor;
@@ -94,6 +95,13 @@ public class CppPreprocessor {
 		for(DeclarationGroup group : declarationGroups) {
 			Visibility currentVisibility = group.initialVisibility;
 			for(IASTDeclaration declaration : group.declarations) {
+				String raw = declaration.getRawSignature();
+				if(raw.startsWith("TEST(") || raw.startsWith("TEST_F(") || raw.startsWith("TEST_P(") || raw.startsWith("TYPED_TEST(") || raw.startsWith("TYPED_TEST_P(")) {
+					if(declaration instanceof IASTFunctionDefinition functionDefinition && functionDefinition.getBody() == null)
+						continue;
+					else if(declaration instanceof IASTSimpleDeclaration)
+						continue;
+				}
 				if(fileProcessor.shouldProcessDeclaration(declaration) && !mergedInactiveContainers.contains(declaration)) {
 					currentVisibility = fileProcessor.processDeclaration(packageName, sourceFolder, parentContainer, comments, currentVisibility,
 							declaration, templateParameters, alternatives.getOrDefault(declaration, Collections.emptyList()));
@@ -567,6 +575,13 @@ public class CppPreprocessor {
 		if(retainModelElement(umlImport, origin, parentContainer.getImportedTypes(), importOrigins, UMLImport::equals,
 				inactiveSibling -> removeByIdentity(parentContainer.getImportedTypes(), inactiveSibling))) {
 			parentContainer.getImportedTypes().add(umlImport);
+		}
+	}
+
+	void addForwardDeclaration(UMLClass parentContainer, UMLForwardDeclaration umlForwardDeclaration, IASTNode origin) {
+		if(retainModelElement(umlForwardDeclaration, origin, parentContainer.getForwardDeclarations(), forwardDeclarationOrigins, UMLForwardDeclaration::equals,
+				inactiveSibling -> removeByIdentity(parentContainer.getForwardDeclarations(), inactiveSibling))) {
+			parentContainer.addForwardDeclaration(umlForwardDeclaration);
 		}
 	}
 

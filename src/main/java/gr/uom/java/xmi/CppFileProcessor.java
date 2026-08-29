@@ -493,6 +493,8 @@ public class CppFileProcessor {
 		else if(declaration instanceof CPPASTStaticAssertionDeclaration cppStaticAssertionDeclaration) {
 			//In C++, a static_assert declaration tests a software condition at compile time. If the condition evaluates to false, the compiler stops and issues a compilation error.
 			//Because it is evaluated entirely during compilation, it incurs zero runtime performance or size cost
+			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, cppStaticAssertionDeclaration, CodeElementType.STATIC_ASSERTION_DECLARATION, fileContent);
+			UMLStaticAssertionDeclaration assertionDeclaration = new UMLStaticAssertionDeclaration(locationInfo, cppStaticAssertionDeclaration.getRawSignature());
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.
@@ -621,7 +623,7 @@ public class CppFileProcessor {
 				decl.setFunction(operation);
 			}
 			if(parentContainer instanceof UMLClass)
-				((UMLClass)parentContainer).addForwardDeclaration(decl);
+				preprocessor.addForwardDeclaration((UMLClass)parentContainer, decl, elaboratedTypeSpecifier);
 		}
 		else if(declSpecifier instanceof ICPPASTEnumerationSpecifier enumSpecifier) {
 			if(enumSpecifier.getName() == null) {

@@ -7064,6 +7064,8 @@ public class UMLModelDiff {
 		if(addedOperations.size() <= removedOperations.size()) {
 			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 				UMLOperation addedOperation = addedOperationIterator.next();
+				if(addedOperation.getLANG().equals(Constants.CPP) && addedOperation.getName().endsWith("_Test::TestBody"))
+					continue;
 				double addedOperationBuilderStatementRatio = addedOperation.builderStatementRatio();
 				TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap = new TreeMap<Integer, List<UMLOperationBodyMapper>>();
 				UMLOperation removedOperation2 = findOperationWithIdenticalSignature(addedOperation, removedOperations);
@@ -7107,7 +7109,8 @@ public class UMLModelDiff {
 				}
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
-
+					if(removedOperation.getLANG().equals(Constants.CPP) && removedOperation.getName().endsWith("_Test::TestBody"))
+						continue;
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 					boolean sameClassNameButDifferentFilePath = removedOperation.getClassName().equals(addedOperation.getClassName()) &&
 							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
@@ -7191,6 +7194,8 @@ public class UMLModelDiff {
 		else {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
+				if(removedOperation.getLANG().equals(Constants.CPP) && removedOperation.getName().endsWith("_Test::TestBody"))
+					continue;
 				double removedOperationBuilderStatementRatio = removedOperation.builderStatementRatio();
 				TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap = new TreeMap<Integer, List<UMLOperationBodyMapper>>();
 				UMLOperation addedOperation2 = findOperationWithIdenticalSignature(removedOperation, addedOperations);
@@ -7234,7 +7239,8 @@ public class UMLModelDiff {
 				}
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-
+					if(addedOperation.getLANG().equals(Constants.CPP) && addedOperation.getName().endsWith("_Test::TestBody"))
+						continue;
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 					boolean sameClassNameButDifferentFilePath = removedOperation.getClassName().equals(addedOperation.getClassName()) &&
 							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());

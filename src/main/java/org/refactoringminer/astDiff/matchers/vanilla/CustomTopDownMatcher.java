@@ -170,17 +170,9 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		scoredMappingFactory.prepare(ambiguousGroups);
 		List<ScoredMapping> ambiguousList = new ArrayList<>(initialCapacity(ambiguousMappingCount));
 		long order = 0;
-		//AmbiguousGroup.srcs/dsts are backed by hash-based Sets, whose iteration order depends on Tree's
-		//identity hashcode and can differ across JVM runs; sorting by position here makes the "order"
-		//tiebreaker (the last resort in ScoredMapping.compareTo, once every other signal is genuinely
-		//tied) reproducible instead of incidentally flaky
 		for (AmbiguousGroup ambiguousGroup : ambiguousGroups) {
-			List<Tree> sortedSrcs = new ArrayList<>(ambiguousGroup.srcs);
-			sortedSrcs.sort(Comparator.comparingInt(Tree::getPos));
-			List<Tree> sortedDsts = new ArrayList<>(ambiguousGroup.dsts);
-			sortedDsts.sort(Comparator.comparingInt(Tree::getPos));
-			for (Tree asrc : sortedSrcs)
-				for (Tree adst : sortedDsts)
+			for (Tree asrc : ambiguousGroup.srcs)
+				for (Tree adst : ambiguousGroup.dsts)
 					ambiguousList.add(scoredMappingFactory.score(asrc, adst, order++));
 		}
 		Set<Tree> srcIgnored = new HashSet<>();

@@ -1010,6 +1010,36 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
             else {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                boolean testFunctionCall = (abstractCodeMapping.getFragment1().getString().startsWith("describe(") && abstractCodeMapping.getFragment2().getString().startsWith("describe(")) ||
+                        (abstractCodeMapping.getFragment1().getString().startsWith("it(") && abstractCodeMapping.getFragment2().getString().startsWith("it("));
+                if(testFunctionCall &&
+                        srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENT_BLOCK) &&
+                        dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENT_BLOCK) &&
+                        srcStatementNode.getParent().getParent() != null && srcStatementNode.getParent().getParent().getType().name.equals(LANG1.FUNCTION_EXPRESSION) &&
+                        dstStatementNode.getParent().getParent() != null && dstStatementNode.getParent().getParent().getType().name.equals(LANG2.FUNCTION_EXPRESSION)) {
+                    Tree grandParent1 = srcStatementNode.getParent().getParent();
+                    Tree grandParent2 = dstStatementNode.getParent().getParent();
+                    mappingStore.addMapping(grandParent1, grandParent2);
+                    processArrowFunction(grandParent1, grandParent2, mappingStore, LANG1, LANG2);
+                    Pair<Tree, Tree> blocks = Helpers.findPairOfType(grandParent1, grandParent2, LANG1.STATEMENT_BLOCK, LANG2.STATEMENT_BLOCK);
+                    if(blocks != null) {
+                        List<Tree> children1 = blocks.first.getChildren();
+                        List<Tree> children2 = blocks.second.getChildren();
+                        for(int i=1; i<children1.size(); i++) {
+                            Tree child1 = children1.get(i);
+                            Tree child2 = children2.get(i);
+                            if(child1.isIsomorphicTo(child2)) {
+                                mappingStore.addMappingRecursively(child1, child2);
+                            }
+                            else {
+                                break;
+                            }
+                        }
+                    }
+                    if(grandParent1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && grandParent2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS)) {
+                        MethodMatcher.processObjectLiteralWithinMethodCall(grandParent1, grandParent2, mappingStore, LANG1, LANG2);
+                    }
+                }
                 //special handling for multiplication expression following return
                 if(srcStatementNode.getType().name.equals(LANG1.JUMP_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION)) {
                     Tree parent1 = srcStatementNode.getParent();
@@ -1120,6 +1150,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Pair<Tree, Tree> arrows = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ARROW_TOKEN, LANG2.ARROW_TOKEN);
         if(arrows != null) {
             mappingStore.addMapping(arrows.first, arrows.second);
+        }
+        Pair<Tree, Tree> functions = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.FUNCTION, LANG2.FUNCTION);
+        if(functions != null) {
+            mappingStore.addMapping(functions.first, functions.second);
         }
         Pair<Tree, Tree> async = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ASYNC_KEYWORD, LANG2.ASYNC_KEYWORD);
         if(async != null) {

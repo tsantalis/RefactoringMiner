@@ -2451,8 +2451,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractStatement statement1 = describeMap1.get(key);
 				if(describeMap2.containsKey(key)) {
 					AbstractStatement statement2 = describeMap2.get(key);
-					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true, true);
-					addMapping(mapping);
+					int nestedMappings = matchNestedDescribeMaps(statement1, statement2);
+					if(nestedMappings == 0) {
+						LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true, true);
+						addMapping(mapping);
+					}
 				}
 				else {
 					Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);
@@ -2473,8 +2476,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractStatement statement2 = describeMap2.get(key);
 				if(describeMap1.containsKey(key)) {
 					AbstractStatement statement1 = describeMap1.get(key);
-					LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true, true);
-					addMapping(mapping);
+					int nestedMappings = matchNestedDescribeMaps(statement1, statement2);
+					if(nestedMappings == 0) {
+						LeafMapping mapping = createLeafMapping(statement1, statement2, new LinkedHashMap<String, String>(), true, true);
+						addMapping(mapping);
+					}
 				}
 				else {
 					Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
@@ -2539,6 +2545,73 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		checkUnmatchedStatementsBeingCommented();
 	}
 
+	private int matchNestedDescribeMaps(AbstractStatement statement1, AbstractStatement statement2) {
+		int mappings = 0;
+		Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);
+		Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
+		if(!nestedDescribeMap1.keySet().equals(nestedDescribeMap2.keySet()) && !nestedDescribeMap2.keySet().containsAll(nestedDescribeMap1.keySet()) &&
+				!nestedDescribeMap1.keySet().containsAll(nestedDescribeMap2.keySet())) {
+			Set<String> keysToBeRemoved = new LinkedHashSet<>();
+			for(String key1 : nestedDescribeMap1.keySet()) {
+				AbstractStatement nestedStatement1 = nestedDescribeMap1.get(key1);
+				if(nestedDescribeMap2.containsKey(key1)) {
+					AbstractStatement nestedStatement2 = nestedDescribeMap2.get(key1);
+					LeafMapping nestedMapping = createLeafMapping(nestedStatement1, nestedStatement2, new LinkedHashMap<String, String>(), true, true);
+					addMapping(nestedMapping);
+					mappings++;
+					keysToBeRemoved.add(key1);
+				}
+			}
+			nestedDescribeMap1.keySet().removeAll(keysToBeRemoved);
+			nestedDescribeMap2.keySet().removeAll(keysToBeRemoved);
+			//the remaining describe tests might have been updated, they will be matched based on nested it tests
+			Map<String, String> keyMap = new LinkedHashMap<>();
+			for(String key1 : nestedDescribeMap1.keySet()) {
+				if(!keyMap.containsKey(key1)) {
+					AbstractStatement nestedStatement1 = nestedDescribeMap1.get(key1);
+					Map<String, AbstractStatement> nestedItMap1 = nestedItMap(nestedStatement1);
+					for(String key2 : nestedDescribeMap2.keySet()) {
+						if(!keyMap.containsValue(key2)) {
+							AbstractStatement nestedStatement2 = nestedDescribeMap2.get(key2);
+							Map<String, AbstractStatement> nestedItMap2 = nestedItMap(nestedStatement2);
+							if(nestedItMap1.keySet().equals(nestedItMap2.keySet()) && nestedItMap1.keySet().size() > 0) {
+								LeafMapping nestedMapping = createLeafMapping(nestedStatement1, nestedStatement2, new LinkedHashMap<String, String>(), true, true);
+								addMapping(nestedMapping);
+								mappings++;
+								keyMap.put(key1, key2);
+								break;
+							}
+							else {
+								//match individual it tests
+								Set<String> itKeysToBeRemoved = new LinkedHashSet<>();
+								for(String itKey1 : nestedItMap1.keySet()) {
+									AbstractStatement itStatement1 = nestedItMap1.get(itKey1);
+									if(nestedItMap2.keySet().contains(itKey1)) {
+										AbstractStatement itStatement2 = nestedItMap2.get(itKey1);
+										LeafMapping nestedMapping = createLeafMapping(itStatement1, itStatement2, new LinkedHashMap<String, String>(), true, true);
+										addMapping(nestedMapping);
+										mappings++;
+										itKeysToBeRemoved.add(itKey1);
+									}
+								}
+								nestedItMap1.keySet().removeAll(itKeysToBeRemoved);
+								nestedItMap2.keySet().removeAll(itKeysToBeRemoved);
+								if(nestedItMap1.size() == 1 && nestedItMap2.size() == 1) {
+									AbstractStatement itStatement1 = nestedItMap1.values().iterator().next();
+									AbstractStatement itStatement2 = nestedItMap2.values().iterator().next();
+									LeafMapping nestedMapping = createLeafMapping(itStatement1, itStatement2, new LinkedHashMap<String, String>(), true, true);
+									addMapping(nestedMapping);
+									mappings++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return mappings;
+	}
+
 	public Map<String, AbstractStatement> nestedDescribeMap(AbstractStatement statement) {
 		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
 		if(statement.getLambdas().size()  > 0) {
@@ -2548,6 +2621,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(AbstractStatement s : statements) {
 					AbstractCall call = s.invocationCoveringEntireFragment();
 					if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
+						nestedDescribeMap.put(call.arguments().get(0), s);
+					}
+				}
+			}
+		}
+		return nestedDescribeMap;
+	}
+
+	public Map<String, AbstractStatement> nestedItMap(AbstractStatement statement) {
+		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
+		if(statement.getLambdas().size()  > 0) {
+			LambdaExpressionObject lambda = statement.getLambdas().get(0);
+			if(lambda.getBody() != null) {
+				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
+				for(AbstractStatement s : statements) {
+					AbstractCall call = s.invocationCoveringEntireFragment();
+					if(call != null && call.getName().startsWith("it") && call.arguments().size() > 0) {
 						nestedDescribeMap.put(call.arguments().get(0), s);
 					}
 				}

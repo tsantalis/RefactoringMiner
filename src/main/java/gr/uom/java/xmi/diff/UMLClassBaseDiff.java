@@ -73,6 +73,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<UMLPreprocessorStatementListDiff> preprocessorStatementListDiff;
 	private Optional<UMLForwardDeclarationListDiff> forwardDeclarationListDiff;
 	private Optional<UMLProblemDeclarationListDiff> problemDeclarationListDiff;
+	private Optional<UMLStaticAssertionDeclarationListDiff> staticAssertionDeclarationListDiff;
 	private UMLCommentListDiff packageDeclarationCommentListDiff;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
@@ -105,6 +106,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.preprocessorStatementListDiff = Optional.empty();
 		this.forwardDeclarationListDiff = Optional.empty();
 		this.problemDeclarationListDiff = Optional.empty();
+		this.staticAssertionDeclarationListDiff = Optional.empty();
 		processImports();
 	}
 
@@ -247,6 +249,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(getOriginalClass().getProblemDeclarations().size() > 0 && getNextClass().getProblemDeclarations().size() > 0) {
 			UMLProblemDeclarationListDiff diff = new UMLProblemDeclarationListDiff(getOriginalClass().getProblemDeclarations(), getNextClass().getProblemDeclarations());
 			this.problemDeclarationListDiff = Optional.of(diff);
+		}
+		if(getOriginalClass().getStaticAssertionDeclarations().size() > 0 && getNextClass().getStaticAssertionDeclarations().size() > 0) {
+			UMLStaticAssertionDeclarationListDiff diff = new UMLStaticAssertionDeclarationListDiff(getOriginalClass().getStaticAssertionDeclarations(), getNextClass().getStaticAssertionDeclarations());
+			this.staticAssertionDeclarationListDiff = Optional.of(diff);
 		}
 	}
 
@@ -1288,6 +1294,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<UMLProblemDeclarationListDiff> getProblemDeclarationListDiff() {
 		return problemDeclarationListDiff;
+	}
+
+	public Optional<UMLStaticAssertionDeclarationListDiff> getStaticAssertionDeclarationListDiff() {
+		return staticAssertionDeclarationListDiff;
 	}
 
 	public Optional<UMLPreprocessorStatementListDiff> getPreprocessorStatementListDiff() {

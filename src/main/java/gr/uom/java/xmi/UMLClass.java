@@ -160,6 +160,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		return problemDeclarations;
 	}
 
+	public void addStaticAssertionDeclaration(UMLStaticAssertionDeclaration decl) {
+		this.staticAssertionDeclarations.add(decl);
+	}
+
+	public List<UMLStaticAssertionDeclaration> getStaticAssertionDeclarations() {
+		return staticAssertionDeclarations;
+	}
+
 	public void addSuperTypeCallEntry(AbstractExpression expr) {
 		this.superTypeCallEntries.add(expr);
 	}

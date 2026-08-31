@@ -2545,7 +2545,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		checkUnmatchedStatementsBeingCommented();
 	}
 
-	private int matchNestedDescribeMaps(AbstractStatement statement1, AbstractStatement statement2) {
+	private int matchNestedDescribeMaps(AbstractStatement statement1, AbstractStatement statement2) throws RefactoringMinerTimedOutException {
 		int mappings = 0;
 		Map<String, AbstractStatement> nestedDescribeMap1 = nestedDescribeMap(statement1);
 		Map<String, AbstractStatement> nestedDescribeMap2 = nestedDescribeMap(statement2);
@@ -2590,6 +2590,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										AbstractStatement itStatement2 = nestedItMap2.get(itKey1);
 										LeafMapping nestedMapping = createLeafMapping(itStatement1, itStatement2, new LinkedHashMap<String, String>(), true, true);
 										addMapping(nestedMapping);
+										if(!itStatement1.getString().equals(itStatement2.getString()) && itStatement1.getLambdas().size() == 1 && itStatement2.getLambdas().size() == 1) {
+											UMLOperationBodyMapper lambdaMapper = new UMLOperationBodyMapper(itStatement1.getLambdas().get(0), itStatement2.getLambdas().get(0), this);
+											this.addAllMappings(lambdaMapper.getMappings());
+										}
 										mappings++;
 										itKeysToBeRemoved.add(itKey1);
 									}
@@ -2601,6 +2605,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									AbstractStatement itStatement2 = nestedItMap2.values().iterator().next();
 									LeafMapping nestedMapping = createLeafMapping(itStatement1, itStatement2, new LinkedHashMap<String, String>(), true, true);
 									addMapping(nestedMapping);
+									if(!itStatement1.getString().equals(itStatement2.getString()) && itStatement1.getLambdas().size() == 1 && itStatement2.getLambdas().size() == 1) {
+										UMLOperationBodyMapper lambdaMapper = new UMLOperationBodyMapper(itStatement1.getLambdas().get(0), itStatement2.getLambdas().get(0), this);
+										this.addAllMappings(lambdaMapper.getMappings());
+									}
 									mappings++;
 								}
 							}

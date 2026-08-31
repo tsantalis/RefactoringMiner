@@ -495,6 +495,8 @@ public class CppFileProcessor {
 			//Because it is evaluated entirely during compilation, it incurs zero runtime performance or size cost
 			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, cppStaticAssertionDeclaration, CodeElementType.STATIC_ASSERTION_DECLARATION, fileContent);
 			UMLStaticAssertionDeclaration assertionDeclaration = new UMLStaticAssertionDeclaration(locationInfo, cppStaticAssertionDeclaration.getRawSignature());
+			if(parentContainer instanceof UMLClass)
+				preprocessor.addStaticAssertionDeclaration((UMLClass)parentContainer, assertionDeclaration, cppStaticAssertionDeclaration);
 		}
 		else if(declaration instanceof CPPASTUsingDeclaration cppUsingDeclaration) {
 			//A using-declaration in C++ introduces a specific member from another namespace or a base class into the current scope. It allows you to use that specific name without explicitly typing its fully qualified path or prefix every time.

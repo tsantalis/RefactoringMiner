@@ -54,6 +54,7 @@ public class CppPreprocessor {
 	private final Map<UMLImport, IASTNode> importOrigins = new IdentityHashMap<>();
 	private final Map<UMLTypeAlias, IASTNode> typeAliasOrigins = new IdentityHashMap<>();
 	private final Map<UMLForwardDeclaration, IASTNode> forwardDeclarationOrigins = new IdentityHashMap<>();
+	private final Map<UMLStaticAssertionDeclaration, IASTNode> staticAssertionDeclarationOrigins = new IdentityHashMap<>();
 
 	public CppPreprocessor(CppFileProcessor fileProcessor) {
 		this.fileProcessor = fileProcessor;
@@ -582,6 +583,13 @@ public class CppPreprocessor {
 		if(retainModelElement(umlForwardDeclaration, origin, parentContainer.getForwardDeclarations(), forwardDeclarationOrigins, UMLForwardDeclaration::equals,
 				inactiveSibling -> removeByIdentity(parentContainer.getForwardDeclarations(), inactiveSibling))) {
 			parentContainer.addForwardDeclaration(umlForwardDeclaration);
+		}
+	}
+
+	void addStaticAssertionDeclaration(UMLClass parentContainer, UMLStaticAssertionDeclaration umlStaticAssertionDeclaration, IASTNode origin) {
+		if(retainModelElement(umlStaticAssertionDeclaration, origin, parentContainer.getStaticAssertionDeclarations(), staticAssertionDeclarationOrigins, UMLStaticAssertionDeclaration::equals,
+				inactiveSibling -> removeByIdentity(parentContainer.getStaticAssertionDeclarations(), inactiveSibling))) {
+			parentContainer.addStaticAssertionDeclaration(umlStaticAssertionDeclaration);
 		}
 	}
 

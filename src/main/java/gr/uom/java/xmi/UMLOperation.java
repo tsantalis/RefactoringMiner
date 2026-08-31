@@ -72,6 +72,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private final Constants LANG;
 	private boolean importsTestCase;
 	private Optional<UMLType> receiver;
+	private Optional<AbstractExpression> trailingReturnType;
 	
 	public UMLOperation(String name, LocationInfo locationInfo, String className) {
 		this.locationInfo = locationInfo;
@@ -90,6 +91,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
         this.propertyAccessor = Optional.empty();
         this.receiver = Optional.empty();
+        this.trailingReturnType = Optional.empty();
         this.anonymousClassContainer = Optional.empty();
     }
 
@@ -139,6 +141,24 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public Optional<UMLType> getReceiver() {
 		return receiver;
+	}
+
+	public void setTrailingReturnType(AbstractExpression type) {
+		this.trailingReturnType = Optional.of(type);
+	}
+
+	public Optional<AbstractExpression> getTrailingReturnType() {
+		return trailingReturnType;
+	}
+
+	private boolean equalTrailingReturnType(UMLOperation other) {
+		if(this.trailingReturnType.isPresent() && other.trailingReturnType.isPresent()) {
+			return this.trailingReturnType.get().getString().equals(other.trailingReturnType.get().getString());
+		}
+		else if(!this.trailingReturnType.isPresent() && !other.trailingReturnType.isPresent()) {
+			return true;
+		}
+		return false;
 	}
 
 	public UMLOperation nestedOperationWithTheSameSignatureIgnoringChangedTypes(UMLOperation operation) {
@@ -761,6 +781,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.isFinal == operation.isFinal &&
 				this.isStatic == operation.isStatic &&
@@ -776,6 +797,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.isConst != operation.isConst)
 			return false;
 		if(this.isExplicit != operation.isExplicit)
+			return false;
+		if(!this.equalTrailingReturnType(operation))
 			return false;
 		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
@@ -806,6 +829,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 		if(this.isExplicit != operation.isExplicit)
 			return false;
+		if(!this.equalTrailingReturnType(operation))
+			return false;
 		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
 		/*if(this.isStatic != operation.isStatic)
@@ -834,6 +859,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		if(this.isConst != operation.isConst)
 			return false;
 		if(this.isExplicit != operation.isExplicit)
+			return false;
+		if(!this.equalTrailingReturnType(operation))
 			return false;
 		if(this.isForwardDeclaration() != operation.isForwardDeclaration())
 			return false;
@@ -1137,6 +1164,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				equalTypeParameters(operation)) {
 			Set<UMLTypeParameterDiff> set = typeParameterListDiff.getTypeParameterDiffs();
@@ -1175,6 +1203,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				equalReturnParameter(operation) &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
 				equalTypeParameters(operation);
@@ -1187,6 +1216,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
@@ -1202,6 +1232,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				equalReturnParameter(operation) &&
@@ -1224,6 +1255,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				thisEmptyBody == otherEmptyBody &&
 				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
@@ -1240,6 +1272,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			this.isAbstract == operation.isAbstract &&
 			this.isConst == operation.isConst &&
 			this.isExplicit == operation.isExplicit &&
+			this.equalTrailingReturnType(operation) &&
 			this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 			thisEmptyBody == otherEmptyBody &&
 			this.getParameterTypeList().equals(operation.getParameterTypeList());
@@ -1252,6 +1285,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
 				this.isExplicit == operation.isExplicit &&
+				this.equalTrailingReturnType(operation) &&
 				this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 				equalTypeParameters(operation)) {
 			UMLParameter thisReturnParameter = this.getReturnParameter();
@@ -1286,6 +1320,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		result = prime * result + (isAbstract ? 1231 : 1237);
 		result = prime * result + (isConst ? 1231 : 1237);
 		result = prime * result + (isExplicit ? 1231 : 1237);
+		result = prime * result + (trailingReturnType.isPresent() ? trailingReturnType.get().hashCode() : 0);
 		result = prime * result + (isForwardDeclaration() ? 1231 : 1237);
 		result = prime * result + (thisEmptyBody ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());

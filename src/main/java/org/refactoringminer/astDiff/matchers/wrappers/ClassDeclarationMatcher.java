@@ -400,6 +400,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                         }
                     }
                 }
+                else if(srcSuperConstructorCall.getType().name.equals(LANG1.METHOD_INVOCATION) && dstSuperConstructorCall.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                    mappingStore.addMappingRecursively(srcSuperConstructorCall, dstSuperConstructorCall);
+                    int index1 = srcSuperConstructorCall.getParent().getChildPosition(srcSuperConstructorCall);
+                    int index2 = dstSuperConstructorCall.getParent().getChildPosition(dstSuperConstructorCall);
+                    if(srcSuperConstructorCall.getParent().getChildren().size() > index1+1 && srcSuperConstructorCall.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                            dstSuperConstructorCall.getParent().getChildren().size() > index2+1 && dstSuperConstructorCall.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                        Tree t1 = srcSuperConstructorCall.getParent().getChild(index1+1);
+                        Tree t2 = dstSuperConstructorCall.getParent().getChild(index2+1);
+                        mappingStore.addMapping(t1,t2);
+                    }
+                }
             }
         }
         if (classDiff.getCommonFunctionType().isPresent()) {

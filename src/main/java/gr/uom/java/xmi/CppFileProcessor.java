@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -764,6 +765,24 @@ public class CppFileProcessor {
 			}*/
 		}
 		addTemplateParameters(operation, templateParameters, sourceFolder);
+		if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
+			IASTTypeId trailingReturnType = cppFunctionDeclarator.getTrailingReturnType();
+			if(trailingReturnType != null) {
+				Map<String, Set<VariableDeclaration>> activeVariableDeclarations = new HashMap<String, Set<VariableDeclaration>>();;
+				for(VariableDeclaration v : operation.getParameterDeclarationList()) {
+					if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+						activeVariableDeclarations.get(v.getVariableName()).add(v);
+					}
+					else {
+						Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+						set.add(v);
+						activeVariableDeclarations.put(v.getVariableName(), set);
+					}
+				}
+				AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, trailingReturnType, CodeElementType.TRAILING_RETURN_TYPE, operation, activeVariableDeclarations, fileContent);
+				operation.setTrailingReturnType(expression);
+			}
+		}
 
 		//int start = declSpecifier.getFileLocation().getNodeOffset();
 		//int end = declarator.getFileLocation().getNodeOffset() + declarator.getFileLocation().getNodeLength();
@@ -845,6 +864,13 @@ public class CppFileProcessor {
 			}
 			//clear after processing to avoid keeping AST nodes in memory
 			operationBody.getNestedSimpleDeclarations().clear();
+			if(declarator instanceof ICPPASTFunctionDeclarator cppFunctionDeclarator) {
+				IASTTypeId trailingReturnType = cppFunctionDeclarator.getTrailingReturnType();
+				if(trailingReturnType != null) {
+					AbstractExpression expression = new AbstractExpression(sourceFolder, filePath, trailingReturnType, CodeElementType.TRAILING_RETURN_TYPE, operation, operationBody.getActiveVariableDeclarations(), fileContent);
+					operation.setTrailingReturnType(expression);
+				}
+			}
 		}
 		if(functionDefinition instanceof ICPPASTFunctionDefinition cppFunctionDefinition) {
 			if(cppFunctionDefinition.isDeleted()) {

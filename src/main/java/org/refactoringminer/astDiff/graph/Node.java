@@ -224,7 +224,7 @@ public class Node {
   }
 
   // A hunk may be smaller than a line, so it is overlap in such cases
-  public boolean overlapLine(String path, String side, int line) {
+  public boolean overlapLine(String path, String side, int line, @Nullable Integer startLine) {
     if (!this.getPath().equals(path)) {
       return false;
     }
@@ -234,7 +234,8 @@ public class Node {
     }
 
     TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(this.getTree(), this.getFileContent());
-    return line >= lineRange.startLine() && line <= lineRange.endLine();
+    return startLine == null ? line >= lineRange.startLine() && line <= lineRange.endLine() :
+            startLine <= lineRange.endLine() && lineRange.startLine() <= line;
   }
 
   public JsonObject stringify() {

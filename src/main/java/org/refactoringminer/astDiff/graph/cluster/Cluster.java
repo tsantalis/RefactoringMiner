@@ -18,8 +18,8 @@ public class Cluster extends GraphWrapper {
         return promptIdNode.orElse(null);
     }
 
-    public Set<Node> findNodes(String side, String path, int line) {
+    public Set<Node> findNodes(String side, String path, int line, @Nullable Integer startLine) {
         return getGraph().vertexSet().stream()
-                .filter(node -> node.overlapLine(path, side, line)).collect(Collectors.toSet());
+                .filter(node -> node.overlapLine(path, side, line, startLine)).collect(Collectors.toSet());
     }
 }

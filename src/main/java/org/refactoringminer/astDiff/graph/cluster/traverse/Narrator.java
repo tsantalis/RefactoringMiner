@@ -10,8 +10,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Narrator {
-    public static final int THRESHOLD = 1000;
-
     private final TraversalPattern rootPattern;
     private final Map<GrainLevel, List<TraversalPattern>> cache = new HashMap<>();
     private final Map<GrainLevel, List<ChapterUnit>> flatCache = new HashMap<>();
@@ -159,42 +157,7 @@ public class Narrator {
         }
 
         if (p instanceof AggregatorPattern agg) {
-            List<TraversalPattern> sortedSubs = new ArrayList<>(agg.subs);
-            sortedSubs.sort((s1, s2) -> {
-                boolean s1DependsOnS2 = s1.dependsOn(s2);
-                boolean s2DependsOnS1 = s2.dependsOn(s1);
-                if (s1DependsOnS2 && !s2DependsOnS1) {
-                    return 1;
-                }
-                if (s2DependsOnS1 && !s1DependsOnS2) {
-                    return -1;
-                }
-
-                int d1 = s1.getDepth();
-                int d2 = s2.getDepth();
-                if (d1 != d2) {
-                    return Integer.compare(d2, d1);
-                }
-
-                List<Node> mains1 = s1.getMains();
-                List<Node> mains2 = s2.getMains();
-
-                int points1 = 0;
-                int points2 = 0;
-
-                for (Node m1 : mains1) {
-                    for (Node m2 : mains2) {
-                        if (m1.getPath().equals(m2.getPath())) {
-                            if (m1.getTree().getPos() < m2.getTree().getPos()) {
-                                points1++;
-                            } else if (m2.getTree().getPos() < m1.getTree().getPos()) {
-                                points2++;
-                            }
-                        }
-                    }
-                }
-                return Integer.compare(points2, points1);
-            });
+            List<TraversalPattern> sortedSubs = orderSubs(new ArrayList<>(agg.subs));
             for (TraversalPattern sub : sortedSubs) {
                 traverse(sub, visited, result, stopPredicate, leafPredicate);
             }
@@ -203,6 +166,107 @@ public class Narrator {
         if (leafPredicate.test(p)) {
             result.add(p);
         }
+    }
+
+    private static List<TraversalPattern> orderSubs(List<TraversalPattern> subs) {
+        int n = subs.size();
+        if (n <= 1) return subs;
+
+        Map<TraversalPattern, Integer> dependencies = new HashMap<>();
+        Map<TraversalPattern, List<TraversalPattern>> dependedBy = new HashMap<>();
+        for (TraversalPattern s : subs) {
+            dependencies.put(s, 0);
+            dependedBy.put(s, new ArrayList<>());
+        }
+        for (TraversalPattern a : subs) {
+            for (TraversalPattern b : subs) {
+                if (a == b) continue;
+                boolean aDependsOnB = a.dependsOn(b);
+                boolean bDependsOnA = b.dependsOn(a);
+                if (aDependsOnB && !bDependsOnA) {
+                    dependedBy.get(b).add(a);
+                    dependencies.put(a, dependencies.get(a) + 1);
+                }
+            }
+        }
+
+        List<TraversalPattern> ready = new ArrayList<>();
+        for (TraversalPattern s : subs) {
+            if (dependencies.get(s) == 0) {
+                ready.add(s);
+            }
+        }
+        List<TraversalPattern> result = new ArrayList<>();
+        TraversalPattern last = null;
+        while (!ready.isEmpty()) {
+            TraversalPattern next = pickNext(last, ready);
+            ready.remove(next);
+            result.add(next);
+            last = next;
+
+            for (TraversalPattern dependent : dependedBy.get(next)) {
+                int updated = dependencies.get(dependent) - 1;
+                dependencies.put(dependent, updated);
+                if (updated == 0) {
+                    ready.add(dependent);
+                }
+            }
+        }
+
+        if (result.size() < n) {
+            for (TraversalPattern s : subs) {
+                if (!result.contains(s)) {
+                    result.add(s);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static TraversalPattern pickNext(TraversalPattern last, List<TraversalPattern> ready) {
+        TraversalPattern best = null;
+        int bestCommon = -1;
+
+        for (TraversalPattern candidate : ready) {
+            int common = last == null ? 0 : last.commonNodes(candidate).size();
+
+            if (best == null
+                    || common > bestCommon
+                    || (common == bestCommon && compareByDepthAndPosition(candidate, best) < 0)) {
+                best = candidate;
+                bestCommon = common;
+            }
+        }
+
+        return best;
+    }
+
+    private static int compareByDepthAndPosition(TraversalPattern s1, TraversalPattern s2) {
+        int d1 = s1.getDepth();
+        int d2 = s2.getDepth();
+        if (d1 != d2) {
+            return Integer.compare(d2, d1);
+        }
+
+        List<Node> mains1 = s1.getMains();
+        List<Node> mains2 = s2.getMains();
+
+        int points1 = 0;
+        int points2 = 0;
+
+        for (Node m1 : mains1) {
+            for (Node m2 : mains2) {
+                if (m1.getSrcDst().equals(m2.getSrcDst()) && m1.getPath().equals(m2.getPath())) {
+                    if (m1.getTree().getPos() < m2.getTree().getPos()) {
+                        points1++;
+                    } else if (m2.getTree().getPos() < m1.getTree().getPos()) {
+                        points2++;
+                    }
+                }
+            }
+        }
+        return Integer.compare(points2, points1);
     }
 
     public List<ChapterUnit> getFlatChapters(GrainLevel level) {
@@ -222,23 +286,12 @@ public class Narrator {
 
             if (chapter instanceof AggregatorPattern agg) {
                 List<NarrativeElement> elements = agg.getElements(filterPatterns);
-                int totalLines = elements.stream().mapToInt(NarrativeElement::lineCount).sum();
 
-                if (totalLines > THRESHOLD) {
-                    List<List<NarrativeElement>> splits = createBalancedSplits(elements);
-                    for (List<NarrativeElement> split : splits) {
-                        ChapterUnit chu = new ChapterUnit();
-                        for (NarrativeElement ne : split) {
-                            chu.append(ne.getContent());
-                            chu.addMains(ne.getMains());
-                            chu.addSides(ne.getSides());
-                        }
-
-                        units.add(chu);
-                    }
-                } else {
+                List<List<Integer>> splits = Splitter.createBalancedSplits(elements.stream().map(NarrativeElement::getContent).toList());
+                for (List<Integer> split : splits) {
                     ChapterUnit chu = new ChapterUnit();
-                    for (NarrativeElement ne : elements) {
+                    for (Integer index : split) {
+                        NarrativeElement ne = elements.get(index);
                         chu.append(ne.getContent());
                         chu.addMains(ne.getMains());
                         chu.addSides(ne.getSides());
@@ -262,7 +315,7 @@ public class Narrator {
         int currentSum = 0;
 
         for (ChapterUnit unit : units) {
-            if (currentGroup.isEmpty() || (currentSum + unit.lines() <= THRESHOLD)) {
+            if (currentGroup.isEmpty() || (currentSum + unit.lines() <= Splitter.THRESHOLD)) {
                 currentGroup.add(unit);
                 currentSum += unit.lines();
             } else {
@@ -291,93 +344,6 @@ public class Narrator {
 
         flatCache.put(level, flatGroups);
         return flatGroups;
-    }
-
-    private List<List<NarrativeElement>> createBalancedSplits(List<NarrativeElement> elements) {
-        int totalLines = elements.stream().mapToInt(NarrativeElement::lineCount).sum();
-        if (totalLines <= THRESHOLD) {
-            return List.of(elements);
-        }
-
-        int n = (int) Math.ceil((double) totalLines / THRESHOLD);
-        n = Math.min(n, elements.size());
-
-        return splitIntoN(elements, n);
-    }
-
-    private List<List<NarrativeElement>> splitIntoN(List<NarrativeElement> elements, int n) {
-        if (elements == null || elements.isEmpty()) return Collections.emptyList();
-        if (n <= 1) return List.of(elements);
-
-        int low = 0;
-        int high = 0;
-        for (NarrativeElement e : elements) {
-            low = Math.max(low, e.lineCount());
-            high += e.lineCount();
-        }
-
-        int optimalMaxSum = high;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (canSplitIntoN(elements, n, mid)) {
-                optimalMaxSum = mid;
-                high = mid - 1;
-            } else {
-                low = mid + 1;
-            }
-        }
-
-        List<List<NarrativeElement>> result = new ArrayList<>();
-        List<NarrativeElement> currentSplit = new ArrayList<>();
-        int currentSum = 0;
-
-        for (NarrativeElement e : elements) {
-            if (!currentSplit.isEmpty() && currentSum + e.lineCount() > optimalMaxSum) {
-                result.add(currentSplit);
-                currentSplit = new ArrayList<>();
-                currentSum = 0;
-            }
-            currentSplit.add(e);
-            currentSum += e.lineCount();
-        }
-        if (!currentSplit.isEmpty()) {
-            result.add(currentSplit);
-        }
-
-        while (result.size() < n) {
-            int bestSplitIdx = -1;
-            int maxElements = 0;
-            for (int i = 0; i < result.size(); i++) {
-                if (result.get(i).size() > maxElements && result.get(i).size() > 1) {
-                    maxElements = result.get(i).size();
-                    bestSplitIdx = i;
-                }
-            }
-
-            if (bestSplitIdx == -1) break;
-
-            List<NarrativeElement> toSplit = result.remove(bestSplitIdx);
-            int mid = toSplit.size() / 2;
-            result.add(bestSplitIdx, new ArrayList<>(toSplit.subList(0, mid)));
-            result.add(bestSplitIdx + 1, new ArrayList<>(toSplit.subList(mid, toSplit.size())));
-        }
-
-        return result;
-    }
-
-    private boolean canSplitIntoN(List<NarrativeElement> elements, int n, int maxSum) {
-        int count = 1;
-        int currentSum = 0;
-        for (NarrativeElement e : elements) {
-            if (currentSum + e.lineCount() > maxSum) {
-                count++;
-                currentSum = e.lineCount();
-                if (count > n) return false;
-            } else {
-                currentSum += e.lineCount();
-            }
-        }
-        return true;
     }
 
     public int getProgress(GrainLevel grainLevel) {

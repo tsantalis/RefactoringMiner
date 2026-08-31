@@ -17,6 +17,7 @@ public class TraversalPattern extends GraphWrapper {
     protected final Set<String> identifiers = new HashSet<>();
     private final Narrator narrator = new Narrator(this);
     private final Map<TraversalPattern, Boolean> dependsOnCache = new HashMap<>();
+    private final Map<TraversalPattern, Set<Node>> commonNodesCache = new HashMap<>();
     protected Node cachedLead = null;
     protected NodeType nodeType;
     private List<TraversalPattern> cachedFlatten = null;
@@ -340,6 +341,32 @@ public class TraversalPattern extends GraphWrapper {
         }
 
         result.add(p);
+    }
+
+    public Set<Node> commonNodes(TraversalPattern other) {
+        if (commonNodesCache.containsKey(other)) {
+            return commonNodesCache.get(other);
+        }
+
+        Set<Node> thisNodes = aggregatedLeafNodes(this);
+        Set<Node> otherNodes = aggregatedLeafNodes(other);
+
+        Set<Node> common = new HashSet<>(thisNodes);
+        common.retainAll(otherNodes);
+
+        commonNodesCache.put(other, common);
+        return common;
+    }
+
+    private static Set<Node> aggregatedLeafNodes(TraversalPattern pattern) {
+        List<TraversalPattern> leaves = pattern.getNarrator().getNarrative(GrainLevel.LEAF);
+
+        Set<Node> nodes = new HashSet<>();
+        for (TraversalPattern leaf : leaves) {
+            nodes.addAll(leaf.getMains());
+            nodes.addAll(leaf.getSides());
+        }
+        return nodes;
     }
 
     private String buildSubChapterXml(MergedGroup mergedGroup, List<TraversalPattern> leaves, Map<MergedGroup, List<Node>> localSidesMap) {

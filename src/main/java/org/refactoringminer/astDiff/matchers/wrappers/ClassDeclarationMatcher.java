@@ -687,6 +687,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                if(parent1.getParent() != null && parent2.getParent() != null && parent1.getParent().getType().name.equals(LANG1.LINKAGE_SPECIFICATION) && parent2.getParent().getType().name.equals(LANG2.LINKAGE_SPECIFICATION)) {
+                    mappingStore.addMapping(parent1.getParent(), parent2.getParent());
+                    Pair<Tree,Tree> extern = findPairOfType(parent1.getParent(), parent2.getParent(),LANG1.EXTERN,LANG2.EXTERN);
+                    if(extern != null) {
+                        mappingStore.addMapping(extern.first, extern.second);
+                    }
+                    Pair<Tree,Tree> string_literals = findPairOfType(parent1.getParent(), parent2.getParent(),LANG1.STRING_LITERAL,LANG2.STRING_LITERAL);
+                    if(string_literals != null) {
+                        mappingStore.addMappingRecursively(string_literals.first, string_literals.second);
+                    }
+                }
             }
             else if(parent1.getType().name.equals(LANG1.PREPROC_IFDEF) && parent2.getType().name.equals(LANG2.PREPROC_IFDEF)) {
                 processIsomorphicChildren(parent1, parent2, mappingStore);

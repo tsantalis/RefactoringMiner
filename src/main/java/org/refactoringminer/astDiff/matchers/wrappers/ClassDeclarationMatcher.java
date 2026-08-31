@@ -11,6 +11,7 @@ import gr.uom.java.xmi.UMLForwardDeclaration;
 import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLProblemDeclaration;
+import gr.uom.java.xmi.UMLStaticAssertionDeclaration;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeAlias;
 import gr.uom.java.xmi.UMLTypeParameter;
@@ -27,6 +28,7 @@ import gr.uom.java.xmi.diff.UMLForwardDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportListDiff;
 import gr.uom.java.xmi.diff.UMLProblemDeclarationListDiff;
+import gr.uom.java.xmi.diff.UMLStaticAssertionDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLTypeAliasListDiff;
 
 import org.refactoringminer.astDiff.models.OptimizationData;
@@ -613,6 +615,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             }
             for (org.apache.commons.lang3.tuple.Pair<UMLProblemDeclaration, UMLProblemDeclaration> statementPair : umlProblemDeclarationListDiff.getChangedDeclarations()) {
                 processProblemDeclarationPair(statementPair, srcTypeDeclaration, dstTypeDeclaration, srcTree, dstTree, mappingStore);
+            }
+        }
+        if(classDiff.getStaticAssertionDeclarationListDiff().isPresent()) {
+            UMLStaticAssertionDeclarationListDiff umlAssertionDeclarationListDiff = classDiff.getStaticAssertionDeclarationListDiff().get();
+            for (org.apache.commons.lang3.tuple.Pair<UMLStaticAssertionDeclaration, UMLStaticAssertionDeclaration> statementPair : umlAssertionDeclarationListDiff.getCommonDeclarations()) {
+                Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
+                Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
+                mappingStore.addMappingRecursively(srcStatement, dstStatement);
             }
         }
         Pair<Tree, Tree> attribute_declarations = Helpers.findPairOfType(srcTypeDeclaration,dstTypeDeclaration, LANG1.ATTRIBUTE_DECLARATION, LANG2.ATTRIBUTE_DECLARATION);

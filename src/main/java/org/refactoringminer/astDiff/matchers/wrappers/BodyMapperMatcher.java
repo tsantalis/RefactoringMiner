@@ -196,6 +196,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
+                if(!isPartOfExtractedMethod && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_DECLARATION)) {
+                    if(srcStatementNode.getParent().isIsomorphicTo(dstStatementNode.getParent())) {
+                        mappingStore.addMappingRecursively(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    }
+                    else {
+                        mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    }
+                }
             }
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);

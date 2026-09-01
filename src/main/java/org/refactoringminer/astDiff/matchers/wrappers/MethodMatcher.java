@@ -421,6 +421,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (primitive_types != null) {
                         mappingStore.addMappingRecursively(primitive_types.first,primitive_types.second);
                     }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> template_types = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TEMPLATE_TYPE,LANG2.TEMPLATE_TYPE);
+                    if (template_types != null) {
+                        mappingStore.addMappingRecursively(template_types.first,template_types.second);
+                    }
                     com.github.gumtreediff.utils.Pair<Tree,Tree> errors = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.ERROR,LANG2.ERROR);
                     if (errors != null) {
                         mappingStore.addMappingRecursively(errors.first,errors.second);
@@ -470,6 +474,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if (primitive_types != null) {
                         mappingStore.addMappingRecursively(primitive_types.first,primitive_types.second);
                     }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> template_types = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TEMPLATE_TYPE,LANG2.TEMPLATE_TYPE);
+                    if (template_types != null) {
+                        mappingStore.addMappingRecursively(template_types.first,template_types.second);
+                    }
                     com.github.gumtreediff.utils.Pair<Tree,Tree> errors = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.ERROR,LANG2.ERROR);
                     if (errors != null) {
                         mappingStore.addMappingRecursively(errors.first,errors.second);
@@ -492,6 +500,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     com.github.gumtreediff.utils.Pair<Tree,Tree> primitive_types = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
                     if (primitive_types != null) {
                         mappingStore.addMappingRecursively(primitive_types.first,primitive_types.second);
+                    }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> template_types = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.TEMPLATE_TYPE,LANG2.TEMPLATE_TYPE);
+                    if (template_types != null) {
+                        mappingStore.addMappingRecursively(template_types.first,template_types.second);
                     }
                     com.github.gumtreediff.utils.Pair<Tree,Tree> errors = Helpers.findPairOfType(srcOperationNode.getParent(),dstOperationNode.getParent(),LANG1.ERROR,LANG2.ERROR);
                     if (errors != null) {

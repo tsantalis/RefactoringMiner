@@ -1229,7 +1229,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             }
         }
         boolean parentNamespaceContainsOnlyClass = childCount1 == childCount2 && childCount1 == 1;
-        boolean movedAndRenamed = baseClassDiff instanceof UMLClassRenameDiff && !baseClassDiff.getOriginalClass().getSourceFile().equals(baseClassDiff.getNextClass().getSourceFile()) && !parentNamespaceContainsOnlyClass;
+        boolean justRenamed = false;
+        if(baseClassDiff.getOriginalClass().getSourceFile().contains("/") && baseClassDiff.getNextClass().getSourceFile().contains("/")) {
+            String s1 = baseClassDiff.getOriginalClass().getSourceFile().substring(0, baseClassDiff.getOriginalClass().getSourceFile().lastIndexOf("/"));
+            String s2 = baseClassDiff.getNextClass().getSourceFile().substring(0, baseClassDiff.getNextClass().getSourceFile().lastIndexOf("/"));
+            if(s1.equals(s2))
+                justRenamed = true;
+        }
+        boolean movedAndRenamed = baseClassDiff instanceof UMLClassRenameDiff && !justRenamed && !baseClassDiff.getOriginalClass().getSourceFile().equals(baseClassDiff.getNextClass().getSourceFile()) && !parentNamespaceContainsOnlyClass;
         boolean moved = baseClassDiff instanceof UMLClassMoveDiff && !baseClassDiff.getOriginalClass().getSourceFile().equals(baseClassDiff.getNextClass().getSourceFile()) && !parentNamespaceContainsOnlyClass;
         boolean movedToNestedNameSpace = movedToNestedNamespace(baseClassDiff.getOriginalClass().getPackageName(), baseClassDiff.getNextClass().getPackageName());
         if(!moved && !movedAndRenamed && !movedToNestedNameSpace) {

@@ -667,7 +667,7 @@ public class CppFileProcessor {
 				}
 				umlAttribute.setVariableDeclaration(variableDeclaration);
 				addTemplateParameters(umlAttribute, templateParameters, sourceFolder);
-				preprocessor.addEnumConstant(parentContainer, umlAttribute, name);
+				preprocessor.addEnumConstant(umlClass, umlAttribute, name);
 				distributeComments(comments, locationInfo, umlAttribute.getComments());
 			}
 			this.umlModel.addClass(umlClass);

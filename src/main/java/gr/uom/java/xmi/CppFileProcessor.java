@@ -566,10 +566,10 @@ public class CppFileProcessor {
 			umlClass.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {
 				umlClass.setFinal(cppCompositeTypeSpecifier.isFinal());
-				if(cppCompositeTypeSpecifier.toString().contains("struct")) {
+				if(cppCompositeTypeSpecifier.getKey() == IASTCompositeTypeSpecifier.k_struct) {
 					umlClass.setStruct(true);
 				}
-				if(cppCompositeTypeSpecifier.toString().contains("union")) {
+				if(cppCompositeTypeSpecifier.getKey() == IASTCompositeTypeSpecifier.k_union) {
 					umlClass.setUnion(true);
 				}
 				ICPPASTBaseSpecifier[] baseSpecifiers = cppCompositeTypeSpecifier.getBaseSpecifiers();

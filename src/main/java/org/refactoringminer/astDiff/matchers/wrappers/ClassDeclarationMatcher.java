@@ -179,6 +179,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> storage_class_specifiers = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.STORAGE_CLASS_SPECIFIER,LANG2.STORAGE_CLASS_SPECIFIER);
+                if(storage_class_specifiers != null) {
+                    mappingStore.addMappingRecursively(storage_class_specifiers.first, storage_class_specifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> type_qualifiers = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.TYPE_QUALIFIER,LANG2.TYPE_QUALIFIER);
+                if(type_qualifiers != null) {
+                    mappingStore.addMappingRecursively(type_qualifiers.first, type_qualifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> initializer_lists = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.INITIALIZER_LIST,LANG2.INITIALIZER_LIST);
+                if(initializer_lists != null) {
+                    mappingStore.addMappingRecursively(initializer_lists.first, initializer_lists.second);
+                }
                 matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
@@ -1271,7 +1283,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
     }
 
-    private static void processNamespaceDefinitions(Tree parent1, Tree parent2, ExtendedMultiMappingStore mappingStore,
+    public static void processNamespaceDefinitions(Tree parent1, Tree parent2, ExtendedMultiMappingStore mappingStore,
             Constants LANG1, Constants LANG2) {
         if(parent1.getType().name.equals(LANG1.PACKAGE_DECLARATION) && parent2.getType().name.equals(LANG2.PACKAGE_DECLARATION)) {
             Pair<Tree,Tree> namespaces = Helpers.findPairOfType(parent1,parent2, LANG1.NAMESPACE, LANG2.NAMESPACE);

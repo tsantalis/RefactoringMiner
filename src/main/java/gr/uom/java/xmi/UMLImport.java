@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.refactoringminer.util.PathFileUtils;
+
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class UMLImport implements Serializable, LocationInfoProvider {
@@ -12,6 +14,7 @@ public class UMLImport implements Serializable, LocationInfoProvider {
 	private boolean isStatic;
 	private LocationInfo locationInfo;
 	private Optional<String> alias;
+	private final Constants LANG;
 
 	public UMLImport(String name, boolean isOnDemand, boolean isStatic, LocationInfo locationInfo) {
 		this.name = name;
@@ -19,6 +22,11 @@ public class UMLImport implements Serializable, LocationInfoProvider {
 		this.isStatic = isStatic;
 		this.locationInfo = locationInfo;
 		this.alias = Optional.empty();
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+	}
+
+	public Constants getLANG() {
+		return LANG;
 	}
 
 	public Optional<String> getAlias() {

@@ -196,6 +196,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(matched.first,matched.second);
                 }
             }
+            if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.DECLARATION)
+                    && dstTypeDeclaration.getParent().getType().name.equals(LANG2.DECLARATION)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+            }
             if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.TYPE_DEFINITION)
                     && dstTypeDeclaration.getParent().getType().name.equals(LANG2.TYPE_DEFINITION)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.TYPEDEF,LANG2.TYPEDEF);

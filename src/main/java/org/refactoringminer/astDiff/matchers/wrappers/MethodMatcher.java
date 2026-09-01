@@ -140,6 +140,10 @@ public class MethodMatcher extends BodyMapperMatcher{
                     dstOperationNode.getChildren().get(0).getType().name.equals(LANG2.METHOD_DECLARATION)) {
                 dstOperationNode = dstOperationNode.getChildren().get(0);
             }
+            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.DECLARATION) && dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.DECLARATION) &&
+                    srcOperationNode.isIsomorphicTo(dstOperationNode)) {
+                mappingStore.addMappingRecursively(srcOperationNode, dstOperationNode);
+            }
             if (srcOperationNode == null || !LANG1.isMethod(srcOperationNode.getType().name)) return;
             if (dstOperationNode == null || !LANG2.isMethod(dstOperationNode.getType().name)) return;
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff(), LANG1, LANG2)

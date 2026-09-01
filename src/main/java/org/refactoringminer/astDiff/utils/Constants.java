@@ -678,4 +678,5 @@ public class Constants {
     public final String ATTRIBUTE_DECLARATION = "attribute_declaration";
     public final String LINKAGE_SPECIFICATION = "linkage_specification";
     public final String EXTERN = "extern";
+    public final String COMPOUND_LITERAL_EXPRESSION = "compound_literal_expression";
 }

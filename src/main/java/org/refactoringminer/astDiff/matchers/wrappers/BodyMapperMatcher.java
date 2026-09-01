@@ -463,6 +463,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMappingRecursively(matched.first,matched.second);
                 }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.COMPOUND_LITERAL_EXPRESSION, LANG2.COMPOUND_LITERAL_EXPRESSION);
+                if (matched != null) {
+                    mappingStore.addMappingRecursively(matched.first,matched.second);
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
                 if (matched != null) {
                     mappingStore.addMappingRecursively(matched.first,matched.second);
@@ -868,6 +872,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(srcStatementNode.getParent(), dstStatementNode.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
                         if (closing != null) {
                             mappingStore.addMapping(closing.first,closing.second);
+                        }
+                    }
+                    if(!isPartOfExtractedMethod && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_DECLARATION)) {
+                        mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> compounds = Helpers.findPairOfType(srcStatementNode.getParent(), dstStatementNode.getParent(), LANG1.COMPOUND_STATEMENT, LANG2.COMPOUND_STATEMENT);
+                        if(compounds != null && compounds.first.isIsomorphicTo(compounds.second)) {
+                            mappingStore.addMappingRecursively(compounds.first, compounds.second);
                         }
                     }
                 }

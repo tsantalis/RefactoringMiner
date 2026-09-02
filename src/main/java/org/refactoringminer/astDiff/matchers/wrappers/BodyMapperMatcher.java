@@ -197,8 +197,15 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     }
                 }
                 if(!isPartOfExtractedMethod && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_DECLARATION)) {
-                    if(srcStatementNode.getParent().isIsomorphicTo(dstStatementNode.getParent())) {
-                        mappingStore.addMappingRecursively(srcStatementNode.getParent(), dstStatementNode.getParent());
+                    Tree parent1 = srcStatementNode.getParent();
+                    Tree parent2 = dstStatementNode.getParent();
+                    if(parent1.isIsomorphicTo(parent2)) {
+                        mappingStore.addMappingRecursively(parent1, parent2);
+                        Tree grandParent1 = parent1.getParent();
+                        Tree grandParent2 = parent2.getParent();
+                        if(grandParent1.isIsomorphicTo(grandParent2)) {
+                            mappingStore.addMappingRecursively(grandParent1, grandParent2);
+                        }
                     }
                     else {
                         mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
@@ -1057,6 +1064,19 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                                 }
                             }
                         }
+                    }
+                }
+                //handle parent labeled statement
+                if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.LABELED) &&
+                        dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.LABELED)) {
+                    mappingStore.addMapping(srcStatementNode.getParent(),dstStatementNode.getParent());
+                    Pair<Tree, Tree> identifiers = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.STATEMENT_IDENTIFIER, LANG2.STATEMENT_IDENTIFIER);
+                    if (identifiers != null) {
+                        mappingStore.addMapping(identifiers.first,identifiers.second);
+                    }
+                    Pair<Tree, Tree> colons = Helpers.findPairOfType(srcStatementNode.getParent(),dstStatementNode.getParent(), LANG1.COLON, LANG2.COLON);
+                    if (colons != null) {
+                        mappingStore.addMapping(colons.first,colons.second);
                     }
                 }
                 boolean testFunctionCall = (abstractCodeMapping.getFragment1().getString().startsWith("describe(") && abstractCodeMapping.getFragment2().getString().startsWith("describe(")) ||

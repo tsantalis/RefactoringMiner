@@ -49,7 +49,10 @@ public class ClassDiffMatcher extends OptimizationAwareMatcher{
     private void classDiffMatcher(UMLAbstractClassDiff classDiff, boolean mergeFlag, ExtendedMultiMappingStore mappingStore, Tree srcTree, Tree dstTree, OptimizationData optimizationData) {
         if (!mergeFlag) {
             mappingStore.addMapping(srcTree, dstTree);
-            new PackageDeclarationMatcher(LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+            if(classDiff.getOriginalClass().getLANG().equals(gr.uom.java.xmi.Constants.CPP) && classDiff.getNextClass().getLANG().equals(gr.uom.java.xmi.Constants.CPP))
+                ClassDeclarationMatcher.processNamespaceDefinitions(srcTree, dstTree, mappingStore, LANG1, LANG2);
+            else
+                new PackageDeclarationMatcher(LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         }
         boolean isBaseDiff = classDiff instanceof UMLClassBaseDiff;
         if (isBaseDiff) {

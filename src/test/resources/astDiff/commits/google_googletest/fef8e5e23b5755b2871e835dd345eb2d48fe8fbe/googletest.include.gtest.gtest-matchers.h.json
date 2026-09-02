@@ -71719,6 +71719,116 @@
   "firstEndPos" : 29170,
   "secondEndPos" : 29193
 }, {
+  "firstType" : "template_declaration",
+  "secondType" : "template_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 29172,
+  "secondPos" : 30628,
+  "firstEndPos" : 29295,
+  "secondEndPos" : 30707
+}, {
+  "firstType" : "template",
+  "secondType" : "template",
+  "firstLabel" : "template",
+  "secondLabel" : "template",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 29172,
+  "secondPos" : 30628,
+  "firstEndPos" : 29180,
+  "secondEndPos" : 30636
+}, {
+  "firstType" : "template_parameter_list",
+  "secondType" : "template_parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 29181,
+  "secondPos" : 30637,
+  "firstEndPos" : 29273,
+  "secondEndPos" : 30649
+}, {
+  "firstType" : "alias_declaration",
+  "secondType" : "alias_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_declaration",
+  "secondParentType" : "template_declaration",
+  "firstPos" : 29274,
+  "secondPos" : 30650,
+  "firstEndPos" : 29295,
+  "secondEndPos" : 30707
+}, {
+  "firstType" : "using",
+  "secondType" : "using",
+  "firstLabel" : "using",
+  "secondLabel" : "using",
+  "firstParentType" : "alias_declaration",
+  "secondParentType" : "alias_declaration",
+  "firstPos" : 29274,
+  "secondPos" : 30650,
+  "firstEndPos" : 29279,
+  "secondEndPos" : 30655
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "StringLike",
+  "secondLabel" : "StringType",
+  "firstParentType" : "alias_declaration",
+  "secondParentType" : "alias_declaration",
+  "firstPos" : 29280,
+  "secondPos" : 30656,
+  "firstEndPos" : 29290,
+  "secondEndPos" : 30666
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "alias_declaration",
+  "secondParentType" : "alias_declaration",
+  "firstPos" : 29291,
+  "secondPos" : 30667,
+  "firstEndPos" : 29292,
+  "secondEndPos" : 30668
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "alias_declaration",
+  "secondParentType" : "alias_declaration",
+  "firstPos" : 29293,
+  "secondPos" : 30669,
+  "firstEndPos" : 29294,
+  "secondEndPos" : 30706
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "decltype",
+  "firstLabel" : "T",
+  "secondLabel" : "",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 29293,
+  "secondPos" : 30669,
+  "firstEndPos" : 29294,
+  "secondEndPos" : 30706
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "alias_declaration",
+  "secondParentType" : "alias_declaration",
+  "firstPos" : 29294,
+  "secondPos" : 30706,
+  "firstEndPos" : 29295,
+  "secondEndPos" : 30707
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// Implements polymorphic matchers MatchesRegex(regex) and",

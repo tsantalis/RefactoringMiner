@@ -81,10 +81,12 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdent;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstIdentName;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstMemberExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstParenExpr;
+import com.caoccao.javet.swc4j.ast.expr.Swc4jAstSuperPropExpr;
 import com.caoccao.javet.swc4j.ast.expr.Swc4jAstTsNonNullExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstCallee;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstMemberProp;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstSuperProp;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImport;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamInstantiation;
@@ -1417,6 +1419,16 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(callee instanceof Swc4jAstSuper superCall) {
 			this.methodName = "super";
+		}
+		else if(callee instanceof Swc4jAstSuperPropExpr superPropExpr) {
+			ISwc4jAstSuperProp superProp = superPropExpr.getProp();
+			String propertyName = null;
+			if(superProp instanceof Swc4jAstIdentName ident)
+				propertyName = ident.getSym();
+			else if(superProp instanceof Swc4jAstComputedPropName propName) {
+				propertyName = fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd());
+			}
+			this.methodName = "super." + propertyName;
 		}
 		else if(callee instanceof Swc4jAstFnExpr functionExpr) {
 			//f()() is used to call a function that returns another function

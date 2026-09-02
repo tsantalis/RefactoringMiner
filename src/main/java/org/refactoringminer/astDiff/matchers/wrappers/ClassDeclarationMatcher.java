@@ -584,7 +584,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                         if(srcStatement.getParent().getType().name.equals(LANG1.DECLARATION_LIST) && dstStatement.getParent().getType().name.equals(LANG2.DECLARATION_LIST) &&
                                 srcStatement.getParent().getParent().getType().name.equals(LANG1.PACKAGE_DECLARATION) && dstStatement.getParent().getParent().getType().name.equals(LANG2.PACKAGE_DECLARATION)) {
                             mappingStore.addMapping(srcStatement.getParent().getParent(), dstStatement.getParent().getParent());
-                            processNamespaceDefinitions(srcStatement.getParent().getParent(), dstStatement.getParent().getParent(), mappingStore, LANG1, LANG2);
+                            handleParentNamespace(srcStatement, dstStatement, mappingStore, LANG1, LANG1);
                         }
                         int index1 = srcStatement.getParent().getChildPosition(srcStatement);
                         int index2 = dstStatement.getParent().getChildPosition(dstStatement);

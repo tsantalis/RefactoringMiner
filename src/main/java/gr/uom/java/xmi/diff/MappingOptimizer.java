@@ -583,6 +583,12 @@ public class MappingOptimizer {
 									refactoringsToBeRemoved.add(r);
 								}
 							}
+							else if(r instanceof ReplaceLoopWithPipelineRefactoring) {
+								ReplaceLoopWithPipelineRefactoring replace = (ReplaceLoopWithPipelineRefactoring)r;
+								if(replace.getCodeFragmentsBefore().contains(mapping.getFragment1()) || replace.getCodeFragmentsAfter().contains(mapping.getFragment2())) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
 							else if(r instanceof ReplaceConditionalWithTernaryRefactoring) {
 								ReplaceConditionalWithTernaryRefactoring replace = (ReplaceConditionalWithTernaryRefactoring)r;
 								if(mapping.getFragment1().equals(replace.getOriginalConditional()) || mapping.getFragment2().equals(replace.getTernaryConditional())) {

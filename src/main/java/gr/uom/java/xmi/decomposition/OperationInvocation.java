@@ -688,7 +688,8 @@ public class OperationInvocation extends AbstractCall {
 
 	private static boolean exactlyMatchingArgumentType(UMLType parameterType, UMLType argumentType) {
 		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString())
-				|| parameterType.toString().equals(argumentType.toString() + "&") || parameterType.toString().equals("const " + argumentType.toString() + "&") || parameterType.toString().equals("const " + argumentType.toString());
+				|| parameterType.toString().equals(argumentType.toString() + "&") || parameterType.toString().equals("const " + argumentType.toString() + "&") || parameterType.toString().equals("const " + argumentType.toString())
+				|| argumentType.toString().equals(parameterType.toString() + "&") || argumentType.toString().equals("const " + parameterType.toString() + "&") || argumentType.toString().equals("const " + parameterType.toString());
 	}
 
 	private static String handleNumber(String argument) {
@@ -729,10 +730,13 @@ public class OperationInvocation extends AbstractCall {
     	if(parameterType.toString().equals(type.toString() + "&") || parameterType.toString().equals("const " + type.toString() + "&") || parameterType.toString().equals("const " + type.toString())) {
     		return true;
     	}
+    	if(type.toString().equals(parameterType.toString() + "&") || type.toString().equals("const " + parameterType.toString() + "&") || type.toString().equals("const " + parameterType.toString())) {
+    		return true;
+    	}
     	if(type1.startsWith("int") && type2.startsWith("int")) {
     		return true;
     	}
-    	if(type2.equals("auto") || type2.equals("auto*")) {
+    	if(type2.equals("auto") || type2.equals("auto*") || type2.equals("auto&")) {
     		return true;
     	}
     	if(type2.equals("var")) {

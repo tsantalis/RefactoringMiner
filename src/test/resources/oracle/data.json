@@ -42585,6 +42585,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public executeInternalWithCondition(state QueryState, options QueryOptions) : ResultMessage extracted from public executeWithCondition(queryState QueryState, options QueryOptions) : ResultMessage in class org.apache.cassandra.cql3.statements.ModificationStatement",
+        "comment": null,
+        "validation": "CTP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 7672
 }, {
@@ -101393,10 +101400,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method public printLambdaCall(functionalInterface IMethodBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void extracted from public visit(node LambdaExpression) : boolean in class com.google.devtools.j2objc.gen.StatementGenerator",
-        "comment": null,
-        "validation": "TP",
-        "detectionTools": "RefactoringMiner, RefDiff, RMiner-1x",
-        "validators": null
+        "comment": "<p>serves as an intermediate method calling the actually extracted methods:<br />printLambdaCallWithoutBlocks(functionalInterface, functionalClassName, createdClassName, methodBinding, isCapturing);<br /> printLambdaCallBlocks(functionalInterface, parameters, isCapturing);</p>",
+        "validation": "FP",
+        "detectionTools": "RefDiff, RMiner-1x",
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method public printLambdaCallWithoutBlocks(functionalInterface IMethodBinding, functionalClassName String, newClassName String, methodBinding IMethodBinding, isCapturing boolean) : void extracted from public visit(node LambdaExpression) : boolean in class com.google.devtools.j2objc.gen.StatementGenerator",
@@ -101435,6 +101442,13 @@
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable createdClassName : String in method public printLambdaCall(functionalInterface IMethodBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void from class com.google.devtools.j2objc.gen.StatementGenerator",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method public printCreationReferenceCall(returnType ITypeBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding) : void extracted from public visit(node LambdaExpression) : boolean in class com.google.devtools.j2objc.gen.StatementGenerator",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

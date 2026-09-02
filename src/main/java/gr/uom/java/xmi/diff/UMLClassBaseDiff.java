@@ -1600,7 +1600,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
 		allAddedOperations.addAll(getAddedNestedOperations());
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-			if((!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty()) && mapper.getChildMappers().size() == 0) {
+			if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty()) {
 				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, allAddedOperations, this, modelDiff, true);
 				List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
 				for(UMLOperation addedOperation : sortedAddedOperations) {
@@ -1637,7 +1637,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				//check if container2 calls another mapper
 				if(mapper.getMappings().size() == 0) {
 					for(UMLOperationBodyMapper mapper2 : getOperationBodyMapperList()) {
-						if(!mapper.equals(mapper2) && containCallToOperation(mapper2.getContainer2(), mapper.getContainer2())) {
+						if(!mapper.equals(mapper2) && containCallToOperation(mapper2.getContainer2(), mapper.getContainer2()) && mapper.getChildMappers().size() == 0) {
 							ExtractOperationDetection detection2 = new ExtractOperationDetection(mapper, List.of(mapper2.getOperation2()), this, modelDiff, false);
 							List<ExtractOperationRefactoring> refs = detection2.check(mapper2.getOperation2());
 							for(ExtractOperationRefactoring refactoring : refs) {

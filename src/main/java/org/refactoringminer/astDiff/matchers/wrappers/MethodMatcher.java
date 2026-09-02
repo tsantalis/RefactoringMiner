@@ -853,6 +853,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (matched != null) {
             mappingStore.addMappingRecursively(matched.first,matched.second);
         }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.ERROR, LANG2.ERROR);
+        if (matched != null && matched.first.isIsomorphicTo(matched.second)) {
+            mappingStore.addMappingRecursively(matched.first,matched.second);
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.IMPORT_STAR,LANG2.IMPORT_STAR);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);

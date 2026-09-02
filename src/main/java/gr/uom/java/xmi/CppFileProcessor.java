@@ -488,6 +488,14 @@ public class CppFileProcessor {
 			IASTName name = cppNamespaceDefinition.getName();
 			String namespace = name.getRawSignature();
 			String qualifiedNamespace = packageName + "." + namespace;
+			if(parentContainer instanceof UMLClass umlClass) {
+				LocationInfo namespaceLocation = new LocationInfo(sourceFolder, filePath, cppNamespaceDefinition, CodeElementType.PACKAGE_DECLARATION, fileContent);
+				for(UMLPreprocessorStatement statement : umlClass.getPreprocessorStatements()) {
+					if(namespaceLocation.subsumes(statement.getLocationInfo())) {
+						statement.addNamespace(namespace);
+					}
+				}
+			}
 			preprocessor.processDeclarationGroups(qualifiedNamespace, sourceFolder, parentContainer, declaration, comments,
 					templateParameters, inactiveContainerAlternatives);
 		}

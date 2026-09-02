@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 	private Optional<String> value;
 	private Optional<String> name;
 	private Optional<UMLPreprocessorStatement> previous;
+	private List<String> parentNamespaces = new ArrayList<String>();
 	
 	public UMLPreprocessorStatement(LocationInfo location, Directive type) {
 		this.location = location;
@@ -57,6 +60,14 @@ public class UMLPreprocessorStatement implements LocationInfoProvider {
 
 	public CodeRange codeRange() {
 		return location.codeRange();
+	}
+
+	public void addNamespace(String name) {
+		parentNamespaces.add(name);
+	}
+
+	public List<String> getParentNamespaces() {
+		return parentNamespaces;
 	}
 
 	public Directive getType() {

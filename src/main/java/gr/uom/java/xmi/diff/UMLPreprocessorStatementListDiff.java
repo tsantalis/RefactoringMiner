@@ -31,6 +31,10 @@ public class UMLPreprocessorStatementListDiff {
 					Pair<UMLPreprocessorStatement, UMLPreprocessorStatement> pair = Pair.of(oldStatement, newStatement);
 					if(oldStatement.getValue().isPresent() && newStatement.getValue().isPresent()) {
 						if(oldStatement.getValue().get().equals(newStatement.getValue().get())) {
+							UMLPreprocessorStatement anotherNewStatement = anotherEqualStatementExistsWithSameNamespace(oldStatement, newStatement, newStatementsCopy);
+							if(anotherNewStatement != null) {
+								pair = Pair.of(oldStatement, anotherNewStatement);
+							}
 							commonStatements.add(pair);
 						}
 						else {
@@ -38,6 +42,10 @@ public class UMLPreprocessorStatementListDiff {
 						}
 					}
 					else {
+						UMLPreprocessorStatement anotherNewStatement = anotherEqualStatementExistsWithSameNamespace(oldStatement, newStatement, newStatementsCopy);
+						if(anotherNewStatement != null) {
+							pair = Pair.of(oldStatement, anotherNewStatement);
+						}
 						commonStatements.add(pair);
 					}
 					it.remove();
@@ -117,6 +125,17 @@ public class UMLPreprocessorStatementListDiff {
 		newStatementsCopy.removeAll(newToBeRemoved);
 		this.removedStatements = oldStatementsCopy;
 		this.addedStatements = newStatementsCopy;
+	}
+
+	private UMLPreprocessorStatement anotherEqualStatementExistsWithSameNamespace(UMLPreprocessorStatement oldStatement, UMLPreprocessorStatement newStatement, List<UMLPreprocessorStatement> newStatements) {
+		if(!newStatement.getParentNamespaces().equals(oldStatement.getParentNamespaces())) {
+			for(UMLPreprocessorStatement statement : newStatements) {
+				if(newStatement != statement && statement.equals(oldStatement) && statement.getParentNamespaces().equals(oldStatement.getParentNamespaces())) {
+					return statement;
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean alreadyMatchedInChangedStatements(UMLPreprocessorStatement newStatement) {

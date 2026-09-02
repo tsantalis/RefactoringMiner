@@ -1043,6 +1043,21 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     if(t1.isIsomorphicTo(t2)) {
                         mappingStore.addMappingRecursively(t1, t2);
                     }
+                    if(srcStatementNode.getParent().getChildren().size() > index1+2 && srcStatementNode.getParent().getChild(index1+2).getType().name.equals(LANG1.FIELD_DECLARATION) &&
+                            dstStatementNode.getParent().getChildren().size() > index2+2 && dstStatementNode.getParent().getChild(index2+2).getType().name.equals(LANG2.FIELD_DECLARATION)) {
+                        t1 = srcStatementNode.getParent().getChild(index1+2);
+                        t2 = dstStatementNode.getParent().getChild(index2+2);
+                        mappingStore.addMapping(t1, t2);
+                        if(t1.getChildren().size() == t2.getChildren().size()) {
+                            for(int i=0; i<t1.getChildren().size(); i++) {
+                                Tree child1 = t1.getChildren().get(i);
+                                Tree child2 = t2.getChildren().get(i);
+                                if(child1.isIsomorphicTo(child2)) {
+                                    mappingStore.addMappingRecursively(child1, child2);
+                                }
+                            }
+                        }
+                    }
                 }
                 boolean testFunctionCall = (abstractCodeMapping.getFragment1().getString().startsWith("describe(") && abstractCodeMapping.getFragment2().getString().startsWith("describe(")) ||
                         (abstractCodeMapping.getFragment1().getString().startsWith("it(") && abstractCodeMapping.getFragment2().getString().startsWith("it("));

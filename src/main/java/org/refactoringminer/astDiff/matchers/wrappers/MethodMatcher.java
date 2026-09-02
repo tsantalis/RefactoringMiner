@@ -807,6 +807,10 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (matched != null) {
             mappingStore.addMappingRecursively(matched.first,matched.second);
         }
+        matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.DEPENDENT_TYPE, LANG2.DEPENDENT_TYPE);
+        if (matched != null) {
+            mappingStore.addMappingRecursively(matched.first,matched.second);
+        }
         matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.IMPORT_STAR,LANG2.IMPORT_STAR);
         if (matched != null) {
             mappingStore.addMapping(matched.first,matched.second);

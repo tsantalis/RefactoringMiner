@@ -1033,6 +1033,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
             else {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                //handle following error node
+                int index1 = srcStatementNode.getParent().getChildren().indexOf(srcStatementNode);
+                int index2 = dstStatementNode.getParent().getChildren().indexOf(dstStatementNode);
+                if(srcStatementNode.getParent().getChildren().size() > index1+1 && srcStatementNode.getParent().getChild(index1+1).getType().name.equals(LANG1.ERROR) &&
+                        dstStatementNode.getParent().getChildren().size() > index2+1 && dstStatementNode.getParent().getChild(index2+1).getType().name.equals(LANG2.ERROR)) {
+                    Tree t1 = srcStatementNode.getParent().getChild(index1+1);
+                    Tree t2 = dstStatementNode.getParent().getChild(index2+1);
+                    if(t1.isIsomorphicTo(t2)) {
+                        mappingStore.addMappingRecursively(t1, t2);
+                    }
+                }
                 boolean testFunctionCall = (abstractCodeMapping.getFragment1().getString().startsWith("describe(") && abstractCodeMapping.getFragment2().getString().startsWith("describe(")) ||
                         (abstractCodeMapping.getFragment1().getString().startsWith("it(") && abstractCodeMapping.getFragment2().getString().startsWith("it("));
                 if(testFunctionCall &&
@@ -1067,8 +1078,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if(srcStatementNode.getType().name.equals(LANG1.JUMP_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION)) {
                     Tree parent1 = srcStatementNode.getParent();
                     Tree parent2 = dstStatementNode.getParent();
-                    int index1 = parent1.getChildPosition(srcStatementNode);
-                    int index2 = parent2.getChildPosition(dstStatementNode);
+                    index1 = parent1.getChildPosition(srcStatementNode);
+                    index2 = parent2.getChildPosition(dstStatementNode);
                     if(index1 < parent1.getChildren().size()-1 && index2 < parent2.getChildren().size()-1) {
                         Tree t1 = parent1.getChild(index1+1);
                         Tree t2 = parent2.getChild(index2+1);

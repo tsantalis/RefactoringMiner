@@ -12389,6 +12389,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if (anonymousClass1 == null && classDiff != null) {
+			for(UMLOperation op : classDiff.getOriginalClass().getOperations()) {
+				anonymousClass1 = op.findAnonymousClass(anonymousClassDeclaration1);
+				if(anonymousClass1 != null) {
+					break;
+				}
+			}
+		}
 		return anonymousClass1;
 	}
 
@@ -12418,6 +12426,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							break;
 						}
 					}
+				}
+			}
+		}
+		if (anonymousClass2 == null && classDiff != null) {
+			for(UMLOperation op : classDiff.getNextClass().getOperations()) {
+				anonymousClass2 = op.findAnonymousClass(anonymousClassDeclaration2);
+				if(anonymousClass2 != null) {
+					break;
 				}
 			}
 		}

@@ -1468,6 +1468,12 @@ public class TypeScriptOperationBody extends OperationBody {
 				else {
 					attribute.setVisibility(Visibility.PUBLIC);
 				}
+				for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+					if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+						attribute.addAnonymousClass(anonymousClass);
+						anonymousClass.addParentContainer(attribute);
+					}
+				}
 				umlClass.addAttribute(attribute);
 			}
 			else if(member instanceof Swc4jAstPrivateProp privateProp) {
@@ -1477,6 +1483,12 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
 				attribute.setVariableDeclaration(vd);
 				attribute.setVisibility(Visibility.PRIVATE);
+				for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+					if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+						attribute.addAnonymousClass(anonymousClass);
+						anonymousClass.addParentContainer(attribute);
+					}
+				}
 				umlClass.addAttribute(attribute);
 			}
 			else if(member instanceof Swc4jAstAutoAccessor autoAccessor) {
@@ -1486,6 +1498,12 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
 				attribute.setVariableDeclaration(vd);
 				attribute.setVisibility(Visibility.PRIVATE);
+				for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+					if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+						attribute.addAnonymousClass(anonymousClass);
+						anonymousClass.addParentContainer(attribute);
+					}
+				}
 				umlClass.addAttribute(attribute);
 			}
 			else if(member instanceof Swc4jAstPrivateMethod privateMethod) {

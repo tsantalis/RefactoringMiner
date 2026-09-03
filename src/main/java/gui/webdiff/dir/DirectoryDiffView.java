@@ -3,6 +3,7 @@ package gui.webdiff.dir;
 import gui.webdiff.tree.TreeNodeInfo;
 import gui.webdiff.WebDiff;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -177,13 +178,16 @@ public class DirectoryDiffView implements Renderable {
                     String iconPath = null, description = nodeInfo.getName(), title = "", hoverText = "";
                     int iconWidth = 0, iconHeight = 0;
                     boolean _checkBox = false;
+                    ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                    String srcExtension = FilenameUtils.getExtension(astDiff.getSrcPath());
+                    String dstExtension = FilenameUtils.getExtension(astDiff.getDstPath());
+                    boolean extensionChanged = srcExtension != null && dstExtension != null && !srcExtension.equals(dstExtension);
                     if(isModifiedFile(nodeInfo)) {
                         _checkBox = true;
                         iconPath = "dist/icons8-file-edit.svg";
                         iconWidth = 15;
                         iconHeight = 17;
                         title = "modified file";
-                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         if (astDiff != null)
                             hoverText = astDiff.getSrcPath();
                     }
@@ -192,7 +196,6 @@ public class DirectoryDiffView implements Renderable {
                         iconWidth = 22;
                         iconHeight = 28;
                         title = "moved code between files";
-                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         if(astDiff != null && astDiff.getSrcPath() != null) {
                             String srcName = astDiff.getSrcPath();
                             if(astDiff.getSrcPath().contains("/")) {
@@ -212,7 +215,6 @@ public class DirectoryDiffView implements Renderable {
                         iconWidth = 15;
                         iconHeight = 17;
                         title = "moved/renamed file";
-                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         if(astDiff != null && astDiff.getSrcPath() != null) {
                             String srcName = astDiff.getSrcPath();
                             if(astDiff.getSrcPath().contains("/")) {
@@ -226,9 +228,8 @@ public class DirectoryDiffView implements Renderable {
                             }
                         }
                     }
-                    boolean empty = comparator.getASTDiff(nodeInfo.getId()).isEmpty();
+                    boolean empty = astDiff.isEmpty() && !extensionChanged;
                     if(!empty) {
-                        ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                         String datatype;
                         String datapath;
                         if (astDiff.getSrcPath().equals(astDiff.getDstPath())) {

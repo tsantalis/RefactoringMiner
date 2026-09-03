@@ -248,7 +248,11 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
-* [Tanzim Hossain Romel](https://github.com/thromel): MCP Server, AST diff top-down matcher performance improvement, Processing of inactive C++ preprocessor declarations, UI improvements (merge commit parent selection, `Viewed` toggle in PR diff)
+* [Tanzim Hossain Romel](https://github.com/thromel):
+   * MCP Server
+   * AST diff top-down matcher performance improvement
+   * C++ support: Processing of inactive C++ preprocessor declarations, C++ macro expansion source locations
+   * UI improvements: Merge commit parent selection, `Viewed` toggle in PR diff
 * [Moein Nasr](https://github.com/maorethians): Diff hunk dependency graph + [LLM-assisted code reviewing](https://github.com/maorethians/RefactoringMiner)
 * [Antonino Guarraci](https://github.com/antoguarr): C++ support with Eclipse CDT Parser
 * [Parsa Hejazi](https://github.com/Pogut): [RefactoringMiner Chrome MV3 extension](https://github.com/Pogut/refactoringminer-action-extension) + [RefactoringMiner PR GitHub Action](https://github.com/Pogut/refactoringminer-action-extension)

@@ -6,6 +6,8 @@ import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.viewers.monaco.MonacoCore;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
+
+import org.apache.commons.io.FilenameUtils;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.utils.URLHelper;
@@ -53,9 +55,13 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
                 Pair<String, String> fileContentsPair = comparator.getFileContentsPair(i);
-                boolean empty = comparator.getASTDiff(i).isEmpty();
+                ASTDiff astDiff = comparator.getASTDiff(i);
+                String srcExtension = FilenameUtils.getExtension(astDiff.getSrcPath());
+                String dstExtension = FilenameUtils.getExtension(astDiff.getDstPath());
+                boolean extensionChanged = srcExtension != null && dstExtension != null && !srcExtension.equals(dstExtension);
+                boolean empty = astDiff.isEmpty() && !extensionChanged;
                 if(!empty) {
-                    MonacoCore core = new MonacoCore(comparator, comparator.getASTDiff(i), i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second, comparator.getRefactorings(), metaInfo.getComments());
+                    MonacoCore core = new MonacoCore(comparator, astDiff, i, comparator.isMoveDiff(i), fileContentsPair.first, fileContentsPair.second, comparator.getRefactorings(), metaInfo.getComments());
                     core.setShowFilenames(false);
                     html.div(class_("card"))
                             .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))
@@ -70,7 +76,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                             ._h5()
                             ._div()
                             .div(class_("text-end d-flex align-items-center gap-2 justify-content-end"))
-                            .render_if(new ViewedFileToggle(i, comparator.getASTDiff(i)), viewedFilesEnabled)
+                            .render_if(new ViewedFileToggle(i, astDiff), viewedFilesEnabled)
                             .a(href("monaco-page/" + i).class_("btn btn-primary btn sm")).content("Details")
                             ._div()
                             ._div()

@@ -4446,6 +4446,13 @@ public abstract class UMLAbstractClassDiff {
 				mapperSet.add(operationBodyMapper);
 			}
 		}
+		if (mappings == 0 && isPartOfMethodExtracted(removedOperation, addedOperation) && removedOperation.isConstructor() && addedOperation.isConstructor() && removedOperation.getName().equals(addedOperation.getName())) {
+			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
+			if(relativePositionCheck(differenceInPosition, absoluteDifferenceInPosition) &&
+					removedOperation.testMethodCheck(addedOperation)) {
+				mapperSet.add(operationBodyMapper);
+			}
+		}
 	}
 
 	private boolean relativePositionCheck(int differenceInPosition, int absoluteDifferenceInPosition) {

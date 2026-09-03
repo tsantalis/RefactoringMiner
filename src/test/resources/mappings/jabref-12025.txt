@@ -33,11 +33,15 @@ line range:182-182==line range:100-103
 line range:181-181==line range:99-99
 public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private cleanupFetchedEntry(fetchedEntry BibEntry) : BibEntry
 line range:173-173==line range:159-159
-line range:174-174==line range:160-160
 public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private processFetchedEntryForEntryBasedFetcher(fetchedEntry Optional<BibEntry>, originalEntry BibEntry, fetcher EntryBasedFetcher) : void
-line range:175-175==line range:153-153
 line range:177-177==line range:154-154
 line range:82-82==line range:94-94
+public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private processFetchedEntry(fetchedEntry Optional<BibEntry>, originalEntry BibEntry, fetcher IdBasedFetcher) : void
+line range:173-173==line range:82-82
+line range:174-174==line range:85-85
+line range:175-175==line range:86-86
+line range:172-172==line range:83-89
+line range:172-178==line range:83-89
 line range:75-75==line range:67-67
 line range:77-77==line range:68-68
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> public fetchAndMerge(entry BibEntry, fields List<Field>) : void

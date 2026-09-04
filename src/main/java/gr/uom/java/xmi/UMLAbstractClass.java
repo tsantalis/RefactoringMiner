@@ -1332,7 +1332,8 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		}
 		boolean emptyModules = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && (this.container.isEmpty() || umlClass.container.isEmpty()) && totalAttributes + totalOperations == 0;
 		boolean modulesWithNestedClasses = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && this.container.isPresent() && this.container.get().getNestedClasses().size() > 0 && umlClass.container.isPresent() && umlClass.container.get().getNestedClasses().size() > 0;
-		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes && !emptyModules && !modulesWithNestedClasses) {
+		boolean testVsNonTest = this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && this.container.isPresent() && umlClass.container.isPresent() && this.container.get().getDescribeMap().isEmpty() != umlClass.container.get().getDescribeMap().isEmpty();
+		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes && !emptyModules && !modulesWithNestedClasses && !testVsNonTest) {
 			if(allAttributes == totalAttributes && identicalAllAttributes != allAttributes && totalOperations == 0) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalOperations, totalAttributes, matchedCompanions, totalCompanions, false);
 			}

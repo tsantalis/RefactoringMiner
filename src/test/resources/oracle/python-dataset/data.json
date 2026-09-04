@@ -4855,6 +4855,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class modules.module_base.__module__ moved to module_base.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -8425,6 +8432,13 @@
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type agent : DeepQNetwork to agent : NatureDQNAgent in module cartpole.__module__ from class cartpole.__module__",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move Class",
+        "description": "Move Class modules.replay_memories.deque_replay_memory.__module__ moved to core.replay_memories.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

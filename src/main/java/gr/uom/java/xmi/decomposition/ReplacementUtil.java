@@ -194,6 +194,10 @@ public class ReplacementUtil {
 				return true;
 			if(characterAfter1.equals(")") && characterAfter2.equals(","))
 				return true;
+			if(characterAfter1.equals("-") && characterAfter2.equals("."))
+				return true;
+			if(characterAfter1.equals(".") && characterAfter2.equals("-"))
+				return true;
 		}
 		return false;
 	}

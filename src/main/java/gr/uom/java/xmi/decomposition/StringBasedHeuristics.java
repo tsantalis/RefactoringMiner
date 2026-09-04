@@ -1027,6 +1027,12 @@ public class StringBasedHeuristics {
 			else if(diff1.equals("::") && diff2.equals("...")) {
 				return true;
 			}
+			else if(diff1.equals(".") && diff2.equals("->")) {
+				return true;
+			}
+			else if(diff1.equals("->") && diff2.equals(".")) {
+				return true;
+			}
 			else {
 				String replaceWhitespace1 = s1.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
 				String replaceWhitespace2 = s2.replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");

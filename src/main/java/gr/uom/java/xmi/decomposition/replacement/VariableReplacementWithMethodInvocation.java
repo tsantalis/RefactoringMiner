@@ -15,15 +15,19 @@ public class VariableReplacementWithMethodInvocation extends Replacement {
 	public boolean getterReplacement() {
 		if(direction.equals(Direction.VARIABLE_TO_INVOCATION)) {
 			String variable = getBefore();
-			String capitalizedFirstLetter = Character.toUpperCase(variable.charAt(0)) + variable.substring(1, variable.length());
-			String methodCall = getAfter();
-			return methodCall.equals("get" + capitalizedFirstLetter + "()");
+			if(variable.length() > 0) {
+				String capitalizedFirstLetter = Character.toUpperCase(variable.charAt(0)) + variable.substring(1, variable.length());
+				String methodCall = getAfter();
+				return methodCall.equals("get" + capitalizedFirstLetter + "()");
+			}
 		}
 		else if(direction.equals(Direction.INVOCATION_TO_VARIABLE) ) {
 			String variable = getAfter();
-			String capitalizedFirstLetter = Character.toUpperCase(variable.charAt(0)) + variable.substring(1, variable.length());
-			String methodCall = getBefore();
-			return methodCall.equals("get" + capitalizedFirstLetter + "()");
+			if(variable.length() > 0) {
+				String capitalizedFirstLetter = Character.toUpperCase(variable.charAt(0)) + variable.substring(1, variable.length());
+				String methodCall = getBefore();
+				return methodCall.equals("get" + capitalizedFirstLetter + "()");
+			}
 		}
 		return false;
 	}

@@ -931,6 +931,13 @@ public class UMLModelDiff {
 				if(diff.getOriginalClassName().startsWith(removedClass.getName() + ".") && diff.getNextClassName().startsWith(addedClass.getName() + ".")) {
 					return true;
 				}
+				if(removedClass.isModule() && removedClass.getName().endsWith(".__module__") && addedClass.isModule() && addedClass.getName().endsWith(".__module__")) {
+					String removedClassNameWithoutModule = removedClass.getName().substring(0, removedClass.getName().indexOf(".__module__"));
+					String addedClassNameWithoutModule = addedClass.getName().substring(0, addedClass.getName().indexOf(".__module__"));
+					if(diff.getOriginalClassName().startsWith(removedClassNameWithoutModule + ".") && diff.getNextClassName().startsWith(addedClassNameWithoutModule + ".")) {
+						return true;
+					}
+				}
 			}
 		}
 		return false;

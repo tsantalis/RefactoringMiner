@@ -1708,7 +1708,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								containsAnonymousClassDeclarationObjectForAnonymous(allAnonymousClassDeclarations2, anonymousClass2)) {
 							continue;
 						}
-						if(anonymousClass1.getName().equals(anonymousClass2.getName())) {
+						String longestCommonPrefix = PrefixSuffixUtils.longestCommonPrefix(anonymousClass1.getName(), anonymousClass2.getName());
+						String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(anonymousClass1.getName(), anonymousClass2.getName());
+						String concat = longestCommonPrefix;
+						if(longestCommonPrefix.endsWith(".") && longestCommonSuffix.startsWith(".")) {
+							concat = concat + longestCommonSuffix.substring(1);
+						}
+						else {
+							concat = concat + longestCommonSuffix;
+						}
+						if(anonymousClass1.getName().equals(anonymousClass2.getName()) || concat.equals(anonymousClass2.getName()) || concat.equals(anonymousClass1.getName())) {
 							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 							anonymousClassDiff.process();
 							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
@@ -1739,7 +1748,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								containsAnonymousClassDeclarationObjectForAnonymous(allAnonymousClassDeclarations2, anonymousClass2)) {
 							continue;
 						}
-						if(anonymousClass1.getName().equals(anonymousClass2.getName())) {
+						String longestCommonPrefix = PrefixSuffixUtils.longestCommonPrefix(anonymousClass1.getName(), anonymousClass2.getName());
+						String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(anonymousClass1.getName(), anonymousClass2.getName());
+						String concat = longestCommonPrefix;
+						if(longestCommonPrefix.endsWith(".") && longestCommonSuffix.startsWith(".")) {
+							concat = concat + longestCommonSuffix.substring(1);
+						}
+						else {
+							concat = concat + longestCommonSuffix;
+						}
+						if(anonymousClass1.getName().equals(anonymousClass2.getName()) || concat.equals(anonymousClass2.getName()) || concat.equals(anonymousClass1.getName())) {
 							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 							anonymousClassDiff.process();
 							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();

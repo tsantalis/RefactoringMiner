@@ -116,7 +116,8 @@ public interface UMLClassMatcher {
 	public static class RelaxedMove implements UMLClassMatcher {
 		public MatchResult match(UMLClass removedClass, UMLClass addedClass) {
 			MatchResult matchResult = removedClass.hasCommonAttributesAndOperations(addedClass);
-			if(removedClass.hasSameNameAndKind(addedClass) && matchResult.isMatch() && !removedClass.isModule() && !addedClass.isModule()) {
+			boolean pythonModules = (removedClass.isModule() && removedClass.getLANG().equals(Constants.PYTHON)) || (addedClass.isModule() && addedClass.getLANG().equals(Constants.PYTHON)); 
+			if(removedClass.hasSameNameAndKind(addedClass) && matchResult.isMatch() && !pythonModules) {
 				matchResult.setMatch(true);
 				return matchResult;
 			}

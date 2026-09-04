@@ -1155,6 +1155,20 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		boolean typeScriptObjectWithNonIdenticalValues = this.isObject() && umlClass.isObject() && PathFileUtils.isTypeScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile()) && identicalInitializerAttributes != commonAttributes.size();
 		boolean javaScriptToTypeScript = PathFileUtils.isJavaScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile());
+		if(this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && class1.getContainer().isPresent() && class2.getContainer().isPresent()) {
+			List<UMLAnonymousClass> anonymousList1 = class1.getContainer().get().getAnonymousClassList();
+			List<UMLAnonymousClass> anonymousList2 = class2.getContainer().get().getAnonymousClassList();
+			for(UMLAnonymousClass anonymous1 : anonymousList1) {
+				for(UMLAnonymousClass anonymous2 : anonymousList2) {
+					if(anonymous1.getOperations().size() > 0 && anonymous2.getOperations().size() > 0) {
+						MatchResult matchResult = anonymous1.hasSameAttributesAndOperations(anonymous2);
+						if(matchResult.isMatch()) {
+							return matchResult;
+						}
+					}
+				}
+			}
+		}
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0 || javaScriptToTypeScript)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
 				(identicalOperations.size() > Math.floor(commonOperations.size()/3.0*2.0) && commonOperations.size() >= 2 && identicalOperations.size() >= Math.floor((totalOperations - abstractOperationsToBeDeducted)/3.0*2.0)) ||

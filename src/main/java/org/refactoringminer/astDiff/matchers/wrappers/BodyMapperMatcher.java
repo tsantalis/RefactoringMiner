@@ -937,6 +937,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.DEFAULT_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.SWITCH_CASE)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.ERROR)) {
+            Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
+            if(tmpSrcStatement != null)
+                srcStatementNode = tmpSrcStatement;
+        }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
+            if(tmpSrcStatement != null)
+                srcStatementNode = tmpSrcStatement;
+        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
@@ -974,6 +984,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.DEFAULT_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.SWITCH_CASE)) {
             dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.ERROR)) {
+            Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
+            if(tmpDstStatement != null)
+                dstStatementNode = tmpDstStatement;
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
+            if(tmpDstStatement != null)
+                dstStatementNode = tmpDstStatement;
         }
         if (srcStatementNode == null || dstStatementNode == null) {
             System.err.println("Tree not found for " + abstractCodeMapping);

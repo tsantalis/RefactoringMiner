@@ -942,7 +942,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if(tmpSrcStatement != null)
                 srcStatementNode = tmpSrcStatement;
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && srcStatementNode.getParent().getType().name.equals(LANG1.INITIALIZER_LIST) &&
+                srcStatementNode.getParent().getParent().getType().name.equals(LANG1.COMPOUND_LITERAL_EXPRESSION)) {
             Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
             if(tmpSrcStatement != null)
                 srcStatementNode = tmpSrcStatement;
@@ -990,7 +991,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if(tmpDstStatement != null)
                 dstStatementNode = tmpDstStatement;
         }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getParent().getType().name.equals(LANG2.INITIALIZER_LIST) &&
+                dstStatementNode.getParent().getParent().getType().name.equals(LANG2.COMPOUND_LITERAL_EXPRESSION)) {
             Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
             if(tmpDstStatement != null)
                 dstStatementNode = tmpDstStatement;

@@ -1442,6 +1442,12 @@ public class TypeScriptOperationBody extends OperationBody {
 							if(!umlClass.containsAttributeWithTheSameName(attribute)) {
 								umlClass.addAttribute(attribute);
 							}
+							for(UMLAnonymousClass anonymousClass : nested.getAnonymousClassList()) {
+								if(vd.getLocationInfo().subsumes(anonymousClass.getLocationInfo())) {
+									attribute.addAnonymousClass(anonymousClass);
+									anonymousClass.addParentContainer(attribute);
+								}
+							}
 						}
 					}
 				}

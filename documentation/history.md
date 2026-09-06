@@ -128,4 +128,5 @@ Currently, it supports the detection of the following refactorings:
 105. Extract Fixture
 
 **<ins>supported by RefactoringMiner 3.1 and newer versions</ins>**
+
 106. Move Annotation

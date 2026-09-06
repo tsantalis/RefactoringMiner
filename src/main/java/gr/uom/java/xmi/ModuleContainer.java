@@ -52,7 +52,7 @@ public class ModuleContainer implements VariableDeclarationContainer {
 	public void addStatements(List<AbstractStatement> statements) {
 		for(AbstractStatement s : statements) {
 			AbstractCall call = s.invocationCoveringEntireFragment();
-			if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
+			if(isTestCall(call)) {
 				describeMap.put(call.arguments().get(0), s);
 			}
 			else if(call != null && call.arguments().size() > 0 && s.getLambdas().size() > 0 && s.getLambdas().get(0).getBody() != null &&
@@ -65,14 +65,77 @@ public class ModuleContainer implements VariableDeclarationContainer {
 		}
 	}
 
+	private static boolean isTestCall(AbstractCall call) {
+		return call != null && (call.getName().startsWith("describe") || (call.getName().equals("add") && call.getExpression() != null && call.getExpression().startsWith("storiesOf("))) && call.arguments().size() > 0;
+	}
+
 	private static boolean containsDescribe(List<AbstractStatement> statements) {
 		for(AbstractStatement statement : statements) {
 			AbstractCall nestedCall = statement.invocationCoveringEntireFragment();
-			if(nestedCall != null && nestedCall.getName().startsWith("describe") && nestedCall.arguments().size() > 0) {
+			if(isTestCall(nestedCall)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public Set<String> getTestKeysRecursively() {
+		Set<String> keys = new LinkedHashSet<>();
+		for(String key : describeMap.keySet()) {
+			keys.add(key);
+			AbstractStatement statement = describeMap.get(key);
+			processStatement(statement, keys);
+		}
+		return keys;
+	}
+
+	private static void processStatement(AbstractStatement statement, Set<String> keys) {
+		Map<String, AbstractStatement> describeMap = nestedDescribeMap(statement);
+		for(String key : describeMap.keySet()) {
+			keys.add(key);
+			AbstractStatement nestedStatement = describeMap.get(key);
+			processStatement(nestedStatement, keys);
+		}
+		Map<String, AbstractStatement> itMap = nestedItMap(statement);
+		for(String key : itMap.keySet()) {
+			keys.add(key);
+			AbstractStatement nestedStatement = itMap.get(key);
+			processStatement(nestedStatement, keys);
+		}
+	}
+
+	public static Map<String, AbstractStatement> nestedDescribeMap(AbstractStatement statement) {
+		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
+		if(statement.getLambdas().size()  > 0) {
+			LambdaExpressionObject lambda = statement.getLambdas().get(0);
+			if(lambda.getBody() != null) {
+				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
+				for(AbstractStatement s : statements) {
+					AbstractCall call = s.invocationCoveringEntireFragment();
+					if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
+						nestedDescribeMap.put(call.arguments().get(0), s);
+					}
+				}
+			}
+		}
+		return nestedDescribeMap;
+	}
+
+	public static Map<String, AbstractStatement> nestedItMap(AbstractStatement statement) {
+		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
+		if(statement.getLambdas().size()  > 0) {
+			LambdaExpressionObject lambda = statement.getLambdas().get(0);
+			if(lambda.getBody() != null) {
+				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
+				for(AbstractStatement s : statements) {
+					AbstractCall call = s.invocationCoveringEntireFragment();
+					if(call != null && call.getName().startsWith("it") && call.arguments().size() > 0) {
+						nestedDescribeMap.put(call.arguments().get(0), s);
+					}
+				}
+			}
+		}
+		return nestedDescribeMap;
 	}
 
 	public Map<String, AbstractStatement> getDescribeMap() {

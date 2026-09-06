@@ -17,6 +17,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 
 import static gr.uom.java.xmi.JavaFileProcessor.processJavaBlock;
+import static gr.uom.java.xmi.ModuleContainer.*;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
@@ -2636,40 +2637,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return mappings;
-	}
-
-	public Map<String, AbstractStatement> nestedDescribeMap(AbstractStatement statement) {
-		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
-		if(statement.getLambdas().size()  > 0) {
-			LambdaExpressionObject lambda = statement.getLambdas().get(0);
-			if(lambda.getBody() != null) {
-				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
-				for(AbstractStatement s : statements) {
-					AbstractCall call = s.invocationCoveringEntireFragment();
-					if(call != null && call.getName().startsWith("describe") && call.arguments().size() > 0) {
-						nestedDescribeMap.put(call.arguments().get(0), s);
-					}
-				}
-			}
-		}
-		return nestedDescribeMap;
-	}
-
-	public Map<String, AbstractStatement> nestedItMap(AbstractStatement statement) {
-		Map<String, AbstractStatement> nestedDescribeMap = new LinkedHashMap<>();
-		if(statement.getLambdas().size()  > 0) {
-			LambdaExpressionObject lambda = statement.getLambdas().get(0);
-			if(lambda.getBody() != null) {
-				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
-				for(AbstractStatement s : statements) {
-					AbstractCall call = s.invocationCoveringEntireFragment();
-					if(call != null && call.getName().startsWith("it") && call.arguments().size() > 0) {
-						nestedDescribeMap.put(call.arguments().get(0), s);
-					}
-				}
-			}
-		}
-		return nestedDescribeMap;
 	}
 
 	protected UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {

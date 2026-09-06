@@ -66,8 +66,12 @@ public class TypeScriptFileProcessor {
 				mediaType = Swc4jMediaType.Tsx;
 			else if(filePath.endsWith(".ts"))
 				mediaType = Swc4jMediaType.TypeScript;
-			else if(filePath.endsWith(".js"))
-				mediaType = Swc4jMediaType.JavaScript;
+			else if(filePath.endsWith(".js")) {
+				if(filePath.endsWith("spec.js") || fileContent.contains("</div>") || fileContent.contains("</ul>"))
+					mediaType = Swc4jMediaType.Jsx;
+				else
+					mediaType = Swc4jMediaType.JavaScript;
+			}
 			URL specifier = Path.of(filePath).toUri().toURL();
 			Swc4jParseOptions options = new Swc4jParseOptions()
 					.setSpecifier(specifier)

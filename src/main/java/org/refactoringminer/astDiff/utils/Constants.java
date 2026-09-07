@@ -27,7 +27,7 @@ public class Constants {
         return isNamedMethod(treeType) || treeType.equals(SECONDARY_CONSTRUCTOR) || treeType.equals(LEXICAL_DECLARATION) ||
                 treeType.equals(METHOD_SIGNATURE) || treeType.equals(FUNCTION_SIGNATURE) || treeType.equals(PAIR) ||
                 treeType.equals(FUNCTION_EXPRESSION) || treeType.equals(VARIABLE_DECLARATION) || treeType.equals(POINTER_DECLARATOR) ||
-                treeType.equals(FRIEND_DECLARATION);
+                treeType.equals(FRIEND_DECLARATION) || treeType.equals(INIT_DECLARATOR);
     }
 
     // TODO: FUNCTION_EXPRESSION may have a name, or it may be assigned to a variable which can act as a name (VARIABLE_DECLARATION)

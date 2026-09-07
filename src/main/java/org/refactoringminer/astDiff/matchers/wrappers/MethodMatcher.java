@@ -465,10 +465,15 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(t1,t2);
                 }
             }
-            if(srcOperationNode.getType().name.equals(LANG1.POINTER_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.POINTER_DECLARATOR)) {
+            if((srcOperationNode.getType().name.equals(LANG1.POINTER_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.POINTER_DECLARATOR)) ||
+                    (srcOperationNode.getType().name.equals(LANG1.INIT_DECLARATOR) && dstOperationNode.getType().name.equals(LANG2.INIT_DECLARATOR))) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> pointers = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.POINTER, LANG2.POINTER);
                 if (pointers != null) {
                     mappingStore.addMapping(pointers.first,pointers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> assignments = Helpers.findPairOfType(srcOperationNode,dstOperationNode, LANG1.EQUAL_OPERATOR, LANG2.EQUAL_OPERATOR);
+                if (assignments != null) {
+                    mappingStore.addMapping(assignments.first,assignments.second);
                 }
                 if(srcOperationNode.getParent().getType().name.equals(LANG1.FIELD_DECLARATION) && dstOperationNode.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
                     mappingStore.addMapping(srcOperationNode.getParent(), dstOperationNode.getParent());

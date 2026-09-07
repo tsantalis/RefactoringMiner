@@ -6426,6 +6426,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		processInnerNodes(finalInnerNodes1, finalInnerNodes2, leaves1, leaves2, parameterToArgumentMap, removedOperations, addedOperations, tryWithResourceMigration, containsCallToExtractedMethod, isomorphic, map1, map2);
 		List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 		for(int i = numberOfMappings; i < mappings.size(); i++) {
+			if(mappings.get(i).getFragment1() instanceof CompositeStatementObject comp1 && mappings.get(i).getFragment2() instanceof CompositeStatementObject comp2) {
+				if(comp1.getStatements().size() > 0 && comp2.getStatements().size() > 0 && blocksOfUnmatchedNonBlocks1.containsAll(comp1.getStatements()) && blocksOfUnmatchedNonBlocks2.containsAll(comp2.getStatements())) {
+					if(comp1.getStatements().size() == comp2.getStatements().size()) {
+						for(int j=0; j< comp1.getStatements().size(); j++) {
+							CompositeStatementObject block1 = (CompositeStatementObject) comp1.getStatements().get(j);
+							CompositeStatementObject block2 = (CompositeStatementObject) comp2.getStatements().get(j);
+							CompositeStatementObjectMapping newMapping = createCompositeMapping(block1, block2, parameterToArgumentMap, 1);
+							addMapping(newMapping);
+							innerNodes1.remove(block1);
+							innerNodes2.remove(block2);
+						}
+					}
+				}
+			}
 			innerNodes1.remove(mappings.get(i).getFragment1());
 			innerNodes2.remove(mappings.get(i).getFragment2());
 		}
@@ -12787,6 +12801,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(compStatements1.contains(mapping.getFragment1()) && !compStatements2.contains(mapping.getFragment2())) {
 				if(findFragmentInLambdas(compStatements2, mapping.getFragment2())) {
 					mappedChildrenSize++;
+				}
+			}
+			else if(compStatements1.size() == compStatements2.size() && comp1.getLeaves().isEmpty() && comp2.getLeaves().isEmpty()) {
+				for(int i=0; i<compStatements1.size(); i++) {
+					if(compStatements1.get(i).getString().equals(LANG1.OPEN_BLOCK) && compStatements2.get(i).getString().equals(LANG2.OPEN_BLOCK) &&
+							((CompositeStatementObject)compStatements1.get(i)).getStatements().contains(mapping.getFragment1()) &&
+							((CompositeStatementObject)compStatements2.get(i)).getStatements().contains(mapping.getFragment2())) {
+						mappedChildrenSize++;
+						break;
+					}
 				}
 			}
 		}

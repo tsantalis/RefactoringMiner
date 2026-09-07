@@ -77681,6 +77681,94 @@
   "firstEndPos" : 30691,
   "secondEndPos" : 30697
 }, {
+  "firstType" : "if_statement",
+  "secondType" : "if_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 30696,
+  "secondPos" : 30702,
+  "firstEndPos" : 30805,
+  "secondEndPos" : 30811
+}, {
+  "firstType" : "if",
+  "secondType" : "if",
+  "firstLabel" : "if",
+  "secondLabel" : "if",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
+  "firstPos" : 30696,
+  "secondPos" : 30702,
+  "firstEndPos" : 30698,
+  "secondEndPos" : 30704
+}, {
+  "firstType" : "condition_clause",
+  "secondType" : "condition_clause",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
+  "firstPos" : 30699,
+  "secondPos" : 30705,
+  "firstEndPos" : 30713,
+  "secondEndPos" : 30719
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "condition_clause",
+  "secondParentType" : "condition_clause",
+  "firstPos" : 30699,
+  "secondPos" : 30705,
+  "firstEndPos" : 30700,
+  "secondEndPos" : 30706
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "_sync_active",
+  "secondLabel" : "_sync_active",
+  "firstParentType" : "condition_clause",
+  "secondParentType" : "condition_clause",
+  "firstPos" : 30700,
+  "secondPos" : 30706,
+  "firstEndPos" : 30712,
+  "secondEndPos" : 30718
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "condition_clause",
+  "secondParentType" : "condition_clause",
+  "firstPos" : 30712,
+  "secondPos" : 30718,
+  "firstEndPos" : 30713,
+  "secondEndPos" : 30719
+}, {
+  "firstType" : "compound_statement",
+  "secondType" : "compound_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
+  "firstPos" : 30714,
+  "secondPos" : 30720,
+  "firstEndPos" : 30805,
+  "secondEndPos" : 30811
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 30714,
+  "secondPos" : 30720,
+  "firstEndPos" : 30715,
+  "secondEndPos" : 30721
+}, {
   "firstType" : "while_statement",
   "secondType" : "while_statement",
   "firstLabel" : "",
@@ -78021,6 +78109,17 @@
   "secondPos" : 30804,
   "firstEndPos" : 30799,
   "secondEndPos" : 30805
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 30804,
+  "secondPos" : 30810,
+  "firstEndPos" : 30805,
+  "secondEndPos" : 30811
 }, {
   "firstType" : "}",
   "secondType" : "}",

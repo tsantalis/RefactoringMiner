@@ -135,6 +135,18 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
+	public static List<Tree> findChildrenByType(Tree tree, String type) {
+		List<Tree> trees = new ArrayList<Tree>();
+		if (!tree.getChildren().isEmpty())
+		{
+			for (Tree child: tree.getChildren()) {
+				if (isFromType(child, type))
+					trees.add(child);
+			}
+		}
+		return trees;
+	}
+
 	public static List<Tree> findChildrenByTypeRecursively(Tree tree, String... type) {
 		List<Tree> children = new ArrayList<>();
 		if (!tree.getChildren().isEmpty())

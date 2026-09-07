@@ -387,6 +387,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(tt1,tt2);
                     }
                 }
+                List<Pair<Tree, Tree>> matchedPairs = Helpers.findPairsOfType(srcStatementNode,dstStatementNode, LANG1.SEMICOLON, LANG2.SEMICOLON);
+                for(int i=0; i<matchedPairs.size(); i++) {
+                    mappingStore.addMapping(matchedPairs.get(i).first,matchedPairs.get(i).second);
+                }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.LEXICAL_DECLARATION, LANG2.LEXICAL_DECLARATION);
                 if (matched != null) {
                     mappingStore.addMappingRecursively(matched.first,matched.second);

@@ -10,8 +10,11 @@ import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import org.refactoringminer.astDiff.models.ASTDiff;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 
 /* Created by pourya on 2024-05-22*/
@@ -51,6 +54,7 @@ public class Helpers {
                 moduleDiff.getNextModule().getLocationInfo().getFilePath()
         );
     }
+
     public static Pair<Tree, Tree> findPairOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType1, String searchingType2) {
         if (srcOperationNode == null || dstOperationNode == null) return null;
         Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode,searchingType1);
@@ -58,6 +62,18 @@ public class Helpers {
         if (srcModifier != null && dstModifier != null)
             return new Pair<>(srcModifier, dstModifier);
         return null;
+    }
+
+    public static List<Pair<Tree, Tree>> findPairsOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType1, String searchingType2) {
+        if (srcOperationNode == null || dstOperationNode == null) return Collections.emptyList();
+        List<Pair<Tree, Tree>> list = new ArrayList<Pair<Tree,Tree>>();
+        List<Tree> srcModifiers = TreeUtilFunctions.findChildrenByType(srcOperationNode,searchingType1);
+        List<Tree> dstModifiers = TreeUtilFunctions.findChildrenByType(dstOperationNode,searchingType2);
+        if (srcModifiers != null && dstModifiers != null && srcModifiers.size() == dstModifiers.size()) {
+            for(int i=0; i<srcModifiers.size(); i++)
+                list.add(new Pair<>(srcModifiers.get(i), dstModifiers.get(i)));
+        }
+        return list;
     }
 
     public static Collection<ASTDiff> findAppends(Collection<ASTDiff> diffs, String originalSourceFile, String nextSourceFile, boolean both) {

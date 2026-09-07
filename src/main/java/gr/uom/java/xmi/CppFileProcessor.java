@@ -701,9 +701,14 @@ public class CppFileProcessor {
 	}
 
 	private UMLOperation processFunctionDeclSpecifier(IASTDeclSpecifier declSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
-		IASTName functionName = declarator.getName();
+		IASTName declaratorName = declarator.getName();
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
-		UMLOperation operation = new UMLOperation(functionName.toString(), locationInfo, className);
+		String functionName = declaratorName.toString();
+		if(functionName.isEmpty()) {
+			IASTDeclarator nested = declarator.getNestedDeclarator();
+			functionName = nested.getName().toString();
+		}
+		UMLOperation operation = new UMLOperation(functionName, locationInfo, className);
 		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 		operation.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(declSpecifier.isInline());

@@ -75,7 +75,7 @@ public class UMLModelASTReader {
 				TypeScriptFileProcessor processor = new TypeScriptFileProcessor(umlModel);
 				processor.processTypeScriptFile(filePath, fileContent, astDiff, swc4j);
 			}
-			else if(PathFileUtils.isCppFile(filePath)) {
+			else if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
 				CppFileProcessor processor = new CppFileProcessor(umlModel);
 				processor.processCppFile(filePath, fileContent, astDiff);
 			}

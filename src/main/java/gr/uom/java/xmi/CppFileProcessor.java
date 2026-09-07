@@ -58,7 +58,6 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionWithTryBlock;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNamedTypeSpecifier;
-import org.eclipse.cdt.core.dom.ast.gnu.c.GCCLanguage;
 import org.eclipse.cdt.core.dom.ast.gnu.cpp.GPPLanguage;
 import org.eclipse.cdt.core.index.IIndexFileLocation;
 import org.eclipse.cdt.core.parser.DefaultLogService;
@@ -151,7 +150,7 @@ public class CppFileProcessor {
 				options |= GPPLanguage.OPTION_NO_IMAGE_LOCATIONS;
 			}
 
-			if(PathFileUtils.isCppFile(filePath)) {
+			if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
 				if (astDiff) {
 					ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
 					try {
@@ -179,34 +178,6 @@ public class CppFileProcessor {
 				this.umlModel.addClass(moduleClass);
 				//add remaining comments to moduleClass
 				//TODO consider assigning comments to individual preprocessor statements
-				moduleClass.getComments().addAll(comments);
-			}
-			else if(PathFileUtils.isCFile(filePath)) {
-				if (astDiff) {
-					ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
-					try {
-						TreeContext treeContext = new CTreeSitterNgTreeGenerator().generateFrom().stream(is);
-						this.umlModel.getTreeContextMap().put(filePath, treeContext);
-					}
-					catch(Exception e) {}
-				}
-				IASTTranslationUnit ast = GCCLanguage.getDefault().getASTTranslationUnit(
-						content,
-						scanInfo,
-						includeProvider,
-						EmptyCIndex.INSTANCE,
-						options,
-						new DefaultLogService()
-						);
-				String sourceFolder = extractCppSourceFolder();
-				List<UMLComment> comments = extractInternalComments(ast.getComments(), sourceFolder, filePath, fileContent);
-				this.umlModel.getCommentMap().put(filePath, comments);
-				UMLClass moduleClass = createModuleClass(ast, sourceFolder);
-				processPreprocessorStatements(sourceFolder, moduleClass, ast.getAllPreprocessorStatements());
-				preprocessor.processDeclarations(moduleClass.getName(), sourceFolder, moduleClass,
-						ast.getDeclarations(), comments, new ICPPASTTemplateParameter[0]);
-				this.umlModel.addClass(moduleClass);
-				//add remaining comments to moduleClass
 				moduleClass.getComments().addAll(comments);
 			}
 		}

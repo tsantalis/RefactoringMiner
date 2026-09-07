@@ -19,6 +19,16 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTRangeBasedForStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateDeclaration;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTCompositeTypeSpecifier;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarationStatement;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTForStatement;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDeclarator;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTIfStatement;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTParameterDeclaration;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTSimpleDeclaration;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTSwitchStatement;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTTranslationUnit;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTWhileStatement;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTCompositeTypeSpecifier;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTDeclarationStatement;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator;
@@ -244,6 +254,32 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		else if(declarator.getParent() instanceof CPPASTParameterDeclaration && declarator.getParent().getParent() instanceof CPPASTFunctionDeclarator) {
 			return declarator.getParent().getParent().getParent();
+		}
+		else if(declarator.getParent() instanceof CASTParameterDeclaration && declarator.getParent().getParent() instanceof CASTFunctionDeclarator) {
+			return declarator.getParent().getParent().getParent();
+		}
+		else if(declarator.getParent() instanceof CASTSimpleDeclaration) {
+			if(declarator.getParent().getParent() instanceof CASTDeclarationStatement) {
+				return declarator.getParent().getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CASTTranslationUnit) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CASTCompositeTypeSpecifier) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CASTForStatement) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CASTIfStatement) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CASTSwitchStatement) {
+				return declarator.getParent().getParent();
+			}
+			else if(declarator.getParent().getParent() instanceof CASTWhileStatement) {
+				return declarator.getParent().getParent();
+			}
 		}
 		//TODO Handle more scenarios of variable declarations
 		return null;

@@ -12,6 +12,7 @@ import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDeclarator;
 import org.eclipse.jdt.core.dom.AnnotatableType;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.ArrayType;
@@ -830,6 +831,9 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {
 		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
+		if(type.isEmpty() && declarator instanceof CASTDeclarator cDeclarator) {
+			type = new StringBuilder(cleanTypeText(cDeclarator.getName().toString()));
+		}
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
 				type.append(pointerOperator.getRawSignature());

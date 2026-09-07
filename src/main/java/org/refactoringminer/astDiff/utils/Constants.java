@@ -184,7 +184,7 @@ public class Constants {
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
 		}
-		else if(PathFileUtils.isCppFile(filePath)) {
+		else if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
 			METHOD_DECLARATION = "function_definition";
 			SIMPLE_NAME = "identifier";

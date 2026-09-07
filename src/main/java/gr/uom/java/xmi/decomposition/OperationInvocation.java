@@ -40,11 +40,13 @@ import org.eclipse.cdt.core.dom.ast.IASTFieldReference;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
 import org.eclipse.cdt.core.dom.ast.IASTInitializerClause;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTArraySubscriptExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionCallExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSimpleTypeConstructorExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTUnaryExpression;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTArraySubscriptExpression;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
@@ -1487,6 +1489,14 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(nameExpr instanceof ICPPASTUnaryExpression unary) {
 			this.methodName = unary.getOperand().getRawSignature();
+		}
+		else if(nameExpr instanceof ICPPASTArraySubscriptExpression arraySubscriptExpr) {
+			IASTExpression baseArray = arraySubscriptExpr.getArrayExpression();
+			this.methodName = baseArray.getRawSignature();
+		}
+		else if(nameExpr instanceof CASTArraySubscriptExpression arraySubscriptExpr) {
+			IASTExpression baseArray = arraySubscriptExpr.getArrayExpression();
+			this.methodName = baseArray.getRawSignature();
 		}
 	}
 

@@ -433,7 +433,7 @@ public class ExtractOperationDetection {
 			}
 		}
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
-			if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
+			if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty() && mapping.getFragment1().getLambdas().size() == mapping.getFragment2().getLambdas().size()) {
 				for(AbstractCall invocation : mapping.getFragment2().getMethodInvocations()) {
 					for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
 						AbstractCall matchingInvocation = iterator.next();

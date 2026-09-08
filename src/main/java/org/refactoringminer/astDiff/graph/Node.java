@@ -8,7 +8,11 @@ import com.github.gumtreediff.tree.Tree;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 import org.refactoringminer.astDiff.graph.cluster.traverse.Util;
 import org.jgrapht.Graph;
@@ -18,11 +22,19 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 public class Node {
 
-  private static final java.util.Random RANDOM = new java.util.Random();
-  private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  public static final Comparator<Node> COMPARATOR = Comparator.comparing(Node::getSrcDst)
+      .thenComparing(Node::getPath)
+      .thenComparingInt(node -> node.getTree().getPos());
+
+  private static final String ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+  static final int PROMPT_ID_LENGTH = 5;
+  static final int MAX_PROMPT_ID_LENGTH = 12;
+  private static final String PROMPT_ID_PREFIX = "#";
+  public static final Pattern PROMPT_ID_PATTERN = Pattern.compile(
+      PROMPT_ID_PREFIX + "[0-9A-HJKMNP-TV-Z]{" + PROMPT_ID_LENGTH + ",}(?![0-9A-Z])");
 
   private final String id;
-  private final String promptId;
+  private String promptId;
   private final String path;
   private final Constants constants;
   private final SrcDst srcDst;
@@ -37,7 +49,7 @@ public class Node {
   private UMLs umls = null;
 
   public Node(String fileContent, String path, SrcDst srcDst, Tree tree,
-      @Nullable Set<Node> subs, NodeType nodeType, @Nullable Map<String, Node> promptIdNodeMap) {
+      @Nullable Set<Node> subs, NodeType nodeType) {
     this.id = formatId(path, srcDst, nodeType, tree);
     this.fileContent = fileContent;
     this.path = path;
@@ -46,12 +58,7 @@ public class Node {
     this.tree = tree;
     this.subs = subs;
     this.nodeType = nodeType;
-
-    String promptId = generateShortId();
-    while (promptIdNodeMap != null && promptIdNodeMap.containsKey(promptId)) {
-      promptId = generateShortId();
-    }
-    this.promptId = promptId;
+    this.promptId = PROMPT_ID_PREFIX + shortId(this.id, PROMPT_ID_LENGTH);
   }
 
   public static String formatId(String path, SrcDst srcDst, NodeType nodeType, Tree tree) {
@@ -59,10 +66,32 @@ public class Node {
         tree.getEndPos(), tree.getType().name);
   }
 
-  private String generateShortId() {
-    StringBuilder sb = new StringBuilder(4);
-    for (int i = 0; i < 4; i++) {
-      sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
+  void assignPromptId(int length) {
+    this.promptId = PROMPT_ID_PREFIX + shortId(this.id, length);
+  }
+
+  static String shortId(String formatId, int length) {
+    if (length < 1 || length > MAX_PROMPT_ID_LENGTH) {
+      throw new IllegalArgumentException("Unsupported prompt id length: " + length);
+    }
+
+    byte[] digest;
+    try {
+      digest = MessageDigest.getInstance("SHA-256")
+          .digest(formatId.getBytes(StandardCharsets.UTF_8));
+    } catch (NoSuchAlgorithmException e) {
+      throw new IllegalStateException("SHA-256 is not available", e);
+    }
+
+    long value = 0;
+    for (int i = 0; i < 8; i++) {
+      value = (value << 8) | (digest[i] & 0xFFL);
+    }
+
+    StringBuilder sb = new StringBuilder(length);
+    for (int i = 0; i < length; i++) {
+      sb.append(ALPHABET.charAt((int) (value & 31)));
+      value >>>= 5;
     }
     return sb.toString();
   }
@@ -142,8 +171,8 @@ public class Node {
   }
 
   public boolean isBase() {
-    return nodeType.equals(DELETION) || nodeType.equals(NodeType.SRC_MOVE)
-        || nodeType.equals(ADDITION) || nodeType.equals(NodeType.DST_MOVE);
+    return nodeType.equals(DELETION) || nodeType.equals(NodeType.SRC_MOVE) || nodeType.equals(NodeType.SRC_UPDATE)
+        || nodeType.equals(ADDITION) || nodeType.equals(NodeType.DST_MOVE) || nodeType.equals(NodeType.DST_UPDATE);
   }
 
   public boolean isContext() {
@@ -304,7 +333,8 @@ public class Node {
   }
 
   public String baseXml(Graph<Node, Edge> graph) {
-    String xmlPrompt = "<" + this.getPromptType(graph) + " id=\"" + getPromptId() + "\"";
+    String promptType = this.getPromptType(graph);
+    String xmlPrompt = "<" + promptType + " id=\"" + getPromptId() + "\"";
 
     String contextString = getContextString(graph);
     if (!contextString.isEmpty()) {
@@ -313,7 +343,7 @@ public class Node {
 
     xmlPrompt += ">\n    ";
     xmlPrompt += this.normalizeContent().replace("\n", "\n    ");
-    xmlPrompt += "\n</" + this.getPromptType(graph) + ">";
+    xmlPrompt += "\n</" + promptType + ">";
 
     return xmlPrompt;
   }
@@ -324,12 +354,17 @@ public class Node {
     List<Node> alts = new ArrayList<>();
     alts.addAll(this.getMappingSources(graph));
     alts.addAll(this.getMappingTargets(graph));
-    Node alt = alts.isEmpty() ? null : alts.get(0);
-
-    if (alt == null) {
+    if (alts.isEmpty()) {
       return operations;
     }
 
+    if (!isOneToOneMapping(graph)) {
+      operations.add("move");
+      operations.add("change");
+      return operations;
+    }
+
+    Node alt = alts.get(0);
     String thisContextString = this.getContextString(graph);
     String altContextString = alt.getContextString(graph);
     if (!thisContextString.equals(altContextString)) {
@@ -347,6 +382,30 @@ public class Node {
     }
 
     return operations;
+  }
+
+  private boolean isOneToOneMapping(Graph<Node, Edge> graph) {
+    Set<Node> component = new HashSet<>();
+    Deque<Node> queue = new ArrayDeque<>();
+    component.add(this);
+    queue.add(this);
+
+    while (!queue.isEmpty()) {
+      Node current = queue.poll();
+      for (Node source : current.getMappingSources(graph)) {
+        if (component.add(source)) {
+          queue.add(source);
+        }
+      }
+      for (Node target : current.getMappingTargets(graph)) {
+        if (component.add(target)) {
+          queue.add(target);
+        }
+      }
+    }
+
+    return component.stream().filter(Node::isSrc).count() == 1
+        && component.stream().filter(Node::isDst).count() == 1;
   }
 
   private String getPromptType(Graph<Node, Edge> graph) {

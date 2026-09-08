@@ -89,7 +89,7 @@ public class UsagePattern extends AggregatorPattern implements Leaf {
 
     @Override
     public List<Node> getSides() {
-        return getUsedNodes().stream().toList();
+        return getUsedNodes().stream().sorted(Node.COMPARATOR).toList();
     }
 
     @Override

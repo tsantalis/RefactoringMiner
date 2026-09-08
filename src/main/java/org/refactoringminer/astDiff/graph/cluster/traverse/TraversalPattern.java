@@ -9,77 +9,22 @@ import org.refactoringminer.astDiff.graph.NodeType;
 import org.refactoringminer.astDiff.graph.cluster.GraphWrapper;
 import org.jgrapht.Graph;
 
+import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TraversalPattern extends GraphWrapper {
     protected Graph<Node, Edge> clusterGraph;
     protected final Util util = new Util(getGraph());
     protected final Set<String> identifiers = new HashSet<>();
     private final Narrator narrator = new Narrator(this);
-    private final Map<TraversalPattern, Boolean> dependsOnCache = new HashMap<>();
-    private final Map<TraversalPattern, Set<Node>> commonNodesCache = new HashMap<>();
     protected Node cachedLead = null;
     protected NodeType nodeType;
     private List<TraversalPattern> cachedFlatten = null;
+    private SortKey cachedSortKey;
 
     public void setClusterGraph(Graph<Node, Edge> clusterGraph) {
         this.clusterGraph = clusterGraph;
-    }
-
-    public List<MappingGroup> aggregateByMapping(Collection<Node> nodes) {
-        Set<Node> allowedNodes = new HashSet<>(nodes);
-        for (Node node : nodes) {
-            allowedNodes.addAll(node.getMappingSources(clusterGraph));
-            allowedNodes.addAll(node.getMappingTargets(clusterGraph));
-        }
-
-        List<MappingGroup> result = new ArrayList<>();
-
-        Set<Node> visited = new HashSet<>();
-        for (Node node : nodes) {
-            if (visited.contains(node)) continue;
-
-            Set<Node> component = new HashSet<>();
-            Queue<Node> queue = new LinkedList<>();
-            queue.add(node);
-            visited.add(node);
-
-            while (!queue.isEmpty()) {
-                Node curr = queue.poll();
-                component.add(curr);
-
-                for (Node src : curr.getMappingSources(clusterGraph)) {
-                    if (!visited.contains(src)) {
-                        visited.add(src);
-                        queue.add(src);
-                    }
-                }
-                for (Node dst : curr.getMappingTargets(clusterGraph)) {
-                    if (!visited.contains(dst)) {
-                        visited.add(dst);
-                        queue.add(dst);
-                    }
-                }
-            }
-
-            List<Node> srcNodes = new ArrayList<>();
-            List<Node> dstNodes = new ArrayList<>();
-            for (Node n : component) {
-                if (!allowedNodes.contains(n)) continue;
-                if (n.isSrc()) srcNodes.add(n);
-                else dstNodes.add(n);
-            }
-
-            // TODO: Sort by Dependency
-            Comparator<Node> nodeComparator = Comparator.comparing(Node::getPath)
-                    .thenComparingInt(n -> n.getTree().getPos());
-            srcNodes.sort(nodeComparator);
-            dstNodes.sort(nodeComparator);
-
-            result.add(new MappingGroup(srcNodes, dstNodes));
-        }
-
-        return result;
     }
 
     public Narrator getNarrator() {
@@ -93,51 +38,34 @@ public class TraversalPattern extends GraphWrapper {
     public List<NarrativeElement> getElements(List<TraversalPattern> filterPatterns) {
         List<Node> aggMains = getMains();
 
-        List<MappingGroup> mappingGroups = aggregateByMapping(aggMains);
+        List<MergeGroup> allGroups = new ArrayList<>();
 
-        // Merge Groups by Context
-        Map<MappingGroup, Set<Node>> mappingGroupContexts = new HashMap<>();
-        for (MappingGroup mg : mappingGroups) {
-            Set<Node> contexts = new HashSet<>();
-            for (Node target : mg.targets()) {
-                List<Node> semanticContexts = target.getSemanticContexts(clusterGraph);
-                if (!semanticContexts.isEmpty()) {
-                    Node semanticContext = semanticContexts.get(0);
-                    contexts.add(semanticContext);
-                    contexts.addAll(semanticContext.getMappingSources(clusterGraph));
-                }
-            }
-            for (Node source : mg.sources()) {
-                List<Node> semanticContexts = source.getSemanticContexts(clusterGraph);
-                if (!semanticContexts.isEmpty()) {
-                    Node semanticContext = semanticContexts.get(0);
-                    contexts.add(semanticContext);
-                    contexts.addAll(semanticContext.getMappingTargets(clusterGraph));
-                }
-            }
-            mappingGroupContexts.put(mg, filterLargest(contexts));
-        }
-        List<MergedGroup> mergedGroups = new ArrayList<>();
-        for (Map.Entry<MappingGroup, Set<Node>> entry : mappingGroupContexts.entrySet()) {
-            MappingGroup mg = entry.getKey();
-            Set<Node> context = entry.getValue();
-            boolean merged = false;
-            for (MergedGroup mergedGroup : mergedGroups) {
-                if (isCompatible(context, mergedGroup.context)) {
-                    mergedGroup.groups.add(mg);
-                    Set<Node> union = new HashSet<>(mergedGroup.context);
-                    union.addAll(context);
-                    mergedGroup.context = filterLargest(union);
-                    merged = true;
-                    break;
-                }
-            }
-            if (!merged) {
-                MergedGroup newGroup = new MergedGroup(context);
-                newGroup.groups.add(mg);
-                mergedGroups.add(newGroup);
+        List<MergeGroup> mappingGroups = aggregateByMapping(aggMains);
+        List<MergeGroup> contextMappingGroups = aggregateByContextMapping(aggMains);
+
+        for (MergeGroup mappingGroup : mappingGroups) {
+            boolean covered = contextMappingGroups.stream().anyMatch(contextGroup ->
+                    contextGroup.nodes().size() > mappingGroup.nodes().size()
+                            && contextGroup.nodes().containsAll(mappingGroup.nodes()));
+            if (!covered) {
+                allGroups.add(mappingGroup);
             }
         }
+        for (MergeGroup contextGroup : contextMappingGroups) {
+            boolean covered = mappingGroups.stream().anyMatch(mappingGroup ->
+                    mappingGroup.nodes().containsAll(contextGroup.nodes()));
+            if (!covered) {
+                allGroups.add(contextGroup);
+            }
+        }
+
+        // Nodes without any semantic context (e.g. method declaration and above)
+        List<Node> remainingNodes = aggMains.stream().filter(main -> allGroups.stream().noneMatch(mg -> mg.nodes().contains(main))).toList();
+        List<MergeGroup> remainingGroups = remainingNodes.stream().map(rm -> new MergeGroup(Set.of(rm), MergeType.REMAINING)).toList();
+        allGroups.addAll(remainingGroups);
+
+        allGroups.sort(Comparator.comparing(MergeGroup::mergeType)
+                .thenComparing(mg -> MergeGroup.sortNodes(mg.nodes()).get(0), Node.COMPARATOR));
 
         List<TraversalPattern> leaves = this.getNarrator().getNarrative(GrainLevel.LEAF);
 
@@ -147,7 +75,7 @@ public class TraversalPattern extends GraphWrapper {
                 allMains.addAll(fp.getMains());
             }
         }
-        Map<Node, Set<Node>> sideToMains = new HashMap<>();
+        Map<Node, Set<Node>> printingSidesToMains = new HashMap<>();
         for (TraversalPattern leaf : leaves) {
             List<Node> leafMains = leaf.getMains();
             List<Node> leafSides = leaf.getSides();
@@ -156,7 +84,8 @@ public class TraversalPattern extends GraphWrapper {
                     continue;
                 }
 
-                Set<Node> relyingMains = sideToMains.computeIfAbsent(side, k -> new HashSet<>());
+                printingSidesToMains.putIfAbsent(side, new HashSet<>());
+                Set<Node> relyingMains = printingSidesToMains.get(side);
                 for (Node m : leafMains) {
                     if (allMains.contains(m)) {
                         relyingMains.add(m);
@@ -165,32 +94,47 @@ public class TraversalPattern extends GraphWrapper {
             }
         }
 
-        Map<Node, MergedGroup> mainToGroup = new HashMap<>();
-        for (MergedGroup mg : mergedGroups) {
-            for (Node n : mg.nodes()) mainToGroup.put(n, mg);
+        Map<Node, Set<MergeGroup>> mainToGroup = new HashMap<>();
+        for (MergeGroup mg : allGroups) {
+            for (Node n : mg.nodes()) {
+                mainToGroup.putIfAbsent(n, new HashSet<>());
+                mainToGroup.get(n).add(mg);
+            };
         }
-        Set<Node> globalSides = new HashSet<>();
-        Map<MergedGroup, List<Node>> localSidesMap = new HashMap<>();
-        for (Map.Entry<Node, Set<Node>> entry : sideToMains.entrySet()) {
-            Node side = entry.getKey();
+        Set<Node> globalPrintingSides = new HashSet<>();
+        Map<MergeGroup, List<Node>> localPrintingSidesMap = new HashMap<>();
+        for (Map.Entry<Node, Set<Node>> entry : printingSidesToMains.entrySet()) {
+            Node printingSide = entry.getKey();
             Set<Node> mains = entry.getValue();
-            Set<MergedGroup> chapters = new HashSet<>();
+            Set<MergeGroup> groups = new HashSet<>();
             for (Node m : mains) {
-                MergedGroup mg = mainToGroup.get(m);
-                if (mg != null) chapters.add(mg);
+                Set<MergeGroup> mgs = mainToGroup.get(m);
+                if (mgs != null) {
+                    groups.addAll(mgs);
+                }
             }
 
-            if (chapters.size() > 1) {
-                globalSides.add(side);
-            } else if (chapters.size() == 1) {
-                MergedGroup mg = chapters.iterator().next();
-                localSidesMap.computeIfAbsent(mg, k -> new ArrayList<>()).add(side);
+            if (groups.size() > 1) {
+                globalPrintingSides.add(printingSide);
+            } else if (groups.size() == 1) {
+                MergeGroup mg = groups.iterator().next();
+                localPrintingSidesMap.putIfAbsent(mg, new ArrayList<>());
+                localPrintingSidesMap.get(mg).add(printingSide);
             }
         }
+        localPrintingSidesMap.replaceAll((mg, sides) -> {
+            Map<Node, Integer> changeIndex = changeIndex(mg);
+            Comparator<Node> byEarliestUsingChange = Comparator.comparingInt(side ->
+                    printingSidesToMains.get(side).stream()
+                            .mapToInt(main -> changeIndex.getOrDefault(main, Integer.MAX_VALUE))
+                            .min().orElse(Integer.MAX_VALUE));
+            return sides.stream()
+                    .sorted(byEarliestUsingChange.thenComparing(Node.COMPARATOR))
+                    .toList();
+        });
 
-        // TODO: Sort Must be Done By Dependency, Not Latest Index
-        Map<MergedGroup, Integer> groupLatestIndex = new HashMap<>();
-        for (MergedGroup mg : mergedGroups) {
+        Map<MergeGroup, Integer> groupLatestIndex = new HashMap<>();
+        for (MergeGroup mg : allGroups) {
             int maxIdx = -1;
 
             for (Node n : mg.nodes()) {
@@ -208,19 +152,19 @@ public class TraversalPattern extends GraphWrapper {
         // Produce Elements
         List<NarrativeElement> elements = new ArrayList<>();
         Set<Node> outputtedSides = new HashSet<>();
-        Set<MergedGroup> outputtedGroups = new HashSet<>();
+        Set<MergeGroup> outputtedGroups = new HashSet<>();
         for (int i = 0; i < leaves.size(); i++) {
             TraversalPattern leaf = leaves.get(i);
             for (Node s : leaf.getSides()) {
-                if (globalSides.contains(s) && !outputtedSides.contains(s)) {
+                if (globalPrintingSides.contains(s) && !outputtedSides.contains(s)) {
                     String content = "<dependency>\n    " + s.baseXml(clusterGraph).replace("\n", "\n    ") + "\n</dependency>";
                     elements.add(new NarrativeElement(content, Set.of(s), clusterGraph));
                     outputtedSides.add(s);
                 }
             }
-            for (MergedGroup mg : mergedGroups) {
+            for (MergeGroup mg : allGroups) {
                 if (groupLatestIndex.get(mg) == i && !outputtedGroups.contains(mg)) {
-                    String content = buildSubChapterXml(mg, leaves, localSidesMap);
+                    String content = buildSubChapterXml(mg, leaves, localPrintingSidesMap.get(mg));
                     Set<Node> mgMains = mg.nodes();
                     elements.add(new NarrativeElement(content, mgMains, clusterGraph));
                     outputtedGroups.add(mg);
@@ -229,6 +173,153 @@ public class TraversalPattern extends GraphWrapper {
         }
 
         return elements;
+    }
+
+    private static Map<Set<Node>, Set<Node>> aggregateByContextMapping(List<Node> nodes, Graph<Node, Edge> graph) {
+        Set<Node> contexts = new HashSet<>();
+        for (Node node : nodes) {
+            List<Node> semanticContexts = node.getSemanticContexts(graph);
+            if (semanticContexts.isEmpty()) {
+                continue;
+            }
+
+            contexts.add(semanticContexts.get(0));
+        }
+
+        Set<Node> parentContexts = new HashSet<>();
+        for (Node subject : contexts) {
+            boolean isParent = true;
+
+            List<Node> subjectAlternatives = subject.isSrc() ? subject.getMappingTargets(graph) : subject.getMappingSources(graph);
+            Node subjectAlternative = subjectAlternatives.isEmpty() ? null : subjectAlternatives.get(0);
+            for (Node object : contexts) {
+                if (subject.equals(object)) {
+                    continue;
+                }
+
+                if (subject.isDescendantOf(object)) {
+                    isParent = false;
+                    break;
+                }
+
+                if (subject.getSrcDst().equals(object.getSrcDst())) {
+                    continue;
+                }
+
+                if (subjectAlternative == null) {
+                    continue;
+                }
+
+                if (subjectAlternative.isDescendantOf(object)) {
+                    isParent = false;
+                    break;
+                }
+            }
+
+            if (isParent) {
+                parentContexts.add(subject);
+            }
+        }
+
+        Map<Set<Node>, Set<Node>> result = new HashMap<>();
+        for (Node parentContext : parentContexts) {
+            Set<Node> descendants = new HashSet<>();
+            for (Node node : nodes) {
+                if (node.isDescendantOf(parentContext)) {
+                    descendants.add(node);
+                }
+            }
+
+            List<Node> alternatives = parentContext.isSrc() ? parentContext.getMappingTargets(graph) : parentContext.getMappingSources(graph);
+            Node alternative = alternatives.isEmpty() ? null : alternatives.get(0);
+            Set<Node> alternativeDescendants = new HashSet<>();
+            if (alternative != null) {
+                for (Node node : nodes) {
+                    if (node.isDescendantOf(alternative)) {
+                        alternativeDescendants.add(node);
+                    }
+                }
+            }
+
+            Set<Node> parents = new HashSet<>();
+            parents.add(parentContext);
+            if (!alternativeDescendants.isEmpty()) {
+                parents.add(alternative);
+            }
+            Set<Node> allDescendants = new HashSet<>();
+            allDescendants.addAll(descendants);
+            allDescendants.addAll(alternativeDescendants);
+
+            result.put(parents, allDescendants);
+        }
+
+        return result;
+    }
+
+    private List<MergeGroup> aggregateByContextMapping(List<Node> nodes) {
+        return aggregateByContextMapping(nodes, clusterGraph).values().stream()
+                .map(aggregatedNodes -> new MergeGroup(aggregatedNodes, MergeType.CONTEXT)).toList();
+    }
+
+    protected static Map<Set<Node>, Set<Node>> aggregateByMapping(List<Node> nodes, Graph<Node, Edge> graph) {
+        Set<Node> allowedNodes = new HashSet<>(nodes);
+        for (Node node : nodes) {
+            allowedNodes.addAll(node.getMappingSources(graph));
+            allowedNodes.addAll(node.getMappingTargets(graph));
+        }
+
+        Map<Set<Node>, Set<Node>> result = new HashMap<>();
+
+        Set<Node> visited = new HashSet<>();
+        for (Node node : nodes) {
+            if (visited.contains(node)) continue;
+
+            Set<Node> component = new HashSet<>();
+            Queue<Node> queue = new LinkedList<>();
+            queue.add(node);
+            visited.add(node);
+
+            while (!queue.isEmpty()) {
+                Node curr = queue.poll();
+                component.add(curr);
+
+                for (Node src : curr.getMappingSources(graph)) {
+                    if (!visited.contains(src)) {
+                        visited.add(src);
+                        queue.add(src);
+                    }
+                }
+                for (Node dst : curr.getMappingTargets(graph)) {
+                    if (!visited.contains(dst)) {
+                        visited.add(dst);
+                        queue.add(dst);
+                    }
+                }
+            }
+
+            Set<Node> srcNodes = new HashSet<>();
+            Set<Node> dstNodes = new HashSet<>();
+            for (Node n : component) {
+                if (!allowedNodes.contains(n)) continue;
+                if (n.isSrc()) srcNodes.add(n);
+                else dstNodes.add(n);
+            }
+
+            if (!srcNodes.isEmpty() && !dstNodes.isEmpty()) {
+                result.put(srcNodes, dstNodes);
+            }
+        }
+
+        return result;
+    }
+
+    protected List<MergeGroup> aggregateByMapping(List<Node> nodes) {
+        return aggregateByMapping(nodes, clusterGraph).entrySet().stream().map(e -> {
+            Set<Node> mergedNodes = new HashSet<>();
+            mergedNodes.addAll(e.getKey());
+            mergedNodes.addAll(e.getValue());
+            return new MergeGroup(mergedNodes, MergeType.MAPPING);
+        }).toList();
     }
 
     public Node getLead() {
@@ -266,13 +357,6 @@ public class TraversalPattern extends GraphWrapper {
         return getGraph().vertexSet();
     }
 
-    public int getDepth() {
-        if (this instanceof AggregatorPattern aggregator) {
-            return aggregator.subs.stream().mapToInt(TraversalPattern::getDepth).max().orElse(0) + 1;
-        }
-        return 0;
-    }
-
     public void addIdentifier(String identifier) {
         this.identifiers.add(identifier);
     }
@@ -290,17 +374,12 @@ public class TraversalPattern extends GraphWrapper {
     }
 
     private boolean dependsOnRecursive(TraversalPattern p, Set<TraversalPattern> visited) {
-        if (dependsOnCache.containsKey(p)) {
-            return dependsOnCache.get(p);
-        }
-
         if (visited.contains(this)) {
             return false;
         }
         visited.add(this);
 
         if (this.flatten().contains(p)) {
-            dependsOnCache.put(p, true);
             return true;
         }
 
@@ -308,14 +387,12 @@ public class TraversalPattern extends GraphWrapper {
             if (tp instanceof UsagePattern usage) {
                 for (TraversalPattern req : usage.subs) {
                     if (req.dependsOnRecursive(p, visited)) {
-                        dependsOnCache.put(p, true);
                         return true;
                     }
                 }
             }
         }
 
-        dependsOnCache.put(p, false);
         return false;
     }
 
@@ -343,52 +420,60 @@ public class TraversalPattern extends GraphWrapper {
         result.add(p);
     }
 
-    public Set<Node> commonNodes(TraversalPattern other) {
-        if (commonNodesCache.containsKey(other)) {
-            return commonNodesCache.get(other);
+    public SortKey sortKey() {
+        if (cachedSortKey == null) {
+            List<Node> mains = flatten().stream()
+                    .filter(fl -> fl instanceof Leaf).map(TraversalPattern::getMains).flatMap(List::stream).toList();
+            cachedSortKey = mains.stream()
+                    .map(n -> new SortKey(n.getPath(), n.getTree().getPos()))
+                    .min(Comparator.naturalOrder())
+                    .orElse(new SortKey("", 0));
         }
-
-        Set<Node> thisNodes = aggregatedLeafNodes(this);
-        Set<Node> otherNodes = aggregatedLeafNodes(other);
-
-        Set<Node> common = new HashSet<>(thisNodes);
-        common.retainAll(otherNodes);
-
-        commonNodesCache.put(other, common);
-        return common;
+        return cachedSortKey;
     }
 
-    private static Set<Node> aggregatedLeafNodes(TraversalPattern pattern) {
-        List<TraversalPattern> leaves = pattern.getNarrator().getNarrative(GrainLevel.LEAF);
+    public record SortKey(String path, int pos) implements Comparable<SortKey> {
+        private static final Comparator<SortKey> COMPARATOR = Comparator.comparing(SortKey::path)
+                .thenComparingInt(SortKey::pos);
 
-        Set<Node> nodes = new HashSet<>();
-        for (TraversalPattern leaf : leaves) {
-            nodes.addAll(leaf.getMains());
-            nodes.addAll(leaf.getSides());
+        @Override
+        public int compareTo(SortKey other) {
+            return COMPARATOR.compare(this, other);
         }
-        return nodes;
     }
 
-    private String buildSubChapterXml(MergedGroup mergedGroup, List<TraversalPattern> leaves, Map<MergedGroup, List<Node>> localSidesMap) {
+    private String buildSubChapterXml(MergeGroup mergeGroup, List<TraversalPattern> leaves, @Nullable List<Node> localSides) {
         StringBuilder sb = new StringBuilder();
         sb.append("<sub_chapter>");
 
-        for (MappingGroup mg : mergedGroup.groups) {
-            sb.append("\n    ").append(buildXmlMappingHunk(mg.sources(), mg.targets()).replace("\n", "\n    "));
-        }
-
-        if (!mergedGroup.context.isEmpty()) {
-            sb.append("\n    <context>");
-            Set<String> contextsText = new HashSet<>();
-            for (Node context : mergedGroup.context) {
-                contextsText.add(context.mappingXml(clusterGraph));
+        switch (mergeGroup.mergeType) {
+            case MAPPING -> {
+                sb.append("\n    ").append(buildXmlMappingHunk(mergeGroup.sources(), mergeGroup.targets()).replace("\n", "\n    "));
+                List<Set<Node>> contexts = orderContexts(mergeGroup);
+                if (!contexts.isEmpty()) {
+                    sb.append("\n    ").append(buildXmlContext(contexts).replace("\n", "\n    "));
+                }
             }
-            sb.append("\n        ").append(String.join("\n        ", contextsText.stream().map(text -> text.replace("\n", "\n        ")).toList()));
-            sb.append("\n    </context>");
+            case CONTEXT -> {
+                List<Set<Node>> contexts = orderContexts(mergeGroup);
+                if (!contexts.isEmpty()) {
+                    sb.append("\n    ").append(buildXmlContext(contexts).replace("\n", "\n    "));
+                }
+                List<Node> sources = mergeGroup.sources();
+                if (!sources.isEmpty()) {
+                    sb.append("\n    ").append(buildXmlMappingHunk(sources, List.of()).replace("\n", "\n    "));
+                }
+                List<Node> targets = mergeGroup.targets();
+                if (!targets.isEmpty()) {
+                    sb.append("\n    ").append(buildXmlMappingHunk(List.of(), targets).replace("\n", "\n    "));
+                }
+            }
+            case REMAINING -> {
+                sb.append("\n    ").append(buildXmlMappingHunk(mergeGroup.sources(), mergeGroup.targets()).replace("\n", "\n    "));
+            }
         }
 
-        List<Node> localSides = localSidesMap.getOrDefault(mergedGroup, List.of());
-        if (!localSides.isEmpty()) {
+        if (localSides != null && !localSides.isEmpty()) {
             sb.append("\n    <dependencies>");
             for (Node side : localSides) {
                 sb.append("\n        ").append(side.baseXml(clusterGraph).replace("\n", "\n        "));
@@ -417,72 +502,67 @@ public class TraversalPattern extends GraphWrapper {
         return xmlOutput.toString();
     }
 
-    private boolean isCompatible(Set<Node> setA, Set<Node> setB) {
-        if (setA.isEmpty() || setB.isEmpty()) return false;
+    private static Map<Node, Integer> changeIndex(MergeGroup mergeGroup) {
+        List<Node> printedChanges = new ArrayList<>(mergeGroup.sources());
+        printedChanges.addAll(mergeGroup.targets());
 
-        boolean aCoveredByB = true;
-        for (Node a : setA) {
-            boolean matched = false;
-            for (Node b : setB) {
-                if (a.equals(b) || a.getSemanticContexts(clusterGraph).contains(b) || b.getSemanticContexts(clusterGraph).contains(a)) {
-                    matched = true;
-                    break;
-                }
-            }
-            if (!matched) {
-                aCoveredByB = false;
-                break;
-            }
+        Map<Node, Integer> changeIndex = new HashMap<>();
+        for (int i = 0; i < printedChanges.size(); i++) {
+            changeIndex.put(printedChanges.get(i), i);
         }
-
-        boolean bCoveredByA = true;
-        for (Node b : setB) {
-            boolean matched = false;
-            for (Node a : setA) {
-                if (a.equals(b) || a.getSemanticContexts(clusterGraph).contains(b) || b.getSemanticContexts(clusterGraph).contains(a)) {
-                    matched = true;
-                    break;
-                }
-            }
-            if (!matched) {
-                bCoveredByA = false;
-                break;
-            }
-        }
-
-        return aCoveredByB || bCoveredByA;
+        return changeIndex;
     }
 
-    private Set<Node> filterLargest(Set<Node> contexts) {
-        return contexts.stream().filter(ctx -> ctx.getSemanticContexts(clusterGraph).stream()
-                .noneMatch(sc -> sc != ctx && contexts.contains(sc))).collect(java.util.stream.Collectors.toSet());
+    private List<Set<Node>> orderContexts(MergeGroup mergeGroup) {
+        Map<Set<Node>, Set<Node>> contextAggregatedNodes =
+                aggregateByContextMapping(mergeGroup.nodes().stream().toList(), clusterGraph);
+        if (contextAggregatedNodes.isEmpty()) {
+            return List.of();
+        }
+
+        Map<Node, Integer> changeIndex = changeIndex(mergeGroup);
+
+        Comparator<Map.Entry<Set<Node>, Set<Node>>> byEarliestChange =
+                Comparator.comparingInt(entry -> entry.getValue().stream()
+                        .mapToInt(node -> changeIndex.getOrDefault(node, Integer.MAX_VALUE))
+                        .min().orElse(Integer.MAX_VALUE));
+        Comparator<Map.Entry<Set<Node>, Set<Node>>> byContextPosition =
+                Comparator.comparing((Map.Entry<Set<Node>, Set<Node>> entry) -> MergeGroup.sortNodes(entry.getKey()).get(0),
+                        Node.COMPARATOR);
+
+        return contextAggregatedNodes.entrySet().stream()
+                .sorted(byEarliestChange.thenComparing(byContextPosition))
+                .map(Map.Entry::getKey)
+                .toList();
     }
 
-    public record MappingGroup(List<Node> sources, List<Node> targets) {
-        public Set<Node> nodes() {
-            Set<Node> result = new HashSet<>();
-            result.addAll(sources);
-            result.addAll(targets);
+    private String buildXmlContext(Collection<Set<Node>> contextsSets) {
+        return String.join("\n", contextsSets.stream().map(contexts -> {
+            StringBuilder xmlOutput = new StringBuilder();
+            xmlOutput.append("<context>");
+            xmlOutput.append("\n    ").append(contexts.iterator().next().mappingXml(clusterGraph).replace("\n", "\n    "));
+            xmlOutput.append("\n</context>");
+            return xmlOutput.toString();
+        }).toList());
+    }
 
-            return result;
+    protected record MergeGroup(Set<Node> nodes, MergeType mergeType) {
+        public List<Node> sources() {
+            return sortNodes(nodes.stream().filter(Node::isSrc).collect(Collectors.toSet()));
+        }
+
+        public List<Node> targets() {
+            return sortNodes(nodes.stream().filter(Node::isDst).collect(Collectors.toSet()));
+        }
+
+        static List<Node> sortNodes(Set<Node> nodes) {
+            return nodes.stream().sorted(Node.COMPARATOR).toList();
         }
     }
 
-    private static class MergedGroup {
-        Set<Node> context;
-        List<MappingGroup> groups = new ArrayList<>();
-
-        MergedGroup(Set<Node> context) {
-            this.context = context;
-        }
-
-        public Set<Node> nodes() {
-            Set<Node> result = new HashSet<>();
-            for (MappingGroup group : groups) {
-                result.addAll(group.nodes());
-            }
-
-            return result;
-        }
+    protected enum MergeType {
+        MAPPING,
+        CONTEXT,
+        REMAINING
     }
 }

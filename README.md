@@ -70,6 +70,7 @@ Table of Contents
       * [With the files changed in a GitHub Pull Request](documentation/api.md#with-the-files-changed-in-a-github-pull-request)
       * [With two directories](documentation/api.md#with-two-directories)
       * [With commit range](documentation/api.md#with-commit-range)
+      * [With GitHub Compare](documentation/api.md#with-github-compare)
    * [Purity Checker](documentation/purity.md#purity-checker)
    * [Location information for the detected refactorings](documentation/api.md#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](documentation/api.md#statement-matching-information-for-the-detected-refactorings)

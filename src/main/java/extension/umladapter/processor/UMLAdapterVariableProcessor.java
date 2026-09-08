@@ -1,6 +1,7 @@
 package extension.umladapter.processor;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.expression.LangAssignment;
@@ -42,7 +43,7 @@ public class UMLAdapterVariableProcessor {
                 assignment,
                 container,
                 attributeName,
-                Collections.emptyMap(),
+                new LinkedHashMap<>(),
                 fileContent
         );
 

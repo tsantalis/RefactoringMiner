@@ -72,7 +72,7 @@ miner.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new Refac
 });
 ```
 
-## With two directories containing Java source code
+## With two directories containing source code
 
 It is possible to detect refactorings between the Java files in two directories
 containing the code before and after some changes.
@@ -291,6 +291,21 @@ You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> 
 ```java
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 ProjectASTDiff projectASTDiff = miner.diffAtCommitRange(repo, startCommit, endCommit);
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).openInBrowser();
+```
+
+## With GitHub Compare
+
+This API utilizes the [GitHub Compare](https://docs.github.com/en/pull-requests/how-tos/commit-changes/comparing-commits) API to fetch the patches between two commits or tags. This API is much faster, compared to `diffAtCommitRange` API, which extracts the patches by processing each commit between the start and end commit. Moreover, `diffAtCommitRange` includes the parent commit of the start commit in the analysis, while `diffAtGitHubCompare` does not.
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+String url = "https://github.com/bazelbuild/bazel/compare/66a577385539887743bd99b9239b9b70fc55b4f8...b5b551dc2d0117b577506ba69286b243bde181a0";
+String repo = URLHelper.getRepo(url);
+Pair<String, String> commitPair = URLHelper.getCommitPairFromGitHubCompareURL(url);
+		
+ProjectASTDiff projectASTDiff = miner.diffAtGitHubCompare(repo, commitPair.getLeft(), commitPair.getRight());
 // To visualize the diff add the following line
 new WebDiff(projectASTDiff).openInBrowser();
 ```

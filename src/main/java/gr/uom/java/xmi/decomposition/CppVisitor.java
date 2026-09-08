@@ -23,6 +23,7 @@ import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
+import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -165,6 +166,11 @@ public class CppVisitor extends ASTVisitor {
 		if(statement instanceof IASTProblemStatement problem) {
 			IASTFileLocation fileLocation = problem.getFileLocation();
 			int startOffset = fileLocation.getNodeOffset();
+			if(problem.getRawSignature().startsWith("new->") && PathFileUtils.isCFile(filePath)) {
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, startOffset, 3, startOffset+3, CodeElementType.SIMPLE_NAME, fileContent);
+				LeafExpression leafExpression = new LeafExpression("new", location);
+				variables.add(leafExpression);
+			}
 			Map<String, OperationInvocation> calls = extractAllMethodCalls(startOffset, problem.getRawSignature(), WITH_INVOKER);
 			Map<String, OperationInvocation> callsWithout = extractAllMethodCalls(startOffset, problem.getRawSignature(), WITHOUT_INVOKER);
 			Map<String, OperationInvocation> toAdd = new LinkedHashMap<>();

@@ -765,7 +765,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
 
     private void processParentLinkageSpecification(Tree parent1, Tree parent2, ExtendedMultiMappingStore mappingStore) {
         Pair<Tree, Tree> matched;
-        if(parent1.getType().name.equals(LANG1.DECLARATION_LIST) && parent2.getType().name.equals(LANG2.DECLARATION_LIST)) {
+        if(parent1 != null && parent2 != null && parent1.getType().name.equals(LANG1.DECLARATION_LIST) && parent2.getType().name.equals(LANG2.DECLARATION_LIST)) {
             mappingStore.addMappingRecursively(parent1, parent2);
             matched = Helpers.findPairOfType(parent1, parent2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
             if (matched != null) {

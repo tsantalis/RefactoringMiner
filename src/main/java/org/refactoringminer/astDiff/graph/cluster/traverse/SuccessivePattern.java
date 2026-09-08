@@ -77,9 +77,9 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         }
 
         List<String> mappingHunks = new ArrayList<>();
-        List<TraversalPattern.MappingGroup> aggregated = aggregateByMapping(sequence).stream()
+        List<TraversalPattern.MergeGroup> aggregated = aggregateByMapping(sequence).stream()
                 .filter(mg -> !mg.sources().isEmpty() && !mg.targets().isEmpty()).toList();
-        for (TraversalPattern.MappingGroup mg : aggregated) {
+        for (TraversalPattern.MergeGroup mg : aggregated) {
             List<Node> sources = mg.sources();
             List<Node> targets = mg.targets();
 

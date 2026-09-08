@@ -172,101 +172,49 @@ public class Narrator {
         int n = subs.size();
         if (n <= 1) return subs;
 
-        Map<TraversalPattern, Integer> dependencies = new HashMap<>();
-        Map<TraversalPattern, List<TraversalPattern>> dependedBy = new HashMap<>();
+        Map<TraversalPattern, List<TraversalPattern>> dependents = new HashMap<>();
+        Map<TraversalPattern, Integer> inDegree = new HashMap<>();
         for (TraversalPattern s : subs) {
-            dependencies.put(s, 0);
-            dependedBy.put(s, new ArrayList<>());
+            dependents.put(s, new ArrayList<>());
+            inDegree.put(s, 0);
         }
         for (TraversalPattern a : subs) {
             for (TraversalPattern b : subs) {
                 if (a == b) continue;
-                boolean aDependsOnB = a.dependsOn(b);
-                boolean bDependsOnA = b.dependsOn(a);
-                if (aDependsOnB && !bDependsOnA) {
-                    dependedBy.get(b).add(a);
-                    dependencies.put(a, dependencies.get(a) + 1);
+                if (a.dependsOn(b) && !b.dependsOn(a)) {
+                    dependents.get(b).add(a);
+                    inDegree.merge(a, 1, Integer::sum);
                 }
             }
         }
 
-        List<TraversalPattern> ready = new ArrayList<>();
+        // longest-path level; cycles are broken upstream by TraversalEngine
+        Map<TraversalPattern, Integer> level = new HashMap<>();
+        Deque<TraversalPattern> queue = new ArrayDeque<>();
         for (TraversalPattern s : subs) {
-            if (dependencies.get(s) == 0) {
-                ready.add(s);
+            if (inDegree.get(s) == 0) {
+                level.put(s, 0);
+                queue.add(s);
             }
         }
-        List<TraversalPattern> result = new ArrayList<>();
-        TraversalPattern last = null;
-        while (!ready.isEmpty()) {
-            TraversalPattern next = pickNext(last, ready);
-            ready.remove(next);
-            result.add(next);
-            last = next;
-
-            for (TraversalPattern dependent : dependedBy.get(next)) {
-                int updated = dependencies.get(dependent) - 1;
-                dependencies.put(dependent, updated);
-                if (updated == 0) {
-                    ready.add(dependent);
-                }
+        while (!queue.isEmpty()) {
+            TraversalPattern cur = queue.poll();
+            for (TraversalPattern nxt : dependents.get(cur)) {
+                level.merge(nxt, level.get(cur) + 1, Math::max);
+                if (inDegree.merge(nxt, -1, Integer::sum) == 0) queue.add(nxt);
             }
         }
 
-        if (result.size() < n) {
-            for (TraversalPattern s : subs) {
-                if (!result.contains(s)) {
-                    result.add(s);
-                }
-            }
+        List<TraversalPattern> unleveled = subs.stream().filter(s -> !level.containsKey(s)).toList();
+        if (!unleveled.isEmpty()) {
+            throw new IllegalStateException("Dependency cycle among siblings, unbroken by TraversalEngine: "
+                    + String.join(", ", unleveled.stream().map(TraversalPattern::getId).toList()));
         }
 
-        return result;
-    }
-
-    private static TraversalPattern pickNext(TraversalPattern last, List<TraversalPattern> ready) {
-        TraversalPattern best = null;
-        int bestCommon = -1;
-
-        for (TraversalPattern candidate : ready) {
-            int common = last == null ? 0 : last.commonNodes(candidate).size();
-
-            if (best == null
-                    || common > bestCommon
-                    || (common == bestCommon && compareByDepthAndPosition(candidate, best) < 0)) {
-                best = candidate;
-                bestCommon = common;
-            }
-        }
-
-        return best;
-    }
-
-    private static int compareByDepthAndPosition(TraversalPattern s1, TraversalPattern s2) {
-        int d1 = s1.getDepth();
-        int d2 = s2.getDepth();
-        if (d1 != d2) {
-            return Integer.compare(d2, d1);
-        }
-
-        List<Node> mains1 = s1.getMains();
-        List<Node> mains2 = s2.getMains();
-
-        int points1 = 0;
-        int points2 = 0;
-
-        for (Node m1 : mains1) {
-            for (Node m2 : mains2) {
-                if (m1.getSrcDst().equals(m2.getSrcDst()) && m1.getPath().equals(m2.getPath())) {
-                    if (m1.getTree().getPos() < m2.getTree().getPos()) {
-                        points1++;
-                    } else if (m2.getTree().getPos() < m1.getTree().getPos()) {
-                        points2++;
-                    }
-                }
-            }
-        }
-        return Integer.compare(points2, points1);
+        return subs.stream().sorted(
+                Comparator.comparingInt((TraversalPattern p) -> level.get(p))
+                        .thenComparing(TraversalPattern::sortKey)
+        ).toList();
     }
 
     public List<ChapterUnit> getFlatChapters(GrainLevel level) {

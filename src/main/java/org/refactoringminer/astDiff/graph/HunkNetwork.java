@@ -33,7 +33,6 @@ public class HunkNetwork {
 
   private final Graph<Node, Edge> graph;
   private final Map<String, Node> idNodeMap = new HashMap<>();
-  private final Map<String, Node> promptIdNodeMap = new HashMap<>();
   private final UMLModelDiff modelDiff;
   private final UMLsGenerator umlsGenerator;
   private final Map<String, String> srcContents;
@@ -81,21 +80,17 @@ public class HunkNetwork {
 
     srcTrees.addAll(getValidTrees(srcPath, classifier.getMovedSrcs()).stream()
             .map(tree -> new ImportTree(tree, NodeType.SRC_MOVE, diff, srcPath, SrcDst.SRC)).toList());
-    if (srcPath.equals(dstPath)) {
-      srcTrees.addAll(getValidTrees(srcPath, classifier.getDeletedSrcs()).stream()
-          .map(tree -> new ImportTree(tree, NodeType.DELETION, diff, srcPath, SrcDst.SRC)).toList());
-      srcTrees.addAll(getValidTrees(srcPath, classifier.getUpdatedSrcs()).stream()
-          .map(tree -> new ImportTree(tree, NodeType.SRC_UPDATE, diff, srcPath, SrcDst.SRC)).toList());
-    }
+    srcTrees.addAll(getValidTrees(srcPath, classifier.getDeletedSrcs()).stream()
+            .map(tree -> new ImportTree(tree, NodeType.DELETION, diff, srcPath, SrcDst.SRC)).toList());
+    srcTrees.addAll(getValidTrees(srcPath, classifier.getUpdatedSrcs()).stream()
+            .map(tree -> new ImportTree(tree, NodeType.SRC_UPDATE, diff, srcPath, SrcDst.SRC)).toList());
 
     dstTrees.addAll(getValidTrees(dstPath, classifier.getMovedDsts()).stream()
             .map(tree -> new ImportTree(tree, NodeType.DST_MOVE, diff, dstPath, SrcDst.DST)).toList());
-    if (srcPath.equals(dstPath)) {
-      dstTrees.addAll(getValidTrees(dstPath, classifier.getInsertedDsts()).stream()
-          .map(tree -> new ImportTree(tree, NodeType.ADDITION, diff, dstPath, SrcDst.DST)).toList());
-      dstTrees.addAll(getValidTrees(dstPath, classifier.getUpdatedDsts()).stream()
-          .map(tree -> new ImportTree(tree, NodeType.DST_UPDATE, diff, dstPath, SrcDst.DST)).toList());
-    }
+    dstTrees.addAll(getValidTrees(dstPath, classifier.getInsertedDsts()).stream()
+            .map(tree -> new ImportTree(tree, NodeType.ADDITION, diff, dstPath, SrcDst.DST)).toList());
+    dstTrees.addAll(getValidTrees(dstPath, classifier.getUpdatedDsts()).stream()
+            .map(tree -> new ImportTree(tree, NodeType.DST_UPDATE, diff, dstPath, SrcDst.DST)).toList());
   }
 
   private Set<Tree> getValidTrees(String path, Collection<Tree> trees) {
@@ -155,12 +150,12 @@ public class HunkNetwork {
       Set<ImportTree> subs = entry.getValue();
       String fileContent = getFileContent(parent.srcDst, parent.path);
       Set<Node> subsNode = subs.stream().map(sub -> {
-        Node subNode = new Node(fileContent, sub.path, parent.srcDst, sub.tree, null, sub.type, null);
+        Node subNode = new Node(fileContent, sub.path, parent.srcDst, sub.tree, null, sub.type);
         subNode.addDiff(sub.diff);
         return subNode;
       }).collect(Collectors.toSet());
 
-      Node parentNode = new Node(fileContent, parent.path, parent.srcDst, parent.tree, subsNode, parent.type, promptIdNodeMap);
+      Node parentNode = new Node(fileContent, parent.path, parent.srcDst, parent.tree, subsNode, parent.type);
       parentNode.addDiff(parent.diff);
 
       return parentNode;
@@ -174,7 +169,7 @@ public class HunkNetwork {
             .filter(e -> e.getValue().getRoot().equals(extensionRoot)).findFirst().get().getKey();
 
     Node node = new Node(getFileContent(extendedNode.getSrcDst(), path), path, extendedNode.getSrcDst(),
-            extensionTree, null, NodeType.EXTENSION, promptIdNodeMap);
+            extensionTree, null, NodeType.EXTENSION);
     node.addDiffs(extendedNode.getDiffs());
     return addNode(node);
   }
@@ -200,7 +195,6 @@ public class HunkNetwork {
 
     graph.addVertex(node);
     idNodeMap.put(node.getId(), node);
-    promptIdNodeMap.put(node.getPromptId(), node);
     node.setUMLs(umlsGenerator.getUMLs(node.getTree(), node.getSrcDst(), node.getPath(), false));
 
     addNodeContexts(node);
@@ -217,10 +211,9 @@ public class HunkNetwork {
       String potentialContextId = Node.formatId(path, srcDst, context.second, context.first);
 
       if (!idNodeMap.containsKey(potentialContextId)) {
-        Node contextNode = new Node(node.getFileContent(), path, srcDst, context.first, null, context.second, promptIdNodeMap);
+        Node contextNode = new Node(node.getFileContent(), path, srcDst, context.first, null, context.second);
         graph.addVertex(contextNode);
         idNodeMap.put(contextNode.getId(), contextNode);
-        promptIdNodeMap.put(contextNode.getPromptId(), contextNode);
       }
 
       Node contextNode = idNodeMap.get(potentialContextId);
@@ -284,6 +277,29 @@ public class HunkNetwork {
     processExtensions(SrcDst.DST);
     processMapping();
     processSuccession();
+
+    assignPromptIds();
+  }
+
+  private void assignPromptIds() {
+    for (int length = Node.PROMPT_ID_LENGTH; length <= Node.MAX_PROMPT_ID_LENGTH; length++) {
+      Set<String> promptIds = new HashSet<>();
+      boolean collision = false;
+
+      for (Node node : graph.vertexSet()) {
+        node.assignPromptId(length);
+        if (!promptIds.add(node.getPromptId())) {
+          collision = true;
+          break;
+        }
+      }
+
+      if (!collision) {
+        return;
+      }
+    }
+
+    throw new IllegalStateException("Failed to assign unique prompt ids");
   }
 
   private void processMapping() {

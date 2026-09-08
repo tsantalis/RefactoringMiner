@@ -16,6 +16,9 @@ public class Context {
       return List.of(constants.CLASS_INSTANCE_CREATION, constants.METHOD_INVOCATION,
           constants.METHOD_INVOCATION_RECEIVER, constants.EXPRESSION_STATEMENT);
     }
+    if (treeType.equals(constants.RETURN_STATEMENT)) {
+      return List.of(constants.METHOD_DECLARATION);
+    }
     if (treeType.equals(constants.SIMPLE_NAME)) {
       return List.of(constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
           constants.CLASS_INSTANCE_CREATION, constants.EXPRESSION_STATEMENT, constants.IF_STATEMENT,
@@ -49,19 +52,19 @@ public class Context {
       return List.of(constants.CONSTRUCTOR_INVOCATION,
           constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
           constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
-          constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+          constants.IF_STATEMENT, constants.RETURN_STATEMENT, constants.FIELD_DECLARATION);
     }
     if (treeType.equals(constants.NUMBER_LITERAL)) {
       return List.of(constants.CONSTRUCTOR_INVOCATION,
           constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
           constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
-          constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+          constants.IF_STATEMENT, constants.RETURN_STATEMENT, constants.FIELD_DECLARATION);
     }
     if (treeType.equals(constants.STRING_LITERAL)) {
       return List.of(constants.CONSTRUCTOR_INVOCATION,
           constants.VARIABLE_DECLARATION_STATEMENT, constants.METHOD_INVOCATION,
           constants.CLASS_INSTANCE_CREATION, constants.ENUM_CONSTANT_DECLARATION,
-          constants.IF_STATEMENT, constants.RETURN_STATEMENT);
+          constants.IF_STATEMENT, constants.RETURN_STATEMENT, constants.FIELD_DECLARATION);
     }
     if (treeType.equals(constants.METHOD_INVOCATION)) {
       return List.of(constants.IF_STATEMENT, constants.METHOD_INVOCATION,

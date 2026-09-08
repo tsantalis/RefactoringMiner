@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.graph.cluster.traverse;
 import com.github.gumtreediff.utils.Pair;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -508,13 +509,15 @@ public class TraversalEngine {
     private void mergeByUsageChain() {
         Map<UsagePattern, Set<TraversalPattern>> usageRequirements = new HashMap<>();
         for (UsagePattern usagePattern : usagePatterns) {
-            usageRequirements.put(usagePattern,
-                    new HashSet<>(usagePattern.getRequirements().values()));
+            usageRequirements.put(usagePattern, new HashSet<>(usagePattern.getRequirements().values()));
         }
 
         while (!usageRequirements.isEmpty()) {
             Optional<UsagePattern> requirementLeaf = usageRequirements.entrySet().stream()
-                    .filter(entry -> entry.getValue().isEmpty()).map(Entry::getKey).findFirst();
+                    .filter(entry -> entry.getValue().isEmpty()).map(Entry::getKey)
+                    .min(Comparator.comparing((UsagePattern usage) -> usage.useNode.getPath())
+                            .thenComparingInt(usage -> usage.useNode.getTree().getPos())
+                            .thenComparing(usage -> usage.useNode.getId()));
             if (requirementLeaf.isEmpty()) {
                 break;
             }

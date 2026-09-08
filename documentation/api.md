@@ -299,6 +299,9 @@ new WebDiff(projectASTDiff).openInBrowser();
 
 This API utilizes the [GitHub Compare](https://docs.github.com/en/pull-requests/how-tos/commit-changes/comparing-commits) API to fetch the patches between two commits or tags. This API is much faster, compared to `diffAtCommitRange` API, which extracts the patches by processing each commit between the start and end commit. Moreover, `diffAtCommitRange` includes the parent commit of the start commit in the analysis, while `diffAtGitHubCompare` does not.
 
+To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
 ```java
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 String url = "https://github.com/bazelbuild/bazel/compare/66a577385539887743bd99b9239b9b70fc55b4f8...b5b551dc2d0117b577506ba69286b243bde181a0";

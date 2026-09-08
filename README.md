@@ -15,7 +15,7 @@
 |<img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Kotlin_logo_%282021-present%29.svg" alt="Kotlin" width="100"/> | ✅ | ✅ | <ul><li>- [ ] Validate precision/recall</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="TypeScript" width="30"/> | ✅ | ✅ | <ul><li>- [x] swc4j Parser</li><li>- [ ] Create benchmark</li></ul> |
 |<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" alt ="JavaScript" width="30"/> | ✅ | ✅ | <ul><li>- [x] swc4j Parser</li><li>- [ ] Validate precision/recall</li></ul> |
-|<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt ="C++" width="30"/> | ✅ | ✅ | <ul><li>- [x] Eclipse CDT Parser</li></ul> |
+|<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt ="C" width="30"/> <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt ="C++" width="30"/> | ✅ | ✅ | <ul><li>- [x] Eclipse CDT Parser</li></ul> |
 
 ### Open source projects using RefactoringMiner diff tool for code reviews:
 [<img src="https://www.jabref.org/_nuxt/jabref.4Rtv1swz.svg" alt="JabRef" width="30"/>](https://github.com/JabRef/jabref)
@@ -59,7 +59,7 @@ Table of Contents
       * [Papers using RefactoringMiner](documentation/research.md#papers-using-refactoringminer)
    * [Refactoring detection API usage guidelines](documentation/api.md#refactoring-detection-api-usage-guidelines)
       * [With a locally cloned git repository](documentation/api.md#with-a-locally-cloned-git-repository)
-      * [With two directories containing Java source code](documentation/api.md#with-two-directories-containing-java-source-code)
+      * [With two directories containing source code](documentation/api.md#with-two-directories-containing-source-code)
       * [With file contents as strings](documentation/api.md#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](documentation/api.md#with-all-information-fetched-directly-from-github)
       * [With each commit in a GitHub Pull request](documentation/api.md#with-each-commit-in-a-github-pull-request)
@@ -75,7 +75,7 @@ Table of Contents
    * [Statement matching information for the detected refactorings](documentation/api.md#statement-matching-information-for-the-detected-refactorings)
 
 # General info
-RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
+RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a project.
 Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at **commit**, **pull request** and **commit range** levels.
 You can also use our tool to visualize the diffs in your browser.
 

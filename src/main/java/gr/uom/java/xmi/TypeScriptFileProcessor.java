@@ -60,6 +60,10 @@ public class TypeScriptFileProcessor {
 	}
 
 	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {
+		//skip minified JavaScript files
+		if(filePath.endsWith(".min.js")) {
+			return;
+		}
 		try {
 			Swc4jMediaType mediaType = null;
 			if(filePath.endsWith(".tsx"))
@@ -71,6 +75,9 @@ public class TypeScriptFileProcessor {
 					mediaType = Swc4jMediaType.Jsx;
 				else
 					mediaType = Swc4jMediaType.JavaScript;
+			}
+			else if(filePath.endsWith(".jsx")) {
+				mediaType = Swc4jMediaType.Jsx;
 			}
 			URL specifier = Path.of(filePath).toUri().toURL();
 			Swc4jParseOptions options = new Swc4jParseOptions()

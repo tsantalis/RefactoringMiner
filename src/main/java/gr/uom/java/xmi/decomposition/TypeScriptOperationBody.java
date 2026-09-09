@@ -60,6 +60,7 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPropOrSpread;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsEnumMemberId;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsModuleName;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsNamespaceBody;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsType;
@@ -81,7 +82,10 @@ import com.caoccao.javet.swc4j.ast.module.Swc4jAstNamedExport;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsImportEqualsDecl;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsModuleBlock;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsNamespaceDecl;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
 import com.caoccao.javet.swc4j.ast.program.Swc4jAstModule;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBreakStmt;
@@ -1421,7 +1425,43 @@ public class TypeScriptOperationBody extends OperationBody {
 				
 			}
 			else if(member instanceof Swc4jAstTsIndexSignature indexSignature) {
-				
+				List<ISwc4jAstTsFnParam> parameters = indexSignature.getParams();
+				if(parameters.size() == 1 && indexSignature.getTypeAnn().isPresent()) {
+					ISwc4jAstTsFnParam param = parameters.get(0);
+					ISwc4jAstPat pat = null;
+					if(param instanceof Swc4jAstArrayPat arrayPat) {
+						pat = arrayPat;
+					}
+					else if(param instanceof Swc4jAstObjectPat objectPat) {
+						pat = objectPat;
+					}
+					else if(param instanceof Swc4jAstRestPat restPat) {
+						pat = restPat;
+					}
+					else if(param instanceof Swc4jAstBindingIdent identifier) {
+						Swc4jAstTsTypeAnn typeAnnotation = identifier.getTypeAnn().isPresent() ? identifier.getTypeAnn().get() : null;
+						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+						vd.setAttribute(true);
+						LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+						UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+						attribute.setVariableDeclaration(vd);
+						attribute.setVisibility(Visibility.PRIVATE);
+						umlClass.addAttribute(attribute);
+					}
+					if(pat != null) {
+						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
+						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
+						for(Swc4jAstBindingIdent identifier : identifiers) {
+							VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+							vd.setAttribute(true);
+							LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+							UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+							attribute.setVariableDeclaration(vd);
+							attribute.setVisibility(Visibility.PRIVATE);
+							umlClass.addAttribute(attribute);
+						}
+					}
+				}
 			}
 			else if(member instanceof Swc4jAstTsCallSignatureDecl callSignatureDecl) {
 				

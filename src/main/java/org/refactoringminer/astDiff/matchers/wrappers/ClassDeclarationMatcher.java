@@ -720,6 +720,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+        else if(block1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && block2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
+            mappingStore.addMapping(block1, block2);
+            Pair<Tree, Tree> declares = Helpers.findPairOfType(block1, block2, LANG1.DECLARE_KEYWORD, LANG2.DECLARE_KEYWORD);
+            if(declares != null) {
+                mappingStore.addMapping(declares.first, declares.second);
+            }
+        }
     }
 
     private void processProblemDeclarationPair(

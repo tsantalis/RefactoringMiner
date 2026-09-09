@@ -1418,6 +1418,9 @@ public class OperationInvocation extends AbstractCall {
 				ISwc4jAstExpr receiver = memberExpr.getObj();
 				this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
 			}
+			else if(expr instanceof Swc4jAstIdent ident) {
+				this.methodName = ident.getSym();
+			}
 		}
 		else if(callee instanceof Swc4jAstImport astImport) {
 			Swc4jAstImportPhase phase = astImport.getPhase();

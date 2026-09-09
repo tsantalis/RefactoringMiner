@@ -32,6 +32,10 @@ function getLanguage(config) {
             return "typescript";
         case "js":
             return "javascript";
+        case "jsx":
+            return "javascript";
+        case "c":
+            return "c";
         case "cpp":
             return "cpp";
         case "h":

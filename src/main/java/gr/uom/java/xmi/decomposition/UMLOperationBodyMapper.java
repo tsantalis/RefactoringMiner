@@ -93,6 +93,7 @@ import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -168,6 +169,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			advancedAssertionMigrationMatcher = new AdvancedAssertionMigrationMatcher(this);
 		}
 		return advancedAssertionMigrationMatcher;
+	}
+
+	public boolean sameFileExtension() {
+		String ext1 = FilenameUtils.getExtension(container1.getLocationInfo().getFilePath());
+		String ext2 = FilenameUtils.getExtension(container2.getLocationInfo().getFilePath());
+		if(ext1 != null && ext2 != null)
+			return ext1.equals(ext2);
+		return false;
 	}
 
 	public boolean isNested() {

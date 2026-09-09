@@ -502,7 +502,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						}
 						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments);
 						int startSignatureOffset = variableDecl.getSpan().getStart();
-						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
+						int endSignatureOffset = arrowExpr.getBody().getSpan().getStart();
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 						operation.setActualSignature(text);
 						if(container instanceof UMLOperation) {
@@ -1110,7 +1110,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						operation.setVisibility(Visibility.PUBLIC);
 						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, null, operation, comments);
 						int startSignatureOffset = keyValueProp.getSpan().getStart();
-						int endSignatureOffset = arrowExpr.getSpan().getStart() + 1;
+						int endSignatureOffset = arrowExpr.getBody().getSpan().getStart();
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 						operation.setActualSignature(text);
 						umlClass.addOperation(operation);
@@ -1361,6 +1361,12 @@ public class TypeScriptOperationBody extends OperationBody {
 				UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, ident, 0);
 				umlClass.setSuperclass(type);
 			}
+			else if(expr instanceof Swc4jAstMemberExpr memberExpr) {
+				String text = fileContent.substring(memberExpr.getSpan().getStart(), memberExpr.getSpan().getEnd());
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, memberExpr.getSpan(), CodeElementType.TYPE, fileContent);
+				UMLType type = UMLType.extractTypeObject(text, "<", ">", location);
+				umlClass.setSuperclass(type);
+			}
 		}
 		List<Swc4jAstTsExprWithTypeArgs> interfaces = clazz.getImplements();
 		for(Swc4jAstTsExprWithTypeArgs inter : interfaces) {
@@ -1380,7 +1386,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 		}
 		List<ISwc4jAstClassMember> typeElements = clazz.getBody();
-		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations);
+		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations, comments);
 	}
 
 	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
@@ -1473,7 +1479,7 @@ public class TypeScriptOperationBody extends OperationBody {
 	}
 
 	private void processClassMembers(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,
-			List<ISwc4jAstClassMember> members, List<UMLClass> typeDeclarations) {
+			List<ISwc4jAstClassMember> members, List<UMLClass> typeDeclarations, List<UMLComment> comments) {
 		for(ISwc4jAstClassMember member : members) {
 			if(member instanceof Swc4jAstClassMethod classMethod) {
 				UMLOperation nested = TypeScriptFileProcessor.processFunctionDeclaration(sourceFolder, filePath, classMethod, activeVariableDeclarations, fileContent, umlClass.getName(), comments);
@@ -1503,33 +1509,58 @@ public class TypeScriptOperationBody extends OperationBody {
 				umlClass.addOperation(nested);
 			}
 			else if(member instanceof Swc4jAstClassProp classProperty) {
-				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, classProperty, container, activeVariableDeclarations, fileContent, typeDeclarations);
-				vd.setAttribute(true);
-				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
-				UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
-				attribute.setVariableDeclaration(vd);
-				if(classProperty.getAccessibility().isPresent()) {
-					Swc4jAstAccessibility accessibility = classProperty.getAccessibility().get();
-					if(accessibility.equals(Swc4jAstAccessibility.Public)) {
-						attribute.setVisibility(Visibility.PUBLIC);
+				if(classProperty.getValue().isPresent() && classProperty.getValue().get() instanceof Swc4jAstArrowExpr arrowExpr) {
+					LocationInfo location = new LocationInfo(sourceFolder, filePath, classProperty.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+					String append = "";
+					if(container instanceof UMLOperation) {
+						append = "." + ((UMLOperation)container).getName();
 					}
-					else if(accessibility.equals(Swc4jAstAccessibility.Private)) {
-						attribute.setVisibility(Visibility.PRIVATE);
+					else if(container instanceof LambdaExpressionObject lambda) {
+						if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+							append = "." + ((UMLOperation)lambda.getOwner()).getName();
+						}
 					}
-					else if(accessibility.equals(Swc4jAstAccessibility.Protected)) {
-						attribute.setVisibility(Visibility.PROTECTED);
-					}
+					ISwc4jAstPropName key = classProperty.getKey();
+					Optional<Swc4jAstTsTypeAnn> typeAnn = classProperty.getTypeAnn();
+					Swc4jAstTsTypeAnn typeAnnotation = typeAnn.isPresent() ? typeAnn.get() : null;
+					UMLOperation operation = new UMLOperation(key.toString(), location, container.getClassName() + append);
+					operation.setVisibility(Visibility.PUBLIC);
+					processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments);
+					int startSignatureOffset = classProperty.getSpan().getStart();
+					int endSignatureOffset = arrowExpr.getBody().getSpan().getStart();
+					String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+					operation.setActualSignature(text);
+					umlClass.addOperation(operation);
 				}
 				else {
-					attribute.setVisibility(Visibility.PUBLIC);
-				}
-				for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
-					if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
-						attribute.addAnonymousClass(anonymousClass);
-						anonymousClass.addParentContainer(attribute);
+					VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, classProperty, container, activeVariableDeclarations, fileContent, typeDeclarations);
+					vd.setAttribute(true);
+					LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member.getSpan(), CodeElementType.FIELD_DECLARATION, fileContent);
+					UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
+					attribute.setVariableDeclaration(vd);
+					if(classProperty.getAccessibility().isPresent()) {
+						Swc4jAstAccessibility accessibility = classProperty.getAccessibility().get();
+						if(accessibility.equals(Swc4jAstAccessibility.Public)) {
+							attribute.setVisibility(Visibility.PUBLIC);
+						}
+						else if(accessibility.equals(Swc4jAstAccessibility.Private)) {
+							attribute.setVisibility(Visibility.PRIVATE);
+						}
+						else if(accessibility.equals(Swc4jAstAccessibility.Protected)) {
+							attribute.setVisibility(Visibility.PROTECTED);
+						}
 					}
+					else {
+						attribute.setVisibility(Visibility.PUBLIC);
+					}
+					for(UMLAnonymousClass anonymousClass : container.getAnonymousClassList()) {
+						if(locationInfo.subsumes(anonymousClass.getLocationInfo())) {
+							attribute.addAnonymousClass(anonymousClass);
+							anonymousClass.addParentContainer(attribute);
+						}
+					}
+					umlClass.addAttribute(attribute);
 				}
-				umlClass.addAttribute(attribute);
 			}
 			else if(member instanceof Swc4jAstPrivateProp privateProp) {
 				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, privateProp, container, activeVariableDeclarations, fileContent, typeDeclarations);

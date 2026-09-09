@@ -296,6 +296,37 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMapping(t1,t2);
                 }
             }
+            if(srcOperationNode.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstOperationNode.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION)) {
+                com.github.gumtreediff.utils.Pair<Tree,Tree> identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PROPERTY_IDENTIFIER,LANG2.PROPERTY_IDENTIFIER);
+                if (identifiers != null) {
+                    mappingStore.addMapping(identifiers.first, identifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> private_identifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIVATE_PROPERTY_IDENTIFIER,LANG2.PRIVATE_PROPERTY_IDENTIFIER);
+                if (private_identifiers != null) {
+                    mappingStore.addMapping(private_identifiers.first, private_identifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> modifiers = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ACCESSIBILITY_MODIFIER,LANG2.ACCESSIBILITY_MODIFIER);
+                if (modifiers != null) {
+                    mappingStore.addMappingRecursively(modifiers.first, modifiers.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> equals = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.EQUAL_OPERATOR,LANG2.EQUAL_OPERATOR);
+                if (equals != null) {
+                    mappingStore.addMapping(equals.first, equals.second);
+                }
+                com.github.gumtreediff.utils.Pair<Tree,Tree> arrowFunctions = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.ARROW_FUNCTION,LANG2.ARROW_FUNCTION);
+                if(arrowFunctions != null) {
+                    mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
+                    BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
+                }
+                int index1 = srcOperationNode.getParent().getChildPosition(srcOperationNode);
+                int index2 = dstOperationNode.getParent().getChildPosition(dstOperationNode);
+                if(srcOperationNode.getParent().getChildren().size() > index1+1 && srcOperationNode.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                        dstOperationNode.getParent().getChildren().size() > index2+1 && dstOperationNode.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                    Tree t1 = srcOperationNode.getParent().getChild(index1+1);
+                    Tree t2 = dstOperationNode.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+            }
             if(srcOperationNode.getType().name.equals(LANG1.FUNCTION_EXPRESSION) && dstOperationNode.getType().name.equals(LANG2.FUNCTION_EXPRESSION)) {
                 if(srcOperationNode.getParent().getType().name.equals(LANG1.PAIR) && dstOperationNode.getParent().getType().name.equals(LANG2.PAIR)) {
                     Tree parent1 = srcOperationNode.getParent();
@@ -1542,7 +1573,8 @@ public class MethodMatcher extends BodyMapperMatcher{
             VariableDeclaration rightVarDecl = matchedPair.getRight();
             processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
         }
-        if(umlOperationBodyMapper.getContainer1().getBody() == null && umlOperationBodyMapper.getContainer2().getBody() == null && umlOperationBodyMapper.getOperationSignatureDiff().isPresent()) {
+        boolean proceed = (umlOperationBodyMapper.getContainer1().getBody() == null && umlOperationBodyMapper.getContainer2().getBody() == null) || !umlOperationBodyMapper.sameFileExtension();
+        if(proceed && umlOperationBodyMapper.getOperationSignatureDiff().isPresent()) {
             UMLOperationDiff operationDiff = umlOperationBodyMapper.getOperationSignatureDiff().get();
             for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
                 VariableDeclaration leftVarDecl = parameterDiff.getRemovedParameter();

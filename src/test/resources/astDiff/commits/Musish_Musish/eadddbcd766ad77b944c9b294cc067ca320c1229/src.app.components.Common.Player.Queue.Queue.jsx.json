@@ -935,17 +935,6 @@
   "secondEndPos" : 1154
 }, {
   "firstType" : "property_identifier",
-  "secondType" : "accessibility_modifier",
-  "firstLabel" : "onSortEnd",
-  "secondLabel" : "",
-  "firstParentType" : "public_field_definition",
-  "secondParentType" : "public_field_definition",
-  "firstPos" : 437,
-  "secondPos" : 625,
-  "firstEndPos" : 446,
-  "secondEndPos" : 631
-}, {
-  "firstType" : "property_identifier",
   "secondType" : "property_identifier",
   "firstLabel" : "onSortEnd",
   "secondLabel" : "onSortEnd",
@@ -2254,17 +2243,6 @@
   "firstEndPos" : 836,
   "secondEndPos" : 1065
 }, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// eslint-disable-next-line no-underscore-dangle",
-  "secondLabel" : "// @ts-ignore",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 844,
-  "secondPos" : 1073,
-  "firstEndPos" : 892,
-  "secondEndPos" : 1086
-}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",
@@ -2606,6 +2584,28 @@
   "firstEndPos" : 990,
   "secondEndPos" : 504
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "e",
+  "secondLabel" : "e",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 990,
+  "secondPos" : 504,
+  "firstEndPos" : 991,
+  "secondEndPos" : 505
+}, {
+  "firstType" : "required_parameter",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 990,
+  "secondPos" : 504,
+  "firstEndPos" : 991,
+  "secondEndPos" : 540
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -2737,17 +2737,6 @@
   "secondPos" : 1159,
   "firstEndPos" : 1305,
   "secondEndPos" : 1380
-}, {
-  "firstType" : "property_identifier",
-  "secondType" : "accessibility_modifier",
-  "firstLabel" : "removeItem",
-  "secondLabel" : "",
-  "firstParentType" : "public_field_definition",
-  "secondParentType" : "public_field_definition",
-  "firstPos" : 1063,
-  "secondPos" : 1159,
-  "firstEndPos" : 1073,
-  "secondEndPos" : 1165
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -3265,17 +3254,6 @@
   "secondPos" : 1309,
   "firstEndPos" : 1200,
   "secondEndPos" : 1310
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "// eslint-disable-next-line no-underscore-dangle",
-  "secondLabel" : "// @ts-ignore",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1206,
-  "secondPos" : 1316,
-  "firstEndPos" : 1254,
-  "secondEndPos" : 1329
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

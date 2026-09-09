@@ -351,6 +351,72 @@
   "firstEndPos" : 135,
   "secondEndPos" : 216
 }, {
+  "firstType" : "required_parameter",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 136,
+  "secondPos" : 219,
+  "firstEndPos" : 149,
+  "secondEndPos" : 254
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "bindings",
+  "secondLabel" : "bindings",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 136,
+  "secondPos" : 219,
+  "firstEndPos" : 144,
+  "secondEndPos" : 227
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 145,
+  "secondPos" : 250,
+  "firstEndPos" : 146,
+  "secondEndPos" : 251
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 147,
+  "secondPos" : 252,
+  "firstEndPos" : 149,
+  "secondEndPos" : 254
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 147,
+  "secondPos" : 252,
+  "firstEndPos" : 148,
+  "secondEndPos" : 253
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 148,
+  "secondPos" : 253,
+  "firstEndPos" : 149,
+  "secondEndPos" : 254
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",
@@ -559,6 +625,28 @@
   "secondPos" : 509,
   "firstEndPos" : 211,
   "secondEndPos" : 510
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "props",
+  "secondLabel" : "props",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 211,
+  "secondPos" : 510,
+  "firstEndPos" : 216,
+  "secondEndPos" : 515
+}, {
+  "firstType" : "required_parameter",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 211,
+  "secondPos" : 510,
+  "firstEndPos" : 216,
+  "secondEndPos" : 518
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -2649,17 +2737,6 @@
   "secondPos" : 1178,
   "firstEndPos" : 932,
   "secondEndPos" : 1285
-}, {
-  "firstType" : "property_identifier",
-  "secondType" : "accessibility_modifier",
-  "firstLabel" : "handleEvent",
-  "secondLabel" : "",
-  "firstParentType" : "public_field_definition",
-  "secondParentType" : "public_field_definition",
-  "firstPos" : 845,
-  "secondPos" : 1178,
-  "firstEndPos" : 856,
-  "secondEndPos" : 1184
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",

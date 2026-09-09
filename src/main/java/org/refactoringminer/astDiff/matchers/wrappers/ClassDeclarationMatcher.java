@@ -173,7 +173,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
+                processParentInternalModule(srcTypeDeclaration.getParent(), dstTypeDeclaration.getParent(), mappingStore, LANG1, LANG2);
             }
+            processParentInternalModule(srcTypeDeclaration, dstTypeDeclaration, mappingStore, LANG1, LANG2);
             if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.FIELD_DECLARATION)
                     && dstTypeDeclaration.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent(),LANG1.FIELD_IDENTIFIER,LANG2.FIELD_IDENTIFIER);
@@ -680,6 +682,44 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
         processClassBlock(srcTypeDeclaration, dstTypeDeclaration, mappingStore);
+    }
+
+    public static void processParentInternalModule(Tree t1, Tree t2, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+        if(t1 == null || t2 == null) return;
+        Tree block1 = t1.getParent();
+        Tree block2 = t2.getParent();
+        if(block1.getType().name.equals(LANG1.STATEMENT_BLOCK) && block2.getType().name.equals(LANG2.STATEMENT_BLOCK) &&
+                block1.getParent().getType().name.equals(LANG1.INTERNAL_MODULE) && block2.getParent().getType().name.equals(LANG2.INTERNAL_MODULE)) {
+            mappingStore.addMapping(block1, block2);
+            Pair<Tree, Tree> matched = Helpers.findPairOfType(block1, block2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            matched = Helpers.findPairOfType(block1, block2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            Tree module1 = block1.getParent();
+            Tree module2 = block2.getParent();
+            mappingStore.addMapping(module1, module2);
+            matched = Helpers.findPairOfType(module1, module2, LANG1.NAMESPACE, LANG2.NAMESPACE);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            matched = Helpers.findPairOfType(module1, module2, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            Tree ambient1 = module1.getParent();
+            Tree ambient2 = module2.getParent();
+            if(ambient1 != null && ambient2 != null && ambient1.getType().name.equals(LANG1.AMBIENT_DECLARATION) && ambient2.getType().name.equals(LANG2.AMBIENT_DECLARATION)) {
+                mappingStore.addMapping(ambient1, ambient2);
+                Pair<Tree, Tree> declares = Helpers.findPairOfType(ambient1, ambient2, LANG1.DECLARE_KEYWORD, LANG2.DECLARE_KEYWORD);
+                if(declares != null) {
+                    mappingStore.addMapping(declares.first, declares.second);
+                }
+            }
+        }
     }
 
     private void processProblemDeclarationPair(

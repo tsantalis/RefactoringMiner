@@ -600,6 +600,7 @@ public class Constants {
     public final String ASSIGNMENT_EXPRESSION = "assignment_expression";
     public final String UPDATE_EXPRESSION = "update_expression";
     public final String SPREAD_ELEMENT = "spread_element";
+    public final String INTERNAL_MODULE = "internal_module";
 
     //C++ specific
     public final String TRANSLATION_UNIT = "translation_unit"; // This is the root of all trees in C++

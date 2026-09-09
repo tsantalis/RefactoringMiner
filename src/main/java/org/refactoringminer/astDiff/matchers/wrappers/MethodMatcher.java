@@ -173,7 +173,9 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
+                ClassDeclarationMatcher.processParentInternalModule(srcOperationNode.getParent(), dstOperationNode.getParent(), mappingStore, LANG1, LANG2);
             }
+            ClassDeclarationMatcher.processParentInternalModule(srcOperationNode, dstOperationNode, mappingStore, LANG1, LANG2);
             if(srcOperationNode.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstOperationNode.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.VARIABLE_DECLARATOR,LANG2.VARIABLE_DECLARATOR);
                 if(matched != null) {

@@ -120,6 +120,83 @@
   "firstEndPos" : 260,
   "secondEndPos" : 260
 }, {
+  "firstType" : "ambient_declaration",
+  "secondType" : "ambient_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 261,
+  "secondPos" : 261,
+  "firstEndPos" : 3650,
+  "secondEndPos" : 3650
+}, {
+  "firstType" : "declare",
+  "secondType" : "declare",
+  "firstLabel" : "declare",
+  "secondLabel" : "declare",
+  "firstParentType" : "ambient_declaration",
+  "secondParentType" : "ambient_declaration",
+  "firstPos" : 261,
+  "secondPos" : 261,
+  "firstEndPos" : 268,
+  "secondEndPos" : 268
+}, {
+  "firstType" : "internal_module",
+  "secondType" : "internal_module",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ambient_declaration",
+  "secondParentType" : "ambient_declaration",
+  "firstPos" : 269,
+  "secondPos" : 269,
+  "firstEndPos" : 3650,
+  "secondEndPos" : 3650
+}, {
+  "firstType" : "namespace",
+  "secondType" : "namespace",
+  "firstLabel" : "namespace",
+  "secondLabel" : "namespace",
+  "firstParentType" : "internal_module",
+  "secondParentType" : "internal_module",
+  "firstPos" : 269,
+  "secondPos" : 269,
+  "firstEndPos" : 278,
+  "secondEndPos" : 278
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "MusicKit",
+  "secondLabel" : "MusicKit",
+  "firstParentType" : "internal_module",
+  "secondParentType" : "internal_module",
+  "firstPos" : 279,
+  "secondPos" : 279,
+  "firstEndPos" : 287,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "statement_block",
+  "secondType" : "statement_block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "internal_module",
+  "secondParentType" : "internal_module",
+  "firstPos" : 288,
+  "secondPos" : 288,
+  "firstEndPos" : 3650,
+  "secondEndPos" : 3650
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 288,
+  "secondPos" : 288,
+  "firstEndPos" : 289,
+  "secondEndPos" : 289
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "  \n   * A dictionary containing events for a MusicKit instance.\n   */",
@@ -2364,6 +2441,17 @@
   "firstEndPos" : 3648,
   "secondEndPos" : 3648
 }, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 3649,
+  "secondPos" : 3649,
+  "firstEndPos" : 3650,
+  "secondEndPos" : 3650
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "// tslint:disable-next-line:no-namespace",
@@ -2374,6 +2462,83 @@
   "secondPos" : 3652,
   "firstEndPos" : 3692,
   "secondEndPos" : 3692
+}, {
+  "firstType" : "ambient_declaration",
+  "secondType" : "ambient_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 3693,
+  "secondPos" : 3693,
+  "firstEndPos" : 4045,
+  "secondEndPos" : 4096
+}, {
+  "firstType" : "declare",
+  "secondType" : "declare",
+  "firstLabel" : "declare",
+  "secondLabel" : "declare",
+  "firstParentType" : "ambient_declaration",
+  "secondParentType" : "ambient_declaration",
+  "firstPos" : 3693,
+  "secondPos" : 3693,
+  "firstEndPos" : 3700,
+  "secondEndPos" : 3700
+}, {
+  "firstType" : "internal_module",
+  "secondType" : "internal_module",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ambient_declaration",
+  "secondParentType" : "ambient_declaration",
+  "firstPos" : 3701,
+  "secondPos" : 3701,
+  "firstEndPos" : 4045,
+  "secondEndPos" : 4096
+}, {
+  "firstType" : "namespace",
+  "secondType" : "namespace",
+  "firstLabel" : "namespace",
+  "secondLabel" : "namespace",
+  "firstParentType" : "internal_module",
+  "secondParentType" : "internal_module",
+  "firstPos" : 3701,
+  "secondPos" : 3701,
+  "firstEndPos" : 3710,
+  "secondEndPos" : 3710
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "MusicKit",
+  "secondLabel" : "MusicKit",
+  "firstParentType" : "internal_module",
+  "secondParentType" : "internal_module",
+  "firstPos" : 3711,
+  "secondPos" : 3711,
+  "firstEndPos" : 3719,
+  "secondEndPos" : 3719
+}, {
+  "firstType" : "statement_block",
+  "secondType" : "statement_block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "internal_module",
+  "secondParentType" : "internal_module",
+  "firstPos" : 3720,
+  "secondPos" : 3720,
+  "firstEndPos" : 4045,
+  "secondEndPos" : 4096
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 3720,
+  "secondPos" : 3720,
+  "firstEndPos" : 3721,
+  "secondEndPos" : 3721
 }, {
   "firstType" : "export_statement",
   "secondType" : "export_statement",
@@ -3199,4 +3364,15 @@
   "secondPos" : 4093,
   "firstEndPos" : 4043,
   "secondEndPos" : 4094
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 4044,
+  "secondPos" : 4095,
+  "firstEndPos" : 4045,
+  "secondEndPos" : 4096
 } ]

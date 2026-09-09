@@ -92,6 +92,9 @@ public class TypeScriptFileProcessor {
 				else if(filePath.endsWith(".tsx")) {
 					treeContext = new TsxTreeSitterNgTreeGenerator().generateFrom().stream(is);
 				}
+				else if(filePath.endsWith(".jsx")) {
+					treeContext = new TsxTreeSitterNgTreeGenerator().generateFrom().stream(is);
+				}
 				else {
 					treeContext = new TypeScriptTreeSitterNgTreeGenerator().generateFrom().stream(is);
 				}

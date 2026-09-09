@@ -1530,6 +1530,14 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 if(extendKeywords != null) {
                     mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
                 }
+                Pair<Tree, Tree> member_expressions = Helpers.findPairOfType(extendClauses.first,extendClauses.second, LANG1.MEMBER_EXPRESSION, LANG2.MEMBER_EXPRESSION);
+                if(member_expressions != null) {
+                    mappingStore.addMappingRecursively(member_expressions.first, member_expressions.second);
+                }
+                Pair<Tree, Tree> type_arguments = Helpers.findPairOfType(extendClauses.first,extendClauses.second, LANG1.TYPE_ARGUMENTS, LANG2.TYPE_ARGUMENTS);
+                if(type_arguments != null) {
+                    mappingStore.addMappingRecursively(type_arguments.first, type_arguments.second);
+                }
             }
         }
     }

@@ -20,11 +20,11 @@ public class PathFileUtils {
     }
 
     public static boolean isTypeScriptFile(String path){
-        return path.endsWith(".ts") || path.endsWith(".tsx") || path.endsWith(".js");
+        return path.endsWith(".ts") || path.endsWith(".tsx") || isJavaScriptFile(path);
     }
 
     public static boolean isJavaScriptFile(String path){
-        return path.endsWith(".js");
+        return path.endsWith(".js") || path.endsWith(".jsx");
     }
 
     public static boolean isCFile(String path){
@@ -55,9 +55,7 @@ public class PathFileUtils {
             return Constants.KOTLIN;
         else if (isTypeScriptFile(path))
             return Constants.TYPESCRIPT;
-        else if (isCFile(path))
-            return Constants.C;
-        else if (isCppFile(path))
+        else if (isCppFile(path) || isCFile(path))
             return Constants.CPP;
         return Constants.JAVA;
     }

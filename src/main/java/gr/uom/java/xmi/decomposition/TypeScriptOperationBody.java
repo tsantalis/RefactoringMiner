@@ -78,6 +78,7 @@ import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportDefaultSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportNamedSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstImportStarAsSpecifier;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstNamedExport;
+import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsImportEqualsDecl;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsModuleBlock;
 import com.caoccao.javet.swc4j.ast.module.Swc4jAstTsNamespaceDecl;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
@@ -953,6 +954,14 @@ public class TypeScriptOperationBody extends OperationBody {
 				if(container instanceof ModuleContainer) {
 					((ModuleContainer)container).addNestedImport(umlImport);
 				}
+			}
+		}
+		else if(statement instanceof Swc4jAstTsImportEqualsDecl importDecl) {
+			Swc4jAstIdent ident = importDecl.getId();
+			LocationInfo location = new LocationInfo(sourceFolder, filePath, importDecl.getSpan(), CodeElementType.IMPORT_DECLARATION, fileContent);
+			UMLImport umlImport = new UMLImport(ident.getSym(), false, false, location);
+			if(container instanceof ModuleContainer) {
+				((ModuleContainer)container).addNestedImport(umlImport);
 			}
 		}
 	}

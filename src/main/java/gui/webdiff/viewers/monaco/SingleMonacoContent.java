@@ -1,5 +1,8 @@
 package gui.webdiff.viewers.monaco;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import gui.webdiff.WebDiff;
 import gui.webdiff.dir.PullRequestReviewComment;
 import gui.webdiff.rest.AbstractMenuBar;
@@ -53,20 +56,26 @@ public class SingleMonacoContent implements Renderable {
     @Override
     public void renderOn(HtmlCanvas html) throws IOException {
         String editorId = "monaco-editor-" + Math.abs(path.hashCode());
-        String scriptSourceId = "java-code-source-" + Math.abs(path.hashCode());
         String comments = filterComments(this.comments, path, isAdded ? PullRequestReviewComment.Side.RIGHT : PullRequestReviewComment.Side.LEFT);
+
+        String escapedContent;
+        try {
+            escapedContent = new ObjectMapper().writeValueAsString(this.content).replace("</", "<\\/");
+        } catch (JsonProcessingException e) {
+            escapedContent = "\"\"";
+        }
 
         String monacoHook = """
             (function() {
-                const rawCode = document.getElementById('%s').textContent;
+                const rawCode = %s;
                 loadSingleMonacoEditor({
-                    id: '%s', 
-                    value: rawCode, 
-                    language: 'java', 
-                    comments: %s 
+                    id: '%s',
+                    value: rawCode,
+                    language: 'java',
+                    comments: %s
                 });
             })();
-            """.formatted(scriptSourceId, editorId, comments);
+            """.formatted(escapedContent, editorId, comments);
         html
                 .render(DocType.HTML5)
                 .html(lang("en").class_("h-100"))
@@ -94,9 +103,6 @@ public class SingleMonacoContent implements Renderable {
                 ._div()
                 .div(style("height: 10px; flex-shrink: 0; background:#eee;"))
                 ._div();
-        html.script(id(scriptSourceId).type("text/plain").style("display:none;"))
-                .write(this.content, false) // false prevents escaping HTML entities like < or > inside the content
-                ._script();
         html.script(type("text/javascript"))
                 .write("/*<![CDATA[*/" + monacoHook + "/*]]>*/", false)
                 ._script();

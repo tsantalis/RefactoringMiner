@@ -136,7 +136,7 @@ public class MonacoCore {
             b.append("url:").append("\"/left/" + id + "\"").append(",");
             String escapedContent = "";
             try {
-                escapedContent = mapper.writeValueAsString(srcFileContent);
+                escapedContent = mapper.writeValueAsString(srcFileContent).replace("</", "<\\/");
             } catch (JsonProcessingException e) {
 //                throw new RuntimeException(e);
             }
@@ -198,7 +198,7 @@ public class MonacoCore {
             b.append("url:").append("\"/right/" + id + "\"").append(",");
             String escapedContent = "";
             try {
-                escapedContent = mapper.writeValueAsString(dstFileContent);
+                escapedContent = mapper.writeValueAsString(dstFileContent).replace("</", "<\\/");
             } catch (JsonProcessingException e) {
 //                throw new RuntimeException(e);
             }

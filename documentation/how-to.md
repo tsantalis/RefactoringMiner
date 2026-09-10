@@ -32,19 +32,25 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.1.2</version>
+      <version>3.1.5</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.1.2'
+    implementation 'com.github.tsantalis:refactoring-miner:3.1.5'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
 
 Since version 3.0, RefactoringMiner is available in [DockerHub](https://hub.docker.com/r/tsantalis/refactoringminer).
-A new image is created automatically on every Monday midnight.
+A new image is created automatically after each commit passing all tests.
 You can find detailed instructions on how to install and use the image at [Docker README](https://github.com/tsantalis/RefactoringMiner/blob/master/docker/README.md).
+
+# How to use RefactoringMiner as a GitHub action
+You can run RefactoringMiner as a [GitHub action](https://github.com/marketplace/actions/refactoringminer-action) in your repository.
+The action automatically executes RefactoringMiner upon the creation or update of a Pull Request and generates a Refactoring report as a comment in the PR.
+The refactoring descriptions include links to the exact location of the refactored program elements in the corresponding GitHub commit diff page.
+The action also generates fine-grained AST diff for the Pull Request, which is saved as a `pages-store` artifact, so that it can be accessed on demand.
 
 # How to use RefactoringMiner as a Chrome extension
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
@@ -55,8 +61,10 @@ you can install our [Refactoring Aware Commit Review](https://chrome.google.com/
 The Chrome extension can detect refactorings for **public** projects and commits matching the following URL patterns:
 * `https://github.com/user/project/commit/id`
 * `https://github.com/user/project/pull/id/commits/id`
+* `https://github.com/user/project/pull/id/files`
+* `https://github.com/user/project/pull/id/changes`
 
-![Refactoring Aware Commit Review Chrome Extension](https://user-images.githubusercontent.com/1483516/80326324-62fab400-8806-11ea-9595-4906018b831a.png)
+[![Refactoring Aware Commit Review Chrome Extension](https://img.youtube.com/vi/eLCOk-38T2g/hqdefault.jpg)](http://www.youtube.com/watch?v=eLCOk-38T2g)
 
 # How to run RefactoringMiner from the command line
 ## Refactoring detection command line options

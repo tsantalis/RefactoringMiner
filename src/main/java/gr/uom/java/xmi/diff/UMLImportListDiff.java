@@ -34,8 +34,25 @@ public class UMLImportListDiff {
 			commonImports.add(pair);
 		}
 		oldImportSet.removeAll(intersection);
-		this.removedImports = oldImportSet;
 		newImportSet.removeAll(intersection);
+		//handle changed file extension in JS/TS
+		Set<UMLImport> removedImportsToBeRemoved = new LinkedHashSet<UMLImport>();
+		Set<UMLImport> addedImportsToBeRemoved = new LinkedHashSet<UMLImport>();
+		for(UMLImport oldImport : oldImportSet) {
+			if(oldImport.getName().contains(".js.")) {
+				String newName = oldImport.getName().replace(".js.", ".ts.");
+				UMLImport newImport = findMatchingImport(newImportSet, newName);
+				if(newImport != null) {
+					Pair<UMLImport, UMLImport> pair = Pair.of(oldImport, newImport);
+					changedImports.add(pair);
+					removedImportsToBeRemoved.add(oldImport);
+					addedImportsToBeRemoved.add(newImport);
+				}
+			}
+		}
+		oldImportSet.removeAll(removedImportsToBeRemoved);
+		newImportSet.removeAll(addedImportsToBeRemoved);
+		this.removedImports = oldImportSet;
 		this.addedImports = newImportSet;
 		
 		this.groupedImports = new HashMap<>();

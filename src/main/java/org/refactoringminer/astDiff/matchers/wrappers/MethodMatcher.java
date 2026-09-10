@@ -817,6 +817,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                 }
             }
         }
+        else if(object1.getParent().getType().name.equals(LANG1.ASSIGNMENT_EXPRESSION) && object2.getParent().getType().name.equals(LANG2.EXPORT_STATEMENT)) {
+            Tree assignment1 = object1.getParent();
+            Tree export2 = object2.getParent();
+            if(assignment1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
+                int index = assignment1.getParent().getChildPosition(assignment1);
+                assignment1.getParent().getChildren().remove(index);
+                assignment1.getParent().addChild(object1);
+                mappingStore.addMapping(assignment1.getParent(), export2);
+            }
+        }
         else if(object1.getParent().getType().name.equals(LANG1.ASSIGNMENT_EXPRESSION) && object2.getParent().getType().name.equals(LANG2.ASSIGNMENT_EXPRESSION)) {
             Tree assignment1 = object1.getParent();
             Tree assignment2 = object2.getParent();

@@ -1869,11 +1869,22 @@
   "firstEndPos" : 1018,
   "secondEndPos" : 917
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "export_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 1020,
+  "secondPos" : 919,
+  "firstEndPos" : 6016,
+  "secondEndPos" : 5767
+}, {
   "firstType" : "object",
   "secondType" : "object",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "assignment_expression",
+  "firstParentType" : "expression_statement",
   "secondParentType" : "export_statement",
   "firstPos" : 1037,
   "secondPos" : 934,

@@ -4285,6 +4285,34 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Remove Parameter Annotation",
+        "description": "Remove Parameter Annotation @NonNull in parameter view : View in method public onItemClick(adapter BaseQuickAdapter<?,?>, view View, position int) : void from class com.chad.library.adapter.base.listener.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter Annotation",
+        "description": "Remove Parameter Annotation @NonNull in parameter adapter : BaseQuickAdapter<?,?> in method public onItemClick(adapter BaseQuickAdapter<?,?>, view View, position int) : void from class com.chad.library.adapter.base.listener.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type position : int to position : Int in method public onItemClick(adapter BaseQuickAdapter<T,*>, view View, position Int) from class com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type adapter : BaseQuickAdapter<?,?> to adapter : BaseQuickAdapter<T,*> in method public onItemClick(adapter BaseQuickAdapter<T,*>, view View, position Int) from class com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -8992,6 +9020,76 @@
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type fragmentManager : FragmentManager to fragmentManager : Inferred in method public watchFragments(activity Activity) from class leaksentry.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.internal.FragmentRefWatcher.Helper moved and renamed to leaksentry.internal.FragmentDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class com.squareup.leakcanary.internal.FragmentRefWatcher moved and renamed to leaksentry.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Modifier",
+        "description": "Remove Method Modifier static in method public install(application Application, refWatcher RefWatcher, configProvider Function0<LeakCanary.Config>) : void from class com.squareup.leakcanary.internal.FragmentRefWatcher.Helper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Class Modifier",
+        "description": "Remove Class Modifier final in class com.squareup.leakcanary.internal.FragmentRefWatcher.Helper",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier package to public in class leaksentry.internal.FragmentDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class leaksentry.internal.FragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable fragmentRefWatchers : List<FragmentRefWatcher> to fragmentDestroyWatchers : Inferred in method public install(application Application, refWatcher RefWatcher, configProvider () -> LeakSentry.Config) from class leaksentry.internal.FragmentDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type fragmentRefWatchers : List<FragmentRefWatcher> to fragmentDestroyWatchers : Inferred in method public install(application Application, refWatcher RefWatcher, configProvider () -> LeakSentry.Config) from class leaksentry.internal.FragmentDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Parameter Type",
+        "description": "Change Parameter Type configProvider : Function0<LeakCanary.Config> to configProvider : () -> LeakSentry.Config in method public install(application Application, refWatcher RefWatcher, configProvider () -> LeakSentry.Config) from class leaksentry.internal.FragmentDestroyWatcher.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Type Declaration Kind",
+        "description": "Change Type Declaration Kind class to object in type leaksentry.internal.FragmentDestroyWatcher.Companion",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

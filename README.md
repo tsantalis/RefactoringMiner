@@ -47,7 +47,7 @@ Table of Contents
    * [How to test RefactoringMiner](documentation/how-to.md#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](documentation/how-to.md#how-to-use-refactoringminer-as-a-maven-dependency)
    * [How to use RefactoringMiner as a docker image](documentation/how-to.md#how-to-use-refactoringminer-as-a-docker-image)
-   * [How to use RefactoringMiner as a GitHub action](ocumentation/how-to.md#how-to-use-refactoringminer-as-a-github-action)
+   * [How to use RefactoringMiner as a GitHub action](documentation/how-to.md#how-to-use-refactoringminer-as-a-github-action)
    * [How to use RefactoringMiner as a Chrome extension](documentation/how-to.md#how-to-use-refactoringminer-as-a-chrome-extension)
    * [How to run RefactoringMiner from the command line](documentation/how-to.md#how-to-run-refactoringminer-from-the-command-line)
       * [Refactoring detection command line options](documentation/how-to.md#refactoring-detection-command-line-options)

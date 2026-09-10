@@ -806,8 +806,30 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 		if(this.isFinal != operation.isFinal)
 			return false;*/
-		if(this.parameters.size() != operation.parameters.size())
-			return false;
+		if(this.getReturnParameter() == null && operation.getReturnParameter() != null && this.getParametersWithoutReturnType().size() == operation.getParametersWithoutReturnType().size()) {
+			int i=0;
+			for(UMLParameter thisParameter : this.getParametersWithoutReturnType()) {
+				UMLParameter otherParameter = operation.getParametersWithoutReturnType().get(i);
+				if(!thisParameter.equals(otherParameter) && !thisParameter.equalsExcludingType(otherParameter))
+					return false;
+				i++;
+			}
+			return true;
+		}
+		else if(this.getReturnParameter() != null && operation.getReturnParameter() == null && this.getParametersWithoutReturnType().size() == operation.getParametersWithoutReturnType().size()) {
+			int i=0;
+			for(UMLParameter thisParameter : this.getParametersWithoutReturnType()) {
+				UMLParameter otherParameter = operation.getParametersWithoutReturnType().get(i);
+				if(!thisParameter.equals(otherParameter) && !thisParameter.equalsExcludingType(otherParameter))
+					return false;
+				i++;
+			}
+			return true;
+		}
+		else {
+			if(this.parameters.size() != operation.parameters.size())
+				return false;
+		}
 		if(!equalTypeParameters(operation))
 			return false;
 		int i=0;
@@ -837,8 +859,30 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return false;
 		if(this.isFinal != operation.isFinal)
 			return false;*/
-		if(this.parameters.size() != operation.parameters.size())
-			return false;
+		if(this.getReturnParameter() == null && operation.getReturnParameter() != null && this.getParametersWithoutReturnType().size() == operation.getParametersWithoutReturnType().size()) {
+			int i=0;
+			for(UMLParameter thisParameter : this.getParametersWithoutReturnType()) {
+				UMLParameter otherParameter = operation.getParametersWithoutReturnType().get(i);
+				if(!thisParameter.equals(otherParameter) && !thisParameter.equalsExcludingType(otherParameter))
+					return false;
+				i++;
+			}
+			return true;
+		}
+		else if(this.getReturnParameter() != null && operation.getReturnParameter() == null && this.getParametersWithoutReturnType().size() == operation.getParametersWithoutReturnType().size()) {
+			int i=0;
+			for(UMLParameter thisParameter : this.getParametersWithoutReturnType()) {
+				UMLParameter otherParameter = operation.getParametersWithoutReturnType().get(i);
+				if(!thisParameter.equals(otherParameter) && !thisParameter.equalsExcludingType(otherParameter))
+					return false;
+				i++;
+			}
+			return true;
+		}
+		else {
+			if(this.parameters.size() != operation.parameters.size())
+				return false;
+		}
 		if(!equalTypeParameters(operation))
 			return false;
 		int i=0;

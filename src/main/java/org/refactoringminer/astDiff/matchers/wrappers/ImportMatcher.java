@@ -153,6 +153,10 @@ public class ImportMatcher implements TreeMatcher {
             if (semicolons != null) {
                 mappingStore.addMapping(semicolons.first,semicolons.second);
             }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> import_attributes = Helpers.findPairOfType(srcImportStatement.getParent(),dstImportStatement.getParent(), LANG1.IMPORT_ATTRIBUTE, LANG2.IMPORT_ATTRIBUTE);
+            if (import_attributes != null) {
+                mappingStore.addMappingRecursively(import_attributes.first,import_attributes.second);
+            }
         }
         else if(srcImportStatement.getParent() != null && dstImportStatement.getParent() != null &&
                 srcImportStatement.getParent().getType().name.equals(LANG1.FUTURE_IMPORT_STATEMENT) &&

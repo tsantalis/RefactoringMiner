@@ -373,6 +373,138 @@
   "firstEndPos" : 240,
   "secondEndPos" : 240
 }, {
+  "firstType" : "import_attribute",
+  "secondType" : "import_attribute",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "import_statement",
+  "secondParentType" : "import_statement",
+  "firstPos" : 241,
+  "secondPos" : 241,
+  "firstEndPos" : 262,
+  "secondEndPos" : 262
+}, {
+  "firstType" : "with",
+  "secondType" : "with",
+  "firstLabel" : "with",
+  "secondLabel" : "with",
+  "firstParentType" : "import_attribute",
+  "secondParentType" : "import_attribute",
+  "firstPos" : 241,
+  "secondPos" : 241,
+  "firstEndPos" : 245,
+  "secondEndPos" : 245
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "import_attribute",
+  "secondParentType" : "import_attribute",
+  "firstPos" : 246,
+  "secondPos" : 246,
+  "firstEndPos" : 262,
+  "secondEndPos" : 262
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 246,
+  "secondPos" : 246,
+  "firstEndPos" : 247,
+  "secondEndPos" : 247
+}, {
+  "firstType" : "pair",
+  "secondType" : "pair",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 248,
+  "secondPos" : 248,
+  "firstEndPos" : 260,
+  "secondEndPos" : 260
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "type",
+  "secondLabel" : "type",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 248,
+  "secondPos" : 248,
+  "firstEndPos" : 252,
+  "secondEndPos" : 252
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 252,
+  "secondPos" : 252,
+  "firstEndPos" : 253,
+  "secondEndPos" : 253
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 254,
+  "secondPos" : 254,
+  "firstEndPos" : 260,
+  "secondEndPos" : 260
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 254,
+  "secondPos" : 254,
+  "firstEndPos" : 255,
+  "secondEndPos" : 255
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "json",
+  "secondLabel" : "json",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 255,
+  "secondPos" : 255,
+  "firstEndPos" : 259,
+  "secondEndPos" : 259
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 259,
+  "secondPos" : 259,
+  "firstEndPos" : 260,
+  "secondEndPos" : 260
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 261,
+  "secondPos" : 261,
+  "firstEndPos" : 262,
+  "secondEndPos" : 262
+}, {
   "firstType" : "import_statement",
   "secondType" : "import_statement",
   "firstLabel" : "",

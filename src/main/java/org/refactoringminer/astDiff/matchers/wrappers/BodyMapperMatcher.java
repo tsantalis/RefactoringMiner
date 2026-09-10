@@ -9,6 +9,8 @@ import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
+import gr.uom.java.xmi.diff.UMLClassDiff;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.matchers.statement.CompositeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
@@ -20,6 +22,7 @@ import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -56,6 +59,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 new ClassAttrMatcher(optimizationData, anonymousClassDiff, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 for (UMLOperationBodyMapper umlOperationBodyMapper : anonymousClassDiff.getOperationBodyMapperList()) {
                     new MethodMatcher(optimizationData, umlOperationBodyMapper, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+                }
+                for (UMLClassDiff nestedClassDiff : anonymousClassDiff.getNestedClassDiffList()) {
+                    new ClassDiffMatcher(optimizationData, nestedClassDiff, true, Collections.emptyList(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
                 }
                 Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
                 Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);

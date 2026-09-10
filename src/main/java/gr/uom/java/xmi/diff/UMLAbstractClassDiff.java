@@ -318,7 +318,29 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private void processNestedClasses(UMLOperation operation1, UMLOperation operation2) throws RefactoringMinerTimedOutException {
-		if(operation1.getNestedClasses().size() == operation2.getNestedClasses().size() && operation1.getNestedClasses().toString().equals(operation2.getNestedClasses().toString())) {
+		String name1 = operation1.getNestedClasses().toString();
+		String name2 = operation2.getNestedClasses().toString();
+		boolean condition = name1.equals(name2);
+		if(!condition && name1.contains("module.exports.")) {
+			String updated = name1.replace("module.exports.", ".");
+			if(updated.equals(name2)) {
+				condition = true;
+			}
+			String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(updated, name2);
+			String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(updated, name2);
+			if(!commonPrefix.isEmpty() || !commonSuffix.isEmpty()) {
+				int beginIndexS1 = updated.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS1 = updated.lastIndexOf(commonSuffix);
+				String diff1 = beginIndexS1 > endIndexS1 ? "" :	updated.substring(beginIndexS1, endIndexS1);
+				int beginIndexS2 = name2.indexOf(commonPrefix) + commonPrefix.length();
+				int endIndexS2 = name2.lastIndexOf(commonSuffix);
+				String diff2 = beginIndexS2 > endIndexS2 ? "" :	name2.substring(beginIndexS2, endIndexS2);
+				if(diff1.isEmpty() && diff2.isEmpty()) {
+					condition = true;
+				}
+			}
+		}
+		if(operation1.getNestedClasses().size() == operation2.getNestedClasses().size() && condition) {
 			for(int i=0; i<operation1.getNestedClasses().size(); i++) {
 				UMLClass class1 = operation1.getNestedClasses().get(i);
 				UMLClass class2 = operation2.getNestedClasses().get(i);

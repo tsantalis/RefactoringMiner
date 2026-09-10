@@ -1155,7 +1155,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		boolean typeScriptObjectWithNonIdenticalValues = this.isObject() && umlClass.isObject() && PathFileUtils.isTypeScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile()) && identicalInitializerAttributes != commonAttributes.size();
 		boolean javaScriptToTypeScript = PathFileUtils.isJavaScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile());
-		if(this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && class1.getContainer().isPresent() && class2.getContainer().isPresent()) {
+		if(this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && class1.getContainer().isPresent() && class2.getContainer().isPresent() && class1.getName().equals(class2.getName())) {
 			List<UMLAnonymousClass> anonymousList1 = class1.getContainer().get().getAnonymousClassList();
 			List<UMLAnonymousClass> anonymousList2 = class2.getContainer().get().getAnonymousClassList();
 			for(UMLAnonymousClass anonymous1 : anonymousList1) {

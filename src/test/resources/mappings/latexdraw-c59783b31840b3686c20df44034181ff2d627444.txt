@@ -370,6 +370,8 @@ public testGridDots(div int) : void -> public testGridDots(div int) : void
 null==@ValueSource(ints = {0,3})
 net.sf.latexdraw.parser.pst.TestParsingPswedge -> net.sf.latexdraw.parser.pst.TestParsingPswedge
 @RunWith(Theories.class)==null
+public testAngle1Angle2(cmd String, angle1 double, angle2 double) : void -> public testAngle1Angle2(cmd String) : void
+line range:26-26==line range:20-20
 public testMissingOrigin(cmd String) : void -> public testMissingOrigin(cmd String) : void
 null==@ParameterizedTest
 public testMissingOrigin(cmd String) : void -> public testMissingOrigin(cmd String) : void
@@ -542,6 +544,8 @@ net.sf.latexdraw.util.TestInjector -> net.sf.latexdraw.util.TestInjector
 @RunWith(MockitoJUnitRunner.class)==null
 net.sf.latexdraw.util.TestResources -> net.sf.latexdraw.util.TestResources
 @RunWith(Parameterized.class)==null
+public testFileResource() : void -> public testFileResource(path String) : void
+line range:138-138==line range:12-12
 public testFileResource() : void -> public testFileResource(path String) : void
 null==@ParameterizedTest
 public testFileResource() : void -> public testFileResource(path String) : void

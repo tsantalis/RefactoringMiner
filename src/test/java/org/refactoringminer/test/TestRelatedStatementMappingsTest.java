@@ -494,6 +494,10 @@ public class TestRelatedStatementMappingsTest {
                 annotations = Set.of(Pair.of(null, annotation));
             else if (ref instanceof MoveAnnotationRefactoring move)
                 annotations = Set.of(Pair.of(move.getOriginalAnnotation(), move.getMovedAnnotation()));
+            else if(ref instanceof ParameterizeTestRefactoring parameterize && parameterize.getBodyMapper().getContainer2().getAnnotations().size() > 0) {
+                annotation = parameterize.getBodyMapper().getContainer2().getAnnotations().get(0);
+                annotations = Set.of(Pair.of(parameterize.getBodyMapper().getContainer1().getAnnotations().get(0), annotation));
+            }
             if (!annotations.isEmpty() && set.contains(annotation.getTypeName())) {
                 if (ref instanceof MethodLevelRefactoring m)
                     mapperInfo(annotations, m.getOperationBefore(), m.getOperationAfter());
@@ -503,6 +507,8 @@ public class TestRelatedStatementMappingsTest {
                     mapperInfo(annotations, a.getAttributeBefore(), a.getAttributeAfter());
                 else if (ref instanceof MoveAnnotationRefactoring move)
                     mapperInfo(annotations, move.getOriginalAnnotationProvider(), move.getMovedAnnotationProvider());
+                else if(ref instanceof ParameterizeTestRefactoring parameterize)
+                    mapperInfo(annotations, parameterize.getBodyMapper().getContainer1(), parameterize.getBodyMapper().getContainer2());
             }
         });
     }

@@ -3473,7 +3473,7 @@ public abstract class UMLAbstractClassDiff {
 			}
 			if(commonTokensInName == null) {
 				commonTokensInName = commonTokens;
-				if(Arrays.equals(tokens1, tokens2) || Arrays.equals(commonTokens.toArray(), tokens2) || mappersWithIdenticalRightSide == mapperSet.size()) {
+				if(Arrays.equals(tokens1, tokens2) || Arrays.equals(commonTokens.toArray(), tokens2) || mappersWithIdenticalRightSide == mapperSet.size() || (tokens1.length == tokens2.length && tokens1.length == commonTokens.size()+1)) {
 					commonTokenCheck = true;
 				}
 			}

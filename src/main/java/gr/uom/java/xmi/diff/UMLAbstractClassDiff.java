@@ -3543,7 +3543,8 @@ public abstract class UMLAbstractClassDiff {
 			if(replacements < minReplacements) {
 				minReplacements = replacements;
 			}
-			if(mappings == maxMappings && replacements == minReplacements) {
+			boolean skip = firstMapperWithIdenticalMethodName && !mapper.containsLeafExpressionMapping() && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName());
+			if(mappings == maxMappings && replacements == minReplacements && !skip) {
 				filteredMapperSet2.add(mapper);
 			}
 			else if(mappings <= maxMappings && replacements == minReplacements && addedOperations.size() == 1) {

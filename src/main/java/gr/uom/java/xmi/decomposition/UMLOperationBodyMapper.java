@@ -179,6 +179,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	public boolean containsLeafExpressionMapping() {
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
+				return true;
+		}
+		return false;
+	}
+
 	public boolean isNested() {
 		return nested;
 	}

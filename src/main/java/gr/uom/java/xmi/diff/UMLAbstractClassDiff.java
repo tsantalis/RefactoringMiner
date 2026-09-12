@@ -3519,7 +3519,7 @@ public abstract class UMLAbstractClassDiff {
 						filteredMapperSet.add(mapper);
 					}
 				}
-				else if(!containsOperationWithTheSameName(addedOperations, mapper)) {
+				else {
 					filteredMapperSet.add(mapper);
 				}
 			}
@@ -3575,16 +3575,6 @@ public abstract class UMLAbstractClassDiff {
 		}
 		if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
 			return true;
-		}
-		return false;
-	}
-
-	private static boolean containsOperationWithTheSameName(List<UMLOperation> addedOperations, UMLOperationBodyMapper candidate) {
-		if(!candidate.getContainer1().getName().equals(candidate.getContainer2().getName())) {
-			for(UMLOperation addedOperation : addedOperations) {
-				if(addedOperation.getName().equals(candidate.getContainer2().getName()))
-					return true;
-			}
 		}
 		return false;
 	}

@@ -42,6 +42,7 @@ Table of Contents
          * [On-demand diff generation](#on-demand-diff-generation)
          * [Javadoc and comment reformatting](#javadoc-and-comment-reformatting)
       * [MCP server](#mcp-server)
+      * [GitHub action and Chrome extension demo](#github-action-and-chrome-extension-demo)
    * [Refactoring Support History](documentation/history.md#refactoring-support-history) 
    * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
@@ -130,6 +131,9 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
 ## MCP Server
 <img width="2025" height="1226" alt="claude_cli" src="https://github.com/user-attachments/assets/c7c24ab1-ffea-4249-ac38-ac85fd3509f6" />
 <img width="2350" height="1225" alt="copilot_cli" src="https://github.com/user-attachments/assets/03a93833-b2be-48ce-9982-892825e37272" />
+
+## GitHub action and Chrome extension demo
+[![Refactoring Aware Commit Review Chrome Extension](https://img.youtube.com/vi/eLCOk-38T2g/hqdefault.jpg)](http://www.youtube.com/watch?v=eLCOk-38T2g)
 
 # Supported Refactoring Types
 

@@ -1,3 +1,70 @@
+package cmdLineIsValidIfOnlyDownstreamTlsIsEnabled() : void -> package cmdLineIsValidIfOnlyDownstreamTlsIsEnabled(useConfigFile boolean) : void
+line range:72-72==line range:79-79
+line range:73-73==line range:80-80
+line range:75-75==line range:82-82
+line range:76-76==line range:83-83
+line range:77-77==line range:84-84
+line range:79-79==line range:86-86
+line range:80-80==line range:87-87
+line range:81-81==line range:88-88
+package cmdLineIsValidWithoutDownstreamTlsOptions() : void -> package cmdLineIsValidWithoutDownstreamTlsOptions(useConfigFile boolean) : void
+line range:94-94==line range:103-103
+line range:95-95==line range:104-104
+line range:97-97==line range:106-106
+line range:98-98==line range:107-107
+line range:99-99==line range:108-108
+package cmdLineIsValidWithAllTlsOptions() : void -> package cmdLineIsValidWithAllTlsOptions(useConfigFile boolean) : void
+line range:105-105==line range:117-117
+line range:106-106==line range:118-118
+line range:108-108==line range:120-120
+line range:109-109==line range:121-121
+line range:110-110==line range:122-122
+line range:112-112==line range:124-124
+line range:113-113==line range:125-125
+line range:114-114==line range:126-126
+line range:116-116==line range:128-128
+line range:117-117==line range:129-129
+line range:104-104==line range:114-114
+package cmdLineFailsIfDownstreamTlsOptionsAreUsedWithoutTlsEnabled() : void -> package cmdLineFailsIfDownstreamTlsOptionsAreUsedWithoutTlsEnabled(useConfigFile boolean) : void
+line range:122-128==line range:135-141
+package missingClientCertificateFileDisplaysErrorIfPasswordIsStillIncluded() : void -> package missingClientCertificateFileDisplaysErrorIfPasswordIsStillIncluded(useConfigFile boolean) : void
+line range:134-140==line range:148-154
+package missingClientCertificatePasswordFileDisplaysErrorIfCertificateIsStillIncluded() : void -> package missingClientCertificatePasswordFileDisplaysErrorIfCertificateIsStillIncluded(useConfigFile boolean) : void
+line range:146-152==line range:161-167
+package cmdLineIsValidWhenTlsClientCertificateOptionsAreMissing() : void -> package cmdLineIsValidWhenTlsClientCertificateOptionsAreMissing(useConfigFile boolean) : void
+line range:163-163==line range:179-179
+line range:164-164==line range:180-180
+line range:166-166==line range:182-182
+line range:167-167==line range:183-183
+line range:168-168==line range:184-184
+line range:169-169==line range:185-185
+line range:170-170==line range:186-186
+package cmdLineIsValidIfOnlyDownstreamKnownServerIsSpecified() : void -> package cmdLineIsValidIfOnlyDownstreamKnownServerIsSpecified(useConfigFile boolean) : void
+line range:181-181==line range:199-199
+line range:182-182==line range:201-201
+line range:184-184==line range:203-203
+line range:186-186==line range:205-205
+line range:187-187==line range:206-206
+line range:188-188==line range:207-207
+line range:189-189==line range:208-208
+package cmdLineIsValidWithCaAuthEnabledExplicitly() : void -> package cmdLineIsValidWithCaAuthEnabledExplicitly(useConfigFile boolean) : void
+line range:209-209==line range:232-232
+line range:210-210==line range:233-233
+line range:212-212==line range:235-235
+line range:213-213==line range:236-236
+line range:214-214==line range:237-237
+package cmdLineIsValidWithCaAuthEnabledExplicitly() : void -> package downstreamKnownServerIsNotRequiredIfCaSignedEnabledExplicitly(useConfigFile boolean) : void
+line range:209-209==line range:249-249
+line range:210-210==line range:250-250
+line range:212-212==line range:252-252
+line range:213-213==line range:253-253
+line range:214-214==line range:254-254
+package downstreamKnownServerIsNotRequiredIfCaSignedEnabledExplicitly() : void -> package downstreamKnownServerIsNotRequiredIfCaSignedEnabledExplicitly(useConfigFile boolean) : void
+line range:222-222==line range:249-249
+line range:223-223==line range:250-250
+line range:225-225==line range:252-252
+line range:226-226==line range:253-253
+line range:227-227==line range:254-254
 package fullyPopulatedCommandLineParsesIntoVariables() : void -> package fullyPopulatedCommandLineParsesIntoVariables(useConfigFile boolean) : void
 line range:74-74==line range:83-83
 line range:76-77==line range:85-86
@@ -80,3 +147,7 @@ line range:384-384==line range:416-416
 line range:385-385==line range:417-417
 line range:386-386==line range:418-418
 line range:381-381==line range:410-410
+package parseCommandSuccessfullySetDirectory() : void -> package parseCommandSuccessfullySetDirectory(subCommandOption String) : void
+line range:42-42==line range:49-49
+line range:47-47==line range:56-56
+line range:50-50==line range:57-57

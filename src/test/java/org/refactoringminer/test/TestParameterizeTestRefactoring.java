@@ -262,6 +262,7 @@ class TestParameterizeTestRefactoring {
                                 .statement("assertEquals(null, null);").build()),
                         Map.of("src/test/java/com/test/TestClass.java",refactoredCode),
                         Set.of("."),new ArrayList<>(Arrays.asList(
+                            RefactoringType.PARAMETERIZE_TEST,
                             RefactoringType.ADD_PARAMETER,
                             RefactoringType.ADD_METHOD_ANNOTATION,
                             RefactoringType.ADD_METHOD_ANNOTATION,

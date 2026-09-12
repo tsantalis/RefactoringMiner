@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -3120,32 +3121,45 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
-						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
-						int size = mapperSet.size();
-						betterMatchForAddedOperation(mapperSet, bestMapper);
-						if(mapperSet.size() > size) {
-							bestMapper = findBestMapper(mapperSet);
+						UMLOperation addedOperation = firstMapper.getOperation2();
+						List<List<String>> parameterValues = getParameterValues(addedOperation);
+						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
+							boolean removeAddedOperation = checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
+									firstMapperWithIdenticalMethodName, parameterValues,
+									(UMLOperationBodyMapper mapper) -> {
+										removedOperationIterator.remove();
+									});
+							if(removeAddedOperation)
+								addedOperations.remove(addedOperation);
 						}
-						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper) && !conflictWithExtractMethodCandidate(bestMapper)) {
-							removedOperation = bestMapper.getOperation1();
-							UMLOperation addedOperation = bestMapper.getOperation2();
-							addedOperations.remove(addedOperation);
-							removedOperationIterator.remove();
-							if(!removedOperation.getName().equals(addedOperation.getName()) &&
-									!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
-								Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
-								RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
-								refactorings.add(rename);
+						else {
+							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+							int size = mapperSet.size();
+							betterMatchForAddedOperation(mapperSet, bestMapper);
+							if(mapperSet.size() > size) {
+								bestMapper = findBestMapper(mapperSet);
 							}
-							for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-								if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
-									Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
-									calledBy.add(pair);
+							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper) && !conflictWithExtractMethodCandidate(bestMapper)) {
+								removedOperation = bestMapper.getOperation1();
+								addedOperation = bestMapper.getOperation2();
+								addedOperations.remove(addedOperation);
+								removedOperationIterator.remove();
+								if(!removedOperation.getName().equals(addedOperation.getName()) &&
+										!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+									Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+									RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
+									refactorings.add(rename);
 								}
+								for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+									if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
+										Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
+										calledBy.add(pair);
+									}
+								}
+								this.addOperationBodyMapper(bestMapper);
+								consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+								processNestedTypeDeclarationStatements(removedOperation, addedOperation);
 							}
-							this.addOperationBodyMapper(bestMapper);
-							consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
-							processNestedTypeDeclarationStatements(removedOperation, addedOperation);
 						}
 					}
 					else {
@@ -3300,7 +3314,11 @@ public abstract class UMLAbstractClassDiff {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							boolean removeAddedOperation = checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
-									firstMapperWithIdenticalMethodName, parameterValues);
+									firstMapperWithIdenticalMethodName, parameterValues,
+									(UMLOperationBodyMapper mapper) -> {
+										UMLOperation removedOperation = mapper.getOperation1();
+										removedOperations.remove(removedOperation);
+									});
 							if(removeAddedOperation)
 								addedOperationIterator.remove();
 						}
@@ -3423,7 +3441,7 @@ public abstract class UMLAbstractClassDiff {
 
 	private boolean checkForParameterizedTest(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
 			UMLOperation addedOperation, TreeSet<UMLOperationBodyMapper> mapperSet,
-			boolean firstMapperWithIdenticalMethodName, List<List<String>> parameterValues)
+			boolean firstMapperWithIdenticalMethodName, List<List<String>> parameterValues, Consumer<UMLOperationBodyMapper> removedOperationHandler)
 			throws RefactoringMinerTimedOutException {
 		Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
 		int mappersWithIdenticalRightSide = 0;
@@ -3538,14 +3556,17 @@ public abstract class UMLAbstractClassDiff {
 				filteredMapperSet2.add(mapper);
 			}
 		}
+		UMLOperation previouslyRemovedOperation = null;
 		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
 			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
 			refactorings.add(refactoring);
 			mapper.computeRefactoringsWithinBody();
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 			detectDataProviderRowLinks(mapper, refactoring, addedOperation, parameterValues, parameterNames);
-			UMLOperation removedOperation = mapper.getOperation1();
-			removedOperations.remove(removedOperation);
+			if(!mapper.getOperation1().equals(previouslyRemovedOperation)) {
+				removedOperationHandler.accept(mapper);
+				previouslyRemovedOperation = mapper.getOperation1();
+			}
 			//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
 			mapDataProviderValues(refactoring, addedOperation, removedOperations);
 			if(mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {

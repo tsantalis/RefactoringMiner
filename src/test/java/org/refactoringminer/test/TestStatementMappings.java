@@ -1228,11 +1228,13 @@ public class TestStatementMappings {
 		"https://github.com/dropwizard/dropwizard.git, 9086577e29aba07058619a706701b6d07592aed9, dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt",
 		"https://github.com/apache/commons-lang.git, 7995aad79fab336a4534a5290fdd760df7f55dde, commons-lang-7995aad79fab336a4534a5290fdd760df7f55dde.txt",
 		////one-to-one method to Parameterized Test
+		//TODO needs improvements in file ethsigner/commandline/src/test/java/tech/pegasys/ethsigner/CommandlineParserClientTlsOptionsTest.java
 		"https://github.com/ConsenSys/ethsigner.git, 989241dd872beae0e06903a4751b3efa3767503b, ethsigner-989241dd872beae0e06903a4751b3efa3767503b.txt",
 		"https://github.com/eclipse/corrosion.git, e966a935595cd0e0586ab3c4ea3bcaad8f0d8f89, corrosion-e966a935595cd0e0586ab3c4ea3bcaad8f0d8f89.txt",
 		"https://github.com/webauthn4j/webauthn4j.git, e960a741f5259e0127339f0e0af024ccb66100b2, webauthn4j-e960a741f5259e0127339f0e0af024ccb66100b2.txt",
 		"https://github.com/xlate/staedi.git, 97ccd83c5e33aa8b81056dc2ee690fdf8547c952, staedi-97ccd83c5e33aa8b81056dc2ee690fdf8547c952.txt",
 		"https://github.com/xlate/staedi.git, f8b4a918ed30812635aa15e357bec7ef6f3c786d, staedi-f8b4a918ed30812635aa15e357bec7ef6f3c786d.txt",
+		//"https://github.com/adorsys/xs2a-adapter.git, a0141f7fdd4a5252a2e5706e0b6589dd0f0e1f13, xs2a-adapter-a0141f7fdd4a5252a2e5706e0b6589dd0f0e1f13.txt", //TODO uncomment after fixing issue #1179
 	})
 	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
@@ -2116,6 +2118,10 @@ public class TestStatementMappings {
             for (Refactoring ref : refactorings) {
                 if(ref instanceof RenameOperationRefactoring) {
                     RenameOperationRefactoring rename = (RenameOperationRefactoring)ref;
+                    mapperInfoWithLeafExpressionMappings(rename.getBodyMapper(), actual);
+                }
+                else if(ref instanceof ParameterizeTestRefactoring) {
+                    ParameterizeTestRefactoring rename = (ParameterizeTestRefactoring)ref;
                     mapperInfoWithLeafExpressionMappings(rename.getBodyMapper(), actual);
                 }
             }

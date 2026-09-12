@@ -3299,136 +3299,10 @@ public abstract class UMLAbstractClassDiff {
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
-							Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
-							int mappersWithIdenticalRightSide = 0;
-							for(UMLOperationBodyMapper mapper : mapperSet) {
-								if(mapper.equalMappingHashCodesT2(mapperSet.first())) {
-									mappersWithIdenticalRightSide++;
-								}
-							}
-							List<String> parameterNames = addedOperation.getParameterNameList();
-							int overallMaxMatchingTestParameters = -1;
-							Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();
-							boolean internalParameterizeTest = false;
-							Set<String> commonTokensInName = null;
-							for(UMLOperationBodyMapper mapper : mapperSet) {
-								Set<String> commonTokens = new LinkedHashSet<>();
-								String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer1().getName());
-								String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer2().getName());
-								if(tokens1.length >= 1 && tokens2.length >= 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
-									tokens1 = mapper.getContainer1().getName().split("_");
-									tokens2 = mapper.getContainer2().getName().split("_");
-								}
-								boolean commonTokenCheck = false;
-								for(String token1 : tokens1) {
-									for(String token2 : tokens2) {
-										if(token1.equals(token2) || token1.startsWith(token2)) {
-											commonTokens.add(token2);
-										}
-									}
-								}
-								if(commonTokensInName == null) {
-									commonTokensInName = commonTokens;
-									if(Arrays.equals(tokens1, tokens2) || Arrays.equals(commonTokens.toArray(), tokens2) || mappersWithIdenticalRightSide == mapperSet.size()) {
-										commonTokenCheck = true;
-									}
-								}
-								else if(commonTokens.size() > commonTokensInName.size()) {
-									if(commonTokens.containsAll(commonTokensInName)) {
-										commonTokenCheck = true;
-									}
-									else {
-										commonTokensInName = commonTokens;
-										filteredMapperSet.clear();
-									}
-								}
-								else if(commonTokensInName.equals(commonTokens)) {
-									commonTokenCheck = true;
-								}
-								if(mapper.getInternalParameterizeTestMultiMappings().size() > 0) {
-									internalParameterizeTest = true;
-								}
-								Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements(), mapper, getOriginalClass());
-								if (matchingTestParameters.isEmpty()) {
-									matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
-								}
-								int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
-								if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max >= overallMaxMatchingTestParameters)) {
-									if(max > overallMaxMatchingTestParameters) {
-										overallMaxMatchingTestParameters = max;
-									}
-									int exactMatchCount = 0;
-									for(Map.Entry<Integer, Integer> entry  : matchingTestParameters.entrySet()) {
-										if(overallMatchingTestParameters.containsKey(entry.getKey()) &&
-												overallMatchingTestParameters.get(entry.getKey()).equals(entry.getValue())) {
-											exactMatchCount++;
-										}
-									}
-									boolean containsAll = exactMatchCount == matchingTestParameters.size() && exactMatchCount > 0;
-									int sizeBefore = overallMatchingTestParameters.size();
-									overallMatchingTestParameters.putAll(matchingTestParameters);
-									if(internalParameterizeTest) {
-										if(overallMatchingTestParameters.size() > sizeBefore) {
-											filteredMapperSet.add(mapper);
-										}
-										else if(overallMatchingTestParameters.size() == sizeBefore && !containsAll) {
-											filteredMapperSet.add(mapper);
-										}
-									}
-									else {
-										filteredMapperSet.add(mapper);
-									}
-								}
-								else if(commonTokenCheck) {
-									filteredMapperSet.add(mapper);
-								}
-								else if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
-									filteredMapperSet.add(mapper);
-								}
-							}
-							//cluster mappers based on number of mappings and number of total replacements
-							Set<UMLOperationBodyMapper> filteredMapperSet2 = new LinkedHashSet<UMLOperationBodyMapper>();
-							int maxMappings = -1;
-							int minReplacements = Integer.MAX_VALUE;
-							for(UMLOperationBodyMapper mapper : filteredMapperSet) {
-								int mappings = mapper.countMappingsForInternalParameterizedTest();
-								if(mappings > maxMappings) {
-									maxMappings = mappings;
-								}
-								int replacements = mapper.countReplacementsForInternalParameterizedTest();
-								if(replacements < minReplacements) {
-									minReplacements = replacements;
-								}
-								if(mappings == maxMappings && replacements == minReplacements) {
-									filteredMapperSet2.add(mapper);
-								}
-								else if(mappings <= maxMappings && replacements == minReplacements && addedOperations.size() == 1) {
-									filteredMapperSet2.add(mapper);
-								}
-								else if(mappings <= maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
-									filteredMapperSet2.add(mapper);
-								}
-								else if(mappings == maxMappings && replacements <= 2*minReplacements && mapper.getOperation1().commonNameTokensExceptForOne(mapper.getOperation2())) {
-									filteredMapperSet2.add(mapper);
-								}
-							}
-							for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
-								ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
-								refactorings.add(refactoring);
-								mapper.computeRefactoringsWithinBody();
-								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
-								detectDataProviderRowLinks(mapper, refactoring, addedOperation, parameterValues, parameterNames);
-								UMLOperation removedOperation = mapper.getOperation1();
-								removedOperations.remove(removedOperation);
-								//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
-								mapDataProviderValues(refactoring, addedOperation, removedOperations);
-								if(mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
-									this.addOperationBodyMapper(mapper);
-								}
-							}
-							if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
+							boolean removeAddedOperation = checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
+									firstMapperWithIdenticalMethodName, parameterValues);
+							if(removeAddedOperation)
 								addedOperationIterator.remove();
-							}
 						}
 						else {
 							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
@@ -3545,6 +3419,143 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+	}
+
+	private boolean checkForParameterizedTest(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
+			UMLOperation addedOperation, TreeSet<UMLOperationBodyMapper> mapperSet,
+			boolean firstMapperWithIdenticalMethodName, List<List<String>> parameterValues)
+			throws RefactoringMinerTimedOutException {
+		Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
+		int mappersWithIdenticalRightSide = 0;
+		for(UMLOperationBodyMapper mapper : mapperSet) {
+			if(mapper.equalMappingHashCodesT2(mapperSet.first())) {
+				mappersWithIdenticalRightSide++;
+			}
+		}
+		List<String> parameterNames = addedOperation.getParameterNameList();
+		int overallMaxMatchingTestParameters = -1;
+		Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();
+		boolean internalParameterizeTest = false;
+		Set<String> commonTokensInName = null;
+		for(UMLOperationBodyMapper mapper : mapperSet) {
+			Set<String> commonTokens = new LinkedHashSet<>();
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer1().getName());
+			String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(mapper.getContainer2().getName());
+			if(tokens1.length >= 1 && tokens2.length >= 1 && tokens1[0].contains("_") && tokens2[0].contains("_")) {
+				tokens1 = mapper.getContainer1().getName().split("_");
+				tokens2 = mapper.getContainer2().getName().split("_");
+			}
+			boolean commonTokenCheck = false;
+			for(String token1 : tokens1) {
+				for(String token2 : tokens2) {
+					if(token1.equals(token2) || token1.startsWith(token2)) {
+						commonTokens.add(token2);
+					}
+				}
+			}
+			if(commonTokensInName == null) {
+				commonTokensInName = commonTokens;
+				if(Arrays.equals(tokens1, tokens2) || Arrays.equals(commonTokens.toArray(), tokens2) || mappersWithIdenticalRightSide == mapperSet.size()) {
+					commonTokenCheck = true;
+				}
+			}
+			else if(commonTokens.size() > commonTokensInName.size()) {
+				if(commonTokens.containsAll(commonTokensInName)) {
+					commonTokenCheck = true;
+				}
+				else {
+					commonTokensInName = commonTokens;
+					filteredMapperSet.clear();
+				}
+			}
+			else if(commonTokensInName.equals(commonTokens)) {
+				commonTokenCheck = true;
+			}
+			if(mapper.getInternalParameterizeTestMultiMappings().size() > 0) {
+				internalParameterizeTest = true;
+			}
+			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements(), mapper, getOriginalClass());
+			if (matchingTestParameters.isEmpty()) {
+				matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
+			}
+			int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
+			if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max >= overallMaxMatchingTestParameters)) {
+				if(max > overallMaxMatchingTestParameters) {
+					overallMaxMatchingTestParameters = max;
+				}
+				int exactMatchCount = 0;
+				for(Map.Entry<Integer, Integer> entry  : matchingTestParameters.entrySet()) {
+					if(overallMatchingTestParameters.containsKey(entry.getKey()) &&
+							overallMatchingTestParameters.get(entry.getKey()).equals(entry.getValue())) {
+						exactMatchCount++;
+					}
+				}
+				boolean containsAll = exactMatchCount == matchingTestParameters.size() && exactMatchCount > 0;
+				int sizeBefore = overallMatchingTestParameters.size();
+				overallMatchingTestParameters.putAll(matchingTestParameters);
+				if(internalParameterizeTest) {
+					if(overallMatchingTestParameters.size() > sizeBefore) {
+						filteredMapperSet.add(mapper);
+					}
+					else if(overallMatchingTestParameters.size() == sizeBefore && !containsAll) {
+						filteredMapperSet.add(mapper);
+					}
+				}
+				else {
+					filteredMapperSet.add(mapper);
+				}
+			}
+			else if(commonTokenCheck) {
+				filteredMapperSet.add(mapper);
+			}
+			else if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {
+				filteredMapperSet.add(mapper);
+			}
+		}
+		//cluster mappers based on number of mappings and number of total replacements
+		Set<UMLOperationBodyMapper> filteredMapperSet2 = new LinkedHashSet<UMLOperationBodyMapper>();
+		int maxMappings = -1;
+		int minReplacements = Integer.MAX_VALUE;
+		for(UMLOperationBodyMapper mapper : filteredMapperSet) {
+			int mappings = mapper.countMappingsForInternalParameterizedTest();
+			if(mappings > maxMappings) {
+				maxMappings = mappings;
+			}
+			int replacements = mapper.countReplacementsForInternalParameterizedTest();
+			if(replacements < minReplacements) {
+				minReplacements = replacements;
+			}
+			if(mappings == maxMappings && replacements == minReplacements) {
+				filteredMapperSet2.add(mapper);
+			}
+			else if(mappings <= maxMappings && replacements == minReplacements && addedOperations.size() == 1) {
+				filteredMapperSet2.add(mapper);
+			}
+			else if(mappings <= maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
+				filteredMapperSet2.add(mapper);
+			}
+			else if(mappings == maxMappings && replacements <= 2*minReplacements && mapper.getOperation1().commonNameTokensExceptForOne(mapper.getOperation2())) {
+				filteredMapperSet2.add(mapper);
+			}
+		}
+		for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
+			ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
+			refactorings.add(refactoring);
+			mapper.computeRefactoringsWithinBody();
+			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
+			detectDataProviderRowLinks(mapper, refactoring, addedOperation, parameterValues, parameterNames);
+			UMLOperation removedOperation = mapper.getOperation1();
+			removedOperations.remove(removedOperation);
+			//check for JUnit migration from @Parameterized.Parameters to @ParameterizedTest
+			mapDataProviderValues(refactoring, addedOperation, removedOperations);
+			if(mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
+				this.addOperationBodyMapper(mapper);
+			}
+		}
+		if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
+			return true;
+		}
+		return false;
 	}
 
 	//resolves the JUnit4 @Parameters DataProvider and JUnit5 @MethodSource DataProvider methods for

@@ -71,6 +71,11 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
                             if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
                                 rowCallCandidates.add(nestedCall);
                             }
+                            else if(nestedCall.getExpression() == null && nestedCall.getName().equals("arguments")) {
+                                //it is possible to use the arguments() function
+                                //import static org.junit.jupiter.params.provider.Arguments.arguments
+                                rowCallCandidates.add(nestedCall);
+                            }
                         }
                         for(AbstractCall nestedCall : rowCallCandidates) {
                             boolean nestedInAnotherRowCall = rowCallCandidates.stream()

@@ -5053,14 +5053,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperation getOperation1() {
-		if(container1 instanceof UMLOperation)
-			return (UMLOperation)container1;
+		if(container1 instanceof UMLOperation op1)
+			return op1;
 		return null;
 	}
 
 	public UMLOperation getOperation2() {
-		if(container2 instanceof UMLOperation)
-			return (UMLOperation)container2;
+		if(container2 instanceof UMLOperation op2)
+			return op2;
 		return null;
 	}
 

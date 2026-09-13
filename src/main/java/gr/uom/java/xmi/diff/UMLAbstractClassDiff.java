@@ -3121,16 +3121,14 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
-						UMLOperation addedOperation = firstMapper.getOperation2();
-						List<List<String>> parameterValues = getParameterValues(addedOperation);
-						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
-							boolean removeAddedOperation = checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
+						List<List<String>> parameterValues = getParameterValues(firstMapper.getOperation2());
+						if(firstMapper.getOperation2().hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
+							checkForParameterizedTest(removedOperations, addedOperations, firstMapper.getOperation2(), mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
 										removedOperationIterator.remove();
-									});
-							if(removeAddedOperation)
-								addedOperations.remove(addedOperation);
+									},
+									() -> addedOperations.remove(firstMapper.getOperation2()));
 						}
 						else {
 							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
@@ -3141,7 +3139,7 @@ public abstract class UMLAbstractClassDiff {
 							}
 							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper) && !potentialExtractFixture(bestMapper) && !conflictWithExtractMethodCandidate(bestMapper)) {
 								removedOperation = bestMapper.getOperation1();
-								addedOperation = bestMapper.getOperation2();
+								UMLOperation addedOperation = bestMapper.getOperation2();
 								addedOperations.remove(addedOperation);
 								removedOperationIterator.remove();
 								if(!removedOperation.getName().equals(addedOperation.getName()) &&
@@ -3313,14 +3311,13 @@ public abstract class UMLAbstractClassDiff {
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						List<List<String>> parameterValues = getParameterValues(addedOperation);
 						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
-							boolean removeAddedOperation = checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
+							checkForParameterizedTest(removedOperations, addedOperations, addedOperation, mapperSet,
 									firstMapperWithIdenticalMethodName, parameterValues,
 									(UMLOperationBodyMapper mapper) -> {
 										UMLOperation removedOperation = mapper.getOperation1();
 										removedOperations.remove(removedOperation);
-									});
-							if(removeAddedOperation)
-								addedOperationIterator.remove();
+									},
+									() -> addedOperationIterator.remove());
 						}
 						else {
 							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
@@ -3439,9 +3436,11 @@ public abstract class UMLAbstractClassDiff {
 		}
 	}
 
-	private boolean checkForParameterizedTest(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
+	private void checkForParameterizedTest(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
 			UMLOperation addedOperation, TreeSet<UMLOperationBodyMapper> mapperSet,
-			boolean firstMapperWithIdenticalMethodName, List<List<String>> parameterValues, Consumer<UMLOperationBodyMapper> removedOperationHandler)
+			boolean firstMapperWithIdenticalMethodName, List<List<String>> parameterValues,
+			Consumer<UMLOperationBodyMapper> removedOperationHandler,
+			Runnable addedOperationHandler)
 			throws RefactoringMinerTimedOutException {
 		Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
 		int mappersWithIdenticalRightSide = 0;
@@ -3575,9 +3574,8 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		if(overallMaxMatchingTestParameters > -1 || mapperSet.size() == 1 || (firstMapperWithIdenticalMethodName && filteredMapperSet2.size() == 1)) {
-			return true;
+			addedOperationHandler.run();
 		}
-		return false;
 	}
 
 	//resolves the JUnit4 @Parameters DataProvider and JUnit5 @MethodSource DataProvider methods for

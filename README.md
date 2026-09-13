@@ -272,7 +272,7 @@ Our tool can match Javadoc and inline comments with formatting changes. You can 
    * UI improvements: Merge commit parent selection, `Viewed` toggle in PR diff
 * [Moein Nasr](https://github.com/maorethians): Diff hunk dependency graph + [LLM-assisted code reviewing](https://github.com/maorethians/RefactoringMiner)
 * [Antonino Guarraci](https://github.com/antoguarr): C++ support with Eclipse CDT Parser
-* [Parsa Hejazi](https://github.com/Pogut): [RefactoringMiner Chrome MV3 extension](https://github.com/Pogut/refactoringminer-action-extension) + [RefactoringMiner PR GitHub Action](https://github.com/Pogut/refactoringminer-action-extension)
+* [Parsa Hejazi](https://github.com/Pogut): [RefactoringMiner Chrome MV3 extension](https://github.com/Pogut/refactoringminer-action-extension) + [RefactoringMiner PR GitHub Action](https://github.com/Pogut/RefactoringMiner-action)
 * [Dimitris Kalaitzidis](https://github.com/dkalaitz): Lang AST infrastructure for multi-language extension
 * [Danilo Ferreira e Silva](https://github.com/danilofes): Git repository mining infrastructure + APIs
 * [Pouria Alikhani Fard](https://github.com/pouryafard75): [AST diff](https://github.com/pouryafard75/RM-ASTDiff) + [AST diff benchmark](https://github.com/pouryafard75/DiffBenchmark)

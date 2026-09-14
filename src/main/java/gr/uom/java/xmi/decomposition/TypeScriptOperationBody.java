@@ -599,7 +599,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						return;
 					}
 					else if(declarator.getInit().get() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstIdent ident && ident.getSym().equals("useCallback") &&
-							callExpr.getArgs().size() > 0 && callExpr.getArgs().get(0) instanceof Swc4jAstExprOrSpread expr && expr.getExpr() instanceof Swc4jAstArrowExpr arrowExpr) {
+							callExpr.getArgs().size() > 0 && callExpr.getArgs().get(0).getExpr() instanceof Swc4jAstArrowExpr arrowExpr) {
 						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
 						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
 						//Arrow function declaration style

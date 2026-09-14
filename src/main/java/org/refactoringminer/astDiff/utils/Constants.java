@@ -603,6 +603,7 @@ public class Constants {
     public final String INTERNAL_MODULE = "internal_module";
     public final String INDEX_SIGNATURE = "index_signature";
     public final String IMPORT_ATTRIBUTE = "import_attribute";
+    public final String ARRAY = "array";
 
     //C++ specific
     public final String TRANSLATION_UNIT = "translation_unit"; // This is the root of all trees in C++

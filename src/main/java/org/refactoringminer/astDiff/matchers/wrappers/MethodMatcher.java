@@ -197,6 +197,51 @@ public class MethodMatcher extends BodyMapperMatcher{
                     if(typeAnnotations != null) {
                         mappingStore.addMappingRecursively(typeAnnotations.first, typeAnnotations.second);
                     }
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> callExpressions = Helpers.findPairOfType(matched.first,matched.second,LANG1.METHOD_INVOCATION,LANG2.METHOD_INVOCATION);
+                    if(callExpressions != null) {
+                        mappingStore.addMapping(callExpressions.first,callExpressions.second);
+                        identifiers = Helpers.findPairOfType(callExpressions.first,callExpressions.second,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
+                        if(identifiers != null) {
+                        mappingStore.addMapping(identifiers.first,identifiers.second);
+                        }
+                        com.github.gumtreediff.utils.Pair<Tree,Tree> arguments = Helpers.findPairOfType(callExpressions.first,callExpressions.second,LANG1.METHOD_INVOCATION_ARGUMENTS,LANG2.METHOD_INVOCATION_ARGUMENTS);
+                        if(arguments != null) {
+                            mappingStore.addMapping(arguments.first,arguments.second);
+                            com.github.gumtreediff.utils.Pair<Tree, Tree> openingParen = Helpers.findPairOfType(arguments.first,arguments.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                            if (openingParen != null) {
+                                mappingStore.addMapping(openingParen.first,openingParen.second);
+                            }
+                            com.github.gumtreediff.utils.Pair<Tree, Tree> closingParen = Helpers.findPairOfType(arguments.first,arguments.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                            if (closingParen != null) {
+                                mappingStore.addMapping(closingParen.first,closingParen.second);
+                            }
+                            arrowFunctions = Helpers.findPairOfType(arguments.first,arguments.second,LANG1.ARROW_FUNCTION,LANG2.ARROW_FUNCTION);
+                            if(arrowFunctions != null) {
+                                mappingStore.addMapping(arrowFunctions.first, arrowFunctions.second);
+                                BodyMapperMatcher.processArrowFunction(arrowFunctions.first, arrowFunctions.second, mappingStore, LANG1, LANG2);
+                                int index1 = arguments.first.getChildPosition(arrowFunctions.first);
+                                int index2 = arguments.second.getChildPosition(arrowFunctions.second);
+                                if(arguments.first.getChildren().size() > index1+1 && arguments.first.getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                                        arguments.second.getChildren().size() > index2+1 && arguments.second.getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                                    Tree t1 = arguments.first.getChild(index1+1);
+                                    Tree t2 = arguments.second.getChild(index2+1);
+                                    mappingStore.addMapping(t1,t2);
+                                }
+                                if(arguments.first.getChildren().size() > index1+2 && arguments.first.getChild(index1+2).getType().name.equals(LANG1.ARRAY) &&
+                                        arguments.second.getChildren().size() > index2+2 && arguments.second.getChild(index2+2).getType().name.equals(LANG2.ARRAY)) {
+                                    Tree t1 = arguments.first.getChild(index1+2);
+                                    Tree t2 = arguments.second.getChild(index2+2);
+                                    mappingStore.addMappingRecursively(t1,t2);
+                                }
+                                if(arguments.first.getChildren().size() > index1+3 && arguments.first.getChild(index1+3).getType().name.equals(LANG1.COMMA) &&
+                                        arguments.second.getChildren().size() > index2+3 && arguments.second.getChild(index2+3).getType().name.equals(LANG2.COMMA)) {
+                                    Tree t1 = arguments.first.getChild(index1+3);
+                                    Tree t2 = arguments.second.getChild(index2+3);
+                                    mappingStore.addMapping(t1,t2);
+                                }
+                            }
+                        }
+                    }
                 }
                 matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.CONST_KEYWORD,LANG2.CONST_KEYWORD);
                 if(matched != null) {

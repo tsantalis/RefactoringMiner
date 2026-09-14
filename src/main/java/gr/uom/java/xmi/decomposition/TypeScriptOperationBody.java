@@ -598,6 +598,46 @@ public class TypeScriptOperationBody extends OperationBody {
 						}
 						return;
 					}
+					else if(declarator.getInit().get() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstIdent ident && ident.getSym().equals("useCallback") &&
+							callExpr.getArgs().size() > 0 && callExpr.getArgs().get(0) instanceof Swc4jAstExprOrSpread expr && expr.getExpr() instanceof Swc4jAstArrowExpr arrowExpr) {
+						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
+						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(declarator.getName());
+						//Arrow function declaration style
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+						String append = "";
+						if(container instanceof UMLOperation) {
+							append = "." + ((UMLOperation)container).getName();
+						}
+						else if(container instanceof LambdaExpressionObject lambda) {
+							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+								append = "." + ((UMLOperation)lambda.getOwner()).getName();
+							}
+						}
+						UMLOperation operation = new UMLOperation(identifiers.get(0).getId().getSym(), location, container.getClassName() + append);
+						if(variableDecl.getParent() instanceof Swc4jAstExportDecl) {
+							operation.setVisibility(Visibility.PUBLIC);
+						}
+						else {
+							operation.setVisibility(Visibility.PRIVATE);
+						}
+						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments);
+						int startSignatureOffset = variableDecl.getSpan().getStart();
+						int endSignatureOffset = arrowExpr.getBody().getSpan().getStart();
+						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
+						operation.setActualSignature(text);
+						if(container instanceof UMLOperation) {
+							((UMLOperation)container).addNestedOperation(operation);
+						}
+						else if(container instanceof LambdaExpressionObject lambda) {
+							if(lambda.getOwner() != null && lambda.getOwner() instanceof UMLOperation) {
+								((UMLOperation)lambda.getOwner()).addNestedOperation(operation);
+							}
+						}
+						else if(container instanceof ModuleContainer) {
+							((ModuleContainer)container).addNestedOperation(operation);
+						}
+						return;
+					}
 				}
 			}
 			StatementObject child = new StatementObject(sourceFolder, filePath, variableDecl, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, activeVariableDeclarations, fileContent);

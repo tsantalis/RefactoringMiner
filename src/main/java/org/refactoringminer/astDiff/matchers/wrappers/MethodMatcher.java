@@ -674,6 +674,51 @@ public class MethodMatcher extends BodyMapperMatcher{
                     mappingStore.addMappingRecursively(modifiers.first, modifiers.second);
                 }
             }
+            if(srcOperationNode.getType().name.equals(LANG1.METHOD_DEFINITION) && dstOperationNode.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+                Tree t1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.PROPERTY_IDENTIFIER);
+                Tree t2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.VARIABLE_DECLARATOR);
+                if (t1 != null && t2 != null) {
+                    Tree identifier2 = TreeUtilFunctions.findChildByType(t2, LANG2.SIMPLE_NAME);
+                    mappingStore.addMapping(t1, identifier2);
+                    Tree parameters1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.FORMAL_PARAMETERS);
+                    Tree arrowFunction2 = TreeUtilFunctions.findChildByType(t2, LANG2.ARROW_FUNCTION);
+                    Tree callExpression2 = TreeUtilFunctions.findChildByType(t2, LANG2.METHOD_INVOCATION);
+                    if(parameters1 != null && arrowFunction2 != null) {
+                        Tree parameters2 = TreeUtilFunctions.findChildByType(arrowFunction2, LANG2.FORMAL_PARAMETERS);
+                        if(parameters2 != null) {
+                            mappingStore.addMapping(parameters1, parameters2);
+                            com.github.gumtreediff.utils.Pair<Tree, Tree> open_parenthesis = Helpers.findPairOfType(parameters1, parameters2, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                            if(open_parenthesis != null) {
+                                mappingStore.addMapping(open_parenthesis.first, open_parenthesis.second);
+                            }
+                            com.github.gumtreediff.utils.Pair<Tree, Tree> close_parenthesis = Helpers.findPairOfType(parameters1, parameters2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                            if(close_parenthesis != null) {
+                                mappingStore.addMapping(close_parenthesis.first, close_parenthesis.second);
+                            }
+                        }
+                    }
+                    else if(parameters1 != null && callExpression2 != null) {
+                        Tree arguments2 = TreeUtilFunctions.findChildByType(callExpression2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                        if(arguments2 != null) {
+                            arrowFunction2 = TreeUtilFunctions.findChildByType(arguments2, LANG2.ARROW_FUNCTION);
+                            if(arrowFunction2 != null) {
+                                Tree parameters2 = TreeUtilFunctions.findChildByType(arrowFunction2, LANG2.FORMAL_PARAMETERS);
+                                if(parameters2 != null) {
+                                    mappingStore.addMapping(parameters1, parameters2);
+                                    com.github.gumtreediff.utils.Pair<Tree, Tree> open_parenthesis = Helpers.findPairOfType(parameters1, parameters2, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+                                    if(open_parenthesis != null) {
+                                        mappingStore.addMapping(open_parenthesis.first, open_parenthesis.second);
+                                    }
+                                    com.github.gumtreediff.utils.Pair<Tree, Tree> close_parenthesis = Helpers.findPairOfType(parameters1, parameters2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+                                    if(close_parenthesis != null) {
+                                        mappingStore.addMapping(close_parenthesis.first, close_parenthesis.second);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             if(srcOperationNode.getType().name.equals(LANG1.DECORATED_METHOD) && dstOperationNode.getType().name.equals(LANG2.DECORATED_METHOD)) {
                 com.github.gumtreediff.utils.Pair<Tree,Tree> function_definitions = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.METHOD_DECLARATION,LANG2.METHOD_DECLARATION);
                 if (function_definitions != null) {

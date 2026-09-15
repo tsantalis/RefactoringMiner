@@ -1215,14 +1215,16 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     continue;
                 int nonMappedT2 = lambdaMapper.getNonMappedLeavesT2().size();
                 for(AbstractCodeFragment fragment2 : lambdaMapper.getNonMappedLeavesT2()) {
-                    for(UMLOperationBodyMapper childMapper : lambdaMapper.getParentMapper().getChildMappers()) {
-                        if(fragment2.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
-                            nonMappedT2--;
-                            break;
+                    if(lambdaMapper.getParentMapper() != null) {
+                        for(UMLOperationBodyMapper childMapper : lambdaMapper.getParentMapper().getChildMappers()) {
+                            if(fragment2.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+                                nonMappedT2--;
+                                break;
+                            }
                         }
-                    }
-                    if(fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
-                        nonMappedT2--;
+                        if(fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.RETURN_STATEMENT)) {
+                            nonMappedT2--;
+                        }
                     }
                 }
                 if(lambdaMapper.getNonMappedLeavesT1().size() > 0 && nonMappedT2 > 0) {

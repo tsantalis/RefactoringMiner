@@ -1156,53 +1156,37 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		boolean typeScriptObjectWithNonIdenticalValues = this.isObject() && umlClass.isObject() && PathFileUtils.isTypeScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile()) && identicalInitializerAttributes != commonAttributes.size();
 		boolean javaScriptToTypeScript = PathFileUtils.isJavaScriptFile(this.getSourceFile()) && PathFileUtils.isTypeScriptFile(umlClass.getSourceFile());
-		if(this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && class1.getContainer().isPresent() && class2.getContainer().isPresent()) {
+		if(this instanceof UMLClass class1 && class1.isModule() && umlClass instanceof UMLClass class2 && class2.isModule() && class1.getContainer().isPresent() && class2.getContainer().isPresent() && class1.getName().equals(class2.getName())) {
 			ModuleContainer moduleContainer1 = class1.getContainer().get();
 			ModuleContainer moduleContainer2 = class2.getContainer().get();
-			if(class1.getName().equals(class2.getName())) {
-				List<UMLAnonymousClass> anonymousList1 = moduleContainer1.getAnonymousClassList();
-				List<UMLAnonymousClass> anonymousList2 = moduleContainer2.getAnonymousClassList();
-				for(UMLAnonymousClass anonymous1 : anonymousList1) {
-					for(UMLAnonymousClass anonymous2 : anonymousList2) {
-						if(anonymous1.getOperations().size() > 0 && anonymous2.getOperations().size() > 0) {
-							MatchResult matchResult = anonymous1.hasSameAttributesAndOperations(anonymous2);
-							if(matchResult.isMatch()) {
-								return matchResult;
-							}
+			List<UMLAnonymousClass> anonymousList1 = moduleContainer1.getAnonymousClassList();
+			List<UMLAnonymousClass> anonymousList2 = moduleContainer2.getAnonymousClassList();
+			for(UMLAnonymousClass anonymous1 : anonymousList1) {
+				for(UMLAnonymousClass anonymous2 : anonymousList2) {
+					if(anonymous1.getOperations().size() > 0 && anonymous2.getOperations().size() > 0) {
+						MatchResult matchResult = anonymous1.hasSameAttributesAndOperations(anonymous2);
+						if(matchResult.isMatch()) {
+							return matchResult;
 						}
 					}
 				}
 			}
-			else {
-				String commonNamePrefix = PrefixSuffixUtils.longestCommonPrefix(class1.getName(), class2.getName());
-				String commonNameSuffix = PrefixSuffixUtils.longestCommonSuffix(class1.getName(), class2.getName());
-				if(!commonNamePrefix.isEmpty() || !commonNameSuffix.isEmpty()) {
-					int beginIndexS1 = class1.getName().indexOf(commonNamePrefix) + commonNamePrefix.length();
-					int endIndexS1 = class1.getName().lastIndexOf(commonNameSuffix);
-					String diff1 = beginIndexS1 > endIndexS1 ? "" :	class1.getName().substring(beginIndexS1, endIndexS1);
-					int beginIndexS2 = class2.getName().indexOf(commonNamePrefix) + commonNamePrefix.length();
-					int endIndexS2 = class2.getName().lastIndexOf(commonNameSuffix);
-					String diff2 = beginIndexS2 > endIndexS2 ? "" :	class2.getName().substring(beginIndexS2, endIndexS2);
-					if(diff1.isEmpty() && diff2.isEmpty()) {
-						for(UMLClass nestedClass1 : moduleContainer1.getNestedClasses()) {
-							for(UMLOperation nestedOperation2 : moduleContainer2.getNestedOperations()) {
-								if(nestedClass1.getNonQualifiedName().equals(nestedOperation2.getName()) && nestedOperation2.getReturnParameter() != null
-										&& nestedOperation2.getReturnParameter().getType() != null) {
-									if(reactFunctionComponentNames.contains(nestedOperation2.getReturnParameter().getType().getClassType())) {
-										List<UMLOperation> commonNestedOperations = new ArrayList<UMLOperation>();
-										int totalNestedOperations = 0;
-										for(UMLOperation operation : nestedOperation2.getNestedOperations()) {
-											totalNestedOperations++;
-											if(nestedClass1.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
-												if(!operation.getName().equals("module.exports"))
-													commonNestedOperations.add(operation);
-											}
-										}
-										if(commonNestedOperations.size() > 0) {
-											return new MatchResult(commonNestedOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalNestedOperations, totalAttributes, matchedCompanions, totalCompanions, true);
-										}
-									}
+			for(UMLClass nestedClass1 : moduleContainer1.getNestedClasses()) {
+				for(UMLOperation nestedOperation2 : moduleContainer2.getNestedOperations()) {
+					if(nestedClass1.getNonQualifiedName().equals(nestedOperation2.getName()) && nestedOperation2.getReturnParameter() != null
+							&& nestedOperation2.getReturnParameter().getType() != null) {
+						if(reactFunctionComponentNames.contains(nestedOperation2.getReturnParameter().getType().getClassType())) {
+							List<UMLOperation> commonNestedOperations = new ArrayList<UMLOperation>();
+							int totalNestedOperations = 0;
+							for(UMLOperation operation : nestedOperation2.getNestedOperations()) {
+								totalNestedOperations++;
+								if(nestedClass1.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation)) {
+									if(!operation.getName().equals("module.exports"))
+										commonNestedOperations.add(operation);
 								}
+							}
+							if(commonNestedOperations.size() > 0) {
+								return new MatchResult(commonNestedOperations.size(), commonAttributes.size(), identicalOperations.size(), identicalInitializerAttributes, totalNestedOperations, totalAttributes, matchedCompanions, totalCompanions, true);
 							}
 						}
 					}

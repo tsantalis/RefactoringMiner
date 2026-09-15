@@ -111,7 +111,7 @@ public class TypeScriptFileProcessor {
 				List<ISwc4jAstModuleItem> list = module.getBody();
 				List<UMLImport> imports = new ArrayList<>();
 				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
-				int extensionLength = filePath.endsWith(".tsx") ? 4 : 3;
+				int extensionLength = filePath.endsWith(".tsx") || filePath.endsWith(".jsx") ? 4 : 3;
 				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
 				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
 				List<UMLComment> commentList = extractComments(comments, sourceFolder, filePath, fileContent);

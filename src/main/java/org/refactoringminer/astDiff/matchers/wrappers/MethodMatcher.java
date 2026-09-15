@@ -681,6 +681,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                     Tree identifier2 = TreeUtilFunctions.findChildByType(t2, LANG2.SIMPLE_NAME);
                     mappingStore.addMapping(t1, identifier2);
                     Tree parameters1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.FORMAL_PARAMETERS);
+                    Tree block1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.STATEMENT_BLOCK);
                     Tree arrowFunction2 = TreeUtilFunctions.findChildByType(t2, LANG2.ARROW_FUNCTION);
                     Tree callExpression2 = TreeUtilFunctions.findChildByType(t2, LANG2.METHOD_INVOCATION);
                     if(parameters1 != null && arrowFunction2 != null) {
@@ -694,6 +695,18 @@ public class MethodMatcher extends BodyMapperMatcher{
                             com.github.gumtreediff.utils.Pair<Tree, Tree> close_parenthesis = Helpers.findPairOfType(parameters1, parameters2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
                             if(close_parenthesis != null) {
                                 mappingStore.addMapping(close_parenthesis.first, close_parenthesis.second);
+                            }
+                        }
+                        Tree block2 = TreeUtilFunctions.findChildByType(arrowFunction2, LANG2.STATEMENT_BLOCK);
+                        if(block1 != null && block2 != null) {
+                            mappingStore.addMapping(block1, block2);
+                            com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(block1,block2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                            if (opening != null) {
+                                mappingStore.addMapping(opening.first,opening.second);
+                            }
+                            com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(block1,block2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                            if (closing != null) {
+                                mappingStore.addMapping(closing.first,closing.second);
                             }
                         }
                     }
@@ -712,6 +725,18 @@ public class MethodMatcher extends BodyMapperMatcher{
                                     com.github.gumtreediff.utils.Pair<Tree, Tree> close_parenthesis = Helpers.findPairOfType(parameters1, parameters2, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
                                     if(close_parenthesis != null) {
                                         mappingStore.addMapping(close_parenthesis.first, close_parenthesis.second);
+                                    }
+                                }
+                                Tree block2 = TreeUtilFunctions.findChildByType(arrowFunction2, LANG2.STATEMENT_BLOCK);
+                                if(block1 != null && block2 != null) {
+                                    mappingStore.addMapping(block1, block2);
+                                    com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(block1,block2, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
+                                    if (opening != null) {
+                                        mappingStore.addMapping(opening.first,opening.second);
+                                    }
+                                    com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(block1,block2, LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
+                                    if (closing != null) {
+                                        mappingStore.addMapping(closing.first,closing.second);
                                     }
                                 }
                             }

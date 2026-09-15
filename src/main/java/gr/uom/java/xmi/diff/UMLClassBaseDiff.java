@@ -45,6 +45,8 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
 
+import static gr.uom.java.xmi.UMLAbstractClass.reactFunctionComponentNames;
+
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
 
 	private boolean visibilityChanged;
@@ -236,6 +238,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				addedOperations.removeAll(addedOperationsToBeRemoved);
+			}
+			for(UMLClass nestedClass1 : container1.getNestedClasses()) {
+				for(UMLOperation nestedOperation2 : container2.getNestedOperations()) {
+					if(nestedClass1.getNonQualifiedName().equals(nestedOperation2.getName()) && nestedOperation2.getReturnParameter() != null
+							&& nestedOperation2.getReturnParameter().getType() != null) {
+						if(reactFunctionComponentNames.contains(nestedOperation2.getReturnParameter().getType().getClassType())) {
+							checkForOperationSignatureChanges(nestedClass1.getOperations(), nestedOperation2.getNestedOperations());
+						}
+					}
+				}
 			}
 		}
 		if(getOriginalClass().getPreprocessorStatements().size() > 0 && getNextClass().getPreprocessorStatements().size() > 0) {

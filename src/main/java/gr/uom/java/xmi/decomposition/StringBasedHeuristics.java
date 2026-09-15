@@ -2604,6 +2604,35 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
+		else if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				!invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
+			Constants LANG1 = PathFileUtils.getLang(invocationCoveringTheEntireStatement1.getLocationInfo().getFilePath());
+			Constants LANG2 = PathFileUtils.getLang(invocationCoveringTheEntireStatement2.getLocationInfo().getFilePath());
+			List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
+			List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
+			String expression1 = invocationCoveringTheEntireStatement1.getExpression();
+			String expression2 = invocationCoveringTheEntireStatement2.getExpression();
+			int minArguments = Math.min(arguments1.size(), arguments2.size());
+			int replacedArguments = 0;
+			boolean expressionReplaced = false;
+			if(expression1 == null && expression2 != null)
+				expressionReplaced = true;
+			else if(expression1 != null && expression2 == null)
+				expressionReplaced = true;
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if(replacement.getBefore().contains(LANG1.LAMBDA_ARROW) != replacement.getAfter().contains(LANG2.LAMBDA_ARROW)) {
+					if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
+						replacedArguments++;
+					}
+					if(expression1 != null && expression2 != null && expression1.equals(replacement.getBefore()) && expression2.equals(replacement.getAfter())) {
+						expressionReplaced = true;
+					}
+				}
+			}
+			if(replacedArguments == minArguments && minArguments > 0 && expressionReplaced) {
+				return true;
+			}
+		}
 		return false;
 	}
 

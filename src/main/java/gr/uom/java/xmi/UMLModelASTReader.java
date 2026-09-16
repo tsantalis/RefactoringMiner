@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.jetbrains.kotlin.cli.CompilerConfigurationCreationKt;
 import org.jetbrains.kotlin.cli.jvm.compiler.EnvironmentConfigFiles;
 import org.jetbrains.kotlin.cli.jvm.compiler.KotlinCoreEnvironment;
 import org.jetbrains.kotlin.com.intellij.openapi.util.Disposer;
@@ -44,7 +45,7 @@ public class UMLModelASTReader {
 		if(hasKotlinFiles) {
 			KotlinCoreEnvironment environment = KotlinCoreEnvironment.createForProduction(
 					Disposer.newDisposable(),
-					new CompilerConfiguration(),
+					CompilerConfigurationCreationKt.create(CompilerConfiguration.Companion),
 					EnvironmentConfigFiles.JVM_CONFIG_FILES
 					);
 			factory = (PsiFileFactoryImpl) PsiFileFactory.getInstance(environment.getProject());

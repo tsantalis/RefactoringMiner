@@ -12,7 +12,7 @@ plugins {
 group = "com.github.tsantalis"
 version = project.hasProperty('buildVersion') ?
         project.buildVersion
-        : '3.1.5'
+        : '3.1.6'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
@@ -132,7 +132,7 @@ mavenPublishing {
 }
 
 mavenPublishing {
-  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.5")
+  coordinates("com.github.tsantalis", "refactoring-miner", "3.1.6")
 
   pom {
     name = "Refactoring Miner"

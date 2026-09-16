@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,9 +44,11 @@ class RefactoringMinerMcpToolsTest {
 			assertTrue(tool.tool().annotations().readOnlyHint());
 			assertFalse(tool.tool().annotations().destructiveHint());
 			assertTrue(tool.tool().annotations().openWorldHint());
-			assertTrue(tool.tool().inputSchema().properties().containsKey("source"));
-			assertFalse(tool.tool().inputSchema().properties().containsKey("repositoryPath"));
-			assertFalse(tool.tool().inputSchema().toString().contains("repositoryPath"));
+			Map<String, Object> inputSchema = tool.tool().inputSchema();
+			LinkedHashMap properties = (LinkedHashMap)inputSchema.get("properties");
+			assertTrue(properties.containsKey("source"));
+			assertFalse(properties.containsKey("repositoryPath"));
+			assertFalse(inputSchema.toString().contains("repositoryPath"));
 		}
 	}
 

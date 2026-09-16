@@ -22,7 +22,8 @@ public class MoveCodeRefactoring extends AbstractMoveRefactoring {
 		MOVE_TO_ADDED,
 		MOVE_FROM_REMOVED_TO_ADDED,
 		MOVE_BETWEEN_EXISTING,
-		MOVE_BETWEEN_FILES;
+		MOVE_BETWEEN_FILES,
+		REACT_COMPONENT_MIGRATION;
 	}
 	private VariableDeclarationContainer sourceContainer;
 	private VariableDeclarationContainer targetContainer;

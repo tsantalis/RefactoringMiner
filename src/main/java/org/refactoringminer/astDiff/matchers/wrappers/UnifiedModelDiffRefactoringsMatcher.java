@@ -142,7 +142,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
-                if (moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
+                if (moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES) || moveCodeRefactoring.getMoveType().equals(Type.REACT_COMPONENT_MIGRATION)) {
                     String srcPath = moveCodeRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
                     String dstPath = moveCodeRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
                     Constants LANG1 = new Constants(srcPath);

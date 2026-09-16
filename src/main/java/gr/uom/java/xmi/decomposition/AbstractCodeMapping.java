@@ -177,7 +177,18 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public boolean isExact() {
 		return  !fragment1.isKeyword() && (argumentizedStringExact() || argumentizedStringExactAfterTypeReplacement() ||
-				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement() || callChainMatch());
+				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement() || callChainMatch() || ignoreFormattingChanges());
+	}
+
+	private boolean ignoreFormattingChanges() {
+		if(fragment1.getString().contains("\n") && fragment2.getString().contains("\n")) {
+			String s1 = fragment1.getString().replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			String s2 = fragment2.getString().replaceAll("\s", "").replaceAll("\n", "").replaceAll(",", "");
+			if(s1.equals(s2)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean argumentizedStringExact() {

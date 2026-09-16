@@ -244,7 +244,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(nestedClass1.getNonQualifiedName().equals(nestedOperation2.getName()) && nestedOperation2.getReturnParameter() != null
 							&& nestedOperation2.getReturnParameter().getType() != null) {
 						if(reactFunctionComponentNames.contains(nestedOperation2.getReturnParameter().getType().getClassType())) {
-							checkForOperationSignatureChanges(nestedClass1.getOperations(), nestedOperation2.getNestedOperations());
+							checkForOperationSignatureChanges(new ArrayList<>(nestedClass1.getOperations()), new ArrayList<>(nestedOperation2.getNestedOperations()));
+							for(UMLOperation nestedOperation1 : nestedClass1.getOperations()) {
+								if(!containsMapperForOperation1(nestedOperation1)) {
+									//check for moved code within the body of React Function Component
+									UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(nestedOperation1, nestedOperation2, this);
+									if(moveCodeMapper.mappingsWithoutBlocks() > 0 && moveCodeMapper.allMappingsAreExactMatches()) {
+										MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.REACT_COMPONENT_MIGRATION);
+										refactorings.add(ref);
+									}
+								}
+							}
 						}
 					}
 				}

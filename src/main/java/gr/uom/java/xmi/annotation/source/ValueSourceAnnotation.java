@@ -58,7 +58,7 @@ public class ValueSourceAnnotation extends SourceAnnotation implements NormalAnn
         return combined;
     }
 
-    public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
+    public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         super(annotation, ANNOTATION_TYPENAME);
         memberValuePairs = annotation.getMemberValuePairs();
         Set<String> providedKeys = memberValuePairs.keySet();

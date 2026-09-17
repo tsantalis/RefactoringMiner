@@ -17,7 +17,7 @@ import java.util.Map;
 public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
     public static final String ANNOTATION_TYPENAME = "CsvSource";
 
-    public CsvSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
+    public CsvSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         super(annotation, ANNOTATION_TYPENAME);
         for (String csvParams : getValue()) {
             List<String> parameters = CsvUtils.extractParametersFromCsv(csvParams);

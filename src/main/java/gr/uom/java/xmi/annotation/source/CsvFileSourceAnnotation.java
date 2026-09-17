@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class CsvFileSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
     public static final String ANNOTATION_TYPENAME = "CsvFileSource";
 
-    public CsvFileSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
+    public CsvFileSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         // TODO: Add non-java files to UMLModel + Use model to get CSV based on relative path
         super(annotation, ANNOTATION_TYPENAME);
         testParameters.addAll(CsvUtils.extractParametersFromCsvFile(getValue()));

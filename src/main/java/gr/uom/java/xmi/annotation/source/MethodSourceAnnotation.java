@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 public class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "MethodSource";
     private final UMLOperation annotatedOperation;
-    private final UMLAbstractClass declaringClass;
+    private final List<UMLAbstractClass> declaringClasses;
     private UMLOperation resolvedProviderMethod;
 
-    public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
+    public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         super(annotation, ANNOTATION_TYPENAME);
         this.annotatedOperation = operation;
-        this.declaringClass = declaringClass;
+        this.declaringClasses = declaringClasses;
         List<String> values = getValue();
         if(values.size() > 0) {
             String methodSourceName = values.get(0);
@@ -39,17 +39,20 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
     }
 
     private void processMethodSourceName(UMLOperation operation, String methodSourceName) {
-        List<UMLOperation> sameNameMethods = this.declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList());
-        for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0; ) {
-            for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
-                UMLOperation method = iterator.next();
-                if (method.getAnnotations().containsAll(operation.getAnnotations())) {
-                    iterator.remove();
-                    break;
-                }
-                if (method.equalSignature(operation)) {
-                    iterator.remove();
-                    break;
+        List<UMLOperation> sameNameMethods = new ArrayList<UMLOperation>();
+        for(UMLAbstractClass declaringClass : this.declaringClasses) {
+            sameNameMethods.addAll(declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList()));
+            for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0; ) {
+                for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
+                    UMLOperation method = iterator.next();
+                    if (method.getAnnotations().containsAll(operation.getAnnotations())) {
+                        iterator.remove();
+                        break;
+                    }
+                    if (method.equalSignature(operation)) {
+                        iterator.remove();
+                        break;
+                    }
                 }
             }
         }
@@ -117,17 +120,19 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
     }
 
     private LeafExpression resolveConstantLiteral(String name) {
-        for(UMLAttribute attribute : declaringClass.getAttributes()) {
-            if(attribute.getName().equals(name) && attribute.isFinal() && attribute.isStatic()) {
-                AbstractExpression initializer = attribute.getVariableDeclaration().getInitializer();
-                if(initializer != null) {
-                    List<LeafExpression> literals = new ArrayList<>();
-                    literals.addAll(initializer.getStringLiterals());
-                    literals.addAll(initializer.getNumberLiterals());
-                    literals.addAll(initializer.getBooleanLiterals());
-                    literals.addAll(initializer.getNullLiterals());
-                    if(!literals.isEmpty()) {
-                        return literals.get(0);
+        for(UMLAbstractClass declaringClass : declaringClasses) {
+            for(UMLAttribute attribute : declaringClass.getAttributes()) {
+                if(attribute.getName().equals(name) && attribute.isFinal() && attribute.isStatic()) {
+                    AbstractExpression initializer = attribute.getVariableDeclaration().getInitializer();
+                    if(initializer != null) {
+                        List<LeafExpression> literals = new ArrayList<>();
+                        literals.addAll(initializer.getStringLiterals());
+                        literals.addAll(initializer.getNumberLiterals());
+                        literals.addAll(initializer.getBooleanLiterals());
+                        literals.addAll(initializer.getNullLiterals());
+                        if(!literals.isEmpty()) {
+                            return literals.get(0);
+                        }
                     }
                 }
             }
@@ -152,9 +157,11 @@ public class MethodSourceAnnotation extends SourceAnnotation implements SingleMe
             AbstractExpression value = annotation.getValue();
             values.addAll(extractLiteralFromValue(value));
             if(values.isEmpty()) {
-                for(UMLAttribute attribute : declaringClass.getAttributes()) {
-                    if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
-                        values.addAll(extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer()));
+                for(UMLAbstractClass declaringClass : declaringClasses) {
+                    for(UMLAttribute attribute : declaringClass.getAttributes()) {
+                        if(value.getString().equals(attribute.getName()) && attribute.getVariableDeclaration().getInitializer() !=  null) {
+                            values.addAll(extractLiteralFromValue(attribute.getVariableDeclaration().getInitializer()));
+                        }
                     }
                 }
             }

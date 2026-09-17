@@ -1762,14 +1762,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
-    public boolean hasMethodSourceAnnotation() {
-        return annotations.stream().anyMatch(MethodSourceAnnotation::isMethodSourceAnnotation);
-    }
+	public boolean hasMethodSourceAnnotation() {
+		return annotations.stream().anyMatch(MethodSourceAnnotation::isMethodSourceAnnotation);
+	}
 
-	public MethodSourceAnnotation getMethodSourceAnnotation(UMLAbstractClass declaringClass) {
-		Optional<UMLAnnotation> maybeAnnotation = annotations.stream().filter(MethodSourceAnnotation::isMethodSourceAnnotation).findFirst();
-		assert maybeAnnotation.isPresent() : "MethodSource annotation not found, you must guard getMethodSourceAnnotation method invocation with hasMethodSourceAnnotation";
-		UMLAnnotation annotation = maybeAnnotation.get();
-		return new MethodSourceAnnotation(annotation, this, declaringClass);
+	public Optional<UMLAnnotation> getMethodSourceAnnotation() {
+		return annotations.stream().filter(MethodSourceAnnotation::isMethodSourceAnnotation).findFirst();
 	}
 }

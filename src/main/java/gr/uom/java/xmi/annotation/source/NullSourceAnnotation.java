@@ -13,7 +13,7 @@ import java.util.List;
 public class NullSourceAnnotation extends SourceAnnotation implements MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "NullSource";
 
-    public NullSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
+    public NullSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
         super(annotation, ANNOTATION_TYPENAME);
     }
 

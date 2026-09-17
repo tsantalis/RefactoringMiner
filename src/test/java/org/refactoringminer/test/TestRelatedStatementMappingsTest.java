@@ -460,7 +460,7 @@ public class TestRelatedStatementMappingsTest {
         UMLOperation umlOperation = umlClass.getOperations().get(0);
         UMLAnnotation umlAnnotation = umlOperation.getAnnotations().get(1);
         Assume.assumeTrue(umlAnnotation.isNormalAnnotation() && umlAnnotation.getTypeName().equals("MethodSource"));
-        Assertions.assertDoesNotThrow(() -> new MethodSourceAnnotation(umlAnnotation, umlOperation, umlClass));
+        Assertions.assertDoesNotThrow(() -> new MethodSourceAnnotation(umlAnnotation, umlOperation, List.of(umlClass)));
     }
 
 

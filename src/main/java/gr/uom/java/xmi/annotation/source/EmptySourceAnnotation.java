@@ -8,15 +8,16 @@ import gr.uom.java.xmi.annotation.MarkerAnnotation;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 
 import java.util.Collections;
+import java.util.List;
 
 public class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation {
     public static final String ANNOTATION_TYPENAME = "EmptySource";
 
-    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass) {
-        this(annotation, operation, declaringClass, ANNOTATION_TYPENAME);
+    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses) {
+        this(annotation, operation, declaringClasses, ANNOTATION_TYPENAME);
     }
 
-    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass declaringClass, String typeName) {
+    public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> declaringClasses, String typeName) {
         super(annotation, typeName);
         String sentinel;
         switch (operation.getParametersWithoutReturnType().get(0).getType().toQualifiedString()) {

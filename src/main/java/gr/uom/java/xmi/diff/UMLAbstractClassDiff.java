@@ -3591,13 +3591,18 @@ public abstract class UMLAbstractClassDiff {
 		}
 	}
 
-	ParameterizeTestRefactoring.DataProviderOverride resolveDataProviderMapping(UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
-		UMLOperation junit5DataProvider;
+	public ParameterizeTestRefactoring.DataProviderOverride resolveDataProviderMapping(UMLOperation addedOperation, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
+		UMLOperation junit5DataProvider = null;
 		if(addedOperation.hasMethodSourceAnnotation()) {
-			MethodSourceAnnotation methodSourceAnnotation = addedOperation.getMethodSourceAnnotation(nextClass);
-			junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
-			if(junit5DataProvider == null) {
-				return null;
+			Optional<UMLAnnotation> maybeAnnotation = addedOperation.getMethodSourceAnnotation();
+			if(maybeAnnotation.isPresent()) {
+				SourceAnnotation sourceAnnotation = generateSourceAnnotation(maybeAnnotation.get(), addedOperation);
+				if(sourceAnnotation instanceof MethodSourceAnnotation methodSourceAnnotation) {
+					junit5DataProvider = methodSourceAnnotation.getResolvedProviderMethod();
+					if(junit5DataProvider == null) {
+						return null;
+					}
+				}
 			}
 		}
 		else {
@@ -3880,7 +3885,8 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	private SourceAnnotation generateSourceAnnotation(UMLAnnotation annotation, UMLOperation addedOperation) {
-		UMLAbstractClass inputDeclaration = nextClass;
+		List<UMLAbstractClass> inputDeclarations = new ArrayList<>();
+		inputDeclarations.add(nextClass);
 		if(annotation.getTypeName().equals("EnumSource") && modelDiff != null) {
 			String enumClassLiteral = null;
 			if (annotation.isMarkerAnnotation() || (Objects.isNull(annotation.getValue()) && Objects.isNull(annotation.getMemberValuePairs().get("value")))) {
@@ -3894,11 +3900,23 @@ public abstract class UMLAbstractClassDiff {
 			if(enumClassLiteral != null) {
 				UMLClass enumClassDeclaration = findEnumDeclaration(modelDiff.getChildModel(), enumClassLiteral);
 				if(enumClassDeclaration != null) {
-					inputDeclaration = enumClassDeclaration;
+					inputDeclarations.add(enumClassDeclaration);
 				}
 			}
 		}
-		SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclaration);
+		if(modelDiff != null && nextClass.getSuperclass() != null) {
+			UMLClassBaseDiff superclassDiff = modelDiff.getUMLClassDiff(nextClass.getSuperclass());
+			if(superclassDiff != null) {
+				inputDeclarations.add(superclassDiff.getNextClass());
+			}
+			else {
+				UMLAbstractClass superclass = modelDiff.findClassInChildModel(nextClass.getSuperclass().getClassType());
+				if(superclass != null) {
+					inputDeclarations.add(superclass);
+				}
+			}
+		}
+		SourceAnnotation sourceAnnotation = SourceAnnotation.create(annotation, addedOperation, inputDeclarations);
 		return sourceAnnotation;
 	}
 

@@ -13,26 +13,28 @@ import java.util.List;
 public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation, NormalAnnotation {
     public static final String ANNOTATION_TYPENAME = "EnumSource";
 
-    public EnumSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLAbstractClass enumClassDeclaration) {
+    public EnumSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, List<UMLAbstractClass> enumClassDeclarations) {
         super(annotation, ANNOTATION_TYPENAME);
-        if (annotation.isNormalAnnotation() && annotation.getMemberValuePairs().containsKey("names")) {
-            if (annotation.getMemberValuePairs().containsKey("mode")) {
-                String mode = annotation.getMemberValuePairs().get("mode").getString();
-                if ((mode.equals("EXCLUDE") || mode.equals("Mode.EXCLUDE") || mode.equals("EnumSource.Mode.EXCLUDE")) && enumClassDeclaration != null) {
-                    for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
-                        if (!isExcluded(annotation, constant)) {
-                            addConstantRow(constant);
+        for(UMLAbstractClass enumClassDeclaration : enumClassDeclarations) {
+            if (annotation.isNormalAnnotation() && annotation.getMemberValuePairs().containsKey("names")) {
+                if (annotation.getMemberValuePairs().containsKey("mode")) {
+                    String mode = annotation.getMemberValuePairs().get("mode").getString();
+                    if ((mode.equals("EXCLUDE") || mode.equals("Mode.EXCLUDE") || mode.equals("EnumSource.Mode.EXCLUDE")) && enumClassDeclaration != null) {
+                        for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
+                            if (!isExcluded(annotation, constant)) {
+                                addConstantRow(constant);
+                            }
                         }
+                    } else {
+                        addIncludedNameRows(annotation);
                     }
                 } else {
                     addIncludedNameRows(annotation);
                 }
-            } else {
-                addIncludedNameRows(annotation);
-            }
-        } else if (enumClassDeclaration != null) {
-            for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
-                addConstantRow(constant);
+            } else if (enumClassDeclaration != null) {
+                for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
+                    addConstantRow(constant);
+                }
             }
         }
     }

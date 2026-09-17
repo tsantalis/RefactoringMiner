@@ -2706,11 +2706,21 @@ public class UMLModelDiff {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClass removedClass : removedClasses) {
 			//if(!removedClass.isTopLevel()) {
+			UMLClassBaseDiff parentModule = getUMLClassDiff(removedClass.getPackageName() + ".__module__");
+			if(parentModule != null) {
+				for(UMLOperation operation : removedClass.getOperations()) {
+					if(!parentModule.containsMapperForOperation1(operation) && !operation.isGetter() && !operation.isSetter() && !operation.getName().equals("build")) {
+						removedOperations.add(operation);
+					}
+				}
+			}
+			else {
 				for(UMLOperation operation : removedClass.getOperations()) {
 					if(!operation.isGetter() && !operation.isSetter() && !operation.getName().equals("build")) {
 						removedOperations.add(operation);
 					}
 				}
+			}
 			//}
 		}
 		return removedOperations;
@@ -6832,9 +6842,21 @@ public class UMLModelDiff {
 		addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
 		for(UMLClass addedClass : addedClasses) {
 			if(!addedClass.implementsInterface(interfaceIntersection) && !addedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(addedClass)) {
-				addedOperations.addAll(addedClass.getOperations());
-				if(PathFileUtils.isTypeScriptFile(addedClass.getSourceFile())) {
+				UMLClassBaseDiff parentModule = getUMLClassDiff(addedClass.getPackageName() + ".__module__");
+				List<UMLOperation> addedClassOperations = new ArrayList<UMLOperation>();
+				if(parentModule != null) {
 					for(UMLOperation op : addedClass.getOperations()) {
+						if(!parentModule.containsMapperForOperation2(op)) {
+							addedClassOperations.add(op);
+						}
+					}
+				}
+				else {
+					addedClassOperations.addAll(addedClass.getOperations());
+				}
+				addedOperations.addAll(addedClassOperations);
+				if(PathFileUtils.isTypeScriptFile(addedClass.getSourceFile())) {
+					for(UMLOperation op : addedClassOperations) {
 						addedOperations.addAll(op.getNestedOperations());
 						for(UMLAnonymousClass anonymous : op.getAnonymousClassList()) {
 							addedOperations.addAll(anonymous.getOperations());
@@ -6850,9 +6872,21 @@ public class UMLModelDiff {
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
 		for(UMLClass removedClass : removedClasses) {
 			if(!removedClass.implementsInterface(interfaceIntersection) && !removedClass.extendsSuperclass(interfaceIntersection) && !outerClassMovedOrRenamed(removedClass)) {
-				removedOperations.addAll(removedClass.getOperations());
-				if(PathFileUtils.isTypeScriptFile(removedClass.getSourceFile())) {
+				UMLClassBaseDiff parentModule = getUMLClassDiff(removedClass.getPackageName() + ".__module__");
+				List<UMLOperation> removedClassOperations = new ArrayList<UMLOperation>();
+				if(parentModule != null) {
 					for(UMLOperation op : removedClass.getOperations()) {
+						if(!parentModule.containsMapperForOperation1(op)) {
+							removedClassOperations.add(op);
+						}
+					}
+				}
+				else {
+					removedClassOperations.addAll(removedClass.getOperations());
+				}
+				removedOperations.addAll(removedClassOperations);
+				if(PathFileUtils.isTypeScriptFile(removedClass.getSourceFile())) {
+					for(UMLOperation op : removedClassOperations) {
 						removedOperations.addAll(op.getNestedOperations());
 						for(UMLAnonymousClass anonymous : op.getAnonymousClassList()) {
 							removedOperations.addAll(anonymous.getOperations());

@@ -2702,6 +2702,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	public ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit) throws Exception {
 		GHRepository repository = getGitHubRepository(gitURL);
 		GHCompare compare = repository.getCompare(startCommit, endCommit);
+		//final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
+		//File rootFolder = new File(REPOS);
+		//String repoName = gitURL.substring(gitURL.lastIndexOf('/') + 1, gitURL.lastIndexOf('.'));
+		//String jsonFilePath = changedFileInfoCacheFileName(repoName, endCommit, 0);
+		//File jsonFile = new File(rootFolder, jsonFilePath);
 		Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
 		Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
@@ -2723,6 +2728,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				}
 				multiThreadedFetchWithPatch(commitFileNames, fileContentsBefore, fileContentsCurrent, renamedFilesHint,
 						deletedAndRenamedFileParentDirectories, pool, commitFile, fileName);
+						//rootFolder, repoName, startCommit, endCommit);
 				count++;
 			}
 		}
@@ -2741,6 +2747,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		addDirectoryPaths(repositoryDirectoriesBefore, orderedFilesBefore);
 		addDirectoryPaths(repositoryDirectoriesCurrent, orderedFilesCurrent);
 		repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
+		//ChangedFileInfo changedFileInfo = new ChangedFileInfo(startCommit, endCommit, new ArrayList<>(orderedFilesBefore), new ArrayList<>(orderedFilesCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
+		//final ObjectMapper mapper = new ObjectMapper();
+		//mapper.writeValue(jsonFile, changedFileInfo);
 		/*
 		PagedIterable<Commit> commits = compare.listCommits();
 		for(GHCommit currentGHCommit : commits) {
@@ -2801,6 +2810,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private void multiThreadedFetchWithPatch(List<String> commitFileNames,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> deletedAndRenamedFileParentDirectories, ExecutorService pool, GHCommit.File commitFile, String fileName) {
+			//File rootFolder, String repoName, String parentCommitId, String currentCommitId) {
 		if (commitFile.getStatus().equals("modified")) {
 			Runnable r = () -> {
 				try {
@@ -2815,6 +2825,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					if(!filesBefore.containsKey(fileName))
 						filesBefore.put(fileName, parentRawFile);
 					filesCurrent.put(fileName, currentRawFile);
+					//File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + fileName);
+					//FileUtils.writeStringToFile(parentFilePath, parentRawFile, StandardCharsets.UTF_8);
+					//File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
+					//FileUtils.writeStringToFile(currentFilePath, currentRawFile, StandardCharsets.UTF_8);
 				}
 				catch(IOException e) {
 					e.printStackTrace();
@@ -2829,6 +2843,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					URL currentRawURL = commitFile.getRawUrl();
 					currentRawFile = fetchRawFileContent(currentRawURL);
 					filesCurrent.put(fileName, currentRawFile);
+					//File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
+					//FileUtils.writeStringToFile(currentFilePath, currentRawFile, StandardCharsets.UTF_8);
 				}
 				catch(IOException e) {
 					e.printStackTrace();
@@ -2846,6 +2862,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					if(fileName.contains("/")) {
 						deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
 					}
+					//File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + fileName);
+					//FileUtils.writeStringToFile(parentFilePath, parentRawFile, StandardCharsets.UTF_8);
 				}
 				catch(IOException e) {
 					e.printStackTrace();
@@ -2873,6 +2891,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					if(previousFilename.contains("/")) {
 						deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
 					}
+					//File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + previousFilename);
+					//FileUtils.writeStringToFile(parentFilePath, parentRawFile, StandardCharsets.UTF_8);
+					//File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
+					//FileUtils.writeStringToFile(currentFilePath, currentRawFile, StandardCharsets.UTF_8);
 				}
 				catch(IOException e) {
 					e.printStackTrace();

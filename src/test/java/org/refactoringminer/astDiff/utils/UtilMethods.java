@@ -17,6 +17,7 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl.ChangedFileInfo;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import static gr.uom.java.xmi.JavaFileProcessor.getCompilationUnit;
@@ -54,7 +55,7 @@ public class UtilMethods {
     }
 
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {
-        if(info.getSrc_files() != null && info.getSrc_files().size() == 1) {
+        if(info.getSrc_files() != null) {
             String cloneURL = info.getRepo();
             String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));
             String jsonFilePath = repoName + "-" + info.getCommit() + ".json";
@@ -62,11 +63,27 @@ public class UtilMethods {
             if(jsonFile.exists()) {
                 final ObjectMapper mapper = new ObjectMapper();
                 ChangedFileInfo changedFileInfo = mapper.readValue(jsonFile, ChangedFileInfo.class);
-                String folder1 = REPOS + "/" + repoName + "-" +
-                        changedFileInfo.getParentCommitId() + "/" + info.getSrc_files().iterator().next();
-                String folder2 = REPOS + "/" + repoName + "-" +
-                        changedFileInfo.getCurrentCommitId() + "/" + info.getSrc_files().iterator().next();
-                return new GitHistoryRefactoringMinerImpl().diffAtDirectories(Path.of(folder1), Path.of(folder2)).getDiffSet();
+                Set<ASTDiff> allDiffs = new LinkedHashSet<>();
+                for(String s : info.getSrc_files()) {
+                    String s1 = s;
+                    String s2 = s;
+                    //no file extension provided, language migration
+                    if(s.endsWith(".")) {
+                        s1 = changedFileInfo.getFilesBefore().stream().filter(path -> path.startsWith(s)).findFirst().orElse(null);
+                        s2 = changedFileInfo.getFilesCurrent().stream().filter(path -> path.startsWith(s)).findFirst().orElse(null);
+                    }
+                    String folder1 = REPOS + "/" + repoName + "-" +
+                        changedFileInfo.getParentCommitId() + "/" + s1;
+                    String folder2 = REPOS + "/" + repoName + "-" +
+                        changedFileInfo.getCurrentCommitId() + "/" + s2;
+                    Set<ASTDiff> diffSet = new GitHistoryRefactoringMinerImpl().diffAtDirectories(Path.of(folder1), Path.of(folder2)).getDiffSet();
+                    for(ASTDiff diff : diffSet) {
+                        diff.setSrcPath(s);
+                        diff.setDstPath(s);
+                        allDiffs.add(diff);
+                    }
+                }
+                return allDiffs;
             }
             return Collections.emptySet();
         }

@@ -70,6 +70,14 @@ public class ASTDiff extends Diff {
 		return dstPath;
 	}
 
+	public void setSrcPath(String srcPath) {
+		this.srcPath = srcPath;
+	}
+
+	public void setDstPath(String dstPath) {
+		this.dstPath = dstPath;
+	}
+
 	public Set<Tree> getDeletedSrcTrees() {
 		return classifier.getDeletedSrcs();
 	}

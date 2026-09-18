@@ -36,7 +36,7 @@ public class JavaToKotlinDiffTest {
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
         boolean partial = info.getSrc_files() != null && !info.getSrc_files().isEmpty();
 
-        Set<ASTDiff> astDiffs = getProjectDiffLocally(info.makeURL());
+        Set<ASTDiff> astDiffs = getProjectDiffLocally(info);
         boolean hit = false;
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());

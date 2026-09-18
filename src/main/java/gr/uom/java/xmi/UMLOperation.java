@@ -653,6 +653,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			return thisReturnParameter.equals(otherReturnParameter);
 		else if(thisReturnParameter == null && otherReturnParameter == null)
 			return true;
+		else if(!this.LANG.equals(operation.LANG) && (thisReturnParameter == null) != (otherReturnParameter == null))
+			return true; // allow missing return type when language is different, e.g., Java to Kotlin
 		else
 			return false;
 	}

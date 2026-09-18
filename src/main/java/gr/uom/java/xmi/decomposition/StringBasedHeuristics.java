@@ -332,6 +332,9 @@ public class StringBasedHeuristics {
 		if(diff1.equals("new") && diff2.isEmpty()) {
 			return true;
 		}
+		if(diff1.equals("ne") && diff2.isEmpty() && s1.startsWith("throw ") && s2.startsWith("throw ")) {
+			return true;
+		}
 		if(diff1.toLowerCase().equals(diff2.toLowerCase())) {
 			return true;
 		}

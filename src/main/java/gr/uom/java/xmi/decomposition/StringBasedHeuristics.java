@@ -3750,7 +3750,7 @@ public class StringBasedHeuristics {
 			conditional = s.substring(LANG.RETURN_SPACE.length(), s.length()-LANG.STATEMENT_TERMINATION.length());
 		}
 		int indexOfEquals = s.indexOf(LANG.ASSIGNMENT);
-		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(LANG.STATEMENT_TERMINATION)) {
+		if(indexOfEquals > 0 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(LANG.STATEMENT_TERMINATION)) {
 			conditional = s.substring(indexOfEquals+1, s.length()-LANG.STATEMENT_TERMINATION.length());
 		}
 		return conditional;

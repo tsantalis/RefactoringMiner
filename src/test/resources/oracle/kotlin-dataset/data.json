@@ -13475,10 +13475,10 @@
     }, {
         "type": "Move And Inline Method",
         "description": "Move And Inline Method internal exchangeDoneDueToException() moved from class okhttp3.internal.connection.RealCall to class okhttp3.internal.http.RetryAndFollowUpInterceptor & inlined to public intercept(chain Interceptor.Chain) : Response",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Part of the code seems to be moved to the newly introduced function&nbsp;</p><div><div>internal fun exitNetworkInterceptorExchange(closeExchange: Boolean) {</div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {

@@ -102,18 +102,23 @@ public class JavaToKotlinMigration {
                 }
                 for(Tree t2 : interpolatedExpressions2) {
                     List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
+                    boolean found = false;
                     for(Tree simpleName2 : simpleNames2) {
                         if(name.equals(simpleName2.getLabel())) {
                             mappingStore.addMapping(t1, simpleName2);
                             iter1.remove();
+                            found = true;
                             break;
                         }
                         else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
                             mappingStore.addMapping(t1, simpleName2);
                             iter1.remove();
+                            found = true;
                             break;
                         }
                     }
+                    if(found)
+                        break;
                 }
             }
         }
@@ -254,7 +259,7 @@ public class JavaToKotlinMigration {
                 }
             }
         }
-        else if(children1.size() > children2.size() && firstChildIsType1) {
+        else if(children1.size() > children2.size() && children2.size() > 0 && firstChildIsType1) {
             //this happens when Java side has a type, but Kotlin side has var/val
             Tree t2 = children2.get(0);
             int start1 = -1;
@@ -787,7 +792,7 @@ public class JavaToKotlinMigration {
     public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore, 
             Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
         Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
-        if(variableDeclaration2 == null)
+        if(variableDeclaration2 == null && dstFieldDeclaration != null)
             variableDeclaration2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.VARIABLE_DECLARATION);
         if(variableDeclaration2 != null) {
             Tree name1 = TreeUtilFunctions.findChildByType(srcAttr, LANG1.SIMPLE_NAME);

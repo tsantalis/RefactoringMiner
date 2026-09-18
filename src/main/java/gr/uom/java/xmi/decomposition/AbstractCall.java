@@ -1414,7 +1414,7 @@ public abstract class AbstractCall extends LeafExpression {
 				if(argument.equals(LANG.TRUE) || argument.equals(LANG.FALSE) || argument.equals(LANG.NULL)) {
 					return -1;
 				}
-				if(equalsIgnoringExtraParenthesis(argument, statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length()))) {
+				if(statement.endsWith(LANG.STATEMENT_TERMINATION) && equalsIgnoringExtraParenthesis(argument, statement.substring(LANG.RETURN_SPACE.length(), statement.length()-LANG.STATEMENT_TERMINATION.length()))) {
 					return index;
 				}
 				index++;

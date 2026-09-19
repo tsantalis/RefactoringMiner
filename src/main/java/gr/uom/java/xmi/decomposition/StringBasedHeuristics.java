@@ -101,6 +101,12 @@ public class StringBasedHeuristics {
 						call.getName().startsWith("min")) {
 					temp = ReplacementUtil.performReplacement(temp, "Math.min", "minOf");
 				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 2 && !methodInvocations2.contains(call) &&
+						call.getName().startsWith("put")) {
+					String before = ".put(" + call.arguments.get(0) + "," + call.arguments.get(1) + ")";
+					String after = "[" + call.arguments.get(0) + "]" + LANG2.ASSIGNMENT + call.arguments.get(1);
+					temp = ReplacementUtil.performReplacement(temp, before, after);
+				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().equals("get")) {
 					//Map.get() replaced with square bracket []

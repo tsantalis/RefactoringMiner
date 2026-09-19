@@ -495,6 +495,7 @@ public class Constants {
     public final String EQUALITY_EXPRESSION = "equality_expression";
     public final String ADDITIVE_EXPRESSION = "additive_expression";
     public final String MULTIPLICATIVE_EXPRESSION = "multiplicative_expression";
+    public final String COMPARISON_EXPRESSION = "comparison_expression";
     public final String INTERPOLATED_IDENTIFIER = "interpolated_identifier";
     public final String INTERPOLATED_EXPRESSION = "interpolated_expression";
     public final String AT = "at";

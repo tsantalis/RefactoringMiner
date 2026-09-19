@@ -44,6 +44,12 @@ public class JavaToKotlinMigration {
             Tree expression2 = dstStatementNode.getChild(0);
             handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
         }
+        else if(srcStatementNode.getType().name.equals(LANG1.WHILE_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.WHILE_STATEMENT) &&
+                srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
+            Tree expression1 = srcStatementNode.getChild(0);
+            Tree expression2 = dstStatementNode.getChild(0);
+            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+        }
     }
 
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
@@ -479,6 +485,9 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
         else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.ADDITIVE_EXPRESSION)) {
+            mappingStore.addMapping(srcStatementNode, dstStatementNode);
+        }
+        else if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.COMPARISON_EXPRESSION)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION_OPERATOR);

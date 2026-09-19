@@ -137,6 +137,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChild(0).getType().name.equals(LANG2.WHILE_STATEMENT)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
+        if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
+                srcStatementNode.getChildren().size() > 0 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.IF_STATEMENT)) {
+            srcStatementNode = srcStatementNode.getChild(0);
+        }
+        if (compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
+                dstStatementNode.getChildren().size() > 0 &&
+                dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
+            dstStatementNode = dstStatementNode.getChild(0);
+        }
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {

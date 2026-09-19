@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -71,7 +72,12 @@ public class JavaToKotlinMigration {
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE) &&
                 !firstChild1.getParent().getParent().getType().name.equals(LANG1.CLASS_INSTANCE_CREATION);
+        List<Tree> mathSimpleNames1 = children1.stream().filter(t -> t.getLabel().equals("Math")).collect(Collectors.toList());
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
+        List<Tree> mathSimpleNames2 = children2.stream().filter(t -> t.getLabel().equals("Math")).collect(Collectors.toList());
+        if(mathSimpleNames1.size() > 0 && mathSimpleNames2.isEmpty()) {
+            children1.removeAll(mathSimpleNames1);
+        }
         List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
         List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {

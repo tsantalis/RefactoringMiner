@@ -97,6 +97,10 @@ public class StringBasedHeuristics {
 						call.getName().startsWith("equals")) {
 					temp = ReplacementUtil.performReplacement(temp, ".equals(" + call.arguments.get(0) + ")", " == " + call.arguments.get(0));
 				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 2 && !methodInvocations2.contains(call) &&
+						call.getName().startsWith("min")) {
+					temp = ReplacementUtil.performReplacement(temp, "Math.min", "minOf");
+				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().equals("get")) {
 					//Map.get() replaced with square bracket []
@@ -144,6 +148,15 @@ public class StringBasedHeuristics {
 				}
 				if(!ss1.contains("!!") && ss2.contains("!!")) {
 					ss2 = ss2.replaceAll("!!", "");
+				}
+				if(!ss1.contains(" -= ") && ss2.contains(" -= ")) {
+					ss2 = ss2.replaceAll(" -= ", "-=");
+				}
+				if(!ss1.contains(" += ") && ss2.contains(" += ")) {
+					ss2 = ss2.replaceAll(" += ", "+=");
+				}
+				if(ss1.contains("(int)") && !ss2.contains("(int)")) {
+					ss1 = ss1.replaceAll("\\(int\\)", "");
 				}
 				if(ss1.equals(ss2)) {
 					return true;
@@ -206,6 +219,13 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(diff2.endsWith(".")) {
+						return true;
+					}
+				}
+				else if(!commonPrefix.isEmpty() && commonPrefix.length() > 1 && commonSuffix.isEmpty()) {
+					int beginIndexS2 = ss2.indexOf(commonPrefix) + commonPrefix.length();
+					String diff2 = ss2.substring(beginIndexS2, ss2.length());
+					if(diff2.equals(".toLong()") || diff2.endsWith(".toInt()")) {
 						return true;
 					}
 				}
@@ -323,10 +343,24 @@ public class StringBasedHeuristics {
 			//url() becomes toUrl()
 			return true;
 		}
+		if(diff1.isEmpty() && diff2.equals(".toInt(")) {
+			//toInt is appended
+			return true;
+		}
+		if(diff1.isEmpty() && diff2.equals(".toLong(")) {
+			//toLong is appended
+			return true;
+		}
 		if(diff1.equals("asList") && diff2.equals("listOf")) {
 			return true;
 		}
 		if(diff1.equals("=") && diff2.equals(" = ")) {
+			return true;
+		}
+		if(diff1.equals("-=") && diff2.equals(" -= ")) {
+			return true;
+		}
+		if(diff1.equals("+=") && diff2.equals(" += ")) {
 			return true;
 		}
 		if(diff1.equals("new") && diff2.isEmpty()) {

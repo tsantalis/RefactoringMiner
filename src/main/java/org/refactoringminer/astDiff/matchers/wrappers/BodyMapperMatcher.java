@@ -995,6 +995,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.PLACEHOLDER_TYPE_SPECIFIER)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.DIRECTLY_ASSIGNABLE_EXPRESSION)) {
+            srcStatementNode = srcStatementNode.getParent();
+        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.AUTO)) {
             srcStatementNode = srcStatementNode.getParent();
             if(srcStatementNode.getType().name.equals(LANG1.PLACEHOLDER_TYPE_SPECIFIER)) {
@@ -1042,6 +1045,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.PLACEHOLDER_TYPE_SPECIFIER)) {
+            dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.AUTO)) {

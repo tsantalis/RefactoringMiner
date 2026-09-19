@@ -4928,15 +4928,48 @@
   "secondEndPos" : 10699
 }, {
   "firstType" : "WhileStatement",
-  "secondType" : "statements",
+  "secondType" : "while_statement",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 11143,
   "secondPos" : 10256,
   "firstEndPos" : 11580,
   "secondEndPos" : 10699
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "comparison_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "WhileStatement",
+  "secondParentType" : "while_statement",
+  "firstPos" : 11150,
+  "secondPos" : 10263,
+  "firstEndPos" : 11177,
+  "secondEndPos" : 10290
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "bytesLeftInWriteWindow",
+  "secondLabel" : "bytesLeftInWriteWindow",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "comparison_expression",
+  "firstPos" : 11150,
+  "secondPos" : 10263,
+  "firstEndPos" : 11172,
+  "secondEndPos" : 10285
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "integer_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "comparison_expression",
+  "firstPos" : 11176,
+  "secondPos" : 10289,
+  "firstEndPos" : 11177,
+  "secondEndPos" : 10290
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -7370,11 +7403,11 @@
   "secondEndPos" : 12886
 }, {
   "firstType" : "WhileStatement",
-  "secondType" : "statements",
+  "secondType" : "while_statement",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 14535,
   "secondPos" : 12828,
   "firstEndPos" : 14577,

@@ -125,6 +125,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
+        if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
+                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
+                srcStatementNode.getChildren().size() > 0 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.WHILE_STATEMENT)) {
+            srcStatementNode = srcStatementNode.getChild(0);
+        }
+        if (compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
+                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
+                dstStatementNode.getChildren().size() > 0 &&
+                dstStatementNode.getChild(0).getType().name.equals(LANG2.WHILE_STATEMENT)) {
+            dstStatementNode = dstStatementNode.getChild(0);
+        }
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -242,6 +254,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                             }
                         }
                     }
+                }
+                if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+                    Tree parent1 = srcStatementNode.getParent();
+                    Tree parent2 = dstStatementNode.getParent();
+                    mappingStore.addMapping(parent1, parent2);
                 }
                 if(!isPartOfExtractedMethod && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_DECLARATION)) {
                     Tree parent1 = srcStatementNode.getParent();

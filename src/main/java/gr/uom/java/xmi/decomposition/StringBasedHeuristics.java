@@ -224,7 +224,7 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
-					if(diff2.endsWith(".")) {
+					if(diff2.endsWith(".") && !diff2.contains(LANG2.ASSIGNMENT)) {
 						return true;
 					}
 				}

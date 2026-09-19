@@ -8183,39 +8183,6 @@
   "firstEndPos" : 15462,
   "secondEndPos" : 13773
 }, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "statements",
-  "firstPos" : 15056,
-  "secondPos" : 13510,
-  "firstEndPos" : 15077,
-  "secondEndPos" : 13550
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "lastGoodStreamId",
-  "secondLabel" : "lastGoodStreamId",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "directly_assignable_expression",
-  "firstPos" : 15060,
-  "secondPos" : 13510,
-  "firstEndPos" : 15076,
-  "secondEndPos" : 13526
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "lastGoodStreamId",
-  "secondLabel" : "lastGoodStreamId",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "navigation_suffix",
-  "firstPos" : 15060,
-  "secondPos" : 13534,
-  "firstEndPos" : 15076,
-  "secondEndPos" : 13550
-}, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -8281,6 +8248,61 @@
   "secondPos" : 13459,
   "firstEndPos" : 15147,
   "secondEndPos" : 13465
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 15191,
+  "secondPos" : 13510,
+  "firstEndPos" : 15232,
+  "secondEndPos" : 13550
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 15191,
+  "secondPos" : 13510,
+  "firstEndPos" : 15231,
+  "secondEndPos" : 13526
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "lastGoodStreamId",
+  "secondLabel" : "lastGoodStreamId",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 15191,
+  "secondPos" : 13510,
+  "firstEndPos" : 15207,
+  "secondEndPos" : 13526
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 15208,
+  "secondPos" : 13527,
+  "firstEndPos" : 15209,
+  "secondEndPos" : 13528
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "lastGoodStreamId",
+  "secondLabel" : "lastGoodStreamId",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 15215,
+  "secondPos" : 13534,
+  "firstEndPos" : 15231,
+  "secondEndPos" : 13550
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",

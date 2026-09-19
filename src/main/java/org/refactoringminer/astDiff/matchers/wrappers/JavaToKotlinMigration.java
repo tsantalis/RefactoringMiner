@@ -639,7 +639,7 @@ public class JavaToKotlinMigration {
                 }
             }
         }
-        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf", "get", "toHttpUrl");
+        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf", "get", "toHttpUrl", "min", "minOf");
         if(callNames1.size() <= callNames2.size()) {
             int matches = 0;
             for(int i=0; i<callNames1.size(); i++) {
@@ -717,17 +717,20 @@ public class JavaToKotlinMigration {
             children1.addAll(newChildren1);
             return true;
         }
-        else if(callNames2.size() > callNames1.size() && callNames2.containsAll(callNames1)) {
+        else if(callNames2.size() > callNames1.size() && (callNames2.containsAll(callNames1) || callNamesReplacedWithSynonyms2.containsAll(callNames1))) {
             //sort callNames2 based on callNames1
             List<Tree> newChildren2 = new ArrayList<>();
             for(String s : callNames1) {
                 int index = callNames2.indexOf(s);
+                if(index == -1)
+                    index = callNamesReplacedWithSynonyms2.indexOf(s);
                 newChildren2.add(children2.get(index));
             }
             for(String s : callNames2) {
                 if(!callNames1.contains(s)) {
                     int index = callNames2.indexOf(s);
-                    newChildren2.add(children2.get(index));
+                    if(!newChildren2.contains(children2.get(index)))
+                        newChildren2.add(children2.get(index));
                 }
             }
             children2.clear();

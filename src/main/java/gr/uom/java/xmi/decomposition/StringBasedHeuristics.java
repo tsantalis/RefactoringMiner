@@ -164,6 +164,12 @@ public class StringBasedHeuristics {
 				if(ss1.contains("(int)") && !ss2.contains("(int)")) {
 					ss1 = ss1.replaceAll("\\(int\\)", "");
 				}
+				if(ss2.endsWith(".toInt()") && !ss1.endsWith(".toInt()")) {
+					ss2 = ss2.substring(0, ss2.length() - ".toInt()".length());
+				}
+				if(ss2.endsWith(".toLong()") && !ss1.endsWith(".toLong()")) {
+					ss2 = ss2.substring(0, ss2.length() - ".toLong()".length());
+				}
 				if(ss1.equals(ss2)) {
 					return true;
 				}

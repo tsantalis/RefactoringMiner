@@ -65,6 +65,7 @@ public class StringBasedHeuristics {
 			List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
 			List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 			String temp = new String(s1);
+			Set<Replacement> appliedReplacements = new LinkedHashSet<>();
 			for(AbstractCall call : methodInvocations1) {
 				if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 0 && !methodInvocations2.contains(call) &&
 						call.getName().equals("isEmpty") && s2.contains(".isNotEmpty()")) {
@@ -82,7 +83,9 @@ public class StringBasedHeuristics {
 						fieldName = call.getName().substring(3, call.getName().length());
 						fieldName = Character.toLowerCase(fieldName.charAt(0)) + fieldName.substring(1, fieldName.length());
 					}
-					temp = ReplacementUtil.performReplacement(temp, call.getName() + "()", fieldName);
+					String before = call.getName() + "()";
+					temp = ReplacementUtil.performReplacement(temp, before, fieldName);
+					appliedReplacements.add(new Replacement(before, fieldName, ReplacementType.VARIABLE_NAME));
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("set") && call.getName().length() > "set".length()) {
@@ -95,7 +98,10 @@ public class StringBasedHeuristics {
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("equals")) {
-					temp = ReplacementUtil.performReplacement(temp, ".equals(" + call.arguments.get(0) + ")", " == " + call.arguments.get(0));
+					String before = ".equals(" + call.arguments.get(0) + ")";
+					String after = " == " + call.arguments.get(0);
+					temp = ReplacementUtil.performReplacement(temp, before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 2 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("min")) {
@@ -106,14 +112,17 @@ public class StringBasedHeuristics {
 					String before = ".put(" + call.arguments.get(0) + "," + call.arguments.get(1) + ")";
 					String after = "[" + call.arguments.get(0) + "]" + LANG2.ASSIGNMENT + call.arguments.get(1);
 					temp = ReplacementUtil.performReplacement(temp, before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().equals("get")) {
 					//Map.get() replaced with square bracket []
-					String argBefore = "(" + call.arguments().get(0) + ")";
-					String argAfter = "[" + call.arguments().get(0) + "]";
-					if(temp.contains(argBefore))
-						temp = temp.replace(argBefore, argAfter);
+					String before = ".get(" + call.arguments().get(0) + ")";
+					String after = "[" + call.arguments().get(0) + "]";
+					if(temp.contains(before)) {
+						temp = temp.replace(before, after);
+						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+					}
 				}
 			}
 			if(temp.equals(statement2.getString()) || temp.equals(s2) ) {
@@ -187,6 +196,17 @@ public class StringBasedHeuristics {
 					String diff2 = beginIndexS2 > endIndexS2 ? "" :	ss2.substring(beginIndexS2, endIndexS2);
 					if(compatibleDiffs(s1, s2, info, diff1, diff2)) {
 						return true;
+					}
+					if(diff1.isEmpty() && !diff2.isEmpty()) {
+						for(Replacement r : info.getReplacements()) {
+							for(Replacement applied : appliedReplacements) {
+								if(r.getBefore().contains(applied.getBefore())) {
+									if(diff2.equals(applied.getAfter()) || diff2.equals("." + applied.getAfter())) {
+										return true;
+									}
+								}
+							}
+						}
 					}
 					if(diff2.contains("$")) {
 						//check for string template

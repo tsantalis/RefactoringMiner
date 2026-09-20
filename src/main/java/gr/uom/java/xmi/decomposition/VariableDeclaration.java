@@ -288,18 +288,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,
 							   LangSingleVariableDeclaration param, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.variableName = param.getLangSimpleName().getIdentifier();
-
-		// Extract type from parameter
-		if (param.hasTypeAnnotation() && param.getTypeAnnotation() != null) {
-			this.type = UMLType.extractTypeObject(param.getTypeAnnotation().getName());
-		} else {
-			this.type = UMLType.extractTypeObject("Object"); // Default for untyped Python parameters
-		}
-
-		this.varargsParameter = param.isVarArgs();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, param,
 				LocationInfo.CodeElementType.SINGLE_VARIABLE_DECLARATION);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		// Extract type from parameter
+		if (param.hasTypeAnnotation() && param.getTypeAnnotation() != null) {
+			this.type = UMLType.extractTypeObject(param.getTypeAnnotation().getName(), LANG);
+		} else {
+			this.type = UMLType.extractTypeObject("Object", LANG); // Default for untyped Python parameters
+		}
+
+		this.varargsParameter = param.isVarArgs();
 
 		// Extract annotations and modifiers using existing processors
 		List<LangAnnotation> langAnnotations = param.getAnnotations();
@@ -388,7 +387,6 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 							   LangAssignment assignment, VariableDeclarationContainer container,
 							   String variableName, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.variableName = variableName;
-		this.type = UMLType.extractTypeObject("Object"); // Default type for Python attributes
 		this.varargsParameter = false;
 
 		// Determine element type based on assignment context
@@ -453,6 +451,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, assignment, elementType);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.type = UMLType.extractTypeObject("Object", LANG); // Default type for Python attributes
 
 		// No annotations or modifiers for simple assignments
 		this.annotations = new ArrayList<>();
@@ -646,7 +645,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		if(fragment.getParent() instanceof EnumDeclaration) {
 			EnumDeclaration enumDeclaration = (EnumDeclaration)fragment.getParent();
-			this.type = UMLType.extractTypeObject(enumDeclaration.getName().getIdentifier());
+			this.type = UMLType.extractTypeObject(enumDeclaration.getName().getIdentifier(), LANG);
 		}
 		ASTNode scopeNode = fragment.getParent();
 		int startOffset = scopeNode.getStartPosition();
@@ -1098,7 +1097,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.variableName = enumConstant.getName();
 		if(enumConstant.getParent() instanceof KtClassBody classBody && classBody.getParent() instanceof KtClass enumClass) {
-			this.type = UMLType.extractTypeObject(enumClass.getName());
+			this.type = UMLType.extractTypeObject(enumClass.getName(), LANG);
 		}
 		this.scope = new VariableScope(ktFile, filePath, this.locationInfo.getStartOffset(), parentLocation.getEndOffset());
 	}

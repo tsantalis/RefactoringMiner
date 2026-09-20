@@ -793,7 +793,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 			umlClass.setEnum(true);
 			List<Swc4jAstTsEnumMember> members = enumDecl.getMembers();
-			UMLType enumConstantType = UMLType.extractTypeObject(umlClass.getName());
+			UMLType enumConstantType = UMLType.extractTypeObject(umlClass.getName(), PathFileUtils.getLang(filePath));
 			for(Swc4jAstTsEnumMember member : members) {
 				ISwc4jAstTsEnumMemberId id = member.getId();
 				Optional<ISwc4jAstExpr> initializer = member.getInit();
@@ -1404,7 +1404,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			else if(expr instanceof Swc4jAstMemberExpr memberExpr) {
 				String text = fileContent.substring(memberExpr.getSpan().getStart(), memberExpr.getSpan().getEnd());
 				LocationInfo location = new LocationInfo(sourceFolder, filePath, memberExpr.getSpan(), CodeElementType.TYPE, fileContent);
-				UMLType type = UMLType.extractTypeObject(text, "<", ">", location);
+				UMLType type = UMLType.extractTypeObject(text, "<", ">", location, PathFileUtils.getLang(filePath));
 				umlClass.setSuperclass(type);
 			}
 		}

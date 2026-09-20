@@ -73,7 +73,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean importsTestCase;
 	private Optional<UMLType> receiver;
 	private Optional<AbstractExpression> trailingReturnType;
-	
+
 	public UMLOperation(String name, LocationInfo locationInfo, String className) {
 		this.locationInfo = locationInfo;
         this.name = name;
@@ -1256,8 +1256,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalsIgnoringVisibility(UMLOperation operation) {
-		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
-		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+		boolean thisEmptyBody = emptyBodyOrNoBody();
+		boolean otherEmptyBody = operation.emptyBodyOrNoBody();
 		return this.name.equals(operation.name) &&
 				this.isAbstract == operation.isAbstract &&
 				this.isConst == operation.isConst &&
@@ -1271,8 +1271,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalsIgnoringNameCase(UMLOperation operation) {
-		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
-		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+		boolean thisEmptyBody = emptyBodyOrNoBody();
+		boolean otherEmptyBody = operation.emptyBodyOrNoBody();
 		return this.name.equalsIgnoreCase(operation.name) &&
 				this.visibility.equals(operation.visibility) &&
 				this.isAbstract == operation.isAbstract &&
@@ -1293,8 +1293,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		
 		if(o instanceof UMLOperation) {
 			UMLOperation operation = (UMLOperation)o;
-			boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
-			boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+			boolean thisEmptyBody = emptyBodyOrNoBody();
+			boolean otherEmptyBody = operation.emptyBodyOrNoBody();
 			return this.className.equals(operation.className) &&
 				this.name.equals(operation.name) &&
 				this.visibility.equals(operation.visibility) &&
@@ -1311,8 +1311,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalsIgnoringTypeParameters(UMLOperation operation) {
-		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
-		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+		boolean thisEmptyBody = emptyBodyOrNoBody();
+		boolean otherEmptyBody = operation.emptyBodyOrNoBody();
 		return this.name.equals(operation.name) &&
 			this.visibility.equals(operation.visibility) &&
 			this.isAbstract == operation.isAbstract &&
@@ -1322,6 +1322,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			this.isForwardDeclaration() == operation.isForwardDeclaration() &&
 			thisEmptyBody == otherEmptyBody &&
 			this.getParameterTypeList().equals(operation.getParameterTypeList());
+	}
+
+	private boolean emptyBodyOrNoBody() {
+		return (this.getBody() == null && this.defaultExpression == null) || this.hasEmptyBody();
 	}
 
 	public boolean equalsQualified(UMLOperation operation) {
@@ -1361,7 +1365,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
+		boolean thisEmptyBody = emptyBodyOrNoBody();
 		result = prime * result + ((className == null) ? 0 : className.hashCode());
 		result = prime * result + (isAbstract ? 1231 : 1237);
 		result = prime * result + (isConst ? 1231 : 1237);

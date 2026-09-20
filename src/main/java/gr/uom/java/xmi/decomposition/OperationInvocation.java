@@ -454,35 +454,35 @@ public class OperationInvocation extends AbstractCall {
     		}
     		else if(arg.startsWith("\"") && arg.endsWith("\"")) {
     			if(LANG.equals(Constants.TYPESCRIPT)) {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject("string"));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("string", LANG));
     			}
     			else {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("String", LANG));
     			}
     		}
     		else if(StringDistance.isNumeric(arg)) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("int"));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("int", LANG));
     		}
     		else if(arg.startsWith("\'") && arg.endsWith("\'")) {
     			if(LANG.equals(Constants.TYPESCRIPT)) {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject("string"));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("string", LANG));
     			}
     			else {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject("char"));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("char", LANG));
     			}
     		}
     		else if(arg.endsWith(".class")) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("Class"));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("Class", LANG));
     		}
     		else if(arg.equals(LANG.TRUE)) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean", LANG));
     		}
     		else if(arg.equals(LANG.FALSE)) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean"));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("boolean", LANG));
     		}
     		else if(arg.startsWith("new ") && arg.contains("(") && openingParenthesisBeforeSquareBracket) {
     			String type = arg.substring(4, arg.indexOf("("));
-    			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject(type, LANG));
     		}
     		else if(arg.startsWith("new ") && arg.contains("[") && openingSquareBracketBeforeParenthesis) {
     			String type = arg.substring(4, arg.indexOf("["));
@@ -494,24 +494,24 @@ public class OperationInvocation extends AbstractCall {
     					break;
     				}
     			}
-    			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject(type, LANG));
     		}
     		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(LANG.LAMBDA_ARROW) && !arg.contains(LANG.METHOD_REFERENCE) && arg.indexOf(")") < arg.length() - 1) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
     			if(cast.charAt(0) != '(') {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject(cast, LANG));
     			}
     			else {
     				inferredArgumentTypes.add(null);
     			}
     		}
     		else if(arg.endsWith(".getClassLoader()")) {
-    			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader", LANG));
     		}
     		else if(arg.contains(LANG.STRING_CONCATENATION) && !containsMethodSignatureOfAnonymousClass(arg, LANG)) {
     			String[] tokens = SPLIT_CONCAT_STRING_PATTERN.split(arg);
     			if(tokens[0].startsWith("\"") && tokens[0].endsWith("\"")) {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject("String"));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject("String", LANG));
     			}
     			else {
     				inferredArgumentTypes.add(null);
@@ -524,7 +524,7 @@ public class OperationInvocation extends AbstractCall {
         			Set<VariableDeclaration> variableDeclarations = variableDeclarationMap.get(arrayVariable);
         			for(VariableDeclaration variableDeclaration : variableDeclarations) {
         				if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-        					UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType()) : null;
+        					UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType(), LANG) : null;
         					inferredArgumentTypes.add(elementType);
         					break;
         				}
@@ -536,7 +536,7 @@ public class OperationInvocation extends AbstractCall {
         			if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arrayVariable)) {
     	    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arrayVariable);
     	    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-    	    				UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType()) : null;
+    	    				UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType(), LANG) : null;
         					inferredArgumentTypes.add(elementType);
     						variableDeclarationFound = true;
     					}
@@ -544,7 +544,7 @@ public class OperationInvocation extends AbstractCall {
         			if(!variableDeclarationFound && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arrayVariable)) {
         				VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arrayVariable);
             			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-            				UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType()) : null;
+            				UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType(), LANG) : null;
         					inferredArgumentTypes.add(elementType);
         				}
         			}
@@ -553,7 +553,7 @@ public class OperationInvocation extends AbstractCall {
     		else {
     			String numberType = handleNumber(arg);
     			if(numberType != null) {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType));
+    				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType, LANG));
     			}
     			else {
     				UMLType returnType = null;
@@ -1126,7 +1126,7 @@ public class OperationInvocation extends AbstractCall {
 					if(typeInferenceMapFromContext.containsKey(argument)) {
 						UMLType argumentType = typeInferenceMapFromContext.get(argument);
 						UMLType paremeterType = parameter.isVarargs() ?
-								UMLType.extractTypeObject(parameter.getType().getClassType()) :
+								UMLType.extractTypeObject(parameter.getType().getClassType(), LANG) :
 								parameter.getType();
 						if(!argumentType.equals(paremeterType))
 							return false;

@@ -563,7 +563,7 @@ public class UMLModelDiff {
 		}
 		UMLClassBaseDiff subclassDiff = getUMLClassDiff(subclass);
 		if(subclassDiff == null) {
-			subclassDiff = getUMLClassDiff(UMLType.extractTypeObject(subclass));
+			subclassDiff = getUMLClassDiff(UMLType.extractTypeObject(subclass, Constants.JAVA));
 		}
 		if(subclassDiff != null) {
 			UMLType superclass = subclassDiff.getSuperclass();
@@ -581,7 +581,7 @@ public class UMLModelDiff {
 			}
 			else if(subclassDiff.getOldSuperclass() == null && subclassDiff.getNewSuperclass() != null && looksLikeAddedClass(subclassDiff.getNewSuperclass()) != null) {
 				UMLClass addedClass = looksLikeAddedClass(subclassDiff.getNewSuperclass());
-				return checkInheritanceRelationship(UMLType.extractTypeObject(addedClass.getName()), finalSuperclass, visitedClasses);
+				return checkInheritanceRelationship(UMLType.extractTypeObject(addedClass.getName(), addedClass.getLANG()), finalSuperclass, visitedClasses);
 			}
 			for(UMLType implementedInterface : subclassDiff.getAddedImplementedInterfaces()) {
 				if(checkInheritanceRelationship(implementedInterface, finalSuperclass, visitedClasses)) {
@@ -596,7 +596,7 @@ public class UMLModelDiff {
 		}
 		UMLClass addedClass = getAddedClass(subclass);
 		if(addedClass == null) {
-			addedClass = looksLikeAddedClass(UMLType.extractTypeObject(subclass));
+			addedClass = looksLikeAddedClass(UMLType.extractTypeObject(subclass, Constants.JAVA));
 		}
 		if(addedClass != null) {
 			UMLType superclass = addedClass.getSuperclass();
@@ -611,7 +611,7 @@ public class UMLModelDiff {
 		}
 		UMLClass removedClass = getRemovedClass(subclass);
 		if(removedClass == null) {
-			removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(subclass));
+			removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(subclass, Constants.JAVA));
 		}
 		if(removedClass != null) {
 			UMLType superclass = removedClass.getSuperclass();
@@ -2626,14 +2626,14 @@ public class UMLModelDiff {
 	private boolean sourceClassImportsTargetClass(String sourceClassName, String targetClassName) {
 		UMLClassBaseDiff classDiff = getUMLClassDiff(sourceClassName);
 		if(classDiff == null) {
-			classDiff = getUMLClassDiff(UMLType.extractTypeObject(sourceClassName));
+			classDiff = getUMLClassDiff(UMLType.extractTypeObject(sourceClassName, Constants.JAVA));
 		}
 		if(classDiff != null) {
 			return classDiff.nextClassImportsType(targetClassName) || classDiff.originalClassImportsType(targetClassName);
 		}
 		UMLClass removedClass = getRemovedClass(sourceClassName);
 		if(removedClass == null) {
-			removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(sourceClassName));
+			removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(sourceClassName, Constants.JAVA));
 		}
 		if(removedClass != null) {
 			return removedClass.importsType(targetClassName);
@@ -2644,14 +2644,14 @@ public class UMLModelDiff {
 	private boolean targetClassImportsSourceClass(String sourceClassName, String targetClassName) {
 		UMLClassBaseDiff classDiff = getUMLClassDiff(targetClassName);
 		if(classDiff == null) {
-			classDiff = getUMLClassDiff(UMLType.extractTypeObject(targetClassName));
+			classDiff = getUMLClassDiff(UMLType.extractTypeObject(targetClassName, Constants.JAVA));
 		}
 		if(classDiff != null) {
 			return classDiff.originalClassImportsType(sourceClassName) || classDiff.nextClassImportsType(sourceClassName);
 		}
 		UMLClass addedClass = getAddedClass(targetClassName);
 		if(addedClass == null) {
-			addedClass = looksLikeAddedClass(UMLType.extractTypeObject(targetClassName));
+			addedClass = looksLikeAddedClass(UMLType.extractTypeObject(targetClassName, Constants.JAVA));
 		}
 		if(addedClass != null) {
 			return addedClass.importsType(sourceClassName);
@@ -3134,7 +3134,7 @@ public class UMLModelDiff {
 		for(UMLClass removedClass : removedClasses) {
 			for(UMLRealization removedRealization : removedRealizations) {
 				UMLClass client = removedRealization.getClient();
-				UMLClassBaseDiff supplierClassDiff = getUMLClassDiff(UMLType.extractTypeObject(removedRealization.getSupplier()));
+				UMLClassBaseDiff supplierClassDiff = getUMLClassDiff(UMLType.extractTypeObject(removedRealization.getSupplier(), client.getLANG()));
 				if(removedClass.equals(client) && supplierClassDiff != null) {
 					int commonOperations = 0;
 					for(UMLOperation operation : removedClass.getOperations()) {
@@ -3189,7 +3189,7 @@ public class UMLModelDiff {
 				if(!addedGeneralization.getParent().equals(removedGeneralization.getParent())) {
 					boolean inferRename = addedGeneralization.getChild().getName().endsWith(addedGeneralization.getParent()) &&
 							removedGeneralization.getChild().getName().endsWith(removedGeneralization.getParent());
-					UMLClassBaseDiff classDiff = getUMLClassDiff(UMLType.extractTypeObject(removedGeneralization.getParent()));
+					UMLClassBaseDiff classDiff = getUMLClassDiff(UMLType.extractTypeObject(removedGeneralization.getParent(), addedClass.getLANG()));
 					if(!(classDiff instanceof UMLClassMoveDiff) && !(classDiff instanceof UMLClassRenameDiff) && !inferRename) {
 						processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
 					}
@@ -3228,7 +3228,7 @@ public class UMLModelDiff {
 								implementedInterfaceOperations++;
 							}
 						}
-						clientImplementsSupplier = clientClassDiff.getOriginalClass().getImplementedInterfaces().contains(UMLType.extractTypeObject(supplier));
+						clientImplementsSupplier = clientClassDiff.getOriginalClass().getImplementedInterfaces().contains(UMLType.extractTypeObject(supplier, clientClassDiff.LANG1));
 					}
 					if((implementedInterfaceOperations > 0 || addedClass.getOperations().size() == 0) && !clientImplementsSupplier && clientClassDiff != null) {
 						subclassSetBefore.add(clientClassDiff.getOriginalClass());
@@ -3466,7 +3466,7 @@ public class UMLModelDiff {
 			return addedClassName.equals(parent.substring(parent.lastIndexOf(".") + 1));
 		}
 		if (parent.contains(".") && addedClassName.contains(".")) {
-			return UMLType.extractTypeObject(parent).equalClassType(UMLType.extractTypeObject(addedClassName));
+			return UMLType.extractTypeObject(parent, Constants.JAVA).equalClassType(UMLType.extractTypeObject(addedClassName, Constants.JAVA));
 		}
 		return parent.equals(addedClassName);
 	}
@@ -3979,8 +3979,8 @@ public class UMLModelDiff {
 		Map<RenamePattern, Integer> typeRenamePatternMap = typeRenamePatternMap(refactorings);
 		for(RenamePattern pattern : typeRenamePatternMap.keySet()) {
 			if(typeRenamePatternMap.get(pattern) > 1) {
-				UMLClass removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(pattern.getBefore()));
-				UMLClass addedClass = looksLikeAddedClass(UMLType.extractTypeObject(pattern.getAfter()));
+				UMLClass removedClass = looksLikeRemovedClass(UMLType.extractTypeObject(pattern.getBefore(), Constants.JAVA));
+				UMLClass addedClass = looksLikeAddedClass(UMLType.extractTypeObject(pattern.getAfter(), Constants.JAVA));
 				if(removedClass != null && addedClass != null) {
 					UMLClassRenameDiff renameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, new Rename().match(removedClass, addedClass));
 					renameDiff.process();
@@ -5000,8 +5000,8 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper initializerMapper = changeAttributeType.getAttributeDiff().getInitializerMapper().get();
 						for(Replacement r : initializerMapper.getReplacements()) {
 							if(r.getType().equals(ReplacementType.TYPE)) {
-								UMLType typeBefore = UMLType.extractTypeObject(r.getBefore());
-								UMLType typeAfter = UMLType.extractTypeObject(r.getAfter());
+								UMLType typeBefore = UMLType.extractTypeObject(r.getBefore(), initializerMapper.LANG1);
+								UMLType typeAfter = UMLType.extractTypeObject(r.getAfter(), initializerMapper.LANG2);
 								classDiff.findInterfaceChanges(typeBefore, typeAfter);
 								classDiff.findPermittedTypeChanges(typeBefore, typeAfter);
 							}
@@ -5017,8 +5017,8 @@ public class UMLModelDiff {
 			Set<Replacement> replacements = classDiff.getReplacementsOfType(ReplacementType.TYPE);
 			for(Replacement r : replacements) {
 				if(r.getType().equals(ReplacementType.TYPE)) {
-					UMLType typeBefore = UMLType.extractTypeObject(r.getBefore());
-					UMLType typeAfter = UMLType.extractTypeObject(r.getAfter());
+					UMLType typeBefore = UMLType.extractTypeObject(r.getBefore(), classDiff.LANG1);
+					UMLType typeAfter = UMLType.extractTypeObject(r.getAfter(), classDiff.LANG2);
 					classDiff.findInterfaceChanges(typeBefore, typeAfter);
 					classDiff.findPermittedTypeChanges(typeBefore, typeAfter);
 				}
@@ -5040,7 +5040,9 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper initializerMapper = changeAttributeType.getAttributeDiff().getInitializerMapper().get();
 						for(Replacement r : initializerMapper.getReplacements()) {
 							if(r.getType().equals(ReplacementType.TYPE)) {
-								classDiff.findImportChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
+								LeafType typeBefore = UMLType.extractTypeObject(r.getBefore(), initializerMapper.LANG1);
+								LeafType typeAfter = UMLType.extractTypeObject(r.getAfter(), initializerMapper.LANG2);
+								classDiff.findImportChanges(typeBefore, typeAfter);
 							}
 						}
 					}
@@ -5053,7 +5055,9 @@ public class UMLModelDiff {
 			Set<Replacement> replacements = classDiff.getReplacementsOfType(ReplacementType.TYPE);
 			for(Replacement r : replacements) {
 				if(r.getType().equals(ReplacementType.TYPE)) {
-					classDiff.findImportChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
+					LeafType typeBefore = UMLType.extractTypeObject(r.getBefore(), classDiff.LANG1);
+					LeafType typeAfter = UMLType.extractTypeObject(r.getAfter(), classDiff.LANG2);
+					classDiff.findImportChanges(typeBefore, typeAfter);
 				}
 			}
 		}
@@ -6837,7 +6841,7 @@ public class UMLModelDiff {
 		}
 		Set<UMLType> interfaceIntersection = new LinkedHashSet<UMLType>(interfacesImplementedByAddedClasses);
 		interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
-		interfaceIntersection.remove(UMLType.extractTypeObject("Serializable"));
+		interfaceIntersection.remove(UMLType.extractTypeObject("Serializable", Constants.JAVA));
 		List<UMLOperation> addedOperations = getAddedAndExtractedOperationsInCommonClasses();
 		addedOperations.addAll(getAddedOperationsInMovedAndRenamedClasses());
 		for(UMLClass addedClass : addedClasses) {

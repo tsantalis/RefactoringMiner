@@ -9,9 +9,11 @@ public class LeafType extends UMLType implements Cloneable {
 	private String nonQualifiedClassType;
 	private volatile int hashCode = 0;
 	public static final Pattern CAMEL_CASE_SPLIT_PATTERN = Pattern.compile("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+	private final Constants LANG;
 	
-	public LeafType(String type) {
+	public LeafType(String type, Constants LANG) {
 		this.classType = type;
+		this.LANG = LANG;
 		if(type.equals("..."))
 			this.nonQualifiedClassType = type;
 		else
@@ -73,7 +75,11 @@ public class LeafType extends UMLType implements Cloneable {
 	@Override
 	public boolean equalsQualified(UMLType type) {
 		if(this.getClass() == type.getClass()) {
-			if(this.classType.equals(((LeafType)type).classType) && equalTypeArgumentsAndArrayDimension(type)) {
+			LeafType leafType = (LeafType)type;
+			if(this.classType.equals(leafType.classType) && equalTypeArgumentsAndArrayDimension(type)) {
+				return true;
+			}
+			if(!this.LANG.equals(leafType.LANG) && this.classType.toLowerCase().equals(leafType.classType.toLowerCase()) && equalTypeArgumentsAndArrayDimension(type)) {
 				return true;
 			}
 			if(equalsTypeScript(type)) {
@@ -141,7 +147,10 @@ public class LeafType extends UMLType implements Cloneable {
 	@Override
 	public boolean equalClassType(UMLType type) {
 		if(this.getClass() == type.getClass()) {
-			return this.nonQualifiedClassType.equals(((LeafType)type).nonQualifiedClassType);
+			LeafType leafType = (LeafType)type;
+			if(!this.LANG.equals(leafType.LANG) && this.nonQualifiedClassType.toLowerCase().equals(leafType.nonQualifiedClassType.toLowerCase()))
+				return true;
+			return this.nonQualifiedClassType.equals(leafType.nonQualifiedClassType);
 		}
 		if(equalsTypeScript(type)) {
 			return true;

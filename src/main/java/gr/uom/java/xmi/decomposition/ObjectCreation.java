@@ -81,10 +81,10 @@ public class ObjectCreation extends AbstractCall {
 	public ObjectCreation(LangCompilationUnit cu, String sourceFolder, String filePath, LangMethodInvocation creation, VariableDeclarationContainer container, String fileContent) {
 		super(cu, sourceFolder, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION, container);
 		if(creation.getExpression() instanceof LangFieldAccess fieldAccess) {
-			this.type = UMLType.extractTypeObject(LangVisitor.stringify(fieldAccess), "[", "]", this.locationInfo);
+			this.type = UMLType.extractTypeObject(LangVisitor.stringify(fieldAccess), "[", "]", this.locationInfo, LANG);
 		}
 		else if(creation.getExpression() instanceof LangSimpleName simpleName) {
-			this.type = UMLType.extractTypeObject(simpleName.getIdentifier(), "[", "]", this.locationInfo);
+			this.type = UMLType.extractTypeObject(simpleName.getIdentifier(), "[", "]", this.locationInfo, LANG);
 		}
 		this.numberOfArguments = creation.getArguments().size();
 		this.arguments = new ArrayList<String>();
@@ -370,7 +370,7 @@ public class ObjectCreation extends AbstractCall {
 		super(cu, sourceFolder, filePath, input(invocation), CodeElementType.CLASS_INSTANCE_CREATION, container);
 		KtExpression calleeExpression = invocation.getCalleeExpression();
 		if(calleeExpression instanceof KtNameReferenceExpression nameReference) {
-			this.type = UMLType.extractTypeObject(nameReference.getReferencedName(), "<", ">", this.locationInfo);
+			this.type = UMLType.extractTypeObject(nameReference.getReferencedName(), "<", ">", this.locationInfo, LANG);
 		}
 		this.numberOfArguments = invocation.getValueArguments().size();
 		this.arguments = new ArrayList<String>();
@@ -435,11 +435,11 @@ public class ObjectCreation extends AbstractCall {
 		if(callee instanceof Swc4jAstMemberExpr memberExpr) {
 			ISwc4jAstMemberProp prop = memberExpr.getProp();
 			if(prop instanceof Swc4jAstPrivateName privateName)
-				this.type = UMLType.extractTypeObject(privateName.getName());
+				this.type = UMLType.extractTypeObject(privateName.getName(), LANG);
 			else if(prop instanceof Swc4jAstIdentName ident)
-				this.type = UMLType.extractTypeObject(ident.getSym());
+				this.type = UMLType.extractTypeObject(ident.getSym(), LANG);
 			else if(prop instanceof Swc4jAstComputedPropName propName)
-				this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()));
+				this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()), LANG);
 			ISwc4jAstExpr receiver = memberExpr.getObj();
 			this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
 		}
@@ -451,11 +451,11 @@ public class ObjectCreation extends AbstractCall {
 			if(expr instanceof Swc4jAstMemberExpr memberExpr) {
 				ISwc4jAstMemberProp prop = memberExpr.getProp();
 				if(prop instanceof Swc4jAstPrivateName privateName)
-					this.type = UMLType.extractTypeObject(privateName.getName());
+					this.type = UMLType.extractTypeObject(privateName.getName(), LANG);
 				else if(prop instanceof Swc4jAstIdentName ident)
-					this.type = UMLType.extractTypeObject(ident.getSym());
+					this.type = UMLType.extractTypeObject(ident.getSym(), LANG);
 				else if(prop instanceof Swc4jAstComputedPropName propName)
-					this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()));
+					this.type = UMLType.extractTypeObject(fileContent.substring(propName.getExpr().getSpan().getStart(), propName.getExpr().getSpan().getEnd()), LANG);
 				ISwc4jAstExpr receiver = memberExpr.getObj();
 				this.expression = fileContent.substring(receiver.getSpan().getStart(), receiver.getSpan().getEnd());
 			}

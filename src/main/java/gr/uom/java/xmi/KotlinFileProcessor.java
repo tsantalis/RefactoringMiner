@@ -54,6 +54,7 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtValueArgumentList;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
+import org.refactoringminer.util.PathFileUtils;
 
 import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
@@ -590,7 +591,7 @@ public class KotlinFileProcessor {
 			for(KtEnumEntry entry : classBody.getEnumEntries()) {
 				UMLJavadoc entryJavadoc = generateDocComment(ktFile, sourceFolder, filePath, fileContent, entry.getDocComment());
 				LocationInfo entryLocationInfo = generateLocationInfo(ktFile, sourceFolder, filePath, entry, CodeElementType.ENUM_CONSTANT_DECLARATION);
-				UMLEnumConstant enumConstant = new UMLEnumConstant(entry.getName(), UMLType.extractTypeObject(umlClass.getName()), entryLocationInfo, umlClass.getName());
+				UMLEnumConstant enumConstant = new UMLEnumConstant(entry.getName(), UMLType.extractTypeObject(umlClass.getName(), PathFileUtils.getLang(filePath)), entryLocationInfo, umlClass.getName());
 				VariableDeclaration variableDeclaration = new VariableDeclaration(ktFile, sourceFolder, filePath, entry, activeVariableDeclarations, fileContent, umlClass.getLocationInfo());
 				enumConstant.setVariableDeclaration(variableDeclaration);
 				enumConstant.setJavadoc(entryJavadoc);

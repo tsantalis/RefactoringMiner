@@ -23,6 +23,8 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
 import java.util.*;
 
+import org.refactoringminer.util.PathFileUtils;
+
 import static extension.umladapter.UMLAdapterUtil.extractUMLImports;
 import static extension.umladapter.processor.UMLAdapterVariableProcessor.processVariableDeclarations;
 
@@ -202,14 +204,14 @@ public class UMLModelAdapter {
             // Qualify and set the first superclass as the main superclass
             LangSimpleName primarySuperClassRaw = typeDecl.getSuperClassNames().get(0);
             LocationInfo superTypeLocationInfo = new LocationInfo(sourceFolder, filePath, primarySuperClassRaw, LocationInfo.CodeElementType.TYPE);
-            UMLType superClassType = UMLType.extractTypeObject(primarySuperClassRaw.getIdentifier(), "[", "]", superTypeLocationInfo);
+            UMLType superClassType = UMLType.extractTypeObject(primarySuperClassRaw.getIdentifier(), "[", "]", superTypeLocationInfo, PathFileUtils.getLang(filePath));
             umlClass.setSuperclass(superClassType);
 
             // For additional base classes, also add as generalizations (Python multiple inheritance)
             for (int i = 1; i < typeDecl.getSuperClassNames().size(); i++) {
                 LangSimpleName additionalSuperClassRaw = typeDecl.getSuperClassNames().get(i);
                 LocationInfo additionalSuperTypeLocationInfo = new LocationInfo(sourceFolder, filePath, additionalSuperClassRaw, LocationInfo.CodeElementType.TYPE);
-                UMLType additionalSuperClassType = UMLType.extractTypeObject(additionalSuperClassRaw.getIdentifier(), "[", "]", additionalSuperTypeLocationInfo);
+                UMLType additionalSuperClassType = UMLType.extractTypeObject(additionalSuperClassRaw.getIdentifier(), "[", "]", additionalSuperTypeLocationInfo, PathFileUtils.getLang(filePath));
                 umlClass.addImplementedInterface(additionalSuperClassType);
             }
         }
@@ -301,17 +303,17 @@ public class UMLModelAdapter {
 
         for (int i = paramOffset; i < params.size(); i++) {
             LangSingleVariableDeclaration param = params.get(i);
-            UMLType typeObject = UMLType.extractTypeObject("Object");
+            UMLType typeObject = UMLType.extractTypeObject("Object", PathFileUtils.getLang(filePath));
             LocationInfo paramLocationInfo = new LocationInfo(sourceFolder, filePath, param, LocationInfo.CodeElementType.TYPE);
             if (LangSupportedEnum.PYTHON.equals(language)) {
                 if (param.getTypeAnnotation() != null) {
-                    typeObject = UMLType.extractTypeObject(param.getTypeAnnotation().getName(), "[", "]", paramLocationInfo);
+                    typeObject = UMLType.extractTypeObject(param.getTypeAnnotation().getName(), "[", "]", paramLocationInfo, PathFileUtils.getLang(filePath));
                 }
             } else {
                 if (param.getTypeAnnotation() != null) {
                     String typeName = param.getTypeAnnotation().getName();
                     if (typeName != null && !typeName.isEmpty()) {
-                        typeObject = UMLType.extractTypeObject(typeName, "[", "]", paramLocationInfo);
+                        typeObject = UMLType.extractTypeObject(typeName, "[", "]", paramLocationInfo, PathFileUtils.getLang(filePath));
                     }
                 }
             }
@@ -335,13 +337,13 @@ public class UMLModelAdapter {
         UMLType returnType;
         LocationInfo returnTypeLocationInfo = new LocationInfo(sourceFolder, filePath, methodDecl, LocationInfo.CodeElementType.TYPE);
         if (LangSupportedEnum.PYTHON.equals(language)){
-            returnType = UMLType.extractTypeObject(methodDecl.getReturnTypeAnnotation(), "[", "]", returnTypeLocationInfo);
+            returnType = UMLType.extractTypeObject(methodDecl.getReturnTypeAnnotation(), "[", "]", returnTypeLocationInfo, PathFileUtils.getLang(filePath));
         } else {
             String resolvedReturnType = methodDecl.getReturnTypeAnnotation();
             if (resolvedReturnType == null || resolvedReturnType.isEmpty()) {
                 resolvedReturnType = TypeObjectEnum.VOID.name();
             }
-            returnType = UMLType.extractTypeObject(resolvedReturnType, "[", "]", returnTypeLocationInfo);
+            returnType = UMLType.extractTypeObject(resolvedReturnType, "[", "]", returnTypeLocationInfo, PathFileUtils.getLang(filePath));
             if (methodDecl.getReturnTypeAnnotation() == null) {
                 methodDecl.setReturnTypeAnnotation(resolvedReturnType);
             }
@@ -490,7 +492,7 @@ public class UMLModelAdapter {
             );
             UMLAttribute attribute = new UMLAttribute(
                     attributeName,
-                    UMLType.extractTypeObject("Object"),
+                    UMLType.extractTypeObject("Object", PathFileUtils.getLang(filePath)),
                     attributeLocationInfo,
                     typeDeclaration.getName()
             );

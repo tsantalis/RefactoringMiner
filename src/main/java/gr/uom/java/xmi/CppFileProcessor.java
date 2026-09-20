@@ -632,7 +632,7 @@ public class CppFileProcessor {
 					templateParameters, inactiveContainerAlternatives);
 			IASTEnumerator[] enumerators = enumSpecifier.getEnumerators();
 			//no LocationInfo is attached on purpose, since this type is shared by all enum constants and does not correspond to a single program element
-			UMLType type = UMLType.extractTypeObject(className);
+			UMLType type = UMLType.extractTypeObject(className, PathFileUtils.getLang(filePath));
 			for(IASTEnumerator enumerator : enumerators) {
 				IASTName name = enumerator.getName();
 				LocationInfo enumConstantLocation = new LocationInfo(sourceFolder, filePath, name, CodeElementType.ENUM_CONSTANT_DECLARATION, fileContent);
@@ -937,7 +937,7 @@ public class CppFileProcessor {
 		//if structured extraction can’t model that perfectly, the fallback stores something based on the raw text
 		if(rightType == null) {
 			LocationInfo typeLocationInfo = new LocationInfo(sourceFolder, filePath, mappingTypeId, CodeElementType.TYPE, fileContent);
-			rightType = UMLType.extractTypeObject(UMLType.cleanTypeText(mappingTypeId.getRawSignature()), "<", ">", typeLocationInfo);
+			rightType = UMLType.extractTypeObject(UMLType.cleanTypeText(mappingTypeId.getRawSignature()), "<", ">", typeLocationInfo, PathFileUtils.getLang(filePath));
 		}
 		return new UMLTypeAlias(alias.toString(), rightType, locationInfo);
 	}

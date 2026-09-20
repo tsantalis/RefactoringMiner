@@ -68,6 +68,7 @@ import org.eclipse.jdt.core.dom.UsesDirective;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.refactoringminer.astDiff.visitors.JdtWithCommentsVisitor;
+import org.refactoringminer.util.PathFileUtils;
 
 import com.github.gumtreediff.gen.jdt.AbstractJdtVisitor;
 import com.github.gumtreediff.tree.TreeContext;
@@ -1336,7 +1337,7 @@ public class JavaFileProcessor {
 	private void processEnumConstantDeclaration(CompilationUnit cu, EnumConstantDeclaration enumConstantDeclaration, String sourceFolder, String sourceFile, UMLClass umlClass, List<UMLComment> comments, String javaFileContent) {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFolder, sourceFile, javaFileContent);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
-		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo, umlClass.getName());
+		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName(), PathFileUtils.getLang(sourceFile)), locationInfo, umlClass.getName());
 		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, enumConstantDeclaration, new LinkedHashMap<>(), javaFileContent);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);

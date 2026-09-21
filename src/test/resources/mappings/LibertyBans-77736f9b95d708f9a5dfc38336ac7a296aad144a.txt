@@ -1,0 +1,17 @@
+public testNoArguments() : void -> public noArguments(cmdPackage CommandPackage) : void
+line range:34-34==line range:37-37
+line range:35-35==line range:38-38
+line range:36-36==line range:39-39
+line range:37-37==line range:40-40
+public testMultipleArguments() : void -> public oneArgument(cmdPackage CommandPackage) : void
+line range:56-56==line range:47-47
+line range:57-57==line range:48-48
+line range:59-59==line range:50-50
+line range:60-60==line range:51-51
+line range:62-62==line range:53-53
+public testOneArgument() : void -> public multipleArguments(cmdPackage CommandPackage) : void
+line range:43-43==line range:61-61
+line range:44-44==line range:62-62
+line range:46-46==line range:64-64
+line range:47-47==line range:65-65
+line range:49-49==line range:67-67

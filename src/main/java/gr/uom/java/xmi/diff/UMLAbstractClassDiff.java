@@ -3904,6 +3904,19 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+		if(annotation.getTypeName().equals("ArgumentsSource") && modelDiff != null) {
+			AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : null;
+			if(value != null) {
+				List<LeafExpression> typeLiterals = value.getTypeLiterals();
+				if(typeLiterals.size() > 0) {
+					String providerClassLiteral = SourceAnnotation.sanitizeLiteral(typeLiterals.get(0).getString());
+					UMLAbstractClass providerClass = modelDiff.findClassInChildModel(providerClassLiteral);
+					if(providerClass != null) {
+						inputDeclarations.add(providerClass);
+					}
+				}
+			}
+		}
 		if(modelDiff != null && nextClass.getSuperclass() != null) {
 			UMLClassBaseDiff superclassDiff = modelDiff.getUMLClassDiff(nextClass.getSuperclass());
 			if(superclassDiff != null) {

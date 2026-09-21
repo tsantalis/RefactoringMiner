@@ -1235,6 +1235,8 @@ public class TestStatementMappings {
 		"https://github.com/xlate/staedi.git, f8b4a918ed30812635aa15e357bec7ef6f3c786d, staedi-f8b4a918ed30812635aa15e357bec7ef6f3c786d.txt",
 		"https://github.com/adorsys/xs2a-adapter.git, a0141f7fdd4a5252a2e5706e0b6589dd0f0e1f13, xs2a-adapter-a0141f7fdd4a5252a2e5706e0b6589dd0f0e1f13.txt",
 		"https://github.com/luhenry/netlib.git, 0762ddcf6a5dc972294fc771a25e9823338fc0ba, netlib-0762ddcf6a5dc972294fc771a25e9823338fc0ba.txt",
+		"https://github.com/A248/LibertyBans.git, 77736f9b95d708f9a5dfc38336ac7a296aad144a, LibertyBans-77736f9b95d708f9a5dfc38336ac7a296aad144a-mappings.txt",
+		"https://github.com/usethesource/vallang.git, d58363bc7bcf3f350e55bac9bba3727fa4304385, vallang-d58363bc7bcf3f350e55bac9bba3727fa4304385-mappings.txt",
 	})
 	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

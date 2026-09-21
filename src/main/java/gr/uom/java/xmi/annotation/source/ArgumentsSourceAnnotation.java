@@ -62,9 +62,26 @@ public class ArgumentsSourceAnnotation extends SourceAnnotation implements Singl
         }
         StatementObject statement = stmtCandidate.get();
         AbstractCall call = statement.invocationCoveringEntireFragment();
-        if(call == null || !call.getName().equals("of")) {
+        if(call == null) {
             return;
         }
+        if(call.getName().equals("of")) {
+            //e.g. return Stream.of(Arguments.of(a, b), Arguments.of(c, d));
+            extractArgumentsOfRows(statement);
+        }
+        else if(call.getName().equals("map") && isArgumentsOfMethodReference(call)) {
+            //e.g. return Stream.of(new Fixture("a"), new Fixture("b")).map(Arguments::of);
+            //each element of the Stream.of(...) this is chained onto becomes its own single-value row
+            extractStreamOfMapRows(statement);
+        }
+    }
+
+    private boolean isArgumentsOfMethodReference(AbstractCall call) {
+        List<String> callArguments = call.arguments();
+        return callArguments.size() == 1 && callArguments.get(0).equals("Arguments::of");
+    }
+
+    private void extractArgumentsOfRows(StatementObject statement) {
         List<AbstractCall> rowCallCandidates = new ArrayList<>();
         for(AbstractCall nestedCall : statement.getMethodInvocations()) {
             if(nestedCall.getExpression() != null && !nestedCall.getExpression().equals("Stream") && nestedCall.getName().equals("of")) {
@@ -82,22 +99,38 @@ public class ArgumentsSourceAnnotation extends SourceAnnotation implements Singl
             if(nestedInAnotherRowCall) {
                 continue;
             }
-            List<String> resolvedArguments = new ArrayList<>();
-            List<LeafExpression> leafExpressions = new ArrayList<>();
-            for(String arg : nestedCall.arguments()) {
-                List<LeafExpression> matches = statement.findExpression(arg);
-                LeafExpression match = matches.stream()
-                        .filter(m -> nestedCall.getLocationInfo().subsumes(m.getLocationInfo()))
-                        .findFirst().orElse(null);
-                resolvedArguments.add(arg);
-                if(match != null) {
-                    leafExpressions.add(match);
-                }
+            addRowIfMatched(statement, nestedCall, nestedCall.arguments());
+        }
+    }
+
+    private void extractStreamOfMapRows(StatementObject statement) {
+        AbstractCall streamOfCall = statement.getMethodInvocations().stream()
+                .filter(nestedCall -> nestedCall.getName().equals("of") && "Stream".equals(nestedCall.getExpression()))
+                .findFirst().orElse(null);
+        if(streamOfCall == null) {
+            return;
+        }
+        for(String arg : streamOfCall.arguments()) {
+            addRowIfMatched(statement, streamOfCall, Collections.singletonList(arg));
+        }
+    }
+
+    private void addRowIfMatched(StatementObject statement, AbstractCall scopeCall, List<String> rowArguments) {
+        List<String> resolvedArguments = new ArrayList<>();
+        List<LeafExpression> leafExpressions = new ArrayList<>();
+        for(String arg : rowArguments) {
+            List<LeafExpression> matches = statement.findExpression(arg);
+            LeafExpression match = matches.stream()
+                    .filter(m -> scopeCall.getLocationInfo().subsumes(m.getLocationInfo()))
+                    .findFirst().orElse(null);
+            resolvedArguments.add(arg);
+            if(match != null) {
+                leafExpressions.add(match);
             }
-            if(!leafExpressions.isEmpty()) {
-                testParameters.add(resolvedArguments);
-                testParameterLeafExpressions.add(leafExpressions);
-            }
+        }
+        if(!leafExpressions.isEmpty()) {
+            testParameters.add(resolvedArguments);
+            testParameterLeafExpressions.add(leafExpressions);
         }
     }
 

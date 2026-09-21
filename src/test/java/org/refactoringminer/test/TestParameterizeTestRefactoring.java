@@ -596,8 +596,6 @@ class TestParameterizeTestRefactoring {
 //            "https://github.com/samtools/htsjdk.git, 1734eb99e5dcf16d92febead5e1b62323e0b6199, htsjdk-1734eb99e5dcf16d92febead5e1b62323e0b6199.txt", //FIXME: TestNG not supported, Nikos: 3 tests parameterized into testCheckTerminationForFiles + newly added tests
 //            "https://github.com/apache/hbase.git, 2306820df8b41d9af5227465ee2cf9e18b8f0b5c, hbase-2306820df8b41d9af5227465ee2cf9e18b8f0b5c.txt", //FIXME: JUnit 4 parameterization not supported
             "https://github.com/spring-projects/spring-boot.git, 16439ad6e364267033b8b157f3608b46c654dffa, spring-boot-16439ad6e364267033b8b157f3608b46c654dffa.txt",
-            ////Parameterize Test with ArgumentsSource
-            "https://github.com/A248/LibertyBans.git, 77736f9b95d708f9a5dfc38336ac7a296aad144a, LibertyBans-77736f9b95d708f9a5dfc38336ac7a296aad144a.txt",
             ////Add Parameterized Test
 //            "https://github.com/hapifhir/hapi-fhir/pull/5764.git, ad470cff726d800cbf9baa49abd6a9a536781ec0, hapi-fhir-pull-5764-ad470cff726d800cbf9baa49abd6a9a536781ec0.txt", //TODO: Should test addition of parameterized test be supported?
             ////Merge Data Provider

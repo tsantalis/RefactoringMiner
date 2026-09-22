@@ -124,7 +124,7 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static Tree findChildByType(Tree tree, String type) {
+	public static Tree findChildByType(Tree tree, String... type) {
 		if (!tree.getChildren().isEmpty())
 		{
 			for (Tree child: tree.getChildren()) {

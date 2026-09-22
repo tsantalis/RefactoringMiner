@@ -492,6 +492,7 @@ public class Constants {
     public final String COMPARISON_OPERATOR = "comparison_operator";
     public final String NOT_PREFIX_OPERATOR = "!";
     public final String DISJUNCTION_EXPRESSION = "disjunction_expression";
+    public final String CONJUNCTION_EXPRESSION = "conjunction_expression";
     public final String EQUALITY_EXPRESSION = "equality_expression";
     public final String ADDITIVE_EXPRESSION = "additive_expression";
     public final String MULTIPLICATIVE_EXPRESSION = "multiplicative_expression";

@@ -3706,6 +3706,17 @@
   "firstEndPos" : 9127,
   "secondEndPos" : 8231
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "shutdown",
+  "secondLabel" : "isShutdown",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 9055,
+  "secondPos" : 8162,
+  "firstEndPos" : 9063,
+  "secondEndPos" : 8172
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
@@ -4575,6 +4586,17 @@
   "firstEndPos" : 9876,
   "secondEndPos" : 8930
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "flushHeaders",
+  "secondLabel" : "flushHeaders",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 9833,
+  "secondPos" : 8888,
+  "firstEndPos" : 9845,
+  "secondEndPos" : 8900
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
@@ -5410,17 +5432,6 @@
   "secondPos" : 10084,
   "firstEndPos" : 11004,
   "secondEndPos" : 10085
-}, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 11013,
-  "secondPos" : 10093,
-  "firstEndPos" : 11020,
-  "secondEndPos" : 10099
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -7776,6 +7787,17 @@
   "firstEndPos" : 14028,
   "secondEndPos" : 12307
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "failedDueToMissingPong",
+  "secondLabel" : "failedDueToMissingPong",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 13949,
+  "secondPos" : 12230,
+  "firstEndPos" : 13971,
+  "secondEndPos" : 12252
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
@@ -7841,17 +7863,6 @@
   "secondPos" : 12279,
   "firstEndPos" : 14002,
   "secondEndPos" : 12283
-}, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 14013,
-  "secondPos" : 12293,
-  "firstEndPos" : 14020,
-  "secondEndPos" : 12299
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -8414,6 +8425,17 @@
   "firstEndPos" : 14577,
   "secondEndPos" : 12886
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "awaitingPong",
+  "secondLabel" : "awaitingPong",
+  "firstParentType" : "WhileStatement",
+  "secondParentType" : "while_statement",
+  "firstPos" : 14542,
+  "secondPos" : 12835,
+  "firstEndPos" : 14554,
+  "secondEndPos" : 12847
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
@@ -8799,6 +8821,17 @@
   "firstEndPos" : 15157,
   "secondEndPos" : 13475
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "shutdown",
+  "secondLabel" : "isShutdown",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 15118,
+  "secondPos" : 13435,
+  "firstEndPos" : 15126,
+  "secondEndPos" : 13445
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
@@ -8809,17 +8842,6 @@
   "secondPos" : 13447,
   "firstEndPos" : 15157,
   "secondEndPos" : 13475
-}, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 15140,
-  "secondPos" : 13459,
-  "firstEndPos" : 15147,
-  "secondEndPos" : 13465
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -10196,6 +10218,17 @@
   "firstEndPos" : 17741,
   "secondEndPos" : 15821
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "sendConnectionPreface",
+  "secondLabel" : "sendConnectionPreface",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 17421,
+  "secondPos" : 15517,
+  "firstEndPos" : 17442,
+  "secondEndPos" : 15538
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
@@ -10800,6 +10833,17 @@
   "secondPos" : 16133,
   "firstEndPos" : 18111,
   "secondEndPos" : 16206
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "shutdown",
+  "secondLabel" : "isShutdown",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 18039,
+  "secondPos" : 16137,
+  "firstEndPos" : 18047,
+  "secondEndPos" : 16147
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -13827,17 +13871,6 @@
   "secondEndPos" : 18856
 }, {
   "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 21273,
-  "secondPos" : 18866,
-  "firstEndPos" : 21280,
-  "secondEndPos" : 18872
-}, {
-  "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -14190,17 +14223,6 @@
   "secondEndPos" : 19098
 }, {
   "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 21519,
-  "secondPos" : 19117,
-  "firstEndPos" : 21526,
-  "secondEndPos" : 19123
-}, {
-  "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -14309,6 +14331,17 @@
   "secondPos" : 19183,
   "firstEndPos" : 21673,
   "secondEndPos" : 19268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "inFinished",
+  "secondLabel" : "inFinished",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 21591,
+  "secondPos" : 19187,
+  "firstEndPos" : 21601,
+  "secondEndPos" : 19197
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -14738,17 +14771,6 @@
   "secondPos" : 19505,
   "firstEndPos" : 21903,
   "secondEndPos" : 19515
-}, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 21914,
-  "secondPos" : 19525,
-  "firstEndPos" : 21921,
-  "secondEndPos" : 19531
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -15961,17 +15983,6 @@
   "secondEndPos" : 20697
 }, {
   "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 23357,
-  "secondPos" : 20751,
-  "firstEndPos" : 23364,
-  "secondEndPos" : 20757
-}, {
-  "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -16388,17 +16399,6 @@
   "secondPos" : 21026,
   "firstEndPos" : 23648,
   "secondEndPos" : 21035
-}, {
-  "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 23659,
-  "secondPos" : 21045,
-  "firstEndPos" : 23666,
-  "secondEndPos" : 21051
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -16828,6 +16828,17 @@
   "secondPos" : 21421,
   "firstEndPos" : 24134,
   "secondEndPos" : 21460
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "clearPrevious",
+  "secondLabel" : "clearPrevious",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 24098,
+  "secondPos" : 21425,
+  "firstEndPos" : 24111,
+  "secondEndPos" : 21438
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "control_structure_body",
@@ -18247,6 +18258,17 @@
   "secondPos" : 22875,
   "firstEndPos" : 26337,
   "secondEndPos" : 23251
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "reply",
+  "secondLabel" : "reply",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 25892,
+  "secondPos" : 22879,
+  "firstEndPos" : 25897,
+  "secondEndPos" : 22884
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -20702,17 +20724,6 @@
   "secondEndPos" : 25472
 }, {
   "firstType" : "ReturnStatement",
-  "secondType" : "jump_keyword",
-  "firstLabel" : "",
-  "secondLabel" : "return",
-  "firstParentType" : "Block",
-  "secondParentType" : "jump_expression",
-  "firstPos" : 28630,
-  "secondPos" : 25482,
-  "firstEndPos" : 28637,
-  "secondEndPos" : 25488
-}, {
-  "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -20942,6 +20953,17 @@
   "secondPos" : 25757,
   "firstEndPos" : 29172,
   "secondEndPos" : 25953
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "cancel",
+  "secondLabel" : "cancel",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 28967,
+  "secondPos" : 25761,
+  "firstEndPos" : 28973,
+  "secondEndPos" : 25767
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -21459,6 +21481,17 @@
   "secondPos" : 26325,
   "firstEndPos" : 29803,
   "secondEndPos" : 26381
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "cancel",
+  "secondLabel" : "cancel",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 29750,
+  "secondPos" : 26329,
+  "firstEndPos" : 29756,
+  "secondEndPos" : 26335
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "control_structure_body",
@@ -22328,6 +22361,17 @@
   "secondPos" : 27280,
   "firstEndPos" : 31034,
   "secondEndPos" : 27336
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "cancel",
+  "secondLabel" : "cancel",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 30981,
+  "secondPos" : 27284,
+  "firstEndPos" : 30987,
+  "secondEndPos" : 27290
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "control_structure_body",

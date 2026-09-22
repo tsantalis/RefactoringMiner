@@ -144,6 +144,7 @@ public class JavaToKotlinMigration {
         List<Tree> lambdas2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ANNOTATED_LAMBDA);
         //remove the simpleName children of anonymous/lambdas from the parent children
         removeFromParent(children1, anonymous1, LANG1.SIMPLE_NAME);
+        removeFromParent(qualifiedNames1, anonymous1, LANG1.QUALIFIED_NAME);
         removeFromParent(children2, anonymous2, LANG2.SIMPLE_NAME);
         removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
         boolean letWithLambda = letFound && lambdas2.size() > lambdas1.size();
@@ -219,6 +220,39 @@ public class JavaToKotlinMigration {
                 }
             }
             children1.removeAll(toBeRemoved1);
+        }
+        List<Tree> inv1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
+        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) || srcStatementNode.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+            inv1.add(0, srcStatementNode);
+        }
+        List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
+        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            inv2.add(0, dstStatementNode);
+        }
+        removeFromParent(inv1, anonymous1, LANG1.METHOD_INVOCATION);
+        removeFromParent(inv1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
+        removeFromParent(inv2, anonymous2, LANG2.METHOD_INVOCATION);
+        removeFromParent(inv1, lambdas1, LANG1.METHOD_INVOCATION);
+        removeFromParent(inv1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
+        if(!letWithLambda) {
+            removeFromParent(inv2, lambdas2, LANG2.METHOD_INVOCATION);
+        }
+        //check if class instance creation has an anonymous class and remove it
+        if(anonymous1.size() > anonymous2.size()) {
+            List<Tree> invocationToBeRemoved = new ArrayList<Tree>();
+            for(Tree inv : inv1) {
+                if(inv.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+                    Tree anonymous = TreeUtilFunctions.findChildByType(inv, LANG1.ANONYMOUS_CLASS_DECLARATION);
+                    if(anonymous != null && anonymous1.contains(anonymous)) {
+                        Tree simpleType = inv.getChild(0);
+                        if(simpleType.getChildren().size() > 0 && children1.contains(simpleType.getChild(0))) {
+                            children1.remove(simpleType.getChild(0));
+                        }
+                        invocationToBeRemoved.add(inv);
+                    }
+                }
+            }
+            inv1.removeAll(invocationToBeRemoved);
         }
         boolean equalsMismatch = children1.stream().anyMatch(node -> node.getLabel().equals("equals")) &&
                 !children2.stream().anyMatch(node -> node.getLabel().equals("equals"));
@@ -309,22 +343,6 @@ public class JavaToKotlinMigration {
                     }
                 }
             }
-        }
-        List<Tree> inv1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
-        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) || srcStatementNode.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
-            inv1.add(0, srcStatementNode);
-        }
-        List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
-        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
-            inv2.add(0, dstStatementNode);
-        }
-        removeFromParent(inv1, anonymous1, LANG1.METHOD_INVOCATION);
-        removeFromParent(inv1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
-        removeFromParent(inv2, anonymous2, LANG2.METHOD_INVOCATION);
-        removeFromParent(inv1, lambdas1, LANG1.METHOD_INVOCATION);
-        removeFromParent(inv1, lambdas1, LANG1.CLASS_INSTANCE_CREATION);
-        if(!letWithLambda) {
-            removeFromParent(inv2, lambdas2, LANG2.METHOD_INVOCATION);
         }
         List<Tree> invocationsToBeRemoved = new ArrayList<>();
         if(nameCompliance(inv1, inv2, LANG1, LANG2)) {
@@ -573,7 +591,9 @@ public class JavaToKotlinMigration {
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
                 if(navigationSuffix != null)
                     mappingStore.addMapping(inv1.get(i), navigationSuffix);
-                mappingStore.addMapping(inv1.get(i), children2.get(i));
+                boolean skip = inv1.get(i).getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && children2.get(i).getParent().getType().name.equals(LANG2.VALUE_ARGUMENT);
+                if(!skip)
+                    mappingStore.addMapping(inv1.get(i), children2.get(i));
             }
         }
         if(inv1.size() == 1 && assignableExpression != null) {

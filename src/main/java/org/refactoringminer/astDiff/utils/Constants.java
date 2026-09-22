@@ -503,6 +503,7 @@ public class Constants {
     public final String TYPE_ARGUMENTS = "type_arguments";
     public final String STRING_CONTENT = "string_content";
     public final String LAMBDA_PARAMETERS = "lambda_parameters";
+    public final String VALUE_ARGUMENT = "value_argument";
 
     //TypeScript specific
     public final String FOR_IN_STATEMENT = "for_in_statement";

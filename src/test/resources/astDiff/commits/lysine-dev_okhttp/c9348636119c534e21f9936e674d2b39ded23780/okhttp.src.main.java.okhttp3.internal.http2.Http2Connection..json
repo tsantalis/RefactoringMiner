@@ -17247,6 +17247,94 @@
   "firstEndPos" : 24699,
   "secondEndPos" : 21993
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 24393,
+  "secondPos" : 21705,
+  "firstEndPos" : 24446,
+  "secondEndPos" : 21768
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 24393,
+  "secondPos" : 21705,
+  "firstEndPos" : 24445,
+  "secondEndPos" : 21710
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "delta",
+  "secondLabel" : "delta",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 24393,
+  "secondPos" : 21705,
+  "firstEndPos" : 24398,
+  "secondEndPos" : 21710
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 24399,
+  "secondPos" : 21711,
+  "firstEndPos" : 24400,
+  "secondEndPos" : 21712
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "additive_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "parenthesized_expression",
+  "firstPos" : 24401,
+  "secondPos" : 21714,
+  "firstEndPos" : 24445,
+  "secondEndPos" : 21758
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "peerInitialWindowSize",
+  "secondLabel" : "peerInitialWindowSize",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "additive_expression",
+  "firstPos" : 24401,
+  "secondPos" : 21714,
+  "firstEndPos" : 24422,
+  "secondEndPos" : 21735
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "additive_expression",
+  "firstPos" : 24423,
+  "secondPos" : 21736,
+  "firstEndPos" : 24424,
+  "secondEndPos" : 21737
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "priorWriteWindowSize",
+  "secondLabel" : "priorWriteWindowSize",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "additive_expression",
+  "firstPos" : 24425,
+  "secondPos" : 21738,
+  "firstEndPos" : 24445,
+  "secondEndPos" : 21758
+}, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",
   "firstLabel" : "",

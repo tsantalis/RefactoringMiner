@@ -182,7 +182,7 @@ public class StringBasedHeuristics {
 				if(ss1.equals(ss2)) {
 					return true;
 				}
-				if(equalAfterParenthesisElimination(ss1, ss2, LANG1, LANG2)) {
+				if(equalAfterParenthesisElimination(ss1, ss2, info, LANG1, LANG2)) {
 					return true;
 				}
 				String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(ss1, ss2);
@@ -232,7 +232,7 @@ public class StringBasedHeuristics {
 						if(tmp.equals(diff2)) {
 							return true;
 						}
-						if(equalAfterParenthesisElimination(tmp, diff2, LANG1, LANG2)) {
+						if(equalAfterParenthesisElimination(tmp, diff2, info, LANG1, LANG2)) {
 							return true;
 						}
 					}
@@ -526,7 +526,7 @@ public class StringBasedHeuristics {
 		return identicalMethodCalls == arguments1.size() && arguments1.size() > 0;
 	}
 
-	protected static boolean equalAfterParenthesisElimination(String s1, String s2, Constants LANG1, Constants LANG2) {
+	protected static boolean equalAfterParenthesisElimination(String s1, String s2, ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		String updatedS1 = s1.replace("(", "");
 		updatedS1 = updatedS1.replace(")", "");
 		String updatedS2 = s2.replace("(", "");
@@ -550,6 +550,9 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
+				return true;
+			}
+			if(compatibleDiffs(s1, s2, info, diff1, diff2)) {
 				return true;
 			}
 		}

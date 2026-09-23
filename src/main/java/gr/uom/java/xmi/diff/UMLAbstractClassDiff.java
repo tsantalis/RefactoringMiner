@@ -3534,6 +3534,13 @@ public abstract class UMLAbstractClassDiff {
 		int maxMappings = -1;
 		int minReplacements = Integer.MAX_VALUE;
 		for(UMLOperationBodyMapper mapper : filteredMapperSet) {
+			boolean addedOpetationWithTheSameName = false;
+			for(UMLOperation addedOperation2 : addedOperations) {
+				if(!mapper.getContainer2().equals(addedOperation2) && mapper.getContainer1().getName().equals(addedOperation2.getName())) {
+					addedOpetationWithTheSameName = true;
+					break;
+				}
+			}
 			int mappings = mapper.countMappingsForInternalParameterizedTest();
 			if(mappings > maxMappings) {
 				maxMappings = mappings;
@@ -3549,7 +3556,7 @@ public abstract class UMLAbstractClassDiff {
 			else if(mappings <= maxMappings && replacements == minReplacements && addedOperations.size() == 1) {
 				filteredMapperSet2.add(mapper);
 			}
-			else if(mappings <= maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
+			else if(mappings <= maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName()) && !addedOpetationWithTheSameName) {
 				filteredMapperSet2.add(mapper);
 			}
 			else if(mappings == maxMappings && replacements <= 2*minReplacements && mapper.getOperation1().commonNameTokensExceptForOne(mapper.getOperation2())) {

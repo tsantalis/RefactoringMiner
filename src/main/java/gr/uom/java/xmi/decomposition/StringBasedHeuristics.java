@@ -552,7 +552,7 @@ public class StringBasedHeuristics {
 			if(diff2.isEmpty() && diff1.isBlank() && !diff1.isEmpty()) {
 				return true;
 			}
-			if(compatibleDiffs(s1, s2, info, diff1, diff2)) {
+			if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN) && compatibleDiffs(s1, s2, info, diff1, diff2)) {
 				return true;
 			}
 		}

@@ -3,8 +3,10 @@ package org.refactoringminer.astDiff.graph.cluster.traverse;
 import com.github.gumtreediff.tree.Tree;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.NodeType;
+import org.refactoringminer.astDiff.graph.ReviewNode;
 import org.refactoringminer.astDiff.utils.Constants;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -217,8 +219,8 @@ public class Narrator {
         ).toList();
     }
 
-    public List<ChapterUnit> getFlatChapters(GrainLevel level) {
-        if (flatCache.containsKey(level)) {
+    public List<ChapterUnit> getFlatChapters(GrainLevel level, int length, @Nullable Boolean force) {
+        if (flatCache.containsKey(level) && (force == null || !force)) {
             return flatCache.get(level);
         }
 
@@ -229,29 +231,19 @@ public class Narrator {
         List<ChapterUnit> units = new ArrayList<>();
         for (int i = 0; i < chapters.size(); i++) {
             TraversalPattern chapter = chapters.get(i);
-
             List<TraversalPattern> filterPatterns = i > 0 ? chapters.subList(0, i) : Collections.emptyList();
+            List<NarrativeElement> elements = chapter.getElements(filterPatterns, length);
 
-            if (chapter instanceof AggregatorPattern agg) {
-                List<NarrativeElement> elements = agg.getElements(filterPatterns);
-
-                List<List<Integer>> splits = Splitter.createBalancedSplits(elements.stream().map(NarrativeElement::getContent).toList());
-                for (List<Integer> split : splits) {
-                    ChapterUnit chu = new ChapterUnit();
-                    for (Integer index : split) {
-                        NarrativeElement ne = elements.get(index);
-                        chu.append(ne.getContent());
-                        chu.addMains(ne.getMains());
-                        chu.addSides(ne.getSides());
-                    }
-
-                    units.add(chu);
-                }
-            } else {
+            List<List<Integer>> splits = Splitter.createBalancedSplits(elements.stream().map(NarrativeElement::getContent).toList());
+            for (List<Integer> split : splits) {
                 ChapterUnit chu = new ChapterUnit();
-                chu.append(chapter.extended(filterPatterns));
-                chu.addMains(new HashSet<>(chapter.getMains()));
-                chu.addSides(new HashSet<>(chapter.getSides()));
+                for (Integer index : split) {
+                    NarrativeElement ne = elements.get(index);
+                    chu.append(ne.getContent());
+                    chu.addMains(ne.getMains());
+                    chu.addSides(ne.getSides());
+                    chu.addAnchoredNodes(ne.getAnchoredNodes());
+                }
 
                 units.add(chu);
             }
@@ -285,6 +277,7 @@ public class Narrator {
                 chu.append(unit.contents);
                 chu.addMains(unit.mains);
                 chu.addSides(unit.sides);
+                chu.addAnchoredNodes(unit.anchoredNodes);
             }
 
             flatGroups.add(chu);
@@ -359,8 +352,9 @@ public class Narrator {
 
     public static class ChapterUnit {
         private List<String> contents = new ArrayList<>();
-        private Set<Node> mains = new HashSet<>();
-        private Set<Node> sides = new HashSet<>();
+        private final Set<ReviewNode> anchoredNodes = new HashSet<>();
+        private Set<ReviewNode> mains = new HashSet<>();
+        private Set<ReviewNode> sides = new HashSet<>();
 
         public void append(String content) {
             contents.add(content);
@@ -374,21 +368,29 @@ public class Narrator {
             return String.join("\n", contents);
         }
 
-        public Set<Node> getMains() {
+        public Set<ReviewNode> getMains() {
             return mains;
         }
 
-        void addMains(Set<Node> mains) {
+        public void addMains(Set<? extends ReviewNode> mains) {
             this.mains.addAll(mains);
             this.sides = this.sides.stream().filter(side -> !this.mains.contains(side)).collect(Collectors.toSet());
         }
 
-        public Set<Node> getSides() {
+        public Set<ReviewNode> getSides() {
             return sides;
         }
 
-        void addSides(Set<Node> sides) {
+        public void addSides(Set<? extends ReviewNode> sides) {
             this.sides.addAll(sides.stream().filter(side -> !this.mains.contains(side)).toList());
+        }
+
+      public Set<ReviewNode> getAnchoredNodes() {
+        return anchoredNodes;
+      }
+
+      public void addAnchoredNodes(Set<ReviewNode> anchoredNodes) {
+          this.anchoredNodes.addAll(anchoredNodes);
         }
 
         public int lines() {

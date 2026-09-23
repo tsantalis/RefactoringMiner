@@ -4,7 +4,9 @@ import static org.refactoringminer.astDiff.graph.NodeType.ADDITION;
 import static org.refactoringminer.astDiff.graph.NodeType.DELETION;
 import static org.refactoringminer.astDiff.graph.NodeType.EXTENSION;
 
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.utils.Pair;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -12,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 import org.refactoringminer.astDiff.graph.cluster.traverse.Util;
 import org.jgrapht.Graph;
@@ -20,25 +21,24 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
-public class Node {
+public class Node implements ReviewNode {
 
   public static final Comparator<Node> COMPARATOR = Comparator.comparing(Node::getSrcDst)
       .thenComparing(Node::getPath)
       .thenComparingInt(node -> node.getTree().getPos());
 
   private static final String ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
-  static final int PROMPT_ID_LENGTH = 5;
-  static final int MAX_PROMPT_ID_LENGTH = 12;
-  private static final String PROMPT_ID_PREFIX = "#";
-  public static final Pattern PROMPT_ID_PATTERN = Pattern.compile(
-      PROMPT_ID_PREFIX + "[0-9A-HJKMNP-TV-Z]{" + PROMPT_ID_LENGTH + ",}(?![0-9A-Z])");
+  public static final int PROMPT_ID_LENGTH = 5;
+  public static final int MAX_PROMPT_ID_LENGTH = 12;
+  public static final String PROMPT_ID_PREFIX = "#";
+  public static final String PROMPT_ID_BODY_REGEX = "[0-9A-HJKMNP-TV-Z]{" + PROMPT_ID_LENGTH + ",}(?![0-9A-Z])";
 
   private final String id;
   private String promptId;
   private final String path;
   private final Constants constants;
   private final SrcDst srcDst;
-  private final String fileContent;
+  private final ContentsContexts contentsContexts;
   private final Tree tree;
   @Nullable
   private final Set<Node> subs;
@@ -48,12 +48,12 @@ public class Node {
   @Nullable
   private UMLs umls = null;
 
-  public Node(String fileContent, String path, SrcDst srcDst, Tree tree,
+  public Node(ContentsContexts contentsContexts, String path, SrcDst srcDst, Tree tree,
       @Nullable Set<Node> subs, NodeType nodeType) {
     this.id = formatId(path, srcDst, nodeType, tree);
-    this.fileContent = fileContent;
     this.path = path;
     this.constants = new Constants(path);
+    this.contentsContexts = contentsContexts;
     this.srcDst = srcDst;
     this.tree = tree;
     this.subs = subs;
@@ -208,25 +208,75 @@ public class Node {
       }
     }
 
-    return fileContent.substring(tree.getPos(), tree.getEndPos());
+    return getFileContent().substring(tree.getPos(), tree.getEndPos());
   }
 
-  public String normalizeContent() {
+  public String dedentContent() {
     String content = getContent();
-    if (content == null || !content.contains("\n")) {
+    if (content == null || nodeType.equals(NodeType.LOCATION_CONTEXT)) {
       return content;
     }
 
-    if (nodeType.equals(NodeType.LOCATION_CONTEXT)) {
-      return content;
+    TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(tree, getFileContent());
+    String baseIndent = leadingWhitespace(lineAt(lineRange.startLine()));
+
+    // The first line begins at the node, so it carries no indentation of its own to take off
+    String[] lines = content.split("\n", -1);
+    StringBuilder block = new StringBuilder(lines[0]);
+    for (int i = 1; i < lines.length; i++) {
+      block.append("\n").append(dedent(lines[i], baseIndent));
     }
 
-    TreeUtilFunctions.LineRange lineRange = TreeUtilFunctions.getLineRange(tree, fileContent);
-    return " ".repeat(lineRange.startLineOffset()) + getContent();
+    return block.toString();
+  }
+
+  private String lineAt(int line) {
+    String[] lines = getFileContent().split("\n", -1);
+    return line >= 1 && line <= lines.length ? lines[line - 1] : "";
+  }
+
+  private static String leadingWhitespace(String line) {
+    int end = 0;
+    while (end < line.length() && Character.isWhitespace(line.charAt(end))) {
+      end++;
+    }
+
+    return line.substring(0, end);
+  }
+
+  private static String dedent(String line, String baseIndent) {
+    if (line.startsWith(baseIndent)) {
+      return line.substring(baseIndent.length());
+    }
+
+    return line.substring(Math.min(leadingWhitespace(line).length(), baseIndent.length()));
   }
 
   public String getFileContent() {
-    return fileContent;
+    return this.contentsContexts.getContent(this.getSrcDst(), this.getPath());
+  }
+
+  public Node getAlternative() {
+    for (ASTDiff diff : getDiffs()) {
+      MappingStore mappingStore = diff.getAllMappings().getMonoMappingStore();
+      Tree alternativeTree = this.isSrc() ? mappingStore.getDstForSrc(this.getTree()) : mappingStore.getSrcForDst(this.getTree());
+      if (alternativeTree == null) {
+        continue;
+      }
+
+      SrcDst dstSrc = this.isSrc() ? SrcDst.DST : SrcDst.SRC;
+      NodeType alternativeNodeType = NodeType.alternativeNodeType(this.nodeType);
+      if (alternativeNodeType == null) {
+        continue;
+      }
+
+      Node alternativeNode =  new Node(contentsContexts, contentsContexts.getPath(dstSrc, alternativeTree), dstSrc,
+              alternativeTree, null, alternativeNodeType);
+      alternativeNode.addDiff(diff);
+      return alternativeNode;
+    }
+
+    return null;
   }
 
   public String getPath() {
@@ -253,6 +303,7 @@ public class Node {
   }
 
   // A hunk may be smaller than a line, so it is overlap in such cases
+  @Override
   public boolean overlapLine(String path, String side, int line, @Nullable Integer startLine) {
     if (!this.getPath().equals(path)) {
       return false;
@@ -267,6 +318,7 @@ public class Node {
             startLine <= lineRange.endLine() && lineRange.startLine() <= line;
   }
 
+  @Override
   public JsonObject stringify() {
     JsonObject nodeObj = new JsonObject();
 
@@ -323,26 +375,29 @@ public class Node {
 
   public String base(Graph<Node, Edge> graph) {
     String basePrompt = "{ id: " + this.getPromptId() + ", type: " + getPromptType(graph);
-    String contextString = getContextString(graph);
+    String contextString = getContextString();
     if (!contextString.isEmpty()) {
       basePrompt += ", location: " + contextString;
     }
-    basePrompt += " }\n" + this.normalizeContent();
+    basePrompt += " }\n" + this.dedentContent();
 
     return basePrompt;
   }
 
   public String baseXml(Graph<Node, Edge> graph) {
     String promptType = this.getPromptType(graph);
-    String xmlPrompt = "<" + promptType + " id=\"" + getPromptId() + "\"";
+    String xmlPrompt = "<" + promptType;
+    if (this.isBase()) {
+      xmlPrompt +=  " id=\"" + getPromptId() + "\"";
+    }
 
-    String contextString = getContextString(graph);
+    String contextString = getContextString();
     if (!contextString.isEmpty()) {
       xmlPrompt += " location=\"" + contextString + "\"";
     }
 
     xmlPrompt += ">\n    ";
-    xmlPrompt += this.normalizeContent().replace("\n", "\n    ");
+    xmlPrompt += this.dedentContent().replace("\n", "\n    ");
     xmlPrompt += "\n</" + promptType + ">";
 
     return xmlPrompt;
@@ -365,8 +420,8 @@ public class Node {
     }
 
     Node alt = alts.get(0);
-    String thisContextString = this.getContextString(graph);
-    String altContextString = alt.getContextString(graph);
+    String thisContextString = this.getContextString();
+    String altContextString = alt.getContextString();
     if (!thisContextString.equals(altContextString)) {
       if (!(thisContextString.endsWith(this.getContent()) && altContextString.endsWith(
           alt.getContent()))) {
@@ -445,23 +500,27 @@ public class Node {
     return semanticContexts;
   }
 
-  private String getContextString(Graph<Node, Edge> graph) {
-    List<Node> contexts = Context.get(graph, this);
-    List<Node> locationContexts = new ArrayList<>();
-    for (Node contextNode : contexts) {
-      if (contextNode.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
-        locationContexts.add(contextNode);
+  public String getContextString() {
+    List<Pair<Tree, NodeType>> contexts = Context.get(this.getPath(), this.getTree());
+    List<Pair<Tree, NodeType>> locationContexts = new ArrayList<>();
+    for (Pair<Tree, NodeType> context : contexts) {
+      if (context.second.equals(NodeType.LOCATION_CONTEXT)) {
+        locationContexts.add(context);
       }
     }
     Collections.reverse(locationContexts);
 
+    List<Node> locationContextNodes = locationContexts.stream()
+            .map(locationContext ->
+                    new Node(contentsContexts, this.getPath(), this.getSrcDst(), locationContext.first, null, locationContext.second))
+            .toList();
     StringBuilder sb = new StringBuilder();
-    if (!locationContexts.isEmpty()) {
-      sb.append(locationContexts.get(0).getContent());
-      if (locationContexts.size() > 1) {
-        sb.append("::").append(locationContexts.get(1).getContent());
-        for (int i = 2; i < locationContexts.size(); i++) {
-          Node n = locationContexts.get(i);
+    if (!locationContextNodes.isEmpty()) {
+      sb.append(locationContextNodes.get(0).getContent());
+      if (locationContextNodes.size() > 1) {
+        sb.append("::").append(locationContextNodes.get(1).getContent());
+        for (int i = 2; i < locationContextNodes.size(); i++) {
+          Node n = locationContextNodes.get(i);
           String prefix = this.constants.isNamedMethod(n.getTree().getType().name) ? "#" : ".";
           sb.append(prefix).append(n.getContent());
         }
@@ -552,6 +611,6 @@ public class Node {
     List<Tree> simpleNameTrees = trees.stream()
         .filter(tree -> tree.getType().name.equals(constants.SIMPLE_NAME)).toList();
     return simpleNameTrees.stream()
-        .map(tree -> fileContent.substring(tree.getPos(), tree.getEndPos())).toList();
+        .map(tree -> getFileContent().substring(tree.getPos(), tree.getEndPos())).toList();
   }
 }

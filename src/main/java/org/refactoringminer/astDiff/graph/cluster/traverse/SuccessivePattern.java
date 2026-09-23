@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.graph.cluster.traverse;
 import com.google.gson.JsonObject;
 import org.refactoringminer.astDiff.graph.*;
 import org.jgrapht.Graph;
+import org.refactoringminer.astDiff.graph.cluster.representation.MergeGroup;
 
 import java.util.*;
 
@@ -77,9 +78,9 @@ public class SuccessivePattern extends TraversalPattern implements Leaf {
         }
 
         List<String> mappingHunks = new ArrayList<>();
-        List<TraversalPattern.MergeGroup> aggregated = aggregateByMapping(sequence).stream()
+        List<MergeGroup> aggregated = MergeGroup.mappingGroups(sequence, clusterGraph).stream()
                 .filter(mg -> !mg.sources().isEmpty() && !mg.targets().isEmpty()).toList();
-        for (TraversalPattern.MergeGroup mg : aggregated) {
+        for (MergeGroup mg : aggregated) {
             List<Node> sources = mg.sources();
             List<Node> targets = mg.targets();
 

@@ -1,15 +1,14 @@
 package org.refactoringminer.astDiff.utils;
 
 import com.github.gumtreediff.tree.TreeContext;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.graph.Edge;
 import org.refactoringminer.astDiff.graph.HunkNetwork;
 import org.refactoringminer.astDiff.graph.Node;
-import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
@@ -40,22 +39,14 @@ public class Driver {
                 projectASTDiff.getFileContentsBefore(),
                 projectASTDiff.getFileContentsAfter(), srcContexts, dstContexts);
 
-        Set<ASTDiff> diffSet = projectASTDiff.getDiffSet();
+        Set<ASTDiff> authoritativeDiffs = new LinkedHashSet<>(projectASTDiff.getDiffSet());
+        Set<ASTDiff> diffSet = new LinkedHashSet<>(authoritativeDiffs);
         diffSet.addAll(projectASTDiff.getMoveDiffSet());
-
         for (ASTDiff diff : diffSet) {
-            network.importDiff(diff);
+            network.importDiff(diff, authoritativeDiffs.contains(diff));
         }
 
-        Set<String> diffSrcPaths = diffSet.stream().map(ASTDiff::getSrcPath)
-                .collect(Collectors.toSet());
-        List<Entry<String, TreeContext>> deletedFiles = srcContexts.entrySet().stream()
-                .filter(entry -> !diffSrcPaths.contains(entry.getKey())).toList();
-        Set<String> diffDstPaths = diffSet.stream().map(ASTDiff::getDstPath)
-                .collect(Collectors.toSet());
-        List<Entry<String, TreeContext>> addedFiles = dstContexts.entrySet().stream()
-                .filter(entry -> !diffDstPaths.contains(entry.getKey())).toList();
-        network.importFiles(deletedFiles, addedFiles);
+        network.importFiles();
 
         network.process();
 

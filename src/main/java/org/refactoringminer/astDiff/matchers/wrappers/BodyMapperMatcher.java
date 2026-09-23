@@ -989,6 +989,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
         }
+        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CALL_SUFFIX)) {
+            srcStatementNode = srcStatementNode.getParent();
+            if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && srcStatementNode.getParent().getType().name.equals(LANG1.NAVIGATION_EXPRESSION) &&
+                    srcStatementNode.getParent().getParent().getType().name.equals(LANG1.METHOD_INVOCATION)) {
+                srcStatementNode = srcStatementNode.getParent().getParent();
+            }
+        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.TYPE_QUALIFIER)) {
             srcStatementNode = srcStatementNode.getParent();
         }
@@ -1040,6 +1047,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
             dstStatementNode = dstStatementNode.getParent();
+        }
+        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CALL_SUFFIX)) {
+            dstStatementNode = dstStatementNode.getParent();
+            if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                    dstStatementNode.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                dstStatementNode = dstStatementNode.getParent().getParent();
+            }
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.TYPE_QUALIFIER)) {
             dstStatementNode = dstStatementNode.getParent();

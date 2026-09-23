@@ -584,9 +584,11 @@ public class OperationInvocation extends AbstractCall {
     			if(exactlyMatchingArgumentType(parameterType, inferredArgumentTypes.get(i))) {
     				originalExactlyMatchingArguments++;
     			}
+    			boolean pythonMatch = LANG.equals(Constants.PYTHON) && inferredArgumentTypes.get(i).toString().equals("Object");
     			if(!parameterType.getClassType().equals(inferredArgumentTypes.get(i).toString()) &&
     					!parameterType.toString().equals(inferredArgumentTypes.get(i).toString()) &&
-    					!compatibleTypes(parameter, inferredArgumentTypes.get(i), classDiff, modelDiff)) {
+    					!compatibleTypes(parameter, inferredArgumentTypes.get(i), classDiff, modelDiff) &&
+    					!pythonMatch) {
     				return false;
     			}
     		}

@@ -23,6 +23,45 @@ import org.refactoringminer.util.PathFileUtils;
 public class WorktreeChangeCollector {
 	private static final String DEFAULT_BASE_REF = "HEAD";
 
+	public WorktreeChanges collect(Repository repository, String baseRef, boolean includeUntracked) throws Exception {
+		try (Git git = new Git(repository)) {
+			Path workTree = repository.getWorkTree().toPath().toRealPath();
+			Status status = git.status().call();
+			Set<String> changedPaths = changedPaths(status, includeUntracked);
+			List<String> warnings = new ArrayList<>();
+			changedPaths.removeIf(path -> {
+				boolean unsupported = !PathFileUtils.isSupportedFile(path);
+				if (unsupported) {
+					warnings.add("Skipping unsupported file: " + path);
+				}
+				return unsupported;
+			});
+			String resolvedBaseRef = baseRef == null || baseRef.isBlank() ? DEFAULT_BASE_REF : baseRef;
+			ObjectId treeId = repository.resolve(resolvedBaseRef + "^{tree}");
+			if (treeId == null) {
+				throw new IllegalArgumentException("baseRef does not resolve to a tree: " + resolvedBaseRef);
+			}
+
+			Map<String, String> beforeFiles = new LinkedHashMap<>();
+			Map<String, String> afterFiles = new LinkedHashMap<>();
+			for (String path : changedPaths) {
+				if (hasBaseContent(status, path)) {
+					String baseContent = readBaseContent(repository, treeId, path);
+					if (baseContent != null) {
+						beforeFiles.put(path, baseContent);
+					}
+				}
+				if (hasWorkingTreeContent(status, path)) {
+					afterFiles.put(path, readWorkingTreeContent(workTree, path));
+				}
+			}
+			if (beforeFiles.isEmpty() && afterFiles.isEmpty()) {
+				throw new IllegalArgumentException("No supported worktree changes found.");
+			}
+			return new WorktreeChanges(beforeFiles, afterFiles, warnings);
+		}
+	}
+
 	public WorktreeChanges collect(Path repositoryPath, String baseRef, boolean includeUntracked, int maxFiles,
 			int maxBytesPerFile) throws Exception {
 		validateLimits(maxFiles, maxBytesPerFile);
@@ -140,6 +179,16 @@ public class WorktreeChangeCollector {
 		}
 	}
 
+	private static String readBaseContent(Repository repository, ObjectId treeId, String path) throws IOException {
+		try (TreeWalk treeWalk = TreeWalk.forPath(repository, path, treeId)) {
+			if (treeWalk == null) {
+				return null;
+			}
+			ObjectLoader loader = repository.open(treeWalk.getObjectId(0));
+			return new String(loader.getBytes(), StandardCharsets.UTF_8);
+		}
+	}
+
 	private static String readWorkingTreeContent(Path workTree, String path, int maxBytesPerFile) throws IOException {
 		Path file = workTree.resolve(path).normalize().toRealPath();
 		if (!file.startsWith(workTree)) {
@@ -147,6 +196,14 @@ public class WorktreeChangeCollector {
 		}
 		if (Files.size(file) > maxBytesPerFile) {
 			throw new IllegalArgumentException(path + " exceeds maxBytesPerFile=" + maxBytesPerFile + ".");
+		}
+		return Files.readString(file);
+	}
+
+	private static String readWorkingTreeContent(Path workTree, String path) throws IOException {
+		Path file = workTree.resolve(path).normalize().toRealPath();
+		if (!file.startsWith(workTree)) {
+			throw new IllegalArgumentException("Changed file escapes repository root: " + path);
 		}
 		return Files.readString(file);
 	}

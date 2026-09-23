@@ -158,6 +158,22 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		return lambdaMappers;
 	}
 
+	public boolean containsMappingInLambdaMappersForFragment2(AbstractCodeFragment fragment2) {
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(lambdaMapper.alreadyMatched2(fragment2))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean containsMappingInLambdaMappersForFragment1(AbstractCodeFragment fragment1) {
+		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
+			if(lambdaMapper.alreadyMatched1(fragment1))
+				return true;
+		}
+		return false;
+	}
+
 	public boolean containsRefactoringOfType(RefactoringType type) {
 		for(Refactoring r : refactorings) {
 			if(r.getRefactoringType().equals(type)) {

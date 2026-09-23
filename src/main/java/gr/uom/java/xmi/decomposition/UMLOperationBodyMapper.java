@@ -9651,7 +9651,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return;
 		}
 		for(AbstractCodeFragment leaf : leaves1) {
-			if(!leaf.equals(leaf1)) {
+			if(!leaf.equals(leaf1) && !mappingSet.first().containsMappingInLambdaMappersForFragment1(leaf)) {
 				if(leaf.getVariables().size() == 2 && leaf.getString().equals(leaf.getVariables().get(0).getString() + LANG1.ASSIGNMENT + leaf.getVariables().get(1).getString() + LANG1.STATEMENT_TERMINATION)) {
 					continue;
 				}
@@ -9751,7 +9751,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			parent1 = parent1.getParent();
 		}
 		for(AbstractCodeFragment leaf : leaves2) {
-			if(!leaf.equals(leaf2)) {
+			if(!leaf.equals(leaf2) && !mappingSet.first().containsMappingInLambdaMappersForFragment2(leaf)) {
 				CompositeStatementObject parent2 = leaf.getParent();
 				while(parent2 != null && parent2.getParent() != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 					parent2 = parent2.getParent();

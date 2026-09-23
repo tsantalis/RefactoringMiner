@@ -6764,6 +6764,105 @@
   "firstEndPos" : 12545,
   "secondEndPos" : 11466
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 12146,
+  "secondPos" : 11268,
+  "firstEndPos" : 12442,
+  "secondEndPos" : 11466
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 12146,
+  "secondPos" : 11268,
+  "firstEndPos" : 12441,
+  "secondEndPos" : 11336
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 12146,
+  "secondPos" : 11282,
+  "firstEndPos" : 12160,
+  "secondEndPos" : 11293
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "writerExecutor",
+  "secondLabel" : "writerExecutor",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 12146,
+  "secondPos" : 11268,
+  "firstEndPos" : 12160,
+  "secondEndPos" : 11282
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "execute",
+  "secondLabel" : "tryExecute",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 12161,
+  "secondPos" : 11283,
+  "firstEndPos" : 12168,
+  "secondEndPos" : 11293
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 12169,
+  "secondPos" : 11293,
+  "firstEndPos" : 12440,
+  "secondEndPos" : 11336
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"OkHttp %s stream %d\"",
+  "secondLabel" : "\"OkHttp %s stream %d\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 12187,
+  "secondPos" : 11294,
+  "firstEndPos" : 12208,
+  "secondEndPos" : 11335
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "connectionName",
+  "secondLabel" : "connectionName",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12210,
+  "secondPos" : 11303,
+  "firstEndPos" : 12224,
+  "secondEndPos" : 11317
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "streamId",
+  "secondLabel" : "streamId",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12226,
+  "secondPos" : 11326,
+  "firstEndPos" : 12234,
+  "secondEndPos" : 11334
+}, {
   "firstType" : "Block",
   "secondType" : "statements",
   "firstLabel" : "",
@@ -6840,6 +6939,17 @@
   "secondPos" : 11372,
   "firstEndPos" : 12341,
   "secondEndPos" : 11393
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "streamId",
+  "secondLabel" : "streamId",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12322,
+  "secondPos" : 11326,
+  "firstEndPos" : 12330,
+  "secondEndPos" : 11334
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -7281,6 +7391,105 @@
   "firstEndPos" : 13254,
   "secondEndPos" : 11965
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 12778,
+  "secondPos" : 11733,
+  "firstEndPos" : 13151,
+  "secondEndPos" : 11965
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 12778,
+  "secondPos" : 11733,
+  "firstEndPos" : 13150,
+  "secondEndPos" : 11815
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 12778,
+  "secondPos" : 11747,
+  "firstEndPos" : 12792,
+  "secondEndPos" : 11758
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "writerExecutor",
+  "secondLabel" : "writerExecutor",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 12778,
+  "secondPos" : 11733,
+  "firstEndPos" : 12792,
+  "secondEndPos" : 11747
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "execute",
+  "secondLabel" : "tryExecute",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 12793,
+  "secondPos" : 11748,
+  "firstEndPos" : 12800,
+  "secondEndPos" : 11758
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 12812,
+  "secondPos" : 11758,
+  "firstEndPos" : 13149,
+  "secondEndPos" : 11815
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"OkHttp Window Update %s stream %d\"",
+  "secondLabel" : "\"OkHttp Window Update %s stream %d\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 12830,
+  "secondPos" : 11759,
+  "firstEndPos" : 12865,
+  "secondEndPos" : 11814
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "connectionName",
+  "secondLabel" : "connectionName",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12867,
+  "secondPos" : 11782,
+  "firstEndPos" : 12881,
+  "secondEndPos" : 11796
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "streamId",
+  "secondLabel" : "streamId",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12883,
+  "secondPos" : 11805,
+  "firstEndPos" : 12891,
+  "secondEndPos" : 11813
+}, {
   "firstType" : "Block",
   "secondType" : "statements",
   "firstLabel" : "",
@@ -7379,6 +7588,17 @@
   "secondPos" : 11857,
   "firstEndPos" : 13030,
   "secondEndPos" : 11892
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "streamId",
+  "secondLabel" : "streamId",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12997,
+  "secondPos" : 11805,
+  "firstEndPos" : 13005,
+  "secondEndPos" : 11813
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -18093,6 +18313,94 @@
   "secondPos" : 22416,
   "firstEndPos" : 25656,
   "secondEndPos" : 22628
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 25234,
+  "secondPos" : 22416,
+  "firstEndPos" : 25545,
+  "secondEndPos" : 22628
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 25234,
+  "secondPos" : 22416,
+  "firstEndPos" : 25544,
+  "secondEndPos" : 22480
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 25234,
+  "secondPos" : 22430,
+  "firstEndPos" : 25248,
+  "secondEndPos" : 22441
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "writerExecutor",
+  "secondLabel" : "writerExecutor",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 25234,
+  "secondPos" : 22416,
+  "firstEndPos" : 25248,
+  "secondEndPos" : 22430
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "execute",
+  "secondLabel" : "tryExecute",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 25249,
+  "secondPos" : 22431,
+  "firstEndPos" : 25256,
+  "secondEndPos" : 22441
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 25257,
+  "secondPos" : 22441,
+  "firstEndPos" : 25543,
+  "secondEndPos" : 22480
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"OkHttp %s ACK Settings\"",
+  "secondLabel" : "\"OkHttp %s ACK Settings\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 25275,
+  "secondPos" : 22442,
+  "firstEndPos" : 25299,
+  "secondEndPos" : 22479
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "connectionName",
+  "secondLabel" : "connectionName",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "string_literal",
+  "firstPos" : 25301,
+  "secondPos" : 22451,
+  "firstEndPos" : 25315,
+  "secondEndPos" : 22465
 }, {
   "firstType" : "Block",
   "secondType" : "statements",

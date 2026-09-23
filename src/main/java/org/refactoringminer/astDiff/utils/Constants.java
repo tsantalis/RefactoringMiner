@@ -353,6 +353,7 @@ public class Constants {
     public final String WHILE_STATEMENT;
     public final String CONDITIONAL_EXPRESSION;
     public final String CAST_EXPRESSION = "CastExpression";
+    public final String THIS_EXPRESSION = "ThisExpression";
 
     public final String INFIX_EXPRESSION = "InfixExpression";
     public final String LAMBDA_EXPRESSION;

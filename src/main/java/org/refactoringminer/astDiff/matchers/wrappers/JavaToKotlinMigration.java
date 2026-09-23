@@ -79,6 +79,8 @@ public class JavaToKotlinMigration {
         List<Tree> mathSimpleNames1 = children1.stream().filter(t -> t.getLabel().equals("Math")).collect(Collectors.toList());
         List<Tree> children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.SIMPLE_NAME);
         List<Tree> mathSimpleNames2 = children2.stream().filter(t -> t.getLabel().equals("Math")).collect(Collectors.toList());
+        List<Tree> thisExpressionsWithSimpleName1 = children1.stream().filter(t -> t.getParent().getType().name.equals(LANG1.THIS_EXPRESSION)).collect(Collectors.toList());
+        children1.removeAll(thisExpressionsWithSimpleName1);
         if(mathSimpleNames1.size() > 0 && mathSimpleNames2.isEmpty()) {
             children1.removeAll(mathSimpleNames1);
         }

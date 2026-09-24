@@ -5612,6 +5612,9 @@ public abstract class UMLAbstractClassDiff {
 		}
 		List<UMLOperation> allAddedOperations = new ArrayList<>(addedOperations);
 		allAddedOperations.addAll(addedNestedOperations);
+		for(UMLOperation addedOp : addedOperations) {
+			allAddedOperations.addAll(addedOp.getNestedOperations());
+		}
 		allAddedOperations.addAll(outerClassAddedOperations);
 		List<UMLOperationBodyMapper> allMappers = getOperationBodyMapperListIncludingNestedMappersInAnonymousClassDiffs();
 		for(UMLOperationBodyMapper mapper : allMappers) {

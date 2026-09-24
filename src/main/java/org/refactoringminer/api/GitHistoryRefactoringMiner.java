@@ -86,6 +86,16 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtMergeCommit(Path repositoryDirectory, String commitId, int parentIndex, RefactoringHandler handler) throws Exception;
 
 	/**
+	 * Detect refactorings performed in the worktree. 
+	 * 
+	 * @param repository A git repository (from JGit library).
+	 * @param baseRef The base ref, e.g., HEAD.
+	 * @param handler A handler object that is responsible to process the detected refactorings. 
+	 */
+	void detectAtWorktree(Repository repository, String baseRef, RefactoringHandler handler);
+	void detectAtWorktree(Path repositoryDirectory, String baseRef, RefactoringHandler handler) throws Exception;
+
+	/**
 	 * Detect refactorings performed in the specified commit.
 	 *
 	 * @param repository A git repository (from JGit library).
@@ -121,7 +131,8 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtPullRequest(String gitURL, int pullRequest, RefactoringHandler handler, int timeout) throws Exception;
 
 	/**
-	 * Detect refactorings performed between two directories (or files) representing two versions of Java programs. 
+	 * Detect refactorings performed between two directories (or files) representing two versions of a software system.
+	 * Identical files will be automatically excluded and filtered out.
 	 * 
 	 * @param previousPath The directory (or file) corresponding to the previous version.
 	 * @param nextPath The directory (or file) corresponding to the next version.
@@ -130,7 +141,8 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtDirectories(Path previousPath, Path nextPath, RefactoringHandler handler);
 
 	/**
-	 * Detect refactorings performed between two directories (or files) representing two versions of Java programs. 
+	 * Detect refactorings performed between two directories (or files) representing two versions of a software system.
+	 * Identical files will be automatically excluded and filtered out.
 	 * 
 	 * @param previousFile The directory (or file) corresponding to the previous version.
 	 * @param nextFile The directory (or file) corresponding to the next version.
@@ -180,7 +192,7 @@ public interface GitHistoryRefactoringMiner {
 	 * 
 	 * @param repository A git repository (from JGit library).
 	 * @param commitId The SHA key that identifies the commit.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtCommit(Repository repository, String commitId);
 	ProjectASTDiff diffAtCommit(Path repositoryDirectory, String commitId) throws Exception;
@@ -188,12 +200,22 @@ public interface GitHistoryRefactoringMiner {
 	ProjectASTDiff diffAtMergeCommit(Path repositoryDirectory, String commitId, int parentIndex) throws Exception;
 
 	/**
+	 * Generate the AST diff for the worktree. 
+	 * 
+	 * @param repository A git repository (from JGit library).
+	 * @param commitId The The base ref, e.g., HEAD.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
+	 */
+	ProjectASTDiff diffAtWorktree(Repository repository, String baseRef);
+	ProjectASTDiff diffAtWorktree(Path repositoryDirectory, String baseRef) throws Exception;
+
+	/**
 	 * Generate the AST diff for the specified commit. All required information is extracted using the GitHub API.
 	 *
 	 * @param gitURL The git URL of the repository.
 	 * @param commitId The SHA key that identifies the commit.
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no AST diffs.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtCommit(String gitURL, String commitId, int timeout);
 	ProjectASTDiff diffAtMergeCommit(String gitURL, String commitId, int parentIndex, int timeout);
@@ -204,26 +226,28 @@ public interface GitHistoryRefactoringMiner {
 	 * @param gitURL The git URL of the repository.
 	 * @param pullRequestId The Pull Request ID.
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no AST diffs.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 * @throws Exception propagated from org.kohsuke.github API
 	 */
 	ProjectASTDiff diffAtPullRequest(String gitURL, int pullRequestId, int timeout) throws Exception;
 
 	/**
-	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
+	 * Generate the AST diff between two directories (or files) representing two versions of of a software system.
+	 * Identical files will be automatically excluded and filtered out.
 	 * 
 	 * @param previousPath The directory (or file) corresponding to the previous version.
 	 * @param nextPath The directory (or file) corresponding to the next version.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtDirectories(Path previousPath, Path nextPath);
 
 	/**
-	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
+	 * Generate the AST diff between two directories (or files) representing two versions of of a software system.
+	 * Identical files will be automatically excluded and filtered out.
 	 * 
 	 * @param previousFile The directory (or file) corresponding to the previous version.
 	 * @param nextFile The directory (or file) corresponding to the next version.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtDirectories(File previousFile, File nextFile);
 
@@ -233,7 +257,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param repository A git repository (from JGit library).
 	 * @param startCommit The SHA key that identifies the start commit.
 	 * @param endCommit The SHA key that identifies the end commit.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtCommitRange(Repository repository, String startCommit, String endCommit) throws Exception;
 	ProjectASTDiff diffAtCommitRange(Path repositoryDirectory, String startCommit, String endCommit) throws Exception;
@@ -244,7 +268,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param gitURL The git URL of the repository.
 	 * @param startCommit The SHA key that identifies the start commit.
 	 * @param endCommit The SHA key that identifies the end commit.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtCommitRange(String gitURL, String startCommit, String endCommit) throws Exception;
 
@@ -256,7 +280,7 @@ public interface GitHistoryRefactoringMiner {
 	 * gitURL should be https://github.com/bazelbuild/bazel.git
 	 * @param startCommit The SHA key that identifies the start commit. This can be a sha1 ID (for a commit, tag etc) or a direct tag name
 	 * @param endCommit The SHA key that identifies the end commit. This can be a sha1 ID (for a commit, tag etc) or a direct tag name
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 */
 	ProjectASTDiff diffAtGitHubCompare(String gitURL, String startCommit, String endCommit) throws Exception;
 
@@ -265,7 +289,7 @@ public interface GitHistoryRefactoringMiner {
 	 * 
 	 * @param fileContentsBefore A map where the keys are file paths, and the values are the corresponding file contents.
 	 * @param fileContentsAfter A map where the keys are file paths, and the values are the corresponding file contents.
-	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of compilation units (Java, Kotlin), modules (Python, TS/JS), translation units (C++).
 	 * The keys should correspond to the file path starting from the root of the repository.
 	 * For example, {@code src/main/java/org/refactoringminer/api/GitHistoryRefactoringMiner.java}
 	 */

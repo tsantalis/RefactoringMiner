@@ -71,6 +71,7 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.DiffMetaInfo;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.mcp.WorktreeChangeCollector;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
 import org.refactoringminer.util.GitHubOAuthTokenProvider;
@@ -1035,6 +1036,37 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			handler.handleException(id, e);
 		}
 		handler.handle(id, refactorings);
+	}
+
+
+	public void detectAtWorktree(Path repositoryDirectory, String baseRef, RefactoringHandler handler) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		detectAtWorktree(repository, baseRef, handler);
+	}
+
+	public void detectAtWorktree(Repository repository, String baseRef, RefactoringHandler handler) {
+		List<Refactoring> refactorings = Collections.emptyList();
+		try {
+			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
+					.collect(repository, baseRef, true);
+			Map<String, String> fileContentsBefore = changes.beforeFiles();
+			Map<String, String> fileContentsAfter = changes.afterFiles();
+			Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
+			Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), false); 
+			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = createModel(fileContentsAfter, repositoryDirectoriesCurrent);
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactorings = modelDiff.getRefactorings();
+			refactorings.addAll(moveSourceFolderRefactorings);
+			refactorings = filter(refactorings);
+			handler.handleModelDiff(baseRef, refactorings, modelDiff);
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored worktree %s due to error", baseRef), e);
+			handler.handleException(baseRef, e);
+		}
+		handler.handle(baseRef, refactorings);
 	}
 
 	@Override
@@ -2642,6 +2674,36 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		ProjectASTDiff diff = differ.getProjectASTDiff();
 		diff.setMetaInfo(new DiffMetaInfo("", ""));
 		return diff;
+	}
+
+	@Override
+	public ProjectASTDiff diffAtWorktree(Path repositoryDirectory, String baseRef) throws Exception {
+		GitService gitService = new GitServiceImpl();
+		Repository repository = gitService.openRepository(repositoryDirectory.toString());
+		return diffAtWorktree(repository, baseRef);
+	}
+
+	@Override
+	public ProjectASTDiff diffAtWorktree(Repository repository, String baseRef) {
+		try {
+			WorktreeChangeCollector.WorktreeChanges changes = new WorktreeChangeCollector()
+					.collect(repository, baseRef, true);
+			Map<String, String> fileContentsBefore = changes.beforeFiles();
+			Map<String, String> fileContentsAfter = changes.afterFiles();
+			Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
+			Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap(), true);
+			UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = createModelForASTDiff(fileContentsAfter, repositoryDirectoriesCurrent);
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsAfter);
+			ProjectASTDiff diff = differ.getProjectASTDiff();
+			diff.setMetaInfo(new DiffMetaInfo(baseRef + " -> " + "worktree", ""));
+			return diff;
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored worktree %s due to error", baseRef), e);
+		}
+		return null;
 	}
 
 	public void populateWithGitHubAPIForCommitRange(String cloneURL, String startCommit, String endCommit,

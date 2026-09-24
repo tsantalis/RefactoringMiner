@@ -1287,7 +1287,7 @@ public class TestStatementMappings {
             }
         }
         List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "graphhopper-fb2a259a6177d78b01c27944c4fdb45baf3412ce.txt"));
-        actual.forEach(System.err::println);
+        //actual.forEach(System.err::println);
         Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
     }
 

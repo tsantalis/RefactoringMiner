@@ -103,6 +103,20 @@ public class StringBasedHeuristics {
 					temp = ReplacementUtil.performReplacement(temp, before, after);
 					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+						call.getName().equals("toArray")) {
+					String before = ".toArray(" + call.arguments.get(0) + ")";
+					String after = ".toTypedArray()";
+					temp = ReplacementUtil.performReplacement(temp, before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 0 && !methodInvocations2.contains(call) &&
+						call.getName().equals("values")) {
+					String before = ".values()";
+					String after = ".values";
+					temp = ReplacementUtil.performReplacement(temp, before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 2 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("min")) {
 					temp = ReplacementUtil.performReplacement(temp, "Math.min", "minOf");

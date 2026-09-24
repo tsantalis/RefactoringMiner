@@ -135,6 +135,29 @@ miner.detectAtFileContents(fileContentsBefore, fileContentsAfter, new Refactorin
 });
 ```
 
+## With a worktree
+
+You can detect refactorings in the worktree of your repository by comparing the currently modified files with the version of these files in a base ref, such as `HEAD`, or `HEAD~1`.
+
+```java
+GitService gitService = new GitServiceImpl();
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+
+Repository repo = gitService.cloneIfNotExists(
+    "tmp/RefactoringMiner",
+    "https://github.com/tsantalis/RefactoringMiner.git");
+
+miner.detectAtWorktree(repo, "HEAD", new RefactoringHandler() {
+  @Override
+  public void handle(String baseRef, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at worktree");
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
+
 ## With all information fetched directly from GitHub
 
 To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
@@ -309,6 +332,23 @@ String repo = URLHelper.getRepo(url);
 Pair<String, String> commitPair = URLHelper.getCommitPairFromGitHubCompareURL(url);
 		
 ProjectASTDiff projectASTDiff = miner.diffAtGitHubCompare(repo, commitPair.getLeft(), commitPair.getRight());
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).openInBrowser();
+```
+
+## With worktree changes
+
+You can generate AST diff for the worktree of your repository by comparing the currently modified files with the version of these files in a base ref, such as `HEAD`, or `HEAD~1`.
+
+```java
+GitService gitService = new GitServiceImpl();
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+
+Repository repo = gitService.cloneIfNotExists(
+    "tmp/RefactoringMiner",
+    "https://github.com/tsantalis/RefactoringMiner.git");
+
+ProjectASTDiff projectASTDiff = miner.diffAtWorktree(repo, "HEAD");
 // To visualize the diff add the following line
 new WebDiff(projectASTDiff).openInBrowser();
 ```

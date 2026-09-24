@@ -555,6 +555,10 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperation operation : operations) {
 			if(invocation.matchesOperation(operation, callerOperation, this, modelDiff))
 				return operation;
+			for(UMLOperation nestedOperation : operation.getNestedOperations()) {
+				if(invocation.matchesOperation(nestedOperation, callerOperation, this, modelDiff))
+					return nestedOperation;
+			}
 		}
 		return null;
 	}
@@ -564,6 +568,10 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperation operation : operations) {
 			if(invocation.matchesOperation(operation, callerOperation, this, modelDiff))
 				matches.add(operation);
+			for(UMLOperation nestedOperation : operation.getNestedOperations()) {
+				if(invocation.matchesOperation(nestedOperation, callerOperation, this, modelDiff))
+					matches.add(nestedOperation);
+			}
 		}
 		return matches;
 	}

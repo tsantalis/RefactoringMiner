@@ -8,7 +8,7 @@ ENV TZ=GMT
 
 COPY . /opt/refactoringminer/
 
-RUN /opt/refactoringminer/gradlew -x test -p /opt/refactoringminer build -PbuildVersion=DockerBuild 2>/dev/null
+RUN /opt/refactoringminer/gradlew -x test -p /opt/refactoringminer build -PbuildVersion=DockerBuild
 RUN unzip /opt/refactoringminer/build/distributions/RefactoringMiner-DockerBuild.zip -d /opt/refactoringminer/build/distributions
 
 # Stage 2: Runtime stage

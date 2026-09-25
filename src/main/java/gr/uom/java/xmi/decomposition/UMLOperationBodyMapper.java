@@ -326,7 +326,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(body1 != null && body2 != null) {
 			List<AbstractCodeFragment> leaves1 = new ArrayList<>(body1.getCompositeStatement().getLeaves());
 			List<AbstractCodeFragment> leaves2 = new ArrayList<>(body2.getCompositeStatement().getLeaves());
-			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body2.getCompositeStatement().getInnerNodes());
+			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body1.getCompositeStatement().getInnerNodes());
 			List<CompositeStatementObject> innerNodes2 = new ArrayList<>(body2.getCompositeStatement().getInnerNodes());
 			resetNodes(leaves1);
 			resetNodes(leaves2);

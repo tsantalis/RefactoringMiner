@@ -260,6 +260,26 @@ public class JavaToKotlinMigration {
             }
             inv1.removeAll(invocationToBeRemoved);
         }
+        //check if toArray() is replaced with toTypedArray() and removed nested simpleNames and invocations from the toArray() argument
+        boolean containsToArray1 = children1.stream().anyMatch(t -> t.getLabel().equals("toArray"));
+        boolean containsToArray2 = children2.stream().anyMatch(t -> t.getLabel().equals("toArray"));
+        boolean containsToTypedArray2 = children2.stream().anyMatch(t -> t.getLabel().equals("toTypedArray"));
+        if(containsToArray1 && !containsToArray2 && containsToTypedArray2) {
+            Tree arguments = null;
+            for(Tree inv : inv1) {
+                Tree name = TreeUtilFunctions.findChildByType(inv, LANG1.SIMPLE_NAME);
+                if(name != null && name.getLabel().equals("toArray")) {
+                    arguments = TreeUtilFunctions.findChildByType(inv, LANG1.METHOD_INVOCATION_ARGUMENTS);
+                    break;
+                }
+            }
+            if(arguments != null) {
+                List<Tree> list = List.of(arguments);
+                removeFromParent(inv1, list, LANG1.METHOD_INVOCATION);
+                removeFromParent(inv1, list, LANG1.CLASS_INSTANCE_CREATION);
+                removeFromParent(children1, list, LANG1.SIMPLE_NAME);
+            }
+        }
         boolean equalsMismatch = children1.stream().anyMatch(node -> node.getLabel().equals("equals")) &&
                 !children2.stream().anyMatch(node -> node.getLabel().equals("equals"));
         if(children1.size() != children2.size() || equalsMismatch) {
@@ -673,7 +693,7 @@ public class JavaToKotlinMigration {
         }
         //import okhttp3.internal.tryExecute
         //tryExecute in an internal okhttp Kotlin function
-        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf", "get", "toHttpUrl", "min", "minOf", "execute", "tryExecute");
+        Map<String, String> synonyms = Map.of("url", "toUrl", "getBytes", "toByteArray", "asList", "listOf", "get", "toHttpUrl", "min", "minOf", "execute", "tryExecute", "toArray", "toTypedArray");
         if(callNames1.size() <= callNames2.size()) {
             int matches = 0;
             for(int i=0; i<callNames1.size(); i++) {

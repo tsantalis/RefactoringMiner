@@ -289,9 +289,12 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
             }
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                mappingStore.addMapping(srcStatementNode, dstStatementNode);
-                JavaToKotlinMigration.handleCompositeMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
-                return;
+                boolean skip = srcStatementNode.getType().name.equals(LANG1.BLOCK) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) && !dstStatementNode.getParent().getType().name.equals(LANG2.LAMBDA_LITERAL);
+                if(!skip) {
+                    mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                    JavaToKotlinMigration.handleCompositeMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
+                    return;
+                }
             }
             if (srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.IF_STATEMENT)) {
                 if(srcStatementNode.getParent().getType().name.equals(LANG1.FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {

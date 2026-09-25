@@ -1058,14 +1058,26 @@ public class JavaToKotlinMigration {
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
         Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
         if (matched != null) {
-            mappingStore.addMapping(matched.first,matched.second);
-            if(matched.second.getChildren().size() > 0 && matched.second.getChild(0).getType().name.equals(LANG2.STATEMENTS)) {
-                mappingStore.addMapping(matched.first,matched.second.getChild(0));
+            Tree functionBody = matched.second;
+            Tree statements = TreeUtilFunctions.findChildByType(functionBody, LANG2.STATEMENTS);
+            if (statements != null) {
+                //align function_body -> statements -> stmt* with Java Block -> stmt*
+                int index = functionBody.getChildPosition(statements);
+                functionBody.getChildren().remove(index);
+                functionBody.getChildren().addAll(index, statements.getChildren());
+                for (Tree t : statements.getChildren())
+                    t.setParent(functionBody);
             }
+            mappingStore.addMapping(matched.first, functionBody);
         }
         Tree kotlinFunctionParameters = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS);
         if(kotlinFunctionParameters != null) {
-            mappingStore.addMapping(srcOperationNode, kotlinFunctionParameters);
+            //align function_declaration -> function_value_parameters -> parameter* with Java MethodDeclaration -> SingleVariableDeclaration*
+            int index = dstOperationNode.getChildPosition(kotlinFunctionParameters);
+            dstOperationNode.getChildren().remove(index);
+            dstOperationNode.getChildren().addAll(index, kotlinFunctionParameters.getChildren());
+            for (Tree t : kotlinFunctionParameters.getChildren())
+                t.setParent(dstOperationNode);
         }
     }
 }

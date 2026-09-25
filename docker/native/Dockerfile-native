@@ -45,7 +45,7 @@ COPY --from=native_build /opt/RM-native /opt/refactoringminer
 RUN ln -s /opt/refactoringminer /usr/bin/refactoringminer
 
 RUN apk add gcompat
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 ENV REFACTORINGMINER_WEBDIFF_BIND_HOST=0.0.0.0
 ENV REFACTORINGMINER_WEBDIFF_PUBLIC_HOST=127.0.0.1
 EXPOSE 6789

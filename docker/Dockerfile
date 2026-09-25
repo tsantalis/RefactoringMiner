@@ -30,7 +30,7 @@ RUN mkdir -p /diff/left /diff/right
 COPY --from=build /opt/refactoringminer/build/distributions/RefactoringMiner-DockerBuild /opt/refactoringminer/
 RUN ln -s /opt/refactoringminer/bin/RefactoringMiner /usr/bin/refactoringminer
 
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 EXPOSE 6789
 
 WORKDIR /diff

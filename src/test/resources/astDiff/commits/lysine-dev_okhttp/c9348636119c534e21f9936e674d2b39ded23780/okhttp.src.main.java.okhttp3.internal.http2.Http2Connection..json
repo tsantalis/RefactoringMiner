@@ -1671,6 +1671,105 @@
   "firstEndPos" : 5802,
   "secondEndPos" : 5921
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 6040,
+  "secondPos" : 5687,
+  "firstEndPos" : 6186,
+  "secondEndPos" : 5915
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "writerExecutor",
+  "secondLabel" : "writerExecutor",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 6040,
+  "secondPos" : 5687,
+  "firstEndPos" : 6054,
+  "secondEndPos" : 5701
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "scheduleAtFixedRate",
+  "secondLabel" : "scheduleAtFixedRate",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 6055,
+  "secondPos" : 5702,
+  "firstEndPos" : 6074,
+  "secondEndPos" : 5721
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "false",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "boolean_literal",
+  "firstPos" : 6092,
+  "secondPos" : 5796,
+  "firstEndPos" : 6097,
+  "secondEndPos" : 5801
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "integer_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 6099,
+  "secondPos" : 5803,
+  "firstEndPos" : 6100,
+  "secondEndPos" : 5804
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "integer_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "value_argument",
+  "firstPos" : 6102,
+  "secondPos" : 5806,
+  "firstEndPos" : 6103,
+  "secondEndPos" : 5807
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "builder.pingIntervalMillis",
+  "secondLabel" : "builder.pingIntervalMillis",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 6116,
+  "secondPos" : 5828,
+  "firstEndPos" : 6142,
+  "secondEndPos" : 5854
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "builder.pingIntervalMillis",
+  "secondLabel" : "builder.pingIntervalMillis",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 6144,
+  "secondPos" : 5865,
+  "firstEndPos" : 6170,
+  "secondEndPos" : 5891
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "MILLISECONDS",
+  "secondLabel" : "MILLISECONDS",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 6172,
+  "secondPos" : 5902,
+  "firstEndPos" : 6184,
+  "secondEndPos" : 5914
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

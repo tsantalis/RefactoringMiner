@@ -1012,6 +1012,7 @@ public class ReplacementAlgorithm {
 				variablesToBeConsidered1.remove(s);
 			}
 		}
+		findReplacements(creations1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 		findReplacements(variablesToBeConsidered1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(creations1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(variables1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);

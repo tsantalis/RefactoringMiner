@@ -170,9 +170,19 @@ public class StringBasedHeuristics {
 			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
 				String ss2 = s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
+				for(Replacement r : info.getReplacements()) {
+					if(r.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA)) {
+						ss1 = ss1.replaceAll("\\R\\s*", "");
+						break;
+					}
+				}
 				//eliminate formatting differences
 				ss2 = ss2.replaceAll("\\R\\s*", "");
 				if(!ss1.contains(", ") && ss2.contains(", ")) {
+					ss2 = ss2.replaceAll(",\\s*", ",");
+				}
+				else if(ss1.contains(", ") && ss2.contains(", ")) {
+					ss1 = ss1.replaceAll(",\\s*", ",");
 					ss2 = ss2.replaceAll(",\\s*", ",");
 				}
 				if(!ss1.contains("!!") && ss2.contains("!!")) {
@@ -192,6 +202,9 @@ public class StringBasedHeuristics {
 				}
 				if(ss2.endsWith(".toLong()") && !ss1.endsWith(".toLong()")) {
 					ss2 = ss2.substring(0, ss2.length() - ".toLong()".length());
+				}
+				if(ss2.contains(".toLong()") && !ss1.contains(".toLong()")) {
+					ss2 = ss2.replaceAll(".toLong\\(\\)", "");
 				}
 				if(ss1.equals(ss2)) {
 					return true;

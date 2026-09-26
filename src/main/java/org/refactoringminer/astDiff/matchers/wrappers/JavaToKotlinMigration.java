@@ -50,6 +50,43 @@ public class JavaToKotlinMigration {
             Tree expression2 = dstStatementNode.getChild(0);
             handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
         }
+        else if(srcStatementNode.getType().name.equals(LANG1.SYNCHRONIZED_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getChildren().size() > 1) {
+            Tree suffix2 = dstStatementNode.getChild(1);
+            if(suffix2.getType().name.equals(LANG2.CALL_SUFFIX) && suffix2.getChildren().size() > 0 && suffix2.getChild(0).getType().name.equals(LANG2.ANNOTATED_LAMBDA) &&
+                    suffix2.getChild(0).getChildren().size() > 0 && suffix2.getChild(0).getChild(0).getType().name.equals(LANG2.LAMBDA_LITERAL)) {
+                Tree annotatedLambda2 = suffix2.getChild(0);
+                Tree lambdaLiteral2 = annotatedLambda2.getChild(0);
+                Tree statements2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.STATEMENTS);
+                Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
+                if(block1 != null && statements2 != null) {
+                    //align call_expression -> call_suffix -> annotated_lambda -> lambda_literal -> statements with Java SynchronizedStatement -> Block
+                    flattenChild(dstStatementNode, suffix2);
+                    flattenChild(dstStatementNode, annotatedLambda2);
+                    flattenChild(dstStatementNode, lambdaLiteral2);
+                    mappingStore.addMapping(block1, statements2);
+                }
+                //align call_expression -> call_expression -> call_suffix -> value_arguments -> value_argument -> expression with Java SynchronizedStatement -> expression
+                Tree call2 = dstStatementNode.getChild(0);
+                if(call2.getType().name.equals(LANG2.METHOD_INVOCATION) && call2.getChildren().size() > 1) {
+                    Tree callSuffix2 = call2.getChild(1);
+                    Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                    if(callSuffix2.getType().name.equals(LANG2.CALL_SUFFIX) && callSuffix2.getChildren().size() == 1 &&
+                            valueArguments2 != null && valueArguments2.getChildren().size() == 1 && valueArguments2.getChild(0).getChildren().size() == 1) {
+                        Tree valueArgument2 = valueArguments2.getChild(0);
+                        Tree expression2 = valueArgument2.getChild(0);
+                        flattenChild(dstStatementNode, call2);
+                        flattenChild(dstStatementNode, callSuffix2);
+                        flattenChild(dstStatementNode, valueArguments2);
+                        flattenChild(dstStatementNode, valueArgument2);
+                        if(srcStatementNode.getChildren().size() > 0) {
+                            Tree expression1 = srcStatementNode.getChild(0);
+                            mappingStore.addMapping(expression1, expression2);
+                            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {

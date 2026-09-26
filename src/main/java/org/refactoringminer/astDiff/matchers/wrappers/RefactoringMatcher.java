@@ -25,7 +25,6 @@ import java.util.Set;
 public class RefactoringMatcher extends OptimizationAwareMatcher {
 
     private final List<Refactoring> refactoringList;
-    private static final List<Refactoring> processed = new ArrayList<>();
 
     public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> modelDiffRefactorings, UMLClassBaseDiff baseClassDiff) {
         super(optimizationData);
@@ -154,9 +153,6 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 }
             } else if (refactoring instanceof ReplaceAnonymousWithLambdaRefactoring) {
-                if(processed.contains(refactoring))
-                    continue;
-                processed.add(refactoring);
                 ReplaceAnonymousWithLambdaRefactoring replaceAnonymousWithLambdaRefactoring = (ReplaceAnonymousWithLambdaRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = replaceAnonymousWithLambdaRefactoring.getBodyMapper();
                 Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());

@@ -710,6 +710,37 @@ public class JavaToKotlinMigration {
                 alignFieldAccess(mappingStore, value1, value2, LANG1, LANG2);
             }
         }
+        if(srcStatementNode.getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FIELD_DECLARATION)) {
+            List<Tree> fragments1 = TreeUtilFunctions.findChildrenByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
+            Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION);
+            if(fragments1.size() == 1 && variableDeclaration2 != null) {
+                //align Kotlin property_declaration -> [variable_declaration -> [name, type], =, initializer] with Java VariableDeclarationStatement -> [type, VariableDeclarationFragment -> [name, initializer]]
+                flattenChild(dstStatementNode, variableDeclaration2);
+                Tree fragment1 = fragments1.get(0);
+                Tree affectationOperator2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AFFECTATION_OPERATOR);
+                Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
+                if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 0) {
+                    //keep the fragment as the leaf matching the = operator, placed between the name and the initializer (if any)
+                    int index = srcStatementNode.getChildPosition(fragment1);
+                    Tree name1 = fragment1.getChild(0);
+                    List<Tree> rest1 = new ArrayList<>(fragment1.getChildren().subList(1, fragment1.getChildren().size()));
+                    fragment1.getChildren().clear();
+                    srcStatementNode.getChildren().add(index, name1);
+                    name1.setParent(srcStatementNode);
+                    srcStatementNode.getChildren().addAll(index + 2, rest1);
+                    for(Tree t : rest1)
+                        t.setParent(srcStatementNode);
+                }
+                else {
+                    if(fragmentDsts != null) {
+                        for(Tree dst : new ArrayList<>(fragmentDsts)) {
+                            mappingStore.removeMapping(fragment1, dst);
+                        }
+                    }
+                    flattenChild(srcStatementNode, fragment1);
+                }
+            }
+        }
     }
 
     private static void alignFieldAccess(ExtendedMultiMappingStore mappingStore, Tree fieldAccess1, Tree navigation2, Constants LANG1, Constants LANG2) {

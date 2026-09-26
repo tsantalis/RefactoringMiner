@@ -268,10 +268,6 @@ public class JavaToKotlinMigration {
         if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) || srcStatementNode.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
             inv1.add(0, srcStatementNode);
         }
-        else if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SIMPLE_NAME) != null) {
-            //ExpressionStatement with an already flattened MethodInvocation (see end of this method)
-            inv1.add(0, srcStatementNode);
-        }
         List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
         if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
             inv2.add(0, dstStatementNode);
@@ -677,6 +673,55 @@ public class JavaToKotlinMigration {
                 }
             }
             flattenChild(srcStatementNode, invocation1);
+        }
+        if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.ASSIGNMENT) && dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
+            //align Java ExpressionStatement -> Assignment -> [target, operator, value] with Kotlin assignment -> [target, operator, value]
+            Tree statementAssignment1 = srcStatementNode.getChild(0);
+            Set<Tree> assignmentDsts = mappingStore.getDsts(statementAssignment1);
+            if(assignmentDsts != null) {
+                for(Tree dst : new ArrayList<>(assignmentDsts)) {
+                    mappingStore.removeMapping(statementAssignment1, dst);
+                }
+            }
+            flattenChild(srcStatementNode, statementAssignment1);
+            Tree target1 = srcStatementNode.getChild(0);
+            Tree assignableExpression2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
+            if(assignableExpression2 != null) {
+                if(assignableExpression2.getChildren().size() == 1) {
+                    //align directly_assignable_expression -> name with Java name
+                    flattenChild(dstStatementNode, assignableExpression2);
+                }
+                else if(assignableExpression2.getChildren().size() > 1) {
+                    alignFieldAccess(mappingStore, target1, assignableExpression2, LANG1, LANG2);
+                }
+            }
+            Tree value1 = srcStatementNode.getChild(srcStatementNode.getChildren().size() - 1);
+            Tree value2 = dstStatementNode.getChild(dstStatementNode.getChildren().size() - 1);
+            if(!mappingStore.isDstMapped(value2) && value2.getChildren().size() == 1 && mappingStore.getSrcs(value2.getChild(0)) != null &&
+                    mappingStore.getSrcs(value2.getChild(0)).contains(value1)) {
+                //align Kotlin value wrapper (e.g., boolean_literal -> true) with Java value
+                flattenChild(dstStatementNode, value2);
+            }
+            else if(!mappingStore.isDstMapped(value2) && value2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && value1.getChildren().size() == 2 &&
+                    value2.getChildren().size() == 2 && value2.getChild(1).getType().name.equals(LANG2.NAVIGATION_SUFFIX) &&
+                    value2.getChild(1).getChildren().size() == 1 && mappingStore.getSrcs(value2.getChild(1).getChild(0)) != null &&
+                    mappingStore.getSrcs(value2.getChild(1).getChild(0)).contains(value1.getChild(1))) {
+                alignFieldAccess(mappingStore, value1, value2, LANG1, LANG2);
+            }
+        }
+    }
+
+    private static void alignFieldAccess(ExtendedMultiMappingStore mappingStore, Tree fieldAccess1, Tree navigation2, Constants LANG1, Constants LANG2) {
+        //align [receiver, navigation_suffix -> name] with Java FieldAccess -> [receiver, name]
+        Tree suffix2 = navigation2.getChild(navigation2.getChildren().size() - 1);
+        if(suffix2.getType().name.equals(LANG2.NAVIGATION_SUFFIX)) {
+            flattenChild(navigation2, suffix2);
+        }
+        mappingStore.addMapping(fieldAccess1, navigation2);
+        if(fieldAccess1.getChildren().size() > 0 && fieldAccess1.getChild(0).getType().name.equals(LANG1.THIS_EXPRESSION) &&
+                !mappingStore.isSrcMapped(fieldAccess1.getChild(0)) && !mappingStore.isDstMapped(navigation2.getChild(0))) {
+            mappingStore.addMapping(fieldAccess1.getChild(0), navigation2.getChild(0));
         }
     }
 

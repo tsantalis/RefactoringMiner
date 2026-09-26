@@ -84,8 +84,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Set<AbstractCodeMapping> mappingSet = bodyMapper.getMappings();
         ArrayList<AbstractCodeMapping> mappings = new ArrayList<>(mappingSet);
         for (AbstractCodeMapping abstractCodeMapping : mappings) {
-            if (abstractCodeMapping instanceof LeafMapping)
-                processLeafMapping(srcTree,dstTree,abstractCodeMapping,mappingStore, isPartOfExtractedMethod);
+            if (abstractCodeMapping instanceof LeafMapping) {
+                if (optimizationData.getProcessedLeafMappings().add(abstractCodeMapping))
+                    processLeafMapping(srcTree,dstTree,abstractCodeMapping,mappingStore, isPartOfExtractedMethod);
+            }
             else if (abstractCodeMapping instanceof CompositeStatementObjectMapping)
                 processCompositeMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
         }

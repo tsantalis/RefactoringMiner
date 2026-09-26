@@ -719,8 +719,8 @@ public class JavaToKotlinMigration {
                 Tree fragment1 = fragments1.get(0);
                 Tree affectationOperator2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AFFECTATION_OPERATOR);
                 Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
-                if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 0) {
-                    //keep the fragment as the leaf matching the = operator, placed between the name and the initializer (if any)
+                if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 1) {
+                    //keep the fragment as the leaf matching the = operator, placed between the name and the initializer
                     int index = srcStatementNode.getChildPosition(fragment1);
                     Tree name1 = fragment1.getChild(0);
                     List<Tree> rest1 = new ArrayList<>(fragment1.getChildren().subList(1, fragment1.getChildren().size()));

@@ -23,8 +23,7 @@ public class JavaToKotlinMigration {
             Tree singleVariableDeclaration1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SINGLE_VARIABLE_DECLARATION);
             if(singleVariableDeclaration1 != null) {
                 handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2);
-                srcStatementNode.getChildren().remove(singleVariableDeclaration1);
-                srcStatementNode.getChildren().addAll(singleVariableDeclaration1.getChildren());
+                flattenChild(srcStatementNode, singleVariableDeclaration1);
             }
             Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
             Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);
@@ -1059,25 +1058,25 @@ public class JavaToKotlinMigration {
         Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
         if (matched != null) {
             Tree functionBody = matched.second;
-            Tree statements = TreeUtilFunctions.findChildByType(functionBody, LANG2.STATEMENTS);
-            if (statements != null) {
-                //align function_body -> statements -> stmt* with Java Block -> stmt*
-                int index = functionBody.getChildPosition(statements);
-                functionBody.getChildren().remove(index);
-                functionBody.getChildren().addAll(index, statements.getChildren());
-                for (Tree t : statements.getChildren())
-                    t.setParent(functionBody);
+            //align function_body -> statements -> stmt* with Java Block -> stmt*
+            flattenChild(functionBody, TreeUtilFunctions.findChildByType(functionBody, LANG2.STATEMENTS));
+            //align control_structure_body -> statements -> stmt* with Java Block -> stmt*
+            for (Tree controlStructureBody : TreeUtilFunctions.findChildrenByTypeRecursively(functionBody, LANG2.CONTROL_STRUCTURE_BODY)) {
+                flattenChild(controlStructureBody, TreeUtilFunctions.findChildByType(controlStructureBody, LANG2.STATEMENTS));
             }
             mappingStore.addMapping(matched.first, functionBody);
         }
-        Tree kotlinFunctionParameters = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS);
-        if(kotlinFunctionParameters != null) {
-            //align function_declaration -> function_value_parameters -> parameter* with Java MethodDeclaration -> SingleVariableDeclaration*
-            int index = dstOperationNode.getChildPosition(kotlinFunctionParameters);
-            dstOperationNode.getChildren().remove(index);
-            dstOperationNode.getChildren().addAll(index, kotlinFunctionParameters.getChildren());
-            for (Tree t : kotlinFunctionParameters.getChildren())
-                t.setParent(dstOperationNode);
-        }
+        //align function_declaration -> function_value_parameters -> parameter* with Java MethodDeclaration -> SingleVariableDeclaration*
+        flattenChild(dstOperationNode, TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS));
+    }
+
+    private static void flattenChild(Tree parent, Tree child) {
+        if (child == null)
+            return;
+        int index = parent.getChildPosition(child);
+        parent.getChildren().remove(index);
+        parent.getChildren().addAll(index, child.getChildren());
+        for (Tree t : child.getChildren())
+            t.setParent(parent);
     }
 }

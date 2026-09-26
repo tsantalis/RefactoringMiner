@@ -2123,37 +2123,103 @@
   "secondEndPos" : 6396
 }, {
   "firstType" : "VariableDeclarationStatement",
-  "secondType" : "binding_pattern_kind",
+  "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "property_declaration",
+  "secondParentType" : "function_body",
   "firstPos" : 7165,
   "secondPos" : 6225,
   "firstEndPos" : 7211,
-  "secondEndPos" : 6228
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 7216,
-  "secondPos" : 6238,
-  "firstEndPos" : 7228,
   "secondEndPos" : 6373
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 7177,
+  "secondPos" : 6236,
+  "firstEndPos" : 7210,
+  "secondEndPos" : 6237
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
-  "firstLabel" : "notifyAll",
-  "secondLabel" : "notifyAll",
-  "firstParentType" : "ExpressionStatement",
+  "firstLabel" : "stream",
+  "secondLabel" : "stream",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 7177,
+  "secondPos" : 6229,
+  "firstEndPos" : 7183,
+  "secondEndPos" : 6235
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 7186,
+  "secondPos" : 6238,
+  "firstEndPos" : 7210,
+  "secondEndPos" : 6361
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "streams",
+  "secondLabel" : "streams",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 7186,
+  "secondPos" : 6238,
+  "firstEndPos" : 7193,
+  "secondEndPos" : 6245
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "remove",
+  "secondLabel" : "remove",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "navigation_suffix",
+  "firstPos" : 7194,
+  "secondPos" : 6246,
+  "firstEndPos" : 7200,
+  "secondEndPos" : 6252
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 7201,
+  "secondPos" : 6345,
+  "firstEndPos" : 7209,
+  "secondEndPos" : 6361
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "streamId",
+  "secondLabel" : "streamId",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 7201,
+  "secondPos" : 6253,
+  "firstEndPos" : 7209,
+  "secondEndPos" : 6261
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "call_expression",
   "firstPos" : 7216,
-  "secondPos" : 6362,
-  "firstEndPos" : 7225,
-  "secondEndPos" : 6371
+  "secondPos" : 6345,
+  "firstEndPos" : 7228,
+  "secondEndPos" : 6361
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",

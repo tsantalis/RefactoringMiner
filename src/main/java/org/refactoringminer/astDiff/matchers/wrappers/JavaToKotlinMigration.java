@@ -781,9 +781,12 @@ public class JavaToKotlinMigration {
         List<String> callNames1 = new ArrayList<>();
         for(Tree child1 : children1) {
             if(child1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
-                Tree simpleType = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_TYPE);
-                if(simpleType != null && simpleType.getChildren().size() > 0) {
-                    callNames1.add(simpleType.getChild(0).getLabel());
+                Tree type = child1.getChildren().size() > 0 ? child1.getChild(0) : null;
+                if(type != null && type.getType().name.equals(LANG1.PARAMETERIZED_TYPE) && type.getChildren().size() > 0) {
+                    type = type.getChild(0);
+                }
+                if(type != null && type.getType().name.equals(LANG1.SIMPLE_TYPE) && type.getChildren().size() > 0) {
+                    callNames1.add(type.getChild(0).getLabel());
                 }
             }
             else {
@@ -991,31 +994,15 @@ public class JavaToKotlinMigration {
         if(child1.getType().name.equals(LANG1.METHOD_INVOCATION) && child2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
             alignMethodInvocation(mappingStore, child1, child2, LANG1, LANG2);
         }
+        else if(child1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) && child2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            alignClassInstanceCreation(mappingStore, child1, child2, LANG1, LANG2);
+        }
     }
 
     private static void alignMethodInvocation(ExtendedMultiMappingStore mappingStore, Tree invocation1, Tree invocation2, Constants LANG1, Constants LANG2) {
         Tree args1 = TreeUtilFunctions.findChildByType(invocation1, LANG1.METHOD_INVOCATION_ARGUMENTS);
         //align call_expression -> call_suffix -> value_arguments -> value_argument -> expression with Java MethodInvocation -> METHOD_INVOCATION_ARGUMENTS -> expression
-        Tree callSuffix2 = TreeUtilFunctions.findChildByType(invocation2, LANG2.CALL_SUFFIX);
-        if(callSuffix2 != null) {
-            Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2, LANG2.METHOD_INVOCATION_ARGUMENTS);
-            if(valueArguments2 != null) {
-                if(args1 == null && valueArguments2.getChildren().isEmpty()) {
-                    //Java side has no node for an empty argument list
-                    mappingStore.removeMapping(invocation1, valueArguments2);
-                    callSuffix2.getChildren().remove(valueArguments2);
-                }
-                else {
-                    for(Tree valueArgument2 : new ArrayList<>(valueArguments2.getChildren())) {
-                        //named arguments have more than one child
-                        if(valueArgument2.getType().name.equals(LANG2.VALUE_ARGUMENT) && valueArgument2.getChildren().size() == 1) {
-                            flattenChild(valueArguments2, valueArgument2);
-                        }
-                    }
-                }
-            }
-            flattenChild(invocation2, callSuffix2);
-        }
+        alignCallSuffix(mappingStore, invocation1, invocation2, args1 != null, LANG2);
         //align call_expression -> navigation_expression -> [receiver, navigation_suffix -> name] with Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> receiver, name]
         Tree receiver1 = TreeUtilFunctions.findChildByType(invocation1, LANG1.METHOD_INVOCATION_RECEIVER);
         Tree navigation2 = invocation2.getChildren().size() > 0 ? invocation2.getChild(0) : null;
@@ -1037,6 +1024,64 @@ public class JavaToKotlinMigration {
                 flattenChild(invocation2, child2);
             }
         }
+    }
+
+    private static void alignClassInstanceCreation(ExtendedMultiMappingStore mappingStore, Tree creation1, Tree creation2, Constants LANG1, Constants LANG2) {
+        if(TreeUtilFunctions.findChildByType(creation1, LANG1.ANONYMOUS_CLASS_DECLARATION) != null)
+            return;
+        Tree type1 = creation1.getChildren().size() > 0 ? creation1.getChild(0) : null;
+        boolean arguments1 = creation1.getChildren().size() > 1;
+        //align call_expression -> call_suffix -> value_arguments -> value_argument -> expression with Java ClassInstanceCreation -> expression
+        Tree valueArguments2 = alignCallSuffix(mappingStore, creation1, creation2, arguments1, LANG2);
+        if(valueArguments2 != null) {
+            //Java side has no node for the argument list
+            mappingStore.removeMapping(creation1, valueArguments2);
+            flattenChild(creation2, valueArguments2);
+        }
+        //align call_expression -> name with Java ClassInstanceCreation -> [ParameterizedType ->] SimpleType -> SimpleName
+        Tree parameterizedType1 = null;
+        if(type1 != null && type1.getType().name.equals(LANG1.PARAMETERIZED_TYPE) && type1.getChildren().size() > 0) {
+            parameterizedType1 = type1;
+            type1 = type1.getChild(0);
+        }
+        if(type1 != null && type1.getType().name.equals(LANG1.SIMPLE_TYPE) && type1.getChildren().size() == 1) {
+            Tree name1 = type1.getChild(0);
+            Tree name2 = creation2.getChildren().size() > 0 ? creation2.getChild(0) : null;
+            Set<Tree> nameDsts = mappingStore.getDsts(name1);
+            if(name2 != null && nameDsts != null && nameDsts.contains(name2) && !mappingStore.isSrcMapped(type1) &&
+                    (parameterizedType1 == null || !mappingStore.isSrcMapped(parameterizedType1))) {
+                if(parameterizedType1 != null) {
+                    flattenChild(creation1, parameterizedType1);
+                }
+                flattenChild(creation1, type1);
+            }
+        }
+    }
+
+    private static Tree alignCallSuffix(ExtendedMultiMappingStore mappingStore, Tree call1, Tree call2, boolean arguments1, Constants LANG2) {
+        //returns the value_arguments of call2, after flattening call_suffix and value_argument nodes
+        Tree callSuffix2 = TreeUtilFunctions.findChildByType(call2, LANG2.CALL_SUFFIX);
+        if(callSuffix2 == null)
+            return null;
+        Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        if(valueArguments2 != null) {
+            if(!arguments1 && valueArguments2.getChildren().isEmpty()) {
+                //Java side has no node for an empty argument list
+                mappingStore.removeMapping(call1, valueArguments2);
+                callSuffix2.getChildren().remove(valueArguments2);
+                valueArguments2 = null;
+            }
+            else {
+                for(Tree valueArgument2 : new ArrayList<>(valueArguments2.getChildren())) {
+                    //named arguments have more than one child
+                    if(valueArgument2.getType().name.equals(LANG2.VALUE_ARGUMENT) && valueArgument2.getChildren().size() == 1) {
+                        flattenChild(valueArguments2, valueArgument2);
+                    }
+                }
+            }
+        }
+        flattenChild(call2, callSuffix2);
+        return valueArguments2;
     }
 
     public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore, 

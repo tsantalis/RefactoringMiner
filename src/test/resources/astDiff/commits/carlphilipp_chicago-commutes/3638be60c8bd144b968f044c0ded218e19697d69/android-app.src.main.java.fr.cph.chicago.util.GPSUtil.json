@@ -890,22 +890,11 @@
   "firstEndPos" : 1567,
   "secondEndPos" : 1078
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Assignment",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 1553,
-  "secondPos" : 1039,
-  "firstEndPos" : 1567,
-  "secondEndPos" : 1078
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "Position",
   "secondLabel" : "Position",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 1557,
   "secondPos" : 1031,

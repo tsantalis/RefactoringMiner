@@ -824,22 +824,11 @@
   "firstEndPos" : 1565,
   "secondEndPos" : 1415
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ReturnStatement",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 1547,
-  "secondPos" : 1413,
-  "firstEndPos" : 1565,
-  "secondEndPos" : 1415
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "MockResponse",
   "secondLabel" : "MockResponse",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 1551,
   "secondPos" : 1401,
@@ -1583,22 +1572,11 @@
   "firstEndPos" : 2099,
   "secondEndPos" : 1870
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 2080,
-  "secondPos" : 1868,
-  "firstEndPos" : 2099,
-  "secondEndPos" : 1870
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "AtomicInteger",
   "secondLabel" : "AtomicInteger",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 2084,
   "secondPos" : 1855,
@@ -1649,22 +1627,11 @@
   "firstEndPos" : 2159,
   "secondEndPos" : 1915
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 2140,
-  "secondPos" : 1913,
-  "firstEndPos" : 2159,
-  "secondEndPos" : 1915
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "AtomicInteger",
   "secondLabel" : "AtomicInteger",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 2144,
   "secondPos" : 1900,
@@ -1803,22 +1770,11 @@
   "firstEndPos" : 2296,
   "secondEndPos" : 2010
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 2275,
-  "secondPos" : 2007,
-  "firstEndPos" : 2296,
-  "secondEndPos" : 2010
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "CountDownLatch",
   "secondLabel" : "CountDownLatch",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 2279,
   "secondPos" : 1993,
@@ -1830,7 +1786,7 @@
   "firstLabel" : "1",
   "secondLabel" : "1",
   "firstParentType" : "ClassInstanceCreation",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "call_expression",
   "firstPos" : 2294,
   "secondPos" : 2008,
   "firstEndPos" : 2295,
@@ -2133,22 +2089,11 @@
   "firstEndPos" : 2579,
   "secondEndPos" : 2245
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ReturnStatement",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 2561,
-  "secondPos" : 2243,
-  "firstEndPos" : 2579,
-  "secondEndPos" : 2245
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "MockResponse",
   "secondLabel" : "MockResponse",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 2565,
   "secondPos" : 2231,
@@ -3391,7 +3336,7 @@
   "secondType" : "simple_identifier",
   "firstLabel" : "Thread",
   "secondLabel" : "Thread",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
   "firstPos" : 3368,
   "secondPos" : 3003,

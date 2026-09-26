@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -265,6 +266,10 @@ public class JavaToKotlinMigration {
         }
         List<Tree> inv1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION);
         if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) || srcStatementNode.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION)) {
+            inv1.add(0, srcStatementNode);
+        }
+        else if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SIMPLE_NAME) != null) {
+            //ExpressionStatement with an already flattened MethodInvocation (see end of this method)
             inv1.add(0, srcStatementNode);
         }
         List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
@@ -661,6 +666,18 @@ public class JavaToKotlinMigration {
                 dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode.getChild(0));
         }
+        if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            //align Java ExpressionStatement -> MethodInvocation with Kotlin call_expression, as Kotlin has no expression statement wrapper
+            Tree invocation1 = srcStatementNode.getChild(0);
+            Set<Tree> dsts = mappingStore.getDsts(invocation1);
+            if(dsts != null) {
+                for(Tree dst : new ArrayList<>(dsts)) {
+                    mappingStore.removeMapping(invocation1, dst);
+                }
+            }
+            flattenChild(srcStatementNode, invocation1);
+        }
     }
 
     private static void alignAndMatchInfixExpressions(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2, ExtendedMultiMappingStore mappingStore) {
@@ -893,6 +910,55 @@ public class JavaToKotlinMigration {
                         invocationsToBeRemoved.add(child1);
                     }
                 }
+            }
+        }
+        if(child1.getType().name.equals(LANG1.METHOD_INVOCATION) && child2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            alignMethodInvocation(mappingStore, child1, child2, LANG1, LANG2);
+        }
+    }
+
+    private static void alignMethodInvocation(ExtendedMultiMappingStore mappingStore, Tree invocation1, Tree invocation2, Constants LANG1, Constants LANG2) {
+        Tree args1 = TreeUtilFunctions.findChildByType(invocation1, LANG1.METHOD_INVOCATION_ARGUMENTS);
+        //align call_expression -> call_suffix -> value_arguments -> value_argument -> expression with Java MethodInvocation -> METHOD_INVOCATION_ARGUMENTS -> expression
+        Tree callSuffix2 = TreeUtilFunctions.findChildByType(invocation2, LANG2.CALL_SUFFIX);
+        if(callSuffix2 != null) {
+            Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+            if(valueArguments2 != null) {
+                if(args1 == null && valueArguments2.getChildren().isEmpty()) {
+                    //Java side has no node for an empty argument list
+                    mappingStore.removeMapping(invocation1, valueArguments2);
+                    callSuffix2.getChildren().remove(valueArguments2);
+                }
+                else {
+                    for(Tree valueArgument2 : new ArrayList<>(valueArguments2.getChildren())) {
+                        //named arguments have more than one child
+                        if(valueArgument2.getType().name.equals(LANG2.VALUE_ARGUMENT) && valueArgument2.getChildren().size() == 1) {
+                            flattenChild(valueArguments2, valueArgument2);
+                        }
+                    }
+                }
+            }
+            flattenChild(invocation2, callSuffix2);
+        }
+        //align call_expression -> navigation_expression -> [receiver, navigation_suffix -> name] with Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> receiver, name]
+        Tree receiver1 = TreeUtilFunctions.findChildByType(invocation1, LANG1.METHOD_INVOCATION_RECEIVER);
+        Tree navigation2 = invocation2.getChildren().size() > 0 ? invocation2.getChild(0) : null;
+        if(receiver1 != null && navigation2 != null && navigation2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && navigation2.getChildren().size() > 1) {
+            Tree suffix2 = navigation2.getChild(navigation2.getChildren().size() - 1);
+            if(suffix2.getType().name.equals(LANG2.NAVIGATION_SUFFIX)) {
+                mappingStore.removeMapping(receiver1, suffix2);
+                navigation2.getChildren().remove(suffix2);
+                invocation2.getChildren().addAll(1, suffix2.getChildren());
+                for(Tree t : suffix2.getChildren())
+                    t.setParent(invocation2);
+                mappingStore.addMapping(receiver1, navigation2);
+            }
+        }
+        //names that are Kotlin soft keywords (e.g., set, data) are nested in an empty simple_identifier
+        for(Tree child2 : new ArrayList<>(invocation2.getChildren())) {
+            if(child2.getType().name.equals(LANG2.SIMPLE_NAME) && child2.getLabel().isEmpty() && child2.getChildren().size() == 1 && child2.getChild(0).isLeaf() &&
+                    !mappingStore.isDstMapped(child2)) {
+                flattenChild(invocation2, child2);
             }
         }
     }

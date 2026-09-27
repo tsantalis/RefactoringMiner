@@ -1377,8 +1377,28 @@ public class JavaToKotlinMigration {
 
     public static void handleModifierMapping(ExtendedMultiMappingStore mappingStore, Tree srcModifierTree, Tree dstModifierTree, Constants LANG1, Constants LANG2) {
         Tree modifier2 = TreeUtilFunctions.findChildByType(dstModifierTree, LANG2.MODIFIER);
-        if(modifier2 != null)
+        if(modifier2 != null) {
             mappingStore.addMapping(srcModifierTree, modifier2);
+            //align Kotlin declaration -> modifiers -> visibility_modifier -> visibility_modifier 'private' with Java declaration -> Modifier 'private'
+            Tree modifiers2 = dstModifierTree.getParent();
+            if(modifier2.isLeaf() && dstModifierTree.getChildren().size() == 1 && srcModifierTree.getParent() != null &&
+                    modifiers2 != null && modifiers2.getType().name.equals(LANG2.MODIFIERS) && modifiers2.getParent() != null) {
+                Tree declaration2 = modifiers2.getParent();
+                boolean first = modifiers2.getChildPosition(dstModifierTree) == 0;
+                removeDstMappings(mappingStore, dstModifierTree);
+                modifiers2.getChildren().remove(dstModifierTree);
+                int index = declaration2.getChildPosition(modifiers2);
+                if(modifiers2.getChildren().isEmpty()) {
+                    removeDstMappings(mappingStore, modifiers2);
+                    declaration2.getChildren().set(index, modifier2);
+                    modifier2.setParent(declaration2);
+                }
+                else {
+                    //keep the source code order of the modifiers
+                    declaration2.insertChild(modifier2, first ? index : index + 1);
+                }
+            }
+        }
     }
 
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {

@@ -99,6 +99,7 @@ public class Constants {
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
+			THIS_EXPRESSION = "this_expression";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -141,6 +142,7 @@ public class Constants {
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
+			THIS_EXPRESSION = "this_expression";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -183,6 +185,7 @@ public class Constants {
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
+			THIS_EXPRESSION = "this_expression";
 		}
 		else if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
@@ -225,6 +228,7 @@ public class Constants {
 			CONDITIONAL_EXPRESSION = "conditional_expression";
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
+			THIS_EXPRESSION = "this_expression";
 		}
 		else {
 			// Java values as default
@@ -268,6 +272,7 @@ public class Constants {
 			CONDITIONAL_EXPRESSION = "ConditionalExpression";
 			NUMBER_LITERAL = "NumberLiteral";
 			LAMBDA_EXPRESSION = "LambdaExpression";
+			THIS_EXPRESSION = "ThisExpression";
 		}
 	}
 
@@ -353,7 +358,7 @@ public class Constants {
     public final String WHILE_STATEMENT;
     public final String CONDITIONAL_EXPRESSION;
     public final String CAST_EXPRESSION = "CastExpression";
-    public final String THIS_EXPRESSION = "ThisExpression";
+    public final String THIS_EXPRESSION;
 
     public final String INFIX_EXPRESSION = "InfixExpression";
     public final String LAMBDA_EXPRESSION;

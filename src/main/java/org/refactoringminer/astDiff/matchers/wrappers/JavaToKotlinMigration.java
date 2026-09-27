@@ -461,6 +461,27 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.THIS_EXPRESSION);
+        children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.THIS_EXPRESSION);
+        //the statement itself is a this expression
+        if(srcStatementNode.getType().name.equals(LANG1.THIS_EXPRESSION)) {
+            children1.add(0, srcStatementNode);
+        }
+        if(dstStatementNode.getType().name.equals(LANG2.THIS_EXPRESSION)) {
+            children2.add(0, dstStatementNode);
+        }
+        if(children1.size() == children2.size()) {
+            for(int i=0; i<children1.size(); i++) {
+                if(children2.get(i).getChildren().size() > 0) {
+                    children2.get(i).setLabel(children1.get(i).getLabel());
+                    children2.get(i).getChildren().remove(0);
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                }
+                else {
+                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                }
+            }
+        }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CHARACTER_LITERAL);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.CHARACTER_LITERAL);
         if(children1.size() == children2.size()) {

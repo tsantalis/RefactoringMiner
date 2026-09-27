@@ -672,33 +672,35 @@ public class JavaToKotlinMigration {
             if(navigationSuffix != null)
                 mappingStore.addMapping(inv1.get(0), navigationSuffix);
         }
-        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) &&
+        boolean returnStatement1 = srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT);
+        boolean throwStatement1 = srcStatementNode.getType().name.equals(LANG1.THROW_STATEMENT);
+        if((returnStatement1 || throwStatement1) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) &&
                 dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_EXPRESSION)) {
             Tree jumpExpression = dstStatementNode.getChild(0);
             Tree firstChild = jumpExpression.getChild(0);
             if(firstChild.getLabel().equals("return@")) {
                 firstChild.setLabel("return");
             }
-            if(dstStatementNode.getChildren().size() == 1 && isReturnKeywordWithAlignedChildren(srcStatementNode, jumpExpression, LANG2)) {
-                //align Kotlin control_structure_body -> jump_expression -> [return, expression?] with Java ReturnStatement -> expression?
+            if(dstStatementNode.getChildren().size() == 1 && isJumpKeywordWithAlignedChildren(srcStatementNode, jumpExpression, LANG1, LANG2)) {
+                //align Kotlin control_structure_body -> jump_expression -> [return|throw, expression?] with Java ReturnStatement|ThrowStatement -> expression?
                 removeDstMappings(mappingStore, jumpExpression);
                 flattenChild(dstStatementNode, jumpExpression);
                 removeDstMappings(mappingStore, firstChild);
                 dstStatementNode.getChildren().remove(firstChild);
             }
-            else {
+            else if(returnStatement1) {
                 mappingStore.addMapping(srcStatementNode, firstChild);
             }
         }
-        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION) &&
+        if((returnStatement1 || throwStatement1) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION) &&
                 dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD)) {
             Tree jumpKeyword = dstStatementNode.getChild(0);
-            if(isReturnKeywordWithAlignedChildren(srcStatementNode, dstStatementNode, LANG2)) {
-                //align Kotlin jump_expression -> [return, expression?] with Java ReturnStatement -> expression?, as Java ReturnStatement includes the return keyword
+            if(isJumpKeywordWithAlignedChildren(srcStatementNode, dstStatementNode, LANG1, LANG2)) {
+                //align Kotlin jump_expression -> [return|throw, expression?] with Java ReturnStatement|ThrowStatement -> expression?, as the Java statement includes the keyword
                 removeDstMappings(mappingStore, jumpKeyword);
                 dstStatementNode.getChildren().remove(0);
             }
-            else {
+            else if(returnStatement1) {
                 mappingStore.addMapping(srcStatementNode, jumpKeyword);
             }
         }
@@ -1347,9 +1349,10 @@ public class JavaToKotlinMigration {
         flattenChild(dstOperationNode, TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS));
     }
 
-    private static boolean isReturnKeywordWithAlignedChildren(Tree returnStatement1, Tree jumpExpression2, Constants LANG2) {
-        return returnStatement1.getChildren().size() <= 1 && jumpExpression2.getChildren().size() == returnStatement1.getChildren().size() + 1 &&
-                jumpExpression2.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD) && jumpExpression2.getChild(0).getLabel().equals("return");
+    private static boolean isJumpKeywordWithAlignedChildren(Tree statement1, Tree jumpExpression2, Constants LANG1, Constants LANG2) {
+        String keyword = statement1.getType().name.equals(LANG1.THROW_STATEMENT) ? "throw" : "return";
+        return statement1.getChildren().size() <= 1 && jumpExpression2.getChildren().size() == statement1.getChildren().size() + 1 &&
+                jumpExpression2.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD) && jumpExpression2.getChild(0).getLabel().equals(keyword);
     }
 
     private static void removeDstMappings(ExtendedMultiMappingStore mappingStore, Tree dst) {

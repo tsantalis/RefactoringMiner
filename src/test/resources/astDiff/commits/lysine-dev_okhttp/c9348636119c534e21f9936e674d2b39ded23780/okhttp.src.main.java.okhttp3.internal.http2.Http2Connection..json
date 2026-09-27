@@ -1012,11 +1012,11 @@
   "secondEndPos" : 29508
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "true",
+  "secondType" : "boolean_literal",
   "firstLabel" : "true",
   "secondLabel" : "true",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "value_arguments",
   "firstPos" : 3383,
   "secondPos" : 29510,
   "firstEndPos" : 3387,
@@ -1509,7 +1509,7 @@
   "firstType" : "BooleanLiteral",
   "secondType" : "boolean_literal",
   "firstLabel" : "false",
-  "secondLabel" : "",
+  "secondLabel" : "false",
   "firstParentType" : "VariableDeclarationFragment",
   "secondParentType" : "property_declaration",
   "firstPos" : 4938,
@@ -1716,11 +1716,11 @@
   "secondEndPos" : 5721
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "false",
+  "secondType" : "boolean_literal",
   "firstLabel" : "false",
   "secondLabel" : "false",
   "firstParentType" : "ClassInstanceCreation",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "value_argument",
   "firstPos" : 6092,
   "secondPos" : 5796,
   "firstEndPos" : 6097,
@@ -3476,11 +3476,11 @@
   "secondEndPos" : 7909
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "false",
+  "secondType" : "boolean_literal",
   "firstLabel" : "false",
   "secondLabel" : "false",
   "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "property_declaration",
   "firstPos" : 8813,
   "secondPos" : 7912,
   "firstEndPos" : 8818,
@@ -7535,7 +7535,7 @@
   "secondEndPos" : 12206
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "true",
+  "secondType" : "boolean_literal",
   "firstLabel" : "true",
   "secondLabel" : "true",
   "firstParentType" : "ExpressionStatement",
@@ -7942,11 +7942,11 @@
   "secondEndPos" : 12634
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "false",
+  "secondType" : "boolean_literal",
   "firstLabel" : "false",
   "secondLabel" : "false",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "value_arguments",
   "firstPos" : 14290,
   "secondPos" : 12579,
   "firstEndPos" : 14295,
@@ -12353,11 +12353,11 @@
   "secondEndPos" : 18196
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "false",
+  "secondType" : "boolean_literal",
   "firstLabel" : "false",
   "secondLabel" : "false",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "value_arguments",
   "firstPos" : 20614,
   "secondPos" : 18184,
   "firstEndPos" : 20619,
@@ -13585,11 +13585,11 @@
   "secondEndPos" : 19253
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "true",
+  "secondType" : "boolean_literal",
   "firstLabel" : "true",
   "secondLabel" : "true",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "value_arguments",
   "firstPos" : 21659,
   "secondPos" : 19255,
   "firstEndPos" : 21663,
@@ -14520,11 +14520,11 @@
   "secondEndPos" : 20195
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "false",
+  "secondType" : "boolean_literal",
   "firstLabel" : "false",
   "secondLabel" : "false",
   "firstParentType" : "ClassInstanceCreation",
-  "secondParentType" : "boolean_literal",
+  "secondParentType" : "call_expression",
   "firstPos" : 22644,
   "secondPos" : 20219,
   "firstEndPos" : 22649,
@@ -16379,7 +16379,7 @@
   "secondEndPos" : 21856
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "true",
+  "secondType" : "boolean_literal",
   "firstLabel" : "true",
   "secondLabel" : "true",
   "firstParentType" : "ExpressionStatement",
@@ -17578,7 +17578,7 @@
   "secondEndPos" : 22957
 }, {
   "firstType" : "BooleanLiteral",
-  "secondType" : "false",
+  "secondType" : "boolean_literal",
   "firstLabel" : "false",
   "secondLabel" : "false",
   "firstParentType" : "ExpressionStatement",

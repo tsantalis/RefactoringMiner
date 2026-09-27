@@ -552,10 +552,28 @@ public class JavaToKotlinMigration {
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.BOOLEAN_LITERAL);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.BOOLEAN_LITERAL);
+        //the statement itself is a boolean literal, i.e., a field initializer
+        if(srcStatementNode.getType().name.equals(LANG1.BOOLEAN_LITERAL)) {
+            children1.add(0, srcStatementNode);
+        }
+        if(dstStatementNode.getType().name.equals(LANG2.BOOLEAN_LITERAL)) {
+            children2.add(0, dstStatementNode);
+        }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
-                if(children2.get(i).getChildren().size() > 0)
-                    mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
+                //Java BooleanLiteral is a leaf, while Kotlin boolean_literal has a true/false leaf child
+                Tree literal2 = children2.get(i);
+                if(literal2.getChildren().size() == 1 && literal2.getChild(0).isLeaf()) {
+                    Tree value2 = literal2.getChild(0);
+                    if(mappingStore.isDstMapped(value2)) {
+                        for(Tree src : new ArrayList<>(mappingStore.getSrcs(value2))) {
+                            mappingStore.removeMapping(src, value2);
+                        }
+                    }
+                    literal2.setLabel(value2.getLabel());
+                    literal2.getChildren().clear();
+                }
+                mappingStore.addMapping(children1.get(i), literal2);
             }
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.NULL_LITERAL);

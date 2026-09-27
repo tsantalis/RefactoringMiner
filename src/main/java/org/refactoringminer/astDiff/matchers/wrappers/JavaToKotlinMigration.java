@@ -1394,6 +1394,16 @@ public class JavaToKotlinMigration {
         }
         //align function_declaration -> function_value_parameters -> parameter* with Java MethodDeclaration -> SingleVariableDeclaration*
         flattenChild(dstOperationNode, TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS));
+        //align function names that are soft keywords, i.e., simple_identifier -> class_modifier 'data', with Java SimpleName 'data'
+        Tree name1 = TreeUtilFunctions.findChildByType(srcOperationNode, LANG1.SIMPLE_NAME);
+        Tree name2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.SIMPLE_NAME);
+        if(name1 != null && name2 != null && name2.getLabel().isEmpty() && name2.getChildren().size() == 1 && name2.getChild(0).isLeaf() &&
+                name2.getChild(0).getLabel().equals(name1.getLabel())) {
+            removeDstMappings(mappingStore, name2.getChild(0));
+            name2.setLabel(name2.getChild(0).getLabel());
+            name2.getChildren().clear();
+            mappingStore.addMapping(name1, name2);
+        }
     }
 
     private static boolean isJumpKeywordWithAlignedChildren(Tree statement1, Tree jumpExpression2, Constants LANG1, Constants LANG2) {

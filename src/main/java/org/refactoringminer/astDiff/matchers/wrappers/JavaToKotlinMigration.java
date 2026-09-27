@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -208,7 +209,7 @@ public class JavaToKotlinMigration {
                 if(type1.getChildren().size() > 0 && type1.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME)) {
                     String qualifiedType = type1.getChild(0).getLabel();
                     for(Tree child2 : children2) {
-                        if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
+                        if(isQualifiedNameSegment(qualifiedType, child2.getLabel())) {
                             toBeRemoved2.add(child2);
                             if(child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
                                     //important: skip qualified types whose parent is a variable declaration statement, because these are replaced with var in Kotlin
@@ -217,7 +218,7 @@ public class JavaToKotlinMigration {
                                     !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
                                 Tree lastChild = child2.getParent().getChild(child2.getParent().getChildren().size() - 1);
                                 if(lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastChild.getChildren().size() > 0 &&
-                                        qualifiedType.contains("." + lastChild.getChild(0).getLabel())) {
+                                        isQualifiedNameSegment(qualifiedType, lastChild.getChild(0).getLabel())) {
                                     qualifiedNameToNavigationExpression.put(type1.getChild(0), child2.getParent());
                                 }
                             }
@@ -232,7 +233,7 @@ public class JavaToKotlinMigration {
             for(Tree qualified1 : qualifiedNames1) {
                 String qualifiedType = qualified1.getLabel();
                 for(Tree child2 : children2) {
-                    if(qualifiedType.contains(child2.getLabel() + ".") || qualifiedType.contains("." + child2.getLabel())) {
+                    if(isQualifiedNameSegment(qualifiedType, child2.getLabel())) {
                         boolean skip = child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
                                 child2.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION);
                         if(!skip) {
@@ -243,7 +244,7 @@ public class JavaToKotlinMigration {
                                 !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
                             Tree lastChild = child2.getParent().getChild(child2.getParent().getChildren().size() - 1);
                             if(lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastChild.getChildren().size() > 0 &&
-                                    qualifiedType.contains("." + lastChild.getChild(0).getLabel())) {
+                                    isQualifiedNameSegment(qualifiedType, lastChild.getChild(0).getLabel())) {
                                 qualifiedNameToNavigationExpression.put(qualified1, child2.getParent());
                             }
                         }
@@ -1419,6 +1420,11 @@ public class JavaToKotlinMigration {
                 mappingStore.removeMapping(src, dst);
             }
         }
+    }
+
+    //checks if name is one of the dot-separated segments of qualifiedName, i.e., e is not a segment of ErrorCode.PROTOCOL_ERROR
+    private static boolean isQualifiedNameSegment(String qualifiedName, String name) {
+        return !name.isEmpty() && Arrays.asList(qualifiedName.split("\\.")).contains(name);
     }
 
     private static void flattenChild(Tree parent, Tree child) {

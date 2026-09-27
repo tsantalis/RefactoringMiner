@@ -17,6 +17,8 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+
 public class JavaToKotlinMigration {
 
     public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
@@ -43,13 +45,13 @@ public class JavaToKotlinMigration {
                 srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
             Tree expression1 = srcStatementNode.getChild(0);
             Tree expression2 = dstStatementNode.getChild(0);
-            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, Optional.empty());
         }
         else if(srcStatementNode.getType().name.equals(LANG1.WHILE_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.WHILE_STATEMENT) &&
                 srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
             Tree expression1 = srcStatementNode.getChild(0);
             Tree expression2 = dstStatementNode.getChild(0);
-            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, Optional.empty());
         }
         else if(srcStatementNode.getType().name.equals(LANG1.SYNCHRONIZED_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getChildren().size() > 1) {
             Tree suffix2 = dstStatementNode.getChild(1);
@@ -82,7 +84,7 @@ public class JavaToKotlinMigration {
                         if(srcStatementNode.getChildren().size() > 0) {
                             Tree expression1 = srcStatementNode.getChild(0);
                             mappingStore.addMapping(expression1, expression2);
-                            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2);
+                            handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, Optional.empty());
                         }
                     }
                 }
@@ -90,7 +92,7 @@ public class JavaToKotlinMigration {
         }
     }
 
-    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, Optional<AbstractCodeMapping> mapping) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
         Tree srcFakeTree = TreeUtilFunctions.deepCopyWithMap(srcStatementNode, cpyToSrc);
@@ -297,7 +299,7 @@ public class JavaToKotlinMigration {
             }
             inv1.removeAll(invocationToBeRemoved);
         }
-        //check if toArray() is replaced with toTypedArray() and removed nested simpleNames and invocations from the toArray() argument
+        //check if toArray() is replaced with toTypedArray() and remove nested simpleNames and invocations from the toArray() argument
         boolean containsToArray1 = children1.stream().anyMatch(t -> t.getLabel().equals("toArray"));
         boolean containsToArray2 = children2.stream().anyMatch(t -> t.getLabel().equals("toArray"));
         boolean containsToTypedArray2 = children2.stream().anyMatch(t -> t.getLabel().equals("toTypedArray"));
@@ -316,6 +318,27 @@ public class JavaToKotlinMigration {
                 removeFromParent(inv1, list, LANG1.CLASS_INSTANCE_CREATION);
                 removeFromParent(children1, list, LANG1.SIMPLE_NAME);
             }
+        }
+        //check for TreeSitter parsing issues and remove invocations that do not actually appear in mapping.getFragment2()
+        if(mapping.isPresent()) {
+            List<Tree> invocationToBeRemoved = new ArrayList<Tree>();
+            for(Tree inv : inv2) {
+                List<Tree> list = TreeUtilFunctions.findChildrenByTypeRecursively(inv, LANG2.SIMPLE_NAME);
+                for(Tree simpleName : list) {
+                    if(!mapping.get().getFragment2().getString().contains(simpleName.getLabel())) {
+                        invocationToBeRemoved.add(inv);
+                        break;
+                    }
+                }
+                boolean containsOtherInvocationAsChild = inv2.stream().anyMatch(inv.getChildren()::contains);
+                if(containsOtherInvocationAsChild) {
+                    invocationToBeRemoved.add(inv);
+                }
+                else if(TreeUtilFunctions.findChildByType(inv, LANG2.LINE_COMMENT) != null || TreeUtilFunctions.findChildByType(inv, LANG2.BOOLEAN_LITERAL) != null) {
+                    invocationToBeRemoved.add(inv);
+                }
+            }
+            inv2.removeAll(invocationToBeRemoved);
         }
         boolean equalsMismatch = children1.stream().anyMatch(node -> node.getLabel().equals("equals")) &&
                 !children2.stream().anyMatch(node -> node.getLabel().equals("equals"));

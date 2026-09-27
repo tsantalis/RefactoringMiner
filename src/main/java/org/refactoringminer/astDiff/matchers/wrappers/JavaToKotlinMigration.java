@@ -103,7 +103,7 @@ public class JavaToKotlinMigration {
         new LeafMatcher(LANG1, LANG1).match(srcFakeTree, dstFakeTree, tempMapping);
         */
         if(dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION) && dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD)) {
-            if(dstStatementNode.getChild(0).getLabel().equals("break") || dstStatementNode.getChild(0).getLabel().equals("continue") || dstStatementNode.getChild(0).getLabel().equals("return")) {
+            if(dstStatementNode.getChild(0).getLabel().equals("break") || dstStatementNode.getChild(0).getLabel().equals("continue")) {
                 dstStatementNode.getChildren().clear();
             }
         }
@@ -679,11 +679,41 @@ public class JavaToKotlinMigration {
             if(firstChild.getLabel().equals("return@")) {
                 firstChild.setLabel("return");
             }
-            mappingStore.addMapping(srcStatementNode, firstChild);
+            if(dstStatementNode.getChildren().size() == 1 && isReturnKeywordWithAlignedChildren(srcStatementNode, jumpExpression, LANG2)) {
+                //align Kotlin control_structure_body -> jump_expression -> [return, expression?] with Java ReturnStatement -> expression?
+                removeDstMappings(mappingStore, jumpExpression);
+                flattenChild(dstStatementNode, jumpExpression);
+                removeDstMappings(mappingStore, firstChild);
+                dstStatementNode.getChildren().remove(firstChild);
+            }
+            else {
+                mappingStore.addMapping(srcStatementNode, firstChild);
+            }
         }
         if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.JUMP_EXPRESSION) &&
                 dstStatementNode.getChildren().size() > 0 && dstStatementNode.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD)) {
-            mappingStore.addMapping(srcStatementNode, dstStatementNode.getChild(0));
+            Tree jumpKeyword = dstStatementNode.getChild(0);
+            if(isReturnKeywordWithAlignedChildren(srcStatementNode, dstStatementNode, LANG2)) {
+                //align Kotlin jump_expression -> [return, expression?] with Java ReturnStatement -> expression?, as Java ReturnStatement includes the return keyword
+                removeDstMappings(mappingStore, jumpKeyword);
+                dstStatementNode.getChildren().remove(0);
+            }
+            else {
+                mappingStore.addMapping(srcStatementNode, jumpKeyword);
+            }
+        }
+        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && srcStatementNode.getChildren().size() == 1 && !srcStatementNode.getChild(0).isLeaf() &&
+                dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_BODY) &&
+                TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) != null) {
+            //align Java ReturnStatement -> expression with Kotlin function_body -> [=, expression], as Kotlin expression body has no return statement wrapper
+            Tree expression1 = srcStatementNode.getChild(0);
+            Set<Tree> dsts = mappingStore.getDsts(expression1);
+            if(dsts != null) {
+                for(Tree dst : new ArrayList<>(dsts)) {
+                    mappingStore.removeMapping(expression1, dst);
+                }
+            }
+            flattenChild(srcStatementNode, expression1);
         }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
                 srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
@@ -1315,6 +1345,20 @@ public class JavaToKotlinMigration {
         }
         //align function_declaration -> function_value_parameters -> parameter* with Java MethodDeclaration -> SingleVariableDeclaration*
         flattenChild(dstOperationNode, TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.FUNCTION_PARAMETERS));
+    }
+
+    private static boolean isReturnKeywordWithAlignedChildren(Tree returnStatement1, Tree jumpExpression2, Constants LANG2) {
+        return returnStatement1.getChildren().size() <= 1 && jumpExpression2.getChildren().size() == returnStatement1.getChildren().size() + 1 &&
+                jumpExpression2.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD) && jumpExpression2.getChild(0).getLabel().equals("return");
+    }
+
+    private static void removeDstMappings(ExtendedMultiMappingStore mappingStore, Tree dst) {
+        Set<Tree> srcs = mappingStore.getSrcs(dst);
+        if(srcs != null) {
+            for(Tree src : new ArrayList<>(srcs)) {
+                mappingStore.removeMapping(src, dst);
+            }
+        }
     }
 
     private static void flattenChild(Tree parent, Tree child) {

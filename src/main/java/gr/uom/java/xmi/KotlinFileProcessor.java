@@ -54,6 +54,7 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtValueArgumentList;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
+import org.refactoringminer.astDiff.utils.KotlinTreeSitterTreeFixer;
 import org.refactoringminer.util.PathFileUtils;
 
 import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
@@ -158,6 +159,7 @@ public class KotlinFileProcessor {
 			ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
 			try {
 				TreeContext treeContext = new KotlinTreeSitterNgTreeGenerator().generateFrom().stream(is);
+				KotlinTreeSitterTreeFixer.fix(treeContext, fileContent);
 				this.umlModel.getTreeContextMap().put(filePath, treeContext);
 			}
 			catch(Exception e) {

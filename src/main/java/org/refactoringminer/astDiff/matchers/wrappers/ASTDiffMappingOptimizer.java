@@ -13,7 +13,6 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 /* Created by pourya on 2024-06-06*/
@@ -63,7 +62,7 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2);
                 if (srcExp == null || dstExp == null) continue;
                 if(Constants.isCrossLanguage(astDiff.LANG1, astDiff.LANG2)) {
-                    JavaToKotlinMigration.handleLeafMapping(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2, Optional.of(lastStepMapping));
+                    JavaToKotlinMigration.handleLeafMapping(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2);
                 }
                 if (needToOverride(input, srcExp, dstExp))
                     new IgnoringCommentsLeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcExp, dstExp, lastStepMappingStore);

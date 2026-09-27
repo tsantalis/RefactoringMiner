@@ -24,7 +24,6 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /* Created by pourya on 2024-05-22*/
@@ -1277,7 +1276,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
-            JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, Optional.of(abstractCodeMapping));
+            JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
         }
         if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
             mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());

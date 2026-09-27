@@ -476,6 +476,30 @@ public class JavaToKotlinMigration {
                     children2.get(i).setLabel(children1.get(i).getLabel());
                     children2.get(i).getChildren().remove(0);
                     mappingStore.addMapping(children1.get(i), children2.get(i));
+                    //align Java ThisExpression -> SimpleName with Kotlin this_expression -> [this@, type_identifier]
+                    if(children1.get(i).getChildren().size() == 1 && children2.get(i).getChildren().size() == 1) {
+                        Tree qualifier1 = children1.get(i).getChild(0);
+                        Tree qualifier2 = children2.get(i).getChild(0);
+                        if(qualifier1.getType().name.equals(LANG1.SIMPLE_NAME) && qualifier2.getType().name.equals(LANG2.TYPE_IDENTIFIER) &&
+                                qualifier1.getLabel().equals(qualifier2.getLabel())) {
+                            mappingStore.addMapping(qualifier1, qualifier2);
+                        }
+                    }
+                }
+                //align Java X.this.wait() with Kotlin (this@X as Object).wait(), by flattening the Kotlin parenthesized cast into the receiver
+                Tree this1 = children1.get(i);
+                Tree this2 = children2.get(i);
+                if(this1.getParent() != null && this1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER)) {
+                    Tree as2 = this2.getParent();
+                    if(as2 != null && as2.getType().name.equals(LANG2.AS_EXPRESSION) && as2.getChild(0) == this2) {
+                        Tree parenthesized2 = as2.getParent();
+                        if(parenthesized2 != null && parenthesized2.getType().name.equals(LANG2.PARENTHESIZED_EXPRESSION) && parenthesized2.getChildren().size() == 1 &&
+                                parenthesized2.getParent() != null && parenthesized2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
+                            Tree navigation2 = parenthesized2.getParent();
+                            flattenChild(navigation2, parenthesized2);
+                            flattenChild(navigation2, as2);
+                        }
+                    }
                 }
                 else {
                     mappingStore.addMapping(children1.get(i), children2.get(i));

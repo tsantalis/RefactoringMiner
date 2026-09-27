@@ -79,6 +79,12 @@ public class JavaToKotlinMigration {
                         flattenChild(dstStatementNode, callSuffix2);
                         flattenChild(dstStatementNode, valueArguments2);
                         flattenChild(dstStatementNode, valueArgument2);
+                        //align Kotlin call_expression -> [synchronized, expression, statements] with Java SynchronizedStatement -> [expression, Block], as Java SynchronizedStatement includes the synchronized keyword
+                        Tree keyword2 = dstStatementNode.getChild(0);
+                        if(keyword2.getType().name.equals(LANG2.SIMPLE_NAME) && keyword2.getLabel().equals("synchronized") && dstStatementNode.getChildren().size() == srcStatementNode.getChildren().size() + 1) {
+                            removeDstMappings(mappingStore, keyword2);
+                            dstStatementNode.getChildren().remove(0);
+                        }
                         if(srcStatementNode.getChildren().size() > 0) {
                             Tree expression1 = srcStatementNode.getChild(0);
                             mappingStore.addMapping(expression1, expression2);

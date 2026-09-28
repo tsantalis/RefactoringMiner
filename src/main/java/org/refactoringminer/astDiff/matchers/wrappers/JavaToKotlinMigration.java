@@ -1233,54 +1233,123 @@ public class JavaToKotlinMigration {
 
     public static void handleAnnotationMapping(ExtendedMultiMappingStore mappingStore, Tree srcClassAnnotationTree, Tree dstClassAnnotationTree, Constants LANG1, Constants LANG2) {
         if(srcClassAnnotationTree != null && dstClassAnnotationTree != null) {
-            mappingStore.addMapping(srcClassAnnotationTree, dstClassAnnotationTree);
-            Tree classModifiers2 = dstClassAnnotationTree.getType().name.equals(LANG2.CLASS_MODIFIER) ? dstClassAnnotationTree : TreeUtilFunctions.findChildByType(dstClassAnnotationTree, LANG2.CLASS_MODIFIER);
-            if(classModifiers2 != null) {
-                List<Tree> stringLiteral1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcClassAnnotationTree, LANG1.STRING_LITERAL);
-                List<Tree> numberLiteral1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcClassAnnotationTree, LANG1.NUMBER_LITERAL);
-                List<Tree> stringLiteral2 = null;
-                List<Tree> numberLiteral2 = null;
-                Tree typeName1 = TreeUtilFunctions.findChildByType(srcClassAnnotationTree, LANG1.SIMPLE_NAME);
-                Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
-                Tree at = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.AT);
-                if(at != null) {
-                    at.setLabel("");
-                    mappingStore.addMapping(srcClassAnnotationTree, at);
-                }
-                if(userType2 == null) {
-                    Tree constuctorInvocation2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.CONSTRUCTOR_INVOCATION);
-                    if(constuctorInvocation2 != null) {
-                        stringLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.STRING_LITERAL);
-                        numberLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.INTEGER_LITERAL);
-                        userType2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.USER_TYPE);
-                        Tree valueArguments2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.METHOD_INVOCATION_ARGUMENTS);
-                        if(valueArguments2 != null) {
-                            mappingStore.addMapping(srcClassAnnotationTree, valueArguments2);
+            Tree typeName1 = TreeUtilFunctions.findChildByType(srcClassAnnotationTree, LANG1.SIMPLE_NAME);
+            Tree classModifiers2 = findKotlinAnnotation(dstClassAnnotationTree, typeName1, LANG2);
+            if(classModifiers2 == null) {
+                if(!dstClassAnnotationTree.getType().name.equals(LANG2.MODIFIERS))
+                    mappingStore.addMapping(srcClassAnnotationTree, dstClassAnnotationTree);
+                return;
+            }
+            //map the Java annotation only to the Kotlin annotation node to avoid multi-mappings reported as moves
+            mappingStore.addMapping(srcClassAnnotationTree, classModifiers2);
+            List<Tree> stringLiteral1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcClassAnnotationTree, LANG1.STRING_LITERAL);
+            List<Tree> numberLiteral1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcClassAnnotationTree, LANG1.NUMBER_LITERAL);
+            List<Tree> stringLiteral2 = null;
+            List<Tree> numberLiteral2 = null;
+            Tree userType2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.USER_TYPE);
+            Tree typeIdentifier2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.TYPE_IDENTIFIER);
+            Tree at = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.AT);
+            //align Kotlin class_modifier -> at, user_type -> type_identifier with Java MarkerAnnotation -> SimpleName
+            if(at != null) {
+                removeDstMappings(mappingStore, at);
+                classModifiers2.getChildren().remove(at);
+            }
+            if(userType2 == null && typeIdentifier2 == null) {
+                Tree constuctorInvocation2 = TreeUtilFunctions.findChildByType(classModifiers2, LANG2.CONSTRUCTOR_INVOCATION);
+                if(constuctorInvocation2 != null) {
+                    stringLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.STRING_LITERAL);
+                    numberLiteral2 = TreeUtilFunctions.findChildrenByTypeRecursively(constuctorInvocation2, LANG2.INTEGER_LITERAL);
+                    userType2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.USER_TYPE);
+                    Tree valueArguments2 = TreeUtilFunctions.findChildByType(constuctorInvocation2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                    //align Kotlin class_modifier -> constructor_invocation -> user_type, value_arguments -> value_argument -> expression
+                    //with Java SingleMemberAnnotation -> SimpleName, Expression
+                    if(srcClassAnnotationTree.getType().name.equals(LANG1.SINGLE_MEMBER_ANNOTATION) && userType2 != null && valueArguments2 != null &&
+                            constuctorInvocation2.getChildren().size() == 2 && valueArguments2.getChildren().size() == 1) {
+                        Tree valueArgument2 = valueArguments2.getChild(0);
+                        if(valueArgument2.getType().name.equals(LANG2.VALUE_ARGUMENT) && valueArgument2.getChildren().size() == 1) {
+                            Tree expression2 = valueArgument2.getChild(0);
+                            removeDstMappings(mappingStore, constuctorInvocation2);
+                            removeDstMappings(mappingStore, valueArguments2);
+                            removeDstMappings(mappingStore, valueArgument2);
+                            int index = classModifiers2.getChildPosition(constuctorInvocation2);
+                            classModifiers2.getChildren().set(index, userType2);
+                            userType2.setParent(classModifiers2);
+                            classModifiers2.insertChild(expression2, index + 1);
                         }
-                    }
-                }
-                if(typeName1 != null && userType2 != null && userType2.getChildren().size() > 0) {
-                    mappingStore.addMapping(typeName1, userType2.getChild(0));
-                }
-                if(stringLiteral2 != null && stringLiteral1.size() == stringLiteral2.size()) {
-                    for(int i=0; i<stringLiteral1.size(); i++) {
-                        if(stringLiteral2.get(i).getChildren().size() > 0) {
-                            stringLiteral2.get(i).setLabel(stringLiteral1.get(i).getLabel());
-                            stringLiteral2.get(i).getChildren().remove(0);
-                            mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
-                        }
-                        else {
-                            mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
-                        }
-                    }
-                }
-                if(numberLiteral2 != null && numberLiteral1.size() == numberLiteral2.size()) {
-                    for(int i=0; i<numberLiteral1.size(); i++) {
-                        mappingStore.addMapping(numberLiteral1.get(i), numberLiteral2.get(i));
                     }
                 }
             }
+            if(userType2 != null && userType2.getParent() == classModifiers2 && userType2.getChildren().size() == 1 && userType2.getChild(0).isLeaf()) {
+                typeIdentifier2 = userType2.getChild(0);
+                removeDstMappings(mappingStore, userType2);
+                int index = classModifiers2.getChildPosition(userType2);
+                classModifiers2.getChildren().set(index, typeIdentifier2);
+                typeIdentifier2.setParent(classModifiers2);
+            }
+            else if(userType2 != null && userType2.getChildren().size() > 0) {
+                typeIdentifier2 = userType2.getChild(0);
+            }
+            if(typeName1 != null && typeIdentifier2 != null) {
+                mappingStore.addMapping(typeName1, typeIdentifier2);
+            }
+            if(stringLiteral2 != null && stringLiteral1.size() == stringLiteral2.size()) {
+                for(int i=0; i<stringLiteral1.size(); i++) {
+                    if(stringLiteral2.get(i).getChildren().size() > 0) {
+                        stringLiteral2.get(i).setLabel(stringLiteral1.get(i).getLabel());
+                        stringLiteral2.get(i).getChildren().remove(0);
+                        mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
+                    }
+                    else {
+                        mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
+                    }
+                }
+            }
+            if(numberLiteral2 != null && numberLiteral1.size() == numberLiteral2.size()) {
+                for(int i=0; i<numberLiteral1.size(); i++) {
+                    mappingStore.addMapping(numberLiteral1.get(i), numberLiteral2.get(i));
+                }
+            }
+            //align Kotlin declaration -> modifiers -> class_modifier with Java declaration -> Annotation
+            Tree modifiers2 = classModifiers2.getParent();
+            Tree parent1 = srcClassAnnotationTree.getParent();
+            if(modifiers2 != null && modifiers2.getType().name.equals(LANG2.MODIFIERS) && modifiers2.getParent() != null &&
+                    parent1 != null && !parent1.getType().name.equals(LANG1.MODIFIERS)) {
+                Tree declaration2 = modifiers2.getParent();
+                modifiers2.getChildren().remove(classModifiers2);
+                if(modifiers2.getChildren().isEmpty()) {
+                    removeDstMappings(mappingStore, modifiers2);
+                    declaration2.getChildren().remove(modifiers2);
+                }
+                else {
+                    updateRangeToChildren(modifiers2);
+                }
+                //keep the source code order of the annotations and modifiers
+                int insertionIndex = 0;
+                while(insertionIndex < declaration2.getChildren().size() && declaration2.getChild(insertionIndex).getPos() < classModifiers2.getPos())
+                    insertionIndex++;
+                declaration2.insertChild(classModifiers2, insertionIndex);
+                classModifiers2.setParent(declaration2);
+            }
         }
+    }
+
+    private static Tree findKotlinAnnotation(Tree dstClassAnnotationTree, Tree typeName1, Constants LANG2) {
+        if(dstClassAnnotationTree.getType().name.equals(LANG2.CLASS_MODIFIER))
+            return dstClassAnnotationTree;
+        if(dstClassAnnotationTree.getType().name.equals(LANG2.MODIFIERS)) {
+            List<Tree> candidates = new ArrayList<>(TreeUtilFunctions.findChildrenByType(dstClassAnnotationTree, LANG2.CLASS_MODIFIER));
+            //the annotation might have been already moved from the modifiers to the declaration
+            if(dstClassAnnotationTree.getParent() != null)
+                candidates.addAll(TreeUtilFunctions.findChildrenByType(dstClassAnnotationTree.getParent(), LANG2.CLASS_MODIFIER));
+            for(Tree candidate : candidates) {
+                List<Tree> typeIdentifiers = TreeUtilFunctions.findChildrenByTypeRecursively(candidate, LANG2.TYPE_IDENTIFIER);
+                if(typeName1 != null && typeIdentifiers.size() > 0 && typeIdentifiers.get(0).getLabel().equals(typeName1.getLabel()))
+                    return candidate;
+            }
+            if(candidates.size() > 0 && TreeUtilFunctions.findChildByType(candidates.get(0), LANG2.AT) != null)
+                return candidates.get(0);
+        }
+        return null;
     }
 
     public static void handleImportMapping(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement, Constants LANG1, Constants LANG2) {
@@ -1394,6 +1463,7 @@ public class JavaToKotlinMigration {
                     modifier2.setParent(declaration2);
                 }
                 else {
+                    updateRangeToChildren(modifiers2);
                     //keep the source code order of the modifiers
                     declaration2.insertChild(modifier2, first ? index : index + 1);
                 }
@@ -1431,6 +1501,16 @@ public class JavaToKotlinMigration {
         String keyword = statement1.getType().name.equals(LANG1.THROW_STATEMENT) ? "throw" : "return";
         return statement1.getChildren().size() <= 1 && jumpExpression2.getChildren().size() == statement1.getChildren().size() + 1 &&
                 jumpExpression2.getChild(0).getType().name.equals(LANG2.JUMP_KEYWORD) && jumpExpression2.getChild(0).getLabel().equals(keyword);
+    }
+
+    //shrinks the source code range of a node to cover only its remaining children
+    private static void updateRangeToChildren(Tree tree) {
+        if(!tree.getChildren().isEmpty()) {
+            int start = tree.getChild(0).getPos();
+            int end = tree.getChild(tree.getChildren().size() - 1).getEndPos();
+            tree.setPos(start);
+            tree.setLength(end - start);
+        }
     }
 
     private static void removeDstMappings(ExtendedMultiMappingStore mappingStore, Tree dst) {

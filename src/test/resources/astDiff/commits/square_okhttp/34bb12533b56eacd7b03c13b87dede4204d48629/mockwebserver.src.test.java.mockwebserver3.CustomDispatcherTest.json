@@ -231,7 +231,7 @@
   "secondEndPos" : 3310
 }, {
   "firstType" : "SingleMemberAnnotation",
-  "secondType" : "modifiers",
+  "secondType" : "class_modifier",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "TypeDeclaration",
@@ -241,34 +241,12 @@
   "firstEndPos" : 1040,
   "secondEndPos" : 951
 }, {
-  "firstType" : "SingleMemberAnnotation",
-  "secondType" : "at",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "TypeDeclaration",
-  "secondParentType" : "class_modifier",
-  "firstPos" : 1028,
-  "secondPos" : 939,
-  "firstEndPos" : 1040,
-  "secondEndPos" : 940
-}, {
-  "firstType" : "SingleMemberAnnotation",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "TypeDeclaration",
-  "secondParentType" : "constructor_invocation",
-  "firstPos" : 1028,
-  "secondPos" : 947,
-  "firstEndPos" : 1040,
-  "secondEndPos" : 951
-}, {
   "firstType" : "SimpleName",
   "secondType" : "type_identifier",
   "firstLabel" : "Timeout",
   "secondLabel" : "Timeout",
   "firstParentType" : "SingleMemberAnnotation",
-  "secondParentType" : "user_type",
+  "secondParentType" : "class_modifier",
   "firstPos" : 1029,
   "secondPos" : 940,
   "firstEndPos" : 1036,
@@ -279,7 +257,7 @@
   "firstLabel" : "30",
   "secondLabel" : "30",
   "firstParentType" : "SingleMemberAnnotation",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "class_modifier",
   "firstPos" : 1037,
   "secondPos" : 948,
   "firstEndPos" : 1039,
@@ -374,18 +352,7 @@
   "secondEndPos" : 1134
 }, {
   "firstType" : "MarkerAnnotation",
-  "secondType" : "at",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodDeclaration",
-  "secondParentType" : "class_modifier",
-  "firstPos" : 1119,
-  "secondPos" : 1036,
-  "firstEndPos" : 1130,
-  "secondEndPos" : 1037
-}, {
-  "firstType" : "MarkerAnnotation",
-  "secondType" : "modifiers",
+  "secondType" : "class_modifier",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "MethodDeclaration",
@@ -400,7 +367,7 @@
   "firstLabel" : "BeforeEach",
   "secondLabel" : "BeforeEach",
   "firstParentType" : "MarkerAnnotation",
-  "secondParentType" : "user_type",
+  "secondParentType" : "class_modifier",
   "firstPos" : 1120,
   "secondPos" : 1037,
   "firstEndPos" : 1130,
@@ -550,18 +517,7 @@
   "secondEndPos" : 1787
 }, {
   "firstType" : "MarkerAnnotation",
-  "secondType" : "at",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodDeclaration",
-  "secondParentType" : "class_modifier",
-  "firstPos" : 1246,
-  "secondPos" : 1138,
-  "firstEndPos" : 1251,
-  "secondEndPos" : 1139
-}, {
-  "firstType" : "MarkerAnnotation",
-  "secondType" : "modifiers",
+  "secondType" : "class_modifier",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "MethodDeclaration",
@@ -576,7 +532,7 @@
   "firstLabel" : "Test",
   "secondLabel" : "Test",
   "firstParentType" : "MarkerAnnotation",
-  "secondParentType" : "user_type",
+  "secondParentType" : "class_modifier",
   "firstPos" : 1247,
   "secondPos" : 1139,
   "firstEndPos" : 1251,
@@ -1463,18 +1419,7 @@
   "secondEndPos" : 2904
 }, {
   "firstType" : "MarkerAnnotation",
-  "secondType" : "at",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodDeclaration",
-  "secondParentType" : "class_modifier",
-  "firstPos" : 1983,
-  "secondPos" : 1791,
-  "firstEndPos" : 1988,
-  "secondEndPos" : 1792
-}, {
-  "firstType" : "MarkerAnnotation",
-  "secondType" : "modifiers",
+  "secondType" : "class_modifier",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "MethodDeclaration",
@@ -1489,7 +1434,7 @@
   "firstLabel" : "Test",
   "secondLabel" : "Test",
   "firstParentType" : "MarkerAnnotation",
-  "secondParentType" : "user_type",
+  "secondParentType" : "class_modifier",
   "firstPos" : 1984,
   "secondPos" : 1792,
   "firstEndPos" : 1988,

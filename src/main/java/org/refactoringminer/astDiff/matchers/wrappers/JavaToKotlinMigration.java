@@ -19,6 +19,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TypeSet;
 import com.github.gumtreediff.utils.Pair;
 
 public class JavaToKotlinMigration {
@@ -1359,6 +1360,7 @@ public class JavaToKotlinMigration {
     public static boolean handleJavadocMapping(ExtendedMultiMappingStore mappingStore, Tree srcJavadoc, Tree dstComment, Constants LANG1, Constants LANG2) {
         if(!srcJavadoc.getType().name.equals(LANG1.JAVA_DOC) || !dstComment.getType().name.equals(LANG2.BLOCK_COMMENT))
             return false;
+        List<Pair<Tree, Tree>> pairs = new ArrayList<>();
         if(dstComment.isLeaf()) {
             //tree-sitter-kotlin replaces the /** of multiline comments starting with a line break with the indentation of the comment,
             //i.e., /**\n * text *\/ is labeled as "  \n * text *\/", so the offsets are computed from the end of the comment
@@ -1372,25 +1374,53 @@ public class JavaToKotlinMigration {
             int[] cursor = {text.startsWith("/**") ? 3 : 0};
             List<Tree> children = new ArrayList<>();
             for(Tree srcChild : srcJavadoc.getChildren()) {
-                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, cursor, false, LANG1);
-                if(dstChild == null)
-                    return false;
+                int[] position = {cursor[0]};
+                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, position, false, LANG1);
+                if(dstChild == null) {
+                    //the Kotlin comment might contain added documentation before the element, so the element is searched in the following lines
+                    int lineStart = findJavadocElementLineStart(srcChild, text, offset, cursor[0], LANG1);
+                    if(lineStart < 0)
+                        return false;
+                    Tree added = createAddedJavadocElement(text, offset, cursor[0], lineStart, LANG1);
+                    if(added != null)
+                        children.add(added);
+                    position[0] = lineStart;
+                    dstChild = mirrorJavadocElement(srcChild, text, offset, position, false, LANG1);
+                }
+                cursor[0] = position[0];
+                pairs.add(new Pair<>(srcChild, dstChild));
                 children.add(dstChild);
             }
-            if(!isJavadocFormatting(text, cursor[0], text.length() - 2, false))
-                return false;
+            //the Kotlin comment might contain added documentation after the last element
+            if(!isJavadocFormatting(text, cursor[0], text.length() - 2, false)) {
+                Tree added = createAddedJavadocElement(text, offset, cursor[0], text.length() - 2, LANG1);
+                if(added == null)
+                    return false;
+                children.add(added);
+            }
             dstComment.setLabel(srcJavadoc.getLabel());
             for(Tree child : children)
                 dstComment.addChild(child);
         }
-        //the cached tree metrics of the Kotlin comment are outdated, so isIsoStructuralTo() cannot be used
-        if(!srcJavadoc.getLabel().equals(dstComment.getLabel()) || srcJavadoc.getChildren().size() != dstComment.getChildren().size())
-            return false;
-        for(int i=0; i<srcJavadoc.getChildren().size(); i++) {
-            if(!haveSameStructure(srcJavadoc.getChild(i), dstComment.getChild(i)))
-                return false;
+        else if(mappingStore.getDsts(srcJavadoc) != null && mappingStore.getDsts(srcJavadoc).contains(dstComment)) {
+            return true;
         }
-        mapSameStructure(mappingStore, srcJavadoc, dstComment);
+        else {
+            //the cached tree metrics of the Kotlin comment are outdated, so isIsoStructuralTo() cannot be used
+            int j = 0;
+            for(Tree srcChild : srcJavadoc.getChildren()) {
+                while(j < dstComment.getChildren().size() && !haveSameStructure(srcChild, dstComment.getChild(j)))
+                    j++;
+                if(j == dstComment.getChildren().size())
+                    return false;
+                pairs.add(new Pair<>(srcChild, dstComment.getChild(j++)));
+            }
+        }
+        if(!srcJavadoc.getLabel().equals(dstComment.getLabel()))
+            return false;
+        mappingStore.addMapping(srcJavadoc, dstComment);
+        for(Pair<Tree, Tree> pair : pairs)
+            mapSameStructure(mappingStore, pair.first, pair.second);
         //align Kotlin declaration's parent -> multiline_comment, declaration with Java declaration -> Javadoc
         Tree parent1 = srcJavadoc.getParent();
         Tree parent2 = dstComment.getParent();
@@ -1420,6 +1450,60 @@ public class JavaToKotlinMigration {
             }
         }
         return true;
+    }
+
+    //returns the start of the line after the start position, from which the Java element can be mirrored in the Kotlin comment
+    private static int findJavadocElementLineStart(Tree srcElement, String text, int offset, int start, Constants LANG1) {
+        Tree firstLeaf = null;
+        for(Tree t : srcElement.preOrder()) {
+            if(t.isLeaf() && !t.getLabel().isBlank()) {
+                firstLeaf = t;
+                break;
+            }
+        }
+        if(firstLeaf == null)
+            return -1;
+        Pattern pattern = firstLeaf.getType().name.equals(LANG1.TEXT_ELEMENT) ? javadocTextPattern(firstLeaf.getLabel()) : Pattern.compile(Pattern.quote(firstLeaf.getLabel()));
+        Matcher matcher = pattern.matcher(text);
+        int from = start;
+        while(from < text.length() && matcher.find(from)) {
+            int lineStart = text.lastIndexOf('\n', matcher.start()) + 1;
+            if(lineStart > start) {
+                int[] position = {lineStart};
+                if(mirrorJavadocElement(srcElement, text, offset, position, false, LANG1) != null)
+                    return lineStart;
+            }
+            from = matcher.start() + 1;
+        }
+        return -1;
+    }
+
+    //creates a TagElement with a TextElement for each line of the documentation added in the Kotlin comment between start and end
+    private static Tree createAddedJavadocElement(String text, int offset, int start, int end, Constants LANG1) {
+        DefaultTree tagElement = new DefaultTree(TypeSet.type(LANG1.TAG_ELEMENT), "");
+        int lineStart = start;
+        while(lineStart < end) {
+            int lineEnd = text.indexOf('\n', lineStart);
+            if(lineEnd < 0 || lineEnd > end)
+                lineEnd = end;
+            int textStart = lineStart;
+            while(textStart < lineEnd && isJavadocFormatting(text, textStart, textStart + 1, false))
+                textStart++;
+            int textEnd = lineEnd;
+            while(textEnd > textStart && Character.isWhitespace(text.charAt(textEnd - 1)))
+                textEnd--;
+            if(textStart < textEnd) {
+                DefaultTree textElement = new DefaultTree(TypeSet.type(LANG1.TEXT_ELEMENT), text.substring(textStart, textEnd));
+                textElement.setPos(offset + textStart);
+                textElement.setLength(textEnd - textStart);
+                tagElement.addChild(textElement);
+            }
+            lineStart = lineEnd + 1;
+        }
+        if(tagElement.getChildren().isEmpty())
+            return null;
+        setRangeToChildren(tagElement);
+        return tagElement;
     }
 
     private static boolean haveSameStructure(Tree tree1, Tree tree2) {

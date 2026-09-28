@@ -287,6 +287,10 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
                     mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
         }
+        else {
+            new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
+                    .match(srcTree, dstTree, mappingStore);
+        }
         boolean isMovedAttribute = !srcUMLAttribute.getClassName().equals(dstUMLAttribute.getClassName());
         if(PathFileUtils.isCppFile(srcUMLAttribute.getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(dstUMLAttribute.getLocationInfo().getFilePath()) &&
                 srcUMLAttribute.getLocationInfo().getFilePath().equals(dstUMLAttribute.getLocationInfo().getFilePath()) && !isMovedAttribute) {

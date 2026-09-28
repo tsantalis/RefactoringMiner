@@ -381,6 +381,8 @@ public class Constants {
     public final String TEXT_ELEMENT = "TextElement";
     public final String TAG_ELEMENT = "TagElement";
     public final String TAG_NAME = "TAG_NAME";
+    public final String METHOD_REF = "MethodRef";
+    public final String MEMBER_REF = "MemberRef";
 
     public final String SIMPLE_TYPE = "SimpleType";
     public final String PARAMETERIZED_TYPE = "ParameterizedType";

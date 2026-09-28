@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -15,6 +17,7 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 
@@ -1350,6 +1353,268 @@ public class JavaToKotlinMigration {
                 return candidates.get(0);
         }
         return null;
+    }
+
+    //align Java Javadoc -> TagElement -> TextElement with Kotlin multiline_comment by mirroring the Java structure inside the textually identical Kotlin comment
+    public static boolean handleJavadocMapping(ExtendedMultiMappingStore mappingStore, Tree srcJavadoc, Tree dstComment, Constants LANG1, Constants LANG2) {
+        if(!srcJavadoc.getType().name.equals(LANG1.JAVA_DOC) || !dstComment.getType().name.equals(LANG2.BLOCK_COMMENT))
+            return false;
+        if(dstComment.isLeaf()) {
+            //tree-sitter-kotlin replaces the /** of multiline comments starting with a line break with the indentation of the comment,
+            //i.e., /**\n * text *\/ is labeled as "  \n * text *\/", so the offsets are computed from the end of the comment
+            String text = dstComment.getLabel();
+            int offset = dstComment.getPos() + dstComment.getLength() - text.length();
+            int leadingSpaces = 0;
+            while(leadingSpaces < text.length() && text.charAt(leadingSpaces) == ' ')
+                leadingSpaces++;
+            if(offset + leadingSpaces < dstComment.getPos() || !text.endsWith("*/"))
+                return false;
+            int[] cursor = {text.startsWith("/**") ? 3 : 0};
+            List<Tree> children = new ArrayList<>();
+            for(Tree srcChild : srcJavadoc.getChildren()) {
+                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, cursor, false, LANG1);
+                if(dstChild == null)
+                    return false;
+                children.add(dstChild);
+            }
+            if(!isJavadocFormatting(text, cursor[0], text.length() - 2, false))
+                return false;
+            dstComment.setLabel(srcJavadoc.getLabel());
+            for(Tree child : children)
+                dstComment.addChild(child);
+        }
+        //the cached tree metrics of the Kotlin comment are outdated, so isIsoStructuralTo() cannot be used
+        if(!srcJavadoc.getLabel().equals(dstComment.getLabel()) || srcJavadoc.getChildren().size() != dstComment.getChildren().size())
+            return false;
+        for(int i=0; i<srcJavadoc.getChildren().size(); i++) {
+            if(!haveSameStructure(srcJavadoc.getChild(i), dstComment.getChild(i)))
+                return false;
+        }
+        mapSameStructure(mappingStore, srcJavadoc, dstComment);
+        //align Kotlin declaration's parent -> multiline_comment, declaration with Java declaration -> Javadoc
+        Tree parent1 = srcJavadoc.getParent();
+        Tree parent2 = dstComment.getParent();
+        if(parent1 != null && parent2 != null) {
+            Tree declaration2 = null;
+            Set<Tree> dsts = mappingStore.getDsts(parent1);
+            if(dsts != null) {
+                for(Tree dst : dsts) {
+                    if(dst.getPos() >= dstComment.getEndPos() && dst != parent2) {
+                        declaration2 = dst;
+                        break;
+                    }
+                }
+            }
+            else {
+                int index = parent2.getChildPosition(dstComment);
+                if(index + 1 < parent2.getChildren().size()) {
+                    Tree nextSibling = parent2.getChild(index + 1);
+                    if(!nextSibling.getType().name.equals(LANG2.BLOCK_COMMENT) && !nextSibling.getType().name.equals(LANG2.LINE_COMMENT))
+                        declaration2 = nextSibling;
+                }
+            }
+            if(declaration2 != null) {
+                parent2.getChildren().remove(dstComment);
+                declaration2.insertChild(dstComment, 0);
+                dstComment.setParent(declaration2);
+            }
+        }
+        return true;
+    }
+
+    private static boolean haveSameStructure(Tree tree1, Tree tree2) {
+        //labels are not compared, because Java inline tag names are replaced with Kotlin markup, i.e., @code with `
+        if(!tree1.getType().name.equals(tree2.getType().name) || tree1.getChildren().size() != tree2.getChildren().size())
+            return false;
+        for(int i=0; i<tree1.getChildren().size(); i++) {
+            if(!haveSameStructure(tree1.getChild(i), tree2.getChild(i)))
+                return false;
+        }
+        return true;
+    }
+
+    private static void mapSameStructure(ExtendedMultiMappingStore mappingStore, Tree tree1, Tree tree2) {
+        mappingStore.addMapping(tree1, tree2);
+        for(int i=0; i<tree1.getChildren().size(); i++) {
+            mapSameStructure(mappingStore, tree1.getChild(i), tree2.getChild(i));
+        }
+    }
+
+    private static Tree mirrorJavadocElement(Tree srcElement, String text, int offset, int[] cursor, boolean reference, Constants LANG1) {
+        DefaultTree dstElement = new DefaultTree(srcElement.getType(), srcElement.getLabel());
+        String type = srcElement.getType().name;
+        if(srcElement.isLeaf()) {
+            String label = srcElement.getLabel();
+            int start = cursor[0];
+            int end = cursor[0];
+            if(!label.isBlank()) {
+                //the text might differ in whitespace, line breaks, and HTML markup, i.e., "<p>Writes are" and "Writes are"
+                Matcher matcher = javadocTextPattern(label).matcher(text);
+                if(!matcher.find(cursor[0]))
+                    return null;
+                start = matcher.start();
+                end = matcher.end();
+            }
+            if(!isJavadocFormatting(text, cursor[0], start, reference))
+                return null;
+            cursor[0] = end;
+            dstElement.setPos(offset + start);
+            dstElement.setLength(end - start);
+            String kotlinText = normalizeJavadocText(text.substring(start, end));
+            if(!kotlinText.equals(normalizeJavadocText(label)))
+                dstElement.setLabel(kotlinText);
+        }
+        else if(type.equals(LANG1.TAG_ELEMENT) && srcElement.getParent() != null && srcElement.getParent().getType().name.equals(LANG1.TAG_ELEMENT) &&
+                srcElement.getChild(0).getType().name.equals(LANG1.TAG_NAME)) {
+            return mirrorJavadocInlineTag(srcElement, text, offset, cursor, LANG1);
+        }
+        else {
+            boolean isReference = reference || type.equals(LANG1.METHOD_REF) || type.equals(LANG1.MEMBER_REF) || type.equals(LANG1.QUALIFIED_NAME);
+            for(Tree srcChild : srcElement.getChildren()) {
+                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, cursor, isReference, LANG1);
+                if(dstChild == null)
+                    return null;
+                dstElement.addChild(dstChild);
+            }
+            setRangeToChildren(dstElement);
+        }
+        return dstElement;
+    }
+
+    //align Java inline tags {@code text}, {@link ref}, {@link ref label} with Kotlin markup `text`, [ref], [label][ref], or the unchanged Java inline tag
+    private static Tree mirrorJavadocInlineTag(Tree srcElement, String text, int offset, int[] cursor, Constants LANG1) {
+        int start = cursor[0];
+        while(start < text.length() && isJavadocFormatting(text, start, start + 1, false))
+            start++;
+        if(start >= text.length())
+            return null;
+        char opening = text.charAt(start);
+        if(opening != '{' && opening != '`' && opening != '[')
+            return null;
+        DefaultTree dstElement = new DefaultTree(srcElement.getType(), srcElement.getLabel());
+        List<Tree> srcChildren = srcElement.getChildren();
+        List<Tree> dstChildren = new ArrayList<>();
+        int[] position = {start + 1};
+        if(opening == '{') {
+            for(Tree srcChild : srcChildren) {
+                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, position, false, LANG1);
+                if(dstChild == null)
+                    return null;
+                dstChildren.add(dstChild);
+            }
+            if(!consume(text, position, "}"))
+                return null;
+        }
+        else {
+            //the markup replaces the Java tag name
+            Tree srcTagName = srcChildren.get(0);
+            DefaultTree dstTagName = new DefaultTree(srcTagName.getType(), String.valueOf(opening));
+            dstTagName.setPos(offset + start);
+            dstTagName.setLength(1);
+            dstChildren.add(dstTagName);
+            List<Tree> references = new ArrayList<>();
+            List<Tree> labels = new ArrayList<>();
+            for(Tree srcChild : srcChildren.subList(1, srcChildren.size())) {
+                if(labels.isEmpty() && !srcChild.getType().name.equals(LANG1.TEXT_ELEMENT))
+                    references.add(srcChild);
+                else
+                    labels.add(srcChild);
+            }
+            List<Tree> mirrored = null;
+            if(opening == '[' && !references.isEmpty() && !labels.isEmpty()) {
+                //[label][ref]
+                int[] labelPosition = {position[0]};
+                List<Tree> dstLabels = mirrorJavadocElements(labels, text, offset, labelPosition, false, LANG1);
+                if(dstLabels != null && consume(text, labelPosition, "][")) {
+                    List<Tree> dstReferences = mirrorJavadocElements(references, text, offset, labelPosition, true, LANG1);
+                    if(dstReferences != null && consume(text, labelPosition, "]")) {
+                        //keep the order of the Java tree
+                        mirrored = new ArrayList<>(dstReferences);
+                        mirrored.addAll(dstLabels);
+                        position[0] = labelPosition[0];
+                    }
+                }
+            }
+            if(mirrored == null) {
+                //`text` or [ref]
+                mirrored = mirrorJavadocElements(srcChildren.subList(1, srcChildren.size()), text, offset, position, true, LANG1);
+                if(mirrored == null || !consume(text, position, opening == '`' ? "`" : "]"))
+                    return null;
+            }
+            dstChildren.addAll(mirrored);
+        }
+        for(Tree dstChild : dstChildren)
+            dstElement.addChild(dstChild);
+        cursor[0] = position[0];
+        dstElement.setPos(offset + start);
+        dstElement.setLength(position[0] - start);
+        return dstElement;
+    }
+
+    private static List<Tree> mirrorJavadocElements(List<Tree> srcElements, String text, int offset, int[] cursor, boolean reference, Constants LANG1) {
+        List<Tree> dstElements = new ArrayList<>();
+        for(Tree srcElement : srcElements) {
+            Tree dstElement = mirrorJavadocElement(srcElement, text, offset, cursor, reference, LANG1);
+            if(dstElement == null)
+                return null;
+            dstElements.add(dstElement);
+        }
+        return dstElements;
+    }
+
+    //consumes the expected text after optional whitespace
+    private static boolean consume(String text, int[] cursor, String expected) {
+        int index = cursor[0];
+        while(index < text.length() && Character.isWhitespace(text.charAt(index)))
+            index++;
+        if(!text.startsWith(expected, index))
+            return false;
+        cursor[0] = index + expected.length();
+        return true;
+    }
+
+    //matches the words of a Javadoc text separated by any whitespace, including line breaks followed by a leading *,
+    //allowing HTML markup to be converted to Markdown, and words to be converted to links, i.e., IOException to [IOException]
+    private static Pattern javadocTextPattern(String label) {
+        String[] words = label.trim().split("\\s+");
+        StringBuilder regex = new StringBuilder();
+        for(String word : words) {
+            String markdown = word.replaceAll("</?p>", "").replaceAll("</?(strong|b)>", "**").replaceAll("</?(em|i)>", "*").replaceAll("</?code>", "`");
+            if(markdown.isEmpty())
+                continue;
+            if(regex.length() > 0)
+                regex.append("(?:\\s*\\n\\s*\\*(?!/))?\\s+");
+            String quoted = Pattern.quote(markdown);
+            regex.append("(?:\\[").append(quoted).append("\\]|").append(quoted).append(")");
+        }
+        return Pattern.compile(regex.toString());
+    }
+
+    private static String normalizeJavadocText(String text) {
+        return text.replaceAll("\\s*\\n\\s*\\*", " ").replaceAll("\\s+", " ").trim();
+    }
+
+    //checks if the text between start and end contains only Javadoc formatting characters, or reference separators, i.e., Http2Stream#isOpen() and Http2Stream.isOpen
+    private static boolean isJavadocFormatting(String text, int start, int end, boolean reference) {
+        for(int i=start; i<end; i++) {
+            char c = text.charAt(i);
+            if(!Character.isWhitespace(c) && c != '*' && !(reference && (c == '.' || c == '#' || c == '(' || c == ')')))
+                return false;
+        }
+        return true;
+    }
+
+    private static void setRangeToChildren(Tree tree) {
+        if(!tree.getChildren().isEmpty()) {
+            int start = tree.getChild(0).getPos();
+            int end = tree.getChild(0).getEndPos();
+            for(Tree child : tree.getChildren()) {
+                start = Math.min(start, child.getPos());
+                end = Math.max(end, child.getEndPos());
+            }
+            tree.setPos(start);
+            tree.setLength(end - start);
+        }
     }
 
     public static void handleImportMapping(ExtendedMultiMappingStore mappingStore, Tree srcImportStatement, Tree dstImportStatement, Constants LANG1, Constants LANG2) {

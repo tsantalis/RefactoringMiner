@@ -1423,7 +1423,7 @@ public class JavaToKotlinMigration {
     }
 
     private static boolean haveSameStructure(Tree tree1, Tree tree2) {
-        //labels are not compared, because Java inline tag names are replaced with Kotlin markup, i.e., @code with `
+        //labels are not compared, because Java texts with HTML markup are replaced with Kotlin texts with Markdown
         if(!tree1.getType().name.equals(tree2.getType().name) || tree1.getChildren().size() != tree2.getChildren().size())
             return false;
         for(int i=0; i<tree1.getChildren().size(); i++) {
@@ -1506,9 +1506,9 @@ public class JavaToKotlinMigration {
                 return null;
         }
         else {
-            //the markup replaces the Java tag name
+            //the markup replaces the Java tag name, so it gets the same label to avoid an update, i.e., @code for `
             Tree srcTagName = srcChildren.get(0);
-            DefaultTree dstTagName = new DefaultTree(srcTagName.getType(), String.valueOf(opening));
+            DefaultTree dstTagName = new DefaultTree(srcTagName.getType(), srcTagName.getLabel());
             dstTagName.setPos(offset + start);
             dstTagName.setLength(1);
             dstChildren.add(dstTagName);

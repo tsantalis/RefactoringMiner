@@ -13551,22 +13551,11 @@
   "firstEndPos" : 11833,
   "secondEndPos" : 2676
 }, {
-  "firstType" : "ParameterizedType",
-  "secondType" : "type_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "SingleVariableDeclaration",
-  "secondParentType" : "user_type",
-  "firstPos" : 11815,
-  "secondPos" : 2668,
-  "firstEndPos" : 11833,
-  "secondEndPos" : 2676
-}, {
   "firstType" : "SimpleName",
   "secondType" : "type_identifier",
   "firstLabel" : "Collection",
   "secondLabel" : "Collection",
-  "firstParentType" : "SimpleType",
+  "firstParentType" : "ParameterizedType",
   "secondParentType" : "user_type",
   "firstPos" : 11815,
   "secondPos" : 2658,
@@ -13578,6 +13567,17 @@
   "firstLabel" : "String",
   "secondLabel" : "String",
   "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 11826,
+  "secondPos" : 2669,
+  "firstEndPos" : 11832,
+  "secondEndPos" : 2675
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParameterizedType",
   "secondParentType" : "user_type",
   "firstPos" : 11826,
   "secondPos" : 2669,

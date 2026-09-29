@@ -230,6 +230,17 @@
   "firstEndPos" : 452,
   "secondEndPos" : 1168
 }, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "type_identifier",
+  "firstLabel" : "long",
+  "secondLabel" : "Long",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 466,
+  "secondPos" : 1191,
+  "firstEndPos" : 470,
+  "secondEndPos" : 1195
+}, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "affectation_operator",
   "firstLabel" : "=",
@@ -377,23 +388,12 @@
   "secondType" : "simple_identifier",
   "firstLabel" : "googleApiClient",
   "secondLabel" : "googleApiClient",
-  "firstParentType" : "VariableDeclarationFragment",
+  "firstParentType" : "FieldDeclaration",
   "secondParentType" : "class_parameter",
   "firstPos" : 660,
   "secondPos" : 320,
   "firstEndPos" : 675,
   "secondEndPos" : 335
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "class_parameter",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "FieldDeclaration",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 660,
-  "secondPos" : 308,
-  "firstEndPos" : 675,
-  "secondEndPos" : 352
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",

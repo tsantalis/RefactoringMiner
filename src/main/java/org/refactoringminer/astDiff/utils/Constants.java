@@ -478,6 +478,7 @@ public class Constants {
     public final String CONTROL_STRUCTURE_BODY = "control_structure_body";
     public final String CLASS_PARAMETER = "class_parameter";
     public final String USER_TYPE = "user_type";
+    public final String NULLABLE_TYPE = "nullable_type";
     public final String ERROR = "ERROR";
     public final String ENUM_ENTRY = "enum_entry";
     public final String JUMP_EXPRESSION = "jump_expression";
@@ -510,6 +511,7 @@ public class Constants {
     public final String AT = "at";
     public final String PACKAGE = "package";
     public final String TYPE_ARGUMENTS = "type_arguments";
+    public final String TYPE_PROJECTION = "type_projection";
     public final String STRING_CONTENT = "string_content";
     public final String LAMBDA_PARAMETERS = "lambda_parameters";
     public final String VALUE_ARGUMENT = "value_argument";

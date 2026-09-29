@@ -1860,6 +1860,16 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(qualifiedName, identifier);
             identifier.getChildren().clear();
         }
+        alignImportList(mappingStore, dstImportStatement, LANG2);
+    }
+
+    //align Kotlin source_file -> [package_header, import_list -> import_header*, declaration*] with Java CompilationUnit -> [PackageDeclaration, ImportDeclaration*, declaration*]
+    private static void alignImportList(ExtendedMultiMappingStore mappingStore, Tree dstImportStatement, Constants LANG2) {
+        Tree importList2 = dstImportStatement.getParent();
+        if(importList2 == null || !importList2.getType().name.equals(LANG2.IMPORT_LIST) || importList2.getParent() == null)
+            return;
+        removeDstMappings(mappingStore, importList2);
+        flattenChild(importList2.getParent(), importList2);
     }
 
     public static void handlePackageDeclarationMapping(ExtendedMultiMappingStore mappingStore, Tree srcPackageDeclaration, Tree dstPackageDeclaration, Constants LANG1, Constants LANG2) {

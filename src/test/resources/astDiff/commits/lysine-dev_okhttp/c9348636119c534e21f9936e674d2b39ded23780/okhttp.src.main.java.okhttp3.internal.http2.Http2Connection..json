@@ -23573,11 +23573,11 @@
   "secondEndPos" : 27931
 }, {
   "firstType" : "Modifier",
-  "secondType" : "inheritance_modifier",
+  "secondType" : "inherit_modifier",
   "firstLabel" : "abstract",
-  "secondLabel" : "",
+  "secondLabel" : "abstract",
   "firstParentType" : "TypeDeclaration",
-  "secondParentType" : "modifiers",
+  "secondParentType" : "class_declaration",
   "firstPos" : 31889,
   "secondPos" : 27938,
   "firstEndPos" : 31897,
@@ -24013,11 +24013,11 @@
   "secondEndPos" : 28216
 }, {
   "firstType" : "Modifier",
-  "secondType" : "inheritance_modifier",
+  "secondType" : "inherit_modifier",
   "firstLabel" : "abstract",
-  "secondLabel" : "",
+  "secondLabel" : "abstract",
   "firstParentType" : "MethodDeclaration",
-  "secondParentType" : "modifiers",
+  "secondParentType" : "function_declaration",
   "firstPos" : 32428,
   "secondPos" : 28261,
   "firstEndPos" : 32436,

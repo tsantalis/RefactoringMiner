@@ -27,7 +27,10 @@ public class SameModifierMatcher implements TreeMatcher {
         Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,LANG1.MODIFIER,modifier,LANG1);
         Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,LANG2.MODIFIER,modifier,LANG2);
         if (srcTree != null && dstTree != null){
-            mappingStore.addMappingRecursively(srcTree,dstTree);
+            if (Constants.isCrossLanguage(LANG1, LANG2))
+                JavaToKotlinMigration.handleModifierMapping(mappingStore, srcTree, dstTree, LANG1, LANG2);
+            else
+                mappingStore.addMappingRecursively(srcTree,dstTree);
         }
     }
 }

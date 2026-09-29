@@ -1794,7 +1794,15 @@ public class JavaToKotlinMigration {
     }
 
     public static void handleModifierMapping(ExtendedMultiMappingStore mappingStore, Tree srcModifierTree, Tree dstModifierTree, Constants LANG1, Constants LANG2) {
+        if(dstModifierTree.isLeaf()) {
+            mappingStore.addMapping(srcModifierTree, dstModifierTree);
+            return;
+        }
         Tree modifier2 = TreeUtilFunctions.findChildByType(dstModifierTree, LANG2.MODIFIER);
+        //other Kotlin modifiers are wrapped in the same way, e.g., inheritance_modifier -> inherit_modifier 'abstract'
+        if(modifier2 == null && dstModifierTree.getChildren().size() == 1 && dstModifierTree.getChild(0).isLeaf()) {
+            modifier2 = dstModifierTree.getChild(0);
+        }
         if(modifier2 != null) {
             mappingStore.addMapping(srcModifierTree, modifier2);
             //align Kotlin declaration -> modifiers -> visibility_modifier -> visibility_modifier 'private' with Java declaration -> Modifier 'private'

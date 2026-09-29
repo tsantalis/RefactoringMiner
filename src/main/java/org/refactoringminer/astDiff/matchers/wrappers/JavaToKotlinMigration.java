@@ -726,6 +726,8 @@ public class JavaToKotlinMigration {
         }
         if(inv1.size() == children2.size()) {
             for(int i=0; i<inv1.size(); i++) {
+                if(alignMethodInvocationWithPropertyAccess(mappingStore, inv1.get(i), children2.get(i), LANG1, LANG2))
+                    continue;
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
                 if(navigationSuffix != null)
                     mappingStore.addMapping(inv1.get(i), navigationSuffix);
@@ -902,6 +904,61 @@ public class JavaToKotlinMigration {
                 flattenChild(srcDeclaration, fragment1);
             }
         }
+    }
+
+    //align Kotlin navigation_expression -> [receiver, navigation_suffix -> name] with Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> receiver, name]
+    //for method invocations without arguments converted to property accesses, i.e., debugData.size() -> debugData.size
+    private static boolean alignMethodInvocationWithPropertyAccess(ExtendedMultiMappingStore mappingStore, Tree invocation1, Tree navigation2, Constants LANG1, Constants LANG2) {
+        if(!invocation1.getType().name.equals(LANG1.METHOD_INVOCATION) || invocation1.getChildren().size() != 2)
+            return false;
+        Tree receiver1 = invocation1.getChild(0);
+        Tree name1 = invocation1.getChild(1);
+        if(!receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) || receiver1.getChildren().size() != 1 || !name1.getType().name.equals(LANG1.SIMPLE_NAME))
+            return false;
+        if(!navigation2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) || navigation2.getChildren().size() != 2)
+            return false;
+        Tree suffix2 = navigation2.getChild(1);
+        if(!suffix2.getType().name.equals(LANG2.NAVIGATION_SUFFIX) || suffix2.getChildren().size() != 1 || !suffix2.getChild(0).isLeaf())
+            return false;
+        Tree name2 = suffix2.getChild(0);
+        removeDstMappings(mappingStore, suffix2);
+        flattenChild(navigation2, suffix2);
+        Set<Tree> receiverDsts = mappingStore.getDsts(receiver1);
+        if(receiverDsts != null) {
+            for(Tree dst : new ArrayList<>(receiverDsts)) {
+                mappingStore.removeMapping(receiver1, dst);
+            }
+        }
+        flattenChild(invocation1, receiver1);
+        mappingStore.addMapping(invocation1, navigation2);
+        mappingStore.addMapping(name1, name2);
+        Tree receiverExpression1 = invocation1.getChild(0);
+        Tree receiverExpression2 = navigation2.getChild(0);
+        if(receiverExpression1.isLeaf() && receiverExpression2.isLeaf()) {
+            mappingStore.addMapping(receiverExpression1, receiverExpression2);
+        }
+        //align Kotlin postfix_expression -> [navigation_expression -> [receiver, name], !!] as navigation_expression -> [receiver, name, !!], i.e., response.getBody() -> response.body!!
+        Tree postfix2 = navigation2.getParent();
+        if(postfix2 != null && postfix2.getType().name.equals(LANG2.KOTLIN_POSTFIX_EXPRESSION) && postfix2.getChildren().size() == 2 && postfix2.getChild(0) == navigation2 &&
+                postfix2.getChild(1).getType().name.equals(LANG2.NON_NULL_ASSERTION_OPERATOR) && postfix2.getParent() != null) {
+            Tree assertion2 = postfix2.getChild(1);
+            removeDstMappings(mappingStore, postfix2);
+            Tree parent2 = postfix2.getParent();
+            parent2.getChildren().set(parent2.getChildPosition(postfix2), navigation2);
+            navigation2.setParent(parent2);
+            navigation2.addChild(assertion2);
+            assertion2.setParent(navigation2);
+            navigation2.setLength(postfix2.getEndPos() - navigation2.getPos());
+        }
+        //align Kotlin navigation_expression statement with Java ExpressionStatement -> MethodInvocation, i.e., conn.getResponseCode(); -> conn.responseCode
+        Tree statement1 = invocation1.getParent();
+        Set<Tree> statementDsts = statement1 != null ? mappingStore.getDsts(statement1) : null;
+        if(statement1 != null && statement1.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && statement1.getChildren().size() == 1 &&
+                statementDsts != null && statementDsts.contains(navigation2)) {
+            mappingStore.removeMapping(invocation1, navigation2);
+            flattenChild(statement1, invocation1);
+        }
+        return true;
     }
 
     private static void alignFieldAccess(ExtendedMultiMappingStore mappingStore, Tree fieldAccess1, Tree navigation2, Constants LANG1, Constants LANG2) {

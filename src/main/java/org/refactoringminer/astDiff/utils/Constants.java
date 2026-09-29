@@ -479,6 +479,8 @@ public class Constants {
     public final String CLASS_PARAMETER = "class_parameter";
     public final String USER_TYPE = "user_type";
     public final String NULLABLE_TYPE = "nullable_type";
+    public final String KOTLIN_POSTFIX_EXPRESSION = "postfix_expression";
+    public final String NON_NULL_ASSERTION_OPERATOR = "non-null_assertion_operator";
     public final String ERROR = "ERROR";
     public final String ENUM_ENTRY = "enum_entry";
     public final String JUMP_EXPRESSION = "jump_expression";

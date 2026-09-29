@@ -934,6 +934,17 @@ public class JavaToKotlinMigration {
         flattenChild(invocation1, receiver1);
         mappingStore.addMapping(invocation1, navigation2);
         mappingStore.addMapping(name1, name2);
+        //align Kotlin navigation_expression -> [postfix_expression -> [receiver, !!], name] as navigation_expression -> [receiver, !!, name], i.e., requestUrl.scheme() -> requestUrl!!.scheme
+        Tree receiverPostfix2 = navigation2.getChild(0);
+        if(isNonNullAssertion(receiverPostfix2, LANG2)) {
+            Tree receiver2 = receiverPostfix2.getChild(0);
+            Tree assertion2 = receiverPostfix2.getChild(1);
+            removeDstMappings(mappingStore, receiverPostfix2);
+            navigation2.getChildren().set(0, receiver2);
+            receiver2.setParent(navigation2);
+            navigation2.insertChild(assertion2, 1);
+            assertion2.setParent(navigation2);
+        }
         Tree receiverExpression1 = invocation1.getChild(0);
         Tree receiverExpression2 = navigation2.getChild(0);
         if(receiverExpression1.isLeaf() && receiverExpression2.isLeaf()) {
@@ -941,8 +952,7 @@ public class JavaToKotlinMigration {
         }
         //align Kotlin postfix_expression -> [navigation_expression -> [receiver, name], !!] as navigation_expression -> [receiver, name, !!], i.e., response.getBody() -> response.body!!
         Tree postfix2 = navigation2.getParent();
-        if(postfix2 != null && postfix2.getType().name.equals(LANG2.KOTLIN_POSTFIX_EXPRESSION) && postfix2.getChildren().size() == 2 && postfix2.getChild(0) == navigation2 &&
-                postfix2.getChild(1).getType().name.equals(LANG2.NON_NULL_ASSERTION_OPERATOR) && postfix2.getParent() != null) {
+        if(postfix2 != null && isNonNullAssertion(postfix2, LANG2) && postfix2.getChild(0) == navigation2 && postfix2.getParent() != null) {
             Tree assertion2 = postfix2.getChild(1);
             removeDstMappings(mappingStore, postfix2);
             Tree parent2 = postfix2.getParent();
@@ -961,6 +971,12 @@ public class JavaToKotlinMigration {
             flattenChild(statement1, invocation1);
         }
         return true;
+    }
+
+    //Kotlin postfix_expression -> [expression, !!]
+    private static boolean isNonNullAssertion(Tree t, Constants LANG2) {
+        return t.getType().name.equals(LANG2.KOTLIN_POSTFIX_EXPRESSION) && t.getChildren().size() == 2 &&
+                t.getChild(1).getType().name.equals(LANG2.NON_NULL_ASSERTION_OPERATOR);
     }
 
     private static void alignFieldAccess(ExtendedMultiMappingStore mappingStore, Tree fieldAccess1, Tree navigation2, Constants LANG1, Constants LANG2) {

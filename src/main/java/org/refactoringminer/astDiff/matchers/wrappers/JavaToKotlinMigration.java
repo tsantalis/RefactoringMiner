@@ -1507,16 +1507,12 @@ public class JavaToKotlinMigration {
             return false;
         List<Pair<Tree, Tree>> pairs = new ArrayList<>();
         if(dstComment.isLeaf()) {
-            //tree-sitter-kotlin replaces the /** of multiline comments starting with a line break with the indentation of the comment,
-            //i.e., /**\n * text *\/ is labeled as "  \n * text *\/", so the offsets are computed from the end of the comment
+            //the label is the source code of the comment, as restored by KotlinTreeSitterTreeFixer, so the offsets are computed from the start of the comment
             String text = dstComment.getLabel();
-            int offset = dstComment.getPos() + dstComment.getLength() - text.length();
-            int leadingSpaces = 0;
-            while(leadingSpaces < text.length() && text.charAt(leadingSpaces) == ' ')
-                leadingSpaces++;
-            if(offset + leadingSpaces < dstComment.getPos() || !text.endsWith("*/"))
+            int offset = dstComment.getPos();
+            if(!text.startsWith("/*") || !text.endsWith("*/"))
                 return false;
-            int[] cursor = {text.startsWith("/**") ? 3 : 0};
+            int[] cursor = {text.startsWith("/**") ? 3 : 2};
             List<Tree> children = new ArrayList<>();
             for(Tree srcChild : srcJavadoc.getChildren()) {
                 int[] position = {cursor[0]};

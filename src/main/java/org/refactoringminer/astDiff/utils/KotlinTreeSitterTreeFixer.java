@@ -57,6 +57,14 @@ import com.github.gumtreediff.tree.TypeSet;
  * {@code disjunction_expression(prefix_expression(!, out), ||, equality_expression)}.
  * Similarly, {@code a != -1 && b}, parsed as {@code equality_expression(a, !=, prefix_expression(-, conjunction_expression(1, &&, b)))},
  * is rebuilt as {@code conjunction_expression(equality_expression(a, !=, prefix_expression(-, 1)), &&, b)}.
+ * <p>
+ * 4. The opening delimiter of a multi-line comment starting with a line break is replaced with the indentation of the comment.
+ * <pre>
+ *   /**
+ *    * text
+ *    *&#47;
+ * </pre>
+ * is labeled as {@code "  \n   * text\n   *&#47;"}. The label is restored to the source code of the comment.
  */
 public class KotlinTreeSitterTreeFixer {
 	private static final String STATEMENTS = "statements";
@@ -65,7 +73,8 @@ public class KotlinTreeSitterTreeFixer {
 	private static final String VALUE_ARGUMENTS = "value_arguments";
 	private static final String VALUE_ARGUMENT = "value_argument";
 	private static final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
-	private static final Set<String> COMMENTS = Set.of("line_comment", "multiline_comment");
+	private static final String MULTILINE_COMMENT = "multiline_comment";
+	private static final Set<String> COMMENTS = Set.of("line_comment", MULTILINE_COMMENT);
 	// nodes without a closing token, which absorb the comments preceding the next sibling, i.e., the documentation of the first declaration
 	private static final Set<String> TRAILING_COMMENT_OWNERS = Set.of("package_header", "import_header", "import_list", "when_entry");
 	// expressions that can have the mis-parsed call as their leftmost operand, i.e., (x as Object).notifyAll() or (a) + b
@@ -86,6 +95,7 @@ public class KotlinTreeSitterTreeFixer {
 			"conjunction_expression", "disjunction_expression");
 
 	public static void fix(TreeContext context, String sourceCode) {
+		restoreCommentDelimiters(context, sourceCode);
 		moveTrailingComments(context);
 		Tree call;
 		while ((call = findMisparsedCall(context.getRoot(), sourceCode)) != null) {
@@ -191,6 +201,24 @@ public class KotlinTreeSitterTreeFixer {
 		parent.setChildren(list);
 		for (Tree child : list) {
 			child.setParent(parent);
+		}
+	}
+
+	private static void restoreCommentDelimiters(TreeContext context, String sourceCode) {
+		for (Tree t : context.getRoot().preOrder()) {
+			if (!t.getType().name.equals(MULTILINE_COMMENT) || t.getPos() >= sourceCode.length())
+				continue;
+			String label = t.getLabel();
+			if (sourceCode.startsWith(label, t.getPos()))
+				continue;
+			// the positions are in characters, while the lengths are in UTF-8 bytes, so the label is restored from the start of the comment
+			String text = label.replaceFirst("^ +", "");
+			for (String delimiter : new String[] {"/**", "/*"}) {
+				if (sourceCode.startsWith(delimiter, t.getPos()) && sourceCode.startsWith(text, t.getPos() + delimiter.length())) {
+					t.setLabel(delimiter + text);
+					break;
+				}
+			}
 		}
 	}
 

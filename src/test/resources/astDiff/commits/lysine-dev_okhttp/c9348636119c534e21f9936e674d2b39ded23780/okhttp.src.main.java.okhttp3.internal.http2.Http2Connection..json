@@ -4784,6 +4784,17 @@
   "firstEndPos" : 9368,
   "secondEndPos" : 8466
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "flushHeaders",
+  "secondLabel" : "flushHeaders",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 9277,
+  "secondPos" : 8374,
+  "firstEndPos" : 9289,
+  "secondEndPos" : 8386
+}, {
   "firstType" : "ASSIGNMENT_OPERATOR",
   "secondType" : "affectation_operator",
   "firstLabel" : "=",
@@ -4838,6 +4849,17 @@
   "secondPos" : 8390,
   "firstEndPos" : 9293,
   "secondEndPos" : 8391
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "out",
+  "secondLabel" : "out",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 9293,
+  "secondPos" : 8391,
+  "firstEndPos" : 9296,
+  "secondEndPos" : 8394
 }, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "logical_operator",

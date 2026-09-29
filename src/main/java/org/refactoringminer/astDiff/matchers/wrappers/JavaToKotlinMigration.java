@@ -240,6 +240,11 @@ public class JavaToKotlinMigration {
                     if(isQualifiedNameSegment(qualifiedType, child2.getLabel())) {
                         boolean skip = child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
                                 child2.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION);
+                        //keep the simple names outside navigation expressions matching a Java simple name, i.e., x in x == 0 || s.x == 0
+                        if(!isInsideNavigationExpression(child2, dstStatementNode, LANG2) &&
+                                children1.stream().anyMatch(child1 -> child1.getLabel().equals(child2.getLabel()))) {
+                            continue;
+                        }
                         if(!skip) {
                             toBeRemoved2.add(child2);
                         }
@@ -1886,6 +1891,14 @@ public class JavaToKotlinMigration {
     }
 
     //checks if name is one of the dot-separated segments of qualifiedName, i.e., e is not a segment of ErrorCode.PROTOCOL_ERROR
+    private static boolean isInsideNavigationExpression(Tree t, Tree statement, Constants LANG2) {
+        for(Tree parent = t.getParent(); parent != null && parent != statement.getParent(); parent = parent.getParent()) {
+            if(parent.getType().name.equals(LANG2.NAVIGATION_EXPRESSION))
+                return true;
+        }
+        return false;
+    }
+
     private static boolean isQualifiedNameSegment(String qualifiedName, String name) {
         return !name.isEmpty() && Arrays.asList(qualifiedName.split("\\.")).contains(name);
     }

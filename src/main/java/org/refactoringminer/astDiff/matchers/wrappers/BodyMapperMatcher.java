@@ -177,6 +177,21 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode = statements2.getChild(0);
             }
         }
+        //the statements of a lambda aligned with a Java Block are moved to the lambda_literal including the braces of the block, i.e., synchronized(this) {...}
+        if(Constants.isCrossLanguage(LANG1, LANG2) && dstStatementNode != null && dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) &&
+                !dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
+                dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.LAMBDA_LITERAL)) {
+            Tree lambdaLiteral2 = dstStatementNode.getParent();
+            Tree first2 = lambdaLiteral2.getChild(0);
+            Tree last2 = lambdaLiteral2.getChild(lambdaLiteral2.getChildren().size() - 1);
+            if(first2.getPos() == dstLocationInfo.getStartOffset() && last2.getEndPos() == dstLocationInfo.getEndOffset()) {
+                //the lambda_literal matching the body of an anonymous class method is mapped to the anonymous class, and the method body is deleted
+                Set<Tree> lambdaSrcs = mappingStore.getSrcs(lambdaLiteral2);
+                if(lambdaSrcs != null && srcStatementNode != null && !lambdaSrcs.contains(srcStatementNode))
+                    return;
+                dstStatementNode = lambdaLiteral2;
+            }
+        }
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK) && !dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
             String astTypeName = dstLocationInfo.getCodeElementType().name();
             try {

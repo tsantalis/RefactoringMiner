@@ -68,11 +68,16 @@ public class JavaToKotlinMigration {
                 Tree statements2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.STATEMENTS);
                 Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
                 if(block1 != null && statements2 != null) {
-                    //align call_expression -> call_suffix -> annotated_lambda -> lambda_literal -> statements with Java SynchronizedStatement -> Block
+                    //align call_expression -> call_suffix -> annotated_lambda -> lambda_literal with Java SynchronizedStatement -> Block
+                    removeDstMappings(mappingStore, suffix2);
+                    removeDstMappings(mappingStore, annotatedLambda2);
                     flattenChild(dstStatementNode, suffix2);
                     flattenChild(dstStatementNode, annotatedLambda2);
-                    flattenChild(dstStatementNode, lambdaLiteral2);
-                    mappingStore.addMapping(block1, statements2);
+                    //align lambda_literal -> statements -> stmt* with Java Block -> stmt*, as in function_body and control_structure_body including the braces of the block
+                    removeDstMappings(mappingStore, statements2);
+                    flattenChild(lambdaLiteral2, statements2);
+                    removeDstMappings(mappingStore, lambdaLiteral2);
+                    mappingStore.addMapping(block1, lambdaLiteral2);
                 }
                 //align call_expression -> call_expression -> call_suffix -> value_arguments -> value_argument -> expression with Java SynchronizedStatement -> expression
                 Tree call2 = dstStatementNode.getChild(0);
@@ -1008,7 +1013,7 @@ public class JavaToKotlinMigration {
             navigation2.setParent(parent2);
             navigation2.addChild(assertion2);
             assertion2.setParent(navigation2);
-            navigation2.setLength(postfix2.getEndPos() - navigation2.getPos());
+            updateRangeToChildren(navigation2);
         }
         //align Kotlin navigation_expression statement with Java ExpressionStatement -> MethodInvocation, i.e., conn.getResponseCode(); -> conn.responseCode
         Tree statement1 = invocation1.getParent();
@@ -2217,7 +2222,7 @@ public class JavaToKotlinMigration {
         return true;
     }
 
-    //align Kotlin call_expression -> [simple_identifier, call_suffix -> annotated_lambda -> lambda_literal -> statements] with Java TryStatement -> [try, Block, CatchClause*],
+    //align Kotlin call_expression -> [simple_identifier, call_suffix -> annotated_lambda -> lambda_literal -> statements -> stmt*] with Java TryStatement -> [try, Block -> stmt*, CatchClause*],
     //when the try statement is replaced with a call to a function taking the try block as lambda, i.e., try {...} catch (IOException ignored) {} -> ignoreIoExceptions {...}
     private static void handleTryToLambdaCallMapping(ExtendedMultiMappingStore mappingStore, Tree try1, Tree call2, Constants LANG1, Constants LANG2) {
         if(call2.getChildren().size() != 2)
@@ -2235,14 +2240,16 @@ public class JavaToKotlinMigration {
         Tree block1 = TreeUtilFunctions.findChildByType(try1, LANG1.BLOCK);
         if(block1 == null || statements2 == null)
             return;
-        //align call_expression -> call_suffix -> annotated_lambda -> lambda_literal -> statements with Java TryStatement -> Block
+        //align call_expression -> call_suffix -> annotated_lambda -> lambda_literal with Java TryStatement -> Block
         removeDstMappings(mappingStore, suffix2);
         removeDstMappings(mappingStore, annotatedLambda2);
-        removeDstMappings(mappingStore, lambdaLiteral2);
         flattenChild(call2, suffix2);
         flattenChild(call2, annotatedLambda2);
-        flattenChild(call2, lambdaLiteral2);
-        mappingStore.addMapping(block1, statements2);
+        //align lambda_literal -> statements -> stmt* with Java Block -> stmt*, as in function_body and control_structure_body including the braces of the block
+        removeDstMappings(mappingStore, statements2);
+        flattenChild(lambdaLiteral2, statements2);
+        removeDstMappings(mappingStore, lambdaLiteral2);
+        mappingStore.addMapping(block1, lambdaLiteral2);
         //the try keyword is not in the Java tree, so a leaf is added for it, which is updated to the name of the Kotlin function
         Tree keyword1 = TreeUtilFunctions.findChildByType(try1, LANG1.TRY_KEYWORD);
         if(keyword1 == null) {
@@ -2257,9 +2264,10 @@ public class JavaToKotlinMigration {
         }
     }
 
-    //align Kotlin call_suffix -> annotated_lambda -> lambda_literal -> statements with
-    //Java ClassInstanceCreation -> AnonymousClassDeclaration -> MethodDeclaration -> Block, when the anonymous class is replaced with a lambda,
+    //align Kotlin annotated_lambda -> lambda_literal -> statements -> stmt* with
+    //Java ClassInstanceCreation -> AnonymousClassDeclaration -> MethodDeclaration -> Block -> stmt*, when the anonymous class is replaced with a lambda,
     //i.e., new NamedRunnable("OkHttp %s", connectionName) { public void execute() {...} } -> tryExecute("OkHttp $connectionName") {...}
+    //the body of the anonymous class becomes the lambda, while the method, including the braces of its body, is deleted
     public static void handleAnonymousToLambdaMapping(ExtendedMultiMappingStore mappingStore, Tree anonymousClass1, Tree lambda2, Constants LANG1, Constants LANG2) {
         if(anonymousClass1 == null || !anonymousClass1.getType().name.equals(LANG1.ANONYMOUS_CLASS_DECLARATION) || lambda2 == null)
             return;
@@ -2280,10 +2288,6 @@ public class JavaToKotlinMigration {
         if(trailingLambdaLiteral2 != null) {
             //the lambda passed to the call having the anonymous class as argument, i.e., pushExecutorExecute(new NamedRunnable(...) {...}) -> pushExecutor.execute(...) {...}
             lambdaLiteral2 = trailingLambdaLiteral2;
-            Tree statements2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.STATEMENTS);
-            if(block1 != null && statements2 != null && !mappingStore.isSrcMapped(block1) && !mappingStore.isDstMapped(statements2)) {
-                mappingStore.addMapping(block1, statements2);
-            }
         }
         else if(block1 != null && mappingStore.isSrcMapped(block1)) {
             //the lambda, whose body is mapped to the body of the method, replaces the anonymous class
@@ -2298,26 +2302,23 @@ public class JavaToKotlinMigration {
                 return;
             lambdaLiteral2 = mappedLambdaLiteral2;
         }
-        else {
-            //the body of the method becomes the body of the lambda, even if the statements inside are not mapped one by one
-            Tree statements2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.STATEMENTS);
-            if(block1 != null && statements2 != null && !mappingStore.isDstMapped(statements2)) {
-                mappingStore.addMapping(block1, statements2);
-            }
+        //the method, including its body, has no counterpart in the lambda
+        removeSrcMappings(mappingStore, anonymousMethod1);
+        if(block1 != null)
+            removeSrcMappings(mappingStore, block1);
+        //align lambda_literal -> statements -> stmt* with the statements of the method body
+        Tree statements2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.STATEMENTS);
+        if(statements2 != null) {
+            removeDstMappings(mappingStore, statements2);
+            flattenChild(lambdaLiteral2, statements2);
         }
-        //the pairs of Java and Kotlin ancestors, from the method to the class instance creation
-        String[][] ancestorTypes = {
-                {LANG1.METHOD_DECLARATION, LANG2.LAMBDA_LITERAL},
-                {LANG1.ANONYMOUS_CLASS_DECLARATION, LANG2.ANNOTATED_LAMBDA},
-                {LANG1.CLASS_INSTANCE_CREATION, LANG2.CALL_SUFFIX}};
-        Tree ancestor1 = anonymousMethod1;
-        Tree ancestor2 = lambdaLiteral2;
-        for(String[] types : ancestorTypes) {
-            if(ancestor1 == null || ancestor2 == null || !ancestor1.getType().name.equals(types[0]) || !ancestor2.getType().name.equals(types[1]))
-                break;
-            mappingStore.addMapping(ancestor1, ancestor2);
-            ancestor1 = ancestor1.getParent();
-            ancestor2 = ancestor2.getParent();
+        removeDstMappings(mappingStore, lambdaLiteral2);
+        mappingStore.addMapping(anonymousClass1, lambdaLiteral2);
+        Tree classInstanceCreation1 = anonymousClass1.getParent();
+        Tree annotatedLambda2 = lambdaLiteral2.getParent();
+        if(classInstanceCreation1 != null && annotatedLambda2 != null && classInstanceCreation1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) &&
+                annotatedLambda2.getType().name.equals(LANG2.ANNOTATED_LAMBDA)) {
+            mappingStore.addMapping(classInstanceCreation1, annotatedLambda2);
         }
     }
 
@@ -2360,6 +2361,15 @@ public class JavaToKotlinMigration {
             int end = tree.getChild(tree.getChildren().size() - 1).getEndPos();
             tree.setPos(start);
             tree.setLength(end - start);
+        }
+    }
+
+    private static void removeSrcMappings(ExtendedMultiMappingStore mappingStore, Tree src) {
+        Set<Tree> dsts = mappingStore.getDsts(src);
+        if(dsts != null) {
+            for(Tree dst : new ArrayList<>(dsts)) {
+                mappingStore.removeMapping(src, dst);
+            }
         }
     }
 

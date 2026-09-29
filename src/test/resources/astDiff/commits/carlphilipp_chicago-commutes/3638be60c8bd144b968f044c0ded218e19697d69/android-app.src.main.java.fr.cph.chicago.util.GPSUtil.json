@@ -450,6 +450,17 @@
   "firstEndPos" : 726,
   "secondEndPos" : 387
 }, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 870,
+  "secondPos" : 405,
+  "firstEndPos" : 871,
+  "secondEndPos" : 406
+}, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",
   "firstLabel" : "",

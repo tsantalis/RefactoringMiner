@@ -2094,6 +2094,31 @@ public class JavaToKotlinMigration {
         modifier2.setParent(declaration2);
     }
 
+    //align Kotlin property_declaration -> [name, =, initializer] with Java ExpressionStatement -> Assignment -> [name, =, expression],
+    //when the assignment is moved to the initializer of the assigned property, i.e., client = builder.client; -> val client: Boolean = builder.client
+    public static boolean handleAssignmentToInitializerMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstInitializer, Constants LANG1, Constants LANG2) {
+        if(!srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) || srcStatementNode.getChildren().size() != 1)
+            return false;
+        Tree assignment1 = srcStatementNode.getChild(0);
+        if(!assignment1.getType().name.equals(LANG1.ASSIGNMENT) || assignment1.getChildren().size() != 3 ||
+                !assignment1.getChild(1).getType().name.equals(LANG1.ASSIGNMENT_OPERATOR))
+            return false;
+        Tree declaration2 = dstInitializer.getParent();
+        if(declaration2 == null || !declaration2.getType().name.equals(LANG2.FIELD_DECLARATION))
+            return false;
+        int index2 = declaration2.getChildPosition(dstInitializer);
+        if(index2 < 1 || !declaration2.getChild(index2 - 1).getType().name.equals(LANG2.AFFECTATION_OPERATOR))
+            return false;
+        Tree operator1 = assignment1.getChild(1);
+        Tree operator2 = declaration2.getChild(index2 - 1);
+        if(!mappingStore.isDstMapped(operator2))
+            mappingStore.addMapping(operator1, operator2);
+        Tree expression1 = assignment1.getChild(2);
+        mappingStore.addMapping(expression1, dstInitializer);
+        handleLeafMapping(mappingStore, expression1, dstInitializer, LANG1, LANG2);
+        return true;
+    }
+
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
         Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
         if (matched != null) {

@@ -2210,16 +2210,16 @@
   "firstEndPos" : 5059,
   "secondEndPos" : 5493
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "navigation_expression",
-  "firstLabel" : "",
-  "secondLabel" : "builder.pushObserver",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 5103,
-  "secondPos" : 3973,
-  "firstEndPos" : 5139,
-  "secondEndPos" : 3993
+  "firstPos" : 5116,
+  "secondPos" : 3971,
+  "firstEndPos" : 5117,
+  "secondEndPos" : 3972
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
@@ -2232,16 +2232,16 @@
   "firstEndPos" : 5138,
   "secondEndPos" : 3993
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "navigation_expression",
-  "firstLabel" : "",
-  "secondLabel" : "builder.client",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 5144,
-  "secondPos" : 2758,
-  "firstEndPos" : 5168,
-  "secondEndPos" : 2772
+  "firstPos" : 5151,
+  "secondPos" : 2756,
+  "firstEndPos" : 5152,
+  "secondEndPos" : 2757
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
@@ -2254,16 +2254,16 @@
   "firstEndPos" : 5167,
   "secondEndPos" : 2772
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "navigation_expression",
-  "firstLabel" : "",
-  "secondLabel" : "builder.listener",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 5173,
-  "secondPos" : 2950,
-  "firstEndPos" : 5201,
-  "secondEndPos" : 2966
+  "firstPos" : 5182,
+  "secondPos" : 2948,
+  "firstEndPos" : 5183,
+  "secondEndPos" : 2949
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
@@ -2353,16 +2353,16 @@
   "firstEndPos" : 5767,
   "secondEndPos" : 4505
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "navigation_expression",
-  "firstLabel" : "",
-  "secondLabel" : "builder.connectionName",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 5808,
-  "secondPos" : 3065,
-  "firstEndPos" : 5848,
-  "secondEndPos" : 3087
+  "firstPos" : 5823,
+  "secondPos" : 3063,
+  "firstEndPos" : 5824,
+  "secondEndPos" : 3064
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
@@ -2375,16 +2375,16 @@
   "firstEndPos" : 5847,
   "secondEndPos" : 3087
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 5854,
-  "secondPos" : 3418,
-  "firstEndPos" : 5990,
-  "secondEndPos" : 3530
+  "firstPos" : 5869,
+  "secondPos" : 3416,
+  "firstEndPos" : 5870,
+  "secondEndPos" : 3417
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",
@@ -2727,16 +2727,16 @@
   "firstEndPos" : 6184,
   "secondEndPos" : 5914
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 6267,
-  "secondPos" : 3706,
-  "firstEndPos" : 6452,
-  "secondEndPos" : 3864
+  "firstPos" : 6280,
+  "secondPos" : 3704,
+  "firstEndPos" : 6281,
+  "secondEndPos" : 3705
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",
@@ -3068,16 +3068,16 @@
   "firstEndPos" : 6608,
   "secondEndPos" : 4835
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 6615,
-  "secondPos" : 5242,
-  "firstEndPos" : 6676,
-  "secondEndPos" : 5281
+  "firstPos" : 6638,
+  "secondPos" : 5240,
+  "firstEndPos" : 6639,
+  "secondEndPos" : 5241
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "navigation_expression",
@@ -3112,16 +3112,16 @@
   "firstEndPos" : 6673,
   "secondEndPos" : 5272
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "navigation_expression",
-  "firstLabel" : "",
-  "secondLabel" : "builder.socket",
-  "firstParentType" : "Block",
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
   "secondParentType" : "property_declaration",
-  "firstPos" : 6681,
-  "secondPos" : 5383,
-  "firstEndPos" : 6705,
-  "secondEndPos" : 5397
+  "firstPos" : 6688,
+  "secondPos" : 5381,
+  "firstEndPos" : 6689,
+  "secondEndPos" : 5382
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "navigation_expression",
@@ -3133,6 +3133,17 @@
   "secondPos" : 5383,
   "firstEndPos" : 6704,
   "secondEndPos" : 5397
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6717,
+  "secondPos" : 5411,
+  "firstEndPos" : 6718,
+  "secondEndPos" : 5412
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",
@@ -3177,6 +3188,17 @@
   "secondPos" : 5439,
   "firstEndPos" : 6755,
   "secondEndPos" : 5445
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6778,
+  "secondPos" : 5494,
+  "firstEndPos" : 6779,
+  "secondEndPos" : 5495
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "call_expression",

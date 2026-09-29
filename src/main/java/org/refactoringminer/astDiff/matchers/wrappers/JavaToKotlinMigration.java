@@ -128,6 +128,9 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             return;
         }
+        if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) || srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            flattenTrailingLambdaCall(mappingStore, dstStatementNode, LANG2);
+        }
         List<Tree> children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_NAME);
         Tree firstChild1 = children1.size() > 0 ? children1.get(0) : null;
         boolean firstChildIsType1 = firstChild1 != null && firstChild1.getParent().getType().name.equals(LANG1.SIMPLE_TYPE) &&
@@ -1026,8 +1029,24 @@ public class JavaToKotlinMigration {
         return true;
     }
 
-    //returns the Kotlin call_expression -> [call_expression -> [..., value_arguments], call_suffix -> annotated_lambda -> lambda_literal],
-    //if the Java ClassInstanceCreation is the only argument of the call mapped to the value_arguments
+    //align Kotlin call_expression -> [call_expression -> [receiver, name, value_arguments], call_suffix -> annotated_lambda] with Java invocation -> [receiver, name, arguments],
+    //as the call with a trailing lambda is nested in another call_expression, i.e., writerExecutor.tryExecute("OkHttp $connectionName") {...}
+    private static void flattenTrailingLambdaCall(ExtendedMultiMappingStore mappingStore, Tree call2, Constants LANG2) {
+        if(!call2.getType().name.equals(LANG2.METHOD_INVOCATION) || call2.getChildren().size() != 2)
+            return;
+        Tree innerCall2 = call2.getChild(0);
+        Tree suffix2 = call2.getChild(1);
+        if(!innerCall2.getType().name.equals(LANG2.METHOD_INVOCATION) || !suffix2.getType().name.equals(LANG2.CALL_SUFFIX) ||
+                suffix2.getChildren().size() != 1 || !suffix2.getChild(0).getType().name.equals(LANG2.ANNOTATED_LAMBDA))
+            return;
+        removeDstMappings(mappingStore, innerCall2);
+        removeDstMappings(mappingStore, suffix2);
+        flattenChild(call2, innerCall2);
+        flattenChild(call2, suffix2);
+    }
+
+    //returns the Kotlin call_expression -> [receiver, name, value_arguments, annotated_lambda -> lambda_literal], or the same with the value_arguments nested in a call_expression
+    //and the annotated_lambda nested in a call_suffix, if the Java ClassInstanceCreation is the only argument of the call mapped to the value_arguments
     private static Tree findTrailingLambdaOfMappedCall(ExtendedMultiMappingStore mappingStore, Tree classInstanceCreation1, Constants LANG1, Constants LANG2) {
         if(classInstanceCreation1 == null || !classInstanceCreation1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION))
             return null;
@@ -1036,13 +1055,15 @@ public class JavaToKotlinMigration {
             return null;
         for(Tree arguments2 : mappingStore.getDsts(arguments1)) {
             Tree call2 = arguments2.getParent();
-            if(!arguments2.getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS) || call2 == null || call2.getParent() == null)
+            if(!arguments2.getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS) || call2 == null || !call2.getType().name.equals(LANG2.METHOD_INVOCATION))
                 continue;
+            //the trailing lambda is a child of the call, or of the call_suffix of the enclosing call, if the calls are not flattened yet
+            Tree annotatedLambda2 = TreeUtilFunctions.findChildByType(call2, LANG2.ANNOTATED_LAMBDA);
             Tree outerCall2 = call2.getParent();
-            if(!call2.getType().name.equals(LANG2.METHOD_INVOCATION) || !outerCall2.getType().name.equals(LANG2.METHOD_INVOCATION) || outerCall2.getChild(0) != call2)
-                continue;
-            Tree suffix2 = TreeUtilFunctions.findChildByType(outerCall2, LANG2.CALL_SUFFIX);
-            Tree annotatedLambda2 = suffix2 != null ? TreeUtilFunctions.findChildByType(suffix2, LANG2.ANNOTATED_LAMBDA) : null;
+            if(annotatedLambda2 == null && outerCall2 != null && outerCall2.getType().name.equals(LANG2.METHOD_INVOCATION) && outerCall2.getChild(0) == call2) {
+                Tree suffix2 = TreeUtilFunctions.findChildByType(outerCall2, LANG2.CALL_SUFFIX);
+                annotatedLambda2 = suffix2 != null ? TreeUtilFunctions.findChildByType(suffix2, LANG2.ANNOTATED_LAMBDA) : null;
+            }
             Tree lambdaLiteral2 = annotatedLambda2 != null ? TreeUtilFunctions.findChildByType(annotatedLambda2, LANG2.LAMBDA_LITERAL) : null;
             if(lambdaLiteral2 != null)
                 return lambdaLiteral2;

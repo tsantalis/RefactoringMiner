@@ -720,7 +720,9 @@ public class JavaToKotlinMigration {
         Iterator<Tree> iterator2 = children2.iterator();
         while(iterator2.hasNext()) {
             Tree t2 = iterator2.next();
-            if(t2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) || qualifiedNameToNavigationExpression.containsValue(t2)) {
+            //skip the navigation expressions being the callee of a call, but not the call arguments, i.e., connection.inputStream in InputStreamReader(connection.inputStream, UTF_8)
+            boolean callee = t2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) && t2.getParent().getChild(0) == t2;
+            if(callee || qualifiedNameToNavigationExpression.containsValue(t2)) {
                 iterator2.remove();
             }
         }

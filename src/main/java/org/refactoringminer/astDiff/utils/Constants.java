@@ -100,6 +100,7 @@ public class Constants {
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
 			THIS_EXPRESSION = "this_expression";
+			PARENTHESIZED_EXPRESSION = "parenthesized_expression";
 		}
 		else if(PathFileUtils.isKotlinFile(filePath)) {
 			CLASS_BLOCK = "type_body";
@@ -143,6 +144,7 @@ public class Constants {
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
 			THIS_EXPRESSION = "this_expression";
+			PARENTHESIZED_EXPRESSION = "parenthesized_expression";
 		}
 		else if(PathFileUtils.isTypeScriptFile(filePath)) {
 			CLASS_BLOCK = "block";
@@ -186,6 +188,7 @@ public class Constants {
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
 			THIS_EXPRESSION = "this_expression";
+			PARENTHESIZED_EXPRESSION = "parenthesized_expression";
 		}
 		else if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
 			CLASS_BLOCK = "field_declaration_list";
@@ -229,6 +232,7 @@ public class Constants {
 			NUMBER_LITERAL = "number_literal";
 			LAMBDA_EXPRESSION = "lambda_expression";
 			THIS_EXPRESSION = "this_expression";
+			PARENTHESIZED_EXPRESSION = "parenthesized_expression";
 		}
 		else {
 			// Java values as default
@@ -273,6 +277,7 @@ public class Constants {
 			NUMBER_LITERAL = "NumberLiteral";
 			LAMBDA_EXPRESSION = "LambdaExpression";
 			THIS_EXPRESSION = "ThisExpression";
+			PARENTHESIZED_EXPRESSION = "ParenthesizedExpression";
 		}
 	}
 
@@ -533,7 +538,7 @@ public class Constants {
     public final String TYPE_KEYWORD = "type";
     public final String RETURN_KEYWORD = "return";
     public final String INTERFACE_KEYWORD = "interface";
-    public final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
+    public final String PARENTHESIZED_EXPRESSION;
     public final String LEXICAL_DECLARATION = "lexical_declaration";
     public final String SEMICOLON = ";";
     public final String COLON = ":";

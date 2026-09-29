@@ -446,7 +446,31 @@ public class JavaToKotlinMigration {
             }
         }
         inv1.removeAll(invocationsToBeRemoved);
-        if(castExpressions1.size() > 0) {
+        List<Tree> casts1 = new ArrayList<>(castExpressions1);
+        if(srcStatementNode.getType().name.equals(LANG1.CAST_EXPRESSION)) {
+            casts1.add(0, srcStatementNode);
+        }
+        List<Tree> asExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.AS_EXPRESSION);
+        if(dstStatementNode.getType().name.equals(LANG2.AS_EXPRESSION)) {
+            asExpressions2.add(0, dstStatementNode);
+        }
+        if(casts1.size() > 0 && casts1.size() == asExpressions2.size()) {
+            //align Kotlin [parenthesized_expression ->] as_expression -> [expression, as, type] with Java [ParenthesizedExpression ->] CastExpression -> [type, expression]
+            for(int i=0; i<casts1.size(); i++) {
+                Tree cast1 = casts1.get(i);
+                Tree as2 = asExpressions2.get(i);
+                mappingStore.addMapping(cast1, as2);
+                if(cast1.getChildren().size() > 0) {
+                    handleTypeMapping(mappingStore, cast1.getChild(0), as2, LANG1, LANG2);
+                }
+                Tree parent1 = cast1.getParent();
+                Tree parent2 = as2.getParent();
+                if(parent1 != null && parent2 != null && parent1.getType().name.equals(LANG1.PARENTHESIZED_EXPRESSION) && parent2.getType().name.equals(LANG2.PARENTHESIZED_EXPRESSION)) {
+                    mappingStore.addMapping(parent1, parent2);
+                }
+            }
+        }
+        else if(castExpressions1.size() > 0) {
             Tree simpleType = castExpressions1.get(0).getChild(0);
             Tree as2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AS_EXPRESSION);
             if(as2 != null) {

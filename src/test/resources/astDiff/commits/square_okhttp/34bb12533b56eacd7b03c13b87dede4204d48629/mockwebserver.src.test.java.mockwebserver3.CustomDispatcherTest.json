@@ -1143,6 +1143,17 @@
   "firstEndPos" : 1759,
   "secondEndPos" : 1576
 }, {
+  "firstType" : "CastExpression",
+  "secondType" : "as_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1762,
+  "secondPos" : 1579,
+  "firstEndPos" : 1802,
+  "secondEndPos" : 1620
+}, {
   "firstType" : "SimpleName",
   "secondType" : "type_identifier",
   "firstLabel" : "HttpURLConnection",
@@ -3430,6 +3441,17 @@
   "secondPos" : 3119,
   "firstEndPos" : 3486,
   "secondEndPos" : 3120
+}, {
+  "firstType" : "CastExpression",
+  "secondType" : "as_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 3487,
+  "secondPos" : 3121,
+  "firstEndPos" : 3527,
+  "secondEndPos" : 3162
 }, {
   "firstType" : "SimpleName",
   "secondType" : "type_identifier",

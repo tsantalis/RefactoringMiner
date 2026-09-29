@@ -645,6 +645,12 @@ public class JavaToKotlinMigration {
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 mappingStore.addMapping(children1.get(i), children2.get(i));
+                //align Kotlin prefix_expression -> ! with Java PrefixExpression -> PREFIX_EXPRESSION_OPERATOR
+                Tree parent1 = children1.get(i).getParent();
+                Tree parent2 = children2.get(i).getParent();
+                if(parent1 != null && parent2 != null && parent1.getType().name.equals(LANG1.PREFIX_EXPRESSION) && parent2.getType().name.equals(LANG2.PREFIX_EXPRESSION)) {
+                    mappingStore.addMapping(parent1, parent2);
+                }
             }
         }
         List<Tree> nestedInfix1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);

@@ -13122,6 +13122,17 @@
   "firstEndPos" : 11069,
   "secondEndPos" : 2377
 }, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "prefix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "disjunction_expression",
+  "firstPos" : 11070,
+  "secondPos" : 2378,
+  "firstEndPos" : 11085,
+  "secondEndPos" : 2391
+}, {
   "firstType" : "PREFIX_EXPRESSION_OPERATOR",
   "secondType" : "!",
   "firstLabel" : "!",

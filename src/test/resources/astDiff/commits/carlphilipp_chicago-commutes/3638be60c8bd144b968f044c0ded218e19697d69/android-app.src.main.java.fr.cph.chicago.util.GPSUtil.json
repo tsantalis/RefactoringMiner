@@ -747,6 +747,28 @@
   "firstEndPos" : 1463,
   "secondEndPos" : 979
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Location",
+  "secondLabel" : "Location",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 1376,
+  "secondPos" : 901,
+  "firstEndPos" : 1384,
+  "secondEndPos" : 909
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "nullable_type",
+  "firstPos" : 1376,
+  "secondPos" : 901,
+  "firstEndPos" : 1384,
+  "secondEndPos" : 909
+}, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "affectation_operator",
   "firstLabel" : "=",

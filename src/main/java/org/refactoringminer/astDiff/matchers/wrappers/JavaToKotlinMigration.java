@@ -834,6 +834,8 @@ public class JavaToKotlinMigration {
         }
         if(srcStatementNode.getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FIELD_DECLARATION)) {
             alignVariableDeclaration(mappingStore, srcStatementNode, dstStatementNode, false, LANG1, LANG2);
+            //the variable type is explicit in Kotlin, i.e., var errorException: IOException? = null
+            alignTypes(mappingStore, findJavaType(srcStatementNode, LANG1), findKotlinType(dstStatementNode, LANG2), LANG1, LANG2);
         }
     }
 

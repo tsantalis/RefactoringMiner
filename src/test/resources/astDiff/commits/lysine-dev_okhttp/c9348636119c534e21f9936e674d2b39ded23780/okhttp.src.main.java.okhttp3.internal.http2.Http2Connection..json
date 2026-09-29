@@ -13848,6 +13848,28 @@
   "firstEndPos" : 20525,
   "secondEndPos" : 18096
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "IOException",
+  "secondLabel" : "IOException",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "user_type",
+  "firstPos" : 20491,
+  "secondPos" : 18077,
+  "firstEndPos" : 20502,
+  "secondEndPos" : 18088
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "nullable_type",
+  "firstPos" : 20491,
+  "secondPos" : 18077,
+  "firstEndPos" : 20502,
+  "secondEndPos" : 18088
+}, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "affectation_operator",
   "firstLabel" : "=",

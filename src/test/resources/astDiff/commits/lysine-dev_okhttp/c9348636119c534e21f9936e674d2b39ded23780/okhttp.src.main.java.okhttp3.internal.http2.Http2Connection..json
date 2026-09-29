@@ -374,14 +374,25 @@
   "secondEndPos" : 1189
 }, {
   "firstType" : "ImportDeclaration",
-  "secondType" : "identifier",
+  "secondType" : "import_header",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "CompilationUnit",
-  "secondParentType" : "import_header",
+  "secondParentType" : "import_list",
   "firstPos" : 1647,
-  "secondPos" : 1598,
+  "secondPos" : 1591,
   "firstEndPos" : 1704,
+  "secondEndPos" : 1640
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "identifier",
+  "firstLabel" : "java.util.concurrent.TimeUnit.MILLISECONDS",
+  "secondLabel" : "java.util.concurrent.TimeUnit.MILLISECONDS",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "import_header",
+  "firstPos" : 1661,
+  "secondPos" : 1598,
+  "firstEndPos" : 1703,
   "secondEndPos" : 1640
 }, {
   "firstType" : "ImportDeclaration",

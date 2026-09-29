@@ -9,7 +9,21 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.tree.TypeSet;
 
 /**
- * Repairs a known tree-sitter-kotlin mis-parse, where an expression statement starting with a parenthesized expression
+ * Repairs known tree-sitter-kotlin mis-parses.
+ * <p>
+ * 1. The comments following a node that is not terminated by a closing token are attached as its trailing children.
+ * <pre>
+ * import java.util.concurrent.TimeUnit.MILLISECONDS
+ *
+ * /** A socket connection to a remote peer. *&#47;
+ * class Http2Connection
+ * </pre>
+ * is parsed as {@code import_list(..., import_header(identifier, multiline_comment))}, with the ranges of import_header and import_list
+ * extended to the end of the class documentation. The trailing comments are moved after the node in its parent,
+ * i.e., {@code source_file(import_list(..., import_header(identifier)), multiline_comment, class_declaration)}.
+ * <p>
+ * 2. An expression statement starting with a parenthesized expression
+ * is attached as call arguments to the end of the previous statement. an expression statement starting with a parenthesized expression
  * is attached as call arguments to the end of the previous statement.
  * <pre>
  * val stream = streams.remove(streamId)
@@ -41,6 +55,8 @@ public class KotlinTreeSitterTreeFixer {
 	private static final String VALUE_ARGUMENT = "value_argument";
 	private static final String PARENTHESIZED_EXPRESSION = "parenthesized_expression";
 	private static final Set<String> COMMENTS = Set.of("line_comment", "multiline_comment");
+	// nodes without a closing token, which absorb the comments preceding the next sibling, i.e., the documentation of the first declaration
+	private static final Set<String> TRAILING_COMMENT_OWNERS = Set.of("package_header", "import_header", "import_list", "when_entry");
 	// expressions that can have the mis-parsed call as their leftmost operand, i.e., (x as Object).notifyAll() or (a) + b
 	private static final Set<String> LEFT_OPERAND_EXPRESSIONS = Set.of(CALL_EXPRESSION, "navigation_expression", "indexing_expression",
 			"postfix_expression", "as_expression", "additive_expression", "multiplicative_expression", "comparison_expression",
@@ -52,10 +68,38 @@ public class KotlinTreeSitterTreeFixer {
 			"disjunction_expression", "elvis_expression", "infix_expression", "range_expression", "check_expression", "as_expression");
 
 	public static void fix(TreeContext context, String sourceCode) {
+		moveTrailingComments(context);
 		Tree call;
 		while ((call = findMisparsedCall(context.getRoot(), sourceCode)) != null) {
 			split(context, call);
 		}
+	}
+
+	private static void moveTrailingComments(TreeContext context) {
+		boolean changed = false;
+		// post-order, so that the comments moved from the last import_header to import_list are moved again to source_file
+		List<Tree> nodes = new ArrayList<>();
+		context.getRoot().postOrder().forEach(nodes::add);
+		for (Tree t : nodes) {
+			if (!TRAILING_COMMENT_OWNERS.contains(t.getType().name) || t.getParent() == null)
+				continue;
+			int first = t.getChildren().size();
+			while (first > 1 && COMMENTS.contains(t.getChild(first - 1).getType().name))
+				first--;
+			if (first == t.getChildren().size())
+				continue;
+			List<Tree> comments = new ArrayList<>(t.getChildren().subList(first, t.getChildren().size()));
+			t.getChildren().removeAll(comments);
+			t.setLength(t.getChild(first - 1).getEndPos() - t.getPos());
+			Tree parent = t.getParent();
+			int index = parent.getChildPosition(t) + 1;
+			for (Tree comment : comments) {
+				parent.insertChild(comment, index++);
+			}
+			changed = true;
+		}
+		if (changed)
+			resetMetrics(context.getRoot());
 	}
 
 	private static Tree findMisparsedCall(Tree root, String sourceCode) {

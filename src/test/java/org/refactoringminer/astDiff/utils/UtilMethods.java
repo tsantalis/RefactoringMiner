@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.apache.commons.io.FilenameUtils;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl.ChangedFileInfo;
@@ -68,9 +69,11 @@ public class UtilMethods {
                     String s1 = s;
                     String s2 = s;
                     //no file extension provided, language migration
-                    if(s.endsWith(".")) {
-                        s1 = changedFileInfo.getFilesBefore().stream().filter(path -> path.startsWith(s)).findFirst().orElse(null);
-                        s2 = changedFileInfo.getFilesCurrent().stream().filter(path -> path.startsWith(s)).findFirst().orElse(null);
+                    if(FilenameUtils.getExtension(s).isEmpty()) {
+                        //the dot excludes other files starting with the same name, i.e., Http2ConnectionTest.java
+                        String prefix = s + ".";
+                        s1 = changedFileInfo.getFilesBefore().stream().filter(path -> path.startsWith(prefix)).findFirst().orElse(null);
+                        s2 = changedFileInfo.getFilesCurrent().stream().filter(path -> path.startsWith(prefix)).findFirst().orElse(null);
                     }
                     String folder1 = REPOS + "/" + repoName + "-" +
                         changedFileInfo.getParentCommitId() + "/" + s1;

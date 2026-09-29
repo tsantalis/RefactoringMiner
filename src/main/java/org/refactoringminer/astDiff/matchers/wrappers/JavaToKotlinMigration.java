@@ -266,6 +266,21 @@ public class JavaToKotlinMigration {
             }
             children2.removeAll(toBeRemoved2);
         }
+        //the navigation expressions already converted to qualified names by a previous mapping of the same statement
+        List<Tree> navigationExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION);
+        if(dstStatementNode.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
+            navigationExpressions2.add(0, dstStatementNode);
+        }
+        for(Tree qualified1 : qualifiedNames1) {
+            if(qualifiedNameToNavigationExpression.containsKey(qualified1))
+                continue;
+            for(Tree navigation2 : navigationExpressions2) {
+                if(navigation2.isLeaf() && navigation2.getLabel().equals(qualified1.getLabel()) && !qualifiedNameToNavigationExpression.containsValue(navigation2)) {
+                    qualifiedNameToNavigationExpression.put(qualified1, navigation2);
+                    break;
+                }
+            }
+        }
         for(Tree key : qualifiedNameToNavigationExpression.keySet()) {
             Tree value = qualifiedNameToNavigationExpression.get(key);
             value.setLabel(key.getLabel());

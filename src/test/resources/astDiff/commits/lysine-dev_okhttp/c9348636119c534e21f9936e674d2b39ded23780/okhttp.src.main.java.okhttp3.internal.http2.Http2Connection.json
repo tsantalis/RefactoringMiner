@@ -3189,17 +3189,6 @@
   "firstEndPos" : 6756,
   "secondEndPos" : 5446
 }, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "navigation_expression",
-  "firstLabel" : "",
-  "secondLabel" : "builder.sink",
-  "firstParentType" : "Assignment",
-  "secondParentType" : "call_expression",
-  "firstPos" : 6719,
-  "secondPos" : 5425,
-  "firstEndPos" : 6756,
-  "secondEndPos" : 5437
-}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "Http2Writer",
@@ -3210,6 +3199,17 @@
   "secondPos" : 5413,
   "firstEndPos" : 6734,
   "secondEndPos" : 5424
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "builder.sink",
+  "secondLabel" : "builder.sink",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6735,
+  "secondPos" : 5425,
+  "firstEndPos" : 6747,
+  "secondEndPos" : 5437
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",

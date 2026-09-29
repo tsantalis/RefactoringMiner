@@ -344,6 +344,18 @@ public class KotlinOperationBody extends OperationBody {
 				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
 			}
 		}
+		else if(statement instanceof KtCallExpression invocation && invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference && nameReference.getReferencedName().equals("ignoreIoExceptions") && invocation.getValueArguments().size() == 1) {
+			// ignoreIoExceptions {}
+			// first argument is a lambda
+			// model as a composite synchronized statement
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.TRY_STATEMENT, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			KtValueArgument lambdaArgument = invocation.getValueArguments().get(0);
+			if(lambdaArgument instanceof KtLambdaArgument lambda) {
+				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
+			}
+		}
 		else {
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);

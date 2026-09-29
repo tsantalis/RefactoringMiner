@@ -169,7 +169,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         }
         if(Constants.isCrossLanguage(LANG1, LANG2) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) && abstractCodeMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
+            Tree statements2 = dstStatementNode;
             dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo, LANG2, LANG2.TRY_STATEMENT);
+            //ignoreIoExceptions {} is modeled as a try statement, and it is the only statement of the enclosing statements with the same location
+            if((dstStatementNode == null || !dstStatementNode.getType().name.equals(LANG2.TRY_STATEMENT)) && statements2.getChildren().size() == 1 &&
+                    statements2.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                dstStatementNode = statements2.getChild(0);
+            }
         }
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK) && !dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
             String astTypeName = dstLocationInfo.getCodeElementType().name();

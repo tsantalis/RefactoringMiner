@@ -813,6 +813,17 @@
   "firstEndPos" : 2996,
   "secondEndPos" : 29144
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "multiplicative_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "multiplicative_expression",
+  "firstPos" : 2980,
+  "secondPos" : 29128,
+  "firstEndPos" : 2989,
+  "secondEndPos" : 29137
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "16",
@@ -824,6 +835,17 @@
   "firstEndPos" : 2982,
   "secondEndPos" : 29130
 }, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "multiplicative_expression",
+  "firstPos" : 2983,
+  "secondPos" : 29131,
+  "firstEndPos" : 2984,
+  "secondEndPos" : 29132
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "1024",
@@ -834,6 +856,17 @@
   "secondPos" : 29133,
   "firstEndPos" : 2989,
   "secondEndPos" : 29137
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "multiplicative_expression",
+  "firstPos" : 2990,
+  "secondPos" : 29138,
+  "firstEndPos" : 2991,
+  "secondEndPos" : 29139
 }, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",

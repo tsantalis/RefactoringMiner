@@ -686,6 +686,7 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        nestExtendedOperands(srcStatementNode, LANG1);
         List<Tree> nestedInfix1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);
         if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION)) {
             nestedInfix1.add(0, srcStatementNode);
@@ -1014,6 +1015,52 @@ public class JavaToKotlinMigration {
                 !mappingStore.isSrcMapped(fieldAccess1.getChild(0)) && !mappingStore.isDstMapped(navigation2.getChild(0))) {
             mappingStore.addMapping(fieldAccess1.getChild(0), navigation2.getChild(0));
         }
+    }
+
+    //align Kotlin left-nested binary expressions, i.e., multiplicative_expression -> [multiplicative_expression -> [16, *, 1024], *, 1024],
+    //with Java InfixExpression -> [16, *, 1024, 1024], where the extended operands share the operator of the first two operands
+    private static void nestExtendedOperands(Tree srcStatementNode, Constants LANG1) {
+        List<Tree> infixExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.INFIX_EXPRESSION);
+        if(srcStatementNode.getType().name.equals(LANG1.INFIX_EXPRESSION)) {
+            infixExpressions1.add(0, srcStatementNode);
+        }
+        for(Tree infix1 : infixExpressions1) {
+            List<Tree> children1 = new ArrayList<>(infix1.getChildren());
+            if(children1.size() <= 3 || !children1.get(1).getType().name.equals(LANG1.INFIX_EXPRESSION_OPERATOR))
+                continue;
+            Tree operator1 = children1.get(1);
+            //the extended operators are not in the tree, so they are placed at the same distance from their left operand as the first operator
+            int distance = operator1.getPos() - children1.get(0).getEndPos();
+            Tree left = createInfixExpression(infix1.getType(), children1.get(0), operator1, children1.get(2));
+            for(int i=3; i<children1.size(); i++) {
+                Tree operand = children1.get(i);
+                DefaultTree operator = new DefaultTree(operator1.getType(), operator1.getLabel());
+                int pos = left.getEndPos() + distance;
+                if(pos < left.getEndPos() || pos + operator1.getLength() > operand.getPos())
+                    pos = Math.max(left.getEndPos(), operand.getPos() - operator1.getLength());
+                operator.setPos(pos);
+                operator.setLength(operator1.getLength());
+                if(i < children1.size() - 1) {
+                    left = createInfixExpression(infix1.getType(), left, operator, operand);
+                }
+                else {
+                    //the original node remains the outermost expression, keeping its mappings
+                    infix1.setChildren(new ArrayList<>(List.of(left, operator, operand)));
+                    for(Tree child : infix1.getChildren())
+                        child.setParent(infix1);
+                }
+            }
+        }
+    }
+
+    private static Tree createInfixExpression(com.github.gumtreediff.tree.Type type, Tree left, Tree operator, Tree right) {
+        DefaultTree infix = new DefaultTree(type, "");
+        infix.setChildren(new ArrayList<>(List.of(left, operator, right)));
+        for(Tree child : infix.getChildren())
+            child.setParent(infix);
+        infix.setPos(left.getPos());
+        infix.setLength(right.getEndPos() - left.getPos());
+        return infix;
     }
 
     private static void alignAndMatchInfixExpressions(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2, ExtendedMultiMappingStore mappingStore) {

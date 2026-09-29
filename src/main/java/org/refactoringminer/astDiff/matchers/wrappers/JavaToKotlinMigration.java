@@ -2042,21 +2042,56 @@ public class JavaToKotlinMigration {
         }
         annotation2.getChildren().clear();
         annotation2.setLabel(synchronized1.getLabel());
-        //keep the source code order of the annotations and modifiers
+        liftFromModifiers(mappingStore, modifiers2, annotation2);
+        mappingStore.addMapping(synchronized1, annotation2);
+    }
+
+    //align Kotlin function_declaration -> modifiers -> member_modifier -> member_modifier 'override' with Java MethodDeclaration -> MarkerAnnotation -> SimpleName 'Override'
+    public static void handleOverrideMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
+        Tree annotation1 = null;
+        for(Tree child1 : TreeUtilFunctions.findChildrenByType(srcOperationNode, LANG1.MARKER_ANNOTATION)) {
+            if(child1.getChildren().size() == 1 && child1.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME) && child1.getChild(0).getLabel().equals("Override")) {
+                annotation1 = child1;
+                break;
+            }
+        }
+        Tree modifiers2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.MODIFIERS);
+        if(annotation1 == null || modifiers2 == null)
+            return;
+        Tree override2 = null;
+        for(Tree child2 : modifiers2.getChildren()) {
+            if(child2.getChildren().size() == 1 && child2.getChild(0).isLeaf() && child2.getChild(0).getLabel().equals(LANG2.OVERRIDE)) {
+                override2 = child2;
+                break;
+            }
+        }
+        if(override2 == null)
+            return;
+        //the override modifier is the Kotlin equivalent of the @Override annotation, so it is labeled as the Java annotation name
+        Tree keyword2 = override2.getChild(0);
+        removeDstMappings(mappingStore, override2);
+        removeDstMappings(mappingStore, keyword2);
+        keyword2.setLabel(annotation1.getChild(0).getLabel());
+        liftFromModifiers(mappingStore, modifiers2, override2);
+        mappingStore.addMapping(annotation1, override2);
+        mappingStore.addMapping(annotation1.getChild(0), keyword2);
+    }
+
+    //moves the modifier from the Kotlin modifiers to the declaration, keeping the source code order of the annotations and modifiers
+    private static void liftFromModifiers(ExtendedMultiMappingStore mappingStore, Tree modifiers2, Tree modifier2) {
         Tree declaration2 = modifiers2.getParent();
-        boolean first = modifiers2.getChildPosition(annotation2) == 0;
-        modifiers2.getChildren().remove(annotation2);
+        boolean first = modifiers2.getChildPosition(modifier2) == 0;
+        modifiers2.getChildren().remove(modifier2);
         int index = declaration2.getChildPosition(modifiers2);
         if(modifiers2.getChildren().isEmpty()) {
             removeDstMappings(mappingStore, modifiers2);
-            declaration2.getChildren().set(index, annotation2);
+            declaration2.getChildren().set(index, modifier2);
         }
         else {
             updateRangeToChildren(modifiers2);
-            declaration2.insertChild(annotation2, first ? index : index + 1);
+            declaration2.insertChild(modifier2, first ? index : index + 1);
         }
-        annotation2.setParent(declaration2);
-        mappingStore.addMapping(synchronized1, annotation2);
+        modifier2.setParent(declaration2);
     }
 
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {

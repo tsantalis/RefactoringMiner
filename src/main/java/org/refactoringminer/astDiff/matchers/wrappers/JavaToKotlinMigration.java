@@ -154,6 +154,11 @@ public class JavaToKotlinMigration {
         if(assignment1 != null && !dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
             children1.remove(0);
         }
+        //the Java receiver is the implicit receiver of the Kotlin lambda, i.e., peerSettings.set(...); -> val peerSettings = Settings().apply { set(...) }
+        Tree implicitReceiver1 = findImplicitReceiver(srcStatementNode, dstStatementNode, LANG1, LANG2);
+        if(implicitReceiver1 != null) {
+            children1.remove(implicitReceiver1);
+        }
         //remove from children1 simple names corresponding to interpolated identifiers
         if(interpolatedIdentifiers2.size() > 0 || interpolatedExpressions2.size() > 0) {
             Iterator<Tree> iter1 = children1.iterator();
@@ -1260,6 +1265,10 @@ public class JavaToKotlinMigration {
         boolean isFirstChildType = child1.getChildren().size() > 0 && child1.getChild(0).getType().name.equals(LANG1.SIMPLE_TYPE);
         Tree name1 = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_NAME);
         Tree name2 = TreeUtilFunctions.findChildByType(child2, LANG2.SIMPLE_NAME);
+        //soft keywords, like set, are wrapped in the simple_identifier, as in the matching of simple names by position
+        if(name2 != null && name2.getLabel().isEmpty() && name2.getChildren().size() == 1 && name2.getChild(0).isLeaf()) {
+            name2 = name2.getChild(0);
+        }
         if(!isFirstChildType && name1 != null && name2 != null) {
             mappingStore.addMapping(name1, name2);
         }
@@ -2230,6 +2239,33 @@ public class JavaToKotlinMigration {
                 mappingStore.removeMapping(src, dst);
             }
         }
+    }
+
+    //returns the receiver of Java [ExpressionStatement|MethodInvocation] -> [METHOD_INVOCATION_RECEIVER -> SimpleName, SimpleName, ...],
+    //if the matching Kotlin call_expression -> [simple_identifier, ...] has no receiver and is inside a lambda, i.e., the lambda of a scope function like apply
+    private static Tree findImplicitReceiver(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        Tree invocation1 = srcStatementNode;
+        if(invocation1.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && invocation1.getChildren().size() == 1 &&
+                invocation1.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            invocation1 = invocation1.getChild(0);
+        }
+        if(!invocation1.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && !invocation1.getType().name.equals(LANG1.METHOD_INVOCATION))
+            return null;
+        if(invocation1.getChildren().size() < 2 || !dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) || dstStatementNode.getChildren().isEmpty())
+            return null;
+        Tree receiver1 = invocation1.getChild(0);
+        Tree name1 = invocation1.getChild(1);
+        if(!receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) || receiver1.getChildren().size() != 1 ||
+                !receiver1.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME) || !name1.getType().name.equals(LANG1.SIMPLE_NAME))
+            return null;
+        Tree name2 = dstStatementNode.getChild(0);
+        if(!name2.getType().name.equals(LANG2.SIMPLE_NAME))
+            return null;
+        //soft keywords, like set, are wrapped in the simple_identifier
+        String label2 = name2.getLabel().isEmpty() && name2.getChildren().size() == 1 ? name2.getChild(0).getLabel() : name2.getLabel();
+        if(!name1.getLabel().equals(label2) || TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.LAMBDA_LITERAL) == null)
+            return null;
+        return receiver1.getChild(0);
     }
 
     private static boolean isInsideNavigationExpression(Tree t, Tree statement, Constants LANG2) {

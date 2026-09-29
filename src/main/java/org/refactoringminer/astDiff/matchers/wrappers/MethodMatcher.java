@@ -1192,6 +1192,8 @@ public class MethodMatcher extends BodyMapperMatcher{
                 new SameModifierMatcher(LANG1, LANG2, LANG1.ABSTRACT).match(srcOperationNode,dstOperationNode,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isSynchronized() && umlOperationBodyMapper.getOperation2().isSynchronized())
                 new SameModifierMatcher(LANG1, LANG2, LANG1.SYNCHRONIZED).match(srcOperationNode,dstOperationNode,mappingStore);
+            if (umlOperationBodyMapper.getOperation1().isSynchronized() && Constants.isCrossLanguage(LANG1, LANG2))
+                JavaToKotlinMigration.handleSynchronizedMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);
             if (umlOperationBodyMapper.getOperation1().isNative() && umlOperationBodyMapper.getOperation2().isNative())
                 new SameModifierMatcher(LANG1, LANG2, LANG1.NATIVE).match(srcOperationNode,dstOperationNode,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isDefault() && umlOperationBodyMapper.getOperation2().isDefault())

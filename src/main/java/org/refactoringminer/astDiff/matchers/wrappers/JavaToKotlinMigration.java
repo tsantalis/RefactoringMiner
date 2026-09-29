@@ -2019,6 +2019,46 @@ public class JavaToKotlinMigration {
         }
     }
 
+    //align Kotlin function_declaration -> modifiers -> class_modifier -> [@, user_type -> Synchronized] with Java MethodDeclaration -> Modifier 'synchronized'
+    public static void handleSynchronizedMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
+        Tree synchronized1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, LANG1.MODIFIER, LANG1.SYNCHRONIZED, LANG1);
+        Tree modifiers2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.MODIFIERS);
+        if(synchronized1 == null || modifiers2 == null)
+            return;
+        Tree annotation2 = null;
+        for(Tree classModifier2 : TreeUtilFunctions.findChildrenByType(modifiers2, LANG2.CLASS_MODIFIER)) {
+            Tree userType2 = TreeUtilFunctions.findChildByType(classModifier2, LANG2.USER_TYPE);
+            if(TreeUtilFunctions.findChildByType(classModifier2, LANG2.AT) != null && userType2 != null && userType2.getChildren().size() == 1 &&
+                    userType2.getChild(0).getLabel().equals("Synchronized")) {
+                annotation2 = classModifier2;
+                break;
+            }
+        }
+        if(annotation2 == null)
+            return;
+        //the @Synchronized annotation is the Kotlin equivalent of the synchronized modifier, so it is labeled as the Java modifier
+        for(Tree t : annotation2.getDescendants()) {
+            removeDstMappings(mappingStore, t);
+        }
+        annotation2.getChildren().clear();
+        annotation2.setLabel(synchronized1.getLabel());
+        //keep the source code order of the annotations and modifiers
+        Tree declaration2 = modifiers2.getParent();
+        boolean first = modifiers2.getChildPosition(annotation2) == 0;
+        modifiers2.getChildren().remove(annotation2);
+        int index = declaration2.getChildPosition(modifiers2);
+        if(modifiers2.getChildren().isEmpty()) {
+            removeDstMappings(mappingStore, modifiers2);
+            declaration2.getChildren().set(index, annotation2);
+        }
+        else {
+            updateRangeToChildren(modifiers2);
+            declaration2.insertChild(annotation2, first ? index : index + 1);
+        }
+        annotation2.setParent(declaration2);
+        mappingStore.addMapping(synchronized1, annotation2);
+    }
+
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
         Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
         if (matched != null) {

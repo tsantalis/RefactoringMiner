@@ -29,6 +29,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
     private final UMLCommentListDiff umlCommentListDiff;
     private final Constants LANG1;
     private final Constants LANG2;
+    private Tree srcFieldDeclaration;
+    private Tree dstFieldDeclaration;
 
     public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff, UMLCommentListDiff umlCommentListDiff, Constants LANG1, Constants LANG2) {
         this.originalAttribute = originalAttribute;
@@ -53,6 +55,15 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
     public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processFieldDeclaration(srcTree, dstTree, originalAttribute, movedAttribute, mappingStore);
     }
+
+    public Tree getSrcFieldDeclaration() {
+        return srcFieldDeclaration;
+    }
+
+    public Tree getDstFieldDeclaration() {
+        return dstFieldDeclaration;
+    }
+
     private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
 
         Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1);
@@ -111,6 +122,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstAttr.getType().name.equals(LANG2.SIMPLE_NAME) && dstAttr.getParent().getType().name.equals(LANG2.ENUMERATOR)) {
             dstAttr = dstAttr.getParent();
         }
+        this.srcFieldDeclaration = srcFieldDeclaration;
+        this.dstFieldDeclaration = dstFieldDeclaration;
         new CommentMatcher(optimizationData, umlCommentListDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class

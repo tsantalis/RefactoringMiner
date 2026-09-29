@@ -31,11 +31,15 @@ public class FieldDeclarationByAttrDiffMatcher extends OptimizationAwareMatcher 
         processFieldDeclarationByAttrDiff(srcTree, dstTree, umlAttrDiff, mappingStore);
     }
     private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
-        new FieldDeclarationMatcher(optimizationData, umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute(), umlAttributeDiff.getJavadocDiff(), umlAttributeDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+        FieldDeclarationMatcher fieldDeclarationMatcher = new FieldDeclarationMatcher(optimizationData, umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute(), umlAttributeDiff.getJavadocDiff(), umlAttributeDiff.getCommentListDiff(), LANG1, LANG2);
+        fieldDeclarationMatcher.match(srcTree,dstTree,mappingStore);
         if (umlAttributeDiff.getInitializerMapper().isPresent()) {
             UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
             new MethodMatcher(optimizationData, umlOperationBodyMapper, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
             //TODO: if its a moved process its refactoring
+        }
+        if (Constants.isCrossLanguage(LANG1, LANG2)) {
+            JavaToKotlinMigration.alignFieldDeclaration(mappingStore, fieldDeclarationMatcher.getSrcFieldDeclaration(), fieldDeclarationMatcher.getDstFieldDeclaration(), LANG1, LANG2);
         }
     }
 }

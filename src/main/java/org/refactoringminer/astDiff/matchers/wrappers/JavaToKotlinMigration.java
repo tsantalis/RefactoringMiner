@@ -193,6 +193,10 @@ public class JavaToKotlinMigration {
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> castExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CAST_EXPRESSION);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
+        //the statement itself is a qualified name, i.e., a field initializer
+        if(srcStatementNode.getType().name.equals(LANG1.QUALIFIED_NAME)) {
+            qualifiedNames1.add(0, srcStatementNode);
+        }
         List<Tree> anonymous1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ANONYMOUS_CLASS_DECLARATION);
         List<Tree> anonymous2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.OBJECT_LITERAL);
         List<Tree> lambdas1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.LAMBDA_EXPRESSION);
@@ -829,34 +833,55 @@ public class JavaToKotlinMigration {
             }
         }
         if(srcStatementNode.getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FIELD_DECLARATION)) {
-            List<Tree> fragments1 = TreeUtilFunctions.findChildrenByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
-            Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION);
-            if(fragments1.size() == 1 && variableDeclaration2 != null) {
-                //align Kotlin property_declaration -> [variable_declaration -> [name, type], =, initializer] with Java VariableDeclarationStatement -> [type, VariableDeclarationFragment -> [name, initializer]]
-                flattenChild(dstStatementNode, variableDeclaration2);
-                Tree fragment1 = fragments1.get(0);
-                Tree affectationOperator2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.AFFECTATION_OPERATOR);
-                Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
-                if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 1) {
-                    //keep the fragment as the leaf matching the = operator, placed between the name and the initializer
-                    int index = srcStatementNode.getChildPosition(fragment1);
-                    Tree name1 = fragment1.getChild(0);
-                    List<Tree> rest1 = new ArrayList<>(fragment1.getChildren().subList(1, fragment1.getChildren().size()));
-                    fragment1.getChildren().clear();
-                    srcStatementNode.getChildren().add(index, name1);
-                    name1.setParent(srcStatementNode);
-                    srcStatementNode.getChildren().addAll(index + 2, rest1);
-                    for(Tree t : rest1)
-                        t.setParent(srcStatementNode);
-                }
-                else {
-                    if(fragmentDsts != null) {
-                        for(Tree dst : new ArrayList<>(fragmentDsts)) {
-                            mappingStore.removeMapping(fragment1, dst);
-                        }
+            alignVariableDeclaration(mappingStore, srcStatementNode, dstStatementNode, false, LANG1, LANG2);
+        }
+    }
+
+    //restructures the Java and Kotlin field declarations, so that the name, = and initializer have the same parent (see alignVariableDeclaration)
+    //must be executed after matching the attribute initializers, because they are located through the VariableDeclarationFragment, which becomes a leaf
+    public static void alignFieldDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
+        if(srcFieldDeclaration == null || dstFieldDeclaration == null)
+            return;
+        if(!srcFieldDeclaration.getType().name.equals(LANG1.FIELD_DECLARATION) || !dstFieldDeclaration.getType().name.equals(LANG2.FIELD_DECLARATION))
+            return;
+        Set<Tree> dsts = mappingStore.getDsts(srcFieldDeclaration);
+        if(dsts != null && dsts.contains(dstFieldDeclaration)) {
+            alignVariableDeclaration(mappingStore, srcFieldDeclaration, dstFieldDeclaration, true, LANG1, LANG2);
+        }
+    }
+
+    //align Kotlin property_declaration -> [variable_declaration -> [name, type], =, initializer] with Java declaration -> [type, VariableDeclarationFragment -> [name, initializer]]
+    private static void alignVariableDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcDeclaration, Tree dstDeclaration, boolean mapFragmentToAffectationOperator, Constants LANG1, Constants LANG2) {
+        List<Tree> fragments1 = TreeUtilFunctions.findChildrenByType(srcDeclaration, LANG1.VARIABLE_DECLARATION_FRAGMENT);
+        Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstDeclaration, LANG2.VARIABLE_DECLARATION);
+        if(fragments1.size() == 1 && variableDeclaration2 != null) {
+            flattenChild(dstDeclaration, variableDeclaration2);
+            Tree fragment1 = fragments1.get(0);
+            Tree affectationOperator2 = TreeUtilFunctions.findChildByType(dstDeclaration, LANG2.AFFECTATION_OPERATOR);
+            if(mapFragmentToAffectationOperator && affectationOperator2 != null && fragment1.getChildren().size() > 1) {
+                fragment1.setLabel(affectationOperator2.getLabel());
+                mappingStore.addMapping(fragment1, affectationOperator2);
+            }
+            Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
+            if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 1) {
+                //keep the fragment as the leaf matching the = operator, placed between the name and the initializer
+                int index = srcDeclaration.getChildPosition(fragment1);
+                Tree name1 = fragment1.getChild(0);
+                List<Tree> rest1 = new ArrayList<>(fragment1.getChildren().subList(1, fragment1.getChildren().size()));
+                fragment1.getChildren().clear();
+                srcDeclaration.getChildren().add(index, name1);
+                name1.setParent(srcDeclaration);
+                srcDeclaration.getChildren().addAll(index + 2, rest1);
+                for(Tree t : rest1)
+                    t.setParent(srcDeclaration);
+            }
+            else {
+                if(fragmentDsts != null) {
+                    for(Tree dst : new ArrayList<>(fragmentDsts)) {
+                        mappingStore.removeMapping(fragment1, dst);
                     }
-                    flattenChild(srcStatementNode, fragment1);
                 }
+                flattenChild(srcDeclaration, fragment1);
             }
         }
     }
@@ -1202,7 +1227,8 @@ public class JavaToKotlinMigration {
         return valueArguments2;
     }
 
-    public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore, 
+    //maps the name, type and annotations of the Java and Kotlin field declarations, without restructuring the trees (see alignFieldDeclaration)
+    public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore,
             Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
         Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
         if(variableDeclaration2 == null && dstFieldDeclaration != null)

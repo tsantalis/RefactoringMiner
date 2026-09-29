@@ -38,17 +38,18 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
     private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         Set<Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
         for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
-            new FieldDeclarationMatcher(optimizationData, pair.getLeft(), pair.getRight(),
+            FieldDeclarationMatcher fieldDeclarationMatcher = new FieldDeclarationMatcher(optimizationData, pair.getLeft(), pair.getRight(),
                     (pair.getLeft().getJavadoc() != null && pair.getRight().getJavadoc() != null) ?
                         Optional.of(new UMLJavadocDiff(pair.getLeft().getJavadoc(), pair.getRight().getJavadoc()))
                         //TODO: Replace the above line with the pair.getJavaDocDiff() or something along those lines
                         :
                         Optional.empty(),
-                        new UMLCommentListDiff(pair.getLeft().getComments(), pair.getRight().getComments()), LANG1, LANG2) //Note: UMLJavaDocDiff throws exception if one side is null.
+                        new UMLCommentListDiff(pair.getLeft().getComments(), pair.getRight().getComments()), LANG1, LANG2); //Note: UMLJavaDocDiff throws exception if one side is null.
                     // So if one parameter is null, is better to handle it internally and allow the user to pass it
-
-                    .match(srcTree, dstTree, mappingStore);
-
+            fieldDeclarationMatcher.match(srcTree, dstTree, mappingStore);
+            if (Constants.isCrossLanguage(LANG1, LANG2)) {
+                JavaToKotlinMigration.alignFieldDeclaration(mappingStore, fieldDeclarationMatcher.getSrcFieldDeclaration(), fieldDeclarationMatcher.getDstFieldDeclaration(), LANG1, LANG2);
+            }
         }
         List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();
         for (UMLAttributeDiff umlAttributeDiff : attributeDiffList) {

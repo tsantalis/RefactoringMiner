@@ -7875,6 +7875,17 @@
   "firstEndPos" : 7585,
   "secondEndPos" : 6375
 }, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 7587,
+  "secondPos" : 6399,
+  "firstEndPos" : 7596,
+  "secondEndPos" : 6408
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -9117,6 +9128,17 @@
   "secondPos" : 7123,
   "firstEndPos" : 8463,
   "secondEndPos" : 7131
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 8465,
+  "secondPos" : 7146,
+  "firstEndPos" : 8472,
+  "secondEndPos" : 7172
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
@@ -10426,6 +10448,17 @@
   "secondPos" : 7885,
   "firstEndPos" : 9218,
   "secondEndPos" : 7893
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 9220,
+  "secondPos" : 7919,
+  "firstEndPos" : 9227,
+  "secondEndPos" : 7945
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -12197,6 +12230,17 @@
   "secondPos" : 8800,
   "firstEndPos" : 10155,
   "secondEndPos" : 8808
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 10157,
+  "secondPos" : 8823,
+  "firstEndPos" : 10164,
+  "secondEndPos" : 8849
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -20041,12 +20085,23 @@
   "firstEndPos" : 14971,
   "secondEndPos" : 13428
 }, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 14973,
+  "secondPos" : 13449,
+  "firstEndPos" : 15123,
+  "secondEndPos" : 13599
+}, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// On Android, HttpURLConnection is implemented by OkHttp v2. OkHttp",
   "secondLabel" : "// On Android, HttpURLConnection is implemented by OkHttp v2. OkHttp",
   "firstParentType" : "Block",
-  "secondParentType" : "catch_block",
+  "secondParentType" : "statements",
   "firstPos" : 14981,
   "secondPos" : 13457,
   "firstEndPos" : 15049,
@@ -20057,7 +20112,7 @@
   "firstLabel" : "// treats an incomplete response body as a ProtocolException.",
   "secondLabel" : "// treats an incomplete response body as a ProtocolException.",
   "firstParentType" : "Block",
-  "secondParentType" : "catch_block",
+  "secondParentType" : "statements",
   "firstPos" : 15056,
   "secondPos" : 13532,
   "firstEndPos" : 15117,
@@ -21800,6 +21855,17 @@
   "secondPos" : 14896,
   "firstEndPos" : 16838,
   "secondEndPos" : 14904
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 16840,
+  "secondPos" : 14930,
+  "firstEndPos" : 16847,
+  "secondEndPos" : 14956
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
@@ -35418,6 +35484,17 @@
   "secondPos" : 23063,
   "firstEndPos" : 26096,
   "secondEndPos" : 23071
+}, {
+  "firstType" : "Block",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CatchClause",
+  "secondParentType" : "catch_block",
+  "firstPos" : 26098,
+  "secondPos" : 23096,
+  "firstEndPos" : 26123,
+  "secondEndPos" : 23122
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",

@@ -65,6 +65,13 @@ import com.github.gumtreediff.tree.TypeSet;
  *    *&#47;
  * </pre>
  * is labeled as {@code "  \n   * text\n   *&#47;"}. The label is restored to the source code of the comment.
+ * <p>
+ * 5. An empty block has no node, as the braces of a block are not included in the tree and only its statements are.
+ * <pre>
+ * try { a() } catch (e: IOException) { }
+ * </pre>
+ * is parsed as {@code try_expression(statements, catch_block(simple_identifier, user_type))}. An empty statements node
+ * spanning the braces is added to the empty try, catch, and finally blocks, i.e., {@code catch_block(simple_identifier, user_type, statements)}.
  */
 public class KotlinTreeSitterTreeFixer {
 	private static final String STATEMENTS = "statements";
@@ -87,6 +94,9 @@ public class KotlinTreeSitterTreeFixer {
 			"additive_expression", "multiplicative_expression", "comparison_expression", "equality_expression", "conjunction_expression",
 			"disjunction_expression", "elvis_expression", "infix_expression", "range_expression", "check_expression", "as_expression");
 
+	private static final String TRY_EXPRESSION = "try_expression";
+	private static final String CATCH_BLOCK = "catch_block";
+	private static final String FINALLY_BLOCK = "finally_block";
 	private static final String PREFIX_EXPRESSION = "prefix_expression";
 	private static final Set<String> PREFIX_OPERATORS = Set.of("!", "-", "+", "++", "--");
 	// binary expressions with lower precedence than the prefix operators, from the highest to the lowest precedence
@@ -102,6 +112,7 @@ public class KotlinTreeSitterTreeFixer {
 			split(context, call);
 		}
 		fixPrefixExpressions(context);
+		addEmptyBlockStatements(context, sourceCode);
 	}
 
 	private static void fixPrefixExpressions(TreeContext context) {
@@ -202,6 +213,100 @@ public class KotlinTreeSitterTreeFixer {
 		for (Tree child : list) {
 			child.setParent(parent);
 		}
+	}
+
+	private static void addEmptyBlockStatements(TreeContext context, String sourceCode) {
+		boolean changed = false;
+		List<Tree> nodes = new ArrayList<>();
+		context.getRoot().preOrder().forEach(nodes::add);
+		for (Tree t : nodes) {
+			String type = t.getType().name;
+			if (type.equals(TRY_EXPRESSION)) {
+				// the try block is the first child, followed by the catch and finally blocks
+				Tree first = t.getChildren().isEmpty() ? null : t.getChild(0);
+				if (first == null || first.getType().name.equals(STATEMENTS))
+					continue;
+				changed |= addEmptyStatements(context, t, 0, t.getPos() + "try".length(), sourceCode);
+			}
+			else if (type.equals(CATCH_BLOCK)) {
+				// the catch block is the last child, following the exception parameter
+				if (t.getChildren().isEmpty() || hasChild(t, STATEMENTS))
+					continue;
+				int index = t.getChildren().size();
+				while (index > 0 && COMMENTS.contains(t.getChild(index - 1).getType().name))
+					index--;
+				if (index == 0)
+					continue;
+				changed |= addEmptyStatements(context, t, index, t.getChild(index - 1).getEndPos(), sourceCode);
+			}
+			else if (type.equals(FINALLY_BLOCK)) {
+				if (hasChild(t, STATEMENTS))
+					continue;
+				changed |= addEmptyStatements(context, t, 0, t.getPos() + "finally".length(), sourceCode);
+			}
+		}
+		if (changed)
+			resetMetrics(context.getRoot());
+	}
+
+	/**
+	 * inserts an empty statements node for the braces of the empty block following the start position,
+	 * moving the comments inside the braces to the statements node
+	 */
+	private static boolean addEmptyStatements(TreeContext context, Tree parent, int index, int start, String sourceCode) {
+		int open = start;
+		// the closing parenthesis of the catch parameter
+		while (open < sourceCode.length() && (Character.isWhitespace(sourceCode.charAt(open)) || sourceCode.charAt(open) == ')'))
+			open++;
+		if (open >= sourceCode.length() || sourceCode.charAt(open) != '{')
+			return false;
+		int close = skipWhitespaceAndComments(sourceCode, open + 1);
+		if (close >= sourceCode.length() || sourceCode.charAt(close) != '}')
+			return false;
+		Tree statements = context.createTree(TypeSet.type(STATEMENTS));
+		statements.setPos(open);
+		statements.setLength(close + 1 - open);
+		List<Tree> comments = new ArrayList<>();
+		for (Tree child : parent.getChildren()) {
+			if (COMMENTS.contains(child.getType().name) && child.getPos() > open && child.getPos() < close)
+				comments.add(child);
+		}
+		parent.getChildren().removeAll(comments);
+		for (Tree comment : comments) {
+			statements.addChild(comment);
+			comment.setParent(statements);
+		}
+		parent.insertChild(statements, Math.min(index, parent.getChildren().size()));
+		statements.setParent(parent);
+		return true;
+	}
+
+	private static int skipWhitespaceAndComments(String sourceCode, int i) {
+		while (i < sourceCode.length()) {
+			if (Character.isWhitespace(sourceCode.charAt(i))) {
+				i++;
+			}
+			else if (sourceCode.startsWith("//", i)) {
+				int end = sourceCode.indexOf('\n', i);
+				i = end < 0 ? sourceCode.length() : end;
+			}
+			else if (sourceCode.startsWith("/*", i)) {
+				int end = sourceCode.indexOf("*/", i + 2);
+				i = end < 0 ? sourceCode.length() : end + 2;
+			}
+			else {
+				break;
+			}
+		}
+		return i;
+	}
+
+	private static boolean hasChild(Tree t, String type) {
+		for (Tree child : t.getChildren()) {
+			if (child.getType().name.equals(type))
+				return true;
+		}
+		return false;
 	}
 
 	private static void restoreCommentDelimiters(TreeContext context, String sourceCode) {

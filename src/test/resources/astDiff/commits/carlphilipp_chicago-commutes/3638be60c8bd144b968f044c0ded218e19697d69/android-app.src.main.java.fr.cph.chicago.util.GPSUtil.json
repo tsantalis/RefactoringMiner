@@ -450,6 +450,28 @@
   "firstEndPos" : 726,
   "secondEndPos" : 387
 }, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 872,
+  "secondPos" : 407,
+  "firstEndPos" : 893,
+  "secondEndPos" : 424
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LocationRequest",
+  "secondLabel" : "LocationRequest",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 876,
+  "secondPos" : 407,
+  "firstEndPos" : 891,
+  "secondEndPos" : 422
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -856,6 +878,28 @@
   "secondPos" : 963,
   "firstEndPos" : 1461,
   "secondEndPos" : 978
+}, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "control_structure_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "if_expression",
+  "firstPos" : 1472,
+  "secondPos" : 1021,
+  "firstEndPos" : 1497,
+  "secondEndPos" : 1025
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "null",
+  "firstLabel" : "null",
+  "secondLabel" : "null",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 1492,
+  "secondPos" : 1021,
+  "firstEndPos" : 1496,
+  "secondEndPos" : 1025
 }, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",

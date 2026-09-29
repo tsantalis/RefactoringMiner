@@ -167,9 +167,9 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
-			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && s2.endsWith(LANG2.STATEMENT_TERMINATION)) {
+			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && (s2.endsWith(LANG2.STATEMENT_TERMINATION) || statement2 instanceof AbstractExpression)) {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
-				String ss2 = s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
+				String ss2 = statement2 instanceof AbstractExpression ? s2 : s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
 				for(Replacement r : info.getReplacements()) {
 					if(r.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA)) {
 						ss1 = ss1.replaceAll("\\R\\s*", "");
@@ -197,6 +197,9 @@ public class StringBasedHeuristics {
 				if(ss1.contains("(int)") && !ss2.contains("(int)")) {
 					ss1 = ss1.replaceAll("\\(int\\)", "");
 				}
+				if(ss1.contains("new ") && !ss2.contains("new ")) {
+					ss1 = ss1.replaceAll("new ", "");
+				}
 				if(ss2.endsWith(".toInt()") && !ss1.endsWith(".toInt()")) {
 					ss2 = ss2.substring(0, ss2.length() - ".toInt()".length());
 				}
@@ -205,6 +208,12 @@ public class StringBasedHeuristics {
 				}
 				if(ss2.contains(".toLong()") && !ss1.contains(".toLong()")) {
 					ss2 = ss2.replaceAll(".toLong\\(\\)", "");
+				}
+				for(LeafExpression numberLiteral2 : statement2.getNumberLiterals()) {
+					String l = numberLiteral2.getString();
+					if(l.endsWith("L") && !ss1.contains(l)) {
+						ss2 = ss2.replaceAll(l, l.substring(0, l.length()-1));
+					}
 				}
 				if(ss1.equals(ss2)) {
 					return true;
@@ -278,6 +287,9 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(diff2.endsWith(".") && !diff2.contains(LANG2.ASSIGNMENT)) {
+						return true;
+					}
+					if(diff2.isEmpty()) {
 						return true;
 					}
 				}

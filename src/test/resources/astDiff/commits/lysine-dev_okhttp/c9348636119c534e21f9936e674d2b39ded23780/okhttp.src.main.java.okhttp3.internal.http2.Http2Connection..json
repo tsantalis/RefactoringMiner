@@ -4800,9 +4800,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "prefix_expression",
+  "secondParentType" : "assignment",
   "firstPos" : 9292,
-  "secondPos" : 8391,
+  "secondPos" : 8390,
   "firstEndPos" : 9367,
   "secondEndPos" : 8465
 }, {
@@ -4813,7 +4813,7 @@
   "firstParentType" : "InfixExpression",
   "secondParentType" : "disjunction_expression",
   "firstPos" : 9292,
-  "secondPos" : 8391,
+  "secondPos" : 8390,
   "firstEndPos" : 9328,
   "secondEndPos" : 8426
 }, {
@@ -4822,11 +4822,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "InfixExpression",
-  "secondParentType" : "parenthesized_expression",
+  "secondParentType" : "disjunction_expression",
   "firstPos" : 9292,
   "secondPos" : 8390,
   "firstEndPos" : 9296,
-  "secondEndPos" : 8465
+  "secondEndPos" : 8394
 }, {
   "firstType" : "PREFIX_EXPRESSION_OPERATOR",
   "secondType" : "!",
@@ -17373,9 +17373,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "IfStatement",
-  "secondParentType" : "prefix_expression",
+  "secondParentType" : "if_expression",
   "firstPos" : 24303,
-  "secondPos" : 21641,
+  "secondPos" : 21615,
   "firstEndPos" : 24379,
   "secondEndPos" : 21691
 }, {
@@ -17384,11 +17384,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "InfixExpression",
-  "secondParentType" : "if_expression",
+  "secondParentType" : "conjunction_expression",
   "firstPos" : 24303,
   "secondPos" : 21615,
   "firstEndPos" : 24330,
-  "secondEndPos" : 21691
+  "secondEndPos" : 21642
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -17412,12 +17412,34 @@
   "firstEndPos" : 24327,
   "secondEndPos" : 21639
 }, {
+  "firstType" : "PrefixExpression",
+  "secondType" : "prefix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 24328,
+  "secondPos" : 21640,
+  "firstEndPos" : 24330,
+  "secondEndPos" : 21642
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 24328,
+  "secondPos" : 21640,
+  "firstEndPos" : 24329,
+  "secondEndPos" : 21641
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",
   "firstLabel" : "1",
   "secondLabel" : "1",
   "firstParentType" : "PrefixExpression",
-  "secondParentType" : "conjunction_expression",
+  "secondParentType" : "prefix_expression",
   "firstPos" : 24329,
   "secondPos" : 21641,
   "firstEndPos" : 24330,

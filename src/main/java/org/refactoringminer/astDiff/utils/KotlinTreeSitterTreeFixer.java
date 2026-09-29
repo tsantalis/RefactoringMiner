@@ -46,6 +46,17 @@ import com.github.gumtreediff.tree.TypeSet;
  *         navigation_suffix
  *       call_suffix
  * </pre>
+ * <p>
+ * 3. A prefix operator is applied to the entire binary expression following it, although it has higher precedence than all binary operators.
+ * <pre>
+ * !out || a == 0L
+ * </pre>
+ * is parsed as {@code prefix_expression(!, disjunction_expression(out, ||, equality_expression))}.
+ * The unparenthesized binary expressions containing the mis-parsed prefix expression are flattened into their operands and operators,
+ * and rebuilt according to the operator precedence, with the prefix operator applied only to the first operand following it, i.e.,
+ * {@code disjunction_expression(prefix_expression(!, out), ||, equality_expression)}.
+ * Similarly, {@code a != -1 && b}, parsed as {@code equality_expression(a, !=, prefix_expression(-, conjunction_expression(1, &&, b)))},
+ * is rebuilt as {@code conjunction_expression(equality_expression(a, !=, prefix_expression(-, 1)), &&, b)}.
  */
 public class KotlinTreeSitterTreeFixer {
 	private static final String STATEMENTS = "statements";
@@ -67,11 +78,119 @@ public class KotlinTreeSitterTreeFixer {
 			"additive_expression", "multiplicative_expression", "comparison_expression", "equality_expression", "conjunction_expression",
 			"disjunction_expression", "elvis_expression", "infix_expression", "range_expression", "check_expression", "as_expression");
 
+	private static final String PREFIX_EXPRESSION = "prefix_expression";
+	private static final Set<String> PREFIX_OPERATORS = Set.of("!", "-", "+", "++", "--");
+	// binary expressions with lower precedence than the prefix operators, from the highest to the lowest precedence
+	private static final List<String> BINARY_EXPRESSIONS = List.of("as_expression", "multiplicative_expression", "additive_expression",
+			"range_expression", "infix_expression", "elvis_expression", "check_expression", "comparison_expression", "equality_expression",
+			"conjunction_expression", "disjunction_expression");
+
 	public static void fix(TreeContext context, String sourceCode) {
 		moveTrailingComments(context);
 		Tree call;
 		while ((call = findMisparsedCall(context.getRoot(), sourceCode)) != null) {
 			split(context, call);
+		}
+		fixPrefixExpressions(context);
+	}
+
+	private static void fixPrefixExpressions(TreeContext context) {
+		boolean changed = false;
+		Tree prefix;
+		// post-order, so that in !!a && b the inner prefix expression is fixed before the outer one
+		while ((prefix = findMisparsedPrefixExpression(context.getRoot())) != null) {
+			// the region of binary expressions containing the prefix expression as their rightmost part, i.e., a != -1 && b
+			// is parsed as equality_expression(a, !=, prefix_expression(-, conjunction_expression(1, &&, b)))
+			Tree top = prefix;
+			while (top.getParent() != null && isBinaryExpression(top.getParent()) && top.getParent().getChild(2) == top) {
+				top = top.getParent();
+			}
+			Tree parent = top.getParent();
+			int index = parent.getChildPosition(top);
+			List<Tree> operands = new ArrayList<>();
+			List<Tree> operators = new ArrayList<>();
+			flatten(top, operands, operators);
+			Tree root = rebuild(operands, operators, new int[] {0}, 0);
+			// top is reused inside root, so its parent must not be reset as in replaceChild
+			parent.getChildren().set(index, root);
+			root.setParent(parent);
+			changed = true;
+		}
+		if (changed)
+			resetMetrics(context.getRoot());
+	}
+
+	private static Tree findMisparsedPrefixExpression(Tree root) {
+		for (Tree t : root.postOrder()) {
+			if (isMisparsedPrefixExpression(t))
+				return t;
+		}
+		return null;
+	}
+
+	/**
+	 * prefix_expression(op, binary(left, ...)) where binary has lower precedence than op
+	 */
+	private static boolean isMisparsedPrefixExpression(Tree t) {
+		if (!t.getType().name.equals(PREFIX_EXPRESSION) || t.getParent() == null || t.getChildren().size() != 2)
+			return false;
+		Tree operator = t.getChild(0);
+		return operator.isLeaf() && PREFIX_OPERATORS.contains(operator.getLabel()) && isBinaryExpression(t.getChild(1));
+	}
+
+	private static boolean isBinaryExpression(Tree t) {
+		return BINARY_EXPRESSIONS.contains(t.getType().name) && t.getChildren().size() == 3;
+	}
+
+	private static int precedence(Tree binaryExpression) {
+		return BINARY_EXPRESSIONS.size() - BINARY_EXPRESSIONS.indexOf(binaryExpression.getType().name);
+	}
+
+	/**
+	 * collects the operands and operators of the binary expressions in source code order,
+	 * applying the mis-parsed prefix operators only to the first operand following them
+	 */
+	private static void flatten(Tree t, List<Tree> operands, List<Tree> operators) {
+		if (isBinaryExpression(t)) {
+			flatten(t.getChild(0), operands, operators);
+			// the binary expression is reused for its operator
+			operators.add(t);
+			flatten(t.getChild(2), operands, operators);
+		}
+		else if (isMisparsedPrefixExpression(t)) {
+			int index = operands.size();
+			flatten(t.getChild(1), operands, operators);
+			Tree operand = operands.get(index);
+			setChildren(t, t.getChild(0), operand);
+			t.setLength(operand.getEndPos() - t.getPos());
+			operands.set(index, t);
+		}
+		else {
+			operands.add(t);
+		}
+	}
+
+	/**
+	 * precedence climbing, where all binary operators are left-associative
+	 */
+	private static Tree rebuild(List<Tree> operands, List<Tree> operators, int[] next, int minPrecedence) {
+		Tree left = operands.get(next[0]);
+		while (next[0] < operators.size() && precedence(operators.get(next[0])) >= minPrecedence) {
+			Tree binary = operators.get(next[0]++);
+			Tree right = rebuild(operands, operators, next, precedence(binary) + 1);
+			setChildren(binary, left, binary.getChild(1), right);
+			binary.setPos(left.getPos());
+			binary.setLength(right.getEndPos() - left.getPos());
+			left = binary;
+		}
+		return left;
+	}
+
+	private static void setChildren(Tree parent, Tree... children) {
+		List<Tree> list = new ArrayList<>(List.of(children));
+		parent.setChildren(list);
+		for (Tree child : list) {
+			child.setParent(parent);
 		}
 	}
 

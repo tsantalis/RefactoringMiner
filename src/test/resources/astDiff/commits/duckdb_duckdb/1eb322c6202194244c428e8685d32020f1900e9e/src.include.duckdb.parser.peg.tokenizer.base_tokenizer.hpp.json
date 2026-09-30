@@ -1508,6 +1508,17 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
+  "firstLabel" : "//! unterminated comment / dollar-quoted string. Does NOT append the trailing sentinel —",
+  "secondLabel" : "//! unterminated comment / dollar-quoted string. Does NOT append the trailing sentinel —",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 1244,
+  "secondPos" : 2083,
+  "firstEndPos" : 1334,
+  "secondEndPos" : 2173
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
   "firstLabel" : "//! `TokenizeInput()` is the one that appends `GetTerminator()` (clean) or `END_OF_INPUT`",
   "secondLabel" : "//! `TokenizeInput()` is the one that appends `GetTerminator()` (clean) or `END_OF_INPUT`",
   "firstParentType" : "field_declaration_list",

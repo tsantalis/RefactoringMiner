@@ -104,11 +104,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         //the node spans exactly the if statement, i.e., Kotlin control_structure_body of else wrapping the nested if in else if
         if (statementNode.getPos() == locationInfo.getStartOffset() && statementNode.getEndPos() == locationInfo.getEndOffset())
             return statementNode;
-        //search from the root, as the misparsed if statement might extend beyond the given tree
-        Tree root = tree;
-        while (root.getParent() != null)
-            root = root.getParent();
-        Tree ifStatementNode = TreeUtilFunctions.getTreeBetweenPositions(root, locationInfo.getStartOffset(), locationInfo.getEndOffset(), LANG, LANG.IF_STATEMENT);
+        Tree ifStatementNode = TreeUtilFunctions.findByLocationInfo(tree, locationInfo, LANG, LANG.IF_STATEMENT);
         if (ifStatementNode != null && ifStatementNode.getType().name.equals(LANG.IF_STATEMENT) && ifStatementNode.getPos() == locationInfo.getStartOffset())
             return ifStatementNode;
         return statementNode;

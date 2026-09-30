@@ -1168,7 +1168,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                 }
-                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.METHOD_INVOCATION,LANG2.METHOD_INVOCATION);
+                if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+                    //the statements are method invocations themselves, i.e., Kotlin calls with trailing lambda
+                    matched = new Pair<>(srcStatementNode, dstStatementNode);
+                    processCallWithTrailingLambda(srcStatementNode, dstStatementNode, mappingStore);
+                }
+                else {
+                    matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.METHOD_INVOCATION,LANG2.METHOD_INVOCATION);
+                }
                 if(matched != null) {
                     mappingStore.addMapping(matched.first, matched.second);
                     Pair<Tree,Tree> argument_lists = Helpers.findPairOfType(matched.first, matched.second,LANG1.ARGUMENT_LIST,LANG2.ARGUMENT_LIST);
@@ -1345,6 +1352,42 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    //Kotlin call_expression -> [callee, call_suffix -> [value_arguments?, annotated_lambda -> lambda_literal -> [lambda_parameters?, arrow?, statements]]],
+    //match everything except the body of the lambda, which is matched by the lambda mappers, i.e., list.forEachIndexed { index, item -> ... }
+    private void processCallWithTrailingLambda(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+        Tree suffix1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.CALL_SUFFIX);
+        Tree suffix2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.CALL_SUFFIX);
+        if(suffix1 == null || suffix2 == null)
+            return;
+        //the callee, i.e., list.forEachIndexed
+        Tree callee1 = srcStatementNode.getChild(0);
+        Tree callee2 = dstStatementNode.getChild(0);
+        if(callee1 != suffix1 && callee2 != suffix2) {
+            new LeafMatcher(LANG1, LANG2).match(callee1, callee2, mappingStore);
+        }
+        mappingStore.addMapping(suffix1, suffix2);
+        Pair<Tree,Tree> arguments = Helpers.findPairOfType(suffix1, suffix2, LANG1.METHOD_INVOCATION_ARGUMENTS, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        if(arguments != null) {
+            new LeafMatcher(LANG1, LANG2).match(arguments.first, arguments.second, mappingStore);
+        }
+        Pair<Tree,Tree> annotatedLambdas = Helpers.findPairOfType(suffix1, suffix2, LANG1.ANNOTATED_LAMBDA, LANG2.ANNOTATED_LAMBDA);
+        if(annotatedLambdas == null)
+            return;
+        mappingStore.addMapping(annotatedLambdas.first, annotatedLambdas.second);
+        Pair<Tree,Tree> lambdaLiterals = Helpers.findPairOfType(annotatedLambdas.first, annotatedLambdas.second, LANG1.LAMBDA_LITERAL, LANG2.LAMBDA_LITERAL);
+        if(lambdaLiterals == null)
+            return;
+        mappingStore.addMapping(lambdaLiterals.first, lambdaLiterals.second);
+        Pair<Tree,Tree> parameters = Helpers.findPairOfType(lambdaLiterals.first, lambdaLiterals.second, LANG1.LAMBDA_PARAMETERS, LANG2.LAMBDA_PARAMETERS);
+        if(parameters != null) {
+            new LeafMatcher(LANG1, LANG2).match(parameters.first, parameters.second, mappingStore);
+        }
+        Pair<Tree,Tree> arrows = Helpers.findPairOfType(lambdaLiterals.first, lambdaLiterals.second, LANG1.ARROW, LANG2.ARROW);
+        if(arrows != null) {
+            mappingStore.addMapping(arrows.first, arrows.second);
         }
     }
 

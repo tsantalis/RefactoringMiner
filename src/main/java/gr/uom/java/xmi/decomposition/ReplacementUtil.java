@@ -106,11 +106,17 @@ public class ReplacementUtil {
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
 		for(String character : SPECIAL_CHARACTERS) {
-			if(temp.contains(subString1 + character) && completeString2.contains(subString2 + character)) {
+			String character2 = character;
+			//cross-language assignment with different formatting, i.e., Java x=y; and Kotlin x = y
+			if(character.equals("=") && !LANG1.equals(LANG2) &&
+					temp.startsWith(subString1 + character) && completeString2.startsWith(subString2 + LANG2.ASSIGNMENT)) {
+				character2 = LANG2.ASSIGNMENT;
+			}
+			if(temp.contains(subString1 + character) && completeString2.contains(subString2 + character2)) {
 				StringBuffer sb = new StringBuffer();
 				Pattern p1 = Pattern.compile(Pattern.quote(subString1 + character));
 				Matcher m1 = p1.matcher(temp);
-				Pattern p2 = Pattern.compile(Pattern.quote(subString2 + character));
+				Pattern p2 = Pattern.compile(Pattern.quote(subString2 + character2));
 				Matcher m2 = p2.matcher(completeString2);
 				while(m1.find() && m2.find()) {
 					int start1 = m1.start();

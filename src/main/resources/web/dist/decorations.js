@@ -168,6 +168,22 @@ function offsetToLineColumn(text, offset) {
   return { line, column };
 }
 
+//returns the range of the opening curly brace at the start of the given range, or preceding it with only whitespace in between,
+//i.e., the Kotlin statements node of a block does not include the curly braces
+function findOpeningCurlyBrace(model, range) {
+	const text = model.getValue();
+	let offset = model.getOffsetAt(range.getStartPosition());
+	if(text.charAt(offset) !== '{') {
+		offset--;
+		while(offset >= 0 && /\s/.test(text.charAt(offset))) {
+			offset--;
+		}
+	}
+	if(offset < 0 || text.charAt(offset) !== '{') {
+		return null;
+	}
+	return monaco.Range.fromPositions(model.getPositionAt(offset), model.getPositionAt(offset + 1));
+}
 function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 	var exit = [];
 	if(index === 0) {
@@ -258,6 +274,26 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
                 }
 				else if(mappings[i][dstIndex].endLineNumber - mappings[i][dstIndex].startLineNumber == mappings[i][index].endLineNumber - mappings[i][index].startLineNumber) {
 					onClick(ed, mappings[i], dstIndex);
+				}
+				else {
+					//the mapping spans a different number of lines in each side, i.e., a composite statement reformatted during migration
+					//highlight only the first line of the destination range to avoid highlighting a large region
+					const dstRange = mappings[i][dstIndex];
+					const firstLine = dstRange.startLineNumber;
+					let firstLineRange = new monaco.Range(firstLine, dstRange.startColumn, firstLine, ed.getModel().getLineMaxColumn(firstLine));
+					//a block starting with an opening curly brace, highlight only the opening curly brace of the destination block
+					const srcRange = mappings[i][index];
+					const srcContent = index === 0 ? config.left.content : config.right.content;
+					if(srcContent.split('\n')[srcRange.startLineNumber - 1].charAt(srcRange.startColumn - 1) === '{') {
+						const braceRange = findOpeningCurlyBrace(ed.getModel(), dstRange);
+						if(braceRange) {
+							firstLineRange = braceRange;
+						}
+					}
+					const firstLineMapping = [];
+					firstLineMapping[index] = mappings[i][index];
+					firstLineMapping[dstIndex] = firstLineRange;
+					onClick(ed, firstLineMapping, dstIndex);
 				}
             }
         }

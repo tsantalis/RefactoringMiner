@@ -295,11 +295,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **September 20, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **September 30, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2054  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2078  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -325,19 +325,19 @@ As of **September 20, 2026** the precision and recall of RefactoringMiner on thi
 |Extract Variable|18  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|14  |  1  |  0  | 0.933  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|54  |  1  |  0  | 0.982  | 1.000|
-|Rename Parameter|77  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|59  |  1  |  0  | 0.983  | 1.000|
+|Rename Parameter|75  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|75  |  1  |  0  | 0.987  | 1.000|
 |Merge Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 1  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable| 2  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Variable| 5  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter| 7  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|12  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|118  |  0  |  0  | 1.000  | 1.000|
-|Change Variable Type|137  |  0  |  0  | 1.000  | 1.000|
-|Change Parameter Type|154  |  0  |  0  | 1.000  | 1.000|
+|Change Variable Type|146  |  0  |  0  | 1.000  | 1.000|
+|Change Parameter Type|152  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|69  |  1  |  0  | 0.986  | 1.000|
 |Add Method Annotation|24  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Annotation|14  |  0  |  0  | 1.000  | 1.000|
@@ -347,8 +347,8 @@ As of **September 20, 2026** the precision and recall of RefactoringMiner on thi
 |Remove Class Annotation| 7  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|144  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter|112  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|143  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|118  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 2  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|34  |  0  |  0  | 1.000  | 1.000|

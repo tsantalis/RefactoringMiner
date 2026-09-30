@@ -6049,6 +6049,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter parser : HprofParser to parser : HprofParser in method public stringContentAsLabel() from class leakcanary.internal.LabelTest",
+        "comment": "<p>originally it is a function parameter and it becomes a lambda parameter, as the function is eliminated (replace anonymous with lambda)</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Localize Parameter",
+        "description": "Localize Parameter node : LeakNode to node : LeakNode in method public stringContentAsLabel() from class leakcanary.internal.LabelTest",
+        "comment": "<p>originally it is a function parameter and it becomes a lambda parameter, as the function is eliminated (replace anonymous with lambda)</p>",
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -6082,17 +6096,17 @@
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AppSingletonInspector",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>reporter is becoming a lambda parameter</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AppSingletonInspector",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>reporter is becoming a lambda parameter</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.VIEW",
@@ -6579,13 +6593,139 @@
     }, {
         "type": "Change Parameter Type",
         "description": "Change Parameter Type leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": "<p>reporter is becoming a lambda parameter</p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Rename Parameter",
+        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": "<p>reporter is becoming a lambda parameter</p>",
+        "validation": "FP",
+        "detectionTools": "RefactoringMiner",
+        "validators": "Nikos"
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : List<LeakTraceElementReporter> in method public inspect(graph HprofGraph, leakTrace List<LeakTraceElementReporter>) from class leakcanary.AppSingletonInspector",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
-        "type": "Rename Parameter",
-        "description": "Rename Parameter leakTrace : List<LeakTraceElementReporter> to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : List<LeakTraceElementReporter> in method public inspect(graph HprofGraph, leakTrace List<LeakTraceElementReporter>) from class leakcanary.AndroidLeakTraceInspectors.ANONYMOUS_CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : List<LeakTraceElementReporter> in method public inspect(graph HprofGraph, leakTrace List<LeakTraceElementReporter>) from class leakcanary.AndroidLeakTraceInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : List<LeakTraceElementReporter> in method public inspect(graph HprofGraph, leakTrace List<LeakTraceElementReporter>) from class leakcanary.internal.LeakStatusTest.leaking.LeakTraceInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : List<LeakTraceElementReporter> in method public inspect(graph HprofGraph, leakTrace List<LeakTraceElementReporter>) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.LeakTraceInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Parameter",
+        "description": "Remove Parameter leakTrace : List<LeakTraceElementReporter> in method public inspect(graph HprofGraph, leakTrace List<LeakTraceElementReporter>) from class leakcanary.internal.LeakStatusTest.notLeaking.LeakTraceInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakStatusTest.leaking.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ANONYMOUS_CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AppSingletonInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakStatusTest.notLeaking.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AppSingletonInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakTraceRendererTest.rendersLabelsOnAllNodes.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakStatusTest.notLeaking.ObjectInspector",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.AndroidObjectInspectors.ANONYMOUS_CLASS",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type reporter : Inferred to reporter : ObjectReporter in method public inspect(graph HprofGraph, reporter ObjectReporter) from class leakcanary.internal.LeakStatusTest.leaking.ObjectInspector",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -7792,6 +7932,13 @@
     }, {
         "type": "Extract And Move Method",
         "description": "Extract And Move Method public readRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) : Long extracted from public readHprofRecords(recordTypes Set<KClass<HprofRecord>>, listener OnHprofRecordListener) in class shark.HprofReader & moved to class shark.StreamingHprofReader",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type graph : Inferred to graph : HeapGraph in method public writeAndReadHprof() from class shark.HprofWriterTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -10006,6 +10153,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable pathNode : Inferred to retainedObjectNode : Inferred in method private FindLeakInput.buildLeakTraces(pathFindingResults PathFindingResults) : Pair<List<ApplicationLeak>,List<LibraryLeak>> from class shark.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -10349,10 +10503,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable weakRefMirror : Inferred to weakRef : Inferred in method private findLeakingReferences(parser HprofParser, retainedKeys MutableSet<Long>, analysisResults MutableMap<String,RetainedInstance>, keyedWeakReferenceInstances List<InstanceDumpRecord>, heapDumpUptimeMillis Long) : MutableList<KeyedWeakReferenceMirror> from class leakcanary.updated.HeapAnalyzer",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>weakRef originally exists in for loop, and remains in the body of introduced forEach()</p><div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #0000ff;'>for</span><span style='color: #000000;'> (weakRef </span><span style='color: #0000ff;'>in</span><span style='color: #000000;'> refClass.instancesList) {</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Replace Loop With Pipeline",
         "description": "Replace Loop With Pipeline for(weakRef in refClass.instancesList) with keyedWeakReferenceInstances.forEach { record -> in method private findLeakingReferences(parser HprofParser, retainedKeys MutableSet<Long>, analysisResults MutableMap<String,RetainedInstance>, keyedWeakReferenceInstances List<InstanceDumpRecord>, heapDumpUptimeMillis Long) : MutableList<KeyedWeakReferenceMirror> from class leakcanary.updated.HeapAnalyzer",
@@ -10391,6 +10545,20 @@
     }, {
         "type": "Change Return Type",
         "description": "Change Return Type Pair<MutableList<String>,Long> to Pair<MutableSet<Long>,Long> in method private readHeapDumpMemoryStore(parser HprofParser, heapDumpMemoryStoreClassId Long) : Pair<MutableSet<Long>,Long> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable name : Inferred to fieldName : Inferred in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable snapshot : Inferred to parser : Inferred in method public checkForLeaks(heapDump HeapDump) : HeapAnalysis from class leakcanary.updated.HeapAnalyzer",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -10710,10 +10878,10 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter heapAnalysis : HeapAnalysis in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #000000;'>Based on the following mapping detectedLeak becomes heapAnalysis<br />failureMessage.append(</span><span style='color: #008080;'>LeakCanary</span><span style='color: #000000;'>.leakInfo(</span><span style='color: #000000;'>context, detectedLeak.heapDump, detectedLeak.analysisResult, </span><span style='color: #0000ff;'>false</span><span style='color: #000000;'>)</span><span style='color: #000000;'>)</span></div></div><div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #000000;'>failureMessage.append(</span><span style='color: #008080;'>LeakCanary</span><span style='color: #000000;'>.leakInfo(context, heapAnalysis.heapDump, result, </span><span style='color: #0000ff;'>false</span><span style='color: #000000;'>))</span></div></div><p>Parameterize Variable detectedLeak : Inferred to heapAnalysis : HeapAnalysis in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List&lt;LeakingInstance&gt;) : String from class leakcanary.FailTestOnLeakRunListener</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Parameter",
         "description": "Rename Parameter detectedLeaks : List<InstrumentationLeakResults.Result> to applicationLeaks : List<LeakingInstance> in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
@@ -10843,6 +11011,41 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable results : Inferred to heapAnalysis : Inferred in method public findsSeveralRefs() from class leakcanary.internal.HeapAnalyzerHeapDumpTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Parameterize Variable",
+        "description": "Parameterize Variable detectedLeak : Inferred to heapAnalysis : HeapAnalysis in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type detectedLeak : Inferred to heapAnalysis : HeapAnalysis in method protected buildLeakDetectedMessage(heapAnalysis HeapAnalysis, applicationLeaks List<LeakingInstance>) : String from class leakcanary.FailTestOnLeakRunListener",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable i : Inferred to index : Inferred in method public onHandleIntentInForeground(intent Intent) from class leakcanary.internal.HeapAnalyzerService",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to retainedInstance : Inferred in method internal findAllLeaks(heapDumpFile HeapDumpFile) : HeapAnalysis from class leakcanary.internal.TestUtil.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable result : Inferred to retainedInstance : Inferred in method internal findLeak(heapDumpFile HeapDumpFile) : RetainedInstance from class leakcanary.internal.TestUtil.module",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -15175,6 +15378,13 @@
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type builder : MockResponse.Builder to builder : Inferred in method public mockResponseSetHeader() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type response : Response to response : Inferred in method public proxiedRequestGetsCorrectRequestUrl() from class mockwebserver3.MockWebServerTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

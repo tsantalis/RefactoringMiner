@@ -97,6 +97,23 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
 
     }
 
+    private static Tree findIfStatementWithinRange(Tree tree, Tree statementNode, LocationInfo locationInfo, Constants LANG) {
+        if (statementNode == null || !locationInfo.getCodeElementType().equals(CodeElementType.IF_STATEMENT) ||
+                statementNode.getType().name.equals(LANG.IF_STATEMENT) || statementNode.getType().name.equals(LANG.CLASS_BLOCK))
+            return statementNode;
+        //the node spans exactly the if statement, i.e., Kotlin control_structure_body of else wrapping the nested if in else if
+        if (statementNode.getPos() == locationInfo.getStartOffset() && statementNode.getEndPos() == locationInfo.getEndOffset())
+            return statementNode;
+        //search from the root, as the misparsed if statement might extend beyond the given tree
+        Tree root = tree;
+        while (root.getParent() != null)
+            root = root.getParent();
+        Tree ifStatementNode = TreeUtilFunctions.getTreeBetweenPositions(root, locationInfo.getStartOffset(), locationInfo.getEndOffset(), LANG, LANG.IF_STATEMENT);
+        if (ifStatementNode != null && ifStatementNode.getType().name.equals(LANG.IF_STATEMENT) && ifStatementNode.getPos() == locationInfo.getStartOffset())
+            return ifStatementNode;
+        return statementNode;
+    }
+
     private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
         CompositeStatementObjectMapping compositeStatementObjectMapping = (CompositeStatementObjectMapping) abstractCodeMapping;
         LocationInfo srcLocationInfo = compositeStatementObjectMapping.getFragment1().getLocationInfo();
@@ -151,6 +168,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
+        //handle misparsed if statement, which is not the outermost node in its range, i.e., Kotlin if (...) { ... call().second += x } else { ... }
+        //is parsed by tree-sitter as assignment -> [directly_assignable_expression -> if_expression, +=, x], and the else branch becomes an ERROR node
+        srcStatementNode = findIfStatementWithinRange(srcTree, srcStatementNode, srcLocationInfo, LANG1);
+        dstStatementNode = findIfStatementWithinRange(dstTree, dstStatementNode, dstLocationInfo, LANG2);
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {

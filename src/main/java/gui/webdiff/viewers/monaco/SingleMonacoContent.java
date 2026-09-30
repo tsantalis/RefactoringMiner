@@ -134,6 +134,7 @@ public class SingleMonacoContent implements Renderable {
                     .macros().stylesheet("/dist/monaco.css")
                     .macros().javascript("/dist/marked.min.js")
                     .macros().javascript("/dist/pr-utils.js")
+                    .macros().javascript("/dist/monaco-cdn.js")
                     .macros().javascript("/dist/single-monaco.js")
                     .macros().javascript(WebDiff.JQUERY_JS_URL)
                     .macros().javascript("https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")

@@ -65,7 +65,15 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         if (variableDeclaration != null) {
                             Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo(),LANG1);
                             Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo(),LANG2);
-                            new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
+                            if(dstNode.getType().name.equals(LANG2.LAMBDA_PARAMETERS) && dstNode.getChildren().size() > 0) {
+                                dstNode = dstNode.getChild(0);
+                            }
+                            if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                                JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
+                            }
+                            else {
+                                new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
+                            }
                         }
                     }
                 }
@@ -97,7 +105,12 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                             continue;
                         Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,parameter.getLocationInfo(),LANG1);
                         Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,variableDeclaration.getLocationInfo(),LANG2);
-                        new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
+                        if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                            JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
+                        }
+                        else {
+                            new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
+                        }
                     }
                 }
                 Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,next.getLocationInfo(),LANG1);

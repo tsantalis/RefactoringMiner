@@ -30,6 +30,7 @@ import org.eclipse.jdt.core.dom.YieldStatement;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
+import org.jetbrains.kotlin.psi.KtParameter;
 import org.refactoringminer.util.PathFileUtils;
 
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstFunction;
@@ -219,7 +220,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.asString = lambda.getText();
 		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
-		// TODO process parameters
+		List<KtParameter> parameters = lambda.getValueParameters();
+		for(KtParameter p : parameters) {
+			VariableDeclaration parameter = new VariableDeclaration(ktFile, sourceFolder, filePath, p, this, activeVariableDeclarations, fileContent, this.locationInfo);
+			this.parameters.add(parameter);
+		}
 		KtBlockExpression lambdaBody = lambda.getBodyExpression();
 		if(lambdaBody != null) {
 			this.body = new KotlinOperationBody(ktFile, sourceFolder, filePath, lambdaBody, this, activeVariableDeclarations, fileContent);

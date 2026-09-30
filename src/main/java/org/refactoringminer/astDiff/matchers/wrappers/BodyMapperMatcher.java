@@ -261,34 +261,19 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
+                if(compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+                        compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+                        srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&
+                        srcStatementNode.getChildren().size() > 1 && dstStatementNode.getChildren().size() > 1) {
+                    //handle ignoreIoException {} in Kotlin to Kotlin
+                    processCallExpressionsModeledAsCompositeStatements(mappingStore, srcStatementNode, dstStatementNode);
+                }
                 if(compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
                         compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
                         srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&
                         srcStatementNode.getChildren().size() > 1 && dstStatementNode.getChildren().size() > 1) {
-                    if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
-                        mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-                    }
-                    mappingStore.addMappingRecursively(srcStatementNode.getChild(0), dstStatementNode.getChild(0));
-                    Tree suffix1 = srcStatementNode.getChild(1);
-                    Tree suffix2 = dstStatementNode.getChild(1);
-                    if(suffix1.getType().name.equals(LANG1.CALL_SUFFIX) && suffix2.getType().name.equals(LANG2.CALL_SUFFIX)) {
-                        mappingStore.addMapping(suffix1, suffix2);
-                        if(suffix1.getChildren().size() > 0 && suffix2.getChildren().size() > 0 &&
-                                suffix1.getChild(0).getType().name.equals(LANG1.ANNOTATED_LAMBDA) && suffix2.getChild(0).getType().name.equals(LANG2.ANNOTATED_LAMBDA)) {
-                            mappingStore.addMapping(suffix1.getChild(0), suffix2.getChild(0));
-                            if(suffix1.getChild(0).getChildren().size() > 0 && suffix2.getChild(0).getChildren().size() > 0 &&
-                                    suffix1.getChild(0).getChild(0).getType().name.equals(LANG1.LAMBDA_LITERAL) &&
-                                    suffix2.getChild(0).getChild(0).getType().name.equals(LANG2.LAMBDA_LITERAL)) {
-                                Tree lambdaLiteral1 = suffix1.getChild(0).getChild(0);
-                                Tree lambdaLiteral2 = suffix2.getChild(0).getChild(0);
-                                mappingStore.addMapping(lambdaLiteral1, lambdaLiteral2);
-                                if(lambdaLiteral1.getChildren().size() > 0 && lambdaLiteral2.getChildren().size() > 0 &&
-                                        lambdaLiteral1.getChild(0).getType().name.equals(LANG1.STATEMENTS) && lambdaLiteral2.getChild(0).getType().name.equals(LANG2.STATEMENTS)) {
-                                    mappingStore.addMapping(lambdaLiteral1.getChild(0), lambdaLiteral2.getChild(0));
-                                }
-                            }
-                        }
-                    }
+                    //handle synchronized(lock) {} in Kotlin to Kotlin
+                    processCallExpressionsModeledAsCompositeStatements(mappingStore, srcStatementNode, dstStatementNode);
                 }
                 if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
                     Tree parent1 = srcStatementNode.getParent();
@@ -797,6 +782,34 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    private void processCallExpressionsModeledAsCompositeStatements(ExtendedMultiMappingStore mappingStore,
+            Tree srcStatementNode, Tree dstStatementNode) {
+        if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+            mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
+        }
+        mappingStore.addMappingRecursively(srcStatementNode.getChild(0), dstStatementNode.getChild(0));
+        Tree suffix1 = srcStatementNode.getChild(1);
+        Tree suffix2 = dstStatementNode.getChild(1);
+        if(suffix1.getType().name.equals(LANG1.CALL_SUFFIX) && suffix2.getType().name.equals(LANG2.CALL_SUFFIX)) {
+            mappingStore.addMapping(suffix1, suffix2);
+            if(suffix1.getChildren().size() > 0 && suffix2.getChildren().size() > 0 &&
+                    suffix1.getChild(0).getType().name.equals(LANG1.ANNOTATED_LAMBDA) && suffix2.getChild(0).getType().name.equals(LANG2.ANNOTATED_LAMBDA)) {
+                mappingStore.addMapping(suffix1.getChild(0), suffix2.getChild(0));
+                if(suffix1.getChild(0).getChildren().size() > 0 && suffix2.getChild(0).getChildren().size() > 0 &&
+                        suffix1.getChild(0).getChild(0).getType().name.equals(LANG1.LAMBDA_LITERAL) &&
+                        suffix2.getChild(0).getChild(0).getType().name.equals(LANG2.LAMBDA_LITERAL)) {
+                    Tree lambdaLiteral1 = suffix1.getChild(0).getChild(0);
+                    Tree lambdaLiteral2 = suffix2.getChild(0).getChild(0);
+                    mappingStore.addMapping(lambdaLiteral1, lambdaLiteral2);
+                    if(lambdaLiteral1.getChildren().size() > 0 && lambdaLiteral2.getChildren().size() > 0 &&
+                            lambdaLiteral1.getChild(0).getType().name.equals(LANG1.STATEMENTS) && lambdaLiteral2.getChild(0).getType().name.equals(LANG2.STATEMENTS)) {
+                        mappingStore.addMapping(lambdaLiteral1.getChild(0), lambdaLiteral2.getChild(0));
+                    }
+                }
+            }
         }
     }
 

@@ -1179,7 +1179,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					m.temporaryVariableAssignment(refactorings, leaves2, parentMapper != null);
 				}
 				else {
-					this.mappings.remove(m);
+					this.removeMapping(m);
 					if(!leaves2.contains(m.getFragment2())) {
 						leaves2.add(m.getFragment2());
 					}
@@ -9635,7 +9635,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 						for(int i = mappingsBefore; i < mappings.size(); i++) {
-							this.mappings.remove(mappings.get(i));
+							this.removeMapping(mappings.get(i));
 						}
 					}
 				}
@@ -9732,7 +9732,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 						for(int i = mappingsBefore; i < mappings.size(); i++) {
-							this.mappings.remove(mappings.get(i));
+							this.removeMapping(mappings.get(i));
 						}
 					}
 				}

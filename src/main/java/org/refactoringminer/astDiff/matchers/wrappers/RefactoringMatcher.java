@@ -69,7 +69,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                                 dstNode = dstNode.getChild(0);
                             }
                             if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                                JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
+                                JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                             }
                             else {
                                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
@@ -106,7 +106,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,parameter.getLocationInfo(),LANG1);
                         Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,variableDeclaration.getLocationInfo(),LANG2);
                         if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                            JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
+                            JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                         }
                         else {
                             new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);

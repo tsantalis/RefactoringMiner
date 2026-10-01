@@ -14,6 +14,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 
@@ -26,6 +27,7 @@ import static org.refactoringminer.astDiff.utils.Helpers.findTreeContexts;
 public class UnifiedModelDiffRefactoringsMatcher {
     private final Set<ASTDiff> diffSet;
     private final Map<ASTDiff, OptimizationData> optimizationDataMap;
+    private final DeferredFlattenings deferredFlattenings;
     private final UMLModelDiff modelDiff;
     private final List<Refactoring> modelDiffRefactorings;
 
@@ -35,7 +37,8 @@ public class UnifiedModelDiffRefactoringsMatcher {
         return newlyGeneratedDiffsOptimizationMap;
     }
 
-    public UnifiedModelDiffRefactoringsMatcher(Set<ASTDiff> diffSet, Map<ASTDiff, OptimizationData> optimizationDataMap, UMLModelDiff modelDiff, List<Refactoring> modelDiffRefactorings) {
+    public UnifiedModelDiffRefactoringsMatcher(Set<ASTDiff> diffSet, Map<ASTDiff, OptimizationData> optimizationDataMap, UMLModelDiff modelDiff, List<Refactoring> modelDiffRefactorings, DeferredFlattenings deferredFlattenings) {
+        this.deferredFlattenings = deferredFlattenings;
         this.diffSet = diffSet;
         this.optimizationDataMap = optimizationDataMap;
         this.modelDiff = modelDiff;
@@ -209,7 +212,9 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 ASTDiff diff = new ASTDiff(srcPath, dstPath,
                     treeContextPair.first, treeContextPair.second,
                     mappingStore);
-                newlyGeneratedDiffsOptimizationMap.putIfAbsent(diff, new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree,dstTree,LANG1,LANG2)));
+                OptimizationData optimizationData = new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree,dstTree,LANG1,LANG2));
+                optimizationData.setDeferredFlattenings(deferredFlattenings);
+                newlyGeneratedDiffsOptimizationMap.putIfAbsent(diff, optimizationData);
                 setOptimizationAndMatch(matcher, diff, newlyGeneratedDiffsOptimizationMap.get(diff), srcTree, dstTree);
                 }
             else {

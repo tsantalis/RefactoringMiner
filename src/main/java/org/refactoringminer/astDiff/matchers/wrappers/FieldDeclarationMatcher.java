@@ -156,7 +156,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
         }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-            JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
+            JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, optimizationData.getDeferredFlattenings());
         }
         if(srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
             mappingStore.addMapping(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent());

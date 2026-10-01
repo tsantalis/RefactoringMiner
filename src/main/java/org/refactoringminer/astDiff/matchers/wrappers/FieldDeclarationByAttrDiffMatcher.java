@@ -39,7 +39,7 @@ public class FieldDeclarationByAttrDiffMatcher extends OptimizationAwareMatcher 
             //TODO: if its a moved process its refactoring
         }
         if (Constants.isCrossLanguage(LANG1, LANG2)) {
-            JavaToKotlinMigration.alignFieldDeclaration(mappingStore, fieldDeclarationMatcher.getSrcFieldDeclaration(), fieldDeclarationMatcher.getDstFieldDeclaration(), LANG1, LANG2);
+            JavaToKotlinMigration.alignFieldDeclaration(mappingStore, fieldDeclarationMatcher.getSrcFieldDeclaration(), fieldDeclarationMatcher.getDstFieldDeclaration(), LANG1, LANG2, optimizationData.getDeferredFlattenings());
         }
     }
 }

@@ -4989,7 +4989,43 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
+		if(anonymousArgumentReplacedWithLambdaInParentMapper(statement1, statement2, replacementInfo, operationBodyMapper)) {
+			return replacementInfo.getReplacements();
+		}
 		return null;
+	}
+
+	//inlined method, whose parameter is passed as argument to a call, and the argument at the call site is an anonymous class replaced with lambda in the parent mapper,
+	//i.e., pushExecutorExecute(new NamedRunnable(...) {...}) inlined as pushExecutor.execute(...) {...}, where pushExecutorExecute(namedRunnable) calls pushExecutor.execute(namedRunnable)
+	private static boolean anonymousArgumentReplacedWithLambdaInParentMapper(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) {
+		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
+		AbstractCall callSiteInvocation = operationBodyMapper.getOperationInvocation();
+		Optional<Map<String, String>> parameterToArgumentMap = operationBodyMapper.getParameterToArgumentMap1();
+		if(parentMapper == null || callSiteInvocation == null || parameterToArgumentMap.isEmpty())
+			return false;
+		AbstractCall invocation1 = statement1.invocationCoveringEntireFragment();
+		AbstractCall invocation2 = statement2.invocationCoveringEntireFragment();
+		if(invocation1 == null || invocation2 == null || invocation1.getExpression() == null || !invocation1.getExpression().equals(invocation2.getExpression()))
+			return false;
+		for(Refactoring r : parentMapper.getRefactoringsAfterPostProcessing()) {
+			if(r instanceof ReplaceAnonymousWithLambdaRefactoring) {
+				ReplaceAnonymousWithLambdaRefactoring ref = (ReplaceAnonymousWithLambdaRefactoring)r;
+				if(ref.getLambdaOwner().equals(statement2) && callSiteInvocation.getLocationInfo().subsumes(ref.getAnonymousClass().getLocationInfo())) {
+					for(String argument1 : invocation1.arguments()) {
+						String callSiteArgument = parameterToArgumentMap.get().get(argument1);
+						if(callSiteArgument != null && callSiteInvocation.arguments().contains(callSiteArgument)) {
+							replacementInfo.addReplacement(new Replacement(argument1, ref.getLambda().toString(), ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA));
+							if(!invocation1.getName().equals(invocation2.getName())) {
+								replacementInfo.addReplacement(new Replacement(invocation1.getName(), invocation2.getName(), ReplacementType.METHOD_INVOCATION_NAME));
+							}
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean multipleVariableDeclarationMatch(List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {

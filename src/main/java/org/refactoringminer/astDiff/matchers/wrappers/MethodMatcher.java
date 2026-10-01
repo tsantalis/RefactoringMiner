@@ -1658,7 +1658,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (srcNode.isIsoStructuralTo(dstNode))
                 mappingStore.addMappingRecursively(srcNode,dstNode);
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                JavaToKotlinMigration.handleTypeMapping(mappingStore, srcNode, dstNode, LANG1, LANG2);
+                JavaToKotlinMigration.handleTypeMapping(mappingStore, srcNode, dstNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
             }
             else if(!srcNode.getType().name.equals(LANG1.METHOD_DECLARATION) && !dstNode.getType().name.equals(LANG2.METHOD_DECLARATION)) {
                 new LeafMatcher(LANG1, LANG2).match(srcNode,dstNode,mappingStore);
@@ -1738,7 +1738,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                 mappingStore.addMappingRecursively(leftTree, rightTree);
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
-                JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2);
+                JavaToKotlinMigration.handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2, optimizationData.getDeferredFlattenings());
             }
             else {
                 new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);

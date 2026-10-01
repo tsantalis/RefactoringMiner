@@ -6918,6 +6918,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable l2 : int in method public doCompare(existing Activation, adding Activation) : int from class org.drools.core.conflict.PhreakConflictResolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable l1 : int in method public doCompare(existing Activation, adding Activation) : int from class org.drools.core.conflict.PhreakConflictResolver",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 13908
 }, {

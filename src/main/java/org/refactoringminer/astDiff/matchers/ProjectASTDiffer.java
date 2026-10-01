@@ -15,6 +15,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.actions.editscript.SimplifiedExtendedChawatheScriptGenerator;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.moved.AllSubTreesMovedASTDiffGenerator;
 import org.refactoringminer.astDiff.moved.MovedASTDiffGenerator;
@@ -42,6 +43,8 @@ public class ProjectASTDiffer
 	private final ProjectASTDiff projectASTDiff;
 	private final MovedASTDiffGenerator movedDeclarationGenerator;
 	private final Map<ASTDiff, OptimizationData> optimizationDataMap = new HashMap<>();
+	//the flattenings of the source trees, applied after all diffs are matched
+	private final DeferredFlattenings deferredFlattenings = new DeferredFlattenings();
 
 	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
@@ -78,8 +81,12 @@ public class ProjectASTDiffer
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		makeASTDiff(getExtraDiffs(),true);
 		//Process the ModelDiffRefactorings once at the end
-		UnifiedModelDiffRefactoringsMatcher unifiedModelDiffRefactoringsMatcher = new UnifiedModelDiffRefactoringsMatcher(projectASTDiff.getDiffSet(), optimizationDataMap, modelDiff, modelDiffRefactorings);
+		UnifiedModelDiffRefactoringsMatcher unifiedModelDiffRefactoringsMatcher = new UnifiedModelDiffRefactoringsMatcher(projectASTDiff.getDiffSet(), optimizationDataMap, modelDiff, modelDiffRefactorings, deferredFlattenings);
+		//flatten the source trees after all diffs are matched, so that a source tree matched with multiple target trees has the same structure for all of them
+		applyDeferredFlattenings(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet());
 		processAllOptimizations(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap());
+		//the flattenings registered while processing the optimizations
+		applyDeferredFlattenings(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet());
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			new MissingIdenticalNonAmbiguousSubtrees(diff.LANG1, diff.LANG2).match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
@@ -92,6 +99,23 @@ public class ProjectASTDiffer
 		long movedDiff_execution_finished =  System.currentTimeMillis();
 		logger.info("MovedDiff execution: " + (movedDiff_execution_finished - movedDiff_execution_started)/ 1000 + " seconds");
 		computeMovedDiffsEditScripts();
+	}
+
+	private OptimizationData newOptimizationData(Tree srcTree, Tree dstTree, Constants LANG1, Constants LANG2) {
+		OptimizationData optimizationData = new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2));
+		optimizationData.setDeferredFlattenings(deferredFlattenings);
+		return optimizationData;
+	}
+
+	private void applyDeferredFlattenings(Collection<ASTDiff> newlyGeneratedDiffs) {
+		if (deferredFlattenings.isEmpty())
+			return;
+		List<ExtendedMultiMappingStore> mappingStores = new ArrayList<>();
+		for (ASTDiff diff : projectASTDiff.getDiffSet())
+			mappingStores.add(diff.getAllMappings());
+		for (ASTDiff diff : newlyGeneratedDiffs)
+			mappingStores.add(diff.getAllMappings());
+		deferredFlattenings.apply(mappingStores);
 	}
 
 	private void processAllOptimizations(Map<ASTDiff, OptimizationData> newlyGeneratedDiffMap) {
@@ -231,7 +255,7 @@ public class ProjectASTDiffer
 		if (optimizationData == null){
 			if (!mergeFlag) {
 				optimizationDataMap.putIfAbsent(astDiff,
-						new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2)));
+						newOptimizationData(srcTree, dstTree, LANG1, LANG2));
 				optimizationData = optimizationDataMap.get(astDiff);
 			}
 			else {
@@ -241,7 +265,7 @@ public class ProjectASTDiffer
 				catch (Exception e)
 				{
 					optimizationDataMap.putIfAbsent(astDiff,
-							new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2)));
+							newOptimizationData(srcTree, dstTree, LANG1, LANG2));
 					optimizationData = optimizationDataMap.get(astDiff);
 				}
 			}
@@ -268,7 +292,7 @@ public class ProjectASTDiffer
 		if (optimizationData == null){
 			if (!mergeFlag) {
 				optimizationDataMap.putIfAbsent(astDiff,
-						new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2)));
+						newOptimizationData(srcTree, dstTree, LANG1, LANG2));
 				optimizationData = optimizationDataMap.get(astDiff);
 			}
 			else {
@@ -278,7 +302,7 @@ public class ProjectASTDiffer
 				catch (Exception e)
 				{
 					optimizationDataMap.putIfAbsent(astDiff,
-							new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2)));
+							newOptimizationData(srcTree, dstTree, LANG1, LANG2));
 					optimizationData = optimizationDataMap.get(astDiff);
 				}
 			}
@@ -305,7 +329,7 @@ public class ProjectASTDiffer
 		if (optimizationData == null){
 			if (!mergeFlag) {
 				optimizationDataMap.putIfAbsent(astDiff,
-						new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2)));
+						newOptimizationData(srcTree, dstTree, LANG1, LANG2));
 				optimizationData = optimizationDataMap.get(astDiff);
 			}
 			else {
@@ -315,7 +339,7 @@ public class ProjectASTDiffer
 				catch (Exception e)
 				{
 					optimizationDataMap.putIfAbsent(astDiff,
-							new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2)));
+							newOptimizationData(srcTree, dstTree, LANG1, LANG2));
 					optimizationData = optimizationDataMap.get(astDiff);
 				}
 			}

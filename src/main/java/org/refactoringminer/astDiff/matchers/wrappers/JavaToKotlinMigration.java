@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
@@ -25,11 +26,20 @@ import com.github.gumtreediff.utils.Pair;
 public class JavaToKotlinMigration {
 
     public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        handleCompositeMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, null);
+    }
+
+    //deferredFlattenings: the flattenings of the Java tree are deferred until all diffs are matched, so that the Java tree has the same structure
+    //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites), or applied immediately if null
+    public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
             Tree singleVariableDeclaration1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SINGLE_VARIABLE_DECLARATION);
             if(singleVariableDeclaration1 != null) {
-                handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2);
-                flattenChild(srcStatementNode, singleVariableDeclaration1);
+                handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2, deferredFlattenings);
+                if(deferredFlattenings != null)
+                    deferredFlattenings.flattenKeepingMappings(srcStatementNode, singleVariableDeclaration1);
+                else
+                    flattenChild(srcStatementNode, singleVariableDeclaration1);
             }
             Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
             Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);
@@ -110,6 +120,12 @@ public class JavaToKotlinMigration {
     }
 
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, null);
+    }
+
+    //deferredFlattenings: the flattenings of the Java tree are deferred until all diffs are matched, so that the Java tree has the same structure
+    //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites), or applied immediately if null
+    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
         Tree srcFakeTree = TreeUtilFunctions.deepCopyWithMap(srcStatementNode, cpyToSrc);
@@ -225,6 +241,17 @@ public class JavaToKotlinMigration {
         boolean letWithLambda = letFound && lambdas2.size() > lambdas1.size();
         if(!letWithLambda) {
             removeFromParent(children2, lambdas2, LANG2.SIMPLE_NAME);
+        }
+        //the last argument of the Java call is replaced with the trailing lambda of the Kotlin call, i.e., pushExecutor.execute(namedRunnable) -> pushExecutor.execute(...) {...}
+        if(children1.size() == children2.size() + 1 && hasTrailingLambda(dstStatementNode, LANG2)) {
+            Tree call1 = srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 ? srcStatementNode.getChild(0) : srcStatementNode;
+            Tree arguments1 = call1.getType().name.equals(LANG1.METHOD_INVOCATION) ? TreeUtilFunctions.findChildByType(call1, LANG1.METHOD_INVOCATION_ARGUMENTS) : null;
+            if(arguments1 != null && arguments1.getChildren().size() > 0) {
+                Tree lastArgument1 = arguments1.getChild(arguments1.getChildren().size() - 1);
+                if(lastArgument1.getType().name.equals(LANG1.SIMPLE_NAME) && children1.get(children1.size() - 1) == lastArgument1) {
+                    children1.remove(children1.size() - 1);
+                }
+            }
         }
         Map<Tree, Tree> qualifiedNameToNavigationExpression = new LinkedHashMap<>();
         if(types1.size() > 0 && children1.size() != children2.size()) {
@@ -465,14 +492,14 @@ public class JavaToKotlinMigration {
                 for(int i=0; i<inv1.size(); i++) {
                     Tree child1 = inv1.get(i);
                     Tree child2 = inv2.get(i);
-                    processPair(mappingStore, child1, child2, LANG1, LANG2, invocationsToBeRemoved);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2, invocationsToBeRemoved, deferredFlattenings);
                 }
             }
             else if(inv2.size() < inv1.size()) {
                 for(int i=0; i<inv2.size(); i++) {
                     Tree child1 = inv1.get(i);
                     Tree child2 = inv2.get(i);
-                    processPair(mappingStore, child1, child2, LANG1, LANG2, invocationsToBeRemoved);
+                    processPair(mappingStore, child1, child2, LANG1, LANG2, invocationsToBeRemoved, deferredFlattenings);
                 }
             }
         }
@@ -492,7 +519,7 @@ public class JavaToKotlinMigration {
                 Tree as2 = asExpressions2.get(i);
                 mappingStore.addMapping(cast1, as2);
                 if(cast1.getChildren().size() > 0) {
-                    handleTypeMapping(mappingStore, cast1.getChild(0), as2, LANG1, LANG2);
+                    handleTypeMapping(mappingStore, cast1.getChild(0), as2, LANG1, LANG2, deferredFlattenings);
                 }
                 Tree parent1 = cast1.getParent();
                 Tree parent2 = as2.getParent();
@@ -507,7 +534,7 @@ public class JavaToKotlinMigration {
             if(as2 != null) {
                 Tree userType2 = TreeUtilFunctions.findChildByType(as2, LANG2.USER_TYPE);
                 if(userType2 != null) {
-                    handleTypeMapping(mappingStore, simpleType, userType2, LANG1, LANG2);
+                    handleTypeMapping(mappingStore, simpleType, userType2, LANG1, LANG2, deferredFlattenings);
                 }
             }
         }
@@ -784,7 +811,7 @@ public class JavaToKotlinMigration {
         }
         if(inv1.size() == children2.size()) {
             for(int i=0; i<inv1.size(); i++) {
-                if(alignMethodInvocationWithPropertyAccess(mappingStore, inv1.get(i), children2.get(i), LANG1, LANG2))
+                if(alignMethodInvocationWithPropertyAccess(mappingStore, inv1.get(i), children2.get(i), LANG1, LANG2, deferredFlattenings))
                     continue;
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
                 if(navigationSuffix != null)
@@ -836,38 +863,25 @@ public class JavaToKotlinMigration {
                 TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) != null) {
             //align Java ReturnStatement -> expression with Kotlin function_body -> [=, expression], as Kotlin expression body has no return statement wrapper
             Tree expression1 = srcStatementNode.getChild(0);
-            Set<Tree> dsts = mappingStore.getDsts(expression1);
-            if(dsts != null) {
-                for(Tree dst : new ArrayList<>(dsts)) {
-                    mappingStore.removeMapping(expression1, dst);
-                }
-            }
-            flattenChild(srcStatementNode, expression1);
+            flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, expression1);
         }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
                 srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
             //align Java ExpressionStatement -> MethodInvocation with Kotlin call_expression, as Kotlin has no expression statement wrapper
             Tree invocation1 = srcStatementNode.getChild(0);
-            Set<Tree> dsts = mappingStore.getDsts(invocation1);
-            if(dsts != null) {
-                for(Tree dst : new ArrayList<>(dsts)) {
-                    mappingStore.removeMapping(invocation1, dst);
-                }
-            }
-            flattenChild(srcStatementNode, invocation1);
+            flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, invocation1);
         }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
                 srcStatementNode.getChild(0).getType().name.equals(LANG1.ASSIGNMENT) && dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
             //align Java ExpressionStatement -> Assignment -> [target, operator, value] with Kotlin assignment -> [target, operator, value]
             Tree statementAssignment1 = srcStatementNode.getChild(0);
-            Set<Tree> assignmentDsts = mappingStore.getDsts(statementAssignment1);
-            if(assignmentDsts != null) {
-                for(Tree dst : new ArrayList<>(assignmentDsts)) {
-                    mappingStore.removeMapping(statementAssignment1, dst);
-                }
+            //the node with the [target, operator, value] children: the Assignment, or the statement if the Assignment is flattened immediately
+            Tree assignmentParent1 = statementAssignment1;
+            flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, statementAssignment1);
+            if(deferredFlattenings == null) {
+                assignmentParent1 = srcStatementNode;
             }
-            flattenChild(srcStatementNode, statementAssignment1);
-            Tree target1 = srcStatementNode.getChild(0);
+            Tree target1 = assignmentParent1.getChild(0);
             Tree assignableExpression2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
             if(assignableExpression2 != null) {
                 if(assignableExpression2.getChildren().size() == 1) {
@@ -878,7 +892,7 @@ public class JavaToKotlinMigration {
                     alignFieldAccess(mappingStore, target1, assignableExpression2, LANG1, LANG2);
                 }
             }
-            Tree value1 = srcStatementNode.getChild(srcStatementNode.getChildren().size() - 1);
+            Tree value1 = assignmentParent1.getChild(assignmentParent1.getChildren().size() - 1);
             Tree value2 = dstStatementNode.getChild(dstStatementNode.getChildren().size() - 1);
             if(!mappingStore.isDstMapped(value2) && value2.getChildren().size() == 1 && mappingStore.getSrcs(value2.getChild(0)) != null &&
                     mappingStore.getSrcs(value2.getChild(0)).contains(value1)) {
@@ -893,15 +907,19 @@ public class JavaToKotlinMigration {
             }
         }
         if(srcStatementNode.getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FIELD_DECLARATION)) {
-            alignVariableDeclaration(mappingStore, srcStatementNode, dstStatementNode, false, LANG1, LANG2);
+            alignVariableDeclaration(mappingStore, srcStatementNode, dstStatementNode, false, LANG1, LANG2, deferredFlattenings);
             //the variable type is explicit in Kotlin, i.e., var errorException: IOException? = null
-            alignTypes(mappingStore, findJavaType(srcStatementNode, LANG1), findKotlinType(dstStatementNode, LANG2), LANG1, LANG2);
+            alignTypes(mappingStore, findJavaType(srcStatementNode, LANG1), findKotlinType(dstStatementNode, LANG2), LANG1, LANG2, deferredFlattenings);
         }
     }
 
     //restructures the Java and Kotlin field declarations, so that the name, = and initializer have the same parent (see alignVariableDeclaration)
     //must be executed after matching the attribute initializers, because they are located through the VariableDeclarationFragment, which becomes a leaf
     public static void alignFieldDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
+        alignFieldDeclaration(mappingStore, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, null);
+    }
+
+    public static void alignFieldDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(srcFieldDeclaration == null || dstFieldDeclaration == null)
             return;
         if(!srcFieldDeclaration.getType().name.equals(LANG1.FIELD_DECLARATION))
@@ -910,26 +928,20 @@ public class JavaToKotlinMigration {
         if(dsts == null || !dsts.contains(dstFieldDeclaration))
             return;
         if(dstFieldDeclaration.getType().name.equals(LANG2.FIELD_DECLARATION)) {
-            alignVariableDeclaration(mappingStore, srcFieldDeclaration, dstFieldDeclaration, true, LANG1, LANG2);
+            alignVariableDeclaration(mappingStore, srcFieldDeclaration, dstFieldDeclaration, true, LANG1, LANG2, deferredFlattenings);
         }
         else if(dstFieldDeclaration.getType().name.equals(LANG2.CLASS_PARAMETER)) {
             //align Kotlin class_parameter -> [name, type] with Java FieldDeclaration -> [type, VariableDeclarationFragment -> name]
             List<Tree> fragments1 = TreeUtilFunctions.findChildrenByType(srcFieldDeclaration, LANG1.VARIABLE_DECLARATION_FRAGMENT);
             if(fragments1.size() == 1 && fragments1.get(0).getChildren().size() == 1) {
                 Tree fragment1 = fragments1.get(0);
-                Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
-                if(fragmentDsts != null) {
-                    for(Tree dst : new ArrayList<>(fragmentDsts)) {
-                        mappingStore.removeMapping(fragment1, dst);
-                    }
-                }
-                flattenChild(srcFieldDeclaration, fragment1);
+                flattenSrcChild(mappingStore, deferredFlattenings, srcFieldDeclaration, fragment1);
             }
         }
     }
 
     //align Kotlin property_declaration -> [variable_declaration -> [name, type], =, initializer] with Java declaration -> [type, VariableDeclarationFragment -> [name, initializer]]
-    private static void alignVariableDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcDeclaration, Tree dstDeclaration, boolean mapFragmentToAffectationOperator, Constants LANG1, Constants LANG2) {
+    private static void alignVariableDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcDeclaration, Tree dstDeclaration, boolean mapFragmentToAffectationOperator, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         List<Tree> fragments1 = TreeUtilFunctions.findChildrenByType(srcDeclaration, LANG1.VARIABLE_DECLARATION_FRAGMENT);
         Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstDeclaration, LANG2.VARIABLE_DECLARATION);
         if(fragments1.size() == 1 && variableDeclaration2 != null) {
@@ -941,7 +953,11 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(fragment1, affectationOperator2);
             }
             Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
-            if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 1) {
+            if(deferredFlattenings != null) {
+                //the fragment is kept as the leaf matching the = operator, or flattened, after all diffs are matched
+                deferredFlattenings.alignVariableDeclarationFragment(srcDeclaration, fragment1, LANG2.AFFECTATION_OPERATOR);
+            }
+            else if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 1) {
                 //keep the fragment as the leaf matching the = operator, placed between the name and the initializer
                 int index = srcDeclaration.getChildPosition(fragment1);
                 Tree name1 = fragment1.getChild(0);
@@ -966,7 +982,7 @@ public class JavaToKotlinMigration {
 
     //align Kotlin navigation_expression -> [receiver, navigation_suffix -> name] with Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> receiver, name]
     //for method invocations without arguments converted to property accesses, i.e., debugData.size() -> debugData.size
-    private static boolean alignMethodInvocationWithPropertyAccess(ExtendedMultiMappingStore mappingStore, Tree invocation1, Tree navigation2, Constants LANG1, Constants LANG2) {
+    private static boolean alignMethodInvocationWithPropertyAccess(ExtendedMultiMappingStore mappingStore, Tree invocation1, Tree navigation2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(!invocation1.getType().name.equals(LANG1.METHOD_INVOCATION) || invocation1.getChildren().size() != 2)
             return false;
         Tree receiver1 = invocation1.getChild(0);
@@ -981,13 +997,7 @@ public class JavaToKotlinMigration {
         Tree name2 = suffix2.getChild(0);
         removeDstMappings(mappingStore, suffix2);
         flattenChild(navigation2, suffix2);
-        Set<Tree> receiverDsts = mappingStore.getDsts(receiver1);
-        if(receiverDsts != null) {
-            for(Tree dst : new ArrayList<>(receiverDsts)) {
-                mappingStore.removeMapping(receiver1, dst);
-            }
-        }
-        flattenChild(invocation1, receiver1);
+        flattenSrcChild(mappingStore, deferredFlattenings, invocation1, receiver1);
         mappingStore.addMapping(invocation1, navigation2);
         mappingStore.addMapping(name1, name2);
         //align Kotlin navigation_expression -> [postfix_expression -> [receiver, !!], name] as navigation_expression -> [receiver, !!, name], i.e., requestUrl.scheme() -> requestUrl!!.scheme
@@ -1001,7 +1011,8 @@ public class JavaToKotlinMigration {
             navigation2.insertChild(assertion2, 1);
             assertion2.setParent(navigation2);
         }
-        Tree receiverExpression1 = invocation1.getChild(0);
+        //the receiver expression, whether or not the METHOD_INVOCATION_RECEIVER is already flattened
+        Tree receiverExpression1 = receiver1.getChild(0);
         Tree receiverExpression2 = navigation2.getChild(0);
         if(receiverExpression1.isLeaf() && receiverExpression2.isLeaf()) {
             mappingStore.addMapping(receiverExpression1, receiverExpression2);
@@ -1023,8 +1034,13 @@ public class JavaToKotlinMigration {
         Set<Tree> statementDsts = statement1 != null ? mappingStore.getDsts(statement1) : null;
         if(statement1 != null && statement1.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && statement1.getChildren().size() == 1 &&
                 statementDsts != null && statementDsts.contains(navigation2)) {
-            mappingStore.removeMapping(invocation1, navigation2);
-            flattenChild(statement1, invocation1);
+            if(deferredFlattenings != null) {
+                deferredFlattenings.flattenRemovingMappingTo(statement1, invocation1, navigation2);
+            }
+            else {
+                mappingStore.removeMapping(invocation1, navigation2);
+                flattenChild(statement1, invocation1);
+            }
         }
         return true;
     }
@@ -1313,7 +1329,7 @@ public class JavaToKotlinMigration {
         }
     }
 
-    private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2, List<Tree> invocationsToBeRemoved) {
+    private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2, List<Tree> invocationsToBeRemoved, DeferredFlattenings deferredFlattenings) {
         mappingStore.addMapping(child1, child2);
         boolean isFirstChildType = child1.getChildren().size() > 0 && child1.getChild(0).getType().name.equals(LANG1.SIMPLE_TYPE);
         Tree name1 = TreeUtilFunctions.findChildByType(child1, LANG1.SIMPLE_NAME);
@@ -1379,7 +1395,7 @@ public class JavaToKotlinMigration {
             alignMethodInvocation(mappingStore, child1, child2, LANG1, LANG2);
         }
         else if(child1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) && child2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
-            alignClassInstanceCreation(mappingStore, child1, child2, LANG1, LANG2);
+            alignClassInstanceCreation(mappingStore, child1, child2, LANG1, LANG2, deferredFlattenings);
         }
     }
 
@@ -1410,7 +1426,7 @@ public class JavaToKotlinMigration {
         }
     }
 
-    private static void alignClassInstanceCreation(ExtendedMultiMappingStore mappingStore, Tree creation1, Tree creation2, Constants LANG1, Constants LANG2) {
+    private static void alignClassInstanceCreation(ExtendedMultiMappingStore mappingStore, Tree creation1, Tree creation2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(TreeUtilFunctions.findChildByType(creation1, LANG1.ANONYMOUS_CLASS_DECLARATION) != null)
             return;
         Tree type1 = creation1.getChildren().size() > 0 ? creation1.getChild(0) : null;
@@ -1435,9 +1451,9 @@ public class JavaToKotlinMigration {
             if(name2 != null && nameDsts != null && nameDsts.contains(name2) && !mappingStore.isSrcMapped(type1) &&
                     (parameterizedType1 == null || !mappingStore.isSrcMapped(parameterizedType1))) {
                 if(parameterizedType1 != null) {
-                    flattenChild(creation1, parameterizedType1);
+                    flattenSrcChildKeepingMappings(deferredFlattenings, creation1, parameterizedType1);
                 }
-                flattenChild(creation1, type1);
+                flattenSrcChildKeepingMappings(deferredFlattenings, creation1, type1);
             }
         }
     }
@@ -1471,6 +1487,11 @@ public class JavaToKotlinMigration {
     //maps the name, type and annotations of the Java and Kotlin field declarations, without restructuring the trees (see alignFieldDeclaration)
     public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore,
             Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
+        handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, null);
+    }
+
+    public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore,
+            Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
         if(variableDeclaration2 == null && dstFieldDeclaration != null)
             variableDeclaration2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.VARIABLE_DECLARATION);
@@ -1480,7 +1501,7 @@ public class JavaToKotlinMigration {
             if(name1 != null && name2 != null) {
                 mappingStore.addMapping(name1, name2);
             }
-            alignTypes(mappingStore, findJavaType(srcFieldDeclaration, LANG1), findKotlinType(variableDeclaration2, LANG2), LANG1, LANG2);
+            alignTypes(mappingStore, findJavaType(srcFieldDeclaration, LANG1), findKotlinType(variableDeclaration2, LANG2), LANG1, LANG2, deferredFlattenings);
             Tree annotation1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.MARKER_ANNOTATION);
             Tree modifiers2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.MODIFIERS);
             handleAnnotationMapping(mappingStore, annotation1, modifiers2, LANG1, LANG2);
@@ -1497,7 +1518,7 @@ public class JavaToKotlinMigration {
             if(name1 != null && name2 != null) {
                 mappingStore.addMapping(name1, name2);
             }
-            alignTypes(mappingStore, findJavaType(srcFieldDeclaration, LANG1), findKotlinType(classParameter2, LANG2), LANG1, LANG2);
+            alignTypes(mappingStore, findJavaType(srcFieldDeclaration, LANG1), findKotlinType(classParameter2, LANG2), LANG1, LANG2, deferredFlattenings);
             Tree annotation1 = TreeUtilFunctions.findChildByType(srcFieldDeclaration, LANG1.MARKER_ANNOTATION);
             Tree modifiers2 = TreeUtilFunctions.findChildByType(dstFieldDeclaration, LANG2.MODIFIERS);
             handleAnnotationMapping(mappingStore, annotation1, modifiers2, LANG1, LANG2);
@@ -2021,9 +2042,13 @@ public class JavaToKotlinMigration {
     }
 
     public static void handleParameterMapping(ExtendedMultiMappingStore mappingStore, Tree leftTree, Tree rightTree, Constants LANG1, Constants LANG2) {
+        handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2, null);
+    }
+
+    public static void handleParameterMapping(ExtendedMultiMappingStore mappingStore, Tree leftTree, Tree rightTree, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(leftTree.getType().name.equals(LANG1.SINGLE_VARIABLE_DECLARATION) && rightTree.getType().name.equals(LANG2.PARAMETER))
             mappingStore.addMapping(leftTree, rightTree);
-        alignTypes(mappingStore, findJavaType(leftTree, LANG1), findKotlinType(rightTree, LANG2), LANG1, LANG2);
+        alignTypes(mappingStore, findJavaType(leftTree, LANG1), findKotlinType(rightTree, LANG2), LANG1, LANG2, deferredFlattenings);
         Tree name1 = TreeUtilFunctions.findChildByType(leftTree, LANG1.SIMPLE_NAME);
         Tree name2 = TreeUtilFunctions.findChildByType(rightTree, LANG2.SIMPLE_NAME);
         if(name1 != null && name2 != null) {
@@ -2032,8 +2057,12 @@ public class JavaToKotlinMigration {
     }
 
     public static void handleTypeMapping(ExtendedMultiMappingStore mappingStore, Tree srcNode, Tree dstNode, Constants LANG1, Constants LANG2) {
+        handleTypeMapping(mappingStore, srcNode, dstNode, LANG1, LANG2, null);
+    }
+
+    public static void handleTypeMapping(ExtendedMultiMappingStore mappingStore, Tree srcNode, Tree dstNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         Tree type2 = dstNode.getType().name.equals(LANG2.USER_TYPE) || dstNode.getType().name.equals(LANG2.NULLABLE_TYPE) ? dstNode : TreeUtilFunctions.findChildByType(dstNode, LANG2.USER_TYPE);
-        alignTypes(mappingStore, srcNode, type2, LANG1, LANG2);
+        alignTypes(mappingStore, srcNode, type2, LANG1, LANG2, deferredFlattenings);
     }
 
     private static Tree findJavaType(Tree declaration1, Constants LANG1) {
@@ -2053,7 +2082,7 @@ public class JavaToKotlinMigration {
     }
 
     //align Kotlin user_type with Java SimpleType, PrimitiveType, and ParameterizedType, i.e., int -> Int, Integer -> Int, List<Header> -> List<Header>
-    private static void alignTypes(ExtendedMultiMappingStore mappingStore, Tree type1, Tree type2, Constants LANG1, Constants LANG2) {
+    private static void alignTypes(ExtendedMultiMappingStore mappingStore, Tree type1, Tree type2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(type1 == null || type2 == null)
             return;
         //the nullability of the Kotlin type is an addition, i.e., Http2Stream -> Http2Stream?
@@ -2085,8 +2114,11 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(type1, type2);
             //align Kotlin user_type -> [type_identifier, type_arguments -> type_projection* -> type] with Java ParameterizedType -> [SimpleType -> SimpleName, type*]
             Tree baseType1 = type1.getChild(0);
+            //the leaf with the name of the Java type, whether or not the SimpleType is already flattened
+            Tree baseName1 = baseType1;
             if(baseType1.getType().name.equals(LANG1.SIMPLE_TYPE) && baseType1.getChildren().size() == 1 && baseType1.getChild(0).isLeaf()) {
-                flattenChild(type1, baseType1);
+                baseName1 = baseType1.getChild(0);
+                flattenSrcChildKeepingMappings(deferredFlattenings, type1, baseType1);
             }
             Tree typeArguments2 = TreeUtilFunctions.findChildByType(type2, LANG2.TYPE_ARGUMENTS);
             if(typeArguments2 != null) {
@@ -2097,12 +2129,12 @@ public class JavaToKotlinMigration {
                     }
                 }
             }
-            if(type1.getChild(0).isLeaf() && type2.getChild(0).isLeaf()) {
-                mappingStore.addMapping(type1.getChild(0), type2.getChild(0));
+            if(baseName1.isLeaf() && type2.getChild(0).isLeaf()) {
+                mappingStore.addMapping(baseName1, type2.getChild(0));
             }
             if(type1.getChildren().size() == type2.getChildren().size()) {
                 for(int i=1; i<type1.getChildren().size(); i++) {
-                    alignTypes(mappingStore, type1.getChild(i), type2.getChild(i), LANG1, LANG2);
+                    alignTypes(mappingStore, type1.getChild(i), type2.getChild(i), LANG1, LANG2, deferredFlattenings);
                 }
             }
         }
@@ -2441,6 +2473,96 @@ public class JavaToKotlinMigration {
     //checks if name is one of the dot-separated segments of qualifiedName, i.e., e is not a segment of ErrorCode.PROTOCOL_ERROR
     private static boolean isQualifiedNameSegment(String qualifiedName, String name) {
         return !name.isEmpty() && Arrays.asList(qualifiedName.split("\\.")).contains(name);
+    }
+
+    //post-processing of the Java anonymous class creation passed as argument at the call site of an inlined method, replaced with the lambda of the Kotlin call,
+    //i.e., call(new NamedRunnable("OkHttp %s", connectionName) {...}) -> call("OkHttp $connectionName") {...}, match the string literal and variables with the interpolated string
+    public static void handleAnonymousArgumentReplacedWithLambda(ExtendedMultiMappingStore mappingStore, Tree call1, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        Tree arguments1 = TreeUtilFunctions.findChildByType(call1, LANG1.METHOD_INVOCATION_ARGUMENTS);
+        if(arguments1 == null)
+            return;
+        Tree creation1 = null;
+        for(Tree argument1 : arguments1.getChildren()) {
+            if(argument1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) && TreeUtilFunctions.findChildByType(argument1, LANG1.ANONYMOUS_CLASS_DECLARATION) != null) {
+                creation1 = argument1;
+                break;
+            }
+        }
+        if(creation1 == null)
+            return;
+        //the string literals and interpolated identifiers of the Kotlin call outside the lambda
+        List<Tree> stringLiterals2 = new ArrayList<>();
+        List<Tree> interpolatedIdentifiers2 = new ArrayList<>();
+        for(Tree t2 : dstStatementNode.preOrder()) {
+            if(isWithinLambda(t2, dstStatementNode, LANG2))
+                continue;
+            if(t2.getType().name.equals(LANG2.STRING_LITERAL))
+                stringLiterals2.add(t2);
+            else if(t2.getType().name.equals(LANG2.INTERPOLATED_IDENTIFIER))
+                interpolatedIdentifiers2.add(t2);
+        }
+        //the arguments of the anonymous class creation, excluding the body of the anonymous class
+        List<Tree> stringLiterals1 = TreeUtilFunctions.findChildrenByType(creation1, LANG1.STRING_LITERAL);
+        if(stringLiterals1.size() == 1 && stringLiterals2.size() == 1) {
+            Tree stringLiteral1 = stringLiterals1.get(0);
+            Tree stringLiteral2 = stringLiterals2.get(0);
+            //the Kotlin string literal gets the label of the Java string literal, as in the other string literal mappings (see handleLeafMapping)
+            if(stringLiteral2.getChildren().size() > 0 && !stringLiteral2.getLabel().equals(stringLiteral1.getLabel())) {
+                stringLiteral2.setLabel(stringLiteral1.getLabel());
+                stringLiteral2.getChildren().remove(0);
+            }
+            mappingStore.addMapping(stringLiteral1, stringLiteral2);
+        }
+        for(Tree simpleName1 : TreeUtilFunctions.findChildrenByType(creation1, LANG1.SIMPLE_NAME)) {
+            for(Tree interpolatedIdentifier2 : interpolatedIdentifiers2) {
+                if(simpleName1.getLabel().equals(interpolatedIdentifier2.getLabel()) && !mappingStore.isDstMapped(interpolatedIdentifier2)) {
+                    mappingStore.addMapping(simpleName1, interpolatedIdentifier2);
+                    break;
+                }
+            }
+        }
+    }
+
+    //the node is within a lambda of the statement
+    private static boolean isWithinLambda(Tree t, Tree statement, Constants LANG) {
+        for(Tree parent = t; parent != null && parent != statement; parent = parent.getParent()) {
+            if(parent.getType().name.equals(LANG.ANNOTATED_LAMBDA) || parent.getType().name.equals(LANG.LAMBDA_LITERAL))
+                return true;
+        }
+        return false;
+    }
+
+    //Kotlin call_expression -> [..., annotated_lambda] or call_expression -> [..., call_suffix -> [..., annotated_lambda]]
+    private static boolean hasTrailingLambda(Tree call2, Constants LANG2) {
+        if(!call2.getType().name.equals(LANG2.METHOD_INVOCATION))
+            return false;
+        if(TreeUtilFunctions.findChildByType(call2, LANG2.ANNOTATED_LAMBDA) != null)
+            return true;
+        Tree suffix2 = TreeUtilFunctions.findChildByType(call2, LANG2.CALL_SUFFIX);
+        return suffix2 != null && TreeUtilFunctions.findChildByType(suffix2, LANG2.ANNOTATED_LAMBDA) != null;
+    }
+
+    //flattens the child of the Java tree keeping its mappings, or defers the flattening until all diffs are matched
+    private static void flattenSrcChildKeepingMappings(DeferredFlattenings deferredFlattenings, Tree parent1, Tree child1) {
+        if(deferredFlattenings != null)
+            deferredFlattenings.flattenKeepingMappings(parent1, child1);
+        else
+            flattenChild(parent1, child1);
+    }
+
+    //flattens the child of the Java tree removing all its mappings, or defers the flattening until all diffs are matched
+    private static void flattenSrcChild(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree parent1, Tree child1) {
+        if(deferredFlattenings != null) {
+            deferredFlattenings.flattenRemovingAllMappings(parent1, child1);
+            return;
+        }
+        Set<Tree> dsts = mappingStore.getDsts(child1);
+        if(dsts != null) {
+            for(Tree dst : new ArrayList<>(dsts)) {
+                mappingStore.removeMapping(child1, dst);
+            }
+        }
+        flattenChild(parent1, child1);
     }
 
     private static void flattenChild(Tree parent, Tree child) {

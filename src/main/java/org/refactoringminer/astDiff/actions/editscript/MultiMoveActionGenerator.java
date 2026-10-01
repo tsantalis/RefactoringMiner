@@ -41,8 +41,9 @@ public class MultiMoveActionGenerator implements ExtendedEditScriptGenerator {
 				if (dstTree == null)
 					continue;
 				boolean updated = false;
+				//compare the labels and not the hashes, as the hashes include the types, which differ in cross-language mappings (e.g., Java SimpleName and Kotlin simple_identifier)
 				if (srcTree.isLeaf() && dstTree.isLeaf())
-					updated = (srcTree.getMetrics().hash != dstTree.getMetrics().hash);
+					updated = !srcTree.getLabel().equals(dstTree.getLabel());
 				MultiMove action = new MultiMove(srcTree, dstTree, -1, counter + 1, updated);
 				if (!actions.contains(action)) {
 					actions.add(action);

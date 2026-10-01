@@ -48,7 +48,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
                     // So if one parameter is null, is better to handle it internally and allow the user to pass it
             fieldDeclarationMatcher.match(srcTree, dstTree, mappingStore);
             if (Constants.isCrossLanguage(LANG1, LANG2)) {
-                JavaToKotlinMigration.alignFieldDeclaration(mappingStore, fieldDeclarationMatcher.getSrcFieldDeclaration(), fieldDeclarationMatcher.getDstFieldDeclaration(), LANG1, LANG2);
+                JavaToKotlinMigration.alignFieldDeclaration(mappingStore, fieldDeclarationMatcher.getSrcFieldDeclaration(), fieldDeclarationMatcher.getDstFieldDeclaration(), LANG1, LANG2, optimizationData.getDeferredFlattenings());
             }
         }
         List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();

@@ -62,7 +62,7 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2);
                 if (srcExp == null || dstExp == null) continue;
                 if(Constants.isCrossLanguage(astDiff.LANG1, astDiff.LANG2)) {
-                    JavaToKotlinMigration.handleLeafMapping(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2);
+                    JavaToKotlinMigration.handleLeafMapping(lastStepMappingStore, srcExp, dstExp, astDiff.LANG1, astDiff.LANG2, optimizationData.getDeferredFlattenings());
                 }
                 if (needToOverride(input, srcExp, dstExp))
                     new IgnoringCommentsLeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcExp, dstExp, lastStepMappingStore);

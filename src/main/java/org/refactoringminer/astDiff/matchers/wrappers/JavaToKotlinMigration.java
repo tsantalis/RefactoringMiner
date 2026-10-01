@@ -2238,6 +2238,7 @@ public class JavaToKotlinMigration {
         else if(type1.getType().name.equals(LANG1.SIMPLE_TYPE)) {
             mappingStore.addMapping(type1, type2);
             if(type1.getChildren().size() > 0 && type2.getChildren().size() > 0) {
+                collapseQualifiedTypeIdentifiers(mappingStore, type1.getChild(0), type2, LANG1, LANG2);
                 mappingStore.addMapping(type1.getChild(0),type2.getChild(0));
             }
         }
@@ -2251,6 +2252,7 @@ public class JavaToKotlinMigration {
                 baseName1 = baseType1.getChild(0);
                 flattenSrcChildKeepingMappings(deferredFlattenings, type1, baseType1);
             }
+            collapseQualifiedTypeIdentifiers(mappingStore, baseName1, type2, LANG1, LANG2);
             Tree typeArguments2 = TreeUtilFunctions.findChildByType(type2, LANG2.TYPE_ARGUMENTS);
             if(typeArguments2 != null) {
                 flattenChild(type2, typeArguments2);
@@ -2269,6 +2271,34 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+    }
+
+    //align Kotlin user_type -> [type_identifier 'MockResponse', type_identifier 'Builder', ...] with Java SimpleType -> QualifiedName 'MockResponse.Builder',
+    //the first type_identifier gets the label of the Java qualified name and spans all type_identifiers, which are removed, as with the qualified names in handleLeafMapping
+    private static void collapseQualifiedTypeIdentifiers(ExtendedMultiMappingStore mappingStore, Tree qualifiedName1, Tree type2, Constants LANG1, Constants LANG2) {
+        if(!qualifiedName1.getType().name.equals(LANG1.QUALIFIED_NAME) || !qualifiedName1.isLeaf())
+            return;
+        List<Tree> typeIdentifiers2 = new ArrayList<>();
+        for(Tree child2 : type2.getChildren()) {
+            if(!child2.getType().name.equals(LANG2.TYPE_IDENTIFIER) || !child2.isLeaf())
+                break;
+            typeIdentifiers2.add(child2);
+        }
+        //the type_identifiers are already collapsed by a previous mapping of the same Kotlin type
+        if(typeIdentifiers2.size() < 2)
+            return;
+        String qualifiedName2 = typeIdentifiers2.stream().map(Tree::getLabel).collect(Collectors.joining("."));
+        if(!qualifiedName2.equals(qualifiedName1.getLabel()))
+            return;
+        Tree first2 = typeIdentifiers2.get(0);
+        Tree last2 = typeIdentifiers2.get(typeIdentifiers2.size() - 1);
+        for(int i=1; i<typeIdentifiers2.size(); i++) {
+            Tree typeIdentifier2 = typeIdentifiers2.get(i);
+            removeDstMappings(mappingStore, typeIdentifier2);
+            type2.getChildren().remove(typeIdentifier2);
+        }
+        first2.setLabel(qualifiedName1.getLabel());
+        first2.setLength(last2.getEndPos() - first2.getPos());
     }
 
     public static void handleModifierMapping(ExtendedMultiMappingStore mappingStore, Tree srcModifierTree, Tree dstModifierTree, Constants LANG1, Constants LANG2) {

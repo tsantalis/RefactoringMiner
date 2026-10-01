@@ -195,6 +195,12 @@ public class JavaToKotlinMigration {
         //remove the simpleName children of anonymous/lambdas from the parent children, before matching them with interpolated identifiers
         removeFromParent(children1, anonymous1, LANG1.SIMPLE_NAME);
         removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
+        //the Java builder chains replaced with Kotlin constructor calls with named arguments, i.e., new X.Builder().a(1).build() -> X(a = 1)
+        List<Tree> builderNodes1 = new ArrayList<>();
+        List<Tree> builderNodes2 = new ArrayList<>();
+        alignBuilderWithNamedArguments(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, builderNodes1, builderNodes2);
+        children1.removeAll(builderNodes1);
+        children2.removeAll(builderNodes2);
         //remove from children1 simple names corresponding to interpolated identifiers
         if(interpolatedIdentifiers2.size() > 0 || interpolatedExpressions2.size() > 0) {
             Iterator<Tree> iter1 = children1.iterator();
@@ -356,6 +362,8 @@ public class JavaToKotlinMigration {
         if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
             inv2.add(0, dstStatementNode);
         }
+        inv1.removeAll(builderNodes1);
+        inv2.removeAll(builderNodes2);
         removeFromParent(inv1, anonymous1, LANG1.METHOD_INVOCATION);
         removeFromParent(inv1, anonymous1, LANG1.CLASS_INSTANCE_CREATION);
         removeFromParent(inv2, anonymous2, LANG2.METHOD_INVOCATION);
@@ -1329,6 +1337,112 @@ public class JavaToKotlinMigration {
             return true;
         }
         return false;
+    }
+
+    //align Java builder chain MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> MethodInvocation -> [... -> ClassInstanceCreation -> SimpleType -> QualifiedName X.Builder], a, METHOD_INVOCATION_ARGUMENTS -> arg], build]
+    //with Kotlin constructor call call_expression -> [X, call_suffix -> value_arguments -> value_argument -> [a, =, arg]], i.e., new X.Builder().a(1).build() -> X(a = 1)
+    //the mapped Java and Kotlin nodes are added to builderNodes1 and builderNodes2, so that they are excluded from the matching of simple names and invocations by position
+    private static void alignBuilderWithNamedArguments(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2,
+            List<Tree> builderNodes1, List<Tree> builderNodes2) {
+        for(Tree build1 : srcStatementNode.preOrder()) {
+            if(!build1.getType().name.equals(LANG1.METHOD_INVOCATION) || builderNodes1.contains(build1))
+                continue;
+            Tree buildName1 = TreeUtilFunctions.findChildByType(build1, LANG1.SIMPLE_NAME);
+            if(buildName1 == null || !buildName1.getLabel().equals("build") || TreeUtilFunctions.findChildByType(build1, LANG1.METHOD_INVOCATION_ARGUMENTS) != null)
+                continue;
+            //the chained calls between the builder creation and build()
+            List<Tree> chain1 = new ArrayList<>();
+            Tree creation1 = null;
+            Tree current1 = build1;
+            while(true) {
+                Tree receiver1 = TreeUtilFunctions.findChildByType(current1, LANG1.METHOD_INVOCATION_RECEIVER);
+                if(receiver1 == null || receiver1.getChildren().size() != 1)
+                    break;
+                Tree inner1 = receiver1.getChild(0);
+                if(inner1.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+                    chain1.add(inner1);
+                    current1 = inner1;
+                }
+                else {
+                    if(inner1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION))
+                        creation1 = inner1;
+                    break;
+                }
+            }
+            if(creation1 == null || chain1.isEmpty() || creation1.getChildren().isEmpty())
+                continue;
+            Tree type1 = creation1.getChild(0);
+            if(!type1.getType().name.equals(LANG1.SIMPLE_TYPE) || type1.getChildren().size() != 1 || !type1.getChild(0).getType().name.equals(LANG1.QUALIFIED_NAME))
+                continue;
+            Tree qualifiedName1 = type1.getChild(0);
+            String qualifiedType = qualifiedName1.getLabel();
+            if(!qualifiedType.endsWith(".Builder"))
+                continue;
+            String builtType = qualifiedType.substring(0, qualifiedType.length() - ".Builder".length());
+            String className = builtType.substring(builtType.lastIndexOf('.') + 1);
+            Map<String, Tree> chainByName1 = new LinkedHashMap<>();
+            for(Tree call1 : chain1) {
+                Tree name1 = TreeUtilFunctions.findChildByType(call1, LANG1.SIMPLE_NAME);
+                Tree arguments1 = TreeUtilFunctions.findChildByType(call1, LANG1.METHOD_INVOCATION_ARGUMENTS);
+                if(name1 != null && arguments1 != null && arguments1.getChildren().size() == 1)
+                    chainByName1.putIfAbsent(name1.getLabel(), call1);
+            }
+            for(Tree call2 : dstStatementNode.preOrder()) {
+                if(!call2.getType().name.equals(LANG2.METHOD_INVOCATION) || call2.getChildren().isEmpty() || builderNodes2.contains(call2))
+                    continue;
+                Tree name2 = call2.getChild(0);
+                if(!name2.getType().name.equals(LANG2.SIMPLE_NAME) || !name2.getLabel().equals(className))
+                    continue;
+                Tree callSuffix2 = TreeUtilFunctions.findChildByType(call2, LANG2.CALL_SUFFIX);
+                Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2 != null ? callSuffix2 : call2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+                if(valueArguments2 == null || valueArguments2.getChildren().isEmpty())
+                    continue;
+                //all arguments are named, and each name corresponds to a call of the builder chain
+                boolean allNamed = true;
+                for(Tree valueArgument2 : valueArguments2.getChildren()) {
+                    if(!isNamedArgument(valueArgument2, LANG2) || !chainByName1.containsKey(valueArgument2.getChild(0).getLabel())) {
+                        allNamed = false;
+                        break;
+                    }
+                }
+                if(!allNamed)
+                    continue;
+                mappingStore.addMapping(build1, call2);
+                mappingStore.addMapping(qualifiedName1, name2);
+                for(Tree valueArgument2 : valueArguments2.getChildren()) {
+                    Tree call1 = chainByName1.get(valueArgument2.getChild(0).getLabel());
+                    Tree argument1 = TreeUtilFunctions.findChildByType(call1, LANG1.METHOD_INVOCATION_ARGUMENTS).getChild(0);
+                    Tree argument2 = valueArgument2.getChild(2);
+                    mappingStore.addMapping(call1, valueArgument2);
+                    mappingStore.addMapping(TreeUtilFunctions.findChildByType(call1, LANG1.SIMPLE_NAME), valueArgument2.getChild(0));
+                    mappingStore.addMapping(argument1, argument2);
+                    //the simple names of the argument with identical labels
+                    List<Tree> argumentNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(argument2, LANG2.SIMPLE_NAME);
+                    for(Tree argumentName1 : TreeUtilFunctions.findChildrenByTypeRecursively(argument1, LANG1.SIMPLE_NAME)) {
+                        for(Tree argumentName2 : argumentNames2) {
+                            if(argumentName1.getLabel().equals(argumentName2.getLabel()) && !mappingStore.isDstMapped(argumentName2)) {
+                                mappingStore.addMapping(argumentName1, argumentName2);
+                                break;
+                            }
+                        }
+                    }
+                }
+                builderNodes1.add(build1);
+                builderNodes1.addAll(chain1);
+                builderNodes1.add(creation1);
+                builderNodes1.addAll(TreeUtilFunctions.findChildrenByTypeRecursively(build1, LANG1.SIMPLE_NAME, LANG1.METHOD_INVOCATION, LANG1.CLASS_INSTANCE_CREATION));
+                builderNodes2.add(call2);
+                builderNodes2.addAll(TreeUtilFunctions.findChildrenByTypeRecursively(call2, LANG2.SIMPLE_NAME, LANG2.METHOD_INVOCATION));
+                break;
+            }
+        }
+    }
+
+    //Kotlin value_argument -> [simple_identifier, =, expression]
+    private static boolean isNamedArgument(Tree valueArgument2, Constants LANG2) {
+        return valueArgument2.getType().name.equals(LANG2.VALUE_ARGUMENT) && valueArgument2.getChildren().size() == 3 &&
+                valueArgument2.getChild(0).getType().name.equals(LANG2.SIMPLE_NAME) &&
+                valueArgument2.getChild(1).getType().name.equals(LANG2.AFFECTATION_OPERATOR);
     }
 
     private static void removeFromParent(List<Tree> children, List<Tree> anonymousList, String astType) {

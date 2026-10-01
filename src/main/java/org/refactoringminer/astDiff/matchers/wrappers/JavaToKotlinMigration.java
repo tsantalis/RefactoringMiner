@@ -1425,6 +1425,10 @@ public class JavaToKotlinMigration {
                 mappingStore.addMapping(receiver1, navigation2);
             }
         }
+        //the navigation_suffix is already moved to call_expression by another Java statement mapped to the same Kotlin statement
+        else if(receiver1 != null && navigation2 != null && navigation2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && navigation2.getChildren().size() == 1) {
+            mappingStore.addMapping(receiver1, navigation2);
+        }
         //names that are Kotlin soft keywords (e.g., set, data) are nested in an empty simple_identifier
         for(Tree child2 : new ArrayList<>(invocation2.getChildren())) {
             if(child2.getType().name.equals(LANG2.SIMPLE_NAME) && child2.getLabel().isEmpty() && child2.getChildren().size() == 1 && child2.getChild(0).isLeaf() &&
@@ -2530,6 +2534,41 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+    }
+
+    //post-processing of the Java anonymous class creation passed as argument in the statement of an extracted method, whose parameter is passed as argument to the call,
+    //i.e., call(new NamedRunnable("OkHttp %s", connectionName) {...}) -> extracted("OkHttp $connectionName") {...}, where extracted(name, block) calls call(name, block),
+    //match the string literal and variables with the interpolated string at the call site of the extracted method, instead of the parameters of the extracted method
+    public static void handleAnonymousArgumentReplacedWithLambdaInExtractedMethod(ExtendedMultiMappingStore mappingStore, Tree call1, Tree dstStatementNode, Tree callSite2, Constants LANG1, Constants LANG2) {
+        Tree arguments1 = TreeUtilFunctions.findChildByType(call1, LANG1.METHOD_INVOCATION_ARGUMENTS);
+        if(arguments1 == null)
+            return;
+        for(Tree argument1 : arguments1.getChildren()) {
+            if(argument1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION) && TreeUtilFunctions.findChildByType(argument1, LANG1.ANONYMOUS_CLASS_DECLARATION) != null) {
+                for(Tree child1 : argument1.getChildren()) {
+                    if(child1.getType().name.equals(LANG1.ANONYMOUS_CLASS_DECLARATION))
+                        continue;
+                    for(Tree t1 : child1.preOrder()) {
+                        Set<Tree> dsts = mappingStore.getDsts(t1);
+                        if(dsts == null)
+                            continue;
+                        for(Tree dst : new ArrayList<>(dsts)) {
+                            if(isDescendantOf(dst, dstStatementNode))
+                                mappingStore.removeMapping(t1, dst);
+                        }
+                    }
+                }
+            }
+        }
+        handleAnonymousArgumentReplacedWithLambda(mappingStore, call1, callSite2, LANG1, LANG2);
+    }
+
+    private static boolean isDescendantOf(Tree t, Tree ancestor) {
+        for(Tree parent = t; parent != null; parent = parent.getParent()) {
+            if(parent == ancestor)
+                return true;
+        }
+        return false;
     }
 
     //the node is within a lambda of the statement

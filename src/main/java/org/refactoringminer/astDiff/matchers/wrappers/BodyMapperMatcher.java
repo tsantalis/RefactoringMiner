@@ -102,6 +102,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     //post-processing of the call site of the inlined method, whose argument is an anonymous class replaced with a lambda,
     //i.e., pushExecutorExecute(new NamedRunnable("OkHttp %s", connectionName) {...}) inlined as pushExecutor.execute("OkHttp $connectionName") {...}
     private void processAnonymousArgumentReplacedWithLambda(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
+        //the extracted method mapper shares container1 with its parent mapper, while the call site is in container2 of the parent mapper
+        if (bodyMapper.getParentMapper() != null && bodyMapper.getContainer1().equals(bodyMapper.getParentMapper().getContainer1())) {
+            processAnonymousArgumentReplacedWithLambdaInExtractedMethod(srcTree, dstTree, bodyMapper, mappingStore);
+            return;
+        }
         Tree call1 = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperationInvocation().getLocationInfo(), LANG1, LANG1.METHOD_INVOCATION);
         if (call1 == null)
             return;
@@ -110,6 +115,26 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree, mapping.getFragment2().getLocationInfo(), LANG2);
                 if (dstStatementNode != null) {
                     JavaToKotlinMigration.handleAnonymousArgumentReplacedWithLambda(mappingStore, call1, dstStatementNode, LANG1, LANG2);
+                }
+            }
+        }
+    }
+
+    //post-processing of the call site of the extracted method, whose argument is a lambda replacing an anonymous class passed as argument in the extracted statement,
+    //i.e., pushExecutor.execute(new NamedRunnable("OkHttp %s", connectionName) {...}) extracted as pushExecutorExecute("OkHttp $connectionName") {...}
+    private void processAnonymousArgumentReplacedWithLambdaInExtractedMethod(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
+        Tree callSite2 = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperationInvocation().getLocationInfo(), LANG2, LANG2.METHOD_INVOCATION);
+        if (callSite2 == null)
+            return;
+        for (AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+            if (mapping instanceof LeafMapping && mapping.getReplacements().stream().anyMatch(r -> r.getType().equals(Replacement.ReplacementType.ANONYMOUS_CLASS_DECLARATION_REPLACED_WITH_LAMBDA))) {
+                AbstractCall invocation1 = mapping.getFragment1().invocationCoveringEntireFragment();
+                if (invocation1 == null)
+                    continue;
+                Tree call1 = TreeUtilFunctions.findByLocationInfo(srcTree, invocation1.getLocationInfo(), LANG1, LANG1.METHOD_INVOCATION);
+                Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree, mapping.getFragment2().getLocationInfo(), LANG2);
+                if (call1 != null && dstStatementNode != null) {
+                    JavaToKotlinMigration.handleAnonymousArgumentReplacedWithLambdaInExtractedMethod(mappingStore, call1, dstStatementNode, callSite2, LANG1, LANG2);
                 }
             }
         }

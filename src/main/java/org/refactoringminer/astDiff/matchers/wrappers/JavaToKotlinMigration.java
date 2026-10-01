@@ -190,6 +190,11 @@ public class JavaToKotlinMigration {
         if(implicitReceiver1 != null) {
             children1.remove(implicitReceiver1);
         }
+        List<Tree> anonymous1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ANONYMOUS_CLASS_DECLARATION);
+        List<Tree> lambdas1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.LAMBDA_EXPRESSION);
+        //remove the simpleName children of anonymous/lambdas from the parent children, before matching them with interpolated identifiers
+        removeFromParent(children1, anonymous1, LANG1.SIMPLE_NAME);
+        removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
         //remove from children1 simple names corresponding to interpolated identifiers
         if(interpolatedIdentifiers2.size() > 0 || interpolatedExpressions2.size() > 0) {
             Iterator<Tree> iter1 = children1.iterator();
@@ -233,15 +238,11 @@ public class JavaToKotlinMigration {
         if(srcStatementNode.getType().name.equals(LANG1.QUALIFIED_NAME)) {
             qualifiedNames1.add(0, srcStatementNode);
         }
-        List<Tree> anonymous1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ANONYMOUS_CLASS_DECLARATION);
         List<Tree> anonymous2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.OBJECT_LITERAL);
-        List<Tree> lambdas1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.LAMBDA_EXPRESSION);
         List<Tree> lambdas2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ANNOTATED_LAMBDA);
         //remove the simpleName children of anonymous/lambdas from the parent children
-        removeFromParent(children1, anonymous1, LANG1.SIMPLE_NAME);
         removeFromParent(qualifiedNames1, anonymous1, LANG1.QUALIFIED_NAME);
         removeFromParent(children2, anonymous2, LANG2.SIMPLE_NAME);
-        removeFromParent(children1, lambdas1, LANG1.SIMPLE_NAME);
         boolean letWithLambda = letFound && lambdas2.size() > lambdas1.size();
         if(!letWithLambda) {
             removeFromParent(children2, lambdas2, LANG2.SIMPLE_NAME);

@@ -69,7 +69,22 @@ public class LeafType extends UMLType implements Cloneable {
 				return true;
 			}
 		}
+		if (o instanceof CompositeType compositeType) {
+			return equalsCompositeTypeInOtherLanguage(compositeType);
+		}
 		return false;
+	}
+
+	//the Java qualified type is a LeafType, while the Kotlin qualified type is a CompositeType, i.e., MockResponse.Builder is LeafType in Java and CompositeType(MockResponse, Builder) in Kotlin
+	//the types are equal, if they have identical qualified names, type arguments, and array dimension, and are from different languages
+	//the types within the same language are never compared as LeafType and CompositeType, since they are parsed in the same way
+	boolean equalsCompositeTypeInOtherLanguage(CompositeType compositeType) {
+		LeafType rightType = compositeType.getRightType();
+		if(rightType == null || this.LANG.equals(rightType.LANG))
+			return false;
+		return this.classType.equals(compositeType.qualifiedClassType()) &&
+				this.typeArgumentsToString().equals(rightType.typeArgumentsToString()) &&
+				this.getArrayDimension() == compositeType.arrayDimensionIncludingRightType();
 	}
 
 	@Override
@@ -85,6 +100,9 @@ public class LeafType extends UMLType implements Cloneable {
 			if(equalsTypeScript(type)) {
 				return true;
 			}
+		}
+		if(type instanceof CompositeType compositeType) {
+			return equalsCompositeTypeInOtherLanguage(compositeType);
 		}
 		return false;
 	}

@@ -10,11 +10,11 @@
 **File**: [data.json](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/resources/oracle/data.json)
 
 The original benchmark has been extended by adding newly supported refactoring types by RefactoringMiner.
-As of **September 20, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12711  | 13  | 211  | 0.999  | 0.984|
+|**Total**|12713  | 13  | 211  | 0.999  | 0.984|
 |Extract Method|1021  |  1  | 20  | 0.999  | 0.981|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|260  |  0  |  8  | 1.000  | 0.970|
@@ -42,7 +42,7 @@ As of **September 20, 2026** the precision and recall of RefactoringMiner on thi
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|326  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|32  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|147  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|149  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|348  |  2  | 11  | 0.994  | 0.969|
 |Rename Parameter|511  |  2  | 24  | 0.996  | 0.955|
@@ -295,11 +295,11 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **September 30, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2078  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2082  |  5  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
@@ -336,11 +336,11 @@ As of **September 30, 2026** the precision and recall of RefactoringMiner on thi
 |Localize Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|118  |  0  |  0  | 1.000  | 1.000|
-|Change Variable Type|146  |  0  |  0  | 1.000  | 1.000|
+|Change Variable Type|148  |  0  |  0  | 1.000  | 1.000|
 |Change Parameter Type|152  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Type|69  |  1  |  0  | 0.986  | 1.000|
 |Add Method Annotation|24  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Annotation|14  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Annotation|16  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|11  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Annotation| 5  |  0  |  0  | 1.000  | 1.000|
 |Add Class Annotation|21  |  0  |  0  | 1.000  | 1.000|

@@ -9248,6 +9248,27 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onFragmentDestroyed(fm FragmentManager, fragment Fragment) : void from class com.squareup.leakcanary.internal.AndroidOFragmentRefWatcher.fragmentLifecycleCallbacks.new FragmentManager.FragmentLifecycleCallbacks",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Remove Method Annotation",
+        "description": "Remove Method Annotation @Override in method public onFragmentViewDestroyed(fm FragmentManager, fragment Fragment) : void from class com.squareup.leakcanary.internal.AndroidOFragmentRefWatcher.fragmentLifecycleCallbacks.new FragmentManager.FragmentLifecycleCallbacks",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type view : View to view : Inferred in method public onFragmentViewDestroyed(fm FragmentManager, fragment Fragment) from class leaksentry.internal.AndroidOFragmentDestroyWatcher.fragmentLifecycleCallbacks.FragmentLifecycleCallbacks",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -15385,6 +15406,13 @@
     }, {
         "type": "Change Variable Type",
         "description": "Change Variable Type response : Response to response : Inferred in method public proxiedRequestGetsCorrectRequestUrl() from class mockwebserver3.MockWebServerTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Variable Type",
+        "description": "Change Variable Type headers : Headers to headers : Inferred in method private headersToList(response MockResponse.Builder) : List<String> from class mockwebserver3.MockWebServerTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

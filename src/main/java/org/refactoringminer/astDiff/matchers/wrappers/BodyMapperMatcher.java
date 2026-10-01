@@ -1353,7 +1353,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             //an assignment moved to the initializer of the assigned field, i.e., the statement client = builder.client; in the constructor
             boolean assignmentToInitializer = leafMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER) &&
-                    JavaToKotlinMigration.handleAssignmentToInitializerMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
+                    JavaToKotlinMigration.handleAssignmentToInitializerMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
             if(!assignmentToInitializer) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());

@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The flattenings of the source (Java) trees, which are deferred until all diffs are matched,
- * so that the same source tree has the same structure for all the target trees it is matched with,
+ * The flattenings of the source (Java) and target (Kotlin) trees, which are deferred until all diffs are matched,
+ * so that the same tree has the same structure for all the trees it is matched with,
  * i.e., a statement of a method inlined to multiple call sites.
  */
 public class DeferredFlattenings {
@@ -23,6 +23,10 @@ public class DeferredFlattenings {
         REMOVE_MAPPINGS_TO_TARGETS,
         //flatten the child, keeping its mappings
         KEEP_MAPPINGS,
+        //flatten the child of a target tree, removing all mappings to it
+        REMOVE_ALL_TARGET_MAPPINGS,
+        //remove the child of a target tree, removing all mappings to it
+        REMOVE_TARGET_CHILD,
         //Java VariableDeclarationFragment -> [name, =, initializer], kept as the leaf matching the Kotlin = operator, or flattened
         VARIABLE_DECLARATION_FRAGMENT
     }
@@ -58,6 +62,14 @@ public class DeferredFlattenings {
         register(Kind.KEEP_MAPPINGS, parent, child, null);
     }
 
+    public void flattenTargetRemovingAllMappings(Tree parent, Tree child) {
+        register(Kind.REMOVE_ALL_TARGET_MAPPINGS, parent, child, null);
+    }
+
+    public void removeTargetChild(Tree parent, Tree child) {
+        register(Kind.REMOVE_TARGET_CHILD, parent, child, null);
+    }
+
     public void alignVariableDeclarationFragment(Tree declaration, Tree fragment, String affectationOperatorType) {
         register(Kind.VARIABLE_DECLARATION_FRAGMENT, declaration, fragment, affectationOperatorType);
     }
@@ -76,7 +88,7 @@ public class DeferredFlattenings {
         return flattenings.isEmpty();
     }
 
-    //applies the registered flattenings to the source trees, removing the mappings of the flattened nodes from all mapping stores
+    //applies the registered flattenings to the trees, removing the mappings of the flattened nodes from all mapping stores
     public void apply(Collection<ExtendedMultiMappingStore> mappingStores) {
         List<Flattening> pending = new ArrayList<>(flattenings);
         flattenings.clear();
@@ -98,6 +110,14 @@ public class DeferredFlattenings {
                     break;
                 case KEEP_MAPPINGS:
                     flattenChild(parent, child);
+                    break;
+                case REMOVE_ALL_TARGET_MAPPINGS:
+                    removeTargetMappings(mappingStores, child);
+                    flattenChild(parent, child);
+                    break;
+                case REMOVE_TARGET_CHILD:
+                    removeTargetMappings(mappingStores, child);
+                    parent.getChildren().remove(parent.getChildPosition(child));
                     break;
                 case VARIABLE_DECLARATION_FRAGMENT:
                     if(child.getChildren().size() > 1 && isMappedToType(mappingStores, child, flattening.affectationOperatorType)) {
@@ -143,6 +163,17 @@ public class DeferredFlattenings {
                     if(targets == null || targets.contains(dst)) {
                         mappingStore.removeMapping(src, dst);
                     }
+                }
+            }
+        }
+    }
+
+    private static void removeTargetMappings(Collection<ExtendedMultiMappingStore> mappingStores, Tree dst) {
+        for(ExtendedMultiMappingStore mappingStore : mappingStores) {
+            Set<Tree> srcs = mappingStore.getSrcs(dst);
+            if(srcs != null) {
+                for(Tree src : new ArrayList<>(srcs)) {
+                    mappingStore.removeMapping(src, dst);
                 }
             }
         }

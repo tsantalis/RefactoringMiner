@@ -269,6 +269,11 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
         if (mappings.length >= 1) {
             //select the mappings that span one line in both sides
             for (var i = 0; i < mappings.length; i++) {
+				//the click is on an inner line of a multi-line mapping, i.e., an unmapped line within a method or class, nothing should be highlighted
+				const clickedLine = activatedRange.startLineNumber;
+				if(clickedLine !== mappings[i][index].startLineNumber && clickedLine !== mappings[i][index].endLineNumber) {
+					continue;
+				}
                 if(mappings[i][dstIndex].startLineNumber === mappings[i][dstIndex].endLineNumber && mappings[i][index].startLineNumber === mappings[i][index].endLineNumber) {
                     onClick(ed, mappings[i], dstIndex);
                 }

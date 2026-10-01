@@ -144,7 +144,7 @@ public class InlineOperationRefactoring extends ChangeTypeRefactoring {
 			}
 		}
 		for(AbstractCodeMapping m : leafMappingsToBeAdded) {
-			this.bodyMapper.getParentMapper().getMappings().add(m);
+			this.bodyMapper.getParentMapper().addMapping(m);
 		}
 	}
 

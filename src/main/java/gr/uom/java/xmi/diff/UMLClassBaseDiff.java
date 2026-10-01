@@ -727,7 +727,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(attributeDiff.getContainer1().getAllLambdas().size() == 0 && attributeDiff.getContainer2().getAllLambdas().size() > 0) {
 							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, attributeDiff.getContainer2().getAllLambdas().get(0), this);
 							if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
-								moveCodeMapper.getMappings().removeIf(m -> m.getFragment1().equals(removedOperation.getBody().getCompositeStatement()) && m.getFragment2().equals(attributeDiff.getContainer2().getAllLambdas().get(0).getBody().getCompositeStatement()));
+								for(AbstractCodeMapping m : new ArrayList<>(moveCodeMapper.getMappings())) {
+									if(m.getFragment1().equals(removedOperation.getBody().getCompositeStatement()) && m.getFragment2().equals(attributeDiff.getContainer2().getAllLambdas().get(0).getBody().getCompositeStatement())) {
+										moveCodeMapper.removeMapping(m);
+									}
+								}
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_FROM_REMOVED_TO_ADDED);
 								if(!moveCodeMappers.contains(moveCodeMapper))
 									moveCodeMappers.add(moveCodeMapper);

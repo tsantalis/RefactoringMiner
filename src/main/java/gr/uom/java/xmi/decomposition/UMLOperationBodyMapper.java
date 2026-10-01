@@ -11682,7 +11682,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void removeAllMappings(Set<AbstractCodeMapping> mappings) {
+	public void removeAllMappings(Set<AbstractCodeMapping> mappings) {
 		this.mappings.removeAll(mappings);
 		for(AbstractCodeMapping mapping : mappings) {
 			mappingHashcodesT1.remove(mapping.getFragment1().hashCode());

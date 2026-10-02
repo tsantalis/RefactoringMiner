@@ -8,7 +8,6 @@ import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.NodeType;
 import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalPattern;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -275,9 +274,9 @@ public class MergeGroup {
   }
 
   public static List<Map<Node, Set<Node>>> orderContextGroups(Set<Map<Node, Set<Node>>> contextGroups,
-                                                              MergeGroup mergeGroup, List<TraversalPattern> leaves) {
+                                                              Set<Node> mains, List<TraversalPattern> leaves) {
     Map<Node, Integer> leafIndex = leafIndex(leaves);
-    Map<Node, Integer> changeIndex = changeIndex(mergeGroup);
+    Map<Node, Integer> changeIndex = changeIndex(mains);
 
     Comparator<Map<Node, Set<Node>>> byLatestLeaf =
             Comparator.comparingInt(group -> changesOf(group).stream()
@@ -305,10 +304,10 @@ public class MergeGroup {
     return leafIndex;
   }
 
-  private static Map<Node, Integer> changeIndex(MergeGroup mergeGroup) {
+  private static Map<Node, Integer> changeIndex(Set<Node> mains) {
     List<Node> printedChanges = new ArrayList<>();
-    printedChanges.addAll(mergeGroup.sources());
-    printedChanges.addAll(mergeGroup.targets());
+    printedChanges.addAll(sortNodes(mains.stream().filter(Node::isSrc).collect(Collectors.toSet())));
+    printedChanges.addAll(sortNodes(mains.stream().filter(Node::isDst).collect(Collectors.toSet())));
 
     Map<Node, Integer> changeIndex = new HashMap<>();
     for (int i = 0; i < printedChanges.size(); i++) {
@@ -317,20 +316,19 @@ public class MergeGroup {
     return changeIndex;
   }
 
-  public static Map<Integer, List<Node>> dependenciesIndex(@Nullable List<Node> localSides,
-                                                           List<TraversalPattern> leaves, List<Map<Node, Set<Node>>> contextGroups) {
+  public static Map<Integer, List<Node>> dependenciesIndex(List<Node> localSides, Map<Node, Set<Node>> mainsToSides,
+                                                           List<Map<Node, Set<Node>>> contextGroups) {
     Map<Integer, List<Node>> placed = new HashMap<>();
-    if (localSides == null || localSides.isEmpty()) {
+    if (localSides.isEmpty()) {
       return placed;
     }
 
     Set<Node> dependencies = new HashSet<>(localSides);
     Map<Node, Set<Node>> relyingChanges = new HashMap<>();
-    for (TraversalPattern leaf : leaves) {
-      List<Node> mains = leaf.getMains();
-      for (Node side : leaf.getSides()) {
+    for (Map.Entry<Node, Set<Node>> mainToSides : mainsToSides.entrySet()) {
+      for (Node side : mainToSides.getValue()) {
         if (dependencies.contains(side)) {
-          relyingChanges.computeIfAbsent(side, s -> new HashSet<>()).addAll(mains);
+          relyingChanges.computeIfAbsent(side, s -> new HashSet<>()).add(mainToSides.getKey());
         }
       }
     }

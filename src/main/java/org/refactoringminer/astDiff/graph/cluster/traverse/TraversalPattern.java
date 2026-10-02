@@ -9,9 +9,9 @@ import org.refactoringminer.astDiff.graph.NodeType;
 import org.refactoringminer.astDiff.graph.cluster.GraphWrapper;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.graph.cluster.representation.MergeGroup;
-import org.refactoringminer.astDiff.graph.cluster.representation.Representation;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TraversalPattern extends GraphWrapper {
 
@@ -32,7 +32,9 @@ public class TraversalPattern extends GraphWrapper {
         return narrator;
     }
 
-    public List<NarrativeElement> getElements(List<TraversalPattern> filterPatterns, int length) {
+    public List<NarrativeElement> getElements() {
+        List<NarrativeElement> elements = new ArrayList<>();
+
         List<Node> aggMains = getMains();
 
         List<MergeGroup> allGroups = MergeGroup.getAllMergeGroups(aggMains, clusterGraph);
@@ -40,60 +42,22 @@ public class TraversalPattern extends GraphWrapper {
 
         List<TraversalPattern> leaves = this.getNarrator().getNarrative(GrainLevel.LEAF);
 
-        Set<Node> allMains = new HashSet<>(aggMains);
-        if (filterPatterns != null) {
-            for (TraversalPattern fp : filterPatterns) {
-                allMains.addAll(fp.getMains());
-            }
-        }
-        Map<Node, Set<Node>> printingSidesToMains = new HashMap<>();
+        Map<Node, Set<Node>> mainsToSides = new HashMap<>();
         for (TraversalPattern leaf : leaves) {
-            List<Node> leafMains = leaf.getMains();
-            List<Node> leafSides = leaf.getSides();
-            for (Node side : leafSides) {
-                if ((side.isContext() && !side.getNodeType().equals(NodeType.SEMANTIC_CONTEXT)) || allMains.contains(side)) {
+            Set<Node> validSides = leaf.getSides().stream()
+                    .filter(side -> !side.isContext() || side.getNodeType().equals(NodeType.SEMANTIC_CONTEXT))
+                    .collect(Collectors.toSet());
+            if (validSides.isEmpty()) {
+                continue;
+            }
+
+            for (Node main : leaf.getMains()) {
+                if (!aggMains.contains(main)) {
                     continue;
                 }
-
-                printingSidesToMains.putIfAbsent(side, new HashSet<>());
-                Set<Node> relyingMains = printingSidesToMains.get(side);
-                for (Node m : leafMains) {
-                    if (allMains.contains(m)) {
-                        relyingMains.add(m);
-                    }
-                }
+                mainsToSides.computeIfAbsent(main, k -> new HashSet<>()).addAll(validSides);
             }
         }
-
-        Map<Node, Set<MergeGroup>> mainToGroup = new HashMap<>();
-        for (MergeGroup mg : allGroups) {
-            for (Node n : mg.nodes) {
-                mainToGroup.putIfAbsent(n, new HashSet<>());
-                mainToGroup.get(n).add(mg);
-            }
-        }
-        Set<Node> globalPrintingSides = new HashSet<>();
-        Map<MergeGroup, List<Node>> localPrintingSidesMap = new HashMap<>();
-        for (Map.Entry<Node, Set<Node>> entry : printingSidesToMains.entrySet()) {
-            Node printingSide = entry.getKey();
-            Set<Node> mains = entry.getValue();
-            Set<MergeGroup> groups = new HashSet<>();
-            for (Node m : mains) {
-                Set<MergeGroup> mgs = mainToGroup.get(m);
-                if (mgs != null) {
-                    groups.addAll(mgs);
-                }
-            }
-
-            if (groups.size() > 1) {
-                globalPrintingSides.add(printingSide);
-            } else if (groups.size() == 1) {
-                MergeGroup mg = groups.iterator().next();
-                localPrintingSidesMap.putIfAbsent(mg, new ArrayList<>());
-                localPrintingSidesMap.get(mg).add(printingSide);
-            }
-        }
-
         Map<MergeGroup, Integer> groupLatestIndex = new HashMap<>();
         for (MergeGroup mg : allGroups) {
             int maxIdx = -1;
@@ -109,24 +73,27 @@ public class TraversalPattern extends GraphWrapper {
 
             groupLatestIndex.put(mg, maxIdx);
         }
-
-        // Produce Elements
-        List<NarrativeElement> elements = new ArrayList<>();
-        Set<Node> outputtedSides = new HashSet<>();
         Set<MergeGroup> outputtedGroups = new HashSet<>();
         for (int i = 0; i < leaves.size(); i++) {
-            TraversalPattern leaf = leaves.get(i);
-            for (Node s : leaf.getSides()) {
-                if (globalPrintingSides.contains(s) && !outputtedSides.contains(s)) {
-                    elements.add(Representation.DEFAULT.dependency(s, clusterGraph));
-                    outputtedSides.add(s);
-                }
-            }
             for (MergeGroup mg : allGroups) {
-                if (groupLatestIndex.get(mg) == i && !outputtedGroups.contains(mg)) {
-                    elements.add(Representation.DEFAULT.mergeGroup(mg, leaves, localPrintingSidesMap.get(mg), length, clusterGraph));
-                    outputtedGroups.add(mg);
+                if (groupLatestIndex.get(mg) != i || outputtedGroups.contains(mg)) {
+                    continue;
                 }
+
+                Map<Node, Set<Node>> groupMainsToSides = new HashMap<>();
+                for (Node main : mg.nodes) {
+                    groupMainsToSides.putIfAbsent(main, new HashSet<>());
+
+                    Set<Node> mainToSides = mainsToSides.get(main);
+                    if (mainToSides == null) {
+                        continue;
+                    }
+                    groupMainsToSides.get(main).addAll(mainToSides);
+                }
+
+                elements.add(new NarrativeElement(groupMainsToSides, leaves, clusterGraph));
+
+                outputtedGroups.add(mg);
             }
         }
 

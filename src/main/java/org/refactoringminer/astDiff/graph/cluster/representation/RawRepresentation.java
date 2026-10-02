@@ -67,6 +67,7 @@ public class RawRepresentation {
     // Dependencies name the diffs they serve, so every diff of the unit is known before printing
     List<DiffNode> diffNodes = new ArrayList<>();
     Map<Node, DiffNode> changeDiffNodes = new HashMap<>();
+    Map<DiffNode, List<Node>> shownContexts = new HashMap<>();
     for (List<Block> elementBlocks : elementsBlocks) {
       for (Block block : elementBlocks) {
         if (!(block instanceof DiffBlock diffBlock)) {
@@ -76,6 +77,7 @@ public class RawRepresentation {
         DiffNode diffNode = diffBlock.diffNode();
         diffNodes.add(diffNode);
         putChanges(changeDiffNodes, diffNode);
+        shownContexts.put(diffNode, diffBlock.shownContexts());
       }
     }
 
@@ -94,11 +96,19 @@ public class RawRepresentation {
     Set<DiffNode> renderedChangeDependencies = new HashSet<>();
     for (int i = 0; i < elements.size(); i++) {
       for (Node globalSide : dependencies.globalSidesBefore(i)) {
+        if (isApparent(globalSide, dependencies, changeDiffNodes, shownContexts)) {
+          continue;
+        }
+
         renderDependency(rendered, globalSide, allChangeDiffNodes, renderedChangeDependencies, dependencies, changeDiffNodes, diffNodes);
       }
 
       for (Block block : elementsBlocks.get(i)) {
         if (block instanceof DependencyBlock dependencyBlock) {
+          if (isApparent(dependencyBlock.dependency(), dependencies, changeDiffNodes, shownContexts)) {
+            continue;
+          }
+
           renderDependency(rendered, dependencyBlock.dependency(), allChangeDiffNodes, renderedChangeDependencies, dependencies,
                   changeDiffNodes, diffNodes);
         } else if (block instanceof DiffBlock diffBlock) {
@@ -109,6 +119,33 @@ public class RawRepresentation {
 
     // TODO: show group by indenting in a <sub_chapter>?
     return new RepresentedUnit(String.join("\n", rendered), new LinkedHashSet<>(diffNodes));
+  }
+
+  private static boolean isApparent(Node dependency, UnitDependencies dependencies, Map<Node, DiffNode> changeDiffNodes,
+                                    Map<DiffNode, List<Node>> shownContexts) {
+    Set<Node> relyingMains = dependencies.relyingMains(dependency);
+    if (relyingMains.isEmpty()) {
+      return false;
+    }
+
+    for (Node main : relyingMains) {
+      DiffNode diffNode = changeDiffNodes.get(main);
+      if (diffNode == null || shownContexts.get(diffNode).stream().noneMatch(context -> withinLines(dependency, context))) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private static boolean withinLines(Node node, Node context) {
+    if (!node.getSrcDst().equals(context.getSrcDst()) || !node.getPath().equals(context.getPath())) {
+      return false;
+    }
+
+    TreeUtilFunctions.LineRange nodeRange = TreeUtilFunctions.getLineRange(node.getTree(), node.getFileContent());
+    TreeUtilFunctions.LineRange contextRange = TreeUtilFunctions.getLineRange(context.getTree(), context.getFileContent());
+    return contextRange.startLine() <= nodeRange.startLine() && nodeRange.endLine() <= contextRange.endLine();
   }
 
   // A dependency changed by another unit is shown as the diff presenting that change there, once for all
@@ -153,13 +190,13 @@ public class RawRepresentation {
         break;
       }
 
-      DiffNode diffNode = buildDiffBlock(contextGroups.get(i), length, graph);
-      if (diffNode == null) {
+      DiffBlock diffBlock = buildDiffBlock(contextGroups.get(i), length, graph);
+      if (diffBlock == null) {
         continue;
       }
 
-      blocks.add(new DiffBlock(diffNode));
-      diffNodes.add(diffNode);
+      blocks.add(diffBlock);
+      diffNodes.add(diffBlock.diffNode());
     }
 
     linkMoves(diffNodes, graph);
@@ -248,7 +285,7 @@ public class RawRepresentation {
     return isolated;
   }
 
-  private static DiffNode buildDiffBlock(Map<Node, Set<Node>> contextGroup, int length, Graph<Node, Edge> graph) {
+  private static DiffBlock buildDiffBlock(Map<Node, Set<Node>> contextGroup, int length, Graph<Node, Edge> graph) {
     DiffContexts contexts = resolveContexts(contextGroup, graph);
     Node srcContext = contexts.srcContext();
     Node dstContext = contexts.dstContext();
@@ -297,11 +334,24 @@ public class RawRepresentation {
       return null;
     }
 
-    return DiffNode.of(srcContext == null ? null : srcContext.getPath(),
+    DiffNode diffNode = DiffNode.of(srcContext == null ? null : srcContext.getPath(),
             dstContext == null ? null : dstContext.getPath(),
             src == null ? List.of() : src.changes,
             dst == null ? List.of() : dst.changes,
             location, diffLines, length);
+
+    // A location context prints none of itself but the changes, so no other code is shown within it
+    List<Node> shownContexts = new ArrayList<>();
+    if (!contexts.locationContext()) {
+      if (srcContext != null) {
+        shownContexts.add(srcContext);
+      }
+      if (dstContext != null) {
+        shownContexts.add(dstContext);
+      }
+    }
+
+    return new DiffBlock(diffNode, shownContexts);
   }
 
   private static DiffContexts resolveContexts(Map<Node, Set<Node>> contextGroup, Graph<Node, Edge> graph) {
@@ -617,6 +667,6 @@ public class RawRepresentation {
   private record DependencyBlock(Node dependency) implements Block {
   }
 
-  private record DiffBlock(DiffNode diffNode) implements Block {
+  private record DiffBlock(DiffNode diffNode, List<Node> shownContexts) implements Block {
   }
 }

@@ -184,6 +184,35 @@ function findOpeningCurlyBrace(model, range) {
 	}
 	return monaco.Range.fromPositions(model.getPositionAt(offset), model.getPositionAt(offset + 1));
 }
+//checks if the innermost ranges containing the clicked range have no match in the other side of the diff
+function innermostRangeWithoutMatch(config, index, activatedRange) {
+	const side = index === 0 ? config.left : config.right;
+	const kindsWithoutMatch = index === 0 ? ["deleted", "moveOut"] : ["inserted", "moveIn"];
+	//compute the offsets of the clicked range in the content of the clicked side
+	const lines = side.content.split('\n');
+	let startOffset = 0;
+	for(let i = 0; i < activatedRange.startLineNumber - 1; i++) {
+		startOffset += lines[i].length + 1;
+	}
+	startOffset += activatedRange.startColumn - 1;
+	let endOffset = 0;
+	for(let i = 0; i < activatedRange.endLineNumber - 1; i++) {
+		endOffset += lines[i].length + 1;
+	}
+	endOffset += activatedRange.endColumn - 1;
+	let innermost = [];
+	side.ranges.forEach(range => {
+		if(range.from <= startOffset && range.to >= endOffset) {
+			if(innermost.length === 0 || range.to - range.from < innermost[0].to - innermost[0].from) {
+				innermost = [range];
+			}
+			else if(range.to - range.from === innermost[0].to - innermost[0].from) {
+				innermost.push(range);
+			}
+		}
+	});
+	return innermost.some(range => kindsWithoutMatch.includes(range.kind));
+}
 function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 	var exit = [];
 	if(index === 0) {
@@ -191,7 +220,8 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 			let fromLine = offsetToLineNumber(config.left.content, range.from);
 			let toLine = offsetToLineNumber(config.left.content, range.to);
 			if(fromLine <= activatedRange.startLineNumber && toLine >= activatedRange.startLineNumber) {
-				if(range.kind === "deleted") {
+				//the deleted ASTs and the ASTs moved out to another file have no match in the right side
+				if(range.kind === "deleted" || range.kind === "moveOut") {
 					if(fromLine === toLine) {
 						// the column matters
 						let fromColumn = offsetToLineColumn(config.left.content, range.from);
@@ -215,7 +245,8 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 			let fromLine = offsetToLineNumber(config.right.content, range.from);
 			let toLine = offsetToLineNumber(config.right.content, range.to);
 			if(fromLine <= activatedRange.startLineNumber && toLine >= activatedRange.startLineNumber) {
-				if(range.kind === "inserted") {
+				//the inserted ASTs and the ASTs moved in from another file have no match in the left side
+				if(range.kind === "inserted" || range.kind === "moveIn") {
 					if(fromLine === toLine) {
 						// the column matters
 						let fromColumn = offsetToLineColumn(config.right.content, range.from);
@@ -235,6 +266,11 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 		});
 	}
 	if(!exit.includes(false) && exit.length > 0) {
+		return;
+	}
+	//the innermost range containing the clicked range is deleted/inserted or moved out to/in from another file,
+	//even if there are moved, updated, or multi-mapped ranges in the same line, i.e., the method containing a statement moved to another file
+	if(innermostRangeWithoutMatch(config, index, activatedRange)) {
 		return;
 	}
     candidates = config.mappings

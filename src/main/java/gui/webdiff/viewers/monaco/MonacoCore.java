@@ -48,7 +48,6 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
-import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
@@ -296,30 +295,17 @@ public class MonacoCore {
     }
 
     private boolean isInterfile(ASTDiff astDiff, Tree t, Tree dst) {
-        //find the most parent of t and dst
-        //if they are not same as the astdiff src,dst return false
-        Tree t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.COMPILATION_UNIT);
-        Tree dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.COMPILATION_UNIT);
-        if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.MODULE);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.MODULE);
+        //the root of t and dst should be the root of the astdiff src and dst, respectively
+        //the roots are compared directly, as in a cross-language diff the root types differ, i.e., Java CompilationUnit and Kotlin source_file
+        return root(t) != astDiff.src.getRoot() || root(dst) != astDiff.dst.getRoot();
+    }
+
+    private static Tree root(Tree t) {
+        Tree root = t;
+        while (root.getParent() != null) {
+            root = root.getParent();
         }
-        if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.SOURCE_FILE);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.SOURCE_FILE);
-        }
-        if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.PROGRAM);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.PROGRAM);
-        }
-        if(t_outerP == null && dst_outerP == null) {
-            t_outerP = TreeUtilFunctions.getParentUntilType(t, astDiff.LANG1.TRANSLATION_UNIT);
-            dst_outerP = TreeUtilFunctions.getParentUntilType(dst, astDiff.LANG2.TRANSLATION_UNIT);
-        }
-        if (t_outerP == null || dst_outerP == null) {
-            return false;
-        }
-        return !t_outerP.equals(astDiff.src.getRoot()) || !dst_outerP.equals(astDiff.dst.getRoot());
+        return root;
     }
 
     private static boolean isDeclaration(Tree t) {

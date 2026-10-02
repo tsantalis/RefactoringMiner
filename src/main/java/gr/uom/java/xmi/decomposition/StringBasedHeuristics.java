@@ -299,6 +299,9 @@ public class StringBasedHeuristics {
 					if(diff2.equals(".toLong()") || diff2.endsWith(".toInt()")) {
 						return true;
 					}
+					if(diff2.startsWith(" as ")) {
+						return true;
+					}
 				}
 				if(variableDeclarations1.size() == variableDeclarations2.size() && variableDeclarations1.size() > 0) {
 					VariableDeclaration vd1 = variableDeclarations1.get(0);

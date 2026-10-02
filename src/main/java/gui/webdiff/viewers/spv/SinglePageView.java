@@ -34,6 +34,7 @@ public class SinglePageView extends AbstractSinglePageView implements Renderable
                 .macros().javascript("/dist/folding.js")
                 .macros().javascript("/dist/decorations.js")
                 .macros().javascript("/dist/pr-utils.js")
+                .macros().javascript("/dist/monaco-cdn.js")
                 .macros().javascript("/dist/monaco.js")
                 .macros().javascript("/monaco/min/vs/loader.js")
                 .macros().javascript("/dist/markAsViewed.js")

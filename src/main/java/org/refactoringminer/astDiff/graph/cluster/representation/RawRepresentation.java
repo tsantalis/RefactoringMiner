@@ -5,15 +5,13 @@ import com.github.gumtreediff.tree.Tree;
 import org.jgrapht.Graph;
 import org.refactoringminer.astDiff.graph.*;
 import org.refactoringminer.astDiff.graph.cluster.traverse.NarrativeElement;
-import org.refactoringminer.astDiff.graph.cluster.traverse.TraversalPattern;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
-class RawRepresentation implements Representation {
-  public String specification() {
+public class RawRepresentation {
+  public static String specification() {
     StringBuilder spec = new StringBuilder();
 
     spec.append("### CHANGE REPRESENTATION\n")
@@ -25,56 +23,180 @@ class RawRepresentation implements Representation {
             .append("which reads \"<before> -> <after>\" when the location is changed.\n")
             .append("- For code leaving some blocks and arriving in some others, the corresponding diffs are mutually linked by carrying moved_to and moved_from, ")
             .append("each having a comma-separated list of the ids of the diffs its code moved to or came from.\n")
-            .append("- Each <dependency> element provides unchanged code to resolve references to identifiers in edits, and carries location=\"<file>::<Type>#<member>\".\n")
+            .append("- A <diff> whose code is relied by other diffs in the chapter carries serves, a comma-separated list of the ids of those relying diffs.\n")
+            .append("- Each <dependency> element provides code outside the chapter's own <diff> elements to resolve references to identifiers in edits, ")
+            .append("and carries location=\"<file>::<Type>#<member>\" and serves, a comma-separated list of the ids of the diffs in the chapter which rely on it.\n")
+            .append("- A <dependency> whose code is changed by the pull request outside the chapter shows that change exactly as a <diff> does, but carries no id.\n")
             .append("- The elements are ordered by dependency in which a <diff> appears after all <diff> elements which it builds upon, and all the <dependency> elements which it relies on. ")
             .append("A <dependency> element sits as close as possible before the <diff> elements that rely on it. A <diff> element sits as close as possible before the <diff> elements that build upon it.\n\n");
 
     return spec.toString();
   }
 
-  public NarrativeElement mergeGroup(MergeGroup mergeGroup, List<TraversalPattern> leaves, @Nullable List<Node> localSides,
-                                     int length, Graph<Node, Edge> graph) {
-    Set<Map<Node, Set<Node>>> groups = isolateLocationContexts(MergeGroup.aggregateByContextMapping(mergeGroup.nodes.stream().toList(), graph));
-    List<Map<Node, Set<Node>>> contextGroups = MergeGroup.orderContextGroups(groups, mergeGroup, leaves);
+  // Every change of the given elements mapped to the diff presenting it, so a unit can show a change of another unit it relies on
+  public static Map<Node, DiffNode> changeDiffNodes(List<NarrativeElement> elements, int length) {
+    Map<Node, DiffNode> changeDiffNodes = new HashMap<>();
+    for (NarrativeElement element : elements) {
+      for (Block block : elementBlocks(element, List.of(), length)) {
+        if (block instanceof DiffBlock diffBlock) {
+          putChanges(changeDiffNodes, diffBlock.diffNode());
+        }
+      }
+    }
 
-    Map<Integer, List<Node>> indexDependencies = MergeGroup.dependenciesIndex(localSides, leaves, contextGroups);
+    return changeDiffNodes;
+  }
 
-    Map<DiffNode, Integer> diffNodeBlockIndex = new LinkedHashMap<>();
-    List<String> blocks = new ArrayList<>();
+  private static void putChanges(Map<Node, DiffNode> changeDiffNodes, DiffNode diffNode) {
+    for (Node change : diffNode.getSrcChanges()) {
+      changeDiffNodes.putIfAbsent(change, diffNode);
+    }
+    for (Node change : diffNode.getDstChanges()) {
+      changeDiffNodes.putIfAbsent(change, diffNode);
+    }
+  }
+
+  public static RepresentedUnit represent(List<NarrativeElement> elements, Map<Node, DiffNode> allChangeDiffNodes, int length) {
+    UnitDependencies dependencies = new UnitDependencies(elements);
+
+    List<List<Block>> elementsBlocks = new ArrayList<>();
+    for (int i = 0; i < elements.size(); i++) {
+      elementsBlocks.add(elementBlocks(elements.get(i), dependencies.localSidesOf(i), length));
+    }
+
+    // Dependencies name the diffs they serve, so every diff of the unit is known before printing
+    List<DiffNode> diffNodes = new ArrayList<>();
+    Map<Node, DiffNode> changeDiffNodes = new HashMap<>();
+    for (List<Block> elementBlocks : elementsBlocks) {
+      for (Block block : elementBlocks) {
+        if (!(block instanceof DiffBlock diffBlock)) {
+          continue;
+        }
+
+        DiffNode diffNode = diffBlock.diffNode();
+        diffNodes.add(diffNode);
+        putChanges(changeDiffNodes, diffNode);
+      }
+    }
+
+    // set serve ids for diff nodes
+    for (DiffNode diffNode : diffNodes) {
+      List<Node> changes = new ArrayList<>();
+      changes.addAll(diffNode.getSrcChanges());
+      changes.addAll(diffNode.getDstChanges());
+
+      Set<DiffNode> served = servedDiffNodes(changes, dependencies, changeDiffNodes);
+      served.remove(diffNode);
+      diffNode.setServes(getOrderedIds(served, diffNodes));
+    }
+
+    List<String> rendered = new ArrayList<>();
+    Set<DiffNode> renderedChangeDependencies = new HashSet<>();
+    for (int i = 0; i < elements.size(); i++) {
+      for (Node globalSide : dependencies.globalSidesBefore(i)) {
+        renderDependency(rendered, globalSide, allChangeDiffNodes, renderedChangeDependencies, dependencies, changeDiffNodes, diffNodes);
+      }
+
+      for (Block block : elementsBlocks.get(i)) {
+        if (block instanceof DependencyBlock dependencyBlock) {
+          renderDependency(rendered, dependencyBlock.dependency(), allChangeDiffNodes, renderedChangeDependencies, dependencies,
+                  changeDiffNodes, diffNodes);
+        } else if (block instanceof DiffBlock diffBlock) {
+          rendered.add(diffBlock.diffNode().render());
+        }
+      }
+    }
+
+    // TODO: show group by indenting in a <sub_chapter>?
+    return new RepresentedUnit(String.join("\n", rendered), new LinkedHashSet<>(diffNodes));
+  }
+
+  // A dependency changed by another unit is shown as the diff presenting that change there, once for all
+  // of its changes the unit relies on
+  private static void renderDependency(List<String> rendered, Node dependency, Map<Node, DiffNode> allChangeDiffNodes,
+                                       Set<DiffNode> renderedChangeDependencies, UnitDependencies dependencies,
+                                       Map<Node, DiffNode> changeDiffNodes, List<DiffNode> diffNodes) {
+    DiffNode changeDependency = allChangeDiffNodes.get(dependency);
+    if (changeDependency == null) {
+      rendered.add(dependency(dependency.getContextString(), servedIds(dependency, dependencies, changeDiffNodes, diffNodes),
+              dependency.dedentContent()));
+      return;
+    }
+
+    if (!renderedChangeDependencies.add(changeDependency)) {
+      return;
+    }
+
+    List<Node> changes = new ArrayList<>();
+    changes.addAll(changeDependency.getSrcChanges());
+    changes.addAll(changeDependency.getDstChanges());
+    List<String> servedIds = getOrderedIds(servedDiffNodes(changes, dependencies, changeDiffNodes), diffNodes);
+    rendered.add(dependency(changeDependency.getLocation(), servedIds, changeDependency.renderBody()));
+  }
+
+  private static List<Block> elementBlocks(NarrativeElement element, List<Node> localSides, int length) {
+    Graph<Node, Edge> graph = element.getGraph();
+    Set<Node> mains = element.getMainsToSides().keySet();
+    Set<Map<Node, Set<Node>>> groups = isolateLocationContexts(MergeGroup.aggregateByContextMapping(mains.stream().toList(), graph));
+    List<Map<Node, Set<Node>>> contextGroups = MergeGroup.orderContextGroups(groups, mains, element.getLeaves());
+
+    Map<Integer, List<Node>> indexDependencies = MergeGroup.dependenciesIndex(localSides, element.getMainsToSides(), contextGroups);
+
+    List<Block> blocks = new ArrayList<>();
+    List<DiffNode> diffNodes = new ArrayList<>();
     for (int i = 0; i <= contextGroups.size(); i++) {
       for (Node dependency : indexDependencies.getOrDefault(i, List.of())) {
-        blocks.add(dependency(dependency, graph).getContent());
+        blocks.add(new DependencyBlock(dependency));
       }
 
       if (i == contextGroups.size()) {
         break;
       }
 
-      Map<Node, Set<Node>> contextGroup = contextGroups.get(i);
-
-      DiffNode diffNode = buildDiffBlock(contextGroup, length, graph);
+      DiffNode diffNode = buildDiffBlock(contextGroups.get(i), length, graph);
       if (diffNode == null) {
         continue;
       }
 
-      blocks.add(diffNode.render());
-      diffNodeBlockIndex.put(diffNode, blocks.size() - 1);
+      blocks.add(new DiffBlock(diffNode));
+      diffNodes.add(diffNode);
     }
 
-    linkMoves(diffNodeBlockIndex, blocks, graph);
+    linkMoves(diffNodes, graph);
 
-    // TODO: show group by indenting in a <sub_chapter>?
-    String content = String.join("\n", blocks);
-    Set<ReviewNode> reviewNodes = new HashSet<>(diffNodeBlockIndex.keySet());
-    return new NarrativeElement(content, reviewNodes, mergeGroup.nodes, graph);
+    return blocks;
   }
 
-  private static void linkMoves(Map<DiffNode, Integer> diffNodeBlockIndex, List<String> blocks, Graph<Node, Edge> graph) {
+  private static List<String> servedIds(Node dependency, UnitDependencies dependencies, Map<Node, DiffNode> changeDiffNodes,
+                                        List<DiffNode> diffNodes) {
+    return getOrderedIds(servedDiffNodes(List.of(dependency), dependencies, changeDiffNodes), diffNodes);
+  }
+
+  private static Set<DiffNode> servedDiffNodes(Collection<Node> dependencyNodes, UnitDependencies dependencies,
+                                               Map<Node, DiffNode> changeDiffNodes) {
+    Set<DiffNode> served = new HashSet<>();
+    for (Node dependencyNode : dependencyNodes) {
+      for (Node main : dependencies.relyingMains(dependencyNode)) {
+        DiffNode diffNode = changeDiffNodes.get(main);
+        if (diffNode != null) {
+          served.add(diffNode);
+        }
+      }
+    }
+
+    return served;
+  }
+
+  private static List<String> getOrderedIds(Set<DiffNode> served, List<DiffNode> diffNodes) {
+    return diffNodes.stream().filter(served::contains).map(DiffNode::getPromptId).toList();
+  }
+
+  private static void linkMoves(List<DiffNode> diffNodes, Graph<Node, Edge> graph) {
     Map<DiffNode, List<String>> movedFrom = new LinkedHashMap<>();
     Map<DiffNode, List<String>> movedTo = new LinkedHashMap<>();
 
-    for (DiffNode subject : diffNodeBlockIndex.keySet()) {
-      for (DiffNode object : diffNodeBlockIndex.keySet()) {
+    for (DiffNode subject : diffNodes) {
+      for (DiffNode object : diffNodes) {
         if (subject == object || !movesTo(subject, object, graph)) {
           continue;
         }
@@ -84,15 +206,13 @@ class RawRepresentation implements Representation {
       }
     }
 
-    for (Map.Entry<DiffNode, Integer> blockIndex : diffNodeBlockIndex.entrySet()) {
-      DiffNode diffNode = blockIndex.getKey();
+    for (DiffNode diffNode : diffNodes) {
       if (!movedFrom.containsKey(diffNode) && !movedTo.containsKey(diffNode)) {
         continue;
       }
 
       diffNode.setMovedTo(movedTo.get(diffNode));
       diffNode.setMovedFrom(movedFrom.get(diffNode));
-      blocks.set(blockIndex.getValue(), diffNode.render());
     }
   }
 
@@ -108,7 +228,7 @@ class RawRepresentation implements Representation {
     return false;
   }
 
-  private Set<Map<Node, Set<Node>>> isolateLocationContexts(Set<Map<Node, Set<Node>>> groups) {
+  private static Set<Map<Node, Set<Node>>> isolateLocationContexts(Set<Map<Node, Set<Node>>> groups) {
     Set<Map<Node, Set<Node>>> isolated = new HashSet<>();
     for (Map<Node, Set<Node>> group : groups) {
       if (group.keySet().stream().noneMatch(context -> context.getNodeType().equals(NodeType.LOCATION_CONTEXT))) {
@@ -128,7 +248,7 @@ class RawRepresentation implements Representation {
     return isolated;
   }
 
-  private DiffNode buildDiffBlock(Map<Node, Set<Node>> contextGroup, int length, Graph<Node, Edge> graph) {
+  private static DiffNode buildDiffBlock(Map<Node, Set<Node>> contextGroup, int length, Graph<Node, Edge> graph) {
     DiffContexts contexts = resolveContexts(contextGroup, graph);
     Node srcContext = contexts.srcContext();
     Node dstContext = contexts.dstContext();
@@ -184,7 +304,7 @@ class RawRepresentation implements Representation {
             location, diffLines, length);
   }
 
-  private DiffContexts resolveContexts(Map<Node, Set<Node>> contextGroup, Graph<Node, Edge> graph) {
+  private static DiffContexts resolveContexts(Map<Node, Set<Node>> contextGroup, Graph<Node, Edge> graph) {
     Node srcContext = null;
     Node dstContext = null;
     Set<Node> srcChanges = Set.of();
@@ -474,15 +594,29 @@ class RawRepresentation implements Representation {
                               boolean locationContext) {
   }
 
-  public NarrativeElement dependency(Node dependency, Graph<Node, Edge> graph) {
+  private static String dependency(String location, List<String> servedIds, String body) {
     StringBuilder sb = new StringBuilder("<dependency");
 
-    String contextString = dependency.getContextString();
-    if (!contextString.isEmpty()) {
-      sb.append(" location=\"").append(contextString).append("\"");
+    if (!location.isEmpty()) {
+      sb.append(" location=\"").append(location).append("\"");
     }
-    sb.append(">\n").append(dependency.dedentContent()).append("\n</dependency>");
+    if (!servedIds.isEmpty()) {
+      sb.append(" serves=\"").append(String.join(", ", servedIds)).append("\"");
+    }
+    sb.append(">\n").append(body).append("\n</dependency>");
 
-    return new NarrativeElement(sb.toString(), new HashSet<>(), Set.of(dependency), graph);
+    return sb.toString();
+  }
+
+  public record RepresentedUnit(String content, Set<ReviewNode> anchoredNodes) {
+  }
+
+  private interface Block {
+  }
+
+  private record DependencyBlock(Node dependency) implements Block {
+  }
+
+  private record DiffBlock(DiffNode diffNode) implements Block {
   }
 }

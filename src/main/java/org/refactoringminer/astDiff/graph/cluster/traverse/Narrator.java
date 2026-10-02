@@ -1,9 +1,11 @@
 package org.refactoringminer.astDiff.graph.cluster.traverse;
 
 import com.github.gumtreediff.tree.Tree;
+import org.refactoringminer.astDiff.graph.DiffNode;
 import org.refactoringminer.astDiff.graph.Node;
 import org.refactoringminer.astDiff.graph.NodeType;
 import org.refactoringminer.astDiff.graph.ReviewNode;
+import org.refactoringminer.astDiff.graph.cluster.representation.RawRepresentation;
 import org.refactoringminer.astDiff.utils.Constants;
 
 import javax.annotation.Nullable;
@@ -227,57 +229,23 @@ public class Narrator {
         List<TraversalPattern> chapters = getNarrative(level);
         if (chapters == null) return Collections.emptyList();
 
-        // 1. Expand original chapters into atomic units
-        List<ChapterUnit> units = new ArrayList<>();
-        for (int i = 0; i < chapters.size(); i++) {
-            TraversalPattern chapter = chapters.get(i);
-            List<TraversalPattern> filterPatterns = i > 0 ? chapters.subList(0, i) : Collections.emptyList();
-            List<NarrativeElement> elements = chapter.getElements(filterPatterns, length);
+        List<NarrativeElement> elements = chapters.stream().map(TraversalPattern::getElements).flatMap(List::stream).toList();
 
-            List<List<Integer>> splits = Splitter.createBalancedSplits(elements.stream().map(NarrativeElement::getContent).toList());
-            for (List<Integer> split : splits) {
-                ChapterUnit chu = new ChapterUnit();
-                for (Integer index : split) {
-                    NarrativeElement ne = elements.get(index);
-                    chu.append(ne.getContent());
-                    chu.addMains(ne.getMains());
-                    chu.addSides(ne.getSides());
-                    chu.addAnchoredNodes(ne.getAnchoredNodes());
-                }
+        Map<Node, DiffNode> changeDiffNodes = RawRepresentation.changeDiffNodes(elements, length);
 
-                units.add(chu);
-            }
-        }
+        List<String> elementContents = elements.stream()
+                .map(element -> RawRepresentation.represent(List.of(element), changeDiffNodes, length).content()).toList();
 
-        // 2. Merge units into flat chapters
-        List<List<ChapterUnit>> mergedGroups = new ArrayList<>();
-        List<ChapterUnit> currentGroup = new ArrayList<>();
-        int currentSum = 0;
-
-        for (ChapterUnit unit : units) {
-            if (currentGroup.isEmpty() || (currentSum + unit.lines() <= Splitter.THRESHOLD)) {
-                currentGroup.add(unit);
-                currentSum += unit.lines();
-            } else {
-                mergedGroups.add(currentGroup);
-                currentGroup = new ArrayList<>();
-                currentGroup.add(unit);
-                currentSum = unit.lines();
-            }
-        }
-        if (!currentGroup.isEmpty()) {
-            mergedGroups.add(currentGroup);
-        }
-
-        // 3. Final formatting
         List<ChapterUnit> flatGroups = new ArrayList<>();
-        for (List<ChapterUnit> group : mergedGroups) {
+        for (List<Integer> split : Splitter.createBalancedSplits(elementContents)) {
+            List<NarrativeElement> unitElements = split.stream().map(elements::get).toList();
+            RawRepresentation.RepresentedUnit representedUnit = RawRepresentation.represent(unitElements, changeDiffNodes, length);
+
             ChapterUnit chu = new ChapterUnit();
-            for (ChapterUnit unit : group) {
-                chu.append(unit.contents);
-                chu.addMains(unit.mains);
-                chu.addSides(unit.sides);
-                chu.addAnchoredNodes(unit.anchoredNodes);
+            chu.append(representedUnit.content());
+            chu.addAnchoredNodes(representedUnit.anchoredNodes());
+            for (NarrativeElement element : unitElements) {
+                chu.addMains(element.getMainsToSides().keySet());
             }
 
             flatGroups.add(chu);
@@ -354,7 +322,6 @@ public class Narrator {
         private List<String> contents = new ArrayList<>();
         private final Set<ReviewNode> anchoredNodes = new HashSet<>();
         private Set<ReviewNode> mains = new HashSet<>();
-        private Set<ReviewNode> sides = new HashSet<>();
 
         public void append(String content) {
             contents.add(content);
@@ -374,15 +341,6 @@ public class Narrator {
 
         public void addMains(Set<? extends ReviewNode> mains) {
             this.mains.addAll(mains);
-            this.sides = this.sides.stream().filter(side -> !this.mains.contains(side)).collect(Collectors.toSet());
-        }
-
-        public Set<ReviewNode> getSides() {
-            return sides;
-        }
-
-        public void addSides(Set<? extends ReviewNode> sides) {
-            this.sides.addAll(sides.stream().filter(side -> !this.mains.contains(side)).toList());
         }
 
       public Set<ReviewNode> getAnchoredNodes() {

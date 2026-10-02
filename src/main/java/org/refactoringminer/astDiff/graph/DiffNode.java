@@ -21,6 +21,7 @@ public class DiffNode implements ReviewNode {
   private List<DiffNode.DiffLine> diffLines;
   private List<String> movedTo = null;
   private List<String> movedFrom = null;
+  private List<String> serves = null;
 
   private DiffNode(String id, String promptId, @Nullable String srcPath, @Nullable String dstPath,
                    List<Node> srcChanges, List<Node> dstChanges, String location, List<DiffNode.DiffLine> diffLines) {
@@ -40,6 +41,10 @@ public class DiffNode implements ReviewNode {
 
   public void setMovedFrom(List<String> movedFrom) {
     this.movedFrom = movedFrom;
+  }
+
+  public void setServes(List<String> serves) {
+    this.serves = serves;
   }
 
   public static DiffNode of(@Nullable String srcPath, @Nullable String dstPath, List<Node> srcChanges, List<Node> dstChanges,
@@ -121,7 +126,11 @@ public class DiffNode implements ReviewNode {
     return false;
   }
 
-  public String render() {
+  public String getLocation() {
+    return location;
+  }
+
+  public String renderBody() {
     StringBuilder body = new StringBuilder();
     for (DiffNode.DiffLine diffLine : this.diffLines) {
       if (!body.isEmpty()) {
@@ -130,6 +139,12 @@ public class DiffNode implements ReviewNode {
 
       body.append(diffLine.prefix()).append(diffLine.text());
     }
+
+    return body.toString();
+  }
+
+  public String render() {
+    String body = renderBody();
 
     StringBuilder sb = new StringBuilder("<diff id=\"").append(this.getPromptId()).append("\"");
     if (!this.location.isEmpty()) {
@@ -140,6 +155,9 @@ public class DiffNode implements ReviewNode {
     }
     if (movedTo != null && !movedTo.isEmpty()) {
       sb.append(" moved_to=\"").append(String.join(", ", movedTo)).append("\"");
+    }
+    if (serves != null && !serves.isEmpty()) {
+      sb.append(" serves=\"").append(String.join(", ", serves)).append("\"");
     }
     sb.append(">\n").append(body).append("\n</diff>");
 

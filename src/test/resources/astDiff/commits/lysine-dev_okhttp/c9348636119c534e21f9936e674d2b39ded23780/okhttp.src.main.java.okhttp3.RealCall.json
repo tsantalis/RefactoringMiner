@@ -2936,6 +2936,28 @@
   "firstEndPos" : 4421,
   "secondEndPos" : 3463
 }, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "this_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 4394,
+  "secondPos" : 3450,
+  "firstEndPos" : 4415,
+  "secondEndPos" : 3463
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RealCall",
+  "secondLabel" : "RealCall",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "this_expression",
+  "firstPos" : 4401,
+  "secondPos" : 3455,
+  "firstEndPos" : 4409,
+  "secondEndPos" : 3463
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

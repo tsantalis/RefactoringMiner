@@ -139,6 +139,17 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+			for(LeafExpression thisExpression1 : statement1.getThisExpressions()) {
+				//Java qualified this replaced with Kotlin labeled this, i.e., RealCall.this -> this@RealCall
+				String before = thisExpression1.getString();
+				if(before.endsWith(".this")) {
+					String after = "this@" + before.substring(0, before.length() - ".this".length());
+					if(temp.contains(before) && !temp.contains(after) && s2.contains(after)) {
+						temp = ReplacementUtil.performReplacement(temp, before, after);
+						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+					}
+				}
+			}
 			if(temp.equals(statement2.getString()) || temp.equals(s2) ) {
 				return true;
 			}

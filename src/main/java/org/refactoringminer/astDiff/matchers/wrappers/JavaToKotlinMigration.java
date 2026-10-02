@@ -2484,29 +2484,38 @@ public class JavaToKotlinMigration {
 
     //align Kotlin function_declaration -> modifiers -> class_modifier -> [@, user_type -> Synchronized] with Java MethodDeclaration -> Modifier 'synchronized'
     public static void handleSynchronizedMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
-        Tree synchronized1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, LANG1.MODIFIER, LANG1.SYNCHRONIZED, LANG1);
-        Tree modifiers2 = TreeUtilFunctions.findChildByType(dstOperationNode, LANG2.MODIFIERS);
-        if(synchronized1 == null || modifiers2 == null)
+        handleModifierAnnotationMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1.SYNCHRONIZED, "Synchronized", LANG1, LANG2);
+    }
+
+    //align Kotlin property_declaration -> modifiers -> class_modifier -> [@, user_type -> Volatile] with Java FieldDeclaration -> Modifier 'volatile'
+    public static void handleVolatileMapping(ExtendedMultiMappingStore mappingStore, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
+        handleModifierAnnotationMapping(mappingStore, srcFieldDeclaration, dstFieldDeclaration, LANG1.VOLATILE, "Volatile", LANG1, LANG2);
+    }
+
+    //the Kotlin annotation is the equivalent of the Java modifier, so it is labeled as the Java modifier
+    private static void handleModifierAnnotationMapping(ExtendedMultiMappingStore mappingStore, Tree srcDeclaration, Tree dstDeclaration, String modifier, String annotationName, Constants LANG1, Constants LANG2) {
+        Tree modifier1 = TreeUtilFunctions.findChildByTypeAndLabel(srcDeclaration, LANG1.MODIFIER, modifier, LANG1);
+        Tree modifiers2 = TreeUtilFunctions.findChildByType(dstDeclaration, LANG2.MODIFIERS);
+        if(modifier1 == null || modifiers2 == null)
             return;
         Tree annotation2 = null;
         for(Tree classModifier2 : TreeUtilFunctions.findChildrenByType(modifiers2, LANG2.CLASS_MODIFIER)) {
             Tree userType2 = TreeUtilFunctions.findChildByType(classModifier2, LANG2.USER_TYPE);
             if(TreeUtilFunctions.findChildByType(classModifier2, LANG2.AT) != null && userType2 != null && userType2.getChildren().size() == 1 &&
-                    userType2.getChild(0).getLabel().equals("Synchronized")) {
+                    userType2.getChild(0).getLabel().equals(annotationName)) {
                 annotation2 = classModifier2;
                 break;
             }
         }
         if(annotation2 == null)
             return;
-        //the @Synchronized annotation is the Kotlin equivalent of the synchronized modifier, so it is labeled as the Java modifier
         for(Tree t : annotation2.getDescendants()) {
             removeDstMappings(mappingStore, t);
         }
         annotation2.getChildren().clear();
-        annotation2.setLabel(synchronized1.getLabel());
+        annotation2.setLabel(modifier1.getLabel());
         liftFromModifiers(mappingStore, modifiers2, annotation2);
-        mappingStore.addMapping(synchronized1, annotation2);
+        mappingStore.addMapping(modifier1, annotation2);
     }
 
     //align Kotlin function_declaration -> modifiers -> member_modifier -> member_modifier 'override' with Java MethodDeclaration -> MarkerAnnotation -> SimpleName 'Override'

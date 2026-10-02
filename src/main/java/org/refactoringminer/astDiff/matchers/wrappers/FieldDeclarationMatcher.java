@@ -318,6 +318,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.FINAL,mappingStore);
         if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.VOLATILE,mappingStore);
+        if (srcUMLAttribute.isVolatile() && Constants.isCrossLanguage(LANG1, LANG2))
+            JavaToKotlinMigration.handleVolatileMapping(mappingStore, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
         if (srcUMLAttribute.isStatic() && dstUMLAttribute.isStatic())
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.STATIC,mappingStore);
         if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())

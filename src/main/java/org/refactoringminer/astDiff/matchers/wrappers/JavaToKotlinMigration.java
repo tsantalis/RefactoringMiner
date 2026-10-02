@@ -1562,6 +1562,19 @@ public class JavaToKotlinMigration {
         return receivers1;
     }
 
+    //align Kotlin if_expression -> [condition, body, control_structure_body -> if_expression] with Java IfStatement -> [condition, Block, IfStatement] of an else-if
+    //returns the nested if_expression, after flattening the control_structure_body, which has no Java counterpart (or deferring the flattening)
+    public static Tree handleElseIfMapping(ExtendedMultiMappingStore mappingStore, Tree dstStatementNode, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        if(dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) && dstStatementNode.getChildren().size() == 1 &&
+                dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT) &&
+                dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.IF_STATEMENT)) {
+            Tree elseIf2 = dstStatementNode.getChild(0);
+            flattenDstChild(mappingStore, deferredFlattenings, dstStatementNode.getParent(), dstStatementNode);
+            return elseIf2;
+        }
+        return dstStatementNode;
+    }
+
     //the Java assert statement is replaced with a call to the Kotlin assert function, i.e., assert (x); -> assert(x)
     private static boolean isAssertCall(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
         if(!srcStatementNode.getType().name.equals(LANG1.ASSERT_STATEMENT) || !dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))

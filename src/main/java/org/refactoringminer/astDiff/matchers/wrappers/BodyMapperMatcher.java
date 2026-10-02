@@ -252,6 +252,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode = lambdaLiteral2;
             }
         }
+        if(Constants.isCrossLanguage(LANG1, LANG2) && srcStatementNode != null && dstStatementNode != null &&
+                srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstLocationInfo.getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+            //the Kotlin else-if is nested in a control_structure_body with the same range, which is located instead of the if_expression
+            dstStatementNode = JavaToKotlinMigration.handleElseIfMapping(mappingStore, dstStatementNode, LANG2, optimizationData.getDeferredFlattenings());
+        }
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK) && !dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
             String astTypeName = dstLocationInfo.getCodeElementType().name();
             try {

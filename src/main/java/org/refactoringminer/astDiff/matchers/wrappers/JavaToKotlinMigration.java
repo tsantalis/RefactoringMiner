@@ -148,6 +148,18 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             return;
         }
+        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME) && dstStatementNode.getType().name.equals(LANG2.SIMPLE_NAME) &&
+                dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_BODY) &&
+                TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) != null) {
+            //align Java ReturnStatement -> SimpleName with Kotlin function_body -> [=, simple_identifier], as Kotlin expression body has no return statement wrapper
+            Set<Tree> dsts = mappingStore.getDsts(srcStatementNode);
+            if(dsts != null && dsts.contains(dstStatementNode)) {
+                mappingStore.removeMapping(srcStatementNode, dstStatementNode);
+            }
+            mappingStore.addMapping(srcStatementNode.getChild(0), dstStatementNode);
+            return;
+        }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) || srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
             flattenTrailingLambdaCall(mappingStore, dstStatementNode, LANG2);
         }
@@ -359,7 +371,7 @@ public class JavaToKotlinMigration {
             inv1.add(0, srcStatementNode);
         }
         List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
-        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && !isFlattenedReturnExpression(srcStatementNode, dstStatementNode, LANG1, LANG2)) {
             inv2.add(0, dstStatementNode);
         }
         inv1.removeAll(builderNodes1);
@@ -1450,6 +1462,19 @@ public class JavaToKotlinMigration {
             List<Tree> anonymousChildren = TreeUtilFunctions.findChildrenByTypeRecursively(anonymous, astType);
             children.removeAll(anonymousChildren);
         }
+    }
+
+    //the Java ReturnStatement -> expression is already flattened, when aligned with the Kotlin function_body -> [=, expression] of a previous mapping,
+    //so the ReturnStatement corresponds to the Kotlin expression, i.e., return originalRequest.url().host(); -> = originalRequest.url().host()
+    private static boolean isFlattenedReturnExpression(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        if(!srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) || srcStatementNode.getChildren().isEmpty())
+            return false;
+        if(dstStatementNode.getParent() == null || !dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_BODY) ||
+                TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) == null)
+            return false;
+        Tree expression1 = srcStatementNode.getChild(0);
+        boolean invocation1 = expression1.getType().name.equals(LANG1.METHOD_INVOCATION) || expression1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION);
+        return srcStatementNode.getChildren().size() > 1 || !invocation1;
     }
 
     private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2, List<Tree> invocationsToBeRemoved, DeferredFlattenings deferredFlattenings) {

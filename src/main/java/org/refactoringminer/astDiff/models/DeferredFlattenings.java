@@ -27,6 +27,8 @@ public class DeferredFlattenings {
         REMOVE_ALL_TARGET_MAPPINGS,
         //remove the child of a target tree, removing all mappings to it
         REMOVE_TARGET_CHILD,
+        //remove the leaf child of a source tree, removing all its mappings, so that the parent gets its label
+        ABSORB_LEAF_CHILD,
         //Java VariableDeclarationFragment -> [name, =, initializer], kept as the leaf matching the Kotlin = operator, or flattened
         VARIABLE_DECLARATION_FRAGMENT
     }
@@ -68,6 +70,10 @@ public class DeferredFlattenings {
 
     public void removeTargetChild(Tree parent, Tree child) {
         register(Kind.REMOVE_TARGET_CHILD, parent, child, null);
+    }
+
+    public void absorbLeafChild(Tree parent, Tree child) {
+        register(Kind.ABSORB_LEAF_CHILD, parent, child, null);
     }
 
     public void alignVariableDeclarationFragment(Tree declaration, Tree fragment, String affectationOperatorType) {
@@ -118,6 +124,10 @@ public class DeferredFlattenings {
                 case REMOVE_TARGET_CHILD:
                     removeTargetMappings(mappingStores, child);
                     parent.getChildren().remove(parent.getChildPosition(child));
+                    break;
+                case ABSORB_LEAF_CHILD:
+                    removeMappings(mappingStores, child, null);
+                    applyLeafChildAbsorption(parent, child);
                     break;
                 case VARIABLE_DECLARATION_FRAGMENT:
                     if(child.getChildren().size() > 1 && isMappedToType(mappingStores, child, flattening.affectationOperatorType)) {
@@ -177,6 +187,11 @@ public class DeferredFlattenings {
                 }
             }
         }
+    }
+
+    public static void applyLeafChildAbsorption(Tree parent, Tree child) {
+        parent.setLabel(child.getLabel());
+        parent.getChildren().remove(parent.getChildPosition(child));
     }
 
     private static void flattenChild(Tree parent, Tree child) {

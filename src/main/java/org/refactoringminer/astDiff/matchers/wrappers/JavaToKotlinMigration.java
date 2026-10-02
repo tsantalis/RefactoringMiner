@@ -148,17 +148,21 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             return;
         }
-        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
-                srcStatementNode.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME) && dstStatementNode.getType().name.equals(LANG2.SIMPLE_NAME) &&
+        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.SIMPLE_NAME) &&
                 dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_BODY) &&
                 TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) != null) {
-            //align Java ReturnStatement -> SimpleName with Kotlin function_body -> [=, simple_identifier], as Kotlin expression body has no return statement wrapper
-            Set<Tree> dsts = mappingStore.getDsts(srcStatementNode);
-            if(dsts != null && dsts.contains(dstStatementNode)) {
-                mappingStore.removeMapping(srcStatementNode, dstStatementNode);
+            if(srcStatementNode.getChildren().size() == 1 && srcStatementNode.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
+                //align Java ReturnStatement -> SimpleName with Kotlin function_body -> [=, simple_identifier], as Kotlin expression body has no return statement wrapper
+                //the ReturnStatement takes the place of the SimpleName, as the ReturnStatement takes the place of a returned non-leaf expression (see below)
+                mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                absorbSrcLeafChild(mappingStore, deferredFlattenings, srcStatementNode, srcStatementNode.getChild(0));
+                return;
             }
-            mappingStore.addMapping(srcStatementNode.getChild(0), dstStatementNode);
-            return;
+            if(srcStatementNode.isLeaf()) {
+                //the SimpleName is already absorbed by a previous mapping of the same statement
+                mappingStore.addMapping(srcStatementNode, dstStatementNode);
+                return;
+            }
         }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) || srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
             flattenTrailingLambdaCall(mappingStore, dstStatementNode, LANG2);
@@ -2837,6 +2841,21 @@ public class JavaToKotlinMigration {
             }
         }
         flattenChild(parent1, child1);
+    }
+
+    //removes the leaf child of the Java tree with all its mappings, so that the parent gets its label, or defers the removal until all diffs are matched
+    private static void absorbSrcLeafChild(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree parent1, Tree child1) {
+        if(deferredFlattenings != null) {
+            deferredFlattenings.absorbLeafChild(parent1, child1);
+            return;
+        }
+        Set<Tree> dsts = mappingStore.getDsts(child1);
+        if(dsts != null) {
+            for(Tree dst : new ArrayList<>(dsts)) {
+                mappingStore.removeMapping(child1, dst);
+            }
+        }
+        DeferredFlattenings.applyLeafChildAbsorption(parent1, child1);
     }
 
     private static void flattenChild(Tree parent, Tree child) {

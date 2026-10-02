@@ -1710,6 +1710,14 @@ public class MethodMatcher extends BodyMapperMatcher{
                 VariableDeclaration rightVarDecl = parameterDiff.getAddedParameter();
                 processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
             }
+            if(!umlOperationBodyMapper.sameFileExtension()) {
+                //the parameters without changes, which are not matched through their references in the mapped statements
+                for(Pair<VariableDeclaration, VariableDeclaration> commonParameter : operationDiff.getCommonParameters()) {
+                    if(!matchedVariables.contains(commonParameter)) {
+                        processParameterPair(srcTree, dstTree, mappingStore, commonParameter.getLeft(), commonParameter.getRight());
+                    }
+                }
+            }
         }
     }
 

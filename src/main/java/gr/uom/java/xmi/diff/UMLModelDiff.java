@@ -5938,12 +5938,20 @@ public class UMLModelDiff {
 		for(UMLClass addedClass : addedClasses) {
 			//addedClass is inner class of classDiff
 			if(addedClass.getName().startsWith(classDiff.getNextClassName() + ".")) {
-				addedOperations.addAll(addedClass.getOperations());
+				for(UMLOperation addedOperation : addedClass.getOperations()) {
+					if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(addedOperation)) {
+						addedOperations.add(addedOperation);
+					}
+				}
 			}
 			//addedClass in inner sibling class to classDiff
 			else if(!addedClass.isTopLevel() && !classDiff.getNextClass().isTopLevel() && addedClass.getName().contains(".") && classDiff.getNextClassName().contains(".") &&
 					addedClass.getName().substring(0, addedClass.getName().lastIndexOf(".")).equals(classDiff.getNextClassName().substring(0, classDiff.getNextClassName().lastIndexOf(".")))) {
-				addedOperations.addAll(addedClass.getOperations());
+				for(UMLOperation addedOperation : addedClass.getOperations()) {
+					if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(addedOperation)) {
+						addedOperations.add(addedOperation);
+					}
+				}
 			}
 		}
 		if(addedOperations.size() > 0) {

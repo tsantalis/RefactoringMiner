@@ -55,6 +55,27 @@ public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
+	//the receiver of the Kotlin apply scope function, whose lambda contains the statement, i.e., RealCall(x) in RealCall(x).apply { y = z }
+	private static String applyReceiver(AbstractCodeFragment statement) {
+		for(CompositeStatementObject parent = statement.getParent(); parent != null; parent = parent.getParent()) {
+			if(parent.getOwner().isPresent() && parent.getOwner().get() instanceof LambdaExpressionObject lambda) {
+				if(lambda.getOwner() == null)
+					return null;
+				for(AbstractCall call : lambda.getOwner().getAllOperationInvocations()) {
+					if(call.getName().equals("apply") && call.getExpression() != null && call.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+						return call.getExpression();
+					}
+				}
+				return null;
+			}
+		}
+		return null;
+	}
+
+	private static String withoutNewAndWhitespace(String expression) {
+		return expression.replace("new ", "").replaceAll("\\s", "");
+	}
+
 	protected static boolean javaToKotlin(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
@@ -147,6 +168,22 @@ public class StringBasedHeuristics {
 					if(temp.contains(before) && !temp.contains(after) && s2.contains(after)) {
 						temp = ReplacementUtil.performReplacement(temp, before, after);
 						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+					}
+				}
+			}
+			String applyReceiver2 = applyReceiver(statement2);
+			if(applyReceiver2 != null && statement1 instanceof AbstractStatement abstractStatement1) {
+				//the Java variable initialized with the receiver of the Kotlin apply, i.e., RealCall call = new RealCall(x); call.y = z; -> RealCall(x).apply { y = z }
+				for(LeafExpression variable1 : statement1.getVariables()) {
+					String variableName = variable1.getString();
+					VariableDeclaration declaration1 = abstractStatement1.searchVariableDeclaration(variableName);
+					if(declaration1 != null && declaration1.getInitializer() != null &&
+							withoutNewAndWhitespace(declaration1.getInitializer().getString()).equals(withoutNewAndWhitespace(applyReceiver2))) {
+						//the field accesses and method calls on the variable have the implicit apply receiver, while the variable itself becomes this
+						temp = temp.replaceAll("(?<![\\w.])" + Pattern.quote(variableName) + "\\.", "");
+						temp = temp.replaceAll("(?<![\\w.])" + Pattern.quote(variableName) + "(?![\\w(])", "this");
+						appliedReplacements.add(new Replacement(variableName, "this", ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION));
+						break;
 					}
 				}
 			}

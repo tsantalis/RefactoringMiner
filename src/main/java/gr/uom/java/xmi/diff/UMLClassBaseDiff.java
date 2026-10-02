@@ -276,6 +276,20 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			UMLStaticAssertionDeclarationListDiff diff = new UMLStaticAssertionDeclarationListDiff(getOriginalClass().getStaticAssertionDeclarations(), getNextClass().getStaticAssertionDeclarations());
 			this.staticAssertionDeclarationListDiff = Optional.of(diff);
 		}
+		if(originalClass.getCompanionObjects().size() == 0 && nextClass.getCompanionObjects().size() > 0) {
+			for(UMLOperation removedOperation : removedOperations) {
+				for(UMLClass companion : nextClass.getCompanionObjects()) {
+					for(UMLOperation addedOperation : companion.getOperations()) {
+						if(removedOperation.equalSignature(addedOperation)) {
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+							MoveOperationRefactoring move = new MoveOperationRefactoring(operationBodyMapper);
+							refactorings.add(move);
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public void checkForMovedAnnotations() {

@@ -3134,12 +3134,23 @@
   "firstEndPos" : 4722,
   "secondEndPos" : 3756
 }, {
+  "firstType" : "ParenthesizedExpression",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "AssertStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 4681,
+  "secondPos" : 3716,
+  "firstEndPos" : 4721,
+  "secondEndPos" : 3756
+}, {
   "firstType" : "PrefixExpression",
   "secondType" : "prefix_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "ParenthesizedExpression",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "value_arguments",
   "firstPos" : 4682,
   "secondPos" : 3717,
   "firstEndPos" : 4720,

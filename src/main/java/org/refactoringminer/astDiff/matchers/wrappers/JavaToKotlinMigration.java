@@ -375,7 +375,8 @@ public class JavaToKotlinMigration {
             inv1.add(0, srcStatementNode);
         }
         List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
-        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && !isFlattenedReturnExpression(srcStatementNode, dstStatementNode, LANG1, LANG2)) {
+        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && !isFlattenedReturnExpression(srcStatementNode, dstStatementNode, LANG1, LANG2) &&
+                !isAssertCall(srcStatementNode, dstStatementNode, LANG1, LANG2)) {
             inv2.add(0, dstStatementNode);
         }
         inv1.removeAll(builderNodes1);
@@ -890,6 +891,9 @@ public class JavaToKotlinMigration {
             //align Java ReturnStatement -> expression with Kotlin function_body -> [=, expression], as Kotlin expression body has no return statement wrapper
             Tree expression1 = srcStatementNode.getChild(0);
             flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, expression1);
+        }
+        if(isAssertCall(srcStatementNode, dstStatementNode, LANG1, LANG2)) {
+            alignAssertStatement(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, deferredFlattenings);
         }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
                 srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION)) {
@@ -1479,6 +1483,42 @@ public class JavaToKotlinMigration {
         Tree expression1 = srcStatementNode.getChild(0);
         boolean invocation1 = expression1.getType().name.equals(LANG1.METHOD_INVOCATION) || expression1.getType().name.equals(LANG1.CLASS_INSTANCE_CREATION);
         return srcStatementNode.getChildren().size() > 1 || !invocation1;
+    }
+
+    //the Java assert statement is replaced with a call to the Kotlin assert function, i.e., assert (x); -> assert(x)
+    private static boolean isAssertCall(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        if(!srcStatementNode.getType().name.equals(LANG1.ASSERT_STATEMENT) || !dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION))
+            return false;
+        Tree name2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.SIMPLE_NAME);
+        if(name2 != null)
+            return name2.getLabel().equals("assert");
+        //the assert name is already removed by a previous mapping of the same statement, so the call has no callee
+        return TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.NAVIGATION_EXPRESSION) == null;
+    }
+
+    //align Kotlin call_expression -> [assert, call_suffix -> value_arguments -> value_argument -> expression] with Java AssertStatement -> [ParenthesizedExpression ->] expression
+    private static void alignAssertStatement(ExtendedMultiMappingStore mappingStore, Tree assert1, Tree call2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        Tree name2 = TreeUtilFunctions.findChildByType(call2, LANG2.SIMPLE_NAME);
+        if(name2 != null && name2.getLabel().equals("assert")) {
+            //the Java statement includes the assert keyword
+            removeDstChild(mappingStore, deferredFlattenings, call2, name2);
+        }
+        Tree valueArguments2 = alignCallSuffix(mappingStore, assert1, call2, true, LANG2, deferredFlattenings);
+        if(valueArguments2 == null) {
+            //the call_suffix is already flattened by a previous mapping of the same statement
+            valueArguments2 = TreeUtilFunctions.findChildByType(call2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        }
+        if(valueArguments2 == null || assert1.getChildren().isEmpty())
+            return;
+        Tree expression1 = assert1.getChild(0);
+        if(expression1.getType().name.equals(LANG1.PARENTHESIZED_EXPRESSION)) {
+            //the Java parentheses correspond to the Kotlin argument list parentheses
+            mappingStore.addMapping(expression1, valueArguments2);
+        }
+        else {
+            //Java side has no node for the argument list
+            flattenDstChildKeepingMappings(deferredFlattenings, call2, valueArguments2);
+        }
     }
 
     private static void processPair(ExtendedMultiMappingStore mappingStore, Tree child1, Tree child2, Constants LANG1, Constants LANG2, List<Tree> invocationsToBeRemoved, DeferredFlattenings deferredFlattenings) {

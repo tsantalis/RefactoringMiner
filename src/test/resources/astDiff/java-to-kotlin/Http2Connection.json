@@ -11417,12 +11417,23 @@
   "firstEndPos" : 15882,
   "secondEndPos" : 14205
 }, {
+  "firstType" : "ParenthesizedExpression",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "AssertStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 15856,
+  "secondPos" : 14180,
+  "firstEndPos" : 15881,
+  "secondEndPos" : 14205
+}, {
   "firstType" : "PrefixExpression",
   "secondType" : "prefix_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "ParenthesizedExpression",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "value_arguments",
   "firstPos" : 15857,
   "secondPos" : 14181,
   "firstEndPos" : 15880,

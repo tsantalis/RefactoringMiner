@@ -34,6 +34,8 @@ window.addEventListener("message", (event) => {
             const decorations = editor.getDecorationsInRange(model.getFullModelRange()) || [];
 
             decorations.forEach(d => {
+                //the decorations only showing tooltips duplicate the ranges of the colored decorations
+                if (typeof isTooltipDecoration === 'function' && isTooltipDecoration(d)) return;
                 const range = d.range;
                 const startOffset = model.getOffsetAt({ lineNumber: range.startLineNumber, column: range.startColumn });
                 const endOffset = model.getOffsetAt({ lineNumber: range.endLineNumber, column: range.endColumn });

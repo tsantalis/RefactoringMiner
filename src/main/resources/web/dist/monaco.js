@@ -26,13 +26,13 @@ function mymonaco(config) {
                 leftEditor.getModel().getPositionAt(range.from),
                 leftEditor.getModel().getPositionAt(range.to),
                 leftEditor
-            )).flat();
+            )).flat().concat(getTooltipDecorations(config.left.ranges, leftEditor));
             const rightDecorations = config.right.ranges.map(range => getDecorationNoLeadingWhiteSpace(
                 range,
                 rightEditor.getModel().getPositionAt(range.from),
                 rightEditor.getModel().getPositionAt(range.to),
                 rightEditor
-            )).flat();
+            )).flat().concat(getTooltipDecorations(config.right.ranges, rightEditor));
             deltaDecorations(leftEditor, leftDecorations);
             deltaDecorations(rightEditor, rightDecorations);
             varInits(config, rightEditor, leftEditor);

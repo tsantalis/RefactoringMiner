@@ -330,33 +330,14 @@ public class MonacoCore {
     	String type = t.getType().toString();
     	return type.startsWith("LineComment") || type.startsWith("BlockComment") || type.endsWith("_comment");
     }
-    //private Map<Tree, Set<String>> appliedTooltips = new HashMap<>();
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
         Set<String> tooltips = kind.equals("updated") ? updateTooltip(t) : tooltip(t);
         if(!tooltips.isEmpty() && (isStatement(t) || isDeclaration(t) || isExpression(t) || isComment(t)) &&
         		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn"))) {
         	for(String tooltip : tooltips) {
-        		//TODO the problem with duplicated tooltips seems to be related with cascading tooltips from parent nodes
-        		//when an AST in nested under a parent with tooltips, it inherits all tooltips from its parent
-        		//the solution below does not fix the problem
-        		/*
-        		boolean tipExists = false;
-        		if(appliedTooltips.containsKey(t)) {
-        			Set<String> tips = appliedTooltips.get(t);
-        			if(tips.contains(tooltip)) {
-        				tipExists = true;
-        			}
-        			else {
-        				tips.add(tooltip);
-        			}
-        		}
-        		else {
-        			Set<String> tips = new HashSet<>();
-        			tips.add(tooltip);
-        			appliedTooltips.put(t, tooltips);
-        		}
-        		*/
+        		//the ranges of nested AST nodes overlap, and Monaco shows the hover messages of all decorations containing the mouse position,
+        		//so decorations.js (getTooltipDecorations) shows the tooltips of each AST node only outside its nested AST nodes with tooltips
         		String requestPath = "";
         		if((kind.equals("moveOut") || kind.equals("mm")) && tooltip.contains("moved to file: ")) {
         			String prefix = "moved to file: ";

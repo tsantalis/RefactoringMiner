@@ -1,104 +1,99 @@
-function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
-    const decorations = [];
+//the ranges of the lines from pos to endPos, skipping the leading whitespace of each line
+function getLineRangesNoLeadingWhiteSpace(pos, endPos, editor) {
+    const model = editor.getModel();
     // Helper function to get adjusted column position by skipping leading whitespace
-    function getAdjustedPos(lineNumber, column) {
-        const lineContent = editor.getModel().getLineContent(lineNumber);
+    function getAdjustedColumn(lineNumber, column) {
+        const lineContent = model.getLineContent(lineNumber);
         const trimmedStartColumn = lineContent.search(/\S|$/) + 1;
         return Math.max(column, trimmedStartColumn);
     }
     if (pos.lineNumber === endPos.lineNumber) {
-        // Single-line decoration
-        const adjustedPos = {
-            lineNumber: pos.lineNumber,
-            column: getAdjustedPos(pos.lineNumber, pos.column),
-        };
-        decorations.push({
-            range: new monaco.Range(adjustedPos.lineNumber, adjustedPos.column, endPos.lineNumber, endPos.column),
-            options: {
-                className: range.kind,
-                //inlineClassName: range.kind, // Use this instead of className
-                zIndex: range.index,
-                hoverMessage: {
-                    value: range.requestPath
-                        ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
-                        : range.tooltip,
-                    isTrusted: true
-                },
-                overviewRuler: {
-                    color: getEditColor(range.kind),
-                },
-            },
-        });
+        return [new monaco.Range(pos.lineNumber, getAdjustedColumn(pos.lineNumber, pos.column), endPos.lineNumber, endPos.column)];
     }
-    else {
-        // Multi-line decoration
-        // Decorate the first line
-        const adjustedStartPos = {
-            lineNumber: pos.lineNumber,
-            column: getAdjustedPos(pos.lineNumber, pos.column),
-        };
-        decorations.push({
-            range: new monaco.Range(adjustedStartPos.lineNumber, adjustedStartPos.column, pos.lineNumber, editor.getModel().getLineMaxColumn(pos.lineNumber)),
-            options: {
-                className: range.kind,
-                //inlineClassName: range.kind, // Use this instead of className
-                zIndex: range.index,
-                hoverMessage: {
-                    value: range.requestPath
-                        ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
-                        : range.tooltip,
-                    isTrusted: true
-                },
-                overviewRuler: {
-                    color: getEditColor(range.kind),
-                },
+    const ranges = [];
+    // the first line
+    ranges.push(new monaco.Range(pos.lineNumber, getAdjustedColumn(pos.lineNumber, pos.column), pos.lineNumber, model.getLineMaxColumn(pos.lineNumber)));
+    // each line in between
+    for (let line = pos.lineNumber + 1; line < endPos.lineNumber; line++) {
+        ranges.push(new monaco.Range(line, getAdjustedColumn(line, 1), line, model.getLineMaxColumn(line)));
+    }
+    // the last line
+    ranges.push(new monaco.Range(endPos.lineNumber, getAdjustedColumn(endPos.lineNumber, 1), endPos.lineNumber, endPos.column));
+    return ranges;
+}
+//the decorations coloring the range, without the tooltips, which are added by getTooltipDecorations
+function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
+    return getLineRangesNoLeadingWhiteSpace(pos, endPos, editor).map(lineRange => ({
+        range: lineRange,
+        options: {
+            className: range.kind,
+            //inlineClassName: range.kind, // Use this instead of className
+            zIndex: range.index,
+            overviewRuler: {
+                color: getEditColor(range.kind),
             },
+        },
+    }));
+}
+//marks the decorations that only show tooltips, so that they are ignored when locating the clicked AST node
+const TOOLTIP_DECORATION = 'ast-tooltip';
+function isTooltipDecoration(decoration) {
+    return decoration.options && decoration.options.description === TOOLTIP_DECORATION;
+}
+//Monaco shows the hover messages of all decorations containing the mouse position, so the tooltips of a parent AST node would be repeated
+//in all its child AST nodes; the tooltips of each AST node are shown only in the parts of its range that are not covered by nested AST nodes with tooltips
+function getTooltipDecorations(ranges, editor) {
+    const model = editor.getModel();
+    const text = model.getValue();
+    //the tooltips of each AST node, as an AST node may have multiple ranges (i.e., kinds) with tooltips
+    const nodes = new Map();
+    ranges.forEach(range => {
+        if (!range.tooltip) return;
+        const key = range.from + ':' + range.to;
+        if (!nodes.has(key)) {
+            nodes.set(key, {from: range.from, to: range.to, messages: [], tooltips: new Set()});
+        }
+        const node = nodes.get(key);
+        if (node.tooltips.has(range.tooltip)) return;
+        node.tooltips.add(range.tooltip);
+        node.messages.push({
+            value: range.requestPath
+                ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
+                : range.tooltip,
+            isTrusted: true
         });
-        // Decorate each line in between, avoiding leading whitespace
-        for (let line = pos.lineNumber + 1; line < endPos.lineNumber; line++) {
-            const adjustedColumn = getAdjustedPos(line, 1); // Adjust for leading whitespace
-            decorations.push({
-                range: new monaco.Range(line, adjustedColumn, line, editor.getModel().getLineMaxColumn(line)),
-                options: {
-                    className: range.kind,
-                    //inlineClassName: range.kind, // Use this instead of className
-                    zIndex: range.index,
-                    hoverMessage: {
-                        value: range.requestPath
-                            ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
-                            : range.tooltip,
-                        isTrusted: true
+    });
+    const sorted = [...nodes.values()].sort((a, b) => a.from - b.from || b.to - a.to);
+    const decorations = [];
+    sorted.forEach(node => {
+        //the nested AST nodes with tooltips, which show their own tooltips
+        const nested = sorted.filter(other => other !== node && other.from >= node.from && other.to <= node.to);
+        let start = node.from;
+        nested.forEach(other => {
+            if (other.from > start) {
+                addTooltipSegment(start, other.from);
+            }
+            start = Math.max(start, other.to);
+        });
+        if (start < node.to) {
+            addTooltipSegment(start, node.to);
+        }
+        function addTooltipSegment(from, to) {
+            if (text.substring(from, to).trim().length === 0) return;
+            const pos = model.getPositionAt(from);
+            const endPos = model.getPositionAt(to);
+            getLineRangesNoLeadingWhiteSpace(pos, endPos, editor).forEach(lineRange => {
+                if (lineRange.isEmpty()) return;
+                decorations.push({
+                    range: lineRange,
+                    options: {
+                        description: TOOLTIP_DECORATION,
+                        hoverMessage: node.messages,
                     },
-                    overviewRuler: {
-                        color: getEditColor(range.kind),
-                    },
-                },
+                });
             });
         }
-        // Decorate the last line, skipping leading whitespace
-        const adjustedEndPos = {
-            lineNumber: endPos.lineNumber,
-            column: getAdjustedPos(endPos.lineNumber, 1),
-        };
-        decorations.push({
-            range: new monaco.Range(endPos.lineNumber, adjustedEndPos.column, endPos.lineNumber, endPos.column),
-            options: {
-                className: range.kind,
-                //inlineClassName: range.kind, // Use this instead of className
-                zIndex: range.index,
-                hoverMessage: {
-                    value: range.requestPath
-                        ? `[${range.tooltip}](${new URL(range.requestPath, window.location.href).href})`
-                        : range.tooltip,
-                    isTrusted: true
-                },
-                overviewRuler: {
-                    color: getEditColor(range.kind),
-                },
-            },
-        });
-    }
-    // return [];
+    });
     return decorations;
 }
 function getDecoration(range, pos, endPos) {
@@ -344,6 +339,7 @@ function editorMouseDown(config, srcEditor, dstEditor, index, destIndex) {
     return (event) => {
         if (event.target.range) {
             const allDecorations = srcEditor.getModel().getDecorationsInRange(event.target.range, srcEditor.id, true)
+                .filter(decoration => !isTooltipDecoration(decoration))
             if (allDecorations.length >= 1) {
                 let activatedRange = allDecorations[0].range;
                 if (allDecorations.length > 1) {

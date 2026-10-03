@@ -58585,6 +58585,50 @@
   "firstEndPos" : 47399,
   "secondEndPos" : 47323
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 47453,
+  "secondPos" : 51154,
+  "firstEndPos" : 47473,
+  "secondEndPos" : 51174
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 47453,
+  "secondPos" : 51154,
+  "firstEndPos" : 47458,
+  "secondEndPos" : 51159
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Lists",
+  "secondLabel" : "Lists",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 47453,
+  "secondPos" : 51154,
+  "firstEndPos" : 47458,
+  "secondEndPos" : 51159
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "newArrayList",
+  "secondLabel" : "newArrayList",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 47459,
+  "secondPos" : 51160,
+  "firstEndPos" : 47471,
+  "secondEndPos" : 51172
+}, {
   "firstType" : "Javadoc",
   "secondType" : "Javadoc",
   "firstLabel" : "",
@@ -58617,50 +58661,6 @@
   "secondPos" : 47399,
   "firstEndPos" : 47510,
   "secondEndPos" : 47418
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 47732,
-  "secondPos" : 51154,
-  "firstEndPos" : 47752,
-  "secondEndPos" : 51174
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 47732,
-  "secondPos" : 51154,
-  "firstEndPos" : 47737,
-  "secondEndPos" : 51159
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Lists",
-  "secondLabel" : "Lists",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 47732,
-  "secondPos" : 51154,
-  "firstEndPos" : 47737,
-  "secondEndPos" : 51159
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "newArrayList",
-  "secondLabel" : "newArrayList",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 47738,
-  "secondPos" : 51160,
-  "firstEndPos" : 47750,
-  "secondEndPos" : 51172
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

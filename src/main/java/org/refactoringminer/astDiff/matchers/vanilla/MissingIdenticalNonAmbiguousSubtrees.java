@@ -81,10 +81,12 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
 
         filterMappings(multiMappings);
     }
-    @Override
     public void filterMappings(MultiMappingStore multiMappings) {
         List<Mapping> ambiguousList = new ArrayList<>();
         Set<Tree> ignored = new HashSet<>();
+        //the rank of each ambiguous subtree among the identical subtrees of its group in textual order
+        Map<Tree, Integer> srcRanks = new HashMap<>();
+        Map<Tree, Integer> dstRanks = new HashMap<>();
         Set<Tree> trees = new TreeSet<>(Comparator.comparingInt(Tree::getPos));
         trees.addAll(multiMappings.allMappedSrcs());
         for (var src : trees) {
@@ -120,13 +122,25 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
                         ambiguousList.add(new Mapping(asrc, adst));
                     }
                 ignored.addAll(asrcs);
+                if (asrcs.size() == adsts.size()) {
+                    //the order of the identical subtrees is preserved, when there are as many in the src as in the dst
+                    rankInTextualOrder(asrcs, srcRanks);
+                    rankInTextualOrder(adsts, dstRanks);
+                }
             }
             Set<Tree> srcIgnored = new HashSet<>();
             Set<Tree> dstIgnored = new HashSet<>();
-            Collections.sort(ambiguousList, new CustomTopDownMatcher.ExtendedFullMappingComparator(mappings.getMonoMappingStore()));
+            Collections.sort(ambiguousList, new CustomTopDownMatcher.ExtendedFullMappingComparator(mappings.getMonoMappingStore(), srcRanks, dstRanks));
             // Select the best ambiguous mappings
             retainBestMapping(ambiguousList, srcIgnored, dstIgnored);
         }
+    }
+
+    private static void rankInTextualOrder(Set<Tree> trees, Map<Tree, Integer> ranks) {
+        List<Tree> sorted = new ArrayList<>(trees);
+        sorted.sort(Comparator.comparingInt(Tree::getPos));
+        for (int i = 0; i < sorted.size(); i++)
+            ranks.put(sorted.get(i), i);
     }
 
     private boolean isAcceptable(Tree src, Tree dst) {
@@ -210,7 +224,6 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
         return false;
     }
 
-    @Override
     protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
         List<Mapping> verifiedList = new ArrayList<>();
         for (Mapping mapping : mappingList) {

@@ -18,7 +18,6 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		setMinPriority(minP);
 	}
 
-	@Override
 	protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
 		List<Mapping> verifiedList = new ArrayList<>();
 		for (Mapping mapping : mappingList) {
@@ -28,7 +27,21 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			}
 			else verifiedList.add(mapping);
 		}
-		super.retainBestMapping(verifiedList, srcIgnored, dstIgnored);
+		retainMappingsInOrder(verifiedList, srcIgnored, dstIgnored);
+	}
+
+	//the retainBestMapping of GumTree 3.0 AbstractSubtreeMatcher, which is removed in GumTree 4.0
+	private void retainMappingsInOrder(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+		while (mappingList.size() > 0) {
+			var mapping = mappingList.remove(0);
+			if (!(srcIgnored.contains(mapping.first) || dstIgnored.contains(mapping.second))) {
+				mappings.addMappingRecursively(mapping.first, mapping.second);
+				srcIgnored.add(mapping.first);
+				srcIgnored.addAll(mapping.first.getDescendants());
+				dstIgnored.add(mapping.second);
+				dstIgnored.addAll(mapping.second.getDescendants());
+			}
+		}
 	}
 
 	private boolean isAcceptableMatch(Mapping mapping) {
@@ -140,7 +153,6 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		return this.mappings;
 	}
 
-	@Override
 	public void filterMappings(MultiMappingStore multiMappings) {
 		// Select unique mappings first and extract ambiguous mappings.
 		List<AmbiguousGroup> ambiguousGroups = new ArrayList<>();
@@ -620,21 +632,62 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		}
 	}
 
+	//ranks the mappings with the criteria of the GumTree FullMappingComparator, adding the order of the identical subtrees
+	//before the positions in the parents, because GumTree 4.0 compares the unnormalized positions in the parents,
+	//which crosses identical subtrees when statements are inserted before them, i.e., the same argument of two consecutive calls
 	public static class ExtendedFullMappingComparator implements Comparator<Mapping> {
-		private final MappingComparators.FullMappingComparator fullMappingComparator;
+		private final MappingComparators.SiblingsSimilarityMappingComparator siblingsComparator;
+		private final MappingComparators.ParentsSimilarityMappingComparator parentsComparator = new MappingComparators.ParentsSimilarityMappingComparator();
+		private final MappingComparators.PositionInParentsSimilarityMappingComparator positionInParentsComparator = new MappingComparators.PositionInParentsSimilarityMappingComparator();
+		private final MappingComparators.TextualPositionDistanceMappingComparator textualPositionComparator = new MappingComparators.TextualPositionDistanceMappingComparator();
+		private final MappingComparators.AbsolutePositionDistanceMappingComparator absolutePositionComparator = new MappingComparators.AbsolutePositionDistanceMappingComparator();
+		//the rank of each identical subtree among the identical subtrees of its group in textual order, or empty if unknown
+		private final Map<Tree, Integer> srcRanks;
+		private final Map<Tree, Integer> dstRanks;
 
 		public ExtendedFullMappingComparator(MappingStore ms) {
-			fullMappingComparator = new MappingComparators.FullMappingComparator(ms);
+			this(ms, Collections.emptyMap(), Collections.emptyMap());
+		}
+
+		public ExtendedFullMappingComparator(MappingStore ms, Map<Tree, Integer> srcRanks, Map<Tree, Integer> dstRanks) {
+			siblingsComparator = new MappingComparators.SiblingsSimilarityMappingComparator(ms);
+			this.srcRanks = srcRanks;
+			this.dstRanks = dstRanks;
 		}
 
 		@Override
 		public int compare(Mapping m1, Mapping m2) {
-			int result = fullMappingComparator.compare(m1,m2);
+			int result = siblingsComparator.compare(m1,m2);
+			if (result != 0)
+				return result;
+			result = parentsComparator.compare(m1, m2);
+			if (result != 0)
+				return result;
+			result = Integer.compare(rankDistance(m1), rankDistance(m2));
+			if (result != 0)
+				return result;
+			result = positionInParentsComparator.compare(m1, m2);
+			if (result != 0)
+				return result;
+			result = textualPositionComparator.compare(m1, m2);
+			if (result != 0)
+				return result;
+			result = absolutePositionComparator.compare(m1, m2);
 			if (result != 0)
 				return result;
 			return new AbsoluteOffsetComparator().compare(m1,m2);
 		}
+
+		//the k-th identical subtree in the src preferably corresponds to the k-th identical subtree in the dst
+		private int rankDistance(Mapping m) {
+			Integer srcRank = srcRanks.get(m.first);
+			Integer dstRank = dstRanks.get(m.second);
+			if (srcRank == null || dstRank == null)
+				return 0;
+			return Math.abs(srcRank - dstRank);
+		}
 	}
+
 	public static class AbsoluteOffsetComparator implements Comparator<Mapping> {
 		@Override
 		public int compare(Mapping m1, Mapping m2) {

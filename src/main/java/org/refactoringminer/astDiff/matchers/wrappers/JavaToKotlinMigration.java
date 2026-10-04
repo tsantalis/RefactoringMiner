@@ -180,6 +180,15 @@ public class JavaToKotlinMigration {
         if(mathSimpleNames1.size() > 0 && mathSimpleNames2.isEmpty()) {
             children1.removeAll(mathSimpleNames1);
         }
+        //the Java parseLong call is replaced with the Kotlin toLong call on its argument, i.e., Long.parseLong(header.trim()) -> header.trim().toLong()
+        List<Tree> parseLongInvocations1 = findParseLongInvocationsOnlyInJava(srcStatementNode, children2, LANG1);
+        for(Tree parseLongInvocation1 : parseLongInvocations1) {
+            children1.remove(TreeUtilFunctions.findChildByType(parseLongInvocation1, LANG1.SIMPLE_NAME));
+            Tree receiver1 = TreeUtilFunctions.findChildByType(parseLongInvocation1, LANG1.METHOD_INVOCATION_RECEIVER);
+            if(receiver1 != null) {
+                children1.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(receiver1, LANG1.SIMPLE_NAME));
+            }
+        }
         List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
         List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
@@ -401,6 +410,7 @@ public class JavaToKotlinMigration {
         }
         inv1.removeAll(builderNodes1);
         inv2.removeAll(builderNodes2);
+        inv1.removeAll(parseLongInvocations1);
         //the Java variable initializer is the receiver of the Kotlin apply call, i.e., RealCall call = new RealCall(x); -> return RealCall(x).apply {...}
         Tree applyCall2 = findApplyCallWithInitializerReceiver(srcStatementNode, dstStatementNode, LANG1, LANG2);
         if(applyCall2 != null) {
@@ -1532,6 +1542,24 @@ public class JavaToKotlinMigration {
     }
 
     //the receivers of the Java invocations, which are called without receiver in Kotlin, i.e., the class name of a static method moved to a companion object
+    //the Java parseLong invocations, i.e., Long.parseLong(x), when the Kotlin statement has no parseLong call
+    private static List<Tree> findParseLongInvocationsOnlyInJava(Tree srcStatementNode, List<Tree> simpleNames2, Constants LANG1) {
+        if(simpleNames2.stream().anyMatch(t -> t.getLabel().equals("parseLong")))
+            return Collections.emptyList();
+        List<Tree> invocations1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            invocations1.add(0, srcStatementNode);
+        }
+        List<Tree> parseLongInvocations1 = new ArrayList<>();
+        for(Tree invocation1 : invocations1) {
+            Tree name1 = TreeUtilFunctions.findChildByType(invocation1, LANG1.SIMPLE_NAME);
+            if(name1 != null && name1.getLabel().equals("parseLong")) {
+                parseLongInvocations1.add(invocation1);
+            }
+        }
+        return parseLongInvocations1;
+    }
+
     private static List<Tree> droppedReceivers(List<Tree> inv1, List<Tree> inv2, Constants LANG1, Constants LANG2) {
         List<Tree> receivers1 = new ArrayList<>();
         for(Tree invocation1 : inv1) {

@@ -131,6 +131,16 @@ public class StringBasedHeuristics {
 					temp = ReplacementUtil.performReplacement(temp, before, after);
 					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+						call.getName().equals("parseLong")) {
+					String before = "parseLong(" + call.arguments.get(0) + ")";
+					if(call.getExpression() != null) {
+						before = call.getExpression() + "." + before;
+					}
+					String after = call.arguments.get(0);
+					temp = ReplacementUtil.performReplacement(temp, before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 0 && !methodInvocations2.contains(call) &&
 						call.getName().equals("values")) {
 					String before = ".values()";

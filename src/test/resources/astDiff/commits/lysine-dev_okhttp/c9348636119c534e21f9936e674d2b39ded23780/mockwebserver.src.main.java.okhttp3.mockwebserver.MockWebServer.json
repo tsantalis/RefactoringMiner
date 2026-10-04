@@ -15212,6 +15212,28 @@
   "firstEndPos" : 24180,
   "secondEndPos" : 21899
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 24085,
+  "secondPos" : 21809,
+  "firstEndPos" : 24106,
+  "secondEndPos" : 21826
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 24085,
+  "secondPos" : 21809,
+  "firstEndPos" : 24092,
+  "secondEndPos" : 21824
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "request",
@@ -15222,17 +15244,6 @@
   "secondPos" : 21809,
   "firstEndPos" : 24092,
   "secondEndPos" : 21816
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "length",
-  "secondLabel" : "isEmpty",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "navigation_suffix",
-  "firstPos" : 24093,
-  "secondPos" : 21817,
-  "firstEndPos" : 24099,
-  "secondEndPos" : 21824
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
@@ -15464,6 +15475,116 @@
   "secondPos" : 22013,
   "firstEndPos" : 24327,
   "secondEndPos" : 22018
+}, {
+  "firstType" : "WhileStatement",
+  "secondType" : "while_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 24352,
+  "secondPos" : 22023,
+  "firstEndPos" : 25028,
+  "secondEndPos" : 22738
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "WhileStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 24359,
+  "secondPos" : 22095,
+  "firstEndPos" : 24411,
+  "secondEndPos" : 22111
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 24359,
+  "secondPos" : 22095,
+  "firstEndPos" : 24397,
+  "secondEndPos" : 22109
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParenthesizedExpression",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 24360,
+  "secondPos" : 22044,
+  "firstEndPos" : 24396,
+  "secondEndPos" : 22084
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "header",
+  "secondLabel" : "header",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 24360,
+  "secondPos" : 22048,
+  "firstEndPos" : 24366,
+  "secondEndPos" : 22054
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 24367,
+  "secondPos" : 22055,
+  "firstEndPos" : 24368,
+  "secondEndPos" : 22056
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 24369,
+  "secondPos" : 22057,
+  "firstEndPos" : 24396,
+  "secondEndPos" : 22084
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 24369,
+  "secondPos" : 22057,
+  "firstEndPos" : 24375,
+  "secondEndPos" : 22082
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "source",
+  "secondLabel" : "source",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 24369,
+  "secondPos" : 22057,
+  "firstEndPos" : 24375,
+  "secondEndPos" : 22063
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readUtf8LineStrict",
+  "secondLabel" : "readUtf8LineStrict",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 24376,
+  "secondPos" : 22064,
+  "firstEndPos" : 24394,
+  "secondEndPos" : 22082
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",

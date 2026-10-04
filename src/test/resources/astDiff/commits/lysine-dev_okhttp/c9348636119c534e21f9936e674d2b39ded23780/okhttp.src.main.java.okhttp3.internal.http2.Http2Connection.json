@@ -23429,17 +23429,6 @@
   "firstEndPos" : 28275,
   "secondEndPos" : 25225
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "streamId",
-  "secondLabel" : "streamId",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "infix_expression",
-  "firstPos" : 28267,
-  "secondPos" : 25234,
-  "firstEndPos" : 28275,
-  "secondEndPos" : 25242
-}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "comparison_operator",
   "firstLabel" : "!=",
@@ -23472,6 +23461,17 @@
   "secondPos" : 25234,
   "firstEndPos" : 28303,
   "secondEndPos" : 25253
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "streamId",
+  "secondLabel" : "streamId",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "infix_expression",
+  "firstPos" : 28285,
+  "secondPos" : 25234,
+  "firstEndPos" : 28293,
+  "secondEndPos" : 25242
 }, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",

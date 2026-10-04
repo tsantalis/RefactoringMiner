@@ -575,11 +575,14 @@ public class JavaToKotlinMigration {
             }
         }
         else if(children2.size() > children1.size()) {
-            //match only the children with identical labels on a first match basis
+            //match only the children with identical labels on a first match basis, each child of children1 is matched at most once,
+            //i.e., the second lowercaseHeader in lowercaseHeader.startsWith("expect:") && lowercaseHeader.substring(7)...
+            Set<Tree> matched1 = Collections.newSetFromMap(new IdentityHashMap<>());
             for(int i=0; i<children2.size(); i++) {
                 for(int j=0; j<children1.size(); j++) {
-                    if(children2.get(i).getLabel().equals(children1.get(j).getLabel())) {
+                    if(!matched1.contains(children1.get(j)) && children2.get(i).getLabel().equals(children1.get(j).getLabel())) {
                         mappingStore.addMapping(children1.get(j), children2.get(i));
+                        matched1.add(children1.get(j));
                         break;
                     }
                 }

@@ -206,7 +206,9 @@ function innermostRangeWithoutMatch(config, index, activatedRange) {
 			}
 		}
 	});
-	return innermost.some(range => kindsWithoutMatch.includes(range.kind));
+	//the innermost ranges with the same span are the clicked node and its single-child wrappers, i.e., Kotlin lambda_parameters -> variable_declaration -> sink,
+	//so the clicked node has a match, unless all of them have no match
+	return innermost.length > 0 && innermost.every(range => kindsWithoutMatch.includes(range.kind));
 }
 function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 	var exit = [];
@@ -272,8 +274,9 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
         .filter(mapping =>
             mapping[index].startColumn <= activatedRange.startColumn
             && mapping[index].startLineNumber <= activatedRange.startLineNumber
+            //the mapping of the clicked range itself is a candidate, i.e., a lambda parameter mapped to a try resource name
             && !(mapping[index].endLineNumber === activatedRange.endLineNumber &&
-                mapping[index].endColumn <= activatedRange.endColumn)
+                mapping[index].endColumn < activatedRange.endColumn)
         );
     candidates = candidates.filter(candidate => candidate[index].containsRange(activatedRange))
     candidates

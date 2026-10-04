@@ -365,11 +365,30 @@ public class KotlinOperationBody extends OperationBody {
 			// model as a composite try statement
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.TRY_STATEMENT, fileContent);
 			parent.addStatement(child);
-			addStatementInVariableScopes(child);
+			// the receiver is the resource, as in the Java try-with-resources
+			AbstractExpression resource = new AbstractExpression(ktFile, sourceFolder, filePath, qualifiedExpression.getReceiverExpression(), CodeElementType.TRY_STATEMENT_RESOURCE, container, activeVariableDeclarations, fileContent);
+			child.addExpression(resource);
 			KtValueArgument lambdaArgument = invocation.getValueArguments().get(0);
+			// the lambda parameter is the resource variable, as in the Java try-with-resources
+			if(lambdaArgument instanceof KtLambdaArgument lambda) {
+				for(KtParameter parameter : lambda.getLambdaExpression().getValueParameters()) {
+					if(parameter.getDestructuringDeclaration() != null) {
+						for(KtDestructuringDeclarationEntry entry : parameter.getDestructuringDeclaration().getEntries()) {
+							child.addVariableDeclaration(new VariableDeclaration(ktFile, sourceFolder, filePath, entry, container, activeVariableDeclarations, fileContent, child.getLocationInfo()));
+						}
+					}
+					else {
+						child.addVariableDeclaration(new VariableDeclaration(ktFile, sourceFolder, filePath, parameter, container, activeVariableDeclarations, fileContent, child.getLocationInfo()));
+					}
+				}
+			}
+			addStatementInVariableScopes(child);
+			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			if(lambdaArgument instanceof KtLambdaArgument lambda) {
 				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
 			}
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else {
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);

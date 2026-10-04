@@ -12338,8 +12338,8 @@
     }, {
         "type": "Move Code",
         "description": "Move Code from public checkForLeaks(heapDumpFile File, exclusions List<Exclusion>, computeRetainedHeapSize Boolean, leakTraceInspectors List<LeakTraceInspector>) : HeapAnalysis to public checkForLeaks(heapDumpFile File, exclusions List<Exclusion>, computeRetainedHeapSize Boolean, leakTraceInspectors List<LeakTraceInspector>) : HeapAnalysis in class leakcanary.HeapAnalyzer",
-        "comment": "<p>moved from lambda to parent function</p>",
-        "validation": "TP",
+        "comment": "<p>moved from lambda to parent function. The code is indeed moved to</p><div style='color: #000000; background-color: #fffffe; font-family: Menlo, Monaco, 'Courier New', monospace; font-weight: normal; font-size: 12px; line-height: 18px; white-space: pre;'><div><span style='color: #000000;'>hprofCloseable.use {</span></div><div><span style='color: #000000;'>which is modeled as try block</span></div></div>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }, {

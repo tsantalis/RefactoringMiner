@@ -290,6 +290,7 @@ public class Constants {
     public final String CATCH_CLAUSE;
     public final String BLOCK = "Block";
     public final String VARIABLE_DECLARATION_FRAGMENT = "VariableDeclarationFragment";
+    public final String VARIABLE_DECLARATION_EXPRESSION = "VariableDeclarationExpression";
     public final String FIELD_DECLARATION;
     public final String ACCESS_MODIFIER = "AccessModifier";
     public final String PACKAGE_DECLARATION;

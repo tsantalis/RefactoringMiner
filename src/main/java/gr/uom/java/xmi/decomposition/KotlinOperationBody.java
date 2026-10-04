@@ -14,6 +14,7 @@ import org.jetbrains.kotlin.psi.KtContinueExpression;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclaration;
 import org.jetbrains.kotlin.psi.KtDestructuringDeclarationEntry;
 import org.jetbrains.kotlin.psi.KtDoWhileExpression;
+import org.jetbrains.kotlin.psi.KtDotQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtFinallySection;
@@ -347,7 +348,21 @@ public class KotlinOperationBody extends OperationBody {
 		else if(statement instanceof KtCallExpression invocation && invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference && nameReference.getReferencedName().equals("ignoreIoExceptions") && invocation.getValueArguments().size() == 1) {
 			// ignoreIoExceptions {}
 			// first argument is a lambda
-			// model as a composite synchronized statement
+			// model as a composite try statement
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.TRY_STATEMENT, fileContent);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+			KtValueArgument lambdaArgument = invocation.getValueArguments().get(0);
+			if(lambdaArgument instanceof KtLambdaArgument lambda) {
+				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
+			}
+		}
+		else if(statement instanceof KtDotQualifiedExpression qualifiedExpression && qualifiedExpression.getSelectorExpression() instanceof KtCallExpression invocation &&
+				invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference &&
+				nameReference.getReferencedName().equals("use") && invocation.getValueArguments().size() == 1) {
+			// resource.use {}
+			// first argument is a lambda
+			// model as a composite try statement
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.TRY_STATEMENT, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);

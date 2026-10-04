@@ -203,6 +203,12 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        //the Java get call is replaced with the Kotlin indexing expression, i.e., response.getHeaders().get("Transfer-Encoding") -> response.getHeaders()["Transfer-Encoding"]
+        //the get name is not matched, as the Kotlin [] has no name
+        Map<Tree, Tree> getInvocations = findGetInvocationsReplacedWithIndexing(srcStatementNode, dstStatementNode, LANG1, LANG2);
+        for(Tree getInvocation1 : getInvocations.keySet()) {
+            children1.remove(getInvocation1.getChild(1));
+        }
         //the Java length/size comparison with zero is replaced with the Kotlin isEmpty/isNotEmpty call, i.e., request.length() == 0 -> request.isEmpty()
         //the length and isEmpty names are not matched, as with parseLong above
         Map<Tree, Tree> lengthComparisons = findLengthComparisonsReplacedWithIsEmpty(srcStatementNode, dstStatementNode, LANG1, LANG2);
@@ -432,6 +438,7 @@ public class JavaToKotlinMigration {
         inv1.removeAll(builderNodes1);
         inv2.removeAll(builderNodes2);
         inv1.removeAll(parseLongInvocations1);
+        inv1.removeAll(getInvocations.keySet());
         for(Map.Entry<Tree, Tree> entry : lengthComparisons.entrySet()) {
             inv1.remove(entry.getKey().getChild(0));
             inv2.remove(entry.getValue());
@@ -626,6 +633,12 @@ public class JavaToKotlinMigration {
         inv1.removeAll(invocationsToBeRemoved);
         for(Map.Entry<Tree, Tree> entry : lengthComparisons.entrySet()) {
             alignLengthComparisonWithIsEmpty(mappingStore, entry.getKey(), entry.getValue(), LANG1, LANG2, deferredFlattenings);
+        }
+        for(Map.Entry<Tree, Tree> entry : getInvocations.entrySet()) {
+            Tree propertyAccessReceiver1 = alignGetInvocationWithIndexing(mappingStore, entry.getKey(), entry.getValue(), LANG1, LANG2, deferredFlattenings);
+            if(propertyAccessReceiver1 != null) {
+                inv1.remove(propertyAccessReceiver1);
+            }
         }
         List<Tree> casts1 = new ArrayList<>(castExpressions1);
         if(srcStatementNode.getType().name.equals(LANG1.CAST_EXPRESSION)) {
@@ -1404,6 +1417,73 @@ public class JavaToKotlinMigration {
             alignLengthComparisonWithIsEmpty(mappingStore, condition1, if2.getChild(0), LANG1, LANG2, deferredFlattenings);
         }
         return true;
+    }
+
+    //the Java get invocations paired with the Kotlin indexing expressions in order, i.e., response.getHeaders().get("Transfer-Encoding") -> response.getHeaders()["Transfer-Encoding"]
+    private static Map<Tree, Tree> findGetInvocationsReplacedWithIndexing(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        List<Tree> invocations1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            invocations1.add(0, srcStatementNode);
+        }
+        invocations1.removeIf(invocation1 -> !isGetInvocationWithOneArgument(invocation1, LANG1));
+        List<Tree> indexing2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INDEXING_EXPRESSION);
+        if(dstStatementNode.getType().name.equals(LANG2.INDEXING_EXPRESSION)) {
+            indexing2.add(0, dstStatementNode);
+        }
+        indexing2.removeIf(indexingExpression2 -> indexingArgument2(indexingExpression2, LANG2) == null);
+        Map<Tree, Tree> pairs = new LinkedHashMap<>();
+        if(invocations1.size() == indexing2.size()) {
+            for(int i=0; i<invocations1.size(); i++) {
+                pairs.put(invocations1.get(i), indexing2.get(i));
+            }
+        }
+        return pairs;
+    }
+
+    //Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> receiver, get, METHOD_INVOCATION_ARGUMENTS -> argument],
+    //or MethodInvocation -> [receiver, get, METHOD_INVOCATION_ARGUMENTS -> argument] if the receiver is already flattened by a previous mapping of the same statement
+    private static boolean isGetInvocationWithOneArgument(Tree invocation1, Constants LANG1) {
+        if(invocation1.getChildren().size() != 3)
+            return false;
+        Tree name1 = invocation1.getChild(1);
+        Tree arguments1 = invocation1.getChild(2);
+        return name1.getType().name.equals(LANG1.SIMPLE_NAME) && name1.getLabel().equals("get") &&
+                arguments1.getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && arguments1.getChildren().size() == 1;
+    }
+
+    //the argument of Kotlin indexing_expression -> [receiver, indexing_suffix -> [[, argument, ]]]
+    private static Tree indexingArgument2(Tree indexingExpression2, Constants LANG2) {
+        if(indexingExpression2.getChildren().size() != 2 || !indexingExpression2.getChild(1).getType().name.equals(LANG2.INDEXING_SUFFIX))
+            return null;
+        Tree suffix2 = indexingExpression2.getChild(1);
+        if(suffix2.getChildren().size() != 3 || !suffix2.getChild(0).getLabel().equals("[") || !suffix2.getChild(2).getLabel().equals("]"))
+            return null;
+        return suffix2.getChild(1);
+    }
+
+    //align Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> receiver, get, METHOD_INVOCATION_ARGUMENTS -> argument]
+    //with Kotlin indexing_expression -> [receiver, indexing_suffix -> [[, argument, ]]], by flattening the Java receiver, which has no Kotlin counterpart (or deferring the flattening)
+    //returns the Java receiver invocation, if it is aligned with a Kotlin property access, i.e., request.getHeaders().get("Accept-Language") -> request.headers["Accept-Language"]
+    private static Tree alignGetInvocationWithIndexing(ExtendedMultiMappingStore mappingStore, Tree invocation1, Tree indexingExpression2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        mappingStore.addMapping(invocation1, indexingExpression2);
+        mappingStore.addMapping(invocation1.getChild(2), indexingExpression2.getChild(1));
+        Tree receiver1 = invocation1.getChild(0);
+        //the receiver expression, whether or not the METHOD_INVOCATION_RECEIVER is already flattened
+        boolean wrapped1 = receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER);
+        Tree receiverExpression1 = wrapped1 && receiver1.getChildren().size() == 1 ? receiver1.getChild(0) : receiver1;
+        Tree receiverExpression2 = indexingExpression2.getChild(0);
+        Tree propertyAccessReceiver1 = null;
+        if(receiverExpression1.isLeaf() && receiverExpression2.isLeaf()) {
+            mappingStore.addMapping(receiverExpression1, receiverExpression2);
+        }
+        else if(!mappingStore.isSrcMapped(receiverExpression1) &&
+                alignMethodInvocationWithPropertyAccess(mappingStore, receiverExpression1, receiverExpression2, LANG1, LANG2, deferredFlattenings)) {
+            propertyAccessReceiver1 = receiverExpression1;
+        }
+        if(wrapped1) {
+            flattenSrcChild(mappingStore, deferredFlattenings, invocation1, receiver1);
+        }
+        return propertyAccessReceiver1;
     }
 
     //the Java length/size comparisons with zero paired with the Kotlin isEmpty/isNotEmpty calls, i.e., request.length() == 0 -> request.isEmpty()

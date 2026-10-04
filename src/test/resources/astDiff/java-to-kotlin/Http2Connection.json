@@ -3633,12 +3633,23 @@
   "secondType" : "simple_identifier",
   "firstLabel" : "streams",
   "secondLabel" : "streams",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstParentType" : "ReturnStatement",
   "secondParentType" : "indexing_expression",
   "firstPos" : 7083,
   "secondPos" : 6135,
   "firstEndPos" : 7090,
   "secondEndPos" : 6142
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "indexing_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "indexing_expression",
+  "firstPos" : 7095,
+  "secondPos" : 6142,
+  "firstEndPos" : 7097,
+  "secondEndPos" : 6146
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",

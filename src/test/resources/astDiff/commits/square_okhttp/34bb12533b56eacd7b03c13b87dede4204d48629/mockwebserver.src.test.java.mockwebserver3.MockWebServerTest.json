@@ -5950,11 +5950,33 @@
   "firstEndPos" : 6244,
   "secondEndPos" : 5221
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "indexing_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 6201,
+  "secondPos" : 5186,
+  "firstEndPos" : 6244,
+  "secondEndPos" : 5220
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "indexing_expression",
+  "firstPos" : 6201,
+  "secondPos" : 5186,
+  "firstEndPos" : 6221,
+  "secondEndPos" : 5201
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "request",
   "secondLabel" : "request",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "navigation_expression",
   "firstPos" : 6201,
   "secondPos" : 5186,
@@ -5966,11 +5988,22 @@
   "firstLabel" : "getHeaders",
   "secondLabel" : "headers",
   "firstParentType" : "MethodInvocation",
-  "secondParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_expression",
   "firstPos" : 6209,
   "secondPos" : 5194,
   "firstEndPos" : 6219,
   "secondEndPos" : 5201
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "indexing_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "indexing_expression",
+  "firstPos" : 6226,
+  "secondPos" : 5201,
+  "firstEndPos" : 6243,
+  "secondEndPos" : 5220
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "string_literal",
@@ -28720,11 +28753,33 @@
   "firstEndPos" : 21331,
   "secondEndPos" : 19004
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "indexing_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 21303,
+  "secondPos" : 18984,
+  "firstEndPos" : 21331,
+  "secondEndPos" : 19003
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "indexing_expression",
+  "firstPos" : 21303,
+  "secondPos" : 18984,
+  "firstEndPos" : 21324,
+  "secondEndPos" : 19000
+}, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
   "firstLabel" : "server",
   "secondLabel" : "server",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "navigation_expression",
   "firstPos" : 21303,
   "secondPos" : 18984,
@@ -28736,11 +28791,22 @@
   "firstLabel" : "getProtocols",
   "secondLabel" : "protocols",
   "firstParentType" : "MethodInvocation",
-  "secondParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_expression",
   "firstPos" : 21310,
   "secondPos" : 18991,
   "firstEndPos" : 21322,
   "secondEndPos" : 19000
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "indexing_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "indexing_expression",
+  "firstPos" : 21329,
+  "secondPos" : 19000,
+  "firstEndPos" : 21330,
+  "secondEndPos" : 19003
 }, {
   "firstType" : "NumberLiteral",
   "secondType" : "integer_literal",

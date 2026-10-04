@@ -493,6 +493,8 @@ public class Constants {
     public final String CALL_SUFFIX = "call_suffix";
     public final String NAVIGATION_EXPRESSION = "navigation_expression";
     public final String NAVIGATION_SUFFIX = "navigation_suffix";
+    public final String INDEXING_EXPRESSION = "indexing_expression";
+    public final String INDEXING_SUFFIX = "indexing_suffix";
     public final String INTEGER_LITERAL = "integer_literal";
     public final String FLOAT_LITERAL = "real_literal";
     public final String VARIABLE_DECLARATION = "variable_declaration";

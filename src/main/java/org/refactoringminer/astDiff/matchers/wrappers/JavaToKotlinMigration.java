@@ -191,6 +191,18 @@ public class JavaToKotlinMigration {
                 children1.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(receiver1, LANG1.SIMPLE_NAME));
             }
         }
+        //the Java equalsIgnoreCase call is replaced with the Kotlin equals call with the ignoreCase named argument, i.e., s.equalsIgnoreCase(x) -> s.equals(x, ignoreCase = true)
+        //the named argument has no Java counterpart, so that equalsIgnoreCase is matched with equals by position (see nameCompliance)
+        //the Kotlin equals names with the ignoreCase named argument are not counterparts of the Java equals names (see equalsMismatch below)
+        List<Tree> equalsIgnoreCaseNames2 = new ArrayList<>();
+        if(children1.stream().anyMatch(t -> t.getLabel().equals("equalsIgnoreCase"))) {
+            children2.removeIf(t -> t.getLabel().equals("ignoreCase") && t.getParent() != null && t.getParent().getType().name.equals(LANG2.VALUE_ARGUMENT));
+            for(Tree child2 : children2) {
+                if(child2.getLabel().equals("equals") && hasIgnoreCaseArgument(child2, LANG2)) {
+                    equalsIgnoreCaseNames2.add(child2);
+                }
+            }
+        }
         //the Java length/size comparison with zero is replaced with the Kotlin isEmpty/isNotEmpty call, i.e., request.length() == 0 -> request.isEmpty()
         //the length and isEmpty names are not matched, as with parseLong above
         Map<Tree, Tree> lengthComparisons = findLengthComparisonsReplacedWithIsEmpty(srcStatementNode, dstStatementNode, LANG1, LANG2);
@@ -496,7 +508,7 @@ public class JavaToKotlinMigration {
             }
         }
         boolean equalsMismatch = children1.stream().anyMatch(node -> node.getLabel().equals("equals")) &&
-                !children2.stream().anyMatch(node -> node.getLabel().equals("equals"));
+                !children2.stream().anyMatch(node -> node.getLabel().equals("equals") && !equalsIgnoreCaseNames2.contains(node));
         if(children1.size() != children2.size() || equalsMismatch) {
             List<Tree> toBeRemoved1 = new ArrayList<>();
             for(Tree child1 : children1) {
@@ -506,7 +518,7 @@ public class JavaToKotlinMigration {
             }
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree child2 : children2) {
-                if(child2.getLabel().equals("get") || child2.getLabel().equals("put") || child2.getLabel().equals("equals")) {
+                if((child2.getLabel().equals("get") || child2.getLabel().equals("put") || child2.getLabel().equals("equals")) && !equalsIgnoreCaseNames2.contains(child2)) {
                     toBeRemoved2.add(child2);
                 }
             }
@@ -587,6 +599,12 @@ public class JavaToKotlinMigration {
                     }
                 }
             }
+        }
+        if(equalsMismatch) {
+            //the Java equals calls replaced with Kotlin == have no Kotlin call counterpart, so they are removed before matching the invocations by position,
+            //i.e., name.equals("expect") && value.equalsIgnoreCase("100-continue") -> name == "expect" && value.equals("100-continue", ignoreCase = true)
+            //the receiver and arguments of the equals call may be already flattened by a previous mapping of the same statement (see alignEqualsWithEqualityExpressions)
+            inv1.removeIf(t1 -> t1.getChildren().stream().anyMatch(child1 -> child1.getType().name.equals(LANG1.SIMPLE_NAME) && child1.getLabel().equals("equals")));
         }
         List<Tree> invocationsToBeRemoved = new ArrayList<>();
         if(nameCompliance(inv1, inv2, LANG1, LANG2)) {
@@ -902,16 +920,6 @@ public class JavaToKotlinMigration {
         }
         if(dstStatementNode.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
             children2.add(0, dstStatementNode);
-        }
-        if(equalsMismatch) {
-            Iterator<Tree> iterator1 = inv1.iterator();
-            while(iterator1.hasNext()) {
-                Tree t1 = iterator1.next();
-                Tree simpleName = TreeUtilFunctions.findChildByType(t1, LANG1.SIMPLE_NAME);
-                if(simpleName != null && simpleName.getLabel().equals("equals")) {
-                    iterator1.remove();
-                }
-            }
         }
         Iterator<Tree> iterator2 = children2.iterator();
         while(iterator2.hasNext()) {
@@ -1495,6 +1503,32 @@ public class JavaToKotlinMigration {
         return mappingStore.getDsts(src) != null && mappingStore.getDsts(src).contains(dst);
     }
 
+    //the Kotlin name of a call_expression -> [navigation_expression -> [receiver, navigation_suffix -> name], call_suffix -> value_arguments -> value_argument -> [ignoreCase, =, value]]
+    private static boolean hasIgnoreCaseArgument(Tree name2, Constants LANG2) {
+        Tree call2 = name2.getParent();
+        while(call2 != null && !call2.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            call2 = call2.getParent();
+        }
+        if(call2 == null)
+            return false;
+        Tree callSuffix2 = TreeUtilFunctions.findChildByType(call2, LANG2.CALL_SUFFIX);
+        Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2 != null ? callSuffix2 : call2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        if(valueArguments2 == null)
+            return false;
+        for(Tree valueArgument2 : valueArguments2.getChildren()) {
+            if(valueArgument2.getType().name.equals(LANG2.VALUE_ARGUMENT) && valueArgument2.getChildren().size() > 1 && valueArgument2.getChild(0).getLabel().equals("ignoreCase"))
+                return true;
+        }
+        return false;
+    }
+
+    //the number of arguments of the Kotlin call_expression -> [..., call_suffix -> value_arguments], or call_expression -> [..., value_arguments] if the call_suffix is already flattened
+    private static int argumentCount2(Tree call2, Constants LANG2) {
+        Tree callSuffix2 = TreeUtilFunctions.findChildByType(call2, LANG2.CALL_SUFFIX);
+        Tree valueArguments2 = TreeUtilFunctions.findChildByType(callSuffix2 != null ? callSuffix2 : call2, LANG2.METHOD_INVOCATION_ARGUMENTS);
+        return valueArguments2 != null ? valueArguments2.getChildren().size() : 0;
+    }
+
     private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {
         List<String> callNames1 = new ArrayList<>();
         for(Tree child1 : children1) {
@@ -1515,6 +1549,8 @@ public class JavaToKotlinMigration {
             }
         }
         List<String> callNames2 = new ArrayList<>();
+        //the Kotlin calls of callNames2, at the same positions
+        List<Tree> namedCalls2 = new ArrayList<>();
         List<Tree> toBeRemoved2 = new ArrayList<>();
         for(Tree child2 : children2) {
             Tree receiver2 = TreeUtilFunctions.findChildByType(child2, LANG2.NAVIGATION_EXPRESSION);
@@ -1526,15 +1562,18 @@ public class JavaToKotlinMigration {
                         callNames2.add(simpleName.getChild(0).getLabel());
                     else
                         callNames2.add(simpleName.getLabel());
+                    namedCalls2.add(child2);
                 }
                 else if(receiver2.getLabel() != null){
                     callNames2.add(receiver2.getLabel());
+                    namedCalls2.add(child2);
                 }
             }
             else {
                 Tree simpleName = TreeUtilFunctions.findChildByType(child2, LANG2.SIMPLE_NAME);
                 if(simpleName != null) {
                     callNames2.add(simpleName.getLabel());
+                    namedCalls2.add(child2);
                 }
                 else {
                     toBeRemoved2.add(child2);
@@ -1558,6 +1597,11 @@ public class JavaToKotlinMigration {
                 else if(synonyms.containsKey(s1) && synonyms.get(s1).equals(s2)) {
                     matches++;
                 }
+                else if(s1.equals("equalsIgnoreCase") && s2.equals("equals")) {
+                    //i.e., s.equalsIgnoreCase(x) -> s.equals(x, ignoreCase = true)
+                    if(argumentCount2(namedCalls2.get(i), LANG2) == 2)
+                        matches++;
+                }
                 else if(s1.startsWith(s2) || s2.startsWith(s1)) {
                     matches++;
                 }
@@ -1580,6 +1624,11 @@ public class JavaToKotlinMigration {
                 }
                 else if(synonyms.containsKey(s1) && synonyms.get(s1).equals(s2)) {
                     matches++;
+                }
+                else if(s1.equals("equalsIgnoreCase") && s2.equals("equals")) {
+                    //i.e., s.equalsIgnoreCase(x) -> s.equals(x, ignoreCase = true)
+                    if(argumentCount2(namedCalls2.get(i), LANG2) == 2)
+                        matches++;
                 }
                 else if(s1.startsWith(s2) || s2.startsWith(s1)) {
                     matches++;

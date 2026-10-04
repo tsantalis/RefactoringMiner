@@ -30954,10 +30954,21 @@
   "secondEndPos" : 20265
 }, {
   "firstType" : "MethodInvocation",
+  "secondType" : "equality_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 22756,
+  "secondPos" : 20236,
+  "firstEndPos" : 22789,
+  "secondEndPos" : 20264
+}, {
+  "firstType" : "MethodInvocation",
   "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "equality_expression",
   "firstPos" : 22756,
   "secondPos" : 20236,
@@ -30979,7 +30990,7 @@
   "secondType" : "string_literal",
   "firstLabel" : "\"conscrypt\"",
   "secondLabel" : "\"conscrypt\"",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "equality_expression",
   "firstPos" : 22777,
   "secondPos" : 20253,

@@ -1925,10 +1925,21 @@
   "secondEndPos" : 2215
 }, {
   "firstType" : "MethodInvocation",
+  "secondType" : "equality_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 2469,
+  "secondPos" : 2150,
+  "firstEndPos" : 2507,
+  "secondEndPos" : 2178
+}, {
+  "firstType" : "MethodInvocation",
   "secondType" : "navigation_expression",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "equality_expression",
   "firstPos" : 2469,
   "secondPos" : 2150,
@@ -1961,7 +1972,7 @@
   "secondType" : "simple_identifier",
   "firstLabel" : "firstRequest",
   "secondLabel" : "firstRequest",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstParentType" : "MethodInvocation",
   "secondParentType" : "equality_expression",
   "firstPos" : 2494,
   "secondPos" : 2166,

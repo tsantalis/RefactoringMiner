@@ -844,6 +844,10 @@ public class JavaToKotlinMigration {
                 dstStatementNode.getType().name.equals(LANG2.MULTIPLICATIVE_EXPRESSION)) {
             nestedInfix2.add(0, dstStatementNode);
         }
+        if(equalsMismatch) {
+            //the Kotlin equality expressions replacing Java equals calls have no Java infix expression counterpart
+            nestedInfix2.removeAll(alignEqualsWithEqualityExpressions(mappingStore, srcStatementNode, nestedInfix2, LANG1, LANG2, deferredFlattenings));
+        }
         alignAndMatchInfixExpressions(nestedInfix1, nestedInfix2, LANG1, LANG2, mappingStore);
         Tree variableDeclarationFragment = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
         Tree variableDeclaration = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.VARIABLE_DECLARATION);
@@ -1264,6 +1268,57 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+    }
+
+    //align Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> x, equals, METHOD_INVOCATION_ARGUMENTS -> y] with Kotlin equality_expression -> [x, ==, y],
+    //i.e., lowercaseHeader.substring(18).trim().equals("chunked") -> lowercaseHeader.substring(18).trim() == "chunked", based on the already mapped operands
+    //the receiver and arguments are flattened, as they have no Kotlin counterpart (or the flattening is deferred)
+    //returns the mapped Kotlin equality expressions
+    private static List<Tree> alignEqualsWithEqualityExpressions(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, List<Tree> nestedInfix2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        List<Tree> invocations1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            invocations1.add(0, srcStatementNode);
+        }
+        List<Tree> matched2 = new ArrayList<>();
+        for(Tree invocation1 : invocations1) {
+            if(invocation1.getChildren().size() != 3)
+                continue;
+            Tree receiver1 = invocation1.getChild(0);
+            Tree name1 = invocation1.getChild(1);
+            Tree arguments1 = invocation1.getChild(2);
+            if(!name1.getType().name.equals(LANG1.SIMPLE_NAME) || !name1.getLabel().equals("equals"))
+                continue;
+            boolean wrapped1 = receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) && receiver1.getChildren().size() == 1 &&
+                    arguments1.getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && arguments1.getChildren().size() == 1;
+            //the receiver and arguments are already flattened by a previous mapping of the same statement
+            boolean flattened1 = !receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) && !arguments1.getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS);
+            if(!wrapped1 && !flattened1)
+                continue;
+            Tree operand1 = wrapped1 ? receiver1.getChild(0) : receiver1;
+            Tree argument1 = wrapped1 ? arguments1.getChild(0) : arguments1;
+            for(Tree infix2 : nestedInfix2) {
+                if(matched2.contains(infix2) || !infix2.getType().name.equals(LANG2.EQUALITY_EXPRESSION) || infix2.getChildren().size() != 3 ||
+                        !infix2.getChild(1).getLabel().equals("=="))
+                    continue;
+                Tree left2 = infix2.getChild(0);
+                Tree right2 = infix2.getChild(2);
+                if((isMappedTo(mappingStore, operand1, left2) && isMappedTo(mappingStore, argument1, right2)) ||
+                        (isMappedTo(mappingStore, operand1, right2) && isMappedTo(mappingStore, argument1, left2))) {
+                    mappingStore.addMapping(invocation1, infix2);
+                    matched2.add(infix2);
+                    if(wrapped1) {
+                        flattenSrcChild(mappingStore, deferredFlattenings, invocation1, receiver1);
+                        flattenSrcChild(mappingStore, deferredFlattenings, invocation1, arguments1);
+                    }
+                    break;
+                }
+            }
+        }
+        return matched2;
+    }
+
+    private static boolean isMappedTo(ExtendedMultiMappingStore mappingStore, Tree src, Tree dst) {
+        return mappingStore.getDsts(src) != null && mappingStore.getDsts(src).contains(dst);
     }
 
     private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {

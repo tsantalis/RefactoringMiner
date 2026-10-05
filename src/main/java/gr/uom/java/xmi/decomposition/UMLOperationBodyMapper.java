@@ -8480,6 +8480,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									LeafMapping minStatementMapping = mappingSet.first();
 									if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
 										addToMappings(minStatementMapping, mappingSet);
+										processAnonymousClassDeclarationsInStaticCallArgument(minStatementMapping);
 										leaves2.remove(minStatementMapping.getFragment2());
 										if(minStatementMapping.getFragment1().equals(leaf1)) {
 											leafIterator1.remove();
@@ -9011,6 +9012,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 												boolean split = checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves1, leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, isomorphic, leaves2ToBeRemoved);
 												if(split) {
 													addToMappings(minStatementMapping, mappingSet);
+													processAnonymousClassDeclarationsInStaticCallArgument(minStatementMapping);
 													leaves1.remove(minStatementMapping.getFragment1());
 													if(minStatementMapping.getFragment2().equals(leaf2)) {
 														leafIterator2.remove();
@@ -11562,6 +11564,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	//the anonymous class receiver of a Kotlin extension call moved to the argument of the static call, i.e., object : Source {...}.buffer() -> Okio.buffer(object : Source {...})
+	private void processAnonymousClassDeclarationsInStaticCallArgument(LeafMapping mapping) throws RefactoringMinerTimedOutException {
+		for(Replacement replacement : mapping.getReplacements()) {
+			if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION_EXPRESSION_MOVED_TO_STATIC_CALL_ARGUMENT)) {
+				processAnonymousClassDeclarationsInIdenticalStatements(mapping);
+				break;
+			}
+		}
 	}
 
 	private void processAnonymousClassDeclarationsInIdenticalStatements(LeafMapping minStatementMapping) throws RefactoringMinerTimedOutException {

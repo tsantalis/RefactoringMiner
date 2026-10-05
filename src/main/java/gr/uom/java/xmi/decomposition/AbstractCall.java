@@ -1224,6 +1224,29 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
+	//a Kotlin extension call and the static call having the receiver as first argument, i.e., source.buffer() -> Okio.buffer(source)
+	public boolean identicalWithExpressionMovedToStaticCallArgument(AbstractCall call) {
+		if(!PathFileUtils.isKotlinFile(getLocationInfo().getFilePath()) || !PathFileUtils.isKotlinFile(call.getLocationInfo().getFilePath()) || !identicalName(call))
+			return false;
+		return expressionMovedToStaticCallArgument(this, call) || expressionMovedToStaticCallArgument(call, this);
+	}
+
+	private static boolean expressionMovedToStaticCallArgument(AbstractCall extensionCall, AbstractCall staticCall) {
+		String receiver = extensionCall.getExpression();
+		String type = staticCall.getExpression();
+		if(receiver == null || type == null || staticCall.arguments().size() != extensionCall.arguments().size() + 1)
+			return false;
+		//the static call is invoked on a type name, i.e., Okio or okio.Okio, and not on the result of a call
+		int simpleNameStart = type.lastIndexOf('.') + 1;
+		if(simpleNameStart >= type.length() || !Character.isUpperCase(type.charAt(simpleNameStart)) || type.indexOf('(') != -1)
+			return false;
+		String argument = staticCall.arguments().get(0);
+		//anonymous objects with the same declaration header are compared separately, as anonymous class diffs
+		boolean sameReceiver = argument.equals(receiver) ||
+				(argument.contains("{\n") && receiver.contains("{\n") && argument.substring(0, argument.indexOf("{\n")).equals(receiver.substring(0, receiver.indexOf("{\n"))));
+		return sameReceiver && staticCall.arguments().subList(1, staticCall.arguments().size()).equals(extensionCall.arguments());
+	}
+
 	public boolean identicalWithExpressionArgumentSwap(AbstractCall call) {
 		if(getExpression() != null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOtherLowerCase(call))) {
 			int argumentIndex1 = arguments().indexOf(call.getExpression());

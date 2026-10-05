@@ -2713,6 +2713,14 @@ public class ReplacementAlgorithm {
 			replacementInfo.addReplacement(replacement);
 			return replacementInfo.getReplacements();
 		}
+		//Kotlin extension call is identical with the static call having the receiver as first argument, i.e., source.buffer() -> Okio.buffer(source)
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.identicalWithExpressionMovedToStaticCallArgument(invocationCoveringTheEntireStatement2)) {
+			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_EXPRESSION_MOVED_TO_STATIC_CALL_ARGUMENT);
+			replacementInfo.addReplacement(replacement);
+			return replacementInfo.getReplacements();
+		}
 		//method invocation is identical if arguments are wrapped or concatenated
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2, replacementInfo, parameterToArgumentMap) &&

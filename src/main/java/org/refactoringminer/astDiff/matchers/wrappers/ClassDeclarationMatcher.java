@@ -370,8 +370,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 new SameModifierMatcher(LANG1, LANG2, LANG1.INTERNAL).match(srcSubTree,dstSubTree,mappingStore);
                 new SameModifierMatcher(LANG1, LANG2, LANG1.PRIVATE).match(srcSubTree,dstSubTree,mappingStore);
                 matched = findPairOfType(srcSubTree,dstSubTree,LANG1.MODIFIERS,LANG2.MODIFIERS);
-                if (matched != null)
+                if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
+                    processPrimaryConstructorAnnotations(matched.first, matched.second, mappingStore);
+                }
                 matched = findPairOfType(srcSubTree,dstSubTree,LANG1.CONSTRUCTOR_KEYWORD,LANG2.CONSTRUCTOR_KEYWORD);
                 if (matched != null)
                     mappingStore.addMapping(matched.first,matched.second);
@@ -1398,6 +1400,35 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
             }
         }
+    }
+
+    //the primary constructor has no annotations in the model, so its annotations are matched by name, i.e., class TaskDetailViewModel @Inject constructor(...)
+    private void processPrimaryConstructorAnnotations(Tree srcModifiers, Tree dstModifiers, ExtendedMultiMappingStore mappingStore) {
+        for (Tree srcAnnotation : srcModifiers.getChildren()) {
+            String name = annotationName(srcAnnotation, LANG1);
+            if (name == null)
+                continue;
+            for (Tree dstAnnotation : dstModifiers.getChildren()) {
+                if (!name.equals(annotationName(dstAnnotation, LANG2)) || mappingStore.isDstMapped(dstAnnotation))
+                    continue;
+                if (srcAnnotation.isIsoStructuralTo(dstAnnotation))
+                    mappingStore.addMappingRecursively(srcAnnotation, dstAnnotation);
+                else
+                    new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcAnnotation, dstAnnotation, mappingStore);
+                break;
+            }
+        }
+    }
+
+    //the name of an annotation, i.e., class_modifier -> [at, user_type -> type_identifier], or null for a modifier keyword
+    private static String annotationName(Tree modifier, Constants LANG) {
+        if (!modifier.getType().name.equals(LANG.CLASS_MODIFIER) || modifier.getChildren().isEmpty() || !modifier.getChild(0).getType().name.equals(LANG.AT))
+            return null;
+        for (Tree t : modifier.preOrder()) {
+            if (t.getType().name.equals(LANG.TYPE_IDENTIFIER))
+                return t.getLabel();
+        }
+        return null;
     }
 
     private void processVariableDeclaratorPair(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {

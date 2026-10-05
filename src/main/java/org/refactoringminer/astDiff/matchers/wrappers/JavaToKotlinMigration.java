@@ -2413,7 +2413,7 @@ public class JavaToKotlinMigration {
             return false;
         List<Pair<Tree, Tree>> pairs = new ArrayList<>();
         if(dstComment.isLeaf()) {
-            //the label is the source code of the comment, as restored by KotlinTreeSitterTreeFixer, so the offsets are computed from the start of the comment
+            //the label is the source code of the comment, so the offsets are computed from the start of the comment
             String text = dstComment.getLabel();
             int offset = dstComment.getPos();
             if(!text.startsWith("/*") || !text.endsWith("*/"))

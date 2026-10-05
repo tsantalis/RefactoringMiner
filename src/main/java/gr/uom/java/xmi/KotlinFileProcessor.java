@@ -2,7 +2,6 @@ package gr.uom.java.xmi;
 
 import static org.jetbrains.kotlin.lexer.KtTokens.*;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -54,10 +53,9 @@ import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtValueArgument;
 import org.jetbrains.kotlin.psi.KtValueArgumentList;
 import org.jetbrains.kotlin.psi.KtWhenExpression;
-import org.refactoringminer.astDiff.utils.KotlinTreeSitterTreeFixer;
+import org.refactoringminer.astDiff.utils.KotlinPsiTreeGenerator;
 import org.refactoringminer.util.PathFileUtils;
 
-import com.github.gumtreediff.gen.treesitterng.KotlinTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -156,10 +154,9 @@ public class KotlinFileProcessor {
 		PsiFile psiFile = factory.createFileFromText(filePath, KotlinLanguage.INSTANCE, fileContent);
 		KtFile ktFile = (KtFile)psiFile;
 		if (astDiff) {
-			ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
 			try {
-				TreeContext treeContext = new KotlinTreeSitterNgTreeGenerator().generateFrom().stream(is);
-				KotlinTreeSitterTreeFixer.fix(treeContext, fileContent);
+				//the tree is generated from the PSI tree used for the RefactoringMiner model
+				TreeContext treeContext = KotlinPsiTreeGenerator.generate(ktFile);
 				this.umlModel.getTreeContextMap().put(filePath, treeContext);
 			}
 			catch(Exception e) {

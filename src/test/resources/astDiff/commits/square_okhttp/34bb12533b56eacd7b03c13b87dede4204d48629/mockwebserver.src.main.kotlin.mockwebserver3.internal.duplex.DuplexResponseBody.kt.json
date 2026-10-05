@@ -54,14 +54,91 @@
   "firstEndPos" : 639,
   "secondEndPos" : 622
 }, {
-  "firstType" : "function_declaration",
+  "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "statements",
+  "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 786,
+  "firstPos" : 749,
   "secondPos" : 827,
-  "firstEndPos" : 881,
+  "firstEndPos" : 883,
   "secondEndPos" : 883
+}, {
+  "firstType" : "type_keyword",
+  "secondType" : "type_keyword",
+  "firstLabel" : "interface",
+  "secondLabel" : "interface",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 753,
+  "secondPos" : 827,
+  "firstEndPos" : 762,
+  "secondEndPos" : 836
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "DuplexResponseBody",
+  "secondLabel" : "StreamHandler",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 763,
+  "secondPos" : 837,
+  "firstEndPos" : 781,
+  "secondEndPos" : 850
+}, {
+  "firstType" : "type_body",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 782,
+  "secondPos" : 851,
+  "firstEndPos" : 883,
+  "secondEndPos" : 883
+}, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 786,
+  "secondPos" : 855,
+  "firstEndPos" : 881,
+  "secondEndPos" : 881
+}, {
+  "firstType" : "function_keyword",
+  "secondType" : "function_keyword",
+  "firstLabel" : "fun",
+  "secondLabel" : "fun",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 816,
+  "secondPos" : 855,
+  "firstEndPos" : 819,
+  "secondEndPos" : 858
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "onRequest",
+  "secondLabel" : "handle",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 820,
+  "secondPos" : 859,
+  "firstEndPos" : 829,
+  "secondEndPos" : 865
+}, {
+  "firstType" : "function_value_parameters",
+  "secondType" : "function_value_parameters",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 829,
+  "secondPos" : 865,
+  "firstEndPos" : 881,
+  "secondEndPos" : 881
 } ]

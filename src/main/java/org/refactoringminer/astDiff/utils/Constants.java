@@ -457,6 +457,7 @@ public class Constants {
     public final String CONSTRUCTOR_KEYWORD = "constructor_keyword";
     public final String FUNCTION_PARAMETERS = "function_value_parameters";
     public final String STATEMENTS = "statements"; // This is a node that wraps each leaf statement in Kotlin
+    public final String FINALLY_BLOCK = "finally_block";
     public final String IMPORT_LIST = "import_list";
     public final String MODIFIERS = "modifiers"; // This is a node that wraps all modifiers
     public final String TYPE_PARAMETERS = "type_parameters";

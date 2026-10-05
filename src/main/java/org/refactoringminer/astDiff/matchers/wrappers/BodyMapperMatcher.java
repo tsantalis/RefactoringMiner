@@ -836,6 +836,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     new KeywordMatcher(LANG1, LANG2, LANG1.JUMP_KEYWORD, LANG2.JUMP_KEYWORD, "return").match(srcStatementNode.getParent(),dstStatementNode.getParent(),mappingStore);
                 }
                 matchBlocks(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
+                //the empty Kotlin try, catch and finally blocks, which have no mapped statements
+                matchEmptyStatements(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
+                Pair<Tree, Tree> finallyBlocks = Helpers.findPairOfType(srcStatementNode, dstStatementNode, LANG1.FINALLY_BLOCK, LANG2.FINALLY_BLOCK);
+                if (finallyBlocks != null)
+                    matchEmptyStatements(finallyBlocks.first, finallyBlocks.second, mappingStore, LANG1, LANG2);
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             } else if (!srcStatementNode.getType().name.equals(LANG1.BLOCK) && !dstStatementNode.getType().name.equals(LANG2.BLOCK)) {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
@@ -903,6 +908,22 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
             }
         }
+    }
+
+    //an empty block is a statements node spanning its braces, possibly with comments, which is not mapped as the parent of mapped statements
+    private static void matchEmptyStatements(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
+        Tree statements1 = findEmptyStatements(srcStatementNode, LANG1);
+        Tree statements2 = findEmptyStatements(dstStatementNode, LANG2);
+        if (statements1 != null && statements2 != null && !mappingStore.isSrcMapped(statements1) && !mappingStore.isDstMapped(statements2))
+            mappingStore.addMapping(statements1, statements2);
+    }
+
+    private static Tree findEmptyStatements(Tree tree, Constants LANG) {
+        for (Tree child : tree.getChildren()) {
+            if (child.getType().name.equals(LANG.STATEMENTS) && child.getChildren().stream().allMatch(c -> c.getType().name.equals(LANG.LINE_COMMENT) || c.getType().name.equals(LANG.BLOCK_COMMENT)))
+                return child;
+        }
+        return null;
     }
 
     public static void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {

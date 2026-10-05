@@ -183,6 +183,19 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
+        //resource.use {} and ignoreIoExceptions {} are modeled as try statements, and they are the only statement of the enclosing statements with the same location (Kotlin to Kotlin)
+        if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
+                srcStatementNode.getChildren().size() == 1 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            srcStatementNode = srcStatementNode.getChild(0);
+        }
+        if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
+                dstStatementNode.getChildren().size() == 1 &&
+                dstStatementNode.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            dstStatementNode = dstStatementNode.getChild(0);
+        }
         if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
                 srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
                 srcStatementNode.getChildren().size() > 0 &&
@@ -855,7 +868,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
             mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
         }
-        mappingStore.addMappingRecursively(srcStatementNode.getChild(0), dstStatementNode.getChild(0));
+        Tree name1 = srcStatementNode.getChild(0);
+        Tree name2 = dstStatementNode.getChild(0);
+        if(name1.getType().name.equals(LANG1.NAVIGATION_EXPRESSION) && name2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                name1.getChildren().size() == 2 && name2.getChildren().size() == 2 &&
+                name1.getChild(1).getType().name.equals(LANG1.NAVIGATION_SUFFIX) && name2.getChild(1).getType().name.equals(LANG2.NAVIGATION_SUFFIX)) {
+            //resource.use {}, the resource receiver is matched by the CompositeMatcher, as it is the expression of the try statement
+            mappingStore.addMapping(name1, name2);
+            mappingStore.addMappingRecursively(name1.getChild(1), name2.getChild(1));
+        }
+        else {
+            mappingStore.addMappingRecursively(name1, name2);
+        }
         Tree suffix1 = srcStatementNode.getChild(1);
         Tree suffix2 = dstStatementNode.getChild(1);
         if(suffix1.getType().name.equals(LANG1.CALL_SUFFIX) && suffix2.getType().name.equals(LANG2.CALL_SUFFIX)) {
@@ -869,9 +893,29 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     Tree lambdaLiteral1 = suffix1.getChild(0).getChild(0);
                     Tree lambdaLiteral2 = suffix2.getChild(0).getChild(0);
                     mappingStore.addMapping(lambdaLiteral1, lambdaLiteral2);
-                    if(lambdaLiteral1.getChildren().size() > 0 && lambdaLiteral2.getChildren().size() > 0 &&
-                            lambdaLiteral1.getChild(0).getType().name.equals(LANG1.STATEMENTS) && lambdaLiteral2.getChild(0).getType().name.equals(LANG2.STATEMENTS)) {
-                        mappingStore.addMapping(lambdaLiteral1.getChild(0), lambdaLiteral2.getChild(0));
+                    //the statements follow the lambda parameters and the arrow, i.e., resource.use { r -> ...}
+                    Tree statements1 = TreeUtilFunctions.findChildByType(lambdaLiteral1, LANG1.STATEMENTS);
+                    Tree statements2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.STATEMENTS);
+                    if(statements1 != null && statements2 != null) {
+                        mappingStore.addMapping(statements1, statements2);
+                    }
+                    Tree parameters1 = TreeUtilFunctions.findChildByType(lambdaLiteral1, LANG1.LAMBDA_PARAMETERS);
+                    Tree parameters2 = TreeUtilFunctions.findChildByType(lambdaLiteral2, LANG2.LAMBDA_PARAMETERS);
+                    if(parameters1 != null && parameters2 != null && parameters1.getChildren().size() == parameters2.getChildren().size()) {
+                        mappingStore.addMapping(parameters1, parameters2);
+                        for(int i=0; i<parameters1.getChildren().size(); i++) {
+                            mappingStore.addMappingRecursively(parameters1.getChild(i), parameters2.getChild(i));
+                            //the parameter name, when the type is added or removed, i.e., use { graph -> ...} -> use { graph: HeapGraph -> ...}
+                            Tree parameterName1 = TreeUtilFunctions.findChildByType(parameters1.getChild(i), LANG1.SIMPLE_NAME);
+                            Tree parameterName2 = TreeUtilFunctions.findChildByType(parameters2.getChild(i), LANG2.SIMPLE_NAME);
+                            if(parameterName1 != null && parameterName2 != null) {
+                                mappingStore.addMapping(parameterName1, parameterName2);
+                            }
+                        }
+                        Pair<Tree, Tree> arrows = Helpers.findPairOfType(lambdaLiteral1, lambdaLiteral2, "arrow", "arrow");
+                        if(arrows != null) {
+                            mappingStore.addMapping(arrows.first, arrows.second);
+                        }
                     }
                 }
             }

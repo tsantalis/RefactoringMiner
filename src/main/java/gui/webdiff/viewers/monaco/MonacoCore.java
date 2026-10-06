@@ -316,7 +316,12 @@ public class MonacoCore {
     private static boolean isStatement(Tree t) {
     	String type = t.getType().toString();
 		return type.endsWith("Statement") || type.equals("Block") || type.endsWith("ConstructorInvocation") || type.equals("SwitchCase") ||
-				type.endsWith("_statement") || type.endsWith("block") || type.equals("statements");
+				type.endsWith("_statement") || type.endsWith("block") || isKotlinStatement(t);
+    }
+
+    //the Kotlin statements are the children of a statements node, i.e., call_expression, assignment, property_declaration, jump_expression, and the statements node itself is a block
+    private static boolean isKotlinStatement(Tree t) {
+    	return t.getType().name.equals("statements") || (t.getParent() != null && t.getParent().getType().name.equals("statements"));
     }
 
     private static boolean isExpression(Tree t) {
@@ -761,16 +766,12 @@ public class MonacoCore {
 			}
 		}
 		if(bodyMapper != null) {
-			//the Kotlin statements of a block moved together, i.e., the whole body of an extracted method, belong to the refactoring with the mappings of their statements
+			//a Kotlin statements block moved as a whole, i.e., the body of an extracted method, as its statements are mapped individually
 			if(tree.getType().name.equals("statements")) {
-				boolean left = classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree);
-				boolean right = classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree);
-				for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
-					if(left && tree.getChildren().stream().anyMatch(s -> subsumes(mapping.getFragment1().codeRange(), s)))
-						return tooltipLeft;
-					if(right && tree.getChildren().stream().anyMatch(s -> subsumes(mapping.getFragment2().codeRange(), s)))
-						return tooltipRight;
-				}
+				if((classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree)) && allStatementsMapped(bodyMapper, tree, true))
+					return tooltipLeft;
+				if((classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree)) && allStatementsMapped(bodyMapper, tree, false))
+					return tooltipRight;
 			}
 			for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 				if(subsumes(mapping.getFragment1().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
@@ -801,6 +802,14 @@ public class MonacoCore {
 		}
 		return null;
 	}
+
+    private static boolean allStatementsMapped(UMLOperationBodyMapper bodyMapper, Tree statements, boolean left) {
+    	for(Tree statement : statements.getChildren()) {
+    		if(!isComment(statement) && bodyMapper.getMappings().stream().noneMatch(m -> subsumes(left ? m.getFragment1().codeRange() : m.getFragment2().codeRange(), statement)))
+    			return false;
+    	}
+    	return !statements.getChildren().isEmpty();
+    }
 
     private static boolean subsumes(CodeRange range, Tree t) {
     	if(range.getStartOffset() <= t.getPos() &&

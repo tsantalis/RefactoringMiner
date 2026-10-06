@@ -439,7 +439,7 @@ public class JavaToKotlinMigration {
             inv1.add(0, srcStatementNode);
         }
         List<Tree> inv2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.METHOD_INVOCATION);
-        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && !isFlattenedReturnExpression(srcStatementNode, dstStatementNode, LANG1, LANG2) &&
+        if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && !isFlattenedExpressionBody(srcStatementNode, dstStatementNode, LANG1, LANG2) &&
                 !isAssertCall(srcStatementNode, dstStatementNode, LANG1, LANG2)) {
             inv2.add(0, dstStatementNode);
         }
@@ -1971,10 +1971,12 @@ public class JavaToKotlinMigration {
         }
     }
 
-    //the Java ReturnStatement -> expression is already flattened, when aligned with the Kotlin function_body -> [=, expression] of a previous mapping,
-    //so the ReturnStatement corresponds to the Kotlin expression, i.e., return originalRequest.url().host(); -> = originalRequest.url().host()
-    private static boolean isFlattenedReturnExpression(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
-        if(!srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) || srcStatementNode.getChildren().isEmpty())
+    //the Java ReturnStatement|ExpressionStatement -> expression is already flattened, when aligned with the Kotlin function_body -> [=, expression] of a previous mapping,
+    //so the statement corresponds to the Kotlin expression, i.e., return originalRequest.url().host(); -> = originalRequest.url().host()
+    //or ((QueueDispatcher) dispatcher).enqueueResponse(response.clone()); -> = (dispatcher as QueueDispatcher).enqueueResponse(response.clone())
+    private static boolean isFlattenedExpressionBody(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        boolean statement1 = srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) || srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT);
+        if(!statement1 || srcStatementNode.getChildren().isEmpty())
             return false;
         if(dstStatementNode.getParent() == null || !dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_BODY) ||
                 TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) == null)

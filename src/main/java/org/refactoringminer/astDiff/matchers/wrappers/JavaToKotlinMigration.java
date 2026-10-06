@@ -353,15 +353,16 @@ public class JavaToKotlinMigration {
                     for(Tree child2 : children2) {
                         if(isQualifiedNameSegment(qualifiedType, child2.getLabel())) {
                             toBeRemoved2.add(child2);
-                            if(child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                            Tree navigation2 = outermostQualifiedNavigation(child2.getParent(), qualifiedType, LANG2);
+                            if(navigation2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
                                     //important: skip qualified types whose parent is a variable declaration statement, because these are replaced with var in Kotlin
                                     !type1.getParent().getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) &&
                                     !qualifiedNameToNavigationExpression.containsKey(type1.getChild(0)) &&
-                                    !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
-                                Tree lastChild = child2.getParent().getChild(child2.getParent().getChildren().size() - 1);
+                                    !qualifiedNameToNavigationExpression.containsValue(navigation2)) {
+                                Tree lastChild = navigation2.getChild(navigation2.getChildren().size() - 1);
                                 if(lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastChild.getChildren().size() > 0 &&
                                         isQualifiedNameSegment(qualifiedType, lastChild.getChild(0).getLabel())) {
-                                    qualifiedNameToNavigationExpression.put(type1.getChild(0), child2.getParent());
+                                    qualifiedNameToNavigationExpression.put(type1.getChild(0), navigation2);
                                 }
                             }
                         }
@@ -386,13 +387,14 @@ public class JavaToKotlinMigration {
                         if(!skip) {
                             toBeRemoved2.add(child2);
                         }
-                        if(child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                        Tree navigation2 = outermostQualifiedNavigation(child2.getParent(), qualifiedType, LANG2);
+                        if(navigation2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
                                 !qualifiedNameToNavigationExpression.containsKey(qualified1) &&
-                                !qualifiedNameToNavigationExpression.containsValue(child2.getParent())) {
-                            Tree lastChild = child2.getParent().getChild(child2.getParent().getChildren().size() - 1);
+                                !qualifiedNameToNavigationExpression.containsValue(navigation2)) {
+                            Tree lastChild = navigation2.getChild(navigation2.getChildren().size() - 1);
                             if(lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) && lastChild.getChildren().size() > 0 &&
                                     isQualifiedNameSegment(qualifiedType, lastChild.getChild(0).getLabel())) {
-                                qualifiedNameToNavigationExpression.put(qualified1, child2.getParent());
+                                qualifiedNameToNavigationExpression.put(qualified1, navigation2);
                             }
                         }
                     }
@@ -3430,6 +3432,24 @@ public class JavaToKotlinMigration {
     //checks if name is one of the dot-separated segments of qualifiedName, i.e., e is not a segment of ErrorCode.PROTOCOL_ERROR
     private static boolean isQualifiedNameSegment(String qualifiedName, String name) {
         return !name.isEmpty() && Arrays.asList(qualifiedName.split("\\.")).contains(name);
+    }
+
+    //the outermost navigation expression covering the segments of the qualified name, as the navigation expression of the first segment covers only the first two segments,
+    //i.e., Proxy.Type.HTTP -> navigation_expression -> [navigation_expression -> [Proxy, navigation_suffix -> Type], navigation_suffix -> HTTP]
+    private static Tree outermostQualifiedNavigation(Tree navigation2, String qualifiedName, Constants LANG2) {
+        int segments = qualifiedName.split("\\.").length;
+        int coveredSegments = 2;
+        while(coveredSegments < segments && navigation2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && navigation2.getParent() != null &&
+                navigation2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && navigation2.getParent().getChild(0) == navigation2) {
+            Tree parent2 = navigation2.getParent();
+            Tree lastChild = parent2.getChild(parent2.getChildren().size() - 1);
+            if(!lastChild.getType().name.equals(LANG2.NAVIGATION_SUFFIX) || lastChild.getChildren().isEmpty() ||
+                    !isQualifiedNameSegment(qualifiedName, lastChild.getChild(0).getLabel()))
+                break;
+            navigation2 = parent2;
+            coveredSegments++;
+        }
+        return navigation2;
     }
 
     //post-processing of the Java anonymous class creation passed as argument at the call site of an inlined method, replaced with the lambda of the Kotlin call,

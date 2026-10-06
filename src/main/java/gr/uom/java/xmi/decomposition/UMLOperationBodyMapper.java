@@ -6484,6 +6484,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			innerNodes1.remove(mappings.get(i).getFragment1());
 			innerNodes2.remove(mappings.get(i).getFragment2());
 		}
+		//in Kotlin, return when/if/try and val x = when/if/try are represented by the composite followed by a parent leaf containing the entire statement
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping instanceof CompositeStatementObjectMapping) {
+				AbstractCodeFragment parentLeaf1 = parentLeaf((CompositeStatementObject)mapping.getFragment1());
+				AbstractCodeFragment parentLeaf2 = parentLeaf((CompositeStatementObject)mapping.getFragment2());
+				if(parentLeaf1 != null && parentLeaf2 != null && leaves1.contains(parentLeaf1) && leaves2.contains(parentLeaf2)) {
+					addMapping(createLeafMapping(parentLeaf1, parentLeaf2, parameterToArgumentMap, false, isomorphic));
+					leaves1.remove(parentLeaf1);
+					leaves2.remove(parentLeaf2);
+				}
+			}
+		}
+	}
+
+	private static AbstractCodeFragment parentLeaf(CompositeStatementObject composite) {
+		if(composite.getParent() != null) {
+			List<AbstractStatement> statements = composite.getParent().getStatements();
+			int index = statements.indexOf(composite);
+			if(index < statements.size()-1 && statements.get(index+1) instanceof StatementObject leaf && leaf.getLocationInfo().subsumes(composite.getLocationInfo())) {
+				return leaf;
+			}
+		}
+		return null;
 	}
 
 	private boolean isInMergeConditionalRefactoring(CompositeStatementObject innerNode1) {

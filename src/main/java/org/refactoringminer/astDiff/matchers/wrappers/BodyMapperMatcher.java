@@ -146,6 +146,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1);
         LocationInfo dstLocationInfo = compositeStatementObjectMapping.getFragment2().getLocationInfo();
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2);
+        //the location of a Kotlin block includes its leading comments, which precede the statements node, i.e., a lambda body starting with a comment
+        if (srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) && srcStatementNode != null && IgnoringCommentsLeafMatcher.isPartOfComments(srcStatementNode, LANG1))
+            srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1,LANG1.STATEMENTS);
+        if (dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) && dstStatementNode != null && IgnoringCommentsLeafMatcher.isPartOfComments(dstStatementNode, LANG2))
+            dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2,LANG2.STATEMENTS);
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.IF_KEYWORD))
             srcStatementNode = srcStatementNode.getParent();
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.IF_KEYWORD))
@@ -305,7 +310,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(matched.first,matched.second);
                     }
                 }
-                if(srcStatementNode.getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
+                //the composite is the only statement of the statements node, while a block is the statements node itself
+                if(srcStatementNode.getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
                     Tree srcFirstChild = srcStatementNode.getChild(0);
                     Tree dstFirstChild = dstStatementNode.getChild(0);
                     mappingStore.addMapping(srcFirstChild, dstFirstChild);
@@ -1372,6 +1378,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for(UMLOperationBodyMapper lambdaMapper : abstractCodeMapping.getLambdaMappers()) {
                     processBodyMapper(srcTree, dstTree, lambdaMapper, mappingStore, isPartOfExtractedMethod);
                 }
+                matchParentStatements(srcStatementNode, dstStatementNode, mappingStore);
                 return;
             }
             else {
@@ -1486,9 +1493,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
             }
         }
-        if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
-            mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-        }
+        matchParentStatements(srcStatementNode, dstStatementNode, mappingStore);
         boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
         boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
         boolean _abstractExpWithNonCompositeOwner = _abstractExp;
@@ -1514,6 +1519,12 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    private void matchParentStatements(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+        if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
+            mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
         }
     }
 

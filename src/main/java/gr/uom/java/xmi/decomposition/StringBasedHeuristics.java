@@ -1191,6 +1191,13 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals("== null")) {
 				return true;
 			}
+			else if(diff1.isEmpty() && diff2.equals("!!")) {
+				//not-null assertion operator is added, i.e., x -> x!!
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("!!")) {
+				return true;
+			}
 			else if(diff1.isEmpty() && diff2.startsWith("@")) {
 				return true;
 			}

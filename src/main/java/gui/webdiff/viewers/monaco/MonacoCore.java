@@ -316,7 +316,7 @@ public class MonacoCore {
     private static boolean isStatement(Tree t) {
     	String type = t.getType().toString();
 		return type.endsWith("Statement") || type.equals("Block") || type.endsWith("ConstructorInvocation") || type.equals("SwitchCase") ||
-				type.endsWith("_statement") || type.endsWith("block");
+				type.endsWith("_statement") || type.endsWith("block") || type.equals("statements");
     }
 
     private static boolean isExpression(Tree t) {
@@ -761,6 +761,17 @@ public class MonacoCore {
 			}
 		}
 		if(bodyMapper != null) {
+			//the Kotlin statements of a block moved together, i.e., the whole body of an extracted method, belong to the refactoring with the mappings of their statements
+			if(tree.getType().name.equals("statements")) {
+				boolean left = classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree);
+				boolean right = classifier.getMovedDsts().contains(tree) || classifier.getMultiMapDst().containsKey(tree);
+				for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+					if(left && tree.getChildren().stream().anyMatch(s -> subsumes(mapping.getFragment1().codeRange(), s)))
+						return tooltipLeft;
+					if(right && tree.getChildren().stream().anyMatch(s -> subsumes(mapping.getFragment2().codeRange(), s)))
+						return tooltipRight;
+				}
+			}
 			for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 				if(subsumes(mapping.getFragment1().codeRange(),tree) && (classifier.getMovedSrcs().contains(tree) || classifier.getMultiMapSrc().containsKey(tree))) {
 					return tooltipLeft;

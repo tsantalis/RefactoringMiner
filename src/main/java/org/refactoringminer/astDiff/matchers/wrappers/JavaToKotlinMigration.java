@@ -956,19 +956,32 @@ public class JavaToKotlinMigration {
                 iterator2.remove();
             }
         }
-        if(inv1.size() == children2.size()) {
-            for(int i=0; i<inv1.size(); i++) {
-                if(alignMethodInvocationWithPropertyAccess(mappingStore, inv1.get(i), children2.get(i), LANG1, LANG2, deferredFlattenings))
+        //the Java setter invocation is the extra invocation, when its value has property accesses,
+        //i.e., serverSocket.setReuseAddress(inetSocketAddress.getPort() != 0); -> serverSocket!!.reuseAddress = inetSocketAddress.port != 0
+        boolean setterWithPropertyAccesses1 = assignableExpression != null && children2.size() > 0 && inv1.size() == children2.size() + 1;
+        List<Tree> propertyAccesses1 = setterWithPropertyAccesses1 ? inv1.subList(1, inv1.size()) : inv1;
+        if(propertyAccesses1.size() != children2.size()) {
+            //the Java invocations without receiver and arguments have no Kotlin navigation expression counterpart, as they are converted to properties of the same class,
+            //i.e., new InetSocketAddress(inetSocketAddress.getAddress().getCanonicalHostName(), getPort()) -> InetSocketAddress(inetSocketAddress!!.address.canonicalHostName, port)
+            List<Tree> withReceiver1 = propertyAccesses1.stream().filter(t -> !(t.getType().name.equals(LANG1.METHOD_INVOCATION) &&
+                    t.getChildren().size() == 1 && t.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME))).collect(Collectors.toList());
+            if(withReceiver1.size() == children2.size()) {
+                propertyAccesses1 = withReceiver1;
+            }
+        }
+        if(propertyAccesses1.size() == children2.size()) {
+            for(int i=0; i<propertyAccesses1.size(); i++) {
+                if(alignMethodInvocationWithPropertyAccess(mappingStore, propertyAccesses1.get(i), children2.get(i), LANG1, LANG2, deferredFlattenings))
                     continue;
                 Tree navigationSuffix = TreeUtilFunctions.findChildByType(children2.get(i), LANG2.NAVIGATION_SUFFIX);
                 if(navigationSuffix != null)
-                    mappingStore.addMapping(inv1.get(i), navigationSuffix);
-                boolean skip = inv1.get(i).getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && children2.get(i).getParent().getType().name.equals(LANG2.VALUE_ARGUMENT);
+                    mappingStore.addMapping(propertyAccesses1.get(i), navigationSuffix);
+                boolean skip = propertyAccesses1.get(i).getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && children2.get(i).getParent().getType().name.equals(LANG2.VALUE_ARGUMENT);
                 if(!skip)
-                    mappingStore.addMapping(inv1.get(i), children2.get(i));
+                    mappingStore.addMapping(propertyAccesses1.get(i), children2.get(i));
             }
         }
-        if(inv1.size() == 1 && assignableExpression != null) {
+        if((inv1.size() == 1 || setterWithPropertyAccesses1) && assignableExpression != null) {
             Tree navigationSuffix = TreeUtilFunctions.findChildByType(assignableExpression, LANG2.NAVIGATION_SUFFIX);
             if(navigationSuffix != null)
                 mappingStore.addMapping(inv1.get(0), navigationSuffix);

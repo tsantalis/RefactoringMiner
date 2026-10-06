@@ -7601,6 +7601,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return commentsWithinStatement1.size() > 0 && commentsWithinStatement1.equals(commentsWithinStatement2);
 	}
 
+	//the same name with and without qualification, i.e., LeakTraceElement.Type.STATIC_FIELD and STATIC_FIELD
+	private static boolean equalOrQualified(String s1, String s2) {
+		return s1.equals(s2) || s1.endsWith("." + s2) || s2.endsWith("." + s1);
+	}
+
 	private boolean identicalBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			return false;
@@ -7622,8 +7627,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY) &&
 				statement1.getExpressions().size() > 1 && statement2.getExpressions().size() > 1) {
-			if(!statement1.getExpressions().get(0).getString().equals(statement2.getExpressions().get(0).getString()) &&
-					!statement1.getExpressions().get(1).getString().equals(statement2.getExpressions().get(1).getString())) {
+			if(!equalOrQualified(statement1.getExpressions().get(0).getString(), statement2.getExpressions().get(0).getString()) &&
+					!equalOrQualified(statement1.getExpressions().get(1).getString(), statement2.getExpressions().get(1).getString())) {
 				return false;
 			}
 		}

@@ -857,28 +857,30 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             } else if (!srcStatementNode.getType().name.equals(LANG1.BLOCK) && !dstStatementNode.getType().name.equals(LANG2.BLOCK)) {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
             }
-            matchControlStructureBodies(srcStatementNode, dstStatementNode, mappingStore);
+            matchChildrenWithMappedContent(srcStatementNode, dstStatementNode, LANG1.CONTROL_STRUCTURE_BODY, LANG2.CONTROL_STRUCTURE_BODY, mappingStore);
+            matchChildrenWithMappedContent(srcStatementNode, dstStatementNode, LANG1.WHEN_CONDITION, LANG2.WHEN_CONDITION, mappingStore);
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
         }
     }
 
-    //the Kotlin branches of a mapped if, loop or when entry, with mapped content, i.e., if (x) throw e -> if (x) { throw e }
-    //the content distinguishes the corresponding branches from the branches at the same position of reordered if clauses in an else if chain
-    private void matchControlStructureBodies(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+    //the Kotlin children of the same type of a mapped composite, with mapped content, i.e., the branches of an if, a loop or a when entry, and the conditions of a when entry,
+    //i.e., if (x) throw e -> if (x) { throw e } and A.B.X, A.B.Y -> ... -> X, Y -> ...
+    //the content distinguishes the corresponding children from the children at the same position of reordered if clauses in an else if chain
+    private void matchChildrenWithMappedContent(Tree srcStatementNode, Tree dstStatementNode, String type1, String type2, ExtendedMultiMappingStore mappingStore) {
         Set<Tree> dsts = mappingStore.getDsts(srcStatementNode);
         if (dsts == null || !dsts.contains(dstStatementNode))
             return;
-        List<Tree> bodies1 = TreeUtilFunctions.findChildrenByType(srcStatementNode, LANG1.CONTROL_STRUCTURE_BODY);
-        List<Tree> bodies2 = TreeUtilFunctions.findChildrenByType(dstStatementNode, LANG2.CONTROL_STRUCTURE_BODY);
-        if (bodies1.size() != bodies2.size())
+        List<Tree> children1 = TreeUtilFunctions.findChildrenByType(srcStatementNode, type1);
+        List<Tree> children2 = TreeUtilFunctions.findChildrenByType(dstStatementNode, type2);
+        if (children1.size() != children2.size())
             return;
-        for (int i = 0; i < bodies1.size(); i++) {
-            Tree body1 = bodies1.get(i);
-            Tree body2 = bodies2.get(i);
-            if (!mappingStore.isSrcMapped(body1) && !mappingStore.isDstMapped(body2) && contentMappedWithin(body1, body2, mappingStore))
-                mappingStore.addMapping(body1, body2);
+        for (int i = 0; i < children1.size(); i++) {
+            Tree child1 = children1.get(i);
+            Tree child2 = children2.get(i);
+            if (!mappingStore.isSrcMapped(child1) && !mappingStore.isDstMapped(child2) && contentMappedWithin(child1, child2, mappingStore))
+                mappingStore.addMapping(child1, child2);
         }
     }
 

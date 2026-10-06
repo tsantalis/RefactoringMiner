@@ -27,6 +27,7 @@ import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLForwardDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportListDiff;
+import gr.uom.java.xmi.diff.UMLParameterDiff;
 import gr.uom.java.xmi.diff.UMLProblemDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLStaticAssertionDeclarationListDiff;
 import gr.uom.java.xmi.diff.UMLTypeAliasDiff;
@@ -38,6 +39,7 @@ import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
+import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
@@ -352,16 +354,11 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if (classDiff.getPrimaryConstructorParameterListDiff().isPresent()) {
             Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> pairs = classDiff.getPrimaryConstructorParameterListDiff().get().getCommonParameters();
             for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
-                Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo(), LANG1);
-                Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo(), LANG2);
-                if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
-                    srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, pair.getLeft().getLocationInfo(), LANG1, LANG1.CLASS_PARAMETER);
-                }
-                if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
-                    dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, pair.getRight().getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
-                }
-                if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
-                    mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+                processPrimaryConstructorParameterPair(srcTypeDeclaration, dstTypeDeclaration, pair.getLeft(), pair.getRight(), mappingStore);
+            }
+            //the parameters with changes, i.e., a changed type
+            for (UMLParameterDiff parameterDiff : classDiff.getPrimaryConstructorParameterListDiff().get().getParameterDiffList()) {
+                processPrimaryConstructorParameterPair(srcTypeDeclaration, dstTypeDeclaration, parameterDiff.getRemovedParameter(), parameterDiff.getAddedParameter(), mappingStore);
             }
             Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, classDiff.getOriginalClass().getPrimaryConstructor().get().getLocationInfo(), LANG1);
             Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, classDiff.getNextClass().getPrimaryConstructor().get().getLocationInfo(), LANG2);
@@ -1399,6 +1396,26 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     }
                 }
             }
+        }
+    }
+
+    private void processPrimaryConstructorParameterPair(Tree srcTypeDeclaration, Tree dstTypeDeclaration, VariableDeclaration left, VariableDeclaration right, ExtendedMultiMappingStore mappingStore) {
+        Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, left.getLocationInfo(), LANG1);
+        Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, right.getLocationInfo(), LANG2);
+        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, left.getLocationInfo(), LANG1, LANG1.CLASS_PARAMETER);
+        }
+        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, right.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
+        }
+        if (srcFieldDeclaration == null || dstFieldDeclaration == null)
+            return;
+        if (srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+            mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+        //the parameter with a changed type, or becoming a property, i.e., viewBinding: T -> val viewBinding: T
+        else if (!Constants.isCrossLanguage(LANG1, LANG2) && srcFieldDeclaration.getType().name.equals(dstFieldDeclaration.getType().name)) {
+            new LeafMatcher(LANG1, LANG2).match(srcFieldDeclaration,dstFieldDeclaration,mappingStore);
+            mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
         }
     }
 

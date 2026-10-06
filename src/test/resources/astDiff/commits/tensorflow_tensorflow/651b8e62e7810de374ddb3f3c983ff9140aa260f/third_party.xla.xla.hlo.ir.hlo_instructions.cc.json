@@ -339503,6 +339503,72 @@
   "firstEndPos" : 122154,
   "secondEndPos" : 122212
 }, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 122198,
+  "secondPos" : 122256,
+  "firstEndPos" : 122223,
+  "secondEndPos" : 122280
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 122204,
+  "secondPos" : 122256,
+  "firstEndPos" : 122215,
+  "secondEndPos" : 122273
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "std",
+  "secondLabel" : "absl",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 122204,
+  "secondPos" : 122256,
+  "firstEndPos" : 122207,
+  "secondEndPos" : 122260
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 122207,
+  "secondPos" : 122260,
+  "firstEndPos" : 122209,
+  "secondEndPos" : 122262
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "string",
+  "secondLabel" : "string_view",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 122209,
+  "secondPos" : 122262,
+  "firstEndPos" : 122215,
+  "secondEndPos" : 122273
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "config",
+  "secondLabel" : "config",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 122217,
+  "secondPos" : 122274,
+  "firstEndPos" : 122223,
+  "secondEndPos" : 122280
+}, {
   "firstType" : ")",
   "secondType" : ")",
   "firstLabel" : ")",

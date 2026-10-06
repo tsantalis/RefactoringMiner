@@ -1708,20 +1708,20 @@ public class MethodMatcher extends BodyMapperMatcher{
             VariableDeclaration rightVarDecl = matchedPair.getRight();
             processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
         }
-        boolean proceed = (umlOperationBodyMapper.getContainer1().getBody() == null && umlOperationBodyMapper.getContainer2().getBody() == null) || !umlOperationBodyMapper.sameFileExtension();
-        if(proceed && umlOperationBodyMapper.getOperationSignatureDiff().isPresent()) {
+        if(umlOperationBodyMapper.getOperationSignatureDiff().isPresent()) {
             UMLOperationDiff operationDiff = umlOperationBodyMapper.getOperationSignatureDiff().get();
+            //the parameters with changes, which are not matched through their references in the mapped statements, i.e., item: T -> item: Any?
             for(UMLParameterDiff parameterDiff : operationDiff.getParameterDiffList()) {
                 VariableDeclaration leftVarDecl = parameterDiff.getRemovedParameter();
                 VariableDeclaration rightVarDecl = parameterDiff.getAddedParameter();
-                processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
+                if(!matchedVariables.contains(Pair.of(leftVarDecl, rightVarDecl)))
+                    processParameterPair(srcTree, dstTree, mappingStore, leftVarDecl, rightVarDecl);
             }
             if(!umlOperationBodyMapper.sameFileExtension()) {
                 //the parameters without changes, which are not matched through their references in the mapped statements
                 for(Pair<VariableDeclaration, VariableDeclaration> commonParameter : operationDiff.getCommonParameters()) {
-                    if(!matchedVariables.contains(commonParameter)) {
+                    if(!matchedVariables.contains(commonParameter))
                         processParameterPair(srcTree, dstTree, mappingStore, commonParameter.getLeft(), commonParameter.getRight());
-                    }
                 }
             }
         }

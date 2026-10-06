@@ -75,6 +75,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
@@ -144,7 +145,8 @@ public class UMLModelDiff {
 	}
 
 	public void addUnchangedFiles(Map<String, String> fileContents) {
-		UMLModel newModel = new UMLModelASTReader(fileContents, childModel.getRepositoryDirectories(), false).getUmlModel();
+		Set<String> repositoryDirectories = GitHistoryRefactoringMinerImpl.populateDirectories(fileContents);
+		UMLModel newModel = new UMLModelASTReader(fileContents, repositoryDirectories, false).getUmlModel();
 		for(UMLClass umlClass : newModel.getClassList()) {
 			childModel.addClass(umlClass);
 			parentModel.addClass(umlClass);

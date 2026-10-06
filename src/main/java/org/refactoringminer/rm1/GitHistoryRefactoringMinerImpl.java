@@ -986,7 +986,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return paths;
 	}
 
-	private static Set<String> populateDirectories(Map<String, String> fileContents) {
+	public static Set<String> populateDirectories(Map<String, String> fileContents) {
 		Set<String> repositoryDirectories = new LinkedHashSet<>();
 		for(String path : fileContents.keySet()) {
 			addDirectoryPath(repositoryDirectories, path);

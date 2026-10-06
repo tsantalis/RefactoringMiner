@@ -16,6 +16,8 @@ import gr.uom.java.xmi.UMLGeneralization;
 import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLModel;
+import gr.uom.java.xmi.UMLModelASTReader;
+import gr.uom.java.xmi.UMLModule;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLRealization;
@@ -139,6 +141,26 @@ public class UMLModelDiff {
 		this.deletedFolderPaths = new LinkedHashSet<String>();
 		this.packageInfoDiffList = new ArrayList<UMLPackageInfoDiff>();
 		this.moduleDiffList = new ArrayList<UMLModuleDiff>();
+	}
+
+	public void addUnchangedFiles(Map<String, String> fileContents) {
+		UMLModel newModel = new UMLModelASTReader(fileContents, childModel.getRepositoryDirectories(), false).getUmlModel();
+		for(UMLClass umlClass : newModel.getClassList()) {
+			childModel.addClass(umlClass);
+			parentModel.addClass(umlClass);
+		}
+		for(UMLModule umlModule : newModel.getModuleList()) {
+			childModel.addModule(umlModule);
+			parentModel.addModule(umlModule);
+		}
+		for(UMLGeneralization generalization : newModel.getGeneralizationList()) {
+			childModel.addGeneralization(generalization);
+			parentModel.addGeneralization(generalization);
+		}
+		for(UMLRealization realization : newModel.getRealizationList()) {
+			childModel.addRealization(realization);
+			parentModel.addRealization(realization);
+		}
 	}
 
 	public UMLModel getParentModel() {

@@ -37,6 +37,10 @@ public class UMLModel {
         realizationList = new ArrayList<UMLRealization>();
     }
 
+	public Set<String> getRepositoryDirectories() {
+		return repositoryDirectories;
+	}
+
 	public Map<String, TreeContext> getTreeContextMap() {
 		return treeContextMap;
 	}

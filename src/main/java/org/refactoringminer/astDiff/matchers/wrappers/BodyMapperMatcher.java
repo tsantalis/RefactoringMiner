@@ -207,6 +207,18 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
+        //the Kotlin else branch has the same range as the nested if of an else if, i.e., if (a) {...} else if (b) {...}
+        //in a cross-language diff, the else branch is flattened by JavaToKotlinMigration.handleElseIfMapping, as Java has no counterpart
+        if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CONTROL_STRUCTURE_BODY) &&
+                srcStatementNode.getChildren().size() == 1 && srcStatementNode.getChild(0).getType().name.equals(LANG1.IF_STATEMENT)) {
+            srcStatementNode = srcStatementNode.getChild(0);
+        }
+        if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) &&
+                dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
+            dstStatementNode = dstStatementNode.getChild(0);
+        }
         //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
         //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -845,10 +857,45 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             } else if (!srcStatementNode.getType().name.equals(LANG1.BLOCK) && !dstStatementNode.getType().name.equals(LANG2.BLOCK)) {
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
             }
+            matchControlStructureBodies(srcStatementNode, dstStatementNode, mappingStore);
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
         }
+    }
+
+    //the Kotlin branches of a mapped if, loop or when entry, with mapped content, i.e., if (x) throw e -> if (x) { throw e }
+    //the content distinguishes the corresponding branches from the branches at the same position of reordered if clauses in an else if chain
+    private void matchControlStructureBodies(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+        Set<Tree> dsts = mappingStore.getDsts(srcStatementNode);
+        if (dsts == null || !dsts.contains(dstStatementNode))
+            return;
+        List<Tree> bodies1 = TreeUtilFunctions.findChildrenByType(srcStatementNode, LANG1.CONTROL_STRUCTURE_BODY);
+        List<Tree> bodies2 = TreeUtilFunctions.findChildrenByType(dstStatementNode, LANG2.CONTROL_STRUCTURE_BODY);
+        if (bodies1.size() != bodies2.size())
+            return;
+        for (int i = 0; i < bodies1.size(); i++) {
+            Tree body1 = bodies1.get(i);
+            Tree body2 = bodies2.get(i);
+            if (!mappingStore.isSrcMapped(body1) && !mappingStore.isDstMapped(body2) && contentMappedWithin(body1, body2, mappingStore))
+                mappingStore.addMapping(body1, body2);
+        }
+    }
+
+    //a node within the first tree is mapped to a node within the second tree
+    private static boolean contentMappedWithin(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {
+        for (Tree t1 : tree1.getDescendants()) {
+            Set<Tree> dsts = mappingStore.getDsts(t1);
+            if (dsts == null)
+                continue;
+            for (Tree t2 : dsts) {
+                for (Tree p = t2.getParent(); p != null; p = p.getParent()) {
+                    if (p == tree2)
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void processCallExpressionsModeledAsCompositeStatements(ExtendedMultiMappingStore mappingStore,

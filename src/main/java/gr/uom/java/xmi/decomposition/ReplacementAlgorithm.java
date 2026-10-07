@@ -2303,12 +2303,48 @@ public class ReplacementAlgorithm {
 			List<AbstractExpression> expressions2 = while2.getExpressions();
 			AbstractExpression whileExpression = expressions2.get(expressions2.size()-1);
 			boolean conditionMatched = false;
+			VariableDeclaration forDeclaration = null;
+			AbstractExpression forDeclarationExpression1 = null;
 			for(AbstractExpression expression1 : for1.getExpressions()) {
 				if(expression1.getString().equals(whileExpression.getString())) {
 					LeafMapping leafMapping = new LeafMapping(expression1, whileExpression, container1, container2);
 					replacementInfo.addSubExpressionMapping(leafMapping);
 					conditionMatched = true;
 					break;
+				}
+				if(forDeclaration != null && forDeclaration.getInitializer() != null) {
+					List<AbstractCall> calls1 = expression1.getMethodInvocations();
+					List<AbstractCall> calls2 = whileExpression.getMethodInvocations();
+					if(calls1.size() == calls2.size() && calls1.size() > 0) {
+						int equalCalls = 0;
+						//the declaration of the while condition variable before the while, having the same initializer with the for declaration,
+						//i.e., for(Iterator<Socket> s = openClientSockets.iterator(); s.hasNext(); ) -> val openClientSocket = openClientSockets.iterator(); while(openClientSocket.hasNext())
+						AbstractCodeFragment whileDeclaration2 = null;
+						for(int i=0; i<calls1.size(); i++) {
+							if(calls1.get(i).equals(calls2.get(i))) {
+								equalCalls++;
+								if(whileDeclaration2 == null && forDeclaration.getVariableName().equals(calls1.get(i).getExpression())) {
+									whileDeclaration2 = findDeclarationWithInitializer(replacementInfo.getStatements2(), calls2.get(i).getExpression(), forDeclaration.getInitializer().getString());
+								}
+							}
+						}
+						if(equalCalls == calls1.size() && whileDeclaration2 != null) {
+							LeafMapping leafMapping = new LeafMapping(expression1, whileExpression, container1, container2);
+							replacementInfo.addSubExpressionMapping(leafMapping);
+							LeafMapping declarationMapping = new LeafMapping(forDeclarationExpression1, whileDeclaration2, container1, container2);
+							replacementInfo.addSubExpressionMapping(declarationMapping);
+							Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<AbstractCodeFragment>();
+							additionallyMatchedStatements2.add(whileDeclaration2);
+							Replacement composite = new CompositeReplacement(statement1.getString(), statement2.getString(), new LinkedHashSet<AbstractCodeFragment>(), additionallyMatchedStatements2);
+							replacementInfo.addReplacement(composite);
+							conditionMatched = true;
+							break;
+						}
+					}
+				}
+				if(expression1.getVariableDeclarations().size() > 0) {
+					forDeclaration = expression1.getAllVariableDeclarations().get(0);
+					forDeclarationExpression1 = expression1;
 				}
 			}
 			if(conditionMatched) {
@@ -6710,6 +6746,17 @@ public class ReplacementAlgorithm {
 				operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getOperationSignatureDiff().get().getRefactorings());
 			}
 		}
+	}
+
+	private static AbstractCodeFragment findDeclarationWithInitializer(List<? extends AbstractCodeFragment> statements, String variableName, String initializer) {
+		for(AbstractCodeFragment statement : statements) {
+			List<VariableDeclaration> declarations = statement.getVariableDeclarations();
+			if(declarations.size() == 1 && declarations.get(0).getVariableName().equals(variableName) &&
+					declarations.get(0).getInitializer() != null && declarations.get(0).getInitializer().getString().equals(initializer)) {
+				return statement;
+			}
+		}
+		return null;
 	}
 
 	private static boolean isPartOfLambdaMovedToParentMapper(UMLOperationBodyMapper lambdaMapper) {

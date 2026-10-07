@@ -599,6 +599,16 @@ public class JavaToKotlinMigration {
                     start1 = 1;
                 }
             }
+            Tree fragment1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.VARIABLE_DECLARATION_FRAGMENT);
+            if(start1 == -1 && fragment1 != null) {
+                //the Java type has multiple simple names and the variable is renamed, so the type names are the simple names outside the fragment,
+                //i.e., Iterator<Socket> s = openClientSockets.iterator() -> val openClientSocket = openClientSockets.iterator()
+                List<Tree> fragmentNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(fragment1, LANG1.SIMPLE_NAME);
+                int typeNames1 = (int)children1.stream().filter(child1 -> !fragmentNames1.contains(child1)).count();
+                if(typeNames1 > 0 && children1.size() - typeNames1 == children2.size()) {
+                    start1 = typeNames1;
+                }
+            }
             if(children2.size() == children1.size() - start1) {
                 for(int i=0; i<children2.size(); i++) {
                     mappingStore.addMapping(children1.get(i+start1), children2.get(i));

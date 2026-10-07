@@ -30,6 +30,7 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
 	private List<Double> levelParentEditDistance;
+	private Integer renamedVariablesWithIdenticalInitializers;
 	private boolean identicalPreviousStatement;
 	private boolean identicalPreviousAndNextStatement;
 	private boolean identicalNextStatement;
@@ -112,6 +113,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		else {
+			//the variable renames backed by declarations with identical initializers distinguish the mappings of statements in loops with identical bodies,
+			//i.e., s.remove() -> openClientSocket.remove(), when Iterator<Socket> s=openClientSockets.iterator() -> val openClientSocket = openClientSockets.iterator()
+			int renamedVariablesWithIdenticalInitializers1 = this.renamedVariablesWithIdenticalInitializers();
+			int renamedVariablesWithIdenticalInitializers2 = o.renamedVariablesWithIdenticalInitializers();
+			if(renamedVariablesWithIdenticalInitializers1 >= 0 && renamedVariablesWithIdenticalInitializers2 >= 0 &&
+					renamedVariablesWithIdenticalInitializers1 != renamedVariablesWithIdenticalInitializers2) {
+				return -Integer.compare(renamedVariablesWithIdenticalInitializers1, renamedVariablesWithIdenticalInitializers2);
+			}
 			double distance1 = this.editDistance();
 			double distance2 = o.editDistance();
 			if(distance1 != distance2) {
@@ -1140,6 +1149,33 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 		}
 		return false;
+	}
+
+	//-1 when there are no variable renames, 1 when all renamed variables are declared with identical initializers, 0 otherwise
+	//the renamed variables declared by the mapped statements themselves are not considered, as their initializers are part of the mapped statements
+	private int renamedVariablesWithIdenticalInitializers() {
+		if(this.renamedVariablesWithIdenticalInitializers != null) {
+			return this.renamedVariablesWithIdenticalInitializers;
+		}
+		int renamedVariables = 0;
+		int identicalInitializers = 0;
+		for(Replacement r : getReplacements()) {
+			if(r.getType().equals(ReplacementType.VARIABLE_NAME)) {
+				if(getFragment1().getVariableDeclaration(r.getBefore()) != null || getFragment2().getVariableDeclaration(r.getAfter()) != null) {
+					this.renamedVariablesWithIdenticalInitializers = -1;
+					return this.renamedVariablesWithIdenticalInitializers;
+				}
+				renamedVariables++;
+				VariableDeclaration v1 = getFragment1().searchVariableDeclaration(r.getBefore());
+				VariableDeclaration v2 = getFragment2().searchVariableDeclaration(r.getAfter());
+				if(v1 != null && v2 != null && v1.getInitializer() != null && v2.getInitializer() != null &&
+						v1.getInitializer().getString().equals(v2.getInitializer().getString())) {
+					identicalInitializers++;
+				}
+			}
+		}
+		this.renamedVariablesWithIdenticalInitializers = renamedVariables == 0 ? -1 : (identicalInitializers == renamedVariables ? 1 : 0);
+		return this.renamedVariablesWithIdenticalInitializers;
 	}
 
 	private int parentIndexDiff() {

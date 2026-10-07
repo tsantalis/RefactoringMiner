@@ -18655,6 +18655,17 @@
   "firstEndPos" : 14020,
   "secondEndPos" : 12769
 }, {
+  "firstType" : "POSTFIX_EXPRESSION_OPERATOR",
+  "secondType" : "increment_operator",
+  "firstLabel" : "++",
+  "secondLabel" : "++",
+  "firstParentType" : "PostfixExpression",
+  "secondParentType" : "postfix_expression",
+  "firstPos" : 14020,
+  "secondPos" : 12769,
+  "firstEndPos" : 14022,
+  "secondEndPos" : 12771
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

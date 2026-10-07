@@ -15073,12 +15073,23 @@
   "secondType" : "simple_identifier",
   "firstLabel" : "sequenceNumber",
   "secondLabel" : "sequenceNumber",
-  "firstParentType" : "PostfixExpression",
+  "firstParentType" : "ExpressionStatement",
   "secondParentType" : "postfix_expression",
   "firstPos" : 22670,
   "secondPos" : 20413,
   "firstEndPos" : 22684,
   "secondEndPos" : 20427
+}, {
+  "firstType" : "POSTFIX_EXPRESSION_OPERATOR",
+  "secondType" : "increment_operator",
+  "firstLabel" : "++",
+  "secondLabel" : "++",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "postfix_expression",
+  "firstPos" : 22684,
+  "secondPos" : 20427,
+  "firstEndPos" : 22686,
+  "secondEndPos" : 20429
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",

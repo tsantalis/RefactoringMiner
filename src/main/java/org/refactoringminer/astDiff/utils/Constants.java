@@ -371,6 +371,8 @@ public class Constants {
     public final String LAMBDA_EXPRESSION;
     public final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
     public final String PREFIX_EXPRESSION_OPERATOR = "PREFIX_EXPRESSION_OPERATOR";
+    public final String POSTFIX_EXPRESSION = "PostfixExpression";
+    public final String POSTFIX_EXPRESSION_OPERATOR = "POSTFIX_EXPRESSION_OPERATOR";
 
     public final String STRING_LITERAL;
     public final String CHARACTER_LITERAL;

@@ -1045,6 +1045,18 @@ public class JavaToKotlinMigration {
             flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, invocation1);
         }
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.POSTFIX_EXPRESSION) && dstStatementNode.getType().name.equals(LANG2.KOTLIN_POSTFIX_EXPRESSION) &&
+                srcStatementNode.getChild(0).getChildren().size() == 2 && dstStatementNode.getChildren().size() == 2) {
+            //align Java ExpressionStatement -> PostfixExpression -> [operand, ++] with Kotlin postfix_expression -> [operand, ++], as Kotlin has no expression statement wrapper
+            Tree postfix1 = srcStatementNode.getChild(0);
+            alignPostfixOperator(mappingStore, postfix1, dstStatementNode, LANG1, LANG2);
+            flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, postfix1);
+        }
+        if(srcStatementNode.getType().name.equals(LANG1.POSTFIX_EXPRESSION)) {
+            //the updater of the Java for loop becomes a statement in the body of the Kotlin while loop, i.e., for (i = 0; i < 1024; i++) {...} -> while (i < 1024) {... i++ }
+            alignPostfixOperator(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
+        }
+        if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
                 srcStatementNode.getChild(0).getType().name.equals(LANG1.ASSIGNMENT) && dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
             //align Java ExpressionStatement -> Assignment -> [target, operator, value] with Kotlin assignment -> [target, operator, value]
             Tree statementAssignment1 = srcStatementNode.getChild(0);
@@ -3311,6 +3323,17 @@ public class JavaToKotlinMigration {
             handleLeafMapping(mappingStore, operand1, subject2.getChild(0), LANG1, LANG2, deferredFlattenings);
         }
         return true;
+    }
+
+    //Java PostfixExpression -> [operand, ++] and Kotlin postfix_expression -> [operand, ++]
+    private static void alignPostfixOperator(ExtendedMultiMappingStore mappingStore, Tree postfix1, Tree postfix2, Constants LANG1, Constants LANG2) {
+        if(!postfix2.getType().name.equals(LANG2.KOTLIN_POSTFIX_EXPRESSION) || postfix1.getChildren().size() != 2 || postfix2.getChildren().size() != 2)
+            return;
+        Tree operator1 = postfix1.getChild(1);
+        Tree operator2 = postfix2.getChild(1);
+        if(operator1.getType().name.equals(LANG1.POSTFIX_EXPRESSION_OPERATOR) && operator1.getLabel().equals(operator2.getLabel())) {
+            mappingStore.addMapping(operator1, operator2);
+        }
     }
 
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {

@@ -186,7 +186,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		else {
 			leftSide = ".";
 		}
-		String codePath = container.getName() + leftSide + type.getClassType();
+		//the object expression without supertypes implicitly extends Object, i.e., object {}.javaClass.classLoader
+		String codePath = container.getName() + leftSide + (type != null ? type.getClassType() : "Object");
 		UMLAnonymousClass anonymousClass =  new UMLAnonymousClass(container.getClassName(), codePath, codePath, anonymousLocationInfo, Collections.emptyList());
 		KotlinFileProcessor.processClassBody(cu, sourceFolder, filePath, fileContent, Collections.emptyList(), container.getComments(), anonymousClass, activeVariableDeclarations, objectDeclaration.getBody(), null);
 		if(container instanceof LambdaExpressionObject lambda) {

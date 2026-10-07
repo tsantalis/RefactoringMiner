@@ -155,6 +155,14 @@ public class StringBasedHeuristics {
 					}
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
+						call.getName().equals("equalsIgnoreCase")) {
+					//i.e., s.equalsIgnoreCase(x) -> s.equals(x, ignoreCase = true)
+					String before = ".equalsIgnoreCase(" + call.arguments.get(0) + ")";
+					String after = ".equals(" + call.arguments.get(0) + ",ignoreCase = true)";
+					temp = ReplacementUtil.performReplacement(temp, before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+				}
+				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 1 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("equals")) {
 					String before = ".equals(" + call.arguments.get(0) + ")";
 					String after = " == " + call.arguments.get(0);
@@ -266,7 +274,8 @@ public class StringBasedHeuristics {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
 				String ss2 = statement2 instanceof AbstractExpression ? s2 : s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
 				for(Replacement r : info.getReplacements()) {
-					if(r.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA)) {
+					//the replacement brings the formatting of the Kotlin statement, i.e., "Upgrade".equals(request.getHeader("Connection"),\n ignoreCase = true)
+					if(r.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA) || r.getAfter().contains("\n")) {
 						ss1 = ss1.replaceAll("\\R\\s*", "");
 						break;
 					}

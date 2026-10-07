@@ -14112,6 +14112,28 @@
   "firstEndPos" : 18178,
   "secondEndPos" : 16366
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "get",
+  "firstLabel" : "get",
+  "secondLabel" : "get",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 18179,
+  "secondPos" : 16367,
+  "firstEndPos" : 18182,
+  "secondEndPos" : 16370
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "getSelectedProtocol",
+  "secondLabel" : "getSelectedProtocol",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 18185,
+  "secondPos" : 16373,
+  "firstEndPos" : 18204,
+  "secondEndPos" : 16392
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "value_arguments",
   "firstLabel" : "",
@@ -30777,15 +30799,15 @@
   "firstEndPos" : 33434,
   "secondEndPos" : 29798
 }, {
-  "firstType" : "QualifiedName",
+  "firstType" : "ReturnStatement",
   "secondType" : "navigation_expression",
   "firstLabel" : "Timeout.NONE",
   "secondLabel" : "Timeout.NONE",
-  "firstParentType" : "ReturnStatement",
+  "firstParentType" : "Block",
   "secondParentType" : "function_body",
-  "firstPos" : 33415,
+  "firstPos" : 33408,
   "secondPos" : 29786,
-  "firstEndPos" : 33427,
+  "firstEndPos" : 33428,
   "secondEndPos" : 29798
 }, {
   "firstType" : "MethodDeclaration",
@@ -33044,9 +33066,9 @@
   "secondEndPos" : 31623
 }, {
   "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
+  "secondType" : "value",
   "firstLabel" : "value",
-  "secondLabel" : "",
+  "secondLabel" : "value",
   "firstParentType" : "VariableDeclarationStatement",
   "secondParentType" : "property_declaration",
   "firstPos" : 35698,
@@ -33088,9 +33110,9 @@
   "secondEndPos" : 31637
 }, {
   "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
+  "secondType" : "value",
   "firstLabel" : "value",
-  "secondLabel" : "",
+  "secondLabel" : "value",
   "firstParentType" : "MethodInvocation",
   "secondParentType" : "call_expression",
   "firstPos" : 35720,
@@ -33477,7 +33499,7 @@
   "firstLabel" : "value",
   "secondLabel" : "value",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "simple_identifier",
+  "secondParentType" : "value_arguments",
   "firstPos" : 36018,
   "secondPos" : 31925,
   "firstEndPos" : 36023,
@@ -33620,7 +33642,7 @@
   "firstLabel" : "value",
   "secondLabel" : "value",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "simple_identifier",
+  "secondParentType" : "navigation_expression",
   "firstPos" : 36135,
   "secondPos" : 32031,
   "firstEndPos" : 36140,

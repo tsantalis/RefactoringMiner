@@ -150,11 +150,12 @@ public class JavaToKotlinMigration {
             mappingStore.addMapping(srcStatementNode, dstStatementNode);
             return;
         }
-        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.SIMPLE_NAME) &&
+        if(srcStatementNode.getType().name.equals(LANG1.RETURN_STATEMENT) && dstStatementNode.isLeaf() &&
                 dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_BODY) &&
                 TreeUtilFunctions.findChildByType(dstStatementNode.getParent(), LANG2.AFFECTATION_OPERATOR) != null) {
-            if(srcStatementNode.getChildren().size() == 1 && srcStatementNode.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME)) {
+            if(srcStatementNode.getChildren().size() == 1 && srcStatementNode.getChild(0).isLeaf()) {
                 //align Java ReturnStatement -> SimpleName with Kotlin function_body -> [=, simple_identifier], as Kotlin expression body has no return statement wrapper
+                //the same holds for any returned leaf, i.e., return Timeout.NONE; -> = Timeout.NONE
                 //the ReturnStatement takes the place of the SimpleName, as the ReturnStatement takes the place of a returned non-leaf expression (see below)
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 absorbSrcLeafChild(mappingStore, deferredFlattenings, srcStatementNode, srcStatementNode.getChild(0));
@@ -538,7 +539,8 @@ public class JavaToKotlinMigration {
             }
             List<Tree> toBeRemoved2 = new ArrayList<>();
             for(Tree child2 : children2) {
-                if((child2.getLabel().equals("get") || child2.getLabel().equals("put") || child2.getLabel().equals("equals")) && !equalsIgnoreCaseNames2.contains(child2)) {
+                String label2 = nameLabel(child2);
+                if((label2.equals("get") || label2.equals("put") || label2.equals("equals")) && !equalsIgnoreCaseNames2.contains(child2)) {
                     toBeRemoved2.add(child2);
                 }
             }
@@ -548,10 +550,7 @@ public class JavaToKotlinMigration {
         }
         if(children1.size() == children2.size() && (!firstChildIsType1 || children1.size() == 1)) {
             for(int i=0; i<children1.size(); i++) {
-                if(children2.get(i).getChildren().size() > 0)
-                    mappingStore.addMapping(children1.get(i), children2.get(i).getChild(0));
-                else
-                    mappingStore.addMapping(children1.get(i), children2.get(i));
+                addNameMapping(mappingStore, children1.get(i), children2.get(i), deferredFlattenings);
             }
         }
         if(children1.size() == children2.size() && firstChildIsType1) {
@@ -612,7 +611,7 @@ public class JavaToKotlinMigration {
             }
             if(children2.size() == children1.size() - start1) {
                 for(int i=0; i<children2.size(); i++) {
-                    mappingStore.addMapping(children1.get(i+start1), children2.get(i));
+                    addNameMapping(mappingStore, children1.get(i+start1), children2.get(i), deferredFlattenings);
                 }
             }
         }
@@ -3359,6 +3358,22 @@ public class JavaToKotlinMigration {
         if(operator1.getType().name.equals(LANG1.POSTFIX_EXPRESSION_OPERATOR) && operator1.getLabel().equals(operator2.getLabel())) {
             mappingStore.addMapping(operator1, operator2);
         }
+    }
+
+    //the Kotlin name may be a wrapper of a soft keyword, i.e., simple_identifier -> value in val value = streamHeaders.value(i)
+    //the soft keyword takes the place of the wrapper, so that the mapped name is not moved inside the wrapper
+    private static void addNameMapping(ExtendedMultiMappingStore mappingStore, Tree name1, Tree name2, DeferredFlattenings deferredFlattenings) {
+        if(name2.getChildren().size() > 0) {
+            mappingStore.addMapping(name1, name2.getChild(0));
+            if(name2.getParent() != null)
+                flattenDstChildKeepingMappings(deferredFlattenings, name2.getParent(), name2);
+        }
+        else
+            mappingStore.addMapping(name1, name2);
+    }
+
+    private static String nameLabel(Tree name2) {
+        return name2.getChildren().size() > 0 ? name2.getChild(0).getLabel() : name2.getLabel();
     }
 
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {

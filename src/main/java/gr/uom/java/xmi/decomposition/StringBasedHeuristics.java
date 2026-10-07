@@ -124,6 +124,15 @@ public class StringBasedHeuristics {
 			List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 			String temp = new String(s1);
 			Set<Replacement> appliedReplacements = new LinkedHashSet<>();
+			for(TernaryOperatorExpression ternary1 : statement1.getTernaryOperatorExpressions()) {
+				//Java ternary operator replaced with Kotlin if expression, i.e., x != null ? a : b -> if (x != null) a else b
+				String before = ternary1.getString();
+				String after = "if (" + ternary1.getCondition().getString() + ") " + ternary1.getThenExpression().getString() + " else " + ternary1.getElseExpression().getString();
+				if(temp.contains(before) && s2.replaceAll("\\s+", " ").contains(after)) {
+					temp = temp.replace(before, after);
+					appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+				}
+			}
 			for(AbstractCall call : methodInvocations1) {
 				if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 0 && !methodInvocations2.contains(call) &&
 						call.getName().equals("isEmpty") && s2.contains(".isNotEmpty()")) {
@@ -210,7 +219,7 @@ public class StringBasedHeuristics {
 					//Map.get() replaced with square bracket []
 					String before = ".get(" + call.arguments().get(0) + ")";
 					String after = "[" + call.arguments().get(0) + "]";
-					if(temp.contains(before)) {
+					if(temp.contains(before) && !s2.contains(before)) {
 						temp = temp.replace(before, after);
 						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 					}
@@ -233,7 +242,7 @@ public class StringBasedHeuristics {
 				VariableDeclaration declaration2 = statement2.searchVariableDeclaration(after);
 				if(declaration2 != null && declaration2.getInitializer() != null) {
 					String before = declaration2.getInitializer().getString();
-					if(!before.equals(after) && statement1.getVariables().stream().anyMatch(v -> v.getString().equals(before)) &&
+					if(!before.equals(after) && before.matches("[A-Za-z_$][\\w$]*") && statement1.getVariables().stream().anyMatch(v -> v.getString().equals(before)) &&
 							statement2.getVariables().stream().noneMatch(v -> v.getString().equals(before))) {
 						temp = ReplacementUtil.performReplacement(temp, before, after);
 						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));

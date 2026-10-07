@@ -23,6 +23,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.InferredType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLOperation;
@@ -1104,7 +1105,9 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			if(list1.size() == list2.size() && list1.size() > 0) {
 				VariableDeclaration v1 = list1.get(0);
 				VariableDeclaration v2 = list2.get(0);
-				if(v1.equalType(v2) && v1.getInitializer() != null && v2.getInitializer() != null &&
+				//the Kotlin variable without declared type has the type of its initializer, i.e., String protocolString=x; -> val protocolString = x
+				boolean inferredType = v1.getType() instanceof InferredType || v2.getType() instanceof InferredType;
+				if((v1.equalType(v2) || inferredType) && v1.getInitializer() != null && v2.getInitializer() != null &&
 						v1.getInitializer().getString().equals(v2.getInitializer().getString())) {
 					equalTypeAndInitializer = true;
 				}

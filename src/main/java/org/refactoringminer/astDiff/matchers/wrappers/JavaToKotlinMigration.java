@@ -1096,6 +1096,31 @@ public class JavaToKotlinMigration {
             //the variable type is explicit in Kotlin, i.e., var errorException: IOException? = null
             alignTypes(mappingStore, findJavaType(srcStatementNode, LANG1), findKotlinType(dstStatementNode, LANG2), LANG1, LANG2, deferredFlattenings);
         }
+        alignConditionalWithIfExpression(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, deferredFlattenings);
+    }
+
+    //align Java ConditionalExpression -> [condition, then, else] with Kotlin if_expression -> [condition, control_structure_body -> then, control_structure_body -> else],
+    //when the ternary operator is replaced with the if expression, i.e., x != null ? a : b -> if (x != null) a else b
+    //the if expression is the one with the condition mapped to the condition of the ternary operator
+    private static void alignConditionalWithIfExpression(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        for(Tree conditional1 : TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CONDITIONAL_EXPRESSION)) {
+            Set<Tree> conditions2 = conditional1.getChildren().size() == 3 ? mappingStore.getDsts(conditional1.getChild(0)) : null;
+            if(conditions2 == null || mappingStore.isSrcMapped(conditional1))
+                continue;
+            for(Tree condition2 : conditions2) {
+                Tree if2 = condition2.getParent();
+                if(if2 != null && if2.getType().name.equals(LANG2.IF_STATEMENT) && if2.getChildren().size() == 3 && if2.getChild(0) == condition2 &&
+                        isDescendantOf(if2, dstStatementNode)) {
+                    mappingStore.addMapping(conditional1, if2);
+                    for(Tree body2 : new ArrayList<>(if2.getChildren().subList(1, 3))) {
+                        if(body2.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) && body2.getChildren().size() == 1) {
+                            flattenDstChildKeepingMappings(deferredFlattenings, if2, body2);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     //restructures the Java and Kotlin field declarations, so that the name, = and initializer have the same parent (see alignVariableDeclaration)

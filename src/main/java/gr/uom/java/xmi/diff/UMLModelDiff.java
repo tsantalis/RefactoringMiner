@@ -144,9 +144,9 @@ public class UMLModelDiff {
 		this.moduleDiffList = new ArrayList<UMLModuleDiff>();
 	}
 
-	public void addUnchangedFiles(Map<String, String> fileContents) {
+	public void addUnchangedFiles(Map<String, String> fileContents, boolean astDiff) {
 		Set<String> repositoryDirectories = GitHistoryRefactoringMinerImpl.populateDirectories(fileContents);
-		UMLModel newModel = new UMLModelASTReader(fileContents, repositoryDirectories, false).getUmlModel();
+		UMLModel newModel = new UMLModelASTReader(fileContents, repositoryDirectories, astDiff).getUmlModel();
 		for(UMLClass umlClass : newModel.getClassList()) {
 			childModel.addClass(umlClass);
 			parentModel.addClass(umlClass);
@@ -162,6 +162,12 @@ public class UMLModelDiff {
 		for(UMLRealization realization : newModel.getRealizationList()) {
 			childModel.addRealization(realization);
 			parentModel.addRealization(realization);
+		}
+		if(astDiff) {
+			for(String key : newModel.getTreeContextMap().keySet()) {
+				childModel.getTreeContextMap().put(key, newModel.getTreeContextMap().get(key));
+				parentModel.getTreeContextMap().put(key, newModel.getTreeContextMap().get(key));
+			}
 		}
 	}
 

@@ -304,7 +304,8 @@ public class JavaToKotlinMigration {
                             found = true;
                             break;
                         }
-                        else if(name.toLowerCase().endsWith(simpleName2.getLabel())) {
+                        else if(name.equalsIgnoreCase("get" + simpleName2.getLabel())) {
+                            //the Java getter is replaced with the Kotlin property access, i.e., e.getMessage() -> ${e.message}
                             mappingStore.addMapping(t1, simpleName2);
                             iter1.remove();
                             found = true;

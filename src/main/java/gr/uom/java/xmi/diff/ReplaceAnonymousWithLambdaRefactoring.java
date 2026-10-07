@@ -11,6 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -19,6 +20,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class ReplaceAnonymousWithLambdaRefactoring extends AbstractRefactoring implements MethodLevelRefactoring {
 	private UMLAnonymousClass anonymousClass;
+	private UMLOperation anonymousClassOperation;
 	private LambdaExpressionObject lambda;
 	private AbstractCodeFragment anonymousOwner;
 	private AbstractCodeFragment lambdaOwner;
@@ -27,10 +29,11 @@ public class ReplaceAnonymousWithLambdaRefactoring extends AbstractRefactoring i
 	private Set<AbstractCodeMapping> mappings;
 	private UMLOperationBodyMapper bodyMapper;
 
-	public ReplaceAnonymousWithLambdaRefactoring(UMLAnonymousClass anonymousClass, LambdaExpressionObject lambda,
+	public ReplaceAnonymousWithLambdaRefactoring(UMLAnonymousClass anonymousClass, UMLOperation anonymousClassOperation, LambdaExpressionObject lambda,
 			AbstractCodeFragment anonymousOwner, AbstractCodeFragment lambdaOwner,
 			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, UMLOperationBodyMapper mapper) {
 		this.anonymousClass = anonymousClass;
+		this.anonymousClassOperation = anonymousClassOperation;
 		this.lambda = lambda;
 		this.anonymousOwner = anonymousOwner;
 		this.lambdaOwner = lambdaOwner;
@@ -61,6 +64,10 @@ public class ReplaceAnonymousWithLambdaRefactoring extends AbstractRefactoring i
 
 	public UMLAnonymousClass getAnonymousClass() {
 		return anonymousClass;
+	}
+
+	public UMLOperation getAnonymousClassOperation() {
+		return anonymousClassOperation;
 	}
 
 	public LambdaExpressionObject getLambda() {

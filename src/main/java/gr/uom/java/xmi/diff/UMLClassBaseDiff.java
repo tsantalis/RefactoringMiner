@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -197,6 +198,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processOperations();
 		createBodyMappers();
 		processAnonymousClasses();
+		processAnonymousClassesReplacedWithLambdas();
 		checkForOperationSignatureChanges(this.removedOperations, this.addedOperations);
 		if(removedNestedOperations.size() > 0 || addedNestedOperations.size() > 0) {
 			checkForOperationSignatureChanges(this.removedNestedOperations, this.addedNestedOperations);
@@ -1827,6 +1829,26 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return false;
+	}
+
+	//the operations of the anonymous classes replaced with lambdas, which are not matched with the lambdas, are removed nested operations of the container,
+	//i.e., acceptConnections() of new NamedRunnable("MockWebServer %s", port) {...} replaced with the lambda of executor.execute("MockWebServer $port") {...}
+	private void processAnonymousClassesReplacedWithLambdas() {
+		Map<UMLAnonymousClass, Set<UMLOperation>> lambdaMatchedOperations = new LinkedHashMap<>();
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			for(Refactoring r : mapper.getRefactoringsAfterPostProcessing()) {
+				if(r instanceof ReplaceAnonymousWithLambdaRefactoring replaceAnonymous) {
+					lambdaMatchedOperations.computeIfAbsent(replaceAnonymous.getAnonymousClass(), k -> new LinkedHashSet<>()).add(replaceAnonymous.getAnonymousClassOperation());
+				}
+			}
+		}
+		for(Map.Entry<UMLAnonymousClass, Set<UMLOperation>> entry : lambdaMatchedOperations.entrySet()) {
+			for(UMLOperation operation : entry.getKey().getOperations()) {
+				if(!entry.getValue().contains(operation) && !removedNestedOperations.contains(operation)) {
+					removedNestedOperations.add(operation);
+				}
+			}
+		}
 	}
 
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {

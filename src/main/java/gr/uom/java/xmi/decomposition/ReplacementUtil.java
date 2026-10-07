@@ -102,7 +102,7 @@ public class ReplacementUtil {
 		return temp;
 	}
 
-	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG1, Constants LANG2) {	
+	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG1, Constants LANG2) {
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
 		for(String character : SPECIAL_CHARACTERS) {
@@ -111,6 +111,11 @@ public class ReplacementUtil {
 			if(character.equals("=") && !LANG1.equals(LANG2) &&
 					temp.startsWith(subString1 + character) && completeString2.startsWith(subString2 + LANG2.ASSIGNMENT)) {
 				character2 = LANG2.ASSIGNMENT;
+			}
+			//cross-language compound assignment with different formatting, i.e., Java x-=y; and Kotlin x -= y
+			else if((character.equals("+") || character.equals("-")) && !LANG1.equals(LANG2) &&
+					temp.startsWith(subString1 + character + "=") && completeString2.startsWith(subString2 + " " + character + "=")) {
+				character2 = " ";
 			}
 			if(temp.contains(subString1 + character) && completeString2.contains(subString2 + character2)) {
 				StringBuffer sb = new StringBuffer();
@@ -123,6 +128,11 @@ public class ReplacementUtil {
 					int start2 = m2.start();
 					String characterBeforeMatch1 = start1 == 0 ? "" : String.valueOf(temp.charAt(start1 - 1));
 					String characterBeforeMatch2 = start2 == 0 ? "" : String.valueOf(completeString2.charAt(start2 - 1));
+					//cross-language arguments with different formatting, i.e., Java min(x,y) and Kotlin min(x, y)
+					//the Kotlin trailing lambda is not an argument replacing a Java argument, i.e., pushExecutor.execute(new NamedRunnable("...",streamId) {...}) -> pushExecutorExecute("...") {...}
+					if(!LANG1.equals(LANG2) && !subString2.startsWith("{") && characterBeforeMatch1.equals(",") && characterBeforeMatch2.equals(" ") && start2 > 1 && completeString2.charAt(start2 - 2) == ',') {
+						characterBeforeMatch2 = ",";
+					}
 					if(compatibleCharacterBeforeMatch(characterBeforeMatch1, characterBeforeMatch2, LANG1, LANG2)) {
 						m1.appendReplacement(sb, Matcher.quoteReplacement(subString2 + character));
 						replacementOccurred = true;

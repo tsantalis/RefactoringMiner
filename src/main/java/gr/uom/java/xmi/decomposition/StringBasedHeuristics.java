@@ -122,6 +122,15 @@ public class StringBasedHeuristics {
 			List<LeafExpression> castExpressions2 = statement2.getCastExpressions();
 			List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
 			List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
+			if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
+				//Java variable declaration without initializer replaced with Kotlin variable declaration with explicit type, i.e., Socket socket; -> val socket: Socket
+				VariableDeclaration declaration1 = variableDeclarations1.get(0);
+				VariableDeclaration declaration2 = variableDeclarations2.get(0);
+				if(declaration1.getInitializer() == null && declaration2.getInitializer() == null &&
+						declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+					return true;
+				}
+			}
 			String temp = new String(s1);
 			Set<Replacement> appliedReplacements = new LinkedHashSet<>();
 			for(TernaryOperatorExpression ternary1 : statement1.getTernaryOperatorExpressions()) {
@@ -231,19 +240,6 @@ public class StringBasedHeuristics {
 				if(before.endsWith(".this")) {
 					String after = "this@" + before.substring(0, before.length() - ".this".length());
 					if(temp.contains(before) && !temp.contains(after) && s2.contains(after)) {
-						temp = ReplacementUtil.performReplacement(temp, before, after);
-						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
-					}
-				}
-			}
-			for(LeafExpression variable2 : statement2.getVariables()) {
-				//the Java variable replaced with the Kotlin variable initialized with it, i.e., byteCount -> byteCountNum, where var byteCountNum = byteCount
-				String after = variable2.getString();
-				VariableDeclaration declaration2 = statement2.searchVariableDeclaration(after);
-				if(declaration2 != null && declaration2.getInitializer() != null) {
-					String before = declaration2.getInitializer().getString();
-					if(!before.equals(after) && before.matches("[A-Za-z_$][\\w$]*") && statement1.getVariables().stream().anyMatch(v -> v.getString().equals(before)) &&
-							statement2.getVariables().stream().noneMatch(v -> v.getString().equals(before))) {
 						temp = ReplacementUtil.performReplacement(temp, before, after);
 						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 					}

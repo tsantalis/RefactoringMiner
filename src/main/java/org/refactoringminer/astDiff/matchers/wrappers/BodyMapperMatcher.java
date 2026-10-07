@@ -114,7 +114,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if (mapping instanceof LeafMapping && mapping.getReplacements().stream().anyMatch(r -> r.getType().equals(Replacement.ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA))) {
                 Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree, mapping.getFragment2().getLocationInfo(), LANG2);
                 if (dstStatementNode != null) {
-                    JavaToKotlinMigration.handleAnonymousArgumentReplacedWithLambda(mappingStore, call1, dstStatementNode, LANG1, LANG2);
+                    JavaToKotlinMigration.handleAnonymousArgumentReplacedWithLambda(mappingStore, call1, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                 }
             }
         }
@@ -134,7 +134,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 Tree call1 = TreeUtilFunctions.findByLocationInfo(srcTree, invocation1.getLocationInfo(), LANG1, LANG1.METHOD_INVOCATION);
                 Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree, mapping.getFragment2().getLocationInfo(), LANG2);
                 if (call1 != null && dstStatementNode != null) {
-                    JavaToKotlinMigration.handleAnonymousArgumentReplacedWithLambdaInExtractedMethod(mappingStore, call1, dstStatementNode, callSite2, LANG1, LANG2);
+                    JavaToKotlinMigration.handleAnonymousArgumentReplacedWithLambdaInExtractedMethod(mappingStore, call1, dstStatementNode, callSite2, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                 }
             }
         }

@@ -173,9 +173,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 new BodyMapperMatcher(optimizationData, bodyMapper, false, LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 if (Constants.isCrossLanguage(LANG1, LANG2)) {
                     Tree anonymousClass1 = TreeUtilFunctions.findByLocationInfo(srcTree, replaceAnonymousWithLambdaRefactoring.getAnonymousClass().getLocationInfo(), LANG1);
+                    Tree anonymousMethod1 = TreeUtilFunctions.findByLocationInfo(srcTree, replaceAnonymousWithLambdaRefactoring.getAnonymousClassOperation().getLocationInfo(), LANG1);
                     //call_suffix, annotated_lambda, and lambda_literal have the same location
                     Tree lambda2 = TreeUtilFunctions.findByLocationInfo(dstTree, replaceAnonymousWithLambdaRefactoring.getLambda().getLocationInfo(), LANG2, LANG2.LAMBDA_LITERAL);
-                    JavaToKotlinMigration.handleAnonymousToLambdaMapping(mappingStore, anonymousClass1, lambda2, LANG1, LANG2);
+                    JavaToKotlinMigration.handleAnonymousToLambdaMapping(mappingStore, anonymousClass1, anonymousMethod1, lambda2, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                 }
             } else if (refactoring instanceof ParameterizeTestRefactoring) {
                 ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;

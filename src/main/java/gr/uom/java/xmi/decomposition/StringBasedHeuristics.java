@@ -195,7 +195,8 @@ public class StringBasedHeuristics {
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 2 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("min")) {
-					temp = ReplacementUtil.performReplacement(temp, "Math.min", "minOf");
+					//Math.min is replaced with the Kotlin minOf, or with min, if kotlin.math.min is imported
+					temp = ReplacementUtil.performReplacement(temp, "Math.min", s2.contains("minOf(") || !s2.contains("min(") ? "minOf" : "min");
 				}
 				else if((s1.contains(call.actualString()) || statement1.getString().contains(call.actualString())) && call.arguments.size() == 2 && !methodInvocations2.contains(call) &&
 						call.getName().startsWith("put")) {
@@ -221,6 +222,19 @@ public class StringBasedHeuristics {
 				if(before.endsWith(".this")) {
 					String after = "this@" + before.substring(0, before.length() - ".this".length());
 					if(temp.contains(before) && !temp.contains(after) && s2.contains(after)) {
+						temp = ReplacementUtil.performReplacement(temp, before, after);
+						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
+					}
+				}
+			}
+			for(LeafExpression variable2 : statement2.getVariables()) {
+				//the Java variable replaced with the Kotlin variable initialized with it, i.e., byteCount -> byteCountNum, where var byteCountNum = byteCount
+				String after = variable2.getString();
+				VariableDeclaration declaration2 = statement2.searchVariableDeclaration(after);
+				if(declaration2 != null && declaration2.getInitializer() != null) {
+					String before = declaration2.getInitializer().getString();
+					if(!before.equals(after) && statement1.getVariables().stream().anyMatch(v -> v.getString().equals(before)) &&
+							statement2.getVariables().stream().noneMatch(v -> v.getString().equals(before))) {
 						temp = ReplacementUtil.performReplacement(temp, before, after);
 						appliedReplacements.add(new Replacement(before, after, ReplacementType.VARIABLE_NAME));
 					}

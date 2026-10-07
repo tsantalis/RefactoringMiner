@@ -25266,6 +25266,127 @@
   "firstEndPos" : 30949,
   "secondEndPos" : 28278
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 30886,
+  "secondPos" : 28218,
+  "firstEndPos" : 30939,
+  "secondEndPos" : 28268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "toRead",
+  "secondLabel" : "toRead",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 30886,
+  "secondPos" : 28218,
+  "firstEndPos" : 30892,
+  "secondEndPos" : 28224
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 30893,
+  "secondPos" : 28225,
+  "firstEndPos" : 30894,
+  "secondEndPos" : 28226
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 30895,
+  "secondPos" : 28227,
+  "firstEndPos" : 30938,
+  "secondEndPos" : 28268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "min",
+  "secondLabel" : "min",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 30900,
+  "secondPos" : 28227,
+  "firstEndPos" : 30903,
+  "secondEndPos" : 28230
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 30904,
+  "secondPos" : 28230,
+  "firstEndPos" : 30937,
+  "secondEndPos" : 28268
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "toRead",
+  "secondLabel" : "toRead",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 30904,
+  "secondPos" : 28231,
+  "firstEndPos" : 30910,
+  "secondEndPos" : 28237
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "additive_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 30912,
+  "secondPos" : 28239,
+  "firstEndPos" : 30937,
+  "secondEndPos" : 28267
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "byteCount",
+  "secondLabel" : "byteCount",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 30912,
+  "secondPos" : 27435,
+  "firstEndPos" : 30921,
+  "secondEndPos" : 27444
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "arithmetic_operator",
+  "firstLabel" : "-",
+  "secondLabel" : "-",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "additive_expression",
+  "firstPos" : 30922,
+  "secondPos" : 28252,
+  "firstEndPos" : 30923,
+  "secondEndPos" : 28253
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "halfByteCount",
+  "secondLabel" : "halfByteCount",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "additive_expression",
+  "firstPos" : 30924,
+  "secondPos" : 28254,
+  "firstEndPos" : 30937,
+  "secondEndPos" : 28267
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
   "firstLabel" : "",
@@ -25606,6 +25727,50 @@
   "secondPos" : 28427,
   "firstEndPos" : 31106,
   "secondEndPos" : 28431
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 31116,
+  "secondPos" : 28440,
+  "firstEndPos" : 31134,
+  "secondEndPos" : 28460
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "byteCount",
+  "secondLabel" : "byteCount",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 31116,
+  "secondPos" : 27435,
+  "firstEndPos" : 31125,
+  "secondEndPos" : 27444
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "-=",
+  "secondLabel" : "-=",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 31126,
+  "secondPos" : 28453,
+  "firstEndPos" : 31128,
+  "secondEndPos" : 28455
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "read",
+  "secondLabel" : "read",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 31129,
+  "secondPos" : 28456,
+  "firstEndPos" : 31133,
+  "secondEndPos" : 28460
 }, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",

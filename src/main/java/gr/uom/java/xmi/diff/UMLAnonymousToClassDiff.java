@@ -30,6 +30,8 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
 	public void process() throws RefactoringMinerTimedOutException {
 		processOperations();
 		processAttributes();
+		//the renamed operations, i.e., processConnection() of the anonymous class -> handle() of the inner class SocketHandler
+		checkForOperationSignatureChanges(removedOperations, addedOperations);
 	}
 
 	@Override

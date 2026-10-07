@@ -2113,6 +2113,61 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	//the Java if-else-if chain comparing the same expression with constants is replaced with the Kotlin when with subject, i.e.,
+	//if(x == A) {...} else if(x == B) {...} -> when(x) { A -> {...} B -> {...} }, where the first if is mapped to the when,
+	//the else-if statements are mapped to the when entries, and the constants are mapped to the conditions of the when entries
+	private void matchElseIfChainWithWhenEntries(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves2,
+			Map<String, String> parameterToArgumentMap) {
+		for(AbstractCodeMapping whenMapping : new ArrayList<>(this.mappings)) {
+			if(!(whenMapping instanceof CompositeStatementObjectMapping) ||
+					!whenMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) ||
+					!whenMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT))
+				continue;
+			CompositeStatementObject when2 = (CompositeStatementObject)whenMapping.getFragment2();
+			if(when2.getExpressions().size() != 1)
+				continue;
+			String subject = when2.getExpressions().get(0).getString();
+			CompositeStatementObject if1 = (CompositeStatementObject)whenMapping.getFragment1();
+			while(if1 != null) {
+				String condition1 = if1.getExpressions().size() == 1 ? if1.getExpressions().get(0).getString() : "";
+				for(AbstractStatement statement2 : when2.getStatements()) {
+					if(!(statement2 instanceof CompositeStatementObject entry2) || !entry2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY))
+						continue;
+					List<AbstractExpression> conditions2 = entry2.getExpressions().stream()
+							.filter(e -> e.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_CONDITION)).collect(Collectors.toList());
+					if(conditions2.size() != 1 || !leaves2.contains(conditions2.get(0)))
+						continue;
+					AbstractExpression condition2 = conditions2.get(0);
+					String caseExpression = condition2.getString();
+					if(!condition1.equals(subject + " == " + caseExpression) && !condition1.equals(caseExpression + " == " + subject))
+						continue;
+					if(if1 != whenMapping.getFragment1()) {
+						if(!innerNodes2.contains(entry2))
+							continue;
+						CompositeStatementObjectMapping mapping = createCompositeMapping(if1, entry2, parameterToArgumentMap, 0);
+						addMapping(mapping);
+						innerNodes1.remove(if1);
+						innerNodes2.remove(entry2);
+					}
+					//the condition of the when entry is the constant itself
+					List<LeafExpression> subExpressions1 = if1.getExpressions().get(0).findExpression(caseExpression);
+					if(subExpressions1.size() == 1) {
+						addMapping(new LeafMapping(subExpressions1.get(0), condition2, container1, container2));
+					}
+					leaves2.remove(condition2);
+					break;
+				}
+				//the else-if statement
+				CompositeStatementObject elseIf1 = null;
+				if(if1.getStatements().size() == 2 && if1.getStatements().get(1) instanceof CompositeStatementObject else1 &&
+						else1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && innerNodes1.contains(else1)) {
+					elseIf1 = else1;
+				}
+				if1 = elseIf1;
+			}
+		}
+	}
+
 	private boolean ifToSwitch(AbstractCodeFragment parent1, AbstractCodeFragment parent2) {
 		if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
 			return true;
@@ -7397,6 +7452,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+		}
+		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+			matchElseIfChainWithWhenEntries(innerNodes1, innerNodes2, leaves2, parameterToArgumentMap);
 		}
 		//check for possibly missed split conditional
 		Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();

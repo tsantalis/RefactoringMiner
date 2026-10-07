@@ -3289,6 +3289,30 @@ public class JavaToKotlinMigration {
         }
     }
 
+    //align the Java InfixExpression -> [operand, ==, constant] with the Kotlin when_condition -> constant, when the if-else-if chain is replaced with the when with subject,
+    //i.e., if (response.getSocketPolicy() == DISCONNECT_AT_END) {...} else if (...) -> when (response.getSocketPolicy()) { DISCONNECT_AT_END -> {...} ... }
+    //the other operand of each if condition becomes the when subject, i.e., a multi-mapping of response.getSocketPolicy() to the when subject
+    public static boolean handleEqualityOperandToWhenCondition(ExtendedMultiMappingStore mappingStore, Tree constant1, Tree condition2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        if(!condition2.getType().name.equals(LANG2.WHEN_CONDITION) || condition2.getChildren().size() != 1)
+            return false;
+        Tree constant2 = condition2.getChild(0);
+        Tree infix1 = constant1.getParent();
+        if(infix1 == null || !infix1.getType().name.equals(LANG1.INFIX_EXPRESSION) || infix1.getChildren().size() != 3 ||
+                !constant1.isLeaf() || !constant2.isLeaf() || !constant1.getLabel().equals(constant2.getLabel()))
+            return false;
+        mappingStore.addMapping(infix1, condition2);
+        mappingStore.addMapping(constant1, constant2);
+        Tree entry2 = condition2.getParent();
+        Tree when2 = entry2 != null ? entry2.getParent() : null;
+        Tree subject2 = when2 != null ? TreeUtilFunctions.findChildByType(when2, LANG2.WHEN_SUBJECT) : null;
+        if(subject2 != null && subject2.getChildren().size() == 1) {
+            Tree operand1 = infix1.getChild(0) == constant1 ? infix1.getChild(2) : infix1.getChild(0);
+            mappingStore.addMapping(operand1, subject2.getChild(0));
+            handleLeafMapping(mappingStore, operand1, subject2.getChild(0), LANG1, LANG2, deferredFlattenings);
+        }
+        return true;
+    }
+
     public static void handleFunctionBodyMapping(ExtendedMultiMappingStore mappingStore, Tree srcOperationNode, Tree dstOperationNode, Constants LANG1, Constants LANG2) {
         Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.BLOCK,LANG2.FUNCTION_BODY);
         if (matched != null) {

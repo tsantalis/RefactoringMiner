@@ -1122,6 +1122,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								continue;
 							}
 						}
+						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT_UPDATER)) {
+							boolean matchFound = false;
+							for(AbstractExpression expression2 : ((CompositeStatementObject)mapping.getFragment2()).getExpressions()) {
+								if(expression2.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT_UPDATER)) {
+									matchFound = true;
+								}
+							}
+							if(matchFound) {
+								continue;
+							}
+						}
 						AbstractCall call1 = expression.invocationCoveringEntireFragment();
 						if(call1 != null) {
 							CompositeStatementObject comp2 = (CompositeStatementObject)mapping.getFragment2();

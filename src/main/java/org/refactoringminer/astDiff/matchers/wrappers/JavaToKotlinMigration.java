@@ -243,7 +243,7 @@ public class JavaToKotlinMigration {
             }
         }
         Tree assignment1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.ASSIGNMENT);
-        if(assignment1 != null && !dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
+        if(assignment1 != null && kotlinAssignment(dstStatementNode, LANG2) == null) {
             children1.remove(0);
         }
         //the Java receiver is the implicit receiver of the Kotlin lambda, i.e., peerSettings.set(...); -> val peerSettings = Settings().apply { set(...) }
@@ -1055,8 +1055,9 @@ public class JavaToKotlinMigration {
             //the updater of the Java for loop becomes a statement in the body of the Kotlin while loop, i.e., for (i = 0; i < 1024; i++) {...} -> while (i < 1024) {... i++ }
             alignPostfixOperator(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
         }
+        Tree assignment2 = kotlinAssignment(dstStatementNode, LANG2);
         if(srcStatementNode.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && srcStatementNode.getChildren().size() == 1 &&
-                srcStatementNode.getChild(0).getType().name.equals(LANG1.ASSIGNMENT) && dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT)) {
+                srcStatementNode.getChild(0).getType().name.equals(LANG1.ASSIGNMENT) && assignment2 != null) {
             //align Java ExpressionStatement -> Assignment -> [target, operator, value] with Kotlin assignment -> [target, operator, value]
             Tree statementAssignment1 = srcStatementNode.getChild(0);
             //the node with the [target, operator, value] children: the Assignment, or the statement if the Assignment is flattened immediately
@@ -1066,28 +1067,38 @@ public class JavaToKotlinMigration {
                 assignmentParent1 = srcStatementNode;
             }
             Tree target1 = assignmentParent1.getChild(0);
-            Tree assignableExpression2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
+            Tree assignableExpression2 = TreeUtilFunctions.findChildByType(assignment2, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
             if(assignableExpression2 != null) {
                 if(assignableExpression2.getChildren().size() == 1) {
                     //align directly_assignable_expression -> name with Java name
-                    flattenDstChildKeepingMappings(deferredFlattenings, dstStatementNode, assignableExpression2);
+                    flattenDstChildKeepingMappings(deferredFlattenings, assignment2, assignableExpression2);
                 }
                 else if(assignableExpression2.getChildren().size() > 1) {
                     alignFieldAccess(mappingStore, target1, assignableExpression2, LANG1, LANG2, deferredFlattenings);
                 }
             }
             Tree value1 = assignmentParent1.getChild(assignmentParent1.getChildren().size() - 1);
-            Tree value2 = dstStatementNode.getChild(dstStatementNode.getChildren().size() - 1);
+            Tree value2 = assignment2.getChild(assignment2.getChildren().size() - 1);
             if(!mappingStore.isDstMapped(value2) && value2.getChildren().size() == 1 && mappingStore.getSrcs(value2.getChild(0)) != null &&
                     mappingStore.getSrcs(value2.getChild(0)).contains(value1)) {
                 //align Kotlin value wrapper (e.g., boolean_literal -> true) with Java value
-                flattenDstChildKeepingMappings(deferredFlattenings, dstStatementNode, value2);
+                flattenDstChildKeepingMappings(deferredFlattenings, assignment2, value2);
             }
             else if(!mappingStore.isDstMapped(value2) && value2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && value1.getChildren().size() == 2 &&
                     value2.getChildren().size() == 2 && value2.getChild(1).getType().name.equals(LANG2.NAVIGATION_SUFFIX) &&
                     value2.getChild(1).getChildren().size() == 1 && mappingStore.getSrcs(value2.getChild(1).getChild(0)) != null &&
                     mappingStore.getSrcs(value2.getChild(1).getChild(0)).contains(value1.getChild(1))) {
                 alignFieldAccess(mappingStore, value1, value2, LANG1, LANG2, deferredFlattenings);
+            }
+            if(assignment2 != dstStatementNode) {
+                //align Kotlin control_structure_body -> assignment with Java ExpressionStatement, as the Java statement is matched with the brace-less body,
+                //while the Java Block has no Kotlin counterpart, i.e., else { socket = raw; } -> else -> socket = raw
+                Tree operator1 = TreeUtilFunctions.findChildByType(assignmentParent1, LANG1.ASSIGNMENT_OPERATOR);
+                Tree operator2 = TreeUtilFunctions.findChildByType(assignment2, LANG2.AFFECTATION_OPERATOR);
+                if(operator1 != null && operator2 != null && !mappingStore.isSrcMapped(operator1) && !mappingStore.isDstMapped(operator2))
+                    mappingStore.addMapping(operator1, operator2);
+                //registered after the flattenings of the assignment children, which are applied in order
+                flattenDstChildKeepingMappings(deferredFlattenings, dstStatementNode, assignment2);
             }
         }
         if(srcStatementNode.getType().name.equals(LANG1.VARIABLE_DECLARATION_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.FIELD_DECLARATION)) {
@@ -3400,6 +3411,16 @@ public class JavaToKotlinMigration {
             name2.getChildren().clear();
             mappingStore.addMapping(name1, name2);
         }
+    }
+
+    //the Kotlin assignment, or the only assignment in a brace-less control_structure_body, i.e., else -> socket = raw
+    private static Tree kotlinAssignment(Tree dstStatementNode, Constants LANG2) {
+        if(dstStatementNode.getType().name.equals(LANG2.ASSIGNMENT))
+            return dstStatementNode;
+        if(dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY) && dstStatementNode.getChildren().size() == 1 &&
+                dstStatementNode.getChild(0).getType().name.equals(LANG2.ASSIGNMENT))
+            return dstStatementNode.getChild(0);
+        return null;
     }
 
     private static boolean isJumpKeywordWithAlignedChildren(Tree statement1, Tree jumpExpression2, Constants LANG1, Constants LANG2) {

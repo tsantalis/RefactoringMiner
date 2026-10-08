@@ -32603,6 +32603,28 @@
   "firstEndPos" : 34925,
   "secondEndPos" : 30915
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "logger",
+  "secondLabel" : "logger",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 34919,
+  "secondPos" : 30904,
+  "firstEndPos" : 34925,
+  "secondEndPos" : 30910
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "info",
+  "secondLabel" : "info",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 34926,
+  "secondPos" : 30911,
+  "firstEndPos" : 34930,
+  "secondEndPos" : 30915
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "value_arguments",
   "firstLabel" : "",
@@ -32657,6 +32679,17 @@
   "secondPos" : 30971,
   "firstEndPos" : 34983,
   "secondEndPos" : 30978
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_content",
+  "firstLabel" : "\" and responded: \"",
+  "secondLabel" : "\" and responded: \"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 34998,
+  "secondPos" : 31000,
+  "firstEndPos" : 35016,
+  "secondEndPos" : 31015
 }, {
   "firstType" : "SimpleName",
   "secondType" : "interpolated_identifier",

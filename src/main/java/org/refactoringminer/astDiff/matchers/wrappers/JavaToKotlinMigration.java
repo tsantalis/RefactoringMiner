@@ -319,6 +319,11 @@ public class JavaToKotlinMigration {
             }
         }
         removeFromParent(children2, interpolatedExpressions2, LANG2.SIMPLE_NAME);
+        if((interpolatedIdentifiers2.size() > 0 || interpolatedExpressions2.size() > 0) && children2.stream().noneMatch(t2 -> t2.getLabel().equals("toString"))) {
+            //the string template calls toString() implicitly, i.e., "a" + b.toString() -> "a$b"
+            children1.removeIf(t1 -> t1.getLabel().equals("toString") && t1.getParent() != null && t1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
+                    TreeUtilFunctions.findChildByType(t1.getParent(), LANG1.METHOD_INVOCATION_ARGUMENTS) == null);
+        }
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> castExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CAST_EXPRESSION);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
@@ -824,6 +829,22 @@ public class JavaToKotlinMigration {
                     Tree child1 = children1.get(i);
                     for(Tree stringContent : stringContents) {
                         if(child1.getLabel().equals("\"" + stringContent.getLabel() + "\"")) {
+                            stringContent.setLabel(child1.getLabel());
+                            mappingStore.addMapping(child1, stringContent);
+                            break;
+                        }
+                    }
+                }
+            }
+            //the whitespace moved to the adjacent string template, i.e., "a" + b + " c" -> "a$b " + "c"
+            for(Tree child2 : children2) {
+                for(Tree stringContent : TreeUtilFunctions.findChildrenByTypeRecursively(child2, LANG2.STRING_CONTENT)) {
+                    if(stringContent.getLabel().isBlank() || mappingStore.isDstMapped(stringContent)) {
+                        continue;
+                    }
+                    for(Tree child1 : children1) {
+                        if(!mappingStore.isSrcMapped(child1) && child1.getLabel().length() > 1 &&
+                                child1.getLabel().substring(1, child1.getLabel().length() - 1).trim().equals(stringContent.getLabel().trim())) {
                             stringContent.setLabel(child1.getLabel());
                             mappingStore.addMapping(child1, stringContent);
                             break;

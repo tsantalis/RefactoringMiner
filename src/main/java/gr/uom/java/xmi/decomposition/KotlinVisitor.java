@@ -418,7 +418,15 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			LeafExpression valueArgument = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.FIELD_ACCESS, container);
 			arguments.add(valueArgument);
 		}
-		this.visitExpression(expression.getReceiverExpression(), data);
+		if(expression.getReceiverExpression() instanceof KtNameReferenceExpression receiver && Character.isUpperCase(receiver.getReferencedName().charAt(0)) &&
+				expression.getSelectorExpression() instanceof KtCallExpression call && call.getCalleeExpression() instanceof KtNameReferenceExpression callee &&
+				Character.isUpperCase(callee.getReferencedName().charAt(0))) {
+			//the outer class of a nested class instance creation is a type, i.e., Http2Connection.Builder(false)
+			types.add(receiver.getText());
+		}
+		else {
+			this.visitExpression(expression.getReceiverExpression(), data);
+		}
 		if (expression.getSelectorExpression() != null)
 			this.visitExpression(expression.getSelectorExpression(), data);
 	}

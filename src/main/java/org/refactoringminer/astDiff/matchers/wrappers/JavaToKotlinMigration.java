@@ -1386,10 +1386,11 @@ public class JavaToKotlinMigration {
                 Tree operator1 = TreeUtilFunctions.findChildByType(child1, LANG1.INFIX_EXPRESSION_OPERATOR);
                 for(Tree child2 : children2) {
                     Tree operator2 = TreeUtilFunctions.findChildByType(child2, LANG2.LOGICAL_OPERATOR, LANG2.COMPARISON_OPERATOR, LANG2.ARITHMETIC_OPERATOR, "<=", ">=", "%");
+                    String label2 = javaEquivalentOperator(operator2.getLabel());
                     boolean invertOperator = children1.size() == 1 &&
-                            ((operator1.getLabel().equals("==") && operator2.getLabel().equals("!=")) ||
-                             (operator1.getLabel().equals("!=") && operator2.getLabel().equals("==")));
-                    if(!matched2.contains(child2) && (operator1.getLabel().equals(operator2.getLabel()) || invertOperator)) {
+                            ((operator1.getLabel().equals("==") && label2.equals("!=")) ||
+                             (operator1.getLabel().equals("!=") && label2.equals("==")));
+                    if(!matched2.contains(child2) && (operator1.getLabel().equals(label2) || invertOperator)) {
                         mappingStore.addMapping(child1, child2);
                         mappingStore.addMapping(operator1, operator2);
                         matched2.add(child2);
@@ -1398,6 +1399,16 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+    }
+
+    //the Kotlin referential equality operators === and !== are the counterparts of the Java == and != operators, i.e., socketPolicy == EXPECT_CONTINUE -> socketPolicy === EXPECT_CONTINUE
+    //the operators are matched as an update, as their labels differ
+    private static String javaEquivalentOperator(String operator2) {
+        if(operator2.equals("==="))
+            return "==";
+        if(operator2.equals("!=="))
+            return "!=";
+        return operator2;
     }
 
     //align Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> x, equals, METHOD_INVOCATION_ARGUMENTS -> y] with Kotlin equality_expression -> [x, ==, y],

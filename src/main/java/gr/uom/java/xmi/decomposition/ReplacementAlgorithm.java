@@ -2751,7 +2751,7 @@ public class ReplacementAlgorithm {
 		}
 		//Kotlin extension call is identical with the static call having the receiver as first argument, i.e., source.buffer() -> Okio.buffer(source)
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.identicalWithExpressionMovedToStaticCallArgument(invocationCoveringTheEntireStatement2)) {
+				invocationCoveringTheEntireStatement1.identicalWithExpressionMovedToStaticCallArgument(invocationCoveringTheEntireStatement2, statement1.getMethodInvocations(), statement2.getMethodInvocations())) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_EXPRESSION_MOVED_TO_STATIC_CALL_ARGUMENT);
 			replacementInfo.addReplacement(replacement);

@@ -1225,13 +1225,16 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	//a Kotlin extension call and the static call having the receiver as first argument, i.e., source.buffer() -> Okio.buffer(source)
-	public boolean identicalWithExpressionMovedToStaticCallArgument(AbstractCall call) {
-		if(!PathFileUtils.isKotlinFile(getLocationInfo().getFilePath()) || !PathFileUtils.isKotlinFile(call.getLocationInfo().getFilePath()) || !identicalName(call))
+	//the static call can be in a Java file, i.e., Java to Kotlin migration
+	public boolean identicalWithExpressionMovedToStaticCallArgument(AbstractCall call, List<AbstractCall> invocations1, List<AbstractCall> invocations2) {
+		if(!identicalName(call))
 			return false;
-		return expressionMovedToStaticCallArgument(this, call) || expressionMovedToStaticCallArgument(call, this);
+		return expressionMovedToStaticCallArgument(this, call, invocations1, invocations2) || expressionMovedToStaticCallArgument(call, this, invocations2, invocations1);
 	}
 
-	private static boolean expressionMovedToStaticCallArgument(AbstractCall extensionCall, AbstractCall staticCall) {
+	private static boolean expressionMovedToStaticCallArgument(AbstractCall extensionCall, AbstractCall staticCall, List<AbstractCall> extensionInvocations, List<AbstractCall> staticInvocations) {
+		if(!PathFileUtils.isKotlinFile(extensionCall.getLocationInfo().getFilePath()))
+			return false;
 		String receiver = extensionCall.getExpression();
 		String type = staticCall.getExpression();
 		if(receiver == null || type == null || staticCall.arguments().size() != extensionCall.arguments().size() + 1)
@@ -1243,8 +1246,24 @@ public abstract class AbstractCall extends LeafExpression {
 		String argument = staticCall.arguments().get(0);
 		//anonymous objects with the same declaration header are compared separately, as anonymous class diffs
 		boolean sameReceiver = argument.equals(receiver) ||
-				(argument.contains("{\n") && receiver.contains("{\n") && argument.substring(0, argument.indexOf("{\n")).equals(receiver.substring(0, receiver.indexOf("{\n"))));
+				(argument.contains("{\n") && receiver.contains("{\n") && argument.substring(0, argument.indexOf("{\n")).equals(receiver.substring(0, receiver.indexOf("{\n")))) ||
+				nestedExpressionMovedToStaticCallArgument(receiver, argument, extensionInvocations, staticInvocations);
 		return sameReceiver && staticCall.arguments().subList(1, staticCall.arguments().size()).equals(extensionCall.arguments());
+	}
+
+	//the receiver is also an extension call replacing a static call, i.e., socket.source().buffer() -> Okio.buffer(Okio.source(socket))
+	private static boolean nestedExpressionMovedToStaticCallArgument(String receiver, String argument, List<AbstractCall> extensionInvocations, List<AbstractCall> staticInvocations) {
+		for(AbstractCall extensionCall : extensionInvocations) {
+			if(extensionCall.actualString().equals(receiver)) {
+				for(AbstractCall staticCall : staticInvocations) {
+					if(staticCall.actualString().equals(argument) && extensionCall.identicalName(staticCall) &&
+							expressionMovedToStaticCallArgument(extensionCall, staticCall, extensionInvocations, staticInvocations)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public boolean identicalWithExpressionArgumentSwap(AbstractCall call) {

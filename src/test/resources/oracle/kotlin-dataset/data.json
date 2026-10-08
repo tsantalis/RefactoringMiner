@@ -13750,17 +13750,17 @@
     }, {
         "type": "Move Method",
         "description": "Move Method public getAcceptedIssuers() : Array<X509Certificate> from class okhttp3.recipes.kt.JvmAllowlistedTrustManager to public getAcceptedIssuers() : Array<X509Certificate> from class okhttp3.tls.internal.InsecureAndroidTrustManager",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Move And Rename Class okhttp3.recipes.kt.JvmAllowlistedTrustManager moved and renamed to okhttp3.tls.internal.InsecureExtendedTrustManage</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Move Method",
         "description": "Move Method public checkServerTrusted(chain Array<X509Certificate>, authType String) from class okhttp3.recipes.kt.JvmAllowlistedTrustManager to public checkServerTrusted(chain Array<X509Certificate>, authType String) from class okhttp3.tls.internal.InsecureAndroidTrustManager",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Move And Rename Class okhttp3.recipes.kt.JvmAllowlistedTrustManager moved and renamed to okhttp3.tls.internal.InsecureExtendedTrustManage</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Add Method Annotation",
         "description": "Add Method Annotation @Suppress(\"unused\", \"UNCHECKED_CAST\") in method public checkServerTrusted(chain Array<X509Certificate>, authType String, host String) : List<Certificate> from class okhttp3.tls.internal.InsecureAndroidTrustManager",
@@ -13855,6 +13855,20 @@
     }, {
         "type": "Rename Class",
         "description": "Rename Class okhttp3.recipes.kt.DevServerJvm.module renamed to okhttp3.recipes.kt.DevServer.module",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Move And Rename Class",
+        "description": "Move And Rename Class okhttp3.recipes.kt.JvmAllowlistedTrustManager moved and renamed to okhttp3.tls.internal.InsecureExtendedTrustManager",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Class Access Modifier",
+        "description": "Change Class Access Modifier public to internal in class okhttp3.tls.internal.InsecureExtendedTrustManager",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

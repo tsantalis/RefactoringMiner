@@ -2618,24 +2618,35 @@ public class StringBasedHeuristics {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg1)));
 						StringBuilder sb = new StringBuilder();
+						//Kotlin string template, i.e., "a" + b.c() -> "a${b.c()}"
+						StringBuilder template = new StringBuilder();
 						sb.append("\"");
+						template.append("\"");
 						for(String token : tokens1) {
 							if(arguments2.contains(token) && arguments1.size() == arguments2.size() && tokens1.size() <= 2) {
 								tokenMatchesArgument = true;
 							}
 							if(token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {
 								sb.append(token.substring(1, token.length()-1));
+								template.append(token.substring(1, token.length()-1));
 							}
 							else if(parameterToArgumentMap.containsKey(token)) {
 								sb.append(parameterToArgumentMap.get(token));
+								template.append("${" + parameterToArgumentMap.get(token) + "}");
 							}
 							else {
 								sb.append(token);
+								template.append("${" + token + "}");
 							}
 						}
 						sb.append("\"");
+						template.append("\"");
 						String concatenatedString = sb.toString();
-						if(concatenatedString.equals(arg2)) {
+						if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN) && template.toString().equals(arg2.replaceAll("\\$(\\w+)", "\\${$1}"))) {
+							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
+							concatenatedArguments++;
+						}
+						else if(concatenatedString.equals(arg2)) {
 							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
 							concatenatedArguments++;
 						}

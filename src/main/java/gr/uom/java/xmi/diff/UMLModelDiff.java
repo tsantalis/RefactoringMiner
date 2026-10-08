@@ -4655,6 +4655,7 @@ public class UMLModelDiff {
 								}
 								refactorings.remove(moveRef);
 							}
+							refactorings.removeAll(movesOfOperationsMatchedInClassDiff(renameDiff, refactorings));
 							//eliminate inner classes being reported as moved
 							List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
 							for(Refactoring r : refactorings) {
@@ -4686,6 +4687,7 @@ public class UMLModelDiff {
 								}
 								refactorings.remove(moveRef);
 							}
+							refactorings.removeAll(movesOfOperationsMatchedInClassDiff(moveDiff, refactorings));
 							//eliminate inner classes being reported as moved
 							List<Refactoring> toBeRemoved = new ArrayList<Refactoring>();
 							for(Refactoring r : refactorings) {
@@ -7532,7 +7534,53 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		//filter based on common supertype, i.e., source and target classes extending the same superclass or implementing the same interface
+		List<UMLOperationBodyMapper> list5 = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLOperationBodyMapper mapper : list4) {
+			if(commonSupertype(mapper)) {
+				list5.add(mapper);
+			}
+		}
+		if(list5.size() > 0 && list5.size() < list4.size()) {
+			return list5;
+		}
 		return list4;
+	}
+
+	//moves of operations that are matched by another mapper in the class diff, i.e., the same method also moved to another class
+	private Set<Refactoring> movesOfOperationsMatchedInClassDiff(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
+		Set<Refactoring> moves = new LinkedHashSet<Refactoring>();
+		for(Refactoring r : refactorings) {
+			if(r.getRefactoringType().equals(RefactoringType.MOVE_OPERATION) || r.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
+				MoveOperationRefactoring move = (MoveOperationRefactoring)r;
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(!mapper.equals(move.getBodyMapper()) &&
+							(mapper.getContainer1().equals(move.getOriginalOperation()) || mapper.getContainer2().equals(move.getMovedOperation()))) {
+						moves.add(move);
+						break;
+					}
+				}
+			}
+		}
+		return moves;
+	}
+
+	private boolean commonSupertype(UMLOperationBodyMapper mapper) {
+		UMLAbstractClass class1 = findClassInParentModel(mapper.getContainer1().getClassName());
+		UMLAbstractClass class2 = findClassInChildModel(mapper.getContainer2().getClassName());
+		if(class1 == null || class2 == null) {
+			return false;
+		}
+		Set<UMLType> supertypes1 = new LinkedHashSet<UMLType>(class1.getImplementedInterfaces());
+		if(class1.getSuperclass() != null) {
+			supertypes1.add(class1.getSuperclass());
+		}
+		Set<UMLType> supertypes2 = new LinkedHashSet<UMLType>(class2.getImplementedInterfaces());
+		if(class2.getSuperclass() != null) {
+			supertypes2.add(class2.getSuperclass());
+		}
+		supertypes1.retainAll(supertypes2);
+		return !supertypes1.isEmpty();
 	}
 
 	private boolean sameOuterClass(UMLOperationBodyMapper mapper) {

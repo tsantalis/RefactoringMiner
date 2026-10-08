@@ -42,6 +42,7 @@ import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeEntry;
 import org.jetbrains.kotlin.psi.KtSuperTypeListEntry;
 import org.jetbrains.kotlin.psi.KtThisExpression;
+import org.jetbrains.kotlin.psi.KtThrowExpression;
 import org.jetbrains.kotlin.psi.KtTypeReference;
 import org.jetbrains.kotlin.psi.KtUserType;
 import org.jetbrains.kotlin.psi.KtValueArgument;
@@ -114,6 +115,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			this.processBinaryExpression(binaryExpression, data);
 		} else if (expression instanceof KtReturnExpression) {
 			this.processReturnExpression((KtReturnExpression) expression, data);
+		} else if (expression instanceof KtThrowExpression throwExpression) {
+			this.processThrowExpression(throwExpression, data);
 		} else if (expression instanceof KtDotQualifiedExpression dotQualifiedExpression) {
 			this.processDotQualifiedExpression(dotQualifiedExpression, data);
 		} else if (expression instanceof KtCallExpression callExpression) {
@@ -359,6 +362,11 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 	private void processReturnExpression(KtReturnExpression expression, Object data) {
 		if (expression.getReturnedExpression() != null)
 			this.visitExpression(expression.getReturnedExpression(), data);
+	}
+
+	private void processThrowExpression(KtThrowExpression expression, Object data) {
+		if (expression.getThrownExpression() != null)
+			this.visitExpression(expression.getThrownExpression(), data);
 	}
 
 	private void processParenthesizedExpression(KtParenthesizedExpression expression, Object data) {

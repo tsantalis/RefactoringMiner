@@ -295,22 +295,22 @@ Python commits may not always be syntactically valid, leading to parsing errors.
 
 **File**: [kotlin-dataset](https://github.com/tsantalis/RefactoringMiner/tree/master/src/test/resources/oracle/kotlin-dataset/data.json)
 
-As of **October 1, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 8, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|2082  |  5  |  0  | 0.998  | 1.000|
+|**Total**|2081  |  4  |  0  | 0.998  | 1.000|
 |Extract Method|11  |  0  |  0  | 1.000  | 1.000|
 |Rename Class|43  |  0  |  0  | 1.000  | 1.000|
 |Move Attribute|53  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Attribute| 3  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|137  |  0  |  0  | 1.000  | 1.000|
 |Inline Method|15  |  0  |  0  | 1.000  | 1.000|
-|Move Method|81  |  0  |  0  | 1.000  | 1.000|
+|Move Method|79  |  0  |  0  | 1.000  | 1.000|
 |Move And Rename Method| 8  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Method|46  |  0  |  0  | 1.000  | 1.000|
 |Move Class|179  |  0  |  0  | 1.000  | 1.000|
-|Move And Rename Class|17  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Class|18  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|17  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 4  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|16  |  0  |  0  | 1.000  | 1.000|
@@ -325,7 +325,7 @@ As of **October 1, 2026** the precision and recall of RefactoringMiner on this b
 |Extract Variable|18  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|14  |  1  |  0  | 0.933  | 1.000|
 |Inline Attribute| 3  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|59  |  1  |  0  | 0.983  | 1.000|
+|Rename Variable|59  |  0  |  0  | 1.000  | 1.000|
 |Rename Parameter|75  |  0  |  0  | 1.000  | 1.000|
 |Rename Attribute|75  |  1  |  0  | 0.987  | 1.000|
 |Merge Parameter| 1  |  0  |  0  | 1.000  | 1.000|
@@ -357,7 +357,7 @@ As of **October 1, 2026** the precision and recall of RefactoringMiner on this b
 |Encapsulate Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier| 3  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|10  |  0  |  0  | 1.000  | 1.000|
-|Change Class Access Modifier|33  |  0  |  0  | 1.000  | 1.000|
+|Change Class Access Modifier|34  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier| 7  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Modifier| 2  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind|13  |  0  |  0  | 1.000  | 1.000|
@@ -365,7 +365,7 @@ As of **October 1, 2026** the precision and recall of RefactoringMiner on this b
 |Merge Class| 1  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 2  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 3  |  0  |  0  | 1.000  | 1.000|
 
 ## JavaScript Benchmark
 **Source**: Mosabbir Khan Shiblu, "JsDiffer: Refactoring Detection in JavaScript," Master's thesis, Department of Computer Science and Software Engineering, Concordia University, November 2022. 

@@ -299,8 +299,21 @@ public class StringBasedHeuristics {
 						break;
 					}
 				}
-				//eliminate formatting differences
+				//eliminate formatting differences, keeping the space after a logical operator, i.e., x &&\n y -> x && y
+				ss2 = ss2.replaceAll("(&&|\\|\\|)\\R\\s*", "$1 ");
 				ss2 = ss2.replaceAll("\\R\\s*", "");
+				if(variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1) {
+					//Kotlin redundant parentheses around the initializer, i.e., boolean b = x && y; -> val b = (x && y)
+					AbstractExpression initializer1 = variableDeclarations1.get(0).getInitializer();
+					AbstractExpression initializer2 = variableDeclarations2.get(0).getInitializer();
+					if(initializer1 != null && initializer2 != null && !initializer1.getString().startsWith("(") && ss2.endsWith(")") &&
+							statement2.getParenthesizedExpressions().stream().anyMatch(p -> p.getString().equals(initializer2.getString()))) {
+						int index = ss2.indexOf(LANG2.ASSIGNMENT + "(");
+						if(index != -1) {
+							ss2 = ss2.substring(0, index) + LANG2.ASSIGNMENT + ss2.substring(index + LANG2.ASSIGNMENT.length() + 1, ss2.length() - 1);
+						}
+					}
+				}
 				if(!ss1.contains(", ") && ss2.contains(", ")) {
 					ss2 = ss2.replaceAll(",\\s*", ",");
 				}

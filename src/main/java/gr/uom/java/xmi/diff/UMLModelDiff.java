@@ -4687,7 +4687,6 @@ public class UMLModelDiff {
 								}
 								refactorings.remove(moveRef);
 							}
-							refactorings.removeAll(movesOfOperationsMatchedInClassDiff(moveDiff, refactorings));
 							//eliminate inner classes being reported as moved
 							List<Refactoring> toBeRemoved = new ArrayList<Refactoring>();
 							for(Refactoring r : refactorings) {

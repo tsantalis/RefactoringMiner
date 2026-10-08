@@ -1154,7 +1154,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return false;
 	}
 
-	//-1 when there are no variable renames, 1 when all renamed variables are declared with identical initializers, 0 otherwise
+	//-1 when there are no variable renames or a renamed variable has no declaration with initializer, 1 when all renamed variables are declared with identical initializers, 0 otherwise
 	//the renamed variables declared by the mapped statements themselves are not considered, as their initializers are part of the mapped statements
 	private int renamedVariablesWithIdenticalInitializers() {
 		if(this.renamedVariablesWithIdenticalInitializers != null) {
@@ -1171,8 +1171,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				renamedVariables++;
 				VariableDeclaration v1 = getFragment1().searchVariableDeclaration(r.getBefore());
 				VariableDeclaration v2 = getFragment2().searchVariableDeclaration(r.getAfter());
-				if(v1 != null && v2 != null && v1.getInitializer() != null && v2.getInitializer() != null &&
-						v1.getInitializer().getString().equals(v2.getInitializer().getString())) {
+				if(v1 == null || v2 == null || v1.getInitializer() == null || v2.getInitializer() == null) {
+					//a renamed variable without declaration (i.e., a field) or initializer gives no evidence, so the other criteria decide,
+					//i.e., mergeThreads.get(i) -> activeMerges.get(threadIdx), when mergeThreads is a field
+					this.renamedVariablesWithIdenticalInitializers = -1;
+					return this.renamedVariablesWithIdenticalInitializers;
+				}
+				if(v1.getInitializer().getString().equals(v2.getInitializer().getString())) {
 					identicalInitializers++;
 				}
 			}

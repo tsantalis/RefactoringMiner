@@ -89,9 +89,7 @@ dependencies {
     implementation 'io.github.java-diff-utils:java-diff-utils:4.17'
     implementation 'com.github.gumtreediff:core:4.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:4.0.0'
-    implementation('com.github.gumtreediff:gen.treesitter-ng:4.0.0') {
-        exclude group: 'com.github.gumtreediff', module: 'core'
-    }
+    implementation 'com.github.gumtreediff:gen.treesitter-ng:4.0.0'
     implementation 'org.jcommander:jcommander:3.0'
     implementation 'org.jsoup:jsoup:1.23.2'
     implementation 'org.jgrapht:jgrapht-core:1.5.3'

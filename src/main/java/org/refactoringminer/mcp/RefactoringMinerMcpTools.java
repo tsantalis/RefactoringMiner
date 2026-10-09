@@ -15,7 +15,6 @@ import io.modelcontextprotocol.server.McpServerFeatures.SyncToolSpecification;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.spec.McpSchema.CallToolRequest;
 import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
-import io.modelcontextprotocol.spec.McpSchema.JsonSchema;
 import io.modelcontextprotocol.spec.McpSchema.TextContent;
 import io.modelcontextprotocol.spec.McpSchema.Tool;
 import io.modelcontextprotocol.spec.McpSchema.ToolAnnotations;
@@ -66,11 +65,9 @@ public final class RefactoringMinerMcpTools {
 
 	static SyncToolSpecification analyzeTool(RefactoringMinerMcpService service) {
 		return SyncToolSpecification.builder()
-				.tool(Tool.builder()
-						.name(ANALYZE)
+				.tool(Tool.builder(ANALYZE, analyzeInputSchema())
 						.title("Analyze refactorings")
 						.description("Find refactorings from a source. The source can be fileContents, worktree, commit, pullRequest, or directories. Does not edit files.")
-						.inputSchema(analyzeInputSchema())
 						.outputSchema(outputSchema())
 						.annotations(new ToolAnnotations("Analyze refactorings", true, false, true, true, false))
 						.build())
@@ -80,11 +77,9 @@ public final class RefactoringMinerMcpTools {
 
 	static SyncToolSpecification validateTool(RefactoringMinerMcpService service) {
 		return SyncToolSpecification.builder()
-				.tool(Tool.builder()
-						.name(VALIDATE)
+				.tool(Tool.builder(VALIDATE, validateInputSchema())
 						.title("Validate intended refactoring")
 						.description("Check whether detected refactorings from a source match a stated intent. Does not edit files.")
-						.inputSchema(validateInputSchema())
 						.outputSchema(validationOutputSchema())
 						.annotations(new ToolAnnotations("Validate intended refactoring", true, false, true, true,
 								false))
@@ -95,11 +90,9 @@ public final class RefactoringMinerMcpTools {
 
 	static SyncToolSpecification diffTool(RefactoringMinerMcpService service) {
 		return SyncToolSpecification.builder()
-				.tool(Tool.builder()
-						.name(DIFF)
+				.tool(Tool.builder(DIFF, diffInputSchema())
 						.title("Open RefactoringMiner AST diff")
 						.description("Start a local RefactoringMiner AST diff page from a source. The source can be fileContents, worktree, commit, pullRequest, or url.")
-						.inputSchema(diffInputSchema())
 						.outputSchema(diffBrowserOutputSchema())
 						.annotations(new ToolAnnotations("Open RefactoringMiner AST diff", true, false, true, true,
 								false))
@@ -324,7 +317,7 @@ public final class RefactoringMinerMcpTools {
 
 	private static CallToolResult toCallToolResult(McpAnalysisResult result) {
 		return CallToolResult.builder()
-				.addContent(new TextContent(writeResult(result)))
+				.addContent(TextContent.builder(writeResult(result)).build())
 				.structuredContent(result)
 				.isError("error".equals(result.status()))
 				.build();
@@ -332,7 +325,7 @@ public final class RefactoringMinerMcpTools {
 
 	private static CallToolResult toCallToolResult(McpValidationResult result) {
 		return CallToolResult.builder()
-				.addContent(new TextContent(writeResult(result)))
+				.addContent(TextContent.builder(writeResult(result)).build())
 				.structuredContent(result)
 				.isError(McpValidationResult.ERROR.equals(result.status()))
 				.build();
@@ -340,7 +333,7 @@ public final class RefactoringMinerMcpTools {
 
 	private static CallToolResult toCallToolResult(McpDiffBrowserResult result) {
 		return CallToolResult.builder()
-				.addContent(new TextContent(writeResult(result)))
+				.addContent(TextContent.builder(writeResult(result)).build())
 				.structuredContent(result)
 				.isError(McpDiffBrowserResult.ERROR.equals(result.status()))
 				.build();
@@ -625,26 +618,26 @@ public final class RefactoringMinerMcpTools {
 		throw new IllegalArgumentException("source.baseRef must be a non-empty string.");
 	}
 
-	private static JsonSchema analyzeInputSchema() {
+	private static Map<String, Object> analyzeInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
 		properties.put("source", sourceSchema(List.of("fileContents", "worktree", "commit", "pullRequest",
 				"directories")));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0,
 				"default", DEFAULT_MAX_REFACTORINGS));
-		return new JsonSchema("object", properties, List.of(), false, null, null);
+		return objectSchema(properties, List.of());
 	}
 
-	private static JsonSchema validateInputSchema() {
+	private static Map<String, Object> validateInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
 		properties.put("source", sourceSchema(List.of("fileContents", "worktree", "commit", "pullRequest",
 				"directories")));
 		properties.put("intent", intentSchema());
 		properties.put("maxCandidates", Map.of("type", "integer", "minimum", 0,
 				"default", DEFAULT_MAX_CANDIDATES));
-		return new JsonSchema("object", properties, List.of("intent"), false, null, null);
+		return objectSchema(properties, List.of("intent"));
 	}
 
-	private static JsonSchema diffInputSchema() {
+	private static Map<String, Object> diffInputSchema() {
 		Map<String, Object> properties = new LinkedHashMap<>();
 		properties.put("source", sourceSchema(List.of("fileContents", "worktree", "commit", "pullRequest", "url")));
 		properties.put("port", Map.of("type", "integer", "minimum", 1, "maximum", 65535,
@@ -652,7 +645,16 @@ public final class RefactoringMinerMcpTools {
 				"description", "Local WebDiff port. Defaults to 6789."));
 		properties.put("maxRefactorings", Map.of("type", "integer", "minimum", 0,
 				"default", DEFAULT_MAX_REFACTORINGS));
-		return new JsonSchema("object", properties, List.of(), false, null, null);
+		return objectSchema(properties, List.of());
+	}
+
+	private static Map<String, Object> objectSchema(Map<String, Object> properties, List<String> required) {
+		Map<String, Object> schema = new LinkedHashMap<>();
+		schema.put("type", "object");
+		schema.put("properties", properties);
+		schema.put("required", required);
+		schema.put("additionalProperties", false);
+		return schema;
 	}
 
 	private static Map<String, Object> sourceSchema(List<String> sourceTypes) {

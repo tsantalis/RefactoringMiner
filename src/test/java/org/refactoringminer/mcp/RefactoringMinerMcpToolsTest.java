@@ -55,12 +55,12 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void analyzeToolUsesFileContentsSource() throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.analyzeTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.ANALYZE, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.ANALYZE).arguments(Map.of(
 				"source", Map.of(
 						"type", "fileContents",
 						"beforeFiles", Map.of("src/main/java/A.java", "class A { void f() {} }"),
 						"afterFiles", Map.of("src/main/java/A.java", "class A { void g() {} }")),
-				"maxRefactorings", 5));
+				"maxRefactorings", 5)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -74,13 +74,13 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void validateToolUsesFileContentsSource() throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.validateTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.VALIDATE, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.VALIDATE).arguments(Map.of(
 				"source", Map.of(
 						"type", "fileContents",
 						"beforeFiles", Map.of("src/main/java/A.java", "class A { void f() {} }"),
 						"afterFiles", Map.of("src/main/java/A.java", "class A { void g() {} }")),
 				"intent", Map.of("type", "Rename Method", "methodNames", List.of("g")),
-				"maxCandidates", 5));
+				"maxCandidates", 5)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -106,7 +106,7 @@ class RefactoringMinerMcpToolsTest {
 		try {
 			System.setProperty("user.dir", repo.toString());
 			SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-			CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of("port", 6794));
+			CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of("port", 6794)).build();
 
 			CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -137,12 +137,12 @@ class RefactoringMinerMcpToolsTest {
 		try {
 			System.setProperty("user.dir", tempDir.toString());
 			SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-			CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+			CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 					"source", Map.of(
 							"type", "worktree",
 							"workingDirectory", "repo-a",
 							"baseRef", "HEAD"),
-					"port", 6798));
+					"port", 6798)).build();
 
 			CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -159,11 +159,11 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void toolsRejectAbsoluteWorkingDirectory(@TempDir Path tempDir) throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"type", "worktree",
 						"workingDirectory", tempDir.toString()),
-				"port", 6798));
+				"port", 6798)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -176,11 +176,11 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void toolsRejectEscapingWorkingDirectory() throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"type", "worktree",
 						"workingDirectory", "../repo"),
-				"port", 6798));
+				"port", 6798)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -214,12 +214,12 @@ class RefactoringMinerMcpToolsTest {
 				(diff, port, inputSummary, warnings, maxRefactorings) ->
 						McpDiffBrowserResult.ok(diff, port, inputSummary, warnings, maxRefactorings));
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(service);
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
 						"pullRequestId", 1055,
 						"timeoutSeconds", 30),
-				"port", 6795));
+				"port", 6795)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -233,12 +233,12 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void diffToolAcceptsPullRequestSourceAlias() throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"type", "PULL_REQUEST",
 						"cloneUrl", "https://github.com/tsantalis/RefactoringMiner.git",
 						"pullRequestId", 1055),
-				"port", 6795));
+				"port", 6795)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -272,12 +272,12 @@ class RefactoringMinerMcpToolsTest {
 				(diff, port, inputSummary, warnings, maxRefactorings) ->
 						McpDiffBrowserResult.ok(diff, port, inputSummary, warnings, maxRefactorings));
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(service);
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"type", "url",
 						"url", "https://github.com/tsantalis/RefactoringMiner/pull/1086/files",
 						"timeoutSeconds", 30),
-				"port", 6795));
+				"port", 6795)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -312,11 +312,11 @@ class RefactoringMinerMcpToolsTest {
 				(diff, port, inputSummary, warnings, maxRefactorings) ->
 						McpDiffBrowserResult.ok(diff, port, inputSummary, warnings, maxRefactorings));
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(service);
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"url", "https://github.com/tsantalis/RefactoringMiner/pull/1055/files",
 						"timeoutSeconds", 30),
-				"port", 6795));
+				"port", 6795)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -352,14 +352,14 @@ class RefactoringMinerMcpToolsTest {
 				(diff, port, inputSummary, warnings, maxRefactorings) ->
 						McpDiffBrowserResult.ok(diff, port, inputSummary, warnings, maxRefactorings));
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(service);
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"type", "url",
 						"url", "https://github.com/tsantalis/RefactoringMiner/commit/abcdef1234567890?diff=split",
 						"parentIndex", 1,
 						"timeoutSeconds", 45),
 				"maxRefactorings", 0,
-				"port", 6796));
+				"port", 6796)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -375,11 +375,11 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void toolsRejectRepositoryPathInSource(@TempDir Path tempDir) throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of(
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of(
 				"source", Map.of(
 						"type", "worktree",
 						"repositoryPath", tempDir.toString()),
-				"port", 6797));
+				"port", 6797)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 
@@ -393,7 +393,7 @@ class RefactoringMinerMcpToolsTest {
 	@Test
 	void diffToolReturnsErrorShapeForInvalidPort() throws Exception {
 		SyncToolSpecification tool = RefactoringMinerMcpTools.diffTool(fakeService());
-		CallToolRequest request = new CallToolRequest(RefactoringMinerMcpTools.DIFF, Map.of("port", 0));
+		CallToolRequest request = CallToolRequest.builder(RefactoringMinerMcpTools.DIFF).arguments(Map.of("port", 0)).build();
 
 		CallToolResult result = tool.callHandler().apply(null, request);
 

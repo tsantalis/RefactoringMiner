@@ -158,7 +158,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 218,
   "secondPos" : 259,
   "firstEndPos" : 5212,
@@ -175,6 +175,17 @@
   "firstEndPos" : 223,
   "secondEndPos" : 264
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "GitHubPROrIssueCommand",
+  "secondLabel" : "GitHubPROrIssueCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 224,
+  "secondPos" : 265,
+  "firstEndPos" : 246,
+  "secondEndPos" : 287
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -186,12 +197,23 @@
   "firstEndPos" : 262,
   "secondEndPos" : 303
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 247,
+  "secondPos" : 288,
+  "firstEndPos" : 254,
+  "secondEndPos" : 295
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 255,
   "secondPos" : 296,
   "firstEndPos" : 262,

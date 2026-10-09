@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 52,
   "secondPos" : 155,
   "firstEndPos" : 306,
@@ -32,6 +32,17 @@
   "firstEndPos" : 57,
   "secondEndPos" : 160
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "LookupTransactionByID",
+  "secondLabel" : "LookupTransactionByID",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 58,
+  "secondPos" : 161,
+  "firstEndPos" : 79,
+  "secondEndPos" : 182
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 99,
   "secondEndPos" : 202
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 80,
+  "secondPos" : 183,
+  "firstEndPos" : 87,
+  "secondEndPos" : 190
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "JSONRequest",
   "secondLabel" : "JSONRequest",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 88,
   "secondPos" : 191,
   "firstEndPos" : 99,
@@ -185,6 +207,17 @@
   "secondPos" : 258,
   "firstEndPos" : 131,
   "secondEndPos" : 259
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "txID",
+  "secondLabel" : "txID",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 132,
+  "secondPos" : 268,
+  "firstEndPos" : 136,
+  "secondEndPos" : 272
 }, {
   "firstType" : ")",
   "secondType" : ")",

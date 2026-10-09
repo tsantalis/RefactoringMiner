@@ -884,7 +884,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 551,
   "secondPos" : 604,
   "firstEndPos" : 1147,
@@ -901,6 +901,17 @@
   "firstEndPos" : 556,
   "secondEndPos" : 609
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PingCommand",
+  "secondLabel" : "PingCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 557,
+  "secondPos" : 610,
+  "firstEndPos" : 568,
+  "secondEndPos" : 621
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -912,12 +923,23 @@
   "firstEndPos" : 584,
   "secondEndPos" : 637
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 569,
+  "secondPos" : 622,
+  "firstEndPos" : 576,
+  "secondEndPos" : 629
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 577,
   "secondPos" : 630,
   "firstEndPos" : 584,

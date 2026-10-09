@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 214,
   "secondPos" : 234,
   "firstEndPos" : 1822,
@@ -32,6 +32,17 @@
   "firstEndPos" : 219,
   "secondEndPos" : 239
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "UserInfoCommand",
+  "secondLabel" : "UserInfoCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 220,
+  "secondPos" : 240,
+  "firstEndPos" : 235,
+  "secondEndPos" : 255
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 251,
   "secondEndPos" : 271
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 236,
+  "secondPos" : 256,
+  "firstEndPos" : 243,
+  "secondEndPos" : 263
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 244,
   "secondPos" : 264,
   "firstEndPos" : 251,

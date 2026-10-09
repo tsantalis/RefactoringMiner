@@ -2144,6 +2144,17 @@
   "firstEndPos" : 695,
   "secondEndPos" : 789
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "TiltMotionInput",
+  "secondLabel" : "TiltMotionInput",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 696,
+  "secondPos" : 790,
+  "firstEndPos" : 711,
+  "secondEndPos" : 805
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -2155,12 +2166,23 @@
   "firstEndPos" : 729,
   "secondEndPos" : 827
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 712,
+  "secondPos" : 806,
+  "firstEndPos" : 719,
+  "secondEndPos" : 813
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Component",
   "secondLabel" : "Component",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 720,
   "secondPos" : 814,
   "firstEndPos" : 729,

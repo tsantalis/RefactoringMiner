@@ -191,7 +191,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 572,
   "secondPos" : 1128,
   "firstEndPos" : 4370,
@@ -208,6 +208,17 @@
   "firstEndPos" : 577,
   "secondEndPos" : 1133
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "YukikazeClient",
+  "secondLabel" : "YukikazeClient",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 578,
+  "secondPos" : 1134,
+  "firstEndPos" : 592,
+  "secondEndPos" : 1148
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -219,12 +230,23 @@
   "firstEndPos" : 613,
   "secondEndPos" : 1169
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 593,
+  "secondPos" : 1149,
+  "firstEndPos" : 600,
+  "secondEndPos" : 1156
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "AkairoClient",
   "secondLabel" : "AkairoClient",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 601,
   "secondPos" : 1157,
   "firstEndPos" : 613,

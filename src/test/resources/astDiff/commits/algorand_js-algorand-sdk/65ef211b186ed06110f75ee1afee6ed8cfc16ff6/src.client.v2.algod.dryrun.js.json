@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 102,
   "secondPos" : 236,
   "firstEndPos" : 520,
@@ -31,6 +31,17 @@
   "secondPos" : 236,
   "firstEndPos" : 107,
   "secondEndPos" : 241
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Dryrun",
+  "secondLabel" : "Dryrun",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 108,
+  "secondPos" : 242,
+  "firstEndPos" : 114,
+  "secondEndPos" : 248
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",
@@ -593,6 +604,17 @@
   "firstEndPos" : 322,
   "secondEndPos" : 610
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 322,
+  "secondPos" : 610,
+  "firstEndPos" : 334,
+  "secondEndPos" : 622
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "headers",
@@ -603,6 +625,50 @@
   "secondPos" : 610,
   "firstEndPos" : 329,
   "secondEndPos" : 617
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 330,
+  "secondPos" : 618,
+  "firstEndPos" : 331,
+  "secondEndPos" : 619
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 332,
+  "secondPos" : 620,
+  "firstEndPos" : 334,
+  "secondEndPos" : 622
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 332,
+  "secondPos" : 620,
+  "firstEndPos" : 333,
+  "secondEndPos" : 621
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 333,
+  "secondPos" : 621,
+  "firstEndPos" : 334,
+  "secondEndPos" : 622
 }, {
   "firstType" : ")",
   "secondType" : ")",

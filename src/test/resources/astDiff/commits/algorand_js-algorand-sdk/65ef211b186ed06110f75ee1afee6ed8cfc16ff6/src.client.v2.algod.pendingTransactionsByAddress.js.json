@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 57,
   "secondPos" : 244,
   "firstEndPos" : 751,
@@ -31,6 +31,17 @@
   "secondPos" : 244,
   "firstEndPos" : 62,
   "secondEndPos" : 249
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PendingTransactionsByAddress",
+  "secondLabel" : "PendingTransactionsByAddress",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 63,
+  "secondPos" : 250,
+  "firstEndPos" : 91,
+  "secondEndPos" : 278
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",
@@ -130,6 +141,17 @@
   "secondPos" : 328,
   "firstEndPos" : 110,
   "secondEndPos" : 329
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "address",
+  "secondLabel" : "address",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 111,
+  "secondPos" : 338,
+  "firstEndPos" : 118,
+  "secondEndPos" : 345
 }, {
   "firstType" : ")",
   "secondType" : ")",

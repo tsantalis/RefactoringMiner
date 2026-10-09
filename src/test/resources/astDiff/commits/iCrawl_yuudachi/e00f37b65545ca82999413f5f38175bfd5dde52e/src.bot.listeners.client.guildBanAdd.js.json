@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 125,
   "secondPos" : 204,
   "firstEndPos" : 1284,
@@ -32,6 +32,17 @@
   "firstEndPos" : 130,
   "secondEndPos" : 209
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "GuildBanAddListener",
+  "secondLabel" : "GuildBanAddListener",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 131,
+  "secondPos" : 210,
+  "firstEndPos" : 150,
+  "secondEndPos" : 229
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 167,
   "secondEndPos" : 246
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 151,
+  "secondPos" : 230,
+  "firstEndPos" : 158,
+  "secondEndPos" : 237
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Listener",
   "secondLabel" : "Listener",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 159,
   "secondPos" : 238,
   "firstEndPos" : 167,

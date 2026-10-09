@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 788,
   "secondPos" : 954,
   "firstEndPos" : 5112,
@@ -31,6 +31,17 @@
   "secondPos" : 954,
   "firstEndPos" : 793,
   "secondEndPos" : 959
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "AlgodClient",
+  "secondLabel" : "AlgodClient",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 794,
+  "secondPos" : 960,
+  "firstEndPos" : 805,
+  "secondEndPos" : 971
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",
@@ -98,6 +109,17 @@
   "firstEndPos" : 822,
   "secondEndPos" : 1010
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 827,
+  "secondPos" : 1015,
+  "firstEndPos" : 837,
+  "secondEndPos" : 1025
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "token",
@@ -108,6 +130,72 @@
   "secondPos" : 1015,
   "firstEndPos" : 832,
   "secondEndPos" : 1020
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 833,
+  "secondPos" : 1021,
+  "firstEndPos" : 834,
+  "secondEndPos" : 1022
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 835,
+  "secondPos" : 1023,
+  "firstEndPos" : 837,
+  "secondEndPos" : 1025
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 835,
+  "secondPos" : 1023,
+  "firstEndPos" : 836,
+  "secondEndPos" : 1024
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 836,
+  "secondPos" : 1024,
+  "firstEndPos" : 837,
+  "secondEndPos" : 1025
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 837,
+  "secondPos" : 1025,
+  "firstEndPos" : 838,
+  "secondEndPos" : 1026
+}, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 843,
+  "secondPos" : 1031,
+  "firstEndPos" : 884,
+  "secondEndPos" : 1072
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -120,6 +208,83 @@
   "firstEndPos" : 853,
   "secondEndPos" : 1041
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 854,
+  "secondPos" : 1042,
+  "firstEndPos" : 855,
+  "secondEndPos" : 1043
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 856,
+  "secondPos" : 1044,
+  "firstEndPos" : 884,
+  "secondEndPos" : 1072
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 856,
+  "secondPos" : 1044,
+  "firstEndPos" : 857,
+  "secondEndPos" : 1045
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "http://r2.algorand.network",
+  "secondLabel" : "http://r2.algorand.network",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 857,
+  "secondPos" : 1045,
+  "firstEndPos" : 883,
+  "secondEndPos" : 1071
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 883,
+  "secondPos" : 1071,
+  "firstEndPos" : 884,
+  "secondEndPos" : 1072
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 884,
+  "secondPos" : 1072,
+  "firstEndPos" : 885,
+  "secondEndPos" : 1073
+}, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 890,
+  "secondPos" : 1078,
+  "firstEndPos" : 901,
+  "secondEndPos" : 1089
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "port",
@@ -131,6 +296,50 @@
   "firstEndPos" : 894,
   "secondEndPos" : 1082
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 895,
+  "secondPos" : 1083,
+  "firstEndPos" : 896,
+  "secondEndPos" : 1084
+}, {
+  "firstType" : "number",
+  "secondType" : "number",
+  "firstLabel" : "4180",
+  "secondLabel" : "4180",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 897,
+  "secondPos" : 1085,
+  "firstEndPos" : 901,
+  "secondEndPos" : 1089
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 901,
+  "secondPos" : 1089,
+  "firstEndPos" : 902,
+  "secondEndPos" : 1090
+}, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 907,
+  "secondPos" : 1095,
+  "firstEndPos" : 919,
+  "secondEndPos" : 1107
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "headers",
@@ -141,6 +350,50 @@
   "secondPos" : 1095,
   "firstEndPos" : 914,
   "secondEndPos" : 1102
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 915,
+  "secondPos" : 1103,
+  "firstEndPos" : 916,
+  "secondEndPos" : 1104
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 917,
+  "secondPos" : 1105,
+  "firstEndPos" : 919,
+  "secondEndPos" : 1107
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 917,
+  "secondPos" : 1105,
+  "firstEndPos" : 918,
+  "secondEndPos" : 1106
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 918,
+  "secondPos" : 1106,
+  "firstEndPos" : 919,
+  "secondEndPos" : 1107
 }, {
   "firstType" : ")",
   "secondType" : ")",

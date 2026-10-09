@@ -180,7 +180,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 133,
   "secondPos" : 147,
   "firstEndPos" : 2387,
@@ -197,6 +197,17 @@
   "firstEndPos" : 138,
   "secondEndPos" : 152
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "MessageUpdateListener",
+  "secondLabel" : "MessageUpdateListener",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 139,
+  "secondPos" : 153,
+  "firstEndPos" : 160,
+  "secondEndPos" : 174
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -208,12 +219,23 @@
   "firstEndPos" : 177,
   "secondEndPos" : 191
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 161,
+  "secondPos" : 175,
+  "firstEndPos" : 168,
+  "secondEndPos" : 182
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Listener",
   "secondLabel" : "Listener",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 169,
   "secondPos" : 183,
   "firstEndPos" : 177,

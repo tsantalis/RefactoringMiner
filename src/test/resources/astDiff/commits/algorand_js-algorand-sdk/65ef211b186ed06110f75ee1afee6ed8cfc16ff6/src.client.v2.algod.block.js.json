@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 57,
   "secondPos" : 235,
   "firstEndPos" : 684,
@@ -31,6 +31,17 @@
   "secondPos" : 235,
   "firstEndPos" : 62,
   "secondEndPos" : 240
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Block",
+  "secondLabel" : "Block",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 63,
+  "secondPos" : 241,
+  "firstEndPos" : 68,
+  "secondEndPos" : 246
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",

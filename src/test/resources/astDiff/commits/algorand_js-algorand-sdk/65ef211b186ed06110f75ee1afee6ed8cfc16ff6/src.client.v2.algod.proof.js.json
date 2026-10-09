@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 52,
   "secondPos" : 155,
   "firstEndPos" : 348,
@@ -32,6 +32,17 @@
   "firstEndPos" : 57,
   "secondEndPos" : 160
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Proof",
+  "secondLabel" : "Proof",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 58,
+  "secondPos" : 161,
+  "firstEndPos" : 63,
+  "secondEndPos" : 166
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 83,
   "secondEndPos" : 186
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 64,
+  "secondPos" : 167,
+  "firstEndPos" : 71,
+  "secondEndPos" : 174
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "JSONRequest",
   "secondLabel" : "JSONRequest",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 72,
   "secondPos" : 175,
   "firstEndPos" : 83,
@@ -185,6 +207,39 @@
   "secondPos" : 251,
   "firstEndPos" : 115,
   "secondEndPos" : 252
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "round",
+  "secondLabel" : "round",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 116,
+  "secondPos" : 265,
+  "firstEndPos" : 121,
+  "secondEndPos" : 270
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 121,
+  "secondPos" : 278,
+  "firstEndPos" : 122,
+  "secondEndPos" : 279
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "txID",
+  "secondLabel" : "txID",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 123,
+  "secondPos" : 292,
+  "firstEndPos" : 127,
+  "secondEndPos" : 296
 }, {
   "firstType" : ")",
   "secondType" : ")",

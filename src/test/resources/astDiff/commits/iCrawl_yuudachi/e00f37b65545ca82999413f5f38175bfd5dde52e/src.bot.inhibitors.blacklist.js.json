@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 50,
   "secondPos" : 98,
   "firstEndPos" : 310,
@@ -32,6 +32,17 @@
   "firstEndPos" : 55,
   "secondEndPos" : 103
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "BlacklistInhibitor",
+  "secondLabel" : "BlacklistInhibitor",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 56,
+  "secondPos" : 104,
+  "firstEndPos" : 74,
+  "secondEndPos" : 122
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 92,
   "secondEndPos" : 140
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 75,
+  "secondPos" : 123,
+  "firstEndPos" : 82,
+  "secondEndPos" : 130
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Inhibitor",
   "secondLabel" : "Inhibitor",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 83,
   "secondPos" : 131,
   "firstEndPos" : 92,

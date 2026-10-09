@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +23,7 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
+import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
@@ -30,6 +32,7 @@ import com.caoccao.javet.swc4j.ast.program.Swc4jAstScript;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParamProp;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParam;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeParamDecl;
@@ -48,6 +51,7 @@ import com.github.gumtreediff.tree.TreeContext;
 
 import extension.umladapter.UMLAdapterUtil;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.TypeScriptOperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -230,6 +234,7 @@ public class TypeScriptFileProcessor {
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
 				parameter.setParameter(true);
+				setDefaultValue(parameter, identifier, pat, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					umlParameter.setVariableDeclaration(parameter);
@@ -251,6 +256,14 @@ public class TypeScriptFileProcessor {
 		return operation;
 	}
 
+	//the default value of a parameter is its initializer, i.e., function start(port = 0)
+	private static void setDefaultValue(VariableDeclaration parameter, Swc4jAstBindingIdent identifier, ISwc4jAstPat pat, String sourceFolder, String filePath,
+			UMLOperation operation, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		if(pat instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == identifier) {
+			parameter.setInitializer(new AbstractExpression(sourceFolder, filePath, assignPat.getRight(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, operation, activeVariableDeclarations, fileContent, Collections.emptyList()));
+		}
+	}
+
 	public static UMLOperation processConstructor(String sourceFolder, String filePath, Swc4jAstConstructor functionDecl,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
 		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
@@ -258,13 +271,21 @@ public class TypeScriptFileProcessor {
 		TypeScriptOperationBody.processComments(comments, operation);
 		operation.setVisibility(Visibility.PRIVATE);
 		for(ISwc4jAstParamOrTsParamProp param : functionDecl.getParams()) {
+			ISwc4jAstPat pat = null;
 			if(param instanceof Swc4jAstParam p) {
-				ISwc4jAstPat pat = p.getPat();
+				pat = p.getPat();
+			}
+			else if(param instanceof Swc4jAstTsParamProp paramProp && paramProp.getParam() instanceof ISwc4jAstPat paramPropPat) {
+				//the parameter property, i.e., constructor(private source: string)
+				pat = paramPropPat;
+			}
+			if(pat != null) {
 				Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
 				List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
 				for(Swc4jAstBindingIdent identifier : identifiers) {
 					VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
 					parameter.setParameter(true);
+					setDefaultValue(parameter, identifier, pat, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 					if(parameter.getType() != null) {
 						UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 						umlParameter.setVariableDeclaration(parameter);

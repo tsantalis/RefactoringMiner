@@ -177,6 +177,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 }
                 processParentInternalModule(srcTypeDeclaration.getParent(), dstTypeDeclaration.getParent(), mappingStore, LANG1, LANG2);
             }
+            else if(!srcTypeDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstTypeDeclaration.getParent().getType().name.equals(LANG2.EXPORT_STATEMENT) &&
+                    dstTypeDeclaration.getParent().getParent() != null) {
+                //the exported class has the same parent as the original class, i.e., class X {} -> export default class X {}
+                //the export statement is replaced with its children, so that the class contents are not moved
+                Tree export2 = dstTypeDeclaration.getParent();
+                Tree parent2 = export2.getParent();
+                int index = parent2.getChildPosition(export2);
+                parent2.getChildren().remove(index);
+                for(Tree child : new ArrayList<>(export2.getChildren())) {
+                    parent2.insertChild(child, index++);
+                }
+            }
             processParentInternalModule(srcTypeDeclaration, dstTypeDeclaration, mappingStore, LANG1, LANG2);
             if (srcTypeDeclaration.getParent().getType().name.equals(LANG1.FIELD_DECLARATION)
                     && dstTypeDeclaration.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
@@ -265,6 +277,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMapping(matched.first,matched.second);
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.TYPE_IDENTIFIER,LANG2.TYPE_IDENTIFIER);
         if (matched != null)
+            mappingStore.addMapping(matched.first,matched.second);
+        //the JavaScript class name is an identifier, and the TypeScript class name a type_identifier, i.e., class X {} -> export class X {}
+        matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.SIMPLE_NAME,LANG2.TYPE_IDENTIFIER);
+        if (matched != null && !mappingStore.isSrcMapped(matched.first) && !mappingStore.isDstMapped(matched.second))
             mappingStore.addMapping(matched.first,matched.second);
         matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,LANG1.QUALIFIED_IDENTIFIER,LANG2.QUALIFIED_IDENTIFIER);
         if (matched != null)
@@ -1630,6 +1646,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                 Pair<Tree, Tree> type_arguments = Helpers.findPairOfType(extendClauses.first,extendClauses.second, LANG1.TYPE_ARGUMENTS, LANG2.TYPE_ARGUMENTS);
                 if(type_arguments != null) {
                     mappingStore.addMappingRecursively(type_arguments.first, type_arguments.second);
+                }
+            }
+            else {
+                Tree extendClause2 = TreeUtilFunctions.findChildByType(classHeritage.second, LANG2.EXTENDS_CLAUSE);
+                if(extendClause2 != null && TreeUtilFunctions.findChildByType(classHeritage.first, LANG1.EXTENDS_CLAUSE) == null) {
+                    //the JavaScript class_heritage has no extends_clause, i.e., class X extends Y {} -> class X extends Y {} in TypeScript
+                    //the extends_clause is replaced with its children after all diffs are matched, so that the supertype is not moved
+                    optimizationData.getDeferredFlattenings().flattenKeepingMappings(classHeritage.second, extendClause2);
+                    Pair<Tree, Tree> extendKeywords = Helpers.findPairOfType(classHeritage.first, extendClause2, LANG1.EXTENDS_KEYWORD, LANG2.EXTENDS_KEYWORD);
+                    if(extendKeywords != null) {
+                        mappingStore.addMapping(extendKeywords.first,extendKeywords.second);
+                    }
                 }
             }
         }

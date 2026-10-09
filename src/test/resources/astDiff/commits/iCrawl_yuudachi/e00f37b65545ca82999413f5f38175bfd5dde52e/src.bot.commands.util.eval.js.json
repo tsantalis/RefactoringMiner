@@ -323,7 +323,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 237,
   "secondPos" : 238,
   "firstEndPos" : 3092,
@@ -340,6 +340,17 @@
   "firstEndPos" : 242,
   "secondEndPos" : 243
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "EvalCommand",
+  "secondLabel" : "EvalCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 243,
+  "secondPos" : 244,
+  "firstEndPos" : 254,
+  "secondEndPos" : 255
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -351,12 +362,23 @@
   "firstEndPos" : 270,
   "secondEndPos" : 271
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 255,
+  "secondPos" : 256,
+  "firstEndPos" : 262,
+  "secondEndPos" : 263
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 263,
   "secondPos" : 264,
   "firstEndPos" : 270,
@@ -5807,6 +5829,17 @@
   "firstEndPos" : 1700,
   "secondEndPos" : 1878
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 1701,
+  "secondPos" : 1879,
+  "firstEndPos" : 1713,
+  "secondEndPos" : 1906
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "input",
@@ -5817,6 +5850,28 @@
   "secondPos" : 1879,
   "firstEndPos" : 1706,
   "secondEndPos" : 1884
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 1707,
+  "secondPos" : 1900,
+  "firstEndPos" : 1708,
+  "secondEndPos" : 1901
+}, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "null",
+  "secondLabel" : "null",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 1709,
+  "secondPos" : 1902,
+  "firstEndPos" : 1713,
+  "secondEndPos" : 1906
 }, {
   "firstType" : ")",
   "secondType" : ")",

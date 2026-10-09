@@ -758,6 +758,17 @@
   "firstEndPos" : 258,
   "secondEndPos" : 301
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "DeviceMotion",
+  "secondLabel" : "DeviceMotion",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 259,
+  "secondPos" : 302,
+  "firstEndPos" : 271,
+  "secondEndPos" : 314
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -769,12 +780,23 @@
   "firstEndPos" : 289,
   "secondEndPos" : 507
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 272,
+  "secondPos" : 315,
+  "firstEndPos" : 279,
+  "secondEndPos" : 322
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Component",
   "secondLabel" : "Component",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 280,
   "secondPos" : 323,
   "firstEndPos" : 289,

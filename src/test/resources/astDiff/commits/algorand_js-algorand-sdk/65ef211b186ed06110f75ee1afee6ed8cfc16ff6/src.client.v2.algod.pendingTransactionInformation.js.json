@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 57,
   "secondPos" : 249,
   "firstEndPos" : 752,
@@ -31,6 +31,17 @@
   "secondPos" : 249,
   "firstEndPos" : 62,
   "secondEndPos" : 254
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PendingTransactionInformation",
+  "secondLabel" : "PendingTransactionInformation",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 63,
+  "secondPos" : 255,
+  "firstEndPos" : 92,
+  "secondEndPos" : 284
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",
@@ -130,6 +141,17 @@
   "secondPos" : 334,
   "firstEndPos" : 111,
   "secondEndPos" : 335
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "txid",
+  "secondLabel" : "txid",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 112,
+  "secondPos" : 344,
+  "firstEndPos" : 116,
+  "secondEndPos" : 348
 }, {
   "firstType" : ")",
   "secondType" : ")",

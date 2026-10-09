@@ -2567,7 +2567,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 1224,
   "secondPos" : 1268,
   "firstEndPos" : 2489,
@@ -2584,6 +2584,17 @@
   "firstEndPos" : 1229,
   "secondEndPos" : 1273
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RoleInfoCommand",
+  "secondLabel" : "RoleInfoCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1230,
+  "secondPos" : 1274,
+  "firstEndPos" : 1245,
+  "secondEndPos" : 1289
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -2595,12 +2606,23 @@
   "firstEndPos" : 1261,
   "secondEndPos" : 1305
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 1246,
+  "secondPos" : 1290,
+  "firstEndPos" : 1253,
+  "secondEndPos" : 1297
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 1254,
   "secondPos" : 1298,
   "firstEndPos" : 1261,

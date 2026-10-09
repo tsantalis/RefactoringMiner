@@ -1049,7 +1049,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 316,
   "secondPos" : 441,
   "firstEndPos" : 709,
@@ -1065,6 +1065,17 @@
   "secondPos" : 441,
   "firstEndPos" : 321,
   "secondEndPos" : 446
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Compile",
+  "secondLabel" : "Compile",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 322,
+  "secondPos" : 447,
+  "firstEndPos" : 329,
+  "secondEndPos" : 454
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",
@@ -1164,6 +1175,17 @@
   "secondPos" : 504,
   "firstEndPos" : 348,
   "secondEndPos" : 505
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "source",
+  "secondLabel" : "source",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 349,
+  "secondPos" : 514,
+  "firstEndPos" : 355,
+  "secondEndPos" : 520
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -1407,6 +1429,17 @@
   "firstEndPos" : 508,
   "secondEndPos" : 752
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 508,
+  "secondPos" : 752,
+  "firstEndPos" : 520,
+  "secondEndPos" : 764
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "headers",
@@ -1417,6 +1450,50 @@
   "secondPos" : 752,
   "firstEndPos" : 515,
   "secondEndPos" : 759
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 516,
+  "secondPos" : 760,
+  "firstEndPos" : 517,
+  "secondEndPos" : 761
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 518,
+  "secondPos" : 762,
+  "firstEndPos" : 520,
+  "secondEndPos" : 764
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 518,
+  "secondPos" : 762,
+  "firstEndPos" : 519,
+  "secondEndPos" : 763
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 519,
+  "secondPos" : 763,
+  "firstEndPos" : 520,
+  "secondEndPos" : 764
 }, {
   "firstType" : ")",
   "secondType" : ")",

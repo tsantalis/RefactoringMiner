@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 52,
   "secondPos" : 155,
   "firstEndPos" : 397,
@@ -32,6 +32,17 @@
   "firstEndPos" : 57,
   "secondEndPos" : 160
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "StatusAfterBlock",
+  "secondLabel" : "StatusAfterBlock",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 58,
+  "secondPos" : 161,
+  "firstEndPos" : 74,
+  "secondEndPos" : 177
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 94,
   "secondEndPos" : 197
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 75,
+  "secondPos" : 178,
+  "firstEndPos" : 82,
+  "secondEndPos" : 185
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "JSONRequest",
   "secondLabel" : "JSONRequest",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 83,
   "secondPos" : 186,
   "firstEndPos" : 94,
@@ -185,6 +207,17 @@
   "secondPos" : 253,
   "firstEndPos" : 126,
   "secondEndPos" : 254
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "round",
+  "secondLabel" : "round",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 127,
+  "secondPos" : 263,
+  "firstEndPos" : 132,
+  "secondEndPos" : 268
 }, {
   "firstType" : ")",
   "secondType" : ")",

@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 48,
   "secondPos" : 150,
   "firstEndPos" : 1014,
@@ -32,6 +32,17 @@
   "firstEndPos" : 53,
   "secondEndPos" : 155
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "TagDownloadCommand",
+  "secondLabel" : "TagDownloadCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 54,
+  "secondPos" : 156,
+  "firstEndPos" : 72,
+  "secondEndPos" : 174
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 88,
   "secondEndPos" : 190
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 73,
+  "secondPos" : 175,
+  "firstEndPos" : 80,
+  "secondEndPos" : 182
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 81,
   "secondPos" : 183,
   "firstEndPos" : 88,

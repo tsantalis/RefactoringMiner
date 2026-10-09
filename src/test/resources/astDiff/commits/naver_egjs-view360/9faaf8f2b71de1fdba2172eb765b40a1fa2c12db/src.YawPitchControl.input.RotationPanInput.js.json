@@ -362,6 +362,17 @@
   "firstEndPos" : 519,
   "secondEndPos" : 693
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RotationPanInput",
+  "secondLabel" : "RotationPanInput",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 520,
+  "secondPos" : 694,
+  "firstEndPos" : 536,
+  "secondEndPos" : 710
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -373,12 +384,23 @@
   "firstEndPos" : 553,
   "secondEndPos" : 727
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 537,
+  "secondPos" : 711,
+  "firstEndPos" : 544,
+  "secondEndPos" : 718
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "PanInput",
   "secondLabel" : "PanInput",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 545,
   "secondPos" : 719,
   "firstEndPos" : 553,

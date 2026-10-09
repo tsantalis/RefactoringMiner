@@ -1727,6 +1727,17 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
     }
 
+    //the node of the parameter in the parameter list, i.e., the TypeScript required_parameter or JavaScript assignment_pattern wrapping the identifier
+    private static Tree parameterInList(Tree tree, Constants LANG) {
+        Tree parent = tree.getParent();
+        String parentType = parent.getType().name;
+        if((parentType.equals(LANG.REQUIRED_PARAMETER) || parentType.equals(LANG.OPTIONAL_PARAMETER) || parentType.equals(LANG.ASSIGNMENT_PATTERN)) &&
+                parent.getParent() != null && parent.getParent().getType().name.equals(LANG.FORMAL_PARAMETERS)) {
+            return parent;
+        }
+        return tree;
+    }
+
     private void processParameterPair(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore,
             VariableDeclaration leftVarDecl, VariableDeclaration rightVarDecl) {
         Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo(),LANG1);
@@ -1759,18 +1770,21 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMapping(leftTree,rightTree);
             }
             if(leftTree.getParent() != null && rightTree.getParent() != null) {
-                int index1 = leftTree.getParent().getChildPosition(leftTree);
-                int index2 = rightTree.getParent().getChildPosition(rightTree);
-                if(leftTree.getParent().getChildren().size() > index1+1 && leftTree.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
-                        rightTree.getParent().getChildren().size() > index2+1 && rightTree.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
-                    Tree t1 = leftTree.getParent().getChild(index1+1);
-                    Tree t2 = rightTree.getParent().getChild(index2+1);
+                //the commas follow the parameter in the parameter list, i.e., the TypeScript required_parameter of index in index = 0
+                Tree parameter1 = parameterInList(leftTree, LANG1);
+                Tree parameter2 = parameterInList(rightTree, LANG2);
+                int index1 = parameter1.getParent().getChildPosition(parameter1);
+                int index2 = parameter2.getParent().getChildPosition(parameter2);
+                if(parameter1.getParent().getChildren().size() > index1+1 && parameter1.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        parameter2.getParent().getChildren().size() > index2+1 && parameter2.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = parameter1.getParent().getChild(index1+1);
+                    Tree t2 = parameter2.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
                 }
-                if(leftTree.getParent().getChildren().size() > index1+2 && leftTree.getParent().getChild(index1+2).getType().name.equals(LANG1.COMMA) &&
-                        rightTree.getParent().getChildren().size() > index2+2 && rightTree.getParent().getChild(index2+2).getType().name.equals(LANG2.COMMA)) {
-                    Tree t1 = leftTree.getParent().getChild(index1+2);
-                    Tree t2 = rightTree.getParent().getChild(index2+2);
+                if(parameter1.getParent().getChildren().size() > index1+2 && parameter1.getParent().getChild(index1+2).getType().name.equals(LANG1.COMMA) &&
+                        parameter2.getParent().getChildren().size() > index2+2 && parameter2.getParent().getChild(index2+2).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = parameter1.getParent().getChild(index1+2);
+                    Tree t2 = parameter2.getParent().getChild(index2+2);
                     mappingStore.addMapping(t1,t2);
                 }
                 if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
@@ -1838,6 +1852,15 @@ public class MethodMatcher extends BodyMapperMatcher{
                     Tree previousRight = rightInitializerTree.getParent().getChild(rightPosition-1);
                     if(previousLeft.getType().name.equals(LANG1.AFFECTATION_OPERATOR) && previousRight.getType().name.equals(LANG2.AFFECTATION_OPERATOR)) {
                         mappingStore.addMapping(previousLeft, previousRight);
+                    }
+                    if(previousLeft.getType().name.equals(LANG1.EQUAL_OPERATOR) && previousRight.getType().name.equals(LANG2.EQUAL_OPERATOR)) {
+                        mappingStore.addMapping(previousLeft, previousRight);
+                        //the parameter with the default value, i.e., port = 0 as JavaScript assignment_pattern and TypeScript required_parameter
+                        Tree parameter1 = leftInitializerTree.getParent();
+                        Tree parameter2 = rightInitializerTree.getParent();
+                        if(!mappingStore.isSrcMapped(parameter1) && !mappingStore.isDstMapped(parameter2)) {
+                            mappingStore.addMapping(parameter1, parameter2);
+                        }
                     }
                 }
             }

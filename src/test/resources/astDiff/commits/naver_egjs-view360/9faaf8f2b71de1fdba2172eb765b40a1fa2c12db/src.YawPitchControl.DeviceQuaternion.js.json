@@ -714,6 +714,17 @@
   "firstEndPos" : 216,
   "secondEndPos" : 218
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "DeviceQuaternion",
+  "secondLabel" : "DeviceQuaternion",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 217,
+  "secondPos" : 219,
+  "firstEndPos" : 233,
+  "secondEndPos" : 235
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -725,12 +736,23 @@
   "firstEndPos" : 251,
   "secondEndPos" : 298
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 234,
+  "secondPos" : 236,
+  "firstEndPos" : 241,
+  "secondEndPos" : 243
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Component",
   "secondLabel" : "Component",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 242,
   "secondPos" : 244,
   "firstEndPos" : 251,

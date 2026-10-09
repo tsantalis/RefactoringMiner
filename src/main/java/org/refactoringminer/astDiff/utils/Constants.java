@@ -580,6 +580,8 @@ public class Constants {
     public final String UNION_TYPE = "union_type";
     public final String GENERIC_TYPE = "generic_type";
     public final String REQUIRED_PARAMETER = "required_parameter";
+    public final String OPTIONAL_PARAMETER = "optional_parameter";
+    public final String ASSIGNMENT_PATTERN = "assignment_pattern";
     public final String OPENING_TAG = "<";
     public final String CLOSING_TAG = ">";
     public final String INTERFACE_DECLARATION = "interface_declaration";

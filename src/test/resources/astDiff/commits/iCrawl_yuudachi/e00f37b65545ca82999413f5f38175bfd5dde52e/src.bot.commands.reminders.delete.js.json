@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 97,
   "secondPos" : 178,
   "firstEndPos" : 1999,
@@ -32,6 +32,17 @@
   "firstEndPos" : 102,
   "secondEndPos" : 183
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ReminderDeleteCommand",
+  "secondLabel" : "ReminderDeleteCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 103,
+  "secondPos" : 184,
+  "firstEndPos" : 124,
+  "secondEndPos" : 205
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 140,
   "secondEndPos" : 221
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 125,
+  "secondPos" : 206,
+  "firstEndPos" : 132,
+  "secondEndPos" : 213
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 133,
   "secondPos" : 214,
   "firstEndPos" : 140,

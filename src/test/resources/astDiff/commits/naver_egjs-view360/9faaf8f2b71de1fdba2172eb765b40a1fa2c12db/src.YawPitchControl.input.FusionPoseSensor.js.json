@@ -1407,6 +1407,17 @@
   "firstEndPos" : 541,
   "secondEndPos" : 547
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "FusionPoseSensor",
+  "secondLabel" : "FusionPoseSensor",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 542,
+  "secondPos" : 548,
+  "firstEndPos" : 558,
+  "secondEndPos" : 564
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -1418,12 +1429,23 @@
   "firstEndPos" : 576,
   "secondEndPos" : 625
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 559,
+  "secondPos" : 565,
+  "firstEndPos" : 566,
+  "secondEndPos" : 572
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Component",
   "secondLabel" : "Component",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 567,
   "secondPos" : 573,
   "firstEndPos" : 576,

@@ -934,6 +934,17 @@
   "firstEndPos" : 865,
   "secondEndPos" : 1481
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 865,
+  "secondPos" : 1481,
+  "firstEndPos" : 877,
+  "secondEndPos" : 1514
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "headers",
@@ -944,6 +955,50 @@
   "secondPos" : 1481,
   "firstEndPos" : 872,
   "secondEndPos" : 1488
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 873,
+  "secondPos" : 1510,
+  "firstEndPos" : 874,
+  "secondEndPos" : 1511
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 875,
+  "secondPos" : 1512,
+  "firstEndPos" : 877,
+  "secondEndPos" : 1514
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 875,
+  "secondPos" : 1512,
+  "firstEndPos" : 876,
+  "secondEndPos" : 1513
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 876,
+  "secondPos" : 1513,
+  "firstEndPos" : 877,
+  "secondEndPos" : 1514
 }, {
   "firstType" : ")",
   "secondType" : ")",

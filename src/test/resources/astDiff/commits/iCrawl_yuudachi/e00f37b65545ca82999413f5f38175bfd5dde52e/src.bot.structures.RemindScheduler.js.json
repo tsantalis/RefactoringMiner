@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 80,
   "secondPos" : 209,
   "firstEndPos" : 1985,
@@ -31,6 +31,17 @@
   "secondPos" : 209,
   "firstEndPos" : 85,
   "secondEndPos" : 214
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "RemindScheduler",
+  "secondLabel" : "RemindScheduler",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 86,
+  "secondPos" : 215,
+  "firstEndPos" : 101,
+  "secondEndPos" : 230
 }, {
   "firstType" : "class_body",
   "secondType" : "class_body",

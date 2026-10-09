@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 172,
   "secondPos" : 240,
   "firstEndPos" : 2932,
@@ -32,6 +32,17 @@
   "firstEndPos" : 177,
   "secondEndPos" : 245
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "KickCommand",
+  "secondLabel" : "KickCommand",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 178,
+  "secondPos" : 246,
+  "firstEndPos" : 189,
+  "secondEndPos" : 257
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 205,
   "secondEndPos" : 273
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 190,
+  "secondPos" : 258,
+  "firstEndPos" : 197,
+  "secondEndPos" : 265
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "Command",
   "secondLabel" : "Command",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 198,
   "secondPos" : 266,
   "firstEndPos" : 205,

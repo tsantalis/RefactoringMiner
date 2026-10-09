@@ -15,7 +15,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "program",
-  "secondParentType" : "export_statement",
+  "secondParentType" : "program",
   "firstPos" : 99,
   "secondPos" : 179,
   "firstEndPos" : 1004,
@@ -32,6 +32,17 @@
   "firstEndPos" : 104,
   "secondEndPos" : 184
 }, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "SettingsProvider",
+  "secondLabel" : "TypeORMProvider",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 105,
+  "secondPos" : 185,
+  "firstEndPos" : 121,
+  "secondEndPos" : 200
+}, {
   "firstType" : "class_heritage",
   "secondType" : "class_heritage",
   "firstLabel" : "",
@@ -43,12 +54,23 @@
   "firstEndPos" : 147,
   "secondEndPos" : 217
 }, {
+  "firstType" : "extends",
+  "secondType" : "extends",
+  "firstLabel" : "extends",
+  "secondLabel" : "extends",
+  "firstParentType" : "class_heritage",
+  "secondParentType" : "class_heritage",
+  "firstPos" : 122,
+  "secondPos" : 201,
+  "firstEndPos" : 129,
+  "secondEndPos" : 208
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "SequelizeProvider",
   "secondLabel" : "Provider",
   "firstParentType" : "class_heritage",
-  "secondParentType" : "extends_clause",
+  "secondParentType" : "class_heritage",
   "firstPos" : 130,
   "secondPos" : 209,
   "firstEndPos" : 147,

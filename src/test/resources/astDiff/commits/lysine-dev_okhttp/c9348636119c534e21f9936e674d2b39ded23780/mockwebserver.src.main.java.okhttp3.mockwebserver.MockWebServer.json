@@ -4256,12 +4256,23 @@
   "firstEndPos" : 6982,
   "secondEndPos" : 5941
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 6789,
+  "secondPos" : 5802,
+  "firstEndPos" : 6926,
+  "secondEndPos" : 5886
+}, {
   "firstType" : "InfixExpression",
   "secondType" : "equality_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "IfStatement",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "call_expression",
   "firstPos" : 6793,
   "secondPos" : 5808,
   "firstEndPos" : 6809,
@@ -4299,6 +4310,28 @@
   "secondPos" : 5820,
   "firstEndPos" : 6809,
   "secondEndPos" : 5824
+}, {
+  "firstType" : "Block",
+  "secondType" : "lambda_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6811,
+  "secondPos" : 5826,
+  "firstEndPos" : 6926,
+  "secondEndPos" : 5886
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"setServerSocketFactory() must be called before start()\"",
+  "secondLabel" : "\"setServerSocketFactory() must be called before start()\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 6862,
+  "secondPos" : 5828,
+  "firstEndPos" : 6918,
+  "secondEndPos" : 5884
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
@@ -8612,6 +8645,39 @@
   "firstEndPos" : 15635,
   "secondEndPos" : 13378
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 13515,
+  "secondPos" : 11991,
+  "firstEndPos" : 13586,
+  "secondEndPos" : 12037
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "started",
+  "secondLabel" : "started",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 13519,
+  "secondPos" : 12000,
+  "firstEndPos" : 13526,
+  "secondEndPos" : 12007
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"start() already called\"",
+  "secondLabel" : "\"start() already called\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 13560,
+  "secondPos" : 12011,
+  "firstEndPos" : 13584,
+  "secondEndPos" : 12035
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
   "firstLabel" : "",
@@ -11351,12 +11417,23 @@
   "firstEndPos" : 15721,
   "secondEndPos" : 14061
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 15726,
+  "secondPos" : 14066,
+  "firstEndPos" : 15813,
+  "secondEndPos" : 14127
+}, {
   "firstType" : "InfixExpression",
   "secondType" : "equality_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "IfStatement",
-  "secondParentType" : "value_argument",
+  "secondParentType" : "call_expression",
   "firstPos" : 15730,
   "secondPos" : 14074,
   "firstEndPos" : 15750,
@@ -11394,6 +11471,17 @@
   "secondPos" : 14090,
   "firstEndPos" : 15750,
   "secondEndPos" : 14094
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"shutdown() before start()\"",
+  "secondLabel" : "\"shutdown() before start()\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 15784,
+  "secondPos" : 14098,
+  "firstEndPos" : 15811,
+  "secondEndPos" : 14125
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
@@ -38278,6 +38366,160 @@
   "secondPos" : 34343,
   "firstEndPos" : 38689,
   "secondEndPos" : 34347
+}, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 38697,
+  "secondPos" : 34354,
+  "firstEndPos" : 38846,
+  "secondEndPos" : 34473
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "disjunction_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 38701,
+  "secondPos" : 34362,
+  "firstEndPos" : 38735,
+  "secondEndPos" : 34398
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "outFinished",
+  "secondLabel" : "outFinished",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 38701,
+  "secondPos" : 34363,
+  "firstEndPos" : 38712,
+  "secondEndPos" : 34374
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "logical_operator",
+  "firstLabel" : "&&",
+  "secondLabel" : "||",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "disjunction_expression",
+  "firstPos" : 38713,
+  "secondPos" : 34375,
+  "firstEndPos" : 38715,
+  "secondEndPos" : 34377
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "equality_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "disjunction_expression",
+  "firstPos" : 38716,
+  "secondPos" : 34378,
+  "firstEndPos" : 38735,
+  "secondEndPos" : 34398
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 38716,
+  "secondPos" : 34378,
+  "firstEndPos" : 38731,
+  "secondEndPos" : 34393
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 38716,
+  "secondPos" : 34378,
+  "firstEndPos" : 38724,
+  "secondEndPos" : 34391
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "trailers",
+  "secondLabel" : "trailers",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 38716,
+  "secondPos" : 34378,
+  "firstEndPos" : 38724,
+  "secondEndPos" : 34386
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "size",
+  "secondLabel" : "size",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 38725,
+  "secondPos" : 34387,
+  "firstEndPos" : 38729,
+  "secondEndPos" : 34391
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "comparison_operator",
+  "firstLabel" : ">",
+  "secondLabel" : "==",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 38732,
+  "secondPos" : 34394,
+  "firstEndPos" : 38733,
+  "secondEndPos" : 34396
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "integer_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 38734,
+  "secondPos" : 34397,
+  "firstEndPos" : 38735,
+  "secondEndPos" : 34398
+}, {
+  "firstType" : "Block",
+  "secondType" : "lambda_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 38737,
+  "secondPos" : 34400,
+  "firstEndPos" : 38846,
+  "secondEndPos" : 34473
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"unsupported: no body and non-empty trailers \"",
+  "secondLabel" : "\"unsupported: no body and non-empty trailers \"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 38779,
+  "secondPos" : 34410,
+  "firstEndPos" : 38825,
+  "secondEndPos" : 34465
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "interpolated_identifier",
+  "firstLabel" : "trailers",
+  "secondLabel" : "trailers",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 38828,
+  "secondPos" : 34456,
+  "firstEndPos" : 38836,
+  "secondEndPos" : 34464
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",

@@ -79,7 +79,13 @@ public class JavaToKotlinMigration {
                 handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, deferredFlattenings);
             }
         }
-        else if(srcStatementNode.getType().name.equals(LANG1.SYNCHRONIZED_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getChildren().size() > 1) {
+        else if((srcStatementNode.getType().name.equals(LANG1.SYNCHRONIZED_STATEMENT) || (srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && isRequireOrCheckCall(dstStatementNode, LANG2))) &&
+                dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getChildren().size() > 1) {
+            //the if statement throwing an exception is replaced with a call to require or check, aligned as the synchronized statement,
+            //i.e., if (x != null) throw new IllegalStateException("message"); -> check(x == null) { "message" }
+            //the exception message and the lambda statement are found before the Kotlin tree is restructured
+            Tree message1 = srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) ? exceptionMessage(srcStatementNode, LANG1) : null;
+            Tree message2 = message1 != null ? singleLambdaStatement(dstStatementNode, LANG2) : null;
             //the Kotlin nodes flattened into the call, to compute its children when the flattenings are deferred
             Set<Tree> flattenedSynchronized2 = Collections.newSetFromMap(new IdentityHashMap<>());
             Tree suffix2 = dstStatementNode.getChild(1);
@@ -99,6 +105,14 @@ public class JavaToKotlinMigration {
                     flattenDstChild(mappingStore, deferredFlattenings, lambdaLiteral2, statements2);
                     removeDstMappingsOfCounterpart(mappingStore, deferredFlattenings, lambdaLiteral2, srcStatementNode);
                     mappingStore.addMapping(block1, lambdaLiteral2);
+                }
+                else if(block1 == null && statements2 != null && srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT)) {
+                    //align call_expression -> call_suffix -> annotated_lambda -> lambda_literal -> statements -> stmt with Java IfStatement -> stmt, when the if statement has no block
+                    flattenDstChild(mappingStore, deferredFlattenings, dstStatementNode, suffix2);
+                    flattenDstChild(mappingStore, deferredFlattenings, dstStatementNode, annotatedLambda2);
+                    flattenDstChild(mappingStore, deferredFlattenings, dstStatementNode, lambdaLiteral2);
+                    flattenDstChild(mappingStore, deferredFlattenings, dstStatementNode, statements2);
+                    flattenedSynchronized2.addAll(List.of(suffix2, annotatedLambda2, lambdaLiteral2, statements2));
                 }
                 //align call_expression -> call_expression -> call_suffix -> value_arguments -> value_argument -> expression with Java SynchronizedStatement -> expression
                 Tree call2 = dstStatementNode.getChild(0);
@@ -122,13 +136,88 @@ public class JavaToKotlinMigration {
                         }
                         if(srcStatementNode.getChildren().size() > 0) {
                             Tree expression1 = srcStatementNode.getChild(0);
-                            mappingStore.addMapping(expression1, expression2);
+                            if(srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT)) {
+                                alignInvertedCondition(mappingStore, expression1, expression2, LANG1, LANG2);
+                            }
+                            else {
+                                mappingStore.addMapping(expression1, expression2);
+                            }
                             handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, deferredFlattenings);
                         }
                     }
                 }
             }
+            if(message1 != null && message2 != null) {
+                //the containers of the messages are aligned, so that the string literals and the interpolations are matched as in statements
+                handleLeafMapping(mappingStore, message1.getParent(), message2.getParent(), LANG1, LANG2, deferredFlattenings);
+            }
         }
+    }
+
+    //the condition of the if statement throwing an exception is the negation of the require or check condition,
+    //i.e., executor != null -> executor == null, started -> !started, a && b > 0 -> !a || b == 0
+    private static void alignInvertedCondition(ExtendedMultiMappingStore mappingStore, Tree expression1, Tree expression2, Constants LANG1, Constants LANG2) {
+        Tree operand1 = negatedOperand(expression1, LANG1);
+        Tree operand2 = negatedOperand(expression2, LANG2);
+        if(operand1 == null && operand2 != null) {
+            alignInvertedCondition(mappingStore, expression1, operand2, LANG1, LANG2);
+            return;
+        }
+        if(operand1 != null && operand2 == null) {
+            alignInvertedCondition(mappingStore, operand1, expression2, LANG1, LANG2);
+            return;
+        }
+        mappingStore.addMapping(expression1, expression2);
+        //binary expressions with the inverted operator, i.e., != -> ==, && -> ||
+        if(expression1.getType().name.equals(LANG1.INFIX_EXPRESSION) && expression1.getChildren().size() == 3 && expression2.getChildren().size() == 3 &&
+                expression1.getChild(1).isLeaf() && expression2.getChild(1).isLeaf()) {
+            mappingStore.addMapping(expression1.getChild(1), expression2.getChild(1));
+            alignInvertedCondition(mappingStore, expression1.getChild(0), expression2.getChild(0), LANG1, LANG2);
+            alignInvertedCondition(mappingStore, expression1.getChild(2), expression2.getChild(2), LANG1, LANG2);
+        }
+    }
+
+    //the operand of the negation, i.e., x in !x
+    private static Tree negatedOperand(Tree expression, Constants LANG) {
+        if(expression.getType().name.equals(LANG.PREFIX_EXPRESSION) && expression.getChildren().size() == 2 && expression.getChild(0).getLabel().equals("!")) {
+            return expression.getChild(1);
+        }
+        return null;
+    }
+
+    //the Kotlin require or check call with a trailing lambda, i.e., check(x == null) { "message" }
+    static boolean isRequireOrCheckCall(Tree call2, Constants LANG2) {
+        if(call2.getChildren().isEmpty() || !call2.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION) || call2.getChild(0).getChildren().isEmpty())
+            return false;
+        Tree name2 = call2.getChild(0).getChild(0);
+        return name2.getType().name.equals(LANG2.SIMPLE_NAME) && (name2.getLabel().equals("require") || name2.getLabel().equals("check"));
+    }
+
+    //the message of the exception thrown in the body of the if statement, i.e., "message" in if (x != null) throw new IllegalStateException("message");
+    private static Tree exceptionMessage(Tree if1, Constants LANG1) {
+        if(if1.getChildren().size() != 2)
+            return null;
+        Tree body1 = if1.getChild(1);
+        if(body1.getType().name.equals(LANG1.BLOCK) && body1.getChildren().size() == 1)
+            body1 = body1.getChild(0);
+        if(!body1.getType().name.equals(LANG1.THROW_STATEMENT))
+            return null;
+        Tree creation1 = TreeUtilFunctions.findChildByType(body1, LANG1.CLASS_INSTANCE_CREATION);
+        if(creation1 == null || creation1.getChildren().size() != 2)
+            return null;
+        return creation1.getChild(1);
+    }
+
+    //the single statement of the trailing lambda of the call, i.e., "message" in check(x == null) { "message" }
+    private static Tree singleLambdaStatement(Tree call2, Constants LANG2) {
+        Tree suffix2 = call2.getChild(1);
+        if(!suffix2.getType().name.equals(LANG2.CALL_SUFFIX) || suffix2.getChildren().isEmpty() || !suffix2.getChild(0).getType().name.equals(LANG2.ANNOTATED_LAMBDA) ||
+                suffix2.getChild(0).getChildren().isEmpty())
+            return null;
+        Tree statements2 = TreeUtilFunctions.findChildByType(suffix2.getChild(0).getChild(0), LANG2.STATEMENTS);
+        if(statements2 == null || statements2.getChildren().size() != 1)
+            return null;
+        return statements2.getChild(0);
     }
 
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
@@ -299,13 +388,17 @@ public class JavaToKotlinMigration {
             while(iter1.hasNext()) {
                 Tree t1 = iter1.next();
                 String name = t1.getLabel();
+                boolean identifierFound = false;
                 for(Tree t2 : interpolatedIdentifiers2) {
                     if(name.equals(t2.getLabel())) {
                         mappingStore.addMapping(t1, t2);
                         iter1.remove();
+                        identifierFound = true;
                         break;
                     }
                 }
+                if(identifierFound)
+                    continue;
                 for(Tree t2 : interpolatedExpressions2) {
                     List<Tree> simpleNames2 = TreeUtilFunctions.findChildrenByTypeRecursively(t2, LANG2.SIMPLE_NAME);
                     boolean found = false;

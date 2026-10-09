@@ -347,6 +347,14 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     //handle ignoreIoException {} in Kotlin to Kotlin
                     processCallExpressionsModeledAsCompositeStatements(mappingStore, srcStatementNode, dstStatementNode);
                 }
+                if(compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+                        compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+                        srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&
+                        srcStatementNode.getChildren().size() > 1 && dstStatementNode.getChildren().size() > 1 &&
+                        JavaToKotlinMigration.isRequireOrCheckCall(srcStatementNode, LANG1) && JavaToKotlinMigration.isRequireOrCheckCall(dstStatementNode, LANG2)) {
+                    //handle require/check(condition) {} in Kotlin to Kotlin
+                    processCallExpressionsModeledAsCompositeStatements(mappingStore, srcStatementNode, dstStatementNode);
+                }
                 if(compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
                         compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
                         srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&

@@ -4740,6 +4740,39 @@
   "firstEndPos" : 8291,
   "secondEndPos" : 7346
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 8148,
+  "secondPos" : 7231,
+  "firstEndPos" : 8224,
+  "secondEndPos" : 7280
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "client",
+  "secondLabel" : "client",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 8152,
+  "secondPos" : 7238,
+  "firstEndPos" : 8158,
+  "secondEndPos" : 7244
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"Client cannot push requests.\"",
+  "secondLabel" : "\"Client cannot push requests.\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 8192,
+  "secondPos" : 7248,
+  "firstEndPos" : 8222,
+  "secondEndPos" : 7278
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
   "firstLabel" : "",
@@ -6521,6 +6554,39 @@
   "secondPos" : 8634,
   "firstEndPos" : 9556,
   "secondEndPos" : 8648
+}, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 9572,
+  "secondPos" : 8673,
+  "firstEndPos" : 9817,
+  "secondEndPos" : 8747
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "client",
+  "secondLabel" : "client",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "prefix_expression",
+  "firstPos" : 9576,
+  "secondPos" : 8682,
+  "firstEndPos" : 9582,
+  "secondEndPos" : 8688
+}, {
+  "firstType" : "Block",
+  "secondType" : "lambda_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 9584,
+  "secondPos" : 8690,
+  "firstEndPos" : 9692,
+  "secondEndPos" : 8747
 }, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",

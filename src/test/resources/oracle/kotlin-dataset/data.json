@@ -6770,8 +6770,8 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.HprofHeader.Companion",
-        "comment": "<p>There is an Extract And Move Method refactoring reported for the same methods</p>",
-        "validation": "CTP",
+        "comment": "<p>There is an Extract And Move Method refactoring reported for the same methods. Duplicate of:<br />Extract And Move Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion &amp; moved to class shark.HprofHeader.Companion</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }, {

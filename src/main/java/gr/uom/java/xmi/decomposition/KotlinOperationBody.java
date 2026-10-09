@@ -345,6 +345,20 @@ public class KotlinOperationBody extends OperationBody {
 				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
 			}
 		}
+		else if(statement instanceof KtCallExpression invocation && invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference && (nameReference.getReferencedName().equals("require") || nameReference.getReferencedName().equals("check")) && invocation.getValueArguments().size() == 2) {
+			// require/check(condition) {}
+			// first argument is the condition, second argument is a lambda
+			// model as a composite if statement
+			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
+			parent.addStatement(child);
+			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, invocation.getValueArguments().get(0), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
+			child.addExpression(abstractExpression);
+			addStatementInVariableScopes(child);
+			KtValueArgument lambdaArgument = invocation.getValueArguments().get(1);
+			if(lambdaArgument instanceof KtLambdaArgument lambda) {
+				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
+			}
+		}
 		else if(statement instanceof KtCallExpression invocation && invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference && nameReference.getReferencedName().equals("ignoreIoExceptions") && invocation.getValueArguments().size() == 1) {
 			// ignoreIoExceptions {}
 			// first argument is a lambda

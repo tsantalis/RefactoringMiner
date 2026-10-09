@@ -128,7 +128,7 @@ public class ExtractOperationDetection {
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty() || mapper.containsCompositeMappingWithoutReplacements() || mapper.containsLambdaMapper()) {
 			List<AbstractCall> addedOperationInvocations = callCountMap != null ? callCountMap.get(addedOperation) : matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
-			if(addedOperationInvocations.size() > 0) {
+			if(addedOperationInvocations.size() > 0 && !invocationMatchesWithOperationHavingDefaultParameterValues(addedOperationInvocations.get(0), mapper.getContainer1().getAllOperationInvocations())) {
 				int otherAddedMethodsCalled = 0;
 				int otherAddedMethodsCalledWithSameOrMoreCallSites = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
@@ -387,6 +387,18 @@ public class ExtractOperationDetection {
 				}
 			}
 		}
+	}
+
+	//the call of the added overload resolved to an operation with default parameter values, i.e., fun start(port: Int = 0) -> start()
+	private boolean invocationMatchesWithOperationHavingDefaultParameterValues(AbstractCall addedOperationInvocation, List<AbstractCall> operationInvocationsInOldMethod) {
+		if(classDiff != null && operationInvocationsInOldMethod.contains(addedOperationInvocation)) {
+			for(UMLOperation operation : classDiff.getOriginalClass().getOperations()) {
+				if(operation.getName().equals(addedOperationInvocation.getName()) && operation.hasDefaultParameterValuesAfter(addedOperationInvocation.arguments().size())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean parentMapperContainsOperationInvocation(UMLOperationBodyMapper parentMapper, UMLOperationBodyMapper childMapper, AbstractCall addedOperationInvocation) {

@@ -954,6 +954,21 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return params;
 	}
 
+	//the parameters following the given number of arguments have default values, i.e., fun start(port: Int = 0) called as start()
+	public boolean hasDefaultParameterValuesAfter(int numberOfArguments) {
+		List<UMLParameter> params = getParametersWithoutReturnType();
+		if(params.size() <= numberOfArguments) {
+			return false;
+		}
+		for(int i=numberOfArguments; i<params.size(); i++) {
+			VariableDeclaration declaration = params.get(i).getVariableDeclaration();
+			if(declaration == null || declaration.getInitializer() == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public List<UMLParameter> getParameterizedTypesInSignature() {
 		List<UMLParameter> params = new ArrayList<UMLParameter>();
 		for(UMLParameter parameter : parameters) {

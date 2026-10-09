@@ -88,7 +88,8 @@ public class InlineOperationDetection {
 		if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocationForInline().isEmpty() || mapper.containsCompositeMappingWithoutReplacements()) {
 			List<AbstractCall> removedOperationInvocations = callCountMap != null ? callCountMap.get(removedOperation) : matchingInvocations(removedOperation, operationInvocations, mapper.getContainer1());
-			if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getContainer1(), mapper.getContainer2().getAllOperationInvocations())) {
+			if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getContainer1(), mapper.getContainer2().getAllOperationInvocations()) &&
+					!invocationMatchesWithOperationHavingDefaultParameterValues(removedOperationInvocations.get(0), mapper.getContainer2().getAllOperationInvocations())) {
 				int otherAddedMethodsCalled = 0;
 				int otherAddedMethodsCalledWithSameOrMoreCallSites = 0;
 				for(UMLOperation removedOperation1 : this.removedOperations) {
@@ -400,6 +401,18 @@ public class InlineOperationDetection {
 				(exactMatches >= mappings && !exactMatchForInt && nonMappedElementsT2 == 0) ||
 				(exactMatchesWithoutMatchesInNestedContainers == 1 && !exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException() && nonMappedElementsT1-exactMatchesWithoutMatchesInNestedContainers < 10) ||
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
+	}
+
+	//the call of the removed overload resolves to an operation with default parameter values, i.e., start() -> fun start(port: Int = 0)
+	private boolean invocationMatchesWithOperationHavingDefaultParameterValues(AbstractCall removedOperationInvocation, List<AbstractCall> operationInvocationsInNewMethod) {
+		if(classDiff != null && operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
+			for(UMLOperation operation : classDiff.getNextClass().getOperations()) {
+				if(operation.getName().equals(removedOperationInvocation.getName()) && operation.hasDefaultParameterValuesAfter(removedOperationInvocation.arguments().size())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean invocationMatchesWithAddedOperation(AbstractCall removedOperationInvocation, VariableDeclarationContainer callerOperation, List<AbstractCall> operationInvocationsInNewMethod) {

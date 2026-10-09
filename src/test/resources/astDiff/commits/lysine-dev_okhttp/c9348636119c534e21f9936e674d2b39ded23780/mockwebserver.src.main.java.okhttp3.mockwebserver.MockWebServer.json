@@ -3629,6 +3629,28 @@
   "firstEndPos" : 6219,
   "secondEndPos" : 5402
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 6205,
+  "secondPos" : 5395,
+  "firstEndPos" : 6213,
+  "secondEndPos" : 5402
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "start",
+  "secondLabel" : "start",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6205,
+  "secondPos" : 5395,
+  "firstEndPos" : 6210,
+  "secondEndPos" : 5400
+}, {
   "firstType" : "CatchClause",
   "secondType" : "catch_block",
   "firstLabel" : "",
@@ -7830,39 +7852,6 @@
   "secondPos" : 10909,
   "firstEndPos" : 12347,
   "secondEndPos" : 10914
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "statements",
-  "firstPos" : 12445,
-  "secondPos" : 5395,
-  "firstEndPos" : 12454,
-  "secondEndPos" : 5402
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "start",
-  "secondLabel" : "start",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "call_expression",
-  "firstPos" : 12445,
-  "secondPos" : 5395,
-  "firstEndPos" : 12450,
-  "secondEndPos" : 5400
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "call_expression",
-  "firstPos" : 12451,
-  "secondPos" : 5400,
-  "firstEndPos" : 12452,
-  "secondEndPos" : 5402
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",

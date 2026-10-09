@@ -426,11 +426,8 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		}
 		else if(expression.getReceiverExpression() instanceof KtNameReferenceExpression receiver && Character.isUpperCase(receiver.getReferencedName().charAt(0)) &&
 				expression.getSelectorExpression() instanceof KtNameReferenceExpression) {
-			//the static field access is a single variable, as the Java qualified name, i.e., Protocol.HTTP_1_1
+			//the class of a static field access is a type, i.e., Protocol.HTTP_1_1
 			types.add(receiver.getText());
-			LeafExpression qualifiedName = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.QUALIFIED_NAME, container);
-			variables.add(qualifiedName);
-			return;
 		}
 		else {
 			this.visitExpression(expression.getReceiverExpression(), data);

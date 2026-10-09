@@ -1493,7 +1493,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     JavaToKotlinMigration.handleEqualityOperandToWhenCondition(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
             if(!assignmentToInitializer && !equalityOperandToWhenCondition) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
-                JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
+                JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, abstractCodeMapping.getRefactorings(), optimizationData.getDeferredFlattenings());
             }
         }
         matchParentStatements(srcStatementNode, dstStatementNode, mappingStore);

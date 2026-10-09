@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.models.DeferredFlattenings;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -21,6 +22,11 @@ import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import com.github.gumtreediff.tree.DefaultTree;
+import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TypeSet;
 import com.github.gumtreediff.utils.Pair;
@@ -129,9 +135,14 @@ public class JavaToKotlinMigration {
         handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, null);
     }
 
+    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, Collections.emptySet(), deferredFlattenings);
+    }
+
+    //refactorings: the refactorings of the statement mapping, i.e., the extracted variables replacing Java expressions
     //deferredFlattenings: the flattenings of the Java tree are deferred until all diffs are matched, so that the Java tree has the same structure
     //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites), or applied immediately if null
-    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, Set<Refactoring> refactorings, DeferredFlattenings deferredFlattenings) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
         Tree srcFakeTree = TreeUtilFunctions.deepCopyWithMap(srcStatementNode, cpyToSrc);
@@ -324,6 +335,8 @@ public class JavaToKotlinMigration {
             children1.removeIf(t1 -> t1.getLabel().equals("toString") && t1.getParent() != null && t1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
                     TreeUtilFunctions.findChildByType(t1.getParent(), LANG1.METHOD_INVOCATION_ARGUMENTS) == null);
         }
+        //the Java expressions replaced with a Kotlin extracted variable are matched with the variable initializer, i.e., a.split(" ")[1] -> parts[1], when val parts = a.split(" ")
+        removeExpressionsReplacedWithExtractedVariables(srcStatementNode, children1, children2, refactorings, LANG1);
         List<Tree> types1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.SIMPLE_TYPE);
         List<Tree> castExpressions1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.CAST_EXPRESSION);
         List<Tree> qualifiedNames1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.QUALIFIED_NAME);
@@ -1535,6 +1548,34 @@ public class JavaToKotlinMigration {
             alignLengthComparisonWithIsEmpty(mappingStore, condition1, if2.getChild(0), LANG1, LANG2, deferredFlattenings);
         }
         return true;
+    }
+
+    private static void removeExpressionsReplacedWithExtractedVariables(Tree srcStatementNode, List<Tree> children1, List<Tree> children2, Set<Refactoring> refactorings, Constants LANG1) {
+        for(Refactoring refactoring : refactorings) {
+            if(refactoring instanceof ExtractVariableRefactoring extractVariable) {
+                String variableName = extractVariable.getVariableDeclaration().getVariableName();
+                boolean expressionRemoved = false;
+                for(AbstractCodeMapping reference : extractVariable.getReferences()) {
+                    for(Replacement replacement : reference.getReplacements()) {
+                        if(replacement.getAfter().equals(variableName)) {
+                            for(AbstractCall call : reference.getFragment1().getMethodInvocations()) {
+                                LocationInfo location = call.getLocationInfo();
+                                if(call.actualString().equals(replacement.getBefore()) &&
+                                        srcStatementNode.getPos() <= location.getStartOffset() && location.getEndOffset() <= srcStatementNode.getEndPos()) {
+                                    Tree expression1 = TreeUtilFunctions.findByLocationInfo(srcStatementNode, location, LANG1);
+                                    if(expression1 != null) {
+                                        expressionRemoved |= children1.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(expression1, LANG1.SIMPLE_NAME));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if(expressionRemoved) {
+                    children2.removeIf(t2 -> t2.getLabel().equals(variableName));
+                }
+            }
+        }
     }
 
     //the Java get invocations paired with the Kotlin indexing expressions in order, i.e., response.getHeaders().get("Transfer-Encoding") -> response.getHeaders()["Transfer-Encoding"]

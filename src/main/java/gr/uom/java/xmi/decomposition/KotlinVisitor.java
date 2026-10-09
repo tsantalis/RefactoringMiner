@@ -424,6 +424,14 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			//the outer class of a nested class instance creation is a type, i.e., Http2Connection.Builder(false)
 			types.add(receiver.getText());
 		}
+		else if(expression.getReceiverExpression() instanceof KtNameReferenceExpression receiver && Character.isUpperCase(receiver.getReferencedName().charAt(0)) &&
+				expression.getSelectorExpression() instanceof KtNameReferenceExpression) {
+			//the static field access is a single variable, as the Java qualified name, i.e., Protocol.HTTP_1_1
+			types.add(receiver.getText());
+			LeafExpression qualifiedName = new LeafExpression(cu, sourceFolder, filePath, expression, CodeElementType.QUALIFIED_NAME, container);
+			variables.add(qualifiedName);
+			return;
+		}
 		else {
 			this.visitExpression(expression.getReceiverExpression(), data);
 		}

@@ -190,7 +190,8 @@ public class JavaToKotlinMigration {
         if(call2.getChildren().isEmpty() || !call2.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION) || call2.getChild(0).getChildren().isEmpty())
             return false;
         Tree name2 = call2.getChild(0).getChild(0);
-        return name2.getType().name.equals(LANG2.SIMPLE_NAME) && (name2.getLabel().equals("require") || name2.getLabel().equals("check"));
+        return name2.getType().name.equals(LANG2.SIMPLE_NAME) && (name2.getLabel().equals("require") || name2.getLabel().equals("check") ||
+                name2.getLabel().equals("requireNotNull") || name2.getLabel().equals("checkNotNull"));
     }
 
     //the message of the exception thrown in the body of the if statement, i.e., "message" in if (x != null) throw new IllegalStateException("message");

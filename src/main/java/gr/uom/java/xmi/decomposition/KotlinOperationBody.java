@@ -345,8 +345,9 @@ public class KotlinOperationBody extends OperationBody {
 				processStatement(ktFile, sourceFolder, filePath, child, lambda.getLambdaExpression().getBodyExpression(), fileContent);
 			}
 		}
-		else if(statement instanceof KtCallExpression invocation && invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference && (nameReference.getReferencedName().equals("require") || nameReference.getReferencedName().equals("check")) && invocation.getValueArguments().size() == 2) {
-			// require/check(condition) {}
+		else if(statement instanceof KtCallExpression invocation && invocation.getCalleeExpression() instanceof KtNameReferenceExpression nameReference && (nameReference.getReferencedName().equals("require") || nameReference.getReferencedName().equals("check") ||
+				nameReference.getReferencedName().equals("requireNotNull") || nameReference.getReferencedName().equals("checkNotNull")) && invocation.getValueArguments().size() == 2) {
+			// require/check/requireNotNull/checkNotNull(condition) {}
 			// first argument is the condition, second argument is a lambda
 			// model as a composite if statement
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);

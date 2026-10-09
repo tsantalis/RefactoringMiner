@@ -68,7 +68,7 @@ tasks.processTestResources {
     }
 }
 dependencies {
-    implementation 'io.joern:eclipse-cdt-core:9.2.100.202507101054+1'
+    implementation 'io.joern:eclipse-cdt-core:9.3.200.202607131546+1'
 
     implementation platform("io.modelcontextprotocol.sdk:mcp-bom:2.0.1")
     implementation "io.modelcontextprotocol.sdk:mcp-core"

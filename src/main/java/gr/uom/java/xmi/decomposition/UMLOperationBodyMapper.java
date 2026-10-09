@@ -6658,9 +6658,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther(TreeSet<CompositeStatementObjectMapping> mappingSet) {
 		if(mappingSet.size() > 1) {
-			CompositeStatementObjectMapping innermostNestedUseCall = innermostNestedUseCall(mappingSet);
-			if(innermostNestedUseCall != null) {
-				return innermostNestedUseCall;
+			CompositeStatementObjectMapping outermostNestedUseCall = outermostNestedUseCall(mappingSet);
+			if(outermostNestedUseCall != null) {
+				return outermostNestedUseCall;
 			}
 			int tryMappingCount = 0;
 			Map<CompositeStatementObjectMapping, Boolean> identicalCatchFinallyBlocksMap = new LinkedHashMap<>();
@@ -6689,9 +6689,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
-	private CompositeStatementObjectMapping innermostNestedUseCall(TreeSet<CompositeStatementObjectMapping> mappingSet) {
+	private CompositeStatementObjectMapping outermostNestedUseCall(TreeSet<CompositeStatementObjectMapping> mappingSet) {
 		//try-with-resources with multiple resources migrated to Kotlin nested resource.use {} calls
-		//skip the outer use calls and select the innermost one, whose lambda contains the try body
+		//select the outermost use call, which corresponds to the first resource and has the same position as the try statement
 		AbstractCodeFragment try1 = mappingSet.first().getFragment1();
 		if(!(try1 instanceof TryStatementObject)) {
 			return null;
@@ -6705,21 +6705,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(resources1 < mappingSet.size()) {
 			return null;
 		}
-		CompositeStatementObjectMapping innermost = null;
+		CompositeStatementObjectMapping outermost = null;
 		for(CompositeStatementObjectMapping mapping : mappingSet) {
 			AbstractCodeFragment fragment2 = mapping.getFragment2();
 			boolean useCall2 = fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && !(fragment2 instanceof TryStatementObject);
 			if(!mapping.getFragment1().equals(try1) || !useCall2) {
 				return null;
 			}
-			if(innermost == null || innermost.getFragment2().getLocationInfo().subsumes(fragment2.getLocationInfo())) {
-				innermost = mapping;
+			if(outermost == null || fragment2.getLocationInfo().subsumes(outermost.getFragment2().getLocationInfo())) {
+				outermost = mapping;
 			}
-			else if(!fragment2.getLocationInfo().subsumes(innermost.getFragment2().getLocationInfo())) {
+			else if(!outermost.getFragment2().getLocationInfo().subsumes(fragment2.getLocationInfo())) {
 				return null;
 			}
 		}
-		return innermost;
+		return outermost;
 	}
 
 	private boolean allLeavesWithinBodyMapped(CompositeStatementObject statement1, CompositeStatementObject statement2) {

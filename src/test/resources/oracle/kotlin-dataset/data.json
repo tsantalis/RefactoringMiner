@@ -6770,8 +6770,8 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.HprofHeader.Companion",
-        "comment": "<p>There is an Extract And Move Method refactoring reported for the same methods. Duplicate of:<br />Extract And Move Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion &amp; moved to class shark.HprofHeader.Companion</p>",
-        "validation": "FP",
+        "comment": "<p>There is an Extract And Move Method refactoring reported for the same methods</p>",
+        "validation": "CTP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
     }, {
@@ -7918,10 +7918,10 @@
     }, {
         "type": "Extract Method",
         "description": "Extract Method public parseHeaderOf(source BufferedSource) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.HprofHeader.Companion",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>Duplicate of:<br />Extract And Move Method public parseHeaderOf(hprofFile File) : HprofHeader extracted from public open(hprofFile File) : Hprof in class shark.Hprof.Companion &amp; moved to class shark.HprofHeader.Companion</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Move Code",
         "description": "Move Code from public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap to public render(context Context, heapDumpFile File, sourceWidth Int, sourceHeight Int, sourceBytesPerPixel Int) : Bitmap in class leakcanary.internal.activity.screen.HeapDumpRenderer",

@@ -39329,11 +39329,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "statements",
+  "secondParentType" : "control_structure_body",
   "firstPos" : 39364,
-  "secondPos" : 35009,
+  "secondPos" : 34959,
   "firstEndPos" : 39648,
-  "secondEndPos" : 35195
+  "secondEndPos" : 35205
 }, {
   "firstType" : "try",
   "secondType" : "simple_identifier",
@@ -39342,9 +39342,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "navigation_suffix",
   "firstPos" : 39364,
-  "secondPos" : 35037,
+  "secondPos" : 34985,
   "firstEndPos" : 39367,
-  "secondEndPos" : 35040
+  "secondEndPos" : 34988
 }, {
   "firstType" : "SimpleName",
   "secondType" : "simple_identifier",
@@ -39529,16 +39529,16 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "call_expression",
   "firstPos" : 39490,
-  "secondPos" : 35041,
+  "secondPos" : 34989,
   "firstEndPos" : 39648,
-  "secondEndPos" : 35195
+  "secondEndPos" : 35205
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "lambda_literal",
+  "secondParentType" : "statements",
   "firstPos" : 39502,
   "secondPos" : 35065,
   "firstEndPos" : 39575,
@@ -39604,7 +39604,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "Block",
-  "secondParentType" : "lambda_literal",
+  "secondParentType" : "statements",
   "firstPos" : 39586,
   "secondPos" : 35130,
   "firstEndPos" : 39638,

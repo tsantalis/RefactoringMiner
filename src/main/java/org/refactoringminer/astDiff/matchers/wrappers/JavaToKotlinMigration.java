@@ -3402,13 +3402,18 @@ public class JavaToKotlinMigration {
     }
 
     //align each Java try resource VariableDeclarationExpression -> [type, VariableDeclarationFragment -> [name, initializer]] with the Kotlin use call having
-    //the resource as receiver and lambda parameter, which is either the use call mapped to the try statement or an enclosing use call for multiple resources,
+    //the resource as receiver and lambda parameter, which is either the use call mapped to the try statement, or an enclosing/nested use call for multiple resources,
     //i.e., try (BufferedSink sink = Okio.buffer(stream.getSink()); BufferedSource source = Okio.buffer(stream.getSource())) {...} ->
     //stream.getSink().buffer().use { sink -> stream.getSource().buffer().use { source -> ...} }
     private static void alignTryResourcesWithUseCalls(ExtendedMultiMappingStore mappingStore, Tree try1, Tree call2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         List<Tree> useCalls2 = new ArrayList<>();
         for(Tree t2 = call2; t2 != null; t2 = t2.getParent()) {
             if(useCallName2(t2, LANG2) != null) {
+                useCalls2.add(t2);
+            }
+        }
+        for(Tree t2 : TreeUtilFunctions.findChildrenByTypeRecursively(call2, LANG2.METHOD_INVOCATION)) {
+            if(t2 != call2 && useCallName2(t2, LANG2) != null) {
                 useCalls2.add(t2);
             }
         }

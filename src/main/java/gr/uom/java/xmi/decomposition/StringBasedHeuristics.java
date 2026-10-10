@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
@@ -52,6 +53,7 @@ public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_CONDITIONAL_PATTERN_JAVA = Pattern.compile("( \\|\\| )|( && )|( \\? )|( : )");
 	protected static final Pattern SPLIT_CONDITIONAL_PATTERN_PYTHON = Pattern.compile("( or )|( and )|( if )|( else )");
 	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*( \\+ )(\\s)*");
+	private static final Pattern TEMPLATE_VARIABLE = Pattern.compile("\\$\\{(\\w+)\\}");
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 	protected static final Pattern SPLIT_TAB_PATTERN = Pattern.compile("(\\s)*(\\\\t)(\\s)*");
 
@@ -110,10 +112,68 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	private static boolean throwReplacedWithRequireOrCheckMessage(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2, Constants LANG1) {
+		//Java thrown exception message replaced with the message of Kotlin require/check, i.e., if (x) throw new IllegalStateException("a" + b); -> check(!x) { "a$b" }
+		CompositeStatementObject parent2 = statement2.getParent();
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.THROW_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.EXPRESSION_STATEMENT) &&
+				parent2 != null && parent2.getParent() != null && parent2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+				statement1.getCreations().size() == 1 && statement1.getCreations().get(0).arguments().size() == 1) {
+			String message2 = s2.strip();
+			String prefix1 = "throw new ";
+			String suffix1 = ")" + LANG1.STATEMENT_TERMINATION;
+			if(message2.startsWith("\"") && message2.endsWith("\"") && s1.startsWith(prefix1) && s1.endsWith(suffix1) && s1.contains("(")) {
+				//s1 includes the variable replacements, i.e., renamed variables in the message
+				String message1 = s1.substring(s1.indexOf("(") + 1, s1.length() - suffix1.length());
+				StringBuilder template = new StringBuilder("\"");
+				for(String token : SPLIT_CONCAT_STRING_PATTERN.split(message1)) {
+					if(token.startsWith("\"") && token.endsWith("\"") && token.length() > 1) {
+						template.append(token.substring(1, token.length()-1));
+					}
+					else {
+						template.append("${" + token + "}");
+					}
+				}
+				template.append("\"");
+				String template1 = template.toString();
+				String template2 = message2.replaceAll("\\$(\\w+)", "\\${$1}");
+				if(template1.equals(template2)) {
+					return true;
+				}
+				//identical message with renamed variables, i.e., "a: " + protocols -> "a: $protocolsCopy"
+				List<String> names1 = new ArrayList<>();
+				List<String> names2 = new ArrayList<>();
+				Matcher matcher1 = TEMPLATE_VARIABLE.matcher(template1);
+				while(matcher1.find()) {
+					names1.add(matcher1.group(1));
+				}
+				Matcher matcher2 = TEMPLATE_VARIABLE.matcher(template2);
+				while(matcher2.find()) {
+					names2.add(matcher2.group(1));
+				}
+				if(names1.size() > 0 && names1.size() == names2.size() &&
+						TEMPLATE_VARIABLE.matcher(template1).replaceAll("\\${}").equals(TEMPLATE_VARIABLE.matcher(template2).replaceAll("\\${}"))) {
+					Set<String> variables1 = convertToStringSet(statement1.getVariables());
+					Set<String> variables2 = convertToStringSet(statement2.getVariables());
+					for(int i=0; i<names1.size(); i++) {
+						if(!names1.get(i).equals(names2.get(i)) && (!variables1.contains(names1.get(i)) || !variables2.contains(names2.get(i)))) {
+							return false;
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	protected static boolean javaToKotlin(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo info, Constants LANG1, Constants LANG2) {
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
 			if(whileConditionAssignmentMovedToBody(statement1, statement2, info)) {
+				return true;
+			}
+			if(throwReplacedWithRequireOrCheckMessage(s1, s2, statement1, statement2, LANG1)) {
 				return true;
 			}
 			List<AbstractCall> methodInvocations1 = statement1.getMethodInvocations();

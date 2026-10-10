@@ -173,9 +173,25 @@ public class JavaToKotlinMigration {
         if(expression1.getType().name.equals(LANG1.INFIX_EXPRESSION) && expression1.getChildren().size() == 3 && expression2.getChildren().size() == 3 &&
                 expression1.getChild(1).isLeaf() && expression2.getChild(1).isLeaf()) {
             mappingStore.addMapping(expression1.getChild(1), expression2.getChild(1));
-            alignInvertedCondition(mappingStore, expression1.getChild(0), expression2.getChild(0), LANG1, LANG2);
-            alignInvertedCondition(mappingStore, expression1.getChild(2), expression2.getChild(2), LANG1, LANG2);
+            Tree left2 = expression2.getChild(0);
+            Tree right2 = expression2.getChild(2);
+            //the operands of the logical operator may be reordered, i.e., !c.contains(a) && !c.contains(b) -> b in c || a in c
+            String operator1 = expression1.getChild(1).getLabel();
+            if((operator1.equals("&&") || operator1.equals("||")) &&
+                    commonIdentifiers(expression1.getChild(0), right2, LANG1, LANG2) + commonIdentifiers(expression1.getChild(2), left2, LANG1, LANG2) >
+                    commonIdentifiers(expression1.getChild(0), left2, LANG1, LANG2) + commonIdentifiers(expression1.getChild(2), right2, LANG1, LANG2)) {
+                left2 = expression2.getChild(2);
+                right2 = expression2.getChild(0);
+            }
+            alignInvertedCondition(mappingStore, expression1.getChild(0), left2, LANG1, LANG2);
+            alignInvertedCondition(mappingStore, expression1.getChild(2), right2, LANG1, LANG2);
         }
+    }
+
+    private static int commonIdentifiers(Tree t1, Tree t2, Constants LANG1, Constants LANG2) {
+        Set<String> labels = identifierLabels(t1, LANG1, LANG2);
+        labels.retainAll(identifierLabels(t2, LANG1, LANG2));
+        return labels.size();
     }
 
     //the operand of the negation, i.e., x in !x
@@ -196,18 +212,54 @@ public class JavaToKotlinMigration {
     }
 
     //the message of the exception thrown in the body of the if statement, i.e., "message" in if (x != null) throw new IllegalStateException("message");
+    //the else branch of the if statement becomes a separate require or check call, i.e., if (a) throw ...; else if (b) throw ...; -> require(!a) {...} require(!b) {...}
     private static Tree exceptionMessage(Tree if1, Constants LANG1) {
-        if(if1.getChildren().size() != 2)
+        if(if1.getChildren().size() < 2)
             return null;
         Tree body1 = if1.getChild(1);
-        if(body1.getType().name.equals(LANG1.BLOCK) && body1.getChildren().size() == 1)
-            body1 = body1.getChild(0);
-        if(!body1.getType().name.equals(LANG1.THROW_STATEMENT))
+        if(body1.getType().name.equals(LANG1.BLOCK)) {
+            //the comments of the block are ignored, i.e., { // comment throw new X("message"); }
+            List<Tree> statements1 = body1.getChildren().stream().filter(t -> !t.getType().name.equals(LANG1.LINE_COMMENT) && !t.getType().name.equals(LANG1.BLOCK_COMMENT)).collect(Collectors.toList());
+            if(statements1.size() == 1)
+                body1 = statements1.get(0);
+        }
+        return thrownMessage(body1, LANG1);
+    }
+
+    //the Kotlin string literal gets the label of the Java string literal, and its string content is removed, i.e., "a: " -> "a: $b" with the children [a: , $b]
+    //applied once, as handleLeafMapping runs again on the aligned trees (see ASTDiffMappingOptimizer), so that the interpolations are not removed
+    private static void copyStringLiteralLabel(Tree stringLiteral1, Tree stringLiteral2, Constants LANG2) {
+        if(stringLiteral2.getLabel().equals(stringLiteral1.getLabel()))
+            return;
+        stringLiteral2.setLabel(stringLiteral1.getLabel());
+        for(Tree child2 : stringLiteral2.getChildren()) {
+            if(child2.getType().name.equals(LANG2.STRING_CONTENT)) {
+                stringLiteral2.getChildren().remove(child2);
+                break;
+            }
+        }
+    }
+
+    //the message of the thrown exception, i.e., "message" in throw new IllegalStateException("message");
+    private static Tree thrownMessage(Tree throw1, Constants LANG1) {
+        if(!throw1.getType().name.equals(LANG1.THROW_STATEMENT))
             return null;
-        Tree creation1 = TreeUtilFunctions.findChildByType(body1, LANG1.CLASS_INSTANCE_CREATION);
+        Tree creation1 = TreeUtilFunctions.findChildByType(throw1, LANG1.CLASS_INSTANCE_CREATION);
         if(creation1 == null || creation1.getChildren().size() != 2)
             return null;
         return creation1.getChild(1);
+    }
+
+    //the Java thrown exception replaced with its message in the lambda of the Kotlin require or check call, i.e., throw new IllegalStateException("message"); -> check(x) { "message" }
+    //the messages are matched as in the require or check call (see exceptionMessage), while the throw statement is deleted
+    public static boolean handleThrowReplacedWithMessage(ExtendedMultiMappingStore mappingStore, Tree throw1, Tree message2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        if(!message2.getType().name.equals(LANG2.STRING_LITERAL) || message2.getParent() == null)
+            return false;
+        Tree message1 = thrownMessage(throw1, LANG1);
+        if(message1 == null)
+            return false;
+        handleLeafMapping(mappingStore, message1.getParent(), message2.getParent(), LANG1, LANG2, deferredFlattenings);
+        return true;
     }
 
     //the single statement of the trailing lambda of the call, i.e., "message" in check(x == null) { "message" }
@@ -403,8 +455,8 @@ public class JavaToKotlinMigration {
                 String name = t1.getLabel();
                 boolean identifierFound = false;
                 for(Tree t2 : interpolatedIdentifiers2) {
-                    if(name.equals(t2.getLabel())) {
-                        mappingStore.addMapping(t1, t2);
+                    if(name.equals(nameLabel(t2))) {
+                        addNameMapping(mappingStore, t1, t2, deferredFlattenings);
                         iter1.remove();
                         identifierFound = true;
                         break;
@@ -433,6 +485,14 @@ public class JavaToKotlinMigration {
                     if(found)
                         break;
                 }
+            }
+            //the single concatenated variable is renamed in the single interpolated identifier, i.e., "a: " + protocols -> "a: $protocolsCopy"
+            List<Tree> concatenatedNames1 = children1.stream().filter(t1 -> t1.getType().name.equals(LANG1.SIMPLE_NAME) && t1.getParent() != null &&
+                    t1.getParent().getType().name.equals(LANG1.INFIX_EXPRESSION) && TreeUtilFunctions.findChildByType(t1.getParent(), LANG1.STRING_LITERAL) != null).collect(Collectors.toList());
+            List<Tree> unmatchedIdentifiers2 = interpolatedIdentifiers2.stream().filter(t2 -> !mappingStore.isDstMapped(t2) && (t2.getChildren().isEmpty() || !mappingStore.isDstMapped(t2.getChild(0)))).collect(Collectors.toList());
+            if(concatenatedNames1.size() == 1 && unmatchedIdentifiers2.size() == 1) {
+                addNameMapping(mappingStore, concatenatedNames1.get(0), unmatchedIdentifiers2.get(0), deferredFlattenings);
+                children1.remove(concatenatedNames1.get(0));
             }
         }
         removeFromParent(children2, interpolatedExpressions2, LANG2.SIMPLE_NAME);
@@ -920,8 +980,7 @@ public class JavaToKotlinMigration {
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 if(children2.get(i).getChildren().size() > 0) {
-                    children2.get(i).setLabel(children1.get(i).getLabel());
-                    children2.get(i).getChildren().remove(0);
+                    copyStringLiteralLabel(children1.get(i), children2.get(i), LANG2);
                     mappingStore.addMapping(children1.get(i), children2.get(i));
                 }
                 else {
@@ -941,8 +1000,7 @@ public class JavaToKotlinMigration {
                 for(int i=0; i<children1.size(); i++) {
                     Tree child1 = children1.get(i);
                     if(child2.getChildren().size() > 0 && child1.getLabel().equals("\"" + child2.getChild(0).getLabel() + "\"")) {
-                        child2.setLabel(child1.getLabel());
-                        child2.getChildren().remove(0);
+                        copyStringLiteralLabel(child1, child2, LANG2);
                         mappingStore.addMapping(child1, child2);
                         children1ToBeRemoved.add(child1);
                         children2ToBeRemoved.add(child2);
@@ -2777,8 +2835,7 @@ public class JavaToKotlinMigration {
             if(stringLiteral2 != null && stringLiteral1.size() == stringLiteral2.size()) {
                 for(int i=0; i<stringLiteral1.size(); i++) {
                     if(stringLiteral2.get(i).getChildren().size() > 0) {
-                        stringLiteral2.get(i).setLabel(stringLiteral1.get(i).getLabel());
-                        stringLiteral2.get(i).getChildren().remove(0);
+                        copyStringLiteralLabel(stringLiteral1.get(i), stringLiteral2.get(i), LANG2);
                         mappingStore.addMapping(stringLiteral1.get(i), stringLiteral2.get(i));
                     }
                     else {
@@ -3993,9 +4050,8 @@ public class JavaToKotlinMigration {
             Tree stringLiteral1 = stringLiterals1.get(0);
             Tree stringLiteral2 = stringLiterals2.get(0);
             //the Kotlin string literal gets the label of the Java string literal, as in the other string literal mappings (see handleLeafMapping)
-            if(stringLiteral2.getChildren().size() > 0 && !stringLiteral2.getLabel().equals(stringLiteral1.getLabel())) {
-                stringLiteral2.setLabel(stringLiteral1.getLabel());
-                stringLiteral2.getChildren().remove(0);
+            if(stringLiteral2.getChildren().size() > 0) {
+                copyStringLiteralLabel(stringLiteral1, stringLiteral2, LANG2);
             }
             mappingStore.addMapping(stringLiteral1, stringLiteral2);
         }

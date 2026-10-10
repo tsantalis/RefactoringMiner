@@ -659,20 +659,22 @@ public class ReplacementAlgorithm {
 			//so that the contains calls are not replaced with Kotlin variables, and the Kotlin in/!in operators with Java operators
 			//the renamed collections are not applied to the receivers of the next contains calls, which are still in the argumentized string
 			Set<Replacement> previousReplacements = new LinkedHashSet<Replacement>(replacementInfo.getReplacements());
+			Set<Replacement> renames = new LinkedHashSet<Replacement>();
 			for(AbstractCall call1 : statement1.getMethodInvocations()) {
-				Set<Replacement> renames = new LinkedHashSet<Replacement>();
 				Replacement containsReplacement = containsReplacedWithInOperator(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(),
 						call1, statement1, statement2, previousReplacements, renames, LANG1);
 				if(containsReplacement != null) {
-					replacementInfo.addReplacements(renames);
 					replacementInfo.addReplacement(containsReplacement);
 					replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replace(containsReplacement.getBefore(), containsReplacement.getAfter()));
 					methodInvocationMap1.values().removeIf(calls -> calls.contains(call1));
-					for(Replacement rename : renames) {
-						variables1.remove(rename.getBefore());
-						variables2.remove(rename.getAfter());
-					}
 				}
+			}
+			//the renamed collections are applied to their remaining occurrences, i.e., protocols.size() -> protocolsCopy.size()
+			for(Replacement rename : renames) {
+				replacementInfo.addReplacement(rename);
+				replacementInfo.setArgumentizedString1(ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), rename.getBefore(), rename.getAfter()));
+				variables1.remove(rename.getBefore());
+				variables2.remove(rename.getAfter());
 			}
 		}
 		

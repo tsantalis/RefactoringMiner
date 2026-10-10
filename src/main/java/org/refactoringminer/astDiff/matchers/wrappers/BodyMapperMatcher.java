@@ -1502,7 +1502,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             //the name negated in the inverted condition, i.e., if (started) throw ... -> check(!started) {...}
             boolean nameReplacedWithNegatedName = !assignmentToInitializer && !equalityOperandToWhenCondition &&
                     JavaToKotlinMigration.handleNameReplacedWithNegatedName(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
-            if(!assignmentToInitializer && !equalityOperandToWhenCondition && !nameReplacedWithNegatedName) {
+            //the throw statement replaced with its message, i.e., if (x) throw new IllegalStateException("message"); -> check(!x) { "message" }
+            boolean throwReplacedWithMessage = !assignmentToInitializer && !equalityOperandToWhenCondition && !nameReplacedWithNegatedName &&
+                    JavaToKotlinMigration.handleThrowReplacedWithMessage(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
+            if(!assignmentToInitializer && !equalityOperandToWhenCondition && !nameReplacedWithNegatedName && !throwReplacedWithMessage) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, abstractCodeMapping.getRefactorings(), optimizationData.getDeferredFlattenings());
             }

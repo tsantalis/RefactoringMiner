@@ -6588,6 +6588,17 @@
   "firstEndPos" : 9692,
   "secondEndPos" : 8747
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"client streams shouldn't have associated stream IDs\"",
+  "secondLabel" : "\"client streams shouldn't have associated stream IDs\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 9629,
+  "secondPos" : 8692,
+  "firstEndPos" : 9682,
+  "secondEndPos" : 8745
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

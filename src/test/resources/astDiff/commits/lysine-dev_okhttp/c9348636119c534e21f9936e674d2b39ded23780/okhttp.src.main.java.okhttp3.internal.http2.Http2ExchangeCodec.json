@@ -5873,6 +5873,17 @@
   "firstEndPos" : 6707,
   "secondEndPos" : 6539
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "statusLine",
+  "secondLabel" : "statusLine",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 6656,
+  "secondPos" : 6491,
+  "firstEndPos" : 6666,
+  "secondEndPos" : 6501
+}, {
   "firstType" : "ASSIGNMENT_OPERATOR",
   "secondType" : "affectation_operator",
   "firstLabel" : "=",
@@ -5906,6 +5917,28 @@
   "firstEndPos" : 6679,
   "secondEndPos" : 6520
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "StatusLine",
+  "secondLabel" : "StatusLine",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 6669,
+  "secondPos" : 6504,
+  "firstEndPos" : 6679,
+  "secondEndPos" : 6514
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "parse",
+  "secondLabel" : "parse",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6680,
+  "secondPos" : 6515,
+  "firstEndPos" : 6685,
+  "secondEndPos" : 6520
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "value_arguments",
   "firstLabel" : "",
@@ -5927,6 +5960,17 @@
   "secondPos" : 6521,
   "firstEndPos" : 6697,
   "secondEndPos" : 6538
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "value",
+  "firstLabel" : "value",
+  "secondLabel" : "value",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "string_literal",
+  "firstPos" : 6700,
+  "secondPos" : 6532,
+  "firstEndPos" : 6705,
+  "secondEndPos" : 6537
 }, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",

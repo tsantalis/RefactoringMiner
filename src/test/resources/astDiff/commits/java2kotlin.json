@@ -16,6 +16,10 @@
   "src_files" : [
     "okhttp/src/main/java/okhttp3/internal/http2/Http2Connection",
     "okhttp/src/main/java/okhttp3/RealCall",
-    "mockwebserver/src/main/java/okhttp3/mockwebserver/MockWebServer"
+    "mockwebserver/src/main/java/okhttp3/mockwebserver/MockWebServer",
+    "okhttp/src/main/java/okhttp3/internal/connection/RealConnection",
+    "okhttp/src/main/java/okhttp3/internal/tls/OkHostnameVerifier",
+    "okhttp/src/main/java/okhttp3/internal/http2/Http2ExchangeCodec",
+    "okhttp/src/main/java/okhttp3/OkHttpClient"
   ]
 }]

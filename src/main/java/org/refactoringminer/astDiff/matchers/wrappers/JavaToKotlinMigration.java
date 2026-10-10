@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -326,6 +327,17 @@ public class JavaToKotlinMigration {
             children1.remove(lengthComparisonName1(entry.getKey(), LANG1));
             children2.remove(isEmptyCallName2(entry.getValue(), LANG2));
         }
+        //the Java contains call is replaced with the Kotlin in/!in operator, i.e., !c.contains(x) -> x !in c
+        //the receiver and argument names are not matched by position, as their order is swapped (see alignContainsWithInOperator)
+        Map<Tree, Tree> containsChecks = findContainsReplacedWithInOperator(srcStatementNode, dstStatementNode, LANG1, LANG2);
+        for(Map.Entry<Tree, Tree> entry : containsChecks.entrySet()) {
+            List<Tree> names1 = TreeUtilFunctions.findChildrenByTypeRecursively(entry.getKey(), LANG1.SIMPLE_NAME);
+            Set<String> labels1 = names1.stream().map(Tree::getLabel).collect(Collectors.toSet());
+            children1.removeAll(names1);
+            //the Kotlin names of the qualified name segments remain, i.e., ConnectionSpec.CLEARTEXT -> ConnectionSpec.CLEARTEXT
+            children2.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(entry.getValue(), LANG2.SIMPLE_NAME).stream()
+                    .filter(t -> labels1.contains(t.getLabel())).collect(Collectors.toList()));
+        }
         List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
         List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
@@ -562,6 +574,7 @@ public class JavaToKotlinMigration {
         inv1.removeAll(builderNodes1);
         inv2.removeAll(builderNodes2);
         inv1.removeAll(parseLongInvocations1);
+        inv1.removeAll(containsChecks.keySet());
         inv1.removeAll(getInvocations.keySet());
         inv1.removeAll(staticCalls.keySet());
         inv2.removeAll(staticCalls.values());
@@ -767,6 +780,9 @@ public class JavaToKotlinMigration {
         inv1.removeAll(invocationsToBeRemoved);
         for(Map.Entry<Tree, Tree> entry : lengthComparisons.entrySet()) {
             alignLengthComparisonWithIsEmpty(mappingStore, entry.getKey(), entry.getValue(), LANG1, LANG2, deferredFlattenings);
+        }
+        for(Map.Entry<Tree, Tree> entry : containsChecks.entrySet()) {
+            alignContainsWithInOperator(mappingStore, entry.getKey(), entry.getValue(), LANG1, LANG2, deferredFlattenings);
         }
         for(Map.Entry<Tree, Tree> entry : staticCalls.entrySet()) {
             alignStaticCallWithExtensionCall(mappingStore, entry.getKey(), entry.getValue(), LANG1, LANG2, deferredFlattenings);
@@ -1737,6 +1753,140 @@ public class JavaToKotlinMigration {
             flattenSrcChild(mappingStore, deferredFlattenings, invocation1, receiver1);
         }
         return propertyAccessReceiver1;
+    }
+
+    //the Java contains calls paired with the Kotlin in/!in checks, i.e., !c.contains(x) -> x !in c, c.contains(x) -> x in c,
+    //when the names of the Java receiver and argument are found in the Kotlin right and left operand, respectively,
+    //as the Kotlin collection may be cast to accept null elements, i.e., c.contains(null) -> null !in (c as List<T?>)
+    private static Map<Tree, Tree> findContainsReplacedWithInOperator(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        List<Tree> calls1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.METHOD_INVOCATION);
+        if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            calls1.add(0, srcStatementNode);
+        }
+        calls1.removeIf(call1 -> containsCallParts1(call1, LANG1) == null);
+        List<Tree> checks2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.CHECK_EXPRESSION);
+        if(dstStatementNode.getType().name.equals(LANG2.CHECK_EXPRESSION)) {
+            checks2.add(0, dstStatementNode);
+        }
+        checks2.removeIf(check2 -> inOperator2(check2, LANG2) == null);
+        Map<Tree, Tree> pairs = new LinkedHashMap<>();
+        for(Tree call1 : calls1) {
+            Tree[] parts1 = containsCallParts1(call1, LANG1);
+            for(Tree check2 : checks2) {
+                if(!pairs.containsValue(check2) &&
+                        identifierLabels(check2.getChild(check2.getChildren().size() - 1), LANG1, LANG2).containsAll(identifierLabels(parts1[0], LANG1, LANG2)) &&
+                        identifierLabels(check2.getChild(0), LANG1, LANG2).containsAll(identifierLabels(parts1[2], LANG1, LANG2))) {
+                    pairs.put(call1, check2);
+                    break;
+                }
+            }
+        }
+        return pairs;
+    }
+
+    //the receiver, name and arguments of Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> c, contains, METHOD_INVOCATION_ARGUMENTS -> x]
+    private static Tree[] containsCallParts1(Tree call1, Constants LANG1) {
+        if(call1.getChildren().size() != 3)
+            return null;
+        Tree receiver1 = call1.getChild(0);
+        Tree name1 = call1.getChild(1);
+        Tree arguments1 = call1.getChild(2);
+        if(!receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER) || !name1.getType().name.equals(LANG1.SIMPLE_NAME) || !name1.getLabel().equals("contains") ||
+                !arguments1.getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) || arguments1.getChildren().size() != 1)
+            return null;
+        return new Tree[] {receiver1, name1, arguments1};
+    }
+
+    //the operator of Kotlin check_expression -> [x, in|!in, c],
+    //or check_expression -> [x, !, in, c] if the !in operator is already split by a previous mapping of the same statement (see alignContainsWithInOperator)
+    private static Tree inOperator2(Tree check2, Constants LANG2) {
+        int size = check2.getChildren().size();
+        if(size == 4 && !splitNotOperator2(check2, LANG2))
+            return null;
+        if(size != 3 && size != 4)
+            return null;
+        Tree operator2 = check2.getChild(size - 2);
+        if(operator2.getType().name.equals(LANG2.COLLECTION_CONTAINS) || operator2.getType().name.equals(LANG2.COLLECTION_NOT_CONTAINS))
+            return operator2;
+        return null;
+    }
+
+    private static boolean splitNotOperator2(Tree check2, Constants LANG2) {
+        return check2.getChildren().size() == 4 && check2.getChild(1).getType().name.equals(LANG2.NOT_PREFIX_OPERATOR);
+    }
+
+    //the labels of the simple names and qualified name segments in the subtree, i.e., [ConnectionSpec, CLEARTEXT] for ConnectionSpec.CLEARTEXT
+    private static Set<String> identifierLabels(Tree t, Constants LANG1, Constants LANG2) {
+        Set<String> labels = new LinkedHashSet<>();
+        for(Tree node : t.preOrder()) {
+            String type = node.getType().name;
+            if(type.equals(LANG1.SIMPLE_NAME) || type.equals(LANG2.SIMPLE_NAME) || type.equals(LANG1.QUALIFIED_NAME)) {
+                labels.addAll(Arrays.asList(node.getLabel().split("\\.")));
+            }
+        }
+        return labels;
+    }
+
+    //align Java [PrefixExpression -> [!,] MethodInvocation -> [METHOD_INVOCATION_RECEIVER -> c, contains, METHOD_INVOCATION_ARGUMENTS -> x]] with Kotlin check_expression -> [x, in|!in, c]
+    //the negated invocation is matched with !in, and the contains name is matched with the operator, while the receiver/arguments wrappers have no Kotlin counterpart
+    //the simple names of the receiver and argument, not matched by position as their order is swapped, are matched with the same names of the operands
+    private static void alignContainsWithInOperator(ExtendedMultiMappingStore mappingStore, Tree call1, Tree check2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        Tree[] parts1 = containsCallParts1(call1, LANG1);
+        Tree operator2 = inOperator2(check2, LANG2);
+        if(parts1 == null || operator2 == null)
+            return;
+        Tree prefix1 = call1.getParent();
+        boolean negated1 = prefix1 != null && prefix1.getType().name.equals(LANG1.PREFIX_EXPRESSION) && prefix1.getChildren().size() == 2 &&
+                prefix1.getChild(0).getLabel().equals(LANG1.NOT_PREFIX_OPERATOR);
+        boolean notIn2 = operator2.getType().name.equals(LANG2.COLLECTION_NOT_CONTAINS) || splitNotOperator2(check2, LANG2);
+        Tree outer1 = negated1 && notIn2 ? prefix1 : call1;
+        //the invocation may be already matched as the statement, i.e., with the when_condition wrapping the in/!in check
+        if(!mappingStore.isSrcMapped(outer1) && !mappingStore.isDstMapped(check2)) {
+            mappingStore.addMapping(outer1, check2);
+        }
+        if(outer1 == prefix1 && !splitNotOperator2(check2, LANG2)) {
+            //split the Kotlin !in operator into the ! and in operators, so that the ! is matched with the Java ! prefix operator, and in with the contains name
+            Tree not2 = new DefaultTree(TypeSet.type(LANG2.NOT_PREFIX_OPERATOR), LANG2.NOT_PREFIX_OPERATOR);
+            not2.setPos(operator2.getPos());
+            not2.setLength(LANG2.NOT_PREFIX_OPERATOR.length());
+            check2.insertChild(not2, check2.getChildPosition(operator2));
+            not2.setParent(check2);
+            operator2.setType(TypeSet.type(LANG2.COLLECTION_CONTAINS));
+            operator2.setLabel(operator2.getLabel().substring(LANG2.NOT_PREFIX_OPERATOR.length()));
+            operator2.setPos(operator2.getPos() + LANG2.NOT_PREFIX_OPERATOR.length());
+            operator2.setLength(operator2.getLength() - LANG2.NOT_PREFIX_OPERATOR.length());
+        }
+        if(outer1 == prefix1 && !mappingStore.isSrcMapped(prefix1.getChild(0)) && !mappingStore.isDstMapped(check2.getChild(1))) {
+            mappingStore.addMapping(prefix1.getChild(0), check2.getChild(1));
+        }
+        if(!mappingStore.isSrcMapped(parts1[1]) && !mappingStore.isDstMapped(operator2)) {
+            mappingStore.addMapping(parts1[1], operator2);
+        }
+        alignOperandNames(mappingStore, parts1[0], check2.getChild(check2.getChildren().size() - 1), LANG1, LANG2);
+        alignOperandNames(mappingStore, parts1[2], check2.getChild(0), LANG1, LANG2);
+        flattenSrcChild(mappingStore, deferredFlattenings, call1, parts1[0]);
+        flattenSrcChild(mappingStore, deferredFlattenings, call1, parts1[2]);
+        if(outer1 == prefix1) {
+            flattenSrcChild(mappingStore, deferredFlattenings, prefix1, call1);
+        }
+    }
+
+    //the unmatched Java simple names matched with the unmatched Kotlin simple names having the same label
+    private static void alignOperandNames(ExtendedMultiMappingStore mappingStore, Tree operand1, Tree operand2, Constants LANG1, Constants LANG2) {
+        List<Tree> names2 = TreeUtilFunctions.findChildrenByTypeRecursively(operand2, LANG2.SIMPLE_NAME);
+        if(operand2.getType().name.equals(LANG2.SIMPLE_NAME)) {
+            names2.add(0, operand2);
+        }
+        for(Tree name1 : TreeUtilFunctions.findChildrenByTypeRecursively(operand1, LANG1.SIMPLE_NAME)) {
+            if(mappingStore.isSrcMapped(name1))
+                continue;
+            for(Tree name2 : names2) {
+                if(!mappingStore.isDstMapped(name2) && name2.getLabel().equals(name1.getLabel())) {
+                    mappingStore.addMapping(name1, name2);
+                    break;
+                }
+            }
+        }
     }
 
     //the Java length/size comparisons with zero paired with the Kotlin isEmpty/isNotEmpty calls, i.e., request.length() == 0 -> request.isEmpty()

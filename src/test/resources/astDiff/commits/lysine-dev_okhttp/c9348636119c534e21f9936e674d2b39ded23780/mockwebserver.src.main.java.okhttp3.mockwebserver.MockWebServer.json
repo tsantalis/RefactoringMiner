@@ -14607,6 +14607,50 @@
   "firstEndPos" : 18419,
   "secondEndPos" : 16626
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "when_condition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "when_entry",
+  "firstPos" : 18441,
+  "secondPos" : 16646,
+  "firstEndPos" : 18488,
+  "secondEndPos" : 16686
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "protocols",
+  "secondLabel" : "protocols",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "check_expression",
+  "firstPos" : 18441,
+  "secondPos" : 16677,
+  "firstEndPos" : 18450,
+  "secondEndPos" : 16686
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "collection_contains",
+  "firstLabel" : "contains",
+  "secondLabel" : "in",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "check_expression",
+  "firstPos" : 18451,
+  "secondPos" : 16674,
+  "firstEndPos" : 18459,
+  "secondEndPos" : 16676
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "Protocol.H2_PRIOR_KNOWLEDGE",
+  "secondLabel" : "Protocol.H2_PRIOR_KNOWLEDGE",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "check_expression",
+  "firstPos" : 18460,
+  "secondPos" : 16646,
+  "firstEndPos" : 18487,
+  "secondEndPos" : 16673
+}, {
   "firstType" : "Block",
   "secondType" : "control_structure_body",
   "firstLabel" : "",

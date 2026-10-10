@@ -2177,6 +2177,17 @@ public class JavaToKotlinMigration {
         return valueArguments2 != null ? valueArguments2.getChildren().size() : 0;
     }
 
+    //the index of the first occurrence of the name not used yet, which becomes used
+    private static int nextUnusedIndexOf(List<String> names, String name, Set<Integer> used) {
+        for(int i=0; i<names.size(); i++) {
+            if(!used.contains(i) && names.get(i).equals(name)) {
+                used.add(i);
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private static boolean nameCompliance(List<Tree> children1, List<Tree> children2, Constants LANG1, Constants LANG2) {
         List<String> callNames1 = new ArrayList<>();
         for(Tree child1 : children1) {
@@ -2302,16 +2313,18 @@ public class JavaToKotlinMigration {
             }
         }
         if(callNames1.size() > callNames2.size() && callNames1.containsAll(callNamesReplacedWithSynonyms2)) {
-            //sort callNames1 based on callNames2
+            //sort callNames1 based on callNames2, each child of children1 is used at most once, i.e., the second exhausted in !source.getBuffer().exhausted() || !sink.buffer().exhausted()
             List<Tree> newChildren1 = new ArrayList<>();
+            Set<Integer> used1 = new LinkedHashSet<>();
             for(String s : callNamesReplacedWithSynonyms2) {
-                int index = callNames1.indexOf(s);
-                newChildren1.add(children1.get(index));
-            }
-            for(String s : callNames1) {
-                if(!callNamesReplacedWithSynonyms2.contains(s)) {
-                    int index = callNames1.indexOf(s);
+                int index = nextUnusedIndexOf(callNames1, s, used1);
+                if(index != -1) {
                     newChildren1.add(children1.get(index));
+                }
+            }
+            for(int i=0; i<children1.size(); i++) {
+                if(!used1.contains(i)) {
+                    newChildren1.add(children1.get(i));
                 }
             }
             children1.clear();
@@ -2319,19 +2332,20 @@ public class JavaToKotlinMigration {
             return true;
         }
         else if(callNames2.size() > callNames1.size() && (callNames2.containsAll(callNames1) || callNamesReplacedWithSynonyms2.containsAll(callNames1))) {
-            //sort callNames2 based on callNames1
+            //sort callNames2 based on callNames1, each child of children2 is used at most once
             List<Tree> newChildren2 = new ArrayList<>();
+            Set<Integer> used2 = new LinkedHashSet<>();
             for(String s : callNames1) {
-                int index = callNames2.indexOf(s);
+                int index = nextUnusedIndexOf(callNames2, s, used2);
                 if(index == -1)
-                    index = callNamesReplacedWithSynonyms2.indexOf(s);
-                newChildren2.add(children2.get(index));
+                    index = nextUnusedIndexOf(callNamesReplacedWithSynonyms2, s, used2);
+                if(index != -1) {
+                    newChildren2.add(children2.get(index));
+                }
             }
-            for(String s : callNames2) {
-                if(!callNames1.contains(s)) {
-                    int index = callNames2.indexOf(s);
-                    if(!newChildren2.contains(children2.get(index)))
-                        newChildren2.add(children2.get(index));
+            for(int i=0; i<children2.size(); i++) {
+                if(!used2.contains(i)) {
+                    newChildren2.add(children2.get(i));
                 }
             }
             children2.clear();

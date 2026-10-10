@@ -12,6 +12,8 @@ import org.jetbrains.kotlin.com.intellij.psi.stubs.IStubElementType;
 import org.jetbrains.kotlin.com.intellij.psi.tree.IElementType;
 import org.jetbrains.kotlin.lexer.KtSingleValueToken;
 import org.jetbrains.kotlin.psi.KtArrayAccessExpression;
+import org.jetbrains.kotlin.psi.KtWhenConditionInRange;
+import org.jetbrains.kotlin.psi.KtWhenConditionWithExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpression;
 import org.jetbrains.kotlin.psi.KtBinaryExpressionWithTypeRHS;
 import org.jetbrains.kotlin.psi.KtCallExpression;
@@ -225,6 +227,19 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 			processArgument(argument, data);
 		}
 		return super.visitSuperTypeCallEntry(entry, data);
+	}
+
+	//the condition of a when entry, i.e., x in c -> ..., is not an expression, so its expression is visited
+	public Object visitWhenConditionWithExpression(KtWhenConditionWithExpression condition, Object data) {
+		if(condition.getExpression() != null)
+			this.visitExpression(condition.getExpression(), data);
+		return super.visitWhenConditionWithExpression(condition, data);
+	}
+
+	public Object visitWhenConditionInRange(KtWhenConditionInRange condition, Object data) {
+		if(condition.getRangeExpression() != null)
+			this.visitExpression(condition.getRangeExpression(), data);
+		return super.visitWhenConditionInRange(condition, data);
 	}
 
 	public Object visitSuperTypeEntry(KtSuperTypeEntry entry, Object data) {

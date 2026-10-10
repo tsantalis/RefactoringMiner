@@ -337,7 +337,7 @@ public class KotlinOperationBody extends OperationBody {
 			// model as a composite synchronized statement
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.SYNCHRONIZED_STATEMENT, fileContent);
 			parent.addStatement(child);
-			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, invocation.getValueArguments().get(0), CodeElementType.SYNCHRONIZED_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent);
+			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, invocation.getValueArguments().get(0).getArgumentExpression(), CodeElementType.SYNCHRONIZED_STATEMENT_EXPRESSION, container, activeVariableDeclarations, fileContent);
 			child.addExpression(abstractExpression);
 			addStatementInVariableScopes(child);
 			KtValueArgument lambdaArgument = invocation.getValueArguments().get(1);
@@ -352,7 +352,7 @@ public class KotlinOperationBody extends OperationBody {
 			// model as a composite if statement
 			CompositeStatementObject child = new CompositeStatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.IF_STATEMENT, fileContent);
 			parent.addStatement(child);
-			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, invocation.getValueArguments().get(0), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
+			AbstractExpression abstractExpression = new AbstractExpression(ktFile, sourceFolder, filePath, invocation.getValueArguments().get(0).getArgumentExpression(), CodeElementType.IF_STATEMENT_CONDITION, container, activeVariableDeclarations, fileContent);
 			child.addExpression(abstractExpression);
 			addStatementInVariableScopes(child);
 			KtValueArgument lambdaArgument = invocation.getValueArguments().get(1);

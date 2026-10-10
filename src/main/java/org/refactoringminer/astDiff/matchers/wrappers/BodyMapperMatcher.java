@@ -1499,7 +1499,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             //the constant of the if condition replaced with the condition of the when entry
             boolean equalityOperandToWhenCondition = !assignmentToInitializer && leafMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_CONDITION) &&
                     JavaToKotlinMigration.handleEqualityOperandToWhenCondition(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
-            if(!assignmentToInitializer && !equalityOperandToWhenCondition) {
+            //the name negated in the inverted condition, i.e., if (started) throw ... -> check(!started) {...}
+            boolean nameReplacedWithNegatedName = !assignmentToInitializer && !equalityOperandToWhenCondition &&
+                    JavaToKotlinMigration.handleNameReplacedWithNegatedName(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2);
+            if(!assignmentToInitializer && !equalityOperandToWhenCondition && !nameReplacedWithNegatedName) {
                 mappingStore.addMapping(srcStatementNode, dstStatementNode);
                 JavaToKotlinMigration.handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, abstractCodeMapping.getRefactorings(), optimizationData.getDeferredFlattenings());
             }

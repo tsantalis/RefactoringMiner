@@ -5664,6 +5664,83 @@
   "firstEndPos" : 8316,
   "secondEndPos" : 7234
 }, {
+  "firstType" : "IfStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 8839,
+  "secondPos" : 7582,
+  "firstEndPos" : 8953,
+  "secondEndPos" : 7669
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "check_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 8843,
+  "secondPos" : 7590,
+  "firstEndPos" : 8867,
+  "secondEndPos" : 7630
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "protocols",
+  "secondLabel" : "protocolList",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "as_expression",
+  "firstPos" : 8843,
+  "secondPos" : 7599,
+  "firstEndPos" : 8852,
+  "secondEndPos" : 7611
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "collection_not_contains",
+  "firstLabel" : "contains",
+  "secondLabel" : "!in",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "check_expression",
+  "firstPos" : 8853,
+  "secondPos" : 7595,
+  "firstEndPos" : 8861,
+  "secondEndPos" : 7598
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "null",
+  "firstLabel" : "null",
+  "secondLabel" : "null",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "check_expression",
+  "firstPos" : 8862,
+  "secondPos" : 7590,
+  "firstEndPos" : 8866,
+  "secondEndPos" : 7594
+}, {
+  "firstType" : "Block",
+  "secondType" : "lambda_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 8869,
+  "secondPos" : 7632,
+  "firstEndPos" : 8953,
+  "secondEndPos" : 7669
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"protocols must not contain null\"",
+  "secondLabel" : "\"protocols must not contain null\"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 8912,
+  "secondPos" : 7634,
+  "firstEndPos" : 8945,
+  "secondEndPos" : 7667
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

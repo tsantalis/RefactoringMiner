@@ -1788,6 +1788,17 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        //the Kotlin collection is a renamed variable, i.e., protocols.contains(x) -> x in protocolsCopy, when a single check has the same left operand
+        for(Tree call1 : calls1) {
+            if(pairs.containsKey(call1))
+                continue;
+            Tree[] parts1 = containsCallParts1(call1, LANG1);
+            List<Tree> candidates2 = checks2.stream().filter(check2 -> !pairs.containsValue(check2) &&
+                    identifierLabels(check2.getChild(0), LANG1, LANG2).equals(identifierLabels(parts1[2], LANG1, LANG2))).collect(Collectors.toList());
+            if(candidates2.size() == 1) {
+                pairs.put(call1, candidates2.get(0));
+            }
+        }
         return pairs;
     }
 
@@ -1884,7 +1895,8 @@ public class JavaToKotlinMigration {
         if(operand2.getType().name.equals(LANG2.SIMPLE_NAME)) {
             names2.add(0, operand2);
         }
-        for(Tree name1 : TreeUtilFunctions.findChildrenByTypeRecursively(operand1, LANG1.SIMPLE_NAME)) {
+        List<Tree> names1 = TreeUtilFunctions.findChildrenByTypeRecursively(operand1, LANG1.SIMPLE_NAME);
+        for(Tree name1 : names1) {
             if(mappingStore.isSrcMapped(name1))
                 continue;
             for(Tree name2 : names2) {
@@ -1894,6 +1906,22 @@ public class JavaToKotlinMigration {
                 }
             }
         }
+        //the single unmatched name on each side is a renamed variable, i.e., protocols.contains(x) -> x in protocolsCopy
+        List<Tree> unmatchedNames1 = names1.stream().filter(t -> !mappingStore.isSrcMapped(t)).collect(Collectors.toList());
+        List<Tree> unmatchedNames2 = names2.stream().filter(t -> !mappingStore.isDstMapped(t) && !isTypeName2(t, operand2, LANG2)).collect(Collectors.toList());
+        if(unmatchedNames1.size() == 1 && unmatchedNames2.size() == 1) {
+            mappingStore.addMapping(unmatchedNames1.get(0), unmatchedNames2.get(0));
+        }
+    }
+
+    //the name is part of the type of a Kotlin cast, i.e., List and Interceptor in (interceptors as List<Interceptor?>)
+    private static boolean isTypeName2(Tree name2, Tree operand2, Constants LANG2) {
+        for(Tree parent = name2.getParent(); parent != null && parent != operand2.getParent(); parent = parent.getParent()) {
+            if(parent.getType().name.equals(LANG2.AS_EXPRESSION) && parent.getChildren().size() > 0 && !parent.getChild(0).equals(name2) &&
+                    !TreeUtilFunctions.findChildrenByTypeRecursively(parent.getChild(0), LANG2.SIMPLE_NAME).contains(name2))
+                return true;
+        }
+        return false;
     }
 
     //the Java length/size comparisons with zero paired with the Kotlin isEmpty/isNotEmpty calls, i.e., request.length() == 0 -> request.isEmpty()
@@ -3663,6 +3691,24 @@ public class JavaToKotlinMigration {
             if(arguments1 != null && arguments1.getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && call2 != null)
                 handleAnonymousArgumentReplacedWithLambda(mappingStore, arguments1.getParent(), call2, LANG1, LANG2, deferredFlattenings);
         }
+    }
+
+    //the Java name negated in the Kotlin inverted condition, i.e., if (started) throw ... -> check(!started) {...}
+    //the Java name is matched with the same Kotlin name inside the negation, instead of the negation, i.e., the value_argument -> prefix_expression -> [!, started]
+    public static boolean handleNameReplacedWithNegatedName(ExtendedMultiMappingStore mappingStore, Tree name1, Tree negation2, Constants LANG1, Constants LANG2) {
+        if(!name1.getType().name.equals(LANG1.SIMPLE_NAME))
+            return false;
+        Tree prefix2 = negation2;
+        if(prefix2.getType().name.equals(LANG2.VALUE_ARGUMENT) && prefix2.getChildren().size() == 1)
+            prefix2 = prefix2.getChild(0);
+        if(!prefix2.getType().name.equals(LANG2.PREFIX_EXPRESSION) || prefix2.getChildren().size() != 2 || !prefix2.getChild(0).getLabel().equals(LANG2.NOT_PREFIX_OPERATOR))
+            return false;
+        Tree name2 = prefix2.getChild(1);
+        if(!name2.getType().name.equals(LANG2.SIMPLE_NAME) || !name2.getLabel().equals(name1.getLabel()))
+            return false;
+        if(!mappingStore.isSrcMapped(name1) && !mappingStore.isDstMapped(name2))
+            mappingStore.addMapping(name1, name2);
+        return true;
     }
 
     //align the Java InfixExpression -> [operand, ==, constant] with the Kotlin when_condition -> constant, when the if-else-if chain is replaced with the when with subject,

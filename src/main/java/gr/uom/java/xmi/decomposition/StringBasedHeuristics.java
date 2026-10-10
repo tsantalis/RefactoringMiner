@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.refactoringminer.api.Refactoring;
@@ -107,84 +106,6 @@ public class StringBasedHeuristics {
 				info.addReplacement(new Replacement(condition1, comp2.getExpressions().get(0).getString(), ReplacementType.WHILE_CONDITION_MOVED_TO_BODY));
 				return true;
 			}
-		}
-		return false;
-	}
-
-	//the Java contains call replaced with the Kotlin in/!in operator, i.e., !c.contains(x) -> x !in c, c.contains(x) -> x in c
-	//the Kotlin collection may be cast to accept null elements, i.e., c.contains(null) -> null !in (c as List<T?>)
-	//the receiver and argument of the call are updated with the replacements already applied to s1, i.e., renamed variables and getters replaced with properties
-	private static Replacement containsReplacedWithInOperator(String s1, String s2, AbstractCall call, AbstractCodeFragment statement2, Set<Replacement> replacements, Constants LANG1) {
-		if(!call.getName().equals("contains") || call.arguments().size() != 1 || call.getExpression() == null)
-			return null;
-		String receiver = call.getExpression();
-		String argument = call.arguments().get(0);
-		for(Replacement r : replacements) {
-			receiver = ReplacementUtil.performReplacement(receiver, r.getBefore(), r.getAfter());
-			argument = ReplacementUtil.performReplacement(argument, r.getBefore(), r.getAfter());
-		}
-		String before = receiver + ".contains(" + argument + ")";
-		if(!s1.contains(before))
-			return null;
-		List<String> receivers2 = new ArrayList<>();
-		receivers2.add(receiver);
-		for(LeafExpression cast2 : statement2.getCastExpressions()) {
-			if(cast2.getString().startsWith(receiver + " as ")) {
-				receivers2.add("(" + cast2.getString() + ")");
-				receivers2.add(cast2.getString());
-			}
-		}
-		boolean negated1 = s1.contains(LANG1.NOT + before);
-		boolean plain1 = s1.replace(LANG1.NOT + before, "").contains(before);
-		for(String receiver2 : receivers2) {
-			String notIn = argument + " !in " + receiver2;
-			String in = argument + " in " + receiver2;
-			if(negated1 && s2.contains(notIn)) {
-				return new Replacement(LANG1.NOT + before, notIn, ReplacementType.VARIABLE_NAME);
-			}
-			if(plain1 && s2.contains(in)) {
-				return new Replacement(before, in, ReplacementType.VARIABLE_NAME);
-			}
-			//the condition is inverted, i.e., if (c.contains(x)) throw ... -> require(x !in c)
-			if(negated1 && s2.contains(in)) {
-				return new Replacement(LANG1.NOT + before, in, ReplacementType.INVERT_CONDITIONAL);
-			}
-			if(plain1 && s2.contains(notIn)) {
-				return new Replacement(before, notIn, ReplacementType.INVERT_CONDITIONAL);
-			}
-		}
-		return null;
-	}
-
-	private static final Pattern CONTAINS_SUB_CONDITION = Pattern.compile("(!?)(.+)\\.contains\\((.+)\\)");
-	private static final Pattern IN_SUB_CONDITION = Pattern.compile("(.+?) (!?in) (.+)");
-
-	//the Java contains sub-condition is inverted in the Kotlin in/!in sub-condition, i.e., !c.contains(x) -> x in c, c.contains(x) -> x !in c
-	private static boolean containsInvertedWithInOperator(String subCondition1, String subCondition2, ReplacementInfo info) {
-		Matcher m1 = CONTAINS_SUB_CONDITION.matcher(subCondition1);
-		Matcher m2 = IN_SUB_CONDITION.matcher(subCondition2);
-		if(!m1.matches() || !m2.matches())
-			return false;
-		boolean negated1 = !m1.group(1).isEmpty();
-		boolean negated2 = m2.group(2).equals("!in");
-		if(negated1 == negated2)
-			return false;
-		String receiver1 = m1.group(2);
-		String argument1 = m1.group(3);
-		String argument2 = m2.group(1);
-		String receiver2 = m2.group(3);
-		//the Kotlin collection may be cast to accept null elements, i.e., null !in (c as List<T?>)
-		if(receiver2.startsWith("(") && receiver2.endsWith(")"))
-			receiver2 = receiver2.substring(1, receiver2.length() - 1);
-		if(receiver2.contains(" as "))
-			receiver2 = receiver2.substring(0, receiver2.indexOf(" as "));
-		if(!argument1.equals(argument2))
-			return false;
-		if(receiver1.equals(receiver2))
-			return true;
-		for(Replacement r : info.getReplacements()) {
-			if(r.getBefore().equals(receiver1) && r.getAfter().equals(receiver2))
-				return true;
 		}
 		return false;
 	}
@@ -313,20 +234,6 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
-			Set<Replacement> invertedConditionals = new LinkedHashSet<>();
-			for(AbstractCall call : methodInvocations1) {
-				//Java contains replaced with Kotlin in/!in operator, i.e., !c.contains(x) -> x !in c, c.contains(x) -> x in c
-				Set<Replacement> replacements = new LinkedHashSet<>(info.getReplacements());
-				replacements.addAll(appliedReplacements);
-				Replacement containsReplacement = containsReplacedWithInOperator(temp, s2, call, statement2, replacements, LANG1);
-				if(containsReplacement != null) {
-					temp = temp.replace(containsReplacement.getBefore(), containsReplacement.getAfter());
-					appliedReplacements.add(containsReplacement);
-					if(containsReplacement.getType().equals(ReplacementType.INVERT_CONDITIONAL)) {
-						invertedConditionals.add(containsReplacement);
-					}
-				}
-			}
 			for(LeafExpression thisExpression1 : statement1.getThisExpressions()) {
 				//Java qualified this replaced with Kotlin labeled this, i.e., RealCall.this -> this@RealCall
 				String before = thisExpression1.getString();
@@ -355,7 +262,6 @@ public class StringBasedHeuristics {
 				}
 			}
 			if(temp.equals(statement2.getString()) || temp.equals(s2) ) {
-				info.addReplacements(invertedConditionals);
 				return true;
 			}
 			if(statement2.getLambdas().size() > 0 && statement1.getLambdas().size() == 0 && methodInvocations2.size() > 0 &&
@@ -446,11 +352,9 @@ public class StringBasedHeuristics {
 					}
 				}
 				if(ss1.equals(ss2)) {
-					info.addReplacements(invertedConditionals);
 					return true;
 				}
 				if(equalAfterParenthesisElimination(ss1, ss2, info, LANG1, LANG2)) {
-					info.addReplacements(invertedConditionals);
 					return true;
 				}
 				String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(ss1, ss2);
@@ -3983,12 +3887,6 @@ public class StringBasedHeuristics {
 		int invertedConditionals = 0;
 		for(String subCondition1 : subConditionsAsList1) {
 			for(String subCondition2 : subConditionsAsList2) {
-				if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN) && containsInvertedWithInOperator(subCondition1, subCondition2, info)) {
-					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
-					info.addReplacement(r2);
-					invertedConditionals++;
-					break;
-				}
 				if(subCondition1.equals(LANG1.NOT + subCondition2) || subCondition1.equals(LANG1.NOT + "(" + subCondition2 + ")")) {
 					Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
 					info.addReplacement(r2);

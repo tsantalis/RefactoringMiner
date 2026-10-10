@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.refactoringminer.api.Refactoring;
@@ -257,6 +259,66 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return null;
+	}
+
+	private static final Pattern IN_SUB_CONDITION = Pattern.compile("(.+?) (!?in) (.+)");
+
+	//the Java contains call replaced with the Kotlin in/!in operator, i.e., !c.contains(x) -> x !in c, c.contains(x) -> x in c
+	//the Kotlin collection may be cast to accept null elements, i.e., c.contains(null) -> null !in (c as List<T?>)
+	//the receiver and argument of the call are updated with the replacements already applied to s1, i.e., renamed variables and getters replaced with properties
+	//the Kotlin collection may be a renamed variable, which is added to renames, i.e., protocols = new ArrayList<>(protocols); protocols.contains(x) -> val protocolsCopy = protocols.toMutableList(); x in protocolsCopy
+	private static Replacement containsReplacedWithInOperator(String s1, String s2, AbstractCall call, AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			Set<Replacement> replacements, Set<Replacement> renames, Constants LANG1) {
+		if(!call.getName().equals("contains") || call.arguments().size() != 1 || call.getExpression() == null)
+			return null;
+		String receiver = call.getExpression();
+		String argument = call.arguments().get(0);
+		for(Replacement r : replacements) {
+			receiver = ReplacementUtil.performReplacement(receiver, r.getBefore(), r.getAfter());
+			argument = ReplacementUtil.performReplacement(argument, r.getBefore(), r.getAfter());
+		}
+		String before = receiver + ".contains(" + argument + ")";
+		if(!s1.contains(before))
+			return null;
+		boolean negated1 = s1.contains(LANG1.NOT + before);
+		boolean plain1 = s1.replace(LANG1.NOT + before, "").contains(before);
+		//the Kotlin in/!in checks of the same element are compared as whole infix expressions, so that x !in protocols is not found in x !in protocolsCopy
+		for(LeafExpression infix2 : statement2.getInfixExpressions()) {
+			Matcher m2 = IN_SUB_CONDITION.matcher(infix2.getString());
+			if(!m2.matches() || !m2.group(1).equals(argument) || !s2.contains(infix2.getString()))
+				continue;
+			String variable2 = collectionVariable2(m2.group(3));
+			boolean renamed = !variable2.equals(receiver);
+			if(renamed && !(isVariable(receiver, statement1) && isVariable(variable2, statement2)))
+				continue;
+			if(renamed) {
+				renames.add(new Replacement(receiver, variable2, ReplacementType.VARIABLE_NAME));
+			}
+			boolean notIn2 = m2.group(2).equals("!in");
+			//the same condition, i.e., !c.contains(x) -> x !in c, c.contains(x) -> x in c,
+			//otherwise the inverted condition, i.e., if (c.contains(x)) throw ... -> require(x !in c)
+			boolean inverted = !(notIn2 ? negated1 : plain1);
+			String before1 = notIn2 != inverted ? LANG1.NOT + before : before;
+			return new Replacement(before1, infix2.getString(), inverted ? ReplacementType.INVERT_CONDITIONAL : ReplacementType.VARIABLE_NAME);
+		}
+		return null;
+	}
+
+	private static boolean isVariable(String name, AbstractCodeFragment statement) {
+		for(LeafExpression variable : statement.getVariables()) {
+			if(variable.getString().equals(name))
+				return true;
+		}
+		return false;
+	}
+
+	//the Kotlin collection variable of an in/!in check, which may be cast to accept null elements, i.e., (c as List<T?>) -> c
+	private static String collectionVariable2(String collection2) {
+		if(collection2.startsWith("(") && collection2.endsWith(")"))
+			collection2 = collection2.substring(1, collection2.length() - 1);
+		if(collection2.contains(" as "))
+			collection2 = collection2.substring(0, collection2.indexOf(" as "));
+		return collection2;
 	}
 
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
@@ -591,6 +653,28 @@ public class ReplacementAlgorithm {
 		// remove common variables from the two sets
 		variables1.removeAll(variableIntersection);
 		variables2.removeAll(variableIntersection);
+		
+		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
+			//the Java contains calls replaced with the Kotlin in/!in checks before the other replacements, i.e., !c.contains(x) -> x !in c,
+			//so that the contains calls are not replaced with Kotlin variables, and the Kotlin in/!in operators with Java operators
+			//the renamed collections are not applied to the receivers of the next contains calls, which are still in the argumentized string
+			Set<Replacement> previousReplacements = new LinkedHashSet<Replacement>(replacementInfo.getReplacements());
+			for(AbstractCall call1 : statement1.getMethodInvocations()) {
+				Set<Replacement> renames = new LinkedHashSet<Replacement>();
+				Replacement containsReplacement = containsReplacedWithInOperator(replacementInfo.getArgumentizedString1(), replacementInfo.getArgumentizedString2(),
+						call1, statement1, statement2, previousReplacements, renames, LANG1);
+				if(containsReplacement != null) {
+					replacementInfo.addReplacements(renames);
+					replacementInfo.addReplacement(containsReplacement);
+					replacementInfo.setArgumentizedString1(replacementInfo.getArgumentizedString1().replace(containsReplacement.getBefore(), containsReplacement.getAfter()));
+					methodInvocationMap1.values().removeIf(calls -> calls.contains(call1));
+					for(Replacement rename : renames) {
+						variables1.remove(rename.getBefore());
+						variables2.remove(rename.getAfter());
+					}
+				}
+			}
+		}
 		
 		// replace variables with the corresponding arguments
 		replaceVariablesWithArguments(variables1, parameterToArgumentMap);

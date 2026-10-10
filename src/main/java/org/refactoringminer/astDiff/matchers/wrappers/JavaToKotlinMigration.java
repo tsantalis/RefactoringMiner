@@ -910,6 +910,13 @@ public class JavaToKotlinMigration {
         }
         children1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.STRING_LITERAL);
         children2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.STRING_LITERAL);
+        //the statement itself is a string literal with the same content, i.e., a field initializer
+        if(srcStatementNode.getType().name.equals(LANG1.STRING_LITERAL) && dstStatementNode.getType().name.equals(LANG2.STRING_LITERAL) &&
+                dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(LANG2.STRING_CONTENT) &&
+                srcStatementNode.getLabel().equals("\"" + dstStatementNode.getChild(0).getLabel() + "\"")) {
+            children1.add(0, srcStatementNode);
+            children2.add(0, dstStatementNode);
+        }
         if(children1.size() == children2.size()) {
             for(int i=0; i<children1.size(); i++) {
                 if(children2.get(i).getChildren().size() > 0) {

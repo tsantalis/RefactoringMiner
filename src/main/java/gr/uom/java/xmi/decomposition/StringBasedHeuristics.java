@@ -484,6 +484,15 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
+					//the Java field assignment becomes a Kotlin local variable declaration, i.e., http2Connection = x; -> val http2Connection = x
+					//a Java local variable has its own declaration as counterpart, i.e., boolean readBody = true; -> var readBody = true
+					if(variableDeclarations1.isEmpty() && variableDeclarations2.size() > 0 && (diff2.endsWith("=") || diff2.endsWith("= "))) {
+						String diff1 = ss1.substring(0, ss1.lastIndexOf(commonSuffix));
+						String name2 = variableDeclarations2.get(0).getVariableName();
+						if((diff1.equals(name2 + LANG1.ASSIGNMENT) || diff1.equals(LANG1.THIS_DOT + name2 + LANG1.ASSIGNMENT)) && statement1.searchVariableDeclaration(name2) == null) {
+							return true;
+						}
+					}
 					if(diff2.endsWith(".") && !diff2.contains(LANG2.ASSIGNMENT)) {
 						return true;
 					}

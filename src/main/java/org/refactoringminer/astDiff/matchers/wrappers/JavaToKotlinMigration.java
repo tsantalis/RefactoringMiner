@@ -407,7 +407,8 @@ public class JavaToKotlinMigration {
         //the type name is a Kotlin type_identifier, and the java name has no Java counterpart, so that they are excluded from matching by position
         Map<Tree, Tree> classLiterals = findTypeLiteralsReplacedWithClassLiterals(srcStatementNode, dstStatementNode, LANG1, LANG2);
         for(Map.Entry<Tree, Tree> entry : classLiterals.entrySet()) {
-            children1.remove(typeLiteralName1(entry.getKey(), LANG1));
+            children1.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(entry.getKey(), LANG1.SIMPLE_NAME));
+            children2.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(entry.getValue(), LANG2.SIMPLE_NAME));
             Tree javaName2 = classLiteralJavaName2(entry.getValue(), LANG2);
             if(javaName2 != null) {
                 children2.remove(javaName2);
@@ -2008,10 +2009,16 @@ public class JavaToKotlinMigration {
         return false;
     }
 
-    //the Java type literals paired with the Kotlin class literals of the same type, i.e., MockWebServer.class -> MockWebServer::class, byte[].class -> ByteArray::class
+    //the Java type literals paired with the Kotlin class literals of the same type, i.e., MockWebServer.class -> MockWebServer::class, byte[].class -> ByteArray::class,
+    //X509Certificate[].class -> Array<X509Certificate>::class
     private static Map<Tree, Tree> findTypeLiteralsReplacedWithClassLiterals(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
         List<Tree> typeLiterals1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.TYPE_LITERAL);
         List<Tree> classLiterals2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.CALLABLE_REFERENCE);
+        for(Tree navigation2 : TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.NAVIGATION_EXPRESSION)) {
+            if(classLiteralName2(navigation2, LANG2) != null) {
+                classLiterals2.add(navigation2);
+            }
+        }
         Map<Tree, Tree> pairs = new LinkedHashMap<>();
         for(Tree typeLiteral1 : typeLiterals1) {
             Tree name1 = typeLiteralName1(typeLiteral1, LANG1);
@@ -2019,7 +2026,7 @@ public class JavaToKotlinMigration {
                 continue;
             for(Tree classLiteral2 : classLiterals2) {
                 Tree name2 = classLiteralName2(classLiteral2, LANG2);
-                if(name2 != null && name2.getLabel().equals(kotlinTypeName(name1, LANG1)) && !pairs.containsValue(classLiteral2)) {
+                if(name2 != null && classLiteralTypeName2(name2, LANG2).equals(kotlinTypeName(name1, LANG1)) && !pairs.containsValue(classLiteral2)) {
                     pairs.put(typeLiteral1, classLiteral2);
                     break;
                 }
@@ -2028,7 +2035,7 @@ public class JavaToKotlinMigration {
         return pairs;
     }
 
-    //the type of Java TypeLiteral -> SimpleType -> SimpleName, TypeLiteral -> PrimitiveType, or TypeLiteral -> ArrayType -> [PrimitiveType, Dimension],
+    //the type of Java TypeLiteral -> SimpleType -> SimpleName, TypeLiteral -> PrimitiveType, or TypeLiteral -> ArrayType -> [PrimitiveType|SimpleType -> SimpleName, Dimension],
     //or TypeLiteral -> SimpleName if the SimpleType is already flattened by a previous mapping of the same statement
     private static Tree typeLiteralName1(Tree typeLiteral1, Constants LANG1) {
         if(typeLiteral1.getChildren().size() != 1)
@@ -2037,26 +2044,65 @@ public class JavaToKotlinMigration {
         if(child1.getType().name.equals(LANG1.SIMPLE_TYPE) && child1.getChildren().size() == 1)
             child1 = child1.getChild(0);
         if(child1.getType().name.equals(LANG1.ARRAY_TYPE))
-            return child1.getChildren().size() == 2 && child1.getChild(0).getType().name.equals(LANG1.PRIMITIVE_TYPE) ? child1 : null;
+            return child1.getChildren().size() == 2 && (child1.getChild(0).getType().name.equals(LANG1.PRIMITIVE_TYPE) || isSimpleTypeWithName1(child1.getChild(0), LANG1)) ? child1 : null;
         return child1.getType().name.equals(LANG1.SIMPLE_NAME) || child1.getType().name.equals(LANG1.PRIMITIVE_TYPE) ? child1 : null;
     }
 
-    //the Kotlin name of a Java type, i.e., Object -> Any, boolean -> Boolean, byte[] -> ByteArray
+    private static boolean isSimpleTypeWithName1(Tree type1, Constants LANG1) {
+        return type1.getType().name.equals(LANG1.SIMPLE_TYPE) && type1.getChildren().size() == 1 && type1.getChild(0).getType().name.equals(LANG1.SIMPLE_NAME);
+    }
+
+    //the Kotlin name of a Java type, i.e., Object -> Any, boolean -> Boolean, byte[] -> ByteArray, X509Certificate[] -> Array<X509Certificate>
     private static String kotlinTypeName(Tree type1, Constants LANG1) {
-        if(type1.getType().name.equals(LANG1.ARRAY_TYPE))
-            return kotlinTypeName(type1.getChild(0), LANG1) + "Array";
+        if(type1.getType().name.equals(LANG1.ARRAY_TYPE)) {
+            Tree elementType1 = type1.getChild(0);
+            if(isSimpleTypeWithName1(elementType1, LANG1))
+                return "Array<" + kotlinTypeName(elementType1.getChild(0), LANG1) + ">";
+            return kotlinTypeName(elementType1, LANG1) + "Array";
+        }
         String name1 = type1.getLabel();
         if(type1.getType().name.equals(LANG1.PRIMITIVE_TYPE))
             return Character.toUpperCase(name1.charAt(0)) + name1.substring(1);
         return name1.equals("Object") ? "Any" : name1;
     }
 
-    //the type name of Kotlin callable_reference -> [type_identifier, ::, class]
+    //the type name of Kotlin callable_reference -> [type_identifier, ::, class],
+    //or the array type of navigation_expression -> [call_expression -> [Array, call_suffix -> type_arguments -> type_projection -> user_type -> type_identifier], navigation_suffix -> [::, class]]
     private static Tree classLiteralName2(Tree classLiteral2, Constants LANG2) {
+        if(classLiteral2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION)) {
+            if(classLiteral2.getChildren().size() != 2 || !classLiteral2.getChild(1).getType().name.equals(LANG2.NAVIGATION_SUFFIX))
+                return null;
+            Tree keyword2 = TreeUtilFunctions.findChildByType(classLiteral2.getChild(1), LANG2.TYPE_DECLARATION_KIND);
+            if(keyword2 == null || !keyword2.getLabel().equals("class"))
+                return null;
+            Tree array2 = classLiteral2.getChild(0);
+            return arrayElementType2(array2, LANG2) != null ? array2 : null;
+        }
         Tree keyword2 = TreeUtilFunctions.findChildByType(classLiteral2, LANG2.TYPE_DECLARATION_KIND);
         if(keyword2 == null || !keyword2.getLabel().equals("class"))
             return null;
         return TreeUtilFunctions.findChildByType(classLiteral2, LANG2.TYPE_IDENTIFIER);
+    }
+
+    //the element type of Kotlin call_expression -> [Array, call_suffix -> type_arguments -> type_projection -> user_type -> type_identifier],
+    //or call_expression -> [Array, user_type -> type_identifier] if the wrappers are already flattened by a previous mapping of the same statement
+    private static Tree arrayElementType2(Tree array2, Constants LANG2) {
+        if(!array2.getType().name.equals(LANG2.METHOD_INVOCATION) || array2.getChildren().size() != 2 || !array2.getChild(0).getLabel().equals("Array"))
+            return null;
+        Tree node2 = array2.getChild(1);
+        for(String type : List.of(LANG2.CALL_SUFFIX, LANG2.TYPE_ARGUMENTS, LANG2.TYPE_PROJECTION)) {
+            if(node2.getType().name.equals(type) && node2.getChildren().size() == 1)
+                node2 = node2.getChild(0);
+        }
+        return node2.getType().name.equals(LANG2.USER_TYPE) && node2.getChildren().size() == 1 && node2.getChild(0).getType().name.equals(LANG2.TYPE_IDENTIFIER) ? node2 : null;
+    }
+
+    //the Kotlin name of the type of a class literal, i.e., X509Certificate, Array<X509Certificate>
+    private static String classLiteralTypeName2(Tree name2, Constants LANG2) {
+        Tree elementType2 = arrayElementType2(name2, LANG2);
+        if(elementType2 != null)
+            return "Array<" + elementType2.getChild(0).getLabel() + ">";
+        return name2.getLabel();
     }
 
     //the java name of Kotlin navigation_expression -> [callable_reference, navigation_suffix -> java|javaPrimitiveType]
@@ -2078,6 +2124,24 @@ public class JavaToKotlinMigration {
         Tree name2 = classLiteralName2(classLiteral2, LANG2);
         mappingStore.addMapping(typeLiteral1, classLiteral2);
         mappingStore.addMapping(name1, name2);
+        Tree elementType2 = arrayElementType2(name2, LANG2);
+        if(elementType2 != null) {
+            //align Kotlin Array<X> -> [Array, user_type -> type_identifier] with Java ArrayType -> [SimpleType -> SimpleName, Dimension], as Kotlin has the type arguments wrappers
+            Tree elementType1 = name1.getChild(0);
+            mappingStore.addMapping(elementType1, elementType2);
+            mappingStore.addMapping(elementType1.getChild(0), elementType2.getChild(0));
+            mappingStore.addMapping(name1.getChild(1), name2.getChild(0));
+            //flatten type_projection, type_arguments and call_suffix, innermost first, so that each is still a child of its parent
+            Tree wrapper2 = elementType2;
+            while(wrapper2.getParent() != name2) {
+                Tree parent2 = wrapper2.getParent();
+                if(wrapper2 != elementType2)
+                    flattenDstChildKeepingMappings(deferredFlattenings, parent2, wrapper2);
+                wrapper2 = parent2;
+            }
+            if(wrapper2 != elementType2)
+                flattenDstChildKeepingMappings(deferredFlattenings, name2, wrapper2);
+        }
         Tree type1 = typeLiteral1.getChild(0);
         if(type1.getType().name.equals(LANG1.SIMPLE_TYPE)) {
             flattenSrcChildKeepingMappings(deferredFlattenings, typeLiteral1, type1);

@@ -1136,8 +1136,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							if(declaration.isParameter() && replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
 								skip = true;
 							}
-							//the assigned variable already exists in the original method, i.e., return false; -> return reuseSocket, when reuseSocket = false exists before and after
-							if(statement.getVariableDeclarations().isEmpty() && operation1.getVariableDeclaration(variable) != null) {
+							//the assignment already exists in the original method, i.e., return false; -> return reuseSocket, when reuseSocket = false exists before and after
+							if(statement.getVariableDeclarations().isEmpty() && assignmentExistsInOperation1(variable, initializer)) {
 								skip = true;
 							}
 							if(!declarationMappingFound && !skip) {
@@ -1162,6 +1162,18 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 			}
 		}
+	}
+
+	private boolean assignmentExistsInOperation1(String variable, String initializer) {
+		if(operation1.getBody() == null)
+			return false;
+		String assignment = variable + LANG1.ASSIGNMENT + initializer + LANG1.STATEMENT_TERMINATION;
+		for(AbstractCodeFragment leaf : operation1.getBody().getCompositeStatement().getLeaves()) {
+			if(leaf.getString().equals(assignment)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void addSubExpressionMappingsForExtract(AbstractExpression initializer, String before,

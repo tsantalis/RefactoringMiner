@@ -403,6 +403,17 @@ public class JavaToKotlinMigration {
             children2.removeAll(TreeUtilFunctions.findChildrenByTypeRecursively(entry.getValue(), LANG2.SIMPLE_NAME).stream()
                     .filter(t -> labels1.contains(t.getLabel())).collect(Collectors.toList()));
         }
+        //the Java type literal is replaced with the Kotlin class literal, i.e., MockWebServer.class.getName() -> MockWebServer::class.java.name
+        //the type name is a Kotlin type_identifier, and the java name has no Java counterpart, so that they are excluded from matching by position
+        Map<Tree, Tree> classLiterals = findTypeLiteralsReplacedWithClassLiterals(srcStatementNode, dstStatementNode, LANG1, LANG2);
+        for(Map.Entry<Tree, Tree> entry : classLiterals.entrySet()) {
+            children1.remove(typeLiteralName1(entry.getKey(), LANG1));
+            Tree javaName2 = classLiteralJavaName2(entry.getValue(), LANG2);
+            if(javaName2 != null) {
+                children2.remove(javaName2);
+            }
+            alignTypeLiteralWithClassLiteral(mappingStore, entry.getKey(), entry.getValue(), LANG1, LANG2, deferredFlattenings);
+        }
         List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
         List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
         if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code") && children1.stream().noneMatch(t -> t.getLabel().equals("code"))) {
@@ -1995,6 +2006,100 @@ public class JavaToKotlinMigration {
                 return true;
         }
         return false;
+    }
+
+    //the Java type literals paired with the Kotlin class literals of the same type, i.e., MockWebServer.class -> MockWebServer::class, byte[].class -> ByteArray::class
+    private static Map<Tree, Tree> findTypeLiteralsReplacedWithClassLiterals(Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
+        List<Tree> typeLiterals1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.TYPE_LITERAL);
+        List<Tree> classLiterals2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.CALLABLE_REFERENCE);
+        Map<Tree, Tree> pairs = new LinkedHashMap<>();
+        for(Tree typeLiteral1 : typeLiterals1) {
+            Tree name1 = typeLiteralName1(typeLiteral1, LANG1);
+            if(name1 == null)
+                continue;
+            for(Tree classLiteral2 : classLiterals2) {
+                Tree name2 = classLiteralName2(classLiteral2, LANG2);
+                if(name2 != null && name2.getLabel().equals(kotlinTypeName(name1, LANG1)) && !pairs.containsValue(classLiteral2)) {
+                    pairs.put(typeLiteral1, classLiteral2);
+                    break;
+                }
+            }
+        }
+        return pairs;
+    }
+
+    //the type of Java TypeLiteral -> SimpleType -> SimpleName, TypeLiteral -> PrimitiveType, or TypeLiteral -> ArrayType -> [PrimitiveType, Dimension],
+    //or TypeLiteral -> SimpleName if the SimpleType is already flattened by a previous mapping of the same statement
+    private static Tree typeLiteralName1(Tree typeLiteral1, Constants LANG1) {
+        if(typeLiteral1.getChildren().size() != 1)
+            return null;
+        Tree child1 = typeLiteral1.getChild(0);
+        if(child1.getType().name.equals(LANG1.SIMPLE_TYPE) && child1.getChildren().size() == 1)
+            child1 = child1.getChild(0);
+        if(child1.getType().name.equals(LANG1.ARRAY_TYPE))
+            return child1.getChildren().size() == 2 && child1.getChild(0).getType().name.equals(LANG1.PRIMITIVE_TYPE) ? child1 : null;
+        return child1.getType().name.equals(LANG1.SIMPLE_NAME) || child1.getType().name.equals(LANG1.PRIMITIVE_TYPE) ? child1 : null;
+    }
+
+    //the Kotlin name of a Java type, i.e., Object -> Any, boolean -> Boolean, byte[] -> ByteArray
+    private static String kotlinTypeName(Tree type1, Constants LANG1) {
+        if(type1.getType().name.equals(LANG1.ARRAY_TYPE))
+            return kotlinTypeName(type1.getChild(0), LANG1) + "Array";
+        String name1 = type1.getLabel();
+        if(type1.getType().name.equals(LANG1.PRIMITIVE_TYPE))
+            return Character.toUpperCase(name1.charAt(0)) + name1.substring(1);
+        return name1.equals("Object") ? "Any" : name1;
+    }
+
+    //the type name of Kotlin callable_reference -> [type_identifier, ::, class]
+    private static Tree classLiteralName2(Tree classLiteral2, Constants LANG2) {
+        Tree keyword2 = TreeUtilFunctions.findChildByType(classLiteral2, LANG2.TYPE_DECLARATION_KIND);
+        if(keyword2 == null || !keyword2.getLabel().equals("class"))
+            return null;
+        return TreeUtilFunctions.findChildByType(classLiteral2, LANG2.TYPE_IDENTIFIER);
+    }
+
+    //the java name of Kotlin navigation_expression -> [callable_reference, navigation_suffix -> java|javaPrimitiveType]
+    private static Tree classLiteralJavaName2(Tree classLiteral2, Constants LANG2) {
+        Tree parent2 = classLiteral2.getParent();
+        if(parent2 == null || !parent2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) || parent2.getChildren().size() != 2 || parent2.getChild(0) != classLiteral2)
+            return null;
+        Tree suffix2 = parent2.getChild(1);
+        if(!suffix2.getType().name.equals(LANG2.NAVIGATION_SUFFIX) || suffix2.getChildren().size() != 1 || !(suffix2.getChild(0).getLabel().equals("java") || suffix2.getChild(0).getLabel().equals("javaPrimitiveType")))
+            return null;
+        return suffix2.getChild(0);
+    }
+
+    //align Kotlin callable_reference -> type_identifier with Java TypeLiteral -> SimpleType -> SimpleName, as Kotlin has no SimpleType wrapper
+    //Java X.class corresponds to Kotlin X::class.java (or X::class.javaPrimitiveType for primitive types),
+    //so that a Java invocation receiver X.class is aligned with the Kotlin navigation_expression X::class.java
+    private static void alignTypeLiteralWithClassLiteral(ExtendedMultiMappingStore mappingStore, Tree typeLiteral1, Tree classLiteral2, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
+        Tree name1 = typeLiteralName1(typeLiteral1, LANG1);
+        Tree name2 = classLiteralName2(classLiteral2, LANG2);
+        mappingStore.addMapping(typeLiteral1, classLiteral2);
+        mappingStore.addMapping(name1, name2);
+        Tree type1 = typeLiteral1.getChild(0);
+        if(type1.getType().name.equals(LANG1.SIMPLE_TYPE)) {
+            flattenSrcChildKeepingMappings(deferredFlattenings, typeLiteral1, type1);
+        }
+        Tree receiver1 = typeLiteral1.getParent();
+        if(classLiteralJavaName2(classLiteral2, LANG2) != null && receiver1 != null && receiver1.getType().name.equals(LANG1.METHOD_INVOCATION_RECEIVER)) {
+            Tree receiver2 = classLiteral2.getParent();
+            mappingStore.addMapping(receiver1, receiver2);
+            //the Java getter call is replaced with the Kotlin property access, i.e., MockWebServer.class.getName() -> MockWebServer::class.java.name
+            Tree invocation1 = receiver1.getParent();
+            Tree property2 = receiver2.getParent();
+            if(invocation1 != null && invocation1.getType().name.equals(LANG1.METHOD_INVOCATION) &&
+                    property2 != null && property2.getType().name.equals(LANG2.NAVIGATION_EXPRESSION) && property2.getChild(0) == receiver2 &&
+                    (property2.getParent() == null || !property2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION))) {
+                mappingStore.addMapping(invocation1, property2);
+                //align [receiver, navigation_suffix -> name] with Java MethodInvocation -> [METHOD_INVOCATION_RECEIVER, name], as in alignFieldAccess
+                Tree suffix2 = property2.getChild(property2.getChildren().size() - 1);
+                if(suffix2.getType().name.equals(LANG2.NAVIGATION_SUFFIX)) {
+                    flattenDstChildKeepingMappings(deferredFlattenings, property2, suffix2);
+                }
+            }
+        }
     }
 
     //the Java length/size comparisons with zero paired with the Kotlin isEmpty/isNotEmpty calls, i.e., request.length() == 0 -> request.isEmpty()

@@ -394,6 +394,8 @@ public class Constants {
     public final String MEMBER_REF = "MemberRef";
 
     public final String SIMPLE_TYPE = "SimpleType";
+    public final String TYPE_LITERAL = "TypeLiteral";
+    public final String ARRAY_TYPE = "ArrayType";
     public final String PARAMETERIZED_TYPE = "ParameterizedType";
     public final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
     public final String PREFIX_EXPRESSION;
@@ -498,6 +500,7 @@ public class Constants {
     public final String CALL_SUFFIX = "call_suffix";
     public final String NAVIGATION_EXPRESSION = "navigation_expression";
     public final String NAVIGATION_SUFFIX = "navigation_suffix";
+    public final String CALLABLE_REFERENCE = "callable_reference";
     public final String INDEXING_EXPRESSION = "indexing_expression";
     public final String INDEXING_SUFFIX = "indexing_suffix";
     public final String INTEGER_LITERAL = "integer_literal";

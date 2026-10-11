@@ -352,6 +352,8 @@ public class StringBasedHeuristics {
 			if(temp.endsWith(LANG1.STATEMENT_TERMINATION) && (s2.endsWith(LANG2.STATEMENT_TERMINATION) || statement2 instanceof AbstractExpression)) {
 				String ss1 = temp.substring(0, temp.length()-LANG1.STATEMENT_TERMINATION.length());
 				String ss2 = statement2 instanceof AbstractExpression ? s2 : s2.substring(0, s2.length()-LANG2.STATEMENT_TERMINATION.length());
+				//the Kotlin code is entirely the result of a replacement, i.e., return headerList; -> "$key: $value" with headerList -> "$key: $value"
+				boolean replacedKotlinCode = info.getReplacements().stream().map(Replacement::getAfter).anyMatch(ss2::equals);
 				for(Replacement r : info.getReplacements()) {
 					//the replacement brings the formatting of the Kotlin statement, i.e., "Upgrade".equals(request.getHeader("Connection"),\n ignoreCase = true)
 					if(r.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA) || r.getAfter().contains("\n")) {
@@ -414,7 +416,7 @@ public class StringBasedHeuristics {
 				if(ss1.equals(ss2)) {
 					return true;
 				}
-				if(equalAfterParenthesisElimination(ss1, ss2, info, LANG1, LANG2)) {
+				if(!replacedKotlinCode && equalAfterParenthesisElimination(ss1, ss2, info, LANG1, LANG2)) {
 					return true;
 				}
 				String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(ss1, ss2);
@@ -485,7 +487,8 @@ public class StringBasedHeuristics {
 					if(diff2.endsWith(".") && !diff2.contains(LANG2.ASSIGNMENT)) {
 						return true;
 					}
-					if(diff2.isEmpty()) {
+					//the Kotlin code is the right-hand side of the Java assignment, i.e., this.x = foo; -> val x = foo
+					if(diff2.isEmpty() && !replacedKotlinCode) {
 						return true;
 					}
 				}

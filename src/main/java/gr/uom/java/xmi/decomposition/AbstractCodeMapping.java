@@ -1136,6 +1136,10 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							if(declaration.isParameter() && replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
 								skip = true;
 							}
+							//the assigned variable already exists in the original method, i.e., return false; -> return reuseSocket, when reuseSocket = false exists before and after
+							if(statement.getVariableDeclarations().isEmpty() && operation1.getVariableDeclaration(variable) != null) {
+								skip = true;
+							}
 							if(!declarationMappingFound && !skip) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());

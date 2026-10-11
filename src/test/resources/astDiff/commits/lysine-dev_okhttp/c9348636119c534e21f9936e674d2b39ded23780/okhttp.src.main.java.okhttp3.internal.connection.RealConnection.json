@@ -8656,6 +8656,17 @@
   "firstEndPos" : 10034,
   "secondEndPos" : 9289
 }, {
+  "firstType" : "ThrowStatement",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 10043,
+  "secondPos" : 9190,
+  "firstEndPos" : 10052,
+  "secondEndPos" : 9298
+}, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// The following try/catch block is a pseudo hacky way to get around a crash on Android 7.0",
@@ -15365,6 +15376,171 @@
   "secondPos" : 15633,
   "firstEndPos" : 16298,
   "secondEndPos" : 15648
+}, {
+  "firstType" : "IfStatement",
+  "secondType" : "if_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 16502,
+  "secondPos" : 15828,
+  "firstEndPos" : 16610,
+  "secondEndPos" : 15942
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 16506,
+  "secondPos" : 15832,
+  "firstEndPos" : 16561,
+  "secondEndPos" : 15896
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16506,
+  "secondPos" : 15832,
+  "firstEndPos" : 16513,
+  "secondEndPos" : 15846
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"close\"",
+  "secondLabel" : "\"close\"",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 16506,
+  "secondPos" : 15832,
+  "firstEndPos" : 16513,
+  "secondEndPos" : 15839
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "equalsIgnoreCase",
+  "secondLabel" : "equals",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16514,
+  "secondPos" : 15840,
+  "firstEndPos" : 16530,
+  "secondEndPos" : 15846
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16531,
+  "secondPos" : 15846,
+  "firstEndPos" : 16560,
+  "secondEndPos" : 15896
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 16531,
+  "secondPos" : 15847,
+  "firstEndPos" : 16560,
+  "secondEndPos" : 15876
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16531,
+  "secondPos" : 15847,
+  "firstEndPos" : 16539,
+  "secondEndPos" : 15862
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "response",
+  "secondLabel" : "response",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 16531,
+  "secondPos" : 15847,
+  "firstEndPos" : 16539,
+  "secondEndPos" : 15855
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "header",
+  "secondLabel" : "header",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16540,
+  "secondPos" : 15856,
+  "firstEndPos" : 16546,
+  "secondEndPos" : 15862
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16547,
+  "secondPos" : 15862,
+  "firstEndPos" : 16559,
+  "secondEndPos" : 15876
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "string_literal",
+  "firstLabel" : "\"Connection\"",
+  "secondLabel" : "\"Connection\"",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_arguments",
+  "firstPos" : 16547,
+  "secondPos" : 15863,
+  "firstEndPos" : 16559,
+  "secondEndPos" : 15875
+}, {
+  "firstType" : "Block",
+  "secondType" : "control_structure_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "if_expression",
+  "firstPos" : 16563,
+  "secondPos" : 15898,
+  "firstEndPos" : 16610,
+  "secondEndPos" : 15942
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 16577,
+  "secondPos" : 15912,
+  "firstEndPos" : 16598,
+  "secondEndPos" : 15930
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "tunnelRequest",
+  "secondLabel" : "tunnelRequest",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 16584,
+  "secondPos" : 14294,
+  "firstEndPos" : 16597,
+  "secondEndPos" : 14307
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "control_structure_body",

@@ -6071,6 +6071,72 @@
   "firstEndPos" : 8945,
   "secondEndPos" : 7667
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 8958,
+  "secondPos" : 7674,
+  "firstEndPos" : 8985,
+  "secondEndPos" : 7703
+}, {
+  "firstType" : "FieldAccess",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 8958,
+  "secondPos" : 7674,
+  "firstEndPos" : 8972,
+  "secondEndPos" : 7688
+}, {
+  "firstType" : "ThisExpression",
+  "secondType" : "this_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 8958,
+  "secondPos" : 7674,
+  "firstEndPos" : 8962,
+  "secondEndPos" : 7678
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "protocols",
+  "secondLabel" : "protocols",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 8963,
+  "secondPos" : 7679,
+  "firstEndPos" : 8972,
+  "secondEndPos" : 7688
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 8973,
+  "secondPos" : 7689,
+  "firstEndPos" : 8974,
+  "secondEndPos" : 7690
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "protocols",
+  "secondLabel" : "protocolList",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 8975,
+  "secondPos" : 7691,
+  "firstEndPos" : 8984,
+  "secondEndPos" : 7703
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

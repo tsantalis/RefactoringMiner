@@ -117,6 +117,12 @@ public class ReplacementUtil {
 					temp.startsWith(subString1 + character + "=") && completeString2.startsWith(subString2 + " " + character + "=")) {
 				character2 = " ";
 			}
+			//cross-language statement termination, i.e., Java return x; and Kotlin return x
+			//the Kotlin trailing lambda is not the last expression of a Java statement, i.e., return shutdown; -> pushExecutorExecute("...") {...}
+			else if(character.equals(";") && !LANG1.equals(LANG2) && !subString2.startsWith("{") &&
+					temp.endsWith(subString1 + LANG1.STATEMENT_TERMINATION) && completeString2.endsWith(subString2 + LANG2.STATEMENT_TERMINATION)) {
+				character2 = LANG2.STATEMENT_TERMINATION;
+			}
 			if(temp.contains(subString1 + character) && completeString2.contains(subString2 + character2)) {
 				StringBuffer sb = new StringBuffer();
 				Pattern p1 = Pattern.compile(Pattern.quote(subString1 + character));

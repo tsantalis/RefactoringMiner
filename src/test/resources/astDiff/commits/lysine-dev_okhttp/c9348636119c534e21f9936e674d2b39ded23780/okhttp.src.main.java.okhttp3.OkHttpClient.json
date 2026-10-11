@@ -19920,6 +19920,105 @@
   "firstEndPos" : 39312,
   "secondEndPos" : 33809
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "statements",
+  "firstPos" : 39222,
+  "secondPos" : 33735,
+  "firstEndPos" : 39287,
+  "secondEndPos" : 33803
+}, {
+  "firstType" : "FieldAccess",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 39222,
+  "secondPos" : 33735,
+  "firstEndPos" : 39247,
+  "secondEndPos" : 33760
+}, {
+  "firstType" : "ThisExpression",
+  "secondType" : "this_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 39222,
+  "secondPos" : 33735,
+  "firstEndPos" : 39226,
+  "secondEndPos" : 33739
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "eventListenerFactory",
+  "secondLabel" : "eventListenerFactory",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 39227,
+  "secondPos" : 33740,
+  "firstEndPos" : 39247,
+  "secondEndPos" : 33760
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 39248,
+  "secondPos" : 33761,
+  "firstEndPos" : 39249,
+  "secondEndPos" : 33762
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 39250,
+  "secondPos" : 33739,
+  "firstEndPos" : 39286,
+  "secondEndPos" : 33760
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "EventListener",
+  "secondLabel" : "Util",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 39250,
+  "secondPos" : 33763,
+  "firstEndPos" : 39263,
+  "secondEndPos" : 33767
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "factory",
+  "secondLabel" : "eventListenerFactory",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 39264,
+  "secondPos" : 33768,
+  "firstEndPos" : 39271,
+  "secondEndPos" : 33788
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "eventListener",
+  "secondLabel" : "eventListener",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "value_argument",
+  "firstPos" : 39272,
+  "secondPos" : 33789,
+  "firstEndPos" : 39285,
+  "secondEndPos" : 33802
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

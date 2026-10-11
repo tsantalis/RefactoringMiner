@@ -2969,6 +2969,39 @@
   "firstEndPos" : 5750,
   "secondEndPos" : 3766
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 5728,
+  "secondPos" : 3745,
+  "firstEndPos" : 5744,
+  "secondEndPos" : 3760
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "hostname",
+  "secondLabel" : "hostname",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5728,
+  "secondPos" : 3745,
+  "firstEndPos" : 5736,
+  "secondEndPos" : 3753
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "+=",
+  "secondLabel" : "+=",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5737,
+  "secondPos" : 3754,
+  "firstEndPos" : 5739,
+  "secondEndPos" : 3756
+}, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",
   "firstLabel" : "",
@@ -3078,6 +3111,39 @@
   "secondPos" : 3799,
   "firstEndPos" : 5812,
   "secondEndPos" : 3827
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 5791,
+  "secondPos" : 3807,
+  "firstEndPos" : 5806,
+  "secondEndPos" : 3821
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "pattern",
+  "secondLabel" : "pattern",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5791,
+  "secondPos" : 3807,
+  "firstEndPos" : 5798,
+  "secondEndPos" : 3814
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "+=",
+  "secondLabel" : "+=",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "assignment",
+  "firstPos" : 5799,
+  "secondPos" : 3815,
+  "firstEndPos" : 5801,
+  "secondEndPos" : 3817
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",

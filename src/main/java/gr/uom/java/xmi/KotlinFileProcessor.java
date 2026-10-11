@@ -35,6 +35,7 @@ import org.jetbrains.kotlin.psi.KtExpression;
 import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtFileAnnotationList;
 import org.jetbrains.kotlin.psi.KtIfExpression;
+import org.jetbrains.kotlin.psi.KtTryExpression;
 import org.jetbrains.kotlin.psi.KtImportDirective;
 import org.jetbrains.kotlin.psi.KtImportList;
 import org.jetbrains.kotlin.psi.KtInitializerList;
@@ -841,6 +842,10 @@ public class KotlinFileProcessor {
 			}
 			else if(functionInitializer instanceof KtIfExpression ifExpression) {
 				OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, ifExpression, umlOperation, attributes, fileContent);
+				umlOperation.setBody(operationBody);
+			}
+			else if(functionInitializer instanceof KtTryExpression tryExpression) {
+				OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, tryExpression, umlOperation, attributes, fileContent);
 				umlOperation.setBody(operationBody);
 			}
 			else {

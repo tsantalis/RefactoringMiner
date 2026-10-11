@@ -563,8 +563,10 @@ public class JavaToKotlinMigration {
                 String qualifiedType = qualified1.getLabel();
                 for(Tree child2 : children2) {
                     if(isQualifiedNameSegment(qualifiedType, child2.getLabel())) {
-                        boolean skip = child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
-                                child2.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION);
+                        //keep the called names, i.e., code in builder.code(statusLine.code)
+                        boolean skip = (child2.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
+                                child2.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION)) ||
+                                isCallName2(child2, LANG2);
                         //keep the simple names outside navigation expressions matching a Java simple name, i.e., x in x == 0 || s.x == 0
                         if(!isInsideNavigationExpression(child2, dstStatementNode, LANG2) &&
                                 children1.stream().anyMatch(child1 -> child1.getLabel().equals(child2.getLabel()))) {
@@ -4004,6 +4006,16 @@ public class JavaToKotlinMigration {
                 return true;
         }
         return false;
+    }
+
+    //checks if name2 is the name of a called function, i.e., call_expression -> [navigation_expression -> [receiver, navigation_suffix -> name2], value_arguments]
+    private static boolean isCallName2(Tree name2, Constants LANG2) {
+        Tree suffix2 = name2.getParent();
+        if(suffix2 == null || !suffix2.getType().name.equals(LANG2.NAVIGATION_SUFFIX))
+            return false;
+        Tree navigation2 = suffix2.getParent();
+        Tree call2 = navigation2 != null ? navigation2.getParent() : null;
+        return call2 != null && call2.getType().name.equals(LANG2.METHOD_INVOCATION) && call2.getChild(0) == navigation2;
     }
 
     //checks if name is one of the dot-separated segments of qualifiedName, i.e., e is not a segment of ErrorCode.PROTOCOL_ERROR

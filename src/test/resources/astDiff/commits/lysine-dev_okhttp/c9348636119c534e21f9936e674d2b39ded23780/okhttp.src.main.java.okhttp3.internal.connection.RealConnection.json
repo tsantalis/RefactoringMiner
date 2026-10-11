@@ -14948,6 +14948,72 @@
   "firstEndPos" : 16761,
   "secondEndPos" : 16055
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "when_expression",
+  "firstPos" : 15662,
+  "secondPos" : 15021,
+  "firstEndPos" : 15677,
+  "secondEndPos" : 15036
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 15662,
+  "secondPos" : 15021,
+  "firstEndPos" : 15670,
+  "secondEndPos" : 15034
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "response",
+  "secondLabel" : "response",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 15662,
+  "secondPos" : 15021,
+  "firstEndPos" : 15670,
+  "secondEndPos" : 15029
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "code",
+  "secondLabel" : "code",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 15671,
+  "secondPos" : 15030,
+  "firstEndPos" : 15675,
+  "secondEndPos" : 15034
+}, {
+  "firstType" : "SwitchCase",
+  "secondType" : "when_condition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "when_entry",
+  "firstPos" : 15689,
+  "secondPos" : 15048,
+  "firstEndPos" : 15702,
+  "secondEndPos" : 15055
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HTTP_OK",
+  "secondLabel" : "HTTP_OK",
+  "firstParentType" : "SwitchCase",
+  "secondParentType" : "when_condition",
+  "firstPos" : 15694,
+  "secondPos" : 15048,
+  "firstEndPos" : 15701,
+  "secondEndPos" : 15055
+}, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// Assume the server won't send a TLS ServerHello until we send a TLS ClientHello. If",
@@ -15256,15 +15322,59 @@
   "firstEndPos" : 16231,
   "secondEndPos" : 15578
 }, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 16256,
+  "secondPos" : 15602,
+  "firstEndPos" : 16268,
+  "secondEndPos" : 15613
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "null",
+  "firstLabel" : "null",
+  "secondLabel" : "null",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "jump_expression",
+  "firstPos" : 16263,
+  "secondPos" : 15609,
+  "firstEndPos" : 16267,
+  "secondEndPos" : 15613
+}, {
+  "firstType" : "SwitchCase",
+  "secondType" : "when_condition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "when_entry",
+  "firstPos" : 16278,
+  "secondPos" : 15633,
+  "firstEndPos" : 16299,
+  "secondEndPos" : 15648
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "HTTP_PROXY_AUTH",
+  "secondLabel" : "HTTP_PROXY_AUTH",
+  "firstParentType" : "SwitchCase",
+  "secondParentType" : "when_condition",
+  "firstPos" : 16283,
+  "secondPos" : 15633,
+  "firstEndPos" : 16298,
+  "secondEndPos" : 15648
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "control_structure_body",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "IfStatement",
+  "firstParentType" : "SwitchStatement",
   "secondParentType" : "when_entry",
-  "firstPos" : 16431,
+  "firstPos" : 16656,
   "secondPos" : 15970,
-  "firstEndPos" : 16490,
+  "firstEndPos" : 16753,
   "secondEndPos" : 16047
 }, {
   "firstType" : "ClassInstanceCreation",
@@ -15273,9 +15383,9 @@
   "secondLabel" : "",
   "firstParentType" : "ThrowStatement",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 16437,
+  "firstPos" : 16662,
   "secondPos" : 15976,
-  "firstEndPos" : 16489,
+  "firstEndPos" : 16752,
   "secondEndPos" : 16047
 }, {
   "firstType" : "SimpleName",
@@ -15284,21 +15394,65 @@
   "secondLabel" : "IOException",
   "firstParentType" : "ClassInstanceCreation",
   "secondParentType" : "call_expression",
-  "firstPos" : 16441,
+  "firstPos" : 16666,
   "secondPos" : 15976,
-  "firstEndPos" : 16452,
+  "firstEndPos" : 16677,
   "secondEndPos" : 15987
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "string_literal",
-  "firstLabel" : "\"Failed to authenticate with proxy\"",
-  "secondLabel" : "\"Failed to authenticate with proxy\"",
-  "firstParentType" : "ClassInstanceCreation",
+  "firstLabel" : "\"Unexpected response code for CONNECT: \"",
+  "secondLabel" : "\"Unexpected response code for CONNECT: \"",
+  "firstParentType" : "InfixExpression",
   "secondParentType" : "call_expression",
-  "firstPos" : 16453,
+  "firstPos" : 16693,
   "secondPos" : 15988,
-  "firstEndPos" : 16488,
+  "firstEndPos" : 16733,
   "secondEndPos" : 16046
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "interpolated_expression",
+  "firstPos" : 16736,
+  "secondPos" : 16029,
+  "firstEndPos" : 16751,
+  "secondEndPos" : 16044
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16736,
+  "secondPos" : 16029,
+  "firstEndPos" : 16744,
+  "secondEndPos" : 16042
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "response",
+  "secondLabel" : "response",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 16736,
+  "secondPos" : 16029,
+  "firstEndPos" : 16744,
+  "secondEndPos" : 16037
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "code",
+  "secondLabel" : "code",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 16745,
+  "secondPos" : 16038,
+  "firstEndPos" : 16749,
+  "secondEndPos" : 16042
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",

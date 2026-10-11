@@ -484,7 +484,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				creation.coverage = StatementCoverageType.RETURN_CALL;
 				return creation;
 			}
-			else if((LANG.THROW_SPACE + objectCreation + LANG.STATEMENT_TERMINATION).equals(statement)) {
+			//the expression has no statement termination, i.e., the Kotlin when entry else -> throw IOException("a")
+			else if((LANG.THROW_SPACE + objectCreation + LANG.STATEMENT_TERMINATION).equals(statement) ||
+					(this instanceof AbstractExpression && (LANG.THROW_SPACE + objectCreation).equals(statement))) {
 				creation.coverage = StatementCoverageType.THROW_CALL;
 				return creation;
 			}

@@ -2100,6 +2100,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	//the Java switch is replaced with the Kotlin when, i.e., switch(x) { case A: ... case B: ... } -> when(x) { A -> {...} B -> {...} },
+	//where the switch cases are mapped to the conditions of the when entries with the same constant
+	private void matchSwitchCasesWithWhenEntries(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2) {
+		for(AbstractCodeMapping whenMapping : new ArrayList<>(this.mappings)) {
+			if(!(whenMapping instanceof CompositeStatementObjectMapping) ||
+					!whenMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) ||
+					!whenMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_STATEMENT))
+				continue;
+			CompositeStatementObject switch1 = (CompositeStatementObject)whenMapping.getFragment1();
+			CompositeStatementObject when2 = (CompositeStatementObject)whenMapping.getFragment2();
+			for(AbstractStatement statement1 : switch1.getStatements()) {
+				if(!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) || !leaves1.contains(statement1) ||
+						!statement1.getString().startsWith(LANG1.CASE_SPACE))
+					continue;
+				String caseExpression = statement1.getString().substring(LANG1.CASE_SPACE.length(), statement1.getString().lastIndexOf(":"));
+				for(AbstractStatement statement2 : when2.getStatements()) {
+					if(!statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY))
+						continue;
+					AbstractExpression condition2 = ((CompositeStatementObject)statement2).getExpressions().stream()
+							.filter(e -> e.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_CONDITION) && e.getString().equals(caseExpression))
+							.findFirst().orElse(null);
+					if(condition2 != null && leaves2.contains(condition2)) {
+						addMapping(new LeafMapping(statement1, condition2, container1, container2));
+						leaves1.remove(statement1);
+						leaves2.remove(condition2);
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	//the Java if-else-if chain comparing the same expression with constants is replaced with the Kotlin when with subject, i.e.,
 	//if(x == A) {...} else if(x == B) {...} -> when(x) { A -> {...} B -> {...} }, where the first if is mapped to the when,
 	//the else-if statements are mapped to the when entries, and the constants are mapped to the conditions of the when entries
@@ -6488,6 +6520,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(LANG1.equals(Constants.JAVA) && LANG2.equals(Constants.KOTLIN)) {
 			matchElseIfChainWithWhenEntries(innerNodes1, innerNodes2, leaves2, parameterToArgumentMap);
+			matchSwitchCasesWithWhenEntries(leaves1, leaves2);
 		}
 		//check for possibly missed split conditional
 		Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();

@@ -72,6 +72,19 @@ public class JavaToKotlinMigration {
             Tree expression2 = dstStatementNode.getChild(0);
             handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, deferredFlattenings);
         }
+        else if(srcStatementNode.getType().name.equals(LANG1.SWITCH_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.WHEN_EXPRESSION) &&
+                srcStatementNode.getChildren().size() > 0) {
+            //align Kotlin when_expression -> when_subject -> expression with Java SwitchStatement -> expression, as the Java switch expression has no wrapper,
+            //i.e., switch (response.code()) {...} -> when (response.code()) {...}
+            Tree subject2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.WHEN_SUBJECT);
+            if(subject2 != null && subject2.getChildren().size() == 1) {
+                Tree expression1 = srcStatementNode.getChild(0);
+                Tree expression2 = subject2.getChild(0);
+                flattenDstChildKeepingMappings(deferredFlattenings, dstStatementNode, subject2);
+                mappingStore.addMapping(expression1, expression2);
+                handleLeafMapping(mappingStore, expression1, expression2, LANG1, LANG2, deferredFlattenings);
+            }
+        }
         else if(srcStatementNode.getType().name.equals(LANG1.WHILE_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.WHILE_STATEMENT) &&
                 srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
             Tree expression1 = srcStatementNode.getChild(0);
@@ -392,8 +405,8 @@ public class JavaToKotlinMigration {
         }
         List<Tree> interpolatedIdentifiers2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_IDENTIFIER);
         List<Tree> interpolatedExpressions2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.INTERPOLATED_EXPRESSION);
-        if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code")) {
-            //remove .code on character literals to convert to int
+        if(children2.size() > 0 && children2.get(children2.size()-1).getLabel().equals("code") && children1.stream().noneMatch(t -> t.getLabel().equals("code"))) {
+            //remove .code on character literals to convert to int, unless Java has the same name, i.e., response.code()
             children2.remove(children2.size()-1);
         }
         Iterator<Tree> iter2 = children2.iterator();

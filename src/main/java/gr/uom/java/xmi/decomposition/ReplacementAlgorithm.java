@@ -74,6 +74,14 @@ public class ReplacementAlgorithm {
 		return null;
 	}
 
+	//the statements of the Java switch case are nested under the block of the Kotlin when entry, i.e., switch(x) { case A: return null; } -> when(x) { A -> { return null } }
+	private static boolean switchCaseStatementInWhenEntry(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		CompositeStatementObject parent2 = statement2.getParent();
+		return statement1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) &&
+				parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent2.getParent() != null &&
+				parent2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY);
+	}
+
 	private static boolean advancedAssertJTypeNarrowingConversion(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
 			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
@@ -2027,7 +2035,8 @@ public class ReplacementAlgorithm {
 			if(statement1.getString().startsWith(LANG1.RETURN_SPACE) && statement2.getString().startsWith(LANG2.RETURN_SPACE) &&
 					(statement1.commonReturnStatement() || statement2.commonReturnStatement()) &&
 					statement1.getParent() != null && statement2.getParent() != null &&
-					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
+					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType()) &&
+					!switchCaseStatementInWhenEntry(statement1, statement2)) {
 				if(!(statement1.isLastStatementInParentBlock() && statement1.getParent() instanceof TryStatementObject && statement2.isLastStatement()) &&
 						!(statement2.isLastStatementInParentBlock() && statement2.getParent() instanceof TryStatementObject && statement1.isLastStatement())) {
 					return null;

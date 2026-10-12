@@ -698,11 +698,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean equalSignature(UMLOperation operation) {
-		boolean equalParameterTypes = this.getParameterTypeList().equals(operation.getParameterTypeList());
+		List<UMLType> thisParameterTypeList = this.getParameterTypeList();
+		List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+		boolean equalParameterTypes = thisParameterTypeList.equals(otherParameterTypeList);
 		boolean compatibleParameterTypes = false;
 		if(!equalParameterTypes) {
-			List<UMLType> thisParameterTypeList = this.getParameterTypeList();
-			List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
 			if(thisParameterTypeList.size() == otherParameterTypeList.size()) {
 				int compatibleTypes = 0;
 				int equalTypes = 0;

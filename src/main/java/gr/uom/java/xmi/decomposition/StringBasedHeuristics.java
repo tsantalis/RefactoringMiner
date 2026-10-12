@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -706,7 +707,27 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	//the same statement strings are checked repeatedly, e.g., by ReplacementUtil.performReplacement for every pair of compared variables and method invocations
+	private static final int MAX_CACHE_SIZE = 100000;
+	private static final Map<StringAndLanguage, Boolean> ANONYMOUS_CLASS_SIGNATURE_CACHE = new ConcurrentHashMap<>();
+	//the language ordinal is used, because Enum.hashCode() is an identity hash code and computing it shifts the identity hash codes of other objects
+	private record StringAndLanguage(String s, int language) {}
+
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s, Constants LANG) {
+		StringAndLanguage key = new StringAndLanguage(s, LANG.ordinal());
+		Boolean cached = ANONYMOUS_CLASS_SIGNATURE_CACHE.get(key);
+		if(cached != null) {
+			return cached;
+		}
+		boolean result = computeContainsMethodSignatureOfAnonymousClass(s, LANG);
+		if(ANONYMOUS_CLASS_SIGNATURE_CACHE.size() >= MAX_CACHE_SIZE) {
+			ANONYMOUS_CLASS_SIGNATURE_CACHE.clear();
+		}
+		ANONYMOUS_CLASS_SIGNATURE_CACHE.put(key, result);
+		return result;
+	}
+
+	private static boolean computeContainsMethodSignatureOfAnonymousClass(String s, Constants LANG) {
 		String[] lines = s.split("\n");
 		if(s.contains(LANG.LAMBDA_ARROW)) {
 			if(lines.length > 1)

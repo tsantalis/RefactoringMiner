@@ -100,6 +100,36 @@ public class ReplacementUtil {
 		return temp;
 	}
 
+	//equivalent to s.contains(subString + suffix) without creating the concatenated string
+	private static boolean containsFollowedBy(String s, String subString, String suffix) {
+		int index = s.indexOf(subString);
+		while(index != -1) {
+			if(s.startsWith(suffix, index + subString.length())) {
+				return true;
+			}
+			if(index == s.length()) {
+				return false;
+			}
+			index = s.indexOf(subString, index + 1);
+		}
+		return false;
+	}
+
+	//equivalent to s.contains(prefix + subString) without creating the concatenated string
+	private static boolean containsPrecededBy(String s, String prefix, String subString) {
+		int index = s.indexOf(subString, prefix.length());
+		while(index != -1) {
+			if(s.startsWith(prefix, index - prefix.length())) {
+				return true;
+			}
+			if(index == s.length()) {
+				return false;
+			}
+			index = s.indexOf(subString, index + 1);
+		}
+		return false;
+	}
+
 	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG1, Constants LANG2) {
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
@@ -121,7 +151,7 @@ public class ReplacementUtil {
 					temp.endsWith(subString1 + LANG1.STATEMENT_TERMINATION) && completeString2.endsWith(subString2 + LANG2.STATEMENT_TERMINATION)) {
 				character2 = LANG2.STATEMENT_TERMINATION;
 			}
-			if(temp.contains(subString1 + character) && completeString2.contains(subString2 + character2)) {
+			if(containsFollowedBy(temp, subString1, character) && containsFollowedBy(completeString2, subString2, character2)) {
 				StringBuffer sb = new StringBuffer();
 				Pattern p1 = Pattern.compile(Pattern.quote(subString1 + character));
 				Matcher m1 = p1.matcher(temp);
@@ -149,7 +179,7 @@ public class ReplacementUtil {
 		boolean resume = !replacementOccurred || (temp.contains(": " + subString1) && completeString2.contains(": " + subString2));
 		if(resume && !containsMethodSignatureOfAnonymousClass(completeString1, LANG1) && !containsMethodSignatureOfAnonymousClass(completeString2, LANG2)) {
 			for(String character : SPECIAL_CHARACTERS) {
-				if(temp.contains(character + subString1) && completeString2.contains(character + subString2)) {
+				if(containsPrecededBy(temp, character, subString1) && containsPrecededBy(completeString2, character, subString2)) {
 					StringBuffer sb = new StringBuffer();
 					Pattern p1 = Pattern.compile(Pattern.quote(character + subString1));
 					Matcher m1 = p1.matcher(temp);

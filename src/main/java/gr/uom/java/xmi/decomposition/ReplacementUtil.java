@@ -3,6 +3,8 @@ package gr.uom.java.xmi.decomposition;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +17,11 @@ public class ReplacementUtil {
 	private static final String SPECIAL_CHARACTER_SET = String.join("", SPECIAL_CHARACTERS);
 	private static final String[] SPECIAL_ARGUMENT_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " "};
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
+	//the same replacements are performed repeatedly, e.g., when the same pair of statements is compared by different mappers
+	private static final int MAX_CACHE_SIZE = 100000;
+	private static final Map<ReplacementKey, String> REPLACEMENT_CACHE = new ConcurrentHashMap<>();
+	//the language ordinals are used, because Enum.hashCode() is an identity hash code and computing it shifts the identity hash codes of other objects
+	private record ReplacementKey(String completeString1, String completeString2, String subString1, String subString2, int language1, int language2) {}
 
 	public static boolean isInsideSingleQuotes(String argument, int indexOfChar) {
 		if(indexOfChar > 0 && indexOfChar < argument.length()-1) {
@@ -131,6 +138,20 @@ public class ReplacementUtil {
 	}
 
 	public static String performReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG1, Constants LANG2) {
+		ReplacementKey key = new ReplacementKey(completeString1, completeString2, subString1, subString2, LANG1.ordinal(), LANG2.ordinal());
+		String cached = REPLACEMENT_CACHE.get(key);
+		if(cached != null) {
+			return cached;
+		}
+		String result = computeReplacement(completeString1, completeString2, subString1, subString2, LANG1, LANG2);
+		if(REPLACEMENT_CACHE.size() >= MAX_CACHE_SIZE) {
+			REPLACEMENT_CACHE.clear();
+		}
+		REPLACEMENT_CACHE.put(key, result);
+		return result;
+	}
+
+	private static String computeReplacement(String completeString1, String completeString2, String subString1, String subString2, Constants LANG1, Constants LANG2) {
 		String temp = new String(completeString1);
 		boolean replacementOccurred = false;
 		for(String character : SPECIAL_CHARACTERS) {

@@ -55,11 +55,8 @@ public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 						refactorings.add(rename);
 					}
 				}
-				if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
-					classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
-				}
-				if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
-					classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+				if(classDiff != null) {
+					classDiff.anonymousClassesMatched(anonymousClass1, anonymousClass2);
 				}
 			}
 		}

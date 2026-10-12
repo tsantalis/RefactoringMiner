@@ -136,7 +136,7 @@ public class PurityChecker {
                 if (declaration != null && declaration.getInitializer() != null) {
                     String variableName = declaration.getVariableName();
                     String initializer = declaration.getInitializer().getString();
-                    String argumentizedInitializer = declaration.getInitializer().getArgumentizedString();
+                    String argumentizedInitializer = argumentizedString(declaration.getInitializer(), ev);
                     if (initializer != null) {
                         // Store exact form and outer-parentheses-stripped form to handle ((expr)) == expr comparisons
                         extractVariablePatterns.put(initializer, variableName);
@@ -347,15 +347,13 @@ public class PurityChecker {
                     if (fragment.getString() != null) {
                         afterStatements.add(fragment.getString().trim());
                     }
-                    if (fragment.getArgumentizedString() != null) {
-                        afterStatements.add(fragment.getArgumentizedString().trim());
-                    }
+                    afterStatements.add(argumentizedString(fragment, refactoring).trim());
                 }
             }
             List<AbstractCodeFragment> unmatchedToRemove = new ArrayList<>();
             for (AbstractCodeFragment fragment : unresolvedUnmatched) {
                 String fragmentString = fragment.getString();
-                String fragmentArgumentized = fragment.getArgumentizedString();
+                String fragmentArgumentized = argumentizedString(fragment, refactoring);
                 for (String initializer : extractVariableInitializers) {
                     if ((fragmentString != null && fragmentString.contains(initializer)) ||
                             (fragmentArgumentized != null && fragmentArgumentized.contains(initializer))) {
@@ -444,7 +442,7 @@ public class PurityChecker {
 
         for (AbstractCodeFragment abstractCodeFragment : nonMappedLeavesT2) {
             for (AbstractCodeMapping mapping : mappings) {
-                if (abstractCodeFragment.equalFragment(mapping.getFragment2())) {
+                if (abstractCodeFragment.equalFragment(mapping.getFragment2(), mapping.getArgumentizedString(abstractCodeFragment))) {
                     nonMappedLeavesT2ToRemove.add(abstractCodeFragment);
                     break;
                 }
@@ -453,7 +451,7 @@ public class PurityChecker {
 
         for (AbstractCodeFragment abstractCodeFragment : nonMappedLeavesT1) {
             for (AbstractCodeMapping mapping : mappings) {
-                if (abstractCodeFragment.equalFragment(mapping.getFragment1())) {
+                if (abstractCodeFragment.equalFragment(mapping.getFragment1(), mapping.getArgumentizedString(abstractCodeFragment))) {
                     nonMappedLeavesT1ToRemove.add(abstractCodeFragment);
                     break;
                 }
@@ -462,7 +460,7 @@ public class PurityChecker {
 
         for (CompositeStatementObject abstractCodeFragment : nonMappedNodesT2) {
             for (AbstractCodeMapping mapping : mappings) {
-                if (abstractCodeFragment.equalFragment(mapping.getFragment2())) {
+                if (abstractCodeFragment.equalFragment(mapping.getFragment2(), mapping.getArgumentizedString(abstractCodeFragment))) {
                     nonMappedNodesT2ToRemove.add(abstractCodeFragment);
                     break;
                 }
@@ -471,7 +469,7 @@ public class PurityChecker {
 
         for (CompositeStatementObject abstractCodeFragment : nonMappedNodesT1) {
             for (AbstractCodeMapping mapping : mappings) {
-                if (abstractCodeFragment.equalFragment(mapping.getFragment1())) {
+                if (abstractCodeFragment.equalFragment(mapping.getFragment1(), mapping.getArgumentizedString(abstractCodeFragment))) {
                     nonMappedNodesT1ToRemove.add(abstractCodeFragment);
                     break;
                 }
@@ -2098,7 +2096,7 @@ public class PurityChecker {
 
             for (AbstractCodeFragment abstractCodeFragment : nonMappedLeavesT1) {
                 for (UMLAttribute removedAttribute : removedAttributes) {
-                    if (abstractCodeFragment.getArgumentizedString().contains(removedAttribute.getName())) {
+                    if (refactoring.getBodyMapper().getArgumentizedString(abstractCodeFragment).contains(removedAttribute.getName())) {
                         nonMappedLeavesT1ToRemove.add(abstractCodeFragment);
                     }
                 }
@@ -2137,15 +2135,14 @@ public class PurityChecker {
         List<AbstractCodeFragment> nonMappedLeavesT1ToRemove = new ArrayList<>();
         for (AbstractCodeFragment abstractCodeFragment : nonMappedInnerNodesT1) {
             if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.IF_STATEMENT)) {
-                abstractCodeFragment.replaceParametersWithArguments(refactoring.getParameterToArgumentMap());
-                abstractCodeFragment.replaceParametersWithArguments(refactoring.getParameterToArgumentMap());
-                if (abstractCodeFragment.getArgumentizedString().equals("if(false)")) {
+                String argumentizedString = abstractCodeFragment.replaceParametersWithArguments(refactoring.getParameterToArgumentMap());
+                if (argumentizedString.equals("if(false)")) {
                     nonMappedInnerNodesT1ToRemove.add(abstractCodeFragment);
                     List<AbstractStatement> statements = ((CompositeStatementObject) (abstractCodeFragment)).getStatements();
                     if (statements.size() == 2 || statements.size() == 1) { //it's an if-else condition
                         nonMappedLeavesT1ToRemove.addAll(((CompositeStatementObject) (statements.get(0))).getStatements());
                     }
-                } else if (abstractCodeFragment.getArgumentizedString().equals("if(true)")) {
+                } else if (argumentizedString.equals("if(true)")) {
                     nonMappedInnerNodesT1ToRemove.add(abstractCodeFragment);
                     List<AbstractStatement> statements = ((CompositeStatementObject) (abstractCodeFragment)).getStatements();
                     if (statements.size() == 2) {
@@ -4688,7 +4685,7 @@ Mapping state for Move Method refactoring purity:
     private static boolean checkForTheSameDeclarationInTheTargetMethod(InlineOperationRefactoring refactoring, VariableDeclaration variableDeclaration) {
         for (VariableDeclaration variableDeclaration1: refactoring.getTargetOperationAfterInline().getBody().getAllVariableDeclarations()) {
             if (variableDeclaration.equalVariableDeclarationType(variableDeclaration1) && variableDeclaration.equalQualifiedType(variableDeclaration1) &&
-            		((variableDeclaration.getInitializer() != null && variableDeclaration1.getInitializer() != null && variableDeclaration.getInitializer().equalFragment(variableDeclaration1.getInitializer())) || variableDeclaration1.getInitializer() == null )) {
+            		((variableDeclaration.getInitializer() != null && variableDeclaration1.getInitializer() != null && variableDeclaration.getInitializer().equalFragment(variableDeclaration1.getInitializer(), variableDeclaration.getInitializer().getString())) || variableDeclaration1.getInitializer() == null )) {
                 return true;
             }
         }
@@ -4792,8 +4789,7 @@ Mapping state for Move Method refactoring purity:
         for (Refactoring refactoring1 : refactorings) {
             if (refactoring1.getRefactoringType().equals(RefactoringType.EXTRACT_VARIABLE)) {
                 if (((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getInitializer() != null) {
-                    ((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getInitializer().replaceParametersWithArguments(parameterToArgumentMap);
-                    patterns.put(((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getInitializer().getArgumentizedString(), ((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getVariableName());
+                    patterns.put(((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getInitializer().replaceParametersWithArguments(parameterToArgumentMap), ((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getVariableName());
                     patterns.put(((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getInitializer().getString(), ((ExtractVariableRefactoring) refactoring1).getVariableDeclaration().getVariableName());
                 }
             }
@@ -4814,9 +4810,8 @@ Mapping state for Move Method refactoring purity:
         List<AbstractCodeFragment> nonMappedNodesT2ToRemove = new ArrayList<>();
 
         for (AbstractCodeFragment abstractCodeFragment : nonMappedInnerNodesT2) {
-            abstractCodeFragment.replaceParametersWithArguments(refactoring.getParameterToArgumentMap());
             if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.IF_STATEMENT)) {
-                if (abstractCodeFragment.getArgumentizedString().equals("if(true)")) {
+                if (abstractCodeFragment.replaceParametersWithArguments(refactoring.getParameterToArgumentMap()).equals("if(true)")) {
                     nonMappedNodesT2ToRemove.add(abstractCodeFragment);
                 }
             }
@@ -4873,7 +4868,7 @@ Mapping state for Move Method refactoring purity:
         if(refactoring.getExtractedOperation().getBody() != null) {
             List<AbstractStatement> statementList = refactoring.getExtractedOperation().getBody().getCompositeStatement().getAllStatements();
             for (AbstractStatement abstractStatement : statementList) {
-                if (abstractStatement.getString().contains(variableName) && !abstractStatement.equalFragment(abstractCodeFragment)) {
+                if (abstractStatement.getString().contains(variableName) && !abstractStatement.equalFragment(abstractCodeFragment, refactoring.getBodyMapper().getArgumentizedString(abstractStatement))) {
                     if (!isPrintOrLog(abstractStatement.getString())) {
                         return false;
                     }
@@ -5772,8 +5767,7 @@ Mapping state for Move Method refactoring purity:
                 for (Replacement replacement : replacementsToCheck) {
                     if (replacement.getType().equals(Replacement.ReplacementType.COMPOSITE)
                             || replacement.getType().equals(Replacement.ReplacementType.CONDITIONAL)) {
-                        if (replacement.getAfter().equals(((MergeConditionalRefactoring) (refactoring1)).getNewConditional().getString()) ||
-                                replacement.getAfter().equals(((MergeConditionalRefactoring) (refactoring1)).getNewConditional().getArgumentizedString())) {
+                        if (replacement.getAfter().equals(((MergeConditionalRefactoring) (refactoring1)).getNewConditional().getString())) {
                             replacementsToRemove.add(replacement);
                         }
                     }
@@ -6384,21 +6378,25 @@ Mapping state for Move Method refactoring purity:
 		replacementsToCheck.removeAll(replacementsToRemove);
 	}
 
+	private static String argumentizedString(AbstractCodeFragment fragment, ExtractVariableRefactoring refactoring) {
+		for (AbstractCodeMapping mapping : refactoring.getReferences()) {
+			return mapping.getArgumentizedString(fragment);
+		}
+		return fragment.getString();
+	}
+
 	private static boolean isPurelyExact(AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap) {
 		AbstractCodeFragment fragment1 = mapping.getFragment1();
 		AbstractCodeFragment fragment2 = mapping.getFragment2();
-		fragment2.replaceParametersWithArguments(parameterToArgumentMap);
-		fragment1.replaceParametersWithArguments(parameterToArgumentMap);
-		return mapping.isExact();
+		return mapping.isExact(fragment1.replaceParametersWithArguments(parameterToArgumentMap), fragment2.replaceParametersWithArguments(parameterToArgumentMap));
 	}
 
 	private static boolean checkForSupplierPattern(AbstractCodeMapping mapping, Replacement replacement, Map<String, String> parameterToArgumentMap) {
 		AbstractCodeFragment fragment1 = mapping.getFragment1();
 		AbstractCodeFragment fragment2 = mapping.getFragment2();
-		fragment2.replaceParametersWithArguments(parameterToArgumentMap);
 
 		String s1 = fragment1.getString();
-		String s2 = fragment2.getArgumentizedString();
+		String s2 = fragment2.replaceParametersWithArguments(parameterToArgumentMap);
 		String lambdaArrow = "()" + LANG2.LAMBDA_ARROW;
 		String supplierGet = ".get()";
 		String tmp = s2.replace(supplierGet, "");

@@ -228,13 +228,6 @@ public class CompositeStatementObject extends AbstractStatement {
 		return false;
 	}
 
-	public void resetArgumentization() {
-		super.resetArgumentization();
-		for(AbstractExpression expression : expressionList) {
-			expression.resetArgumentization();
-		}
-	}
-
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(locationInfo.getCodeElementType().getName());

@@ -3537,7 +3537,7 @@ public class ReplacementAlgorithm {
 							List<String> arguments = invocation2.arguments();
 							if(arguments.size() == 1) {
 								for(String arg : invocationCoveringTheEntireStatement1.arguments()) {
-									if(statement2.getArgumentizedString().contains(arg)) {
+									if(operationBodyMapper.getArgumentizedString(statement2).contains(arg)) {
 										Replacement replacement = new MethodInvocationReplacement(
 												invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 												invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3546,7 +3546,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(".")) {
 										String trim = arg.substring(arg.indexOf(".") + 1, arg.length());
-										if(statement2.getArgumentizedString().contains(trim)) {
+										if(operationBodyMapper.getArgumentizedString(statement2).contains(trim)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3557,7 +3557,7 @@ public class ReplacementAlgorithm {
 									if(arg.contains(" instanceof ")) {
 										String before = arg.substring(0, arg.indexOf(" instanceof "));
 										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
-										if(statement2.getArgumentizedString().contains(before) && statement2.getArgumentizedString().contains(after)) {
+										if(operationBodyMapper.getArgumentizedString(statement2).contains(before) && operationBodyMapper.getArgumentizedString(statement2).contains(after)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3567,7 +3567,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(" > 0")) {
 										String before = arg.substring(0, arg.indexOf(" > 0"));
-										if(statement2.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement2).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3577,7 +3577,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(" < 0")) {
 										String before = arg.substring(0, arg.indexOf(" < 0"));
-										if(statement2.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement2).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3587,7 +3587,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(" == 0")) {
 										String before = arg.substring(0, arg.indexOf(" == 0"));
-										if(statement2.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement2).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3597,7 +3597,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.endsWith(".isEmpty()")) {
 										String before = arg.substring(0, arg.indexOf(".isEmpty()"));
-										if(statement2.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement2).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocationCoveringTheEntireStatement1.actualString(), invocation2.actualString(),
 													invocationCoveringTheEntireStatement1, invocation2, ReplacementType.ASSERTION_CONVERSION);
@@ -3682,7 +3682,7 @@ public class ReplacementAlgorithm {
 							List<String> arguments = invocation1.arguments();
 							if(arguments.size() == 1) {
 								for(String arg : invocationCoveringTheEntireStatement2.arguments()) {
-									if(statement1.getArgumentizedString().contains(arg)) {
+									if(operationBodyMapper.getArgumentizedString(statement1).contains(arg)) {
 										Replacement replacement = new MethodInvocationReplacement(
 												invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 												invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3691,7 +3691,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(".")) {
 										String trim = arg.substring(arg.indexOf(".") + 1, arg.length());
-										if(statement1.getArgumentizedString().contains(trim)) {
+										if(operationBodyMapper.getArgumentizedString(statement1).contains(trim)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3702,7 +3702,7 @@ public class ReplacementAlgorithm {
 									if(arg.contains(" instanceof ")) {
 										String before = arg.substring(0, arg.indexOf(" instanceof "));
 										String after = arg.substring(arg.indexOf(" instanceof ") + " instanceof ".length(), arg.length());
-										if(statement1.getArgumentizedString().contains(before) && statement1.getArgumentizedString().contains(after)) {
+										if(operationBodyMapper.getArgumentizedString(statement1).contains(before) && operationBodyMapper.getArgumentizedString(statement1).contains(after)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3712,7 +3712,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(" > 0")) {
 										String before = arg.substring(0, arg.indexOf(" > 0"));
-										if(statement1.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement1).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3722,7 +3722,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(" < 0")) {
 										String before = arg.substring(0, arg.indexOf(" < 0"));
-										if(statement1.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement1).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3732,7 +3732,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.contains(" == 0")) {
 										String before = arg.substring(0, arg.indexOf(" == 0"));
-										if(statement1.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement1).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -3742,7 +3742,7 @@ public class ReplacementAlgorithm {
 									}
 									else if(arg.endsWith(".isEmpty()")) {
 										String before = arg.substring(0, arg.indexOf(".isEmpty()"));
-										if(statement1.getArgumentizedString().contains(before)) {
+										if(operationBodyMapper.getArgumentizedString(statement1).contains(before)) {
 											Replacement replacement = new MethodInvocationReplacement(
 													invocation1.actualString(), invocationCoveringTheEntireStatement2.actualString(),
 													invocation1, invocationCoveringTheEntireStatement2, ReplacementType.ASSERTION_CONVERSION);
@@ -7012,11 +7012,8 @@ public class ReplacementAlgorithm {
 				if(parentMapper != null && statement1 instanceof AbstractExpression && statement2 instanceof AbstractExpression) {
 					parentMapper.getAnonymousClassDiffs().add(anonymousClassDiff);
 				}
-				if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
-					classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
-				}
-				if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
-					classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+				if(classDiff != null) {
+					classDiff.anonymousClassesMatched(anonymousClass1, anonymousClass2);
 				}
 				if(!anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString())) {
 					Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);

@@ -77,11 +77,8 @@ public class ExtractAttributeRefactoring extends AbstractRefactoring implements 
 						anonymousClassDiffList.add(anonymousClassDiff);
 						List<Refactoring> anonymousClassDiffRefactorings = anonymousClassDiff.getRefactorings();
 						allRefactorings.addAll(anonymousClassDiffRefactorings);
-						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(before)) {
-							classDiff.getRemovedAnonymousClasses().remove(before);
-						}
-						if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(after)) {
-							classDiff.getAddedAnonymousClasses().remove(after);
+						if(classDiff != null) {
+							classDiff.anonymousClassesMatched(before, after);
 						}
 					}
 				}

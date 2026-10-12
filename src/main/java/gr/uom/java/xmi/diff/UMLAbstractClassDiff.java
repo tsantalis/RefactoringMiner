@@ -298,6 +298,23 @@ public abstract class UMLAbstractClassDiff {
 		return nestedClassDiffList;
 	}
 
+	public void anonymousClassesMatched(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2) {
+		removedAnonymousClasses.remove(anonymousClass1);
+		addedAnonymousClasses.remove(anonymousClass2);
+	}
+
+	public void anonymousClassUnmatched1(UMLAnonymousClass anonymousClass) {
+		if(!removedAnonymousClasses.contains(anonymousClass)) {
+			removedAnonymousClasses.add(anonymousClass);
+		}
+	}
+
+	public void anonymousClassUnmatched2(UMLAnonymousClass anonymousClass) {
+		if(!addedAnonymousClasses.contains(anonymousClass)) {
+			addedAnonymousClasses.add(anonymousClass);
+		}
+	}
+
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {
 		this.addedAnonymousClasses.add(umlClass);
 	}

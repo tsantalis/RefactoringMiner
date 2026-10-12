@@ -836,6 +836,49 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
     }
 
+    //the statement was moved out of the function of a top-level statement to the top level,
+    //i.e., module.exports = function(Chart) { Chart.defaults.bar = {...}; } -> defaults._set('bar', {...}); module.exports = function(Chart) {}
+    //the source statement is moved before the top-level statement containing it, so that its contents are not moved
+    private static void moveToTopLevel(Tree statement1, Tree statement2) {
+        Tree program2 = statement2.getParent();
+        if(program2 == null || program2.getParent() != null) {
+            return;
+        }
+        Tree topLevelStatement1 = statement1;
+        while(topLevelStatement1.getParent() != null && topLevelStatement1.getParent().getParent() != null) {
+            topLevelStatement1 = topLevelStatement1.getParent();
+        }
+        Tree program1 = topLevelStatement1.getParent();
+        if(program1 == null || topLevelStatement1 == statement1) {
+            return;
+        }
+        Tree parent1 = statement1.getParent();
+        parent1.getChildren().remove(parent1.getChildPosition(statement1));
+        program1.insertChild(statement1, program1.getChildPosition(topLevelStatement1));
+    }
+
+    //the name of the assigned property is passed as a string argument, i.e., object.name = value replaced with object._set('name', value)
+    private static boolean propertyNamePassedAsArgument(Tree assignment1, Tree arguments2, Constants LANG1, Constants LANG2) {
+        Tree leftHandSide1 = assignment1.getChild(0);
+        if(!leftHandSide1.getType().name.equals(LANG1.MEMBER_EXPRESSION) || leftHandSide1.getChildren().isEmpty()) {
+            return false;
+        }
+        Tree property1 = leftHandSide1.getChild(leftHandSide1.getChildren().size()-1);
+        if(!property1.getType().name.equals(LANG1.PROPERTY_IDENTIFIER)) {
+            return false;
+        }
+        for(Tree argument2 : arguments2.getChildren()) {
+            if(argument2.getType().name.equals(LANG2.STRING)) {
+                for(Tree stringChild : argument2.getChildren()) {
+                    if(stringChild.getLabel().equals(property1.getLabel())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public static void processObjectLiteralWithinMethodCall(Tree object1, Tree object2, ExtendedMultiMappingStore mappingStore, Constants LANG1, Constants LANG2) {
         if(object1.getParent().getType().name.equals(LANG1.METHOD_INVOCATION_ARGUMENTS) && object2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS)) {
             Tree arguments1 = object1.getParent();
@@ -960,6 +1003,37 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (semicolons != null) {
                     mappingStore.addMapping(semicolons.first, semicolons.second);
                 }
+            }
+        }
+        else if(object1.getParent().getType().name.equals(LANG1.ASSIGNMENT_EXPRESSION) && object2.getParent().getType().name.equals(LANG2.METHOD_INVOCATION_ARGUMENTS) &&
+                object2.getParent().getParent() != null && object2.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION) &&
+                propertyNamePassedAsArgument(object1.getParent(), object2.getParent(), LANG1, LANG2)) {
+            //object.name = {...} replaced with object._set('name', {...})
+            Tree assignment1 = object1.getParent();
+            Tree arguments2 = object2.getParent();
+            Tree call2 = arguments2.getParent();
+            //remove the arguments node, so that the objects have mapped parents and are not reported as moved
+            Set<Tree> srcs = mappingStore.getSrcs(arguments2);
+            if(srcs != null) {
+                for(Tree src : new ArrayList<>(srcs)) {
+                    mappingStore.removeMapping(src, arguments2);
+                }
+            }
+            int index = call2.getChildPosition(arguments2);
+            call2.getChildren().remove(index);
+            for(Tree argumentChild : new ArrayList<>(arguments2.getChildren())) {
+                call2.insertChild(argumentChild, index++);
+            }
+            mappingStore.addMapping(assignment1, call2);
+            if(assignment1.getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT) && call2.getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
+                Tree statement1 = assignment1.getParent();
+                Tree statement2 = call2.getParent();
+                mappingStore.addMapping(statement1, statement2);
+                com.github.gumtreediff.utils.Pair<Tree,Tree> semicolons = Helpers.findPairOfType(statement1, statement2,LANG1.SEMICOLON,LANG2.SEMICOLON);
+                if (semicolons != null) {
+                    mappingStore.addMapping(semicolons.first, semicolons.second);
+                }
+                moveToTopLevel(statement1, statement2);
             }
         }
         else if(object1.getParent().getType().name.equals(LANG1.PAIR) && object2.getParent().getType().name.equals(LANG2.PAIR)) {

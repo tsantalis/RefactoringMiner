@@ -299,6 +299,17 @@ public class TypeScriptOperationBody extends OperationBody {
 					addStatementInVariableScopes(child);
 				}
 			}
+			else if(expressionStatement.getExpr() instanceof Swc4jAstCallExpr callExpr && callExpr.getCallee() instanceof Swc4jAstMemberExpr memberExpr &&
+					memberExpr.getProp() instanceof Swc4jAstIdentName ident && ident.getSym().equals("_set") && callExpr.getArgs().size() == 2 &&
+					callExpr.getArgs().get(0).getExpr() instanceof Swc4jAstStr && callExpr.getArgs().get(1).getExpr() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
+				//object._set('name', {...}) is processed like object.name = {...}
+				UMLAnonymousClass anonymous = createAnonymousClass(objectLiteral, sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations);
+				if(anonymous.getOperations().isEmpty()) {
+					StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
+					parent.addStatement(child);
+					addStatementInVariableScopes(child);
+				}
+			}
 			else {
 				StatementObject child = new StatementObject(sourceFolder, filePath, expressionStatement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
 				parent.addStatement(child);

@@ -406,12 +406,34 @@
   "firstEndPos" : 93,
   "secondEndPos" : 1403
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 96,
+  "secondPos" : 108,
+  "firstEndPos" : 417,
+  "secondEndPos" : 412
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 96,
+  "secondPos" : 108,
+  "firstEndPos" : 416,
+  "secondEndPos" : 411
+}, {
   "firstType" : "object",
   "secondType" : "object",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "assignment_expression",
-  "secondParentType" : "arguments",
+  "secondParentType" : "call_expression",
   "firstPos" : 117,
   "secondPos" : 129,
   "firstEndPos" : 416,
@@ -1274,6 +1296,17 @@
   "secondPos" : 409,
   "firstEndPos" : 416,
   "secondEndPos" : 410
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 416,
+  "secondPos" : 411,
+  "firstEndPos" : 417,
+  "secondEndPos" : 412
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -30106,12 +30139,34 @@
   "firstEndPos" : 8934,
   "secondEndPos" : 9920
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 9059,
+  "secondPos" : 414,
+  "firstEndPos" : 10122,
+  "secondEndPos" : 1367
+}, {
+  "firstType" : "assignment_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 9059,
+  "secondPos" : 414,
+  "firstEndPos" : 10121,
+  "secondEndPos" : 1366
+}, {
   "firstType" : "object",
   "secondType" : "object",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "assignment_expression",
-  "secondParentType" : "arguments",
+  "secondParentType" : "call_expression",
   "firstPos" : 9090,
   "secondPos" : 445,
   "firstEndPos" : 10121,
@@ -33570,6 +33625,17 @@
   "secondPos" : 1364,
   "firstEndPos" : 10121,
   "secondEndPos" : 1365
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 10121,
+  "secondPos" : 1366,
+  "firstEndPos" : 10122,
+  "secondEndPos" : 1367
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

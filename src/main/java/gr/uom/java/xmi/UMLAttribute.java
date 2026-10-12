@@ -39,7 +39,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
 	private List<UMLComment> comments;
-	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private volatile Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private Optional<UMLOperation> customGetter;
 	private Optional<UMLOperation> customSetter;
 	private final Constants LANG;
@@ -277,8 +277,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	}
 
 	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
-		if(this.variableDeclarationMap == null) {
-			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+		//build the map before publishing it, because operations are shared between mappers constructed in parallel
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = this.variableDeclarationMap;
+		if(variableDeclarationMap == null) {
+			variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
 			for(VariableDeclaration declaration : getAllVariableDeclarations()) {
 				if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
 					variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
@@ -289,6 +291,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 					variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
 				}
 			}
+			this.variableDeclarationMap = variableDeclarationMap;
 		}
 		return variableDeclarationMap;
 	}

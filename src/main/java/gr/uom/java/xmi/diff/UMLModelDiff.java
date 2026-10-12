@@ -68,6 +68,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -7191,6 +7195,7 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				List<OperationPair> candidatePairs = new ArrayList<OperationPair>();
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
 					if(removedOperation.getLANG().equals(Constants.CPP) && removedOperation.getName().endsWith("_Test::TestBody"))
@@ -7200,9 +7205,10 @@ public class UMLModelDiff {
 							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
-						processMethodPair(removedOperations, addedOperations, removedOperation, addedOperation, operationBodyMapperMap, pair);
+						candidatePairs.add(new OperationPair(removedOperation, addedOperation));
 					}
 				}
+				processMethodPairs(removedOperations, addedOperations, candidatePairs, operationBodyMapperMap);
 				if(!operationBodyMapperMap.isEmpty()) {
 					List<UMLOperationBodyMapper> firstMappers = firstMappers(operationBodyMapperMap);
 					Collections.sort(firstMappers, new UMLOperationBodyMapperComparator());
@@ -7321,6 +7327,7 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				List<OperationPair> candidatePairs = new ArrayList<OperationPair>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
 					if(addedOperation.getLANG().equals(Constants.CPP) && addedOperation.getName().endsWith("_Test::TestBody"))
@@ -7330,9 +7337,10 @@ public class UMLModelDiff {
 							(!removedOperation.getLocationInfo().getFilePath().equals(addedOperation.getLocationInfo().getFilePath()) || removedOperation.getAnonymousClassContainer().isPresent() || addedOperation.getAnonymousClassContainer().isPresent());
 					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && (!removedOperation.getClassName().equals(addedOperation.getClassName()) || sameClassNameButDifferentFilePath) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
-						processMethodPair(removedOperations, addedOperations, removedOperation, addedOperation, operationBodyMapperMap, pair);
+						candidatePairs.add(new OperationPair(removedOperation, addedOperation));
 					}
 				}
+				processMethodPairs(removedOperations, addedOperations, candidatePairs, operationBodyMapperMap);
 				if(!operationBodyMapperMap.isEmpty()) {
 					List<UMLOperationBodyMapper> firstMappers = firstMappers(operationBodyMapperMap);
 					Collections.sort(firstMappers, new UMLOperationBodyMapperComparator());
@@ -7396,16 +7404,107 @@ public class UMLModelDiff {
 		}
 	}
 
-	private void processMethodPair(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
-			UMLOperation removedOperation, UMLOperation addedOperation,
-			TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap,
-			Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair)
-			throws RefactoringMinerTimedOutException {
+	private record OperationPair(UMLOperation removedOperation, UMLOperation addedOperation) {}
+
+	private record MoveCandidateMapper(UMLOperationBodyMapper mapper, List<Runnable> anonymousClassChanges) {}
+
+	private static final int MOVE_CANDIDATE_THREADS = Runtime.getRuntime().availableProcessors();
+	private static final ExecutorService MOVE_CANDIDATE_POOL = Executors.newFixedThreadPool(MOVE_CANDIDATE_THREADS, runnable -> {
+		Thread thread = new Thread(runnable, "move-candidate-mapper");
+		thread.setDaemon(true);
+		return thread;
+	});
+
+	private UMLClassBaseDiff moveCandidateClassDiff(UMLOperation removedOperation, UMLOperation addedOperation) {
 		UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 		if(umlClassDiff == null) {
 			umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
 		}
-		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, umlClassDiff);
+		return umlClassDiff;
+	}
+
+	private void processMethodPairs(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
+			List<OperationPair> candidatePairs,
+			TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap)
+			throws RefactoringMinerTimedOutException {
+		if(candidatePairs.size() < 2 || MOVE_CANDIDATE_THREADS < 2) {
+			for(OperationPair candidatePair : candidatePairs) {
+				UMLOperation removedOperation = candidatePair.removedOperation();
+				UMLOperation addedOperation = candidatePair.addedOperation();
+				UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, moveCandidateClassDiff(removedOperation, addedOperation));
+				processMethodPair(removedOperations, addedOperations, removedOperation, addedOperation, operationBodyMapperMap, operationBodyMapper);
+			}
+			return;
+		}
+		List<MoveCandidateMapper> candidateMappers = createMoveCandidateMappersInParallel(candidatePairs);
+		for(int i=0; i<candidatePairs.size(); i++) {
+			OperationPair candidatePair = candidatePairs.get(i);
+			MoveCandidateMapper candidateMapper = candidateMappers.get(i);
+			//apply the changes in the anonymous class lists in the same order as in a sequential execution
+			for(Runnable change : candidateMapper.anonymousClassChanges()) {
+				change.run();
+			}
+			processMethodPair(removedOperations, addedOperations, candidatePair.removedOperation(), candidatePair.addedOperation(), operationBodyMapperMap, candidateMapper.mapper());
+		}
+	}
+
+	private List<MoveCandidateMapper> createMoveCandidateMappersInParallel(List<OperationPair> candidatePairs) throws RefactoringMinerTimedOutException {
+		List<Future<MoveCandidateMapper>> futures = new ArrayList<Future<MoveCandidateMapper>>();
+		for(OperationPair candidatePair : candidatePairs) {
+			UMLOperation removedOperation = candidatePair.removedOperation();
+			UMLOperation addedOperation = candidatePair.addedOperation();
+			UMLClassBaseDiff umlClassDiff = moveCandidateClassDiff(removedOperation, addedOperation);
+			futures.add(MOVE_CANDIDATE_POOL.submit(() -> {
+				List<Runnable> anonymousClassChanges = UMLAbstractClassDiff.startRecordingAnonymousClassChanges();
+				try {
+					return new MoveCandidateMapper(new UMLOperationBodyMapper(removedOperation, addedOperation, umlClassDiff), anonymousClassChanges);
+				}
+				finally {
+					UMLAbstractClassDiff.stopRecordingAnonymousClassChanges();
+				}
+			}));
+		}
+		List<MoveCandidateMapper> candidateMappers = new ArrayList<MoveCandidateMapper>();
+		try {
+			for(Future<MoveCandidateMapper> future : futures) {
+				candidateMappers.add(future.get());
+			}
+		}
+		catch(InterruptedException e) {
+			//the detection timed out
+			cancel(futures);
+			throw new RefactoringMinerTimedOutException();
+		}
+		catch(ExecutionException e) {
+			cancel(futures);
+			Throwable cause = e.getCause();
+			if(cause instanceof RefactoringMinerTimedOutException timedOutException) {
+				throw timedOutException;
+			}
+			if(cause instanceof RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			if(cause instanceof Error error) {
+				throw error;
+			}
+			throw new IllegalStateException(cause);
+		}
+		return candidateMappers;
+	}
+
+	private static void cancel(List<? extends Future<?>> futures) {
+		for(Future<?> future : futures) {
+			future.cancel(true);
+		}
+	}
+
+	private void processMethodPair(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations,
+			UMLOperation removedOperation, UMLOperation addedOperation,
+			TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap,
+			UMLOperationBodyMapper operationBodyMapper)
+			throws RefactoringMinerTimedOutException {
+		UMLClassBaseDiff umlClassDiff = moveCandidateClassDiff(removedOperation, addedOperation);
+		Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
 		processedOperationPairs.add(pair);
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation) ||

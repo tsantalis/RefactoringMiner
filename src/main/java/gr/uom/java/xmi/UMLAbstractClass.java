@@ -34,7 +34,7 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 	protected Optional<ModuleContainer> container;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private Map<List<String>, Integer> operationIdentifierSignatureMap;
-	private Map<String, VariableDeclaration> fieldDeclarationMap;
+	private volatile Map<String, VariableDeclaration> fieldDeclarationMap;
 	private List<UMLInitializer> initializers;
 	private UMLType superclass;
     private List<UMLType> implementedInterfaces;
@@ -373,11 +373,13 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 	}
 
 	public Map<String, VariableDeclaration> getFieldDeclarationMap() {
-		if(this.fieldDeclarationMap == null) {
+		Map<String, VariableDeclaration> fieldDeclarationMap = this.fieldDeclarationMap;
+		if(fieldDeclarationMap == null) {
 			fieldDeclarationMap = new LinkedHashMap<String, VariableDeclaration>();
 			for(UMLAttribute attribute : attributes) {
 				fieldDeclarationMap.put(attribute.getName(), attribute.getVariableDeclaration());
 			}
+			this.fieldDeclarationMap = fieldDeclarationMap;
 		}
 		return fieldDeclarationMap;
 	}

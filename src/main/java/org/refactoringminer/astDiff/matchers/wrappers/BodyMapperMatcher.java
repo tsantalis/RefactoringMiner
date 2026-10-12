@@ -63,6 +63,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 for (UMLClassDiff nestedClassDiff : anonymousClassDiff.getNestedClassDiffList()) {
                     new ClassDiffMatcher(optimizationData, nestedClassDiff, true, Collections.emptyList(), LANG1, LANG2).match(srcTree, dstTree, mappingStore);
                 }
+                //the comments inside the anonymous class, which are not inside its operations
+                new CommentMatcher(optimizationData, anonymousClassDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
                 Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
                 Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);
                 if(srcTypeDeclaration != null && dstTypeDeclaration != null) {

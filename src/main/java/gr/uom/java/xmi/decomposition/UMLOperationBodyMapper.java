@@ -76,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -1440,16 +1441,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc(), operationSignatureDiff);
 			this.javadocDiff = Optional.of(diff);
 		}
-		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
-			for(UMLAnonymousClassDiff anonymousDiff : this.anonymousClassDiffs) {
-				for(UMLOperationBodyMapper anonymousMapper : anonymousDiff.getOperationBodyMapperList()) {
-					for(Pair<UMLComment, UMLComment> pair : anonymousMapper.commentListDiff.getCommonComments()) {
-						container1.getComments().remove(pair.getLeft());
-						container2.getComments().remove(pair.getRight());
-					}
-				}
-			}
-		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
 		checkUnmatchedStatementsBeingCommented();
 		if(operation1.getNestedImports().size() > 0 || operation2.getNestedImports().size() > 0) {
@@ -2586,41 +2577,75 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					processRemainingAnonymousClassesInRandomOrder(classDiff, container1.getAnonymousClassListIncludingNested(), container2.getAnonymousClassListIncludingNested());
 				}
 			}
-			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-				for(Pair<UMLComment, UMLComment> pair : mapper.commentListDiff.getCommonComments()) {
-					container1.getComments().remove(pair.getLeft());
-					container2.getComments().remove(pair.getRight());
-				}
-				for(UMLAnonymousClassDiff anonymousDiff : mapper.getAnonymousClassDiffs()) {
-					for(UMLOperationBodyMapper anonymousMapper : anonymousDiff.getOperationBodyMapperList()) {
-						for(Pair<UMLComment, UMLComment> pair : anonymousMapper.commentListDiff.getCommonComments()) {
-							container1.getComments().remove(pair.getLeft());
-							container2.getComments().remove(pair.getRight());
-						}
-					}
-				}
-				for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
-					for(Pair<UMLComment, UMLComment> pair : childMapper.commentListDiff.getCommonComments()) {
-						container1.getComments().remove(pair.getLeft());
-						container2.getComments().remove(pair.getRight());
-					}
-				}
-			}
-			if(modelDiff != null) {
-				for(UMLClassBaseDiff nestedClassDiff : modelDiff.getCommonClassDiffList()) {
-					if(nestedClassDiff.getOriginalClass().getSourceFile().equals(container1.getLocationInfo().getFilePath()) &&
-							nestedClassDiff.getNextClass().getSourceFile().equals(container2.getLocationInfo().getFilePath())) {
-						for(Pair<UMLComment, UMLComment> pair : nestedClassDiff.getCommentListDiff().getCommonComments()) {
-							container1.getComments().remove(pair.getLeft());
-							container2.getComments().remove(pair.getRight());
-						}
-					}
-				}
-			}
 		}
-		UMLCommentListDiff commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this);
+		List<UMLComment> comments1 = container1.getComments();
+		List<UMLComment> comments2 = container2.getComments();
+		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+			//the comments not matched within the code elements of the module can be matched at the module level,
+			//e.g., comments in object literals without an anonymous class diff, or comments in code moved between code elements
+			Set<UMLComment> matchedComments = Collections.newSetFromMap(new IdentityHashMap<UMLComment, Boolean>());
+			if(classDiff != null) {
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					collectMatchedComments(mapper, matchedComments);
+				}
+			}
+			collectMatchedComments(this, matchedComments);
+			if(modelDiff != null) {
+				//the classes of the module can be common, moved, or renamed (e.g., when the file is renamed)
+				List<UMLClassBaseDiff> classDiffs = new ArrayList<UMLClassBaseDiff>();
+				classDiffs.addAll(modelDiff.getCommonClassDiffList());
+				classDiffs.addAll(modelDiff.getClassMoveDiffList());
+				classDiffs.addAll(modelDiff.getInnerClassMoveDiffList());
+				classDiffs.addAll(modelDiff.getClassRenameDiffList());
+				for(UMLClassBaseDiff nestedClassDiff : classDiffs) {
+					if(nestedClassDiff != classDiff && nestedClassDiff.getOriginalClass().getSourceFile().equals(container1.getLocationInfo().getFilePath()) &&
+							nestedClassDiff.getNextClass().getSourceFile().equals(container2.getLocationInfo().getFilePath())) {
+						collectMatchedComments(nestedClassDiff, matchedComments);
+					}
+				}
+			}
+			comments1 = unmatchedComments(container1.getAllComments(), matchedComments);
+			comments2 = unmatchedComments(container2.getAllComments(), matchedComments);
+		}
+		UMLCommentListDiff commentListDiff = new UMLCommentListDiff(comments1, comments2, this);
 		this.commentListDiff.append(commentListDiff);
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	private static List<UMLComment> unmatchedComments(List<UMLComment> comments, Set<UMLComment> matchedComments) {
+		List<UMLComment> unmatched = new ArrayList<UMLComment>();
+		for(UMLComment comment : comments) {
+			if(!matchedComments.contains(comment)) {
+				unmatched.add(comment);
+			}
+		}
+		return unmatched;
+	}
+
+	private static void collectMatchedComments(UMLAbstractClassDiff classDiff, Set<UMLComment> matchedComments) {
+		addCommonComments(classDiff.getCommentListDiff(), matchedComments);
+		for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+			collectMatchedComments(mapper, matchedComments);
+		}
+	}
+
+	private static void collectMatchedComments(UMLOperationBodyMapper mapper, Set<UMLComment> matchedComments) {
+		addCommonComments(mapper.commentListDiff, matchedComments);
+		for(UMLAnonymousClassDiff anonymousClassDiff : mapper.getAnonymousClassDiffs()) {
+			collectMatchedComments(anonymousClassDiff, matchedComments);
+		}
+		for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
+			collectMatchedComments(childMapper, matchedComments);
+		}
+	}
+
+	private static void addCommonComments(UMLCommentListDiff commentListDiff, Set<UMLComment> matchedComments) {
+		if(commentListDiff != null) {
+			for(Pair<UMLComment, UMLComment> pair : commentListDiff.getCommonComments()) {
+				matchedComments.add(pair.getLeft());
+				matchedComments.add(pair.getRight());
+			}
+		}
 	}
 
 	private int matchNestedDescribeMaps(AbstractStatement statement1, AbstractStatement statement2) throws RefactoringMinerTimedOutException {
@@ -2764,12 +2789,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
 		}
 		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments(), this);
-		if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
-			for(Pair<UMLComment, UMLComment> pair : this.commentListDiff.getCommonComments()) {
-				parentMapper.getContainer1().getComments().remove(pair.getLeft());
-				parentMapper.getContainer2().getComments().remove(pair.getRight());
-			}
-		}
 		checkUnmatchedStatementsBeingCommented();
 	}
 

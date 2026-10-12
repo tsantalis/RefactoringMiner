@@ -158,7 +158,7 @@ public class TypeScriptOperationBody extends OperationBody {
 	public TypeScriptOperationBody(Swc4jAstModule module, String sourceFolder, String filePath, List<? extends ISwc4jAstModuleItem> statements, VariableDeclarationContainer container, String fileContent) {
 		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, module, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
-		this.comments = container.getComments();
+		this.comments = commentList(container);
 		this.container = container;
 		this.bodyHashCode = statements.stream()
 				.map(statement -> fileContent.substring(statement.getSpan().getStart(), statement.getSpan().getEnd()))
@@ -173,7 +173,7 @@ public class TypeScriptOperationBody extends OperationBody {
 	public TypeScriptOperationBody(String sourceFolder, String filePath, Swc4jAstBlockStmt block, VariableDeclarationContainer container, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.compositeStatement = new CompositeStatementObject(sourceFolder, filePath, block, 0, CodeElementType.BLOCK, fileContent);
 		this.compositeStatement.setOwner(container);
-		this.comments = container.getComments();
+		this.comments = commentList(container);
 		this.container = container;
 		this.bodyHashCode = fileContent.substring(block.getSpan().getStart(), block.getSpan().getEnd()).hashCode();
 		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
@@ -500,7 +500,8 @@ public class TypeScriptOperationBody extends OperationBody {
 						else {
 							operation.setVisibility(Visibility.PRIVATE);
 						}
-						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments);
+						//a function declared in a statement of an operation does not take the comment in the line before the statement, like in Java
+						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments, container instanceof ModuleContainer);
 						int startSignatureOffset = variableDecl.getSpan().getStart();
 						int endSignatureOffset = arrowExpr.getBody().getSpan().getStart();
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
@@ -539,7 +540,8 @@ public class TypeScriptOperationBody extends OperationBody {
 							operation.setVisibility(Visibility.PRIVATE);
 						}
 						Swc4jAstFunction function = functionExpr.getFunction();
-						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments);
+						//a function declared in a statement of an operation does not take the comment in the line before the statement, like in Java
+						TypeScriptFileProcessor.processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, container instanceof ModuleContainer);
 						if(container instanceof UMLOperation) {
 							((UMLOperation)container).addNestedOperation(operation);
 						}
@@ -620,7 +622,8 @@ public class TypeScriptOperationBody extends OperationBody {
 						else {
 							operation.setVisibility(Visibility.PRIVATE);
 						}
-						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments);
+						//a function declared in a statement of an operation does not take the comment in the line before the statement, like in Java
+						processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments, container instanceof ModuleContainer);
 						int startSignatureOffset = variableDecl.getSpan().getStart();
 						int endSignatureOffset = arrowExpr.getBody().getSpan().getStart();
 						String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
@@ -1013,7 +1016,13 @@ public class TypeScriptOperationBody extends OperationBody {
 	private static void processArrowExpression(String sourceFolder, String filePath, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
 			List<UMLClass> typeDeclarations, Swc4jAstArrowExpr arrowExpr, Swc4jAstTsTypeAnn typeAnnotation,
 			UMLOperation operation, List<UMLComment> comments) {
-		processComments(comments, operation);
+		processArrowExpression(sourceFolder, filePath, activeVariableDeclarations, fileContent, typeDeclarations, arrowExpr, typeAnnotation, operation, comments, true);
+	}
+
+	private static void processArrowExpression(String sourceFolder, String filePath, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
+			List<UMLClass> typeDeclarations, Swc4jAstArrowExpr arrowExpr, Swc4jAstTsTypeAnn typeAnnotation,
+			UMLOperation operation, List<UMLComment> comments, boolean leadingComment) {
+		processComments(comments, operation, leadingComment);
 		if(arrowExpr.getReturnType().isPresent()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, arrowExpr.getReturnType().get().getTypeAnn(), 0);
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
@@ -1103,6 +1112,8 @@ public class TypeScriptOperationBody extends OperationBody {
 	public static void processObjectLiteral(String sourceFolder, String filePath, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
 			List<UMLClass> typeDeclarations, List<UMLComment> comments, Swc4jAstObjectLit objectLiteral, UMLAbstractClass umlClass) {
 		processComments(comments, umlClass);
+		//the members take their comments from the object literal
+		comments = umlClass.getComments();
 		List<ISwc4jAstPropOrSpread> props = objectLiteral.getProps();
 		for(ISwc4jAstPropOrSpread prop : props) {
 			if(prop instanceof ISwc4jAstProp astProp) {
@@ -1207,10 +1218,21 @@ public class TypeScriptOperationBody extends OperationBody {
 		}
 	}
 
+	//like in the other languages, a comment belongs only to the innermost code element containing it,
+	//so the comments of a code element are moved from the comment list of its enclosing code element
 	public static void processComments(List<UMLComment> comments, CommentProvider operation) {
+		processComments(comments, operation, true);
+	}
+
+	//leadingComment: whether the code element takes the comment in the line before it
+	public static void processComments(List<UMLComment> comments, CommentProvider operation, boolean leadingComment) {
+		List<UMLComment> movedComments = new ArrayList<UMLComment>();
+		//like in Java, anonymous classes (object literals) do not take the comment in the line before them
+		boolean anonymousClass = operation.getLocationInfo().getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		for(UMLComment comment : comments) {
-			if(operation.getLocationInfo().subsumes(comment.getLocationInfo()) || operation.getLocationInfo().nextLine(comment.getLocationInfo())) {
+			if(operation.getLocationInfo().subsumes(comment.getLocationInfo()) || (leadingComment && !anonymousClass && operation.getLocationInfo().nextLine(comment.getLocationInfo()))) {
 				operation.getComments().add(comment);
+				movedComments.add(comment);
 				if(comment.getText().contains("@private") && operation.getLocationInfo().nextLine(comment.getLocationInfo())) {
 					if(operation instanceof UMLOperation op) {
 						op.setVisibility(Visibility.PRIVATE);
@@ -1218,6 +1240,17 @@ public class TypeScriptOperationBody extends OperationBody {
 				}
 			}
 		}
+		if(!movedComments.isEmpty()) {
+			comments.removeAll(movedComments);
+		}
+	}
+
+	//lambdas do not own comments, they expose the comments of their owner within their range
+	private static List<UMLComment> commentList(VariableDeclarationContainer container) {
+		while(container instanceof LambdaExpressionObject lambda && lambda.getOwner() != null) {
+			container = lambda.getOwner();
+		}
+		return container.getComments();
 	}
 
 	private static void addToContainer(VariableDeclarationContainer container, UMLClass umlClass) {
@@ -1249,7 +1282,7 @@ public class TypeScriptOperationBody extends OperationBody {
 			List<UMLImport> imports = new ArrayList<>();
 			String codePath = getAnonymousCodePath(node, fileContent);
 			anonymousClass = new UMLAnonymousClass(container.getClassName(), codePath, codePath, location, imports);
-			processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, container.getComments(), node, anonymousClass);
+			processObjectLiteral(sourceFolder, filePath, container, activeVariableDeclarations, fileContent, typeDeclarations, commentList(container), node, anonymousClass);
 		}
 		if(container instanceof LambdaExpressionObject lambda) {
 			VariableDeclarationContainer owner = lambda.getOwner();
@@ -1426,7 +1459,8 @@ public class TypeScriptOperationBody extends OperationBody {
 			}
 		}
 		List<ISwc4jAstClassMember> typeElements = clazz.getBody();
-		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations, comments);
+		//the members take their comments from the class
+		processClassMembers(sourceFolder, filePath, fileContent, umlClass, typeElements, typeDeclarations, umlClass.getComments());
 	}
 
 	private void processTypeLiteral(String sourceFolder, String filePath, String fileContent, UMLClass umlClass,

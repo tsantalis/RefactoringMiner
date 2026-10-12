@@ -1363,17 +1363,6 @@
   "firstEndPos" : 1171,
   "secondEndPos" : 971
 }, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "    \n     * Checks whether the given node can convert to the `v-slot`.\n     * @param {VAttribute} slotAttr node of `slot`\n     * @returns {boolean} `true` if the given node can convert to the `v-slot`\n     */",
-  "secondLabel" : "    \n     * Checks whether the given node can convert to the `v-slot`.\n     */",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 964,
-  "secondPos" : 1413,
-  "firstEndPos" : 1171,
-  "secondEndPos" : 1490
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
@@ -2330,17 +2319,6 @@
   "secondPos" : 1406,
   "firstEndPos" : 1586,
   "secondEndPos" : 1407
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "    \n     * Checks whether the given node can convert to the `v-slot`.\n     * @param {VDirective} slotAttr node of `v-bind:slot`\n     * @returns {boolean} `true` if the given node can convert to the `v-slot`\n     */",
-  "secondLabel" : "    \n     * Checks whether the given node can convert to the `v-slot`.\n     */",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 1592,
-  "secondPos" : 894,
-  "firstEndPos" : 1806,
-  "secondEndPos" : 971
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -3408,28 +3386,6 @@
   "secondPos" : 1914,
   "firstEndPos" : 2210,
   "secondEndPos" : 1915
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "    \n     * Convert to `v-slot`.\n     * @param {RuleFixer} fixer fixer\n     * @param {VAttribute|VDirective} slotAttr node of `slot`\n     * @param {string | null} slotName name of `slot`\n     * @param {boolean} vBind `true` if `slotAttr` is `v-bind:slot`\n     * @returns {IterableIterator<Fix>} fix data\n     */",
-  "secondLabel" : "    \n     * Checks whether the given node can convert to the `v-slot`.\n     */",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2216,
-  "secondPos" : 894,
-  "firstEndPos" : 2526,
-  "secondEndPos" : 971
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "    \n     * Convert to `v-slot`.\n     * @param {RuleFixer} fixer fixer\n     * @param {VAttribute|VDirective} slotAttr node of `slot`\n     * @param {string | null} slotName name of `slot`\n     * @param {boolean} vBind `true` if `slotAttr` is `v-bind:slot`\n     * @returns {IterableIterator<Fix>} fix data\n     */",
-  "secondLabel" : "    \n     * Checks whether the given node can convert to the `v-slot`.\n     */",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2216,
-  "secondPos" : 1413,
-  "firstEndPos" : 2526,
-  "secondEndPos" : 1490
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

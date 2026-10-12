@@ -29,7 +29,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	private List<UMLAnonymousClass> anonymousClassList;
 	private UMLJavadoc javadoc;
 	private List<UMLComment> comments;
-	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private volatile Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private final Constants LANG;
 	
 	public UMLInitializer(String name, LocationInfo locationInfo, String className) {
@@ -168,8 +168,10 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 
 	@Override
 	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
-		if(this.variableDeclarationMap == null) {
-			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+		//build the map before publishing it, because operations are shared between mappers constructed in parallel
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = this.variableDeclarationMap;
+		if(variableDeclarationMap == null) {
+			variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
 			for(VariableDeclaration declaration : getAllVariableDeclarations()) {
 				if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
 					variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
@@ -180,6 +182,7 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 					variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
 				}
 			}
+			this.variableDeclarationMap = variableDeclarationMap;
 		}
 		return variableDeclarationMap;
 	}

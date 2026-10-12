@@ -2543,17 +2543,6 @@
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Returns the given account's information.\n   * @param account The address of the account to look up.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 1719,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 1833
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
   "secondLabel" : "  \n   * Gets the block info for the given round.\n   * @param roundNumber The round number of the block to get.\n   */",
   "firstParentType" : "class_body",
   "secondParentType" : "class_body",
@@ -2561,72 +2550,6 @@
   "secondPos" : 1951,
   "firstEndPos" : 2433,
   "secondEndPos" : 2068
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Returns the transaction information for a specific pending transaction.\n   * @param txid The TxID string of the pending transaction to look up.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 2150,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 2308
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Returns transactions that are pending in the pool sent by a specific sender.\n   * @param address The address of the sender.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 2578,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 2716
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Waits for a specific round to occur then returns the StatusResponse for that round.\n   * @param round The number of the round to wait for.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 2971,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 3124
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Given an asset ID, return asset information including creator, name, total supply and\n   * special addresses.\n   * @param index The asset ID to look up.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 3675,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 3842
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Given an application ID, it returns application information including creator, approval\n   * and clear programs, global and local schemas, and global state.\n   * @param index The application ID to look up.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 3944,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 4164
-}, {
-  "firstType" : "comment",
-  "secondType" : "comment",
-  "firstLabel" : "  \n   * Gets the block info for the given round.\n   * @param {number} roundNumber The round number of the block to get.\n   */",
-  "secondLabel" : "  \n   * Get the proof for a given transaction in a round.\n   * @param round The round in which the transaction appears.\n   * @param txID The transaction ID for which to generate a proof.\n   */",
-  "firstParentType" : "class_body",
-  "secondParentType" : "class_body",
-  "firstPos" : 2307,
-  "secondPos" : 4397,
-  "firstEndPos" : 2433,
-  "secondEndPos" : 4590
 }, {
   "firstType" : "method_definition",
   "secondType" : "method_definition",

@@ -17,7 +17,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public abstract class OperationBody {
 	protected CompositeStatementObject compositeStatement;
-	protected List<String> stringRepresentation;
+	protected volatile List<String> stringRepresentation;
 	protected boolean containsAssertion;
 	protected Map<String, Set<VariableDeclaration>> activeVariableDeclarations;
 	protected VariableDeclarationContainer container;

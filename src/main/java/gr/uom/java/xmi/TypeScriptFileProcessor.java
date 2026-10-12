@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -161,6 +162,8 @@ public class TypeScriptFileProcessor {
 			List<Swc4jComment> list = trailing.get(key);
 			processCommentList(sourceFolder, filePath, fileContent, commentList, list);
 		}
+		//like in the other languages, the comments are in the order they appear in the file
+		commentList.sort(Comparator.comparingInt(comment -> comment.getLocationInfo().getStartOffset()));
 		return commentList;
 	}
 
@@ -211,7 +214,14 @@ public class TypeScriptFileProcessor {
 	public static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
 			UMLOperation operation, List<UMLComment> comments) {
-		TypeScriptOperationBody.processComments(comments, operation);
+		return processFunction(sourceFolder, filePath, function, activeVariableDeclarations, fileContent, operation, comments, true);
+	}
+
+	//leadingComment: whether the function takes the comment in the line before it
+	public static UMLOperation processFunction(String sourceFolder, String filePath, Swc4jAstFunction function,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent,
+			UMLOperation operation, List<UMLComment> comments, boolean leadingComment) {
+		TypeScriptOperationBody.processComments(comments, operation, leadingComment);
 		Optional<Swc4jAstTsTypeAnn> returnType = function.getReturnType();
 		if(returnType.isPresent()) {
 			UMLType type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, returnType.get().getTypeAnn(), 0);

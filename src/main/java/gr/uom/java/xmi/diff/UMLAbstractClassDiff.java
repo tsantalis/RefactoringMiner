@@ -102,6 +102,7 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLEnumConstant> removedEnumConstants;
 	protected List<UMLAnonymousClass> addedAnonymousClasses;
 	protected List<UMLAnonymousClass> removedAnonymousClasses;
+	private static final ThreadLocal<List<Runnable>> recordedAnonymousClassChanges = new ThreadLocal<List<Runnable>>();
 	protected Set<CandidateMergeMethodRefactoring> candidateMethodMerges = new LinkedHashSet<CandidateMergeMethodRefactoring>();
 	protected Set<CandidateSplitMethodRefactoring> candidateMethodSplits = new LinkedHashSet<CandidateSplitMethodRefactoring>();
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
@@ -298,21 +299,51 @@ public abstract class UMLAbstractClassDiff {
 		return nestedClassDiffList;
 	}
 
+	/**
+	 * Mappers constructed in parallel must not change the added/removed anonymous class lists, which are shared.
+	 * While recording is active on the current thread, the changes are collected so that they can be applied later in a deterministic order.
+	 */
+	public static List<Runnable> startRecordingAnonymousClassChanges() {
+		List<Runnable> changes = new ArrayList<Runnable>();
+		recordedAnonymousClassChanges.set(changes);
+		return changes;
+	}
+
+	public static void stopRecordingAnonymousClassChanges() {
+		recordedAnonymousClassChanges.remove();
+	}
+
+	private static void changeAnonymousClasses(Runnable change) {
+		List<Runnable> changes = recordedAnonymousClassChanges.get();
+		if(changes != null) {
+			changes.add(change);
+		}
+		else {
+			change.run();
+		}
+	}
+
 	public void anonymousClassesMatched(UMLAnonymousClass anonymousClass1, UMLAnonymousClass anonymousClass2) {
-		removedAnonymousClasses.remove(anonymousClass1);
-		addedAnonymousClasses.remove(anonymousClass2);
+		changeAnonymousClasses(() -> {
+			removedAnonymousClasses.remove(anonymousClass1);
+			addedAnonymousClasses.remove(anonymousClass2);
+		});
 	}
 
 	public void anonymousClassUnmatched1(UMLAnonymousClass anonymousClass) {
-		if(!removedAnonymousClasses.contains(anonymousClass)) {
-			removedAnonymousClasses.add(anonymousClass);
-		}
+		changeAnonymousClasses(() -> {
+			if(!removedAnonymousClasses.contains(anonymousClass)) {
+				removedAnonymousClasses.add(anonymousClass);
+			}
+		});
 	}
 
 	public void anonymousClassUnmatched2(UMLAnonymousClass anonymousClass) {
-		if(!addedAnonymousClasses.contains(anonymousClass)) {
-			addedAnonymousClasses.add(anonymousClass);
-		}
+		changeAnonymousClasses(() -> {
+			if(!addedAnonymousClasses.contains(anonymousClass)) {
+				addedAnonymousClasses.add(anonymousClass);
+			}
+		});
 	}
 
 	public void reportAddedAnonymousClass(UMLAnonymousClass umlClass) {

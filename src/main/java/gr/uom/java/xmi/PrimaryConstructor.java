@@ -21,7 +21,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 public class PrimaryConstructor implements VariableDeclarationContainer {
 	private List<UMLParameter> parameters = new ArrayList<>();
 	private LocationInfo locationInfo;
-	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private volatile Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private String constructorName;
 	private String className;
 	private final Constants LANG;
@@ -201,8 +201,10 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 
 	@Override
 	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
-		if(this.variableDeclarationMap == null) {
-			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+		//build the map before publishing it, because operations are shared between mappers constructed in parallel
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = this.variableDeclarationMap;
+		if(variableDeclarationMap == null) {
+			variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
 			for(VariableDeclaration declaration : getAllVariableDeclarations()) {
 				if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
 					variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
@@ -213,6 +215,7 @@ public class PrimaryConstructor implements VariableDeclarationContainer {
 					variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
 				}
 			}
+			this.variableDeclarationMap = variableDeclarationMap;
 		}
 		return variableDeclarationMap;
 	}

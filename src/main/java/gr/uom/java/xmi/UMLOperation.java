@@ -64,7 +64,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
 	private List<UMLComment> comments;
-	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private volatile Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	private String actualSignature;
 	private List<UMLOperation> nestedOperations;
 	private List<UMLImport> nestedImports;
@@ -556,8 +556,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
-		if(this.variableDeclarationMap == null) {
-			this.variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
+		//build the map before publishing it, because operations are shared between mappers constructed in parallel
+		Map<String, Set<VariableDeclaration>> variableDeclarationMap = this.variableDeclarationMap;
+		if(variableDeclarationMap == null) {
+			variableDeclarationMap = new LinkedHashMap<String, Set<VariableDeclaration>>();
 			for(VariableDeclaration declaration : getAllVariableDeclarations()) {
 				if(variableDeclarationMap.containsKey(declaration.getVariableName())) {
 					variableDeclarationMap.get(declaration.getVariableName()).add(declaration);
@@ -568,6 +570,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					variableDeclarationMap.put(declaration.getVariableName(), variableDeclarations);
 				}
 			}
+			this.variableDeclarationMap = variableDeclarationMap;
 		}
 		return variableDeclarationMap;
 	}

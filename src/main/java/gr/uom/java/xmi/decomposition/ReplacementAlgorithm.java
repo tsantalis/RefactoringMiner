@@ -1140,7 +1140,6 @@ public class ReplacementAlgorithm {
 							prefixMatch = true;
 						}
 					}
-					boolean multipleInstances = ReplacementUtil.countInstances(temp, s2) > 1;
 					boolean typeContainsVariableName = false;
 					if(variableDeclarations1.size() > 0 && !s1.equals(s2)) {
 						VariableDeclaration variableDeclaration = variableDeclarations1.get(0);
@@ -1169,10 +1168,12 @@ public class ReplacementAlgorithm {
 							}
 						}
 					}
-					if(distanceRaw == -1 && (multipleInstances || typeContainsVariableName || prefixMatch)) {
+					//countInstances is evaluated last, because it is more expensive than the other conditions, and at most once
+					int instances = -1;
+					if(distanceRaw == -1 && (typeContainsVariableName || prefixMatch || (instances = ReplacementUtil.countInstances(temp, s2)) > 1)) {
 						distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 					}
-					boolean allowReplacementIncreasingDistance = (multipleInstances && Math.abs(s1.length() - s2.length()) == Math.abs(distanceRaw - minDistance) && !s1.equals(s2)) || typeContainsVariableName || prefixMatch;
+					boolean allowReplacementIncreasingDistance = (!s1.equals(s2) && Math.abs(s1.length() - s2.length()) == Math.abs(distanceRaw - minDistance) && (instances != -1 ? instances : ReplacementUtil.countInstances(temp, s2)) > 1) || typeContainsVariableName || prefixMatch;
 					if(distanceRaw >= 0 && (distanceRaw < replacementInfo.getRawDistance() || allowReplacementIncreasingDistance)) {
 						minDistance = distanceRaw;
 						Replacement replacement = null;

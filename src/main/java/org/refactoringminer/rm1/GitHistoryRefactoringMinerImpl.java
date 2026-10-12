@@ -2369,7 +2369,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\n")), patch);
 						parentRawFile = String.join("\n", parentRawFileLines);
 					}
 					filesBefore.put(fileName, parentRawFile);
@@ -2433,7 +2433,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					}
 					else {
 						com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+						List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\n")), patch);
 						parentRawFile = String.join("\n", parentRawFileLines);
 					}
 					filesBefore.put(previousFilename, parentRawFile);
@@ -2463,7 +2463,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	private List<String> createPatchLines(String patch) {
 		if(patch != null) {
-			String[] patchLines = patch.split("\\n");
+			String[] patchLines = patch.split("\n");
 			List<String> patchLineList = new ArrayList<String>();
 			patchLineList.add("+++");
 			for (String raw : patchLines) {
@@ -2882,7 +2882,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					currentRawFile = fetchRawFileContent(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile.getPatch());
 					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\n")), patch);
 					parentRawFile = String.join("\n", parentRawFileLines);
 					if(!filesBefore.containsKey(fileName))
 						filesBefore.put(fileName, parentRawFile);
@@ -2944,7 +2944,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					currentRawFile = fetchRawFileContent(currentRawURL);
 					List<String> patchLineList = createPatchLines(commitFile.getPatch());
 					com.github.difflib.patch.Patch<String> patch = UnifiedDiffUtils.parseUnifiedDiff(patchLineList);
-					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\\n")), patch);
+					List<String> parentRawFileLines = DiffUtils.unpatch(Arrays.asList(currentRawFile.split("\n")), patch);
 					parentRawFile = String.join("\n", parentRawFileLines);
 					if(!filesBefore.containsKey(previousFilename))
 						filesBefore.put(previousFilename, parentRawFile);

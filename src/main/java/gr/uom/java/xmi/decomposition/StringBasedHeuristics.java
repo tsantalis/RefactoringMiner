@@ -707,7 +707,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s, Constants LANG) {
-		String[] lines = s.split("\\n");
+		String[] lines = s.split("\n");
 		if(s.contains(LANG.LAMBDA_ARROW)) {
 			if(lines.length > 1)
 				return true;
@@ -724,7 +724,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean containsAnonymousClass(String s) {
-		String[] lines = s.split("\\n");
+		String[] lines = s.split("\n");
 		for(String line : lines) {
 			line = VariableReplacementAnalysis.prepareLine(line);
 			if(Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {

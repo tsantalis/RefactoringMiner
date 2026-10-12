@@ -12,6 +12,7 @@ import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethod
 
 public class ReplacementUtil {
 	private static final String[] SPECIAL_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " ", "(", "[", "}", "{", "`"};
+	private static final String SPECIAL_CHARACTER_SET = String.join("", SPECIAL_CHARACTERS);
 	private static final String[] SPECIAL_ARGUMENT_CHARACTERS = {";", ",", ")", "=", "+", "-", ">", "<", ".", "]", " "};
 	private static final Pattern DOUBLE_QUOTES = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 
@@ -39,11 +40,8 @@ public class ReplacementUtil {
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<input.length(); i++) {
 			char c = input.charAt(i);
-			for(String character : SPECIAL_CHARACTERS) {
-				if(character.equals(Character.toString(c))) {
-					sb.append(c);
-					break;
-				}
+			if(SPECIAL_CHARACTER_SET.indexOf(c) != -1) {
+				sb.append(c);
 			}
 		}
 		return sb.toString();

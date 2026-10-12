@@ -2796,7 +2796,7 @@ public class VariableReplacementAnalysis {
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = fragment2.getAnonymousClassDeclarations();
 		if(anonymousClassDeclarations1.size() > 0 && anonymousClassDeclarations2.size() > 0) {
 			boolean replacementBeforeNotFoundInMethodSignature = false;
-			String[] lines1 = fragment1.getString().split("\\n");
+			String[] lines1 = fragment1.getString().split("\n");
 			for(String line : lines1) {
 				line = prepareLine(line);
 				if(!Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches() &&
@@ -2806,7 +2806,7 @@ public class VariableReplacementAnalysis {
 				}
 			}
 			boolean replacementAfterNotFoundInMethodSignature = false;
-			String[] lines2 = fragment2.getString().split("\\n");
+			String[] lines2 = fragment2.getString().split("\n");
 			for(String line : lines2) {
 				line = prepareLine(line);
 				if(!Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches() &&

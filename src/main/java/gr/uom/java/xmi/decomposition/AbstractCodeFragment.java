@@ -317,7 +317,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		String afterReplacements = getString();
 		Set<String> anonymousClassMethodDeclarationLines = new LinkedHashSet<>();
 		if(StringBasedHeuristics.containsMethodSignatureOfAnonymousClass(afterReplacements, LANG)) {
-			String[] lines = afterReplacements.split("\\n");
+			String[] lines = afterReplacements.split("\n");
 			for(String line : lines) {
 				line = VariableReplacementAnalysis.prepareLine(line);
 				if(Visitor.METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {

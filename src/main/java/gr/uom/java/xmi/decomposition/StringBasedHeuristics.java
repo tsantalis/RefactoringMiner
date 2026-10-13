@@ -3157,6 +3157,23 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	//the string literal is replaced with a constant initialized with the same literal, i.e., x = ""; becomes x = EMPTY;
+	private static boolean literalReplacedWithConstant(String assignment1, String assignment2, UMLAbstractClassDiff classDiff) {
+		if(classDiff != null) {
+			UMLAttribute attribute2 = classDiff.findAttributeInNextClass(assignment2);
+			if(attribute2 != null && attribute2.getVariableDeclaration().getInitializer() != null &&
+					attribute2.getVariableDeclaration().getInitializer().getString().equals(assignment1)) {
+				return true;
+			}
+			UMLAttribute attribute1 = classDiff.findAttributeInOriginalClass(assignment1);
+			if(attribute1 != null && attribute1.getVariableDeclaration().getInitializer() != null &&
+					attribute1.getVariableDeclaration().getInitializer().getString().equals(assignment2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected static boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo, UMLOperationBodyMapper mapper) {
 		Constants LANG1 = mapper.LANG1;
@@ -3264,6 +3281,11 @@ public class StringBasedHeuristics {
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()) &&
+						!literalReplacedWithConstant(assignment1, assignment2, mapper.getClassDiff()))
 					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION) &&
 						assignment1.equals(replacement.getBefore()) &&

@@ -3196,6 +3196,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			List<AbstractCodeFragment> leaves1 = leaves1Sublist.isPresent() ? leaves1Sublist.get() : operationBodyMapper.getNonMappedLeavesT1();
 			List<CompositeStatementObject> innerNodes1 = leaves1Sublist.isPresent() ? new ArrayList<>() : operationBodyMapper.getNonMappedInnerNodesT1();
+			List<AbstractCodeFragment> originalLeaves1 = new ArrayList<>(leaves1);
+			List<CompositeStatementObject> originalInnerNodes1 = new ArrayList<>(innerNodes1);
+			List<AbstractCodeFragment> excludedLeaves1 = new ArrayList<>();
+			List<CompositeStatementObject> excludedInnerNodes1 = new ArrayList<>();
 			for(Pair<AbstractCodeFragment, UMLComment> pair : operationBodyMapper.getCommentedCode()) {
 				if(leaves1.contains(pair.getLeft())) {
 					leaves1.remove(pair.getLeft());
@@ -3401,6 +3405,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			argumentization.argumentize(innerNodes1, parameterToArgumentMap1);
 			//replace parameters with arguments in innerNode2
 			argumentization.argumentize(innerNodes2, parameterToArgumentMap2);
+			//JavaScript: the statements of the matched anonymous class operations are excluded, as the extracted operation is detected for the anonymous class operations
+			if(LANG1.equals(Constants.TYPESCRIPT) && LANG2.equals(Constants.TYPESCRIPT)) {
+				for(AbstractCodeFragment leaf1 : leaves1) {
+					if(withinMatchedAnonymousClassOperation1(operationBodyMapper, leaf1)) {
+						excludedLeaves1.add(leaf1);
+					}
+				}
+				for(CompositeStatementObject innerNode1 : innerNodes1) {
+					if(withinMatchedAnonymousClassOperation1(operationBodyMapper, innerNode1)) {
+						excludedInnerNodes1.add(innerNode1);
+					}
+				}
+				leaves1.removeAll(excludedLeaves1);
+				innerNodes1.removeAll(excludedInnerNodes1);
+			}
 			//compare leaves from T1 with leaves from T2
 			processLeaves(leaves1, leaves2, parameterToArgumentMap2, false);
 			
@@ -3496,6 +3515,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			//restore the excluded statements in their original order
+			if(!excludedLeaves1.isEmpty()) {
+				Set<AbstractCodeFragment> remainingLeaves1 = new LinkedHashSet<>(leaves1);
+				leaves1.clear();
+				for(AbstractCodeFragment leaf1 : originalLeaves1) {
+					if(remainingLeaves1.contains(leaf1) || excludedLeaves1.contains(leaf1)) {
+						leaves1.add(leaf1);
+					}
+				}
+			}
+			if(!excludedInnerNodes1.isEmpty()) {
+				Set<CompositeStatementObject> remainingInnerNodes1 = new LinkedHashSet<>(innerNodes1);
+				innerNodes1.clear();
+				for(CompositeStatementObject innerNode1 : originalInnerNodes1) {
+					if(remainingInnerNodes1.contains(innerNode1) || excludedInnerNodes1.contains(innerNode1)) {
+						innerNodes1.add(innerNode1);
+					}
+				}
+			}
 			
 			for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
 				temporaryVariableAssignment(statement, nonMappedLeavesT2);
@@ -3699,13 +3737,35 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(LambdaExpressionObject lambda : statement.getLambdas()) {
 					List<LambdaExpressionObject> nestedLambdas = new ArrayList<LambdaExpressionObject>();
 					collectNestedLambdaExpressions(lambda, nestedLambdas);
-					expandLambda(lambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+					if(!withinAnonymousClass(lambda, statement, anonymousClassList)) {
+						expandLambda(lambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+					}
 					for(LambdaExpressionObject nestedLambda : nestedLambdas) {
-						expandLambda(nestedLambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+						if(!withinAnonymousClass(nestedLambda, statement, anonymousClassList)) {
+							expandLambda(nestedLambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+						}
 					}
 				}
 			}
 		}
+	}
+
+	//JavaScript: the functions of object literals are both lambdas and operations of anonymous classes,
+	//the lambdas within the anonymous class operations of the statement are not expanded, as the anonymous class operations are already expanded
+	private static boolean withinAnonymousClass(LambdaExpressionObject lambda, AbstractCodeFragment statement, List<UMLAnonymousClass> anonymousClassList) {
+		if(statement.getAnonymousClassDeclarations().isEmpty()) {
+			return false;
+		}
+		for(UMLAnonymousClass anonymous : anonymousClassList) {
+			if(statement.getLocationInfo().subsumes(anonymous.getLocationInfo()) && anonymous.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+				for(UMLOperation anonymousOperation : anonymous.getOperations()) {
+					if(anonymousOperation.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void expandLambda(LambdaExpressionObject lambda, List<AbstractCodeFragment> leaves,
@@ -10715,6 +10775,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(int i=0; i<lambdas1.size(); i++) {
 				LambdaExpressionObject lambda1 = lambdas1.get(i);
 				LambdaExpressionObject lambda2 = lambdas2.get(i);
+				if(withinMatchedAnonymousClasses(lambda1, lambda2)) {
+					continue;
+				}
 				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, this);
 				int mappings = mapper.mappingsWithoutBlocks();
 				if(mappings > 0) {
@@ -10740,6 +10803,55 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	//JavaScript: the extracted/inlined operation mapper does not match the anonymous classes already matched by the parent mapper
+	protected boolean anonymousClassMatchedByParentMapper(AnonymousClassDeclarationObject anonymousClassDeclaration1, AnonymousClassDeclarationObject anonymousClassDeclaration2) {
+		if(parentMapper == null || callSiteOperation == null || !LANG1.equals(Constants.TYPESCRIPT) || !LANG2.equals(Constants.TYPESCRIPT)) {
+			return false;
+		}
+		UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
+		UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
+		for(UMLAnonymousClassDiff anonymousClassDiff : parentMapper.anonymousClassDiffs) {
+			if(anonymousClassDiff.getOriginalClass().equals(anonymousClass1) || anonymousClassDiff.getNextClass().equals(anonymousClass2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean withinMatchedAnonymousClassOperation1(UMLOperationBodyMapper mapper, AbstractCodeFragment fragment) {
+		for(UMLAnonymousClassDiff anonymousClassDiff : mapper.anonymousClassDiffs) {
+			for(UMLOperationBodyMapper operationMapper : anonymousClassDiff.getOperationBodyMapperList()) {
+				if(operationMapper.getContainer1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	//JavaScript: the functions of object literals are both lambdas and operations of anonymous classes,
+	//a lambda is not mapped, when the anonymous class operation it corresponds to is already matched by this mapper or its parent mapper
+	protected boolean withinMatchedAnonymousClasses(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2) {
+		return matchedAnonymousClassOperation(lambda1, true) || matchedAnonymousClassOperation(lambda2, false);
+	}
+
+	private boolean matchedAnonymousClassOperation(LambdaExpressionObject lambda, boolean before) {
+		for(UMLOperationBodyMapper mapper = this; mapper != null; mapper = mapper.parentMapper) {
+			for(UMLAnonymousClassDiff anonymousClassDiff : mapper.anonymousClassDiffs) {
+				UMLAbstractClass anonymousClass = before ? anonymousClassDiff.getOriginalClass() : anonymousClassDiff.getNextClass();
+				if(anonymousClass.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+					for(UMLOperationBodyMapper operationMapper : anonymousClassDiff.getOperationBodyMapperList()) {
+						VariableDeclarationContainer operation = before ? operationMapper.getContainer1() : operationMapper.getContainer2();
+						if(operation.getLocationInfo().subsumes(lambda.getLocationInfo())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	protected void addAllMappings(Set<AbstractCodeMapping> mappings) {

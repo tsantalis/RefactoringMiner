@@ -1033,6 +1033,39 @@
   "firstEndPos" : 310,
   "secondEndPos" : 2505
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "program",
+  "firstPos" : 313,
+  "secondPos" : 102,
+  "firstEndPos" : 2456,
+  "secondEndPos" : 2252
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 334,
+  "secondPos" : 110,
+  "firstEndPos" : 335,
+  "secondEndPos" : 111
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "tooltips",
+  "secondLabel" : "tooltips",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "pair",
+  "firstPos" : 335,
+  "secondPos" : 129,
+  "firstEndPos" : 343,
+  "secondEndPos" : 137
+}, {
   "firstType" : "object",
   "secondType" : "object",
   "firstLabel" : "",
@@ -7390,6 +7423,17 @@
   "secondPos" : 2247,
   "firstEndPos" : 2455,
   "secondEndPos" : 2248
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 2455,
+  "secondPos" : 2251,
+  "firstEndPos" : 2456,
+  "secondEndPos" : 2252
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

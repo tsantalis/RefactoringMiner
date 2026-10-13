@@ -219,6 +219,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			ModuleContainer container2 = nextClass.getContainer().get();
 			UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(container1, container2, this);
 			addOperationBodyMapper(mapper);
+			checkForMovedCodeBetweenModuleAndOperations(mapper);
 			if(container1.getNamedExports().size() > 0 || container2.getNamedExports().size() > 0) {
 				UMLNamedExportListDiff diff = new UMLNamedExportListDiff(container1.getNamedExports(), container2.getNamedExports());
 				this.namedExportListDiff = Optional.of(diff);
@@ -385,6 +386,68 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				this.refactorings.add(r);
 			}
 		}
+	}
+
+	//code moved from an operation of the module to the module level, or the opposite,
+	//i.e., Chart.defaults.bar = {...} moved out of module.exports = function(Chart) {...} to the module level
+	private void checkForMovedCodeBetweenModuleAndOperations(UMLOperationBodyMapper moduleMapper) throws RefactoringMinerTimedOutException {
+		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
+		for(UMLOperationBodyMapper mapper : new ArrayList<>(operationBodyMapperList)) {
+			if(mapper.getContainer1() instanceof ModuleContainer || mapper.getContainer2() instanceof ModuleContainer) {
+				continue;
+			}
+			if(mapper.nonMappedElementsT1() > 0 && moduleMapper.nonMappedElementsT2() > 0) {
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, moduleMapper, this);
+				if(movedCode(moveCodeMapper, mapper, moduleMapper)) {
+					moveCodeMappers.add(moveCodeMapper);
+					refactorings.add(new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING));
+				}
+			}
+			if(moduleMapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0) {
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(moduleMapper, mapper, this);
+				if(movedCode(moveCodeMapper, moduleMapper, mapper)) {
+					moveCodeMappers.add(moveCodeMapper);
+					refactorings.add(new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING));
+				}
+			}
+		}
+		if(moveCodeMappers.size() > 0) {
+			MappingOptimizer optimizer = new MappingOptimizer(this);
+			optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, refactorings);
+		}
+	}
+
+	//the move code mapper maps statements that are not mapped in the source and target mappers
+	private static boolean movedCode(UMLOperationBodyMapper moveCodeMapper, UMLOperationBodyMapper sourceMapper, UMLOperationBodyMapper targetMapper) {
+		int validMappings = 0;
+		for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+			if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
+					mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
+				continue;
+			}
+			if((sourceMapper.getNonMappedLeavesT1().contains(mapping.getFragment1()) || sourceMapper.getNonMappedInnerNodesT1().contains(mapping.getFragment1())) &&
+					(targetMapper.getNonMappedLeavesT2().contains(mapping.getFragment2()) || targetMapper.getNonMappedInnerNodesT2().contains(mapping.getFragment2())) &&
+					!differentVariableDeclarations(mapping)) {
+				validMappings++;
+			}
+		}
+		return validMappings > 0;
+	}
+
+	//both the name and the initializer of the declared variable are different
+	private static boolean differentVariableDeclarations(AbstractCodeMapping mapping) {
+		List<VariableDeclaration> declarations1 = mapping.getFragment1().getVariableDeclarations();
+		List<VariableDeclaration> declarations2 = mapping.getFragment2().getVariableDeclarations();
+		if(declarations1.size() == 1 && declarations2.size() == 1) {
+			VariableDeclaration declaration1 = declarations1.get(0);
+			VariableDeclaration declaration2 = declarations2.get(0);
+			if(!declaration1.getVariableName().equals(declaration2.getVariableName())) {
+				AbstractExpression initializer1 = declaration1.getInitializer();
+				AbstractExpression initializer2 = declaration2.getInitializer();
+				return initializer1 == null || initializer2 == null || !initializer1.getString().equals(initializer2.getString());
+			}
+		}
+		return false;
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {

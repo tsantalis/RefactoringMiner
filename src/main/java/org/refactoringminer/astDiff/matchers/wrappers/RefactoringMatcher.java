@@ -497,6 +497,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 String refactoringClassNameAfter = refactoringClassAfter.getRight();
                 // Relied on || in order to ascertain at least one class involves (handling move to anonymous and vice versa)
                 boolean isNameMatching = refactoringClassNameBefore.equals(umlClassBefore.getName()) || refactoringClassNameAfter.equals(umlClassAfter.getName());
+                //the code moved between module-level statements and functions has the module name as class name
+                if (modelDiffRefactoring instanceof MoveCodeRefactoring && umlClassBefore.isModule() && umlClassAfter.isModule()) {
+                    isNameMatching = isNameMatching || refactoringClassNameBefore.equals(umlClassBefore.getPackageName()) || refactoringClassNameAfter.equals(umlClassAfter.getPackageName());
+                }
                 boolean bothInAnonymous = refactoringClassNameBefore.contains(umlClassBefore.getName()) && refactoringClassNameAfter.contains(umlClassAfter.getName());
                 if (isNameMatching || bothInAnonymous)
                     classDiffRefactorings.add(modelDiffRefactoring);

@@ -410,7 +410,7 @@
   "secondType" : "expression_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "program",
+  "firstParentType" : "statement_block",
   "secondParentType" : "program",
   "firstPos" : 96,
   "secondPos" : 108,
@@ -427,6 +427,17 @@
   "secondPos" : 108,
   "firstEndPos" : 933,
   "secondEndPos" : 875
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 110,
+  "secondPos" : 116,
+  "firstEndPos" : 111,
+  "secondEndPos" : 117
 }, {
   "firstType" : "object",
   "secondType" : "object",

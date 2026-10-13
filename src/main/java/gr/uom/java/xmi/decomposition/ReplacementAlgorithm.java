@@ -6744,6 +6744,9 @@ public class ReplacementAlgorithm {
 
 	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
 			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper, boolean sameNumberOfLambdas) throws RefactoringMinerTimedOutException {
+		if(operationBodyMapper.withinMatchedAnonymousClasses(lambda1, lambda2)) {
+			return;
+		}
 		boolean methodReference1 = lambda1.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		boolean methodReference2 = lambda2.getLocationInfo().getCodeElementType().equals(CodeElementType.METHOD_REFERENCE);
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
@@ -6976,6 +6979,9 @@ public class ReplacementAlgorithm {
 		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
 		String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, container1);
 		String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, container2);
+		if(operationBodyMapper.anonymousClassMatchedByParentMapper(anonymousClassDeclaration1, anonymousClassDeclaration2)) {
+			return replacementAdded;
+		}
 		if(replacementInfo.getRawDistance() == 0 || statementWithoutAnonymous1.equals(statementWithoutAnonymous2) || anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString()) ||
 				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements(), LANG1, LANG2) ||
 				extractedToVariable(statementWithoutAnonymous1, statementWithoutAnonymous2, statement1, statement2, replacementInfo) ||

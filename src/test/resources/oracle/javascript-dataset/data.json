@@ -557,10 +557,10 @@
     "refactorings": [{
         "type": "Extract Method",
         "description": "Extract Method private toBeValidChart() extracted from private toBeChartOfSize() in class mockContext",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Method",
         "description": "Extract Method private toBeValidChart() extracted from public compare(actual, expected) in class mockContext",
@@ -592,10 +592,10 @@
     }, {
         "type": "Remove Parameter",
         "description": "Remove Parameter expected : Inferred in method public compare(actual, expected) from class mockContext",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>related to false/duplicate&nbsp;Extract Method private toBeValidChart() extracted from private toBeChartOfSize() in class mockContext</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Extract Variable",
         "description": "Extract Variable height : Inferred in method public Chart.Controller(item, config, instance) from class core.controller",
@@ -1057,10 +1057,10 @@
     }, {
         "type": "Merge Conditional",
         "description": "Merge Conditional [return value;, if(helpers.isArray(value))] to return helpers.valueOrDefault(helpers.isArray(value)? value[index] : value, defaultValue); in method public module.exports(Chart) from class helpers.core",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in method public generateLabels(chart) from class controller.doughnut",
@@ -1078,10 +1078,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public module.exports(Chart) from class core.ticks",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable itemOrDefault : Inferred to valueOrDefault : Inferred in method public draw() from class plugin.legend",
@@ -1106,10 +1106,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private labels : Inferred from class controller.doughnut.module.exports.defaults.doughnut.legend",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in method public generateLabels(chart) from class controller.polarArea",
@@ -1120,17 +1120,17 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private legend : Inferred from class controller.polarArea.module.exports.Chart.defaults.polarArea",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private legend : Inferred from class controller.doughnut.module.exports.defaults.doughnut",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public logarithmic(generationOptions, dataRange) from class core.ticks",
@@ -1155,10 +1155,10 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueAtIndexOrDefault : Inferred to valueAtIndexOrDefault : Inferred in attribute private labels : Inferred from class controller.polarArea.module.exports.Chart.defaults.polarArea.legend",
-        "comment": null,
-        "validation": "TP",
+        "comment": "<p>duplicate</p>",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable getValueOrDefault : Inferred to valueOrDefault : Inferred in method public parseFontOptions(options) from class core.scale",
@@ -1176,10 +1176,10 @@
     }, {
         "type": "Move Code",
         "description": "Move Code from public module.exports(Chart) to public module.exports(Chart) in class helpers.core",
-        "comment": null,
-        "validation": "CTP",
+        "comment": "null",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
-        "validators": null
+        "validators": "Nikos"
     }],
     "refDiffExecutionTime": 0
 }, {

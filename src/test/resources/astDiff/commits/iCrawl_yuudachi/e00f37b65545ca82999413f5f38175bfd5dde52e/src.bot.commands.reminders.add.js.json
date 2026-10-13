@@ -1755,17 +1755,6 @@
   "firstParentType" : "arrow_function",
   "secondParentType" : "arrow_function",
   "firstPos" : 597,
-  "secondPos" : 927,
-  "firstEndPos" : 664,
-  "secondEndPos" : 980
-}, {
-  "firstType" : "template_string",
-  "secondType" : "template_string",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "arrow_function",
-  "firstPos" : 597,
   "secondPos" : 1091,
   "firstEndPos" : 664,
   "secondEndPos" : 1149
@@ -1780,17 +1769,6 @@
   "secondPos" : 835,
   "firstEndPos" : 598,
   "secondEndPos" : 836
-}, {
-  "firstType" : "`",
-  "secondType" : "`",
-  "firstLabel" : "`",
-  "secondLabel" : "`",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 597,
-  "secondPos" : 927,
-  "firstEndPos" : 598,
-  "secondEndPos" : 928
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -1821,17 +1799,6 @@
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 598,
-  "secondPos" : 928,
-  "firstEndPos" : 615,
-  "secondEndPos" : 945
-}, {
-  "firstType" : "template_substitution",
-  "secondType" : "template_substitution",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 598,
   "secondPos" : 1092,
   "firstEndPos" : 615,
   "secondEndPos" : 1109
@@ -1846,17 +1813,6 @@
   "secondPos" : 836,
   "firstEndPos" : 600,
   "secondEndPos" : 838
-}, {
-  "firstType" : "${",
-  "secondType" : "${",
-  "firstLabel" : "${",
-  "secondLabel" : "${",
-  "firstParentType" : "template_substitution",
-  "secondParentType" : "template_substitution",
-  "firstPos" : 598,
-  "secondPos" : 928,
-  "firstEndPos" : 600,
-  "secondEndPos" : 930
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -1887,17 +1843,6 @@
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
   "firstPos" : 600,
-  "secondPos" : 930,
-  "firstEndPos" : 614,
-  "secondEndPos" : 944
-}, {
-  "firstType" : "member_expression",
-  "secondType" : "member_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "template_substitution",
-  "secondParentType" : "template_substitution",
-  "firstPos" : 600,
   "secondPos" : 1094,
   "firstEndPos" : 614,
   "secondEndPos" : 1108
@@ -1912,17 +1857,6 @@
   "secondPos" : 838,
   "firstEndPos" : 607,
   "secondEndPos" : 845
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "message",
-  "secondLabel" : "message",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 600,
-  "secondPos" : 930,
-  "firstEndPos" : 607,
-  "secondEndPos" : 937
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -1953,17 +1887,6 @@
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
   "firstPos" : 607,
-  "secondPos" : 937,
-  "firstEndPos" : 608,
-  "secondEndPos" : 938
-}, {
-  "firstType" : ".",
-  "secondType" : ".",
-  "firstLabel" : ".",
-  "secondLabel" : ".",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 607,
   "secondPos" : 1101,
   "firstEndPos" : 608,
   "secondEndPos" : 1102
@@ -1978,17 +1901,6 @@
   "secondPos" : 846,
   "firstEndPos" : 614,
   "secondEndPos" : 852
-}, {
-  "firstType" : "property_identifier",
-  "secondType" : "property_identifier",
-  "firstLabel" : "author",
-  "secondLabel" : "author",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 608,
-  "secondPos" : 938,
-  "firstEndPos" : 614,
-  "secondEndPos" : 944
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -2019,17 +1931,6 @@
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
   "firstPos" : 614,
-  "secondPos" : 944,
-  "firstEndPos" : 615,
-  "secondEndPos" : 945
-}, {
-  "firstType" : "}",
-  "secondType" : "}",
-  "firstLabel" : "}",
-  "secondLabel" : "}",
-  "firstParentType" : "template_substitution",
-  "secondParentType" : "template_substitution",
-  "firstPos" : 614,
   "secondPos" : 1108,
   "firstEndPos" : 615,
   "secondEndPos" : 1109
@@ -2044,17 +1945,6 @@
   "secondPos" : 853,
   "firstEndPos" : 663,
   "secondEndPos" : 889
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : ", what do you want me to remind you of and when?",
-  "secondLabel" : ", please use a proper time format.",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 615,
-  "secondPos" : 945,
-  "firstEndPos" : 663,
-  "secondEndPos" : 979
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -2077,17 +1967,6 @@
   "secondPos" : 889,
   "firstEndPos" : 664,
   "secondEndPos" : 890
-}, {
-  "firstType" : "`",
-  "secondType" : "`",
-  "firstLabel" : "`",
-  "secondLabel" : "`",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 663,
-  "secondPos" : 979,
-  "firstEndPos" : 664,
-  "secondEndPos" : 980
 }, {
   "firstType" : "`",
   "secondType" : "`",

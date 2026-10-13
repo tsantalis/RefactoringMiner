@@ -1666,9 +1666,22 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
+	//JavaScript: object.name = value; replaced with object._set('name', value);
+	private boolean assignedPropertyPassedAsArgument(String statement, int index) {
+		if(LANG.equals(Constants.TYPESCRIPT) && arguments().size() == 2 && index == 1) {
+			String leftHandSide = statement.substring(0, statement.indexOf(LANG.ASSIGNMENT)).trim();
+			if(leftHandSide.contains(".")) {
+				String name = leftHandSide.substring(leftHandSide.lastIndexOf(".") + 1);
+				String firstArgument = arguments().get(0).trim();
+				return firstArgument.equals("'" + name + "'") || firstArgument.equals("\"" + name + "\"") || firstArgument.equals("`" + name + "`");
+			}
+		}
+		return false;
+	}
+
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
-		if(index >= 0 && (arguments().size() == 1 || (statement.contains(LANG.TERNARY_CONDITION) && statement.contains(LANG.TERNARY_ELSE)))) {
+		if(index >= 0 && (arguments().size() == 1 || (statement.contains(LANG.TERNARY_CONDITION) && statement.contains(LANG.TERNARY_ELSE)) || assignedPropertyPassedAsArgument(statement, index))) {
 			return new Replacement(statement.substring(statement.indexOf(LANG.ASSIGNMENT) + LANG.ASSIGNMENT.length(), statement.length()-LANG.STATEMENT_TERMINATION.length()),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}

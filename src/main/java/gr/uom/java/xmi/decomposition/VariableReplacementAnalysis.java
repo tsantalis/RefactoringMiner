@@ -3018,7 +3018,7 @@ public class VariableReplacementAnalysis {
 			}
 		}
 		return v1 != null && v2 != null &&
-				v1.equalVariableDeclarationType(v2) && !onlyOneFragmentIncludesDeclarationInReferences &&
+				v1.equalVariableDeclarationKind(v2) && !onlyOneFragmentIncludesDeclarationInReferences &&
 				!containsVariableDeclarationWithName(v1, allVariableDeclarations1, v2) &&
 				(!containsVariableDeclarationWithName(v2, allVariableDeclarations2, v1) || operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) != null) &&
 				consistencyCheck(v1, v2, set);
@@ -3246,6 +3246,9 @@ public class VariableReplacementAnalysis {
 										return true;
 									}
 								}
+								else if(deletedDeclarationWithSameNameInScope(v1, v2, mapping)) {
+									return true;
+								}
 								else if(set.size() == 1) {
 									boolean skip = false;
 									if(statement1.getParent() != null && statement2.getParent() != null && 
@@ -3290,6 +3293,29 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	//v2 is used in an exact mapping, because a deleted variable with the same name and type was already in scope where v1 is declared
+	private boolean deletedDeclarationWithSameNameInScope(VariableDeclaration v1, VariableDeclaration v2, AbstractCodeMapping mapping) {
+		if(v1.isParameter() || v2.isParameter() || insideExtractedOrInlinedMethod) {
+			return false;
+		}
+		for(VariableDeclaration declaration2 : operation2.getVariableDeclarationsInScope(mapping.getFragment2().getLocationInfo())) {
+			if(declaration2.getVariableName().equals(v1.getVariableName())) {
+				return false;
+			}
+		}
+		for(VariableDeclaration declaration1 : operation1.getVariableDeclarationsInScope(mapping.getFragment1().getLocationInfo())) {
+			if(declaration1 != v1 && declaration1.getVariableName().equals(v2.getVariableName()) && declaration1.equalType(v2) &&
+					declaration1.getScope().subsumes(v1.getLocationInfo())) {
+				for(AbstractCodeFragment leaf1 : nonMappedLeavesT1) {
+					if(leaf1.getVariableDeclarations().contains(declaration1)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public static boolean bothFragmentsUseVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
 		boolean containedInFragment1 = false;
 		for(LeafExpression variable : mapping.getFragment1().getVariables()) {
@@ -3310,7 +3336,7 @@ public class VariableReplacementAnalysis {
 
 	private static boolean containsVariableDeclarationWithName(VariableDeclaration variableDeclaration, Set<VariableDeclaration> variableDeclarations, VariableDeclaration other) {
 		for(VariableDeclaration declaration : variableDeclarations) {
-			if(declaration.getVariableName().equals(other.getVariableName()) && declaration.equalVariableDeclarationType(other) && !invokingExpressionOrWrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
+			if(declaration.getVariableName().equals(other.getVariableName()) && declaration.equalVariableDeclarationKind(other) && !invokingExpressionOrWrappedAsArgument(declaration.getInitializer(), variableDeclaration)) {
 				return true;
 			}
 		}

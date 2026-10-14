@@ -4684,7 +4684,7 @@ Mapping state for Move Method refactoring purity:
 
     private static boolean checkForTheSameDeclarationInTheTargetMethod(InlineOperationRefactoring refactoring, VariableDeclaration variableDeclaration) {
         for (VariableDeclaration variableDeclaration1: refactoring.getTargetOperationAfterInline().getBody().getAllVariableDeclarations()) {
-            if (variableDeclaration.equalVariableDeclarationType(variableDeclaration1) && variableDeclaration.equalQualifiedType(variableDeclaration1) &&
+            if (variableDeclaration.equalVariableDeclarationKind(variableDeclaration1) && variableDeclaration.equalQualifiedType(variableDeclaration1) &&
             		((variableDeclaration.getInitializer() != null && variableDeclaration1.getInitializer() != null && variableDeclaration.getInitializer().equalFragment(variableDeclaration1.getInitializer(), variableDeclaration.getInitializer().getString())) || variableDeclaration1.getInitializer() == null )) {
                 return true;
             }

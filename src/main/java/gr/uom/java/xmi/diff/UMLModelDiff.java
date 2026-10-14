@@ -3319,6 +3319,11 @@ public class UMLModelDiff {
 		return refactorings;
 	}
 
+	//a class matched as moved or renamed cannot be an extracted supertype
+	private void removeExtractSuperclassRefactorings(UMLAbstractClass extractedClass) {
+		refactorings.removeIf(r -> r instanceof ExtractSuperclassRefactoring extract && extract.getExtractedClass().equals(extractedClass));
+	}
+
 	private void processAddedGeneralization(UMLClass addedClass, Set<UMLClass> subclassSetBefore, Set<UMLClass> subclassSetAfter, UMLGeneralization addedGeneralization) throws RefactoringMinerTimedOutException {
 		String parent = addedGeneralization.getParent();
 		UMLClass subclass = addedGeneralization.getChild();
@@ -4726,6 +4731,7 @@ public class UMLModelDiff {
 							refactorings.add(refactoring);
 							removedClasses.remove(parentClass);
 							addedClasses.remove(childClass);
+							removeExtractSuperclassRefactorings(childClass);
 							for(MoveOperationRefactoring moveRef : refs) {
 								if(!renameDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
 									renameDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
@@ -4758,6 +4764,7 @@ public class UMLModelDiff {
 							refactorings.add(refactoring);
 							removedClasses.remove(parentClass);
 							addedClasses.remove(childClass);
+							removeExtractSuperclassRefactorings(childClass);
 							for(MoveOperationRefactoring moveRef : refs) {
 								if(!moveDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
 									moveDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
@@ -5273,7 +5280,7 @@ public class UMLModelDiff {
 			if(classDiff.getOriginalClass().containsOperationWithTheSameSignature(removedOperation) &&
 					classDiff.getNextClass().containsOperationWithTheSameSignature(addedOperation)) {
 				UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
-				if(!classDiff.getOperationBodyMapperList().contains(bodyMapper)) {
+				if(!classDiff.getOperationBodyMapperList().contains(bodyMapper) && !rewrittenBodyOfExtractedOperation(classDiff, bodyMapper)) {
 					classDiff.addOperationBodyMapper(bodyMapper);
 					bodyMapper.computeRefactoringsWithinBody();
 					refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
@@ -5287,6 +5294,11 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	//call sites alone are not enough evidence when the bodies share nothing and the added operation is already explained as extracted
+	private static boolean rewrittenBodyOfExtractedOperation(UMLClassBaseDiff classDiff, UMLOperationBodyMapper bodyMapper) {
+		return bodyMapper.mappingsWithoutBlocks() == 0 && !classDiff.getAddedOperations().contains(bodyMapper.getOperation2());
 	}
 
 	private boolean exactMatchingMethodInvocationReplacements(Set<MethodInvocationReplacement> replacements, UMLOperation removedOperation, UMLOperation addedOperation) {

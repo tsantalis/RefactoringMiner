@@ -144,16 +144,16 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **October 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 14, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3575  | 33  | 52  | 0.991  | 0.986|
+|**Total**|3575  | 28  | 52  | 0.992  | 0.986|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
 |Move Attribute|73  |  0  |  3  | 1.000  | 0.961|
 |Move And Rename Attribute| 7  |  0  |  1  | 1.000  | 0.875|
-|Rename Method|303  |  5  |  2  | 0.984  | 0.993|
+|Rename Method|303  |  4  |  2  | 0.987  | 0.993|
 |Inline Method|72  |  1  |  2  | 0.986  | 0.973|
 |Move Method|266  |  1  |  0  | 0.996  | 1.000|
 |Move And Rename Method|27  |  2  |  0  | 0.931  | 1.000|
@@ -163,7 +163,7 @@ As of **October 13, 2026** the precision and recall of RefactoringMiner on this 
 |Pull Up Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|22  |  0  |  0  | 1.000  | 1.000|
-|Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
+|Extract Interface|16  |  1  |  0  | 0.941  | 1.000|
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|47  |  1  |  1  | 0.979  | 0.979|
@@ -173,14 +173,14 @@ As of **October 13, 2026** the precision and recall of RefactoringMiner on this 
 |Extract Variable|294  |  1  |  3  | 0.997  | 0.990|
 |Extract Attribute| 7  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|126  |  0  |  8  | 1.000  | 0.940|
-|Rename Variable|309  |  5  |  5  | 0.984  | 0.984|
+|Rename Variable|309  |  4  |  5  | 0.987  | 0.984|
 |Rename Attribute|112  |  4  |  4  | 0.966  | 0.966|
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|59  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|171  |  1  |  2  | 0.994  | 0.988|
-|Change Variable Type|382  |  5  |  2  | 0.987  | 0.995|
+|Change Return Type|171  |  0  |  2  | 1.000  | 0.988|
+|Change Variable Type|382  |  4  |  2  | 0.990  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|

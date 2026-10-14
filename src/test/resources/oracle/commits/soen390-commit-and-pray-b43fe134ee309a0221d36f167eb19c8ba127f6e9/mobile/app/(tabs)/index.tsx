@@ -236,7 +236,7 @@ export default function Index() {
           {permissionState.granted ? currentCampus?.campus.name ?? "Outside campus boundaries" : "Location permission required"}
         </Text>
 
-        {userBuilding && <Text style={styles.overlayBuilding}> Inside: {userBuilding.name}</Text>}
+        {userBuilding && <Text style={styles.overlayBuilding}>📍 Inside: {userBuilding.name}</Text>}
       </View>
 
       {!directionsState.isActive && (

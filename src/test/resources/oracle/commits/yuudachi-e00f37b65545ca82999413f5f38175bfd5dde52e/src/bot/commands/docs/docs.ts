@@ -51,11 +51,11 @@ export default class DocsCommand extends Command {
 			return message.util!.send({ embed });
 		}
 		const msg = await message.util!.send({ embed }) as Message;
-		msg.react('');
+		msg.react('🗑');
 		let react;
 		try {
 			react = await msg.awaitReactions(
-				(reaction, user) => reaction.emoji.name === '' && user.id === message.author.id,
+				(reaction, user) => reaction.emoji.name === '🗑' && user.id === message.author.id,
 				{ max: 1, time: 5000, errors: ['time'] }
 			);
 		} catch (error) {

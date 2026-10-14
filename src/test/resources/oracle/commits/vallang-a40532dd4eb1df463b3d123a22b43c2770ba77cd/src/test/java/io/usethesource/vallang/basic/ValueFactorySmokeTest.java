@@ -305,8 +305,8 @@ public final class ValueFactorySmokeTest {
   @Test
   public void testString() {
     assertTrue(vf.string("hello").getValue().equals("hello"));
-    assertTrue(vf.string(0x1F35D).getValue().equals(""));
-    assertTrue(vf.string(new int[] {0x1F35D, 0x1F35D}).getValue().equals(""));
+    assertTrue(vf.string(0x1F35D).getValue().equals("🍝"));
+    assertTrue(vf.string(new int[] {0x1F35D, 0x1F35D}).getValue().equals("🍝🍝"));
   }
 
   // @Test

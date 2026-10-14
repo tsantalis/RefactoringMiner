@@ -1,6 +1,5 @@
 package gr.uom.java.xmi;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -97,10 +96,9 @@ import org.eclipse.cdt.internal.core.parser.IMacroDictionary;
 import org.eclipse.cdt.internal.core.parser.scanner.InternalFileContent;
 import org.eclipse.cdt.internal.core.parser.scanner.InternalFileContentProvider;
 import org.eclipse.core.runtime.CoreException;
+import org.refactoringminer.astDiff.utils.TreeSitterTreeGenerator;
 import org.refactoringminer.util.PathFileUtils;
 
-import com.github.gumtreediff.gen.treesitterng.CTreeSitterNgTreeGenerator;
-import com.github.gumtreediff.gen.treesitterng.CppTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
 
 import extension.umladapter.UMLAdapterUtil;
@@ -152,9 +150,8 @@ public class CppFileProcessor {
 
 			if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
 				if (astDiff) {
-					ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
 					try {
-						TreeContext treeContext = new CppTreeSitterNgTreeGenerator().generateFrom().stream(is);
+						TreeContext treeContext = TreeSitterTreeGenerator.generate(TreeSitterTreeGenerator.Language.CPP, fileContent);
 						this.umlModel.getTreeContextMap().put(filePath, treeContext);
 					}
 					catch(Exception e) {}

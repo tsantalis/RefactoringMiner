@@ -171,7 +171,7 @@ function addSwiftImplicitImports(
   }
 
   if (isDev) {
-    console.log(` Swift: ${swiftFiles.length} files in ${targetGroups.size} target group(s), implicit imports added${logSuffix}`);
+    console.log(`📊 Swift: ${swiftFiles.length} files in ${targetGroups.size} target group(s), implicit imports added${logSuffix}`);
   }
 }
 
@@ -349,7 +349,7 @@ export const processImports = async (
       matches = query.matches(tree.rootNode);
     } catch (queryError: any) {
       if (isDev) {
-        console.group(` Query Error: ${file.path}`);
+        console.group(`🔴 Query Error: ${file.path}`);
         console.log('Language:', language);
         console.log('Query (first 200 chars):', queryStr.substring(0, 200) + '...');
         console.log('Error:', queryError?.message || queryError);
@@ -371,7 +371,7 @@ export const processImports = async (
         const sourceNode = captureMap['import.source'];
         if (!sourceNode) {
           if (isDev) {
-            console.log(`️ Import captured but no source node in ${file.path}`);
+            console.log(`⚠️ Import captured but no source node in ${file.path}`);
           }
           return;
         }
@@ -415,7 +415,7 @@ export const processImports = async (
   }
 
   if (isDev) {
-    console.log(` Import processing complete: ${getResolvedCount()}/${totalImportsFound} imports resolved to graph edges`);
+    console.log(`📊 Import processing complete: ${getResolvedCount()}/${totalImportsFound} imports resolved to graph edges`);
   }
 };
 
@@ -479,6 +479,6 @@ export const processImportsFromExtracted = async (
   addSwiftImplicitImports(files, configs.swiftPackageConfig, importMap, addImportEdge, ' (fast path)');
 
   if (isDev) {
-    console.log(` Import processing (fast path): ${getResolvedCount()}/${totalImportsFound} imports resolved to graph edges`);
+    console.log(`📊 Import processing (fast path): ${getResolvedCount()}/${totalImportsFound} imports resolved to graph edges`);
   }
 };

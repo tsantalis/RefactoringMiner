@@ -191,8 +191,8 @@ import static okhttp3.internal.Util.verifyAsIpAddress;
  * href="http://www.unicode.org/reports/tr46/#ToASCII">IDNA Mapping</a> transforms names to avoid
  * confusing characters. This includes basic case folding: transforming shouting {@code SQUARE.COM}
  * into cool and casual {@code square.com}. It also handles more exotic characters. For example, the
- * Unicode trademark sign () could be confused for the letters "TM" in {@code http://homail.com}.
- * To mitigate this, the single character () maps to the string (tm). There is similar policy for
+ * Unicode trademark sign (™) could be confused for the letters "TM" in {@code http://ho™mail.com}.
+ * To mitigate this, the single character (™) maps to the string (tm). There is similar policy for
  * all of the 1.1 million Unicode code points. Note that some code points such as "\ud83c\udf69" are
  * not mapped and cannot be used in a hostname.
  *

@@ -283,7 +283,7 @@ async function runCrossFileBindingPropagation(
 
   // Cycle diagnostic: only log when actual cycles detected (cycleCount from Kahn's BFS)
   if (isDev && cycleCount > 0) {
-    console.log(` ${cycleCount} files in import cycles (skipped for cross-file propagation)`);
+    console.log(`🔄 ${cycleCount} files in import cycles (skipped for cross-file propagation)`);
   }
 
   // Quick count of files with cross-file binding gaps (early exit once threshold exceeded)
@@ -306,7 +306,7 @@ async function runCrossFileBindingPropagation(
   const gapRatio = totalFiles > 0 ? filesWithGaps / totalFiles : 0;
   if (gapRatio < CROSS_FILE_SKIP_THRESHOLD && filesWithGaps < gapThreshold) {
     if (isDev) {
-      console.log(`️ Cross-file re-resolution skipped (${filesWithGaps}/${totalFiles} files, ${(gapRatio * 100).toFixed(1)}% < ${CROSS_FILE_SKIP_THRESHOLD * 100}% threshold)`);
+      console.log(`⏭️ Cross-file re-resolution skipped (${filesWithGaps}/${totalFiles} files, ${(gapRatio * 100).toFixed(1)}% < ${CROSS_FILE_SKIP_THRESHOLD * 100}% threshold)`);
     }
     return;
   }
@@ -377,7 +377,7 @@ async function runCrossFileBindingPropagation(
     }
 
     if (crossFileResolved >= MAX_CROSS_FILE_REPROCESS) {
-      if (isDev) console.log(`️ Cross-file re-resolution capped at ${MAX_CROSS_FILE_REPROCESS} files`);
+      if (isDev) console.log(`⚠️ Cross-file re-resolution capped at ${MAX_CROSS_FILE_REPROCESS} files`);
       break;
     }
   }
@@ -389,7 +389,7 @@ async function runCrossFileBindingPropagation(
     const totalElapsed = Date.now() - pipelineStart;
     const reResolutionPct = totalElapsed > 0 ? ((elapsed / totalElapsed) * 100).toFixed(1) : '0';
     console.log(
-      ` Cross-file re-resolution: ${crossFileResolved} candidates re-processed` +
+      `🔗 Cross-file re-resolution: ${crossFileResolved} candidates re-processed` +
       ` in ${elapsed}ms (${reResolutionPct}% of total ingestion time so far)`,
     );
   }
@@ -528,7 +528,7 @@ export const runPipelineFromRepo = async (
 
     if (isDev) {
       const totalMB = parseableScanned.reduce((s, f) => s + f.size, 0) / (1024 * 1024);
-      console.log(` Scan: ${totalFiles} paths, ${totalParseable} parseable (${totalMB.toFixed(0)}MB), ${numChunks} chunks @ ${CHUNK_BYTE_BUDGET / (1024 * 1024)}MB budget`);
+      console.log(`📂 Scan: ${totalFiles} paths, ${totalParseable} parseable (${totalMB.toFixed(0)}MB), ${numChunks} chunks @ ${CHUNK_BYTE_BUDGET / (1024 * 1024)}MB budget`);
     }
 
     onProgress({
@@ -654,7 +654,7 @@ export const runPipelineFromRepo = async (
               chunkWorkerData.calls, ctx.namedImportMap, exportedTypeMap,
             );
             if (isDev && enrichedCount > 0) {
-              console.log(` E1: Seeded ${enrichedCount} cross-file receiver types (chunk ${chunkIdx + 1})`);
+              console.log(`🔗 E1: Seeded ${enrichedCount} cross-file receiver types (chunk ${chunkIdx + 1})`);
             }
           }
           // Calls + Heritage + Routes — resolve in parallel (no shared mutable state between them)
@@ -835,7 +835,7 @@ export const runPipelineFromRepo = async (
       }
 
       if (isDev) {
-        console.log(`️ Route registry: ${routeRegistry.size} routes${duplicateRoutes > 0 ? ` (${duplicateRoutes} duplicate URLs skipped)` : ''}`);
+        console.log(`🗺️ Route registry: ${routeRegistry.size} routes${duplicateRoutes > 0 ? ` (${duplicateRoutes} duplicate URLs skipped)` : ''}`);
       }
     }
 
@@ -873,7 +873,7 @@ export const runPipelineFromRepo = async (
 
       processNextjsFetchRoutes(graph, allFetchCalls, routeURLToFile, consumerContents);
       if (isDev) {
-        console.log(` Processed ${allFetchCalls.length} fetch() calls against ${routeRegistry.size} routes`);
+        console.log(`🔗 Processed ${allFetchCalls.length} fetch() calls against ${routeRegistry.size} routes`);
       }
     }
 
@@ -930,7 +930,7 @@ export const runPipelineFromRepo = async (
       }
 
       if (isDev) {
-        console.log(` Tool registry: ${toolDefs.length} tools detected`);
+        console.log(`🔧 Tool registry: ${toolDefs.length} tools detected`);
       }
     }
 
@@ -939,7 +939,7 @@ export const runPipelineFromRepo = async (
       const rcStats = ctx.getStats();
       const total = rcStats.cacheHits + rcStats.cacheMisses;
       const hitRate = total > 0 ? ((rcStats.cacheHits / total) * 100).toFixed(1) : '0';
-      console.log(` Resolution cache: ${rcStats.cacheHits} hits, ${rcStats.cacheMisses} misses (${hitRate}% hit rate)`);
+      console.log(`🔍 Resolution cache: ${rcStats.cacheHits} hits, ${rcStats.cacheMisses} misses (${hitRate}% hit rate)`);
     }
 
     // ── Worker path quality enrichment: merge TypeEnv file-scope bindings into ExportedTypeMap ──
@@ -967,7 +967,7 @@ export const runPipelineFromRepo = async (
         }
       }
       if (isDev && enriched > 0) {
-        console.log(` Worker TypeEnv enrichment: ${enriched} fixpoint-inferred exports added to ExportedTypeMap`);
+        console.log(`🔗 Worker TypeEnv enrichment: ${enriched} fixpoint-inferred exports added to ExportedTypeMap`);
       }
     }
 
@@ -977,7 +977,7 @@ export const runPipelineFromRepo = async (
     // and that Phase 14 type propagation has complete namedImportMap data.
     const synthesized = synthesizeWildcardImportBindings(graph, ctx);
     if (isDev && synthesized > 0) {
-      console.log(` Synthesized ${synthesized} additional wildcard import bindings (Go/Ruby/C++/Swift/Python)`);
+      console.log(`🔗 Synthesized ${synthesized} additional wildcard import bindings (Go/Ruby/C++/Swift/Python)`);
     }
 
     // ── Phase 14: Cross-file binding propagation ──────────────────────
@@ -1006,7 +1006,7 @@ export const runPipelineFromRepo = async (
 
       const mroResult = computeMRO(graph);
       if (isDev && mroResult.entries.length > 0) {
-        console.log(` MRO: ${mroResult.entries.length} classes analyzed, ${mroResult.ambiguityCount} ambiguities found, ${mroResult.overrideEdges} OVERRIDES edges`);
+        console.log(`🔀 MRO: ${mroResult.entries.length} classes analyzed, ${mroResult.ambiguityCount} ambiguities found, ${mroResult.overrideEdges} OVERRIDES edges`);
       }
 
       // ── Phase 5: Communities ───────────────────────────────────────────
@@ -1028,7 +1028,7 @@ export const runPipelineFromRepo = async (
       });
 
       if (isDev) {
-        console.log(`️ Community detection: ${communityResult.stats.totalCommunities} communities found (modularity: ${communityResult.stats.modularity.toFixed(3)})`);
+        console.log(`🏘️ Community detection: ${communityResult.stats.totalCommunities} communities found (modularity: ${communityResult.stats.modularity.toFixed(3)})`);
       }
 
       communityResult.communities.forEach(comm => {
@@ -1084,7 +1084,7 @@ export const runPipelineFromRepo = async (
       );
 
       if (isDev) {
-        console.log(` Process detection: ${processResult.stats.totalProcesses} processes found (${processResult.stats.crossCommunityCount} cross-community)`);
+        console.log(`🔄 Process detection: ${processResult.stats.totalProcesses} processes found (${processResult.stats.crossCommunityCount} cross-community)`);
       }
 
       processResult.processes.forEach(proc => {
@@ -1172,7 +1172,7 @@ export const runPipelineFromRepo = async (
           }
         }
         if (isDev && linked > 0) {
-          console.log(` Linked ${linked} Route/Tool nodes to execution flows`);
+          console.log(`🔗 Linked ${linked} Route/Tool nodes to execution flows`);
         }
       }
     }

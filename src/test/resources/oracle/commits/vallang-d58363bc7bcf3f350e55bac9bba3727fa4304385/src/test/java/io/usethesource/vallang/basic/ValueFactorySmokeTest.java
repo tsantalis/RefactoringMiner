@@ -289,7 +289,7 @@ public final class ValueFactorySmokeTest {
   @ParameterizedTest @ArgumentsSource(ValueFactoryProvider.class)
   public void testString(IValueFactory vf) {
     assertTrue(vf.string("hello").getValue().equals("hello"));
-    assertTrue(vf.string(0x1F35D).getValue().equals(""));
-    assertTrue(vf.string(new int[] {0x1F35D, 0x1F35D}).getValue().equals(""));
+    assertTrue(vf.string(0x1F35D).getValue().equals("🍝"));
+    assertTrue(vf.string(new int[] {0x1F35D, 0x1F35D}).getValue().equals("🍝🍝"));
   }
 }

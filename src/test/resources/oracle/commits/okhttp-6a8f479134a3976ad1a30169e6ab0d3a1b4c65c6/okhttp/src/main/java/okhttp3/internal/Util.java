@@ -387,7 +387,7 @@ public final class Util {
    * If {@code host} is an IP address, this returns the IP address in canonical form.
    *
    * <p>Otherwise this performs IDN ToASCII encoding and canonicalize the result to lowercase. For
-   * example this converts {@code .net} to {@code xn--n3h.net}, and {@code WwW.GoOgLe.cOm} to
+   * example this converts {@code ☃.net} to {@code xn--n3h.net}, and {@code WwW.GoOgLe.cOm} to
    * {@code www.google.com}. {@code null} will be returned if the host cannot be ToASCII encoded or
    * if the result contains unsupported ASCII characters.
    */

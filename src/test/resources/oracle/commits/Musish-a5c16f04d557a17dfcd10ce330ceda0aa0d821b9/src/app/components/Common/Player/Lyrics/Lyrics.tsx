@@ -52,7 +52,7 @@ const Lyrics: React.FC<ILyricsProps> = ({ song }: ILyricsProps) => {
       <div className={classes.noMatch}>
         {translate.noLyricsAvailable}
         <span role={'img'} aria-label={'crying'}>
-          
+          😢
         </span>
       </div>
     );

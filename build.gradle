@@ -89,6 +89,9 @@ dependencies {
     implementation 'com.github.gumtreediff:core:4.0.0'
     implementation 'com.github.gumtreediff:gen.jdt:4.0.0'
     implementation 'com.github.gumtreediff:gen.treesitter-ng:4.0.0'
+    // tree-sitter bindings used by TreeSitterTreeGenerator, same versions as gen.treesitter-ng
+    implementation 'io.github.bonede:tree-sitter:0.26.6'
+    implementation 'io.github.bonede:tree-sitter-cpp:0.23.4'
     implementation 'org.jcommander:jcommander:3.0'
     implementation 'org.jsoup:jsoup:1.23.2'
     implementation 'org.jgrapht:jgrapht-core:1.5.3'

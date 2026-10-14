@@ -1,6 +1,6 @@
 /* 
  * LibertyBans-env-velocity
- * Copyright  2020 Anand Beh <https://www.arim.space>
+ * Copyright © 2020 Anand Beh <https://www.arim.space>
  * 
  * LibertyBans-env-velocity is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as

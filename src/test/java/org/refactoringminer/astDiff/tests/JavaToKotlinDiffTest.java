@@ -27,8 +27,6 @@ import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import net.joshka.junit.json.params.JsonFileSource;
 
 public class JavaToKotlinDiffTest {
@@ -36,7 +34,7 @@ public class JavaToKotlinDiffTest {
 	public static final String MAPPING_PATH = System.getProperty("user.dir") + "/src/test/resources/astDiff/java-to-kotlin";
 
 	@Test
-	public void testSubTreeMappings() throws JsonProcessingException {
+	public void testSubTreeMappings() throws Exception {
 		File mappingsDirFile = new File(MAPPING_PATH);
 		String[] files = mappingsDirFile.list();
 		List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));

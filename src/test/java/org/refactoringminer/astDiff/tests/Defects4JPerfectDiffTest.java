@@ -1,9 +1,7 @@
 package org.refactoringminer.astDiff.tests;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import net.joshka.junit.json.params.JsonFileSource;
 import org.apache.commons.io.FileUtils;
-import org.json.JSONException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -32,7 +30,7 @@ public class Defects4JPerfectDiffTest extends ConsideringCommentsVisitorTest {
     @ParameterizedTest(name= "{index}: {0}")
 //    @JsonFileSource(resources = "/astDiff/defects4j/cases-problematic.json")
     @JsonFileSource(resources = "/astDiff/defects4j/cases.json")
-    public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws JsonProcessingException, JSONException {
+    public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws Exception {
         File mappingsDirFile = new File(getFinalFolderPath(dir, info.getRepo(), info.getCommit()));
         String[] files = mappingsDirFile.list();
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));

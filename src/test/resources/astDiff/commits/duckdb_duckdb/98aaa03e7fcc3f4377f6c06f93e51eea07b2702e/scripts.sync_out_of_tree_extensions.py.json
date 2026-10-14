@@ -34,8 +34,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "\nSyncs out-of-tree extensions into extension/external/<name> directories.\n\nUsed when DUCKDB_NEW_EXTENSION_BUILD=1. Reads the following environment variables\nto determine which extensions to sync:\n\n  BUILD_EXTENSIONS   Semicolon-separated list of extension names\n                     (e.g. \"spatial;delta;postgres_scanner\")\n  DUCKDB_EXTENSIONS  Alias for BUILD_EXTENSIONS\n  EXTENSION_CONFIGS  Semicolon-separated list of cmake config file paths\n                     whose duckdb_extension_load(... GIT_URL ...) calls are parsed\n\nFor each out-of-tree extension found, the corresponding cmake config in\n.github/config/extensions/<name>.cmake is parsed to obtain GIT_URL, GIT_TAG,\nSUBMODULES, and APPLY_PATCHES. The extension is then cloned (or updated) at\nextension/external/<name>.\n\"\"\"",
-  "secondLabel" : "\nSyncs out-of-tree extensions into extension/external/<name> directories.\n\nUsed when DUCKDB_NEW_EXTENSION_BUILD=1. Reads the following environment variables\nto determine which extensions to sync:\n\n  BUILD_EXTENSIONS   Semicolon-separated list of extension names\n                     (e.g. \"spatial;delta;postgres_scanner\")\n  DUCKDB_EXTENSIONS  Alias for BUILD_EXTENSIONS\n  EXTENSION_CONFIGS  Semicolon-separated list of cmake config file paths\n                     whose duckdb_extension_load(... GIT_URL ...) calls are parsed\n\nFor each out-of-tree extension found, the corresponding cmake config in\n.github/config/extensions/<name>.cmake is parsed to obtain GIT_URL, GIT_TAG,\nSUBMODULES, and APPLY_PATCHES. The extension is then cloned (or updated) at\nextension/external/<name>.\n\"\"\"",
+  "firstLabel" : "\"\"\"\nSyncs out-of-tree extensions into extension/external/<name> directories.\n\nUsed when DUCKDB_NEW_EXTENSION_BUILD=1. Reads the following environment variables\nto determine which extensions to sync:\n\n  BUILD_EXTENSIONS   Semicolon-separated list of extension names\n                     (e.g. \"spatial;delta;postgres_scanner\")\n  DUCKDB_EXTENSIONS  Alias for BUILD_EXTENSIONS\n  EXTENSION_CONFIGS  Semicolon-separated list of cmake config file paths\n                     whose duckdb_extension_load(... GIT_URL ...) calls are parsed\n\nFor each out-of-tree extension found, the corresponding cmake config in\n.github/config/extensions/<name>.cmake is parsed to obtain GIT_URL, GIT_TAG,\nSUBMODULES, and APPLY_PATCHES. The extension is then cloned (or updated) at\nextension/external/<name>.\n\"\"\"",
+  "secondLabel" : "\"\"\"\nSyncs out-of-tree extensions into extension/external/<name> directories.\n\nUsed when DUCKDB_NEW_EXTENSION_BUILD=1. Reads the following environment variables\nto determine which extensions to sync:\n\n  BUILD_EXTENSIONS   Semicolon-separated list of extension names\n                     (e.g. \"spatial;delta;postgres_scanner\")\n  DUCKDB_EXTENSIONS  Alias for BUILD_EXTENSIONS\n  EXTENSION_CONFIGS  Semicolon-separated list of cmake config file paths\n                     whose duckdb_extension_load(... GIT_URL ...) calls are parsed\n\nFor each out-of-tree extension found, the corresponding cmake config in\n.github/config/extensions/<name>.cmake is parsed to obtain GIT_URL, GIT_TAG,\nSUBMODULES, and APPLY_PATCHES. The extension is then cloned (or updated) at\nextension/external/<name>.\n\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 23,
@@ -1552,8 +1552,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Parse a cmake file and return a list of out-of-tree extension descriptors,\n    i.e. duckdb_extension_load() calls that contain GIT_URL.\n\n    Follows include(\"${EXTENSION_CONFIG_BASE_DIR}/foo.cmake\") directives,\n    resolving them relative to the directory of cmake_path.\n\n    Each descriptor is a dict with keys:\n      name, git_url, git_tag, submodules (list, may be empty), apply_patches (bool)\n    \"\"\"",
-  "secondLabel" : "    \n    Parse a cmake file and return a list of out-of-tree extension descriptors,\n    i.e. duckdb_extension_load() calls that contain GIT_URL.\n\n    Follows include(\"${EXTENSION_CONFIG_BASE_DIR}/foo.cmake\") directives,\n    resolving them relative to the directory of cmake_path.\n\n    Each descriptor is a dict with keys:\n      name, git_url, git_tag, submodules (list, may be empty), apply_patches (bool)\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Parse a cmake file and return a list of out-of-tree extension descriptors,\n    i.e. duckdb_extension_load() calls that contain GIT_URL.\n\n    Follows include(\"${EXTENSION_CONFIG_BASE_DIR}/foo.cmake\") directives,\n    resolving them relative to the directory of cmake_path.\n\n    Each descriptor is a dict with keys:\n      name, git_url, git_tag, submodules (list, may be empty), apply_patches (bool)\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Parse a cmake file and return a list of out-of-tree extension descriptors,\n    i.e. duckdb_extension_load() calls that contain GIT_URL.\n\n    Follows include(\"${EXTENSION_CONFIG_BASE_DIR}/foo.cmake\") directives,\n    resolving them relative to the directory of cmake_path.\n\n    Each descriptor is a dict with keys:\n      name, git_url, git_tag, submodules (list, may be empty), apply_patches (bool)\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 1390,
@@ -3989,8 +3989,8 @@
   "secondParentType" : "block",
   "firstPos" : 3244,
   "secondPos" : 3244,
-  "firstEndPos" : 3351,
-  "secondEndPos" : 3351
+  "firstEndPos" : 3349,
+  "secondEndPos" : 3349
 }, {
   "firstType" : "boolean_operator",
   "secondType" : "boolean_operator",
@@ -4088,8 +4088,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 3299,
   "secondPos" : 3299,
-  "firstEndPos" : 3351,
-  "secondEndPos" : 3351
+  "firstEndPos" : 3349,
+  "secondEndPos" : 3349
 }, {
   "firstType" : "continue",
   "secondType" : "continue",
@@ -4121,8 +4121,8 @@
   "secondParentType" : "block",
   "firstPos" : 3309,
   "secondPos" : 3309,
-  "firstEndPos" : 3351,
-  "secondEndPos" : 3351
+  "firstEndPos" : 3349,
+  "secondEndPos" : 3349
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -6634,8 +6634,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Apply each patch file with git-apply and create a commit whose message is\n    the patch filename (e.g. \"fix.patch\").\n    \"\"\"",
-  "secondLabel" : "    \n    Apply each patch file with git-apply and create a commit whose message is\n    the patch filename (e.g. \"fix.patch\").\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Apply each patch file with git-apply and create a commit whose message is\n    the patch filename (e.g. \"fix.patch\").\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Apply each patch file with git-apply and create a commit whose message is\n    the patch filename (e.g. \"fix.patch\").\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 5063,
@@ -7404,8 +7404,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Return None if the commit list can be exported as patch files, or a human-readable\n    reason string explaining why it cannot.\n\n    Commits are exportable when every message:\n      - is a single word (no whitespace)\n      - ends in '.patch'\n      - is unique\n      - appears in strict ascending lexicographic order\n    \"\"\"",
-  "secondLabel" : "    \n    Return None if the commit list can be exported as patch files, or a human-readable\n    reason string explaining why it cannot.\n\n    Commits are exportable when every message:\n      - is a single word (no whitespace)\n      - ends in '.patch'\n      - is unique\n      - appears in strict ascending lexicographic order\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Return None if the commit list can be exported as patch files, or a human-readable\n    reason string explaining why it cannot.\n\n    Commits are exportable when every message:\n      - is a single word (no whitespace)\n      - ends in '.patch'\n      - is unique\n      - appears in strict ascending lexicographic order\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Return None if the commit list can be exported as patch files, or a human-readable\n    reason string explaining why it cannot.\n\n    Commits are exportable when every message:\n      - is a single word (no whitespace)\n      - ends in '.patch'\n      - is unique\n      - appears in strict ascending lexicographic order\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 6268,
@@ -8394,8 +8394,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Export every commit on top of <resolved_git_tag> as a patch file in <patch_dir>.\n\n    Each commit message becomes the filename; its diff is written as the file content.\n    Validates the same constraints as _exportable_reason before writing anything.\n    \"\"\"",
-  "secondLabel" : "    \n    Export every commit on top of <resolved_git_tag> as a patch file in <patch_dir>.\n\n    Each commit message becomes the filename; its diff is written as the file content.\n    Validates the same constraints as _exportable_reason before writing anything.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Export every commit on top of <resolved_git_tag> as a patch file in <patch_dir>.\n\n    Each commit message becomes the filename; its diff is written as the file content.\n    Validates the same constraints as _exportable_reason before writing anything.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Export every commit on top of <resolved_git_tag> as a patch file in <patch_dir>.\n\n    Each commit message becomes the filename; its diff is written as the file content.\n    Validates the same constraints as _exportable_reason before writing anything.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 7269,
@@ -9973,8 +9973,8 @@
   "secondParentType" : "block",
   "firstPos" : 8319,
   "secondPos" : 8371,
-  "firstEndPos" : 8425,
-  "secondEndPos" : 8477
+  "firstEndPos" : 8423,
+  "secondEndPos" : 8475
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -9995,8 +9995,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 8338,
   "secondPos" : 8390,
-  "firstEndPos" : 8425,
-  "secondEndPos" : 8477
+  "firstEndPos" : 8423,
+  "secondEndPos" : 8475
 }, {
   "firstType" : "raise_statement",
   "secondType" : "raise_statement",
@@ -10006,8 +10006,8 @@
   "secondParentType" : "block",
   "firstPos" : 8338,
   "secondPos" : 8390,
-  "firstEndPos" : 8425,
-  "secondEndPos" : 8477
+  "firstEndPos" : 8423,
+  "secondEndPos" : 8475
 }, {
   "firstType" : "raise",
   "secondType" : "raise",
@@ -10028,8 +10028,8 @@
   "secondParentType" : "raise_statement",
   "firstPos" : 8344,
   "secondPos" : 8396,
-  "firstEndPos" : 8425,
-  "secondEndPos" : 8477
+  "firstEndPos" : 8423,
+  "secondEndPos" : 8475
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -10050,8 +10050,8 @@
   "secondParentType" : "call",
   "firstPos" : 8366,
   "secondPos" : 8418,
-  "firstEndPos" : 8425,
-  "secondEndPos" : 8477
+  "firstEndPos" : 8423,
+  "secondEndPos" : 8475
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -10061,8 +10061,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 8367,
   "secondPos" : 8419,
-  "firstEndPos" : 8424,
-  "secondEndPos" : 8476
+  "firstEndPos" : 8422,
+  "secondEndPos" : 8474
 }, {
   "firstType" : "call",
   "secondType" : "call",
@@ -10946,8 +10946,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Verify the extension repo is in a known-good state:\n\n      1. No uncommitted working-tree changes (git status --porcelain is empty).\n      2. The only commits on top of <git_tag> are exactly the patch commits, in\n         application order (oldest first).\n\n    Fetches from remote if <git_tag> cannot be resolved locally.\n\n    Returns True  if the repo is already at the correct state (no update needed).\n    Returns False if the base is not yet at <git_tag> (update needed but repo is clean).\n    Raises ExtensionNotCleanError if either condition fails.\n    \"\"\"",
-  "secondLabel" : "    \n    Verify the extension repo is in a known-good state:\n\n      1. No uncommitted working-tree changes (git status --porcelain is empty).\n      2. The only commits on top of <git_tag> are exactly the patch commits, in\n         application order (oldest first).\n\n    Fetches from remote if <git_tag> cannot be resolved locally.\n\n    Returns True  if the repo is already at the correct state (no update needed).\n    Returns False if the base is not yet at <git_tag> (update needed but repo is clean).\n    Raises ExtensionNotCleanError if either condition fails.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Verify the extension repo is in a known-good state:\n\n      1. No uncommitted working-tree changes (git status --porcelain is empty).\n      2. The only commits on top of <git_tag> are exactly the patch commits, in\n         application order (oldest first).\n\n    Fetches from remote if <git_tag> cannot be resolved locally.\n\n    Returns True  if the repo is already at the correct state (no update needed).\n    Returns False if the base is not yet at <git_tag> (update needed but repo is clean).\n    Raises ExtensionNotCleanError if either condition fails.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Verify the extension repo is in a known-good state:\n\n      1. No uncommitted working-tree changes (git status --porcelain is empty).\n      2. The only commits on top of <git_tag> are exactly the patch commits, in\n         application order (oldest first).\n\n    Fetches from remote if <git_tag> cannot be resolved locally.\n\n    Returns True  if the repo is already at the correct state (no update needed).\n    Returns False if the base is not yet at <git_tag> (update needed but repo is clean).\n    Raises ExtensionNotCleanError if either condition fails.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 9069,
@@ -11293,8 +11293,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 9826,
   "secondPos" : 9878,
-  "firstEndPos" : 10114,
-  "secondEndPos" : 10166
+  "firstEndPos" : 10112,
+  "secondEndPos" : 10164
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -11326,8 +11326,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 9942,
   "secondPos" : 9994,
-  "firstEndPos" : 10027,
-  "secondEndPos" : 10079
+  "firstEndPos" : 10025,
+  "secondEndPos" : 10077
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -11337,8 +11337,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 10038,
   "secondPos" : 10090,
-  "firstEndPos" : 10114,
-  "secondEndPos" : 10166
+  "firstEndPos" : 10112,
+  "secondEndPos" : 10164
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -12613,8 +12613,8 @@
   "secondParentType" : "block",
   "firstPos" : 10894,
   "secondPos" : 10946,
-  "firstEndPos" : 11051,
-  "secondEndPos" : 11103
+  "firstEndPos" : 11049,
+  "secondEndPos" : 11101
 }, {
   "firstType" : "not_operator",
   "secondType" : "not_operator",
@@ -12690,8 +12690,8 @@
   "secondParentType" : "expression_statement",
   "firstPos" : 10961,
   "secondPos" : 11013,
-  "firstEndPos" : 11051,
-  "secondEndPos" : 11103
+  "firstEndPos" : 11049,
+  "secondEndPos" : 11101
 }, {
   "firstType" : "block",
   "secondType" : "block",
@@ -12701,8 +12701,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 10961,
   "secondPos" : 11013,
-  "firstEndPos" : 11051,
-  "secondEndPos" : 11103
+  "firstEndPos" : 11049,
+  "secondEndPos" : 11101
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -12712,8 +12712,8 @@
   "secondParentType" : "block",
   "firstPos" : 10961,
   "secondPos" : 11013,
-  "firstEndPos" : 11051,
-  "secondEndPos" : 11103
+  "firstEndPos" : 11049,
+  "secondEndPos" : 11101
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -12745,8 +12745,8 @@
   "secondParentType" : "assignment",
   "firstPos" : 10975,
   "secondPos" : 11027,
-  "firstEndPos" : 11051,
-  "secondEndPos" : 11103
+  "firstEndPos" : 11049,
+  "secondEndPos" : 11101
 }, {
   "firstType" : "raise_statement",
   "secondType" : "raise_statement",
@@ -12811,8 +12811,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 11100,
   "secondPos" : 11152,
-  "firstEndPos" : 11584,
-  "secondEndPos" : 11636
+  "firstEndPos" : 11582,
+  "secondEndPos" : 11634
 }, {
   "firstType" : "concatenated_string",
   "secondType" : "concatenated_string",
@@ -12822,8 +12822,8 @@
   "secondParentType" : "binary_operator",
   "firstPos" : 11100,
   "secondPos" : 11152,
-  "firstEndPos" : 11570,
-  "secondEndPos" : 11622
+  "firstEndPos" : 11568,
+  "secondEndPos" : 11620
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -12888,8 +12888,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 11398,
   "secondPos" : 11450,
-  "firstEndPos" : 11483,
-  "secondEndPos" : 11535
+  "firstEndPos" : 11481,
+  "secondEndPos" : 11533
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -12899,8 +12899,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 11494,
   "secondPos" : 11546,
-  "firstEndPos" : 11570,
-  "secondEndPos" : 11622
+  "firstEndPos" : 11568,
+  "secondEndPos" : 11620
 }, {
   "firstType" : "+",
   "secondType" : "+",
@@ -12908,10 +12908,10 @@
   "secondLabel" : "+",
   "firstParentType" : "binary_operator",
   "secondParentType" : "binary_operator",
-  "firstPos" : 11571,
-  "secondPos" : 11623,
-  "firstEndPos" : 11572,
-  "secondEndPos" : 11624
+  "firstPos" : 11569,
+  "secondPos" : 11621,
+  "firstEndPos" : 11570,
+  "secondEndPos" : 11622
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -12919,10 +12919,10 @@
   "secondLabel" : "export_hint",
   "firstParentType" : "binary_operator",
   "secondParentType" : "binary_operator",
-  "firstPos" : 11573,
-  "secondPos" : 11625,
-  "firstEndPos" : 11584,
-  "secondEndPos" : 11636
+  "firstPos" : 11571,
+  "secondPos" : 11623,
+  "firstEndPos" : 11582,
+  "secondEndPos" : 11634
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -14538,8 +14538,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 12328,
   "secondPos" : 12380,
-  "firstEndPos" : 12511,
-  "secondEndPos" : 12563
+  "firstEndPos" : 12399,
+  "secondEndPos" : 12451
 }, {
   "firstType" : "block",
   "secondType" : "block",
@@ -15539,8 +15539,8 @@
   "secondParentType" : "elif_clause",
   "firstPos" : 13123,
   "secondPos" : 13175,
-  "firstEndPos" : 13234,
-  "secondEndPos" : 13286
+  "firstEndPos" : 13194,
+  "secondEndPos" : 13246
 }, {
   "firstType" : "block",
   "secondType" : "block",
@@ -15638,8 +15638,8 @@
   "secondParentType" : "else_clause",
   "firstPos" : 13312,
   "secondPos" : 13364,
-  "firstEndPos" : 13491,
-  "secondEndPos" : 13543
+  "firstEndPos" : 13383,
+  "secondEndPos" : 13435
 }, {
   "firstType" : "block",
   "secondType" : "block",
@@ -19961,8 +19961,8 @@
   "secondParentType" : "block",
   "firstPos" : 16468,
   "secondPos" : 16520,
-  "firstEndPos" : 16562,
-  "secondEndPos" : 16614
+  "firstEndPos" : 16560,
+  "secondEndPos" : 16612
 }, {
   "firstType" : "not_operator",
   "secondType" : "not_operator",
@@ -20049,8 +20049,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 16508,
   "secondPos" : 16560,
-  "firstEndPos" : 16562,
-  "secondEndPos" : 16614
+  "firstEndPos" : 16560,
+  "secondEndPos" : 16612
 }, {
   "firstType" : "continue",
   "secondType" : "continue",
@@ -20082,8 +20082,8 @@
   "secondParentType" : "block",
   "firstPos" : 16518,
   "secondPos" : 16570,
-  "firstEndPos" : 16562,
-  "secondEndPos" : 16614
+  "firstEndPos" : 16560,
+  "secondEndPos" : 16612
 }, {
   "firstType" : "for_statement",
   "secondType" : "for_statement",
@@ -21814,8 +21814,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Collect vcpkg.json files from all synced extensions, merge their dependencies\n    and overlay configuration, and write the result to <output_dir>/vcpkg.json.\n\n    Overlay paths are stored as absolute paths so the manifest is valid regardless\n    of which directory cmake is invoked from.\n    \"\"\"",
-  "secondLabel" : "    \n    Collect vcpkg.json files from all synced extensions, merge their dependencies\n    and overlay configuration, and write the result to <output_dir>/vcpkg.json.\n\n    Overlay paths are stored as absolute paths so the manifest is valid regardless\n    of which directory cmake is invoked from.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Collect vcpkg.json files from all synced extensions, merge their dependencies\n    and overlay configuration, and write the result to <output_dir>/vcpkg.json.\n\n    Overlay paths are stored as absolute paths so the manifest is valid regardless\n    of which directory cmake is invoked from.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Collect vcpkg.json files from all synced extensions, merge their dependencies\n    and overlay configuration, and write the result to <output_dir>/vcpkg.json.\n\n    Overlay paths are stored as absolute paths so the manifest is valid regardless\n    of which directory cmake is invoked from.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 17659,

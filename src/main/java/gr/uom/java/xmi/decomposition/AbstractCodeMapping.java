@@ -875,6 +875,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							wrappedAsArgument(initializer, before) ||
 							stringConcatMatch(initializer, before) ||
 							diamondClassInstanceCreationMatch(initializer, before) ||
+							classInstanceCreationWithAdditionalArgumentsMatch(initializer, before) ||
 							reservedTokenMatch(initializer, replacement, before) ||
 							classInstanceCreationToCreationReference(initializer, before) ||
 							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
@@ -2007,6 +2008,30 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			if(tmp.equals(replacedExpression)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	//new A(x) extracted as new B(x, y, z): all arguments of the replaced creation are kept and new ones are added
+	private boolean classInstanceCreationWithAdditionalArgumentsMatch(AbstractExpression initializer, String replacedExpression) {
+		AbstractCall creation1 = null;
+		for(AbstractCall creation : fragment1.getCreations()) {
+			if(creation.actualString().equals(replacedExpression)) {
+				creation1 = creation;
+				break;
+			}
+		}
+		AbstractCall creation2 = null;
+		for(AbstractCall creation : initializer.getCreations()) {
+			if(creation.actualString().equals(initializer.getString())) {
+				creation2 = creation;
+				break;
+			}
+		}
+		if(creation1 != null && creation2 != null) {
+			List<String> arguments1 = creation1.arguments();
+			List<String> arguments2 = creation2.arguments();
+			return arguments1.size() > 0 && arguments2.size() > arguments1.size() && arguments2.containsAll(arguments1);
 		}
 		return false;
 	}

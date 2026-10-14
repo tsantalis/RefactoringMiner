@@ -1699,7 +1699,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic parameters() : String renamed to public parameterTypeNames() : String in class org.junit.platform.suite.api.SelectMethod",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_ANNOTATION",

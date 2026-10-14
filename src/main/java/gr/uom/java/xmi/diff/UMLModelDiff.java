@@ -3030,6 +3030,47 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	private boolean testMethodsMovedToAddedTestClass(UMLClass umlClass, UMLClassBaseDiff classDiff, Map<UMLOperation, UMLOperation> commonOperations) {
+		if(commonOperations.isEmpty() || !umlClass.isTestClass() || !classDiff.getOriginalClass().isTestClass()) {
+			return false;
+		}
+		for(Map.Entry<UMLOperation, UMLOperation> entry : commonOperations.entrySet()) {
+			if(!entry.getKey().hasTestAnnotation() || !(entry.getValue().hasTestAnnotation() || entry.getValue().hasParameterizedTestAnnotation())) {
+				return false;
+			}
+			if(!similarTestBodies(entry.getKey(), entry.getValue())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//at least half of the statements of the shorter test body appear identically in the other test body
+	private static boolean similarTestBodies(UMLOperation operation1, UMLOperation operation2) {
+		if(operation1.getBody() == null || operation2.getBody() == null) {
+			return false;
+		}
+		List<String> leaves1 = new ArrayList<>();
+		for(AbstractCodeFragment leaf : operation1.getBody().getCompositeStatement().getLeaves()) {
+			leaves1.add(leaf.getString());
+		}
+		List<String> leaves2 = new ArrayList<>();
+		for(AbstractCodeFragment leaf : operation2.getBody().getCompositeStatement().getLeaves()) {
+			leaves2.add(leaf.getString());
+		}
+		int minSize = Math.min(leaves1.size(), leaves2.size());
+		if(minSize == 0) {
+			return false;
+		}
+		int identical = 0;
+		for(String leaf : leaves1) {
+			if(leaves2.remove(leaf)) {
+				identical++;
+			}
+		}
+		return identical * 2 >= minSize;
+	}
+
 	private ExtractClassRefactoring atLeastOneCommonAttributeOrOperation(UMLClass umlClass, UMLClassBaseDiff classDiff, UMLAttribute attributeOfExtractedClassType, Set<VariableDeclaration> variablesOfExtractedClassType, boolean addedClassFoundInAddedImport) {
 		Map<UMLOperation, UMLOperation> commonOperations = new LinkedHashMap<>();
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
@@ -3112,7 +3153,7 @@ public class UMLModelDiff {
 			}
 		}
 		int threshold = 1;
-		if(attributeOfExtractedClassType != null || variablesOfExtractedClassType.size() > 0 || classDiff.getNextClass().isInnerClass(umlClass) || addedClassFoundInAddedImport)
+		if(attributeOfExtractedClassType != null || variablesOfExtractedClassType.size() > 0 || classDiff.getNextClass().isInnerClass(umlClass) || addedClassFoundInAddedImport || testMethodsMovedToAddedTestClass(umlClass, classDiff, commonOperations))
 			threshold = 0;
 		boolean innerClassExtracted = false;
 		for(UMLClassRenameDiff diff : classRenameDiffList) {
@@ -3291,6 +3332,35 @@ public class UMLModelDiff {
 		}
 	}
 
+	//another added class declaring the same attribute received more members removed from the original class
+	private boolean addedClassWithHigherArity(UMLClassBaseDiff classDiff, UMLClass addedClass, UMLAttribute removedAttribute) {
+		int arity = membersMovedFromOriginalClass(classDiff, addedClass);
+		for(UMLClass otherAddedClass : addedClasses) {
+			if(!otherAddedClass.equals(addedClass) && otherAddedClass.attributeWithTheSameNameIgnoringChangedType(removedAttribute) != null &&
+					membersMovedFromOriginalClass(classDiff, otherAddedClass) > arity) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static int membersMovedFromOriginalClass(UMLClassBaseDiff classDiff, UMLClass addedClass) {
+		UMLClass originalClass = classDiff.getOriginalClass();
+		UMLClass nextClass = classDiff.getNextClass();
+		int count = 0;
+		for(UMLOperation operation : originalClass.getOperations()) {
+			if(nextClass.operationWithTheSameSignatureIgnoringChangedTypes(operation) == null && addedClass.operationWithTheSameSignatureIgnoringChangedTypes(operation) != null) {
+				count++;
+			}
+		}
+		for(UMLAttribute attribute : originalClass.getAttributes()) {
+			if(nextClass.attributeWithTheSameNameIgnoringChangedType(attribute) == null && addedClass.attributeWithTheSameNameIgnoringChangedType(attribute) != null) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) throws RefactoringMinerTimedOutException {
 		int refactoringsBefore = refactorings.size();
 		Constants LANG1 = classDiff.LANG1;
@@ -3382,6 +3452,9 @@ public class UMLModelDiff {
 				if(renameFound) {
 					removedAttribute = classDiff.getOriginalClass().containsAttributeWithTheSameSignature(addedAttribute);
 				}
+			}
+			if(removedAttribute != null && parentType.equals(RefactoringType.EXTRACT_SUPERCLASS) && addedClassWithHigherArity(classDiff, addedClass, removedAttribute)) {
+				removedAttribute = null;
 			}
 			if(removedAttribute != null) {
 				classDiff.getRemovedAttributes().remove(removedAttribute);

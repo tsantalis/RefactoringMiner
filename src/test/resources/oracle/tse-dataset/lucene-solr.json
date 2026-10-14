@@ -1027,6 +1027,11 @@
       ],
       "baseline": [
         {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tpublic Lucene84PostingsFormat(minTermBlockSize int, maxTermBlockSize int) inlined to public Lucene84PostingsFormat() in class org.apache.lucene.backward_codecs.lucene84.Lucene84PostingsFormat",
+          "validation": true
+        },
+        {
           "type": "MOVE_CLASS",
           "description": "Move Class\torg.apache.lucene.codecs.blocktree.FieldReader moved to org.apache.lucene.codecs.lucene90.blocktree.FieldReader",
           "validation": false

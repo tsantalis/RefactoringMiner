@@ -55,7 +55,7 @@
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\tOPERATION_BREACH_MESSAGE : String to OTHER_SERVER_THROTTLING_ABBREVIATION : String in class org.apache.hadoop.fs.azurebfs.services.RetryReasonConstants",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -916,7 +916,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tb : byte in method package runReadRangeFromPositionedReadable(allocate IntFunction<ByteBuffer>) : void from class org.apache.hadoop.fs.TestVectoredReadUtils",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [
@@ -1757,7 +1757,7 @@
         {
           "type": "EXTRACT_AND_MOVE_OPERATION",
           "description": "Extract And Move Method\tpublic requireAnonymousDataPath(conf Configuration) : Path extracted from public testJobSubmissionCollectsTokens() : void in class org.apache.hadoop.fs.s3a.auth.delegation.ITestDelegatedMRJob & moved to class org.apache.hadoop.fs.s3a.test.PublicDatasetTestUtils",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

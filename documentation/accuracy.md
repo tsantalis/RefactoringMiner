@@ -144,43 +144,43 @@ Moreover, the benchmark has been extended with valid instances for the following
 * `Merge Parameter`
 * `Invert Condition`
 
-As of **September 12, 2026** the precision and recall of RefactoringMiner on this benchmark is:
+As of **October 13, 2026** the precision and recall of RefactoringMiner on this benchmark is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|3565  | 38  | 75  | 0.989  | 0.979|
+|**Total**|3575  | 33  | 52  | 0.991  | 0.986|
 |Extract Method|375  |  1  |  4  | 0.997  | 0.989|
 |Rename Class|233  |  0  |  1  | 1.000  | 0.996|
-|Move Attribute|72  |  0  |  7  | 1.000  | 0.911|
+|Move Attribute|73  |  0  |  3  | 1.000  | 0.961|
 |Move And Rename Attribute| 7  |  0  |  1  | 1.000  | 0.875|
-|Rename Method|301  |  6  |  5  | 0.980  | 0.984|
-|Inline Method|70  |  3  |  2  | 0.959  | 0.972|
+|Rename Method|303  |  5  |  2  | 0.984  | 0.993|
+|Inline Method|72  |  1  |  2  | 0.986  | 0.973|
 |Move Method|266  |  1  |  0  | 0.996  | 1.000|
-|Move And Rename Method|26  |  3  |  0  | 0.897  | 1.000|
+|Move And Rename Method|27  |  2  |  0  | 0.931  | 1.000|
 |Pull Up Method|47  |  0  |  0  | 1.000  | 1.000|
 |Move Class|144  |  1  |  1  | 0.993  | 0.993|
 |Move And Rename Class|28  |  0  |  0  | 1.000  | 1.000|
-|Pull Up Attribute|12  |  0  |  0  | 1.000  | 1.000|
+|Pull Up Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Push Down Attribute| 6  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Interface|16  |  2  |  0  | 0.889  | 1.000|
 |Extract Superclass| 8  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 8  |  0  |  0  | 1.000  | 1.000|
-|Extract Class|45  |  1  |  4  | 0.978  | 0.918|
-|Extract And Move Method|141  |  0  |  5  | 1.000  | 0.966|
+|Extract Class|47  |  1  |  1  | 0.979  | 0.979|
+|Extract And Move Method|141  |  0  |  4  | 1.000  | 0.972|
 |Move And Inline Method|28  |  1  |  6  | 0.966  | 0.824|
 |Replace Anonymous With Class| 5  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|293  |  1  |  6  | 0.997  | 0.980|
+|Extract Variable|294  |  1  |  3  | 0.997  | 0.990|
 |Extract Attribute| 7  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|126  |  0  | 10  | 1.000  | 0.926|
-|Rename Variable|309  |  5  |  6  | 0.984  | 0.981|
-|Rename Attribute|112  |  4  |  6  | 0.966  | 0.949|
+|Inline Variable|126  |  0  |  8  | 1.000  | 0.940|
+|Rename Variable|309  |  5  |  5  | 0.984  | 0.984|
+|Rename Attribute|112  |  4  |  4  | 0.966  | 0.966|
 |Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|11  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute With Variable|59  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|170  |  1  |  6  | 0.994  | 0.966|
-|Change Variable Type|381  |  6  |  2  | 0.984  | 0.995|
+|Change Return Type|171  |  1  |  2  | 0.994  | 0.988|
+|Change Variable Type|382  |  5  |  2  | 0.987  | 0.995|
 |Change Attribute Type|164  |  2  |  3  | 0.988  | 0.982|
 |Change Type Declaration Kind| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Loop With Pipeline| 4  |  0  |  0  | 1.000  | 1.000|

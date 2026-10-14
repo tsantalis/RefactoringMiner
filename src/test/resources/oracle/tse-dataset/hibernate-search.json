@@ -2467,7 +2467,7 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate sessionFactory : SessionFactoryImplementor from class org.hibernate.search.mapper.orm.loading.impl.AbstractHibernateOrmLoadingStrategy to private sessionFactory : SessionFactoryImplementor from class org.hibernate.search.jakarta.batch.core.massindexing.util.impl.EntityTypeDescriptor",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_OPERATION",
@@ -2663,7 +2663,7 @@
         {
           "type": "RENAME_ATTRIBUTE",
           "description": "Rename Attribute\tprocessor : PojoIndexingProcessor<E> to indexingProcessor : PojoIndexingProcessor<E> in class org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager.Builder",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_CLASS",
@@ -2939,7 +2939,7 @@
         {
           "type": "MOVE_ATTRIBUTE",
           "description": "Move Attribute\tprivate log : Log from class org.hibernate.search.mapper.pojo.standalone.mapping.impl.StandalonePojoMapping to private log : Log from class org.hibernate.search.mapper.pojo.mapping.impl.PojoMappingDelegateImpl",
-          "validation": true
+          "validation": false
         },
         {
           "type": "PUSH_DOWN_OPERATION",
@@ -2959,7 +2959,7 @@
         {
           "type": "EXTRACT_CLASS",
           "description": "Extract Class\torg.hibernate.search.mapper.pojo.mapping.spi.PojoRawTypeIdentifierResolver from class org.hibernate.search.mapper.orm.model.impl.HibernateOrmRuntimeIntrospectorTypeContextProvider",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_AND_INLINE_OPERATION",

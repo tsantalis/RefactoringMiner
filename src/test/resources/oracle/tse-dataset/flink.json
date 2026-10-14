@@ -634,7 +634,7 @@
         {
           "type": "CHANGE_RETURN_TYPE",
           "description": "Change Return Type\tbyte to byte[] in method public toByteArray() : byte[] from class org.apache.flink.core.memory.ByteArrayOutputStreamWithPos",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []

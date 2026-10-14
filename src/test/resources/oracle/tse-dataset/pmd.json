@@ -511,6 +511,11 @@
       ],
       "baseline": [
         {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpackage unnamedPatternsAndVariablesBeforeJava22Preview() : void from class net.sourceforge.pmd.lang.java.ast.Java22PreviewTreeDumpTest to package jep456UnnamedVariablesAndPatternsUnderscoreBeforeJava21() : void from class net.sourceforge.pmd.lang.java.ast.Java22TreeDumpTest",
+          "validation": true
+        },
+        {
           "type": "REPLACE_VARIABLE_WITH_ATTRIBUTE",
           "description": "Replace Variable With Attribute\tcanBePreview : boolean to wasStandardized : boolean in method public errorMessage(jdk int, preview boolean) : String from class net.sourceforge.pmd.lang.java.ast.internal.LanguageLevelChecker.PreviewFeature",
           "validation": false

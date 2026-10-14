@@ -1719,7 +1719,27 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				return true;
 			}
 		}
-		return (this.equalReturnParameter(removedOperation) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
+		return ((this.equalReturnParameter(removedOperation) || this.voidCompatibleReturnParameter(removedOperation)) && (equalParameterTypes(removedOperation) || overloadedParameterTypes(removedOperation) || equalParameterNames(removedOperation))) || replacedParameterTypes(removedOperation);
+	}
+
+	//void is compatible with a single Void type argument, e.g., CompletableFuture<Void>
+	private boolean voidCompatibleReturnParameter(UMLOperation operation) {
+		UMLParameter thisReturnParameter = this.getReturnParameter();
+		UMLParameter otherReturnParameter = operation.getReturnParameter();
+		if(thisReturnParameter != null && otherReturnParameter != null) {
+			UMLType thisType = thisReturnParameter.getType();
+			UMLType otherType = otherReturnParameter.getType();
+			return (isVoid(thisType) && hasSingleVoidTypeArgument(otherType)) || (isVoid(otherType) && hasSingleVoidTypeArgument(thisType));
+		}
+		return false;
+	}
+
+	private static boolean isVoid(UMLType type) {
+		return type.getArrayDimension() == 0 && type.toString().equals("void");
+	}
+
+	private static boolean hasSingleVoidTypeArgument(UMLType type) {
+		return type.getArrayDimension() == 0 && type.getTypeArguments().size() == 1 && type.getTypeArguments().get(0).toString().equals("Void");
 	}
 
 	public boolean compatibleSignature(UMLOperation removedOperation, Map<UMLTypeParameter, UMLType> typeParameterToTypeArgumentMap) {

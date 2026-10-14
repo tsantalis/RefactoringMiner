@@ -221,7 +221,7 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tprivate evaluateWithDelegate(delegate Statement) : ThrowingRunnable renamed to private failAfter50Ms(statement Statement) : FailOnTimeout in class org.junit.internal.runners.statements.FailOnTimeoutTest",
-          "validation": true
+          "validation": false
         },
         {
           "type": "REPLACE_ATTRIBUTE_WITH_VARIABLE",

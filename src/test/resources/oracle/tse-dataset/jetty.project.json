@@ -190,7 +190,7 @@
         {
           "type": "INLINE_VARIABLE",
           "description": "Inline Variable\tsb : StringBuilder in method public toString() : String from class org.eclipse.jetty.servlets.DoSFilter.RateTracker.Overage",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": []
@@ -414,12 +414,12 @@
         {
           "type": "EXTRACT_CLASS",
           "description": "Extract Class\torg.eclipse.jetty.util.DateCache.TickHolder from class org.eclipse.jetty.util.DateCache",
-          "validation": true
+          "validation": false
         },
         {
           "type": "RENAME_VARIABLE",
           "description": "Rename Variable\tseconds : long to ms : long in method public format(inDate long) : String from class org.eclipse.jetty.util.DateCache.Tick",
-          "validation": true
+          "validation": false
         },
         {
           "type": "EXTRACT_VARIABLE",

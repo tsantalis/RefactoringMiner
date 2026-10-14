@@ -109,7 +109,7 @@
         {
           "type": "INLINE_OPERATION",
           "description": "Inline Method\tprivate processInjectMocks(clazz Class<?>, testInstance Object) : List<AutoCloseable> inlined to public process(clazz Class<?>, testInstance Object) : AutoCloseable in class org.mockito.internal.configuration.InjectingAnnotationEngine",
-          "validation": false
+          "validation": true
         }
       ]
     },
@@ -208,12 +208,12 @@
         {
           "type": "RENAME_METHOD",
           "description": "Rename Method\tpublic should_capture_vararg() : void renamed to public should_capture_multiple_vararg_with_array_captor() : void in class org.mockitousage.matchers.CapturingArgumentsTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\targumentCaptor : ArgumentCaptor<String> to argumentCaptor : ArgumentCaptor<String[]> in method public should_capture_multiple_vararg_with_array_captor() : void from class org.mockitousage.matchers.CapturingArgumentsTest",
-          "validation": false
+          "validation": true
         },
         {
           "type": "MOVE_AND_RENAME_OPERATION",
@@ -338,7 +338,7 @@
         {
           "type": "EXTRACT_VARIABLE",
           "description": "Extract Variable\tdefaultAnswer : Answer<?> in method public answer(invocation InvocationOnMock) : Object from class org.mockito.internal.stubbing.defaultanswers.ReturnsSmartNulls",
-          "validation": true
+          "validation": false
         }
       ],
       "baseline": [

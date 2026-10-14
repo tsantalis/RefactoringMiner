@@ -49,21 +49,11 @@ public class TypeScriptTreeGenerator {
 
 	public static TreeContext generate(String filePath, String content) {
 		try {
-			Swc4jMediaType mediaType;
-			if(filePath.endsWith(".tsx"))
-				mediaType = Swc4jMediaType.Tsx;
-			else if(filePath.endsWith(".ts"))
-				mediaType = Swc4jMediaType.TypeScript;
-			else if(filePath.endsWith(".jsx"))
-				mediaType = Swc4jMediaType.Jsx;
-			else if(filePath.endsWith("spec.js") || content.contains("</div>") || content.contains("</ul>") || content.contains("</Route>") || content.contains("</Provider>") || content.contains("/>"))
-				mediaType = Swc4jMediaType.Jsx;
-			else
-				mediaType = Swc4jMediaType.JavaScript;
+			Swc4jMediaType mediaType = gr.uom.java.xmi.TypeScriptFileProcessor.mediaType(filePath);
 			URL specifier = Path.of(filePath).toUri().toURL();
 			Swc4jParseOptions options = new Swc4jParseOptions().setSpecifier(specifier).setMediaType(mediaType)
 					.setCaptureAst(true).setCaptureComments(true).setParseMode(Swc4jParseMode.Module);
-			Swc4jParseOutput output = new Swc4j().parse(content, options);
+			Swc4jParseOutput output = new Swc4j().parse(gr.uom.java.xmi.TypeScriptFileProcessor.utf16Source(content), options);
 			return generate(filePath, content, output.getProgram(), output.getComments());
 		}
 		catch(Exception e) {

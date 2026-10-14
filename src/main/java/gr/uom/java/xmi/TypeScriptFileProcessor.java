@@ -62,6 +62,25 @@ public class TypeScriptFileProcessor {
 		this.umlModel = umlModel;
 	}
 
+	/**
+	 * swc4j gives the offsets in code points, so the source is parsed with each UTF-16 unit of a surrogate pair, i.e., an emoji, replaced by a private use character,
+	 * to get UTF-16 offsets, i.e., the offsets of Java strings. The mapping is one-to-one, so different emoji remain different, and the source code text is taken from the original content.
+	 */
+	public static String utf16Source(String content) {
+		char[] chars = null;
+		for(int i = 0; i < content.length(); i++) {
+			char character = content.charAt(i);
+			if(Character.isSurrogate(character)) {
+				if(chars == null) {
+					chars = content.toCharArray();
+				}
+				//U+D800-U+DFFF to U+E000-U+E7FF
+				chars[i] = (char) (character + 0x800);
+			}
+		}
+		return chars == null ? content : new String(chars);
+	}
+
 	//JSX does not conflict with JavaScript, because an expression cannot start with <, while it conflicts with the TypeScript type assertions <T>x
 	public static Swc4jMediaType mediaType(String filePath) {
 		if(filePath.endsWith(".tsx"))
@@ -86,7 +105,7 @@ public class TypeScriptFileProcessor {
 					.setCaptureComments(true)
 					.setParseMode(Swc4jParseMode.Module);
 			// Parse the code.
-			Swc4jParseOutput output = swc4j.parse(fileContent, options);
+			Swc4jParseOutput output = swc4j.parse(utf16Source(fileContent), options);
 			Swc4jComments comments = output.getComments();
 			//System.out.println(output.getProgram().toDebugString());
 			if (astDiff) {

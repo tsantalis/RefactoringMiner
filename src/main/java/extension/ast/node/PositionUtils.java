@@ -3,6 +3,8 @@ package extension.ast.node;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
+import extension.base.Utf16CharStream;
+
 public class PositionUtils {
 
     public static PositionInfo getPositionInfo(ParserRuleContext ctx) {
@@ -58,13 +60,20 @@ public class PositionUtils {
 
     public static int getStartColumn(ParserRuleContext ctx) {
         Token start = (ctx == null) ? null : ctx.getStart();
-        return (start != null) ? start.getCharPositionInLine() : 0;  // Default to 0
+        return (start != null) ? getColumn(start) : 0;  // Default to 0
+    }
+
+    //the lexer counts the columns in code points, while the UTF-16 stream gives the column in UTF-16 offsets, like the offsets
+    private static int getColumn(Token token) {
+        if (token.getInputStream() instanceof Utf16CharStream stream && token.getStartIndex() >= 0)
+            return stream.column(token.getStartIndex());
+        return token.getCharPositionInLine();
     }
 
     public static int getEndColumn(ParserRuleContext ctx) {
         Token stop = (ctx == null) ? null : ctx.getStop();
         if (stop != null) {
-            return stop.getCharPositionInLine() + stop.getText().length();  // Add token length
+            return getColumn(stop) + stop.getText().length();  // Add token length
         }
         // Fallback to start column
         return getStartColumn(ctx);

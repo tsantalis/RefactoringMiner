@@ -115534,8 +115534,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "            \n            it is not meant to move the scrolling viewport.\n            (e.g. changing workspace to a scrolling layout workspace fits the focused window in that workspace into view) */",
-  "secondLabel" : "            \n            it is not meant to move the scrolling viewport.\n            (e.g. changing workspace to a scrolling layout workspace fits the focused window in that workspace into view) */",
+  "firstLabel" : "/* guard against unwanted scrolling viewport moves - If recalculate() was called, it is assumed that either the INPUT_MODE will be HARD (i.e. it is meant to move the scrolling viewport) or\n            it is not meant to move the scrolling viewport.\n            (e.g. changing workspace to a scrolling layout workspace fits the focused window in that workspace into view) */",
+  "secondLabel" : "/* guard against unwanted scrolling viewport moves - If recalculate() was called, it is assumed that either the INPUT_MODE will be HARD (i.e. it is meant to move the scrolling viewport) or\n            it is not meant to move the scrolling viewport.\n            (e.g. changing workspace to a scrolling layout workspace fits the focused window in that workspace into view) */",
   "firstParentType" : "compound_statement",
   "secondParentType" : "compound_statement",
   "firstPos" : 36679,

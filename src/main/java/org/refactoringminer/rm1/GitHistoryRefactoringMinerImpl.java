@@ -82,7 +82,6 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
-import com.vdurmont.emoji.EmojiParser;
 
 public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMiner {
 
@@ -436,7 +435,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private static String objectLoaderToString(ObjectLoader loader) throws IOException, MissingObjectException {
 		StringWriter writer = new StringWriter();
 		IOUtils.copy(loader.openStream(), writer, StandardCharsets.UTF_8);
-		return EmojiParser.removeAllEmojis(writer.toString());
+		return writer.toString();
 	}
 
 	public static void populateFileContents(Repository repository, RevCommit commit,
@@ -1519,7 +1518,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public String streamToString(InputStream rawFileInputStream) throws IOException {
-		return EmojiParser.removeAllEmojis(IOUtils.toString(rawFileInputStream, StandardCharsets.UTF_8));
+		return IOUtils.toString(rawFileInputStream, StandardCharsets.UTF_8);
 	}
 
 	public void detectAtCommitWithGitHubAPI(String cloneURL, String commitId, File rootFolder, RefactoringHandler m) {

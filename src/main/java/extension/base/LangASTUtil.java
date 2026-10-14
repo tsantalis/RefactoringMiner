@@ -37,8 +37,8 @@ public class LangASTUtil {
 
     public static LangASTNode getCustomPythonAST(Reader r) throws IOException {
 
-        // Parse the Python code
-        CharStream input = CharStreams.fromReader(r);
+        // Parse the Python code with UTF-16 offsets
+        CharStream input = new Utf16CharStream(CharStreams.fromReader(r).toString());
         PythonLexer lexer = new PythonLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         PythonParser parser = new PythonParser(tokens);

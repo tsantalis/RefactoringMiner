@@ -3,7 +3,6 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.refactoringminer.astDiff.utils.PythonTreeGenerator;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -13,6 +12,7 @@ import com.github.gumtreediff.tree.TreeContext;
 
 import extension.ast.builder.python.PyASTBuilder;
 import extension.ast.node.LangASTNode;
+import extension.base.Utf16CharStream;
 import extension.base.lang.python.PythonLexer;
 import extension.base.lang.python.PythonParser;
 import extension.umladapter.UMLAdapterUtil;
@@ -28,7 +28,7 @@ public class PythonFileProcessor {
 
 	public void processPythonFile(String filePath, String fileContent, boolean astDiff) {
 		//a single parse for the model and the AST diff tree
-		CommonTokenStream tokens = new CommonTokenStream(new PythonLexer(CharStreams.fromString(fileContent)));
+		CommonTokenStream tokens = new CommonTokenStream(new PythonLexer(new Utf16CharStream(fileContent)));
 		PythonParser.File_inputContext parseTree = new PythonParser(tokens).file_input();
 		LangASTNode ast = new PyASTBuilder().build(parseTree);
 		if (astDiff) {

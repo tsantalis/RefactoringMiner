@@ -12,8 +12,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n==============================================================================*/",
-  "secondLabel" : "\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n==============================================================================*/",
+  "firstLabel" : "/* Copyright 2026 The OpenXLA Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n==============================================================================*/",
+  "secondLabel" : "/* Copyright 2026 The OpenXLA Authors.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n==============================================================================*/",
   "firstParentType" : "translation_unit",
   "secondParentType" : "translation_unit",
   "firstPos" : 0,
@@ -1211,8 +1211,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "const char* kHlo1 = R\"(\nHloModule module1\nENTRY entry {\n  p0 = f32[10,10]{1,0} parameter(0)\n  p1 = f32[10,10]{1,0} parameter(1)\n  ROOT dot = f32[10,10]{1,0} dot(p0, p1), lhs_contracting_dims={1}, rhs_contracting_dims={0}\n}\n",
-  "secondLabel" : "const char* kHlo1 = R\"(\nHloModule module1\nENTRY entry {\n  p0 = f32[10,10]{1,0} parameter(0)\n  p1 = f32[10,10]{1,0} parameter(1)\n  ROOT dot = f32[10,10]{1,0} dot(p0, p1), lhs_contracting_dims={1}, rhs_contracting_dims={0}\n}\n",
+  "firstLabel" : "\nHloModule module1\nENTRY entry {\n  p0 = f32[10,10]{1,0} parameter(0)\n  p1 = f32[10,10]{1,0} parameter(1)\n  ROOT dot = f32[10,10]{1,0} dot(p0, p1), lhs_contracting_dims={1}, rhs_contracting_dims={0}\n}\n",
+  "secondLabel" : "\nHloModule module1\nENTRY entry {\n  p0 = f32[10,10]{1,0} parameter(0)\n  p1 = f32[10,10]{1,0} parameter(1)\n  ROOT dot = f32[10,10]{1,0} dot(p0, p1), lhs_contracting_dims={1}, rhs_contracting_dims={0}\n}\n",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 1514,

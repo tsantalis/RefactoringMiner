@@ -4324,8 +4324,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if defined(__DragonFly__) || defined(__FreeBSD__)\n",
-  "secondLabel" : "#if defined(__DragonFly__) || defined(__FreeBSD__)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 2764,
@@ -4621,8 +4621,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#elif defined(__NetBSD__)\n",
-  "secondLabel" : "#elif defined(__NetBSD__)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_elif",
   "secondParentType" : "preproc_elif",
   "firstPos" : 2920,
@@ -4907,8 +4907,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if defined(__OpenBSD__)\n",
-  "secondLabel" : "#if defined(__OpenBSD__)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 3059,
@@ -23266,8 +23266,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "            R\"#(\n    \"id\": {},\n    \"name\": \"{}\",\n    \"description\": \"{}\",\n    \"make\": \"{}\",\n    \"model\": \"{}\",\n    \"serial\": \"{}\",\n    \"width\": {},\n    \"height\": {},\n    \"physicalWidth\": {},\n    \"physicalHeight\": {},\n    \"refreshRate\": {:.5f},\n    \"x\": {},\n    \"y\": {},\n    \"activeWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"specialWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"reserved\": [{}, {}, {}, {}],\n    \"scale\": {:.2f},\n    \"transform\": {},\n    \"focused\": {},\n    \"dpmsStatus\": {},\n    \"vrr\": {},\n    \"solitary\": \"{:x}\",\n    \"solitaryBlockedBy\": {},\n    \"activelyTearing\": {},\n    \"tearingBlockedBy\": {},\n    \"directScanoutTo\": \"{:x}\",\n    \"directScanoutBlockedBy\": {},\n    \"disabled\": {},\n    \"currentFormat\": \"{}\",\n    \"mirrorOf\": \"{}\",\n    \"availableModes\": [{}],\n    \"colorManagementPreset\": \"{}\",\n    \"sdrBrightness\": {:.2f},\n    \"sdrSaturation\": {:.2f},\n    \"sdrMinLuminance\": {:.2f},\n    \"sdrMaxLuminance\": {},\n    \"hardwareCursorsInUse\": {}\n}},",
-  "secondLabel" : "            R\"#(\n    \"id\": {},\n    \"name\": \"{}\",\n    \"description\": \"{}\",\n    \"make\": \"{}\",\n    \"model\": \"{}\",\n    \"serial\": \"{}\",\n    \"width\": {},\n    \"height\": {},\n    \"physicalWidth\": {},\n    \"physicalHeight\": {},\n    \"refreshRate\": {:.5f},\n    \"x\": {},\n    \"y\": {},\n    \"activeWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"specialWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"reserved\": [{}, {}, {}, {}],\n    \"scale\": {:.2f},\n    \"transform\": {},\n    \"focused\": {},\n    \"dpmsStatus\": {},\n    \"vrr\": {},\n    \"solitary\": \"{:x}\",\n    \"solitaryBlockedBy\": {},\n    \"activelyTearing\": {},\n    \"tearingBlockedBy\": {},\n    \"directScanoutTo\": \"{:x}\",\n    \"directScanoutBlockedBy\": {},\n    \"disabled\": {},\n    \"currentFormat\": \"{}\",\n    \"mirrorOf\": \"{}\",\n    \"availableModes\": [{}],\n    \"colorManagementPreset\": \"{}\",\n    \"sdrBrightness\": {:.2f},\n    \"sdrSaturation\": {:.2f},\n    \"sdrMinLuminance\": {:.2f},\n    \"sdrMaxLuminance\": {},\n    \"hardwareCursorsInUse\": {}\n}},",
+  "firstLabel" : "{{\n    \"id\": {},\n    \"name\": \"{}\",\n    \"description\": \"{}\",\n    \"make\": \"{}\",\n    \"model\": \"{}\",\n    \"serial\": \"{}\",\n    \"width\": {},\n    \"height\": {},\n    \"physicalWidth\": {},\n    \"physicalHeight\": {},\n    \"refreshRate\": {:.5f},\n    \"x\": {},\n    \"y\": {},\n    \"activeWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"specialWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"reserved\": [{}, {}, {}, {}],\n    \"scale\": {:.2f},\n    \"transform\": {},\n    \"focused\": {},\n    \"dpmsStatus\": {},\n    \"vrr\": {},\n    \"solitary\": \"{:x}\",\n    \"solitaryBlockedBy\": {},\n    \"activelyTearing\": {},\n    \"tearingBlockedBy\": {},\n    \"directScanoutTo\": \"{:x}\",\n    \"directScanoutBlockedBy\": {},\n    \"disabled\": {},\n    \"currentFormat\": \"{}\",\n    \"mirrorOf\": \"{}\",\n    \"availableModes\": [{}],\n    \"colorManagementPreset\": \"{}\",\n    \"sdrBrightness\": {:.2f},\n    \"sdrSaturation\": {:.2f},\n    \"sdrMinLuminance\": {:.2f},\n    \"sdrMaxLuminance\": {},\n    \"hardwareCursorsInUse\": {}\n}},",
+  "secondLabel" : "{{\n    \"id\": {},\n    \"name\": \"{}\",\n    \"description\": \"{}\",\n    \"make\": \"{}\",\n    \"model\": \"{}\",\n    \"serial\": \"{}\",\n    \"width\": {},\n    \"height\": {},\n    \"physicalWidth\": {},\n    \"physicalHeight\": {},\n    \"refreshRate\": {:.5f},\n    \"x\": {},\n    \"y\": {},\n    \"activeWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"specialWorkspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"reserved\": [{}, {}, {}, {}],\n    \"scale\": {:.2f},\n    \"transform\": {},\n    \"focused\": {},\n    \"dpmsStatus\": {},\n    \"vrr\": {},\n    \"solitary\": \"{:x}\",\n    \"solitaryBlockedBy\": {},\n    \"activelyTearing\": {},\n    \"tearingBlockedBy\": {},\n    \"directScanoutTo\": \"{:x}\",\n    \"directScanoutBlockedBy\": {},\n    \"disabled\": {},\n    \"currentFormat\": \"{}\",\n    \"mirrorOf\": \"{}\",\n    \"availableModes\": [{}],\n    \"colorManagementPreset\": \"{}\",\n    \"sdrBrightness\": {:.2f},\n    \"sdrSaturation\": {:.2f},\n    \"sdrMinLuminance\": {:.2f},\n    \"sdrMaxLuminance\": {},\n    \"hardwareCursorsInUse\": {}\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 8634,
@@ -50282,8 +50282,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "            R\"#(\n    \"address\": \"0x{:x}\",\n    \"mapped\": {},\n    \"hidden\": {},\n    \"visible\": {},\n    \"acceptsInput\": {},\n    \"at\": [{}, {}],\n    \"size\": [{}, {}],\n    \"workspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"floating\": {},\n    \"monitor\": {},\n    \"class\": \"{}\",\n    \"title\": \"{}\",\n    \"initialClass\": \"{}\",\n    \"initialTitle\": \"{}\",\n    \"pid\": {},\n    \"xwayland\": {},\n    \"pinned\": {},\n    \"fullscreen\": {},\n    \"fullscreenClient\": {},\n    \"overFullscreen\": {},\n    \"grouped\": [{}],\n    \"tags\": [{}],\n    \"swallowing\": \"0x{:x}\",\n    \"focusHistoryID\": {},\n    \"inhibitingIdle\": {},\n    \"xdgTag\": \"{}\",\n    \"xdgDescription\": \"{}\",\n    \"contentType\": \"{}\",\n    \"stableId\": \"{:x}\"\n}},",
-  "secondLabel" : "            R\"#(\n    \"address\": \"0x{:x}\",\n    \"mapped\": {},\n    \"hidden\": {},\n    \"visible\": {},\n    \"acceptsInput\": {},\n    \"at\": [{}, {}],\n    \"size\": [{}, {}],\n    \"workspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"floating\": {},\n    \"monitor\": {},\n    \"class\": \"{}\",\n    \"title\": \"{}\",\n    \"initialClass\": \"{}\",\n    \"initialTitle\": \"{}\",\n    \"pid\": {},\n    \"xwayland\": {},\n    \"pinned\": {},\n    \"fullscreen\": {},\n    \"fullscreenClient\": {},\n    \"overFullscreen\": {},\n    \"grouped\": [{}],\n    \"tags\": [{}],\n    \"swallowing\": \"0x{:x}\",\n    \"focusHistoryID\": {},\n    \"inhibitingIdle\": {},\n    \"xdgTag\": \"{}\",\n    \"xdgDescription\": \"{}\",\n    \"contentType\": \"{}\",\n    \"stableId\": \"{:x}\"\n}},",
+  "firstLabel" : "{{\n    \"address\": \"0x{:x}\",\n    \"mapped\": {},\n    \"hidden\": {},\n    \"visible\": {},\n    \"acceptsInput\": {},\n    \"at\": [{}, {}],\n    \"size\": [{}, {}],\n    \"workspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"floating\": {},\n    \"monitor\": {},\n    \"class\": \"{}\",\n    \"title\": \"{}\",\n    \"initialClass\": \"{}\",\n    \"initialTitle\": \"{}\",\n    \"pid\": {},\n    \"xwayland\": {},\n    \"pinned\": {},\n    \"fullscreen\": {},\n    \"fullscreenClient\": {},\n    \"overFullscreen\": {},\n    \"grouped\": [{}],\n    \"tags\": [{}],\n    \"swallowing\": \"0x{:x}\",\n    \"focusHistoryID\": {},\n    \"inhibitingIdle\": {},\n    \"xdgTag\": \"{}\",\n    \"xdgDescription\": \"{}\",\n    \"contentType\": \"{}\",\n    \"stableId\": \"{:x}\"\n}},",
+  "secondLabel" : "{{\n    \"address\": \"0x{:x}\",\n    \"mapped\": {},\n    \"hidden\": {},\n    \"visible\": {},\n    \"acceptsInput\": {},\n    \"at\": [{}, {}],\n    \"size\": [{}, {}],\n    \"workspace\": {{\n        \"id\": {},\n        \"name\": \"{}\"\n    }},\n    \"floating\": {},\n    \"monitor\": {},\n    \"class\": \"{}\",\n    \"title\": \"{}\",\n    \"initialClass\": \"{}\",\n    \"initialTitle\": \"{}\",\n    \"pid\": {},\n    \"xwayland\": {},\n    \"pinned\": {},\n    \"fullscreen\": {},\n    \"fullscreenClient\": {},\n    \"overFullscreen\": {},\n    \"grouped\": [{}],\n    \"tags\": [{}],\n    \"swallowing\": \"0x{:x}\",\n    \"focusHistoryID\": {},\n    \"inhibitingIdle\": {},\n    \"xdgTag\": \"{}\",\n    \"xdgDescription\": \"{}\",\n    \"contentType\": \"{}\",\n    \"stableId\": \"{:x}\"\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 16323,
@@ -69202,8 +69202,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "        return std::format(R\"#(\n    \"id\": {},\n    \"name\": \"{}\",\n    \"monitor\": \"{}\",\n    \"monitorID\": {},\n    \"windows\": {},\n    \"hasfullscreen\": {},\n    \"lastwindow\": \"0x{:x}\",\n    \"lastwindowtitle\": \"{}\",\n    \"ispersistent\": {},\n    \"tiledLayout\": \"{}\"\n}}",
-  "secondLabel" : "        return std::format(R\"#(\n    \"id\": {},\n    \"name\": \"{}\",\n    \"monitor\": \"{}\",\n    \"monitorID\": {},\n    \"windows\": {},\n    \"hasfullscreen\": {},\n    \"lastwindow\": \"0x{:x}\",\n    \"lastwindowtitle\": \"{}\",\n    \"ispersistent\": {},\n    \"tiledLayout\": \"{}\"\n}}",
+  "firstLabel" : "{{\n    \"id\": {},\n    \"name\": \"{}\",\n    \"monitor\": \"{}\",\n    \"monitorID\": {},\n    \"windows\": {},\n    \"hasfullscreen\": {},\n    \"lastwindow\": \"0x{:x}\",\n    \"lastwindowtitle\": \"{}\",\n    \"ispersistent\": {},\n    \"tiledLayout\": \"{}\"\n}}",
+  "secondLabel" : "{{\n    \"id\": {},\n    \"name\": \"{}\",\n    \"monitor\": \"{}\",\n    \"monitorID\": {},\n    \"windows\": {},\n    \"hasfullscreen\": {},\n    \"lastwindow\": \"0x{:x}\",\n    \"lastwindowtitle\": \"{}\",\n    \"ispersistent\": {},\n    \"tiledLayout\": \"{}\"\n}}",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 21485,
@@ -83678,8 +83678,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "        std::string result = std::format(R\"#(\n    \"workspaceString\": \"{}\"{}{}{}{}{}{}{}{}{}{}{}{}\n}}",
-  "secondLabel" : "        std::string result = std::format(R\"#(\n    \"workspaceString\": \"{}\"{}{}{}{}{}{}{}{}{}{}{}{}\n}}",
+  "firstLabel" : "{{\n    \"workspaceString\": \"{}\"{}{}{}{}{}{}{}{}{}{}{}{}\n}}",
+  "secondLabel" : "{{\n    \"workspaceString\": \"{}\"{}{}{}{}{}{}{}{}{}{}{}{}\n}}",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 25108,
@@ -102851,8 +102851,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n    \"levels\": {{\n",
-  "secondLabel" : "                R\"#(\n    \"levels\": {{\n",
+  "firstLabel" : "\"{}\": {{\n    \"levels\": {{\n",
+  "secondLabel" : "\"{}\": {{\n    \"levels\": {{\n",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 30346,
@@ -103467,8 +103467,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                    R\"#(\n        \"{}\": [\n",
-  "secondLabel" : "                    R\"#(\n        \"{}\": [\n",
+  "firstLabel" : "\n        \"{}\": [\n",
+  "secondLabel" : "\n        \"{}\": [\n",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 30588,
@@ -103885,8 +103885,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                        R\"#(\n                    \"address\": \"0x{:x}\",\n                    \"x\": {},\n                    \"y\": {},\n                    \"w\": {},\n                    \"h\": {},\n                    \"namespace\": \"{}\",\n                    \"pid\": {}\n                }},",
-  "secondLabel" : "                        R\"#(\n                    \"address\": \"0x{:x}\",\n                    \"x\": {},\n                    \"y\": {},\n                    \"w\": {},\n                    \"h\": {},\n                    \"namespace\": \"{}\",\n                    \"pid\": {}\n                }},",
+  "firstLabel" : "                {{\n                    \"address\": \"0x{:x}\",\n                    \"x\": {},\n                    \"y\": {},\n                    \"w\": {},\n                    \"h\": {},\n                    \"namespace\": \"{}\",\n                    \"pid\": {}\n                }},",
+  "secondLabel" : "                {{\n                    \"address\": \"0x{:x}\",\n                    \"x\": {},\n                    \"y\": {},\n                    \"w\": {},\n                    \"h\": {},\n                    \"namespace\": \"{}\",\n                    \"pid\": {}\n                }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 30764,
@@ -110221,8 +110221,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n\t\"{}\",",
-  "secondLabel" : "                R\"#(\n\t\"{}\",",
+  "firstLabel" : "\n\t\"{}\",",
+  "secondLabel" : "\n\t\"{}\",",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 33019,
@@ -113312,8 +113312,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"defaultSpeed\": {:.5f},\n        \"scrollFactor\": {:.2f}\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"defaultSpeed\": {:.5f},\n        \"scrollFactor\": {:.2f}\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"defaultSpeed\": {:.5f},\n        \"scrollFactor\": {:.2f}\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"defaultSpeed\": {:.5f},\n        \"scrollFactor\": {:.2f}\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 33949,
@@ -115941,8 +115941,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"rules\": \"{}\",\n        \"model\": \"{}\",\n        \"layout\": \"{}\",\n        \"variant\": \"{}\",\n        \"options\": \"{}\",\n        \"active_layout_index\": {},\n        \"active_keymap\": \"{}\",\n        \"capsLock\": {},\n        \"numLock\": {},\n        \"main\": {}\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"rules\": \"{}\",\n        \"model\": \"{}\",\n        \"layout\": \"{}\",\n        \"variant\": \"{}\",\n        \"options\": \"{}\",\n        \"active_layout_index\": {},\n        \"active_keymap\": \"{}\",\n        \"capsLock\": {},\n        \"numLock\": {},\n        \"main\": {}\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"rules\": \"{}\",\n        \"model\": \"{}\",\n        \"layout\": \"{}\",\n        \"variant\": \"{}\",\n        \"options\": \"{}\",\n        \"active_layout_index\": {},\n        \"active_keymap\": \"{}\",\n        \"capsLock\": {},\n        \"numLock\": {},\n        \"main\": {}\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\",\n        \"rules\": \"{}\",\n        \"model\": \"{}\",\n        \"layout\": \"{}\",\n        \"variant\": \"{}\",\n        \"options\": \"{}\",\n        \"active_layout_index\": {},\n        \"active_keymap\": \"{}\",\n        \"capsLock\": {},\n        \"numLock\": {},\n        \"main\": {}\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 34782,
@@ -118592,8 +118592,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletPad\",\n        \"belongsTo\": {{\n            \"address\": \"0x{:x}\",\n            \"name\": \"{}\"\n        }}\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletPad\",\n        \"belongsTo\": {{\n            \"address\": \"0x{:x}\",\n            \"name\": \"{}\"\n        }}\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletPad\",\n        \"belongsTo\": {{\n            \"address\": \"0x{:x}\",\n            \"name\": \"{}\"\n        }}\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletPad\",\n        \"belongsTo\": {{\n            \"address\": \"0x{:x}\",\n            \"name\": \"{}\"\n        }}\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 35837,
@@ -119758,8 +119758,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 36268,
@@ -120528,8 +120528,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletTool\"\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletTool\"\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletTool\"\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"type\": \"tabletTool\"\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 36539,
@@ -121540,8 +121540,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 36883,
@@ -122662,8 +122662,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
-  "secondLabel" : "                R\"#(\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
+  "firstLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
+  "secondLabel" : "    {{\n        \"address\": \"0x{:x}\",\n        \"name\": \"{}\"\n    }},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 37255,
@@ -137853,8 +137853,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "            ret += std::format(R\"#(\n{{\n    \"name\": \"{}\",\n    \"overridden\": {},\n    \"bezier\": \"{}\",\n    \"enabled\": {},\n    \"speed\": {:.2f},\n    \"style\": \"{}\"\n}},",
-  "secondLabel" : "            ret += std::format(R\"#(\n{{\n    \"name\": \"{}\",\n    \"overridden\": {},\n    \"bezier\": \"{}\",\n    \"enabled\": {},\n    \"speed\": {:.2f},\n    \"style\": \"{}\"\n}},",
+  "firstLabel" : "\n{{\n    \"name\": \"{}\",\n    \"overridden\": {},\n    \"bezier\": \"{}\",\n    \"enabled\": {},\n    \"speed\": {:.2f},\n    \"style\": \"{}\"\n}},",
+  "secondLabel" : "\n{{\n    \"name\": \"{}\",\n    \"overridden\": {},\n    \"bezier\": \"{}\",\n    \"enabled\": {},\n    \"speed\": {:.2f},\n    \"style\": \"{}\"\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 41461,
@@ -139789,8 +139789,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "            ret += std::format(R\"#(\n{{\n    \"name\": \"{}\",\n    \"X0\": {:.2f},\n    \"Y0\": {:.2f},\n    \"X1\": {:.2f},\n    \"Y1\": {:.2f}\n}},",
-  "secondLabel" : "            ret += std::format(R\"#(\n{{\n    \"name\": \"{}\",\n    \"X0\": {:.2f},\n    \"Y0\": {:.2f},\n    \"X1\": {:.2f},\n    \"Y1\": {:.2f}\n}},",
+  "firstLabel" : "\n{{\n    \"name\": \"{}\",\n    \"X0\": {:.2f},\n    \"Y0\": {:.2f},\n    \"X1\": {:.2f},\n    \"Y1\": {:.2f}\n}},",
+  "secondLabel" : "\n{{\n    \"name\": \"{}\",\n    \"X0\": {:.2f},\n    \"Y0\": {:.2f},\n    \"X1\": {:.2f},\n    \"Y1\": {:.2f}\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 42113,
@@ -144024,8 +144024,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "            ret += std::format(R\"#(\n{{\n    \"name\": \"{}\",\n    \"description\": \"{}\"\n}},",
-  "secondLabel" : "            ret += std::format(R\"#(\n{{\n    \"name\": \"{}\",\n    \"description\": \"{}\"\n}},",
+  "firstLabel" : "\n{{\n    \"name\": \"{}\",\n    \"description\": \"{}\"\n}},",
+  "secondLabel" : "\n{{\n    \"name\": \"{}\",\n    \"description\": \"{}\"\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 43367,
@@ -148622,8 +148622,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                R\"#(\n{{\n    \"locked\": {},\n    \"mouse\": {},\n    \"release\": {},\n    \"repeat\": {},\n    \"longPress\": {},\n    \"non_consuming\": {},\n    \"auto_consuming\": {},\n    \"has_description\": {},\n    \"modmask\": {},\n    \"submap\": \"{}\",\n    \"submap_universal\": \"{}\",\n    \"key\": \"{}\",\n    \"keycode\": {},\n    \"catch_all\": {},\n    \"description\": \"{}\",\n    \"dispatcher\": \"{}\",\n    \"arg\": \"{}\"\n}},",
-  "secondLabel" : "                R\"#(\n{{\n    \"locked\": {},\n    \"mouse\": {},\n    \"release\": {},\n    \"repeat\": {},\n    \"longPress\": {},\n    \"non_consuming\": {},\n    \"auto_consuming\": {},\n    \"has_description\": {},\n    \"modmask\": {},\n    \"submap\": \"{}\",\n    \"submap_universal\": \"{}\",\n    \"key\": \"{}\",\n    \"keycode\": {},\n    \"catch_all\": {},\n    \"description\": \"{}\",\n    \"dispatcher\": \"{}\",\n    \"arg\": \"{}\"\n}},",
+  "firstLabel" : "\n{{\n    \"locked\": {},\n    \"mouse\": {},\n    \"release\": {},\n    \"repeat\": {},\n    \"longPress\": {},\n    \"non_consuming\": {},\n    \"auto_consuming\": {},\n    \"has_description\": {},\n    \"modmask\": {},\n    \"submap\": \"{}\",\n    \"submap_universal\": \"{}\",\n    \"key\": \"{}\",\n    \"keycode\": {},\n    \"catch_all\": {},\n    \"description\": \"{}\",\n    \"dispatcher\": \"{}\",\n    \"arg\": \"{}\"\n}},",
+  "secondLabel" : "\n{{\n    \"locked\": {},\n    \"mouse\": {},\n    \"release\": {},\n    \"repeat\": {},\n    \"longPress\": {},\n    \"non_consuming\": {},\n    \"auto_consuming\": {},\n    \"has_description\": {},\n    \"modmask\": {},\n    \"submap\": \"{}\",\n    \"submap_universal\": \"{}\",\n    \"key\": \"{}\",\n    \"keycode\": {},\n    \"catch_all\": {},\n    \"description\": \"{}\",\n    \"dispatcher\": \"{}\",\n    \"arg\": \"{}\"\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 44796,
@@ -157692,8 +157692,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 47875,
   "secondPos" : 47860,
-  "firstEndPos" : 47996,
-  "secondEndPos" : 47981
+  "firstEndPos" : 47994,
+  "secondEndPos" : 47979
 }, {
   "firstType" : "return",
   "secondType" : "return",
@@ -157714,8 +157714,8 @@
   "secondParentType" : "return_statement",
   "firstPos" : 47882,
   "secondPos" : 47867,
-  "firstEndPos" : 47995,
-  "secondEndPos" : 47980
+  "firstEndPos" : 47993,
+  "secondEndPos" : 47978
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -157747,8 +157747,8 @@
   "secondParentType" : "binary_expression",
   "firstPos" : 47888,
   "secondPos" : 47873,
-  "firstEndPos" : 47995,
-  "secondEndPos" : 47980
+  "firstEndPos" : 47993,
+  "secondEndPos" : 47978
 }, {
   "firstType" : "\"",
   "secondType" : "\"",
@@ -157791,8 +157791,8 @@
   "secondParentType" : "string_literal",
   "firstPos" : 47893,
   "secondPos" : 47878,
-  "firstEndPos" : 47994,
-  "secondEndPos" : 47979
+  "firstEndPos" : 47992,
+  "secondEndPos" : 47977
 }, {
   "firstType" : "\"",
   "secondType" : "\"",
@@ -157800,10 +157800,10 @@
   "secondLabel" : "\"",
   "firstParentType" : "string_literal",
   "secondParentType" : "string_literal",
-  "firstPos" : 47994,
-  "secondPos" : 47979,
-  "firstEndPos" : 47995,
-  "secondEndPos" : 47980
+  "firstPos" : 47992,
+  "secondPos" : 47977,
+  "firstEndPos" : 47993,
+  "secondEndPos" : 47978
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -157811,10 +157811,10 @@
   "secondLabel" : ";",
   "firstParentType" : "return_statement",
   "secondParentType" : "return_statement",
-  "firstPos" : 47995,
-  "secondPos" : 47980,
-  "firstEndPos" : 47996,
-  "secondEndPos" : 47981
+  "firstPos" : 47993,
+  "secondPos" : 47978,
+  "firstEndPos" : 47994,
+  "secondEndPos" : 47979
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -177277,8 +177277,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "        return std::format(R\"#(\n{{\n    \"x\": {},\n    \"y\": {}\n}}\n",
-  "secondLabel" : "        return std::format(R\"#(\n{{\n    \"x\": {},\n    \"y\": {}\n}}\n",
+  "firstLabel" : "\n{{\n    \"x\": {},\n    \"y\": {}\n}}\n",
+  "secondLabel" : "\n{{\n    \"x\": {},\n    \"y\": {}\n}}\n",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 54200,
@@ -267246,8 +267246,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "                    R\"#(\n{{\n    \"name\": \"{}\",\n    \"author\": \"{}\",\n    \"handle\": \"{:x}\",\n    \"version\": \"{}\",\n    \"description\": \"{}\"\n}},",
-  "secondLabel" : "                    R\"#(\n{{\n    \"name\": \"{}\",\n    \"author\": \"{}\",\n    \"handle\": \"{:x}\",\n    \"version\": \"{}\",\n    \"description\": \"{}\"\n}},",
+  "firstLabel" : "\n{{\n    \"name\": \"{}\",\n    \"author\": \"{}\",\n    \"handle\": \"{:x}\",\n    \"version\": \"{}\",\n    \"description\": \"{}\"\n}},",
+  "secondLabel" : "\n{{\n    \"name\": \"{}\",\n    \"author\": \"{}\",\n    \"handle\": \"{:x}\",\n    \"version\": \"{}\",\n    \"description\": \"{}\"\n}},",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 79216,
@@ -278114,8 +278114,8 @@
 }, {
   "firstType" : "raw_string_content",
   "secondType" : "raw_string_content",
-  "firstLabel" : "        lockedStr = std::format(R\"#(\n{{\n    \"locked\": {}\n}}\n",
-  "secondLabel" : "        lockedStr = std::format(R\"#(\n{{\n    \"locked\": {}\n}}\n",
+  "firstLabel" : "\n{{\n    \"locked\": {}\n}}\n",
+  "secondLabel" : "\n{{\n    \"locked\": {}\n}}\n",
   "firstParentType" : "raw_string_literal",
   "secondParentType" : "raw_string_literal",
   "firstPos" : 82301,
@@ -302254,8 +302254,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 90235,
   "secondPos" : 90220,
-  "firstEndPos" : 90251,
-  "secondEndPos" : 90236
+  "firstEndPos" : 90250,
+  "secondEndPos" : 90235
 }, {
   "firstType" : "while_statement",
   "secondType" : "while_statement",

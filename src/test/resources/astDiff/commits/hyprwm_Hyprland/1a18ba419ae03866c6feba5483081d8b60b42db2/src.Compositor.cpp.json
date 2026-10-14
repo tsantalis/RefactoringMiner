@@ -5589,8 +5589,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if defined(__linux__)\n",
-  "secondLabel" : "#if defined(__linux__)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 3505,
@@ -34189,8 +34189,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if defined(__linux__)\n",
-  "secondLabel" : "#if defined(__linux__)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 13370,
@@ -81319,8 +81319,8 @@
   "secondParentType" : "preproc_ifdef",
   "firstPos" : 29047,
   "secondPos" : 28944,
-  "firstEndPos" : 29405,
-  "secondEndPos" : 29302
+  "firstEndPos" : 29404,
+  "secondEndPos" : 29301
 }, {
   "firstType" : "if",
   "secondType" : "if",
@@ -81924,8 +81924,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 29281,
   "secondPos" : 29178,
-  "firstEndPos" : 29405,
-  "secondEndPos" : 29302
+  "firstEndPos" : 29404,
+  "secondEndPos" : 29301
 }, {
   "firstType" : "else",
   "secondType" : "else",
@@ -81946,8 +81946,8 @@
   "secondParentType" : "else_clause",
   "firstPos" : 29294,
   "secondPos" : 29191,
-  "firstEndPos" : 29405,
-  "secondEndPos" : 29302
+  "firstEndPos" : 29404,
+  "secondEndPos" : 29301
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -81957,8 +81957,8 @@
   "secondParentType" : "expression_statement",
   "firstPos" : 29294,
   "secondPos" : 29191,
-  "firstEndPos" : 29404,
-  "secondEndPos" : 29301
+  "firstEndPos" : 29403,
+  "secondEndPos" : 29300
 }, {
   "firstType" : "field_expression",
   "secondType" : "field_expression",
@@ -82045,8 +82045,8 @@
   "secondParentType" : "call_expression",
   "firstPos" : 29310,
   "secondPos" : 29207,
-  "firstEndPos" : 29404,
-  "secondEndPos" : 29301
+  "firstEndPos" : 29403,
+  "secondEndPos" : 29300
 }, {
   "firstType" : "(",
   "secondType" : "(",
@@ -82122,8 +82122,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 29323,
   "secondPos" : 29220,
-  "firstEndPos" : 29403,
-  "secondEndPos" : 29300
+  "firstEndPos" : 29402,
+  "secondEndPos" : 29299
 }, {
   "firstType" : "\"",
   "secondType" : "\"",
@@ -82144,8 +82144,8 @@
   "secondParentType" : "string_literal",
   "firstPos" : 29324,
   "secondPos" : 29221,
-  "firstEndPos" : 29402,
-  "secondEndPos" : 29299
+  "firstEndPos" : 29401,
+  "secondEndPos" : 29298
 }, {
   "firstType" : "\"",
   "secondType" : "\"",
@@ -82153,10 +82153,10 @@
   "secondLabel" : "\"",
   "firstParentType" : "string_literal",
   "secondParentType" : "string_literal",
-  "firstPos" : 29402,
-  "secondPos" : 29299,
-  "firstEndPos" : 29403,
-  "secondEndPos" : 29300
+  "firstPos" : 29401,
+  "secondPos" : 29298,
+  "firstEndPos" : 29402,
+  "secondEndPos" : 29299
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -82164,10 +82164,10 @@
   "secondLabel" : ")",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
-  "firstPos" : 29403,
-  "secondPos" : 29300,
-  "firstEndPos" : 29404,
-  "secondEndPos" : 29301
+  "firstPos" : 29402,
+  "secondPos" : 29299,
+  "firstEndPos" : 29403,
+  "secondEndPos" : 29300
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -82175,10 +82175,10 @@
   "secondLabel" : ";",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
-  "firstPos" : 29404,
-  "secondPos" : 29301,
-  "firstEndPos" : 29405,
-  "secondEndPos" : 29302
+  "firstPos" : 29403,
+  "secondPos" : 29300,
+  "firstEndPos" : 29404,
+  "secondEndPos" : 29301
 }, {
   "firstType" : "#endif",
   "secondType" : "#endif",
@@ -128019,8 +128019,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if defined(VT_GETSTATE)\n",
-  "secondLabel" : "#if defined(VT_GETSTATE)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 46188,
@@ -128558,8 +128558,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#elif defined(VT_GETACTIVE)\n",
-  "secondLabel" : "#elif defined(VT_GETACTIVE)\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_elif",
   "secondParentType" : "preproc_elif",
   "firstPos" : 46325,

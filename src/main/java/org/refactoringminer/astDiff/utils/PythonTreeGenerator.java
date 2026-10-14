@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -19,6 +18,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.tree.TypeSet;
 
+import extension.base.Utf16CharStream;
 import extension.base.lang.python.PythonLexer;
 import extension.base.lang.python.PythonParser;
 
@@ -43,7 +43,7 @@ public class PythonTreeGenerator {
 			Map.entry("%=", "assignment_operator_literal"), Map.entry("**=", "assignment_operator_literal"));
 
 	public static TreeContext generate(String content) {
-		PythonLexer lexer = new PythonLexer(CharStreams.fromString(content));
+		PythonLexer lexer = new PythonLexer(new Utf16CharStream(content));
 		lexer.removeErrorListeners();
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		PythonParser parser = new PythonParser(tokens);
@@ -75,7 +75,7 @@ public class PythonTreeGenerator {
 						chars[print.getValue() + 1] = ' ';
 					}
 				}
-				tokens = new CommonTokenStream(new PythonLexer(CharStreams.fromString(new String(chars))));
+				tokens = new CommonTokenStream(new PythonLexer(new Utf16CharStream(new String(chars))));
 				PythonParser parser = new PythonParser(tokens);
 				parser.removeErrorListeners();
 				fileInput = parser.file_input();
@@ -164,9 +164,6 @@ public class PythonTreeGenerator {
 
 	private final String content;
 	private final List<Token> tokens;
-	//the char offset of each code point, when the file has supplementary characters (ANTLR indices are code point indices)
-	private final int[] charOffsets;
-	//the node containing each token, or the token node itself
 	private final Node[] tokenOwners;
 	private final Map<Node, Integer> blockIndents = new IdentityHashMap<>();
 	//the newlines ending the simple statements and decorators, at the end of their line like in tree-sitter, while ANTLR emits them before the next statement
@@ -178,22 +175,6 @@ public class PythonTreeGenerator {
 		this.content = content;
 		this.tokens = tokens;
 		this.tokenOwners = new Node[tokens.size()];
-		if(content.codePointCount(0, content.length()) != content.length()) {
-			int codePoints = content.codePointCount(0, content.length());
-			charOffsets = new int[codePoints + 1];
-			for(int i = 0, offset = 0; i < codePoints; i++) {
-				charOffsets[i] = offset;
-				offset += Character.charCount(content.codePointAt(offset));
-			}
-			charOffsets[codePoints] = content.length();
-		}
-		else {
-			charOffsets = null;
-		}
-	}
-
-	private int charOffset(int codePointIndex) {
-		return charOffsets == null ? codePointIndex : charOffsets[Math.min(codePointIndex, charOffsets.length - 1)];
 	}
 
 	private void register(TerminalNode terminal, Node owner) {
@@ -205,8 +186,8 @@ public class PythonTreeGenerator {
 
 	private Node tokenNode(String type, Token token) {
 		Node node = new Node(type);
-		node.start = charOffset(token.getStartIndex());
-		node.end = charOffset(token.getStopIndex() + 1);
+		node.start = token.getStartIndex();
+		node.end = token.getStopIndex() + 1;
 		node.leaf = true;
 		if(token.getTokenIndex() >= 0) {
 			tokenOwners[token.getTokenIndex()] = node;
@@ -312,9 +293,9 @@ public class PythonTreeGenerator {
 		for(int i = 0; i < children.size(); i++) {
 			ParseTree child = children.get(i);
 			if(child instanceof PythonParser.Simple_stmtContext simpleStatement && simpleStatement.pass_stmt() != null
-					&& prints.containsKey(charOffset(simpleStatement.getStart().getStartIndex()))) {
+					&& prints.containsKey(simpleStatement.getStart().getStartIndex())) {
 				//pass; expressions of a Python 2 print statement
-				int start = charOffset(simpleStatement.getStart().getStartIndex());
+				int start = simpleStatement.getStart().getStartIndex();
 				Node print = new Node("print_statement");
 				Node keyword = new Node("print");
 				keyword.start = start;
@@ -358,7 +339,7 @@ public class PythonTreeGenerator {
 		while(index >= 0 && (tokens.get(index).getChannel() != Token.DEFAULT_CHANNEL || tokens.get(index).getType() == PythonParser.NEWLINE)) {
 			index--;
 		}
-		int position = lineEnd(index >= 0 ? charOffset(tokens.get(index).getStopIndex() + 1) : 0);
+		int position = lineEnd(index >= 0 ? tokens.get(index).getStopIndex() + 1 : 0);
 		Node newline = new Node("newline");
 		newline.start = position;
 		newline.end = position;
@@ -910,7 +891,7 @@ public class PythonTreeGenerator {
 				node.add(token((TerminalNode) child));
 				//the block starts with the indent at the end of the line
 				Node indent = new Node("indent");
-				indent.start = indent.end = lineEnd(charOffset(((TerminalNode) child).getSymbol().getStopIndex() + 1));
+				indent.start = indent.end = lineEnd(((TerminalNode) child).getSymbol().getStopIndex() + 1);
 				indent.ignored = true;
 				block.add(indent);
 				newlines.add(indent);
@@ -1572,8 +1553,8 @@ public class PythonTreeGenerator {
 	private Node string(ParserRuleContext ctx) {
 		Node node = new Node("string");
 		node.leaf = true;
-		node.start = charOffset(ctx.getStart().getStartIndex());
-		node.end = charOffset(ctx.getStop().getStopIndex() + 1);
+		node.start = ctx.getStart().getStartIndex();
+		node.end = ctx.getStop().getStopIndex() + 1;
 		for(int i = ctx.getStart().getTokenIndex(); i <= ctx.getStop().getTokenIndex(); i++) {
 			tokenOwners[i] = node;
 		}
@@ -1811,8 +1792,8 @@ public class PythonTreeGenerator {
 					}
 				}
 				if(next != null && startsPrintedExpression(next.getType())) {
-					int start = content.offsetByCodePoints(0, token.getStartIndex());
-					int chevron = next.getType() == PythonParser.RIGHTSHIFT ? content.offsetByCodePoints(0, next.getStartIndex()) : -1;
+					int start = token.getStartIndex();
+					int chevron = next.getType() == PythonParser.RIGHTSHIFT ? next.getStartIndex() : -1;
 					prints.put(start, chevron);
 				}
 			}
@@ -1892,10 +1873,10 @@ public class PythonTreeGenerator {
 				extras.add(tokenNode(token.getType() == PythonLexer.COMMENT ? "comment" : "line_continuation", token));
 			}
 			else if(token.getType() == PythonParser.DEDENT) {
-				anchors.add(new Anchor(charOffset(token.getStartIndex()), null, true));
+				anchors.add(new Anchor(token.getStartIndex(), null, true));
 			}
 			else if(tokenOwners[i] != null) {
-				anchors.add(new Anchor(charOffset(token.getStartIndex()), tokenOwners[i], false));
+				anchors.add(new Anchor(token.getStartIndex(), tokenOwners[i], false));
 			}
 		}
 		for(Node newline : newlines) {

@@ -1057,8 +1057,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if defined(_MSC_VER) && _MSC_VER >= 1915\n",
-  "secondLabel" : "#if defined(_MSC_VER) && _MSC_VER >= 1915\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 2320,
@@ -1178,8 +1178,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "    4251 GTEST_MAYBE_5046_ \n                              clients of class B */",
-  "secondLabel" : "    4251 GTEST_MAYBE_5046_ \n                              clients of class B */",
+  "firstLabel" : "/* class A needs to have dll-interface to be used by\n                              clients of class B */",
+  "secondLabel" : "/* class A needs to have dll-interface to be used by\n                              clients of class B */",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 2453,
@@ -43957,8 +43957,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if GTEST_INTERNAL_HAS_STRING_VIEW\n",
-  "secondLabel" : "#if GTEST_INTERNAL_HAS_STRING_VIEW\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 20130,
@@ -72425,8 +72425,8 @@
 }, {
   "firstType" : "\n",
   "secondType" : "\n",
-  "firstLabel" : "#if GTEST_INTERNAL_HAS_STRING_VIEW\n",
-  "secondLabel" : "#if GTEST_INTERNAL_HAS_STRING_VIEW\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
   "firstParentType" : "preproc_if",
   "secondParentType" : "preproc_if",
   "firstPos" : 29653,

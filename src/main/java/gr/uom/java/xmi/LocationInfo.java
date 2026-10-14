@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
@@ -280,25 +281,48 @@ public class LocationInfo {
 		}
 	}
 
+	// Like the line ends table of JDT CompilationUnit: the offsets of the line terminators (\n, \r, or the \n of \r\n) are computed once per file
+	private record LineEnds(String fileContent, int[] offsets) {}
+	private static volatile LineEnds lastLineEnds;
+
+	private static int[] lineEnds(String fileContent) {
+		LineEnds cached = lastLineEnds;
+		if(cached != null && cached.fileContent() == fileContent) {
+			return cached.offsets();
+		}
+		int[] offsets = new int[16];
+		int count = 0;
+		for(int i = 0; i < fileContent.length(); i++) {
+			char character = fileContent.charAt(i);
+			if(character == '\r' && i + 1 < fileContent.length() && fileContent.charAt(i + 1) == '\n') {
+				i++;
+			}
+			else if(character != '\r' && character != '\n') {
+				continue;
+			}
+			if(count == offsets.length) {
+				offsets = Arrays.copyOf(offsets, count * 2);
+			}
+			offsets[count++] = i;
+		}
+		offsets = Arrays.copyOf(offsets, count);
+		lastLineEnds = new LineEnds(fileContent, offsets);
+		return offsets;
+	}
+
+	// The number of line terminators before the offset
+	private static int lineEndsBefore(int[] lineEnds, int offset) {
+		int index = Arrays.binarySearch(lineEnds, offset);
+		return index >= 0 ? index : -index - 1;
+	}
+
 	private int computeLine(String fileContent, int offset) {
 		if(fileContent == null || fileContent.isEmpty() || offset < 0) {
 			return 0;
 		}
 		int safeOffset = Math.min(offset, fileContent.length());
-		int line = 1;
-		for(int i = 0; i < safeOffset; i++) {
-			char character = fileContent.charAt(i);
-			if(character == '\r') {
-				line++;
-				if(i + 1 < safeOffset && fileContent.charAt(i + 1) == '\n') {
-					i++;
-				}
-			}
-			else if(character == '\n') {
-				line++;
-			}
-		}
-		return line;
+		// Lines are 1-based.
+		return lineEndsBefore(lineEnds(fileContent), safeOffset) + 1;
 	}
 
 	private int computeColumn(String fileContent, int offset) {
@@ -307,22 +331,21 @@ public class LocationInfo {
 		}
 		// Prevent searching past the end of the source text.
 		int safeOffset = Math.min(offset, fileContent.length());
-
-		// Search strictly before the target offset.
-		int searchFrom = safeOffset - 1;
-		int previousLf = fileContent.lastIndexOf('\n', searchFrom);
-		int previousCr = fileContent.lastIndexOf('\r', searchFrom);
-		int previousNewLine = Math.max(previousLf, previousCr);
-
+		int[] lineEnds = lineEnds(fileContent);
+		int line = lineEndsBefore(lineEnds, safeOffset);
+		int lineStart = line == 0 ? 0 : lineEnds[line - 1] + 1;
 		// Columns are 1-based.
-		return safeOffset - previousNewLine;
+		return safeOffset - lineStart + 1;
 	}
 
 	private int computeCompilationUnitLength(String fileContent) {
 		if(fileContent == null || fileContent.isEmpty()) {
 			return 0;
 		}
-		return (int) fileContent.lines().count();
+		int[] lineEnds = lineEnds(fileContent);
+		// Like String.lines(), the last line is counted if it has no line terminator
+		boolean lastLineTerminated = lineEnds.length > 0 && lineEnds[lineEnds.length - 1] == fileContent.length() - 1;
+		return lineEnds.length + (lastLineTerminated ? 0 : 1);
 	}
 
 	public String getSourceFolder() {

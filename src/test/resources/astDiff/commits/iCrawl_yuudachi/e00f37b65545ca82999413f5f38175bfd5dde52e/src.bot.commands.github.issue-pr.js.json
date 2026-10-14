@@ -2487,8 +2487,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\treturn message.util.reply(oneLine`\n\t\t\t\tmy commander has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
-  "secondLabel" : "\t\t\treturn message.util!.reply(oneLine`\n\t\t\t\tmy commander has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
+  "firstLabel" : "\n\t\t\t\tmy commander has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
+  "secondLabel" : "\n\t\t\t\tmy commander has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 902,
@@ -6447,8 +6447,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\tconst query = `\n\t\t\t{\n\t\t\t\trepository(owner: \"",
-  "secondLabel" : "\t\tconst query = `\n\t\t\t{\n\t\t\t\trepository(owner: \"",
+  "firstLabel" : "\n\t\t\t{\n\t\t\t\trepository(owner: \"",
+  "secondLabel" : "\n\t\t\t{\n\t\t\t\trepository(owner: \"",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 1976,
@@ -6557,8 +6557,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\trepository(owner: \"${owner}\", name: \"${repo}\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
-  "secondLabel" : "\t\t\t\trepository(owner: \"${owner}\", name: \"${repo}\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
+  "firstLabel" : "\") {\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
+  "secondLabel" : "\") {\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2030,
@@ -6612,8 +6612,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tissueOrPullRequest(number: ${number}\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
-  "secondLabel" : "\t\t\t\t\tissueOrPullRequest(number: ${number}\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
+  "firstLabel" : ") {\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
+  "secondLabel" : ") {\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2086,
@@ -14128,11 +14128,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "parenthesized_expression",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "parenthesized_expression",
   "firstPos" : 4681,
   "secondPos" : 4662,
   "firstEndPos" : 4779,
-  "secondEndPos" : 4728
+  "secondEndPos" : 4778
 }, {
   "firstType" : "!",
   "secondType" : "!",
@@ -14150,9 +14150,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "unary_expression",
-  "secondParentType" : "parenthesized_expression",
+  "secondParentType" : "unary_expression",
   "firstPos" : 4682,
-  "secondPos" : 4662,
+  "secondPos" : 4663,
   "firstEndPos" : 4779,
   "secondEndPos" : 4778
 }, {
@@ -14163,7 +14163,7 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 4682,
-  "secondPos" : 4662,
+  "secondPos" : 4663,
   "firstEndPos" : 4734,
   "secondEndPos" : 4733
 }, {
@@ -14172,7 +14172,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "member_expression",
-  "secondParentType" : "unary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 4682,
   "secondPos" : 4663,
   "firstEndPos" : 4730,
@@ -14843,11 +14843,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
+  "secondParentType" : "as_expression",
   "firstPos" : 4837,
   "secondPos" : 4837,
   "firstEndPos" : 4867,
-  "secondEndPos" : 4879
+  "secondEndPos" : 4868
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -14865,7 +14865,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "await_expression",
-  "secondParentType" : "as_expression",
+  "secondParentType" : "await_expression",
   "firstPos" : 4843,
   "secondPos" : 4843,
   "firstEndPos" : 4867,

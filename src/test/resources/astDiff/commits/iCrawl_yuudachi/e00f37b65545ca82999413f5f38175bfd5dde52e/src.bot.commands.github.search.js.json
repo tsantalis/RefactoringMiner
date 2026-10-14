@@ -2531,8 +2531,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\treturn message.reply(oneLine`\n\t\t\t\tmy master has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
-  "secondLabel" : "\t\t\treturn message.reply(oneLine`\n\t\t\t\tmy master has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
+  "firstLabel" : "\n\t\t\t\tmy master has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
+  "secondLabel" : "\n\t\t\t\tmy master has not set a valid GitHub API key,\n\t\t\t\ttherefore this command is not available.\n\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 945,
@@ -7580,8 +7580,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t\t.substring(0, 300)}\n\t\t\t\t",
-  "secondLabel" : "\t\t\t\t\t\t.substring(0, 300)}\n\t\t\t\t",
+  "firstLabel" : " ...\n\t\t\t\t",
+  "secondLabel" : " ...\n\t\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2296,
@@ -7756,14 +7756,14 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tstripIndents`\n\t\t\t\t\t\t• Total: ",
-  "secondLabel" : "\t\t\t\t\tstripIndents`\n\t\t\t\t\t\t• Total: ",
+  "firstLabel" : "\n\t\t\t\t\t\t• Total: ",
+  "secondLabel" : "\n\t\t\t\t\t\t• Total: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2360,
   "secondPos" : 2410,
-  "firstEndPos" : 2378,
-  "secondEndPos" : 2428
+  "firstEndPos" : 2376,
+  "secondEndPos" : 2426
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -7771,10 +7771,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2378,
-  "secondPos" : 2428,
-  "firstEndPos" : 2397,
-  "secondEndPos" : 2447
+  "firstPos" : 2376,
+  "secondPos" : 2426,
+  "firstEndPos" : 2395,
+  "secondEndPos" : 2445
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -7782,10 +7782,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2378,
-  "secondPos" : 2428,
-  "firstEndPos" : 2380,
-  "secondEndPos" : 2430
+  "firstPos" : 2376,
+  "secondPos" : 2426,
+  "firstEndPos" : 2378,
+  "secondEndPos" : 2428
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -7793,10 +7793,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2380,
-  "secondPos" : 2430,
-  "firstEndPos" : 2396,
-  "secondEndPos" : 2446
+  "firstPos" : 2378,
+  "secondPos" : 2428,
+  "firstEndPos" : 2394,
+  "secondEndPos" : 2444
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -7804,10 +7804,10 @@
   "secondLabel" : "",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2380,
-  "secondPos" : 2430,
-  "firstEndPos" : 2390,
-  "secondEndPos" : 2440
+  "firstPos" : 2378,
+  "secondPos" : 2428,
+  "firstEndPos" : 2388,
+  "secondEndPos" : 2438
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -7815,10 +7815,10 @@
   "secondLabel" : "body",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2380,
-  "secondPos" : 2430,
-  "firstEndPos" : 2384,
-  "secondEndPos" : 2434
+  "firstPos" : 2378,
+  "secondPos" : 2428,
+  "firstEndPos" : 2382,
+  "secondEndPos" : 2432
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -7826,10 +7826,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2384,
-  "secondPos" : 2434,
-  "firstEndPos" : 2385,
-  "secondEndPos" : 2435
+  "firstPos" : 2382,
+  "secondPos" : 2432,
+  "firstEndPos" : 2383,
+  "secondEndPos" : 2433
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -7837,10 +7837,10 @@
   "secondLabel" : "stats",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2385,
-  "secondPos" : 2435,
-  "firstEndPos" : 2390,
-  "secondEndPos" : 2440
+  "firstPos" : 2383,
+  "secondPos" : 2433,
+  "firstEndPos" : 2388,
+  "secondEndPos" : 2438
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -7848,10 +7848,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2390,
-  "secondPos" : 2440,
-  "firstEndPos" : 2391,
-  "secondEndPos" : 2441
+  "firstPos" : 2388,
+  "secondPos" : 2438,
+  "firstEndPos" : 2389,
+  "secondEndPos" : 2439
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -7859,10 +7859,10 @@
   "secondLabel" : "total",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2391,
-  "secondPos" : 2441,
-  "firstEndPos" : 2396,
-  "secondEndPos" : 2446
+  "firstPos" : 2389,
+  "secondPos" : 2439,
+  "firstEndPos" : 2394,
+  "secondEndPos" : 2444
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -7870,21 +7870,21 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2396,
-  "secondPos" : 2446,
-  "firstEndPos" : 2397,
-  "secondEndPos" : 2447
+  "firstPos" : 2394,
+  "secondPos" : 2444,
+  "firstEndPos" : 2395,
+  "secondEndPos" : 2445
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t\t• Total: ${body.stats.total}\n\t\t\t\t\t\t• Additions: ",
-  "secondLabel" : "\t\t\t\t\t\t• Total: ${body.stats.total}\n\t\t\t\t\t\t• Additions: ",
+  "firstLabel" : "\n\t\t\t\t\t\t• Additions: ",
+  "secondLabel" : "\n\t\t\t\t\t\t• Additions: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2397,
-  "secondPos" : 2447,
-  "firstEndPos" : 2417,
-  "secondEndPos" : 2467
+  "firstPos" : 2395,
+  "secondPos" : 2445,
+  "firstEndPos" : 2415,
+  "secondEndPos" : 2465
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -7892,10 +7892,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2417,
-  "secondPos" : 2467,
-  "firstEndPos" : 2440,
-  "secondEndPos" : 2490
+  "firstPos" : 2415,
+  "secondPos" : 2465,
+  "firstEndPos" : 2438,
+  "secondEndPos" : 2488
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -7903,10 +7903,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2417,
-  "secondPos" : 2467,
-  "firstEndPos" : 2419,
-  "secondEndPos" : 2469
+  "firstPos" : 2415,
+  "secondPos" : 2465,
+  "firstEndPos" : 2417,
+  "secondEndPos" : 2467
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -7914,10 +7914,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2419,
-  "secondPos" : 2469,
-  "firstEndPos" : 2439,
-  "secondEndPos" : 2489
+  "firstPos" : 2417,
+  "secondPos" : 2467,
+  "firstEndPos" : 2437,
+  "secondEndPos" : 2487
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -7925,10 +7925,10 @@
   "secondLabel" : "",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2419,
-  "secondPos" : 2469,
-  "firstEndPos" : 2429,
-  "secondEndPos" : 2479
+  "firstPos" : 2417,
+  "secondPos" : 2467,
+  "firstEndPos" : 2427,
+  "secondEndPos" : 2477
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -7936,10 +7936,10 @@
   "secondLabel" : "body",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2419,
-  "secondPos" : 2469,
-  "firstEndPos" : 2423,
-  "secondEndPos" : 2473
+  "firstPos" : 2417,
+  "secondPos" : 2467,
+  "firstEndPos" : 2421,
+  "secondEndPos" : 2471
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -7947,10 +7947,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2423,
-  "secondPos" : 2473,
-  "firstEndPos" : 2424,
-  "secondEndPos" : 2474
+  "firstPos" : 2421,
+  "secondPos" : 2471,
+  "firstEndPos" : 2422,
+  "secondEndPos" : 2472
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -7958,10 +7958,10 @@
   "secondLabel" : "stats",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2424,
-  "secondPos" : 2474,
-  "firstEndPos" : 2429,
-  "secondEndPos" : 2479
+  "firstPos" : 2422,
+  "secondPos" : 2472,
+  "firstEndPos" : 2427,
+  "secondEndPos" : 2477
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -7969,10 +7969,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2429,
-  "secondPos" : 2479,
-  "firstEndPos" : 2430,
-  "secondEndPos" : 2480
+  "firstPos" : 2427,
+  "secondPos" : 2477,
+  "firstEndPos" : 2428,
+  "secondEndPos" : 2478
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -7980,10 +7980,10 @@
   "secondLabel" : "additions",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2430,
-  "secondPos" : 2480,
-  "firstEndPos" : 2439,
-  "secondEndPos" : 2489
+  "firstPos" : 2428,
+  "secondPos" : 2478,
+  "firstEndPos" : 2437,
+  "secondEndPos" : 2487
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -7991,21 +7991,21 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2439,
-  "secondPos" : 2489,
-  "firstEndPos" : 2440,
-  "secondEndPos" : 2490
+  "firstPos" : 2437,
+  "secondPos" : 2487,
+  "firstEndPos" : 2438,
+  "secondEndPos" : 2488
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t\t• Additions: ${body.stats.additions}\n\t\t\t\t\t\t• Deletions: ",
-  "secondLabel" : "\t\t\t\t\t\t• Additions: ${body.stats.additions}\n\t\t\t\t\t\t• Deletions: ",
+  "firstLabel" : "\n\t\t\t\t\t\t• Deletions: ",
+  "secondLabel" : "\n\t\t\t\t\t\t• Deletions: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2440,
-  "secondPos" : 2490,
-  "firstEndPos" : 2460,
-  "secondEndPos" : 2510
+  "firstPos" : 2438,
+  "secondPos" : 2488,
+  "firstEndPos" : 2458,
+  "secondEndPos" : 2508
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -8013,10 +8013,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2460,
-  "secondPos" : 2510,
-  "firstEndPos" : 2483,
-  "secondEndPos" : 2533
+  "firstPos" : 2458,
+  "secondPos" : 2508,
+  "firstEndPos" : 2481,
+  "secondEndPos" : 2531
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -8024,10 +8024,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2460,
-  "secondPos" : 2510,
-  "firstEndPos" : 2462,
-  "secondEndPos" : 2512
+  "firstPos" : 2458,
+  "secondPos" : 2508,
+  "firstEndPos" : 2460,
+  "secondEndPos" : 2510
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8035,10 +8035,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2462,
-  "secondPos" : 2512,
-  "firstEndPos" : 2482,
-  "secondEndPos" : 2532
+  "firstPos" : 2460,
+  "secondPos" : 2510,
+  "firstEndPos" : 2480,
+  "secondEndPos" : 2530
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8046,10 +8046,10 @@
   "secondLabel" : "",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2462,
-  "secondPos" : 2512,
-  "firstEndPos" : 2472,
-  "secondEndPos" : 2522
+  "firstPos" : 2460,
+  "secondPos" : 2510,
+  "firstEndPos" : 2470,
+  "secondEndPos" : 2520
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -8057,10 +8057,10 @@
   "secondLabel" : "body",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2462,
-  "secondPos" : 2512,
-  "firstEndPos" : 2466,
-  "secondEndPos" : 2516
+  "firstPos" : 2460,
+  "secondPos" : 2510,
+  "firstEndPos" : 2464,
+  "secondEndPos" : 2514
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8068,10 +8068,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2466,
-  "secondPos" : 2516,
-  "firstEndPos" : 2467,
-  "secondEndPos" : 2517
+  "firstPos" : 2464,
+  "secondPos" : 2514,
+  "firstEndPos" : 2465,
+  "secondEndPos" : 2515
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -8079,10 +8079,10 @@
   "secondLabel" : "stats",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2467,
-  "secondPos" : 2517,
-  "firstEndPos" : 2472,
-  "secondEndPos" : 2522
+  "firstPos" : 2465,
+  "secondPos" : 2515,
+  "firstEndPos" : 2470,
+  "secondEndPos" : 2520
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8090,10 +8090,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2472,
-  "secondPos" : 2522,
-  "firstEndPos" : 2473,
-  "secondEndPos" : 2523
+  "firstPos" : 2470,
+  "secondPos" : 2520,
+  "firstEndPos" : 2471,
+  "secondEndPos" : 2521
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -8101,10 +8101,10 @@
   "secondLabel" : "deletions",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2473,
-  "secondPos" : 2523,
-  "firstEndPos" : 2482,
-  "secondEndPos" : 2532
+  "firstPos" : 2471,
+  "secondPos" : 2521,
+  "firstEndPos" : 2480,
+  "secondEndPos" : 2530
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -8112,19 +8112,19 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2482,
-  "secondPos" : 2532,
-  "firstEndPos" : 2483,
-  "secondEndPos" : 2533
+  "firstPos" : 2480,
+  "secondPos" : 2530,
+  "firstEndPos" : 2481,
+  "secondEndPos" : 2531
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t\t• Deletions: ${body.stats.deletions}\n\t\t\t\t\t",
-  "secondLabel" : "\t\t\t\t\t\t• Deletions: ${body.stats.deletions}\n\t\t\t\t\t",
+  "firstLabel" : "\n\t\t\t\t\t",
+  "secondLabel" : "\n\t\t\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2483,
-  "secondPos" : 2533,
+  "firstPos" : 2481,
+  "secondPos" : 2531,
   "firstEndPos" : 2487,
   "secondEndPos" : 2537
 }, {
@@ -8279,8 +8279,8 @@
   "secondParentType" : "arguments",
   "firstPos" : 2544,
   "secondPos" : 2594,
-  "firstEndPos" : 2636,
-  "secondEndPos" : 2686
+  "firstEndPos" : 2634,
+  "secondEndPos" : 2684
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8345,8 +8345,8 @@
   "secondParentType" : "ternary_expression",
   "firstPos" : 2561,
   "secondPos" : 2611,
-  "firstEndPos" : 2624,
-  "secondEndPos" : 2674
+  "firstEndPos" : 2622,
+  "secondEndPos" : 2672
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -8367,8 +8367,8 @@
   "secondParentType" : "template_string",
   "firstPos" : 2562,
   "secondPos" : 2612,
-  "firstEndPos" : 2569,
-  "secondEndPos" : 2619
+  "firstEndPos" : 2567,
+  "secondEndPos" : 2617
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -8376,10 +8376,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2569,
-  "secondPos" : 2619,
-  "firstEndPos" : 2592,
-  "secondEndPos" : 2642
+  "firstPos" : 2567,
+  "secondPos" : 2617,
+  "firstEndPos" : 2590,
+  "secondEndPos" : 2640
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -8387,10 +8387,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2569,
-  "secondPos" : 2619,
-  "firstEndPos" : 2571,
-  "secondEndPos" : 2621
+  "firstPos" : 2567,
+  "secondPos" : 2617,
+  "firstEndPos" : 2569,
+  "secondEndPos" : 2619
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8398,10 +8398,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2571,
-  "secondPos" : 2621,
-  "firstEndPos" : 2591,
-  "secondEndPos" : 2641
+  "firstPos" : 2569,
+  "secondPos" : 2619,
+  "firstEndPos" : 2589,
+  "secondEndPos" : 2639
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8409,10 +8409,10 @@
   "secondLabel" : "",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2571,
-  "secondPos" : 2621,
-  "firstEndPos" : 2585,
-  "secondEndPos" : 2635
+  "firstPos" : 2569,
+  "secondPos" : 2619,
+  "firstEndPos" : 2583,
+  "secondEndPos" : 2633
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -8420,10 +8420,10 @@
   "secondLabel" : "body",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2571,
-  "secondPos" : 2621,
-  "firstEndPos" : 2575,
-  "secondEndPos" : 2625
+  "firstPos" : 2569,
+  "secondPos" : 2619,
+  "firstEndPos" : 2573,
+  "secondEndPos" : 2623
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8431,10 +8431,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2575,
-  "secondPos" : 2625,
-  "firstEndPos" : 2576,
-  "secondEndPos" : 2626
+  "firstPos" : 2573,
+  "secondPos" : 2623,
+  "firstEndPos" : 2574,
+  "secondEndPos" : 2624
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -8442,10 +8442,10 @@
   "secondLabel" : "committer",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2576,
-  "secondPos" : 2626,
-  "firstEndPos" : 2585,
-  "secondEndPos" : 2635
+  "firstPos" : 2574,
+  "secondPos" : 2624,
+  "firstEndPos" : 2583,
+  "secondEndPos" : 2633
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8453,10 +8453,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2585,
-  "secondPos" : 2635,
-  "firstEndPos" : 2586,
-  "secondEndPos" : 2636
+  "firstPos" : 2583,
+  "secondPos" : 2633,
+  "firstEndPos" : 2584,
+  "secondEndPos" : 2634
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -8464,10 +8464,10 @@
   "secondLabel" : "login",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2586,
-  "secondPos" : 2636,
-  "firstEndPos" : 2591,
-  "secondEndPos" : 2641
+  "firstPos" : 2584,
+  "secondPos" : 2634,
+  "firstEndPos" : 2589,
+  "secondEndPos" : 2639
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -8475,10 +8475,10 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2591,
-  "secondPos" : 2641,
-  "firstEndPos" : 2592,
-  "secondEndPos" : 2642
+  "firstPos" : 2589,
+  "secondPos" : 2639,
+  "firstEndPos" : 2590,
+  "secondEndPos" : 2640
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -8486,10 +8486,10 @@
   "secondLabel" : "**](",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2592,
-  "secondPos" : 2642,
-  "firstEndPos" : 2596,
-  "secondEndPos" : 2646
+  "firstPos" : 2590,
+  "secondPos" : 2640,
+  "firstEndPos" : 2594,
+  "secondEndPos" : 2644
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -8497,10 +8497,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2596,
-  "secondPos" : 2646,
-  "firstEndPos" : 2622,
-  "secondEndPos" : 2672
+  "firstPos" : 2594,
+  "secondPos" : 2644,
+  "firstEndPos" : 2620,
+  "secondEndPos" : 2670
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -8508,10 +8508,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2596,
-  "secondPos" : 2646,
-  "firstEndPos" : 2598,
-  "secondEndPos" : 2648
+  "firstPos" : 2594,
+  "secondPos" : 2644,
+  "firstEndPos" : 2596,
+  "secondEndPos" : 2646
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8519,10 +8519,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2598,
-  "secondPos" : 2648,
-  "firstEndPos" : 2621,
-  "secondEndPos" : 2671
+  "firstPos" : 2596,
+  "secondPos" : 2646,
+  "firstEndPos" : 2619,
+  "secondEndPos" : 2669
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -8530,10 +8530,10 @@
   "secondLabel" : "",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2598,
-  "secondPos" : 2648,
-  "firstEndPos" : 2612,
-  "secondEndPos" : 2662
+  "firstPos" : 2596,
+  "secondPos" : 2646,
+  "firstEndPos" : 2610,
+  "secondEndPos" : 2660
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -8541,10 +8541,10 @@
   "secondLabel" : "body",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2598,
-  "secondPos" : 2648,
-  "firstEndPos" : 2602,
-  "secondEndPos" : 2652
+  "firstPos" : 2596,
+  "secondPos" : 2646,
+  "firstEndPos" : 2600,
+  "secondEndPos" : 2650
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8552,10 +8552,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2602,
-  "secondPos" : 2652,
-  "firstEndPos" : 2603,
-  "secondEndPos" : 2653
+  "firstPos" : 2600,
+  "secondPos" : 2650,
+  "firstEndPos" : 2601,
+  "secondEndPos" : 2651
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -8563,10 +8563,10 @@
   "secondLabel" : "committer",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2603,
-  "secondPos" : 2653,
-  "firstEndPos" : 2612,
-  "secondEndPos" : 2662
+  "firstPos" : 2601,
+  "secondPos" : 2651,
+  "firstEndPos" : 2610,
+  "secondEndPos" : 2660
 }, {
   "firstType" : ".",
   "secondType" : ".",
@@ -8574,10 +8574,10 @@
   "secondLabel" : ".",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2612,
-  "secondPos" : 2662,
-  "firstEndPos" : 2613,
-  "secondEndPos" : 2663
+  "firstPos" : 2610,
+  "secondPos" : 2660,
+  "firstEndPos" : 2611,
+  "secondEndPos" : 2661
 }, {
   "firstType" : "property_identifier",
   "secondType" : "property_identifier",
@@ -8585,10 +8585,10 @@
   "secondLabel" : "html_url",
   "firstParentType" : "member_expression",
   "secondParentType" : "member_expression",
-  "firstPos" : 2613,
-  "secondPos" : 2663,
-  "firstEndPos" : 2621,
-  "secondEndPos" : 2671
+  "firstPos" : 2611,
+  "secondPos" : 2661,
+  "firstEndPos" : 2619,
+  "secondEndPos" : 2669
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -8596,10 +8596,10 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 2621,
-  "secondPos" : 2671,
-  "firstEndPos" : 2622,
-  "secondEndPos" : 2672
+  "firstPos" : 2619,
+  "secondPos" : 2669,
+  "firstEndPos" : 2620,
+  "secondEndPos" : 2670
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -8607,10 +8607,10 @@
   "secondLabel" : ")",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2622,
-  "secondPos" : 2672,
-  "firstEndPos" : 2623,
-  "secondEndPos" : 2673
+  "firstPos" : 2620,
+  "secondPos" : 2670,
+  "firstEndPos" : 2621,
+  "secondEndPos" : 2671
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -8618,10 +8618,10 @@
   "secondLabel" : "`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 2623,
-  "secondPos" : 2673,
-  "firstEndPos" : 2624,
-  "secondEndPos" : 2674
+  "firstPos" : 2621,
+  "secondPos" : 2671,
+  "firstEndPos" : 2622,
+  "secondEndPos" : 2672
 }, {
   "firstType" : ":",
   "secondType" : ":",
@@ -8629,10 +8629,10 @@
   "secondLabel" : ":",
   "firstParentType" : "ternary_expression",
   "secondParentType" : "ternary_expression",
-  "firstPos" : 2625,
-  "secondPos" : 2675,
-  "firstEndPos" : 2626,
-  "secondEndPos" : 2676
+  "firstPos" : 2623,
+  "secondPos" : 2673,
+  "firstEndPos" : 2624,
+  "secondEndPos" : 2674
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -8640,10 +8640,10 @@
   "secondLabel" : "",
   "firstParentType" : "ternary_expression",
   "secondParentType" : "ternary_expression",
-  "firstPos" : 2627,
-  "secondPos" : 2677,
-  "firstEndPos" : 2636,
-  "secondEndPos" : 2686
+  "firstPos" : 2625,
+  "secondPos" : 2675,
+  "firstEndPos" : 2634,
+  "secondEndPos" : 2684
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -8651,10 +8651,10 @@
   "secondLabel" : "'",
   "firstParentType" : "string",
   "secondParentType" : "string",
-  "firstPos" : 2627,
-  "secondPos" : 2677,
-  "firstEndPos" : 2628,
-  "secondEndPos" : 2678
+  "firstPos" : 2625,
+  "secondPos" : 2675,
+  "firstEndPos" : 2626,
+  "secondEndPos" : 2676
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -8662,10 +8662,10 @@
   "secondLabel" : "Unknown",
   "firstParentType" : "string",
   "secondParentType" : "string",
-  "firstPos" : 2628,
-  "secondPos" : 2678,
-  "firstEndPos" : 2635,
-  "secondEndPos" : 2685
+  "firstPos" : 2626,
+  "secondPos" : 2676,
+  "firstEndPos" : 2633,
+  "secondEndPos" : 2683
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -8673,10 +8673,10 @@
   "secondLabel" : "'",
   "firstParentType" : "string",
   "secondParentType" : "string",
-  "firstPos" : 2635,
-  "secondPos" : 2685,
-  "firstEndPos" : 2636,
-  "secondEndPos" : 2686
+  "firstPos" : 2633,
+  "secondPos" : 2683,
+  "firstEndPos" : 2634,
+  "secondEndPos" : 2684
 }, {
   "firstType" : ",",
   "secondType" : ",",
@@ -8684,10 +8684,10 @@
   "secondLabel" : ",",
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
-  "firstPos" : 2636,
-  "secondPos" : 2686,
-  "firstEndPos" : 2637,
-  "secondEndPos" : 2687
+  "firstPos" : 2634,
+  "secondPos" : 2684,
+  "firstEndPos" : 2635,
+  "secondEndPos" : 2685
 }, {
   "firstType" : "true",
   "secondType" : "true",
@@ -9244,11 +9244,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "parenthesized_expression",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "parenthesized_expression",
   "firstPos" : 2775,
   "secondPos" : 2825,
   "firstEndPos" : 2890,
-  "secondEndPos" : 2909
+  "secondEndPos" : 2959
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -9314,7 +9314,7 @@
   "firstPos" : 2792,
   "secondPos" : 2842,
   "firstEndPos" : 2890,
-  "secondEndPos" : 2909
+  "secondEndPos" : 2959
 }, {
   "firstType" : "!",
   "secondType" : "!",
@@ -9332,9 +9332,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "unary_expression",
-  "secondParentType" : "parenthesized_expression",
+  "secondParentType" : "unary_expression",
   "firstPos" : 2793,
-  "secondPos" : 2825,
+  "secondPos" : 2843,
   "firstEndPos" : 2890,
   "secondEndPos" : 2959
 }, {
@@ -9345,7 +9345,7 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 2793,
-  "secondPos" : 2825,
+  "secondPos" : 2843,
   "firstEndPos" : 2845,
   "secondEndPos" : 2914
 }, {
@@ -9354,7 +9354,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "member_expression",
-  "secondParentType" : "unary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 2793,
   "secondPos" : 2843,
   "firstEndPos" : 2841,
@@ -10025,11 +10025,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
+  "secondParentType" : "as_expression",
   "firstPos" : 2951,
   "secondPos" : 3021,
   "firstEndPos" : 2981,
-  "secondEndPos" : 3063
+  "secondEndPos" : 3052
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -10047,7 +10047,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "await_expression",
-  "secondParentType" : "as_expression",
+  "secondParentType" : "await_expression",
   "firstPos" : 2957,
   "secondPos" : 3027,
   "firstEndPos" : 2981,
@@ -12904,8 +12904,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\tconst query = `\n\t\t\t{\n\t\t\t\trepository(owner: \"",
-  "secondLabel" : "\t\tconst query = `\n\t\t\t{\n\t\t\t\trepository(owner: \"",
+  "firstLabel" : "\n\t\t\t{\n\t\t\t\trepository(owner: \"",
+  "secondLabel" : "\n\t\t\t{\n\t\t\t\trepository(owner: \"",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 3634,
@@ -13014,8 +13014,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\trepository(owner: \"${owner}\", name: \"${repository}\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
-  "secondLabel" : "\t\t\t\trepository(owner: \"${owner}\", name: \"${repository}\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
+  "firstLabel" : "\") {\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
+  "secondLabel" : "\") {\n\t\t\t\t\tname\n\t\t\t\t\tissueOrPullRequest(number: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 3694,
@@ -13069,8 +13069,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tissueOrPullRequest(number: ${number}\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
-  "secondLabel" : "\t\t\t\t\tissueOrPullRequest(number: ${number}\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
+  "firstLabel" : ") {\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
+  "secondLabel" : ") {\n\t\t\t\t\t\t... on PullRequest {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tmerged\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t\t... on Issue {\n\t\t\t\t\t\t\tcomments {\n\t\t\t\t\t\t\t\ttotalCount\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tauthor {\n\t\t\t\t\t\t\t\tavatarUrl\n\t\t\t\t\t\t\t\tlogin\n\t\t\t\t\t\t\t\turl\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbody\n\t\t\t\t\t\t\tlabels(first: 10) {\n\t\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t\tname\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tnumber\n\t\t\t\t\t\t\tpublishedAt\n\t\t\t\t\t\t\tstate\n\t\t\t\t\t\t\ttitle\n\t\t\t\t\t\t\turl\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 3750,
@@ -20112,11 +20112,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "parenthesized_expression",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "parenthesized_expression",
   "firstPos" : 6276,
   "secondPos" : 6392,
   "firstEndPos" : 6391,
-  "secondEndPos" : 6476
+  "secondEndPos" : 6526
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -20182,7 +20182,7 @@
   "firstPos" : 6293,
   "secondPos" : 6409,
   "firstEndPos" : 6391,
-  "secondEndPos" : 6476
+  "secondEndPos" : 6526
 }, {
   "firstType" : "!",
   "secondType" : "!",
@@ -20200,9 +20200,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "unary_expression",
-  "secondParentType" : "parenthesized_expression",
+  "secondParentType" : "unary_expression",
   "firstPos" : 6294,
-  "secondPos" : 6392,
+  "secondPos" : 6410,
   "firstEndPos" : 6391,
   "secondEndPos" : 6526
 }, {
@@ -20213,7 +20213,7 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 6294,
-  "secondPos" : 6392,
+  "secondPos" : 6410,
   "firstEndPos" : 6346,
   "secondEndPos" : 6481
 }, {
@@ -20222,7 +20222,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "member_expression",
-  "secondParentType" : "unary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 6294,
   "secondPos" : 6410,
   "firstEndPos" : 6342,
@@ -20893,11 +20893,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
+  "secondParentType" : "as_expression",
   "firstPos" : 6449,
   "secondPos" : 6585,
   "firstEndPos" : 6479,
-  "secondEndPos" : 6627
+  "secondEndPos" : 6616
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -20915,7 +20915,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "await_expression",
-  "secondParentType" : "as_expression",
+  "secondParentType" : "await_expression",
   "firstPos" : 6455,
   "secondPos" : 6591,
   "firstEndPos" : 6479,

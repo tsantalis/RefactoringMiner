@@ -562,14 +562,14 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\tcontent: stripIndents`\n\t\t\t\t\t • show ",
-  "secondLabel" : "\t\t\t\tcontent: stripIndents`\n\t\t\t\t\t • show ",
+  "firstLabel" : "Available methods:\n\t\t\t\t\t • show ",
+  "secondLabel" : "Available methods:\n\t\t\t\t\t • show ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 231,
   "secondPos" : 281,
-  "firstEndPos" : 265,
-  "secondEndPos" : 315
+  "firstEndPos" : 263,
+  "secondEndPos" : 313
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -577,10 +577,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 265,
-  "secondPos" : 315,
-  "firstEndPos" : 267,
-  "secondEndPos" : 317
+  "firstPos" : 263,
+  "secondPos" : 313,
+  "firstEndPos" : 265,
+  "secondEndPos" : 315
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -588,32 +588,32 @@
   "secondLabel" : "<tag>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 267,
-  "secondPos" : 317,
-  "firstEndPos" : 272,
-  "secondEndPos" : 322
+  "firstPos" : 265,
+  "secondPos" : 315,
+  "firstEndPos" : 270,
+  "secondEndPos" : 320
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 270,
+  "secondPos" : 320,
+  "firstEndPos" : 272,
+  "secondEndPos" : 322
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • add ",
+  "secondLabel" : "\n\t\t\t\t\t • add ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 272,
   "secondPos" : 322,
-  "firstEndPos" : 274,
-  "secondEndPos" : 324
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • show \\`<tag>\\`\n\t\t\t\t\t • add ",
-  "secondLabel" : "\t\t\t\t\t • show \\`<tag>\\`\n\t\t\t\t\t • add ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 274,
-  "secondPos" : 324,
-  "firstEndPos" : 287,
-  "secondEndPos" : 337
+  "firstEndPos" : 285,
+  "secondEndPos" : 335
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -621,10 +621,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 287,
-  "secondPos" : 337,
-  "firstEndPos" : 289,
-  "secondEndPos" : 339
+  "firstPos" : 285,
+  "secondPos" : 335,
+  "firstEndPos" : 287,
+  "secondEndPos" : 337
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -632,32 +632,32 @@
   "secondLabel" : "[--hoist/--pin] <tag> <content>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 289,
-  "secondPos" : 339,
-  "firstEndPos" : 320,
-  "secondEndPos" : 370
+  "firstPos" : 287,
+  "secondPos" : 337,
+  "firstEndPos" : 318,
+  "secondEndPos" : 368
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 318,
+  "secondPos" : 368,
+  "firstEndPos" : 320,
+  "secondEndPos" : 370
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • alias ",
+  "secondLabel" : "\n\t\t\t\t\t • alias ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 320,
   "secondPos" : 370,
-  "firstEndPos" : 322,
-  "secondEndPos" : 372
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • add \\`[--hoist/--pin] <tag> <content>\\`\n\t\t\t\t\t • alias ",
-  "secondLabel" : "\t\t\t\t\t • add \\`[--hoist/--pin] <tag> <content>\\`\n\t\t\t\t\t • alias ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 322,
-  "secondPos" : 372,
-  "firstEndPos" : 337,
-  "secondEndPos" : 387
+  "firstEndPos" : 335,
+  "secondEndPos" : 385
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -665,10 +665,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 337,
-  "secondPos" : 387,
-  "firstEndPos" : 339,
-  "secondEndPos" : 389
+  "firstPos" : 335,
+  "secondPos" : 385,
+  "firstEndPos" : 337,
+  "secondEndPos" : 387
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -676,32 +676,32 @@
   "secondLabel" : "<--add/--del> <tag> <tagalias>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 339,
-  "secondPos" : 389,
-  "firstEndPos" : 369,
-  "secondEndPos" : 419
+  "firstPos" : 337,
+  "secondPos" : 387,
+  "firstEndPos" : 367,
+  "secondEndPos" : 417
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 367,
+  "secondPos" : 417,
+  "firstEndPos" : 369,
+  "secondEndPos" : 419
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • del ",
+  "secondLabel" : "\n\t\t\t\t\t • del ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 369,
   "secondPos" : 419,
-  "firstEndPos" : 371,
-  "secondEndPos" : 421
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • alias \\`<--add/--del> <tag> <tagalias>\\`\n\t\t\t\t\t • del ",
-  "secondLabel" : "\t\t\t\t\t • alias \\`<--add/--del> <tag> <tagalias>\\`\n\t\t\t\t\t • del ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 371,
-  "secondPos" : 421,
-  "firstEndPos" : 384,
-  "secondEndPos" : 434
+  "firstEndPos" : 382,
+  "secondEndPos" : 432
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -709,10 +709,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 384,
-  "secondPos" : 434,
-  "firstEndPos" : 386,
-  "secondEndPos" : 436
+  "firstPos" : 382,
+  "secondPos" : 432,
+  "firstEndPos" : 384,
+  "secondEndPos" : 434
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -720,32 +720,32 @@
   "secondLabel" : "<tag>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 386,
-  "secondPos" : 436,
-  "firstEndPos" : 391,
-  "secondEndPos" : 441
+  "firstPos" : 384,
+  "secondPos" : 434,
+  "firstEndPos" : 389,
+  "secondEndPos" : 439
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 389,
+  "secondPos" : 439,
+  "firstEndPos" : 391,
+  "secondEndPos" : 441
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • edit ",
+  "secondLabel" : "\n\t\t\t\t\t • edit ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 391,
   "secondPos" : 441,
-  "firstEndPos" : 393,
-  "secondEndPos" : 443
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • del \\`<tag>\\`\n\t\t\t\t\t • edit ",
-  "secondLabel" : "\t\t\t\t\t • del \\`<tag>\\`\n\t\t\t\t\t • edit ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 393,
-  "secondPos" : 443,
-  "firstEndPos" : 407,
-  "secondEndPos" : 457
+  "firstEndPos" : 405,
+  "secondEndPos" : 455
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -753,10 +753,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 407,
-  "secondPos" : 457,
-  "firstEndPos" : 409,
-  "secondEndPos" : 459
+  "firstPos" : 405,
+  "secondPos" : 455,
+  "firstEndPos" : 407,
+  "secondEndPos" : 457
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -764,32 +764,32 @@
   "secondLabel" : "[--hoist/--unhoist] <tag> <content>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 409,
-  "secondPos" : 459,
-  "firstEndPos" : 444,
-  "secondEndPos" : 494
+  "firstPos" : 407,
+  "secondPos" : 457,
+  "firstEndPos" : 442,
+  "secondEndPos" : 492
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 442,
+  "secondPos" : 492,
+  "firstEndPos" : 444,
+  "secondEndPos" : 494
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • source ",
+  "secondLabel" : "\n\t\t\t\t\t • source ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 444,
   "secondPos" : 494,
-  "firstEndPos" : 446,
-  "secondEndPos" : 496
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • edit \\`[--hoist/--unhoist] <tag> <content>\\`\n\t\t\t\t\t • source ",
-  "secondLabel" : "\t\t\t\t\t • edit \\`[--hoist/--unhoist] <tag> <content>\\`\n\t\t\t\t\t • source ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 446,
-  "secondPos" : 496,
-  "firstEndPos" : 462,
-  "secondEndPos" : 512
+  "firstEndPos" : 460,
+  "secondEndPos" : 510
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -797,10 +797,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 462,
-  "secondPos" : 512,
-  "firstEndPos" : 464,
-  "secondEndPos" : 514
+  "firstPos" : 460,
+  "secondPos" : 510,
+  "firstEndPos" : 462,
+  "secondEndPos" : 512
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -808,76 +808,76 @@
   "secondLabel" : "[--file] <tag>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 464,
-  "secondPos" : 514,
-  "firstEndPos" : 478,
-  "secondEndPos" : 528
+  "firstPos" : 462,
+  "secondPos" : 512,
+  "firstEndPos" : 476,
+  "secondEndPos" : 526
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 476,
+  "secondPos" : 526,
+  "firstEndPos" : 478,
+  "secondEndPos" : 528
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • info ",
+  "secondLabel" : "\n\t\t\t\t\t • info ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 478,
   "secondPos" : 528,
-  "firstEndPos" : 480,
-  "secondEndPos" : 530
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • source \\`[--file] <tag>\\`\n\t\t\t\t\t • info ",
-  "secondLabel" : "\t\t\t\t\t • source \\`[--file] <tag>\\`\n\t\t\t\t\t • info ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 480,
-  "secondPos" : 530,
-  "firstEndPos" : 494,
-  "secondEndPos" : 544
+  "firstEndPos" : 492,
+  "secondEndPos" : 542
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 492,
+  "secondPos" : 542,
+  "firstEndPos" : 494,
+  "secondEndPos" : 544
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "<tag>",
+  "secondLabel" : "<tag>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 494,
   "secondPos" : 544,
-  "firstEndPos" : 496,
-  "secondEndPos" : 546
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "<tag>",
-  "secondLabel" : "<tag>",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 496,
-  "secondPos" : 546,
-  "firstEndPos" : 501,
-  "secondEndPos" : 551
+  "firstEndPos" : 499,
+  "secondEndPos" : 549
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 499,
+  "secondPos" : 549,
+  "firstEndPos" : 501,
+  "secondEndPos" : 551
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • search ",
+  "secondLabel" : "\n\t\t\t\t\t • search ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 501,
   "secondPos" : 551,
-  "firstEndPos" : 503,
-  "secondEndPos" : 553
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • info \\`<tag>\\`\n\t\t\t\t\t • search ",
-  "secondLabel" : "\t\t\t\t\t • info \\`<tag>\\`\n\t\t\t\t\t • search ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 503,
-  "secondPos" : 553,
-  "firstEndPos" : 519,
-  "secondEndPos" : 569
+  "firstEndPos" : 517,
+  "secondEndPos" : 567
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -885,10 +885,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 519,
-  "secondPos" : 569,
-  "firstEndPos" : 521,
-  "secondEndPos" : 571
+  "firstPos" : 517,
+  "secondPos" : 567,
+  "firstEndPos" : 519,
+  "secondEndPos" : 569
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -896,76 +896,76 @@
   "secondLabel" : "<tag>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 521,
-  "secondPos" : 571,
-  "firstEndPos" : 526,
-  "secondEndPos" : 576
+  "firstPos" : 519,
+  "secondPos" : 569,
+  "firstEndPos" : 524,
+  "secondEndPos" : 574
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 524,
+  "secondPos" : 574,
+  "firstEndPos" : 526,
+  "secondEndPos" : 576
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • list ",
+  "secondLabel" : "\n\t\t\t\t\t • list ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 526,
   "secondPos" : 576,
-  "firstEndPos" : 528,
-  "secondEndPos" : 578
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • search \\`<tag>\\`\n\t\t\t\t\t • list ",
-  "secondLabel" : "\t\t\t\t\t • search \\`<tag>\\`\n\t\t\t\t\t • list ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 528,
-  "secondPos" : 578,
-  "firstEndPos" : 542,
-  "secondEndPos" : 592
+  "firstEndPos" : 540,
+  "secondEndPos" : 590
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 540,
+  "secondPos" : 590,
+  "firstEndPos" : 542,
+  "secondEndPos" : 592
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "[member]",
+  "secondLabel" : "[member]",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 542,
   "secondPos" : 592,
-  "firstEndPos" : 544,
-  "secondEndPos" : 594
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "[member]",
-  "secondLabel" : "[member]",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 544,
-  "secondPos" : 594,
-  "firstEndPos" : 552,
-  "secondEndPos" : 602
+  "firstEndPos" : 550,
+  "secondEndPos" : 600
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 550,
+  "secondPos" : 600,
+  "firstEndPos" : 552,
+  "secondEndPos" : 602
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • download ",
+  "secondLabel" : "\n\t\t\t\t\t • download ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 552,
   "secondPos" : 602,
-  "firstEndPos" : 554,
-  "secondEndPos" : 604
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • list \\`[member]\\`\n\t\t\t\t\t • download ",
-  "secondLabel" : "\t\t\t\t\t • list \\`[member]\\`\n\t\t\t\t\t • download ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 554,
-  "secondPos" : 604,
-  "firstEndPos" : 572,
-  "secondEndPos" : 622
+  "firstEndPos" : 570,
+  "secondEndPos" : 620
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -973,10 +973,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 572,
-  "secondPos" : 622,
-  "firstEndPos" : 574,
-  "secondEndPos" : 624
+  "firstPos" : 570,
+  "secondPos" : 620,
+  "firstEndPos" : 572,
+  "secondEndPos" : 622
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -984,10 +984,10 @@
   "secondLabel" : "[member]",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 574,
-  "secondPos" : 624,
-  "firstEndPos" : 582,
-  "secondEndPos" : 632
+  "firstPos" : 572,
+  "secondPos" : 622,
+  "firstEndPos" : 580,
+  "secondEndPos" : 630
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -995,19 +995,19 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 582,
-  "secondPos" : 632,
-  "firstEndPos" : 584,
-  "secondEndPos" : 634
+  "firstPos" : 580,
+  "secondPos" : 630,
+  "firstEndPos" : 582,
+  "secondEndPos" : 632
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • download \\`[member]\\`\n\n\t\t\t\t\tRequired: ",
-  "secondLabel" : "\t\t\t\t\t • download \\`[member]\\`\n\n\t\t\t\t\tRequired: ",
+  "firstLabel" : "\n\n\t\t\t\t\tRequired: ",
+  "secondLabel" : "\n\n\t\t\t\t\tRequired: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 584,
-  "secondPos" : 634,
+  "firstPos" : 582,
+  "secondPos" : 632,
   "firstEndPos" : 599,
   "secondEndPos" : 649
 }, {
@@ -1090,8 +1090,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tRequired: \\`<>\\` | Optional: \\`[]\\`\n\n\t\t\t\t\tFor additional ",
-  "secondLabel" : "\t\t\t\t\tRequired: \\`<>\\` | Optional: \\`[]\\`\n\n\t\t\t\t\tFor additional ",
+  "firstLabel" : "\n\n\t\t\t\t\tFor additional ",
+  "secondLabel" : "\n\n\t\t\t\t\tFor additional ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 624,
@@ -1134,8 +1134,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tFor additional \\`<...arguments>\\`\n\t\t\t\t",
-  "secondLabel" : "\t\t\t\t\tFor additional \\`<...arguments>\\`\n\t\t\t\t",
+  "firstLabel" : " usage refer to the examples below.\n\t\t\t\t",
+  "secondLabel" : " usage refer to the examples below.\n\t\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 664,
@@ -4434,8 +4434,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\treturn message.util.send(stripIndents`\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
-  "secondLabel" : "\t\t\treturn message.util!.send(stripIndents`\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
+  "firstLabel" : "\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
+  "secondLabel" : "\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 1669,
@@ -4522,8 +4522,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\tCheck \\`${prefix}help tag\\`\n\t\t\t\n\t\t\t\tHmph, you probably wanted to use ",
-  "secondLabel" : "\t\t\t\tCheck \\`${prefix}help tag\\`\n\t\t\t\n\t\t\t\tHmph, you probably wanted to use ",
+  "firstLabel" : " for more information.\n\t\t\t\n\t\t\t\tHmph, you probably wanted to use ",
+  "secondLabel" : " for more information.\n\t\t\t\n\t\t\t\tHmph, you probably wanted to use ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 1756,
@@ -4610,8 +4610,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\tHmph, you probably wanted to use \\`${prefix}tag show\\`\n\t\t\t",
-  "secondLabel" : "\t\t\t\tHmph, you probably wanted to use \\`${prefix}tag show\\`\n\t\t\t",
+  "firstLabel" : " or something!\n\t\t\t",
+  "secondLabel" : " or something!\n\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 1841,

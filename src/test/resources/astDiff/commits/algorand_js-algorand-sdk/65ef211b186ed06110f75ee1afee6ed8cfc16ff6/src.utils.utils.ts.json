@@ -496,8 +496,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Parse JSON with additional options.\n * @param str The JSON string to parse.\n * @param options Parsing options.\n * @param options.intDecoding Configure how integers in\n *   this request's JSON response will be decoded.\n *\n *   The options are:\n *   * \"default\": All integers will be decoded as Numbers, meaning any values greater than\n *     Number.MAX_SAFE_INTEGER will lose precision.\n *   * \"safe\": All integers will be decoded as Numbers, but if any values are greater than\n *     Number.MAX_SAFE_INTEGER an error will be thrown.\n *   * \"mixed\": Integers will be decoded as Numbers if they are less than or equal to\n *     Number.MAX_SAFE_INTEGER, otherwise they will be decoded as BigInts.\n *   * \"bigint\": All integers will be decoded as BigInts.\n *\n *   Defaults to \"default\" if not included.\n */",
-  "secondLabel" : "\n * Parse JSON with additional options.\n * @param str The JSON string to parse.\n * @param options Parsing options.\n * @param options.intDecoding Configure how integers in\n *   this request's JSON response will be decoded.\n *\n *   The options are:\n *   * \"default\": All integers will be decoded as Numbers, meaning any values greater than\n *     Number.MAX_SAFE_INTEGER will lose precision.\n *   * \"safe\": All integers will be decoded as Numbers, but if any values are greater than\n *     Number.MAX_SAFE_INTEGER an error will be thrown.\n *   * \"mixed\": Integers will be decoded as Numbers if they are less than or equal to\n *     Number.MAX_SAFE_INTEGER, otherwise they will be decoded as BigInts.\n *   * \"bigint\": All integers will be decoded as BigInts.\n *\n *   Defaults to \"default\" if not included.\n */",
+  "firstLabel" : "/**\n * Parse JSON with additional options.\n * @param str The JSON string to parse.\n * @param options Parsing options.\n * @param options.intDecoding Configure how integers in\n *   this request's JSON response will be decoded.\n *\n *   The options are:\n *   * \"default\": All integers will be decoded as Numbers, meaning any values greater than\n *     Number.MAX_SAFE_INTEGER will lose precision.\n *   * \"safe\": All integers will be decoded as Numbers, but if any values are greater than\n *     Number.MAX_SAFE_INTEGER an error will be thrown.\n *   * \"mixed\": Integers will be decoded as Numbers if they are less than or equal to\n *     Number.MAX_SAFE_INTEGER, otherwise they will be decoded as BigInts.\n *   * \"bigint\": All integers will be decoded as BigInts.\n *\n *   Defaults to \"default\" if not included.\n */",
+  "secondLabel" : "/**\n * Parse JSON with additional options.\n * @param str The JSON string to parse.\n * @param options Parsing options.\n * @param options.intDecoding Configure how integers in\n *   this request's JSON response will be decoded.\n *\n *   The options are:\n *   * \"default\": All integers will be decoded as Numbers, meaning any values greater than\n *     Number.MAX_SAFE_INTEGER will lose precision.\n *   * \"safe\": All integers will be decoded as Numbers, but if any values are greater than\n *     Number.MAX_SAFE_INTEGER an error will be thrown.\n *   * \"mixed\": Integers will be decoded as Numbers if they are less than or equal to\n *     Number.MAX_SAFE_INTEGER, otherwise they will be decoded as BigInts.\n *   * \"bigint\": All integers will be decoded as BigInts.\n *\n *   Defaults to \"default\" if not included.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 212,
@@ -3950,8 +3950,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * ArrayEqual takes two arrays and return true if equal, false otherwise\n */",
-  "secondLabel" : "\n * ArrayEqual takes two arrays and return true if equal, false otherwise\n */",
+  "firstLabel" : "/**\n * ArrayEqual takes two arrays and return true if equal, false otherwise\n */",
+  "secondLabel" : "/**\n * ArrayEqual takes two arrays and return true if equal, false otherwise\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2358,
@@ -4984,8 +4984,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * ConcatArrays takes two array and returns a joint array of both\n * @param a\n * @param b\n * @returns [a,b]\n */",
-  "secondLabel" : "\n * ConcatArrays takes n number arrays and returns a joint Uint8Array\n * @param arrs An arbitrary number of n array-like number list arguments\n * @returns [a,b]\n */",
+  "firstLabel" : "/**\n * ConcatArrays takes two array and returns a joint array of both\n * @param a\n * @param b\n * @returns [a,b]\n */",
+  "secondLabel" : "/**\n * ConcatArrays takes n number arrays and returns a joint Uint8Array\n * @param arrs An arbitrary number of n array-like number list arguments\n * @returns [a,b]\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2618,
@@ -5413,8 +5413,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Remove undefined properties from an object\n * @param obj An object, preferably one with some undefined properties\n * @returns A copy of the object with undefined properties removed\n */",
-  "secondLabel" : "\n * Remove undefined properties from an object\n * @param obj An object, preferably one with some undefined properties\n * @returns A copy of the object with undefined properties removed\n */",
+  "firstLabel" : "/**\n * Remove undefined properties from an object\n * @param obj An object, preferably one with some undefined properties\n * @returns A copy of the object with undefined properties removed\n */",
+  "secondLabel" : "/**\n * Remove undefined properties from an object\n * @param obj An object, preferably one with some undefined properties\n * @returns A copy of the object with undefined properties removed\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2901,

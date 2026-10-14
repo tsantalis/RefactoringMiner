@@ -4734,11 +4734,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "pair",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "pair",
   "firstPos" : 1728,
   "secondPos" : 2804,
   "firstEndPos" : 1740,
-  "secondEndPos" : 2816
+  "secondEndPos" : 2817
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -4767,7 +4767,7 @@
   "firstLabel" : "limit",
   "secondLabel" : "limit",
   "firstParentType" : "binary_expression",
-  "secondParentType" : "binary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 1735,
   "secondPos" : 2811,
   "firstEndPos" : 1740,
@@ -5350,11 +5350,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "pair",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "pair",
   "firstPos" : 1887,
   "secondPos" : 2965,
   "firstEndPos" : 1910,
-  "secondEndPos" : 2988
+  "secondEndPos" : 2989
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -5416,7 +5416,7 @@
   "firstLabel" : "limit",
   "secondLabel" : "limit",
   "firstParentType" : "binary_expression",
-  "secondParentType" : "binary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 1905,
   "secondPos" : 2983,
   "firstEndPos" : 1910,

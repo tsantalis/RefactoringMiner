@@ -298,8 +298,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * RotationPanInput is extension of PanInput to compensate coordinates by screen rotation angle.\n *\n * The reason for using this function is that in VR mode,\n * the roll angle is adjusted in the direction opposite to the screen rotation angle.\n *\n * Therefore, the angle that the user touches and moves does not match the angle at which the actual object should move.\n * @extends PanInput\n */",
-  "secondLabel" : "\n * RotationPanInput is extension of PanInput to compensate coordinates by screen rotation angle.\n *\n * The reason for using this function is that in VR mode,\n * the roll angle is adjusted in the direction opposite to the screen rotation angle.\n *\n * Therefore, the angle that the user touches and moves does not match the angle at which the actual object should move.\n * @extends PanInput\n */",
+  "firstLabel" : "/**\n * RotationPanInput is extension of PanInput to compensate coordinates by screen rotation angle.\n *\n * The reason for using this function is that in VR mode,\n * the roll angle is adjusted in the direction opposite to the screen rotation angle.\n *\n * Therefore, the angle that the user touches and moves does not match the angle at which the actual object should move.\n * @extends PanInput\n */",
+  "secondLabel" : "/**\n * RotationPanInput is extension of PanInput to compensate coordinates by screen rotation angle.\n *\n * The reason for using this function is that in VR mode,\n * the roll angle is adjusted in the direction opposite to the screen rotation angle.\n *\n * Therefore, the angle that the user touches and moves does not match the angle at which the actual object should move.\n * @extends PanInput\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 102,
@@ -430,8 +430,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\n\t * Constructor\n\t *\n\t * @private\n\t * @param {HTMLElement} el target element\n\t * @param {Object} [options] The option object\n\t * @param {Boolean} [options.useRotation]  Whether to use rotation(or VR)\n\t */",
-  "secondLabel" : "  \n   * Constructor\n   *\n   * @private\n   * @param {HTMLElement} el target element\n   * @param {Object} [options] The option object\n   * @param {Boolean} [options.useRotation]  Whether to use rotation(or VR)\n   */",
+  "firstLabel" : "/**\n\t * Constructor\n\t *\n\t * @private\n\t * @param {HTMLElement} el target element\n\t * @param {Object} [options] The option object\n\t * @param {Boolean} [options.useRotation]  Whether to use rotation(or VR)\n\t */",
+  "secondLabel" : "/**\n   * Constructor\n   *\n   * @private\n   * @param {HTMLElement} el target element\n   * @param {Object} [options] The option object\n   * @param {Boolean} [options.useRotation]  Whether to use rotation(or VR)\n   */",
   "firstParentType" : "class_body",
   "secondParentType" : "class_body",
   "firstPos" : 557,
@@ -6436,8 +6436,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Override getDirectionByAngle to return DIRECTION_ALL\n * Ref: https://github.com/naver/egjs-axes/issues/99\n *\n * But we obey axes's rule. If axes's rule is problem, let's apply following code.\n */",
-  "secondLabel" : "\n * Override getDirectionByAngle to return DIRECTION_ALL\n * Ref: https://github.com/naver/egjs-axes/issues/99\n *\n * But we obey axes's rule. If axes's rule is problem, let's apply following code.\n */",
+  "firstLabel" : "/**\n * Override getDirectionByAngle to return DIRECTION_ALL\n * Ref: https://github.com/naver/egjs-axes/issues/99\n *\n * But we obey axes's rule. If axes's rule is problem, let's apply following code.\n */",
+  "secondLabel" : "/**\n * Override getDirectionByAngle to return DIRECTION_ALL\n * Ref: https://github.com/naver/egjs-axes/issues/99\n *\n * But we obey axes's rule. If axes's rule is problem, let's apply following code.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2564,

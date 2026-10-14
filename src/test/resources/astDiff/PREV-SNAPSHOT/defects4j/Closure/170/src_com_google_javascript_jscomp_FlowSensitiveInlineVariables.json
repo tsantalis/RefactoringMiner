@@ -17852,6 +17852,83 @@
   "firstEndPos" : 17130,
   "secondEndPos" : 17130
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParenthesizedExpression",
+  "secondParentType" : "ParenthesizedExpression",
+  "firstPos" : 17152,
+  "secondPos" : 17137,
+  "firstEndPos" : 17179,
+  "secondEndPos" : 17164
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 17152,
+  "secondPos" : 17137,
+  "firstEndPos" : 17174,
+  "secondEndPos" : 17159
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 17152,
+  "secondPos" : 17137,
+  "firstEndPos" : 17158,
+  "secondEndPos" : 17143
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "parent",
+  "secondLabel" : "parent",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 17152,
+  "secondPos" : 17137,
+  "firstEndPos" : 17158,
+  "secondEndPos" : 17143
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "getFirstChild",
+  "secondLabel" : "getFirstChild",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 17159,
+  "secondPos" : 17144,
+  "firstEndPos" : 17172,
+  "secondEndPos" : 17157
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "==",
+  "secondLabel" : "==",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 17175,
+  "secondPos" : 17160,
+  "firstEndPos" : 17177,
+  "secondEndPos" : 17162
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "n",
+  "secondLabel" : "n",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 17178,
+  "secondPos" : 17163,
+  "firstEndPos" : 17179,
+  "secondEndPos" : 17164
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",

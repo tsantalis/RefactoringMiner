@@ -397,8 +397,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Escapes the `RegExp` special characters \"^\", \"$\", \"\\\", \".\", \"*\", \"+\",\n * \"?\", \"(\", \")\", \"[\", \"]\", \"{\", \"}\", and \"|\" in `string`.\n *\n * @param {string} string The string to escape.\n * @returns {string} Returns the escaped string.\n */",
-  "secondLabel" : "\n * Escapes the `RegExp` special characters \"^\", \"$\", \"\\\", \".\", \"*\", \"+\",\n * \"?\", \"(\", \")\", \"[\", \"]\", \"{\", \"}\", and \"|\" in `string`.\n */",
+  "firstLabel" : "/**\n * Escapes the `RegExp` special characters \"^\", \"$\", \"\\\", \".\", \"*\", \"+\",\n * \"?\", \"(\", \")\", \"[\", \"]\", \"{\", \"}\", and \"|\" in `string`.\n *\n * @param {string} string The string to escape.\n * @returns {string} Returns the escaped string.\n */",
+  "secondLabel" : "/**\n * Escapes the `RegExp` special characters \"^\", \"$\", \"\\\", \".\", \"*\", \"+\",\n * \"?\", \"(\", \")\", \"[\", \"]\", \"{\", \"}\", and \"|\" in `string`.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 149,
@@ -947,8 +947,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Convert a string to the `RegExp`.\n * Normal strings (e.g. `\"foo\"`) is converted to `/^foo$/` of `RegExp`.\n * Strings like `\"/^foo/i\"` are converted to `/^foo/i` of `RegExp`.\n *\n * @param {string} string The string to convert.\n * @param {{add?: string, remove?: string}} [flags] The flags to add or remove.\n *   - `add`: Flags to add to the `RegExp` (e.g. `'i'` for case-insensitive).\n *   - `remove`: Flags to remove from the `RegExp` (e.g. `'g'` to remove global matching).\n * @returns {RegExp} Returns the `RegExp`.\n */",
-  "secondLabel" : "\n * Convert a string to the `RegExp`.\n * Normal strings (e.g. `\"foo\"`) is converted to `/^foo$/` of `RegExp`.\n * Strings like `\"/^foo/i\"` are converted to `/^foo/i` of `RegExp`.\n */",
+  "firstLabel" : "/**\n * Convert a string to the `RegExp`.\n * Normal strings (e.g. `\"foo\"`) is converted to `/^foo$/` of `RegExp`.\n * Strings like `\"/^foo/i\"` are converted to `/^foo/i` of `RegExp`.\n *\n * @param {string} string The string to convert.\n * @param {{add?: string, remove?: string}} [flags] The flags to add or remove.\n *   - `add`: Flags to add to the `RegExp` (e.g. `'i'` for case-insensitive).\n *   - `remove`: Flags to remove from the `RegExp` (e.g. `'g'` to remove global matching).\n * @returns {RegExp} Returns the `RegExp`.\n */",
+  "secondLabel" : "/**\n * Convert a string to the `RegExp`.\n * Normal strings (e.g. `\"foo\"`) is converted to `/^foo$/` of `RegExp`.\n * Strings like `\"/^foo/i\"` are converted to `/^foo/i` of `RegExp`.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 539,
@@ -2773,8 +2773,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Checks whether given string is regexp string\n * @param {string} string\n * @returns {boolean}\n */",
-  "secondLabel" : "\n * Checks whether given string is regexp string\n */",
+  "firstLabel" : "/**\n * Checks whether given string is regexp string\n * @param {string} string\n * @returns {boolean}\n */",
+  "secondLabel" : "/**\n * Checks whether given string is regexp string\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 1576,
@@ -3026,8 +3026,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Converts an array of strings to a singular function to match any of them.\n * This function converts each string to a `RegExp` and returns a function that checks all of them.\n *\n * @param {string[]} [patterns] The strings or regular expression strings to match.\n * @returns {(...toCheck: string[]) => boolean} Returns a function that checks if any string matches any of the given patterns.\n */",
-  "secondLabel" : "\n * Converts an array of strings or regular expression strings to a singular function to match any of them.\n * This function converts each string to a `RegExp` and returns a function that checks all of them.\n */",
+  "firstLabel" : "/**\n * Converts an array of strings to a singular function to match any of them.\n * This function converts each string to a `RegExp` and returns a function that checks all of them.\n *\n * @param {string[]} [patterns] The strings or regular expression strings to match.\n * @returns {(...toCheck: string[]) => boolean} Returns a function that checks if any string matches any of the given patterns.\n */",
+  "secondLabel" : "/**\n * Converts an array of strings or regular expression strings to a singular function to match any of them.\n * This function converts each string to a `RegExp` and returns a function that checks all of them.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 1747,

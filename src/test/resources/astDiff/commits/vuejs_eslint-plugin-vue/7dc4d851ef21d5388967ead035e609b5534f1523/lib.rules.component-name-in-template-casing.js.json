@@ -12,8 +12,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * @author Yosuke Ota\n * issue https://github.com/vuejs/eslint-plugin-vue/issues/250\n */",
-  "secondLabel" : "\n * @author Yosuke Ota\n * issue https://github.com/vuejs/eslint-plugin-vue/issues/250\n */",
+  "firstLabel" : "/**\n * @author Yosuke Ota\n * issue https://github.com/vuejs/eslint-plugin-vue/issues/250\n */",
+  "secondLabel" : "/**\n * @author Yosuke Ota\n * issue https://github.com/vuejs/eslint-plugin-vue/issues/250\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 0,
@@ -309,8 +309,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Checks whether the given variable is the type-only import object.\n * @param {Variable} variable\n * @returns {boolean} `true` if the given variable is the type-only import.\n */",
-  "secondLabel" : "\n * Checks whether the given variable is the type-only import object.\n */",
+  "firstLabel" : "/**\n * Checks whether the given variable is the type-only import object.\n * @param {Variable} variable\n * @returns {boolean} `true` if the given variable is the type-only import.\n */",
+  "secondLabel" : "/**\n * Checks whether the given variable is the type-only import object.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 344,
@@ -7855,8 +7855,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "    \n     * Checks whether the given node is the verification target node.\n     * @param {VElement} node element node\n     * @returns {boolean} `true` if the given node is the verification target node.\n     */",
-  "secondLabel" : "    \n     * Checks whether the given node is the verification target node.\n     */",
+  "firstLabel" : "/**\n     * Checks whether the given node is the verification target node.\n     * @param {VElement} node element node\n     * @returns {boolean} `true` if the given node is the verification target node.\n     */",
+  "secondLabel" : "/**\n     * Checks whether the given node is the verification target node.\n     */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 3498,

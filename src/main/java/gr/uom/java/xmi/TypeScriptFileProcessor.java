@@ -1,6 +1,5 @@
 package gr.uom.java.xmi;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -11,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
+import org.refactoringminer.astDiff.utils.TypeScriptTreeGenerator;
 
 import com.caoccao.javet.swc4j.Swc4j;
 import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
@@ -45,9 +46,6 @@ import com.caoccao.javet.swc4j.enums.Swc4jParseMode;
 import com.caoccao.javet.swc4j.exceptions.Swc4jCoreException;
 import com.caoccao.javet.swc4j.options.Swc4jParseOptions;
 import com.caoccao.javet.swc4j.outputs.Swc4jParseOutput;
-import com.github.gumtreediff.gen.treesitterng.JavaScriptTreeSitterNgTreeGenerator;
-import com.github.gumtreediff.gen.treesitterng.TsxTreeSitterNgTreeGenerator;
-import com.github.gumtreediff.gen.treesitterng.TypeScriptTreeSitterNgTreeGenerator;
 import com.github.gumtreediff.tree.TreeContext;
 
 import extension.umladapter.UMLAdapterUtil;
@@ -64,26 +62,22 @@ public class TypeScriptFileProcessor {
 		this.umlModel = umlModel;
 	}
 
+	//JSX does not conflict with JavaScript, because an expression cannot start with <, while it conflicts with the TypeScript type assertions <T>x
+	public static Swc4jMediaType mediaType(String filePath) {
+		if(filePath.endsWith(".tsx"))
+			return Swc4jMediaType.Tsx;
+		if(filePath.endsWith(".ts"))
+			return Swc4jMediaType.TypeScript;
+		return Swc4jMediaType.Jsx;
+	}
+
 	public void processTypeScriptFile(String filePath, String fileContent, boolean astDiff, Swc4j swc4j) {
 		//skip minified JavaScript files
 		if(filePath.endsWith(".min.js")) {
 			return;
 		}
 		try {
-			Swc4jMediaType mediaType = null;
-			if(filePath.endsWith(".tsx"))
-				mediaType = Swc4jMediaType.Tsx;
-			else if(filePath.endsWith(".ts"))
-				mediaType = Swc4jMediaType.TypeScript;
-			else if(filePath.endsWith(".js")) {
-				if(filePath.endsWith("spec.js") || fileContent.contains("</div>") || fileContent.contains("</ul>") || fileContent.contains("</Route>") || fileContent.contains("</Provider>") || fileContent.contains("/>"))
-					mediaType = Swc4jMediaType.Jsx;
-				else
-					mediaType = Swc4jMediaType.JavaScript;
-			}
-			else if(filePath.endsWith(".jsx")) {
-				mediaType = Swc4jMediaType.Jsx;
-			}
+			Swc4jMediaType mediaType = mediaType(filePath);
 			URL specifier = Path.of(filePath).toUri().toURL();
 			Swc4jParseOptions options = new Swc4jParseOptions()
 					.setSpecifier(specifier)
@@ -96,20 +90,7 @@ public class TypeScriptFileProcessor {
 			Swc4jComments comments = output.getComments();
 			//System.out.println(output.getProgram().toDebugString());
 			if (astDiff) {
-				ByteArrayInputStream is = new ByteArrayInputStream(fileContent.getBytes());
-				TreeContext treeContext = null;
-				if(filePath.endsWith(".js")) {
-					treeContext = new JavaScriptTreeSitterNgTreeGenerator().generateFrom().stream(is);
-				}
-				else if(filePath.endsWith(".tsx")) {
-					treeContext = new TsxTreeSitterNgTreeGenerator().generateFrom().stream(is);
-				}
-				else if(filePath.endsWith(".jsx")) {
-					treeContext = new TsxTreeSitterNgTreeGenerator().generateFrom().stream(is);
-				}
-				else {
-					treeContext = new TypeScriptTreeSitterNgTreeGenerator().generateFrom().stream(is);
-				}
+				TreeContext treeContext = TypeScriptTreeGenerator.generate(filePath, fileContent, output.getProgram(), comments);
 				this.umlModel.getTreeContextMap().put(filePath, treeContext);
 			}
 			if(output.getProgram() instanceof Swc4jAstModule module) {

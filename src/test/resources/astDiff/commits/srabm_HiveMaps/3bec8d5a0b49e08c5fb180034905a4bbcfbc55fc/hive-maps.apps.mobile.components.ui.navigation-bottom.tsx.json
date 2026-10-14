@@ -6882,8 +6882,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 2252,
   "secondPos" : 2252,
-  "firstEndPos" : 2285,
-  "secondEndPos" : 2285
+  "firstEndPos" : 2283,
+  "secondEndPos" : 2283
 }, {
   "firstType" : "if",
   "secondType" : "if",
@@ -6981,8 +6981,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 2272,
   "secondPos" : 2272,
-  "firstEndPos" : 2285,
-  "secondEndPos" : 2285
+  "firstEndPos" : 2283,
+  "secondEndPos" : 2283
 }, {
   "firstType" : "return",
   "secondType" : "return",
@@ -7003,8 +7003,8 @@
   "secondParentType" : "return_statement",
   "firstPos" : 2279,
   "secondPos" : 2279,
-  "firstEndPos" : 2284,
-  "secondEndPos" : 2284
+  "firstEndPos" : 2282,
+  "secondEndPos" : 2282
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -7025,8 +7025,8 @@
   "secondParentType" : "string",
   "firstPos" : 2280,
   "secondPos" : 2280,
-  "firstEndPos" : 2283,
-  "secondEndPos" : 2283
+  "firstEndPos" : 2281,
+  "secondEndPos" : 2281
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -7034,10 +7034,10 @@
   "secondLabel" : "'",
   "firstParentType" : "string",
   "secondParentType" : "string",
-  "firstPos" : 2283,
-  "secondPos" : 2283,
-  "firstEndPos" : 2284,
-  "secondEndPos" : 2284
+  "firstPos" : 2281,
+  "secondPos" : 2281,
+  "firstEndPos" : 2282,
+  "secondEndPos" : 2282
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -7045,10 +7045,10 @@
   "secondLabel" : ";",
   "firstParentType" : "return_statement",
   "secondParentType" : "return_statement",
-  "firstPos" : 2284,
-  "secondPos" : 2284,
-  "firstEndPos" : 2285,
-  "secondEndPos" : 2285
+  "firstPos" : 2282,
+  "secondPos" : 2282,
+  "firstEndPos" : 2283,
+  "secondEndPos" : 2283
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",
@@ -7817,8 +7817,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 2431,
   "secondPos" : 2431,
-  "firstEndPos" : 2469,
-  "secondEndPos" : 2469
+  "firstEndPos" : 2467,
+  "secondEndPos" : 2467
 }, {
   "firstType" : "if",
   "secondType" : "if",
@@ -7916,8 +7916,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 2452,
   "secondPos" : 2452,
-  "firstEndPos" : 2469,
-  "secondEndPos" : 2469
+  "firstEndPos" : 2467,
+  "secondEndPos" : 2467
 }, {
   "firstType" : "return",
   "secondType" : "return",
@@ -7938,8 +7938,8 @@
   "secondParentType" : "return_statement",
   "firstPos" : 2459,
   "secondPos" : 2459,
-  "firstEndPos" : 2468,
-  "secondEndPos" : 2468
+  "firstEndPos" : 2466,
+  "secondEndPos" : 2466
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -7960,8 +7960,8 @@
   "secondParentType" : "string",
   "firstPos" : 2460,
   "secondPos" : 2460,
-  "firstEndPos" : 2467,
-  "secondEndPos" : 2467
+  "firstEndPos" : 2465,
+  "secondEndPos" : 2465
 }, {
   "firstType" : "'",
   "secondType" : "'",
@@ -7969,10 +7969,10 @@
   "secondLabel" : "'",
   "firstParentType" : "string",
   "secondParentType" : "string",
-  "firstPos" : 2467,
-  "secondPos" : 2467,
-  "firstEndPos" : 2468,
-  "secondEndPos" : 2468
+  "firstPos" : 2465,
+  "secondPos" : 2465,
+  "firstEndPos" : 2466,
+  "secondEndPos" : 2466
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -7980,10 +7980,10 @@
   "secondLabel" : ";",
   "firstParentType" : "return_statement",
   "secondParentType" : "return_statement",
-  "firstPos" : 2468,
-  "secondPos" : 2468,
-  "firstEndPos" : 2469,
-  "secondEndPos" : 2469
+  "firstPos" : 2466,
+  "secondPos" : 2466,
+  "firstEndPos" : 2467,
+  "secondEndPos" : 2467
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -9670,8 +9670,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Formats a relative-minutes value for the \"in X min\" label next to each departure.\n * Handles negative values (custom filter in the past relative to wall clock) gracefully.\n */",
-  "secondLabel" : "\n * Formats a relative-minutes value for the \"in X min\" label next to each departure.\n * Handles negative values (custom filter in the past relative to wall clock) gracefully.\n */",
+  "firstLabel" : "/**\n * Formats a relative-minutes value for the \"in X min\" label next to each departure.\n * Handles negative values (custom filter in the past relative to wall clock) gracefully.\n */",
+  "secondLabel" : "/**\n * Formats a relative-minutes value for the \"in X min\" label next to each departure.\n * Handles negative values (custom filter in the past relative to wall clock) gracefully.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2897,
@@ -11089,8 +11089,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * When a custom timeFilter is active (more than 60 s away from real now), display\n * labels relative to the filter anchor so they are meaningful to the user.\n * When the filter is essentially \"now\", use the wall-clock-relative minutesUntil\n * so the labels reflect real time remaining.\n */",
-  "secondLabel" : "\n * When a custom timeFilter is active (more than 60 s away from real now), display\n * labels relative to the filter anchor so they are meaningful to the user.\n * When the filter is essentially \"now\", use the wall-clock-relative minutesUntil\n * so the labels reflect real time remaining.\n */",
+  "firstLabel" : "/**\n * When a custom timeFilter is active (more than 60 s away from real now), display\n * labels relative to the filter anchor so they are meaningful to the user.\n * When the filter is essentially \"now\", use the wall-clock-relative minutesUntil\n * so the labels reflect real time remaining.\n */",
+  "secondLabel" : "/**\n * When a custom timeFilter is active (more than 60 s away from real now), display\n * labels relative to the filter anchor so they are meaningful to the user.\n * When the filter is essentially \"now\", use the wall-clock-relative minutesUntil\n * so the labels reflect real time remaining.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 3639,
@@ -37077,8 +37077,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 15606,
   "secondPos" : 14412,
-  "firstEndPos" : 15723,
-  "secondEndPos" : 14529
+  "firstEndPos" : 15683,
+  "secondEndPos" : 14489
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -39123,8 +39123,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 16517,
   "secondPos" : 15323,
-  "firstEndPos" : 16605,
-  "secondEndPos" : 15411
+  "firstEndPos" : 16597,
+  "secondEndPos" : 15403
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -39530,8 +39530,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 16876,
   "secondPos" : 15682,
-  "firstEndPos" : 16942,
-  "secondEndPos" : 15748
+  "firstEndPos" : 16940,
+  "secondEndPos" : 15746
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -43270,8 +43270,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 19090,
   "secondPos" : 17896,
-  "firstEndPos" : 19226,
-  "secondEndPos" : 18032
+  "firstEndPos" : 19168,
+  "secondEndPos" : 17974
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -43314,8 +43314,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 19329,
   "secondPos" : 18135,
-  "firstEndPos" : 19403,
-  "secondEndPos" : 18209
+  "firstEndPos" : 19401,
+  "secondEndPos" : 18207
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

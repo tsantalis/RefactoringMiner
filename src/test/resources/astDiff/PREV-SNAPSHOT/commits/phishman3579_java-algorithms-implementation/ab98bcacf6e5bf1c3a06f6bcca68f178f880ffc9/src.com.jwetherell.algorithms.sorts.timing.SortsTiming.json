@@ -1539,6 +1539,50 @@
   "firstEndPos" : 1603,
   "secondEndPos" : 1324
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Dimension",
+  "secondParentType" : "Dimension",
+  "firstPos" : 1617,
+  "secondPos" : 3683,
+  "firstEndPos" : 1622,
+  "secondEndPos" : 3688
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "NumberLiteral",
+  "firstLabel" : "3",
+  "secondLabel" : "3",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 1617,
+  "secondPos" : 3683,
+  "firstEndPos" : 1618,
+  "secondEndPos" : 3684
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 1619,
+  "secondPos" : 3685,
+  "firstEndPos" : 1620,
+  "secondEndPos" : 3686
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "NumberLiteral",
+  "firstLabel" : "3",
+  "secondLabel" : "3",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 1621,
+  "secondPos" : 3687,
+  "firstEndPos" : 1622,
+  "secondEndPos" : 3688
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",

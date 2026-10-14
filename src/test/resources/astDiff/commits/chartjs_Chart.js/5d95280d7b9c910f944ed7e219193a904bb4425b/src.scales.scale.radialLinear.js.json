@@ -6942,8 +6942,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\n\t * Helper function to fit a radial linear scale with point labels\n\t */",
-  "secondLabel" : "\t\n\t * Helper function to fit a radial linear scale with point labels\n\t */",
+  "firstLabel" : "/**\n\t * Helper function to fit a radial linear scale with point labels\n\t */",
+  "secondLabel" : "/**\n\t * Helper function to fit a radial linear scale with point labels\n\t */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 2484,
@@ -7052,8 +7052,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\t\n\t\t * Right, this is really confusing and there is a lot of maths going on here\n\t\t * The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9\n\t\t *\n\t\t * Reaction: https://dl.dropboxusercontent.com/u/34601363/toomuchscience.gif\n\t\t *\n\t\t * Solution:\n\t\t *\n\t\t * We assume the radius of the polygon is half the size of the canvas at first\n\t\t * at each index we check if the text overlaps.\n\t\t *\n\t\t * Where it does, we store that angle and that index.\n\t\t *\n\t\t * After finding the largest index and angle we calculate how much we need to remove\n\t\t * from the shape radius to move the point inwards by that x.\n\t\t *\n\t\t * We average the left and right distances to get the maximum shape radius that can fit in the box\n\t\t * along with labels.\n\t\t *\n\t\t * Once we have that, we can find the centre point for the chart, by taking the x text protrusion\n\t\t * on each side, removing that from the size, halving it and adding the left x protrusion width.\n\t\t *\n\t\t * This will mean we have a shape fitted to the canvas, as large as it can be with the labels\n\t\t * and position it in the most space efficient manner\n\t\t *\n\t\t * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif\n\t\t */",
-  "secondLabel" : "\t\t\n\t\t * Right, this is really confusing and there is a lot of maths going on here\n\t\t * The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9\n\t\t *\n\t\t * Reaction: https://dl.dropboxusercontent.com/u/34601363/toomuchscience.gif\n\t\t *\n\t\t * Solution:\n\t\t *\n\t\t * We assume the radius of the polygon is half the size of the canvas at first\n\t\t * at each index we check if the text overlaps.\n\t\t *\n\t\t * Where it does, we store that angle and that index.\n\t\t *\n\t\t * After finding the largest index and angle we calculate how much we need to remove\n\t\t * from the shape radius to move the point inwards by that x.\n\t\t *\n\t\t * We average the left and right distances to get the maximum shape radius that can fit in the box\n\t\t * along with labels.\n\t\t *\n\t\t * Once we have that, we can find the centre point for the chart, by taking the x text protrusion\n\t\t * on each side, removing that from the size, halving it and adding the left x protrusion width.\n\t\t *\n\t\t * This will mean we have a shape fitted to the canvas, as large as it can be with the labels\n\t\t * and position it in the most space efficient manner\n\t\t *\n\t\t * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif\n\t\t */",
+  "firstLabel" : "/*\n\t\t * Right, this is really confusing and there is a lot of maths going on here\n\t\t * The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9\n\t\t *\n\t\t * Reaction: https://dl.dropboxusercontent.com/u/34601363/toomuchscience.gif\n\t\t *\n\t\t * Solution:\n\t\t *\n\t\t * We assume the radius of the polygon is half the size of the canvas at first\n\t\t * at each index we check if the text overlaps.\n\t\t *\n\t\t * Where it does, we store that angle and that index.\n\t\t *\n\t\t * After finding the largest index and angle we calculate how much we need to remove\n\t\t * from the shape radius to move the point inwards by that x.\n\t\t *\n\t\t * We average the left and right distances to get the maximum shape radius that can fit in the box\n\t\t * along with labels.\n\t\t *\n\t\t * Once we have that, we can find the centre point for the chart, by taking the x text protrusion\n\t\t * on each side, removing that from the size, halving it and adding the left x protrusion width.\n\t\t *\n\t\t * This will mean we have a shape fitted to the canvas, as large as it can be with the labels\n\t\t * and position it in the most space efficient manner\n\t\t *\n\t\t * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif\n\t\t */",
+  "secondLabel" : "/*\n\t\t * Right, this is really confusing and there is a lot of maths going on here\n\t\t * The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9\n\t\t *\n\t\t * Reaction: https://dl.dropboxusercontent.com/u/34601363/toomuchscience.gif\n\t\t *\n\t\t * Solution:\n\t\t *\n\t\t * We assume the radius of the polygon is half the size of the canvas at first\n\t\t * at each index we check if the text overlaps.\n\t\t *\n\t\t * Where it does, we store that angle and that index.\n\t\t *\n\t\t * After finding the largest index and angle we calculate how much we need to remove\n\t\t * from the shape radius to move the point inwards by that x.\n\t\t *\n\t\t * We average the left and right distances to get the maximum shape radius that can fit in the box\n\t\t * along with labels.\n\t\t *\n\t\t * Once we have that, we can find the centre point for the chart, by taking the x text protrusion\n\t\t * on each side, removing that from the size, halving it and adding the left x protrusion width.\n\t\t *\n\t\t * This will mean we have a shape fitted to the canvas, as large as it can be with the labels\n\t\t * and position it in the most space efficient manner\n\t\t *\n\t\t * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif\n\t\t */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 2600,
@@ -12332,8 +12332,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\n\t * Helper function to fit a radial linear scale with no point labels\n\t */",
-  "secondLabel" : "\t\n\t * Helper function to fit a radial linear scale with no point labels\n\t */",
+  "firstLabel" : "/**\n\t * Helper function to fit a radial linear scale with no point labels\n\t */",
+  "secondLabel" : "/**\n\t * Helper function to fit a radial linear scale with no point labels\n\t */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 5541,
@@ -33056,8 +33056,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\t\n\t\t * Set radius reductions and determine new radius and center point\n\t\t * @private\n\t\t */",
-  "secondLabel" : "\t\t\n\t\t * Set radius reductions and determine new radius and center point\n\t\t * @private\n\t\t */",
+  "firstLabel" : "/**\n\t\t * Set radius reductions and determine new radius and center point\n\t\t * @private\n\t\t */",
+  "secondLabel" : "/**\n\t\t * Set radius reductions and determine new radius and center point\n\t\t * @private\n\t\t */",
   "firstParentType" : "object",
   "secondParentType" : "object",
   "firstPos" : 11373,

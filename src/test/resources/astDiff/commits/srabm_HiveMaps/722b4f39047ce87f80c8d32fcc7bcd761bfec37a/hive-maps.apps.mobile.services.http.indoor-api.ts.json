@@ -5554,6 +5554,39 @@
   "firstEndPos" : 1704,
   "secondEndPos" : 1574
 }, {
+  "firstType" : "arguments",
+  "secondType" : "arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "new_expression",
+  "secondParentType" : "new_expression",
+  "firstPos" : 1788,
+  "secondPos" : 1665,
+  "firstEndPos" : 1790,
+  "secondEndPos" : 1667
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1788,
+  "secondPos" : 1665,
+  "firstEndPos" : 1789,
+  "secondEndPos" : 1666
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 1789,
+  "secondPos" : 1666,
+  "firstEndPos" : 1790,
+  "secondEndPos" : 1667
+}, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
   "firstLabel" : "",
@@ -7633,8 +7666,8 @@
   "firstEndPos" : 2445,
   "secondEndPos" : 2315
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
+  "firstType" : "await_expression",
+  "secondType" : "await_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
@@ -7643,17 +7676,6 @@
   "secondPos" : 2316,
   "firstEndPos" : 2517,
   "secondEndPos" : 2387
-}, {
-  "firstType" : "await_expression",
-  "secondType" : "await_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2446,
-  "secondPos" : 2316,
-  "firstEndPos" : 2465,
-  "secondEndPos" : 2335
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -7666,12 +7688,23 @@
   "firstEndPos" : 2451,
   "secondEndPos" : 2321
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "await_expression",
+  "secondParentType" : "await_expression",
+  "firstPos" : 2452,
+  "secondPos" : 2322,
+  "firstEndPos" : 2517,
+  "secondEndPos" : 2387
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "getIndoorJson",
   "secondLabel" : "getIndoorJson",
-  "firstParentType" : "await_expression",
-  "secondParentType" : "await_expression",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
   "firstPos" : 2452,
   "secondPos" : 2322,
   "firstEndPos" : 2465,
@@ -9173,8 +9206,8 @@
   "firstEndPos" : 2943,
   "secondEndPos" : 2799
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
+  "firstType" : "await_expression",
+  "secondType" : "await_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
@@ -9183,17 +9216,6 @@
   "secondPos" : 2800,
   "firstEndPos" : 2985,
   "secondEndPos" : 2841
-}, {
-  "firstType" : "await_expression",
-  "secondType" : "await_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 2944,
-  "secondPos" : 2800,
-  "firstEndPos" : 2963,
-  "secondEndPos" : 2819
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -9206,12 +9228,23 @@
   "firstEndPos" : 2949,
   "secondEndPos" : 2805
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "await_expression",
+  "secondParentType" : "await_expression",
+  "firstPos" : 2950,
+  "secondPos" : 2806,
+  "firstEndPos" : 2985,
+  "secondEndPos" : 2841
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "getIndoorJson",
   "secondLabel" : "getIndoorJson",
-  "firstParentType" : "await_expression",
-  "secondParentType" : "await_expression",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
   "firstPos" : 2950,
   "secondPos" : 2806,
   "firstEndPos" : 2963,
@@ -10669,8 +10702,8 @@
   "firstEndPos" : 3398,
   "secondEndPos" : 3239
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
+  "firstType" : "await_expression",
+  "secondType" : "await_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "return_statement",
@@ -10679,17 +10712,6 @@
   "secondPos" : 3240,
   "firstEndPos" : 3446,
   "secondEndPos" : 3287
-}, {
-  "firstType" : "await_expression",
-  "secondType" : "await_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 3399,
-  "secondPos" : 3240,
-  "firstEndPos" : 3418,
-  "secondEndPos" : 3259
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -10702,12 +10724,23 @@
   "firstEndPos" : 3404,
   "secondEndPos" : 3245
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "await_expression",
+  "secondParentType" : "await_expression",
+  "firstPos" : 3405,
+  "secondPos" : 3246,
+  "firstEndPos" : 3446,
+  "secondEndPos" : 3287
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "getIndoorJson",
   "secondLabel" : "getIndoorJson",
-  "firstParentType" : "await_expression",
-  "secondParentType" : "await_expression",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
   "firstPos" : 3405,
   "secondPos" : 3246,
   "firstEndPos" : 3418,
@@ -12132,8 +12165,8 @@
   "firstEndPos" : 3934,
   "secondEndPos" : 3768
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
+  "firstType" : "await_expression",
+  "secondType" : "await_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "return_statement",
@@ -12142,17 +12175,6 @@
   "secondPos" : 3769,
   "firstEndPos" : 3980,
   "secondEndPos" : 3814
-}, {
-  "firstType" : "await_expression",
-  "secondType" : "await_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 3935,
-  "secondPos" : 3769,
-  "firstEndPos" : 3954,
-  "secondEndPos" : 3788
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -12165,12 +12187,23 @@
   "firstEndPos" : 3940,
   "secondEndPos" : 3774
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "await_expression",
+  "secondParentType" : "await_expression",
+  "firstPos" : 3941,
+  "secondPos" : 3775,
+  "firstEndPos" : 3980,
+  "secondEndPos" : 3814
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "getIndoorJson",
   "secondLabel" : "getIndoorJson",
-  "firstParentType" : "await_expression",
-  "secondParentType" : "await_expression",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
   "firstPos" : 3941,
   "secondPos" : 3775,
   "firstEndPos" : 3954,

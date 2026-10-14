@@ -12,8 +12,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
-  "secondLabel" : "\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
+  "firstLabel" : "/**\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
+  "secondLabel" : "/**\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 0,
@@ -309,8 +309,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Get the name param node from the given CallExpression\n * @param {CallExpression} node CallExpression\n * @returns { NameWithLoc | null }\n */",
-  "secondLabel" : "\n * Get the name param node from the given CallExpression\n */",
+  "firstLabel" : "/**\n * Get the name param node from the given CallExpression\n * @param {CallExpression} node CallExpression\n * @returns { NameWithLoc | null }\n */",
+  "secondLabel" : "/**\n * Get the name param node from the given CallExpression\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 567,
@@ -1288,8 +1288,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Get the callee member node from the given CallExpression\n * @param {CallExpression} node CallExpression\n */",
-  "secondLabel" : "\n * Get the callee member node from the given CallExpression\n */",
+  "firstLabel" : "/**\n * Get the callee member node from the given CallExpression\n * @param {CallExpression} node CallExpression\n */",
+  "secondLabel" : "/**\n * Get the callee member node from the given CallExpression\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 1038,
@@ -4709,8 +4709,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "    \n     * Check whether the given event name is valid.\n     * @param {string} name The name to check.\n     * @returns {boolean} `true` if the given event name is valid.\n     */",
-  "secondLabel" : "    \n     * Check whether the given event name is valid.\n     */",
+  "firstLabel" : "/**\n     * Check whether the given event name is valid.\n     * @param {string} name The name to check.\n     * @returns {boolean} `true` if the given event name is valid.\n     */",
+  "secondLabel" : "/**\n     * Check whether the given event name is valid.\n     */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 2602,

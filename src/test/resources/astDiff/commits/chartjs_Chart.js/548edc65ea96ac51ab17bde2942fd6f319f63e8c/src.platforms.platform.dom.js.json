@@ -1299,8 +1299,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\n\t * The \"used\" size is the final value of a dimension property after all calculations have\n\t * been performed. This method uses the computed style of `element` but returns undefined\n\t * if the computed style is not expressed in pixels. That can happen in some cases where\n\t * `element` has a size relative to its parent and this last one is not yet displayed,\n\t * for example because of `display: none` on a parent node.\n\t * @see https://developer.mozilla.org/en-US/docs/Web/CSS/used_value\n\t * @returns {Number} Size in pixels or undefined if unknown.\n\t */",
-  "secondLabel" : "\t\n\t * The \"used\" size is the final value of a dimension property after all calculations have\n\t * been performed. This method uses the computed style of `element` but returns undefined\n\t * if the computed style is not expressed in pixels. That can happen in some cases where\n\t * `element` has a size relative to its parent and this last one is not yet displayed,\n\t * for example because of `display: none` on a parent node.\n\t * @see https://developer.mozilla.org/en-US/docs/Web/CSS/used_value\n\t * @returns {Number} Size in pixels or undefined if unknown.\n\t */",
+  "firstLabel" : "/**\n\t * The \"used\" size is the final value of a dimension property after all calculations have\n\t * been performed. This method uses the computed style of `element` but returns undefined\n\t * if the computed style is not expressed in pixels. That can happen in some cases where\n\t * `element` has a size relative to its parent and this last one is not yet displayed,\n\t * for example because of `display: none` on a parent node.\n\t * @see https://developer.mozilla.org/en-US/docs/Web/CSS/used_value\n\t * @returns {Number} Size in pixels or undefined if unknown.\n\t */",
+  "secondLabel" : "/**\n\t * The \"used\" size is the final value of a dimension property after all calculations have\n\t * been performed. This method uses the computed style of `element` but returns undefined\n\t * if the computed style is not expressed in pixels. That can happen in some cases where\n\t * `element` has a size relative to its parent and this last one is not yet displayed,\n\t * for example because of `display: none` on a parent node.\n\t * @see https://developer.mozilla.org/en-US/docs/Web/CSS/used_value\n\t * @returns {Number} Size in pixels or undefined if unknown.\n\t */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 604,
@@ -2058,8 +2058,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\n\t * Initializes the canvas style and render size without modifying the canvas display size,\n\t * since responsiveness is handled by the controller.resize() method. The config is used\n\t * to determine the aspect ratio to apply in case no explicit height has been specified.\n\t */",
-  "secondLabel" : "\t\n\t * Initializes the canvas style and render size without modifying the canvas display size,\n\t * since responsiveness is handled by the controller.resize() method. The config is used\n\t * to determine the aspect ratio to apply in case no explicit height has been specified.\n\t */",
+  "firstLabel" : "/**\n\t * Initializes the canvas style and render size without modifying the canvas display size,\n\t * since responsiveness is handled by the controller.resize() method. The config is used\n\t * to determine the aspect ratio to apply in case no explicit height has been specified.\n\t */",
+  "secondLabel" : "/**\n\t * Initializes the canvas style and render size without modifying the canvas display size,\n\t * since responsiveness is handled by the controller.resize() method. The config is used\n\t * to determine the aspect ratio to apply in case no explicit height has been specified.\n\t */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 1374,

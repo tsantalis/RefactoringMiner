@@ -2408,6 +2408,50 @@
   "firstEndPos" : 3372,
   "secondEndPos" : 4406
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 3378,
+  "secondPos" : 4412,
+  "firstEndPos" : 3389,
+  "secondEndPos" : 4423
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 3378,
+  "secondPos" : 4412,
+  "firstEndPos" : 3379,
+  "secondEndPos" : 4413
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 3378,
+  "secondPos" : 4412,
+  "firstEndPos" : 3379,
+  "secondEndPos" : 4413
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "getNext",
+  "secondLabel" : "getNext",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 3380,
+  "secondPos" : 4414,
+  "firstEndPos" : 3387,
+  "secondEndPos" : 4421
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

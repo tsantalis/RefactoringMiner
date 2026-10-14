@@ -7690,8 +7690,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t.setDescription(stripIndents`\n\t\t\t\t**Member:** ",
-  "secondLabel" : "\t\t\t.setDescription(stripIndents`\n\t\t\t\t**Member:** ",
+  "firstLabel" : "\n\t\t\t\t**Member:** ",
+  "secondLabel" : "\n\t\t\t\t**Member:** ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2324,
@@ -7866,8 +7866,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t**Member:** ${dbCase.target_tag} (${dbCase.target_id}\n\t\t\t\t**Action:** ",
-  "secondLabel" : "\t\t\t\t**Member:** ${dbCase.target_tag} (${dbCase.target_id}\n\t\t\t\t**Action:** ",
+  "firstLabel" : ")\n\t\t\t\t**Action:** ",
+  "secondLabel" : ")\n\t\t\t\t**Action:** ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2382,
@@ -8559,8 +8559,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t**Action:** ${ACTIONS[dbCase.action]}${dbCase.action === 5 ? `\\n**Length:** ${ms(dbCase.action_duration.getTime(), { 'long': true })}` : ''}\n\t\t\t\t**Reason:** ",
-  "secondLabel" : "\t\t\t\t**Action:** ${ACTIONS[dbCase.action]}${dbCase.action === 5 ? `\\n**Length:** ${ms(dbCase.action_duration.getTime(), { 'long': true })}` : ''}\n\t\t\t\t**Reason:** ",
+  "firstLabel" : "\n\t\t\t\t**Reason:** ",
+  "secondLabel" : "\n\t\t\t\t**Reason:** ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2528,
@@ -8922,8 +8922,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t**Reason:** ${dbCase.reason}${dbCase.ref_id ? `\\n**Ref case:** ${dbCase.ref_id}` : ''}\n\t\t\t",
-  "secondLabel" : "\t\t\t\t**Reason:** ${dbCase.reason}${dbCase.ref_id ? `\\n**Ref case:** ${dbCase.ref_id}` : ''}\n\t\t\t",
+  "firstLabel" : "\n\t\t\t",
+  "secondLabel" : "\n\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2619,

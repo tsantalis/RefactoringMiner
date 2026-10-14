@@ -12,8 +12,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
-  "secondLabel" : "\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
+  "firstLabel" : "/**\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
+  "secondLabel" : "/**\n * @author Yosuke Ota\n * See LICENSE file in root directory for full license.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 0,
@@ -1327,8 +1327,8 @@
   "secondParentType" : "array",
   "firstPos" : 633,
   "secondPos" : 633,
-  "firstEndPos" : 640,
-  "secondEndPos" : 640
+  "firstEndPos" : 639,
+  "secondEndPos" : 639
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -1393,8 +1393,8 @@
   "secondParentType" : "array",
   "firstPos" : 652,
   "secondPos" : 652,
-  "firstEndPos" : 660,
-  "secondEndPos" : 660
+  "firstEndPos" : 658,
+  "secondEndPos" : 658
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -1459,8 +1459,8 @@
   "secondParentType" : "array",
   "firstPos" : 671,
   "secondPos" : 671,
-  "firstEndPos" : 679,
-  "secondEndPos" : 679
+  "firstEndPos" : 677,
+  "secondEndPos" : 677
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -1525,8 +1525,8 @@
   "secondParentType" : "array",
   "firstPos" : 690,
   "secondPos" : 690,
-  "firstEndPos" : 698,
-  "secondEndPos" : 698
+  "firstEndPos" : 696,
+  "secondEndPos" : 696
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -1591,8 +1591,8 @@
   "secondParentType" : "array",
   "firstPos" : 709,
   "secondPos" : 709,
-  "firstEndPos" : 717,
-  "secondEndPos" : 717
+  "firstEndPos" : 715,
+  "secondEndPos" : 715
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -1657,8 +1657,8 @@
   "secondParentType" : "array",
   "firstPos" : 728,
   "secondPos" : 728,
-  "firstEndPos" : 736,
-  "secondEndPos" : 736
+  "firstEndPos" : 734,
+  "secondEndPos" : 734
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -2542,8 +2542,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Parse attributes option\n * @param {any} options\n * @returns {TargetAttrs}\n */",
-  "secondLabel" : "\n * Parse attributes option\n */",
+  "firstLabel" : "/**\n * Parse attributes option\n * @param {any} options\n * @returns {TargetAttrs}\n */",
+  "secondLabel" : "/**\n * Parse attributes option\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 977,
@@ -4005,8 +4005,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Get a string from given expression container node\n * @param {VExpressionContainer} value\n * @returns { string | null }\n */",
-  "secondLabel" : "\n * Get a string from given expression container node\n */",
+  "firstLabel" : "/**\n * Get a string from given expression container node\n * @param {VExpressionContainer} value\n * @returns { string | null }\n */",
+  "secondLabel" : "/**\n * Get a string from given expression container node\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 1513,
@@ -9989,8 +9989,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "    \n     * Gets the bare string from given string\n     * @param {string} str\n     */",
-  "secondLabel" : "    \n     * Gets the bare string from given string\n     */",
+  "firstLabel" : "/**\n     * Gets the bare string from given string\n     * @param {string} str\n     */",
+  "secondLabel" : "/**\n     * Gets the bare string from given string\n     */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 4148,
@@ -11573,8 +11573,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "    \n     * Get the attribute to be verified from the element name.\n     * @param {string} tagName\n     * @returns {Set<string>}\n     */",
-  "secondLabel" : "    \n     * Get the attribute to be verified from the element name.\n     */",
+  "firstLabel" : "/**\n     * Get the attribute to be verified from the element name.\n     * @param {string} tagName\n     * @returns {Set<string>}\n     */",
+  "secondLabel" : "/**\n     * Get the attribute to be verified from the element name.\n     */",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 4683,

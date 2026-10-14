@@ -5116,8 +5116,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Populated during call processing, consumed by Phase 14 re-resolution pass. */",
-  "secondLabel" : "\n *  Populated during call processing, consumed by Phase 14 re-resolution pass. */",
+  "firstLabel" : "/** Per-file resolved type bindings for exported symbols.\n *  Populated during call processing, consumed by Phase 14 re-resolution pass. */",
+  "secondLabel" : "/** Per-file resolved type bindings for exported symbols.\n *  Populated during call processing, consumed by Phase 14 re-resolution pass. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2122,
@@ -5556,8 +5556,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Consulted ONLY when SymbolTable has no unambiguous local match (local-first principle). */",
-  "secondLabel" : "\n *  Consulted ONLY when SymbolTable has no unambiguous local match (local-first principle). */",
+  "firstLabel" : "/** Build a map of imported callee names → return types for cross-file call-result binding.\n *  Consulted ONLY when SymbolTable has no unambiguous local match (local-first principle). */",
+  "secondLabel" : "/** Build a map of imported callee names → return types for cross-file call-result binding.\n *  Consulted ONLY when SymbolTable has no unambiguous local match (local-first principle). */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2396,
@@ -8306,8 +8306,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Unlike buildImportedReturnTypes (which stores extractReturnTypeName output),\n *  this stores the raw declared return type string (e.g., 'User[]', 'List<User>').\n *  Used by lookupRawReturnType for for-loop element extraction via extractElementTypeFromString. */",
-  "secondLabel" : "\n *  Unlike buildImportedReturnTypes (which stores extractReturnTypeName output),\n *  this stores the raw declared return type string (e.g., 'User[]', 'List<User>').\n *  Used by lookupRawReturnType for for-loop element extraction via extractElementTypeFromString. */",
+  "firstLabel" : "/** Build cross-file RAW return types for imported callables.\n *  Unlike buildImportedReturnTypes (which stores extractReturnTypeName output),\n *  this stores the raw declared return type string (e.g., 'User[]', 'List<User>').\n *  Used by lookupRawReturnType for for-loop element extraction via extractElementTypeFromString. */",
+  "secondLabel" : "/** Build cross-file RAW return types for imported callables.\n *  Unlike buildImportedReturnTypes (which stores extractReturnTypeName output),\n *  this stores the raw declared return type string (e.g., 'User[]', 'List<User>').\n *  Used by lookupRawReturnType for for-loop element extraction via extractElementTypeFromString. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 3362,
@@ -10858,14 +10858,14 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Uses graph node isExported flag — does NOT require isExported on SymbolDefinition. */",
-  "secondLabel" : "\n *  Uses graph node isExported flag — does NOT require isExported on SymbolDefinition. */",
+  "firstLabel" : "/** Collect resolved type bindings for exported file-scope symbols.\n *  Uses graph node isExported flag — does NOT require isExported on SymbolDefinition. */",
+  "secondLabel" : "/** Collect resolved type bindings for exported file-scope symbols.\n *  Uses graph node isExported flag — does NOT require isExported on SymbolDefinition. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 4392,
   "secondPos" : 4577,
-  "firstEndPos" : 4551,
-  "secondEndPos" : 4736
+  "firstEndPos" : 4549,
+  "secondEndPos" : 4734
 }, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
@@ -14477,8 +14477,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  is not available in the main thread. Collects returnType/declaredType from\n *  exported symbols that have callables with known return types. */",
-  "secondLabel" : "\n *  is not available in the main thread. Collects returnType/declaredType from\n *  exported symbols that have callables with known return types. */",
+  "firstLabel" : "/** Build ExportedTypeMap from graph nodes — used for worker path where TypeEnv\n *  is not available in the main thread. Collects returnType/declaredType from\n *  exported symbols that have callables with known return types. */",
+  "secondLabel" : "/** Build ExportedTypeMap from graph nodes — used for worker path where TypeEnv\n *  is not available in the main thread. Collects returnType/declaredType from\n *  exported symbols that have callables with known return types. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 5451,
@@ -17387,8 +17387,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 6620,
   "secondPos" : 6805,
-  "firstEndPos" : 6696,
-  "secondEndPos" : 6881
+  "firstEndPos" : 6694,
+  "secondEndPos" : 6879
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -18624,8 +18624,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Fills missing receiverTypeName for single-hop imported variables\n *  using ExportedTypeMap + namedImportMap — zero disk I/O, zero AST re-parsing.\n *  Mutates calls in-place. Runs BEFORE processCallsFromExtracted. */",
-  "secondLabel" : "\n *  Fills missing receiverTypeName for single-hop imported variables\n *  using ExportedTypeMap + namedImportMap — zero disk I/O, zero AST re-parsing.\n *  Mutates calls in-place. Runs BEFORE processCallsFromExtracted. */",
+  "firstLabel" : "/** Seed cross-file receiver types into pre-extracted call records.\n *  Fills missing receiverTypeName for single-hop imported variables\n *  using ExportedTypeMap + namedImportMap — zero disk I/O, zero AST re-parsing.\n *  Mutates calls in-place. Runs BEFORE processCallsFromExtracted. */",
+  "secondLabel" : "/** Seed cross-file receiver types into pre-extracted call records.\n *  Fills missing receiverTypeName for single-hop imported variables\n *  using ExportedTypeMap + namedImportMap — zero disk I/O, zero AST re-parsing.\n *  Mutates calls in-place. Runs BEFORE processCallsFromExtracted. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 7062,
@@ -22128,8 +22128,8 @@
   "secondParentType" : "program",
   "firstPos" : 8426,
   "secondPos" : 8611,
-  "firstEndPos" : 8507,
-  "secondEndPos" : 8692
+  "firstEndPos" : 8505,
+  "secondEndPos" : 8690
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -22139,8 +22139,8 @@
   "secondParentType" : "program",
   "firstPos" : 8506,
   "secondPos" : 8691,
-  "firstEndPos" : 8575,
-  "secondEndPos" : 8760
+  "firstEndPos" : 8573,
+  "secondEndPos" : 8758
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -23068,8 +23068,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Keyed by classNode.id to avoid re-extracting the same class body per call site.\n *  Cleared between files at line ~611 in the processCalls file loop. */",
-  "secondLabel" : "\n *  Keyed by classNode.id to avoid re-extracting the same class body per call site.\n *  Cleared between files at line ~611 in the processCalls file loop. */",
+  "firstLabel" : "/** Cache for method extraction results in findEnclosingFunction fallback path.\n *  Keyed by classNode.id to avoid re-extracting the same class body per call site.\n *  Cleared between files at line ~611 in the processCalls file loop. */",
+  "secondLabel" : "/** Cache for method extraction results in findEnclosingFunction fallback path.\n *  Keyed by classNode.id to avoid re-extracting the same class body per call site.\n *  Cleared between files at line ~611 in the processCalls file loop. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 8896,
@@ -23464,8 +23464,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Walk up the AST from a node to find the enclosing function/method.\n * Returns null if the call is at module/file level (top-level code).\n */",
-  "secondLabel" : "\n * Walk up the AST from a node to find the enclosing function/method.\n * Returns null if the call is at module/file level (top-level code).\n */",
+  "firstLabel" : "/**\n * Walk up the AST from a node to find the enclosing function/method.\n * Returns null if the call is at module/file level (top-level code).\n */",
+  "secondLabel" : "/**\n * Walk up the AST from a node to find the enclosing function/method.\n * Returns null if the call is at module/file level (top-level code).\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 9244,
@@ -26770,8 +26770,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 10456,
   "secondPos" : 10641,
-  "firstEndPos" : 10517,
-  "secondEndPos" : 10702
+  "firstEndPos" : 10515,
+  "secondEndPos" : 10700
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -27034,8 +27034,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 10602,
   "secondPos" : 10787,
-  "firstEndPos" : 10675,
-  "secondEndPos" : 10860
+  "firstEndPos" : 10673,
+  "secondEndPos" : 10858
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -27276,8 +27276,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 10897,
   "secondPos" : 11082,
-  "firstEndPos" : 10951,
-  "secondEndPos" : 11136
+  "firstEndPos" : 10949,
+  "secondEndPos" : 11134
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",
@@ -46619,8 +46619,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Verify constructor bindings against SymbolTable and infer receiver types.\n * Shared between sequential (processCalls) and worker (processCallsFromExtracted) paths.\n */",
-  "secondLabel" : "\n * Verify constructor bindings against SymbolTable and infer receiver types.\n * Shared between sequential (processCalls) and worker (processCallsFromExtracted) paths.\n */",
+  "firstLabel" : "/**\n * Verify constructor bindings against SymbolTable and infer receiver types.\n * Shared between sequential (processCalls) and worker (processCallsFromExtracted) paths.\n */",
+  "secondLabel" : "/**\n * Verify constructor bindings against SymbolTable and infer receiver types.\n * Shared between sequential (processCalls) and worker (processCallsFromExtracted) paths.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 18686,
@@ -52911,8 +52911,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolution result with confidence scoring\n */",
-  "secondLabel" : "\n * Resolution result with confidence scoring\n */",
+  "firstLabel" : "/**\n * Resolution result with confidence scoring\n */",
+  "secondLabel" : "/**\n * Resolution result with confidence scoring\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 20951,
@@ -53313,8 +53313,8 @@
   "secondParentType" : "program",
   "firstPos" : 21114,
   "secondPos" : 21299,
-  "firstEndPos" : 21201,
-  "secondEndPos" : 21386
+  "firstEndPos" : 21199,
+  "secondEndPos" : 21384
 }, {
   "firstType" : "export_statement",
   "secondType" : "export_statement",
@@ -53560,8 +53560,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Build an ImplementorMap from extracted heritage data.\n * Only direct `implements` relationships are tracked (transitive not needed for\n * the common Java/Kotlin/C# interface dispatch pattern).\n * `extends` is ignored — dispatch keyed on abstract class bases is not modeled here.\n */",
-  "secondLabel" : "\n * Build an ImplementorMap from extracted heritage data.\n * Only direct `implements` relationships are tracked (transitive not needed for\n * the common Java/Kotlin/C# interface dispatch pattern).\n * `extends` is ignored — dispatch keyed on abstract class bases is not modeled here.\n */",
+  "firstLabel" : "/**\n * Build an ImplementorMap from extracted heritage data.\n * Only direct `implements` relationships are tracked (transitive not needed for\n * the common Java/Kotlin/C# interface dispatch pattern).\n * `extends` is ignored — dispatch keyed on abstract class bases is not modeled here.\n */",
+  "secondLabel" : "/**\n * Build an ImplementorMap from extracted heritage data.\n * Only direct `implements` relationships are tracked (transitive not needed for\n * the common Java/Kotlin/C# interface dispatch pattern).\n * `extends` is ignored — dispatch keyed on abstract class bases is not modeled here.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 21272,
@@ -53571,8 +53571,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Maps interface name → file paths of classes that implement it (direct only).\n * When `ctx` is set, `kind: 'extends'` rows are classified like heritage-processor\n * (C#/Java base_list: class vs interface parents share one capture name).\n */",
-  "secondLabel" : "\n * Maps interface name → file paths of classes that implement it (direct only).\n * When `ctx` is set, `kind: 'extends'` rows are classified like heritage-processor\n * (C#/Java base_list: class vs interface parents share one capture name).\n */",
+  "firstLabel" : "/**\n * Maps interface name → file paths of classes that implement it (direct only).\n * When `ctx` is set, `kind: 'extends'` rows are classified like heritage-processor\n * (C#/Java base_list: class vs interface parents share one capture name).\n */",
+  "secondLabel" : "/**\n * Maps interface name → file paths of classes that implement it (direct only).\n * When `ctx` is set, `kind: 'extends'` rows are classified like heritage-processor\n * (C#/Java base_list: class vs interface parents share one capture name).\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 21562,
@@ -56739,8 +56739,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Merge a chunk's implementor map into the global accumulator.\n */",
-  "secondLabel" : "\n * Merge a chunk's implementor map into the global accumulator.\n */",
+  "firstLabel" : "/**\n * Merge a chunk's implementor map into the global accumulator.\n */",
+  "secondLabel" : "/**\n * Merge a chunk's implementor map into the global accumulator.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 22569,
@@ -58345,8 +58345,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * After resolving a call to an interface method, find additional targets\n * in classes implementing that interface. Returns implementation method\n * results with lower confidence ('interface-dispatch').\n */",
-  "secondLabel" : "\n * After resolving a call to an interface method, find additional targets\n * in classes implementing that interface. Returns implementation method\n * results with lower confidence ('interface-dispatch').\n */",
+  "firstLabel" : "/**\n * After resolving a call to an interface method, find additional targets\n * in classes implementing that interface. Returns implementation method\n * results with lower confidence ('interface-dispatch').\n */",
+  "secondLabel" : "/**\n * After resolving a call to an interface method, find additional targets\n * in classes implementing that interface. Returns implementation method\n * results with lower confidence ('interface-dispatch').\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 22998,
@@ -62333,8 +62333,8 @@
   "secondParentType" : "formal_parameters",
   "firstPos" : 24372,
   "secondPos" : 24557,
-  "firstEndPos" : 24496,
-  "secondEndPos" : 24681
+  "firstEndPos" : 24494,
+  "secondEndPos" : 24679
 }, {
   "firstType" : "optional_parameter",
   "secondType" : "optional_parameter",
@@ -62602,8 +62602,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "  \n   *  Consulted ONLY when SymbolTable has no unambiguous match (local-first principle). */",
-  "secondLabel" : "  \n   *  Consulted ONLY when SymbolTable has no unambiguous match (local-first principle). */",
+  "firstLabel" : "/** Phase 14 E3: cross-file return types for imported callables. Keyed by filePath → Map<calleeName, returnType>.\n   *  Consulted ONLY when SymbolTable has no unambiguous match (local-first principle). */",
+  "secondLabel" : "/** Phase 14 E3: cross-file return types for imported callables. Keyed by filePath → Map<calleeName, returnType>.\n   *  Consulted ONLY when SymbolTable has no unambiguous match (local-first principle). */",
   "firstParentType" : "formal_parameters",
   "secondParentType" : "formal_parameters",
   "firstPos" : 24571,
@@ -62883,8 +62883,8 @@
   "secondParentType" : "formal_parameters",
   "firstPos" : 24855,
   "secondPos" : 25040,
-  "firstEndPos" : 24989,
-  "secondEndPos" : 25174
+  "firstEndPos" : 24987,
+  "secondEndPos" : 25172
 }, {
   "firstType" : "optional_parameter",
   "secondType" : "optional_parameter",
@@ -64214,8 +64214,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 25453,
   "secondPos" : 25638,
-  "firstEndPos" : 25538,
-  "secondEndPos" : 25723
+  "firstEndPos" : 25536,
+  "secondEndPos" : 25721
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -78844,8 +78844,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 30259,
   "secondPos" : 30444,
-  "firstEndPos" : 30354,
-  "secondEndPos" : 30539
+  "firstEndPos" : 30346,
+  "secondEndPos" : 30531
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -79625,8 +79625,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 30640,
   "secondPos" : 30825,
-  "firstEndPos" : 30722,
-  "secondEndPos" : 30907
+  "firstEndPos" : 30720,
+  "secondEndPos" : 30905
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -83013,8 +83013,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 32677,
   "secondPos" : 32609,
-  "firstEndPos" : 32746,
-  "secondEndPos" : 32678
+  "firstEndPos" : 32744,
+  "secondEndPos" : 32676
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -97082,8 +97082,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 38062,
   "secondPos" : 37994,
-  "firstEndPos" : 38146,
-  "secondEndPos" : 38078
+  "firstEndPos" : 38144,
+  "secondEndPos" : 38076
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -99315,8 +99315,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 39816,
   "secondPos" : 39748,
-  "firstEndPos" : 39897,
-  "secondEndPos" : 39829
+  "firstEndPos" : 39895,
+  "secondEndPos" : 39827
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -103803,8 +103803,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 42016,
   "secondPos" : 41948,
-  "firstEndPos" : 42096,
-  "secondEndPos" : 42028
+  "firstEndPos" : 42094,
+  "secondEndPos" : 42026
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -107554,8 +107554,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 43857,
   "secondPos" : 43789,
-  "firstEndPos" : 43938,
-  "secondEndPos" : 43870
+  "firstEndPos" : 43936,
+  "secondEndPos" : 43868
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -114759,8 +114759,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 46931,
   "secondPos" : 46863,
-  "firstEndPos" : 46983,
-  "secondEndPos" : 46915
+  "firstEndPos" : 46975,
+  "secondEndPos" : 46907
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -116739,8 +116739,8 @@
   "secondParentType" : "arguments",
   "firstPos" : 47644,
   "secondPos" : 47576,
-  "firstEndPos" : 47743,
-  "secondEndPos" : 47675
+  "firstEndPos" : 47741,
+  "secondEndPos" : 47673
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -116871,8 +116871,8 @@
   "secondParentType" : "template_string",
   "firstPos" : 47681,
   "secondPos" : 47613,
-  "firstEndPos" : 47713,
-  "secondEndPos" : 47645
+  "firstEndPos" : 47711,
+  "secondEndPos" : 47643
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -116880,10 +116880,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 47713,
-  "secondPos" : 47645,
-  "firstEndPos" : 47720,
-  "secondEndPos" : 47652
+  "firstPos" : 47711,
+  "secondPos" : 47643,
+  "firstEndPos" : 47718,
+  "secondEndPos" : 47650
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -116891,10 +116891,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 47713,
-  "secondPos" : 47645,
-  "firstEndPos" : 47715,
-  "secondEndPos" : 47647
+  "firstPos" : 47711,
+  "secondPos" : 47643,
+  "firstEndPos" : 47713,
+  "secondEndPos" : 47645
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -116902,10 +116902,10 @@
   "secondLabel" : "lang",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 47715,
-  "secondPos" : 47647,
-  "firstEndPos" : 47719,
-  "secondEndPos" : 47651
+  "firstPos" : 47713,
+  "secondPos" : 47645,
+  "firstEndPos" : 47717,
+  "secondEndPos" : 47649
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -116913,10 +116913,10 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 47719,
-  "secondPos" : 47651,
-  "firstEndPos" : 47720,
-  "secondEndPos" : 47652
+  "firstPos" : 47717,
+  "secondPos" : 47649,
+  "firstEndPos" : 47718,
+  "secondEndPos" : 47650
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -116924,10 +116924,10 @@
   "secondLabel" : " parser not available.",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 47720,
-  "secondPos" : 47652,
-  "firstEndPos" : 47742,
-  "secondEndPos" : 47674
+  "firstPos" : 47718,
+  "secondPos" : 47650,
+  "firstEndPos" : 47740,
+  "secondEndPos" : 47672
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -116935,10 +116935,10 @@
   "secondLabel" : "`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 47742,
-  "secondPos" : 47674,
-  "firstEndPos" : 47743,
-  "secondEndPos" : 47675
+  "firstPos" : 47740,
+  "secondPos" : 47672,
+  "firstEndPos" : 47741,
+  "secondEndPos" : 47673
 }, {
   "firstType" : ",",
   "secondType" : ",",
@@ -116946,10 +116946,10 @@
   "secondLabel" : ",",
   "firstParentType" : "arguments",
   "secondParentType" : "arguments",
-  "firstPos" : 47743,
-  "secondPos" : 47675,
-  "firstEndPos" : 47744,
-  "secondEndPos" : 47676
+  "firstPos" : 47741,
+  "secondPos" : 47673,
+  "firstEndPos" : 47742,
+  "secondEndPos" : 47674
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -123146,8 +123146,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Only available on the sequential path (has AST); worker path passes undefined. */",
-  "secondLabel" : "\n *  Only available on the sequential path (has AST); worker path passes undefined. */",
+  "firstLabel" : "/** Optional hints for overload disambiguation via argument literal types.\n *  Only available on the sequential path (has AST); worker path passes undefined. */",
+  "secondLabel" : "/** Optional hints for overload disambiguation via argument literal types.\n *  Only available on the sequential path (has AST); worker path passes undefined. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 49511,
@@ -123432,8 +123432,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Kotlin often declares parameters with boxed names (`Int`, `Boolean`, …) while\n * literal inference yields JVM primitives (`int`, `boolean`). This map aligns\n * those for overload matching. Java parameter text is usually already primitive\n * spellings, so lookups here are typically unchanged.\n */",
-  "secondLabel" : "\n * Kotlin often declares parameters with boxed names (`Int`, `Boolean`, …) while\n * literal inference yields JVM primitives (`int`, `boolean`). This map aligns\n * those for overload matching. Java parameter text is usually already primitive\n * spellings, so lookups here are typically unchanged.\n */",
+  "firstLabel" : "/**\n * Kotlin often declares parameters with boxed names (`Int`, `Boolean`, …) while\n * literal inference yields JVM primitives (`int`, `boolean`). This map aligns\n * those for overload matching. Java parameter text is usually already primitive\n * spellings, so lookups here are typically unchanged.\n */",
+  "secondLabel" : "/**\n * Kotlin often declares parameters with boxed names (`Int`, `Boolean`, …) while\n * literal inference yields JVM primitives (`int`, `boolean`). This map aligns\n * those for overload matching. Java parameter text is usually already primitive\n * spellings, so lookups here are typically unchanged.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 49795,
@@ -125814,8 +125814,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 50660,
   "secondPos" : 50592,
-  "firstEndPos" : 50744,
-  "secondEndPos" : 50676
+  "firstEndPos" : 50742,
+  "secondEndPos" : 50674
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -125836,8 +125836,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 50836,
   "secondPos" : 50768,
-  "firstEndPos" : 50928,
-  "secondEndPos" : 50860
+  "firstEndPos" : 50926,
+  "secondEndPos" : 50858
 }, {
   "firstType" : "if_statement",
   "secondType" : "if_statement",
@@ -126551,8 +126551,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 51084,
   "secondPos" : 51016,
-  "firstEndPos" : 51160,
-  "secondEndPos" : 51092
+  "firstEndPos" : 51156,
+  "secondEndPos" : 51088
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -127046,8 +127046,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 51445,
   "secondPos" : 51377,
-  "firstEndPos" : 51529,
-  "secondEndPos" : 51461
+  "firstEndPos" : 51527,
+  "secondEndPos" : 51459
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -127854,8 +127854,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Try to disambiguate overloaded candidates using argument literal types.\n * Only invoked when filteredCandidates.length > 1 and at least one has parameterTypes.\n * Returns the single matching candidate, or null if ambiguous/inconclusive.\n */",
-  "secondLabel" : "\n * Try to disambiguate overloaded candidates using argument literal types.\n * Only invoked when filteredCandidates.length > 1 and at least one has parameterTypes.\n * Returns the single matching candidate, or null if ambiguous/inconclusive.\n */",
+  "firstLabel" : "/**\n * Try to disambiguate overloaded candidates using argument literal types.\n * Only invoked when filteredCandidates.length > 1 and at least one has parameterTypes.\n * Returns the single matching candidate, or null if ambiguous/inconclusive.\n */",
+  "secondLabel" : "/**\n * Try to disambiguate overloaded candidates using argument literal types.\n * Only invoked when filteredCandidates.length > 1 and at least one has parameterTypes.\n * Returns the single matching candidate, or null if ambiguous/inconclusive.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 51771,
@@ -129130,8 +129130,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolve a function call to its target node ID using priority strategy:\n * A. Narrow candidates by scope tier via ctx.resolve()\n * B. Filter to callable symbol kinds (constructor-aware when callForm is set)\n * C. Apply arity filtering when parameter metadata is available\n * D. Apply receiver-type filtering for member calls with typed receivers\n * E. Apply overload disambiguation via argument literal types (when available)\n *\n * If filtering still leaves multiple candidates, refuse to emit a CALLS edge.\n */",
-  "secondLabel" : "\n * Resolve a function call to its target node ID using priority strategy:\n * A. Narrow candidates by scope tier via ctx.resolve()\n * B. Filter to callable symbol kinds (constructor-aware when callForm is set)\n * C. Apply arity filtering when parameter metadata is available\n * D. Apply receiver-type filtering for member calls with typed receivers\n * E. Apply overload disambiguation via argument literal types (when available)\n *\n * If filtering still leaves multiple candidates, refuse to emit a CALLS edge.\n */",
+  "firstLabel" : "/**\n * Resolve a function call to its target node ID using priority strategy:\n * A. Narrow candidates by scope tier via ctx.resolve()\n * B. Filter to callable symbol kinds (constructor-aware when callForm is set)\n * C. Apply arity filtering when parameter metadata is available\n * D. Apply receiver-type filtering for member calls with typed receivers\n * E. Apply overload disambiguation via argument literal types (when available)\n *\n * If filtering still leaves multiple candidates, refuse to emit a CALLS edge.\n */",
+  "secondLabel" : "/**\n * Resolve a function call to its target node ID using priority strategy:\n * A. Narrow candidates by scope tier via ctx.resolve()\n * B. Filter to callable symbol kinds (constructor-aware when callForm is set)\n * C. Apply arity filtering when parameter metadata is available\n * D. Apply receiver-type filtering for member calls with typed receivers\n * E. Apply overload disambiguation via argument literal types (when available)\n *\n * If filtering still leaves multiple candidates, refuse to emit a CALLS edge.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 52415,
@@ -132568,8 +132568,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 54341,
   "secondPos" : 54273,
-  "firstEndPos" : 54431,
-  "secondEndPos" : 54363
+  "firstEndPos" : 54429,
+  "secondEndPos" : 54361
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -133162,8 +133162,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 54744,
   "secondPos" : 54676,
-  "firstEndPos" : 54833,
-  "secondEndPos" : 54765
+  "firstEndPos" : 54831,
+  "secondEndPos" : 54763
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -133184,8 +133184,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 54928,
   "secondPos" : 54860,
-  "firstEndPos" : 55021,
-  "secondEndPos" : 54953
+  "firstEndPos" : 55019,
+  "secondEndPos" : 54951
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -136352,8 +136352,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 56669,
   "secondPos" : 56601,
-  "firstEndPos" : 56746,
-  "secondEndPos" : 56678
+  "firstEndPos" : 56744,
+  "secondEndPos" : 56676
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -144206,8 +144206,8 @@
   "secondParentType" : "program",
   "firstPos" : 60498,
   "secondPos" : 60430,
-  "firstEndPos" : 60682,
-  "secondEndPos" : 60614
+  "firstEndPos" : 60574,
+  "secondEndPos" : 60506
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -144316,8 +144316,8 @@
   "secondParentType" : "program",
   "firstPos" : 61161,
   "secondPos" : 61093,
-  "firstEndPos" : 61250,
-  "secondEndPos" : 61182
+  "firstEndPos" : 61248,
+  "secondEndPos" : 61180
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -144794,8 +144794,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n *  Handles both unqualified (\"Function:filepath:funcName\" → \"funcName\")\n *  and qualified (\"Function:filepath:ClassName.funcName\" → \"funcName\").\n *  Strips any trailing #<arity> suffix from Method/Constructor IDs. */",
-  "secondLabel" : "\n *  Handles both unqualified (\"Function:filepath:funcName\" → \"funcName\")\n *  and qualified (\"Function:filepath:ClassName.funcName\" → \"funcName\").\n *  Strips any trailing #<arity> suffix from Method/Constructor IDs. */",
+  "firstLabel" : "/** Extract the bare function name from a sourceId.\n *  Handles both unqualified (\"Function:filepath:funcName\" → \"funcName\")\n *  and qualified (\"Function:filepath:ClassName.funcName\" → \"funcName\").\n *  Strips any trailing #<arity> suffix from Method/Constructor IDs. */",
+  "secondLabel" : "/** Extract the bare function name from a sourceId.\n *  Handles both unqualified (\"Function:filepath:funcName\" → \"funcName\")\n *  and qualified (\"Function:filepath:ClassName.funcName\" → \"funcName\").\n *  Strips any trailing #<arity> suffix from Method/Constructor IDs. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 61346,
@@ -146043,8 +146043,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 61912,
   "secondPos" : 61844,
-  "firstEndPos" : 61963,
-  "secondEndPos" : 61895
+  "firstEndPos" : 61961,
+  "secondEndPos" : 61893
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -146510,8 +146510,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Build a composite key for receiver type storage.\n * Uses the full scope string (e.g. \"save@100\") to distinguish overloaded\n * methods with the same name in different classes.\n */",
-  "secondLabel" : "\n * Build a composite key for receiver type storage.\n * Uses the full scope string (e.g. \"save@100\") to distinguish overloaded\n * methods with the same name in different classes.\n */",
+  "firstLabel" : "/**\n * Build a composite key for receiver type storage.\n * Uses the full scope string (e.g. \"save@100\") to distinguish overloaded\n * methods with the same name in different classes.\n */",
+  "secondLabel" : "/**\n * Build a composite key for receiver type storage.\n * Uses the full scope string (e.g. \"save@100\") to distinguish overloaded\n * methods with the same name in different classes.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 62055,
@@ -146961,8 +146961,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Pre-built secondary index for O(1) receiver type lookups.\n * Built once per file from the verified receiver map, keyed by funcName → varName.\n */",
-  "secondLabel" : "\n * Pre-built secondary index for O(1) receiver type lookups.\n * Built once per file from the verified receiver map, keyed by funcName → varName.\n */",
+  "firstLabel" : "/**\n * Pre-built secondary index for O(1) receiver type lookups.\n * Built once per file from the verified receiver map, keyed by funcName → varName.\n */",
+  "secondLabel" : "/**\n * Pre-built secondary index for O(1) receiver type lookups.\n * Built once per file from the verified receiver map, keyed by funcName → varName.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 62330,
@@ -147687,8 +147687,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Build a two-level secondary index from the verified receiver map.\n * The verified map is keyed by `scope\\0varName` where scope is either\n * \"funcName@startIndex\" (inside a function) or \"\" (file level).\n * Index structure: Map<funcName, Map<varName, ReceiverTypeEntry>>\n *\n * Known limitation: the index collapses scope keys to bare funcName,\n * so two same-arity overloads with the same local variable name but\n * different types will mark that variable as ambiguous. A future\n * enhancement should key by full scope (funcName@startIndex) and carry\n * scope keys through findEnclosingFunction's return type.\n */",
-  "secondLabel" : "\n * Build a two-level secondary index from the verified receiver map.\n * The verified map is keyed by `scope\\0varName` where scope is either\n * \"funcName@startIndex\" (inside a function) or \"\" (file level).\n * Index structure: Map<funcName, Map<varName, ReceiverTypeEntry>>\n *\n * Known limitation: the index collapses scope keys to bare funcName,\n * so two same-arity overloads with the same local variable name but\n * different types will mark that variable as ambiguous. A future\n * enhancement should key by full scope (funcName@startIndex) and carry\n * scope keys through findEnclosingFunction's return type.\n */",
+  "firstLabel" : "/**\n * Build a two-level secondary index from the verified receiver map.\n * The verified map is keyed by `scope\\0varName` where scope is either\n * \"funcName@startIndex\" (inside a function) or \"\" (file level).\n * Index structure: Map<funcName, Map<varName, ReceiverTypeEntry>>\n *\n * Known limitation: the index collapses scope keys to bare funcName,\n * so two same-arity overloads with the same local variable name but\n * different types will mark that variable as ambiguous. A future\n * enhancement should key by full scope (funcName@startIndex) and carry\n * scope keys through findEnclosingFunction's return type.\n */",
+  "secondLabel" : "/**\n * Build a two-level secondary index from the verified receiver map.\n * The verified map is keyed by `scope\\0varName` where scope is either\n * \"funcName@startIndex\" (inside a function) or \"\" (file level).\n * Index structure: Map<funcName, Map<varName, ReceiverTypeEntry>>\n *\n * Known limitation: the index collapses scope keys to bare funcName,\n * so two same-arity overloads with the same local variable name but\n * different types will mark that variable as ambiguous. A future\n * enhancement should key by full scope (funcName@startIndex) and carry\n * scope keys through findEnclosingFunction's return type.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 62673,
@@ -151735,8 +151735,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * O(1) receiver type lookup using the pre-built secondary index.\n * Returns the unique type name if unambiguous. Falls back to file-level scope.\n */",
-  "secondLabel" : "\n * O(1) receiver type lookup using the pre-built secondary index.\n * Returns the unique type name if unambiguous. Falls back to file-level scope.\n */",
+  "firstLabel" : "/**\n * O(1) receiver type lookup using the pre-built secondary index.\n * Returns the unique type name if unambiguous. Falls back to file-level scope.\n */",
+  "secondLabel" : "/**\n * O(1) receiver type lookup using the pre-built secondary index.\n * Returns the unique type name if unambiguous. Falls back to file-level scope.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 64185,
@@ -153061,8 +153061,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 64668,
   "secondPos" : 64600,
-  "firstEndPos" : 64731,
-  "secondEndPos" : 64663
+  "firstEndPos" : 64729,
+  "secondEndPos" : 64661
 }, {
   "firstType" : "lexical_declaration",
   "secondType" : "lexical_declaration",
@@ -154628,8 +154628,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolve the type that results from accessing `receiverName.fieldName`.\n * Requires declaredType on the Property node (needed for chain walking continuation).\n */",
-  "secondLabel" : "\n * Resolve the type that results from accessing `receiverName.fieldName`.\n * Requires declaredType on the Property node (needed for chain walking continuation).\n */",
+  "firstLabel" : "/**\n * Resolve the type that results from accessing `receiverName.fieldName`.\n * Requires declaredType on the Property node (needed for chain walking continuation).\n */",
+  "secondLabel" : "/**\n * Resolve the type that results from accessing `receiverName.fieldName`.\n * Requires declaredType on the Property node (needed for chain walking continuation).\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 65270,
@@ -155525,8 +155525,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 65733,
   "secondPos" : 65665,
-  "firstEndPos" : 65813,
-  "secondEndPos" : 65745
+  "firstEndPos" : 65811,
+  "secondEndPos" : 65743
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -155860,8 +155860,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolve a field's Property node given a receiver type name and field name.\n * Does NOT require declaredType — used by write-access tracking where only the\n * fieldNodeId is needed (no chain continuation).\n */",
-  "secondLabel" : "\n * Resolve a field's Property node given a receiver type name and field name.\n * Does NOT require declaredType — used by write-access tracking where only the\n * fieldNodeId is needed (no chain continuation).\n */",
+  "firstLabel" : "/**\n * Resolve a field's Property node given a receiver type name and field name.\n * Does NOT require declaredType — used by write-access tracking where only the\n * fieldNodeId is needed (no chain continuation).\n */",
+  "secondLabel" : "/**\n * Resolve a field's Property node given a receiver type name and field name.\n * Does NOT require declaredType — used by write-access tracking where only the\n * fieldNodeId is needed (no chain continuation).\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 66003,
@@ -157587,8 +157587,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolve a method by owner type name using the eagerly-populated methodByOwner index.\n * Returns the SymbolDefinition if an unambiguous method is found, undefined otherwise.\n * Falls through to undefined for: unknown type, no class-like candidates, ambiguous overloads.\n */",
-  "secondLabel" : "\n * Resolve a method by owner type name using the eagerly-populated methodByOwner index.\n * Returns the SymbolDefinition if an unambiguous method is found, undefined otherwise.\n * Falls through to undefined for: unknown type, no class-like candidates, ambiguous overloads.\n */",
+  "firstLabel" : "/**\n * Resolve a method by owner type name using the eagerly-populated methodByOwner index.\n * Returns the SymbolDefinition if an unambiguous method is found, undefined otherwise.\n * Falls through to undefined for: unknown type, no class-like candidates, ambiguous overloads.\n */",
+  "secondLabel" : "/**\n * Resolve a method by owner type name using the eagerly-populated methodByOwner index.\n * Returns the SymbolDefinition if an unambiguous method is found, undefined otherwise.\n * Falls through to undefined for: unknown type, no class-like candidates, ambiguous overloads.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 66860,
@@ -159105,8 +159105,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Create a deduplicated ACCESSES edge emitter for a single source node.\n * Each (sourceId, fieldNodeId) pair is emitted at most once per source.\n */",
-  "secondLabel" : "\n * Create a deduplicated ACCESSES edge emitter for a single source node.\n * Each (sourceId, fieldNodeId) pair is emitted at most once per source.\n */",
+  "firstLabel" : "/**\n * Create a deduplicated ACCESSES edge emitter for a single source node.\n * Each (sourceId, fieldNodeId) pair is emitted at most once per source.\n */",
+  "secondLabel" : "/**\n * Create a deduplicated ACCESSES edge emitter for a single source node.\n * Each (sourceId, fieldNodeId) pair is emitted at most once per source.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 67753,
@@ -161107,8 +161107,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Walk a pre-built mixed chain of field/call steps, threading the current type\n * through each step and returning the final resolved type.\n *\n * Returns `undefined` if any step cannot be resolved (chain is broken).\n * The caller is responsible for seeding `startType` from its own context\n * (TypeEnv, constructor bindings, or static-class fallback).\n */",
-  "secondLabel" : "\n * Walk a pre-built mixed chain of field/call steps, threading the current type\n * through each step and returning the final resolved type.\n *\n * Returns `undefined` if any step cannot be resolved (chain is broken).\n * The caller is responsible for seeding `startType` from its own context\n * (TypeEnv, constructor bindings, or static-class fallback).\n */",
+  "firstLabel" : "/**\n * Walk a pre-built mixed chain of field/call steps, threading the current type\n * through each step and returning the final resolved type.\n *\n * Returns `undefined` if any step cannot be resolved (chain is broken).\n * The caller is responsible for seeding `startType` from its own context\n * (TypeEnv, constructor bindings, or static-class fallback).\n */",
+  "secondLabel" : "/**\n * Walk a pre-built mixed chain of field/call steps, threading the current type\n * through each step and returning the final resolved type.\n *\n * Returns `undefined` if any step cannot be resolved (chain is broken).\n * The caller is responsible for seeding `startType` from its own context\n * (TypeEnv, constructor bindings, or static-class fallback).\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 68408,
@@ -163269,8 +163269,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 69501,
   "secondPos" : 69135,
-  "firstEndPos" : 69585,
-  "secondEndPos" : 69219
+  "firstEndPos" : 69583,
+  "secondEndPos" : 69217
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -163907,8 +163907,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 70080,
   "secondPos" : 69714,
-  "firstEndPos" : 70169,
-  "secondEndPos" : 69803
+  "firstEndPos" : 70167,
+  "secondEndPos" : 69801
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -166343,8 +166343,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Fast path: resolve pre-extracted call sites from workers.\n * No AST parsing — workers already extracted calledName + sourceId.\n */",
-  "secondLabel" : "\n * Fast path: resolve pre-extracted call sites from workers.\n * No AST parsing — workers already extracted calledName + sourceId.\n */",
+  "firstLabel" : "/**\n * Fast path: resolve pre-extracted call sites from workers.\n * No AST parsing — workers already extracted calledName + sourceId.\n */",
+  "secondLabel" : "/**\n * Fast path: resolve pre-extracted call sites from workers.\n * No AST parsing — workers already extracted calledName + sourceId.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 71344,
@@ -167229,8 +167229,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 71769,
   "secondPos" : 71403,
-  "firstEndPos" : 71855,
-  "secondEndPos" : 71489
+  "firstEndPos" : 71851,
+  "secondEndPos" : 71485
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -173378,8 +173378,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 74199,
   "secondPos" : 73833,
-  "firstEndPos" : 74302,
-  "secondEndPos" : 73936
+  "firstEndPos" : 74300,
+  "secondEndPos" : 73934
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -183327,8 +183327,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolve pre-extracted field write assignments to ACCESSES {reason: 'write'} edges.\n * Accepts optional constructorBindings for return-type-aware receiver inference,\n * mirroring processCallsFromExtracted's verified binding lookup.\n */",
-  "secondLabel" : "\n * Resolve pre-extracted field write assignments to ACCESSES {reason: 'write'} edges.\n * Accepts optional constructorBindings for return-type-aware receiver inference,\n * mirroring processCallsFromExtracted's verified binding lookup.\n */",
+  "firstLabel" : "/**\n * Resolve pre-extracted field write assignments to ACCESSES {reason: 'write'} edges.\n * Accepts optional constructorBindings for return-type-aware receiver inference,\n * mirroring processCallsFromExtracted's verified binding lookup.\n */",
+  "secondLabel" : "/**\n * Resolve pre-extracted field write assignments to ACCESSES {reason: 'write'} edges.\n * Accepts optional constructorBindings for return-type-aware receiver inference,\n * mirroring processCallsFromExtracted's verified binding lookup.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 78636,
@@ -188332,8 +188332,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Resolve pre-extracted Laravel routes to CALLS edges from route files to controller methods.\n */",
-  "secondLabel" : "\n * Resolve pre-extracted Laravel routes to CALLS edges from route files to controller methods.\n */",
+  "firstLabel" : "/**\n * Resolve pre-extracted Laravel routes to CALLS edges from route files to controller methods.\n */",
+  "secondLabel" : "/**\n * Resolve pre-extracted Laravel routes to CALLS edges from route files to controller methods.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 80948,
@@ -194426,8 +194426,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Extract property access keys from a consumer file's source code near fetch calls.\n *\n * Looks for three patterns after a fetch/response variable assignment:\n * 1. Destructuring: `const { data, pagination } = await res.json()`\n * 2. Property access: `response.data`, `result.items`\n * 3. Optional chaining: `data?.key1?.key2`\n *\n * Returns deduplicated top-level property names accessed on the response.\n *\n * NOTE: This scans the entire file content, not just code near a specific fetch call.\n * If a file has multiple fetch calls to different routes, all accessed keys are\n * attributed to each fetch. This is an acceptable tradeoff for regex-based extraction.\n */",
-  "secondLabel" : "\n * Extract property access keys from a consumer file's source code near fetch calls.\n *\n * Looks for three patterns after a fetch/response variable assignment:\n * 1. Destructuring: `const { data, pagination } = await res.json()`\n * 2. Property access: `response.data`, `result.items`\n * 3. Optional chaining: `data?.key1?.key2`\n *\n * Returns deduplicated top-level property names accessed on the response.\n *\n * NOTE: This scans the entire file content, not just code near a specific fetch call.\n * If a file has multiple fetch calls to different routes, all accessed keys are\n * attributed to each fetch. This is an acceptable tradeoff for regex-based extraction.\n */",
+  "firstLabel" : "/**\n * Extract property access keys from a consumer file's source code near fetch calls.\n *\n * Looks for three patterns after a fetch/response variable assignment:\n * 1. Destructuring: `const { data, pagination } = await res.json()`\n * 2. Property access: `response.data`, `result.items`\n * 3. Optional chaining: `data?.key1?.key2`\n *\n * Returns deduplicated top-level property names accessed on the response.\n *\n * NOTE: This scans the entire file content, not just code near a specific fetch call.\n * If a file has multiple fetch calls to different routes, all accessed keys are\n * attributed to each fetch. This is an acceptable tradeoff for regex-based extraction.\n */",
+  "secondLabel" : "/**\n * Extract property access keys from a consumer file's source code near fetch calls.\n *\n * Looks for three patterns after a fetch/response variable assignment:\n * 1. Destructuring: `const { data, pagination } = await res.json()`\n * 2. Property access: `response.data`, `result.items`\n * 3. Optional chaining: `data?.key1?.key2`\n *\n * Returns deduplicated top-level property names accessed on the response.\n *\n * NOTE: This scans the entire file content, not just code near a specific fetch call.\n * If a file has multiple fetch calls to different routes, all accessed keys are\n * attributed to each fetch. This is an acceptable tradeoff for regex-based extraction.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 82893,
@@ -196698,8 +196698,8 @@
   "secondParentType" : "array",
   "firstPos" : 84459,
   "secondPos" : 83880,
-  "firstEndPos" : 84545,
-  "secondEndPos" : 83966
+  "firstEndPos" : 84543,
+  "secondEndPos" : 83964
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -199151,8 +199151,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 85255,
   "secondPos" : 84676,
-  "firstEndPos" : 85339,
-  "secondEndPos" : 84760
+  "firstEndPos" : 85337,
+  "secondEndPos" : 84758
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -202588,8 +202588,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Create FETCHES edges from extracted fetch() calls to matching Route nodes.\n * When consumerContents is provided, extracts property access patterns from\n * consumer files and encodes them in the edge reason field.\n */",
-  "secondLabel" : "\n * Create FETCHES edges from extracted fetch() calls to matching Route nodes.\n * When consumerContents is provided, extracts property access patterns from\n * consumer files and encodes them in the edge reason field.\n */",
+  "firstLabel" : "/**\n * Create FETCHES edges from extracted fetch() calls to matching Route nodes.\n * When consumerContents is provided, extracts property access patterns from\n * consumer files and encodes them in the edge reason field.\n */",
+  "secondLabel" : "/**\n * Create FETCHES edges from extracted fetch() calls to matching Route nodes.\n * When consumerContents is provided, extracts property access patterns from\n * consumer files and encodes them in the edge reason field.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 87051,
@@ -203045,8 +203045,8 @@
   "secondParentType" : "formal_parameters",
   "firstPos" : 87416,
   "secondPos" : 86837,
-  "firstEndPos" : 87447,
-  "secondEndPos" : 86868
+  "firstEndPos" : 87445,
+  "secondEndPos" : 86866
 }, {
   "firstType" : "optional_parameter",
   "secondType" : "optional_parameter",
@@ -203232,8 +203232,8 @@
   "secondParentType" : "formal_parameters",
   "firstPos" : 87488,
   "secondPos" : 86909,
-  "firstEndPos" : 87516,
-  "secondEndPos" : 86937
+  "firstEndPos" : 87514,
+  "secondEndPos" : 86935
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -208187,8 +208187,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Extract fetch() calls from source files (sequential path).\n * Workers handle this via tree-sitter captures in parse-worker; this function\n * provides the same extraction for the sequential fallback path.\n */",
-  "secondLabel" : "\n * Extract fetch() calls from source files (sequential path).\n * Workers handle this via tree-sitter captures in parse-worker; this function\n * provides the same extraction for the sequential fallback path.\n */",
+  "firstLabel" : "/**\n * Extract fetch() calls from source files (sequential path).\n * Workers handle this via tree-sitter captures in parse-worker; this function\n * provides the same extraction for the sequential fallback path.\n */",
+  "secondLabel" : "/**\n * Extract fetch() calls from source files (sequential path).\n * Workers handle this via tree-sitter captures in parse-worker; this function\n * provides the same extraction for the sequential fallback path.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 89307,

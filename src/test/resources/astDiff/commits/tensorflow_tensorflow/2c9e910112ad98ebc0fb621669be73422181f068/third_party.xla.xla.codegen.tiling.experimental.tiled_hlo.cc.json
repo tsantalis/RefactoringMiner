@@ -27158,6 +27158,94 @@
   "firstEndPos" : 11833,
   "secondEndPos" : 14175
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pointer_expression",
+  "secondParentType" : "pointer_expression",
+  "firstPos" : 11925,
+  "secondPos" : 14257,
+  "firstEndPos" : 11946,
+  "secondEndPos" : 14278
+}, {
+  "firstType" : "field_expression",
+  "secondType" : "field_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 11925,
+  "secondPos" : 14257,
+  "firstEndPos" : 11944,
+  "secondEndPos" : 14276
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "operand",
+  "secondLabel" : "operand",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 11925,
+  "secondPos" : 14257,
+  "firstEndPos" : 11932,
+  "secondEndPos" : 14264
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 11932,
+  "secondPos" : 14264,
+  "firstEndPos" : 11933,
+  "secondEndPos" : 14265
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "instruction",
+  "secondLabel" : "instruction",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 11933,
+  "secondPos" : 14265,
+  "firstEndPos" : 11944,
+  "secondEndPos" : 14276
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 11944,
+  "secondPos" : 14276,
+  "firstEndPos" : 11946,
+  "secondEndPos" : 14278
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 11944,
+  "secondPos" : 14276,
+  "firstEndPos" : 11945,
+  "secondEndPos" : 14277
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 11945,
+  "secondPos" : 14277,
+  "firstEndPos" : 11946,
+  "secondEndPos" : 14278
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "ASSIGN_OR_RETURN",

@@ -408,8 +408,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "  \n   * pendingTransactionsInformation returns transactions that are pending in the pool\n   * @param headers, optional\n   * @returns {Promise<*>}\n   */",
-  "secondLabel" : "\n * pendingTransactionsInformation returns transactions that are pending in the pool\n */",
+  "firstLabel" : "/**\n   * pendingTransactionsInformation returns transactions that are pending in the pool\n   * @param headers, optional\n   * @returns {Promise<*>}\n   */",
+  "secondLabel" : "/**\n * pendingTransactionsInformation returns transactions that are pending in the pool\n */",
   "firstParentType" : "class_body",
   "secondParentType" : "program",
   "firstPos" : 183,

@@ -6577,6 +6577,94 @@
   "firstEndPos" : 2133,
   "secondEndPos" : 2124
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 2140,
+  "secondPos" : 2131,
+  "firstEndPos" : 2160,
+  "secondEndPos" : 2151
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 2140,
+  "secondPos" : 2131,
+  "firstEndPos" : 2158,
+  "secondEndPos" : 2149
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "CWLSurface",
+  "secondLabel" : "CWLSurface",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 2140,
+  "secondPos" : 2131,
+  "firstEndPos" : 2150,
+  "secondEndPos" : 2141
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 2150,
+  "secondPos" : 2141,
+  "firstEndPos" : 2152,
+  "secondEndPos" : 2143
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "create",
+  "secondLabel" : "create",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 2152,
+  "secondPos" : 2143,
+  "firstEndPos" : 2158,
+  "secondEndPos" : 2149
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 2158,
+  "secondPos" : 2149,
+  "firstEndPos" : 2160,
+  "secondEndPos" : 2151
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 2158,
+  "secondPos" : 2149,
+  "firstEndPos" : 2159,
+  "secondEndPos" : 2150
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 2159,
+  "secondPos" : 2150,
+  "firstEndPos" : 2160,
+  "secondEndPos" : 2151
+}, {
   "firstType" : "compound_statement",
   "secondType" : "compound_statement",
   "firstLabel" : "",

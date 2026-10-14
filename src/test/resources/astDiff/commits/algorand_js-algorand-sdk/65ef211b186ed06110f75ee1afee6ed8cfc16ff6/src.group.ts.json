@@ -969,8 +969,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Aux class for group id calculation of a group of transactions\n */",
-  "secondLabel" : "\n * Aux class for group id calculation of a group of transactions\n */",
+  "firstLabel" : "/**\n * Aux class for group id calculation of a group of transactions\n */",
+  "secondLabel" : "/**\n * Aux class for group id calculation of a group of transactions\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 368,
@@ -4291,8 +4291,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * computeGroupID returns group ID for a group of transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @return Buffer\n */",
-  "secondLabel" : "\n * computeGroupID returns group ID for a group of transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @return Buffer\n */",
+  "firstLabel" : "/**\n * computeGroupID returns group ID for a group of transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @return Buffer\n */",
+  "secondLabel" : "/**\n * computeGroupID returns group ID for a group of transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @return Buffer\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 1477,
@@ -6029,8 +6029,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * assignGroupID assigns group id to a given list of unsigned transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @param from optional sender address specifying which transaction return\n * @return possible list of matching transactions\n */",
-  "secondLabel" : "\n * assignGroupID assigns group id to a given list of unsigned transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @param from optional sender address specifying which transaction return\n * @return possible list of matching transactions\n */",
+  "firstLabel" : "/**\n * assignGroupID assigns group id to a given list of unsigned transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @param from optional sender address specifying which transaction return\n * @return possible list of matching transactions\n */",
+  "secondLabel" : "/**\n * assignGroupID assigns group id to a given list of unsigned transactions\n * @param txns array of transactions (every element is a dict or Transaction)\n * @param from optional sender address specifying which transaction return\n * @return possible list of matching transactions\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 2075,

@@ -8867,8 +8867,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "                background: `\n              to right,\n              #fe2851 0%,\n              #fe2851 ",
-  "secondLabel" : "                background: `\n              to right,\n              #fe2851 0%,\n              #fe2851 ",
+  "firstLabel" : "linear-gradient(\n              to right,\n              #fe2851 0%,\n              #fe2851 ",
+  "secondLabel" : "linear-gradient(\n              to right,\n              #fe2851 0%,\n              #fe2851 ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2672,
@@ -9054,8 +9054,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "              #fe2851 ${mk.instance.player.volume * 100}\n              #cccccc ",
-  "secondLabel" : "              #fe2851 ${mk.instance.player.volume * 100}\n              #cccccc ",
+  "firstLabel" : "%,\n              #cccccc ",
+  "secondLabel" : "%,\n              #cccccc ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2795,
@@ -9241,8 +9241,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "              #cccccc ${mk.instance.player.volume * 100}\n              #cccccc 100%\n            ) no-repeat",
-  "secondLabel" : "              #cccccc ${mk.instance.player.volume * 100}\n              #cccccc 100%\n            ) no-repeat",
+  "firstLabel" : "%,\n              #cccccc 100%\n            ) no-repeat",
+  "secondLabel" : "%,\n              #cccccc 100%\n            ) no-repeat",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 2854,

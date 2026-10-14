@@ -70102,6 +70102,83 @@
   "firstEndPos" : 58483,
   "secondEndPos" : 58449
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "PrefixExpression",
+  "firstPos" : 58488,
+  "secondPos" : 58501,
+  "firstEndPos" : 58518,
+  "secondEndPos" : 58531
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 58488,
+  "secondPos" : 58501,
+  "firstEndPos" : 58493,
+  "secondEndPos" : 58506
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "scope",
+  "secondLabel" : "scope",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 58488,
+  "secondPos" : 58501,
+  "firstEndPos" : 58493,
+  "secondEndPos" : 58506
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "isDeclared",
+  "secondLabel" : "isDeclared",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 58494,
+  "secondPos" : 58507,
+  "firstEndPos" : 58504,
+  "secondEndPos" : 58517
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 58505,
+  "secondPos" : 58518,
+  "firstEndPos" : 58517,
+  "secondEndPos" : 58530
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "qName",
+  "secondLabel" : "qName",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 58505,
+  "secondPos" : 58518,
+  "firstEndPos" : 58510,
+  "secondEndPos" : 58523
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "BooleanLiteral",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 58512,
+  "secondPos" : 58525,
+  "firstEndPos" : 58517,
+  "secondEndPos" : 58530
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",

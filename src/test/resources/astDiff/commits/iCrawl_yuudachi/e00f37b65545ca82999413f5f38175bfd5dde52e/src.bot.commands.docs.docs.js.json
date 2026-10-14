@@ -5141,11 +5141,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "parenthesized_expression",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "parenthesized_expression",
   "firstPos" : 1403,
   "secondPos" : 1526,
   "firstEndPos" : 1534,
-  "secondEndPos" : 1625
+  "secondEndPos" : 1675
 }, {
   "firstType" : "binary_expression",
   "secondType" : "binary_expression",
@@ -5310,7 +5310,7 @@
   "firstPos" : 1436,
   "secondPos" : 1559,
   "firstEndPos" : 1534,
-  "secondEndPos" : 1625
+  "secondEndPos" : 1675
 }, {
   "firstType" : "!",
   "secondType" : "!",
@@ -5328,9 +5328,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "unary_expression",
-  "secondParentType" : "parenthesized_expression",
+  "secondParentType" : "unary_expression",
   "firstPos" : 1437,
-  "secondPos" : 1526,
+  "secondPos" : 1560,
   "firstEndPos" : 1534,
   "secondEndPos" : 1675
 }, {
@@ -5341,7 +5341,7 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 1437,
-  "secondPos" : 1526,
+  "secondPos" : 1560,
   "firstEndPos" : 1489,
   "secondEndPos" : 1630
 }, {
@@ -5350,7 +5350,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "member_expression",
-  "secondParentType" : "unary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 1437,
   "secondPos" : 1560,
   "firstEndPos" : 1485,
@@ -6054,11 +6054,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
+  "secondParentType" : "as_expression",
   "firstPos" : 1596,
   "secondPos" : 1738,
   "firstEndPos" : 1630,
-  "secondEndPos" : 1784
+  "secondEndPos" : 1773
 }, {
   "firstType" : "await",
   "secondType" : "await",
@@ -6076,7 +6076,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "await_expression",
-  "secondParentType" : "as_expression",
+  "secondParentType" : "await_expression",
   "firstPos" : 1602,
   "secondPos" : 1744,
   "firstEndPos" : 1630,

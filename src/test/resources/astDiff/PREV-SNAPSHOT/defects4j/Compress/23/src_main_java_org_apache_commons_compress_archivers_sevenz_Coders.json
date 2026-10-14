@@ -4784,6 +4784,94 @@
   "firstEndPos" : 4458,
   "secondEndPos" : 4466
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ArrayAccess",
+  "secondParentType" : "ArrayAccess",
+  "firstPos" : 4425,
+  "secondPos" : 4425,
+  "firstEndPos" : 4430,
+  "secondEndPos" : 4430
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "i",
+  "secondLabel" : "i",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4425,
+  "secondPos" : 4425,
+  "firstEndPos" : 4426,
+  "secondEndPos" : 4426
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "+",
+  "secondLabel" : "+",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4427,
+  "secondPos" : 4427,
+  "firstEndPos" : 4428,
+  "secondEndPos" : 4428
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "NumberLiteral",
+  "firstLabel" : "1",
+  "secondLabel" : "1",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4429,
+  "secondPos" : 4429,
+  "firstEndPos" : 4430,
+  "secondEndPos" : 4430
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParenthesizedExpression",
+  "secondParentType" : "ParenthesizedExpression",
+  "firstPos" : 4436,
+  "secondPos" : 4445,
+  "firstEndPos" : 4441,
+  "secondEndPos" : 4450
+}, {
+  "firstType" : "NumberLiteral",
+  "secondType" : "NumberLiteral",
+  "firstLabel" : "8",
+  "secondLabel" : "8",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4436,
+  "secondPos" : 4445,
+  "firstEndPos" : 4437,
+  "secondEndPos" : 4446
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "*",
+  "secondLabel" : "*",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4438,
+  "secondPos" : 4447,
+  "firstEndPos" : 4439,
+  "secondEndPos" : 4448
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "i",
+  "secondLabel" : "i",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 4440,
+  "secondPos" : 4449,
+  "firstEndPos" : 4441,
+  "secondEndPos" : 4450
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",

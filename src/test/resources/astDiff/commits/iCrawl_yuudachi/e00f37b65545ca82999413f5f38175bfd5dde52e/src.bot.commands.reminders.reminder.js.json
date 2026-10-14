@@ -617,14 +617,14 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\tcontent: stripIndents`\n\t\t\t\t\t • add ",
-  "secondLabel" : "\t\t\t\tcontent: stripIndents`\n\t\t\t\t\t • add ",
+  "firstLabel" : "Available methods:\n\t\t\t\t\t • add ",
+  "secondLabel" : "Available methods:\n\t\t\t\t\t • add ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 256,
   "secondPos" : 306,
-  "firstEndPos" : 289,
-  "secondEndPos" : 339
+  "firstEndPos" : 287,
+  "secondEndPos" : 337
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -632,10 +632,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 289,
-  "secondPos" : 339,
-  "firstEndPos" : 291,
-  "secondEndPos" : 341
+  "firstPos" : 287,
+  "secondPos" : 337,
+  "firstEndPos" : 289,
+  "secondEndPos" : 339
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -643,32 +643,32 @@
   "secondLabel" : "[--hoist/--pin] <tag> <content>",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 291,
-  "secondPos" : 341,
-  "firstEndPos" : 322,
-  "secondEndPos" : 372
+  "firstPos" : 289,
+  "secondPos" : 339,
+  "firstEndPos" : 320,
+  "secondEndPos" : 370
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
   "firstLabel" : "\\`",
   "secondLabel" : "\\`",
+  "firstParentType" : "template_string",
+  "secondParentType" : "template_string",
+  "firstPos" : 320,
+  "secondPos" : 370,
+  "firstEndPos" : 322,
+  "secondEndPos" : 372
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "\n\t\t\t\t\t • del ",
+  "secondLabel" : "\n\t\t\t\t\t • del ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 322,
   "secondPos" : 372,
-  "firstEndPos" : 324,
-  "secondEndPos" : 374
-}, {
-  "firstType" : "string_fragment",
-  "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • add \\`[--hoist/--pin] <tag> <content>\\`\n\t\t\t\t\t • del ",
-  "secondLabel" : "\t\t\t\t\t • add \\`[--hoist/--pin] <tag> <content>\\`\n\t\t\t\t\t • del ",
-  "firstParentType" : "template_string",
-  "secondParentType" : "template_string",
-  "firstPos" : 324,
-  "secondPos" : 374,
-  "firstEndPos" : 337,
-  "secondEndPos" : 387
+  "firstEndPos" : 335,
+  "secondEndPos" : 385
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -676,10 +676,10 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 337,
-  "secondPos" : 387,
-  "firstEndPos" : 339,
-  "secondEndPos" : 389
+  "firstPos" : 335,
+  "secondPos" : 385,
+  "firstEndPos" : 337,
+  "secondEndPos" : 387
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -687,10 +687,10 @@
   "secondLabel" : "[--all]",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 339,
-  "secondPos" : 389,
-  "firstEndPos" : 346,
-  "secondEndPos" : 396
+  "firstPos" : 337,
+  "secondPos" : 387,
+  "firstEndPos" : 344,
+  "secondEndPos" : 394
 }, {
   "firstType" : "escape_sequence",
   "secondType" : "escape_sequence",
@@ -698,19 +698,19 @@
   "secondLabel" : "\\`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 346,
-  "secondPos" : 396,
-  "firstEndPos" : 348,
-  "secondEndPos" : 398
+  "firstPos" : 344,
+  "secondPos" : 394,
+  "firstEndPos" : 346,
+  "secondEndPos" : 396
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\t • del \\`[--all]\\`\n\t\t\t\t\t • list\n\n\t\t\t\t\tRequired: ",
-  "secondLabel" : "\t\t\t\t\t • del \\`[--all]\\`\n\t\t\t\t\t • list\n\n\t\t\t\t\tRequired: ",
+  "firstLabel" : "\n\t\t\t\t\t • list\n\n\t\t\t\t\tRequired: ",
+  "secondLabel" : "\n\t\t\t\t\t • list\n\n\t\t\t\t\tRequired: ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 348,
-  "secondPos" : 398,
+  "firstPos" : 346,
+  "secondPos" : 396,
   "firstEndPos" : 376,
   "secondEndPos" : 426
 }, {
@@ -793,8 +793,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tRequired: \\`<>\\` | Optional: \\`[]\\`\n\n\t\t\t\t\tFor additional ",
-  "secondLabel" : "\t\t\t\t\tRequired: \\`<>\\` | Optional: \\`[]\\`\n\n\t\t\t\t\tFor additional ",
+  "firstLabel" : "\n\n\t\t\t\t\tFor additional ",
+  "secondLabel" : "\n\n\t\t\t\t\tFor additional ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 401,
@@ -837,8 +837,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\t\tFor additional \\`<...arguments>\\`\n\t\t\t\t",
-  "secondLabel" : "\t\t\t\t\tFor additional \\`<...arguments>\\`\n\t\t\t\t",
+  "firstLabel" : " usage refer to the examples below.\n\t\t\t\t",
+  "secondLabel" : " usage refer to the examples below.\n\t\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 441,
@@ -3004,8 +3004,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\treturn message.util.send(stripIndents`\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
-  "secondLabel" : "\t\t\treturn message.util!.send(stripIndents`\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
+  "firstLabel" : "\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
+  "secondLabel" : "\n\t\t\t\tWhen you beg me so much I just can't not help you~\n\t\t\t\tCheck ",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 1024,
@@ -3092,8 +3092,8 @@
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
-  "firstLabel" : "\t\t\t\tCheck \\`${prefix}help reminder\\`\n\t\t\t",
-  "secondLabel" : "\t\t\t\tCheck \\`${prefix}help reminder\\`\n\t\t\t",
+  "firstLabel" : " for more information.\n\t\t\t",
+  "secondLabel" : " for more information.\n\t\t\t",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
   "firstPos" : 1116,

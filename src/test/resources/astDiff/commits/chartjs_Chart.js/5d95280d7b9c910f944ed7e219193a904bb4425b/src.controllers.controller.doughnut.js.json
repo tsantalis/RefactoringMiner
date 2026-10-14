@@ -33122,8 +33122,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\t\t\t\n\t\t\t\ttotal = NaN;\n\t\t\t}*/",
-  "secondLabel" : "\t\t\t\n\t\t\t\ttotal = NaN;\n\t\t\t}*/",
+  "firstLabel" : "/* if (total === 0) {\n\t\t\t\ttotal = NaN;\n\t\t\t}*/",
+  "secondLabel" : "/* if (total === 0) {\n\t\t\t\ttotal = NaN;\n\t\t\t}*/",
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 9118,

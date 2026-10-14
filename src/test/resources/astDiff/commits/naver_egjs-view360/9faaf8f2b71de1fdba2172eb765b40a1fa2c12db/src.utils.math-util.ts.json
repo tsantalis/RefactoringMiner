@@ -12,8 +12,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Original Code\n * https://github.com/toji/gl-matrix/blob/v2.3.2/src/gl-matrix.js\n * Math Util\n * modified by egjs\n */",
-  "secondLabel" : "\n * Original Code\n * https://github.com/toji/gl-matrix/blob/v2.3.2/src/gl-matrix.js\n * Math Util\n * modified by egjs\n */",
+  "firstLabel" : "/**\n * Original Code\n * https://github.com/toji/gl-matrix/blob/v2.3.2/src/gl-matrix.js\n * Math Util\n * modified by egjs\n */",
+  "secondLabel" : "/**\n * Original Code\n * https://github.com/toji/gl-matrix/blob/v2.3.2/src/gl-matrix.js\n * Math Util\n * modified by egjs\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 0,
@@ -23,8 +23,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * @fileoverview gl-matrix - High performance matrix and vector operations\n * @author Brandon Jones\n * @author Colin MacKenzie IV\n * @version 2.3.2\n */",
-  "secondLabel" : "\n * @fileoverview gl-matrix - High performance matrix and vector operations\n * @author Brandon Jones\n * @author Colin MacKenzie IV\n * @version 2.3.2\n */",
+  "firstLabel" : "/**\n * @fileoverview gl-matrix - High performance matrix and vector operations\n * @author Brandon Jones\n * @author Colin MacKenzie IV\n * @version 2.3.2\n */",
+  "secondLabel" : "/**\n * @fileoverview gl-matrix - High performance matrix and vector operations\n * @author Brandon Jones\n * @author Colin MacKenzie IV\n * @version 2.3.2\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 124,
@@ -34,8 +34,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE. */",
-  "secondLabel" : "\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE. */",
+  "firstLabel" : "/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE. */",
+  "secondLabel" : "/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE. */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 281,
@@ -3505,8 +3505,8 @@
   "secondParentType" : "program",
   "firstPos" : 2145,
   "secondPos" : 2194,
-  "firstEndPos" : 2234,
-  "secondEndPos" : 2283
+  "firstEndPos" : 2224,
+  "secondEndPos" : 2273
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -12461,6 +12461,204 @@
   "secondPos" : 5289,
   "firstEndPos" : 5058,
   "secondEndPos" : 5290
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 5211,
+  "secondPos" : 5452,
+  "firstEndPos" : 5242,
+  "secondEndPos" : 5483
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5211,
+  "secondPos" : 5452,
+  "firstEndPos" : 5222,
+  "secondEndPos" : 5463
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "vec3",
+  "secondLabel" : "vec3",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 5211,
+  "secondPos" : 5452,
+  "firstEndPos" : 5215,
+  "secondEndPos" : 5456
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 5215,
+  "secondPos" : 5456,
+  "firstEndPos" : 5216,
+  "secondEndPos" : 5457
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 5216,
+  "secondPos" : 5457,
+  "firstEndPos" : 5222,
+  "secondEndPos" : 5463
+}, {
+  "firstType" : "arguments",
+  "secondType" : "arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5222,
+  "secondPos" : 5463,
+  "firstEndPos" : 5242,
+  "secondEndPos" : 5483
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 5222,
+  "secondPos" : 5463,
+  "firstEndPos" : 5223,
+  "secondEndPos" : 5464
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "projectedPrevPoint",
+  "secondLabel" : "projectedPrevPoint",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 5223,
+  "secondPos" : 5464,
+  "firstEndPos" : 5241,
+  "secondEndPos" : 5482
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 5241,
+  "secondPos" : 5482,
+  "firstEndPos" : 5242,
+  "secondEndPos" : 5483
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 5245,
+  "secondPos" : 5486,
+  "firstEndPos" : 5266,
+  "secondEndPos" : 5507
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5245,
+  "secondPos" : 5486,
+  "firstEndPos" : 5256,
+  "secondEndPos" : 5497
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "vec3",
+  "secondLabel" : "vec3",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 5245,
+  "secondPos" : 5486,
+  "firstEndPos" : 5249,
+  "secondEndPos" : 5490
+}, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 5249,
+  "secondPos" : 5490,
+  "firstEndPos" : 5250,
+  "secondEndPos" : 5491
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "length",
+  "secondLabel" : "length",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 5250,
+  "secondPos" : 5491,
+  "firstEndPos" : 5256,
+  "secondEndPos" : 5497
+}, {
+  "firstType" : "arguments",
+  "secondType" : "arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 5256,
+  "secondPos" : 5497,
+  "firstEndPos" : 5266,
+  "secondEndPos" : 5507
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 5256,
+  "secondPos" : 5497,
+  "firstEndPos" : 5257,
+  "secondEndPos" : 5498
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "curPoint",
+  "secondLabel" : "curPoint",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 5257,
+  "secondPos" : 5498,
+  "firstEndPos" : 5265,
+  "secondEndPos" : 5506
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "arguments",
+  "secondParentType" : "arguments",
+  "firstPos" : 5265,
+  "secondPos" : 5506,
+  "firstEndPos" : 5266,
+  "secondEndPos" : 5507
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

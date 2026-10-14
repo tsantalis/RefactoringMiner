@@ -182467,6 +182467,94 @@
   "firstEndPos" : 69064,
   "secondEndPos" : 68943
 }, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 69179,
+  "secondPos" : 69052,
+  "firstEndPos" : 69212,
+  "secondEndPos" : 69085
+}, {
+  "firstType" : "field_expression",
+  "secondType" : "field_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 69179,
+  "secondPos" : 69052,
+  "firstEndPos" : 69210,
+  "secondEndPos" : 69083
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "PACTIVEWORKSPACE",
+  "secondLabel" : "PACTIVEWORKSPACE",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 69179,
+  "secondPos" : 69052,
+  "firstEndPos" : 69195,
+  "secondEndPos" : 69068
+}, {
+  "firstType" : "->",
+  "secondType" : "->",
+  "firstLabel" : "->",
+  "secondLabel" : "->",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 69195,
+  "secondPos" : 69068,
+  "firstEndPos" : 69197,
+  "secondEndPos" : 69070
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "hasFullscreen",
+  "secondLabel" : "hasFullscreen",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 69197,
+  "secondPos" : 69070,
+  "firstEndPos" : 69210,
+  "secondEndPos" : 69083
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 69210,
+  "secondPos" : 69083,
+  "firstEndPos" : 69212,
+  "secondEndPos" : 69085
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 69210,
+  "secondPos" : 69083,
+  "firstEndPos" : 69211,
+  "secondEndPos" : 69084
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 69211,
+  "secondPos" : 69084,
+  "firstEndPos" : 69212,
+  "secondEndPos" : 69085
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",

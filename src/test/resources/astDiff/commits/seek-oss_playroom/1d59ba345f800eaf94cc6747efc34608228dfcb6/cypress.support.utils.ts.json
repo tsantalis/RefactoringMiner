@@ -20610,8 +20610,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 5107,
   "secondPos" : 5234,
-  "firstEndPos" : 5201,
-  "secondEndPos" : 5328
+  "firstEndPos" : 5199,
+  "secondEndPos" : 5326
 }, {
   "firstType" : "return",
   "secondType" : "return",
@@ -20632,8 +20632,8 @@
   "secondParentType" : "return_statement",
   "firstPos" : 5114,
   "secondPos" : 5241,
-  "firstEndPos" : 5200,
-  "secondEndPos" : 5327
+  "firstEndPos" : 5198,
+  "secondEndPos" : 5325
 }, {
   "firstType" : "binary_expression",
   "secondType" : "binary_expression",
@@ -20852,8 +20852,8 @@
   "secondParentType" : "ternary_expression",
   "firstPos" : 5169,
   "secondPos" : 5296,
-  "firstEndPos" : 5200,
-  "secondEndPos" : 5327
+  "firstEndPos" : 5198,
+  "secondEndPos" : 5325
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -20962,8 +20962,8 @@
   "secondParentType" : "template_string",
   "firstPos" : 5181,
   "secondPos" : 5308,
-  "firstEndPos" : 5186,
-  "secondEndPos" : 5313
+  "firstEndPos" : 5184,
+  "secondEndPos" : 5311
 }, {
   "firstType" : "template_substitution",
   "secondType" : "template_substitution",
@@ -20971,10 +20971,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 5186,
-  "secondPos" : 5313,
-  "firstEndPos" : 5197,
-  "secondEndPos" : 5324
+  "firstPos" : 5184,
+  "secondPos" : 5311,
+  "firstEndPos" : 5195,
+  "secondEndPos" : 5322
 }, {
   "firstType" : "${",
   "secondType" : "${",
@@ -20982,10 +20982,10 @@
   "secondLabel" : "${",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 5186,
-  "secondPos" : 5313,
-  "firstEndPos" : 5188,
-  "secondEndPos" : 5315
+  "firstPos" : 5184,
+  "secondPos" : 5311,
+  "firstEndPos" : 5186,
+  "secondEndPos" : 5313
 }, {
   "firstType" : "subscript_expression",
   "secondType" : "subscript_expression",
@@ -20993,10 +20993,10 @@
   "secondLabel" : "",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 5188,
-  "secondPos" : 5315,
-  "firstEndPos" : 5196,
-  "secondEndPos" : 5323
+  "firstPos" : 5186,
+  "secondPos" : 5313,
+  "firstEndPos" : 5194,
+  "secondEndPos" : 5321
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -21004,10 +21004,10 @@
   "secondLabel" : "frame",
   "firstParentType" : "subscript_expression",
   "secondParentType" : "subscript_expression",
-  "firstPos" : 5188,
-  "secondPos" : 5315,
-  "firstEndPos" : 5193,
-  "secondEndPos" : 5320
+  "firstPos" : 5186,
+  "secondPos" : 5313,
+  "firstEndPos" : 5191,
+  "secondEndPos" : 5318
 }, {
   "firstType" : "[",
   "secondType" : "[",
@@ -21015,10 +21015,10 @@
   "secondLabel" : "[",
   "firstParentType" : "subscript_expression",
   "secondParentType" : "subscript_expression",
-  "firstPos" : 5193,
-  "secondPos" : 5320,
-  "firstEndPos" : 5194,
-  "secondEndPos" : 5321
+  "firstPos" : 5191,
+  "secondPos" : 5318,
+  "firstEndPos" : 5192,
+  "secondEndPos" : 5319
 }, {
   "firstType" : "number",
   "secondType" : "number",
@@ -21026,10 +21026,10 @@
   "secondLabel" : "1",
   "firstParentType" : "subscript_expression",
   "secondParentType" : "subscript_expression",
-  "firstPos" : 5194,
-  "secondPos" : 5321,
-  "firstEndPos" : 5195,
-  "secondEndPos" : 5322
+  "firstPos" : 5192,
+  "secondPos" : 5319,
+  "firstEndPos" : 5193,
+  "secondEndPos" : 5320
 }, {
   "firstType" : "]",
   "secondType" : "]",
@@ -21037,10 +21037,10 @@
   "secondLabel" : "]",
   "firstParentType" : "subscript_expression",
   "secondParentType" : "subscript_expression",
-  "firstPos" : 5195,
-  "secondPos" : 5322,
-  "firstEndPos" : 5196,
-  "secondEndPos" : 5323
+  "firstPos" : 5193,
+  "secondPos" : 5320,
+  "firstEndPos" : 5194,
+  "secondEndPos" : 5321
 }, {
   "firstType" : "}",
   "secondType" : "}",
@@ -21048,10 +21048,10 @@
   "secondLabel" : "}",
   "firstParentType" : "template_substitution",
   "secondParentType" : "template_substitution",
-  "firstPos" : 5196,
-  "secondPos" : 5323,
-  "firstEndPos" : 5197,
-  "secondEndPos" : 5324
+  "firstPos" : 5194,
+  "secondPos" : 5321,
+  "firstEndPos" : 5195,
+  "secondEndPos" : 5322
 }, {
   "firstType" : "string_fragment",
   "secondType" : "string_fragment",
@@ -21059,10 +21059,10 @@
   "secondLabel" : "px",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 5197,
-  "secondPos" : 5324,
-  "firstEndPos" : 5199,
-  "secondEndPos" : 5326
+  "firstPos" : 5195,
+  "secondPos" : 5322,
+  "firstEndPos" : 5197,
+  "secondEndPos" : 5324
 }, {
   "firstType" : "`",
   "secondType" : "`",
@@ -21070,10 +21070,10 @@
   "secondLabel" : "`",
   "firstParentType" : "template_string",
   "secondParentType" : "template_string",
-  "firstPos" : 5199,
-  "secondPos" : 5326,
-  "firstEndPos" : 5200,
-  "secondEndPos" : 5327
+  "firstPos" : 5197,
+  "secondPos" : 5324,
+  "firstEndPos" : 5198,
+  "secondEndPos" : 5325
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -21081,10 +21081,10 @@
   "secondLabel" : ";",
   "firstParentType" : "return_statement",
   "secondParentType" : "return_statement",
-  "firstPos" : 5200,
-  "secondPos" : 5327,
-  "firstEndPos" : 5201,
-  "secondEndPos" : 5328
+  "firstPos" : 5198,
+  "secondPos" : 5325,
+  "firstEndPos" : 5199,
+  "secondEndPos" : 5326
 }, {
   "firstType" : "}",
   "secondType" : "}",

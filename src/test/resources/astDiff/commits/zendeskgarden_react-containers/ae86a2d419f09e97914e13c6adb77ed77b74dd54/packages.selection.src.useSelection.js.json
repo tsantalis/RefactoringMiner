@@ -12,8 +12,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Copyright Zendesk, Inc.\n *\n * Use of this source code is governed under the Apache License, Version 2.0\n * found at http://www.apache.org/licenses/LICENSE-2.0.\n */",
-  "secondLabel" : "\n * Copyright Zendesk, Inc.\n *\n * Use of this source code is governed under the Apache License, Version 2.0\n * found at http://www.apache.org/licenses/LICENSE-2.0.\n */",
+  "firstLabel" : "/**\n * Copyright Zendesk, Inc.\n *\n * Use of this source code is governed under the Apache License, Version 2.0\n * found at http://www.apache.org/licenses/LICENSE-2.0.\n */",
+  "secondLabel" : "/**\n * Copyright Zendesk, Inc.\n *\n * Use of this source code is governed under the Apache License, Version 2.0\n * found at http://www.apache.org/licenses/LICENSE-2.0.\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 0,
@@ -9395,8 +9395,8 @@
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
-  "firstLabel" : "\n * Custom hook to manage selection using the Roving Tab Index strategy\n *\n * https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex\n */",
-  "secondLabel" : "\n * Custom hook to manage selection using the Roving Tab Index strategy\n *\n * https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex\n */",
+  "firstLabel" : "/**\n * Custom hook to manage selection using the Roving Tab Index strategy\n *\n * https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex\n */",
+  "secondLabel" : "/**\n * Custom hook to manage selection using the Roving Tab Index strategy\n *\n * https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex\n */",
   "firstParentType" : "program",
   "secondParentType" : "program",
   "firstPos" : 3615,
@@ -10960,11 +10960,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "expression_statement",
-  "secondParentType" : "non_null_expression",
+  "secondParentType" : "expression_statement",
   "firstPos" : 4398,
   "secondPos" : 6249,
   "firstEndPos" : 4454,
-  "secondEndPos" : 6297
+  "secondEndPos" : 6306
 }, {
   "firstType" : "subscript_expression",
   "secondType" : "subscript_expression",
@@ -11037,9 +11037,9 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "binary_expression",
-  "secondParentType" : "expression_statement",
+  "secondParentType" : "binary_expression",
   "firstPos" : 4420,
-  "secondPos" : 6249,
+  "secondPos" : 6271,
   "firstEndPos" : 4454,
   "secondEndPos" : 6306
 }, {
@@ -11050,7 +11050,7 @@
   "firstParentType" : "call_expression",
   "secondParentType" : "call_expression",
   "firstPos" : 4420,
-  "secondPos" : 6249,
+  "secondPos" : 6271,
   "firstEndPos" : 4452,
   "secondEndPos" : 6304
 }, {
@@ -11059,7 +11059,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "member_expression",
-  "secondParentType" : "binary_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 4420,
   "secondPos" : 6271,
   "firstEndPos" : 4446,

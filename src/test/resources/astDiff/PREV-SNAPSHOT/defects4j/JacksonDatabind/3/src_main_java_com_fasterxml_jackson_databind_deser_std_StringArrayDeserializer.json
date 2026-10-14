@@ -4223,6 +4223,50 @@
   "firstEndPos" : 3289,
   "secondEndPos" : 3331
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParenthesizedExpression",
+  "secondParentType" : "ParenthesizedExpression",
+  "firstPos" : 3318,
+  "secondPos" : 3360,
+  "firstEndPos" : 3343,
+  "secondEndPos" : 3385
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "t",
+  "secondLabel" : "t",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 3318,
+  "secondPos" : 3360,
+  "firstEndPos" : 3319,
+  "secondEndPos" : 3361
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "==",
+  "secondLabel" : "==",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 3320,
+  "secondPos" : 3362,
+  "firstEndPos" : 3322,
+  "secondEndPos" : 3364
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "JsonToken.VALUE_NULL",
+  "secondLabel" : "JsonToken.VALUE_NULL",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 3323,
+  "secondPos" : 3365,
+  "firstEndPos" : 3343,
+  "secondEndPos" : 3385
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",

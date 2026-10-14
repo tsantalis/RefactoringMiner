@@ -5048,8 +5048,8 @@
   "firstEndPos" : 1841,
   "secondEndPos" : 1841
 }, {
-  "firstType" : "member_expression",
-  "secondType" : "member_expression",
+  "firstType" : "binary_expression",
+  "secondType" : "binary_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "assignment_expression",
@@ -5058,28 +5058,6 @@
   "secondPos" : 1842,
   "firstEndPos" : 1879,
   "secondEndPos" : 1879
-}, {
-  "firstType" : "non_null_expression",
-  "secondType" : "non_null_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 1842,
-  "secondPos" : 1842,
-  "firstEndPos" : 1876,
-  "secondEndPos" : 1876
-}, {
-  "firstType" : "binary_expression",
-  "secondType" : "binary_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "non_null_expression",
-  "secondParentType" : "non_null_expression",
-  "firstPos" : 1842,
-  "secondPos" : 1842,
-  "firstEndPos" : 1875,
-  "secondEndPos" : 1875
 }, {
   "firstType" : "member_expression",
   "secondType" : "member_expression",
@@ -5175,6 +5153,28 @@
   "secondLabel" : "",
   "firstParentType" : "binary_expression",
   "secondParentType" : "binary_expression",
+  "firstPos" : 1859,
+  "secondPos" : 1859,
+  "firstEndPos" : 1879,
+  "secondEndPos" : 1879
+}, {
+  "firstType" : "non_null_expression",
+  "secondType" : "non_null_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1859,
+  "secondPos" : 1859,
+  "firstEndPos" : 1876,
+  "secondEndPos" : 1876
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "non_null_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 1859,
   "secondPos" : 1859,
   "firstEndPos" : 1875,
@@ -24804,8 +24804,8 @@
   "firstEndPos" : 8247,
   "secondEndPos" : 8273
 }, {
-  "firstType" : "member_expression",
-  "secondType" : "member_expression",
+  "firstType" : "binary_expression",
+  "secondType" : "binary_expression",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
@@ -24814,28 +24814,6 @@
   "secondPos" : 8274,
   "firstEndPos" : 8263,
   "secondEndPos" : 8289
-}, {
-  "firstType" : "non_null_expression",
-  "secondType" : "non_null_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "member_expression",
-  "secondParentType" : "member_expression",
-  "firstPos" : 8248,
-  "secondPos" : 8274,
-  "firstEndPos" : 8260,
-  "secondEndPos" : 8286
-}, {
-  "firstType" : "binary_expression",
-  "secondType" : "binary_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "non_null_expression",
-  "secondParentType" : "non_null_expression",
-  "firstPos" : 8248,
-  "secondPos" : 8274,
-  "firstEndPos" : 8259,
-  "secondEndPos" : 8285
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -24859,12 +24837,34 @@
   "firstEndPos" : 8253,
   "secondEndPos" : 8279
 }, {
+  "firstType" : "member_expression",
+  "secondType" : "member_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 8254,
+  "secondPos" : 8280,
+  "firstEndPos" : 8263,
+  "secondEndPos" : 8289
+}, {
+  "firstType" : "non_null_expression",
+  "secondType" : "non_null_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 8254,
+  "secondPos" : 8280,
+  "firstEndPos" : 8260,
+  "secondEndPos" : 8286
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "album",
   "secondLabel" : "album",
-  "firstParentType" : "binary_expression",
-  "secondParentType" : "binary_expression",
+  "firstParentType" : "non_null_expression",
+  "secondParentType" : "non_null_expression",
   "firstPos" : 8254,
   "secondPos" : 8280,
   "firstEndPos" : 8259,

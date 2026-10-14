@@ -2487,8 +2487,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    create_test_procedure_without_params_sql = \n        CREATE PROCEDURE \"TEST_PROCEDURE\" AS\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    \"\"\"",
-  "secondLabel" : "    create_test_procedure_without_params_sql = \n        CREATE PROCEDURE \"TEST_PROCEDURE\" AS\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n        CREATE PROCEDURE \"TEST_PROCEDURE\" AS\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n        CREATE PROCEDURE \"TEST_PROCEDURE\" AS\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    \"\"\"",
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 2245,
@@ -2542,8 +2542,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    create_test_procedure_with_int_param_sql = \n        CREATE PROCEDURE \"TEST_PROCEDURE\" (P_I INTEGER) AS\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    \"\"\"",
-  "secondLabel" : "    create_test_procedure_with_int_param_sql = \n        CREATE PROCEDURE \"TEST_PROCEDURE\" (P_I INTEGER) AS\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n        CREATE PROCEDURE \"TEST_PROCEDURE\" (P_I INTEGER) AS\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n        CREATE PROCEDURE \"TEST_PROCEDURE\" (P_I INTEGER) AS\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    \"\"\"",
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 2423,

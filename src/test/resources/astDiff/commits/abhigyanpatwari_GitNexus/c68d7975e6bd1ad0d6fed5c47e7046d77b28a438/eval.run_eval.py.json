@@ -34,8 +34,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "\nGitNexus SWE-bench Evaluation Runner\n\nMain entry point for running SWE-bench evaluations with and without GitNexus.\nSupports running a single configuration or a full matrix of models x modes.\n\nUsage:\n    # Single run (default: native_augment mode — GitNexus tools + grep enrichment)\n    python run_eval.py single -m claude-sonnet --subset lite --slice 0:5\n\n    # Baseline comparison (no GitNexus)\n    python run_eval.py single -m claude-sonnet --mode baseline --subset lite --slice 0:5\n\n    # Matrix run (all models x all modes)\n    python run_eval.py matrix --subset lite --slice 0:50 --workers 4\n\n    # Single instance for debugging\n    python run_eval.py debug -m claude-haiku -i django__django-16527\n\"\"\"",
-  "secondLabel" : "\nGitNexus SWE-bench Evaluation Runner\n\nMain entry point for running SWE-bench evaluations with and without GitNexus.\nSupports running a single configuration or a full matrix of models x modes.\n\nUsage:\n    # Single run (default: native_augment mode — GitNexus tools + grep enrichment)\n    python run_eval.py single -m claude-sonnet --subset lite --slice 0:5\n\n    # Baseline comparison (no GitNexus)\n    python run_eval.py single -m claude-sonnet --mode baseline --subset lite --slice 0:5\n\n    # Matrix run (all models x all modes)\n    python run_eval.py matrix --subset lite --slice 0:50 --workers 4\n\n    # Single instance for debugging\n    python run_eval.py debug -m claude-haiku -i django__django-16527\n\"\"\"",
+  "firstLabel" : "\"\"\"\nGitNexus SWE-bench Evaluation Runner\n\nMain entry point for running SWE-bench evaluations with and without GitNexus.\nSupports running a single configuration or a full matrix of models x modes.\n\nUsage:\n    # Single run (default: native_augment mode — GitNexus tools + grep enrichment)\n    python run_eval.py single -m claude-sonnet --subset lite --slice 0:5\n\n    # Baseline comparison (no GitNexus)\n    python run_eval.py single -m claude-sonnet --mode baseline --subset lite --slice 0:5\n\n    # Matrix run (all models x all modes)\n    python run_eval.py matrix --subset lite --slice 0:50 --workers 4\n\n    # Single instance for debugging\n    python run_eval.py debug -m claude-haiku -i django__django-16527\n\"\"\"",
+  "secondLabel" : "\"\"\"\nGitNexus SWE-bench Evaluation Runner\n\nMain entry point for running SWE-bench evaluations with and without GitNexus.\nSupports running a single configuration or a full matrix of models x modes.\n\nUsage:\n    # Single run (default: native_augment mode — GitNexus tools + grep enrichment)\n    python run_eval.py single -m claude-sonnet --subset lite --slice 0:5\n\n    # Baseline comparison (no GitNexus)\n    python run_eval.py single -m claude-sonnet --mode baseline --subset lite --slice 0:5\n\n    # Matrix run (all models x all modes)\n    python run_eval.py matrix --subset lite --slice 0:50 --workers 4\n\n    # Single instance for debugging\n    python run_eval.py debug -m claude-haiku -i django__django-16527\n\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 23,
@@ -8471,7 +8471,7 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
   "secondLabel" : "\"\"\"Construct the model from config.\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
@@ -8482,7 +8482,7 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
   "secondLabel" : "\"\"\"Construct the environment for the instance.\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
@@ -8493,7 +8493,7 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
   "secondLabel" : "\"\"\"Construct the GitNexus agent with trajectory output configured.\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
@@ -8504,7 +8504,7 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
   "secondLabel" : "\"\"\"Pull the git diff patch from the container, falling back to the agent submission.\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
@@ -8515,8 +8515,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
-  "secondLabel" : "    \n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Process a single SWE-bench instance with the given config.\n    Returns result dict with instance_id, exit_status, submission, metrics.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 4684,
@@ -18652,8 +18652,8 @@
   "secondParentType" : "module",
   "firstPos" : 10766,
   "secondPos" : 11925,
-  "firstEndPos" : 10968,
-  "secondEndPos" : 12127
+  "firstEndPos" : 10844,
+  "secondEndPos" : 12003
 }, {
   "firstType" : "decorated_definition",
   "secondType" : "decorated_definition",
@@ -24009,8 +24009,8 @@
   "secondParentType" : "expression_statement",
   "firstPos" : 13770,
   "secondPos" : 14929,
-  "firstEndPos" : 13841,
-  "secondEndPos" : 15000
+  "firstEndPos" : 13829,
+  "secondEndPos" : 14988
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -24020,8 +24020,8 @@
   "secondParentType" : "block",
   "firstPos" : 13770,
   "secondPos" : 14929,
-  "firstEndPos" : 13841,
-  "secondEndPos" : 15000
+  "firstEndPos" : 13829,
+  "secondEndPos" : 14988
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -24064,8 +24064,8 @@
   "secondParentType" : "call",
   "firstPos" : 13783,
   "secondPos" : 14942,
-  "firstEndPos" : 13841,
-  "secondEndPos" : 15000
+  "firstEndPos" : 13829,
+  "secondEndPos" : 14988
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -24075,8 +24075,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 13784,
   "secondPos" : 14943,
-  "firstEndPos" : 13840,
-  "secondEndPos" : 14999
+  "firstEndPos" : 13828,
+  "secondEndPos" : 14987
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -29575,8 +29575,8 @@
   "secondParentType" : "module",
   "firstPos" : 16887,
   "secondPos" : 18046,
-  "firstEndPos" : 17082,
-  "secondEndPos" : 18241
+  "firstEndPos" : 16964,
+  "secondEndPos" : 18123
 }, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",

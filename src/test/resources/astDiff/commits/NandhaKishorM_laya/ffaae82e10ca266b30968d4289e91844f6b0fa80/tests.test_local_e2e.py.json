@@ -23,8 +23,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "\n\nCovers three integration properties:\n  1. non-English input reaches a checkpoint that can actually read it\n  2. the shipped application presets still behave on English\n  3. a noul label override preserves false/true polarity on the English checkpoint\n\nRun:  python3 tests/test_local_e2e.py [model_root]\nDefaults to ~/laya_models, expecting laya/, laya-multilingual/, laya-typed-decisions/.\n\"\"\"",
-  "secondLabel" : "\n\nCovers three integration properties:\n  1. non-English input reaches a checkpoint that can actually read it\n  2. the shipped application presets still behave on English\n  3. a noul label override preserves false/true polarity on the English checkpoint\n\nRun:  python3 tests/test_local_e2e.py [model_root]\nDefaults to ~/laya_models, expecting laya/, laya-multilingual/, laya-typed-decisions/.\n\"\"\"",
+  "firstLabel" : "\"\"\"End-to-end local test: real weights, real forward passes.\n\nCovers three integration properties:\n  1. non-English input reaches a checkpoint that can actually read it\n  2. the shipped application presets still behave on English\n  3. a noul label override preserves false/true polarity on the English checkpoint\n\nRun:  python3 tests/test_local_e2e.py [model_root]\nDefaults to ~/laya_models, expecting laya/, laya-multilingual/, laya-typed-decisions/.\n\"\"\"",
+  "secondLabel" : "\"\"\"End-to-end local test: real weights, real forward passes.\n\nCovers three integration properties:\n  1. non-English input reaches a checkpoint that can actually read it\n  2. the shipped application presets still behave on English\n  3. a noul label override preserves false/true polarity on the English checkpoint\n\nRun:  python3 tests/test_local_e2e.py [model_root]\nDefaults to ~/laya_models, expecting laya/, laya-multilingual/, laya-typed-decisions/.\n\"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 0,
@@ -3791,8 +3791,8 @@
   "secondParentType" : "list",
   "firstPos" : 2470,
   "secondPos" : 2470,
-  "firstEndPos" : 2680,
-  "secondEndPos" : 2680
+  "firstEndPos" : 2572,
+  "secondEndPos" : 2572
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3813,8 +3813,19 @@
   "secondParentType" : "tuple",
   "firstPos" : 2480,
   "secondPos" : 2480,
-  "firstEndPos" : 2663,
-  "secondEndPos" : 2663
+  "firstEndPos" : 2555,
+  "secondEndPos" : 2555
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"multilingual\"",
+  "secondLabel" : "\"multilingual\"",
+  "firstParentType" : "tuple",
+  "secondParentType" : "tuple",
+  "firstPos" : 2557,
+  "secondPos" : 2557,
+  "firstEndPos" : 2571,
+  "secondEndPos" : 2571
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -3824,8 +3835,8 @@
   "secondParentType" : "list",
   "firstPos" : 2578,
   "secondPos" : 2578,
-  "firstEndPos" : 2698,
-  "secondEndPos" : 2698
+  "firstEndPos" : 2642,
+  "secondEndPos" : 2642
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3846,8 +3857,19 @@
   "secondParentType" : "tuple",
   "firstPos" : 2591,
   "secondPos" : 2591,
-  "firstEndPos" : 2681,
-  "secondEndPos" : 2681
+  "firstEndPos" : 2625,
+  "secondEndPos" : 2625
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"multilingual\"",
+  "secondLabel" : "\"multilingual\"",
+  "firstParentType" : "tuple",
+  "secondParentType" : "tuple",
+  "firstPos" : 2627,
+  "secondPos" : 2627,
+  "firstEndPos" : 2641,
+  "secondEndPos" : 2641
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -3857,8 +3879,8 @@
   "secondParentType" : "list",
   "firstPos" : 2648,
   "secondPos" : 2648,
-  "firstEndPos" : 2761,
-  "secondEndPos" : 2761
+  "firstEndPos" : 2715,
+  "secondEndPos" : 2715
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3879,8 +3901,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 2659,
   "secondPos" : 2659,
-  "firstEndPos" : 2744,
-  "secondEndPos" : 2744
+  "firstEndPos" : 2698,
+  "secondEndPos" : 2698
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3888,21 +3910,10 @@
   "secondLabel" : "\"multilingual\"",
   "firstParentType" : "tuple",
   "secondParentType" : "tuple",
-  "firstPos" : 2665,
-  "secondPos" : 2665,
-  "firstEndPos" : 2679,
-  "secondEndPos" : 2679
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"multilingual\"",
-  "secondLabel" : "\"multilingual\"",
-  "firstParentType" : "tuple",
-  "secondParentType" : "tuple",
-  "firstPos" : 2683,
-  "secondPos" : 2683,
-  "firstEndPos" : 2697,
-  "secondEndPos" : 2697
+  "firstPos" : 2700,
+  "secondPos" : 2700,
+  "firstEndPos" : 2714,
+  "secondEndPos" : 2714
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -3912,8 +3923,8 @@
   "secondParentType" : "list",
   "firstPos" : 2721,
   "secondPos" : 2721,
-  "firstEndPos" : 2849,
-  "secondEndPos" : 2849
+  "firstEndPos" : 2807,
+  "secondEndPos" : 2807
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3934,8 +3945,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 2732,
   "secondPos" : 2732,
-  "firstEndPos" : 2832,
-  "secondEndPos" : 2832
+  "firstEndPos" : 2790,
+  "secondEndPos" : 2790
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3943,10 +3954,10 @@
   "secondLabel" : "\"multilingual\"",
   "firstParentType" : "tuple",
   "secondParentType" : "tuple",
-  "firstPos" : 2746,
-  "secondPos" : 2746,
-  "firstEndPos" : 2760,
-  "secondEndPos" : 2760
+  "firstPos" : 2792,
+  "secondPos" : 2792,
+  "firstEndPos" : 2806,
+  "secondEndPos" : 2806
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -3956,8 +3967,8 @@
   "secondParentType" : "list",
   "firstPos" : 2813,
   "secondPos" : 2813,
-  "firstEndPos" : 3062,
-  "secondEndPos" : 3062
+  "firstEndPos" : 2924,
+  "secondEndPos" : 2924
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3978,8 +3989,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 2823,
   "secondPos" : 2823,
-  "firstEndPos" : 3045,
-  "secondEndPos" : 3045
+  "firstEndPos" : 2907,
+  "secondEndPos" : 2907
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -3987,10 +3998,10 @@
   "secondLabel" : "\"multilingual\"",
   "firstParentType" : "tuple",
   "secondParentType" : "tuple",
-  "firstPos" : 2834,
-  "secondPos" : 2834,
-  "firstEndPos" : 2848,
-  "secondEndPos" : 2848
+  "firstPos" : 2909,
+  "secondPos" : 2909,
+  "firstEndPos" : 2923,
+  "secondEndPos" : 2923
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -4000,8 +4011,8 @@
   "secondParentType" : "list",
   "firstPos" : 2930,
   "secondPos" : 2930,
-  "firstEndPos" : 3089,
-  "secondEndPos" : 3089
+  "firstEndPos" : 3033,
+  "secondEndPos" : 3033
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -4022,8 +4033,19 @@
   "secondParentType" : "tuple",
   "firstPos" : 2942,
   "secondPos" : 2942,
-  "firstEndPos" : 3072,
-  "secondEndPos" : 3072
+  "firstEndPos" : 3016,
+  "secondEndPos" : 3016
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"multilingual\"",
+  "secondLabel" : "\"multilingual\"",
+  "firstParentType" : "tuple",
+  "secondParentType" : "tuple",
+  "firstPos" : 3018,
+  "secondPos" : 3018,
+  "firstEndPos" : 3032,
+  "secondEndPos" : 3032
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -4033,8 +4055,8 @@
   "secondParentType" : "list",
   "firstPos" : 3039,
   "secondPos" : 3039,
-  "firstEndPos" : 3116,
-  "secondEndPos" : 3116
+  "firstEndPos" : 3088,
+  "secondEndPos" : 3088
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -4049,25 +4071,14 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "\"multilingual\"",
-  "secondLabel" : "\"multilingual\"",
-  "firstParentType" : "tuple",
-  "secondParentType" : "tuple",
-  "firstPos" : 3047,
-  "secondPos" : 3047,
-  "firstEndPos" : 3061,
-  "secondEndPos" : 3061
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
   "firstLabel" : "\"发票4411被重复扣款，请今天退款。\"",
   "secondLabel" : "\"发票4411被重复扣款，请今天退款。\"",
   "firstParentType" : "tuple",
   "secondParentType" : "tuple",
   "firstPos" : 3051,
   "secondPos" : 3051,
-  "firstEndPos" : 3099,
-  "secondEndPos" : 3099
+  "firstEndPos" : 3071,
+  "secondEndPos" : 3071
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -4075,10 +4086,10 @@
   "secondLabel" : "\"multilingual\"",
   "firstParentType" : "tuple",
   "secondParentType" : "tuple",
-  "firstPos" : 3074,
-  "secondPos" : 3074,
-  "firstEndPos" : 3088,
-  "secondEndPos" : 3088
+  "firstPos" : 3073,
+  "secondPos" : 3073,
+  "firstEndPos" : 3087,
+  "secondEndPos" : 3087
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -4088,8 +4099,8 @@
   "secondParentType" : "list",
   "firstPos" : 3094,
   "secondPos" : 3094,
-  "firstEndPos" : 3302,
-  "secondEndPos" : 3302
+  "firstEndPos" : 3186,
+  "secondEndPos" : 3186
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -4104,25 +4115,102 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "\"multilingual\"",
-  "secondLabel" : "\"multilingual\"",
-  "firstParentType" : "tuple",
-  "secondParentType" : "tuple",
-  "firstPos" : 3101,
-  "secondPos" : 3101,
-  "firstEndPos" : 3115,
-  "secondEndPos" : 3115
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
   "firstLabel" : "\"ถูกเรียกเก็บเงินสองครั้งสำหรับใบแจ้งหนี้ 4411 กรุณาคืนเงินวันนี้\"",
   "secondLabel" : "\"ถูกเรียกเก็บเงินสองครั้งสำหรับใบแจ้งหนี้ 4411 กรุณาคืนเงินวันนี้\"",
   "firstParentType" : "tuple",
   "secondParentType" : "tuple",
   "firstPos" : 3103,
   "secondPos" : 3103,
-  "firstEndPos" : 3285,
-  "secondEndPos" : 3285
+  "firstEndPos" : 3169,
+  "secondEndPos" : 3169
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "\"multilingual\"",
+  "secondLabel" : "\"multilingual\"",
+  "firstParentType" : "tuple",
+  "secondParentType" : "tuple",
+  "firstPos" : 3171,
+  "secondPos" : 3171,
+  "firstEndPos" : 3185,
+  "secondEndPos" : 3185
+}, {
+  "firstType" : "for_statement",
+  "secondType" : "for_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "module",
+  "secondParentType" : "module",
+  "firstPos" : 3190,
+  "secondPos" : 3190,
+  "firstEndPos" : 3408,
+  "secondEndPos" : 3408
+}, {
+  "firstType" : "pattern_list",
+  "secondType" : "pattern_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_statement",
+  "secondParentType" : "for_statement",
+  "firstPos" : 3194,
+  "secondPos" : 3194,
+  "firstEndPos" : 3211,
+  "secondEndPos" : 3211
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "label",
+  "secondLabel" : "label",
+  "firstParentType" : "pattern_list",
+  "secondParentType" : "pattern_list",
+  "firstPos" : 3194,
+  "secondPos" : 3194,
+  "firstEndPos" : 3199,
+  "secondEndPos" : 3199
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "text",
+  "secondLabel" : "text",
+  "firstParentType" : "pattern_list",
+  "secondParentType" : "pattern_list",
+  "firstPos" : 3201,
+  "secondPos" : 3201,
+  "firstEndPos" : 3205,
+  "secondEndPos" : 3205
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "want",
+  "secondLabel" : "want",
+  "firstParentType" : "pattern_list",
+  "secondParentType" : "pattern_list",
+  "firstPos" : 3207,
+  "secondPos" : 3207,
+  "firstEndPos" : 3211,
+  "secondEndPos" : 3211
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LANGS",
+  "secondLabel" : "LANGS",
+  "firstParentType" : "for_statement",
+  "secondParentType" : "for_statement",
+  "firstPos" : 3215,
+  "secondPos" : 3215,
+  "firstEndPos" : 3220,
+  "secondEndPos" : 3220
+}, {
+  "firstType" : "block",
+  "secondType" : "block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "for_statement",
+  "secondParentType" : "for_statement",
+  "firstPos" : 3226,
+  "secondPos" : 3226,
+  "firstEndPos" : 3408,
+  "secondEndPos" : 3408
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -4343,17 +4431,6 @@
   "secondPos" : 3267,
   "firstEndPos" : 3288,
   "secondEndPos" : 3288
-}, {
-  "firstType" : "string",
-  "secondType" : "string",
-  "firstLabel" : "\"multilingual\"",
-  "secondLabel" : "\"multilingual\"",
-  "firstParentType" : "tuple",
-  "secondParentType" : "tuple",
-  "firstPos" : 3287,
-  "secondPos" : 3287,
-  "firstEndPos" : 3301,
-  "secondEndPos" : 3301
 }, {
   "firstType" : "%",
   "secondType" : "%",
@@ -7179,8 +7256,8 @@
   "secondParentType" : "list",
   "firstPos" : 5463,
   "secondPos" : 5463,
-  "firstEndPos" : 5647,
-  "secondEndPos" : 5647
+  "firstEndPos" : 5545,
+  "secondEndPos" : 5545
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -7201,8 +7278,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 5473,
   "secondPos" : 5473,
-  "firstEndPos" : 5646,
-  "secondEndPos" : 5646
+  "firstEndPos" : 5544,
+  "secondEndPos" : 5544
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -7212,8 +7289,8 @@
   "secondParentType" : "list",
   "firstPos" : 5551,
   "secondPos" : 5551,
-  "firstEndPos" : 5643,
-  "secondEndPos" : 5643
+  "firstEndPos" : 5595,
+  "secondEndPos" : 5595
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -7234,8 +7311,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 5564,
   "secondPos" : 5564,
-  "firstEndPos" : 5642,
-  "secondEndPos" : 5642
+  "firstEndPos" : 5594,
+  "secondEndPos" : 5594
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -7245,8 +7322,8 @@
   "secondParentType" : "list",
   "firstPos" : 5601,
   "secondPos" : 5601,
-  "firstEndPos" : 5656,
-  "secondEndPos" : 5656
+  "firstEndPos" : 5632,
+  "secondEndPos" : 5632
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -7267,8 +7344,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 5613,
   "secondPos" : 5613,
-  "firstEndPos" : 5655,
-  "secondEndPos" : 5655
+  "firstEndPos" : 5631,
+  "secondEndPos" : 5631
 }, {
   "firstType" : "tuple",
   "secondType" : "tuple",
@@ -7278,8 +7355,8 @@
   "secondParentType" : "list",
   "firstPos" : 5638,
   "secondPos" : 5638,
-  "firstEndPos" : 5756,
-  "secondEndPos" : 5756
+  "firstEndPos" : 5712,
+  "secondEndPos" : 5712
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -7300,8 +7377,8 @@
   "secondParentType" : "tuple",
   "firstPos" : 5650,
   "secondPos" : 5650,
-  "firstEndPos" : 5755,
-  "secondEndPos" : 5755
+  "firstEndPos" : 5711,
+  "secondEndPos" : 5711
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -18146,8 +18223,8 @@
   "secondParentType" : "expression_statement",
   "firstPos" : 12062,
   "secondPos" : 12062,
-  "firstEndPos" : 12232,
-  "secondEndPos" : 12232
+  "firstEndPos" : 12152,
+  "secondEndPos" : 12152
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -18157,8 +18234,8 @@
   "secondParentType" : "module",
   "firstPos" : 12062,
   "secondPos" : 12062,
-  "firstEndPos" : 12232,
-  "secondEndPos" : 12232
+  "firstEndPos" : 12152,
+  "secondEndPos" : 12152
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -18190,8 +18267,8 @@
   "secondParentType" : "assignment",
   "firstPos" : 12071,
   "secondPos" : 12071,
-  "firstEndPos" : 12232,
-  "secondEndPos" : 12232
+  "firstEndPos" : 12152,
+  "secondEndPos" : 12152
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -18234,8 +18311,8 @@
   "secondParentType" : "call",
   "firstPos" : 12081,
   "secondPos" : 12081,
-  "firstEndPos" : 12232,
-  "secondEndPos" : 12232
+  "firstEndPos" : 12152,
+  "secondEndPos" : 12152
 }, {
   "firstType" : "dictionary",
   "secondType" : "dictionary",
@@ -18245,8 +18322,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 12082,
   "secondPos" : 12082,
-  "firstEndPos" : 12227,
-  "secondEndPos" : 12227
+  "firstEndPos" : 12147,
+  "secondEndPos" : 12147
 }, {
   "firstType" : "pair",
   "secondType" : "pair",
@@ -18256,8 +18333,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 12083,
   "secondPos" : 12083,
-  "firstEndPos" : 12226,
-  "secondEndPos" : 12226
+  "firstEndPos" : 12146,
+  "secondEndPos" : 12146
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -18278,8 +18355,19 @@
   "secondParentType" : "pair",
   "firstPos" : 12094,
   "secondPos" : 12094,
-  "firstEndPos" : 12226,
-  "secondEndPos" : 12226
+  "firstEndPos" : 12146,
+  "secondEndPos" : 12146
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "QD",
+  "secondLabel" : "QD",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12149,
+  "secondPos" : 12149,
+  "firstEndPos" : 12151,
+  "secondEndPos" : 12151
 }, {
   "firstType" : "call",
   "secondType" : "call",
@@ -18465,17 +18553,6 @@
   "secondParentType" : "subscript",
   "firstPos" : 12222,
   "secondPos" : 12222,
-  "firstEndPos" : 12231,
-  "secondEndPos" : 12231
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "QD",
-  "secondLabel" : "QD",
-  "firstParentType" : "argument_list",
-  "secondParentType" : "argument_list",
-  "firstPos" : 12229,
-  "secondPos" : 12229,
   "firstEndPos" : 12231,
   "secondEndPos" : 12231
 }, {

@@ -969,8 +969,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Limit introspection to tables created for models of this app.\n    Some databases such as Oracle are extremely slow at introspection.\n    \"\"\"",
-  "secondLabel" : "    \n    Limit introspection to tables created for models of this app.\n    Some databases such as Oracle are extremely slow at introspection.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Limit introspection to tables created for models of this app.\n    Some databases such as Oracle are extremely slow at introspection.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Limit introspection to tables created for models of this app.\n    Some databases such as Oracle are extremely slow at introspection.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 440,
@@ -1519,8 +1519,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Execute SQL queries using a new cursor on the default database connection.\n    \"\"\"",
-  "secondLabel" : "    \n    Execute SQL queries using a new cursor on the default database connection.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Execute SQL queries using a new cursor on the default database connection.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Execute SQL queries using a new cursor on the default database connection.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 917,
@@ -2718,8 +2718,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        inspectdb can inspect a subset of tables by passing the table names as\n        arguments.\n        \"\"\"",
-  "secondLabel" : "        \n        inspectdb can inspect a subset of tables by passing the table names as\n        arguments.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        inspectdb can inspect a subset of tables by passing the table names as\n        arguments.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        inspectdb can inspect a subset of tables by passing the table names as\n        arguments.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 1879,
@@ -3257,8 +3257,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Call inspectdb and return a function to validate a field type in its\n        output.\n        \"\"\"",
-  "secondLabel" : "        \n        Call inspectdb and return a function to validate a field type in its\n        output.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Call inspectdb and return a function to validate a field type in its\n        output.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Call inspectdb and return a function to validate a field type in its\n        output.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 2291,
@@ -14543,8 +14543,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Introspection of column names consist/start with digits (#16536/#17676)\n        \"\"\"",
-  "secondLabel" : "        \n        Introspection of column names consist/start with digits (#16536/#17676)\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Introspection of column names consist/start with digits (#16536/#17676)\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Introspection of column names consist/start with digits (#16536/#17676)\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 13042,
@@ -15946,8 +15946,8 @@
   "secondParentType" : "block",
   "firstPos" : 14143,
   "secondPos" : 14214,
-  "firstEndPos" : 15376,
-  "secondEndPos" : 15447
+  "firstEndPos" : 15375,
+  "secondEndPos" : 15446
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -15990,8 +15990,8 @@
   "secondParentType" : "function_definition",
   "firstPos" : 14201,
   "secondPos" : 14272,
-  "firstEndPos" : 15376,
-  "secondEndPos" : 15447
+  "firstEndPos" : 15375,
+  "secondEndPos" : 15446
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -16006,8 +16006,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Introspection of column names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
-  "secondLabel" : "        \n        Introspection of column names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Introspection of column names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Introspection of column names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 14201,
@@ -17266,8 +17266,8 @@
   "secondParentType" : "expression_statement",
   "firstPos" : 15309,
   "secondPos" : 15380,
-  "firstEndPos" : 15376,
-  "secondEndPos" : 15447
+  "firstEndPos" : 15375,
+  "secondEndPos" : 15446
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -17277,8 +17277,8 @@
   "secondParentType" : "block",
   "firstPos" : 15309,
   "secondPos" : 15380,
-  "firstEndPos" : 15376,
-  "secondEndPos" : 15447
+  "firstEndPos" : 15375,
+  "secondEndPos" : 15446
 }, {
   "firstType" : "attribute",
   "secondType" : "attribute",
@@ -17321,8 +17321,8 @@
   "secondParentType" : "call",
   "firstPos" : 15322,
   "secondPos" : 15393,
-  "firstEndPos" : 15376,
-  "secondEndPos" : 15447
+  "firstEndPos" : 15375,
+  "secondEndPos" : 15446
 }, {
   "firstType" : "binary_operator",
   "secondType" : "binary_operator",
@@ -17332,8 +17332,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 15323,
   "secondPos" : 15394,
-  "firstEndPos" : 15367,
-  "secondEndPos" : 15438
+  "firstEndPos" : 15366,
+  "secondEndPos" : 15437
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -17343,8 +17343,8 @@
   "secondParentType" : "binary_operator",
   "firstPos" : 15323,
   "secondPos" : 15394,
-  "firstEndPos" : 15346,
-  "secondEndPos" : 15417
+  "firstEndPos" : 15345,
+  "secondEndPos" : 15416
 }, {
   "firstType" : "%",
   "secondType" : "%",
@@ -17352,10 +17352,10 @@
   "secondLabel" : "%",
   "firstParentType" : "binary_operator",
   "secondParentType" : "binary_operator",
-  "firstPos" : 15347,
-  "secondPos" : 15418,
-  "firstEndPos" : 15348,
-  "secondEndPos" : 15419
+  "firstPos" : 15346,
+  "secondPos" : 15417,
+  "firstEndPos" : 15347,
+  "secondEndPos" : 15418
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -17363,10 +17363,10 @@
   "secondLabel" : "integer_field_type",
   "firstParentType" : "binary_operator",
   "secondParentType" : "binary_operator",
-  "firstPos" : 15349,
-  "secondPos" : 15420,
-  "firstEndPos" : 15367,
-  "secondEndPos" : 15438
+  "firstPos" : 15348,
+  "secondPos" : 15419,
+  "firstEndPos" : 15366,
+  "secondEndPos" : 15437
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -17374,10 +17374,10 @@
   "secondLabel" : "output",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
-  "firstPos" : 15369,
-  "secondPos" : 15440,
-  "firstEndPos" : 15375,
-  "secondEndPos" : 15446
+  "firstPos" : 15368,
+  "secondPos" : 15439,
+  "firstEndPos" : 15374,
+  "secondEndPos" : 15445
 }, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",
@@ -17447,8 +17447,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Introspection of table names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
-  "secondLabel" : "        \n        Introspection of table names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Introspection of table names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Introspection of table names containing special characters,\n        unsuitable for Python identifiers\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 15430,
@@ -19702,8 +19702,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        By default the command generates models with `Meta.managed = False`.\n        \"\"\"",
-  "secondLabel" : "        \n        By default the command generates models with `Meta.managed = False`.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        By default the command generates models with `Meta.managed = False`.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        By default the command generates models with `Meta.managed = False`.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 16999,
@@ -22683,8 +22683,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Introspection of columns with a custom field (#21090)\n        \"\"\"",
-  "secondLabel" : "        \n        Introspection of columns with a custom field (#21090)\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Introspection of columns with a custom field (#21090)\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Introspection of columns with a custom field (#21090)\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 19297,
@@ -23431,8 +23431,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Introspection errors should not crash the command, and the error should\n        be visible in the output.\n        \"\"\"",
-  "secondLabel" : "        \n        Introspection errors should not crash the command, and the error should\n        be visible in the output.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Introspection errors should not crash the command, and the error should\n        be visible in the output.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Introspection errors should not crash the command, and the error should\n        be visible in the output.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 19974,
@@ -27666,8 +27666,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "            \n            CREATE TABLE inspectdb_partition_parent (name text not null)\n            PARTITION BY LIST (left(upper(name), 1))\n            \"\"\"",
-  "secondLabel" : "            \n            CREATE TABLE inspectdb_partition_parent (name text not null)\n            PARTITION BY LIST (left(upper(name), 1))\n            \"\"\"",
+  "firstLabel" : "\"\"\"\n            CREATE TABLE inspectdb_partition_parent (name text not null)\n            PARTITION BY LIST (left(upper(name), 1))\n            \"\"\"",
+  "secondLabel" : "\"\"\"\n            CREATE TABLE inspectdb_partition_parent (name text not null)\n            PARTITION BY LIST (left(upper(name), 1))\n            \"\"\"",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 23510,
@@ -27677,8 +27677,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "            \n            CREATE TABLE inspectdb_partition_child\n            PARTITION OF inspectdb_partition_parent\n            FOR VALUES IN ('A', 'B', 'C')\n            \"\"\"",
-  "secondLabel" : "            \n            CREATE TABLE inspectdb_partition_child\n            PARTITION OF inspectdb_partition_parent\n            FOR VALUES IN ('A', 'B', 'C')\n            \"\"\"",
+  "firstLabel" : "\"\"\"\n            CREATE TABLE inspectdb_partition_child\n            PARTITION OF inspectdb_partition_parent\n            FOR VALUES IN ('A', 'B', 'C')\n            \"\"\"",
+  "secondLabel" : "\"\"\"\n            CREATE TABLE inspectdb_partition_child\n            PARTITION OF inspectdb_partition_parent\n            FOR VALUES IN ('A', 'B', 'C')\n            \"\"\"",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 23669,
@@ -29349,8 +29349,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "            \n            CREATE FOREIGN TABLE inspectdb_iris_foreign_table (\n                petal_length real,\n                petal_width real,\n                sepal_length real,\n                sepal_width real\n            ) SERVER inspectdb_server OPTIONS (\n                program 'echo 1,2,3,4',\n                format 'csv'\n            )\n            \"\"\"",
-  "secondLabel" : "            \n            CREATE FOREIGN TABLE inspectdb_iris_foreign_table (\n                petal_length real,\n                petal_width real,\n                sepal_length real,\n                sepal_width real\n            ) SERVER inspectdb_server OPTIONS (\n                program 'echo 1,2,3,4',\n                format 'csv'\n            )\n            \"\"\"",
+  "firstLabel" : "\"\"\"\n            CREATE FOREIGN TABLE inspectdb_iris_foreign_table (\n                petal_length real,\n                petal_width real,\n                sepal_length real,\n                sepal_width real\n            ) SERVER inspectdb_server OPTIONS (\n                program 'echo 1,2,3,4',\n                format 'csv'\n            )\n            \"\"\"",
+  "secondLabel" : "\"\"\"\n            CREATE FOREIGN TABLE inspectdb_iris_foreign_table (\n                petal_length real,\n                petal_width real,\n                sepal_length real,\n                sepal_width real\n            ) SERVER inspectdb_server OPTIONS (\n                program 'echo 1,2,3,4',\n                format 'csv'\n            )\n            \"\"\"",
   "firstParentType" : "argument_list",
   "secondParentType" : "argument_list",
   "firstPos" : 25340,

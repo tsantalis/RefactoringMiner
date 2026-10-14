@@ -5050,8 +5050,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        SQLite has a variable limit per query. The limit can be changed using\n        the SQLITE_MAX_VARIABLE_NUMBER compile-time option (which defaults to\n        32766) or lowered per connection at run-time with\n        setlimit(SQLITE_LIMIT_VARIABLE_NUMBER, N).\n        \"\"\"",
-  "secondLabel" : "        \n        SQLite has a variable limit per query. The limit can be changed using\n        the SQLITE_MAX_VARIABLE_NUMBER compile-time option (which defaults to\n        32766) or lowered per connection at run-time with\n        setlimit(SQLITE_LIMIT_VARIABLE_NUMBER, N).\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        SQLite has a variable limit per query. The limit can be changed using\n        the SQLITE_MAX_VARIABLE_NUMBER compile-time option (which defaults to\n        32766) or lowered per connection at run-time with\n        setlimit(SQLITE_LIMIT_VARIABLE_NUMBER, N).\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        SQLite has a variable limit per query. The limit can be changed using\n        the SQLITE_MAX_VARIABLE_NUMBER compile-time option (which defaults to\n        32766) or lowered per connection at run-time with\n        setlimit(SQLITE_LIMIT_VARIABLE_NUMBER, N).\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 5961,

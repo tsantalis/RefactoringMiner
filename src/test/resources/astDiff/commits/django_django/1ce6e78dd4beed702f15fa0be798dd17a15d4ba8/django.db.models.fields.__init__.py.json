@@ -9384,8 +9384,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return \"app_label.model_label.field_name\" for fields attached to\n        models.\n        \"\"\"",
-  "secondLabel" : "        \n        Return \"app_label.model_label.field_name\" for fields attached to\n        models.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return \"app_label.model_label.field_name\" for fields attached to\n        models.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return \"app_label.model_label.field_name\" for fields attached to\n        models.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 7257,
@@ -11375,8 +11375,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Check if field name is valid, i.e. 1) does not end with an\n        underscore, 2) does not contain \"__\" and 3) is not \"pk\".\n        \"\"\"",
-  "secondLabel" : "        \n        Check if field name is valid, i.e. 1) does not end with an\n        underscore, 2) does not contain \"__\" and 3) is not \"pk\".\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Check if field name is valid, i.e. 1) does not end with an\n        underscore, 2) does not contain \"__\" and 3) is not \"pk\".\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Check if field name is valid, i.e. 1) does not end with an\n        underscore, 2) does not contain \"__\" and 3) is not \"pk\".\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 8350,
@@ -24454,8 +24454,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Custom format for select clauses. For example, GIS columns need to be\n        selected as AsText(table.col) on MySQL as the table.col data can't be\n        used by Django.\n        \"\"\"",
-  "secondLabel" : "        \n        Custom format for select clauses. For example, GIS columns need to be\n        selected as AsText(table.col) on MySQL as the table.col data can't be\n        used by Django.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Custom format for select clauses. For example, GIS columns need to be\n        selected as AsText(table.col) on MySQL as the table.col data can't be\n        used by Django.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Custom format for select clauses. For example, GIS columns need to be\n        selected as AsText(table.col) on MySQL as the table.col data can't be\n        used by Django.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 18586,
@@ -24575,8 +24575,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return enough information to recreate the field as a 4-tuple:\n\n         * The name of the field on the model, if contribute_to_class() has\n           been run.\n         * The import path of the field, including the class, e.g.\n           django.db.models.IntegerField. This should be the most portable\n           version, so less specific may be better.\n         * A list of positional arguments.\n         * A dict of keyword arguments.\n\n        Note that the positional or keyword arguments must contain values of\n        the following types (including inner values of collection types):\n\n         * None, bool, str, int, float, complex, set, frozenset, list, tuple,\n           dict\n         * UUID\n         * datetime.datetime (naive), datetime.date\n         * top-level classes, top-level functions - will be referenced by their\n           full import path\n         * Storage instances - these have their own deconstruct() method\n\n        This is because the values here must be serialized into a text format\n        (possibly new Python code, possibly JSON) and these are the only types\n        with encoding handlers defined.\n\n        There's no need to return the exact way the field was instantiated this\n        time, just ensure that the resulting field is the same - prefer keyword\n        arguments over positional ones, and omit parameters with their default\n        values.\n        \"\"\"",
-  "secondLabel" : "        \n        Return enough information to recreate the field as a 4-tuple:\n\n         * The name of the field on the model, if contribute_to_class() has\n           been run.\n         * The import path of the field, including the class, e.g.\n           django.db.models.IntegerField. This should be the most portable\n           version, so less specific may be better.\n         * A list of positional arguments.\n         * A dict of keyword arguments.\n\n        Note that the positional or keyword arguments must contain values of\n        the following types (including inner values of collection types):\n\n         * None, bool, str, int, float, complex, set, frozenset, list, tuple,\n           dict\n         * UUID\n         * datetime.datetime (naive), datetime.date\n         * top-level classes, top-level functions - will be referenced by their\n           full import path\n         * Storage instances - these have their own deconstruct() method\n\n        This is because the values here must be serialized into a text format\n        (possibly new Python code, possibly JSON) and these are the only types\n        with encoding handlers defined.\n\n        There's no need to return the exact way the field was instantiated this\n        time, just ensure that the resulting field is the same - prefer keyword\n        arguments over positional ones, and omit parameters with their default\n        values.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return enough information to recreate the field as a 4-tuple:\n\n         * The name of the field on the model, if contribute_to_class() has\n           been run.\n         * The import path of the field, including the class, e.g.\n           django.db.models.IntegerField. This should be the most portable\n           version, so less specific may be better.\n         * A list of positional arguments.\n         * A dict of keyword arguments.\n\n        Note that the positional or keyword arguments must contain values of\n        the following types (including inner values of collection types):\n\n         * None, bool, str, int, float, complex, set, frozenset, list, tuple,\n           dict\n         * UUID\n         * datetime.datetime (naive), datetime.date\n         * top-level classes, top-level functions - will be referenced by their\n           full import path\n         * Storage instances - these have their own deconstruct() method\n\n        This is because the values here must be serialized into a text format\n        (possibly new Python code, possibly JSON) and these are the only types\n        with encoding handlers defined.\n\n        There's no need to return the exact way the field was instantiated this\n        time, just ensure that the resulting field is the same - prefer keyword\n        arguments over positional ones, and omit parameters with their default\n        values.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return enough information to recreate the field as a 4-tuple:\n\n         * The name of the field on the model, if contribute_to_class() has\n           been run.\n         * The import path of the field, including the class, e.g.\n           django.db.models.IntegerField. This should be the most portable\n           version, so less specific may be better.\n         * A list of positional arguments.\n         * A dict of keyword arguments.\n\n        Note that the positional or keyword arguments must contain values of\n        the following types (including inner values of collection types):\n\n         * None, bool, str, int, float, complex, set, frozenset, list, tuple,\n           dict\n         * UUID\n         * datetime.datetime (naive), datetime.date\n         * top-level classes, top-level functions - will be referenced by their\n           full import path\n         * Storage instances - these have their own deconstruct() method\n\n        This is because the values here must be serialized into a text format\n        (possibly new Python code, possibly JSON) and these are the only types\n        with encoding handlers defined.\n\n        There's no need to return the exact way the field was instantiated this\n        time, just ensure that the resulting field is the same - prefer keyword\n        arguments over positional ones, and omit parameters with their default\n        values.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 18845,
@@ -28469,8 +28469,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Uses deconstruct() to clone a new copy of this Field.\n        Will not preserve any class attachments/attribute names.\n        \"\"\"",
-  "secondLabel" : "        \n        Uses deconstruct() to clone a new copy of this Field.\n        Will not preserve any class attachments/attribute names.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Uses deconstruct() to clone a new copy of this Field.\n        Will not preserve any class attachments/attribute names.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Uses deconstruct() to clone a new copy of this Field.\n        Will not preserve any class attachments/attribute names.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 23210,
@@ -31945,8 +31945,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Pickling should return the model._meta.fields instance of the field,\n        not a new copy of that field. So, use the app registry to load the\n        model and then the field back.\n        \"\"\"",
-  "secondLabel" : "        \n        Pickling should return the model._meta.fields instance of the field,\n        not a new copy of that field. So, use the app registry to load the\n        model and then the field back.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Pickling should return the model._meta.fields instance of the field,\n        not a new copy of that field. So, use the app registry to load the\n        model and then the field back.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Pickling should return the model._meta.fields instance of the field,\n        not a new copy of that field. So, use the app registry to load the\n        model and then the field back.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 25527,
@@ -32737,8 +32737,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Hook to generate new PK values on save. This method is called when\n        saving instances with no primary key value set. If this method returns\n        something else than None, then the returned value is used when saving\n        the new instance.\n        \"\"\"",
-  "secondLabel" : "        \n        Hook to generate new PK values on save. This method is called when\n        saving instances with no primary key value set. If this method returns\n        something else than None, then the returned value is used when saving\n        the new instance.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Hook to generate new PK values on save. This method is called when\n        saving instances with no primary key value set. If this method returns\n        something else than None, then the returned value is used when saving\n        the new instance.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Hook to generate new PK values on save. This method is called when\n        saving instances with no primary key value set. If this method returns\n        something else than None, then the returned value is used when saving\n        the new instance.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 26578,
@@ -32968,8 +32968,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Convert the input value into the expected Python data type, raising\n        django.core.exceptions.ValidationError if the data can't be converted.\n        Return the converted value. Subclasses should override this.\n        \"\"\"",
-  "secondLabel" : "        \n        Convert the input value into the expected Python data type, raising\n        django.core.exceptions.ValidationError if the data can't be converted.\n        Return the converted value. Subclasses should override this.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Convert the input value into the expected Python data type, raising\n        django.core.exceptions.ValidationError if the data can't be converted.\n        Return the converted value. Subclasses should override this.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Convert the input value into the expected Python data type, raising\n        django.core.exceptions.ValidationError if the data can't be converted.\n        Return the converted value. Subclasses should override this.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 26976,
@@ -33672,8 +33672,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Some validators can't be created at field initialization time.\n        This method provides a way to delay their creation until required.\n        \"\"\"",
-  "secondLabel" : "        \n        Some validators can't be created at field initialization time.\n        This method provides a way to delay their creation until required.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Some validators can't be created at field initialization time.\n        This method provides a way to delay their creation until required.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Some validators can't be created at field initialization time.\n        This method provides a way to delay their creation until required.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 27564,
@@ -34915,8 +34915,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Validate value and raise ValidationError if necessary. Subclasses\n        should override this to provide validation logic.\n        \"\"\"",
-  "secondLabel" : "        \n        Validate value and raise ValidationError if necessary. Subclasses\n        should override this to provide validation logic.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Validate value and raise ValidationError if necessary. Subclasses\n        should override this to provide validation logic.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Validate value and raise ValidationError if necessary. Subclasses\n        should override this to provide validation logic.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 28338,
@@ -36664,8 +36664,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Convert the value's type and run validation. Validation errors\n        from to_python() and validate() are propagated. Return the correct\n        value if no error is raised.\n        \"\"\"",
-  "secondLabel" : "        \n        Convert the value's type and run validation. Validation errors\n        from to_python() and validate() are propagated. Return the correct\n        value if no error is raised.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Convert the value's type and run validation. Validation errors\n        from to_python() and validate() are propagated. Return the correct\n        value if no error is raised.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Convert the value's type and run validation. Validation errors\n        from to_python() and validate() are propagated. Return the correct\n        value if no error is raised.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 29636,
@@ -37258,8 +37258,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return the database column check constraint for this field, for the\n        provided connection. Works the same way as db_type() for the case that\n        get_internal_type() does not map to a preexisting model field.\n        \"\"\"",
-  "secondLabel" : "        \n        Return the database column check constraint for this field, for the\n        provided connection. Works the same way as db_type() for the case that\n        get_internal_type() does not map to a preexisting model field.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return the database column check constraint for this field, for the\n        provided connection. Works the same way as db_type() for the case that\n        get_internal_type() does not map to a preexisting model field.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return the database column check constraint for this field, for the\n        provided connection. Works the same way as db_type() for the case that\n        get_internal_type() does not map to a preexisting model field.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 30142,
@@ -37709,8 +37709,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return the database column data type for this field, for the provided\n        connection.\n        \"\"\"",
-  "secondLabel" : "        \n        Return the database column data type for this field, for the provided\n        connection.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return the database column data type for this field, for the provided\n        connection.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return the database column data type for this field, for the provided\n        connection.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 30664,
@@ -38534,8 +38534,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return the data type that a related field pointing to this field should\n        use. For example, this method is called by ForeignKey and OneToOneField\n        to determine its data type.\n        \"\"\"",
-  "secondLabel" : "        \n        Return the data type that a related field pointing to this field should\n        use. For example, this method is called by ForeignKey and OneToOneField\n        to determine its data type.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return the data type that a related field pointing to this field should\n        use. For example, this method is called by ForeignKey and OneToOneField\n        to determine its data type.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return the data type that a related field pointing to this field should\n        use. For example, this method is called by ForeignKey and OneToOneField\n        to determine its data type.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 32162,
@@ -39205,8 +39205,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Extension of db_type(), providing a range of different return values\n        (type, checks). This will look at db_type(), allowing custom model\n        fields to override it.\n        \"\"\"",
-  "secondLabel" : "        \n        Extension of db_type(), providing a range of different return values\n        (type, checks). This will look at db_type(), allowing custom model\n        fields to override it.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Extension of db_type(), providing a range of different return values\n        (type, checks). This will look at db_type(), allowing custom model\n        fields to override it.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Extension of db_type(), providing a range of different return values\n        (type, checks). This will look at db_type(), allowing custom model\n        fields to override it.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 32775,
@@ -41482,8 +41482,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Register the field with the model class it belongs to.\n\n        If private_only is True, create a separate instance of this field\n        for every subclass of cls, even if cls is not an abstract model.\n        \"\"\"",
-  "secondLabel" : "        \n        Register the field with the model class it belongs to.\n\n        If private_only is True, create a separate instance of this field\n        for every subclass of cls, even if cls is not an abstract model.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Register the field with the model class it belongs to.\n\n        If private_only is True, create a separate instance of this field\n        for every subclass of cls, even if cls is not an abstract model.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Register the field with the model class it belongs to.\n\n        If private_only is True, create a separate instance of this field\n        for every subclass of cls, even if cls is not an abstract model.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 34168,
@@ -42615,8 +42615,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return a dict that when passed as kwargs to self.model.filter(), would\n        yield all instances having the same value for this field as obj has.\n        \"\"\"",
-  "secondLabel" : "        \n        Return a dict that when passed as kwargs to self.model.filter(), would\n        yield all instances having the same value for this field as obj has.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return a dict that when passed as kwargs to self.model.filter(), would\n        yield all instances having the same value for this field as obj has.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return a dict that when passed as kwargs to self.model.filter(), would\n        yield all instances having the same value for this field as obj has.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 35267,
@@ -43891,8 +43891,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return field's value prepared for interacting with the database\n        backend.\n\n        Used by the default implementations of get_db_prep_save().\n        \"\"\"",
-  "secondLabel" : "        \n        Return field's value prepared for interacting with the database\n        backend.\n\n        Used by the default implementations of get_db_prep_save().\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return field's value prepared for interacting with the database\n        backend.\n\n        Used by the default implementations of get_db_prep_save().\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return field's value prepared for interacting with the database\n        backend.\n\n        Used by the default implementations of get_db_prep_save().\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 36218,
@@ -46729,8 +46729,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return choices with a default blank choices included, for use\n        as <select> choices for this field.\n        \"\"\"",
-  "secondLabel" : "        \n        Return choices with a default blank choices included, for use\n        as <select> choices for this field.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return choices with a default blank choices included, for use\n        as <select> choices for this field.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return choices with a default blank choices included, for use\n        as <select> choices for this field.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 38330,
@@ -48170,8 +48170,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return a string value of this field from the passed obj.\n        This is used by the serialization framework.\n        \"\"\"",
-  "secondLabel" : "        \n        Return a string value of this field from the passed obj.\n        This is used by the serialization framework.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return a string value of this field from the passed obj.\n        This is used by the serialization framework.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return a string value of this field from the passed obj.\n        This is used by the serialization framework.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 39242,
@@ -51850,8 +51850,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 42072,
   "secondPos" : 42072,
-  "firstEndPos" : 42139,
-  "secondEndPos" : 42139
+  "firstEndPos" : 42135,
+  "secondEndPos" : 42135
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -51872,8 +51872,8 @@
   "secondParentType" : "pair",
   "firstPos" : 42083,
   "secondPos" : 42083,
-  "firstEndPos" : 42139,
-  "secondEndPos" : 42139
+  "firstEndPos" : 42135,
+  "secondEndPos" : 42135
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -51894,8 +51894,8 @@
   "secondParentType" : "call",
   "firstPos" : 42084,
   "secondPos" : 42084,
-  "firstEndPos" : 42139,
-  "secondEndPos" : 42139
+  "firstEndPos" : 42135,
+  "secondEndPos" : 42135
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -51905,8 +51905,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 42085,
   "secondPos" : 42085,
-  "firstEndPos" : 42138,
-  "secondEndPos" : 42138
+  "firstEndPos" : 42134,
+  "secondEndPos" : 42134
 }, {
   "firstType" : "pair",
   "secondType" : "pair",
@@ -51916,8 +51916,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 42145,
   "secondPos" : 42145,
-  "firstEndPos" : 42228,
-  "secondEndPos" : 42228
+  "firstEndPos" : 42224,
+  "secondEndPos" : 42224
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -51938,8 +51938,8 @@
   "secondParentType" : "pair",
   "firstPos" : 42165,
   "secondPos" : 42165,
-  "firstEndPos" : 42228,
-  "secondEndPos" : 42228
+  "firstEndPos" : 42224,
+  "secondEndPos" : 42224
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -51960,8 +51960,8 @@
   "secondParentType" : "call",
   "firstPos" : 42166,
   "secondPos" : 42166,
-  "firstEndPos" : 42228,
-  "secondEndPos" : 42228
+  "firstEndPos" : 42224,
+  "secondEndPos" : 42224
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -51971,8 +51971,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 42167,
   "secondPos" : 42167,
-  "firstEndPos" : 42227,
-  "secondEndPos" : 42227
+  "firstEndPos" : 42223,
+  "secondEndPos" : 42223
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -63405,8 +63405,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Check if the given value appears to have been provided as a \"fixed\"\n        time value, and include a warning in the returned list if it does. The\n        value argument must be a date object or aware/naive datetime object. If\n        now is provided, it must be a naive datetime object.\n        \"\"\"",
-  "secondLabel" : "        \n        Check if the given value appears to have been provided as a \"fixed\"\n        time value, and include a warning in the returned list if it does. The\n        value argument must be a date object or aware/naive datetime object. If\n        now is provided, it must be a naive datetime object.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Check if the given value appears to have been provided as a \"fixed\"\n        time value, and include a warning in the returned list if it does. The\n        value argument must be a date object or aware/naive datetime object. If\n        now is provided, it must be a naive datetime object.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Check if the given value appears to have been provided as a \"fixed\"\n        time value, and include a warning in the returned list if it does. The\n        value argument must be a date object or aware/naive datetime object. If\n        now is provided, it must be a naive datetime object.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 49982,
@@ -65039,8 +65039,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 51432,
   "secondPos" : 51432,
-  "firstEndPos" : 51495,
-  "secondEndPos" : 51495
+  "firstEndPos" : 51491,
+  "secondEndPos" : 51491
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -65127,8 +65127,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 51578,
   "secondPos" : 51578,
-  "firstEndPos" : 51638,
-  "secondEndPos" : 51638
+  "firstEndPos" : 51634,
+  "secondEndPos" : 51634
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -66023,8 +66023,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
-  "secondLabel" : "        \n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 52132,
@@ -72222,8 +72222,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 55951,
   "secondPos" : 55951,
-  "firstEndPos" : 56012,
-  "secondEndPos" : 56012
+  "firstEndPos" : 56008,
+  "secondEndPos" : 56008
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -72310,8 +72310,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 56116,
   "secondPos" : 56116,
-  "firstEndPos" : 56163,
-  "secondEndPos" : 56163
+  "firstEndPos" : 56159,
+  "secondEndPos" : 56159
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -72398,8 +72398,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 56268,
   "secondPos" : 56268,
-  "firstEndPos" : 56315,
-  "secondEndPos" : 56315
+  "firstEndPos" : 56311,
+  "secondEndPos" : 56311
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -72590,8 +72590,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
-  "secondLabel" : "        \n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 56560,
@@ -78877,8 +78877,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 61110,
   "secondPos" : 61110,
-  "firstEndPos" : 61173,
-  "secondEndPos" : 61173
+  "firstEndPos" : 61169,
+  "secondEndPos" : 61169
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -78899,8 +78899,8 @@
   "secondParentType" : "pair",
   "firstPos" : 61121,
   "secondPos" : 61121,
-  "firstEndPos" : 61173,
-  "secondEndPos" : 61173
+  "firstEndPos" : 61169,
+  "secondEndPos" : 61169
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -78921,8 +78921,8 @@
   "secondParentType" : "call",
   "firstPos" : 61122,
   "secondPos" : 61122,
-  "firstEndPos" : 61173,
-  "secondEndPos" : 61173
+  "firstEndPos" : 61169,
+  "secondEndPos" : 61169
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -78932,8 +78932,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 61123,
   "secondPos" : 61123,
-  "firstEndPos" : 61172,
-  "secondEndPos" : 61172
+  "firstEndPos" : 61168,
+  "secondEndPos" : 61168
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -86142,8 +86142,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Store timedelta objects.\n\n    Use interval on PostgreSQL, INTERVAL DAY TO SECOND on Oracle, and bigint\n    of microseconds on other databases.\n    \"\"\"",
-  "secondLabel" : "    \n    Store timedelta objects.\n\n    Use interval on PostgreSQL, INTERVAL DAY TO SECOND on Oracle, and bigint\n    of microseconds on other databases.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Store timedelta objects.\n\n    Use interval on PostgreSQL, INTERVAL DAY TO SECOND on Oracle, and bigint\n    of microseconds on other databases.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Store timedelta objects.\n\n    Use interval on PostgreSQL, INTERVAL DAY TO SECOND on Oracle, and bigint\n    of microseconds on other databases.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 65838,
@@ -86335,8 +86335,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 66097,
   "secondPos" : 67526,
-  "firstEndPos" : 66158,
-  "secondEndPos" : 67587
+  "firstEndPos" : 66154,
+  "secondEndPos" : 67583
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -94552,8 +94552,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 70884,
   "secondPos" : 72313,
-  "firstEndPos" : 70938,
-  "secondEndPos" : 72367
+  "firstEndPos" : 70934,
+  "secondEndPos" : 72363
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -94574,8 +94574,8 @@
   "secondParentType" : "pair",
   "firstPos" : 70895,
   "secondPos" : 72324,
-  "firstEndPos" : 70938,
-  "secondEndPos" : 72367
+  "firstEndPos" : 70934,
+  "secondEndPos" : 72363
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -94596,8 +94596,8 @@
   "secondParentType" : "call",
   "firstPos" : 70896,
   "secondPos" : 72325,
-  "firstEndPos" : 70938,
-  "secondEndPos" : 72367
+  "firstEndPos" : 70934,
+  "secondEndPos" : 72363
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -94607,8 +94607,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 70897,
   "secondPos" : 72326,
-  "firstEndPos" : 70937,
-  "secondEndPos" : 72366
+  "firstEndPos" : 70933,
+  "secondEndPos" : 72362
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -96488,8 +96488,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 72042,
   "secondPos" : 73471,
-  "firstEndPos" : 72099,
-  "secondEndPos" : 73528
+  "firstEndPos" : 72095,
+  "secondEndPos" : 73524
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -96510,8 +96510,8 @@
   "secondParentType" : "pair",
   "firstPos" : 72053,
   "secondPos" : 73482,
-  "firstEndPos" : 72099,
-  "secondEndPos" : 73528
+  "firstEndPos" : 72095,
+  "secondEndPos" : 73524
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -96532,8 +96532,8 @@
   "secondParentType" : "call",
   "firstPos" : 72054,
   "secondPos" : 73483,
-  "firstEndPos" : 72099,
-  "secondEndPos" : 73528
+  "firstEndPos" : 72095,
+  "secondEndPos" : 73524
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -96543,8 +96543,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 72055,
   "secondPos" : 73484,
-  "firstEndPos" : 72098,
-  "secondEndPos" : 73527
+  "firstEndPos" : 72094,
+  "secondEndPos" : 73523
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -108808,8 +108808,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 79638,
   "secondPos" : 81067,
-  "firstEndPos" : 79711,
-  "secondEndPos" : 81140
+  "firstEndPos" : 79707,
+  "secondEndPos" : 81136
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -108830,8 +108830,8 @@
   "secondParentType" : "pair",
   "firstPos" : 79649,
   "secondPos" : 81078,
-  "firstEndPos" : 79711,
-  "secondEndPos" : 81140
+  "firstEndPos" : 79707,
+  "secondEndPos" : 81136
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -108852,8 +108852,8 @@
   "secondParentType" : "call",
   "firstPos" : 79650,
   "secondPos" : 81079,
-  "firstEndPos" : 79711,
-  "secondEndPos" : 81140
+  "firstEndPos" : 79707,
+  "secondEndPos" : 81136
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -108863,8 +108863,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 79651,
   "secondPos" : 81080,
-  "firstEndPos" : 79710,
-  "secondEndPos" : 81139
+  "firstEndPos" : 79706,
+  "secondEndPos" : 81135
 }, {
   "firstType" : "pair",
   "secondType" : "pair",
@@ -108874,8 +108874,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 79717,
   "secondPos" : 81146,
-  "firstEndPos" : 79799,
-  "secondEndPos" : 81228
+  "firstEndPos" : 79795,
+  "secondEndPos" : 81224
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -108896,8 +108896,8 @@
   "secondParentType" : "pair",
   "firstPos" : 79737,
   "secondPos" : 81166,
-  "firstEndPos" : 79799,
-  "secondEndPos" : 81228
+  "firstEndPos" : 79795,
+  "secondEndPos" : 81224
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -108918,8 +108918,8 @@
   "secondParentType" : "call",
   "firstPos" : 79738,
   "secondPos" : 81167,
-  "firstEndPos" : 79799,
-  "secondEndPos" : 81228
+  "firstEndPos" : 79795,
+  "secondEndPos" : 81224
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -108929,8 +108929,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 79739,
   "secondPos" : 81168,
-  "firstEndPos" : 79798,
-  "secondEndPos" : 81227
+  "firstEndPos" : 79794,
+  "secondEndPos" : 81223
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -110749,8 +110749,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Return the data type that a related field pointing to this field should\n        use. In most cases, a foreign key pointing to a positive integer\n        primary key will have an integer column data type but some databases\n        (e.g. MySQL) have an unsigned integer type. In that case\n        (related_fields_match_type=True), the primary key should return its\n        db_type.\n        \"\"\"",
-  "secondLabel" : "        \n        Return the data type that a related field pointing to this field should\n        use. In most cases, a foreign key pointing to a positive integer\n        primary key will have an integer column data type but some databases\n        (e.g. MySQL) have an unsigned integer type. In that case\n        (related_fields_match_type=True), the primary key should return its\n        db_type.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Return the data type that a related field pointing to this field should\n        use. In most cases, a foreign key pointing to a positive integer\n        primary key will have an integer column data type but some databases\n        (e.g. MySQL) have an unsigned integer type. In that case\n        (related_fields_match_type=True), the primary key should return its\n        db_type.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Return the data type that a related field pointing to this field should\n        use. In most cases, a foreign key pointing to a positive integer\n        primary key will have an integer column data type but some databases\n        (e.g. MySQL) have an unsigned integer type. In that case\n        (related_fields_match_type=True), the primary key should return its\n        db_type.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 80933,
@@ -119489,8 +119489,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 86551,
   "secondPos" : 87980,
-  "firstEndPos" : 86612,
-  "secondEndPos" : 88041
+  "firstEndPos" : 86608,
+  "secondEndPos" : 88037
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -119577,8 +119577,8 @@
   "secondParentType" : "concatenated_string",
   "firstPos" : 86701,
   "secondPos" : 88130,
-  "firstEndPos" : 86748,
-  "secondEndPos" : 88177
+  "firstEndPos" : 86744,
+  "secondEndPos" : 88173
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -120473,8 +120473,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "        \n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
-  "secondLabel" : "        \n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
+  "firstLabel" : "\"\"\"\n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
+  "secondLabel" : "\"\"\"\n        Warn that using an actual date or datetime value is probably wrong;\n        it's only evaluated on server startup.\n        \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 87249,
@@ -131160,8 +131160,8 @@
   "secondParentType" : "dictionary",
   "firstPos" : 93454,
   "secondPos" : 94883,
-  "firstEndPos" : 93506,
-  "secondEndPos" : 94935
+  "firstEndPos" : 93502,
+  "secondEndPos" : 94931
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -131182,8 +131182,8 @@
   "secondParentType" : "pair",
   "firstPos" : 93465,
   "secondPos" : 94894,
-  "firstEndPos" : 93506,
-  "secondEndPos" : 94935
+  "firstEndPos" : 93502,
+  "secondEndPos" : 94931
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -131204,8 +131204,8 @@
   "secondParentType" : "call",
   "firstPos" : 93466,
   "secondPos" : 94895,
-  "firstEndPos" : 93506,
-  "secondEndPos" : 94935
+  "firstEndPos" : 93502,
+  "secondEndPos" : 94931
 }, {
   "firstType" : "string",
   "secondType" : "string",
@@ -131215,8 +131215,8 @@
   "secondParentType" : "argument_list",
   "firstPos" : 93467,
   "secondPos" : 94896,
-  "firstEndPos" : 93505,
-  "secondEndPos" : 94934
+  "firstEndPos" : 93501,
+  "secondEndPos" : 94930
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -137017,8 +137017,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    \n    Metaclass to maintain backward inheritance compatibility for AutoField.\n\n    It is intended that AutoFieldMixin become public API when it is possible to\n    create a non-integer automatically-generated field using column defaults\n    stored in the database.\n\n    In many areas Django also relies on using isinstance() to check for an\n    automatically-generated field as a subclass of AutoField. A new flag needs\n    to be implemented on Field to be used instead.\n\n    When these issues have been addressed, this metaclass could be used to\n    deprecate inheritance from AutoField and use of isinstance() with AutoField\n    for detecting automatically-generated fields.\n    \"\"\"",
-  "secondLabel" : "    \n    Metaclass to maintain backward inheritance compatibility for AutoField.\n\n    It is intended that AutoFieldMixin become public API when it is possible to\n    create a non-integer automatically-generated field using column defaults\n    stored in the database.\n\n    In many areas Django also relies on using isinstance() to check for an\n    automatically-generated field as a subclass of AutoField. A new flag needs\n    to be implemented on Field to be used instead.\n\n    When these issues have been addressed, this metaclass could be used to\n    deprecate inheritance from AutoField and use of isinstance() with AutoField\n    for detecting automatically-generated fields.\n    \"\"\"",
+  "firstLabel" : "\"\"\"\n    Metaclass to maintain backward inheritance compatibility for AutoField.\n\n    It is intended that AutoFieldMixin become public API when it is possible to\n    create a non-integer automatically-generated field using column defaults\n    stored in the database.\n\n    In many areas Django also relies on using isinstance() to check for an\n    automatically-generated field as a subclass of AutoField. A new flag needs\n    to be implemented on Field to be used instead.\n\n    When these issues have been addressed, this metaclass could be used to\n    deprecate inheritance from AutoField and use of isinstance() with AutoField\n    for detecting automatically-generated fields.\n    \"\"\"",
+  "secondLabel" : "\"\"\"\n    Metaclass to maintain backward inheritance compatibility for AutoField.\n\n    It is intended that AutoFieldMixin become public API when it is possible to\n    create a non-integer automatically-generated field using column defaults\n    stored in the database.\n\n    In many areas Django also relies on using isinstance() to check for an\n    automatically-generated field as a subclass of AutoField. A new flag needs\n    to be implemented on Field to be used instead.\n\n    When these issues have been addressed, this metaclass could be used to\n    deprecate inheritance from AutoField and use of isinstance() with AutoField\n    for detecting automatically-generated fields.\n    \"\"\"",
   "firstParentType" : "expression_statement",
   "secondParentType" : "expression_statement",
   "firstPos" : 96598,

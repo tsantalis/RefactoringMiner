@@ -2278,8 +2278,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    create_test_procedure_without_params_sql = \n        CREATE FUNCTION test_procedure () RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
-  "secondLabel" : "    create_test_procedure_without_params_sql = \n        CREATE FUNCTION test_procedure () RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
+  "firstLabel" : "\"\"\"\n        CREATE FUNCTION test_procedure () RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
+  "secondLabel" : "\"\"\"\n        CREATE FUNCTION test_procedure () RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := 1;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 1476,
@@ -2333,8 +2333,8 @@
 }, {
   "firstType" : "string",
   "secondType" : "string",
-  "firstLabel" : "    create_test_procedure_with_int_param_sql = \n        CREATE FUNCTION test_procedure (P_I INTEGER) RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
-  "secondLabel" : "    create_test_procedure_with_int_param_sql = \n        CREATE FUNCTION test_procedure (P_I INTEGER) RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
+  "firstLabel" : "\"\"\"\n        CREATE FUNCTION test_procedure (P_I INTEGER) RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
+  "secondLabel" : "\"\"\"\n        CREATE FUNCTION test_procedure (P_I INTEGER) RETURNS void AS $$\n        DECLARE\n            V_I INTEGER;\n        BEGIN\n            V_I := P_I;\n        END;\n    $$ LANGUAGE plpgsql;\"\"\"",
   "firstParentType" : "assignment",
   "secondParentType" : "assignment",
   "firstPos" : 1706,

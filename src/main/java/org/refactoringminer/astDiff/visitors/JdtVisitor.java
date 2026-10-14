@@ -1,7 +1,6 @@
 package org.refactoringminer.astDiff.visitors;
 
 import com.github.gumtreediff.gen.SyntaxException;
-import com.github.gumtreediff.gen.jdt.AbstractJdtVisitor;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.Type;
 import org.eclipse.jdt.core.compiler.IScanner;

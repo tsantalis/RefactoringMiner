@@ -1,7 +1,7 @@
 package org.refactoringminer.astDiff.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.gumtreediff.gen.jdt.JdtVisitor;
+import org.refactoringminer.astDiff.visitors.JdtVisitor;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import org.eclipse.jdt.core.JavaCore;

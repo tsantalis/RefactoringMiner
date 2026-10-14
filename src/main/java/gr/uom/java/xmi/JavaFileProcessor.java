@@ -67,10 +67,11 @@ import org.eclipse.jdt.core.dom.TypeParameter;
 import org.eclipse.jdt.core.dom.UsesDirective;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.refactoringminer.astDiff.visitors.AbstractJdtVisitor;
+import org.refactoringminer.astDiff.visitors.JdtVisitor;
 import org.refactoringminer.astDiff.visitors.JdtWithCommentsVisitor;
 import org.refactoringminer.util.PathFileUtils;
 
-import com.github.gumtreediff.gen.jdt.AbstractJdtVisitor;
 import com.github.gumtreediff.tree.TreeContext;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -120,7 +121,7 @@ public class JavaFileProcessor {
 				scanner.setSource(charArray);
 				AbstractJdtVisitor visitor = (VISIT_JDT_COMMENTS) ?
 						new JdtWithCommentsVisitor(scanner) :
-							new com.github.gumtreediff.gen.jdt.JdtVisitor(scanner);
+							new JdtVisitor(scanner);
 				compilationUnit.accept(visitor);
 				TreeContext treeContext = visitor.getTreeContext();
 				this.umlModel.getTreeContextMap().put(filePath, treeContext);

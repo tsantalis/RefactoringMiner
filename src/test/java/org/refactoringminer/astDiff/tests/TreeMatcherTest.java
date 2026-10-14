@@ -2,8 +2,9 @@ package org.refactoringminer.astDiff.tests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.gumtreediff.gen.SyntaxException;
-import com.github.gumtreediff.gen.jdt.AbstractJdtVisitor;
-import com.github.gumtreediff.gen.jdt.JdtTreeGenerator;
+import com.github.gumtreediff.gen.TreeGenerator;
+import org.refactoringminer.astDiff.visitors.AbstractJdtVisitor;
+import org.refactoringminer.astDiff.visitors.JdtVisitor;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import org.apache.commons.io.FileUtils;
@@ -82,7 +83,7 @@ public class TreeMatcherTest {
         }
         return allCases.stream();
     }
-    static class JdtPartialTreeGenerator extends JdtTreeGenerator{
+    static class JdtPartialTreeGenerator extends TreeGenerator{
 
         private final int kind;
         JdtPartialTreeGenerator(int kind)
@@ -104,7 +105,7 @@ public class TreeMatcherTest {
             parser.setSource(source);
             IScanner scanner = ToolFactory.createScanner(false, false, false, false);
             scanner.setSource(source);
-            AbstractJdtVisitor v = createVisitor(scanner);
+            AbstractJdtVisitor v = new JdtVisitor(scanner);
             ASTNode node = parser.createAST(null);
             if ((node.getFlags() & ASTNode.MALFORMED) != 0) // bitwise flag to check if the node has a syntax error
                 throw new SyntaxException(this, r, null);

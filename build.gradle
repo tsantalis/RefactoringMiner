@@ -87,7 +87,6 @@ dependencies {
     implementation 'org.kohsuke:github-api:1.330'
     implementation 'io.github.java-diff-utils:java-diff-utils:4.17'
     implementation 'com.github.gumtreediff:core:4.0.0'
-    implementation 'com.github.gumtreediff:gen.jdt:4.0.0'
     implementation 'com.github.gumtreediff:gen.treesitter-ng:4.0.0'
     // tree-sitter bindings used by TreeSitterTreeGenerator, same versions as gen.treesitter-ng
     implementation 'io.github.bonede:tree-sitter:0.26.6'

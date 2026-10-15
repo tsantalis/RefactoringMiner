@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -18,6 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
+import org.eclipse.cdt.core.dom.ast.IASTAttribute;
+import org.eclipse.cdt.core.dom.ast.IASTAttributeList;
+import org.eclipse.cdt.core.dom.ast.IASTAttributeOwner;
+import org.eclipse.cdt.core.dom.ast.IASTAttributeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTExpression;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
@@ -139,7 +144,7 @@ public class CppFileProcessor {
 	private UMLModel umlModel;
 	private CppPreprocessor preprocessor;
 	//the start offsets of the macros expanded to nothing in the file by their end offsets, i.e., DUCKDB_API in DUCKDB_API virtual ~A() = default;
-	private TreeMap<Integer, Integer> emptyMacroExpansions = new TreeMap<>();
+	private TreeMap<Integer, IASTPreprocessorMacroExpansion> emptyMacroExpansions = new TreeMap<>();
 
 	public CppFileProcessor(UMLModel umlModel) {
 		this.umlModel = umlModel;
@@ -309,29 +314,74 @@ public class CppFileProcessor {
 		}
 	}
 
-	private TreeMap<Integer, Integer> emptyMacroExpansions(IASTTranslationUnit translationUnit) {
-		TreeMap<Integer, Integer> expansions = new TreeMap<>();
+	//the macro expansions to nothing by their end offsets
+	private TreeMap<Integer, IASTPreprocessorMacroExpansion> emptyMacroExpansions(IASTTranslationUnit translationUnit) {
+		TreeMap<Integer, IASTPreprocessorMacroExpansion> expansions = new TreeMap<>();
 		for(IASTPreprocessorMacroExpansion expansion : translationUnit.getMacroExpansions()) {
 			IASTFileLocation location = expansion.getFileLocation();
 			if(location != null && isPartOfFile(expansion) && expansion.getMacroDefinition().getExpansion().isBlank()) {
-				expansions.put(location.getNodeOffset() + location.getNodeLength(), location.getNodeOffset());
+				expansions.put(location.getNodeOffset() + location.getNodeLength(), expansion);
 			}
 		}
 		return expansions;
 	}
 
-	//the location starting at the macros expanded to nothing right before it, which CDT excludes from the location, like the AST diff tree
-	private LocationInfo withEmptyMacros(LocationInfo locationInfo) {
-		int start = locationInfo.getStartOffset();
-		Map.Entry<Integer, Integer> expansion = emptyMacroExpansions.floorEntry(start);
-		while(expansion != null && fileContent.substring(expansion.getKey(), start).isBlank() && !inDirective(expansion.getValue())) {
-			start = expansion.getValue();
+	//the macros expanded to nothing right before the offset, which CDT excludes from the location of the declaration starting at the offset
+	private List<IASTPreprocessorMacroExpansion> emptyMacrosBefore(int start) {
+		List<IASTPreprocessorMacroExpansion> macros = new ArrayList<>();
+		Map.Entry<Integer, IASTPreprocessorMacroExpansion> expansion = emptyMacroExpansions.floorEntry(start);
+		while(expansion != null && fileContent.substring(expansion.getKey(), start).isBlank() && !inDirective(expansion.getValue().getFileLocation().getNodeOffset())) {
+			start = expansion.getValue().getFileLocation().getNodeOffset();
+			macros.add(0, expansion.getValue());
 			expansion = emptyMacroExpansions.floorEntry(start);
 		}
-		if(start == locationInfo.getStartOffset()) {
+		return macros;
+	}
+
+	//the location starting at the macros expanded to nothing right before it, which CDT excludes from the location, like the AST diff tree
+	private LocationInfo withEmptyMacros(LocationInfo locationInfo) {
+		List<IASTPreprocessorMacroExpansion> macros = emptyMacrosBefore(locationInfo.getStartOffset());
+		if(macros.isEmpty()) {
 			return locationInfo;
 		}
-		return locationInfo.withStartOffset(start, fileContent);
+		return locationInfo.withStartOffset(macros.get(0).getFileLocation().getNodeOffset(), fileContent);
+	}
+
+	//the annotations of a declaration, which are its attributes, i.e., nodiscard in [[nodiscard]] T f();, and the macros expanded to nothing right before it,
+	//i.e., LLAMA_API in LLAMA_API T f();, which expand to attributes in the configurations where they are not empty, i.e., __declspec(dllexport)
+	private List<UMLAnnotation> annotations(IASTNode declaration, IASTDeclSpecifier declSpecifier, String sourceFolder) {
+		List<UMLAnnotation> annotations = new ArrayList<>();
+		IASTFileLocation location = declaration.getFileLocation();
+		if(location == null) {
+			return annotations;
+		}
+		int start = location.getNodeOffset();
+		List<IASTAttributeSpecifier> specifiers = new ArrayList<>();
+		for(IASTNode owner : new IASTNode[] {declaration, declSpecifier}) {
+			if(owner instanceof IASTAttributeOwner attributeOwner) {
+				for(IASTAttributeSpecifier specifier : attributeOwner.getAttributeSpecifiers()) {
+					if(specifier.getFileLocation() != null && isPartOfFile(specifier) && !specifiers.contains(specifier)) {
+						specifiers.add(specifier);
+						start = Math.min(start, specifier.getFileLocation().getNodeOffset());
+					}
+				}
+			}
+		}
+		for(IASTPreprocessorMacroExpansion macro : emptyMacrosBefore(start)) {
+			annotations.add(new UMLAnnotation(macro.getMacroReference().toString(), new LocationInfo(sourceFolder, filePath, macro, CodeElementType.ANNOTATION, fileContent)));
+		}
+		specifiers.sort(Comparator.comparingInt(specifier -> specifier.getFileLocation().getNodeOffset()));
+		for(IASTAttributeSpecifier specifier : specifiers) {
+			List<String> names = new ArrayList<>();
+			if(specifier instanceof IASTAttributeList list) {
+				for(IASTAttribute attribute : list.getAttributes()) {
+					names.add(String.valueOf(attribute.getName()));
+				}
+			}
+			String typeName = names.isEmpty() ? specifier.getRawSignature() : String.join(", ", names);
+			annotations.add(new UMLAnnotation(typeName, new LocationInfo(sourceFolder, filePath, specifier, CodeElementType.ANNOTATION, fileContent)));
+		}
+		return annotations;
 	}
 
 	//whether the offset is in a preprocessor directive, i.e., X in #if X
@@ -1272,6 +1322,11 @@ public class CppFileProcessor {
 			functionName = nested.getName().toString();
 		}
 		UMLOperation operation = new UMLOperation(functionName, locationInfo, className);
+		if(declSpecifier.getParent() != null) {
+			for(UMLAnnotation annotation : annotations(declSpecifier.getParent(), declSpecifier, sourceFolder)) {
+				operation.addAnnotation(annotation);
+			}
+		}
 		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 		operation.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(declSpecifier.isInline());
@@ -1350,6 +1405,9 @@ public class CppFileProcessor {
 		}
 		LocationInfo locationInfo = withEmptyMacros(new LocationInfo(sourceFolder, filePath, functionDefinition, CodeElementType.METHOD_DECLARATION, fileContent));
 		UMLOperation operation = new UMLOperation(operationName, locationInfo, className);
+		for(UMLAnnotation annotation : annotations(functionDefinition, functionDefinition.getDeclSpecifier(), sourceFolder)) {
+			operation.addAnnotation(annotation);
+		}
 		operation.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 		operation.setStatic(functionDefinition.getDeclSpecifier().getStorageClass() == IASTDeclSpecifier.sc_static);
 		operation.setInline(functionDefinition.getDeclSpecifier().isInline());

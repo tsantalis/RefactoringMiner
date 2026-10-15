@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTAttributeOwner;
+import org.eclipse.cdt.core.dom.ast.IASTAttributeSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement;
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -351,10 +355,28 @@ public class StatementObject extends AbstractStatement {
 		setDepth(depth);
 	}
 
+	//the location of a declaration statement starting at the attributes of its declaration, which CDT excludes from it, i.e., [[maybe_unused]] in [[maybe_unused]] auto y = f();
+	private static LocationInfo withAttributes(IASTStatement statement, LocationInfo locationInfo, String fileContent) {
+		if(statement instanceof IASTDeclarationStatement declarationStatement && declarationStatement.getDeclaration() instanceof IASTAttributeOwner owner) {
+			int start = locationInfo.getStartOffset();
+			for(IASTAttributeSpecifier specifier : owner.getAttributeSpecifiers()) {
+				IASTFileLocation location = specifier.getFileLocation();
+				if(location != null && location.getNodeOffset() < start && fileContent.substring(location.getNodeOffset() + location.getNodeLength(), start).isBlank()) {
+					start = location.getNodeOffset();
+				}
+			}
+			if(start < locationInfo.getStartOffset()) {
+				return locationInfo.withStartOffset(start, fileContent);
+			}
+		}
+		return locationInfo;
+	}
+
 	public StatementObject(String sourceFolder, String filePath,
 			IASTStatement statement, int depth, CodeElementType codeElementType,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
+		this.locationInfo = withAttributes(statement, locationInfo, fileContent);
 		CppVisitor visitor = new CppVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();

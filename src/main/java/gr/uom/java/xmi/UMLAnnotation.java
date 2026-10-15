@@ -104,6 +104,13 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		// Marker annotation - no additional processing needed
 	}
 
+	//an attribute of C or C++, i.e., nodiscard in [[nodiscard]], or a macro expanded to nothing before a declaration, i.e., LLAMA_API in LLAMA_API int f();
+	public UMLAnnotation(String typeName, LocationInfo locationInfo) {
+		this.typeName = typeName;
+		this.locationInfo = locationInfo;
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+	}
+
 	public String getTypeName() {
 		return typeName;
 	}

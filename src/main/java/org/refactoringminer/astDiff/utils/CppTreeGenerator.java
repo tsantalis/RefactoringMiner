@@ -703,6 +703,26 @@ public class CppTreeGenerator {
 				node.add(token);
 			}
 		}
+		//the attributes in the tokens, i.e., [[noreturn]] in [[noreturn]] static void f() {...}, since [[ only starts an attribute
+		List<Node> withAttributes = attributeTokens(node.children);
+		if(withAttributes.size() < node.children.size()) {
+			node.children.clear();
+			for(Node child : withAttributes) {
+				node.add(child);
+			}
+			//the attributes of a declaration, which CDT excludes from the location of a declaration statement,
+			//i.e., [[maybe_unused]] in if(x) [[maybe_unused]] auto y = f();
+			for(int i = node.children.size() - 2; i >= 0; i--) {
+				Node attribute = node.children.get(i);
+				Node declaration = node.children.get(i + 1);
+				if(attribute.type.equals("attribute_declaration") && declaration.type.equals("declaration")) {
+					node.children.remove(i);
+					declaration.children.add(0, attribute);
+					attribute.parent = declaration;
+					declaration.start = attribute.start;
+				}
+			}
+		}
 		return node;
 	}
 

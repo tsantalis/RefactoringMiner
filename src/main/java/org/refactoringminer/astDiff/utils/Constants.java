@@ -74,6 +74,7 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
+			RETURN_STATEMENT = "return_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
 			FIELD_DECLARATION = "";
@@ -118,6 +119,7 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
+			RETURN_STATEMENT = "return_expression";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "package_header";
 			FIELD_DECLARATION = "property_declaration";
@@ -162,6 +164,7 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
+			RETURN_STATEMENT = "return_statement";
 			ENHANCED_FOR_STATEMENT = "for_statement";
 			PACKAGE_DECLARATION = "";
 			FIELD_DECLARATION = "";
@@ -206,7 +209,8 @@ public class Constants {
 			WHILE_STATEMENT = "while_statement";
 			DO_STATEMENT = "do_statement";
 			FOR_STATEMENT = "for_statement";
-			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+			RETURN_STATEMENT = "return_statement";
+			ENHANCED_FOR_STATEMENT = "for_range_loop";
 			PACKAGE_DECLARATION = "namespace_definition";
 			FIELD_DECLARATION = "field_declaration";
 			MODIFIER = "Modifier";
@@ -251,6 +255,7 @@ public class Constants {
 			WHILE_STATEMENT = "WhileStatement";
 			DO_STATEMENT = "DoStatement";
 			FOR_STATEMENT = "ForStatement";
+			RETURN_STATEMENT = "ReturnStatement";
 			ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
 			PACKAGE_DECLARATION = "PackageDeclaration";
 			FIELD_DECLARATION = "FieldDeclaration";
@@ -299,6 +304,8 @@ public class Constants {
     public final String LABELED_STATEMENT = "LabeledStatement";
     public final String SIMPLE_NAME;
     public final String VARIABLE_DECLARATION_STATEMENT = "VariableDeclarationStatement";
+    //the declarations of C and C++, which are statements in the bodies
+    public final String DECLARATION_STATEMENT = "declaration";
     public final String EXPRESSION_STATEMENT;
     public final String MODIFIER;
     public final String IMPORT_DECLARATION;
@@ -356,7 +363,7 @@ public class Constants {
     public final String ENHANCED_FOR_STATEMENT;
     public final String FOR_STATEMENT;
     public final String IF_STATEMENT;
-    public final String RETURN_STATEMENT = "ReturnStatement";
+    public final String RETURN_STATEMENT;
     public final String SUPER_CONSTRUCTOR_INVOCATION = "SuperConstructorInvocation";
     public final String SWITCH_CASE;
     public final String SWITCH_STATEMENT;

@@ -2263,6 +2263,22 @@ public class CppTreeGenerator {
 			return inline(node.children);
 		}
 		boolean hasType = hasType(declSpecifier);
+		if(!hasType && !typedef && !friend && declarators.length == 1 && declarators[0] instanceof ICPPASTFunctionDeclarator function && function.isPureVirtual()) {
+			//virtual ~A() = 0; is a function definition with a pure_virtual_clause, whose 0 is not a node
+			Node declaratorNode = declarator(function, NameKind.IDENTIFIER, false);
+			int equals = find("=", declaratorNode.end, end(declaration));
+			Node clause = new Node("pure_virtual_clause");
+			clause.start = equals;
+			clause.end = end(declaration);
+			clause.add(leaf("=", equals, equals + 1));
+			int semicolon = findLast(";", equals, end(declaration));
+			if(semicolon >= 0) {
+				clause.add(leaf(";", semicolon, semicolon + 1));
+			}
+			Node node = node("function_definition", declaration, specifiers, declaratorNode, clause);
+			wrapModifiers(node);
+			return node;
+		}
 		List<Node> children = new ArrayList<>();
 		children.add(specifiers);
 		NameKind kind = typedef ? NameKind.TYPE : context == Context.CLASS && hasType && !friend ? NameKind.FIELD : NameKind.IDENTIFIER;

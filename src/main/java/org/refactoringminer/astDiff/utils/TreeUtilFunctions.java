@@ -353,6 +353,7 @@ public class TreeUtilFunctions {
 			type.equals(constants.TRY_STATEMENT) || //composite
 			type.equals(constants.TYPE_DECLARATION_STATEMENT) || //composite!!!!!!
 			type.equals(constants.VARIABLE_DECLARATION_STATEMENT) || //leaf
+			type.equals(constants.DECLARATION_STATEMENT) || //leaf
 			type.equals(constants.WHILE_STATEMENT) //composite
 			)
 			return true;

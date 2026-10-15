@@ -1176,6 +1176,50 @@
   "firstEndPos" : 2390,
   "secondEndPos" : 2413
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GTEST_DISABLE_MSC_WARNINGS_PUSH_",
+  "secondLabel" : "GTEST_DISABLE_MSC_WARNINGS_PUSH_",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 2392,
+  "secondPos" : 2415,
+  "firstEndPos" : 2424,
+  "secondEndPos" : 2447
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 2424,
+  "secondPos" : 2447,
+  "firstEndPos" : 2425,
+  "secondEndPos" : 2448
+}, {
+  "firstType" : "number_literal",
+  "secondType" : "number_literal",
+  "firstLabel" : "4251",
+  "secondLabel" : "4251",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 2430,
+  "secondPos" : 2453,
+  "firstEndPos" : 2434,
+  "secondEndPos" : 2457
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GTEST_MAYBE_5046_",
+  "secondLabel" : "GTEST_MAYBE_5046_",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 2435,
+  "secondPos" : 2458,
+  "firstEndPos" : 2452,
+  "secondEndPos" : 2475
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/* class A needs to have dll-interface to be used by\n                              clients of class B */",
@@ -1197,6 +1241,17 @@
   "secondPos" : 2585,
   "firstEndPos" : 2623,
   "secondEndPos" : 2646
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 2623,
+  "secondPos" : 2646,
+  "firstEndPos" : 2624,
+  "secondEndPos" : 2647
 }, {
   "firstType" : "namespace_definition",
   "secondType" : "namespace_definition",
@@ -1858,8 +1913,8 @@
   "firstEndPos" : 3434,
   "secondEndPos" : 3457
 }, {
-  "firstType" : "declaration",
-  "secondType" : "declaration",
+  "firstType" : "function_definition",
+  "secondType" : "function_definition",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "field_declaration_list",
@@ -1873,8 +1928,8 @@
   "secondType" : "virtual",
   "firstLabel" : "virtual",
   "secondLabel" : "virtual",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
   "firstPos" : 3437,
   "secondPos" : 3460,
   "firstEndPos" : 3444,
@@ -1884,8 +1939,8 @@
   "secondType" : "function_declarator",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
   "firstPos" : 3445,
   "secondPos" : 3468,
   "firstEndPos" : 3467,
@@ -1957,34 +2012,34 @@
   "firstEndPos" : 3467,
   "secondEndPos" : 3490
 }, {
+  "firstType" : "pure_virtual_clause",
+  "secondType" : "pure_virtual_clause",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_definition",
+  "secondParentType" : "function_definition",
+  "firstPos" : 3468,
+  "secondPos" : 3491,
+  "firstEndPos" : 3472,
+  "secondEndPos" : 3495
+}, {
   "firstType" : "=",
   "secondType" : "=",
   "firstLabel" : "=",
   "secondLabel" : "=",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
+  "firstParentType" : "pure_virtual_clause",
+  "secondParentType" : "pure_virtual_clause",
   "firstPos" : 3468,
   "secondPos" : 3491,
   "firstEndPos" : 3469,
   "secondEndPos" : 3492
 }, {
-  "firstType" : "number_literal",
-  "secondType" : "number_literal",
-  "firstLabel" : "0",
-  "secondLabel" : "0",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
-  "firstPos" : 3470,
-  "secondPos" : 3493,
-  "firstEndPos" : 3471,
-  "secondEndPos" : 3494
-}, {
   "firstType" : ";",
   "secondType" : ";",
   "firstLabel" : ";",
   "secondLabel" : ";",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
+  "firstParentType" : "pure_virtual_clause",
+  "secondParentType" : "pure_virtual_clause",
   "firstPos" : 3471,
   "secondPos" : 3494,
   "firstEndPos" : 3472,
@@ -84390,6 +84445,39 @@
   "secondPos" : 36067,
   "firstEndPos" : 34507,
   "secondEndPos" : 36087
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GTEST_DISABLE_MSC_WARNINGS_POP_",
+  "secondLabel" : "GTEST_DISABLE_MSC_WARNINGS_POP_",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 34509,
+  "secondPos" : 36089,
+  "firstEndPos" : 34540,
+  "secondEndPos" : 36120
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 34540,
+  "secondPos" : 36120,
+  "firstEndPos" : 34541,
+  "secondEndPos" : 36121
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 34541,
+  "secondPos" : 36121,
+  "firstEndPos" : 34542,
+  "secondEndPos" : 36122
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

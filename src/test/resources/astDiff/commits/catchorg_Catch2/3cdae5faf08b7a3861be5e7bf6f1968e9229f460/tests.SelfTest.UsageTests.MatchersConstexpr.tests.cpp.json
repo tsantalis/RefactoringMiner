@@ -208,6 +208,17 @@
   "firstEndPos" : 395,
   "secondEndPos" : 480
 }, {
+  "firstType" : "\n",
+  "secondType" : "\n",
+  "firstLabel" : "\n",
+  "secondLabel" : "\n",
+  "firstParentType" : "preproc_if",
+  "secondParentType" : "preproc_if",
+  "firstPos" : 395,
+  "secondPos" : 480,
+  "firstEndPos" : 396,
+  "secondEndPos" : 481
+}, {
   "firstType" : "namespace_definition",
   "secondType" : "namespace_definition",
   "firstLabel" : "",
@@ -945,6 +956,105 @@
   "firstEndPos" : 662,
   "secondEndPos" : 747
 }, {
+  "firstType" : "return_statement",
+  "secondType" : "return_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 725,
+  "secondPos" : 810,
+  "firstEndPos" : 752,
+  "secondEndPos" : 837
+}, {
+  "firstType" : "return",
+  "secondType" : "return",
+  "firstLabel" : "return",
+  "secondLabel" : "return",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 725,
+  "secondPos" : 810,
+  "firstEndPos" : 731,
+  "secondEndPos" : 816
+}, {
+  "firstType" : "concatenated_string",
+  "secondType" : "concatenated_string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 732,
+  "secondPos" : 817,
+  "firstEndPos" : 751,
+  "secondEndPos" : 836
+}, {
+  "firstType" : "string_literal",
+  "secondType" : "string_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "concatenated_string",
+  "secondParentType" : "concatenated_string",
+  "firstPos" : 732,
+  "secondPos" : 817,
+  "firstEndPos" : 750,
+  "secondEndPos" : 835
+}, {
+  "firstType" : "\"",
+  "secondType" : "\"",
+  "firstLabel" : "\"",
+  "secondLabel" : "\"",
+  "firstParentType" : "string_literal",
+  "secondParentType" : "string_literal",
+  "firstPos" : 732,
+  "secondPos" : 817,
+  "firstEndPos" : 733,
+  "secondEndPos" : 818
+}, {
+  "firstType" : "string_content",
+  "secondType" : "string_content",
+  "firstLabel" : "Matches anything",
+  "secondLabel" : "Matches anything",
+  "firstParentType" : "string_literal",
+  "secondParentType" : "string_literal",
+  "firstPos" : 733,
+  "secondPos" : 818,
+  "firstEndPos" : 749,
+  "secondEndPos" : 834
+}, {
+  "firstType" : "\"",
+  "secondType" : "\"",
+  "firstLabel" : "\"",
+  "secondLabel" : "\"",
+  "firstParentType" : "string_literal",
+  "secondParentType" : "string_literal",
+  "firstPos" : 749,
+  "secondPos" : 834,
+  "firstEndPos" : 750,
+  "secondEndPos" : 835
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "s",
+  "secondLabel" : "s",
+  "firstParentType" : "concatenated_string",
+  "secondParentType" : "concatenated_string",
+  "firstPos" : 750,
+  "secondPos" : 835,
+  "firstEndPos" : 751,
+  "secondEndPos" : 836
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 751,
+  "secondPos" : 836,
+  "firstEndPos" : 752,
+  "secondEndPos" : 837
+}, {
   "firstType" : "}",
   "secondType" : "}",
   "firstLabel" : "}",
@@ -1099,6 +1209,28 @@
   "firstEndPos" : 813,
   "secondEndPos" : 898
 }, {
+  "firstType" : "return_statement",
+  "secondType" : "return_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 814,
+  "secondPos" : 899,
+  "firstEndPos" : 839,
+  "secondEndPos" : 924
+}, {
+  "firstType" : "return",
+  "secondType" : "return",
+  "firstLabel" : "return",
+  "secondLabel" : "return",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 814,
+  "secondPos" : 899,
+  "firstEndPos" : 820,
+  "secondEndPos" : 905
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -1153,6 +1285,17 @@
   "secondPos" : 922,
   "firstEndPos" : 838,
   "secondEndPos" : 923
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "return_statement",
+  "secondParentType" : "return_statement",
+  "firstPos" : 838,
+  "secondPos" : 923,
+  "firstEndPos" : 839,
+  "secondEndPos" : 924
 }, {
   "firstType" : "}",
   "secondType" : "}",

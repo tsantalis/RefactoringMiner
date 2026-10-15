@@ -9965,6 +9965,50 @@
   "firstEndPos" : 4887,
   "secondEndPos" : 4349
 }, {
+  "firstType" : "declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 4950,
+  "secondPos" : 7498,
+  "firstEndPos" : 4966,
+  "secondEndPos" : 7514
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "BufferView",
+  "secondLabel" : "BufferView",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 4950,
+  "secondPos" : 7498,
+  "firstEndPos" : 4960,
+  "secondEndPos" : 7508
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "view",
+  "secondLabel" : "view",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 4961,
+  "secondPos" : 7509,
+  "firstEndPos" : 4965,
+  "secondEndPos" : 7513
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 4965,
+  "secondPos" : 7513,
+  "firstEndPos" : 4966,
+  "secondEndPos" : 7514
+}, {
   "firstType" : "function_definition",
   "secondType" : "function_definition",
   "firstLabel" : "",
@@ -10052,6 +10096,17 @@
   "secondPos" : 6414,
   "firstEndPos" : 5582,
   "secondEndPos" : 6415
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 5598,
+  "secondPos" : 5232,
+  "firstEndPos" : 5599,
+  "secondEndPos" : 5233
 }, {
   "firstType" : "parameter_declaration",
   "secondType" : "parameter_declaration",
@@ -12890,6 +12945,17 @@
   "secondPos" : 3987,
   "firstEndPos" : 7445,
   "secondEndPos" : 5132
+}, {
+  "firstType" : "struct",
+  "secondType" : "struct",
+  "firstLabel" : "struct",
+  "secondLabel" : "struct",
+  "firstParentType" : "struct_specifier",
+  "secondParentType" : "struct_specifier",
+  "firstPos" : 7071,
+  "secondPos" : 3987,
+  "firstEndPos" : 7077,
+  "secondEndPos" : 3993
 }, {
   "firstType" : "field_declaration_list",
   "secondType" : "field_declaration_list",

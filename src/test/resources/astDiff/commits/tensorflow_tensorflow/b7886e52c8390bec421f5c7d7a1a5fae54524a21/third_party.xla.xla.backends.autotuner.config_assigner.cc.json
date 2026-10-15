@@ -6280,6 +6280,94 @@
   "firstEndPos" : 5097,
   "secondEndPos" : 5098
 }, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 4567,
+  "secondPos" : 4685,
+  "firstEndPos" : 4568,
+  "secondEndPos" : 4686
+}, {
+  "firstType" : "declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 4573,
+  "secondPos" : 4691,
+  "firstEndPos" : 4602,
+  "secondEndPos" : 4720
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 4573,
+  "secondPos" : 4691,
+  "firstEndPos" : 4587,
+  "secondEndPos" : 4705
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "Tuner",
+  "secondLabel" : "Tuner",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 4573,
+  "secondPos" : 4691,
+  "firstEndPos" : 4578,
+  "secondEndPos" : 4696
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 4578,
+  "secondPos" : 4696,
+  "firstEndPos" : 4580,
+  "secondEndPos" : 4698
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Options",
+  "secondLabel" : "Options",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 4580,
+  "secondPos" : 4698,
+  "firstEndPos" : 4587,
+  "secondEndPos" : 4705
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "tuner_options",
+  "secondLabel" : "tuner_options",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 4588,
+  "secondPos" : 4706,
+  "firstEndPos" : 4601,
+  "secondEndPos" : 4719
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 4601,
+  "secondPos" : 4719,
+  "firstEndPos" : 4602,
+  "secondEndPos" : 4720
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",

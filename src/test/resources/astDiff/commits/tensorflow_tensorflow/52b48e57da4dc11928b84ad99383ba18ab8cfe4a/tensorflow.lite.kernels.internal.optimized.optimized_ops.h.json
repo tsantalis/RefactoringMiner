@@ -608838,6 +608838,28 @@
   "firstEndPos" : 254968,
   "secondEndPos" : 254993
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// Check offset calculation is the same as the reference version. See",
+  "secondLabel" : "// Check offset calculation is the same as the reference version. See",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 254977,
+  "secondPos" : 255002,
+  "firstEndPos" : 255046,
+  "secondEndPos" : 255071
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// function comment for details. We check using a non-float version of:",
+  "secondLabel" : "// function comment for details. We check using a non-float version of:",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 255055,
+  "secondPos" : 255080,
+  "firstEndPos" : 255126,
+  "secondEndPos" : 255151
+}, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
   "firstLabel" : "",

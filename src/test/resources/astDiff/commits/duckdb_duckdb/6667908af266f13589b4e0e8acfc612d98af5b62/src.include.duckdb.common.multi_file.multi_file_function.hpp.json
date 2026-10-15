@@ -44186,6 +44186,39 @@
   "firstEndPos" : 19531,
   "secondEndPos" : 19468
 }, {
+  "firstType" : "reference_declarator",
+  "secondType" : "reference_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 19552,
+  "secondPos" : 19610,
+  "firstEndPos" : 19564,
+  "secondEndPos" : 19622
+}, {
+  "firstType" : "&",
+  "secondType" : "&",
+  "firstLabel" : "&",
+  "secondLabel" : "&",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "reference_declarator",
+  "firstPos" : 19552,
+  "secondPos" : 19610,
+  "firstEndPos" : 19553,
+  "secondEndPos" : 19611
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "reader_data",
+  "secondLabel" : "reader_data",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "reference_declarator",
+  "firstPos" : 19553,
+  "secondPos" : 19611,
+  "firstEndPos" : 19564,
+  "secondEndPos" : 19622
+}, {
   "firstType" : "parameter_declaration",
   "secondType" : "parameter_declaration",
   "firstLabel" : "",
@@ -50004,6 +50037,61 @@
   "secondPos" : 21525,
   "firstEndPos" : 21764,
   "secondEndPos" : 21526
+}, {
+  "firstType" : "parameter_declaration",
+  "secondType" : "parameter_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 21801,
+  "secondPos" : 21583,
+  "firstEndPos" : 21831,
+  "secondEndPos" : 21604
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "MultiFileLocalState",
+  "secondLabel" : "MultiFileScanJob",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 21801,
+  "secondPos" : 21583,
+  "firstEndPos" : 21820,
+  "secondEndPos" : 21599
+}, {
+  "firstType" : "reference_declarator",
+  "secondType" : "reference_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parameter_declaration",
+  "secondParentType" : "parameter_declaration",
+  "firstPos" : 21821,
+  "secondPos" : 21600,
+  "firstEndPos" : 21831,
+  "secondEndPos" : 21604
+}, {
+  "firstType" : "&",
+  "secondType" : "&",
+  "firstLabel" : "&",
+  "secondLabel" : "&",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "reference_declarator",
+  "firstPos" : 21821,
+  "secondPos" : 21600,
+  "firstEndPos" : 21822,
+  "secondEndPos" : 21601
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "scan_data",
+  "secondLabel" : "job",
+  "firstParentType" : "reference_declarator",
+  "secondParentType" : "reference_declarator",
+  "firstPos" : 21822,
+  "secondPos" : 21601,
+  "firstEndPos" : 21831,
+  "secondEndPos" : 21604
 }, {
   "firstType" : "parameter_declaration",
   "secondType" : "parameter_declaration",
@@ -85424,17 +85512,6 @@
   "secondPos" : 34939,
   "firstEndPos" : 35079,
   "secondEndPos" : 34946
-}, {
-  "firstType" : "return_statement",
-  "secondType" : "return_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "compound_statement",
-  "secondParentType" : "compound_statement",
-  "firstPos" : 35072,
-  "secondPos" : 35468,
-  "firstEndPos" : 35079,
-  "secondEndPos" : 35475
 }, {
   "firstType" : "return",
   "secondType" : "return",

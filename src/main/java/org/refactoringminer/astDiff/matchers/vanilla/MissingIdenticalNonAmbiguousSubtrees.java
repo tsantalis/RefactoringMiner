@@ -175,6 +175,9 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
             if (TreeUtilFunctions.isStatement(src.getType().name, LANG1) && !src.getType().name.equals(LANG1.BLOCK))
                 if (src.getType().name.equals(LANG1.RETURN_STATEMENT) && src.getMetrics().height <= 2)
                     ret =  false;
+                //the initializer of a for statement in C and C++, i.e., size_t i = 0;
+                else if (src.getType().name.equals(LANG1.DECLARATION_STATEMENT) && src.getParent() != null && src.getParent().getType().name.equals(LANG1.FOR_STATEMENT))
+                    ret =  false;
                 else
                     ret =  true;
             else if (src.getType().name.equals(LANG1.METHOD_INVOCATION)) {

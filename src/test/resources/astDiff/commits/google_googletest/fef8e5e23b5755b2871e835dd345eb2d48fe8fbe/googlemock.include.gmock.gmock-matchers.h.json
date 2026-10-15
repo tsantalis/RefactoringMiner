@@ -7105,6 +7105,50 @@
   "firstEndPos" : 11677,
   "secondEndPos" : 11677
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GTEST_DISABLE_MSC_WARNINGS_PUSH_",
+  "secondLabel" : "GTEST_DISABLE_MSC_WARNINGS_PUSH_",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 11679,
+  "secondPos" : 11679,
+  "firstEndPos" : 11711,
+  "secondEndPos" : 11711
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 11711,
+  "secondPos" : 11711,
+  "firstEndPos" : 11712,
+  "secondEndPos" : 11712
+}, {
+  "firstType" : "number_literal",
+  "secondType" : "number_literal",
+  "firstLabel" : "4251",
+  "secondLabel" : "4251",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 11717,
+  "secondPos" : 11717,
+  "firstEndPos" : 11721,
+  "secondEndPos" : 11721
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GMOCK_MAYBE_5046_",
+  "secondLabel" : "GMOCK_MAYBE_5046_",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 11722,
+  "secondPos" : 11722,
+  "firstEndPos" : 11739,
+  "secondEndPos" : 11739
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/* class A needs to have dll-interface to be used by\n                              clients of class B */",
@@ -7126,6 +7170,17 @@
   "secondPos" : 11849,
   "firstEndPos" : 11910,
   "secondEndPos" : 11910
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 11910,
+  "secondPos" : 11910,
+  "firstEndPos" : 11911,
+  "secondEndPos" : 11911
 }, {
   "firstType" : "namespace_definition",
   "secondType" : "namespace_definition",
@@ -519484,6 +519539,39 @@
   "secondPos" : 229607,
   "firstEndPos" : 231460,
   "secondEndPos" : 229627
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "GTEST_DISABLE_MSC_WARNINGS_POP_",
+  "secondLabel" : "GTEST_DISABLE_MSC_WARNINGS_POP_",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 231462,
+  "secondPos" : 229629,
+  "firstEndPos" : 231493,
+  "secondEndPos" : 229660
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 231493,
+  "secondPos" : 229660,
+  "firstEndPos" : 231494,
+  "secondEndPos" : 229661
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "preproc_ifdef",
+  "secondParentType" : "preproc_ifdef",
+  "firstPos" : 231494,
+  "secondPos" : 229661,
+  "firstEndPos" : 231495,
+  "secondEndPos" : 229662
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

@@ -2826,6 +2826,17 @@
   "firstEndPos" : 2423,
   "secondEndPos" : 3820
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Create a default MultiFileReader, function_name is used for errors",
+  "secondLabel" : "//! Create a default MultiFileReader, function_name is used for errors",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 2425,
+  "secondPos" : 3822,
+  "firstEndPos" : 2495,
+  "secondEndPos" : 3892
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -2836,6 +2847,17 @@
   "secondPos" : 3894,
   "firstEndPos" : 2591,
   "secondEndPos" : 3988
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 2497,
+  "secondPos" : 3894,
+  "firstEndPos" : 2507,
+  "secondEndPos" : 3904
 }, {
   "firstType" : "static",
   "secondType" : "static",
@@ -3387,6 +3409,17 @@
   "firstEndPos" : 2731,
   "secondEndPos" : 4128
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Add the parameters for multi-file readers (e.g. union_by_name, filename) to a table function",
+  "secondLabel" : "//! Add the parameters for multi-file readers (e.g. union_by_name, filename) to a table function",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 2734,
+  "secondPos" : 4131,
+  "firstEndPos" : 2830,
+  "secondEndPos" : 4227
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -3397,6 +3430,17 @@
   "secondPos" : 4229,
   "firstEndPos" : 2900,
   "secondEndPos" : 4297
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 2832,
+  "secondPos" : 4229,
+  "firstEndPos" : 2842,
+  "secondEndPos" : 4239
 }, {
   "firstType" : "static",
   "secondType" : "static",
@@ -3552,6 +3596,17 @@
   "firstEndPos" : 2900,
   "secondEndPos" : 4297
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Creates a table function set from a single reader function (including e.g. list parameters, etc)",
+  "secondLabel" : "//! Creates a table function set from a single reader function (including e.g. list parameters, etc)",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 2902,
+  "secondPos" : 4299,
+  "firstEndPos" : 3002,
+  "secondEndPos" : 4399
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -3562,6 +3617,17 @@
   "secondPos" : 4401,
   "firstEndPos" : 3087,
   "secondEndPos" : 4484
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 3004,
+  "secondPos" : 4401,
+  "firstEndPos" : 3014,
+  "secondEndPos" : 4411
 }, {
   "firstType" : "static",
   "secondType" : "static",
@@ -3695,6 +3761,17 @@
   "firstEndPos" : 3087,
   "secondEndPos" : 4484
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Parse a Value containing 1 or more paths into a vector of paths. Note: no expansion is performed here",
+  "secondLabel" : "//! Parse a Value containing 1 or more paths into a vector of paths. Note: no expansion is performed here",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 3090,
+  "secondPos" : 4487,
+  "firstEndPos" : 3195,
+  "secondEndPos" : 4592
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -3705,6 +3782,17 @@
   "secondPos" : 4594,
   "firstEndPos" : 3262,
   "secondEndPos" : 4659
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 3197,
+  "secondPos" : 4594,
+  "firstEndPos" : 3207,
+  "secondEndPos" : 4604
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -4476,6 +4564,17 @@
   "firstEndPos" : 3569,
   "secondEndPos" : 4966
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Shorthand for ParsePaths + CreateFileList",
+  "secondLabel" : "//! Shorthand for ParsePaths + CreateFileList",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 3571,
+  "secondPos" : 4968,
+  "firstEndPos" : 3616,
+  "secondEndPos" : 5013
+}, {
   "firstType" : "ERROR",
   "secondType" : "ERROR",
   "firstLabel" : "",
@@ -4718,6 +4817,17 @@
   "firstEndPos" : 3798,
   "secondEndPos" : 5195
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Parse the named parameters of a multi-file reader",
+  "secondLabel" : "//! Parse the named parameters of a multi-file reader",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 3801,
+  "secondPos" : 5198,
+  "firstEndPos" : 3854,
+  "secondEndPos" : 5251
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -4728,6 +4838,17 @@
   "secondPos" : 5253,
   "firstEndPos" : 4017,
   "secondEndPos" : 5414
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 3856,
+  "secondPos" : 5253,
+  "firstEndPos" : 3866,
+  "secondEndPos" : 5263
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -5114,6 +5235,17 @@
   "firstEndPos" : 4017,
   "secondEndPos" : 5414
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Perform filter pushdown into the MultiFileList. Returns a new MultiFileList if filters were pushed down",
+  "secondLabel" : "//! Perform filter pushdown into the MultiFileList. Returns a new MultiFileList if filters were pushed down",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 4019,
+  "secondPos" : 5416,
+  "firstEndPos" : 4126,
+  "secondEndPos" : 5523
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -5124,6 +5256,17 @@
   "secondPos" : 5525,
   "firstEndPos" : 4548,
   "secondEndPos" : 5945
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 4128,
+  "secondPos" : 5525,
+  "firstEndPos" : 4138,
+  "secondEndPos" : 5535
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -6687,6 +6830,39 @@
   "firstEndPos" : 4877,
   "secondEndPos" : 6274
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Try to use the MultiFileReader for binding. Returns true if a bind could be made, returns false if the",
+  "secondLabel" : "//! Try to use the MultiFileReader for binding. Returns true if a bind could be made, returns false if the",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 4879,
+  "secondPos" : 6276,
+  "firstEndPos" : 4985,
+  "secondEndPos" : 6382
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! MultiFileReader can not perform the bind and binding should be performed on 1 or more files in the MultiFileList",
+  "secondLabel" : "//! MultiFileReader can not perform the bind and binding should be performed on 1 or more files in the MultiFileList",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 4987,
+  "secondPos" : 6384,
+  "firstEndPos" : 5103,
+  "secondEndPos" : 6500
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! directly.",
+  "secondLabel" : "//! directly.",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5105,
+  "secondPos" : 6502,
+  "firstEndPos" : 5118,
+  "secondEndPos" : 6515
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -6697,6 +6873,17 @@
   "secondPos" : 6517,
   "firstEndPos" : 5326,
   "secondEndPos" : 6723
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 5120,
+  "secondPos" : 6517,
+  "firstEndPos" : 5130,
+  "secondEndPos" : 6527
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -7237,6 +7424,17 @@
   "firstEndPos" : 5326,
   "secondEndPos" : 6723
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Bind the options of the multi-file reader, potentially emitting any extra columns that are required",
+  "secondLabel" : "//! Bind the options of the multi-file reader, potentially emitting any extra columns that are required",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 5328,
+  "secondPos" : 6725,
+  "firstEndPos" : 5431,
+  "secondEndPos" : 6828
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -7247,6 +7445,17 @@
   "secondPos" : 6830,
   "firstEndPos" : 5690,
   "secondEndPos" : 7087
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 5433,
+  "secondPos" : 6830,
+  "firstEndPos" : 5443,
+  "secondEndPos" : 6840
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -8601,6 +8810,28 @@
   "firstEndPos" : 6139,
   "secondEndPos" : 7536
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Finalize the bind phase of the multi-file reader after we know (1) the required (output) columns, and (2) the",
+  "secondLabel" : "//! Finalize the bind phase of the multi-file reader after we know (1) the required (output) columns, and (2) the",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 6142,
+  "secondPos" : 7539,
+  "firstEndPos" : 6255,
+  "secondEndPos" : 7652
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! pushed down table filters",
+  "secondLabel" : "//! pushed down table filters",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 6257,
+  "secondPos" : 7654,
+  "firstEndPos" : 6286,
+  "secondEndPos" : 7683
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -8611,6 +8842,17 @@
   "secondPos" : 7685,
   "firstEndPos" : 6771,
   "secondEndPos" : 8168
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 6288,
+  "secondPos" : 7685,
+  "firstEndPos" : 6298,
+  "secondEndPos" : 7695
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -10361,6 +10603,17 @@
   "firstEndPos" : 7340,
   "secondEndPos" : 8737
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Finalize the reading of a chunk - applying any constants that are required",
+  "secondLabel" : "//! Finalize the reading of a chunk - applying any constants that are required",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 7764,
+  "secondPos" : 9161,
+  "firstEndPos" : 7842,
+  "secondEndPos" : 9239
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -10371,6 +10624,17 @@
   "secondPos" : 9241,
   "firstEndPos" : 8257,
   "secondEndPos" : 9654
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 7844,
+  "secondPos" : 9241,
+  "firstEndPos" : 7854,
+  "secondEndPos" : 9251
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -11065,6 +11329,17 @@
   "firstEndPos" : 8257,
   "secondEndPos" : 9654
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Fetch the partition data for the current chunk",
+  "secondLabel" : "//! Fetch the partition data for the current chunk",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 8260,
+  "secondPos" : 9657,
+  "firstEndPos" : 8310,
+  "secondEndPos" : 9707
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -11075,6 +11350,17 @@
   "secondPos" : 9709,
   "firstEndPos" : 8766,
   "secondEndPos" : 10163
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 8312,
+  "secondPos" : 9709,
+  "firstEndPos" : 8322,
+  "secondEndPos" : 9719
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -11669,6 +11955,17 @@
   "secondPos" : 10166,
   "firstEndPos" : 8942,
   "secondEndPos" : 10339
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 8769,
+  "secondPos" : 10166,
+  "firstEndPos" : 8779,
+  "secondEndPos" : 10176
 }, {
   "firstType" : "static",
   "secondType" : "static",
@@ -13309,6 +13606,17 @@
   "firstEndPos" : 10196,
   "secondEndPos" : 11593
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 9578,
+  "secondPos" : 10975,
+  "firstEndPos" : 9588,
+  "secondEndPos" : 10985
+}, {
   "firstType" : "virtual",
   "secondType" : "virtual",
   "firstLabel" : "virtual",
@@ -14321,6 +14629,17 @@
   "firstEndPos" : 10275,
   "secondEndPos" : 11672
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Returns true iff pre-open-knowable filters (filename, file_index, hive) reject this file.",
+  "secondLabel" : "//! Returns true iff pre-open-knowable filters (filename, file_index, hive) reject this file.",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 10278,
+  "secondPos" : 11675,
+  "firstEndPos" : 10371,
+  "secondEndPos" : 11768
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -14331,6 +14650,17 @@
   "secondPos" : 11770,
   "firstEndPos" : 10844,
   "secondEndPos" : 12241
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 10373,
+  "secondPos" : 11770,
+  "firstEndPos" : 10383,
+  "secondEndPos" : 11780
 }, {
   "firstType" : "static",
   "secondType" : "static",
@@ -15069,6 +15399,17 @@
   "firstEndPos" : 11147,
   "secondEndPos" : 12544
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 10847,
+  "secondPos" : 12244,
+  "firstEndPos" : 10857,
+  "secondEndPos" : 12254
+}, {
   "firstType" : "virtual",
   "secondType" : "virtual",
   "firstLabel" : "virtual",
@@ -15508,6 +15849,17 @@
   "secondPos" : 12546,
   "firstEndPos" : 11464,
   "secondEndPos" : 12861
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 11149,
+  "secondPos" : 12546,
+  "firstEndPos" : 11159,
+  "secondEndPos" : 12556
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -16014,6 +16366,17 @@
   "secondPos" : 12863,
   "firstEndPos" : 11862,
   "secondEndPos" : 13259
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 11466,
+  "secondPos" : 12863,
+  "firstEndPos" : 11476,
+  "secondEndPos" : 12873
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -16532,6 +16895,17 @@
   "firstEndPos" : 11862,
   "secondEndPos" : 13259
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Get partition info",
+  "secondLabel" : "//! Get partition info",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 11865,
+  "secondPos" : 13262,
+  "firstEndPos" : 11887,
+  "secondEndPos" : 13284
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -16542,6 +16916,17 @@
   "secondPos" : 13286,
   "firstEndPos" : 12158,
   "secondEndPos" : 13555
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 11889,
+  "secondPos" : 13286,
+  "firstEndPos" : 11899,
+  "secondEndPos" : 13296
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -16840,6 +17225,28 @@
   "firstEndPos" : 12158,
   "secondEndPos" : 13555
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Get a constant expression for the given virtual column, if this can be handled by the MultiFileReader",
+  "secondLabel" : "//! Get a constant expression for the given virtual column, if this can be handled by the MultiFileReader",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 12161,
+  "secondPos" : 13558,
+  "firstEndPos" : 12266,
+  "secondEndPos" : 13663
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! This expression is constant for the entire file",
+  "secondLabel" : "//! This expression is constant for the entire file",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 12268,
+  "secondPos" : 13665,
+  "firstEndPos" : 12319,
+  "secondEndPos" : 13716
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -16850,6 +17257,17 @@
   "secondPos" : 13718,
   "firstEndPos" : 12532,
   "secondEndPos" : 13929
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 12321,
+  "secondPos" : 13718,
+  "firstEndPos" : 12331,
+  "secondEndPos" : 13728
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -17192,6 +17610,17 @@
   "firstEndPos" : 12532,
   "secondEndPos" : 13929
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "//! Gets an expression to evaluate the given virtual column",
+  "secondLabel" : "//! Gets an expression to evaluate the given virtual column",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 12535,
+  "secondPos" : 13932,
+  "firstEndPos" : 12594,
+  "secondEndPos" : 13991
+}, {
   "firstType" : "field_declaration",
   "secondType" : "field_declaration",
   "firstLabel" : "",
@@ -17202,6 +17631,17 @@
   "secondPos" : 14330,
   "firstEndPos" : 13069,
   "secondEndPos" : 14390
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 13009,
+  "secondPos" : 14330,
+  "firstEndPos" : 13019,
+  "secondEndPos" : 14340
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",
@@ -17389,6 +17829,17 @@
   "secondPos" : 14393,
   "firstEndPos" : 13155,
   "secondEndPos" : 14476
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "DUCKDB_API",
+  "secondLabel" : "DUCKDB_API",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 13072,
+  "secondPos" : 14393,
+  "firstEndPos" : 13082,
+  "secondEndPos" : 14403
 }, {
   "firstType" : "virtual",
   "secondType" : "virtual",

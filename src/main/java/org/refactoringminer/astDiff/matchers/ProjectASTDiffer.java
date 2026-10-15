@@ -23,6 +23,8 @@ import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.matchers.wrappers.*;
+import org.refactoringminer.astDiff.matchers.vanilla.MissingIdenticalNeighbours;
+import org.refactoringminer.util.PathFileUtils;
 import org.refactoringminer.astDiff.matchers.vanilla.MissingIdenticalNonAmbiguousSubtrees;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,6 +91,9 @@ public class ProjectASTDiffer
 		applyDeferredFlattenings(unifiedModelDiffRefactoringsMatcher.getNewlyGeneratedDiffsOptimizationMap().keySet());
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			new MissingIdenticalNonAmbiguousSubtrees(diff.LANG1, diff.LANG2).match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+			if ((PathFileUtils.isCppFile(diff.getSrcPath()) || PathFileUtils.isCFile(diff.getSrcPath())) && (PathFileUtils.isCppFile(diff.getDstPath()) || PathFileUtils.isCFile(diff.getDstPath()))) {
+				new MissingIdenticalNeighbours().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+			}
 		}
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");

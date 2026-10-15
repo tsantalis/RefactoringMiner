@@ -1,5 +1,7 @@
 package gr.uom.java.xmi;
 
+import gr.uom.java.xmi.decomposition.CppVisitor;
+
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.io.Serializable;
@@ -830,7 +832,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	}
 
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {
-		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
+		StringBuilder type = new StringBuilder(cleanTypeText(CppVisitor.singleLine(declSpecifier.getRawSignature())));
 		if(type.isEmpty() && declarator instanceof CASTDeclarator cDeclarator) {
 			type = new StringBuilder(cleanTypeText(cDeclarator.getName().toString()));
 		}
@@ -850,7 +852,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 	}
 
 	public static UMLType extractTypeObject(String sourceFolder, String filePath, String fileContent, ICPPASTBaseSpecifier declSpecifier, IASTDeclarator declarator, int extraDimensions) {
-		StringBuilder type = new StringBuilder(cleanTypeText(declSpecifier.getRawSignature()));
+		StringBuilder type = new StringBuilder(cleanTypeText(CppVisitor.singleLine(declSpecifier.getRawSignature())));
 		if(declarator != null) {
 			for(IASTPointerOperator pointerOperator : declarator.getPointerOperators()) {
 				type.append(pointerOperator.getRawSignature());

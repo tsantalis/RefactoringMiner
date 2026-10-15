@@ -55,10 +55,16 @@ public class MoveOperationRefactoring extends AbstractMoveRefactoring {
 	}
 
 	public RefactoringType getRefactoringType() {
-		if(!originalOperation.getName().equals(movedOperation.getName())) {
+		if(!nameWithoutClassQualifier(originalOperation.getName()).equals(nameWithoutClassQualifier(movedOperation.getName()))) {
 			return RefactoringType.MOVE_AND_RENAME_OPERATION;
 		}
 		return RefactoringType.MOVE_OPERATION;
+	}
+
+	//the name of a C++ member function defined outside its class, i.e., f in A::f, which changes when the function is moved to another class
+	private static String nameWithoutClassQualifier(String name) {
+		int index = name.lastIndexOf("::");
+		return index < 0 ? name : name.substring(index + 2);
 	}
 
 	public void addNestedMapper(UMLOperationBodyMapper mapper) {

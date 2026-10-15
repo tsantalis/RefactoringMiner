@@ -244,7 +244,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
-		this.expression = expression.getRawSignature();
+		this.expression = CppVisitor.singleLine(expression.getRawSignature());
 		this.owner = null;
 		this.lambdaOwner = null;
 	}

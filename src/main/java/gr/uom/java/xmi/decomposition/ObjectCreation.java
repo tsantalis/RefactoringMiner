@@ -491,7 +491,7 @@ public class ObjectCreation extends AbstractCall {
 		this.numberOfArguments = arguments.length;
 		this.arguments = new ArrayList<String>();
 		for(IASTInitializerClause argument : arguments) {
-			this.arguments.add(argument.getRawSignature());
+			this.arguments.add(CppVisitor.singleLine(argument.getRawSignature()));
 		}
 	}
 
@@ -509,11 +509,11 @@ public class ObjectCreation extends AbstractCall {
 			IASTInitializerClause[] arguments = constructor.getArguments();
 			this.numberOfArguments = arguments.length;
 			for(IASTInitializerClause arg : arguments) {
-				this.arguments.add(arg.getRawSignature());
+				this.arguments.add(CppVisitor.singleLine(arg.getRawSignature()));
 			}
 		}
 		if(invocation.isArrayAllocation() && initializer != null) {
-			this.anonymousClassDeclaration = initializer.getRawSignature();
+			this.anonymousClassDeclaration = CppVisitor.singleLine(initializer.getRawSignature());
 		}
 	}
 }

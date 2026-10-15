@@ -350,7 +350,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	public LambdaExpressionObject(String sourceFolder, String filePath, ICPPASTLambdaExpression lambdaExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.owner = owner;
-		this.asString = lambdaExpression.getRawSignature();
+		this.asString = CppVisitor.singleLine(lambdaExpression.getRawSignature());
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, lambdaExpression, CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		ICPPASTFunctionDeclarator functionDeclarator = lambdaExpression.getDeclarator();

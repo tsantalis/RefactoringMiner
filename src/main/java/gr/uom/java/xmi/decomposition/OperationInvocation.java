@@ -1472,14 +1472,14 @@ public class OperationInvocation extends AbstractCall {
 		this.arguments = new ArrayList<String>();
 		this.numberOfArguments = arguments.length;
 		for(IASTInitializerClause arg : arguments) {
-			this.arguments.add(arg.getRawSignature());
+			this.arguments.add(CppVisitor.singleLine(arg.getRawSignature()));
 		}
 		if (nameExpr instanceof IASTIdExpression) {
-			this.methodName = nameExpr.getRawSignature();
+			this.methodName = CppVisitor.singleLine(nameExpr.getRawSignature());
 		}
 		else if(nameExpr instanceof IASTFieldReference fieldReference) {
 			IASTExpression expr = fieldReference.getFieldOwner();
-			this.expression = expr.getRawSignature();
+			this.expression = CppVisitor.singleLine(expr.getRawSignature());
 			this.methodName = fieldReference.getFieldName().toString();
 		}
 		else if(nameExpr instanceof ICPPASTFunctionCallExpression) {
@@ -1487,21 +1487,21 @@ public class OperationInvocation extends AbstractCall {
 		}
 		else if(nameExpr instanceof ICPPASTSimpleTypeConstructorExpression constructorExpr) {
 			ICPPASTDeclSpecifier declSpecifier = constructorExpr.getDeclSpecifier();
-			this.methodName = declSpecifier.getRawSignature();
+			this.methodName = CppVisitor.singleLine(declSpecifier.getRawSignature());
 		}
 		else if(nameExpr instanceof ICPPASTLambdaExpression) {
 			this.methodName = "";
 		}
 		else if(nameExpr instanceof ICPPASTUnaryExpression unary) {
-			this.methodName = unary.getOperand().getRawSignature();
+			this.methodName = CppVisitor.singleLine(unary.getOperand().getRawSignature());
 		}
 		else if(nameExpr instanceof ICPPASTArraySubscriptExpression arraySubscriptExpr) {
 			IASTExpression baseArray = arraySubscriptExpr.getArrayExpression();
-			this.methodName = baseArray.getRawSignature();
+			this.methodName = CppVisitor.singleLine(baseArray.getRawSignature());
 		}
 		else if(nameExpr instanceof CASTArraySubscriptExpression arraySubscriptExpr) {
 			IASTExpression baseArray = arraySubscriptExpr.getArrayExpression();
-			this.methodName = baseArray.getRawSignature();
+			this.methodName = CppVisitor.singleLine(baseArray.getRawSignature());
 		}
 	}
 

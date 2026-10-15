@@ -2271,6 +2271,37 @@ public class StringBasedHeuristics {
 		return true;
 	}
 
+	//the operator joining the pieces of a string, which is << in the C++ stream insertion chains, i.e., VLOG(1) << "Compiled " << n << " configs.";
+	private static String concatenationOperator(String s, Constants LANG) {
+		return streamInsertionChain(s, LANG) ? STREAM_INSERTION : LANG.STRING_CONCATENATION;
+	}
+
+	private static Pattern concatenationPattern(String s, Constants LANG) {
+		return streamInsertionChain(s, LANG) ? SPLIT_STREAM_INSERTION_PATTERN : SPLIT_CONCAT_STRING_PATTERN;
+	}
+
+	//whether the code is a C++ stream insertion chain, which starts with a stream, i.e., a logging or check macro call like VLOG(1) and TF_RET_CHECK(x) or std::cout,
+	//and contains string literals, unlike a shift like 1 << n
+	private static boolean streamInsertionChain(String s, Constants LANG) {
+		if(!LANG.equals(Constants.CPP) || !s.contains(STREAM_INSERTION)) {
+			return false;
+		}
+		String[] tokens = SPLIT_STREAM_INSERTION_PATTERN.split(s);
+		if(tokens.length < 2 || !STREAM.matcher(tokens[0].strip()).matches()) {
+			return false;
+		}
+		for(int i=1; i<tokens.length; i++) {
+			if(tokens[i].strip().startsWith("\"")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static final String STREAM_INSERTION = " << ";
+	private static final Pattern SPLIT_STREAM_INSERTION_PATTERN = Pattern.compile("(\\s)*( << )(\\s)*");
+	private static final Pattern STREAM = Pattern.compile("[A-Za-z_][\\w:]*\\(.*\\)|(std::)?(cout|cerr|clog)");
+
 	protected static boolean commonConcat(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
 		Constants LANG1 = mapper.LANG1;
 		Constants LANG2 = mapper.LANG2;
@@ -2289,9 +2320,9 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			else if(s1.contains(LANG1.STRING_CONCATENATION) && s2.contains(LANG2.STRING_CONCATENATION)) {
-				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
-				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
+			else if(s1.contains(concatenationOperator(s1, LANG1)) && s2.contains(concatenationOperator(s2, LANG2))) {
+				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(concatenationPattern(s1, LANG1).split(s1)));
+				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(concatenationPattern(s2, LANG2).split(s2)));
 				Set<String> intersection = new LinkedHashSet<String>();
 				for(String token1 : tokens1) {
 					for(String token2 : tokens2) {
@@ -3267,6 +3298,9 @@ public class StringBasedHeuristics {
 					typeReplacement = true;
 					if(string1.contains("new " + replacement.getBefore() + "(") && string2.contains("new " + replacement.getAfter() + "("))
 						classInstanceCreationReplacement = true;
+					//the type of a variable declaration is a renamed type parameter, i.e., T total = initial; and Element result = seed;
+					if(map.containsKey(replacement.getBefore()) && map.get(replacement.getBefore()).equals(replacement.getAfter()))
+						typeParameterRename = true;
 				}
 				else if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
 						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(LANG1.THIS_DOT + replacement.getBefore())) &&
@@ -3323,7 +3357,10 @@ public class StringBasedHeuristics {
 					AbstractCall invocationAfter = ((MethodInvocationReplacement)replacement).getInvokedOperationAfter();
 					if((assignment1.equals(replacement.getBefore()) || assignment1.equals(invocationBefore.actualString())) &&
 							(assignment2.equals(replacement.getAfter()) || assignment2.equals(invocationAfter.actualString()))) {
-						if(!invocationBefore.getName().contains(invocationAfter.getName()) && !invocationAfter.getName().contains(invocationBefore.getName())) {
+						//the C++ calls of the same function template with other template arguments, i.e., std::make_unique<A>(x) and std::make_unique<B>(), call the same function
+						String name1 = withoutTemplateArguments(invocationBefore.getName());
+						String name2 = withoutTemplateArguments(invocationAfter.getName());
+						if(!name1.contains(name2) && !name2.contains(name1)) {
 							rightHandSideReplacement = true;
 						}
 					}
@@ -3712,6 +3749,11 @@ public class StringBasedHeuristics {
 			}
 		}
 		return false;
+	}
+
+	private static String withoutTemplateArguments(String name) {
+		int index = name.indexOf('<');
+		return index > 0 && name.endsWith(">") ? name.substring(0, index) : name;
 	}
 
 	protected static String statementWithoutAnonymous(AbstractCodeFragment statement, AnonymousClassDeclarationObject anonymousClassDeclaration, VariableDeclarationContainer operation) {

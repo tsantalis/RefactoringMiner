@@ -386,7 +386,7 @@ public class StatementObject extends AbstractStatement {
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		this.comprehensions = visitor.getComprehensions();
-		this.statement = statement.getRawSignature();
+		this.statement = CppVisitor.singleLine(statement.getRawSignature());
 		if(!this.statement.endsWith("\n")) {
 			this.statement += "\n";
 		}

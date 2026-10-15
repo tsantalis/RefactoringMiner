@@ -57,7 +57,7 @@ public class LeafExpression extends AbstractCodeFragment {
 
 	public LeafExpression(String sourceFolder, String filePath, IASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
 		super(new LocationInfo(sourceFolder, filePath, expression, codeElementType, fileContent));
-		this.string = expression.getRawSignature();
+		this.string = CppVisitor.singleLine(expression.getRawSignature());
 		this.container = container;
 	}
 

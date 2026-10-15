@@ -1288,8 +1288,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                 if (colons != null) {
                     mappingStore.addMapping(colons.first,colons.second);
                 }
-                //List<Tree> initializers1 = TreeUtilFunctions.findChildrenByTypeRecursively(matched.first, LANG1.FIELD_INITIALIZER);
-                //List<Tree> initializers2 = TreeUtilFunctions.findChildrenByTypeRecursively(matched.second, LANG2.FIELD_INITIALIZER);
+                processFieldInitializers(matched.first, matched.second, mappingStore);
             }
         }
         com.github.gumtreediff.utils.Pair<Tree, Tree> primitives = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.PRIMITIVE_TYPE,LANG2.PRIMITIVE_TYPE);
@@ -1300,6 +1299,55 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (explicitSpecifiers != null) {
             mappingStore.addMappingRecursively(explicitSpecifiers.first,explicitSpecifiers.second);
         }
+    }
+
+    private void processFieldInitializers(Tree initializerList1, Tree initializerList2, ExtendedMultiMappingStore mappingStore) {
+        //pair the member initializers by the name of the initialized member or base class
+        List<Tree> initializers1 = TreeUtilFunctions.findChildrenByType(initializerList1, LANG1.FIELD_INITIALIZER);
+        List<Tree> initializers2 = TreeUtilFunctions.findChildrenByType(initializerList2, LANG2.FIELD_INITIALIZER);
+        for(Tree initializer1 : initializers1) {
+            Tree initializer2 = uniqueInitializerWithSameName(initializer1, initializers2);
+            if(initializer2 != null && uniqueInitializerWithSameName(initializer2, initializers1) == initializer1) {
+                if(initializer1.isIsomorphicTo(initializer2)) {
+                    mappingStore.addMappingRecursively(initializer1, initializer2);
+                }
+                else {
+                    //the arguments that changed may have been moved elsewhere, so only identical arguments are matched
+                    mappingStore.addMapping(initializer1, initializer2);
+                    mappingStore.addMappingRecursively(initializer1.getChild(0), initializer2.getChild(0));
+                    Tree arguments1 = initializer1.getChildren().size() > 1 ? initializer1.getChild(1) : null;
+                    Tree arguments2 = initializer2.getChildren().size() > 1 ? initializer2.getChild(1) : null;
+                    if(arguments1 != null && arguments2 != null && arguments1.getType().name.equals(arguments2.getType().name)) {
+                        mappingStore.addMapping(arguments1, arguments2);
+                        for(int i=0; i<Math.min(arguments1.getChildren().size(), arguments2.getChildren().size()); i++) {
+                            Tree argument1 = arguments1.getChild(i);
+                            Tree argument2 = arguments2.getChild(i);
+                            if(argument1.isIsomorphicTo(argument2)) {
+                                mappingStore.addMappingRecursively(argument1, argument2);
+                            }
+                        }
+                        Tree closing1 = arguments1.getChildren().size() > 0 ? arguments1.getChild(arguments1.getChildren().size() - 1) : null;
+                        Tree closing2 = arguments2.getChildren().size() > 0 ? arguments2.getChild(arguments2.getChildren().size() - 1) : null;
+                        if(closing1 != null && closing2 != null && closing1.isIsomorphicTo(closing2) && !mappingStore.isSrcMapped(closing1) && !mappingStore.isDstMapped(closing2)) {
+                            mappingStore.addMapping(closing1, closing2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static Tree uniqueInitializerWithSameName(Tree initializer, List<Tree> initializers) {
+        Tree match = null;
+        for(Tree candidate : initializers) {
+            if(candidate.getChildren().size() > 0 && initializer.getChildren().size() > 0 && candidate.getChild(0).isIsomorphicTo(initializer.getChild(0))) {
+                if(match != null) {
+                    return null;
+                }
+                match = candidate;
+            }
+        }
+        return match;
     }
 
     private void processFunctionDeclarators(Tree functionDeclarator1, Tree functionDeclarator2, ExtendedMultiMappingStore mappingStore) {

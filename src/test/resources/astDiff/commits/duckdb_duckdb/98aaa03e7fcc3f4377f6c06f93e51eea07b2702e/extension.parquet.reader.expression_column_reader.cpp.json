@@ -2012,6 +2012,17 @@
   "firstEndPos" : 1037,
   "secondEndPos" : 1052
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "intermediate_types",
+  "secondLabel" : "intermediate_types",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "field_expression",
+  "firstPos" : 1059,
+  "secondPos" : 1989,
+  "firstEndPos" : 1077,
+  "secondEndPos" : 2007
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -2099,6 +2110,17 @@
   "secondPos" : 2037,
   "firstEndPos" : 1099,
   "secondEndPos" : 2038
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 1100,
+  "secondPos" : 2039,
+  "firstEndPos" : 1101,
+  "secondEndPos" : 2040
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",
@@ -3672,6 +3694,116 @@
   "secondPos" : 1705,
   "firstEndPos" : 1667,
   "secondEndPos" : 1706
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "intermediate_types",
+  "secondLabel" : "intermediate_types",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "field_expression",
+  "firstPos" : 1689,
+  "secondPos" : 1989,
+  "firstEndPos" : 1707,
+  "secondEndPos" : 2007
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 1709,
+  "secondPos" : 2018,
+  "firstEndPos" : 1729,
+  "secondEndPos" : 2038
+}, {
+  "firstType" : "field_expression",
+  "secondType" : "field_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 1709,
+  "secondPos" : 2018,
+  "firstEndPos" : 1727,
+  "secondEndPos" : 2036
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "child_reader",
+  "secondLabel" : "child_reader",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 1709,
+  "secondPos" : 2018,
+  "firstEndPos" : 1721,
+  "secondEndPos" : 2030
+}, {
+  "firstType" : "->",
+  "secondType" : "->",
+  "firstLabel" : "->",
+  "secondLabel" : "->",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 1721,
+  "secondPos" : 2030,
+  "firstEndPos" : 1723,
+  "secondEndPos" : 2032
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "Type",
+  "secondLabel" : "Type",
+  "firstParentType" : "field_expression",
+  "secondParentType" : "field_expression",
+  "firstPos" : 1723,
+  "secondPos" : 2032,
+  "firstEndPos" : 1727,
+  "secondEndPos" : 2036
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 1727,
+  "secondPos" : 2036,
+  "firstEndPos" : 1729,
+  "secondEndPos" : 2038
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 1727,
+  "secondPos" : 2036,
+  "firstEndPos" : 1728,
+  "secondEndPos" : 2037
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 1728,
+  "secondPos" : 2037,
+  "firstEndPos" : 1729,
+  "secondEndPos" : 2038
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 1730,
+  "secondPos" : 2039,
+  "firstEndPos" : 1731,
+  "secondEndPos" : 2040
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

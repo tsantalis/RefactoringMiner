@@ -297,7 +297,7 @@ public class CppPreprocessor {
 	private Map<Integer, Integer> enclosingConditionalBranches(IASTNode node) {
 		Map<Integer, Integer> branches = new HashMap<>();
 		IASTFileLocation location = node.getFileLocation();
-		if(location == null || !node.isPartOfTranslationUnitFile()) {
+		if(location == null || !CppFileProcessor.isPartOfFile(node)) {
 			return branches;
 		}
 		int offset = location.getNodeOffset();
@@ -328,7 +328,7 @@ public class CppPreprocessor {
 		int nextGroupId = 0;
 		for(IASTPreprocessorStatement statement : statements) {
 			IASTFileLocation location = statement.getFileLocation();
-			if(location == null || !statement.isPartOfTranslationUnitFile()) {
+			if(location == null || !CppFileProcessor.isPartOfFile(statement)) {
 				continue;
 			}
 			int start = location.getNodeOffset();

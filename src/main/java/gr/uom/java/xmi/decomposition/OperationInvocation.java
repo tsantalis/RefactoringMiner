@@ -740,7 +740,7 @@ public class OperationInvocation extends AbstractCall {
     	if(type1.startsWith("int") && type2.startsWith("int")) {
     		return true;
     	}
-    	if(type2.equals("auto") || type2.equals("auto*") || type2.equals("auto&")) {
+    	if(type2.matches("(const )?auto[*&]*")) {
     		return true;
     	}
     	if(type2.equals("var")) {

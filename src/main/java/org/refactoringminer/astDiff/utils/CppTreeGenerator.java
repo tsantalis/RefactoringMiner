@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import gr.uom.java.xmi.CppFileProcessor;
+
 import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTArrayModifier;
 import org.eclipse.cdt.core.dom.ast.IASTArraySubscriptExpression;
@@ -76,6 +78,7 @@ import org.eclipse.cdt.core.dom.ast.IASTTypeIdExpression;
 import org.eclipse.cdt.core.dom.ast.IASTTypeIdInitializerExpression;
 import org.eclipse.cdt.core.dom.ast.IASTUnaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTWhileStatement;
+import org.eclipse.cdt.core.dom.ast.IBinding;
 import org.eclipse.cdt.core.dom.ast.IProblemBinding;
 import org.eclipse.cdt.core.dom.ast.IType;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTAliasDeclaration;
@@ -191,6 +194,25 @@ public class CppTreeGenerator {
 		generator.addComments(root);
 		context.setRoot(generator.toTree(root, context));
 		return context;
+	}
+
+	//the names used as types in the code between the offsets, i.e., ns::T and A in ns::T<A> x = e;, and whether they are templates,
+	//which the model declares before parsing the file again, like the code parsed again for the tree
+	public static Map<String, Boolean> templateTypes(String content, List<int[]> ranges) {
+		CppTreeGenerator generator = new CppTreeGenerator(content);
+		Map<String, Boolean> names = new LinkedHashMap<>();
+		for(int[] range : ranges) {
+			Set<String> types = new LinkedHashSet<>();
+			for(Map.Entry<String, Boolean> entry : generator.templateNames(range[0], range[1], types).entrySet()) {
+				if(entry.getValue()) {
+					names.put(entry.getKey(), true);
+				}
+			}
+			for(String type : types) {
+				names.putIfAbsent(type, false);
+			}
+		}
+		return names;
 	}
 
 	private static class Node {
@@ -1630,10 +1652,11 @@ public class CppTreeGenerator {
 		}
 	}
 
-	//whether CDT does not know the name, i.e., it is declared in a header that is not available
+	//whether CDT does not know the name, or knows it only from the declarations that the model added before parsing the file, which tree-sitter does not know
 	private static boolean unknown(IASTName name) {
 		try {
-			return name.resolveBinding() instanceof IProblemBinding;
+			IBinding binding = name.resolveBinding();
+			return binding instanceof IProblemBinding || CppFileProcessor.declaredOnlyBeforeFile(name.getTranslationUnit(), binding);
 		}
 		catch(RuntimeException e) {
 			return true;
@@ -1781,7 +1804,7 @@ public class CppTreeGenerator {
 		int inactiveDepth = -1;
 		int regionStart = -1;
 		for(IASTPreprocessorStatement statement : translationUnit.getAllPreprocessorStatements()) {
-			if(!statement.isPartOfTranslationUnitFile() || statement.getFileLocation() == null) {
+			if(!CppFileProcessor.isPartOfFile(statement) || statement.getFileLocation() == null) {
 				continue;
 			}
 			int statementStart = start(statement);
@@ -1906,13 +1929,48 @@ public class CppTreeGenerator {
 			}
 			i = j;
 		}
+		if(!source.reparsed) {
+			absorbEmptyMacros(nodes);
+		}
 		return nodes;
+	}
+
+	//whether the offset is in a comment or a preprocessor directive, i.e., X in #if X
+	private boolean inExtra(int offset) {
+		Map.Entry<Integer, Integer> extra = extras.floorEntry(offset);
+		return extra != null && extra.getValue() > offset;
+	}
+
+	//the macros expanded to nothing before a declaration, i.e., LLAMA_API in LLAMA_API int f();, which are not in the location of the declaration, are its first children
+	private void absorbEmptyMacros(List<Node> nodes) {
+		int previousEnd = 0;
+		for(Node node : nodes) {
+			if(node.type.equals("declaration") || node.type.equals("function_definition") || node.type.equals("field_declaration")) {
+				boolean absorbed = true;
+				while(absorbed) {
+					absorbed = false;
+					for(int[] expansion : source.expansions) {
+						if(expansion[0] >= previousEnd && expansion[1] <= node.start && skip(expansion[1], node.start) == node.start && !inExtra(expansion[0])) {
+							List<Node> tokens = tokens(expansion[0], expansion[1]);
+							if(tokens.size() == 1 && tokens.get(0).type.equals("identifier")) {
+								node.children.add(0, tokens.get(0));
+								tokens.get(0).parent = node;
+								node.start = expansion[0];
+								absorbed = true;
+							}
+							break;
+						}
+					}
+				}
+			}
+			previousEnd = Math.max(previousEnd, node.end);
+		}
 	}
 
 	private IASTDeclaration[] activeDeclarations(IASTDeclaration[] declarations) {
 		List<IASTDeclaration> active = new ArrayList<>();
 		for(IASTDeclaration declaration : declarations) {
-			if(declaration.isActive() && hasLocation(declaration) && end(declaration) > start(declaration)) {
+			if(declaration.isActive() && hasLocation(declaration) && CppFileProcessor.isPartOfFile(declaration) && end(declaration) > start(declaration)) {
 				active.add(declaration);
 			}
 		}

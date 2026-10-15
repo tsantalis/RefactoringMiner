@@ -210,6 +210,16 @@ function innermostRangeWithoutMatch(config, index, activatedRange) {
 	//so the clicked node has a match, unless all of them have no match
 	return innermost.length > 0 && innermost.every(range => kindsWithoutMatch.includes(range.kind));
 }
+//the column matters in the first and last line of the range, i.e., a deleted block starting at the end of a mapped if statement line
+function rangeContainsClick(content, range, fromLine, toLine, activatedRange) {
+	if(fromLine === activatedRange.startLineNumber && offsetToLineColumn(content, range.from).column > activatedRange.startColumn) {
+		return false;
+	}
+	if(toLine === activatedRange.startLineNumber && offsetToLineColumn(content, range.to).column < activatedRange.startColumn) {
+		return false;
+	}
+	return true;
+}
 function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 	var exit = [];
 	if(index === 0) {
@@ -219,15 +229,7 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 			if(fromLine <= activatedRange.startLineNumber && toLine >= activatedRange.startLineNumber) {
 				//the deleted ASTs and the ASTs moved out to another file have no match in the right side
 				if(range.kind === "deleted" || range.kind === "moveOut") {
-					if(fromLine === toLine) {
-						// the column matters
-						let fromColumn = offsetToLineColumn(config.left.content, range.from);
-						let toColumn = offsetToLineColumn(config.left.content, range.to);
-						if(fromColumn.column <= activatedRange.startColumn && toColumn.column >= activatedRange.startColumn) {
-							exit.push(true);
-						}
-					}
-					else {
+					if(rangeContainsClick(config.left.content, range, fromLine, toLine, activatedRange)) {
 						exit.push(true);
 					}
 				}
@@ -244,15 +246,7 @@ function onClickHelper(config, index, activatedRange, ed, dstIndex) {
 			if(fromLine <= activatedRange.startLineNumber && toLine >= activatedRange.startLineNumber) {
 				//the inserted ASTs and the ASTs moved in from another file have no match in the left side
 				if(range.kind === "inserted" || range.kind === "moveIn") {
-					if(fromLine === toLine) {
-						// the column matters
-						let fromColumn = offsetToLineColumn(config.right.content, range.from);
-						let toColumn = offsetToLineColumn(config.right.content, range.to);
-						if(fromColumn.column <= activatedRange.startColumn && toColumn.column >= activatedRange.startColumn) {
-							exit.push(true);
-						}
-					}
-					else {
+					if(rangeContainsClick(config.right.content, range, fromLine, toLine, activatedRange)) {
 						exit.push(true);
 					}
 				}

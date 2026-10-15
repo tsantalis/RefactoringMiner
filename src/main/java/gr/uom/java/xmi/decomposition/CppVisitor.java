@@ -23,6 +23,15 @@ import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
+import org.eclipse.cdt.core.dom.ast.IASTCastExpression;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConstructorInitializer;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTInitializerList;
+import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer;
+import org.eclipse.cdt.core.dom.ast.IASTInitializer;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTNamedTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.refactoringminer.util.PathFileUtils;
 
 import gr.uom.java.xmi.LocationInfo;
@@ -88,9 +97,32 @@ public class CppVisitor extends ASTVisitor {
 			for(IASTDeclarator declarator : declarators) {
 				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, simpleDeclaration.getDeclSpecifier(), container, activeVariableDeclarations, fileContent);
 				variableDeclarations.add(variableDeclaration);
+				ObjectCreation creation = construction(declarator, simpleDeclaration.getDeclSpecifier(), variableDeclaration);
+				if(creation != null) {
+					creations.add(creation);
+				}
 			}
 		}
 		return super.visit(declaration);
+	}
+
+	//the construction of a variable of a class type with arguments, i.e., T x(a, b), T x{a, b} and T x = {a, b}, but not int x{0} or int x[] = {1, 2}
+	private ObjectCreation construction(IASTDeclarator declarator, IASTDeclSpecifier declSpecifier, VariableDeclaration variableDeclaration) {
+		if(!(declSpecifier instanceof IASTNamedTypeSpecifier) || declarator instanceof IASTArrayDeclarator || declarator instanceof IASTFunctionDeclarator) {
+			return null;
+		}
+		IASTInitializer initializer = declarator.getInitializer();
+		//the creation of T x = {a, b} includes =, like the initializer of the variable declaration, so that it covers the initializer
+		if(initializer instanceof IASTEqualsInitializer equalsInitializer && equalsInitializer.getInitializerClause() instanceof ICPPASTInitializerList list) {
+			return new ObjectCreation(sourceFolder, filePath, equalsInitializer, list.getClauses(), variableDeclaration.getType(), container, fileContent);
+		}
+		if(initializer instanceof ICPPASTInitializerList list) {
+			return new ObjectCreation(sourceFolder, filePath, list, list.getClauses(), variableDeclaration.getType(), container, fileContent);
+		}
+		if(initializer instanceof ICPPASTConstructorInitializer constructorInitializer) {
+			return new ObjectCreation(sourceFolder, filePath, constructorInitializer, constructorInitializer.getArguments(), variableDeclaration.getType(), container, fileContent);
+		}
+		return null;
 	}
 
 	public int visit(IASTName name) {
@@ -215,6 +247,10 @@ public class CppVisitor extends ASTVisitor {
 		else if(expression instanceof ICPPASTNewExpression newExpression) {
 			ObjectCreation invocation = new ObjectCreation(sourceFolder, filePath, newExpression, container, fileContent);
 			creations.add(invocation);
+		}
+		else if(expression instanceof IASTCastExpression castExpression) {
+			LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, castExpression, CodeElementType.CAST_EXPRESSION, container, fileContent);
+			castExpressions.add(leafExpression);
 		}
 		else if(expression instanceof IASTConditionalExpression conditionalExpression) {
 			TernaryOperatorExpression ternary = new TernaryOperatorExpression(sourceFolder, filePath, conditionalExpression, container, activeVariableDeclarations, fileContent);

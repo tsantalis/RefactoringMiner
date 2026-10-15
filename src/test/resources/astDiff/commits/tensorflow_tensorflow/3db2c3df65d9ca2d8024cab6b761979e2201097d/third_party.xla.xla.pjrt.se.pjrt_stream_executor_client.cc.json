@@ -22626,6 +22626,50 @@
   "firstEndPos" : 12206,
   "secondEndPos" : 12701
 }, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12207,
+  "secondPos" : 12702,
+  "firstEndPos" : 12254,
+  "secondEndPos" : 12749
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "platform_id_",
+  "secondLabel" : "platform_id_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12207,
+  "secondPos" : 12702,
+  "firstEndPos" : 12219,
+  "secondEndPos" : 12714
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12219,
+  "secondPos" : 12714,
+  "firstEndPos" : 12254,
+  "secondEndPos" : 12749
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12219,
+  "secondPos" : 12714,
+  "firstEndPos" : 12220,
+  "secondEndPos" : 12715
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -22724,6 +22768,72 @@
   "secondPos" : 12747,
   "firstEndPos" : 12253,
   "secondEndPos" : 12748
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12253,
+  "secondPos" : 12748,
+  "firstEndPos" : 12254,
+  "secondEndPos" : 12749
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12254,
+  "secondPos" : 12749,
+  "firstEndPos" : 12255,
+  "secondEndPos" : 12750
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12262,
+  "secondPos" : 12757,
+  "firstEndPos" : 12302,
+  "secondEndPos" : 12797
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "platform_name_",
+  "secondLabel" : "platform_name_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12262,
+  "secondPos" : 12757,
+  "firstEndPos" : 12276,
+  "secondEndPos" : 12771
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12276,
+  "secondPos" : 12771,
+  "firstEndPos" : 12302,
+  "secondEndPos" : 12797
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12276,
+  "secondPos" : 12771,
+  "firstEndPos" : 12277,
+  "secondEndPos" : 12772
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -22824,6 +22934,149 @@
   "firstEndPos" : 12301,
   "secondEndPos" : 12796
 }, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12301,
+  "secondPos" : 12796,
+  "firstEndPos" : 12302,
+  "secondEndPos" : 12797
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12302,
+  "secondPos" : 12797,
+  "firstEndPos" : 12303,
+  "secondEndPos" : 12798
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12310,
+  "secondPos" : 12805,
+  "firstEndPos" : 12325,
+  "secondEndPos" : 12820
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "client_",
+  "secondLabel" : "client_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12310,
+  "secondPos" : 12805,
+  "firstEndPos" : 12317,
+  "secondEndPos" : 12812
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12317,
+  "secondPos" : 12812,
+  "firstEndPos" : 12325,
+  "secondEndPos" : 12820
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12317,
+  "secondPos" : 12812,
+  "firstEndPos" : 12318,
+  "secondEndPos" : 12813
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "client",
+  "secondLabel" : "client",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12318,
+  "secondPos" : 12813,
+  "firstEndPos" : 12324,
+  "secondEndPos" : 12819
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12324,
+  "secondPos" : 12819,
+  "firstEndPos" : 12325,
+  "secondEndPos" : 12820
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12325,
+  "secondPos" : 12820,
+  "firstEndPos" : 12326,
+  "secondEndPos" : 12821
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12333,
+  "secondPos" : 12828,
+  "firstEndPos" : 12363,
+  "secondEndPos" : 12858
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "topology_",
+  "secondLabel" : "topology_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12333,
+  "secondPos" : 12828,
+  "firstEndPos" : 12342,
+  "secondEndPos" : 12837
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12342,
+  "secondPos" : 12837,
+  "firstEndPos" : 12363,
+  "secondEndPos" : 12858
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12342,
+  "secondPos" : 12837,
+  "firstEndPos" : 12343,
+  "secondEndPos" : 12838
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -22922,6 +23175,28 @@
   "secondPos" : 12856,
   "firstEndPos" : 12362,
   "secondEndPos" : 12857
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12362,
+  "secondPos" : 12857,
+  "firstEndPos" : 12363,
+  "secondEndPos" : 12858
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12363,
+  "secondPos" : 12858,
+  "firstEndPos" : 12364,
+  "secondEndPos" : 12859
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -23022,6 +23297,61 @@
   "firstEndPos" : 12426,
   "secondEndPos" : 11739
 }, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12427,
+  "secondPos" : 13566,
+  "firstEndPos" : 12428,
+  "secondEndPos" : 13567
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12435,
+  "secondPos" : 13574,
+  "firstEndPos" : 12473,
+  "secondEndPos" : 13612
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "owned_allocator_",
+  "secondLabel" : "owned_allocator_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12435,
+  "secondPos" : 13574,
+  "firstEndPos" : 12451,
+  "secondEndPos" : 13590
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12451,
+  "secondPos" : 13590,
+  "firstEndPos" : 12473,
+  "secondEndPos" : 13612
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12451,
+  "secondPos" : 13590,
+  "firstEndPos" : 12452,
+  "secondEndPos" : 13591
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -23120,6 +23450,72 @@
   "secondPos" : 13610,
   "firstEndPos" : 12472,
   "secondEndPos" : 13611
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12472,
+  "secondPos" : 13611,
+  "firstEndPos" : 12473,
+  "secondEndPos" : 13612
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12473,
+  "secondPos" : 13612,
+  "firstEndPos" : 12474,
+  "secondEndPos" : 13613
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12481,
+  "secondPos" : 13620,
+  "firstEndPos" : 12515,
+  "secondEndPos" : 13654
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "owned_devices_",
+  "secondLabel" : "owned_devices_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12481,
+  "secondPos" : 13620,
+  "firstEndPos" : 12495,
+  "secondEndPos" : 13634
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12495,
+  "secondPos" : 13634,
+  "firstEndPos" : 12515,
+  "secondEndPos" : 13654
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12495,
+  "secondPos" : 13634,
+  "firstEndPos" : 12496,
+  "secondEndPos" : 13635
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -23220,6 +23616,149 @@
   "firstEndPos" : 12514,
   "secondEndPos" : 13653
 }, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12514,
+  "secondPos" : 13653,
+  "firstEndPos" : 12515,
+  "secondEndPos" : 13654
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12515,
+  "secondPos" : 13654,
+  "firstEndPos" : 12516,
+  "secondEndPos" : 13655
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12523,
+  "secondPos" : 13662,
+  "firstEndPos" : 12552,
+  "secondEndPos" : 13691
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "process_index_",
+  "secondLabel" : "process_index_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12523,
+  "secondPos" : 13662,
+  "firstEndPos" : 12537,
+  "secondEndPos" : 13676
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12537,
+  "secondPos" : 13676,
+  "firstEndPos" : 12552,
+  "secondEndPos" : 13691
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12537,
+  "secondPos" : 13676,
+  "firstEndPos" : 12538,
+  "secondEndPos" : 13677
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "process_index",
+  "secondLabel" : "process_index",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12538,
+  "secondPos" : 13677,
+  "firstEndPos" : 12551,
+  "secondEndPos" : 13690
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12551,
+  "secondPos" : 13690,
+  "firstEndPos" : 12552,
+  "secondEndPos" : 13691
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12552,
+  "secondPos" : 13691,
+  "firstEndPos" : 12553,
+  "secondEndPos" : 13692
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12560,
+  "secondPos" : 13699,
+  "firstEndPos" : 12606,
+  "secondEndPos" : 13745
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "owned_memory_spaces_",
+  "secondLabel" : "owned_memory_spaces_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12560,
+  "secondPos" : 13699,
+  "firstEndPos" : 12580,
+  "secondEndPos" : 13719
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12580,
+  "secondPos" : 13719,
+  "firstEndPos" : 12606,
+  "secondEndPos" : 13745
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12580,
+  "secondPos" : 13719,
+  "firstEndPos" : 12581,
+  "secondEndPos" : 13720
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -23318,6 +23857,72 @@
   "secondPos" : 13743,
   "firstEndPos" : 12605,
   "secondEndPos" : 13744
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12605,
+  "secondPos" : 13744,
+  "firstEndPos" : 12606,
+  "secondEndPos" : 13745
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12606,
+  "secondPos" : 13745,
+  "firstEndPos" : 12607,
+  "secondEndPos" : 13746
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12710,
+  "secondPos" : 13753,
+  "firstEndPos" : 12754,
+  "secondEndPos" : 13797
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "gpu_run_options_",
+  "secondLabel" : "gpu_run_options_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12710,
+  "secondPos" : 13753,
+  "firstEndPos" : 12726,
+  "secondEndPos" : 13769
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12726,
+  "secondPos" : 13769,
+  "firstEndPos" : 12754,
+  "secondEndPos" : 13797
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12726,
+  "secondPos" : 13769,
+  "firstEndPos" : 12727,
+  "secondEndPos" : 13770
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -23418,6 +24023,72 @@
   "firstEndPos" : 12753,
   "secondEndPos" : 13796
 }, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12753,
+  "secondPos" : 13796,
+  "firstEndPos" : 12754,
+  "secondEndPos" : 13797
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12754,
+  "secondPos" : 13797,
+  "firstEndPos" : 12755,
+  "secondEndPos" : 13798
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12762,
+  "secondPos" : 13805,
+  "firstEndPos" : 12792,
+  "secondEndPos" : 13835
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "kv_store_",
+  "secondLabel" : "kv_store_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12762,
+  "secondPos" : 13805,
+  "firstEndPos" : 12771,
+  "secondEndPos" : 13814
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12771,
+  "secondPos" : 13814,
+  "firstEndPos" : 12792,
+  "secondEndPos" : 13835
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12771,
+  "secondPos" : 13814,
+  "firstEndPos" : 12772,
+  "secondEndPos" : 13815
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -23516,6 +24187,72 @@
   "secondPos" : 13833,
   "firstEndPos" : 12791,
   "secondEndPos" : 13834
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12791,
+  "secondPos" : 13834,
+  "firstEndPos" : 12792,
+  "secondEndPos" : 13835
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12792,
+  "secondPos" : 13835,
+  "firstEndPos" : 12793,
+  "secondEndPos" : 13836
+}, {
+  "firstType" : "field_initializer",
+  "secondType" : "field_initializer",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer_list",
+  "secondParentType" : "field_initializer_list",
+  "firstPos" : 12800,
+  "secondPos" : 13843,
+  "firstEndPos" : 12954,
+  "secondEndPos" : 13997
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "compile_thread_pool_",
+  "secondLabel" : "compile_thread_pool_",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12800,
+  "secondPos" : 13843,
+  "firstEndPos" : 12820,
+  "secondEndPos" : 13863
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_initializer",
+  "secondParentType" : "field_initializer",
+  "firstPos" : 12820,
+  "secondPos" : 13863,
+  "firstEndPos" : 12954,
+  "secondEndPos" : 13997
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12820,
+  "secondPos" : 13863,
+  "firstEndPos" : 12821,
+  "secondEndPos" : 13864
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -23637,6 +24374,72 @@
   "secondPos" : 13893,
   "firstEndPos" : 12851,
   "secondEndPos" : 13894
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12851,
+  "secondPos" : 13894,
+  "firstEndPos" : 12852,
+  "secondEndPos" : 13895
+}, {
+  "firstType" : "string_literal",
+  "secondType" : "string_literal",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12853,
+  "secondPos" : 13896,
+  "firstEndPos" : 12879,
+  "secondEndPos" : 13922
+}, {
+  "firstType" : "\"",
+  "secondType" : "\"",
+  "firstLabel" : "\"",
+  "secondLabel" : "\"",
+  "firstParentType" : "string_literal",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12853,
+  "secondPos" : 13896,
+  "firstEndPos" : 12854,
+  "secondEndPos" : 13897
+}, {
+  "firstType" : "string_content",
+  "secondType" : "string_content",
+  "firstLabel" : "pjrt_compile_thread_pool",
+  "secondLabel" : "pjrt_compile_thread_pool",
+  "firstParentType" : "string_literal",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12854,
+  "secondPos" : 13897,
+  "firstEndPos" : 12878,
+  "secondEndPos" : 13921
+}, {
+  "firstType" : "\"",
+  "secondType" : "\"",
+  "firstLabel" : "\"",
+  "secondLabel" : "\"",
+  "firstParentType" : "string_literal",
+  "secondParentType" : "string_literal",
+  "firstPos" : 12878,
+  "secondPos" : 13921,
+  "firstEndPos" : 12879,
+  "secondEndPos" : 13922
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12879,
+  "secondPos" : 13922,
+  "firstEndPos" : 12880,
+  "secondEndPos" : 13923
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -23945,6 +24748,17 @@
   "secondPos" : 13995,
   "firstEndPos" : 12953,
   "secondEndPos" : 13996
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 12953,
+  "secondPos" : 13996,
+  "firstEndPos" : 12954,
+  "secondEndPos" : 13997
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -199583,6 +200397,259 @@
   "firstEndPos" : 77265,
   "secondEndPos" : 78165
 }, {
+  "firstType" : "declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 77270,
+  "secondPos" : 78170,
+  "firstEndPos" : 77427,
+  "secondEndPos" : 78341
+}, {
+  "firstType" : "auto",
+  "secondType" : "auto",
+  "firstLabel" : "auto",
+  "secondLabel" : "auto",
+  "firstParentType" : "placeholder_type_specifier",
+  "secondParentType" : "placeholder_type_specifier",
+  "firstPos" : 77270,
+  "secondPos" : 78170,
+  "firstEndPos" : 77274,
+  "secondEndPos" : 78174
+}, {
+  "firstType" : "placeholder_type_specifier",
+  "secondType" : "placeholder_type_specifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 77270,
+  "secondPos" : 78170,
+  "firstEndPos" : 77274,
+  "secondEndPos" : 78174
+}, {
+  "firstType" : "init_declarator",
+  "secondType" : "init_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 77275,
+  "secondPos" : 78175,
+  "firstEndPos" : 77426,
+  "secondEndPos" : 78340
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "definition_event_promise",
+  "secondLabel" : "definition_event_promise",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 77275,
+  "secondPos" : 78175,
+  "firstEndPos" : 77299,
+  "secondEndPos" : 78199
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 77300,
+  "secondPos" : 78200,
+  "firstEndPos" : 77301,
+  "secondEndPos" : 78201
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 77310,
+  "secondPos" : 78210,
+  "firstEndPos" : 77426,
+  "secondEndPos" : 78340
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 77310,
+  "secondPos" : 78210,
+  "firstEndPos" : 77360,
+  "secondEndPos" : 78260
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "tsl",
+  "secondLabel" : "tsl",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 77310,
+  "secondPos" : 78210,
+  "firstEndPos" : 77313,
+  "secondEndPos" : 78213
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 77313,
+  "secondPos" : 78213,
+  "firstEndPos" : 77315,
+  "secondEndPos" : 78215
+}, {
+  "firstType" : "template_function",
+  "secondType" : "template_function",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 77315,
+  "secondPos" : 78215,
+  "firstEndPos" : 77360,
+  "secondEndPos" : 78260
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "MakeRef",
+  "secondLabel" : "MakeRef",
+  "firstParentType" : "template_function",
+  "secondParentType" : "template_function",
+  "firstPos" : 77315,
+  "secondPos" : 78215,
+  "firstEndPos" : 77322,
+  "secondEndPos" : 78222
+}, {
+  "firstType" : "template_argument_list",
+  "secondType" : "template_argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_function",
+  "secondParentType" : "template_function",
+  "firstPos" : 77322,
+  "secondPos" : 78222,
+  "firstEndPos" : 77360,
+  "secondEndPos" : 78260
+}, {
+  "firstType" : "<",
+  "secondType" : "<",
+  "firstLabel" : "<",
+  "secondLabel" : "<",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 77322,
+  "secondPos" : 78222,
+  "firstEndPos" : 77323,
+  "secondEndPos" : 78223
+}, {
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 77323,
+  "secondPos" : 78223,
+  "firstEndPos" : 77359,
+  "secondEndPos" : 78259
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "PjRtStreamExecutorDeviceEventPromise",
+  "secondLabel" : "PjRtStreamExecutorDeviceEventPromise",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
+  "firstPos" : 77323,
+  "secondPos" : 78223,
+  "firstEndPos" : 77359,
+  "secondEndPos" : 78259
+}, {
+  "firstType" : ">",
+  "secondType" : ">",
+  "firstLabel" : ">",
+  "secondLabel" : ">",
+  "firstParentType" : "template_argument_list",
+  "secondParentType" : "template_argument_list",
+  "firstPos" : 77359,
+  "secondPos" : 78259,
+  "firstEndPos" : 77360,
+  "secondEndPos" : 78260
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 77360,
+  "secondPos" : 78260,
+  "firstEndPos" : 77426,
+  "secondEndPos" : 78340
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 77360,
+  "secondPos" : 78260,
+  "firstEndPos" : 77361,
+  "secondEndPos" : 78261
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "client_",
+  "secondLabel" : "client_",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "field_expression",
+  "firstPos" : 77374,
+  "secondPos" : 78274,
+  "firstEndPos" : 77381,
+  "secondEndPos" : 78281
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 77381,
+  "secondPos" : 78295,
+  "firstEndPos" : 77382,
+  "secondEndPos" : 78296
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "device_state",
+  "secondLabel" : "device_state",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 77383,
+  "secondPos" : 78297,
+  "firstEndPos" : 77395,
+  "secondEndPos" : 78309
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 77395,
+  "secondPos" : 78309,
+  "firstEndPos" : 77396,
+  "secondEndPos" : 78310
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -199670,6 +200737,28 @@
   "secondPos" : 78338,
   "firstEndPos" : 77425,
   "secondEndPos" : 78339
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 77425,
+  "secondPos" : 78339,
+  "firstEndPos" : 77426,
+  "secondEndPos" : 78340
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 77426,
+  "secondPos" : 78340,
+  "firstEndPos" : 77427,
+  "secondEndPos" : 78341
 }, {
   "firstType" : "expression_statement",
   "secondType" : "expression_statement",

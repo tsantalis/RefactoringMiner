@@ -244,6 +244,26 @@ public class LocationInfo {
 		}
 	}
 
+	private LocationInfo() {
+	}
+
+	//the same location starting earlier in the file, i.e., at the macros expanded to nothing before a C++ declaration
+	public LocationInfo withStartOffset(int startOffset, String fileContent) {
+		LocationInfo locationInfo = new LocationInfo();
+		locationInfo.sourceFolder = sourceFolder;
+		locationInfo.filePath = filePath;
+		locationInfo.codeElementType = codeElementType;
+		locationInfo.startOffset = startOffset;
+		locationInfo.endOffset = endOffset;
+		locationInfo.length = endOffset - startOffset;
+		locationInfo.startLine = computeLine(fileContent, startOffset);
+		locationInfo.startColumn = computeColumn(fileContent, startOffset);
+		locationInfo.endLine = endLine;
+		locationInfo.endColumn = endColumn;
+		locationInfo.compilationUnitLength = compilationUnitLength;
+		return locationInfo;
+	}
+
 	private IASTImageLocation getImageLocation(IASTNode node) {
 		if(node instanceof org.eclipse.cdt.internal.core.dom.parser.ASTNode astNode) {
 			return astNode.getImageLocation();

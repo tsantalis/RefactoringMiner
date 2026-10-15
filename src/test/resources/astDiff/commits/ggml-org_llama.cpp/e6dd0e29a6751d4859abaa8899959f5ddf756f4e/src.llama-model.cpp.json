@@ -265484,6 +265484,83 @@
   "firstEndPos" : 110098,
   "secondEndPos" : 110102
 }, {
+  "firstType" : "declaration",
+  "secondType" : "declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 110103,
+  "secondPos" : 110107,
+  "firstEndPos" : 111009,
+  "secondEndPos" : 110929
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "llama_model_params",
+  "secondLabel" : "llama_model_params",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 110103,
+  "secondPos" : 110107,
+  "firstEndPos" : 110121,
+  "secondEndPos" : 110125
+}, {
+  "firstType" : "init_declarator",
+  "secondType" : "init_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 110122,
+  "secondPos" : 110126,
+  "firstEndPos" : 111008,
+  "secondEndPos" : 110928
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "result",
+  "secondLabel" : "result",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 110122,
+  "secondPos" : 110126,
+  "firstEndPos" : 110128,
+  "secondEndPos" : 110132
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 110129,
+  "secondPos" : 110133,
+  "firstEndPos" : 110130,
+  "secondEndPos" : 110134
+}, {
+  "firstType" : "initializer_list",
+  "secondType" : "initializer_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "init_declarator",
+  "secondParentType" : "init_declarator",
+  "firstPos" : 110131,
+  "secondPos" : 110135,
+  "firstEndPos" : 111008,
+  "secondEndPos" : 110928
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110131,
+  "secondPos" : 110135,
+  "firstEndPos" : 110132,
+  "secondEndPos" : 110136
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.devices                     =*/",
@@ -265494,6 +265571,39 @@
   "secondPos" : 110145,
   "firstEndPos" : 110175,
   "secondEndPos" : 110179
+}, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110176,
+  "secondPos" : 110180,
+  "firstEndPos" : 110183,
+  "secondEndPos" : 110187
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "null",
+  "secondParentType" : "null",
+  "firstPos" : 110176,
+  "secondPos" : 110180,
+  "firstEndPos" : 110183,
+  "secondEndPos" : 110187
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110183,
+  "secondPos" : 110187,
+  "firstEndPos" : 110184,
+  "secondEndPos" : 110188
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -265506,6 +265616,39 @@
   "firstEndPos" : 110227,
   "secondEndPos" : 110231
 }, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110228,
+  "secondPos" : 110232,
+  "firstEndPos" : 110235,
+  "secondEndPos" : 110239
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "null",
+  "secondParentType" : "null",
+  "firstPos" : 110228,
+  "secondPos" : 110232,
+  "firstEndPos" : 110235,
+  "secondEndPos" : 110239
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110235,
+  "secondPos" : 110239,
+  "firstEndPos" : 110236,
+  "secondEndPos" : 110240
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.n_gpu_layers                =*/",
@@ -265516,6 +265659,28 @@
   "secondPos" : 110249,
   "firstEndPos" : 110279,
   "secondEndPos" : 110283
+}, {
+  "firstType" : "number_literal",
+  "secondType" : "number_literal",
+  "firstLabel" : "-1",
+  "secondLabel" : "-1",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110280,
+  "secondPos" : 110284,
+  "firstEndPos" : 110282,
+  "secondEndPos" : 110286
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110282,
+  "secondPos" : 110286,
+  "firstEndPos" : 110283,
+  "secondEndPos" : 110287
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -265528,6 +265693,28 @@
   "firstEndPos" : 110326,
   "secondEndPos" : 110330
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "LLAMA_SPLIT_MODE_LAYER",
+  "secondLabel" : "LLAMA_SPLIT_MODE_LAYER",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110327,
+  "secondPos" : 110331,
+  "firstEndPos" : 110349,
+  "secondEndPos" : 110353
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110349,
+  "secondPos" : 110353,
+  "firstEndPos" : 110350,
+  "secondEndPos" : 110354
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.main_gpu                    =*/",
@@ -265538,6 +265725,28 @@
   "secondPos" : 110428,
   "firstEndPos" : 110393,
   "secondEndPos" : 110462
+}, {
+  "firstType" : "number_literal",
+  "secondType" : "number_literal",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110394,
+  "secondPos" : 110463,
+  "firstEndPos" : 110395,
+  "secondEndPos" : 110464
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110395,
+  "secondPos" : 110464,
+  "firstEndPos" : 110396,
+  "secondEndPos" : 110465
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -265550,6 +265759,39 @@
   "firstEndPos" : 110439,
   "secondEndPos" : 110508
 }, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110440,
+  "secondPos" : 110509,
+  "firstEndPos" : 110447,
+  "secondEndPos" : 110516
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "null",
+  "secondParentType" : "null",
+  "firstPos" : 110440,
+  "secondPos" : 110509,
+  "firstEndPos" : 110447,
+  "secondEndPos" : 110516
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110447,
+  "secondPos" : 110516,
+  "firstEndPos" : 110448,
+  "secondEndPos" : 110517
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.progress_callback           =*/",
@@ -265560,6 +265802,39 @@
   "secondPos" : 110526,
   "firstEndPos" : 110491,
   "secondEndPos" : 110560
+}, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110492,
+  "secondPos" : 110561,
+  "firstEndPos" : 110499,
+  "secondEndPos" : 110568
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "null",
+  "secondParentType" : "null",
+  "firstPos" : 110492,
+  "secondPos" : 110561,
+  "firstEndPos" : 110499,
+  "secondEndPos" : 110568
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110499,
+  "secondPos" : 110568,
+  "firstEndPos" : 110500,
+  "secondEndPos" : 110569
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -265572,6 +265847,39 @@
   "firstEndPos" : 110543,
   "secondEndPos" : 110612
 }, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110544,
+  "secondPos" : 110613,
+  "firstEndPos" : 110551,
+  "secondEndPos" : 110620
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "null",
+  "secondParentType" : "null",
+  "firstPos" : 110544,
+  "secondPos" : 110613,
+  "firstEndPos" : 110551,
+  "secondEndPos" : 110620
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110551,
+  "secondPos" : 110620,
+  "firstEndPos" : 110552,
+  "secondEndPos" : 110621
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.kv_overrides                =*/",
@@ -265582,6 +265890,39 @@
   "secondPos" : 110630,
   "firstEndPos" : 110595,
   "secondEndPos" : 110664
+}, {
+  "firstType" : "null",
+  "secondType" : "null",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110596,
+  "secondPos" : 110665,
+  "firstEndPos" : 110603,
+  "secondEndPos" : 110672
+}, {
+  "firstType" : "nullptr",
+  "secondType" : "nullptr",
+  "firstLabel" : "nullptr",
+  "secondLabel" : "nullptr",
+  "firstParentType" : "null",
+  "secondParentType" : "null",
+  "firstPos" : 110596,
+  "secondPos" : 110665,
+  "firstEndPos" : 110603,
+  "secondEndPos" : 110672
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110603,
+  "secondPos" : 110672,
+  "firstEndPos" : 110604,
+  "secondEndPos" : 110673
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -265594,6 +265935,39 @@
   "firstEndPos" : 110647,
   "secondEndPos" : 110716
 }, {
+  "firstType" : "false",
+  "secondType" : "false",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110648,
+  "secondPos" : 110717,
+  "firstEndPos" : 110653,
+  "secondEndPos" : 110722
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110653,
+  "secondPos" : 110418,
+  "firstEndPos" : 110654,
+  "secondEndPos" : 110419
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110802,
+  "secondPos" : 110722,
+  "firstEndPos" : 110803,
+  "secondEndPos" : 110723
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.check_tensors               =*/",
@@ -265604,6 +265978,28 @@
   "secondPos" : 110732,
   "firstEndPos" : 110846,
   "secondEndPos" : 110766
+}, {
+  "firstType" : "false",
+  "secondType" : "false",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110847,
+  "secondPos" : 110767,
+  "firstEndPos" : 110852,
+  "secondEndPos" : 110772
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110852,
+  "secondPos" : 110772,
+  "firstEndPos" : 110853,
+  "secondEndPos" : 110773
 }, {
   "firstType" : "comment",
   "secondType" : "comment",
@@ -265616,6 +266012,28 @@
   "firstEndPos" : 110896,
   "secondEndPos" : 110816
 }, {
+  "firstType" : "true",
+  "secondType" : "true",
+  "firstLabel" : "true",
+  "secondLabel" : "true",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110897,
+  "secondPos" : 110817,
+  "firstEndPos" : 110901,
+  "secondEndPos" : 110821
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110901,
+  "secondPos" : 110821,
+  "firstEndPos" : 110902,
+  "secondEndPos" : 110822
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.no_host                     =*/",
@@ -265627,6 +266045,28 @@
   "firstEndPos" : 110945,
   "secondEndPos" : 110865
 }, {
+  "firstType" : "false",
+  "secondType" : "false",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110946,
+  "secondPos" : 110866,
+  "firstEndPos" : 110951,
+  "secondEndPos" : 110871
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110951,
+  "secondPos" : 110871,
+  "firstEndPos" : 110952,
+  "secondEndPos" : 110872
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/*.no_alloc                    =*/",
@@ -265637,6 +266077,50 @@
   "secondPos" : 110881,
   "firstEndPos" : 110995,
   "secondEndPos" : 110915
+}, {
+  "firstType" : "false",
+  "secondType" : "false",
+  "firstLabel" : "false",
+  "secondLabel" : "false",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 110996,
+  "secondPos" : 110916,
+  "firstEndPos" : 111001,
+  "secondEndPos" : 110921
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 111001,
+  "secondPos" : 110921,
+  "firstEndPos" : 111002,
+  "secondEndPos" : 110922
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "initializer_list",
+  "secondParentType" : "initializer_list",
+  "firstPos" : 111007,
+  "secondPos" : 110927,
+  "firstEndPos" : 111008,
+  "secondEndPos" : 110928
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "declaration",
+  "secondParentType" : "declaration",
+  "firstPos" : 111008,
+  "secondPos" : 110928,
+  "firstEndPos" : 111009,
+  "secondEndPos" : 110929
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",

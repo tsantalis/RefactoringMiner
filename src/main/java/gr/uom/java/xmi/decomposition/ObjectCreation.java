@@ -484,6 +484,17 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
+	//the construction of a variable with arguments, i.e., T x(a, b), T x{a, b} and T x = {a, b}, which is like T x = new T(a, b) in Java
+	public ObjectCreation(String sourceFolder, String filePath, IASTInitializer initializer, IASTInitializerClause[] arguments, UMLType type, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, initializer, CodeElementType.CLASS_INSTANCE_CREATION, container, fileContent);
+		this.type = type;
+		this.numberOfArguments = arguments.length;
+		this.arguments = new ArrayList<String>();
+		for(IASTInitializerClause argument : arguments) {
+			this.arguments.add(argument.getRawSignature());
+		}
+	}
+
 	public ObjectCreation(String sourceFolder, String filePath, ICPPASTNewExpression invocation, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, invocation, CodeElementType.CLASS_INSTANCE_CREATION, container, fileContent);
 		IASTTypeId type = invocation.getTypeId();

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTFunctionCallExpression;
+import org.eclipse.cdt.core.dom.ast.IASTInitializer;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -94,6 +95,10 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public AbstractCall(String sourceFolder, String filePath, ICPPASTNewExpression expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
 		super(sourceFolder, filePath, expression, codeElementType, container, fileContent);
+	}
+
+	public AbstractCall(String sourceFolder, String filePath, IASTInitializer initializer, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
+		super(sourceFolder, filePath, initializer, codeElementType, container, fileContent);
 	}
 
 	protected AbstractCall(LocationInfo locationInfo) {

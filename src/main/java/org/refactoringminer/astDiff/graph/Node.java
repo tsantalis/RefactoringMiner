@@ -132,8 +132,12 @@ public class Node implements ReviewNode {
   }
 
   public boolean isDescendantOf(Node node) {
-    return (this.getTree().equals(node.getTree()) && this.nodeType.equals(NodeType.SEMANTIC_CONTEXT) && node.getNodeType().equals(NodeType.LOCATION_CONTEXT))
-            || Node.isDescendantOf(this.srcDst, this.path, this.tree, node.srcDst, node.path, node.tree);
+    if (this.srcDst.equals(node.getSrcDst()) && this.path.equals(node.getPath()) && this.getTree().equals(node.getTree())
+            && this.nodeType.equals(NodeType.SEMANTIC_CONTEXT) && node.getNodeType().equals(NodeType.LOCATION_CONTEXT)) {
+      return true;
+    }
+
+    return Node.isDescendantOf(this.srcDst, this.path, this.tree, node.srcDst, node.path, node.tree);
   }
 
   public static boolean isDescendantOf(SrcDst examineeSrcDst, String examineePath, Tree examineeTree,

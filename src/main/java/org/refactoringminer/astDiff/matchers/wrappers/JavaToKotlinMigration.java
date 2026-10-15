@@ -3094,6 +3094,7 @@ public class JavaToKotlinMigration {
         if(!srcJavadoc.getType().name.equals(LANG1.JAVA_DOC) || !dstComment.getType().name.equals(LANG2.BLOCK_COMMENT))
             return false;
         List<Pair<Tree, Tree>> pairs = new ArrayList<>();
+        boolean mirrored = dstComment.isLeaf();
         if(dstComment.isLeaf()) {
             //the label is the source code of the comment, so the offsets are computed from the start of the comment
             String text = dstComment.getLabel();
@@ -3148,8 +3149,20 @@ public class JavaToKotlinMigration {
         if(!srcJavadoc.getLabel().equals(dstComment.getLabel()))
             return false;
         mappingStore.addMapping(srcJavadoc, dstComment);
-        for(Pair<Tree, Tree> pair : pairs)
-            mapSameStructure(mappingStore, pair.first, pair.second);
+        if(mirrored) {
+            //the mirrored elements might skip Java elements that changed, so each one is mapped to the Java element it mirrors
+            for(Tree dst : dstComment.preOrder()) {
+                Object src = dst.getMetadata(MIRRORED_FROM);
+                if(src instanceof Tree srcElement) {
+                    mappingStore.addMapping(srcElement, dst);
+                    dst.setMetadata(MIRRORED_FROM, null);
+                }
+            }
+        }
+        else {
+            for(Pair<Tree, Tree> pair : pairs)
+                mapSameStructure(mappingStore, pair.first, pair.second);
+        }
         //align Kotlin declaration's parent -> multiline_comment, declaration with Java declaration -> Javadoc
         Tree parent1 = srcJavadoc.getParent();
         Tree parent2 = dstComment.getParent();
@@ -3253,8 +3266,12 @@ public class JavaToKotlinMigration {
         }
     }
 
+    //the metadata key of the Java element that a Kotlin comment element mirrors
+    private static final String MIRRORED_FROM = "javadoc.mirrored.from";
+
     private static Tree mirrorJavadocElement(Tree srcElement, String text, int offset, int[] cursor, boolean reference, Constants LANG1) {
         DefaultTree dstElement = new DefaultTree(srcElement.getType(), srcElement.getLabel());
+        dstElement.setMetadata(MIRRORED_FROM, srcElement);
         String type = srcElement.getType().name;
         if(srcElement.isLeaf()) {
             String label = srcElement.getLabel();
@@ -3281,17 +3298,87 @@ public class JavaToKotlinMigration {
                 srcElement.getChild(0).getType().name.equals(LANG1.TAG_NAME)) {
             return mirrorJavadocInlineTag(srcElement, text, offset, cursor, LANG1);
         }
+        else if(type.equals(LANG1.TAG_ELEMENT)) {
+            //the text and inline tags of a block tag, which the Kotlin comment might rewrite, i.e., Java code converted to Kotlin code in a code block
+            List<Tree> skipped = new ArrayList<>();
+            for(Tree srcChild : srcElement.getChildren()) {
+                int[] position = {cursor[0]};
+                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, position, false, LANG1);
+                //the block tag starts with its first element, i.e., @param, and the added documentation before it is found by the caller
+                if(dstChild == null && dstElement.getChildren().isEmpty() && skipped.isEmpty())
+                    return null;
+                if(dstChild == null) {
+                    int start = findJavadocElementStart(srcChild, text, offset, cursor[0], LANG1);
+                    if(start < 0) {
+                        skipped.add(srcChild);
+                        continue;
+                    }
+                    //the Kotlin text before the element is added documentation, or the rewritten text of a single skipped Java text
+                    Tree added = createAddedJavadocElement(text, offset, cursor[0], start, LANG1);
+                    if(added != null) {
+                        List<Tree> addedTexts = new ArrayList<>(added.getChildren());
+                        if(skipped.size() == 1 && addedTexts.size() == 1 && skipped.get(0).getType().name.equals(LANG1.TEXT_ELEMENT))
+                            addedTexts.get(0).setMetadata(MIRRORED_FROM, skipped.get(0));
+                        for(Tree addedText : addedTexts)
+                            dstElement.addChild(addedText);
+                    }
+                    position[0] = start;
+                    dstChild = mirrorJavadocElement(srcChild, text, offset, position, false, LANG1);
+                }
+                skipped.clear();
+                cursor[0] = position[0];
+                dstElement.addChild(dstChild);
+            }
+            if(dstElement.getChildren().isEmpty())
+                return null;
+            setRangeToChildren(dstElement);
+        }
         else {
             boolean isReference = reference || type.equals(LANG1.METHOD_REF) || type.equals(LANG1.MEMBER_REF) || type.equals(LANG1.QUALIFIED_NAME);
             for(Tree srcChild : srcElement.getChildren()) {
-                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, cursor, isReference, LANG1);
-                if(dstChild == null)
+                int[] position = {cursor[0]};
+                Tree dstChild = mirrorJavadocElement(srcChild, text, offset, position, isReference, LANG1);
+                if(dstChild == null) {
+                    //the Kotlin references omit the parameters of the methods, i.e., [A.m] for {@link A#m(String)}
+                    if(srcChild.getType().name.equals(LANG1.METHOD_REF_PARAMETER))
+                        continue;
                     return null;
+                }
+                cursor[0] = position[0];
                 dstElement.addChild(dstChild);
             }
             setRangeToChildren(dstElement);
         }
         return dstElement;
+    }
+
+    //returns the position after the start position, from which the Java element of a block tag can be mirrored in the Kotlin comment, or -1
+    private static int findJavadocElementStart(Tree srcElement, String text, int offset, int start, Constants LANG1) {
+        List<Integer> candidates = new ArrayList<>();
+        if(srcElement.isLeaf()) {
+            if(srcElement.getLabel().isBlank())
+                return -1;
+            Matcher matcher = javadocTextPattern(srcElement.getLabel()).matcher(text);
+            int from = start;
+            while(from < text.length() && matcher.find(from)) {
+                candidates.add(matcher.start());
+                from = matcher.start() + 1;
+            }
+        }
+        else {
+            //an inline tag starts with {, ` or [
+            for(int i=start; i<text.length(); i++) {
+                char c = text.charAt(i);
+                if(c == '{' || c == '`' || c == '[')
+                    candidates.add(i);
+            }
+        }
+        for(int candidate : candidates) {
+            int[] position = {candidate};
+            if(mirrorJavadocElement(srcElement, text, offset, position, false, LANG1) != null)
+                return candidate;
+        }
+        return -1;
     }
 
     //align Java inline tags {@code text}, {@link ref}, {@link ref label} with Kotlin markup `text`, [ref], [label][ref], or the unchanged Java inline tag
@@ -3305,6 +3392,7 @@ public class JavaToKotlinMigration {
         if(opening != '{' && opening != '`' && opening != '[')
             return null;
         DefaultTree dstElement = new DefaultTree(srcElement.getType(), srcElement.getLabel());
+        dstElement.setMetadata(MIRRORED_FROM, srcElement);
         List<Tree> srcChildren = srcElement.getChildren();
         List<Tree> dstChildren = new ArrayList<>();
         int[] position = {start + 1};
@@ -3322,6 +3410,7 @@ public class JavaToKotlinMigration {
             //the markup replaces the Java tag name, so it gets the same label to avoid an update, i.e., @code for `
             Tree srcTagName = srcChildren.get(0);
             DefaultTree dstTagName = new DefaultTree(srcTagName.getType(), srcTagName.getLabel());
+            dstTagName.setMetadata(MIRRORED_FROM, srcTagName);
             dstTagName.setPos(offset + start);
             dstTagName.setLength(1);
             dstChildren.add(dstTagName);
@@ -3387,20 +3476,49 @@ public class JavaToKotlinMigration {
     }
 
     //matches the words of a Javadoc text separated by any whitespace, including line breaks followed by a leading *,
-    //allowing HTML markup to be converted to Markdown, and words to be converted to links, i.e., IOException to [IOException]
+    //allowing HTML markup to be converted to Markdown, i.e., <pre> to ```kotlin and &lt; to <, Markdown emphasis to be added, i.e., **text**,
+    //words to be converted to links, i.e., IOException to [IOException], and the stray punctuation of the Java text to be removed, i.e., } in {@link A} }
     private static Pattern javadocTextPattern(String label) {
-        String[] words = label.trim().split("\\s+");
+        String separator = "(?:\\s*\\n\\s*\\*(?!/))?\\s+";
         StringBuilder regex = new StringBuilder();
-        for(String word : words) {
-            String markdown = word.replaceAll("</?p>", "").replaceAll("</?(strong|b)>", "**").replaceAll("</?(em|i)>", "*").replaceAll("</?code>", "`");
-            if(markdown.isEmpty())
+        boolean started = false;
+        for(String word : label.trim().split("\\s+")) {
+            String part = javadocWordPattern(word);
+            if(part == null)
                 continue;
-            if(regex.length() > 0)
-                regex.append("(?:\\s*\\n\\s*\\*(?!/))?\\s+");
-            String quoted = Pattern.quote(markdown);
-            regex.append("(?:\\[").append(quoted).append("\\]|").append(quoted).append(")");
+            if(word.matches("[{}()\\[\\];,]+")) {
+                regex.append(started ? "(?:" + separator + part + ")?" : "(?:" + part + separator + ")?");
+            }
+            else {
+                if(started)
+                    regex.append(separator);
+                regex.append(part);
+                started = true;
+            }
         }
+        if(!started)
+            return Pattern.compile(Pattern.quote(label.trim()));
         return Pattern.compile(regex.toString());
+    }
+
+    private static String javadocWordPattern(String word) {
+        if(word.equalsIgnoreCase("<pre>"))
+            return "(?:```[\\w+-]*|" + Pattern.quote(word) + ")";
+        if(word.equalsIgnoreCase("</pre>"))
+            return "(?:```|" + Pattern.quote(word) + ")";
+        String markdown = word.replaceAll("</?p>", "").replaceAll("</?(strong|b)>", "**").replaceAll("</?(em|i)>", "*").replaceAll("</?code>", "`");
+        if(markdown.isEmpty())
+            return null;
+        String decoded = markdown.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&amp;", "&");
+        StringBuilder alternatives = new StringBuilder();
+        for(String alternative : decoded.equals(markdown) ? List.of(markdown) : List.of(markdown, decoded)) {
+            String quoted = Pattern.quote(alternative);
+            if(alternatives.length() > 0)
+                alternatives.append("|");
+            alternatives.append("\\[").append(quoted).append("\\]|").append(quoted);
+        }
+        //the * of the end of the comment is not emphasis, i.e., connection.*/
+        return "(?:\\*{1,2}|_{1,2})?(?:" + alternatives + ")(?:\\*{1,2}(?!/)|_{1,2})?";
     }
 
     private static String normalizeJavadocText(String text) {

@@ -417,12 +417,23 @@
   "firstEndPos" : 173,
   "secondEndPos" : 173
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "CWLSurfaceResource",
-  "secondLabel" : "CWLSurfaceResource",
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "template_argument_list",
   "secondParentType" : "template_argument_list",
+  "firstPos" : 173,
+  "secondPos" : 173,
+  "firstEndPos" : 191,
+  "secondEndPos" : 191
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CWLSurfaceResource",
+  "secondLabel" : "CWLSurfaceResource",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
   "firstPos" : 173,
   "secondPos" : 173,
   "firstEndPos" : 191,

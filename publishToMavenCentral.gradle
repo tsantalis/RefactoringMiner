@@ -74,7 +74,6 @@ dependencies {
     implementation platform("io.modelcontextprotocol.sdk:mcp-bom:2.0.1")
     implementation "io.modelcontextprotocol.sdk:mcp-core"
     implementation "io.modelcontextprotocol.sdk:mcp-json-jackson2"
-    implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'com.caoccao.javet:swc4j:2.2.0'
     implementation 'com.caoccao.javet:swc4j-macos-arm64:2.2.0'
     implementation 'com.caoccao.javet:swc4j-linux-x86_64:2.2.0'
@@ -89,8 +88,6 @@ dependencies {
     implementation 'org.kohsuke:github-api:1.330'
     implementation 'io.github.java-diff-utils:java-diff-utils:4.17'
     implementation 'com.github.gumtreediff:core:4.0.0'
-    implementation 'com.github.gumtreediff:gen.jdt:4.0.0'
-    implementation 'com.github.gumtreediff:gen.treesitter-ng:4.0.0'
     implementation 'org.jcommander:jcommander:3.0'
     implementation 'org.jsoup:jsoup:1.23.2'
     implementation 'org.jgrapht:jgrapht-core:1.5.3'

@@ -180,6 +180,7 @@ public class MappingExportModel implements Serializable {
                         .thenComparing(MappingExportModel::getSecondPos)
                         .thenComparing(MappingExportModel::getFirstParentType)
                         .thenComparing(MappingExportModel::getSecondParentType)
+                        .thenComparing(MappingExportModel::getSecondEndPos)
         );
         return exportList;
     }

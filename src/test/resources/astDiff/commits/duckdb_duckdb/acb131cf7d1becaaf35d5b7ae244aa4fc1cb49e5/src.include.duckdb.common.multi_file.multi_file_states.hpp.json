@@ -1033,8 +1033,8 @@
   "firstEndPos" : 1208,
   "secondEndPos" : 1208
 }, {
-  "firstType" : "type_identifier",
-  "secondType" : "type_identifier",
+  "firstType" : "identifier",
+  "secondType" : "identifier",
   "firstLabel" : "DUCKDB_API",
   "secondLabel" : "DUCKDB_API",
   "firstParentType" : "field_declaration",
@@ -1044,23 +1044,12 @@
   "firstEndPos" : 1162,
   "secondEndPos" : 1162
 }, {
-  "firstType" : "ERROR",
-  "secondType" : "ERROR",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "field_declaration",
-  "secondParentType" : "field_declaration",
-  "firstPos" : 1163,
-  "secondPos" : 1163,
-  "firstEndPos" : 1167,
-  "secondEndPos" : 1167
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "primitive_type",
+  "secondType" : "primitive_type",
   "firstLabel" : "void",
   "secondLabel" : "void",
-  "firstParentType" : "ERROR",
-  "secondParentType" : "ERROR",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
   "firstPos" : 1163,
   "secondPos" : 1163,
   "firstEndPos" : 1167,
@@ -1209,6 +1198,17 @@
   "firstEndPos" : 1208,
   "secondEndPos" : 1208
 }, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 1210,
+  "secondPos" : 1210,
+  "firstEndPos" : 1292,
+  "secondEndPos" : 1292
+}, {
   "firstType" : "static",
   "secondType" : "static",
   "firstLabel" : "static",
@@ -1231,30 +1231,30 @@
   "firstEndPos" : 1227,
   "secondEndPos" : 1227
 }, {
-  "firstType" : "declaration",
-  "secondType" : "declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "field_declaration_list",
-  "secondParentType" : "field_declaration_list",
-  "firstPos" : 1252,
-  "secondPos" : 1252,
-  "firstEndPos" : 1292,
-  "secondEndPos" : 1292
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "MultiFileReaderBindData",
+  "secondLabel" : "MultiFileReaderBindData",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 1228,
+  "secondPos" : 1228,
+  "firstEndPos" : 1251,
+  "secondEndPos" : 1251
 }, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
   "firstPos" : 1252,
   "secondPos" : 1252,
   "firstEndPos" : 1291,
   "secondEndPos" : 1291
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
   "firstLabel" : "Deserialize",
   "secondLabel" : "Deserialize",
   "firstParentType" : "function_declarator",
@@ -1356,8 +1356,8 @@
   "secondType" : ";",
   "firstLabel" : ";",
   "secondLabel" : ";",
-  "firstParentType" : "declaration",
-  "secondParentType" : "declaration",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
   "firstPos" : 1291,
   "secondPos" : 1291,
   "firstEndPos" : 1292,

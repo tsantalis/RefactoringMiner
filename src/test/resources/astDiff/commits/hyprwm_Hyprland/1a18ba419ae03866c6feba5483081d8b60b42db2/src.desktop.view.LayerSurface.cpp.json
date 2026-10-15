@@ -9426,12 +9426,23 @@
   "firstEndPos" : 3281,
   "secondEndPos" : 3196
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "CLayerShellResource",
-  "secondLabel" : "CLayerShellResource",
+  "firstType" : "type_descriptor",
+  "secondType" : "type_descriptor",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "template_argument_list",
   "secondParentType" : "template_argument_list",
+  "firstPos" : 3281,
+  "secondPos" : 3196,
+  "firstEndPos" : 3300,
+  "secondEndPos" : 3215
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "CLayerShellResource",
+  "secondLabel" : "CLayerShellResource",
+  "firstParentType" : "type_descriptor",
+  "secondParentType" : "type_descriptor",
   "firstPos" : 3281,
   "secondPos" : 3196,
   "firstEndPos" : 3300,

@@ -494,23 +494,12 @@
   "firstEndPos" : 203,
   "secondEndPos" : 296
 }, {
-  "firstType" : "ERROR",
-  "secondType" : "ERROR",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
-  "firstPos" : 204,
-  "secondPos" : 297,
-  "firstEndPos" : 212,
-  "secondEndPos" : 305
-}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "UNLIKELY",
   "secondLabel" : "UNLIKELY",
-  "firstParentType" : "ERROR",
-  "secondParentType" : "ERROR",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
   "firstPos" : 204,
   "secondPos" : 297,
   "firstEndPos" : 212,
@@ -670,23 +659,12 @@
   "firstEndPos" : 250,
   "secondEndPos" : 343
 }, {
-  "firstType" : "ERROR",
-  "secondType" : "ERROR",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
-  "firstPos" : 251,
-  "secondPos" : 344,
-  "firstEndPos" : 259,
-  "secondEndPos" : 352
-}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "UNLIKELY",
   "secondLabel" : "UNLIKELY",
-  "firstParentType" : "ERROR",
-  "secondParentType" : "ERROR",
+  "firstParentType" : "if_statement",
+  "secondParentType" : "if_statement",
   "firstPos" : 251,
   "secondPos" : 344,
   "firstEndPos" : 259,

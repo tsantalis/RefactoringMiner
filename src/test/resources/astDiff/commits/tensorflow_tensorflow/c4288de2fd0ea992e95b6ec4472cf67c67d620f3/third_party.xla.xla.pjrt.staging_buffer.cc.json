@@ -7,6 +7,17 @@
   "secondParentType" : "",
   "firstPos" : 0,
   "secondPos" : 0,
+  "firstEndPos" : 120357,
+  "secondEndPos" : 1849
+}, {
+  "firstType" : "translation_unit",
+  "secondType" : "translation_unit",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "",
+  "secondParentType" : "",
+  "firstPos" : 0,
+  "secondPos" : 0,
   "firstEndPos" : 773,
   "secondEndPos" : 1849
 }, {
@@ -333,7 +344,62 @@
   "secondType" : "namespace_definition",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "ERROR",
+  "firstParentType" : "translation_unit",
+  "secondParentType" : "translation_unit",
+  "firstPos" : 7091,
+  "secondPos" : 845,
+  "firstEndPos" : 120338,
+  "secondEndPos" : 1830
+}, {
+  "firstType" : "namespace",
+  "secondType" : "namespace",
+  "firstLabel" : "namespace",
+  "secondLabel" : "namespace",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 7091,
+  "secondPos" : 845,
+  "firstEndPos" : 7100,
+  "secondEndPos" : 854
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "xla",
+  "secondLabel" : "xla",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 7101,
+  "secondPos" : 855,
+  "firstEndPos" : 7104,
+  "secondEndPos" : 858
+}, {
+  "firstType" : "declaration_list",
+  "secondType" : "declaration_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "namespace_definition",
+  "secondParentType" : "namespace_definition",
+  "firstPos" : 7105,
+  "secondPos" : 859,
+  "firstEndPos" : 120338,
+  "secondEndPos" : 1830
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 7105,
+  "secondPos" : 859,
+  "firstEndPos" : 7106,
+  "secondEndPos" : 860
+}, {
+  "firstType" : "namespace_definition",
+  "secondType" : "namespace_definition",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "declaration_list",
   "secondParentType" : "declaration_list",
   "firstPos" : 7108,
   "secondPos" : 914,
@@ -1131,4 +1197,15 @@
   "secondPos" : 1474,
   "firstEndPos" : 7654,
   "secondEndPos" : 1475
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "declaration_list",
+  "secondParentType" : "declaration_list",
+  "firstPos" : 120337,
+  "secondPos" : 1829,
+  "firstEndPos" : 120338,
+  "secondEndPos" : 1830
 } ]

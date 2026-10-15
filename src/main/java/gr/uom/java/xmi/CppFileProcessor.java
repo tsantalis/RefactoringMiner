@@ -39,12 +39,15 @@ import org.eclipse.cdt.core.dom.ast.IASTComment;
 import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTFieldDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier.IASTEnumerator;
 import org.eclipse.cdt.core.dom.ast.IASTCompoundStatement;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
+import org.eclipse.cdt.core.dom.ast.IASTNamedTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTParameterDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorElseStatement;
@@ -498,6 +501,12 @@ public class CppFileProcessor {
 	//the declaration specifiers that cannot follow the type of a declaration, i.e., virtual in DUCKDB_API virtual void f();
 	private static final Pattern DECLARATION_MACRO = Pattern.compile("([A-Za-z_][A-Za-z0-9_]*)\\s+(virtual|static|inline|explicit|friend|extern|constexpr|consteval|typedef|mutable|void|bool|char|int|float|double|short|long|signed|unsigned|auto|class|struct|enum|union|template|typename)\\b");
 
+	//a call of a macro, i.e., ABSL_GUARDED_BY(mu)
+	private static final Pattern TRAILING_MACRO = Pattern.compile("\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*\\(");
+
+	//the start of a name
+	private static final Pattern NEXT_NAME = Pattern.compile("\\s*[A-Za-z_]");
+
 	private static final Set<String> KEYWORDS = Set.of("alignas", "alignof", "asm", "auto", "bool", "break", "case", "catch", "char", "char8_t", "char16_t", "char32_t",
 			"class", "concept", "const", "consteval", "constexpr", "constinit", "const_cast", "continue", "co_await", "co_return", "co_yield", "decltype", "default",
 			"delete", "do", "double", "dynamic_cast", "else", "enum", "explicit", "export", "extern", "false", "float", "for", "friend", "goto", "if", "inline", "int",
@@ -524,8 +533,31 @@ public class CppFileProcessor {
 				if(location != null && isPartOfFile(declaration) && (declaration instanceof IASTProblemDeclaration || !endsDeclaration(fileContent, location))) {
 					Matcher matcher = DECLARATION_MACRO.matcher(fileContent);
 					matcher.region(location.getNodeOffset(), fileContent.length());
+					int end = location.getNodeOffset() + location.getNodeLength();
+					Matcher trailing = TRAILING_MACRO.matcher(fileContent);
+					trailing.region(end, fileContent.length());
 					if(matcher.lookingAt()) {
 						String name = matcher.group(1);
+						if(!expanded.contains(name) && !KEYWORDS.contains(name)) {
+							definitions.add("#define " + name);
+						}
+					}
+					//a macro after the name of a declaration that CDT did not parse, i.e., ABSL_GUARDED_BY(mu) in T x ABSL_GUARDED_BY(mu) = e;
+					else if(declaration instanceof IASTProblemDeclaration && startsName(fileContent, location.getNodeOffset()) && end > 0 && Character.isJavaIdentifierPart(fileContent.charAt(end - 1))
+							&& trailing.lookingAt()) {
+						String name = trailing.group(1);
+						if(!expanded.contains(name) && !KEYWORDS.contains(name)) {
+							definitions.add("#define " + name + "(...)");
+						}
+					}
+					//an unknown macro before the type of a declaration, which CDT parsed as the type of the declaration of a variable named after the type,
+					//followed by the name of the declaration, i.e., ABSL_ATTRIBUTE_WEAK in ABSL_ATTRIBUTE_WEAK absl::StatusOr<T> f() {...}
+					else if(declaration instanceof IASTSimpleDeclaration simple && simple.getDeclSpecifier() instanceof IASTNamedTypeSpecifier named
+							&& named.getName().getLastName() == named.getName() && named.getName().resolveBinding() instanceof IProblemBinding
+							&& named.getFileLocation() != null && named.getFileLocation().getNodeOffset() == location.getNodeOffset()
+							&& simple.getDeclarators().length == 1 && isVariableName(simple.getDeclarators()[0])
+							&& NEXT_NAME.matcher(fileContent).region(end, fileContent.length()).lookingAt()) {
+						String name = named.getName().toString();
 						if(!expanded.contains(name) && !KEYWORDS.contains(name)) {
 							definitions.add("#define " + name);
 						}
@@ -535,6 +567,19 @@ public class CppFileProcessor {
 			}
 		});
 		return String.join("\n", definitions);
+	}
+
+	//whether a name starts at the offset, and not in the middle of a name, i.e., the problem of CDT at e of T in DUCKDB_API virtual T f();
+	private static boolean startsName(String fileContent, int offset) {
+		return offset < fileContent.length() && Character.isJavaIdentifierStart(fileContent.charAt(offset))
+				&& (offset == 0 || !Character.isJavaIdentifierPart(fileContent.charAt(offset - 1)));
+	}
+
+	//a declarator that is only a name, i.e., absl::StatusOr<T> in ABSL_ATTRIBUTE_WEAK absl::StatusOr<T>
+	private static boolean isVariableName(IASTDeclarator declarator) {
+		return !(declarator instanceof IASTFunctionDeclarator) && !(declarator instanceof IASTArrayDeclarator) && !(declarator instanceof IASTFieldDeclarator)
+				&& declarator.getPointerOperators().length == 0 && declarator.getInitializer() == null
+				&& declarator.getNestedDeclarator() == null;
 	}
 
 	private static boolean endsDeclaration(String fileContent, IASTFileLocation location) {

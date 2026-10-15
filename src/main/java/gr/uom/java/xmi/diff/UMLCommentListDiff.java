@@ -17,8 +17,11 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLOperation;
 
 public class UMLCommentListDiff {
 	private static final Pattern LEAD_TRAIL_QUOTE = Pattern.compile("^\"|\"$");
@@ -524,6 +527,7 @@ public class UMLCommentListDiff {
 	}
 
 	private void processModifiedComments(List<UMLComment> deletedComments, List<UMLComment> addedComments) {
+		processModifiedCommentsInMappedStatements(deletedComments, addedComments);
 		if(deletedComments.isEmpty() || addedComments.isEmpty()) {
 			this.deletedComments.addAll(deletedComments);
 			this.addedComments.addAll(addedComments);
@@ -609,6 +613,49 @@ public class UMLCommentListDiff {
 				this.addedComments.add(addedComment);
 			}
 		}
+	}
+
+	//the modified comments that are the only deleted and the only added comment in the statements of a mapping, i.e., /*disable_x=*/true -> /*enable_x=*/false in the arguments of a mapped call
+	private void processModifiedCommentsInMappedStatements(List<UMLComment> deletedComments, List<UMLComment> addedComments) {
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject) {
+				List<UMLComment> before = commentsIn(deletedComments, mapping.getFragment1().getLocationInfo());
+				List<UMLComment> after = commentsIn(addedComments, mapping.getFragment2().getLocationInfo());
+				if(before.size() == 1 && after.size() == 1 && !identicalCommentInOtherVersion(before.get(0), true) && !identicalCommentInOtherVersion(after.get(0), false)) {
+					commonComments.add(Pair.of(before.get(0), after.get(0)));
+					deletedComments.remove(before.get(0));
+					addedComments.remove(after.get(0));
+				}
+			}
+		}
+	}
+
+	//whether the other version of the class has a comment with the same text, which is not modified, i.e., the comment of the code duplicated in two methods
+	//and extracted in one method, which matches the identical comment of the other method
+	private boolean identicalCommentInOtherVersion(UMLComment comment, boolean deleted) {
+		UMLAbstractClassDiff diff = operationBodyMapper != null && operationBodyMapper.getClassDiff() != null ? operationBodyMapper.getClassDiff() : classDiff;
+		if(diff == null) {
+			return false;
+		}
+		UMLAbstractClass otherVersion = deleted ? diff.getNextClass() : diff.getOriginalClass();
+		for(UMLOperation operation : otherVersion.getOperations()) {
+			for(UMLComment other : operation.getComments()) {
+				if(other.getText().equals(comment.getText())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private static List<UMLComment> commentsIn(List<UMLComment> comments, LocationInfo location) {
+		List<UMLComment> in = new ArrayList<UMLComment>();
+		for(UMLComment comment : comments) {
+			if(location.subsumes(comment.getLocationInfo())) {
+				in.add(comment);
+			}
+		}
+		return in;
 	}
 
 	private boolean allBlockComments(List<UMLComment> comments) {

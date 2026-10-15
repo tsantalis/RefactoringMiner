@@ -557,7 +557,7 @@ public class CppTreeGenerator {
 		return tokens;
 	}
 
-	//a token as a leaf, with its text as type, except for the identifiers, numbers and literals
+	//a token as a leaf, with its text as type, except for the identifiers, numbers, booleans and literals
 	private Node token(int start, int end) {
 		String text = content.substring(start, end);
 		char first = text.charAt(0);
@@ -569,6 +569,9 @@ public class CppTreeGenerator {
 		}
 		if(Character.isDigit(first) || first == '.' && text.length() > 1 && Character.isDigit(text.charAt(1))) {
 			return leaf("number_literal", start, end);
+		}
+		if(text.equals("true") || text.equals("false")) {
+			return leaf("boolean_literal", start, end);
 		}
 		return leaf(text, start, end);
 	}
@@ -916,11 +919,14 @@ public class CppTreeGenerator {
 			}
 			else if(declarations.length == 1 && declarations[0] instanceof IASTSimpleDeclaration simple && simple.getDeclSpecifier() instanceof ICPPASTCompositeTypeSpecifier composite) {
 				IASTDeclaration[] members = composite.getDeclarations(false);
+				//the members in the code, which are grouped like the members of the file, i.e., the problems of DEFINE_PROP(T, x, T{}, E) that CDT split at T{}
+				List<IASTDeclaration> membersInCode = new ArrayList<>();
 				for(IASTDeclaration member : members) {
 					if(start(member) >= start) {
-						nodes.add(declaration(member, Context.CLASS));
+						membersInCode.add(member);
 					}
 				}
+				nodes.addAll(declarations(membersInCode.toArray(new IASTDeclaration[0]), Context.CLASS));
 				nodes.addAll(inactive(translationUnit, start, end, Context.CLASS, members));
 			}
 			else if(declarations.length == 1 && declarations[0] instanceof IASTFunctionDefinition function && function.getBody() instanceof IASTCompoundStatement body) {
@@ -1910,7 +1916,7 @@ public class CppTreeGenerator {
 			int j = i + 1;
 			while(j < sorted.length && (start(sorted[j]) < end
 					//the problem declarations of a construct that CDT split, i.e., BENCHMARK(f)->Args({1, 2});
-					|| !source.reparsed && sorted[j] instanceof IASTProblemHolder && sorted[j - 1] instanceof IASTProblemHolder
+					|| sorted[j] instanceof IASTProblemHolder && sorted[j - 1] instanceof IASTProblemHolder
 					&& !content.substring(start, end).stripTrailing().endsWith(";")
 					//a macro before a declaration, i.e., LLAMA_API int f();
 					|| !source.reparsed && sorted[j - 1] instanceof IASTProblemHolder && !content.substring(start, end).stripTrailing().endsWith(";")
@@ -3852,8 +3858,7 @@ public class CppTreeGenerator {
 			case IASTLiteralExpression.lk_char_constant -> charLiteral(start, end);
 			case IASTLiteralExpression.lk_string_literal -> strings(start, end);
 			case IASTLiteralExpression.lk_this -> leaf("this", start, end);
-			case IASTLiteralExpression.lk_true -> leaf("true", start, end);
-			case IASTLiteralExpression.lk_false -> leaf("false", start, end);
+			case IASTLiteralExpression.lk_true, IASTLiteralExpression.lk_false -> leaf("boolean_literal", start, end);
 			case IASTLiteralExpression.lk_nullptr -> wrap("null", leaf("nullptr", start, end));
 			default -> leaf("number_literal", start, end);
 		};

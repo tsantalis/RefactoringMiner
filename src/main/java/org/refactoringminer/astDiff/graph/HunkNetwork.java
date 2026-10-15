@@ -5,21 +5,18 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.*;
-import gr.uom.java.xmi.decomposition.AbstractCall;
-import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
-import gr.uom.java.xmi.decomposition.LeafExpression;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.builder.GraphTypeBuilder;
+import org.refactoringminer.astDiff.graph.cluster.traverse.Util;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -27,6 +24,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 public class HunkNetwork {
 
   private final Graph<Node, Edge> graph;
+  private final Util util;
   private final Map<String, Node> idNodeMap = new HashMap<>();
   private final UMLModelDiff modelDiff;
   private final UMLsGenerator umlsGenerator;
@@ -36,15 +34,28 @@ public class HunkNetwork {
   private final Set<ASTDiff> diffs = new HashSet<>();
   private final Set<String> pairedSrcPaths = new HashSet<>();
   private final Set<String> pairedDstPaths = new HashSet<>();
+  @Nullable
+  private final MemberUsageFinder memberUsageFinder;
 
-  public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents,
-                     Map<String, String> dstContents,
-                     Map<String, TreeContext> srcContexts, Map<String, TreeContext> dstContexts) {
+  public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents) {
+    this(modelDiff, srcContents, dstContents, null);
+  }
+
+  public HunkNetwork(UMLModelDiff modelDiff, Map<String, String> srcContents, Map<String, String> dstContents,
+                     @Nullable RepositoryStateFiles repositoryStateFiles) {
     graph = GraphTypeBuilder.<Node, Edge>directed().allowingMultipleEdges(true)
             .allowingSelfLoops(true).edgeClass(Edge.class).weighted(true).buildGraph();
+    this.util = new Util(graph);
     this.modelDiff = modelDiff;
-    this.umlsGenerator = new UMLsGenerator(modelDiff, srcContents, dstContents);
-    this.contentsContexts = new ContentsContexts(srcContents, dstContents, srcContexts, dstContexts);
+    Map<String, String> networkSrcContents = new LinkedHashMap<>(srcContents);
+    Map<String, String> networkDstContents = new LinkedHashMap<>(dstContents);
+    this.umlsGenerator = new UMLsGenerator(modelDiff, networkSrcContents, networkDstContents);
+    this.contentsContexts = new ContentsContexts(networkSrcContents, networkDstContents,
+            modelDiff.getParentModel().getTreeContextMap(), modelDiff.getChildModel().getTreeContextMap());
+    ReceiverTypeResolver receiverTypeResolver = repositoryStateFiles == null ? null
+            : new ReceiverTypeResolver(modelDiff, repositoryStateFiles, contentsContexts);
+    this.memberUsageFinder = receiverTypeResolver == null ? null : new MemberUsageFinder(receiverTypeResolver,
+            (umlModel, location) -> isInChange(umlModel == modelDiff.getParentModel() ? SrcDst.SRC : SrcDst.DST, location));
   }
 
   public void importFiles() {
@@ -268,16 +279,32 @@ public class HunkNetwork {
     importTrees(aggregateTrees(srcTrees));
     importTrees(aggregateTrees(dstTrees));
 
+    if (memberUsageFinder != null) {
+      memberUsageFinder.bindChanges(modelDiff.getParentModel());
+      memberUsageFinder.bindChanges(modelDiff.getChildModel());
+    }
+
     processDefUse();
     processClassLevelRelations();
+
     processExtensions(SrcDst.SRC);
     processExtensions(SrcDst.DST);
+
     processDiffs();
     processContextAlternative();
     processMapping();
+
     processSuccession();
 
     assignPromptIds();
+  }
+
+  private boolean isInChange(SrcDst srcDst, LocationInfo location) {
+    List<Node> enclosingChanges = util.findOverlappingNodes(location.getFilePath(), srcDst, location.getStartOffset(),
+            location.getEndOffset(), n -> !n.isContext() && !n.isExtension()
+                    && n.getTree().getPos() <= location.getStartOffset()
+                    && location.getEndOffset() <= n.getTree().getEndPos());
+    return !enclosingChanges.isEmpty();
   }
 
   private void assignPromptIds() {
@@ -409,9 +436,7 @@ public class HunkNetwork {
 
       for (UMLAttribute attribute : umls.umlAttributes) {
         node.addIdentifier(attribute.getVariableDeclaration().getVariableName());
-        defUseTargets.addAll(findAccessNodes(attribute.getName(),
-                node.isSrc() ? modelDiff.findFieldAccessesInParentModel(attribute)
-                        : modelDiff.findFieldAccessesInChildModel(attribute), node.getSrcDst()));
+        defUseTargets.addAll(getAccessNodes(attribute, node.getSrcDst()));
       }
 
       for (VariableDeclaration variableDeclaration : umls.variableDeclarations) {
@@ -442,10 +467,7 @@ public class HunkNetwork {
     for (UMLClass umlClass : umlModel.getClassList()) {
       for (UMLAttribute fieldDeclaration : umlClass.getAttributes()) {
         LocationInfo declarationLocation = fieldDeclaration.getLocationInfo();
-        Set<AbstractCodeFragment> fieldAccesses =
-                srcDst.equals(SrcDst.SRC) ? modelDiff.findFieldAccessesInParentModel(fieldDeclaration)
-                        : modelDiff.findFieldAccessesInChildModel(fieldDeclaration);
-        Set<Node> accessNodes = findAccessNodes(fieldDeclaration.getName(), fieldAccesses, srcDst);
+        Set<Node> accessNodes = getAccessNodes(fieldDeclaration, srcDst);
         pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, Tree::getParent, srcDst);
       }
 
@@ -455,6 +477,15 @@ public class HunkNetwork {
         pushNodesExtensions(nodesExtensions, invocationNodes, operationLocation, null, srcDst);
 
         for (VariableDeclaration variableDeclaration : operation.getAllVariableDeclarations()) {
+          LocationInfo declarationLocation = variableDeclaration.getLocationInfo();
+          Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
+                  variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
+          pushNodesExtensions(nodesExtensions, accessNodes, declarationLocation, null, srcDst);
+        }
+      }
+
+      for (UMLInitializer initializer : umlClass.getInitializers()) {
+        for (VariableDeclaration variableDeclaration : initializer.getAllVariableDeclarations()) {
           LocationInfo declarationLocation = variableDeclaration.getLocationInfo();
           Set<Node> accessNodes = findAccessNodes(variableDeclaration.getVariableName(),
                   variableDeclaration.getScope().getStatementsInScopeUsingVariable(), srcDst);
@@ -473,7 +504,11 @@ public class HunkNetwork {
   private void pushNodesExtensions(HashMap<Node, Set<Node>> nodesExtensions,
                                    Set<Node> useNodes, LocationInfo usedLocation, Function<Tree, Tree> treeTransformer,
                                    SrcDst srcDst) {
-    List<Node> usedNodes = findOverlappingNodes(usedLocation.getFilePath(), srcDst,
+    if (useNodes.isEmpty()) {
+      return;
+    }
+
+    List<Node> usedNodes = util.findOverlappingNodes(usedLocation.getFilePath(), srcDst,
             usedLocation.getStartOffset(), usedLocation.getEndOffset(),
             (n) -> !n.isContext() && !n.isExtension());
     if (!usedNodes.isEmpty()) {
@@ -499,9 +534,7 @@ public class HunkNetwork {
 
     int parameterIndex = umlOperation.getParameterDeclarationList().indexOf(parameterDeclaration);
 
-    List<AbstractCall> invocations = srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(umlOperation)
-            : modelDiff.findInvocationsInChildModel(umlOperation);
-    for (AbstractCall invocation : invocations) {
+    for (AbstractCall invocation : findInvocations(umlOperation, srcDst)) {
       // Passing callback through method reference does not have arguments
       if (parameterIndex >= invocation.arguments().size()) {
         continue;
@@ -523,7 +556,7 @@ public class HunkNetwork {
 
       int startOffset = invocationLocation.getStartOffset() + argumentIndex;
       int endOffset = startOffset + parameterArgumentStr.length();
-      result.addAll(findOverlappingNodes(invocationLocation.getFilePath(), srcDst, startOffset, endOffset,
+      result.addAll(util.findOverlappingNodes(invocationLocation.getFilePath(), srcDst, startOffset, endOffset,
               (n) -> !n.isContext() && !n.isExtension()));
     }
 
@@ -651,17 +684,38 @@ public class HunkNetwork {
   private Set<Node> getInvocationNodes(UMLOperation operation, SrcDst srcDst) {
     Set<Node> result = new HashSet<>();
 
-    List<AbstractCall> invocations =
-            srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(operation)
-                    : modelDiff.findInvocationsInChildModel(operation);
-    for (AbstractCall invocation : invocations) {
+    for (AbstractCall invocation : findInvocations(operation, srcDst)) {
       LocationInfo invocationLocationInfo = invocation.getLocationInfo();
-      List<Node> overlappingNodes = findOverlappingNodes(invocationLocationInfo.getFilePath(),
-              srcDst, invocationLocationInfo.getStartOffset(),
-              invocationLocationInfo.getEndOffset(), n -> !n.isContext() && !n.isExtension());
+      List<Node> overlappingNodes = util.findOverlappingNodes(invocationLocationInfo.getFilePath(), srcDst,
+              invocationLocationInfo.getStartOffset(), invocationLocationInfo.getEndOffset(),
+              n -> !n.isContext() && !n.isExtension());
       result.addAll(overlappingNodes);
     }
 
+    return result;
+  }
+
+  private List<AbstractCall> findInvocations(UMLOperation operation, SrcDst srcDst) {
+    if (memberUsageFinder == null) {
+      return srcDst.equals(SrcDst.SRC) ? modelDiff.findInvocationsInParentModel(operation)
+              : modelDiff.findInvocationsInChildModel(operation);
+    }
+    return memberUsageFinder.findInvocations(operation, srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel());
+  }
+
+  private Set<Node> getAccessNodes(UMLAttribute attribute, SrcDst srcDst) {
+    if (memberUsageFinder == null) {
+      return findAccessNodes(attribute.getName(), srcDst.equals(SrcDst.SRC) ? modelDiff.findFieldAccessesInParentModel(attribute)
+              : modelDiff.findFieldAccessesInChildModel(attribute), srcDst);
+    }
+
+    Set<Node> result = new HashSet<>();
+    UMLModel umlModel = srcDst.equals(SrcDst.SRC) ? modelDiff.getParentModel() : modelDiff.getChildModel();
+    for (LeafExpression access : memberUsageFinder.findAccesses(attribute, umlModel)) {
+      LocationInfo accessLocation = access.getLocationInfo();
+      result.addAll(util.findOverlappingNodes(accessLocation.getFilePath(), srcDst, accessLocation.getStartOffset(),
+              accessLocation.getEndOffset(), n -> !n.isContext() && !n.isExtension()));
+    }
     return result;
   }
 
@@ -676,26 +730,10 @@ public class HunkNetwork {
 
       for (LeafExpression useVariable : useVariables) {
         LocationInfo useVariableLocation = useVariable.getLocationInfo();
-        List<Node> overlappingNodes = findOverlappingNodes(useVariableLocation.getFilePath(),
+        List<Node> overlappingNodes = util.findOverlappingNodes(useVariableLocation.getFilePath(),
                 srcDst, useVariableLocation.getStartOffset(), useVariableLocation.getEndOffset(),
                 n -> !n.isContext() && !n.isExtension());
         result.addAll(overlappingNodes);
-      }
-    }
-
-    return result;
-  }
-
-  private List<Node> findOverlappingNodes(String path, SrcDst srcDst, int pos, int endPos,
-                                          Predicate<Node> filter) {
-    List<Node> result = new ArrayList<>();
-
-    for (Node node : graph.vertexSet()) {
-      Tree tree = node.getTree();
-      if (node.getPath().equals(path) && node.getSrcDst().equals(srcDst)
-              && tree.getPos() <= endPos && pos <= tree.getEndPos() && (filter == null
-              || filter.test(node))) {
-        result.add(node);
       }
     }
 

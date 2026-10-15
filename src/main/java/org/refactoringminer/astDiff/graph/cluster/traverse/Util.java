@@ -1,12 +1,17 @@
 package org.refactoringminer.astDiff.graph.cluster.traverse;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import com.github.gumtreediff.tree.Tree;
 import org.refactoringminer.astDiff.graph.Edge;
 import org.refactoringminer.astDiff.graph.EdgeType;
 import org.refactoringminer.astDiff.graph.Node;
 import org.jgrapht.Graph;
+import org.refactoringminer.astDiff.graph.SrcDst;
 
 public class Util {
 
@@ -37,5 +42,20 @@ public class Util {
         return graph.outgoingEdgesOf(node).stream()
                 .filter(edge -> edge.getType().equals(EdgeType.MAPPING)).map(graph::getEdgeTarget)
                 .toList();
+    }
+
+    public List<Node> findOverlappingNodes(String path, SrcDst srcDst, int pos, int endPos, Predicate<Node> filter) {
+        List<Node> result = new ArrayList<>();
+
+        for (Node node : graph.vertexSet()) {
+            Tree tree = node.getTree();
+            if (node.getPath().equals(path) && node.getSrcDst().equals(srcDst)
+                    && tree.getPos() <= endPos && pos <= tree.getEndPos() && (filter == null
+                    || filter.test(node))) {
+                result.add(node);
+            }
+        }
+
+        return result;
     }
 }

@@ -29,6 +29,11 @@ public class ContentsContexts {
     return dstContexts;
   }
 
+  void addUnchangedContent(String path, String content) {
+    srcContents.put(path, content);
+    dstContents.put(path, content);
+  }
+
   public String getContent(SrcDst srcDst, String path) {
     return srcDst.equals(SrcDst.SRC) ? srcContents.get(path) : dstContents.get(path);
   }

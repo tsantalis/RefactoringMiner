@@ -21,7 +21,6 @@ import static org.refactoringminer.astDiff.matchers.statement.LRAUtils.LRAify;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
-	private boolean overwrite = false;
 	public LeafMatcher(Constants LANG1, Constants LANG2) {
 		super(LANG1, LANG2);
 	}
@@ -49,10 +48,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 			else {
 				match = process(prunedPair.first, prunedPair.second);
 			}
-			if (!overwrite)
-				mappingStore.addWithMaps(match, srcCopy, dstCopy);
-			else
-				mappingStore.replaceWithMaps(match, srcCopy, dstCopy);
+			mappingStore.addWithMaps(match, srcCopy, dstCopy);
 		}
 		catch (Exception exception)
 		{

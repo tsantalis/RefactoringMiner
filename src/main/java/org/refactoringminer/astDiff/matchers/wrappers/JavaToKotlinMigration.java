@@ -35,16 +35,13 @@ import com.github.gumtreediff.utils.Pair;
 public class JavaToKotlinMigration {
 
     //deferredFlattenings: the flattenings of the Java tree are deferred until all diffs are matched, so that the Java tree has the same structure
-    //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites), or applied immediately if null
+    //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites)
     public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
             Tree singleVariableDeclaration1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SINGLE_VARIABLE_DECLARATION);
             if(singleVariableDeclaration1 != null) {
                 handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2, deferredFlattenings);
-                if(deferredFlattenings != null)
-                    deferredFlattenings.flattenKeepingMappings(srcStatementNode, singleVariableDeclaration1);
-                else
-                    flattenChild(srcStatementNode, singleVariableDeclaration1);
+                deferredFlattenings.flattenKeepingMappings(srcStatementNode, singleVariableDeclaration1);
             }
             Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
             Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);
@@ -289,7 +286,7 @@ public class JavaToKotlinMigration {
 
     //refactorings: the refactorings of the statement mapping, i.e., the extracted variables replacing Java expressions
     //deferredFlattenings: the flattenings of the Java tree are deferred until all diffs are matched, so that the Java tree has the same structure
-    //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites), or applied immediately if null
+    //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites)
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, Set<Refactoring> refactorings, DeferredFlattenings deferredFlattenings) {
         /*
         Map<Tree, Tree> cpyToSrc = new HashMap<>();
@@ -1288,12 +1285,9 @@ public class JavaToKotlinMigration {
                 srcStatementNode.getChild(0).getType().name.equals(LANG1.ASSIGNMENT) && assignment2 != null) {
             //align Java ExpressionStatement -> Assignment -> [target, operator, value] with Kotlin assignment -> [target, operator, value]
             Tree statementAssignment1 = srcStatementNode.getChild(0);
-            //the node with the [target, operator, value] children: the Assignment, or the statement if the Assignment is flattened immediately
+            //the node with the [target, operator, value] children: the Assignment, whose flattening is deferred
             Tree assignmentParent1 = statementAssignment1;
             flattenSrcChild(mappingStore, deferredFlattenings, srcStatementNode, statementAssignment1);
-            if(deferredFlattenings == null) {
-                assignmentParent1 = srcStatementNode;
-            }
             Tree target1 = assignmentParent1.getChild(0);
             Tree assignableExpression2 = TreeUtilFunctions.findChildByType(assignment2, LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION);
             if(assignableExpression2 != null) {
@@ -1396,31 +1390,8 @@ public class JavaToKotlinMigration {
                 fragment1.setLabel(affectationOperator2.getLabel());
                 mappingStore.addMapping(fragment1, affectationOperator2);
             }
-            Set<Tree> fragmentDsts = mappingStore.getDsts(fragment1);
-            if(deferredFlattenings != null) {
-                //the fragment is kept as the leaf matching the = operator, or flattened, after all diffs are matched
-                deferredFlattenings.alignVariableDeclarationFragment(srcDeclaration, fragment1, LANG2.AFFECTATION_OPERATOR);
-            }
-            else if(affectationOperator2 != null && fragmentDsts != null && fragmentDsts.contains(affectationOperator2) && fragment1.getChildren().size() > 1) {
-                //keep the fragment as the leaf matching the = operator, placed between the name and the initializer
-                int index = srcDeclaration.getChildPosition(fragment1);
-                Tree name1 = fragment1.getChild(0);
-                List<Tree> rest1 = new ArrayList<>(fragment1.getChildren().subList(1, fragment1.getChildren().size()));
-                fragment1.getChildren().clear();
-                srcDeclaration.getChildren().add(index, name1);
-                name1.setParent(srcDeclaration);
-                srcDeclaration.getChildren().addAll(index + 2, rest1);
-                for(Tree t : rest1)
-                    t.setParent(srcDeclaration);
-            }
-            else {
-                if(fragmentDsts != null) {
-                    for(Tree dst : new ArrayList<>(fragmentDsts)) {
-                        mappingStore.removeMapping(fragment1, dst);
-                    }
-                }
-                flattenChild(srcDeclaration, fragment1);
-            }
+            //the fragment is kept as the leaf matching the = operator, or flattened, after all diffs are matched
+            deferredFlattenings.alignVariableDeclarationFragment(srcDeclaration, fragment1, LANG2.AFFECTATION_OPERATOR);
         }
     }
 
@@ -1477,13 +1448,7 @@ public class JavaToKotlinMigration {
         Set<Tree> statementDsts = statement1 != null ? mappingStore.getDsts(statement1) : null;
         if(statement1 != null && statement1.getType().name.equals(LANG1.EXPRESSION_STATEMENT) && statement1.getChildren().size() == 1 &&
                 statementDsts != null && statementDsts.contains(navigation2)) {
-            if(deferredFlattenings != null) {
-                deferredFlattenings.flattenRemovingMappingTo(statement1, invocation1, navigation2);
-            }
-            else {
-                mappingStore.removeMapping(invocation1, navigation2);
-                flattenChild(statement1, invocation1);
-            }
+            deferredFlattenings.flattenRemovingMappingTo(statement1, invocation1, navigation2);
         }
         return true;
     }
@@ -4434,41 +4399,24 @@ public class JavaToKotlinMigration {
         return suffix2 != null && TreeUtilFunctions.findChildByType(suffix2, LANG2.ANNOTATED_LAMBDA) != null;
     }
 
-    //flattens the child of the Kotlin tree removing all mappings to it, or defers the flattening until all diffs are matched
+    //flattens the child of the Kotlin tree removing all mappings to it, after all diffs are matched
     private static void flattenDstChild(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree parent2, Tree child2) {
-        if(deferredFlattenings != null) {
-            deferredFlattenings.flattenTargetRemovingAllMappings(parent2, child2);
-            return;
-        }
-        removeDstMappings(mappingStore, child2);
-        flattenChild(parent2, child2);
+        deferredFlattenings.flattenTargetRemovingAllMappings(parent2, child2);
     }
 
-    //flattens the child of the Kotlin tree keeping the mappings to it, or defers the flattening until all diffs are matched
+    //flattens the child of the Kotlin tree keeping the mappings to it, after all diffs are matched
     private static void flattenDstChildKeepingMappings(DeferredFlattenings deferredFlattenings, Tree parent2, Tree child2) {
-        if(deferredFlattenings != null)
-            deferredFlattenings.flattenKeepingMappings(parent2, child2);
-        else
-            flattenChild(parent2, child2);
+        deferredFlattenings.flattenKeepingMappings(parent2, child2);
     }
 
-    //removes the child of the Kotlin tree and all mappings to it, or defers the removal until all diffs are matched
+    //removes the child of the Kotlin tree and all mappings to it, after all diffs are matched
     private static void removeDstChild(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree parent2, Tree child2) {
-        if(deferredFlattenings != null) {
-            deferredFlattenings.removeTargetChild(parent2, child2);
-            return;
-        }
-        removeDstMappings(mappingStore, child2);
-        parent2.getChildren().remove(child2);
+        deferredFlattenings.removeTargetChild(parent2, child2);
     }
 
-    //removes the mappings to the Kotlin node, before mapping it to the Java node, keeping the mappings from other Java trees if the flattenings are deferred,
+    //removes the mappings to the Kotlin node, before mapping it to the Java node, keeping the mappings from other Java trees,
     //i.e., multiple Java statements mapped to the same Kotlin statement
     private static void removeDstMappingsOfCounterpart(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree dst, Tree src1) {
-        if(deferredFlattenings == null) {
-            removeDstMappings(mappingStore, dst);
-            return;
-        }
         Set<Tree> srcs = mappingStore.getSrcs(dst);
         if(srcs != null) {
             for(Tree src : new ArrayList<>(srcs)) {
@@ -4482,7 +4430,7 @@ public class JavaToKotlinMigration {
         }
     }
 
-    //the number of children of the node after flattening the given children (which are already flattened, if the flattenings are not deferred)
+    //the number of children of the node after flattening the given children
     private static int sizeAfterFlattening(Tree node, Set<Tree> flattened) {
         int size = 0;
         for(Tree child : node.getChildren())
@@ -4490,42 +4438,19 @@ public class JavaToKotlinMigration {
         return size;
     }
 
-    //flattens the child of the Java tree keeping its mappings, or defers the flattening until all diffs are matched
+    //flattens the child of the Java tree keeping its mappings, after all diffs are matched
     private static void flattenSrcChildKeepingMappings(DeferredFlattenings deferredFlattenings, Tree parent1, Tree child1) {
-        if(deferredFlattenings != null)
-            deferredFlattenings.flattenKeepingMappings(parent1, child1);
-        else
-            flattenChild(parent1, child1);
+        deferredFlattenings.flattenKeepingMappings(parent1, child1);
     }
 
-    //flattens the child of the Java tree removing all its mappings, or defers the flattening until all diffs are matched
+    //flattens the child of the Java tree removing all its mappings, after all diffs are matched
     private static void flattenSrcChild(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree parent1, Tree child1) {
-        if(deferredFlattenings != null) {
-            deferredFlattenings.flattenRemovingAllMappings(parent1, child1);
-            return;
-        }
-        Set<Tree> dsts = mappingStore.getDsts(child1);
-        if(dsts != null) {
-            for(Tree dst : new ArrayList<>(dsts)) {
-                mappingStore.removeMapping(child1, dst);
-            }
-        }
-        flattenChild(parent1, child1);
+        deferredFlattenings.flattenRemovingAllMappings(parent1, child1);
     }
 
-    //removes the leaf child of the Java tree with all its mappings, so that the parent gets its label, or defers the removal until all diffs are matched
+    //removes the leaf child of the Java tree with all its mappings, so that the parent gets its label, after all diffs are matched
     private static void absorbSrcLeafChild(ExtendedMultiMappingStore mappingStore, DeferredFlattenings deferredFlattenings, Tree parent1, Tree child1) {
-        if(deferredFlattenings != null) {
-            deferredFlattenings.absorbLeafChild(parent1, child1);
-            return;
-        }
-        Set<Tree> dsts = mappingStore.getDsts(child1);
-        if(dsts != null) {
-            for(Tree dst : new ArrayList<>(dsts)) {
-                mappingStore.removeMapping(child1, dst);
-            }
-        }
-        DeferredFlattenings.applyLeafChildAbsorption(parent1, child1);
+        deferredFlattenings.absorbLeafChild(parent1, child1);
     }
 
     private static void flattenChild(Tree parent, Tree child) {

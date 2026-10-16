@@ -112,22 +112,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		return multis;
 	}
 
-	public void replaceMapping(Tree src, Tree dst) {
-		if (this.getDsts(src) != null)
-		{
-			Set<Tree> dstForSrcList = new LinkedHashSet<>(this.getDsts(src));
-			for (Tree dstForSrc : dstForSrcList)
-				removeMapping(src,dstForSrc);
-		}
-		if (this.getSrcs(dst) != null)
-		{
-			Set<Tree> srcForDstList = new LinkedHashSet<>(this.getSrcs(dst));
-			for (Tree srcForDst : srcForDstList)
-				removeMapping(srcForDst,dst);
-		}
-		addMapping(src, dst);
-	}
-
 	public boolean isSrcMapped(Tree src) {
 		return hasSrc(src) && getDsts(src) != null && getDsts(src).size() > 0;
 	}
@@ -183,15 +167,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 			Tree realDst = dstCopy.get(mapping.second);
 			if (realSrc != null && realDst != null)
 				this.addMapping(realSrc,realDst);
-		}
-	}
-
-	public void replaceWithMaps(MappingStore match, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {
-		for (Mapping mapping : match) {
-			Tree realSrc = srcCopy.get(mapping.first);
-			Tree realDst = dstCopy.get(mapping.second);
-			if (realSrc != null && realDst != null)
-				this.replaceMapping(realSrc,realDst);
 		}
 	}
 

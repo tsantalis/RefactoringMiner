@@ -2398,6 +2398,10 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	private static String directory(String filePath) {
+		return filePath.contains("/") ? filePath.substring(0, filePath.lastIndexOf("/")) : "";
+	}
+
 	private boolean instanceAttributeMovedAlongWithMethod(UMLAttribute addedAttribute, UMLAttribute removedAttribute) {
 		if(addedAttribute.isStatic() || removedAttribute.isStatic()) {
 			return true;
@@ -2422,6 +2426,14 @@ public class UMLModelDiff {
 				addedAttribute.getClassName().substring(0, addedAttribute.getClassName().lastIndexOf(".")) : 
 					addedAttribute.getClassName();
 		if(package1.equals(package2)) {
+			return true;
+		}
+		//same directory for C and C++, whose class names start with the module of the file, i.e., persistent_cache.xla.PersistentCache,
+		//so that the classes of different files are in the same package like the Java classes of the same directory
+		String filePath1 = removedAttribute.getLocationInfo().getFilePath();
+		String filePath2 = addedAttribute.getLocationInfo().getFilePath();
+		if((PathFileUtils.isCppFile(filePath1) || PathFileUtils.isCFile(filePath1)) && (PathFileUtils.isCppFile(filePath2) || PathFileUtils.isCFile(filePath2)) &&
+				directory(filePath1).equals(directory(filePath2))) {
 			return true;
 		}
 		if(childModel.getClassList().size() == 2 && parentModel.getClassList().size() == 2 && !childModel.isPartial() && !parentModel.isPartial()) {

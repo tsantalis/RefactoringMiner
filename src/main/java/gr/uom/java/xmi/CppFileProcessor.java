@@ -1,7 +1,9 @@
 package gr.uom.java.xmi;
 
-import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +19,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTAttribute;
@@ -29,6 +32,9 @@ import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement;
 import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateDeclaration;
+import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
+import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
 import org.eclipse.cdt.core.dom.ast.IASTProblem;
 import org.eclipse.cdt.core.dom.ast.IASTProblemDeclaration;
@@ -547,6 +553,35 @@ public class CppFileProcessor {
 
 	//the included file with the definitions of the macros and the declarations of the function templates that CDT does not know
 	private static final String TEMPLATES_FILE = "/__rm_templates__.h";
+	//the included file with the declarations of the standard library and Abseil and the definitions of googletest and googlemock, whose headers are not available
+	private static final String STUBS_FILE = "/__rm_stubs__.h";
+	private static final String STANDARD_LIBRARY_STUB = stub("/cpp-stubs/std.h");
+	private static final String GOOGLE_TEST_STUB = stub("/cpp-stubs/gtest.h");
+	private static final String ABSEIL_STUB = stub("/cpp-stubs/absl.h");
+
+	//the stub without the lines of its documentation, since CDT gives the comments of the included files with their offsets in these files
+	private static String stub(String resource) {
+		try(InputStream input = CppFileProcessor.class.getResourceAsStream(resource)) {
+			String content = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+			return content.lines().filter(line -> !line.startsWith("//")).collect(Collectors.joining("\n"));
+		}
+		catch(IOException | NullPointerException e) {
+			throw new IllegalStateException("Missing stub " + resource, e);
+		}
+	}
+
+	//the stub of the file, with the parts of googletest and googlemock when the file includes their headers, and the part of Abseil when the file uses it
+	private static String stubs(String fileContent) {
+		StringBuilder stubs = new StringBuilder(STANDARD_LIBRARY_STUB);
+		if(fileContent.contains("#include \"gtest/") || fileContent.contains("#include \"gmock/") ||
+				fileContent.contains("#include <gtest/") || fileContent.contains("#include <gmock/")) {
+			stubs.append("\n").append(GOOGLE_TEST_STUB);
+		}
+		if(fileContent.contains("absl") || fileContent.contains("ABSL_")) {
+			stubs.append("\n").append(ABSEIL_STUB);
+		}
+		return stubs.toString();
+	}
 
 	//the declaration specifiers that cannot follow the type of a declaration, i.e., virtual in DUCKDB_API virtual void f();
 	private static final Pattern DECLARATION_MACRO = Pattern.compile("([A-Za-z_][A-Za-z0-9_]*)\\s+(virtual|static|inline|explicit|friend|extern|constexpr|consteval|typedef|mutable|void|bool|char|int|float|double|short|long|signed|unsigned|auto|class|struct|enum|union|template|typename)\\b");
@@ -644,8 +679,9 @@ public class CppFileProcessor {
 	private static IASTTranslationUnit parse(String filePath, String fileContent, boolean astDiff, String templates) throws CoreException {
 		FileContent content = FileContent.create(filePath, fileContent.toCharArray());
 		Map<String, String> predefinedMacros = new HashMap<>();
-		ScannerInfo scanInfo = templates.isEmpty() ? new ExtendedScannerInfo(predefinedMacros, getIncludePaths(filePath, fileContent)) :
-			new ExtendedScannerInfo(predefinedMacros, getIncludePaths(filePath, fileContent), new String[0], new String[] {TEMPLATES_FILE});
+		String[] includeFiles = templates.isEmpty() ? new String[] {STUBS_FILE} : new String[] {STUBS_FILE, TEMPLATES_FILE};
+		//the headers of the analyzed files are not available, so the include paths are empty and only the stubs and the declarations found in the file are included
+		ScannerInfo scanInfo = new ExtendedScannerInfo(predefinedMacros, new String[0], new String[0], includeFiles);
 		//IncludeFileContentProvider includeProvider = IncludeFileContentProvider.getSavedFilesProvider();
 		IncludeFileContentProvider includeProvider = new InternalFileContentProvider() {
 			@Override
@@ -653,8 +689,11 @@ public class CppFileProcessor {
 				if (path.equals(TEMPLATES_FILE)) {
 					return (InternalFileContent) FileContent.create(TEMPLATES_FILE, templates.toCharArray());
 				}
-				File file = new File(path);
-				if (file.exists()) {
+				if (path.equals(STUBS_FILE)) {
+					return (InternalFileContent) FileContent.create(STUBS_FILE, stubs(fileContent).toCharArray());
+				}
+				//the headers next to a file parsed from its location on the disk, i.e., #include "a.h" of /project/b.cpp, while the files of commits are not on the disk
+				if (Paths.get(filePath).isAbsolute() && Files.isRegularFile(Paths.get(path))) {
 					return (InternalFileContent) FileContent.createForExternalFileLocation(path);
 				}
 				return null;
@@ -662,7 +701,7 @@ public class CppFileProcessor {
 
 			@Override
 			public InternalFileContent getContentForInclusion(IIndexFileLocation location, String astPath) {
-				return (InternalFileContent) FileContent.createForExternalFileLocation(astPath);
+				return null;
 			}
 		};
 		int options = GPPLanguage.OPTION_IS_SOURCE_UNIT | GPPLanguage.OPTION_PARSE_INACTIVE_CODE;
@@ -909,24 +948,6 @@ public class CppFileProcessor {
 		return problems[0];
 	}
 
-	private static String[] getIncludePaths(String filePath, String fileContent) {
-		Set<String> includePaths = new LinkedHashSet<>();
-		includePaths.add(".");
-		if(fileContent.contains("#include \"gtest/") || fileContent.contains("#include \"gmock/") ||
-			fileContent.contains("#include <gtest/") || fileContent.contains("#include <gmock/")) {
-			includePaths.add(System.getProperty("user.dir") + "/include");
-		}
-		includePaths.add("src/include");
-		includePaths.add("src");
-
-		Path parent = Paths.get(filePath).normalize().getParent();
-		if(parent != null) {
-			includePaths.add(parent.toString());
-			includePaths.add(parent.resolve("include").toString());
-		}
-		return includePaths.toArray(new String[0]);
-	}
-
 	public Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
 			List<UMLComment> comments, Visibility currentVisibility, IASTDeclaration declaration, ICPPASTTemplateParameter[] templateParameters,
 			List<IASTDeclaration> inactiveContainerAlternatives) {
@@ -1101,7 +1122,7 @@ public class CppFileProcessor {
 		return isPartOfFile(declaration) || declaration instanceof ICPPASTVisibilityLabel;
 	}
 
-	//whether the binding is declared only in the included file with the declarations that CDT does not know
+	//whether the binding is declared only in the included files with the declarations that CDT does not know, the stubs and the declarations found in the file
 	public static boolean declaredOnlyBeforeFile(IASTTranslationUnit translationUnit, IBinding binding) {
 		if(translationUnit == null || binding == null) {
 			return false;
@@ -1111,16 +1132,32 @@ public class CppFileProcessor {
 			return false;
 		}
 		for(IASTName declaration : declarations) {
-			if(!TEMPLATES_FILE.equals(declaration.getContainingFilename())) {
+			if(!TEMPLATES_FILE.equals(declaration.getContainingFilename()) && !STUBS_FILE.equals(declaration.getContainingFilename())) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	//whether the node is in the parsed file, and not in the included file with the declarations of the function templates, which CDT considers part of the file
+	//whether the declaration is a class or a namespace generated by a macro of the stubs, i.e., the class of the test of TEST(A, B) {...},
+	//which is not code of the file, while the function of the test is
+	public static boolean generatedByStub(IASTDeclaration declaration) {
+		IASTDeclaration inner = declaration instanceof ICPPASTTemplateDeclaration template ? template.getDeclaration() : declaration;
+		if(!(inner instanceof IASTSimpleDeclaration simple && simple.getDeclSpecifier() instanceof IASTCompositeTypeSpecifier) && !(inner instanceof ICPPASTNamespaceDefinition)) {
+			return false;
+		}
+		IASTNodeLocation[] locations = declaration.getNodeLocations();
+		return locations.length > 0 && locations[0] instanceof IASTMacroExpansionLocation expansion &&
+				STUBS_FILE.equals(expansion.getExpansion().getMacroDefinition().getContainingFilename());
+	}
+
+	//whether the node is in the parsed file, and not in the included files with the stubs and the declarations of the function templates, which CDT considers part of the file
 	public static boolean isPartOfFile(IASTNode node) {
-		return node.isPartOfTranslationUnitFile() && !TEMPLATES_FILE.equals(node.getContainingFilename());
+		if(node instanceof IASTPreprocessorIncludeStatement include && (TEMPLATES_FILE.equals(include.getPath()) || STUBS_FILE.equals(include.getPath()))) {
+			//the inclusion of the stubs or the declarations of the function templates, which CDT gives as an include directive of the file
+			return false;
+		}
+		return node.isPartOfTranslationUnitFile() && !TEMPLATES_FILE.equals(node.getContainingFilename()) && !STUBS_FILE.equals(node.getContainingFilename());
 	}
 
 	private UMLClass createModuleClass(IASTTranslationUnit ast, String sourceFolder) {

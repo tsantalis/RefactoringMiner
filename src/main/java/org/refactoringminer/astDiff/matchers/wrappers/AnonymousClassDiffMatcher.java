@@ -16,12 +16,6 @@ public class AnonymousClassDiffMatcher extends OptimizationAwareMatcher {
     private final Constants LANG1;
     private final Constants LANG2;
 
-    public AnonymousClassDiffMatcher(UMLAnonymousClassDiff anonymousClassDiff, Constants LANG1, Constants LANG2) {
-        this.anonymousClassDiff = anonymousClassDiff;
-        this.LANG1 = LANG1;
-        this.LANG2 = LANG2;
-    }
-
     public AnonymousClassDiffMatcher(OptimizationData optimizationData, UMLAnonymousClassDiff anonymousClassDiff, Constants LANG1, Constants LANG2) {
         super(optimizationData);
         this.anonymousClassDiff = anonymousClassDiff;

@@ -7,7 +7,6 @@ import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.matchers.MultiMappingStore;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -80,20 +79,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		return monos;
 	}
 
-	private Map<Tree,Tree> getDstToSrcMono() {
-		Map<Tree,Tree> monos = new HashMap<>();
-		for (Tree _dst : allMappedDsts())
-		{
-			if (getSrcs(_dst).size() > 1)
-				continue;
-			Tree _src = getSrcs(_dst).iterator().next();
-			if (getDsts(_src).size() > 1)
-				continue;
-			monos.put(_dst,_src);
-		}
-		return monos;
-	}
-
 	public void mergeMappings(MultiMappingStore addon) {
 		if (addon == null) return;
 		for (Mapping m : addon.getMappings())
@@ -127,24 +112,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		return multis;
 	}
 
-	public Map<Tree,Set<Tree>> srcToDstMultis() {
-		Map<Tree,Set<Tree>> multis = new HashMap<>();
-		for (Tree _src : allMappedSrcs())
-		{
-			if (getDsts(_src).size() > 1)
-				multis.put(_src,getDsts(_src));
-			else
-			{
-				if (getDsts(_src).size() == 0)
-					continue;
-				Tree mappedSrc = getDsts(_src).iterator().next();
-				if (getSrcs(mappedSrc).size() > 1)
-					multis.put(_src,getDsts(_src));
-			}
-		}
-		return multis;
-	}
-
 	public void replaceMapping(Tree src, Tree dst) {
 		if (this.getDsts(src) != null)
 		{
@@ -159,13 +126,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 				removeMapping(srcForDst,dst);
 		}
 		addMapping(src, dst);
-	}
-
-	public void addListOfMapping(List<Pair<Tree,Tree>> pairList) {
-		if (pairList == null) return;
-		for (Pair<Tree,Tree> pair : pairList) {
-			addMapping(pair.first,pair.second);
-		}
 	}
 
 	public boolean isSrcMapped(Tree src) {

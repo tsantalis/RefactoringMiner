@@ -1746,14 +1746,6 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
     }
 
-    private void matchThrowKeyword(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
-        Tree srcThrowKeyword = TreeUtilFunctions.findChildByType(srcTree, LANG1.THROWS_KEYWORD);
-        Tree dstThrowKeyword = TreeUtilFunctions.findChildByType(dstTree, LANG2.THROWS_KEYWORD);
-        if (srcThrowKeyword != null && dstThrowKeyword != null) {
-            mappingStore.addMappingRecursively(srcThrowKeyword, dstThrowKeyword);
-        }
-    }
-
     private void processMethodParameters(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
         Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = umlOperationBodyMapper.getMatchedVariables();
         for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> matchedPair: matchedVariables) {

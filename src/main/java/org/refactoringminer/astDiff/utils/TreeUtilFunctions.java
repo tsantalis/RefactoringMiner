@@ -5,9 +5,6 @@ import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.tree.TreeContext;
-import com.github.gumtreediff.tree.TypeSet;
-import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
 
 import java.io.File;
@@ -112,18 +109,6 @@ public class TreeUtilFunctions {
 		}
 		return null;
 	}
-	public static Tree getTreeBetweenPositionsSecure(Tree tree, int position, int endPosition,String type, String parentType, String label) {
-		for (Tree t: tree.preOrder()) {
-			if (t.getPos() == position && t.getEndPos() == endPosition)
-				if (isFromType(t, type) && t.getLabel().equals(label)) {
-					String t_parentType = (t.getParent() != null) ? t.getParent().getType().name : "";
-					if (t_parentType.equals(parentType))
-						return t;
-				}
-		}
-		return null;
-	}
-
 	public static Tree findChildByType(Tree tree, String... type) {
 		if (!tree.getChildren().isEmpty())
 		{
@@ -185,13 +170,6 @@ public class TreeUtilFunctions {
 		return null;
 	}
 
-	public static Pair<Tree,Tree> pruneTrees(Tree src, Tree dst, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy, Constants LANG1, Constants LANG2)
-	{
-		Tree prunedSrc = deepCopyWithMapPruning(src,srcCopy,LANG1);
-		Tree prunedDst = deepCopyWithMapPruning(dst,dstCopy,LANG2);
-		return new Pair<>(prunedSrc,prunedDst);
-	}
-
 	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap, Constants LANG) {
 		if (isFromType(tree, LANG.BLOCK))
 			if (tree.getChildren().size() != 0) return null;
@@ -216,42 +194,6 @@ public class TreeUtilFunctions {
 		defaultTree.setChildren(new ArrayList<>());
 		defaultTree.setMetrics(other.getMetrics());
 		return defaultTree;
-	}
-
-	public static DefaultTree makeDefaultTreeWithTypeTranslation(Tree other, Constants LANG1, Constants LANG2) {
-		DefaultTree defaultTree = new DefaultTree(null);
-		String newType = null;
-		try {
-			for(java.lang.reflect.Field publicField : Constants.class.getFields()) {
-				String value = (String) publicField.get(LANG2);
-				if(value.equals(other.getType().name)) {
-					newType = (String) publicField.get(LANG1);
-					break;
-				}
-			}
-		} catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			//e.printStackTrace();
-		}
-		if(newType == null) {
-			defaultTree.setType(other.getType());
-		}
-		else {
-			defaultTree.setType(TypeSet.type(newType));
-		}
-		defaultTree.setLabel(other.getLabel());
-		defaultTree.setPos(other.getPos());
-		defaultTree.setLength(other.getLength());
-		defaultTree.setChildren(new ArrayList<>());
-		defaultTree.setMetrics(other.getMetrics());
-		return defaultTree;
-	}
-
-	public static Tree deepCopyWithMapAndTypeTranslation(Tree tree,Map<Tree,Tree> cpyMap, Constants LANG1, Constants LANG2) {
-		Tree copy = makeDefaultTreeWithTypeTranslation(tree, LANG1, LANG2);
-		cpyMap.put(copy,tree);
-		for (Tree child : tree.getChildren())
-			copy.addChild(deepCopyWithMapAndTypeTranslation(child,cpyMap,LANG1, LANG2));
-		return copy;
 	}
 
 	public static Tree deepCopyWithMap(Tree tree,Map<Tree,Tree> cpyMap) {
@@ -313,15 +255,6 @@ public class TreeUtilFunctions {
 		}
 	}
 
-	public static void writeTree(Tree tree, String filePath) {
-		TreeContext srcTC = new TreeContext();
-		srcTC.setRoot(tree);
-		try {
-			TreeIoUtils.toXml(srcTC).writeTo(filePath);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
 	public static boolean isPartOf(Tree srcSubTree, String type) {
 		if (srcSubTree.getType().name.equals(type))
 			return true;
@@ -359,13 +292,6 @@ public class TreeUtilFunctions {
 			return true;
 		else
 			return false;
-	}
-
-	public static boolean isPartOfJavadoc(Tree srcSubTree, Constants LANG) {
-		if (isFromType(srcSubTree, LANG.JAVA_DOC))
-			return true;
-		if (srcSubTree.getParent() == null) return false;
-		return isPartOfJavadoc(srcSubTree.getParent(), LANG);
 	}
 
 	public static List<Tree> findVariable(Tree inputTree, String variableName, Constants LANG) {

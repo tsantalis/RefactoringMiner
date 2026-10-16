@@ -28,13 +28,6 @@ public class BasicTreeMatcher implements TreeMatcher {
 	}
 
 	private int minP = 0;
-	public void setMinP(int minP) {
-		this.minP = minP;
-	}
-
-	public int getMinP() {
-		return minP;
-	}
 
 	@Override
 	public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {

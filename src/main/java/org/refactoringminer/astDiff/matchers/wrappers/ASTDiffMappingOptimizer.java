@@ -21,12 +21,6 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
     final Map<String, TreeContext> parentContextMap;
     final Map<String, TreeContext> childContextMap;
 
-    public ASTDiffMappingOptimizer(ASTDiff astDiff, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-        this.astDiff = astDiff;
-        this.parentContextMap = parentContextMap;
-        this.childContextMap = childContextMap;
-    }
-
     public ASTDiffMappingOptimizer(OptimizationData optimizationData, ASTDiff astDiff, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
         super(optimizationData);
         this.astDiff = astDiff;

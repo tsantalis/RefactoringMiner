@@ -24,14 +24,6 @@ public class ClassDiffMatcher extends OptimizationAwareMatcher{
     private final Constants LANG1;
     private final Constants LANG2;
 
-    public ClassDiffMatcher(UMLAbstractClassDiff classDiff, boolean mergeFlag, List<Refactoring> modelDiffRefactorings, Constants LANG1, Constants LANG2) {
-        this.classDiff = classDiff;
-        this.mergeFlag = mergeFlag;
-        this.modelDiffRefactorings = modelDiffRefactorings;
-        this.LANG1 = LANG1;
-        this.LANG2 = LANG2;
-    }
-
     public ClassDiffMatcher(OptimizationData optimizationData, UMLAbstractClassDiff classDiff, boolean mergeFlag, List<Refactoring> modelDiffRefactorings, Constants LANG1, Constants LANG2) {
         super(optimizationData);
         this.classDiff = classDiff;

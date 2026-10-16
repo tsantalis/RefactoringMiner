@@ -25,12 +25,6 @@ public class MissingIdenticalNonAmbiguousSubtrees extends GreedySubtreeMatcher i
     private final Constants LANG1;
     private final Constants LANG2;
 
-    public MissingIdenticalNonAmbiguousSubtrees(Predicate<Mapping> acceptance, Constants LANG1, Constants LANG2) {
-        this.acceptance = acceptance;
-        this.LANG1 = LANG1;
-        this.LANG2 = LANG2;
-    }
-
     public MissingIdenticalNonAmbiguousSubtrees(Constants LANG1, Constants LANG2) {
         this.acceptance = (m) -> isAcceptable(m.first, m.second);
         this.LANG1 = LANG1;

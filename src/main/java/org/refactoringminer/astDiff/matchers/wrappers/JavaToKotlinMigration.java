@@ -34,10 +34,6 @@ import com.github.gumtreediff.utils.Pair;
 
 public class JavaToKotlinMigration {
 
-    public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
-        handleCompositeMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, null);
-    }
-
     //deferredFlattenings: the flattenings of the Java tree are deferred until all diffs are matched, so that the Java tree has the same structure
     //for all the Kotlin trees it is matched with (i.e., a statement of a method inlined to multiple call sites), or applied immediately if null
     public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
@@ -285,10 +281,6 @@ public class JavaToKotlinMigration {
         if(statements2 == null || statements2.getChildren().size() != 1)
             return null;
         return statements2.getChild(0);
-    }
-
-    public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2) {
-        handleLeafMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, null);
     }
 
     public static void handleLeafMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
@@ -1371,10 +1363,6 @@ public class JavaToKotlinMigration {
 
     //restructures the Java and Kotlin field declarations, so that the name, = and initializer have the same parent (see alignVariableDeclaration)
     //must be executed after matching the attribute initializers, because they are located through the VariableDeclarationFragment, which becomes a leaf
-    public static void alignFieldDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
-        alignFieldDeclaration(mappingStore, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, null);
-    }
-
     public static void alignFieldDeclaration(ExtendedMultiMappingStore mappingStore, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(srcFieldDeclaration == null || dstFieldDeclaration == null)
             return;
@@ -2930,11 +2918,6 @@ public class JavaToKotlinMigration {
 
     //maps the name, type and annotations of the Java and Kotlin field declarations, without restructuring the trees (see alignFieldDeclaration)
     public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore,
-            Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2) {
-        handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, null);
-    }
-
-    public static void handleFieldDeclarationMapping(ExtendedMultiMappingStore mappingStore,
             Tree srcAttr, Tree dstAttr, Tree srcFieldDeclaration, Tree dstFieldDeclaration, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         Tree variableDeclaration2 = TreeUtilFunctions.findChildByType(dstAttr, LANG2.VARIABLE_DECLARATION);
         if(variableDeclaration2 == null && dstFieldDeclaration != null)
@@ -3602,10 +3585,6 @@ public class JavaToKotlinMigration {
         }
     }
 
-    public static void handleParameterMapping(ExtendedMultiMappingStore mappingStore, Tree leftTree, Tree rightTree, Constants LANG1, Constants LANG2) {
-        handleParameterMapping(mappingStore, leftTree, rightTree, LANG1, LANG2, null);
-    }
-
     public static void handleParameterMapping(ExtendedMultiMappingStore mappingStore, Tree leftTree, Tree rightTree, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(leftTree.getType().name.equals(LANG1.SINGLE_VARIABLE_DECLARATION) && rightTree.getType().name.equals(LANG2.PARAMETER))
             mappingStore.addMapping(leftTree, rightTree);
@@ -3615,10 +3594,6 @@ public class JavaToKotlinMigration {
         if(name1 != null && name2 != null) {
             mappingStore.addMapping(name1, name2);
         }
-    }
-
-    public static void handleTypeMapping(ExtendedMultiMappingStore mappingStore, Tree srcNode, Tree dstNode, Constants LANG1, Constants LANG2) {
-        handleTypeMapping(mappingStore, srcNode, dstNode, LANG1, LANG2, null);
     }
 
     public static void handleTypeMapping(ExtendedMultiMappingStore mappingStore, Tree srcNode, Tree dstNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {

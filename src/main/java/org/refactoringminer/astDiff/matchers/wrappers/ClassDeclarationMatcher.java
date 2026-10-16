@@ -60,12 +60,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private final Constants LANG1;
     private final Constants LANG2;
 
-    public ClassDeclarationMatcher(UMLClassBaseDiff baseClassDiff, Constants LANG1, Constants LANG2) {
-        this.baseClassDiff = baseClassDiff;
-        this.LANG1 = LANG1;
-        this.LANG2 = LANG2;
-    }
-
     public ClassDeclarationMatcher(OptimizationData optimizationData, UMLClassBaseDiff baseClassDiff, Constants LANG1, Constants LANG2) {
         super(optimizationData);
         this.baseClassDiff = baseClassDiff;

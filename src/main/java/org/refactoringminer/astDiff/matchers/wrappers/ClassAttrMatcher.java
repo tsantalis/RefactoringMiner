@@ -18,12 +18,6 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
     private final Constants LANG1;
     private final Constants LANG2;
 
-    public ClassAttrMatcher(UMLAbstractClassDiff classDiff, Constants LANG1, Constants LANG2) {
-        this.classDiff = classDiff;
-        this.LANG1 = LANG1;
-        this.LANG2 = LANG2;
-    }
-
     public ClassAttrMatcher(OptimizationData optimizationData, UMLAbstractClassDiff classDiff, Constants LANG1, Constants LANG2) {
         super(optimizationData);
         this.classDiff = classDiff;

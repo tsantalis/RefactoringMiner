@@ -2096,6 +2096,10 @@ public class CppTreeGenerator {
 			return node("using_declaration", using, name(using.getQualifiedName(), NameKind.IDENTIFIER));
 		}
 		if(declaration instanceof ICPPASTUsingDeclaration using) {
+			//a member without using is a macro expanded to a field in the code parsed again, i.e., DIAGNOSTIC_FIELD; with #define DIAGNOSTIC_FIELD int last_error
+			if(!tokenAt(start(using)).equals("using")) {
+				return node("field_declaration", using, name(using.getName(), NameKind.TYPE));
+			}
 			return node("using_declaration", using, name(using.getName(), NameKind.IDENTIFIER));
 		}
 		if(declaration instanceof ICPPASTAliasDeclaration alias) {

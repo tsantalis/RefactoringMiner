@@ -2100,16 +2100,38 @@
   "firstEndPos" : 2219,
   "secondEndPos" : 2220
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 2224,
+  "secondPos" : 2225,
+  "firstEndPos" : 2241,
+  "secondEndPos" : 2242
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
   "firstLabel" : "DIAGNOSTIC_FIELD",
   "secondLabel" : "DIAGNOSTIC_FIELD",
-  "firstParentType" : "using_declaration",
-  "secondParentType" : "using_declaration",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
   "firstPos" : 2224,
   "secondPos" : 2225,
   "firstEndPos" : 2240,
   "secondEndPos" : 2241
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 2240,
+  "secondPos" : 2241,
+  "firstEndPos" : 2241,
+  "secondEndPos" : 2242
 }, {
   "firstType" : "}",
   "secondType" : "}",

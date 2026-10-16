@@ -1293,7 +1293,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         if(baseClassDiff.getOriginalClass().getSourceFile().contains("/") && baseClassDiff.getNextClass().getSourceFile().contains("/")) {
             String s1 = baseClassDiff.getOriginalClass().getSourceFile().substring(0, baseClassDiff.getOriginalClass().getSourceFile().lastIndexOf("/"));
             String s2 = baseClassDiff.getNextClass().getSourceFile().substring(0, baseClassDiff.getNextClass().getSourceFile().lastIndexOf("/"));
-            if(s1.equals(s2))
+            //a nested class moved to another outer class of the same directory is not just renamed, i.e., LeakSentryListener.None -> InternalLeakSentry.NoLeakCanary
+            if(s1.equals(s2) && (baseClassDiff.getOriginalClass().isTopLevel() && baseClassDiff.getNextClass().isTopLevel() ||
+                    baseClassDiff.getOriginalClass().getPackageName().equals(baseClassDiff.getNextClass().getPackageName())))
                 justRenamed = true;
         }
         boolean movedAndRenamed = baseClassDiff instanceof UMLClassRenameDiff && !justRenamed && !baseClassDiff.getOriginalClass().getSourceFile().equals(baseClassDiff.getNextClass().getSourceFile()) && !parentNamespaceContainsOnlyClass;

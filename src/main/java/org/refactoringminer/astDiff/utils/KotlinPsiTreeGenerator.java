@@ -520,9 +520,10 @@ public class KotlinPsiTreeGenerator {
 					for(ASTNode e : kids(c)) {
 						switch(type(e)) {
 							case "TYPE_REFERENCE" -> add(delegation, typeTree(e));
-							case "by" -> add(delegation, leaf("by", e));
-							case "DELEGATE_EXPRESSION" -> add(delegation, expression(kids(e).get(0)));
-							default -> {}
+							//the same keyword as in a property delegate, i.e., val x by lazy {...}
+							case "by" -> add(delegation, leaf("delegate_keyword", e));
+							//the delegate is the expression after by, i.e., I by createDelegate(a)
+							default -> { if(!isComment(e)) add(delegation, expression(e)); }
 						}
 					}
 					add(d, delegation);

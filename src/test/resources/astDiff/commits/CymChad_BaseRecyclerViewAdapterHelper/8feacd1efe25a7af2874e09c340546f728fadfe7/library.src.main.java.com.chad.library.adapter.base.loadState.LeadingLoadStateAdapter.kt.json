@@ -1,0 +1,89 @@
+[ {
+  "firstType" : "source_file",
+  "secondType" : "source_file",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "",
+  "secondParentType" : "",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 82,
+  "secondEndPos" : 90
+}, {
+  "firstType" : "package_header",
+  "secondType" : "package_header",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 47,
+  "secondEndPos" : 55
+}, {
+  "firstType" : "package",
+  "secondType" : "package",
+  "firstLabel" : "package",
+  "secondLabel" : "package",
+  "firstParentType" : "package_header",
+  "secondParentType" : "package_header",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 7,
+  "secondEndPos" : 7
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "package_header",
+  "secondParentType" : "package_header",
+  "firstPos" : 8,
+  "secondPos" : 8,
+  "firstEndPos" : 47,
+  "secondEndPos" : 55
+}, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 49,
+  "secondPos" : 57,
+  "firstEndPos" : 82,
+  "secondEndPos" : 90
+}, {
+  "firstType" : "type_keyword",
+  "secondType" : "type_keyword",
+  "firstLabel" : "class",
+  "secondLabel" : "class",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 49,
+  "secondPos" : 57,
+  "firstEndPos" : 54,
+  "secondEndPos" : 62
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "LeadingLoadStateAdapter",
+  "secondLabel" : "LeadingLoadStateAdapter",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 55,
+  "secondPos" : 63,
+  "firstEndPos" : 78,
+  "secondEndPos" : 86
+}, {
+  "firstType" : "type_body",
+  "secondType" : "type_body",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 79,
+  "secondPos" : 87,
+  "firstEndPos" : 82,
+  "secondEndPos" : 90
+} ]

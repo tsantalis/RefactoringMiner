@@ -1042,11 +1042,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
                     mappingStore.addMapping(closing.first,closing.second);
                 }
             }
-            //find last delegation specifier
-            if(srcTypeDeclaration.getChildren().size() > 0 && srcTypeDeclaration.getChildren().get(srcTypeDeclaration.getChildren().size()-1).getType().name.equals(LANG1.DELEGATION_SPECIFIER) &&
-                    dstTypeDeclaration.getChildren().size() > 0 && dstTypeDeclaration.getChildren().get(dstTypeDeclaration.getChildren().size()-1).getType().name.equals(LANG2.DELEGATION_SPECIFIER)) {
-                Tree delegationSpecifier1 = srcTypeDeclaration.getChildren().get(srcTypeDeclaration.getChildren().size()-1);
-                Tree delegationSpecifier2 = dstTypeDeclaration.getChildren().get(dstTypeDeclaration.getChildren().size()-1);
+            //find last delegation specifier, which is followed by the class body
+            Tree delegationSpecifier1 = lastChildOfType(srcTypeDeclaration, LANG1.DELEGATION_SPECIFIER);
+            Tree delegationSpecifier2 = lastChildOfType(dstTypeDeclaration, LANG2.DELEGATION_SPECIFIER);
+            if(delegationSpecifier1 != null && delegationSpecifier2 != null) {
                 mappingStore.addMapping(delegationSpecifier1, delegationSpecifier2);
                 Pair<Tree,Tree> explicitDelegations = Helpers.findPairOfType(delegationSpecifier1,delegationSpecifier2, LANG1.EXPLICIT_DELEGATION, LANG2.EXPLICIT_DELEGATION);
                 if (explicitDelegations != null) {
@@ -1391,28 +1390,18 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
     }
 
+    private static Tree lastChildOfType(Tree tree, String type) {
+        for(int i = tree.getChildren().size() - 1; i >= 0; i--) {
+            if(tree.getChild(i).getType().name.equals(type))
+                return tree.getChild(i);
+        }
+        return null;
+    }
+
     private static void processCallExpressionsInDelegationSpecifiers(ExtendedMultiMappingStore mappingStore, Pair<Tree, Tree> callExpressions, Constants LANG1, Constants LANG2) {
         mappingStore.addMapping(callExpressions.first,callExpressions.second);
-        Pair<Tree, Tree> byIdentifiers = Helpers.findPairOfType(callExpressions.first,callExpressions.second, LANG1.SIMPLE_NAME, LANG2.SIMPLE_NAME);
-        if(byIdentifiers != null) {
-            mappingStore.addMapping(byIdentifiers.first,byIdentifiers.second);
-        }
-        Pair<Tree, Tree> callSuffixes = Helpers.findPairOfType(callExpressions.first,callExpressions.second, LANG1.CALL_SUFFIX, LANG2.CALL_SUFFIX);
-        if (callSuffixes != null) {
-            mappingStore.addMapping(callSuffixes.first,callSuffixes.second);
-            Pair<Tree, Tree> annotatedLambdas = Helpers.findPairOfType(callSuffixes.first,callSuffixes.second, LANG1.ANNOTATED_LAMBDA, LANG2.ANNOTATED_LAMBDA);
-            if (annotatedLambdas != null) {
-                mappingStore.addMapping(annotatedLambdas.first,annotatedLambdas.second);
-                Pair<Tree, Tree> lambdaLiterals = Helpers.findPairOfType(annotatedLambdas.first,annotatedLambdas.second, LANG1.LAMBDA_LITERAL, LANG2.LAMBDA_LITERAL);
-                if (lambdaLiterals != null) {
-                    mappingStore.addMapping(lambdaLiterals.first,lambdaLiterals.second);
-                    Pair<Tree, Tree> statements = Helpers.findPairOfType(lambdaLiterals.first,lambdaLiterals.second, LANG1.STATEMENTS, LANG2.STATEMENTS);
-                    if (statements != null) {
-                        mappingStore.addMapping(statements.first,statements.second);
-                    }
-                }
-            }
-        }
+        //the delegate calls, i.e., createDelegate(a, 1) in I by createDelegate(a, 1), are matched like statements
+        new LeafMatcher(LANG1, LANG2).match(callExpressions.first, callExpressions.second, mappingStore);
     }
 
     private void processPrimaryConstructorParameterPair(Tree srcTypeDeclaration, Tree dstTypeDeclaration, VariableDeclaration left, VariableDeclaration right, ExtendedMultiMappingStore mappingStore) {

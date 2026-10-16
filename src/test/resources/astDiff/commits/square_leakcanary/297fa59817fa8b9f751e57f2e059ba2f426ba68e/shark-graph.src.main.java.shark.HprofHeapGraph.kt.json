@@ -10944,6 +10944,17 @@
   "firstEndPos" : 6051,
   "secondEndPos" : 5609
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readObjectArrayDumpRecord",
+  "secondLabel" : "readObjectArrayDumpRecord",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6024,
+  "secondPos" : 5582,
+  "firstEndPos" : 6049,
+  "secondEndPos" : 5607
+}, {
   "firstType" : "call_suffix",
   "secondType" : "call_suffix",
   "firstLabel" : "",
@@ -12010,6 +12021,17 @@
   "secondPos" : 6379,
   "firstEndPos" : 6755,
   "secondEndPos" : 6409
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readPrimitiveArrayDumpRecord",
+  "secondLabel" : "readPrimitiveArrayDumpRecord",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "call_expression",
+  "firstPos" : 6725,
+  "secondPos" : 6379,
+  "firstEndPos" : 6753,
+  "secondEndPos" : 6407
 }, {
   "firstType" : "call_suffix",
   "secondType" : "call_suffix",
@@ -15058,6 +15080,17 @@
   "firstEndPos" : 8090,
   "secondEndPos" : 7808
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readClassDumpRecord",
+  "secondLabel" : "readClassDumpRecord",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "call_expression",
+  "firstPos" : 8069,
+  "secondPos" : 7787,
+  "firstEndPos" : 8088,
+  "secondEndPos" : 7806
+}, {
   "firstType" : "call_suffix",
   "secondType" : "call_suffix",
   "firstLabel" : "",
@@ -15464,6 +15497,17 @@
   "secondPos" : 8001,
   "firstEndPos" : 8320,
   "secondEndPos" : 8025
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readInstanceDumpRecord",
+  "secondLabel" : "readInstanceDumpRecord",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "call_expression",
+  "firstPos" : 8296,
+  "secondPos" : 8001,
+  "firstEndPos" : 8318,
+  "secondEndPos" : 8023
 }, {
   "firstType" : "call_suffix",
   "secondType" : "call_suffix",

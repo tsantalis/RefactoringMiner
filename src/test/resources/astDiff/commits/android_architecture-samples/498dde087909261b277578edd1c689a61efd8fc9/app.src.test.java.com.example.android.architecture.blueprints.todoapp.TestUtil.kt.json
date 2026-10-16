@@ -1220,6 +1220,17 @@
   "firstEndPos" : 1031,
   "secondEndPos" : 1096
 }, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "assertEquals",
+  "secondLabel" : "assertEquals",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "call_expression",
+  "firstPos" : 1009,
+  "secondPos" : 1074,
+  "firstEndPos" : 1021,
+  "secondEndPos" : 1086
+}, {
   "firstType" : "call_suffix",
   "secondType" : "call_suffix",
   "firstLabel" : "",

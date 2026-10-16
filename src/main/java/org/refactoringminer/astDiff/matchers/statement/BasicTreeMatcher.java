@@ -70,6 +70,12 @@ public class BasicTreeMatcher implements TreeMatcher {
 		return match;
 	}
 
+    private static Tree lastLeaf(Tree tree) {
+		while (!tree.isLeaf())
+			tree = tree.getChild(tree.getChildren().size() - 1);
+		return tree;
+	}
+
     private void optimizeMappings(MappingStore match) {
 		List<Pair<Tree, Tree>> removeList = new ArrayList<>();
 		List<Pair<Tree, Tree>> incorrectMethodExpressionReferenceSimpleName = new ArrayList<>();
@@ -119,15 +125,16 @@ public class BasicTreeMatcher implements TreeMatcher {
 		List<Pair<Tree, Tree>> calleeNames = new ArrayList<>();
 		for (Mapping mapping : match) {
 			//the receiver is removed or added, i.e., raw_client_->WaitForAllocation(...) -> WaitForAllocation(...),
-			//so the name is a leaf callee on one side and the last child of the member access callee on the other side
+			//so the name is a leaf callee on one side and the last leaf of the member access callee on the other side,
+			//i.e., the field_identifier of a C++ field_expression or the simple_identifier of a Kotlin navigation_suffix
 			if (mapping.first.getType().name.equals(LANG1.METHOD_INVOCATION) && mapping.second.getType().name.equals(LANG2.METHOD_INVOCATION) &&
 					!mapping.first.isLeaf() && !mapping.second.isLeaf()) {
 				Tree callee1 = mapping.first.getChild(0);
 				Tree callee2 = mapping.second.getChild(0);
 				if (match.isSrcMapped(callee1) || match.isDstMapped(callee2) || callee1.isLeaf() == callee2.isLeaf())
 					continue;
-				Tree name1 = callee1.isLeaf() ? callee1 : callee1.getChild(callee1.getChildren().size() - 1);
-				Tree name2 = callee2.isLeaf() ? callee2 : callee2.getChild(callee2.getChildren().size() - 1);
+				Tree name1 = lastLeaf(callee1);
+				Tree name2 = lastLeaf(callee2);
 				if (name1.isLeaf() && name2.isLeaf() && name1.getLabel().equals(name2.getLabel()) && !match.isSrcMapped(name1) && !match.isDstMapped(name2))
 					calleeNames.add(new Pair<>(name1, name2));
 			}

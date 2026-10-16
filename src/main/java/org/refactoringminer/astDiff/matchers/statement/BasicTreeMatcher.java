@@ -116,6 +116,26 @@ public class BasicTreeMatcher implements TreeMatcher {
 				match.addMapping(treeTreePair.first.getParent().getChild(1), treeTreePair.second.getParent().getChild(1));
 		}
 
+		List<Pair<Tree, Tree>> calleeNames = new ArrayList<>();
+		for (Mapping mapping : match) {
+			//the receiver is removed or added, i.e., raw_client_->WaitForAllocation(...) -> WaitForAllocation(...),
+			//so the name is a leaf callee on one side and the last child of the member access callee on the other side
+			if (mapping.first.getType().name.equals(LANG1.METHOD_INVOCATION) && mapping.second.getType().name.equals(LANG2.METHOD_INVOCATION) &&
+					!mapping.first.isLeaf() && !mapping.second.isLeaf()) {
+				Tree callee1 = mapping.first.getChild(0);
+				Tree callee2 = mapping.second.getChild(0);
+				if (match.isSrcMapped(callee1) || match.isDstMapped(callee2) || callee1.isLeaf() == callee2.isLeaf())
+					continue;
+				Tree name1 = callee1.isLeaf() ? callee1 : callee1.getChild(callee1.getChildren().size() - 1);
+				Tree name2 = callee2.isLeaf() ? callee2 : callee2.getChild(callee2.getChildren().size() - 1);
+				if (name1.isLeaf() && name2.isLeaf() && name1.getLabel().equals(name2.getLabel()) && !match.isSrcMapped(name1) && !match.isDstMapped(name2))
+					calleeNames.add(new Pair<>(name1, name2));
+			}
+		}
+		for (Pair<Tree, Tree> treeTreePair : calleeNames) {
+			match.addMapping(treeTreePair.first, treeTreePair.second);
+		}
+
 		List<Pair<Tree, Tree>> addList = new ArrayList<>();
 		for (Mapping mapping : match)
 		{

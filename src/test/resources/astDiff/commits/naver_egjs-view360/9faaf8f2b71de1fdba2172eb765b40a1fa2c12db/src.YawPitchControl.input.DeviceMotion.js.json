@@ -5004,6 +5004,17 @@
   "firstEndPos" : 1598,
   "secondEndPos" : 2930
 }, {
+  "firstType" : "identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "setTimeout",
+  "secondLabel" : "setTimeout",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 1410,
+  "secondPos" : 2730,
+  "firstEndPos" : 1420,
+  "secondEndPos" : 2740
+}, {
   "firstType" : "arguments",
   "secondType" : "arguments",
   "firstLabel" : "",

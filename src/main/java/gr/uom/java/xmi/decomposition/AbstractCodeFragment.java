@@ -485,9 +485,10 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	public AbstractCall invocationCoveringEntireFragment() {
 		String statement = getString();
-		if(LANG.equals(Constants.TYPESCRIPT) && getCastExpressions().size() > 0 && statement.contains(" as ") && getLambdas().size() == 0) {
-			int index = statement.lastIndexOf(" as ");
-			statement = statement.substring(0, index);
+		//the cast covering the entire fragment in TypeScript and Kotlin, i.e., field.get(null) as Listener
+		if((LANG.equals(Constants.TYPESCRIPT) || LANG.equals(Constants.KOTLIN)) && getLambdas().size() == 0) {
+			String termination = statement.endsWith(LANG.STATEMENT_TERMINATION) ? LANG.STATEMENT_TERMINATION : "";
+			statement = withoutCoveringCast(statement.substring(0, statement.length() - termination.length()), getCastExpressions()) + termination;
 		}
 		for(AbstractCall invocation : getMethodInvocations()) {
 			String methodInvocation = invocation.getString();
@@ -681,6 +682,17 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		return false;
+	}
+
+	//the expression of the cast that covers the entire expression, i.e., field.get(null) for field.get(null) as Listener, otherwise the expression itself
+	private static String withoutCoveringCast(String expression, List<LeafExpression> castExpressions) {
+		for(LeafExpression cast : castExpressions) {
+			String castString = cast.getString();
+			if(castString.equals(expression) && castString.contains(" as ")) {
+				return castString.substring(0, castString.lastIndexOf(" as "));
+			}
+		}
+		return expression;
 	}
 
 	private boolean expressionIsTheInitializerOfVariableDeclaration(String expression) {

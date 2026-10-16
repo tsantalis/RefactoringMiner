@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jetbrains.kotlin.lexer.KtTokens;
+import org.jetbrains.kotlin.psi.KtBinaryExpression;
 import org.jetbrains.kotlin.psi.KtBlockExpression;
 import org.jetbrains.kotlin.psi.KtBreakExpression;
 import org.jetbrains.kotlin.psi.KtCallExpression;
@@ -440,6 +442,10 @@ public class KotlinOperationBody extends OperationBody {
 			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else {
+			//the try expression assigned to a variable, i.e., listener = try {...} catch (...) {...}, is processed like the initializer of a variable declaration
+			if(statement instanceof KtBinaryExpression assignment && assignment.getOperationToken() == KtTokens.EQ && assignment.getRight() instanceof KtTryExpression tryStatement) {
+				processTryStatement(ktFile, sourceFolder, filePath, parent, fileContent, tryStatement);
+			}
 			StatementObject child = new StatementObject(ktFile, sourceFolder, filePath, statement, parent.getDepth()+1, CodeElementType.EXPRESSION_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);

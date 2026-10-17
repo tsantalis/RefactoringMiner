@@ -1,0 +1,369 @@
+package org.refactoringminer.astDiff.matchers.wrappers;
+
+import com.github.gumtreediff.tree.Tree;
+
+import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.diff.UMLCommentListDiff;
+import gr.uom.java.xmi.diff.UMLJavadocDiff;
+import org.apache.commons.lang3.tuple.Pair;
+import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
+import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.matchers.TreeMatcher;
+import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
+
+import java.util.List;
+import java.util.Optional;
+
+/* Created by pourya on 2024-05-22*/
+public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
+
+
+    private final UMLAttribute originalAttribute;
+    private final UMLAttribute movedAttribute;
+    private final Optional<UMLJavadocDiff> umlJavadocDiff;
+    private final UMLCommentListDiff umlCommentListDiff;
+    private final Constants LANG1;
+    private final Constants LANG2;
+    private Tree srcFieldDeclaration;
+    private Tree dstFieldDeclaration;
+
+    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff, UMLCommentListDiff umlCommentListDiff, Constants LANG1, Constants LANG2) {
+        this.originalAttribute = originalAttribute;
+        this.movedAttribute = movedAttribute;
+        this.umlJavadocDiff = umlJavadocDiff;
+        this.umlCommentListDiff = umlCommentListDiff;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
+    }
+
+    public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff, UMLCommentListDiff umlCommentListDiff, Constants LANG1, Constants LANG2) {
+        super(optimizationData);
+        this.originalAttribute = originalAttribute;
+        this.movedAttribute = movedAttribute;
+        this.umlJavadocDiff = umlJavadocDiff;
+        this.umlCommentListDiff = umlCommentListDiff;
+        this.LANG1 = LANG1;
+        this.LANG2 = LANG2;
+    }
+
+    @Override
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+        processFieldDeclaration(srcTree, dstTree, originalAttribute, movedAttribute, mappingStore);
+    }
+
+    public Tree getSrcFieldDeclaration() {
+        return srcFieldDeclaration;
+    }
+
+    public Tree getDstFieldDeclaration() {
+        return dstFieldDeclaration;
+    }
+
+    private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
+
+        Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1);
+        Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2);
+        if (srcAttr == null || dstAttr == null) return;
+        Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.FIELD_DECLARATION);
+        Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.FIELD_DECLARATION);
+        if (srcFieldDeclaration == null) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.DECLARATION);
+        }
+        if (dstFieldDeclaration == null) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.DECLARATION);
+        }
+        if (srcFieldDeclaration == null) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.ENUM_CONSTANT_DECLARATION);
+        }
+        if (dstFieldDeclaration == null) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.ENUM_CONSTANT_DECLARATION);
+        }
+        //handle fields expanded with macro
+        if (srcFieldDeclaration == null && srcAttr.getType().name.equals(LANG1.METHOD_INVOCATION)) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.EXPRESSION_STATEMENT);
+        }
+        if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.METHOD_INVOCATION)) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.EXPRESSION_STATEMENT);
+        }
+        //handle Record Components (SingleVariableDeclaration)
+        if (srcFieldDeclaration == null) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.RECORD_COMPONENT);
+        }
+        if (dstFieldDeclaration == null) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.RECORD_COMPONENT);
+        }
+        //handle lexical declarations in TypeScript
+        if (srcFieldDeclaration == null && srcAttr.getType().name.equals(LANG1.VARIABLE_DECLARATOR)) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.LEXICAL_DECLARATION);
+        }
+        if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.VARIABLE_DECLARATOR)) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.LEXICAL_DECLARATION);
+        }
+        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.FIELD_DECLARATION);
+        }
+        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.FIELD_DECLARATION);
+        }
+        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.CLASS_PARAMETER);
+        }
+        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
+        }
+        if (srcAttr.getType().name.equals(LANG1.SIMPLE_NAME) && srcAttr.getParent().getType().name.equals(LANG1.ENUMERATOR)) {
+            srcAttr = srcAttr.getParent();
+        }
+        if (dstAttr.getType().name.equals(LANG2.SIMPLE_NAME) && dstAttr.getParent().getType().name.equals(LANG2.ENUMERATOR)) {
+            dstAttr = dstAttr.getParent();
+        }
+        this.srcFieldDeclaration = srcFieldDeclaration;
+        this.dstFieldDeclaration = dstFieldDeclaration;
+        new CommentMatcher(optimizationData, umlCommentListDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);
+        if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
+            //IsoStructural can't be a good idea here, i.e. anonymous class
+            mappingStore.addMappingRecursively(srcFieldDeclaration, dstFieldDeclaration);
+            if(srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
+                mappingStore.addMapping(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent());
+                com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcFieldDeclaration.getParent(),dstFieldDeclaration.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                matched = Helpers.findPairOfType(srcFieldDeclaration.getParent(),dstFieldDeclaration.getParent(),LANG1.DEFAULT_KEYWORD,LANG2.DEFAULT_KEYWORD);
+                if(matched != null) {
+                    mappingStore.addMapping(matched.first, matched.second);
+                }
+                ClassDeclarationMatcher.processParentInternalModule(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent(), mappingStore, LANG1, LANG2);
+            }
+            ClassDeclarationMatcher.processParentInternalModule(srcFieldDeclaration, dstFieldDeclaration, mappingStore, LANG1, LANG2);
+            boolean isMovedAttribute = !srcUMLAttribute.getClassName().equals(dstUMLAttribute.getClassName());
+            if(PathFileUtils.isCppFile(srcUMLAttribute.getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(dstUMLAttribute.getLocationInfo().getFilePath()) &&
+                    srcUMLAttribute.getLocationInfo().getFilePath().equals(dstUMLAttribute.getLocationInfo().getFilePath()) && !isMovedAttribute) {
+                ClassDeclarationMatcher.handleParentNamespace(srcAttr, dstAttr, mappingStore, LANG1, LANG2);
+            }
+            return;
+        }
+        if (srcAttr.getMetrics().hash == dstAttr.getMetrics().hash) {
+            mappingStore.addMappingRecursively(srcAttr,dstAttr);
+        }
+
+        if(srcFieldDeclaration != null && dstFieldDeclaration != null && PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath())) {
+            mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+        }
+        else if(Constants.isCrossLanguage(LANG1, LANG2)) {
+            JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, optimizationData.getDeferredFlattenings());
+        }
+        if(srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT) && dstFieldDeclaration.getParent().getType().name.equals(LANG1.EXPORT_STATEMENT)) {
+            mappingStore.addMapping(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent());
+            com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcFieldDeclaration.getParent(),dstFieldDeclaration.getParent(),LANG1.EXPORT_KEYWORD,LANG2.EXPORT_KEYWORD);
+            if(matched != null) {
+                mappingStore.addMapping(matched.first, matched.second);
+            }
+            matched = Helpers.findPairOfType(srcFieldDeclaration.getParent(),dstFieldDeclaration.getParent(),LANG1.DEFAULT_KEYWORD,LANG2.DEFAULT_KEYWORD);
+            if(matched != null) {
+                mappingStore.addMapping(matched.first, matched.second);
+            }
+            ClassDeclarationMatcher.processParentInternalModule(srcFieldDeclaration.getParent(), dstFieldDeclaration.getParent(), mappingStore, LANG1, LANG2);
+        }
+        ClassDeclarationMatcher.processParentInternalModule(srcFieldDeclaration, dstFieldDeclaration, mappingStore, LANG1, LANG2);
+        if((srcAttr.getType().name.equals(LANG1.PROPERTY_SIGNATURE) && dstAttr.getType().name.equals(LANG2.PROPERTY_SIGNATURE)) ||
+                (srcAttr.getType().name.equals(LANG1.PUBLIC_FIELD_DEFINITION) && dstAttr.getType().name.equals(LANG2.PUBLIC_FIELD_DEFINITION)) ||
+                (srcAttr.getType().name.equals(LANG1.SHORTHAND_PROPERTY_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.SHORTHAND_PROPERTY_IDENTIFIER)) ||
+                (srcAttr.getType().name.equals(LANG1.PAIR) && dstAttr.getType().name.equals(LANG2.PAIR)) ||
+                (srcAttr.getType().name.equals(LANG1.ENUM_ASSIGNMENT) && dstAttr.getType().name.equals(LANG2.ENUM_ASSIGNMENT)) ||
+                (srcAttr.getType().name.equals(LANG1.SPREAD_ELEMENT) && dstAttr.getType().name.equals(LANG2.SPREAD_ELEMENT)) ||
+                (srcAttr.getType().name.equals(LANG1.INIT_DECLARATOR) && dstAttr.getType().name.equals(LANG2.INIT_DECLARATOR)) ||
+                (srcAttr.getType().name.equals(LANG1.ARRAY_DECLARATOR) && dstAttr.getType().name.equals(LANG2.ARRAY_DECLARATOR)) ||
+                (srcAttr.getType().name.equals(LANG1.FIELD_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.FIELD_IDENTIFIER)) ||
+                (srcAttr.getType().name.equals(LANG1.TYPE_IDENTIFIER) && dstAttr.getType().name.equals(LANG2.TYPE_IDENTIFIER)) ||
+                (srcAttr.getType().name.equals(LANG1.ENUMERATOR) && dstAttr.getType().name.equals(LANG2.ENUMERATOR)) ||
+                (srcAttr.getType().name.equals(LANG1.INDEX_SIGNATURE) && dstAttr.getType().name.equals(LANG2.INDEX_SIGNATURE))) {
+            if(srcAttr.getParent() != null && dstAttr.getParent() != null) {
+                int index1 = srcAttr.getParent().getChildPosition(srcAttr);
+                int index2 = dstAttr.getParent().getChildPosition(dstAttr);
+                if(srcAttr.getParent().getChildren().size() > index1+1 && srcAttr.getParent().getChild(index1+1).getType().name.equals(LANG1.SEMICOLON) &&
+                        dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.SEMICOLON)) {
+                    Tree t1 = srcAttr.getParent().getChild(index1+1);
+                    Tree t2 = dstAttr.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+                else if(srcAttr.getParent().getChildren().size() > index1+1 && srcAttr.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        dstAttr.getParent().getChildren().size() > index2+1 && dstAttr.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = srcAttr.getParent().getChild(index1+1);
+                    Tree t2 = dstAttr.getParent().getChild(index2+1);
+                    mappingStore.addMapping(t1,t2);
+                }
+                if(srcAttr.getParent().getType().name.equals(LANG1.TYPE_DEFINITION) && dstAttr.getParent().getType().name.equals(LANG2.TYPE_DEFINITION)) {
+                    mappingStore.addMapping(srcAttr.getParent(), dstAttr.getParent());
+                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(),LANG1.TYPEDEF,LANG2.TYPEDEF);
+                    if(matched != null) {
+                        mappingStore.addMapping(matched.first, matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.TYPE_IDENTIFIER, LANG2.TYPE_IDENTIFIER);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.PRIMITIVE_TYPE, LANG2.PRIMITIVE_TYPE);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.QUALIFIED_IDENTIFIER, LANG2.QUALIFIED_IDENTIFIER);
+                    if (matched != null) {
+                        mappingStore.addMappingRecursively(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.DEPENDENT_TYPE, LANG2.DEPENDENT_TYPE);
+                    if (matched != null) {
+                        mappingStore.addMappingRecursively(matched.first,matched.second);
+                    }
+                    matched = Helpers.findPairOfType(srcAttr.getParent(),dstAttr.getParent(), LANG1.SEMICOLON, LANG2.SEMICOLON);
+                    if (matched != null) {
+                        mappingStore.addMapping(matched.first,matched.second);
+                    }
+                }
+            }
+            mappingStore.addMapping(srcAttr, dstAttr);
+            com.github.gumtreediff.utils.Pair<Tree, Tree> optionals = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.OPTIONAL_KEYWORD, LANG2.OPTIONAL_KEYWORD);
+            if(optionals != null) {
+                mappingStore.addMapping(optionals.first,optionals.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> type_annotations = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.TYPE_ANNOTATION, LANG2.TYPE_ANNOTATION);
+            if(type_annotations != null) {
+                mappingStore.addMapping(type_annotations.first,type_annotations.second);
+                com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(type_annotations.first,type_annotations.second, LANG1.COLON, LANG2.COLON);
+                if(colons != null) {
+                    mappingStore.addMapping(colons.first, colons.second);
+                }
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> colons = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.COLON, LANG2.COLON);
+            if(colons != null) {
+                mappingStore.addMapping(colons.first, colons.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> member_expressions = Helpers.findPairOfType(srcAttr,dstAttr, LANG1.MEMBER_EXPRESSION, LANG2.MEMBER_EXPRESSION);
+            if(member_expressions != null) {
+                mappingStore.addMappingRecursively(member_expressions.first, member_expressions.second);
+            }
+        }
+        mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
+        if(srcFieldDeclaration != null && srcFieldDeclaration.getType().name.equals(LANG1.LEXICAL_DECLARATION) && dstFieldDeclaration != null && dstFieldDeclaration.getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
+            com.github.gumtreediff.utils.Pair<Tree, Tree> constKeywords = Helpers.findPairOfType(srcFieldDeclaration,dstFieldDeclaration, LANG1.CONST_KEYWORD, LANG2.CONST_KEYWORD);
+            if(constKeywords != null) {
+                mappingStore.addMapping(constKeywords.first, constKeywords.second);
+            }
+            com.github.gumtreediff.utils.Pair<Tree, Tree> semicolons = Helpers.findPairOfType(srcFieldDeclaration,dstFieldDeclaration, LANG1.SEMICOLON, LANG2.SEMICOLON);
+            if(semicolons != null) {
+                mappingStore.addMapping(semicolons.first, semicolons.second);
+            }
+        }
+        matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
+        matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);
+        if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {
+            if (srcUMLAttribute instanceof UMLEnumConstant && dstUMLAttribute instanceof UMLEnumConstant) {
+                //JavaDocs are mapped as well.
+                new LeafMatcher(LANG1, LANG2).match(srcAttr,dstAttr,mappingStore);
+                new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
+                .match(srcTree, dstTree, mappingStore);
+                return;
+            }
+        }
+        if(!Constants.isCrossLanguage(LANG1, LANG2)) {
+            Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getType().getLocationInfo(),LANG1);
+            Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getType().getLocationInfo(),LANG2);
+
+            if (srcType != null && dstType != null && srcType.isIsoStructuralTo(dstType)) {
+                mappingStore.addMappingRecursively(srcType,dstType);
+            }
+            else {
+                new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
+            }
+            Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
+            Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
+            mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
+            new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
+            new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
+                    .match(srcTree, dstTree, mappingStore);
+            if (srcVarDeclaration != null && dstVarDeclaration != null)
+                if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
+                    mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
+        }
+        else {
+            new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
+                    .match(srcTree, dstTree, mappingStore);
+        }
+        boolean isMovedAttribute = !srcUMLAttribute.getClassName().equals(dstUMLAttribute.getClassName());
+        if(PathFileUtils.isCppFile(srcUMLAttribute.getLocationInfo().getFilePath()) && PathFileUtils.isCppFile(dstUMLAttribute.getLocationInfo().getFilePath()) &&
+                srcUMLAttribute.getLocationInfo().getFilePath().equals(dstUMLAttribute.getLocationInfo().getFilePath()) && !isMovedAttribute) {
+            ClassDeclarationMatcher.handleParentNamespace(srcAttr, dstAttr, mappingStore, LANG1, LANG2);
+        }
+    }
+
+    private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
+        if (srcFieldDeclaration == null || dstFieldDeclaration == null) return;
+        matchModifiersForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),dstUMLAttribute.getVisibility().toString(),mappingStore);
+        if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.FINAL,mappingStore);
+        if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.VOLATILE,mappingStore);
+        if (srcUMLAttribute.isVolatile() && Constants.isCrossLanguage(LANG1, LANG2))
+            JavaToKotlinMigration.handleVolatileMapping(mappingStore, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2);
+        if (srcUMLAttribute.isStatic() && dstUMLAttribute.isStatic())
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.STATIC,mappingStore);
+        if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.TRANSIENT,mappingStore);
+    }
+
+    private void matchFieldAnnotations(Tree srcFieldDeclaration, Tree dstFieldDeclaration, ExtendedMultiMappingStore mappingStore) {
+        //TODO: add test for all the annotations
+        Pair<Tree, Tree> srcAndDst = TreeUtilFunctions.populateLeftAndRightBasedOnTheFirstChildOfType(
+                srcFieldDeclaration, dstFieldDeclaration,
+                List.of(
+                        Pair.of(LANG1.MARKER_ANNOTATION, LANG2.MARKER_ANNOTATION),
+                        Pair.of(LANG1.SINGLE_MEMBER_ANNOTATION, LANG2.SINGLE_MEMBER_ANNOTATION),
+                        Pair.of(LANG1.NORMAL_ANNOTATION, LANG2.NORMAL_ANNOTATION)
+                )
+        );
+        new LeafMatcher(LANG1, LANG2).match(srcAndDst.getLeft(), srcAndDst.getRight(), mappingStore);
+    }
+
+    private void matchModifiersForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String srcModifier, String dstModifier, ExtendedMultiMappingStore mappingStore) {
+        Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, srcModifier, LANG1);
+        if(srcModifierTree == null) {
+            srcModifierTree = TreeUtilFunctions.findChildByTypeAndLabel(srcFieldDeclaration, LANG1.MODIFIER, srcModifier, LANG1);
+        }
+        Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, dstModifier, LANG2);
+        if(dstModifierTree == null) {
+            dstModifierTree = TreeUtilFunctions.findChildByTypeAndLabel(dstFieldDeclaration, LANG2.MODIFIER, dstModifier, LANG2);
+        }
+        if (srcModifierTree != null && dstModifierTree != null) {
+            if(Constants.isCrossLanguage(LANG1, LANG2)) {
+                JavaToKotlinMigration.handleModifierMapping(mappingStore, srcModifierTree, dstModifierTree, LANG1, LANG2);
+            }
+            else {
+                mappingStore.addMapping(srcModifierTree,dstModifierTree);
+            }
+        }
+    }
+
+    private void matchModifierForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
+        Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, modifier, LANG1);
+        Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, modifier, LANG2);
+        if (srcModifierTree != null && dstModifierTree != null)
+            mappingStore.addMapping(srcModifierTree,dstModifierTree);
+    }
+
+    private Tree findAttributeModifierByLabel(Tree anyFieldDeclaration,String label, Constants LANG) {
+        if (!anyFieldDeclaration.getChildren().isEmpty()) {
+            for (Tree child : anyFieldDeclaration.getChildren()) {
+                if (child.getLabel().equals(label))
+                    return child;
+                if (child.getType().name.equals(LANG.VARIABLE_DECLARATION_FRAGMENT))
+                    break;
+            }
+        }
+        return null;
+    }
+}

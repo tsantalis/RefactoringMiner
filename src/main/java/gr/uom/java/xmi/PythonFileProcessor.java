@@ -2,6 +2,7 @@ package gr.uom.java.xmi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.refactoringminer.astDiff.utils.PythonTreeGenerator;
@@ -45,5 +46,24 @@ public class PythonFileProcessor {
 			this.umlModel.getTreeContextMap().put(filePath, treeContext);
 		}
 		UMLModelAdapter.extractUMLEntities(ast, umlModel, filePath, fileContent);
+	}
+
+	//the operations declared in a code snippet, or null if the snippet is not valid Python code
+	public static List<UMLOperation> parseOperations(String filePath, String code) {
+		PythonLexer lexer = new PythonLexer(new Utf16CharStream(code));
+		lexer.removeErrorListeners();
+		PythonParser parser = new PythonParser(new CommonTokenStream(lexer));
+		parser.removeErrorListeners();
+		PythonParser.File_inputContext parseTree = parser.file_input();
+		if(parser.getNumberOfSyntaxErrors() > 0) {
+			return null;
+		}
+		UMLModel model = new UMLModel(Set.of());
+		UMLModelAdapter.extractUMLEntities(new PyASTBuilder().build(parseTree), model, filePath, code);
+		List<UMLOperation> operations = new ArrayList<UMLOperation>();
+		for(UMLClass umlClass : model.getClassList()) {
+			operations.addAll(umlClass.getOperations());
+		}
+		return operations;
 	}
 }

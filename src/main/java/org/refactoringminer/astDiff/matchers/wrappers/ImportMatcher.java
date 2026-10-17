@@ -39,26 +39,11 @@ public class ImportMatcher implements TreeMatcher {
                 Tree srcImportStatement = TreeUtilFunctions.findByLocationInfo(srcTree, pair.getLeft().getLocationInfo(), LANG1);
                 Tree dstImportStatement = TreeUtilFunctions.findByLocationInfo(dstTree, pair.getRight().getLocationInfo(), LANG2);
                 boolean isLast = counter == commonImports.size()-1;
-                if(isLast && srcImportStatement != null && dstImportStatement != null && srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && !dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
-                    srcImportStatement = srcImportStatement.getParent();
-                }
                 if(isLast && srcImportStatement != null && dstImportStatement != null && !srcImportStatement.getType().name.equals(LANG1.IMPORT_IDENTIFIER) && dstImportStatement.getType().name.equals(LANG2.IMPORT_IDENTIFIER)) {
                     dstImportStatement = dstImportStatement.getParent();
                 }
                 if (srcImportStatement != null && dstImportStatement != null) {
                     mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
-                    if(pair.getLeft().getLANG().equals(gr.uom.java.xmi.Constants.CPP) && pair.getRight().getLANG().equals(gr.uom.java.xmi.Constants.CPP)) {
-                        int index1 = srcImportStatement.getParent().getChildren().indexOf(srcImportStatement);
-                        int index2 = dstImportStatement.getParent().getChildren().indexOf(dstImportStatement);
-                        if(srcImportStatement.getParent().getChildren().size() > index1+1 && srcImportStatement.getParent().getChild(index1+1).getType().name.equals(LANG1.COMPOUND_STATEMENT) &&
-                                dstImportStatement.getParent().getChildren().size() > index2+1 && dstImportStatement.getParent().getChild(index2+1).getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
-                            Tree t1 = srcImportStatement.getParent().getChild(index1+1);
-                            Tree t2 = dstImportStatement.getParent().getChild(index2+1);
-                            if(t1.isIsomorphicTo(t2)) {
-                                mappingStore.addMappingRecursively(t1, t2);
-                            }
-                        }
-                    }
                     if(Constants.isCrossLanguage(LANG1, LANG2)) {
                         JavaToKotlinMigration.handleImportMapping(mappingStore, srcImportStatement, dstImportStatement, LANG1, LANG2);
                     }

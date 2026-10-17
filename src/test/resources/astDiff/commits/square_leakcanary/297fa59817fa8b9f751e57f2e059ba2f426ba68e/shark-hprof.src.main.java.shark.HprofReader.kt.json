@@ -4668,88 +4668,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 7321,
-  "secondPos" : 4350,
-  "firstEndPos" : 7596,
-  "secondEndPos" : 4469
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
   "firstPos" : 7321,
   "secondPos" : 4671,
   "firstEndPos" : 7596,
   "secondEndPos" : 4828
-}, {
-  "firstType" : "simple_identifier",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "id",
-  "secondLabel" : "id",
-  "firstParentType" : "variable_declaration",
-  "secondParentType" : "directly_assignable_expression",
-  "firstPos" : 7367,
-  "secondPos" : 4384,
-  "firstEndPos" : 7369,
-  "secondEndPos" : 4386
-}, {
-  "firstType" : "affectation_operator",
-  "secondType" : "affectation_operator",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "assignment",
-  "firstPos" : 7370,
-  "secondPos" : 4387,
-  "firstEndPos" : 7371,
-  "secondEndPos" : 4388
-}, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "assignment",
-  "firstPos" : 7372,
-  "secondPos" : 4389,
-  "firstEndPos" : 7380,
-  "secondEndPos" : 4397
-}, {
-  "firstType" : "simple_identifier",
-  "secondType" : "simple_identifier",
-  "firstLabel" : "readId",
-  "secondLabel" : "readId",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 7372,
-  "secondPos" : 4389,
-  "firstEndPos" : 7378,
-  "secondEndPos" : 4395
-}, {
-  "firstType" : "call_suffix",
-  "secondType" : "call_suffix",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_expression",
-  "secondParentType" : "call_expression",
-  "firstPos" : 7378,
-  "secondPos" : 4395,
-  "firstEndPos" : 7380,
-  "secondEndPos" : 4397
-}, {
-  "firstType" : "value_arguments",
-  "secondType" : "value_arguments",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "call_suffix",
-  "secondParentType" : "call_suffix",
-  "firstPos" : 7378,
-  "secondPos" : 4395,
-  "firstEndPos" : 7380,
-  "secondEndPos" : 4397
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5146,6 +5069,72 @@
   "secondPos" : 4377,
   "firstEndPos" : 7811,
   "secondEndPos" : 4379
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "id",
+  "secondLabel" : "id",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 7828,
+  "secondPos" : 4384,
+  "firstEndPos" : 7830,
+  "secondEndPos" : 4386
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "assignment",
+  "firstPos" : 7831,
+  "secondPos" : 4387,
+  "firstEndPos" : 7832,
+  "secondEndPos" : 4388
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "assignment",
+  "firstPos" : 7833,
+  "secondPos" : 4389,
+  "firstEndPos" : 7841,
+  "secondEndPos" : 4397
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readId",
+  "secondLabel" : "readId",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 7833,
+  "secondPos" : 4389,
+  "firstEndPos" : 7839,
+  "secondEndPos" : 4395
+}, {
+  "firstType" : "call_suffix",
+  "secondType" : "call_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 7839,
+  "secondPos" : 4395,
+  "firstEndPos" : 7841,
+  "secondEndPos" : 4397
+}, {
+  "firstType" : "value_arguments",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_suffix",
+  "secondParentType" : "call_suffix",
+  "firstPos" : 7839,
+  "secondPos" : 4395,
+  "firstEndPos" : 7841,
+  "secondEndPos" : 4397
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

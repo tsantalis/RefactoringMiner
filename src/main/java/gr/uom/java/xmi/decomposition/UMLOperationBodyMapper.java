@@ -6754,6 +6754,53 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	//the mapping of another unmatched identical leaf with identical parents to the candidate of the mapping, if the candidate is its best match and it is the best match of the candidate
+	private LeafMapping mutuallyBestIdenticalLeafMapping(LeafMapping mapping, List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2,
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic) {
+		AbstractCodeFragment leaf1 = mapping.getFragment1();
+		AbstractCodeFragment leaf2 = mapping.getFragment2();
+		if(!leaf1.getString().equals(leaf2.getString())) {
+			return null;
+		}
+		TreeSet<LeafMapping> candidates1 = new TreeSet<>();
+		candidates1.add(mapping);
+		for(AbstractCodeFragment other1 : leaves1) {
+			if(other1 != leaf1 && !alreadyMatched1(other1) && other1.getString().equals(leaf1.getString())) {
+				candidates1.add(createLeafMapping(other1, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic));
+			}
+		}
+		LeafMapping best = candidates1.first();
+		//only an identical statement with identical parents at all levels takes the candidate from a statement with different parents
+		if(best.getFragment1() == leaf1 || best.levelParentEditDistanceSum() > 0 || mapping.levelParentEditDistanceSum() == 0) {
+			return null;
+		}
+		TreeSet<LeafMapping> candidates2 = new TreeSet<>();
+		candidates2.add(best);
+		for(AbstractCodeFragment other2 : leaves2) {
+			if(other2 != leaf2 && !alreadyMatched2(other2) && other2.getString().equals(leaf1.getString())) {
+				candidates2.add(createLeafMapping(best.getFragment1(), other2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic));
+			}
+		}
+		return candidates2.first().getFragment2() == leaf2 ? best : null;
+	}
+
+	//the mapping of another unmatched identical leaf at the same depth to the candidate of the mapping with the strongest surrounding statements, if they are stronger than those of the mapping
+	private LeafMapping strongerIdenticalLeafMapping(LeafMapping mapping, List<? extends AbstractCodeFragment> leaves1,
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic) {
+		AbstractCodeFragment leaf1 = mapping.getFragment1();
+		AbstractCodeFragment leaf2 = mapping.getFragment2();
+		LeafMapping strongest = null;
+		for(AbstractCodeFragment other1 : leaves1) {
+			if(other1 != leaf1 && !alreadyMatched1(other1) && other1.getDepth() == leaf1.getDepth() && other1.getString().equals(leaf1.getString()) && equalCatchClauseIndex(other1, leaf2)) {
+				LeafMapping other = createLeafMapping(other1, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
+				if(other.compareSurroundingStatements(strongest != null ? strongest : mapping) < 0) {
+					strongest = other;
+				}
+			}
+		}
+		return strongest;
+	}
+
 	private boolean identicalCommentsInBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
 		List<String> commentsWithinStatement1 = extractCommentsWithinStatement(statement1, container1);
 		List<String> commentsWithinStatement2 = extractCommentsWithinStatement(statement2, container2);
@@ -7139,6 +7186,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(leaves1LessThanLeaves2) {
 			//exact string+depth matching - leaf nodes
 			if(isomorphic) {
+				Set<AbstractCodeFragment> matchedIdenticalLeaves1 = new LinkedHashSet<>();
 				for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 					AbstractCodeFragment leaf1 = leafIterator1.next();
 					if(!alreadyMatched1(leaf1)) {
@@ -7210,21 +7258,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								leafIterator1.remove();
 							}
 							else {
+								//an identical leaf with stronger surrounding statements for the same candidate takes it first,
+								//i.e., a later identical leaf with identical previous and next statements, and the leaf continues with its next candidate
 								LeafMapping minStatementMapping = mappingSet.first();
-								addMapping(minStatementMapping);
-								processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-								leaves2.remove(minStatementMapping.getFragment2());
-								leafIterator1.remove();
+								LeafMapping strongerMapping;
+								while((strongerMapping = strongerIdenticalLeafMapping(minStatementMapping, leaves1, parameterToArgumentMap, equalNumberOfAssertions, isomorphic)) != null) {
+									addMapping(strongerMapping);
+									processAnonymousClassDeclarationsInIdenticalStatements(strongerMapping);
+									leaves2.remove(strongerMapping.getFragment2());
+									matchedIdenticalLeaves1.add(strongerMapping.getFragment1());
+									AbstractCodeFragment taken2 = strongerMapping.getFragment2();
+									mappingSet.removeIf(m -> m.getFragment2() == taken2);
+									minStatementMapping = mappingSet.isEmpty() ? null : mappingSet.first();
+									if(minStatementMapping == null) {
+										break;
+									}
+								}
+								if(minStatementMapping != null) {
+									addMapping(minStatementMapping);
+									processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+									leaves2.remove(minStatementMapping.getFragment2());
+									leafIterator1.remove();
+								}
 							}
 						}
 					}
 				}
+				leaves1.removeAll(matchedIdenticalLeaves1);
 			}
 			AbstractCodeMapping parentMapping = null;
 			if(parentMapper != null && operationInvocation != null) {
 				parentMapping = findParentMappingContainingOperationInvocation();
 			}
 			//exact string matching - leaf nodes - finds moves to another level
+			Set<AbstractCodeFragment> mutuallyMatchedLeaves1 = new LinkedHashSet<>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 				AbstractCodeFragment leaf1 = leafIterator1.next();
 				if(!alreadyMatched1(leaf1)) {
@@ -7322,7 +7389,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!leaf1.isKeyword()) {
 							codeUnderIfMovedUnderElse = codeUnderIfMovedUnderElse(mappingSet);
 						}
-						boolean identicalPreviousAndNextStatement = mappingSet.first().hasIdenticalPreviousAndNextStatement();
+						boolean identicalPreviousAndNextStatement = mappingSet.first().hasDistinguishingSurroundingStatements();
 						if(mappingSet.size() > 1 && (parentMapper != null || codeUnderIfMovedUnderElse) && mappings.size() > 1 && !identicalPreviousAndNextStatement) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
@@ -7381,17 +7448,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									leafIterator1.remove();
 								}
 								else {
+									//the candidate is taken first by another unmatched identical leaf, if each is the best match of the other
 									LeafMapping minStatementMapping = mappingSet.first();
-									addMapping(minStatementMapping);
-									processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-									leaves2.remove(minStatementMapping.getFragment2());
-									leafIterator1.remove();
+									LeafMapping mutualMapping;
+									while((mutualMapping = mutuallyBestIdenticalLeafMapping(minStatementMapping, leaves1, leaves2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic)) != null) {
+										addMapping(mutualMapping);
+										processAnonymousClassDeclarationsInIdenticalStatements(mutualMapping);
+										leaves2.remove(mutualMapping.getFragment2());
+										mutuallyMatchedLeaves1.add(mutualMapping.getFragment1());
+										AbstractCodeFragment taken2 = mutualMapping.getFragment2();
+										mappingSet.removeIf(m -> m.getFragment2() == taken2);
+										minStatementMapping = mappingSet.isEmpty() ? null : mappingSet.first();
+										if(minStatementMapping == null) {
+											break;
+										}
+									}
+									if(minStatementMapping != null) {
+										addMapping(minStatementMapping);
+										processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+										leaves2.remove(minStatementMapping.getFragment2());
+										leafIterator1.remove();
+									}
 								}
 							}
 						}
 					}
 				}
 			}
+			leaves1.removeAll(mutuallyMatchedLeaves1);
 			
 			boolean allIdenticalStatementsHaveSameIndex = false;
 			boolean swappedVariableDeclarations = false;
@@ -7608,7 +7692,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
 								Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
 								Set<AbstractCodeMapping> splitToMultipleAssignments = splitToMultipleAssignments(mappingSet);
-								if(movedInIfElseBranch.size() > 1 && !mappingSet.first().hasIdenticalPreviousAndNextStatement()) {
+								if(movedInIfElseBranch.size() > 1 && !mappingSet.first().hasDistinguishingSurroundingStatements()) {
 									for(AbstractCodeMapping mapping : movedInIfElseBranch) {
 										addToMappings((LeafMapping) mapping, mappingSet);
 										leaves2.remove(mapping.getFragment2());
@@ -7845,7 +7929,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean identicalPreviousAndNextStatement = parentMapper == null && mappingSet.first().hasIdenticalPreviousAndNextStatement();
+						boolean identicalPreviousAndNextStatement = parentMapper == null && mappingSet.first().hasDistinguishingSurroundingStatements();
 						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall())) && mappings.size() > 0 && !allMappingsAreKeywords() && !identicalPreviousAndNextStatement) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
@@ -9970,6 +10054,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(mappingSet.size() == 1) {
 			return Set.of(mappingSet.first());
 		}
+		if(identicalStatementsRemainInBranches(mappingSet, false)) {
+			return Set.of(mappingSet.first());
+		}
 		if(container1.equals(container2) || (parentMapper != null && !nested)) {
 			Map<CompositeStatementObject, AbstractCodeMapping> parentMap = new LinkedHashMap<>();
 			Map<CompositeStatementObject, AbstractCodeMapping> grandParentMap = new LinkedHashMap<>();
@@ -10186,8 +10273,46 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return Set.of(mappingSet.first());
 	}
 
+	//the identical statements of the branches remain in the branches of the other container, i.e., the branches of the conditional are not merged into a single statement
+	private boolean identicalStatementsRemainInBranches(TreeSet<? extends AbstractCodeMapping> mappingSet, boolean branchesInFirstContainer) {
+		VariableDeclarationContainer otherContainer = branchesInFirstContainer ? container2 : container1;
+		if(otherContainer.getBody() == null) {
+			return false;
+		}
+		List<AbstractCodeFragment> otherLeaves = otherContainer.getBody().getCompositeStatement().getLeaves();
+		for(AbstractCodeMapping mapping : mappingSet) {
+			AbstractCodeFragment branchStatement = branchesInFirstContainer ? mapping.getFragment1() : mapping.getFragment2();
+			AbstractCodeFragment statement = branchesInFirstContainer ? mapping.getFragment2() : mapping.getFragment1();
+			CompositeStatementObject branchParent = nonBlockParent(branchStatement);
+			if(branchParent == null || !branchParent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				continue;
+			}
+			for(AbstractCodeFragment otherLeaf : otherLeaves) {
+				if(otherLeaf != statement && otherLeaf.getString().equals(branchStatement.getString()) &&
+						!(branchesInFirstContainer ? alreadyMatched2(otherLeaf) : alreadyMatched1(otherLeaf))) {
+					CompositeStatementObject otherParent = nonBlockParent(otherLeaf);
+					if(otherParent != null && otherParent.getString().equals(branchParent.getString())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private static CompositeStatementObject nonBlockParent(AbstractCodeFragment fragment) {
+		CompositeStatementObject parent = fragment.getParent();
+		while(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent = parent.getParent();
+		}
+		return parent;
+	}
+
 	private Set<AbstractCodeMapping> movedOutOfIfElseIfBranch(TreeSet<? extends AbstractCodeMapping> mappingSet) {
 		if(mappingSet.size() == 1) {
+			return Set.of(mappingSet.first());
+		}
+		if(identicalStatementsRemainInBranches(mappingSet, true)) {
 			return Set.of(mappingSet.first());
 		}
 		Set<String> commonParameters = container1.commonParameters(container2);
@@ -11360,6 +11485,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		VariableDeclarationContainer container1 = codeFragmentOperationMap1.containsKey(leaf1) ? codeFragmentOperationMap1.get(leaf1) : this.container1;
 		VariableDeclarationContainer container2 = codeFragmentOperationMap2.containsKey(leaf2) ? codeFragmentOperationMap2.get(leaf2) : this.container2;
 		LeafMapping mapping = new LeafMapping(leaf1, leaf2, container1, container2);
+		mapping.setMappings(mappings);
 		mapping.setArgumentization(argumentization);
 		mapping.setEqualNumberOfAssertions(equalNumberOfAssertions);
 		mapping.setIsomorphic(isomorphic);

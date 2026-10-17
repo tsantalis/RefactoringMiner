@@ -1415,7 +1415,9 @@ public abstract class UMLAbstractClass implements AnnotationProvider, CommentPro
 					multiLineComments++;
 				}
 			}
-			return identicalComments == multiLineComments && multiLineComments > 0;
+			//without multi-line block comments, i.e., only line comments, the Python docstrings are compared
+			if(multiLineComments > 0)
+				return identicalComments == multiLineComments;
 		}
 		if(this instanceof UMLClass class1 && umlClass instanceof UMLClass class2 && this.LANG.equals(Constants.PYTHON) && umlClass.LANG.equals(Constants.PYTHON)) {
 			UMLJavadoc doc1 = class1.getJavadoc();

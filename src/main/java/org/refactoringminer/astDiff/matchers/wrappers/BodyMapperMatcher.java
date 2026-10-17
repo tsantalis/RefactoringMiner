@@ -253,10 +253,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             srcStatementNode = srcStatementNode.getParent();
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.IF_KEYWORD))
             dstStatementNode = dstStatementNode.getParent();
-        if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.FOR_KEYWORD))
-            srcStatementNode = srcStatementNode.getParent();
-        if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.FOR_KEYWORD))
-            dstStatementNode = dstStatementNode.getParent();
         if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.SWITCH_KEYWORD))
             srcStatementNode = srcStatementNode.getParent();
         if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.SWITCH_KEYWORD))
@@ -330,9 +326,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
                 String value = (String) publicField.get(LANG1);
                 Tree tmp = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo, LANG1, value);
-                if(tmp != null && !tmp.getType().name.equals(value)) {
-                    tmp = TreeUtilFunctions.getTreeBetweenPositions(srcTree, srcLocationInfo.getStartOffset(), srcLocationInfo.getEndOffset(), LANG1, value);
-                }
                 if(tmp != null)
                     srcStatementNode = tmp;
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
@@ -374,9 +367,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
                 String value = (String) publicField.get(LANG2);
                 Tree tmp = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo, LANG2, value);
-                if(tmp != null && !tmp.getType().name.equals(value)) {
-                    tmp = TreeUtilFunctions.getTreeBetweenPositions(dstTree, dstLocationInfo.getStartOffset(), dstLocationInfo.getEndOffset(), LANG2, value);
-                }
                 if(tmp != null)
                     dstStatementNode = tmp;
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
@@ -426,18 +416,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         }
                     }
                 }
-                if(srcStatementNode.getType().name.equals(LANG1.CONTROL_STRUCTURE_BODY) && dstStatementNode.getType().name.equals(LANG2.CONTROL_STRUCTURE_BODY)) {
-                    if(srcStatementNode.getChildren().size() > 0 && dstStatementNode.getChildren().size() > 0) {
-                        Tree srcFirstChild = srcStatementNode.getChild(0);
-                        Tree dstFirstChild = dstStatementNode.getChild(0);
-                        if(abstractCodeMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && srcFirstChild.getType().name.equals(LANG1.IF_STATEMENT)) {
-                            srcStatementNode = srcFirstChild;
-                        }
-                        if(abstractCodeMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && dstFirstChild.getType().name.equals(LANG2.IF_STATEMENT)) {
-                            dstStatementNode = dstFirstChild;
-                        }
-                    }
-                }
                 if(compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
                         compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
                         srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) &&
@@ -464,21 +442,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     Tree parent1 = srcStatementNode.getParent();
                     Tree parent2 = dstStatementNode.getParent();
                     mappingStore.addMapping(parent1, parent2);
-                }
-                if(!isPartOfExtractedMethod && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_DECLARATION)) {
-                    Tree parent1 = srcStatementNode.getParent();
-                    Tree parent2 = dstStatementNode.getParent();
-                    if(parent1.isIsomorphicTo(parent2)) {
-                        mappingStore.addMappingRecursively(parent1, parent2);
-                        Tree grandParent1 = parent1.getParent();
-                        Tree grandParent2 = parent2.getParent();
-                        if(grandParent1.isIsomorphicTo(grandParent2)) {
-                            mappingStore.addMappingRecursively(grandParent1, grandParent2);
-                        }
-                    }
-                    else {
-                        mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-                    }
                 }
             }
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
@@ -1265,10 +1228,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 while(dstStatementNode.getParent() != null && !dstStatementNode.getType().name.endsWith("_statement") && (!dstStatementNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR) || dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_DECLARATOR))) {
                     dstStatementNode = dstStatementNode.getParent();
                 }
-                if(srcStatementNode.getParent().getType().name.equals(LANG1.ERROR) && dstStatementNode.getParent().getType().name.equals(LANG2.ERROR)) {
-                    srcStatementNode = srcStatementNode.getParent();
-                    dstStatementNode = dstStatementNode.getParent();
-                }
                 if(srcStatementNode.getType().name.equals(dstStatementNode.getType().name)) {
                     mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
                     if(srcStatementNode.getParent().getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatementNode.getParent().getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
@@ -1296,45 +1255,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS)) {
             srcStatementNode = srcStatementNode.getChild(0);
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.PROPERTY_DECLARATION_KEYWORD)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
             srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.BINDING_PATTERN_KIND)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CALL_SUFFIX)) {
-            srcStatementNode = srcStatementNode.getParent();
-            if(srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && srcStatementNode.getParent().getType().name.equals(LANG1.NAVIGATION_EXPRESSION) &&
-                    srcStatementNode.getParent().getParent().getType().name.equals(LANG1.METHOD_INVOCATION)) {
-                srcStatementNode = srcStatementNode.getParent().getParent();
-            }
         }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.TYPE_QUALIFIER)) {
             srcStatementNode = srcStatementNode.getParent();
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.PLACEHOLDER_TYPE_SPECIFIER)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.DIRECTLY_ASSIGNABLE_EXPRESSION)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.AUTO)) {
-            srcStatementNode = srcStatementNode.getParent();
-            if(srcStatementNode.getType().name.equals(LANG1.PLACEHOLDER_TYPE_SPECIFIER)) {
-                srcStatementNode = srcStatementNode.getParent();
-            }
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.MEMBER_EXPRESSION) && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_INVOCATION) &&
-                srcStatementNode.getParent().getParent().getType().name.equals(LANG1.EXPRESSION_STATEMENT)) {
-            srcStatementNode = srcStatementNode.getParent().getParent();
-        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CONST_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.LEXICAL_DECLARATION)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.THROW_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.THROW_STATEMENT)) {
             srcStatementNode = srcStatementNode.getParent();
         }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CASE_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.SWITCH_CASE)) {
@@ -1348,55 +1275,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             if(tmpSrcStatement != null)
                 srcStatementNode = tmpSrcStatement;
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.METHOD_INVOCATION) && srcStatementNode.getParent().getType().name.equals(LANG1.INITIALIZER_LIST) &&
-                srcStatementNode.getParent().getParent().getType().name.equals(LANG1.COMPOUND_LITERAL_EXPRESSION)) {
-            Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
-            if(tmpSrcStatement != null)
-                srcStatementNode = tmpSrcStatement;
-        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.PROPERTY_DECLARATION_KEYWORD)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
             dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.BINDING_PATTERN_KIND)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CALL_SUFFIX)) {
-            dstStatementNode = dstStatementNode.getParent();
-            if(dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getParent().getType().name.equals(LANG2.NAVIGATION_EXPRESSION) &&
-                    dstStatementNode.getParent().getParent().getType().name.equals(LANG2.METHOD_INVOCATION)) {
-                dstStatementNode = dstStatementNode.getParent().getParent();
-            }
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.TYPE_QUALIFIER)) {
             dstStatementNode = dstStatementNode.getParent();
         }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.PLACEHOLDER_TYPE_SPECIFIER)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.DIRECTLY_ASSIGNABLE_EXPRESSION)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.AUTO)) {
-            dstStatementNode = dstStatementNode.getParent();
-            if(dstStatementNode.getType().name.equals(LANG2.PLACEHOLDER_TYPE_SPECIFIER)) {
-                dstStatementNode = dstStatementNode.getParent();
-            }
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.MEMBER_EXPRESSION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_INVOCATION) &&
-                dstStatementNode.getParent().getParent().getType().name.equals(LANG2.EXPRESSION_STATEMENT)) {
-            dstStatementNode = dstStatementNode.getParent().getParent();
-        }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CONST_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.THROW_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.THROW_STATEMENT)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CASE_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.SWITCH_CASE)) {
@@ -1406,12 +1295,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.ERROR)) {
-            Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
-            if(tmpDstStatement != null)
-                dstStatementNode = tmpDstStatement;
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.METHOD_INVOCATION) && dstStatementNode.getParent().getType().name.equals(LANG2.INITIALIZER_LIST) &&
-                dstStatementNode.getParent().getParent().getType().name.equals(LANG2.COMPOUND_LITERAL_EXPRESSION)) {
             Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
             if(tmpDstStatement != null)
                 dstStatementNode = tmpDstStatement;
@@ -1502,21 +1385,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     if(t1.isIsomorphicTo(t2)) {
                         mappingStore.addMappingRecursively(t1, t2);
                     }
-                    if(srcStatementNode.getParent().getChildren().size() > index1+2 && srcStatementNode.getParent().getChild(index1+2).getType().name.equals(LANG1.FIELD_DECLARATION) &&
-                            dstStatementNode.getParent().getChildren().size() > index2+2 && dstStatementNode.getParent().getChild(index2+2).getType().name.equals(LANG2.FIELD_DECLARATION)) {
-                        t1 = srcStatementNode.getParent().getChild(index1+2);
-                        t2 = dstStatementNode.getParent().getChild(index2+2);
-                        mappingStore.addMapping(t1, t2);
-                        if(t1.getChildren().size() == t2.getChildren().size()) {
-                            for(int i=0; i<t1.getChildren().size(); i++) {
-                                Tree child1 = t1.getChildren().get(i);
-                                Tree child2 = t2.getChildren().get(i);
-                                if(child1.isIsomorphicTo(child2)) {
-                                    mappingStore.addMappingRecursively(child1, child2);
-                                }
-                            }
-                        }
-                    }
                 }
                 //handle parent labeled statement
                 if(srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.LABELED) &&
@@ -1588,10 +1456,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     ClassDeclarationMatcher.processParentInternalModule(srcStatementNode.getParent(), dstStatementNode.getParent(), mappingStore, LANG1, LANG2);
                 }
                 ClassDeclarationMatcher.processParentInternalModule(srcStatementNode, dstStatementNode, mappingStore, LANG1, LANG2);
-                if(srcStatementNode.getType().name.equals(LANG1.SIMPLE_NAME) && dstStatementNode.getType().name.equals(LANG2.SIMPLE_NAME) && srcStatementNode.getParent() != null && srcStatementNode.getParent().getType().name.equals(LANG1.ERROR) && dstStatementNode.getParent() != null && dstStatementNode.getParent().getType().name.equals(LANG2.ERROR) &&
-                        srcStatementNode.getParent().isIsomorphicTo(dstStatementNode.getParent())) {
-                    mappingStore.addMappingRecursively(srcStatementNode.getParent(), dstStatementNode.getParent());
-                }
             }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             //an assignment moved to the initializer of the assigned field, i.e., the statement client = builder.client; in the constructor

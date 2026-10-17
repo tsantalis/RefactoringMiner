@@ -22725,6 +22725,39 @@
   "firstEndPos" : 24979,
   "secondEndPos" : 23945
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "postfix_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 24991,
+  "secondPos" : 23958,
+  "firstEndPos" : 25011,
+  "secondEndPos" : 23977
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "routeFailureCount",
+  "secondLabel" : "routeFailureCount",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "postfix_expression",
+  "firstPos" : 24991,
+  "secondPos" : 23958,
+  "firstEndPos" : 25008,
+  "secondEndPos" : 23975
+}, {
+  "firstType" : "POSTFIX_EXPRESSION_OPERATOR",
+  "secondType" : "increment_operator",
+  "firstLabel" : "++",
+  "secondLabel" : "++",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "postfix_expression",
+  "firstPos" : 25008,
+  "secondPos" : 23975,
+  "firstEndPos" : 25010,
+  "secondEndPos" : 23977
+}, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",
   "firstLabel" : "",

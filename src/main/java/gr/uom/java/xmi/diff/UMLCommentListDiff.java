@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.refactoringminer.util.PathFileUtils;
 
+import gr.uom.java.xmi.PythonFileProcessor;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLCommentGroup;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -67,7 +71,102 @@ public class UMLCommentListDiff {
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, UMLAbstractClassDiff classDiff) {
 		this.mappings = Collections.emptySet();
 		this.classDiff = classDiff;
-		init(commentsBefore, commentsAfter);
+		//code commented out in the next version, or uncommented from the previous version, is not matched with comments
+		List<UMLComment> commentedCode = commentedCode(commentsAfter, deletedOperations(classDiff));
+		List<UMLComment> unCommentedCode = commentedCode(commentsBefore, addedOperations(classDiff));
+		List<UMLComment> remainingCommentsBefore = new ArrayList<UMLComment>(commentsBefore);
+		remainingCommentsBefore.removeAll(unCommentedCode);
+		List<UMLComment> remainingCommentsAfter = new ArrayList<UMLComment>(commentsAfter);
+		remainingCommentsAfter.removeAll(commentedCode);
+		init(remainingCommentsBefore, remainingCommentsAfter);
+		this.deletedComments.addAll(unCommentedCode);
+		this.addedComments.addAll(commentedCode);
+	}
+
+	private static List<UMLOperation> deletedOperations(UMLAbstractClassDiff classDiff) {
+		List<UMLOperation> operations = new ArrayList<UMLOperation>(classDiff.getRemovedOperations());
+		if(classDiff.getModelDiff() != null) {
+			String filePath = classDiff.getOriginalClass().getLocationInfo().getFilePath();
+			for(UMLClass removedClass : classDiff.getModelDiff().getRemovedClasses()) {
+				if(removedClass.getLocationInfo().getFilePath().equals(filePath)) {
+					operations.addAll(removedClass.getOperations());
+				}
+			}
+		}
+		return operations;
+	}
+
+	private static List<UMLOperation> addedOperations(UMLAbstractClassDiff classDiff) {
+		List<UMLOperation> operations = new ArrayList<UMLOperation>(classDiff.getAddedOperations());
+		if(classDiff.getModelDiff() != null) {
+			String filePath = classDiff.getNextClass().getLocationInfo().getFilePath();
+			for(UMLClass addedClass : classDiff.getModelDiff().getAddedClasses()) {
+				if(addedClass.getLocationInfo().getFilePath().equals(filePath)) {
+					operations.addAll(addedClass.getOperations());
+				}
+			}
+		}
+		return operations;
+	}
+
+	//the groups of consecutive Python line comments that, uncommented, declare one of the given operations with an identical body
+	private static List<UMLComment> commentedCode(List<UMLComment> comments, List<UMLOperation> operations) {
+		List<UMLComment> commentedCode = new ArrayList<UMLComment>();
+		if(operations.isEmpty()) {
+			return commentedCode;
+		}
+		List<UMLComment> lineComments = new ArrayList<UMLComment>();
+		for(UMLComment comment : comments) {
+			if(comment.getLocationInfo().getCodeElementType().equals(CodeElementType.LINE_COMMENT) && PathFileUtils.isPythonFile(comment.getLocationInfo().getFilePath())) {
+				lineComments.add(comment);
+			}
+		}
+		lineComments.sort(Comparator.comparingInt(c -> c.getLocationInfo().getStartLine()));
+		List<UMLComment> group = new ArrayList<UMLComment>();
+		for(UMLComment comment : lineComments) {
+			if(!group.isEmpty() && group.get(group.size()-1).getLocationInfo().getStartLine() + 1 != comment.getLocationInfo().getStartLine()) {
+				if(declaresOperation(group, operations)) {
+					commentedCode.addAll(group);
+				}
+				group = new ArrayList<UMLComment>();
+			}
+			group.add(comment);
+		}
+		if(declaresOperation(group, operations)) {
+			commentedCode.addAll(group);
+		}
+		return commentedCode;
+	}
+
+	private static boolean declaresOperation(List<UMLComment> group, List<UMLOperation> operations) {
+		if(group.isEmpty()) {
+			return false;
+		}
+		List<String> lines = new ArrayList<String>();
+		int indentation = Integer.MAX_VALUE;
+		for(UMLComment comment : group) {
+			String line = comment.getFullText().substring(1);
+			lines.add(line);
+			if(!line.isBlank()) {
+				indentation = Math.min(indentation, line.length() - line.stripLeading().length());
+			}
+		}
+		StringBuilder code = new StringBuilder();
+		for(String line : lines) {
+			code.append(line.isBlank() ? "" : line.substring(indentation)).append("\n");
+		}
+		List<UMLOperation> declaredOperations = PythonFileProcessor.parseOperations(group.get(0).getLocationInfo().getFilePath(), code.toString());
+		if(declaredOperations != null) {
+			for(UMLOperation declaredOperation : declaredOperations) {
+				for(UMLOperation operation : operations) {
+					if(declaredOperation.getName().equals(operation.getName()) && declaredOperation.getBody() != null && operation.getBody() != null &&
+							declaredOperation.getBody().getBodyHashCode() == operation.getBody().getBodyHashCode()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void init(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {

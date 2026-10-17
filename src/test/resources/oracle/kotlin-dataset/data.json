@@ -10181,6 +10181,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Rename Variable",
+        "description": "Rename Variable staticString : Inferred to static : Inferred in method private getNextElementString(leakTrace LeakTrace, element ReferencePathElement, index Int) : String from class shark.LeakTrace.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {

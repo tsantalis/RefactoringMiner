@@ -6759,19 +6759,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic) {
 		AbstractCodeFragment leaf1 = mapping.getFragment1();
 		AbstractCodeFragment leaf2 = mapping.getFragment2();
-		if(!leaf1.getString().equals(leaf2.getString())) {
+		//only an identical statement with identical parents at all levels takes the candidate from a statement with different parents,
+		//so the candidates are ranked only when the parents of the mapping differ and another identical statement has identical parents
+		if(!leaf1.getString().equals(leaf2.getString()) || mapping.levelParentEditDistanceSum() == 0) {
+			return null;
+		}
+		List<LeafMapping> others = new ArrayList<>();
+		boolean otherWithIdenticalParents = false;
+		for(AbstractCodeFragment other1 : leaves1) {
+			if(other1 != leaf1 && !alreadyMatched1(other1) && other1.getString().equals(leaf1.getString())) {
+				LeafMapping other = createLeafMapping(other1, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
+				others.add(other);
+				if(other.levelParentEditDistanceSum() == 0) {
+					otherWithIdenticalParents = true;
+				}
+			}
+		}
+		if(!otherWithIdenticalParents) {
 			return null;
 		}
 		TreeSet<LeafMapping> candidates1 = new TreeSet<>();
 		candidates1.add(mapping);
-		for(AbstractCodeFragment other1 : leaves1) {
-			if(other1 != leaf1 && !alreadyMatched1(other1) && other1.getString().equals(leaf1.getString())) {
-				candidates1.add(createLeafMapping(other1, leaf2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic));
-			}
-		}
+		candidates1.addAll(others);
 		LeafMapping best = candidates1.first();
-		//only an identical statement with identical parents at all levels takes the candidate from a statement with different parents
-		if(best.getFragment1() == leaf1 || best.levelParentEditDistanceSum() > 0 || mapping.levelParentEditDistanceSum() == 0) {
+		if(best.getFragment1() == leaf1 || best.levelParentEditDistanceSum() > 0) {
 			return null;
 		}
 		TreeSet<LeafMapping> candidates2 = new TreeSet<>();

@@ -107,13 +107,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		int result = 0;
 		boolean mappedNeighbour1 = this.mappedPreviousOrNextStatement();
 		boolean mappedNeighbour2 = o.mappedPreviousOrNextStatement();
-		boolean mutuallyMostSimilarParents1 = this.mutuallyMostSimilarParents();
-		boolean mutuallyMostSimilarParents2 = o.mutuallyMostSimilarParents();
+		int mutuallyMostSimilarParents;
 		if(mappedNeighbour1 != mappedNeighbour2) {
 			result = mappedNeighbour1 ? -1 : 1;
 		}
-		else if(mutuallyMostSimilarParents1 != mutuallyMostSimilarParents2) {
-			result = mutuallyMostSimilarParents1 ? -1 : 1;
+		else if((mutuallyMostSimilarParents = compareMutuallyMostSimilarParents(o)) != 0) {
+			result = mutuallyMostSimilarParents;
 		}
 		else {
 			boolean identicalNeighbours1 = this.identicalNeighbours();
@@ -161,6 +160,41 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return false;
 	}
 
+	//when the mappings share the block of one fragment and their other blocks are in the same container, at most one of them, the one whose other block has more
+	//identical statements with the shared block, can have mutually most similar blocks, so the blocks are searched only for this mapping, and not at all when the
+	//identical statements are as many
+	private int compareMutuallyMostSimilarParents(LeafMapping o) {
+		CompositeStatementObject parent1 = getFragment1().getParent(), otherParent1 = o.getFragment1().getParent();
+		CompositeStatementObject parent2 = getFragment2().getParent(), otherParent2 = o.getFragment2().getParent();
+		if(parent1 == otherParent1 && parent2 == otherParent2) {
+			return 0;
+		}
+		LeafMapping candidate = null;
+		if(parent1 != null && parent1 == otherParent1 && parent2 != null && otherParent2 != null && root(parent2) == root(otherParent2)) {
+			int common = commonStatements(parent1, parent2), otherCommon = commonStatements(parent1, otherParent2);
+			if(common == otherCommon) {
+				return 0;
+			}
+			candidate = common > otherCommon ? this : o;
+		}
+		else if(parent2 != null && parent2 == otherParent2 && parent1 != null && otherParent1 != null && root(parent1) == root(otherParent1)) {
+			int common = commonStatements(parent1, parent2), otherCommon = commonStatements(otherParent1, parent2);
+			if(common == otherCommon) {
+				return 0;
+			}
+			candidate = common > otherCommon ? this : o;
+		}
+		if(candidate != null) {
+			return candidate.mutuallyMostSimilarParents() ? (candidate == this ? -1 : 1) : 0;
+		}
+		boolean mutuallyMostSimilarParents1 = this.mutuallyMostSimilarParents();
+		boolean mutuallyMostSimilarParents2 = o.mutuallyMostSimilarParents();
+		if(mutuallyMostSimilarParents1 != mutuallyMostSimilarParents2) {
+			return mutuallyMostSimilarParents1 ? -1 : 1;
+		}
+		return 0;
+	}
+
 	//the blocks of the fragments are each other's most similar block in the other container, i.e., the moved block of a reordered test case
 	private boolean mutuallyMostSimilarParents() {
 		if(mutuallyMostSimilarParents == null) {
@@ -185,6 +219,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		int maxCommonStatements = 0;
 		boolean unique = false;
 		for(CompositeStatementObject candidate : root.getInnerNodes()) {
+			//a block with fewer statements than the most identical statements so far cannot reach them
+			if(candidate.getStatements().size() < maxCommonStatements) {
+				continue;
+			}
 			int common = commonStatements(block, candidate);
 			if(common > maxCommonStatements) {
 				mostSimilar = candidate;

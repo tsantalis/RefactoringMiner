@@ -24,6 +24,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.InferredType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLOperation;
@@ -102,11 +103,11 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	}
 
 	//the surrounding statements distinguish identical statements, i.e., the statements of reordered test cases:
-	//first the previous or next statements mapped to each other, then the blocks that are each other's most similar block, then the identical previous and next statements
+	//first the previous or next statements mapped to each other (or the then branches of else branches), then the blocks that are each other's most similar block, then the identical previous and next statements
 	public int compareSurroundingStatements(LeafMapping o) {
 		int result = 0;
-		boolean mappedNeighbour1 = this.mappedPreviousOrNextStatement();
-		boolean mappedNeighbour2 = o.mappedPreviousOrNextStatement();
+		boolean mappedNeighbour1 = this.mappedPreviousOrNextStatement() || this.mappedThenBranch();
+		boolean mappedNeighbour2 = o.mappedPreviousOrNextStatement() || o.mappedThenBranch();
 		int mutuallyMostSimilarParents;
 		if(mappedNeighbour1 != mappedNeighbour2) {
 			result = mappedNeighbour1 ? -1 : 1;
@@ -623,6 +624,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(!this.isIdenticalWithInlinedVariable() && o.isIdenticalWithInlinedVariable()) {
 					return 1;
 				}
+				//the statements of reordered when entries follow their entries
+				boolean identicalWhenEntry1 = this.identicalWhenEntry();
+				boolean identicalWhenEntry2 = o.identicalWhenEntry();
+				if(identicalWhenEntry1 != identicalWhenEntry2) {
+					return identicalWhenEntry1 ? -1 : 1;
+				}
 				List<Double> levelParentEditDistance1 = this.levelParentEditDistance();
 				List<Double> levelParentEditDistance2 = o.levelParentEditDistance();
 				double nLevelParentEditDistance1 = 0, nLevelParentEditDistance2 = 0;
@@ -980,17 +987,59 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return isUnderElseBranch(getFragment1()) && isUnderElseBranch(getFragment2());
 	}
 	
+	//the fragments are nested in when entries with identical conditions, i.e., STRING_IN_UTF8 -> { ... }
+	private boolean identicalWhenEntry() {
+		CompositeStatementObject whenEntry1 = enclosingWhenEntry(getFragment1());
+		CompositeStatementObject whenEntry2 = enclosingWhenEntry(getFragment2());
+		return whenEntry1 != null && whenEntry2 != null && whenEntry1.getString().equals(whenEntry2.getString());
+	}
+
+	private static CompositeStatementObject enclosingWhenEntry(AbstractCodeFragment fragment) {
+		for(CompositeStatementObject parent = fragment.getParent(); parent != null; parent = parent.getParent()) {
+			if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+				return parent;
+			}
+		}
+		return null;
+	}
+
 	private boolean isUnderElseBranch(AbstractCodeFragment fragment) {
+		return ifWithElseBranch(fragment) != null;
+	}
+
+	//the if statement whose else branch, not an else-if branch, contains the fragment
+	private static CompositeStatementObject ifWithElseBranch(AbstractCodeFragment fragment) {
 		if(fragment.getParent() != null) {
 			CompositeStatementObject child = fragment.getParent();
 			if(child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && child.getParent() != null) {
 				CompositeStatementObject parent = child.getParent();
-				return parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
-						child.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
-						parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1;
+				if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+						parent.getStatements().size() == 2 && parent.getStatements().indexOf(child) == 1) {
+					return parent;
+				}
 			}
 			else if(child.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
-				return child.getStatements().size() == 2 && child.getStatements().indexOf(fragment) == 1;
+				if(child.getStatements().size() == 2 && child.getStatements().indexOf(fragment) == 1) {
+					return child;
+				}
+			}
+		}
+		return null;
+	}
+
+	//the then branches of the if statements, whose else branches contain the fragments, have statements mapped to each other,
+	//i.e., the else branches of the if statements of identical cases contain only identical statements
+	private boolean mappedThenBranch() {
+		CompositeStatementObject if1 = ifWithElseBranch(getFragment1());
+		CompositeStatementObject if2 = ifWithElseBranch(getFragment2());
+		if(if1 == null || if2 == null) {
+			return false;
+		}
+		LocationInfo then1 = if1.getStatements().get(0).getLocationInfo();
+		LocationInfo then2 = if2.getStatements().get(0).getLocationInfo();
+		for(AbstractCodeMapping mapping : mappings) {
+			if(then1.subsumes(mapping.getFragment1().getLocationInfo()) && then2.subsumes(mapping.getFragment2().getLocationInfo())) {
+				return true;
 			}
 		}
 		return false;

@@ -141,20 +141,29 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(parent == null) {
 			return null;
 		}
-		int index = parent.getStatements().indexOf(fragment) + offset;
-		return index >= 0 && index < parent.getStatements().size() ? parent.getStatements().get(index) : null;
+		List<AbstractStatement> statements = parent.getStatements();
+		//the index of the statement in its block, unless the block changed after the statement was added
+		int position = fragment.getIndex();
+		if(position < 0 || position >= statements.size() || statements.get(position) != fragment) {
+			position = statements.indexOf(fragment);
+		}
+		int index = position + offset;
+		return index >= 0 && index < statements.size() ? statements.get(index) : null;
 	}
 
+	//the previous and the next statements are looked up in a single pass over the mappings
 	private boolean mappedPreviousOrNextStatement() {
-		for(int offset : new int[] {-1, 1}) {
-			AbstractCodeFragment neighbour1 = neighbour(getFragment1(), offset);
-			AbstractCodeFragment neighbour2 = neighbour(getFragment2(), offset);
-			if(neighbour1 != null && neighbour2 != null) {
-				for(AbstractCodeMapping mapping : mappings) {
-					if(mapping.getFragment1() == neighbour1 && mapping.getFragment2() == neighbour2) {
-						return true;
-					}
-				}
+		AbstractCodeFragment previous1 = neighbour(getFragment1(), -1), previous2 = neighbour(getFragment2(), -1);
+		AbstractCodeFragment next1 = neighbour(getFragment1(), 1), next2 = neighbour(getFragment2(), 1);
+		boolean previous = previous1 != null && previous2 != null;
+		boolean next = next1 != null && next2 != null;
+		if(!previous && !next) {
+			return false;
+		}
+		for(AbstractCodeMapping mapping : mappings) {
+			if((previous && mapping.getFragment1() == previous1 && mapping.getFragment2() == previous2) ||
+					(next && mapping.getFragment1() == next1 && mapping.getFragment2() == next2)) {
+				return true;
 			}
 		}
 		return false;

@@ -163,24 +163,7 @@ public class LocationInfo {
 	}
 
 	public LocationInfo(String sourceFolder, String filePath, com.github.gumtreediff.tree.Tree tree, CodeElementType codeElementType, String fileContent) {
-		this.sourceFolder = sourceFolder;
-		this.filePath = filePath;
-		this.codeElementType = codeElementType;
-		this.startOffset = tree.getPos();
-		this.length = tree.getLength();
-		this.endOffset = tree.getEndPos();
-		//compute start-line
-		String text = fileContent.substring(0, this.startOffset);
-		long lines = text.lines().count();
-		this.startLine = (int) lines;
-		String text2 = fileContent.substring(this.startOffset, this.endOffset);
-		long lines2 = text2.lines().count();
-		if(lines2 == 0) {
-			this.endLine = this.startLine;
-		}
-		else {
-			this.endLine = (int) (this.startLine + lines2 - 1);
-		}
+		this(sourceFolder, filePath, tree.getPos(), tree.getLength(), tree.getEndPos(), codeElementType, fileContent);
 	}
 
 	public LocationInfo(String sourceFolder, String filePath, int startOffset, int length, int endOffset, CodeElementType codeElementType, String fileContent) {
@@ -190,18 +173,9 @@ public class LocationInfo {
 		this.startOffset = startOffset;
 		this.length = length;
 		this.endOffset = endOffset;
-		//compute start-line
-		String text = fileContent.substring(0, this.startOffset);
-		long lines = text.lines().count();
-		this.startLine = (int) lines;
-		String text2 = fileContent.substring(this.startOffset, this.endOffset);
-		long lines2 = text2.lines().count();
-		if(lines2 == 0) {
-			this.endLine = this.startLine;
-		}
-		else {
-			this.endLine = (int) (this.startLine + lines2 - 1);
-		}
+		//1-based lines, also for a location starting at the beginning of a line
+		this.startLine = computeLine(fileContent, startOffset);
+		this.endLine = computeLine(fileContent, Math.max(startOffset, endOffset - 1));
 	}
 
 	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
@@ -301,12 +275,13 @@ public class LocationInfo {
 		}
 	}
 
-	// Like the line ends table of JDT CompilationUnit: the offsets of the line terminators (\n, \r, or the \n of \r\n) are computed once per file
+	// Like the line ends table of JDT CompilationUnit: the offsets of the line terminators (\n, \r, or the \n of \r\n) are computed once per file,
+	// and kept per thread, as concurrent analyses (i.e., parallel tests) parse different files
 	private record LineEnds(String fileContent, int[] offsets) {}
-	private static volatile LineEnds lastLineEnds;
+	private static final ThreadLocal<LineEnds> lastLineEnds = new ThreadLocal<>();
 
 	private static int[] lineEnds(String fileContent) {
-		LineEnds cached = lastLineEnds;
+		LineEnds cached = lastLineEnds.get();
 		if(cached != null && cached.fileContent() == fileContent) {
 			return cached.offsets();
 		}
@@ -326,7 +301,7 @@ public class LocationInfo {
 			offsets[count++] = i;
 		}
 		offsets = Arrays.copyOf(offsets, count);
-		lastLineEnds = new LineEnds(fileContent, offsets);
+		lastLineEnds.set(new LineEnds(fileContent, offsets));
 		return offsets;
 	}
 

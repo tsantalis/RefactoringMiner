@@ -30,7 +30,7 @@ import static extension.umladapter.processor.UMLAdapterVariableProcessor.process
 
 public class UMLModelAdapter {
 
-    private static void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLComment> codeElementComments) {
+    private static void distributeComments(List<UMLComment> compilationUnitComments, LocationInfo codeElementLocationInfo, List<UMLAnnotation> annotations, List<UMLComment> codeElementComments, String fileContent) {
         ListIterator<UMLComment> listIterator = compilationUnitComments.listIterator(compilationUnitComments.size());
         while(listIterator.hasPrevious()) {
             UMLComment comment = listIterator.previous();
@@ -38,7 +38,7 @@ public class UMLModelAdapter {
             if(codeElementLocationInfo.subsumes(commentLocationInfo) ||
                     codeElementLocationInfo.sameLine(commentLocationInfo) ||
                     (commentLocationInfo.startsAtTheEndLineOf(codeElementLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
-                    (codeElementLocationInfo.nextLine(commentLocationInfo) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
+                    ((codeElementLocationInfo.nextLine(commentLocationInfo) || precedesDeclaration(commentLocationInfo, codeElementLocationInfo, annotations, fileContent)) && !codeElementLocationInfo.getCodeElementType().equals(CodeElementType.ANONYMOUS_CLASS_DECLARATION)) ||
                     (codeElementComments.size() > 0 && codeElementComments.get(0).getLocationInfo().nextLine(commentLocationInfo))) {
                 codeElementComments.add(0, comment);
             }
@@ -47,6 +47,22 @@ public class UMLModelAdapter {
             }
         }
         compilationUnitComments.removeAll(codeElementComments);
+    }
+
+    //the comment is right before the declaration or its first decorator, or between its decorators
+    private static boolean precedesDeclaration(LocationInfo commentLocationInfo, LocationInfo codeElementLocationInfo, List<UMLAnnotation> annotations, String fileContent) {
+        int declarationStartOffset = codeElementLocationInfo.getStartOffset();
+        for(UMLAnnotation annotation : annotations) {
+            declarationStartOffset = Math.min(declarationStartOffset, annotation.getLocationInfo().getStartOffset());
+        }
+        if(commentLocationInfo.getStartOffset() >= declarationStartOffset && commentLocationInfo.getEndOffset() <= codeElementLocationInfo.getStartOffset()) {
+            return true;
+        }
+        if(commentLocationInfo.getEndOffset() > declarationStartOffset) {
+            return false;
+        }
+        String gap = fileContent.substring(commentLocationInfo.getEndOffset(), declarationStartOffset);
+        return gap.isBlank() && gap.chars().filter(c -> c == '\n').count() <= 1;
     }
 
     public static void extractUMLEntities(LangASTNode ast, UMLModel model, String filename, String fileContent) {
@@ -108,7 +124,7 @@ public class UMLModelAdapter {
                 moduleClass.addOperation(operation);
             }
         }
-        distributeComments(comments, moduleClass.getLocationInfo(), moduleClass.getComments());
+        distributeComments(comments, moduleClass.getLocationInfo(), List.of(), moduleClass.getComments(), fileContent);
         //if there are still comments left, add them to module
         if(comments.size() > 0)
             moduleClass.getComments().addAll(comments);
@@ -275,7 +291,7 @@ public class UMLModelAdapter {
             umlClass.getOperations().addAll(moduleContainer.getNestedOperations());
             umlClass.getAttributes().addAll(moduleContainer.getNestedAttributes());
         }
-        distributeComments(comments, locationInfo, umlClass.getComments());
+        distributeComments(comments, locationInfo, umlClass.getAnnotations(), umlClass.getComments(), fileContent);
         return umlClass;
     }
 
@@ -372,7 +388,7 @@ public class UMLModelAdapter {
                 methodDecl.getStartChar() + methodDecl.getLength();
         String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
         umlOperation.setActualSignature(text);
-        distributeComments(comments, locationInfo, umlOperation.getComments());
+        distributeComments(comments, locationInfo, umlOperation.getAnnotations(), umlOperation.getComments(), fileContent);
         return umlOperation;
     }
 

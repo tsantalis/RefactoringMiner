@@ -16,9 +16,11 @@ import extension.ast.node.metadata.LangAnnotation;
 import extension.ast.node.metadata.comment.LangComment;
 import extension.ast.node.statement.LangBlock;
 import extension.ast.node.statement.LangExpressionStatement;
+import extension.ast.node.PositionUtils;
 import extension.base.lang.python.PythonParser;
 import gr.uom.java.xmi.Visibility;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -436,6 +438,13 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
                     annotation = LangASTNodeFactory.createAnnotation(namedExpr, LangASTNodeFactory.createSimpleName(decoratorName, namedExpr));
                 }
                 annotations.add(annotation);
+            }
+        }
+        //each decorator starts at its @, like the decorator node of the tree
+        for (int i = 0; i < annotations.size(); i++) {
+            ParseTree previous = ctx.getChild(ctx.children.indexOf(ctx.named_expression(i)) - 1);
+            if (previous instanceof TerminalNode at && at.getSymbol().getType() == PythonParser.AT) {
+                PositionUtils.startAt(annotations.get(i), at.getSymbol());
             }
         }
         return LangASTNodeFactory.createBlock(ctx, new ArrayList<>(annotations));

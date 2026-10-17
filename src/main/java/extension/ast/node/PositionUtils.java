@@ -191,6 +191,14 @@ public class PositionUtils {
         return getStartOffset(ctx);
     }
 
+    //the node starts at the token, i.e., a decorator at its @, which precedes the decorator expression
+    public static void startAt(LangASTNode node, Token token) {
+        node.setStartLine(token.getLine());
+        node.setStartColumn(getColumn(token));
+        node.setLength(node.getEndChar() - token.getStartIndex());
+        node.setStartChar(token.getStartIndex());
+    }
+
     public static int getStartColumn(ParserRuleContext ctx) {
         Token start = start(ctx);
         return (start != null) ? getColumn(start) : 0;  // Default to 0

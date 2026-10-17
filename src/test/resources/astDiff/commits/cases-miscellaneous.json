@@ -45,5 +45,10 @@
   "commit" : "c0ba35ef625286737622615a9be5f2da230cd886"
 }, {
   "repo" : "https://github.com/tsantalis/RefactoringMiner.git",
-  "commit" : "613e960a7737430d109a05a25dabdbcb274f02cc"
+  "commit" : "613e960a7737430d109a05a25dabdbcb274f02cc",
+  "src_files" : [
+    "src/main/java/gr/uom/java/xmi/decomposition/UMLOperationBodyMapper.java",
+    "src/main/java/org/refactoringminer/astDiff/matchers/wrappers/ClassDeclarationMatcher.java",
+    "src/main/java/org/refactoringminer/astDiff/matchers/wrappers/BodyMapperMatcher.java"
+  ]
 } ]

@@ -6812,10 +6812,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return strongest;
 	}
 
+	//identical comments in the same branches, i.e., a comment of the then branch is not evidence for the else branch of the other statement
 	private boolean identicalCommentsInBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
-		List<String> commentsWithinStatement1 = extractCommentsWithinStatement(statement1, container1);
-		List<String> commentsWithinStatement2 = extractCommentsWithinStatement(statement2, container2);
-		return commentsWithinStatement1.size() > 0 && commentsWithinStatement1.equals(commentsWithinStatement2);
+		List<UMLComment> commentsWithinStatement1 = commentsWithinStatement(statement1, container1);
+		List<UMLComment> commentsWithinStatement2 = commentsWithinStatement(statement2, container2);
+		if(commentsWithinStatement1.isEmpty() || commentsWithinStatement1.size() != commentsWithinStatement2.size()) {
+			return false;
+		}
+		for(int i=0; i<commentsWithinStatement1.size(); i++) {
+			UMLComment comment1 = commentsWithinStatement1.get(i);
+			UMLComment comment2 = commentsWithinStatement2.get(i);
+			if(!comment1.getFullText().equals(comment2.getFullText()) || branch(statement1, comment1) != branch(statement2, comment2)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	//the number of statements of the composite ending before the comment, i.e., 0 for a comment before or in the then branch, and 1 for a comment of the else branch
+	private static int branch(CompositeStatementObject statement, UMLComment comment) {
+		int branch = 0;
+		for(AbstractStatement child : statement.getStatements()) {
+			if(child.getLocationInfo().getEndOffset() <= comment.getLocationInfo().getStartOffset()) {
+				branch++;
+			}
+		}
+		return branch;
 	}
 
 	//the same name with and without qualification, i.e., LeakTraceElement.Type.STATIC_FIELD and STATIC_FIELD
@@ -6932,18 +6954,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public static List<String> extractCommentsWithinStatement(CompositeStatementObject statement, VariableDeclarationContainer container) {
+		List<String> commentsWithinStatement = new ArrayList<>();
+		for(UMLComment comment : commentsWithinStatement(statement, container)) {
+			commentsWithinStatement.add(comment.getFullText());
+		}
+		return commentsWithinStatement;
+	}
+
+	private static List<UMLComment> commentsWithinStatement(CompositeStatementObject statement, VariableDeclarationContainer container) {
 		List<UMLComment> comments1 = container.getComments();
-		List<String> commentsWithinStatement1 = new ArrayList<>();
+		List<UMLComment> commentsWithinStatement1 = new ArrayList<>();
 		for(UMLComment comment1 : comments1) {
 			if(statement.getLocationInfo().subsumes(comment1.getLocationInfo())) {
-				commentsWithinStatement1.add(comment1.getFullText());
+				commentsWithinStatement1.add(comment1);
 			}
 		}
 		if(statement.getTryContainer() != null && statement.getTryContainer().isPresent() && commentsWithinStatement1.isEmpty()) {
 			TryStatementObject tryStatement = statement.getTryContainer().get();
 			for(UMLComment comment1 : comments1) {
 				if(tryStatement.getLocationInfo().subsumes(comment1.getLocationInfo())) {
-					commentsWithinStatement1.add(comment1.getFullText());
+					commentsWithinStatement1.add(comment1);
 				}
 			}
 		}

@@ -48,6 +48,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.util.PathFileUtils;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
@@ -331,6 +332,17 @@ public class MonacoCore {
     			type.equals("Assignment") || type.equals("ArrayInitializer") || type.endsWith("_expression") || type.endsWith("identifier");
     }
 
+    //the expressions of the Python tree, i.e., subscript and call, whose types do not have the suffixes of the expressions of the other trees
+    private static final Set<String> PYTHON_EXPRESSIONS = Set.of("assignment", "attribute", "await", "binary_operator", "boolean_operator", "call",
+    		"comparison_operator", "concatenated_string", "conditional_expression", "dictionary", "dictionary_comprehension", "dictionary_splat",
+    		"ellipsis", "expression_list", "false", "float", "generator_expression", "integer", "keyword_argument", "lambda", "list",
+    		"list_comprehension", "list_splat", "named_expression", "none", "not_operator", "pair", "set", "set_comprehension", "string",
+    		"subscript", "true", "tuple", "unary_operator", "yield");
+
+    private boolean isPythonExpression(Tree t) {
+    	return srcFileName != null && PathFileUtils.isPythonFile(srcFileName) && PYTHON_EXPRESSIONS.contains(t.getType().toString());
+    }
+
     private static boolean isComment(Tree t) {
     	String type = t.getType().toString();
     	return type.startsWith("LineComment") || type.startsWith("BlockComment") || type.endsWith("_comment");
@@ -338,7 +350,7 @@ public class MonacoCore {
 
     private void appendRange(StringBuilder b, Tree t, String kind, String tip) {
         Set<String> tooltips = kind.equals("updated") ? updateTooltip(t) : tooltip(t);
-        if(!tooltips.isEmpty() && (isStatement(t) || isDeclaration(t) || isExpression(t) || isComment(t)) &&
+        if(!tooltips.isEmpty() && (isStatement(t) || isDeclaration(t) || isExpression(t) || isPythonExpression(t) || isComment(t)) &&
         		(kind.equals("moved") || kind.startsWith("mm") || kind.equals("moveOut") || kind.equals("moveIn"))) {
         	for(String tooltip : tooltips) {
         		//the ranges of nested AST nodes overlap, and Monaco shows the hover messages of all decorations containing the mouse position,

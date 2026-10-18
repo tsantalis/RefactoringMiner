@@ -724,6 +724,23 @@ public abstract class AbstractCall extends LeafExpression {
 				!identicalName(call) && (equalArguments(call) || reorderedArguments(call) || this.arguments().size() == 0 || call.arguments().size() == 0);
 	}
 
+	//the arguments become identical after the replacements found within them, i.e., x ? A::IN : A::OUT -> x ? B::C::IN : B::C::OUT
+	private boolean equalArgumentsAfterReplacements(AbstractCall call, Set<Replacement> replacements) {
+		if(this.arguments.size() != call.arguments.size() || replacements.isEmpty()) {
+			return false;
+		}
+		for(int i=0; i<this.arguments.size(); i++) {
+			String argument1 = this.arguments.get(i);
+			for(Replacement replacement : replacements) {
+				argument1 = ReplacementUtil.performReplacement(argument1, replacement.getBefore(), replacement.getAfter());
+			}
+			if(!argument1.equals(call.arguments.get(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		boolean expressionBecomesArgument = false;
 		int commonTokens = 0;
@@ -753,7 +770,8 @@ public abstract class AbstractCall extends LeafExpression {
 		}
 		return (oneNameContainsTheOther(call) || (expressionBecomesArgument && commonTokens > 1)) &&
 				this.arguments.size() > 0 && call.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call) ||
-				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size())) &&
+				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size()) ||
+				equalArgumentsAfterReplacements(call, replacements)) &&
 				((this.getExpression() == null && call.getExpression() != null) || (call.getExpression() == null && this.getExpression() != null));
 	}
 

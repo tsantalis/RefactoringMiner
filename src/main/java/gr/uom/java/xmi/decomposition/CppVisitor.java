@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.cdt.core.dom.ast.IASTIdExpression;
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 import org.eclipse.cdt.core.dom.ast.IASTBinaryExpression;
 import org.eclipse.cdt.core.dom.ast.IASTConditionalExpression;
@@ -22,6 +23,7 @@ import org.eclipse.cdt.core.dom.ast.IASTProblemStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTQualifiedName;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTLambdaExpression;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTNewExpression;
 import org.eclipse.cdt.core.dom.ast.IASTCastExpression;
@@ -144,9 +146,16 @@ public class CppVisitor extends ASTVisitor {
 		return null;
 	}
 
+	private static boolean calledFunctionName(IASTName name) {
+		return name.getParent() instanceof IASTIdExpression id && id.getParent() instanceof IASTFunctionCallExpression call && call.getFunctionNameExpression() == id;
+	}
+
 	public int visit(IASTName name) {
-		LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, name, CodeElementType.SIMPLE_NAME, container, fileContent);
-		variables.add(leafExpression);
+		//the segments of a qualified name, which is not the name of a called function, are not variables, the qualified name is, i.e., CDesktopAnimationManager::ANIMATION_TYPE_IN
+		if(!(name.getParent() instanceof ICPPASTQualifiedName qualifiedName) || calledFunctionName(qualifiedName)) {
+			LeafExpression leafExpression = new LeafExpression(sourceFolder, filePath, name, CodeElementType.SIMPLE_NAME, container, fileContent);
+			variables.add(leafExpression);
+		}
 		return super.visit(name);
 	}
 

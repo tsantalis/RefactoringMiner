@@ -150369,6 +150369,50 @@
   "firstEndPos" : 48879,
   "secondEndPos" : 48875
 }, {
+  "firstType" : "expression_statement",
+  "secondType" : "expression_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 48885,
+  "secondPos" : 48881,
+  "firstEndPos" : 49139,
+  "secondEndPos" : 49115
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 48885,
+  "secondPos" : 48881,
+  "firstEndPos" : 49138,
+  "secondEndPos" : 49114
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call_expression",
+  "secondParentType" : "call_expression",
+  "firstPos" : 48939,
+  "secondPos" : 48929,
+  "firstEndPos" : 49138,
+  "secondEndPos" : 49114
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 48939,
+  "secondPos" : 48929,
+  "firstEndPos" : 48940,
+  "secondEndPos" : 48930
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -150533,6 +150577,171 @@
   "secondPos" : 48959,
   "firstEndPos" : 48970,
   "secondEndPos" : 48960
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 48970,
+  "secondPos" : 48960,
+  "firstEndPos" : 48971,
+  "secondEndPos" : 48961
+}, {
+  "firstType" : "conditional_expression",
+  "secondType" : "conditional_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 49031,
+  "secondPos" : 49015,
+  "firstEndPos" : 49137,
+  "secondEndPos" : 49113
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "coversMonitor",
+  "secondLabel" : "coversMonitor",
+  "firstParentType" : "conditional_expression",
+  "secondParentType" : "conditional_expression",
+  "firstPos" : 49031,
+  "secondPos" : 49015,
+  "firstEndPos" : 49044,
+  "secondEndPos" : 49028
+}, {
+  "firstType" : "?",
+  "secondType" : "?",
+  "firstLabel" : "?",
+  "secondLabel" : "?",
+  "firstParentType" : "conditional_expression",
+  "secondParentType" : "conditional_expression",
+  "firstPos" : 49045,
+  "secondPos" : 49029,
+  "firstEndPos" : 49046,
+  "secondEndPos" : 49030
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "conditional_expression",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49047,
+  "secondPos" : 49042,
+  "firstEndPos" : 49090,
+  "secondEndPos" : 49070
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "CDesktopAnimationManager",
+  "secondLabel" : "Workspace",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49047,
+  "secondPos" : 49042,
+  "firstEndPos" : 49071,
+  "secondEndPos" : 49051
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49071,
+  "secondPos" : 49051,
+  "firstEndPos" : 49073,
+  "secondEndPos" : 49053
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "ANIMATION_TYPE_IN",
+  "secondLabel" : "ANIMATION_TYPE_IN",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49073,
+  "secondPos" : 49053,
+  "firstEndPos" : 49090,
+  "secondEndPos" : 49070
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "conditional_expression",
+  "secondParentType" : "conditional_expression",
+  "firstPos" : 49091,
+  "secondPos" : 49071,
+  "firstEndPos" : 49092,
+  "secondEndPos" : 49072
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "conditional_expression",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49093,
+  "secondPos" : 49084,
+  "firstEndPos" : 49137,
+  "secondEndPos" : 49113
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "CDesktopAnimationManager",
+  "secondLabel" : "Workspace",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49093,
+  "secondPos" : 49084,
+  "firstEndPos" : 49117,
+  "secondEndPos" : 49093
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49117,
+  "secondPos" : 49093,
+  "firstEndPos" : 49119,
+  "secondEndPos" : 49095
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "ANIMATION_TYPE_OUT",
+  "secondLabel" : "ANIMATION_TYPE_OUT",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 49119,
+  "secondPos" : 49095,
+  "firstEndPos" : 49137,
+  "secondEndPos" : 49113
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "argument_list",
+  "secondParentType" : "argument_list",
+  "firstPos" : 49137,
+  "secondPos" : 49113,
+  "firstEndPos" : 49138,
+  "secondEndPos" : 49114
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "expression_statement",
+  "secondParentType" : "expression_statement",
+  "firstPos" : 49138,
+  "secondPos" : 49114,
+  "firstEndPos" : 49139,
+  "secondEndPos" : 49115
 }, {
   "firstType" : "}",
   "secondType" : "}",

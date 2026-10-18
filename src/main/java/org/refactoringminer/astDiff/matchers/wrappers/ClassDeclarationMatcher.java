@@ -1752,10 +1752,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             Tree srcClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree , umlAnnotationUMLAnnotationPair.getLeft().getLocationInfo(), LANG1);
             Tree dstClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, umlAnnotationUMLAnnotationPair.getRight().getLocationInfo(), LANG2);
             if (srcClassAnnotationTree == null || dstClassAnnotationTree == null) continue;
-            if(srcClassAnnotationTree.getParent() != null && srcClassAnnotationTree.getParent().getType().name.equals(LANG1.DECORATOR))
-                srcClassAnnotationTree = srcClassAnnotationTree.getParent();
-            if(dstClassAnnotationTree.getParent() != null && dstClassAnnotationTree.getParent().getType().name.equals(LANG1.DECORATOR))
-                dstClassAnnotationTree = dstClassAnnotationTree.getParent();
             if (srcClassAnnotationTree.isIsoStructuralTo(dstClassAnnotationTree))
                 mappingStore.addMappingRecursively(srcClassAnnotationTree, dstClassAnnotationTree);
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {

@@ -6947,9 +6947,9 @@
   "firstParentType" : "statement_block",
   "secondParentType" : "statement_block",
   "firstPos" : 2250,
-  "secondPos" : 2499,
+  "secondPos" : 2434,
   "firstEndPos" : 2271,
-  "secondEndPos" : 2535
+  "secondEndPos" : 2496
 }, {
   "firstType" : "const",
   "secondType" : "const",
@@ -6958,107 +6958,8 @@
   "firstParentType" : "lexical_declaration",
   "secondParentType" : "lexical_declaration",
   "firstPos" : 2250,
-  "secondPos" : 2499,
+  "secondPos" : 2434,
   "firstEndPos" : 2255,
-  "secondEndPos" : 2504
-}, {
-  "firstType" : "variable_declarator",
-  "secondType" : "variable_declarator",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2256,
-  "secondPos" : 2505,
-  "firstEndPos" : 2270,
-  "secondEndPos" : 2534
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "survivors",
-  "secondLabel" : "promises",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2256,
-  "secondPos" : 2505,
-  "firstEndPos" : 2265,
-  "secondEndPos" : 2513
-}, {
-  "firstType" : "=",
-  "secondType" : "=",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2266,
-  "secondPos" : 2530,
-  "firstEndPos" : 2267,
-  "secondEndPos" : 2531
-}, {
-  "firstType" : "array",
-  "secondType" : "array",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "variable_declarator",
-  "secondParentType" : "variable_declarator",
-  "firstPos" : 2268,
-  "secondPos" : 2532,
-  "firstEndPos" : 2270,
-  "secondEndPos" : 2534
-}, {
-  "firstType" : "[",
-  "secondType" : "[",
-  "firstLabel" : "[",
-  "secondLabel" : "[",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 2268,
-  "secondPos" : 2532,
-  "firstEndPos" : 2269,
-  "secondEndPos" : 2533
-}, {
-  "firstType" : "]",
-  "secondType" : "]",
-  "firstLabel" : "]",
-  "secondLabel" : "]",
-  "firstParentType" : "array",
-  "secondParentType" : "array",
-  "firstPos" : 2269,
-  "secondPos" : 2533,
-  "firstEndPos" : 2270,
-  "secondEndPos" : 2534
-}, {
-  "firstType" : ";",
-  "secondType" : ";",
-  "firstLabel" : ";",
-  "secondLabel" : ";",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2270,
-  "secondPos" : 2534,
-  "firstEndPos" : 2271,
-  "secondEndPos" : 2535
-}, {
-  "firstType" : "lexical_declaration",
-  "secondType" : "lexical_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statement_block",
-  "secondParentType" : "statement_block",
-  "firstPos" : 2274,
-  "secondPos" : 2434,
-  "firstEndPos" : 2294,
-  "secondEndPos" : 2496
-}, {
-  "firstType" : "const",
-  "secondType" : "const",
-  "firstLabel" : "const",
-  "secondLabel" : "const",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
-  "firstPos" : 2274,
-  "secondPos" : 2434,
-  "firstEndPos" : 2279,
   "secondEndPos" : 2439
 }, {
   "firstType" : "variable_declarator",
@@ -7067,20 +6968,20 @@
   "secondLabel" : "",
   "firstParentType" : "lexical_declaration",
   "secondParentType" : "lexical_declaration",
-  "firstPos" : 2280,
+  "firstPos" : 2256,
   "secondPos" : 2440,
-  "firstEndPos" : 2293,
+  "firstEndPos" : 2270,
   "secondEndPos" : 2495
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
-  "firstLabel" : "promises",
+  "firstLabel" : "survivors",
   "secondLabel" : "survivors",
   "firstParentType" : "variable_declarator",
   "secondParentType" : "variable_declarator",
-  "firstPos" : 2280,
+  "firstPos" : 2256,
   "secondPos" : 2440,
-  "firstEndPos" : 2288,
+  "firstEndPos" : 2265,
   "secondEndPos" : 2449
 }, {
   "firstType" : "=",
@@ -7089,9 +6990,9 @@
   "secondLabel" : "=",
   "firstParentType" : "variable_declarator",
   "secondParentType" : "variable_declarator",
-  "firstPos" : 2289,
+  "firstPos" : 2266,
   "secondPos" : 2491,
-  "firstEndPos" : 2290,
+  "firstEndPos" : 2267,
   "secondEndPos" : 2492
 }, {
   "firstType" : "array",
@@ -7100,9 +7001,9 @@
   "secondLabel" : "",
   "firstParentType" : "variable_declarator",
   "secondParentType" : "variable_declarator",
-  "firstPos" : 2291,
+  "firstPos" : 2268,
   "secondPos" : 2493,
-  "firstEndPos" : 2293,
+  "firstEndPos" : 2270,
   "secondEndPos" : 2495
 }, {
   "firstType" : "[",
@@ -7111,9 +7012,9 @@
   "secondLabel" : "[",
   "firstParentType" : "array",
   "secondParentType" : "array",
-  "firstPos" : 2291,
+  "firstPos" : 2268,
   "secondPos" : 2493,
-  "firstEndPos" : 2292,
+  "firstEndPos" : 2269,
   "secondEndPos" : 2494
 }, {
   "firstType" : "]",
@@ -7122,9 +7023,9 @@
   "secondLabel" : "]",
   "firstParentType" : "array",
   "secondParentType" : "array",
-  "firstPos" : 2292,
+  "firstPos" : 2269,
   "secondPos" : 2494,
-  "firstEndPos" : 2293,
+  "firstEndPos" : 2270,
   "secondEndPos" : 2495
 }, {
   "firstType" : ";",
@@ -7133,10 +7034,109 @@
   "secondLabel" : ";",
   "firstParentType" : "lexical_declaration",
   "secondParentType" : "lexical_declaration",
-  "firstPos" : 2293,
+  "firstPos" : 2270,
   "secondPos" : 2495,
-  "firstEndPos" : 2294,
+  "firstEndPos" : 2271,
   "secondEndPos" : 2496
+}, {
+  "firstType" : "lexical_declaration",
+  "secondType" : "lexical_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
+  "firstPos" : 2274,
+  "secondPos" : 2499,
+  "firstEndPos" : 2294,
+  "secondEndPos" : 2535
+}, {
+  "firstType" : "const",
+  "secondType" : "const",
+  "firstLabel" : "const",
+  "secondLabel" : "const",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 2274,
+  "secondPos" : 2499,
+  "firstEndPos" : 2279,
+  "secondEndPos" : 2504
+}, {
+  "firstType" : "variable_declarator",
+  "secondType" : "variable_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 2280,
+  "secondPos" : 2505,
+  "firstEndPos" : 2293,
+  "secondEndPos" : 2534
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "promises",
+  "secondLabel" : "promises",
+  "firstParentType" : "variable_declarator",
+  "secondParentType" : "variable_declarator",
+  "firstPos" : 2280,
+  "secondPos" : 2505,
+  "firstEndPos" : 2288,
+  "secondEndPos" : 2513
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "variable_declarator",
+  "secondParentType" : "variable_declarator",
+  "firstPos" : 2289,
+  "secondPos" : 2530,
+  "firstEndPos" : 2290,
+  "secondEndPos" : 2531
+}, {
+  "firstType" : "array",
+  "secondType" : "array",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "variable_declarator",
+  "secondParentType" : "variable_declarator",
+  "firstPos" : 2291,
+  "secondPos" : 2532,
+  "firstEndPos" : 2293,
+  "secondEndPos" : 2534
+}, {
+  "firstType" : "[",
+  "secondType" : "[",
+  "firstLabel" : "[",
+  "secondLabel" : "[",
+  "firstParentType" : "array",
+  "secondParentType" : "array",
+  "firstPos" : 2291,
+  "secondPos" : 2532,
+  "firstEndPos" : 2292,
+  "secondEndPos" : 2533
+}, {
+  "firstType" : "]",
+  "secondType" : "]",
+  "firstLabel" : "]",
+  "secondLabel" : "]",
+  "firstParentType" : "array",
+  "secondParentType" : "array",
+  "firstPos" : 2292,
+  "secondPos" : 2533,
+  "firstEndPos" : 2293,
+  "secondEndPos" : 2534
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "lexical_declaration",
+  "secondParentType" : "lexical_declaration",
+  "firstPos" : 2293,
+  "secondPos" : 2534,
+  "firstEndPos" : 2294,
+  "secondEndPos" : 2535
 }, {
   "firstType" : "for_in_statement",
   "secondType" : "for_in_statement",

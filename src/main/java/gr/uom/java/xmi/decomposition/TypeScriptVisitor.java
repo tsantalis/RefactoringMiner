@@ -35,6 +35,7 @@ import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstBlockStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstExprStmt;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitor;
 import com.caoccao.javet.swc4j.ast.visitors.Swc4jAstVisitorResponse;
@@ -105,7 +106,8 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 		if(identifiers.size() == 1) {
 			VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, declarator, container, activeVariableDeclarations, fileContent, typeDeclarations);
 			variableDeclarations.add(vd);
-			LeafExpression name = new LeafExpression(sourceFolder, filePath, identifiers.get(0), CodeElementType.SIMPLE_NAME, container, fileContent);
+			//the identifier without its type annotation, i.e., promises in const promises: Promise<any>[] = []
+			LeafExpression name = new LeafExpression(sourceFolder, filePath, identifiers.get(0).getId(), CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(name);
 		}
 		else {
@@ -113,7 +115,7 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
 				variableDeclarations.add(vd);
-				LeafExpression name = new LeafExpression(sourceFolder, filePath, identifier, CodeElementType.SIMPLE_NAME, container, fileContent);
+				LeafExpression name = new LeafExpression(sourceFolder, filePath, identifier.getId(), CodeElementType.SIMPLE_NAME, container, fileContent);
 				variables.add(name);
 			}
 		}
@@ -157,7 +159,9 @@ public class TypeScriptVisitor extends Swc4jAstVisitor {
 
 	public Swc4jAstVisitorResponse visitIdent(Swc4jAstIdent node) {
 		String identifier = node.getSym();
-		if(activeVariableDeclarations.containsKey(identifier)) {
+		//the key of a type literal member is not a variable, i.e., member in { member: GuildMember, error: Error }[]
+		boolean typeLiteralKey = node.getParent() instanceof Swc4jAstTsPropertySignature signature && signature.getKey() == node;
+		if(activeVariableDeclarations.containsKey(identifier) && !typeLiteralKey) {
 			LeafExpression name = new LeafExpression(sourceFolder, filePath, node, CodeElementType.SIMPLE_NAME, container, fileContent);
 			variables.add(name);
 			if(node.getParent() instanceof Swc4jAstMemberExpr && !(node.getParent().getParent() instanceof Swc4jAstCallExpr)) {

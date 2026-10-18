@@ -20,6 +20,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
@@ -3905,6 +3906,80 @@ public class StringBasedHeuristics {
 			return true;
 		}
 		return false;
+	}
+
+	//the declarations of the same position whose type annotations are added, removed or changed, i.e., const survivors = [] -> const survivors: { member: GuildMember, error: Error }[] = []
+	protected static List<VariableDeclaration[]> changedTypeAnnotations(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2) {
+		List<VariableDeclaration[]> changed = new ArrayList<>();
+		List<VariableDeclaration> declarations1 = fragment1.getVariableDeclarations();
+		List<VariableDeclaration> declarations2 = fragment2.getVariableDeclarations();
+		if(declarations1.size() == declarations2.size() &&
+				PathFileUtils.getLang(fragment1.getLocationInfo().getFilePath()).equals(PathFileUtils.getLang(fragment2.getLocationInfo().getFilePath()))) {
+			for(int i=0; i<declarations1.size(); i++) {
+				VariableDeclaration declaration1 = declarations1.get(i);
+				VariableDeclaration declaration2 = declarations2.get(i);
+				if(declaration1.getType() != null && declaration2.getType() != null && !declaration1.getType().equals(declaration2.getType()) &&
+						(typeAnnotation(fragment1, declaration1) != null || typeAnnotation(fragment2, declaration2) != null)) {
+					changed.add(new VariableDeclaration[] {declaration1, declaration2});
+				}
+			}
+		}
+		return changed;
+	}
+
+	//the type annotation following the declared name, i.e., ": Promise<any>[]" in const promises: Promise<any>[] = []
+	private static String typeAnnotation(AbstractCodeFragment fragment, VariableDeclaration declaration) {
+		LocationInfo typeLocation = declaration.getType().getLocationInfo();
+		if(typeLocation == null || declaration.getVariableName() == null || !typeLocation.getFilePath().equals(fragment.getLocationInfo().getFilePath())) {
+			return null;
+		}
+		String s = fragment.getString();
+		int start = typeLocation.getStartOffset() - fragment.getLocationInfo().getStartOffset();
+		int end = typeLocation.getEndOffset() - fragment.getLocationInfo().getStartOffset();
+		if(start <= 0 || end > s.length() || start >= end) {
+			return null;
+		}
+		//the name, an optional ?, and the colon with optional whitespace precede the type
+		int index = start;
+		while(index > 0 && Character.isWhitespace(s.charAt(index - 1))) {
+			index--;
+		}
+		if(index == 0 || s.charAt(index - 1) != ':') {
+			return null;
+		}
+		index--;
+		while(index > 0 && Character.isWhitespace(s.charAt(index - 1))) {
+			index--;
+		}
+		int annotationStart = index;
+		if(index > 0 && s.charAt(index - 1) == '?') {
+			index--;
+		}
+		if(!s.startsWith(declaration.getVariableName(), index - declaration.getVariableName().length())) {
+			return null;
+		}
+		return s.substring(annotationStart, end);
+	}
+
+	protected static String withoutChangedTypeAnnotations(String s, AbstractCodeFragment fragment, AbstractCodeFragment otherFragment) {
+		List<VariableDeclaration[]> changed = changedTypeAnnotations(fragment, otherFragment);
+		for(VariableDeclaration[] pair : changed) {
+			String annotation = typeAnnotation(fragment, pair[0]);
+			if(annotation != null) {
+				String name = pair[0].getVariableName();
+				int index = s.indexOf(name + annotation);
+				if(index == -1) {
+					index = s.indexOf(name + "?" + annotation);
+					if(index != -1) {
+						name = name + "?";
+					}
+				}
+				if(index != -1) {
+					s = s.substring(0, index + name.length()) + s.substring(index + name.length() + annotation.length());
+				}
+			}
+		}
+		return s;
 	}
 
 	protected static VariableDeclaration declarationWithArrayInitializer(List<VariableDeclaration> declarations) {

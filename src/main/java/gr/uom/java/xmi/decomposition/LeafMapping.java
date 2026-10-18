@@ -1305,8 +1305,9 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			distance1 = 0;
 		}
 		else {
-			String s1 = removeGenericTypeAfterDot(this.getFragment1().getString().toLowerCase());
-			String s2 = removeGenericTypeAfterDot(this.getFragment2().getString().toLowerCase());
+			//the changed type annotations of the declarations are TYPE replacements, not text differences
+			String s1 = removeGenericTypeAfterDot(StringBasedHeuristics.withoutChangedTypeAnnotations(this.getFragment1().getString(), this.getFragment1(), this.getFragment2()).toLowerCase());
+			String s2 = removeGenericTypeAfterDot(StringBasedHeuristics.withoutChangedTypeAnnotations(this.getFragment2().getString(), this.getFragment2(), this.getFragment1()).toLowerCase());
 			int distance = StringDistance.editDistance(s1, s2);
 			distance1 = (double)distance/(double)Math.max(s1.length(), s2.length());
 		}

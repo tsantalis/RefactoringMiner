@@ -11319,9 +11319,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		l1.remove(leaf1);
 		List<? extends AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(leaves2);
 		l2.remove(leaf2);
+		//the changed type annotations of the declarations are compared as TYPE replacements
 		ReplacementInfo replacementInfo = new ReplacementInfo(
-				preprocessInput1(leaf1, leaf2),
-				preprocessInput2(leaf1, leaf2),
+				StringBasedHeuristics.withoutChangedTypeAnnotations(preprocessInput1(leaf1, leaf2), leaf1, leaf2),
+				StringBasedHeuristics.withoutChangedTypeAnnotations(preprocessInput2(leaf1, leaf2), leaf2, leaf1),
 				l1, l2,
 				parameterNameList1,
 				parameterNameList2);

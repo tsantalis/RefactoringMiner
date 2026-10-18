@@ -40,6 +40,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper.ReplacementInfo;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.InitializerReplacement;
+import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
@@ -5132,7 +5133,41 @@ public class ReplacementAlgorithm {
 		if(anonymousArgumentReplacedWithLambdaInParentMapper(statement1, statement2, replacementInfo, operationBodyMapper)) {
 			return replacementInfo.getReplacements();
 		}
+		if(declarationInlinedToObjectAttribute(statement1, statement2, replacementInfo, operationBodyMapper)) {
+			return replacementInfo.getReplacements();
+		}
 		return null;
+	}
+
+	//the declared variable became an attribute with the same name and initializer in an object literal,
+	//i.e., const routeStartsAndEndsSameFloor = startNode.floor === endNode.floor -> const context = { ..., routeStartsAndEndsSameFloor: startNode.floor === endNode.floor }
+	private static boolean declarationInlinedToObjectAttribute(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) {
+		if(statement1.getVariableDeclarations().size() == 1 && statement1.getVariableDeclarations().get(0).getInitializer() != null) {
+			VariableDeclaration declaration1 = statement1.getVariableDeclarations().get(0);
+			AbstractExpression initializer1 = declaration1.getInitializer();
+			for(AnonymousClassDeclarationObject anonymousClassDeclaration2 : statement2.getAnonymousClassDeclarations()) {
+				UMLAnonymousClass anonymousClass2 = operationBodyMapper.findAnonymousClass2(anonymousClassDeclaration2);
+				if(anonymousClass2 != null) {
+					for(UMLAttribute attribute2 : anonymousClass2.getAttributes()) {
+						AbstractExpression initializer2 = attribute2.getVariableDeclaration().getInitializer();
+						if(attribute2.getName().equals(declaration1.getVariableName()) && initializer2 != null && initializer2.getString().equals(initializer1.getString())) {
+							IntersectionReplacement replacement = new IntersectionReplacement(statement1.getString(), statement2.getString(), ReplacementType.CONCATENATION);
+							replacementInfo.addReplacement(replacement);
+							for(LeafExpression expression1 : statement1.findExpression(initializer1.getString())) {
+								for(LeafExpression expression2 : statement2.findExpression(initializer2.getString())) {
+									if(expression1.getLocationInfo().equals(initializer1.getLocationInfo()) && expression2.getLocationInfo().equals(initializer2.getLocationInfo())) {
+										LeafMapping leafMapping = new LeafMapping(expression1, expression2, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2());
+										replacementInfo.addSubExpressionMapping(leafMapping);
+									}
+								}
+							}
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	//inlined method, whose parameter is passed as argument to a call, and the argument at the call site is an anonymous class replaced with lambda in the parent mapper,

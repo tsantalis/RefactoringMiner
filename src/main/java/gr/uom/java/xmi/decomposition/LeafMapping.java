@@ -292,7 +292,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(fragment1 == null || fragment2 == null) {
 			return fragment1 == null && fragment2 == null;
 		}
-		return fragment1.getString().equals(fragment2.getString());
+		return fragment1.getString().equals(fragment2.getString()) && identicalCaughtExceptionTypes(fragment1, fragment2);
+	}
+
+	//the string of a catch clause does not contain the type of its exception, i.e., catch(e) for catch(NoClassDefFoundError e) and catch(ClassFormatError e)
+	private static boolean identicalCaughtExceptionTypes(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2) {
+		if(!fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+				!fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+			return true;
+		}
+		List<String> types1 = fragment1.getVariableDeclarations().stream().map(d -> String.valueOf(d.getType())).collect(Collectors.toList());
+		List<String> types2 = fragment2.getVariableDeclarations().stream().map(d -> String.valueOf(d.getType())).collect(Collectors.toList());
+		return types1.equals(types2);
 	}
 
 	public void setExtractedStatements(Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements) {

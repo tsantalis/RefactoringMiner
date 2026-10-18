@@ -1880,6 +1880,17 @@
   "firstEndPos" : 622,
   "secondEndPos" : 796
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 622,
+  "secondPos" : 796,
+  "firstEndPos" : 750,
+  "secondEndPos" : 901
+}, {
   "firstType" : "object_pattern",
   "secondType" : "object_pattern",
   "firstLabel" : "",
@@ -2077,6 +2088,50 @@
   "secondPos" : 895,
   "firstEndPos" : 745,
   "secondEndPos" : 896
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 746,
+  "secondPos" : 897,
+  "firstEndPos" : 747,
+  "secondEndPos" : 898
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 748,
+  "secondPos" : 899,
+  "firstEndPos" : 750,
+  "secondEndPos" : 901
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 748,
+  "secondPos" : 899,
+  "firstEndPos" : 749,
+  "secondEndPos" : 900
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 749,
+  "secondPos" : 900,
+  "firstEndPos" : 750,
+  "secondEndPos" : 901
 }, {
   "firstType" : ")",
   "secondType" : ")",

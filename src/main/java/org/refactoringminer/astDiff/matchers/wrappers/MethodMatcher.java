@@ -1702,6 +1702,68 @@ public class MethodMatcher extends BodyMapperMatcher{
         return tree;
     }
 
+    private static boolean isParameterWrapper(Tree tree, Constants LANG) {
+        String type = tree.getType().name;
+        return type.equals(LANG.REQUIRED_PARAMETER) || type.equals(LANG.OPTIONAL_PARAMETER) || type.equals(LANG.ASSIGNMENT_PATTERN);
+    }
+
+    //the default value of a pattern parameter, which has no variable declaration in the model, i.e., = {} -> = {} as any
+    private void processPatternDefault(Tree parameter1, Tree parameter2, ExtendedMultiMappingStore mappingStore) {
+        Tree equal1 = childOfType(parameter1, LANG1.EQUAL_OPERATOR);
+        Tree equal2 = childOfType(parameter2, LANG2.EQUAL_OPERATOR);
+        if(equal1 == null || equal2 == null) {
+            return;
+        }
+        int index1 = parameter1.getChildPosition(equal1);
+        int index2 = parameter2.getChildPosition(equal2);
+        if(parameter1.getChildren().size() <= index1+1 || parameter2.getChildren().size() <= index2+1) {
+            return;
+        }
+        mappingStore.addMapping(equal1, equal2);
+        Tree value1 = withoutCast(parameter1.getChild(index1+1), LANG1);
+        Tree value2 = withoutCast(parameter2.getChild(index2+1), LANG2);
+        if(TreeUtilFunctions.isIsomorphicTo(value1, value2)) {
+            mappingStore.addMappingRecursively(value1, value2);
+        }
+        else {
+            new LeafMatcher(LANG1, LANG2).match(value1, value2, mappingStore);
+            mappingStore.addMapping(value1, value2);
+        }
+    }
+
+    private static Tree withoutCast(Tree tree, Constants LANG) {
+        if(tree.getType().name.equals(LANG.AS_EXPRESSION) && tree.getChildren().size() > 0) {
+            return tree.getChild(0);
+        }
+        return tree;
+    }
+
+    private static Tree childOfType(Tree parent, String type) {
+        for(Tree child : parent.getChildren()) {
+            if(child.getType().name.equals(type)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    private void mapFollowingComma(Tree tree1, Tree tree2, ExtendedMultiMappingStore mappingStore) {
+        Tree parent1 = tree1.getParent();
+        Tree parent2 = tree2.getParent();
+        if(parent1 == null || parent2 == null) {
+            return;
+        }
+        int index1 = parent1.getChildPosition(tree1);
+        int index2 = parent2.getChildPosition(tree2);
+        if(parent1.getChildren().size() > index1+1 && parent2.getChildren().size() > index2+1) {
+            Tree next1 = parent1.getChild(index1+1);
+            Tree next2 = parent2.getChild(index2+1);
+            if(next1.getType().name.equals(LANG1.COMMA) && next2.getType().name.equals(LANG2.COMMA)) {
+                mappingStore.addMapping(next1, next2);
+            }
+        }
+    }
+
     private void processParameterPair(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore,
             VariableDeclaration leftVarDecl, VariableDeclaration rightVarDecl) {
         Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo(),LANG1);
@@ -1777,12 +1839,15 @@ public class MethodMatcher extends BodyMapperMatcher{
                     }
                     Tree requiredParameter1 = leftTree.getParent().getParent();
                     Tree requiredParameter2 = rightTree.getParent().getParent();
-                    if(requiredParameter1 != null && requiredParameter2 != null && requiredParameter1.getType().name.equals(LANG1.REQUIRED_PARAMETER) && requiredParameter2.getType().name.equals(LANG2.REQUIRED_PARAMETER)) {
+                    //the whole pattern parameter of the paired entries, i.e., { onClick, ...other } = {} -> { onClick, ...other }: IGetItemPropsOptions<Item> = {} as any
+                    if(requiredParameter1 != null && requiredParameter2 != null && isParameterWrapper(requiredParameter1, LANG1) && isParameterWrapper(requiredParameter2, LANG2)) {
                         mappingStore.addMapping(requiredParameter1,requiredParameter2);
                         if(requiredParameter1.getChildren().size() > 1 && requiredParameter2.getChildren().size() > 1 &&
                                 requiredParameter1.getChild(1).getType().name.equals(LANG1.TYPE_ANNOTATION) && requiredParameter2.getChild(1).getType().name.equals(LANG2.TYPE_ANNOTATION)) {
                             mappingStore.addMappingRecursively(requiredParameter1.getChild(1), requiredParameter2.getChild(1));
                         }
+                        processPatternDefault(requiredParameter1, requiredParameter2, mappingStore);
+                        mapFollowingComma(requiredParameter1, requiredParameter2, mappingStore);
                     }
                 }
             }

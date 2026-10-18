@@ -12,6 +12,10 @@ import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 
+import extension.ast.node.LangASTNode;
+import extension.ast.node.unit.LangCompilationUnit;
+import extension.ast.visitor.LangVisitor;
+
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -64,6 +68,12 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	public AnonymousClassDeclarationObject(String sourceFolder, String filePath, Swc4jAstObjectLit objectLiteral, String fileContent) {
 		this.locationInfo = new LocationInfo(sourceFolder, filePath, objectLiteral.getSpan(), CodeElementType.ANONYMOUS_CLASS_DECLARATION, fileContent);
 		this.astNodeString = fileContent.substring(objectLiteral.getSpan().getStart(), objectLiteral.getSpan().getEnd());
+	}
+
+	public AnonymousClassDeclarationObject(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode dictionary, String fileContent) {
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, dictionary, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
+		//flattened like the statements, which contain it
+		this.astNodeString = LangVisitor.stringify(dictionary);
 	}
 
 	public LocationInfo getLocationInfo() {

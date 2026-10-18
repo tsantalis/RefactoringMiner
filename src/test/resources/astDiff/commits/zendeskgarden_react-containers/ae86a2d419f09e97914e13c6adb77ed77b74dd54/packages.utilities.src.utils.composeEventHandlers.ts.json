@@ -120,6 +120,39 @@
   "firstEndPos" : 655,
   "secondEndPos" : 655
 }, {
+  "firstType" : "required_parameter",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 655,
+  "secondPos" : 655,
+  "firstEndPos" : 673,
+  "secondEndPos" : 687
+}, {
+  "firstType" : "rest_pattern",
+  "secondType" : "rest_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 655,
+  "secondPos" : 655,
+  "firstEndPos" : 661,
+  "secondEndPos" : 661
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "rest_pattern",
+  "secondParentType" : "rest_pattern",
+  "firstPos" : 655,
+  "secondPos" : 655,
+  "firstEndPos" : 658,
+  "secondEndPos" : 658
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "fns",
@@ -130,6 +163,72 @@
   "secondPos" : 658,
   "firstEndPos" : 661,
   "secondEndPos" : 661
+}, {
+  "firstType" : "type_annotation",
+  "secondType" : "type_annotation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 661,
+  "secondPos" : 661,
+  "firstEndPos" : 673,
+  "secondEndPos" : 687
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "type_annotation",
+  "secondParentType" : "type_annotation",
+  "firstPos" : 661,
+  "secondPos" : 661,
+  "firstEndPos" : 662,
+  "secondEndPos" : 662
+}, {
+  "firstType" : "array_type",
+  "secondType" : "array_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_annotation",
+  "secondParentType" : "type_annotation",
+  "firstPos" : 663,
+  "secondPos" : 663,
+  "firstEndPos" : 673,
+  "secondEndPos" : 687
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Function",
+  "secondLabel" : "Function",
+  "firstParentType" : "array_type",
+  "secondParentType" : "union_type",
+  "firstPos" : 663,
+  "secondPos" : 664,
+  "firstEndPos" : 671,
+  "secondEndPos" : 672
+}, {
+  "firstType" : "[",
+  "secondType" : "[",
+  "firstLabel" : "[",
+  "secondLabel" : "[",
+  "firstParentType" : "array_type",
+  "secondParentType" : "array_type",
+  "firstPos" : 671,
+  "secondPos" : 685,
+  "firstEndPos" : 672,
+  "secondEndPos" : 686
+}, {
+  "firstType" : "]",
+  "secondType" : "]",
+  "firstLabel" : "]",
+  "secondLabel" : "]",
+  "firstParentType" : "array_type",
+  "secondParentType" : "array_type",
+  "firstPos" : 672,
+  "secondPos" : 686,
+  "firstEndPos" : 673,
+  "secondEndPos" : 687
 }, {
   "firstType" : ")",
   "secondType" : ")",

@@ -16389,6 +16389,17 @@
   "firstEndPos" : 6620,
   "secondEndPos" : 9131
 }, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 6625,
+  "secondPos" : 9136,
+  "firstEndPos" : 6646,
+  "secondEndPos" : 9157
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "initialMode",
@@ -16399,6 +16410,72 @@
   "secondPos" : 9136,
   "firstEndPos" : 6636,
   "secondEndPos" : 9147
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 6637,
+  "secondPos" : 9148,
+  "firstEndPos" : 6638,
+  "secondEndPos" : 9149
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 6639,
+  "secondPos" : 9150,
+  "firstEndPos" : 6646,
+  "secondEndPos" : 9157
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 6639,
+  "secondPos" : 9150,
+  "firstEndPos" : 6640,
+  "secondEndPos" : 9151
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "Drive",
+  "secondLabel" : "Drive",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 6640,
+  "secondPos" : 9151,
+  "firstEndPos" : 6645,
+  "secondEndPos" : 9156
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 6645,
+  "secondPos" : 9156,
+  "firstEndPos" : 6646,
+  "secondEndPos" : 9157
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 6646,
+  "secondPos" : 9157,
+  "firstEndPos" : 6647,
+  "secondEndPos" : 9158
 }, {
   "firstType" : "}",
   "secondType" : "}",

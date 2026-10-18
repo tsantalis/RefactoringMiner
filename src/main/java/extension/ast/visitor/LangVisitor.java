@@ -18,6 +18,9 @@ import extension.ast.stringifier.CSharpASTFlattener;
 import extension.ast.stringifier.LangASTFlattener;
 import extension.ast.stringifier.PyASTFlattener;
 import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.UMLAnonymousClass;
+import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.*;
 
@@ -472,6 +475,11 @@ public class LangVisitor implements LangASTVisitor {
 
     @Override
     public void visit(LangDictionaryLiteral langDictionaryLiteral) {
+        //a dictionary is an anonymous class with an attribute per key, like a TypeScript object literal, so that its entries are matched individually
+        if (!langDictionaryLiteral.getEntries().isEmpty()) {
+            createAnonymousClass(langDictionaryLiteral);
+            anonymousClassDeclarations.add(new AnonymousClassDeclarationObject(cu, sourceFolder, filePath, langDictionaryLiteral, fileContent));
+        }
         // Process dictionary key-value pairs: {"key": value}
         for (LangDictionaryLiteral.Entry entry : langDictionaryLiteral.getEntries()) {
             // Visit the key
@@ -485,6 +493,86 @@ public class LangVisitor implements LangASTVisitor {
         }
     }
 
+
+    private UMLAnonymousClass createAnonymousClass(LangDictionaryLiteral dictionary) {
+        LocationInfo location = new LocationInfo(cu, sourceFolder, filePath, dictionary, LocationInfo.CodeElementType.ANONYMOUS_CLASS_DECLARATION);
+        UMLAnonymousClass anonymousClass = null;
+        boolean alreadyAdded = false;
+        for (UMLAnonymousClass anonymous : container.getAnonymousClassList()) {
+            if (anonymous.getLocationInfo().equals(location)) {
+                alreadyAdded = true;
+                anonymousClass = anonymous;
+                break;
+            }
+        }
+        if (anonymousClass == null) {
+            String codePath = anonymousCodePath(dictionary);
+            anonymousClass = new UMLAnonymousClass(container.getClassName(), codePath, codePath, location, new ArrayList<>());
+            for (LangDictionaryLiteral.Entry entry : dictionary.getEntries()) {
+                LangASTNode key = entry.getKey();
+                LangASTNode value = entry.getValue();
+                VariableDeclaration vd = new VariableDeclaration(cu, sourceFolder, filePath, key, dictionary.getEndChar(), fileContent);
+                vd.setAttribute(true);
+                //the entry from its key to its value, like the pair of the tree
+                LocationInfo attributeLocation = new LocationInfo(sourceFolder, filePath, key.getStartChar(), value.getEndChar() - key.getStartChar(), value.getEndChar(), LocationInfo.CodeElementType.FIELD_DECLARATION, fileContent);
+                UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), attributeLocation, anonymousClass.getName());
+                attribute.setVariableDeclaration(vd);
+                attribute.setVisibility(Visibility.PRIVATE);
+                vd.setInitializer(new AbstractExpression(cu, sourceFolder, filePath, value, LocationInfo.CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent));
+                //the dictionaries nested in the value
+                for (UMLAnonymousClass nested : container.getAnonymousClassList()) {
+                    if (attributeLocation.subsumes(nested.getLocationInfo())) {
+                        attribute.addAnonymousClass(nested);
+                        nested.addParentContainer(attribute);
+                    }
+                }
+                anonymousClass.addAttribute(attribute);
+            }
+        }
+        if (container instanceof LambdaExpressionObject lambda) {
+            VariableDeclarationContainer owner = lambda.getOwner();
+            owner.getAnonymousClassList().add(anonymousClass);
+            while (owner instanceof LambdaExpressionObject parentLambda && parentLambda.getOwner() != null) {
+                parentLambda.getOwner().getAnonymousClassList().add(anonymousClass);
+                owner = parentLambda.getOwner();
+            }
+        }
+        else if (!alreadyAdded) {
+            container.getAnonymousClassList().add(anonymousClass);
+        }
+        if (!anonymousClass.getParentContainers().contains(container))
+            anonymousClass.addParentContainer(container);
+        return anonymousClass;
+    }
+
+    //the path of the dictionary through its enclosing functions, assigned names, keys and calls, like the code path of a TypeScript object literal
+    private String anonymousCodePath(LangDictionaryLiteral dictionary) {
+        String name = "";
+        LangASTNode child = dictionary;
+        for (LangASTNode parent = dictionary.getParent(); parent != null; child = parent, parent = parent.getParent()) {
+            String part = null;
+            if (parent instanceof LangMethodDeclaration method) {
+                part = method.getName();
+            }
+            else if (parent instanceof LangAssignment assignment && assignment.getLeftSide() != null && assignment.getLeftSide() != child) {
+                part = fileContent.substring(assignment.getLeftSide().getStartChar(), assignment.getLeftSide().getEndChar());
+            }
+            else if (parent instanceof LangDictionaryLiteral parentDictionary) {
+                for (LangDictionaryLiteral.Entry entry : parentDictionary.getEntries()) {
+                    if (entry.getValue() == child) {
+                        part = fileContent.substring(entry.getKey().getStartChar(), entry.getKey().getEndChar());
+                    }
+                }
+            }
+            else if (parent instanceof LangMethodInvocation invocation) {
+                part = invocation.getName();
+            }
+            if (part != null) {
+                name = name.isEmpty() ? part : part + "." + name;
+            }
+        }
+        return name;
+    }
 
     @Override
     public void visit(LangTupleLiteral langTupleLiteral) {

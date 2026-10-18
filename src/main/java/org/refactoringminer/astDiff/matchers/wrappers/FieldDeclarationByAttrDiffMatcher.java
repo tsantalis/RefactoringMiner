@@ -1,7 +1,10 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLAttributeDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
@@ -30,8 +33,34 @@ public class FieldDeclarationByAttrDiffMatcher extends OptimizationAwareMatcher 
     public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processFieldDeclarationByAttrDiff(srcTree, dstTree, umlAttrDiff, mappingStore);
     }
+    private static boolean initializerMapped(UMLAttributeDiff umlAttributeDiff) {
+        if (umlAttributeDiff.getInitializerMapper().isEmpty())
+            return false;
+        AbstractExpression initializer1 = umlAttributeDiff.getRemovedAttribute().getVariableDeclaration().getInitializer();
+        AbstractExpression initializer2 = umlAttributeDiff.getAddedAttribute().getVariableDeclaration().getInitializer();
+        if (initializer1 == null || initializer2 == null)
+            return false;
+        UMLOperationBodyMapper mapper = umlAttributeDiff.getInitializerMapper().get();
+        boolean mapped = false;
+        for (AbstractCodeMapping mapping : mapper.getMappings()) {
+            if (mapping.getFragment1() == initializer1 && mapping.getFragment2() == initializer2)
+                mapped = true;
+        }
+        if (!mapped)
+            return false;
+        //the initializers contain anonymous classes matched through their attributes, i.e., the object literal of StyleSheet.create({...})
+        for (UMLAnonymousClassDiff anonymousClassDiff : mapper.getAnonymousClassDiffs()) {
+            if (mapper.matchedThroughAttributes(anonymousClassDiff) &&
+                    initializer1.getLocationInfo().subsumes(anonymousClassDiff.getOriginalClass().getLocationInfo()) &&
+                    initializer2.getLocationInfo().subsumes(anonymousClassDiff.getNextClass().getLocationInfo()))
+                return true;
+        }
+        return false;
+    }
+
     private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
         FieldDeclarationMatcher fieldDeclarationMatcher = new FieldDeclarationMatcher(optimizationData, umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute(), umlAttributeDiff.getJavadocDiff(), umlAttributeDiff.getCommentListDiff(), LANG1, LANG2);
+        fieldDeclarationMatcher.setInitializerMapped(initializerMapped(umlAttributeDiff));
         fieldDeclarationMatcher.match(srcTree,dstTree,mappingStore);
         if (umlAttributeDiff.getInitializerMapper().isPresent()) {
             UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();

@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
+import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
@@ -66,8 +67,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 //the comments inside the anonymous class, which are not inside its operations
                 new CommentMatcher(optimizationData, anonymousClassDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
-                Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
-                Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);
+                Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT,LANG1.DICTIONARY);
+                Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT,LANG2.DICTIONARY);
                 if(srcTypeDeclaration != null && dstTypeDeclaration != null) {
                     Tree object1 = srcTypeDeclaration;
                     Tree object2 = dstTypeDeclaration;
@@ -1209,6 +1210,49 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
     }
 
+    private static boolean unmapped(Set<Tree> mapped) {
+        return mapped == null || mapped.isEmpty();
+    }
+
+    //the anonymous classes without operations matched through their attributes within the fragments of the mapping
+    private List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs(AbstractCodeMapping mapping, boolean initializer) {
+        List<UMLAnonymousClassDiff> diffs = new ArrayList<>();
+        if (initializer && (!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER) ||
+                !mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER)))
+            return diffs;
+        //in an initializer, the anonymous classes matched through their operations too, i.e., prompt: { start: message => ..., retry: ... }
+        for (UMLAnonymousClassDiff anonymousClassDiff : bodyMapper.getAnonymousClassDiffs()) {
+            if ((initializer || bodyMapper.matchedThroughAttributes(anonymousClassDiff)) &&
+                    mapping.getFragment1().getLocationInfo().subsumes(anonymousClassDiff.getOriginalClass().getLocationInfo()) &&
+                    mapping.getFragment2().getLocationInfo().subsumes(anonymousClassDiff.getNextClass().getLocationInfo()))
+                diffs.add(anonymousClassDiff);
+        }
+        return diffs;
+    }
+
+    //the leaves of the anonymous classes matched by the model are mapped through their attributes and operations, so within them
+    //the leaves of the statement only complete the unmapped ones, i.e., the commas between the attributes of StyleSheet.create({...}) are not mapped again
+    private void matchLeavesAroundAnonymousClasses(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode,
+            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs, ExtendedMultiMappingStore mappingStore) {
+        ExtendedMultiMappingStore statementMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
+        new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,statementMappings);
+        for (Mapping mapping : statementMappings) {
+            if (!withinAnonymousClass(mapping, matchedAnonymousClassDiffs) ||
+                    (unmapped(mappingStore.getDsts(mapping.first)) && unmapped(mappingStore.getSrcs(mapping.second))))
+                mappingStore.addMapping(mapping.first, mapping.second);
+        }
+    }
+
+    private static boolean withinAnonymousClass(Mapping mapping, List<UMLAnonymousClassDiff> anonymousClassDiffs) {
+        for (UMLAnonymousClassDiff anonymousClassDiff : anonymousClassDiffs) {
+            LocationInfo location1 = anonymousClassDiff.getOriginalClass().getLocationInfo();
+            LocationInfo location2 = anonymousClassDiff.getNextClass().getLocationInfo();
+            if ((mapping.first.getPos() >= location1.getStartOffset() && mapping.first.getEndPos() <= location1.getEndOffset()) ||
+                    (mapping.second.getPos() >= location2.getStartOffset() && mapping.second.getEndPos() <= location2.getEndOffset()))
+                return true;
+        }
+        return false;
+    }
     private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
         LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
         if(leafMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT) && leafMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT)) {
@@ -1490,9 +1534,19 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     _abstractExpWithNonCompositeOwner = false;
         }
         if (_abstractExpWithNonCompositeOwner || _leafExp) {
-            optimizationData.getLastStepMappings().add(abstractCodeMapping);
+            //the initializers with anonymous classes without operations matched through their attributes are not matched again as leaves in the last step,
+            //which overrides the mappings of their attributes, i.e., the object literal of StyleSheet.create({...})
+            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, true);
+            if (matchedAnonymousClassDiffs.isEmpty())
+                optimizationData.getLastStepMappings().add(abstractCodeMapping);
+            else
+                matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
         } else {
-            new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
+            List<UMLAnonymousClassDiff> matchedAnonymousClassDiffs = matchedAnonymousClassDiffs(abstractCodeMapping, false);
+            if (!matchedAnonymousClassDiffs.isEmpty())
+                matchLeavesAroundAnonymousClasses(srcTree, dstTree, srcStatementNode, dstStatementNode, matchedAnonymousClassDiffs, mappingStore);
+            else
+                new IgnoringCommentsLeafMatcher(LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         }
         optimizeVariableDeclarations(abstractCodeMapping);

@@ -9503,6 +9503,17 @@
   "firstEndPos" : 3792,
   "secondEndPos" : 5549
 }, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 3795,
+  "secondPos" : 5552,
+  "firstEndPos" : 3828,
+  "secondEndPos" : 5576
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "direction",
@@ -9514,6 +9525,50 @@
   "firstEndPos" : 3804,
   "secondEndPos" : 5561
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 3805,
+  "secondPos" : 5562,
+  "firstEndPos" : 3806,
+  "secondEndPos" : 5563
+}, {
+  "firstType" : "member_expression",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 3807,
+  "secondPos" : 5564,
+  "firstEndPos" : 3828,
+  "secondEndPos" : 5576
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 3828,
+  "secondPos" : 5576,
+  "firstEndPos" : 3829,
+  "secondEndPos" : 5577
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 3832,
+  "secondPos" : 5580,
+  "firstEndPos" : 3855,
+  "secondEndPos" : 5603
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "defaultFocusedIndex",
@@ -9524,6 +9579,39 @@
   "secondPos" : 5580,
   "firstEndPos" : 3851,
   "secondEndPos" : 5599
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 3852,
+  "secondPos" : 5600,
+  "firstEndPos" : 3853,
+  "secondEndPos" : 5601
+}, {
+  "firstType" : "number",
+  "secondType" : "number",
+  "firstLabel" : "0",
+  "secondLabel" : "0",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 3854,
+  "secondPos" : 5602,
+  "firstEndPos" : 3855,
+  "secondEndPos" : 5603
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 3855,
+  "secondPos" : 5603,
+  "firstEndPos" : 3856,
+  "secondEndPos" : 5604
 }, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
@@ -12099,6 +12187,39 @@
   "firstEndPos" : 4882,
   "secondEndPos" : 6713
 }, {
+  "firstType" : "object_pattern",
+  "secondType" : "object_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 4882,
+  "secondPos" : 6713,
+  "firstEndPos" : 4912,
+  "secondEndPos" : 6743
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 4882,
+  "secondPos" : 6713,
+  "firstEndPos" : 4883,
+  "secondEndPos" : 6714
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 4884,
+  "secondPos" : 6715,
+  "firstEndPos" : 4900,
+  "secondEndPos" : 6731
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "role",
@@ -12110,6 +12231,94 @@
   "firstEndPos" : 4888,
   "secondEndPos" : 6719
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 4889,
+  "secondPos" : 6720,
+  "firstEndPos" : 4890,
+  "secondEndPos" : 6721
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 4891,
+  "secondPos" : 6722,
+  "firstEndPos" : 4900,
+  "secondEndPos" : 6731
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 4891,
+  "secondPos" : 6722,
+  "firstEndPos" : 4892,
+  "secondEndPos" : 6723
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "listbox",
+  "secondLabel" : "listbox",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 4892,
+  "secondPos" : 6723,
+  "firstEndPos" : 4899,
+  "secondEndPos" : 6730
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 4899,
+  "secondPos" : 6730,
+  "firstEndPos" : 4900,
+  "secondEndPos" : 6731
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 4900,
+  "secondPos" : 6731,
+  "firstEndPos" : 4901,
+  "secondEndPos" : 6732
+}, {
+  "firstType" : "rest_pattern",
+  "secondType" : "rest_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 4902,
+  "secondPos" : 6733,
+  "firstEndPos" : 4910,
+  "secondEndPos" : 6741
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "rest_pattern",
+  "secondParentType" : "rest_pattern",
+  "firstPos" : 4902,
+  "secondPos" : 6733,
+  "firstEndPos" : 4905,
+  "secondEndPos" : 6736
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "other",
@@ -12120,6 +12329,17 @@
   "secondPos" : 6736,
   "firstEndPos" : 4910,
   "secondEndPos" : 6741
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 4911,
+  "secondPos" : 6742,
+  "firstEndPos" : 4912,
+  "secondEndPos" : 6743
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -12142,6 +12362,501 @@
   "secondPos" : 6772,
   "firstEndPos" : 4921,
   "secondEndPos" : 6774
+}, {
+  "firstType" : "parenthesized_expression",
+  "secondType" : "parenthesized_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "arrow_function",
+  "firstPos" : 4922,
+  "secondPos" : 6779,
+  "firstEndPos" : 5130,
+  "secondEndPos" : 6997
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parenthesized_expression",
+  "secondParentType" : "parenthesized_expression",
+  "firstPos" : 4922,
+  "secondPos" : 6779,
+  "firstEndPos" : 4923,
+  "secondEndPos" : 6780
+}, {
+  "firstType" : "object",
+  "secondType" : "object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "parenthesized_expression",
+  "secondParentType" : "as_expression",
+  "firstPos" : 4923,
+  "secondPos" : 6780,
+  "firstEndPos" : 5129,
+  "secondEndPos" : 6989
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 4923,
+  "secondPos" : 6780,
+  "firstEndPos" : 4924,
+  "secondEndPos" : 6781
+}, {
+  "firstType" : "shorthand_property_identifier",
+  "secondType" : "shorthand_property_identifier",
+  "firstLabel" : "role",
+  "secondLabel" : "role",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 4929,
+  "secondPos" : 6788,
+  "firstEndPos" : 4933,
+  "secondEndPos" : 6792
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 4933,
+  "secondPos" : 6792,
+  "firstEndPos" : 4934,
+  "secondEndPos" : 6793
+}, {
+  "firstType" : "pair",
+  "secondType" : "pair",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 4939,
+  "secondPos" : 6800,
+  "firstEndPos" : 5012,
+  "secondEndPos" : 6864
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 4939,
+  "secondPos" : 6800,
+  "firstEndPos" : 4957,
+  "secondEndPos" : 6818
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 4939,
+  "secondPos" : 6800,
+  "firstEndPos" : 4940,
+  "secondEndPos" : 6801
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "aria-orientation",
+  "secondLabel" : "aria-orientation",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 4940,
+  "secondPos" : 6801,
+  "firstEndPos" : 4956,
+  "secondEndPos" : 6817
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 4956,
+  "secondPos" : 6817,
+  "firstEndPos" : 4957,
+  "secondEndPos" : 6818
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 4957,
+  "secondPos" : 6818,
+  "firstEndPos" : 4958,
+  "secondEndPos" : 6819
+}, {
+  "firstType" : "ternary_expression",
+  "secondType" : "ternary_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 4959,
+  "secondPos" : 6820,
+  "firstEndPos" : 5012,
+  "secondEndPos" : 6864
+}, {
+  "firstType" : "binary_expression",
+  "secondType" : "binary_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ternary_expression",
+  "secondParentType" : "ternary_expression",
+  "firstPos" : 4959,
+  "secondPos" : 6820,
+  "firstEndPos" : 4988,
+  "secondEndPos" : 6840
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "direction",
+  "secondLabel" : "direction",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 4959,
+  "secondPos" : 6820,
+  "firstEndPos" : 4968,
+  "secondEndPos" : 6829
+}, {
+  "firstType" : "===",
+  "secondType" : "===",
+  "firstLabel" : "===",
+  "secondLabel" : "===",
+  "firstParentType" : "binary_expression",
+  "secondParentType" : "binary_expression",
+  "firstPos" : 4969,
+  "secondPos" : 6830,
+  "firstEndPos" : 4972,
+  "secondEndPos" : 6833
+}, {
+  "firstType" : "?",
+  "secondType" : "?",
+  "firstLabel" : "?",
+  "secondLabel" : "?",
+  "firstParentType" : "ternary_expression",
+  "secondParentType" : "ternary_expression",
+  "firstPos" : 4989,
+  "secondPos" : 6841,
+  "firstEndPos" : 4990,
+  "secondEndPos" : 6842
+}, {
+  "firstType" : "undefined",
+  "secondType" : "undefined",
+  "firstLabel" : "undefined",
+  "secondLabel" : "undefined",
+  "firstParentType" : "ternary_expression",
+  "secondParentType" : "ternary_expression",
+  "firstPos" : 4991,
+  "secondPos" : 6843,
+  "firstEndPos" : 5000,
+  "secondEndPos" : 6852
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "ternary_expression",
+  "secondParentType" : "ternary_expression",
+  "firstPos" : 5001,
+  "secondPos" : 6853,
+  "firstEndPos" : 5002,
+  "secondEndPos" : 6854
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "direction",
+  "secondLabel" : "direction",
+  "firstParentType" : "ternary_expression",
+  "secondParentType" : "ternary_expression",
+  "firstPos" : 5003,
+  "secondPos" : 6855,
+  "firstEndPos" : 5012,
+  "secondEndPos" : 6864
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5012,
+  "secondPos" : 6864,
+  "firstEndPos" : 5013,
+  "secondEndPos" : 6865
+}, {
+  "firstType" : "pair",
+  "secondType" : "pair",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5018,
+  "secondPos" : 6872,
+  "firstEndPos" : 5057,
+  "secondEndPos" : 6911
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 5018,
+  "secondPos" : 6872,
+  "firstEndPos" : 5044,
+  "secondEndPos" : 6898
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5018,
+  "secondPos" : 6872,
+  "firstEndPos" : 5019,
+  "secondEndPos" : 6873
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "data-garden-container-id",
+  "secondLabel" : "data-garden-container-id",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5019,
+  "secondPos" : 6873,
+  "firstEndPos" : 5043,
+  "secondEndPos" : 6897
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5043,
+  "secondPos" : 6897,
+  "firstEndPos" : 5044,
+  "secondEndPos" : 6898
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 5044,
+  "secondPos" : 6898,
+  "firstEndPos" : 5045,
+  "secondEndPos" : 6899
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 5046,
+  "secondPos" : 6900,
+  "firstEndPos" : 5057,
+  "secondEndPos" : 6911
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5046,
+  "secondPos" : 6900,
+  "firstEndPos" : 5047,
+  "secondEndPos" : 6901
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "selection",
+  "secondLabel" : "selection",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5047,
+  "secondPos" : 6901,
+  "firstEndPos" : 5056,
+  "secondEndPos" : 6910
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5056,
+  "secondPos" : 6910,
+  "firstEndPos" : 5057,
+  "secondEndPos" : 6911
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5057,
+  "secondPos" : 6911,
+  "firstEndPos" : 5058,
+  "secondEndPos" : 6912
+}, {
+  "firstType" : "pair",
+  "secondType" : "pair",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5063,
+  "secondPos" : 6919,
+  "firstEndPos" : 5111,
+  "secondEndPos" : 6967
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 5063,
+  "secondPos" : 6919,
+  "firstEndPos" : 5094,
+  "secondEndPos" : 6950
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5063,
+  "secondPos" : 6919,
+  "firstEndPos" : 5064,
+  "secondEndPos" : 6920
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "data-garden-container-version",
+  "secondLabel" : "data-garden-container-version",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5064,
+  "secondPos" : 6920,
+  "firstEndPos" : 5093,
+  "secondEndPos" : 6949
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5093,
+  "secondPos" : 6949,
+  "firstEndPos" : 5094,
+  "secondEndPos" : 6950
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 5094,
+  "secondPos" : 6950,
+  "firstEndPos" : 5095,
+  "secondEndPos" : 6951
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "PACKAGE_VERSION",
+  "secondLabel" : "PACKAGE_VERSION",
+  "firstParentType" : "pair",
+  "secondParentType" : "pair",
+  "firstPos" : 5096,
+  "secondPos" : 6952,
+  "firstEndPos" : 5111,
+  "secondEndPos" : 6967
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5111,
+  "secondPos" : 6967,
+  "firstEndPos" : 5112,
+  "secondEndPos" : 6968
+}, {
+  "firstType" : "spread_element",
+  "secondType" : "spread_element",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5117,
+  "secondPos" : 6975,
+  "firstEndPos" : 5125,
+  "secondEndPos" : 6983
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "spread_element",
+  "secondParentType" : "spread_element",
+  "firstPos" : 5117,
+  "secondPos" : 6975,
+  "firstEndPos" : 5120,
+  "secondEndPos" : 6978
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "other",
+  "secondLabel" : "other",
+  "firstParentType" : "spread_element",
+  "secondParentType" : "spread_element",
+  "firstPos" : 5120,
+  "secondPos" : 6978,
+  "firstEndPos" : 5125,
+  "secondEndPos" : 6983
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 5128,
+  "secondPos" : 6988,
+  "firstEndPos" : 5129,
+  "secondEndPos" : 6989
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parenthesized_expression",
+  "secondParentType" : "parenthesized_expression",
+  "firstPos" : 5129,
+  "secondPos" : 6996,
+  "firstEndPos" : 5130,
+  "secondEndPos" : 6997
 }, {
   "firstType" : ";",
   "secondType" : ";",
@@ -12264,6 +12979,17 @@
   "firstEndPos" : 5163,
   "secondEndPos" : 7030
 }, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5170,
+  "secondPos" : 7037,
+  "firstEndPos" : 5203,
+  "secondEndPos" : 7070
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "selectedAriaKey",
@@ -12274,6 +13000,83 @@
   "secondPos" : 7037,
   "firstEndPos" : 5185,
   "secondEndPos" : 7052
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 5186,
+  "secondPos" : 7053,
+  "firstEndPos" : 5187,
+  "secondEndPos" : 7054
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 5188,
+  "secondPos" : 7055,
+  "firstEndPos" : 5203,
+  "secondEndPos" : 7070
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5188,
+  "secondPos" : 7055,
+  "firstEndPos" : 5189,
+  "secondEndPos" : 7056
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "aria-selected",
+  "secondLabel" : "aria-selected",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5189,
+  "secondPos" : 7056,
+  "firstEndPos" : 5202,
+  "secondEndPos" : 7069
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5202,
+  "secondPos" : 7069,
+  "firstEndPos" : 5203,
+  "secondEndPos" : 7070
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5203,
+  "secondPos" : 7070,
+  "firstEndPos" : 5204,
+  "secondEndPos" : 7071
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5211,
+  "secondPos" : 7078,
+  "firstEndPos" : 5226,
+  "secondEndPos" : 7093
 }, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
@@ -12286,6 +13089,105 @@
   "firstEndPos" : 5215,
   "secondEndPos" : 7082
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 5216,
+  "secondPos" : 7083,
+  "firstEndPos" : 5217,
+  "secondEndPos" : 7084
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 5218,
+  "secondPos" : 7085,
+  "firstEndPos" : 5226,
+  "secondEndPos" : 7093
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5218,
+  "secondPos" : 7085,
+  "firstEndPos" : 5219,
+  "secondEndPos" : 7086
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "option",
+  "secondLabel" : "option",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5219,
+  "secondPos" : 7086,
+  "firstEndPos" : 5225,
+  "secondEndPos" : 7092
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5225,
+  "secondPos" : 7092,
+  "firstEndPos" : 5226,
+  "secondEndPos" : 7093
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5226,
+  "secondPos" : 7093,
+  "firstEndPos" : 5227,
+  "secondEndPos" : 7094
+}, {
+  "firstType" : "pair_pattern",
+  "secondType" : "pair_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5234,
+  "secondPos" : 7101,
+  "firstEndPos" : 5258,
+  "secondEndPos" : 7125
+}, {
+  "firstType" : "property_identifier",
+  "secondType" : "property_identifier",
+  "firstLabel" : "onFocus",
+  "secondLabel" : "onFocus",
+  "firstParentType" : "pair_pattern",
+  "secondParentType" : "pair_pattern",
+  "firstPos" : 5234,
+  "secondPos" : 7101,
+  "firstEndPos" : 5241,
+  "secondEndPos" : 7108
+}, {
+  "firstType" : ":",
+  "secondType" : ":",
+  "firstLabel" : ":",
+  "secondLabel" : ":",
+  "firstParentType" : "pair_pattern",
+  "secondParentType" : "pair_pattern",
+  "firstPos" : 5241,
+  "secondPos" : 7108,
+  "firstEndPos" : 5242,
+  "secondEndPos" : 7109
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "onFocusCallback",
@@ -12296,6 +13198,17 @@
   "secondPos" : 7110,
   "firstEndPos" : 5258,
   "secondEndPos" : 7125
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5258,
+  "secondPos" : 7125,
+  "firstEndPos" : 5259,
+  "secondEndPos" : 7126
 }, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
@@ -12385,6 +13298,17 @@
   "firstEndPos" : 5319,
   "secondEndPos" : 7186
 }, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5326,
+  "secondPos" : 7193,
+  "firstEndPos" : 5340,
+  "secondEndPos" : 7207
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "refKey",
@@ -12395,6 +13319,94 @@
   "secondPos" : 7193,
   "firstEndPos" : 5332,
   "secondEndPos" : 7199
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 5333,
+  "secondPos" : 7200,
+  "firstEndPos" : 5334,
+  "secondEndPos" : 7201
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 5335,
+  "secondPos" : 7202,
+  "firstEndPos" : 5340,
+  "secondEndPos" : 7207
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5335,
+  "secondPos" : 7202,
+  "firstEndPos" : 5336,
+  "secondEndPos" : 7203
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "ref",
+  "secondLabel" : "ref",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5336,
+  "secondPos" : 7203,
+  "firstEndPos" : 5339,
+  "secondEndPos" : 7206
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5339,
+  "secondPos" : 7206,
+  "firstEndPos" : 5340,
+  "secondEndPos" : 7207
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5340,
+  "secondPos" : 7207,
+  "firstEndPos" : 5341,
+  "secondEndPos" : 7208
+}, {
+  "firstType" : "rest_pattern",
+  "secondType" : "rest_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 5348,
+  "secondPos" : 7215,
+  "firstEndPos" : 5356,
+  "secondEndPos" : 7223
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "rest_pattern",
+  "secondParentType" : "rest_pattern",
+  "firstPos" : 5348,
+  "secondPos" : 7215,
+  "firstEndPos" : 5351,
+  "secondEndPos" : 7218
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -12418,6 +13430,17 @@
   "firstEndPos" : 5362,
   "secondEndPos" : 7229
 }, {
+  "firstType" : "assignment_pattern",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 5373,
+  "secondPos" : 7275,
+  "firstEndPos" : 5404,
+  "secondEndPos" : 7306
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "propGetterName",
@@ -12428,6 +13451,61 @@
   "secondPos" : 7275,
   "firstEndPos" : 5387,
   "secondEndPos" : 7289
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 5388,
+  "secondPos" : 7290,
+  "firstEndPos" : 5389,
+  "secondEndPos" : 7291
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 5390,
+  "secondPos" : 7292,
+  "firstEndPos" : 5404,
+  "secondEndPos" : 7306
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5390,
+  "secondPos" : 7292,
+  "firstEndPos" : 5391,
+  "secondEndPos" : 7293
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "getItemProps",
+  "secondLabel" : "getItemProps",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5391,
+  "secondPos" : 7293,
+  "firstEndPos" : 5403,
+  "secondEndPos" : 7305
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 5403,
+  "secondPos" : 7305,
+  "firstEndPos" : 5404,
+  "secondEndPos" : 7306
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -15289,17 +16367,6 @@
   "firstEndPos" : 6743,
   "secondEndPos" : 8617
 }, {
-  "firstType" : ",",
-  "secondType" : ",",
-  "firstLabel" : ",",
-  "secondLabel" : ",",
-  "firstParentType" : "object",
-  "secondParentType" : "object",
-  "firstPos" : 6749,
-  "secondPos" : 8616,
-  "firstEndPos" : 6750,
-  "secondEndPos" : 8617
-}, {
   "firstType" : "shorthand_property_identifier",
   "secondType" : "shorthand_property_identifier",
   "firstLabel" : "onFocus",
@@ -15663,6 +16730,17 @@
   "firstEndPos" : 6859,
   "secondEndPos" : 8726
 }, {
+  "firstType" : ".",
+  "secondType" : ".",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "nested_type_identifier",
+  "firstPos" : 6867,
+  "secondPos" : 8848,
+  "firstEndPos" : 6868,
+  "secondEndPos" : 8849
+}, {
   "firstType" : ",",
   "secondType" : ",",
   "firstLabel" : ",",
@@ -15937,6 +17015,17 @@
   "secondPos" : 8839,
   "firstEndPos" : 8405,
   "secondEndPos" : 10221
+}, {
+  "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "e",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 6985,
+  "secondPos" : 8840,
+  "firstEndPos" : 6986,
+  "secondEndPos" : 8862
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",
@@ -19930,6 +21019,17 @@
   "secondPos" : 10133,
   "firstEndPos" : 8302,
   "secondEndPos" : 10137
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object",
+  "secondParentType" : "object",
+  "firstPos" : 8302,
+  "secondPos" : 10137,
+  "firstEndPos" : 8303,
+  "secondEndPos" : 10138
 }, {
   "firstType" : ",",
   "secondType" : ",",

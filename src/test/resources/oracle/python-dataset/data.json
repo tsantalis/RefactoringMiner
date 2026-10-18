@@ -7979,6 +7979,20 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter rho_lmf in method public feed_dict(batch, rho_f, rho_r, rho_lmf, rho_rec, gamma, is_train) from class models.tsf.tsf_classifier_att_lm_rec.TSFClassifierAttLMRec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Add Parameter",
+        "description": "Add Parameter rho_rec in method public feed_dict(batch, rho_f, rho_r, rho_lmf, rho_rec, gamma, is_train) from class models.tsf.tsf_classifier_att_lm_rec.TSFClassifierAttLMRec",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -9137,6 +9151,13 @@
     }, {
         "type": "Add Parameter",
         "description": "Add Parameter tgt_length in method protected _build(inputs, encoder_output, src_length, tgt_length) from class modules.decoders.transformer_decoders.TransformerDecoder",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Variable",
+        "description": "Extract Variable hidden_dim in attribute transformer.transformer.__module__ from class transformer.transformer.__module__",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

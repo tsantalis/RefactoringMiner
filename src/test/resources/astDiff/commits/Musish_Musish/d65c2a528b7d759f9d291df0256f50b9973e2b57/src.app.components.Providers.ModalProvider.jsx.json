@@ -692,6 +692,39 @@
   "firstEndPos" : 245,
   "secondEndPos" : 529
 }, {
+  "firstType" : "object_pattern",
+  "secondType" : "object_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "required_parameter",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 245,
+  "secondPos" : 529,
+  "firstEndPos" : 257,
+  "secondEndPos" : 548
+}, {
+  "firstType" : "required_parameter",
+  "secondType" : "required_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "formal_parameters",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 245,
+  "secondPos" : 529,
+  "firstEndPos" : 257,
+  "secondEndPos" : 573
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 245,
+  "secondPos" : 529,
+  "firstEndPos" : 246,
+  "secondEndPos" : 530
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "children",
@@ -702,6 +735,28 @@
   "secondPos" : 531,
   "firstEndPos" : 255,
   "secondEndPos" : 539
+}, {
+  "firstType" : "shorthand_property_identifier_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "children",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 247,
+  "secondPos" : 531,
+  "firstEndPos" : 255,
+  "secondEndPos" : 546
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 256,
+  "secondPos" : 547,
+  "firstEndPos" : 257,
+  "secondEndPos" : 548
 }, {
   "firstType" : ")",
   "secondType" : ")",

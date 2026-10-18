@@ -626,6 +626,39 @@
   "firstEndPos" : 404,
   "secondEndPos" : 1054
 }, {
+  "firstType" : "object_pattern",
+  "secondType" : "object_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 404,
+  "secondPos" : 1054,
+  "firstEndPos" : 432,
+  "secondEndPos" : 1082
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 404,
+  "secondPos" : 1054,
+  "firstEndPos" : 405,
+  "secondEndPos" : 1055
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 406,
+  "secondPos" : 1056,
+  "firstEndPos" : 420,
+  "secondEndPos" : 1070
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "role",
@@ -637,6 +670,94 @@
   "firstEndPos" : 410,
   "secondEndPos" : 1060
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 411,
+  "secondPos" : 1061,
+  "firstEndPos" : 412,
+  "secondEndPos" : 1062
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 413,
+  "secondPos" : 1063,
+  "firstEndPos" : 420,
+  "secondEndPos" : 1070
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 413,
+  "secondPos" : 1063,
+  "firstEndPos" : 414,
+  "secondEndPos" : 1064
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "group",
+  "secondLabel" : "group",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 414,
+  "secondPos" : 1064,
+  "firstEndPos" : 419,
+  "secondEndPos" : 1069
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 419,
+  "secondPos" : 1069,
+  "firstEndPos" : 420,
+  "secondEndPos" : 1070
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 420,
+  "secondPos" : 1070,
+  "firstEndPos" : 421,
+  "secondEndPos" : 1071
+}, {
+  "firstType" : "rest_pattern",
+  "secondType" : "rest_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 422,
+  "secondPos" : 1072,
+  "firstEndPos" : 430,
+  "secondEndPos" : 1080
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "rest_pattern",
+  "secondParentType" : "rest_pattern",
+  "firstPos" : 422,
+  "secondPos" : 1072,
+  "firstEndPos" : 425,
+  "secondEndPos" : 1075
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "other",
@@ -647,6 +768,17 @@
   "secondPos" : 1075,
   "firstEndPos" : 430,
   "secondEndPos" : 1080
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 431,
+  "secondPos" : 1081,
+  "firstEndPos" : 432,
+  "secondEndPos" : 1082
 }, {
   "firstType" : ")",
   "secondType" : ")",
@@ -1132,6 +1264,39 @@
   "firstEndPos" : 628,
   "secondEndPos" : 1278
 }, {
+  "firstType" : "object_pattern",
+  "secondType" : "object_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 628,
+  "secondPos" : 1278,
+  "firstEndPos" : 714,
+  "secondEndPos" : 1341
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 628,
+  "secondPos" : 1278,
+  "firstEndPos" : 629,
+  "secondEndPos" : 1279
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 634,
+  "secondPos" : 1280,
+  "firstEndPos" : 649,
+  "secondEndPos" : 1295
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "role",
@@ -1142,6 +1307,83 @@
   "secondPos" : 1280,
   "firstEndPos" : 638,
   "secondEndPos" : 1284
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 639,
+  "secondPos" : 1285,
+  "firstEndPos" : 640,
+  "secondEndPos" : 1286
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 641,
+  "secondPos" : 1287,
+  "firstEndPos" : 649,
+  "secondEndPos" : 1295
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 641,
+  "secondPos" : 1287,
+  "firstEndPos" : 642,
+  "secondEndPos" : 1288
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "button",
+  "secondLabel" : "button",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 642,
+  "secondPos" : 1288,
+  "firstEndPos" : 648,
+  "secondEndPos" : 1294
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 648,
+  "secondPos" : 1294,
+  "firstEndPos" : 649,
+  "secondEndPos" : 1295
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 649,
+  "secondPos" : 1295,
+  "firstEndPos" : 650,
+  "secondEndPos" : 1296
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 664,
+  "secondPos" : 1297,
+  "firstEndPos" : 696,
+  "secondEndPos" : 1329
 }, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
@@ -1154,6 +1396,94 @@
   "firstEndPos" : 679,
   "secondEndPos" : 1312
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 680,
+  "secondPos" : 1313,
+  "firstEndPos" : 681,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "string",
+  "secondType" : "string",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 682,
+  "secondPos" : 1315,
+  "firstEndPos" : 696,
+  "secondEndPos" : 1329
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 682,
+  "secondPos" : 1315,
+  "firstEndPos" : 683,
+  "secondEndPos" : 1316
+}, {
+  "firstType" : "string_fragment",
+  "secondType" : "string_fragment",
+  "firstLabel" : "aria-pressed",
+  "secondLabel" : "aria-pressed",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 683,
+  "secondPos" : 1316,
+  "firstEndPos" : 695,
+  "secondEndPos" : 1328
+}, {
+  "firstType" : "'",
+  "secondType" : "'",
+  "firstLabel" : "'",
+  "secondLabel" : "'",
+  "firstParentType" : "string",
+  "secondParentType" : "string",
+  "firstPos" : 695,
+  "secondPos" : 1328,
+  "firstEndPos" : 696,
+  "secondEndPos" : 1329
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 696,
+  "secondPos" : 1329,
+  "firstEndPos" : 697,
+  "secondEndPos" : 1330
+}, {
+  "firstType" : "rest_pattern",
+  "secondType" : "rest_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 702,
+  "secondPos" : 1331,
+  "firstEndPos" : 710,
+  "secondEndPos" : 1339
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "rest_pattern",
+  "secondParentType" : "rest_pattern",
+  "firstPos" : 702,
+  "secondPos" : 1331,
+  "firstEndPos" : 705,
+  "secondEndPos" : 1334
+}, {
   "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "other",
@@ -1164,6 +1494,17 @@
   "secondPos" : 1334,
   "firstEndPos" : 710,
   "secondEndPos" : 1339
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 713,
+  "secondPos" : 1340,
+  "firstEndPos" : 714,
+  "secondEndPos" : 1341
 }, {
   "firstType" : ")",
   "secondType" : ")",

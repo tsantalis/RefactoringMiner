@@ -778,10 +778,16 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMapping(closingParen.first,closingParen.second);
             }
             //match first argument if it is not an object
-            if(!arguments1.getChild(1).getType().name.equals(LANG1.OBJECT) && !arguments2.getChild(1).getType().name.equals(LANG2.OBJECT)) {
-                mappingStore.addMappingRecursively(arguments1.getChild(1), arguments2.getChild(1));
-                if(arguments1.getChild(2).getType().name.equals(LANG1.COMMA) && arguments2.getChild(2).getType().name.equals(LANG2.COMMA))
-                    mappingStore.addMapping(arguments1.getChild(2), arguments2.getChild(2));
+            //Python argument lists have no parentheses and commas
+            int first = openingParen != null ? 1 : 0;
+            Tree argument1 = arguments1.getChild(first);
+            Tree argument2 = arguments2.getChild(first);
+            if(!argument1.getType().name.equals(LANG1.OBJECT) && !argument1.getType().name.equals(LANG1.DICTIONARY) &&
+                    !argument2.getType().name.equals(LANG2.OBJECT) && !argument2.getType().name.equals(LANG2.DICTIONARY)) {
+                mappingStore.addMappingRecursively(argument1, argument2);
+                if(arguments1.getChildren().size() > first+1 && arguments2.getChildren().size() > first+1 &&
+                        arguments1.getChild(first+1).getType().name.equals(LANG1.COMMA) && arguments2.getChild(first+1).getType().name.equals(LANG2.COMMA))
+                    mappingStore.addMapping(arguments1.getChild(first+1), arguments2.getChild(first+1));
             }
             Tree call1 = arguments1.getParent();
             Tree call2 = arguments2.getParent();

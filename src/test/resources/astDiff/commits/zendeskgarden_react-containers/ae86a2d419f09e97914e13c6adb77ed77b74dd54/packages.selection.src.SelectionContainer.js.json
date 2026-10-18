@@ -362,6 +362,17 @@
   "firstEndPos" : 352,
   "secondEndPos" : 640
 }, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 353,
+  "secondPos" : 643,
+  "firstEndPos" : 370,
+  "secondEndPos" : 660
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "render",
@@ -372,6 +383,61 @@
   "secondPos" : 643,
   "firstEndPos" : 359,
   "secondEndPos" : 649
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 360,
+  "secondPos" : 650,
+  "firstEndPos" : 361,
+  "secondEndPos" : 651
+}, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "children",
+  "secondLabel" : "children",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 362,
+  "secondPos" : 652,
+  "firstEndPos" : 370,
+  "secondEndPos" : 660
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 370,
+  "secondPos" : 660,
+  "firstEndPos" : 371,
+  "secondEndPos" : 661
+}, {
+  "firstType" : "rest_pattern",
+  "secondType" : "rest_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 372,
+  "secondPos" : 664,
+  "firstEndPos" : 382,
+  "secondEndPos" : 674
+}, {
+  "firstType" : "...",
+  "secondType" : "...",
+  "firstLabel" : "...",
+  "secondLabel" : "...",
+  "firstParentType" : "rest_pattern",
+  "secondParentType" : "rest_pattern",
+  "firstPos" : 372,
+  "secondPos" : 664,
+  "firstEndPos" : 375,
+  "secondEndPos" : 667
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",

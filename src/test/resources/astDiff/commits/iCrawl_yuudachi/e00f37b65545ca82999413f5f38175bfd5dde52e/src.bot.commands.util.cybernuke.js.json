@@ -1759,17 +1759,6 @@
   "firstEndPos" : 643,
   "secondEndPos" : 697
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "message",
-  "secondLabel" : "message",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "required_parameter",
-  "firstPos" : 636,
-  "secondPos" : 1061,
-  "firstEndPos" : 643,
-  "secondEndPos" : 1068
-}, {
   "firstType" : "=>",
   "secondType" : "=>",
   "firstLabel" : "=>",
@@ -1956,17 +1945,6 @@
   "secondPos" : 839,
   "firstEndPos" : 862,
   "secondEndPos" : 937
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "message",
-  "secondLabel" : "message",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "required_parameter",
-  "firstPos" : 775,
-  "secondPos" : 690,
-  "firstEndPos" : 782,
-  "secondEndPos" : 697
 }, {
   "firstType" : "identifier",
   "secondType" : "required_parameter",
@@ -2695,15 +2673,26 @@
   "secondEndPos" : 1200
 }, {
   "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "message",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 985,
+  "secondPos" : 1061,
+  "firstEndPos" : 992,
+  "secondEndPos" : 1077
+}, {
+  "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "message",
   "secondLabel" : "message",
   "firstParentType" : "arrow_function",
   "secondParentType" : "required_parameter",
   "firstPos" : 985,
-  "secondPos" : 1216,
+  "secondPos" : 1061,
   "firstEndPos" : 992,
-  "secondEndPos" : 1223
+  "secondEndPos" : 1068
 }, {
   "firstType" : "=>",
   "secondType" : "=>",
@@ -2893,15 +2882,26 @@
   "secondEndPos" : 1289
 }, {
   "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "message",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 1129,
+  "secondPos" : 1216,
+  "firstEndPos" : 1136,
+  "secondEndPos" : 1232
+}, {
+  "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "message",
   "secondLabel" : "message",
   "firstParentType" : "arrow_function",
   "secondParentType" : "required_parameter",
   "firstPos" : 1129,
-  "secondPos" : 840,
+  "secondPos" : 1216,
   "firstEndPos" : 1136,
-  "secondEndPos" : 847
+  "secondEndPos" : 1223
 }, {
   "firstType" : "=>",
   "secondType" : "=>",
@@ -10316,6 +10316,17 @@
   "secondPos" : 3511,
   "firstEndPos" : 3336,
   "secondEndPos" : 3526
+}, {
+  "firstType" : "identifier",
+  "secondType" : "non_null_expression",
+  "firstLabel" : "response",
+  "secondLabel" : "",
+  "firstParentType" : "member_expression",
+  "secondParentType" : "member_expression",
+  "firstPos" : 3322,
+  "secondPos" : 3511,
+  "firstEndPos" : 3330,
+  "secondEndPos" : 3520
 }, {
   "firstType" : "identifier",
   "secondType" : "identifier",

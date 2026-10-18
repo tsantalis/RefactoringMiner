@@ -119,6 +119,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
 	private Set<UMLAnonymousClassDiff> anonymousClassDiffs = new LinkedHashSet<UMLAnonymousClassDiff>();
+	//anonymous classes without operations matched while evaluating a statement pair, which are diffs only if the statement pair is mapped
+	private List<PendingAnonymousClassDiff> pendingAnonymousClassDiffs = new ArrayList<PendingAnonymousClassDiff>();
+	private record PendingAnonymousClassDiff(UMLAnonymousClassDiff anonymousClassDiff, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {}
 	private Set<UMLOperationBodyMapper> childMappers = new LinkedHashSet<UMLOperationBodyMapper>();
 	private UMLOperationBodyMapper parentMapper;
 	private Argumentization argumentization = new Argumentization(null);
@@ -4497,7 +4500,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public Set<UMLAnonymousClassDiff> getAnonymousClassDiffs() {
-		return anonymousClassDiffs;
+		if(pendingAnonymousClassDiffs.isEmpty())
+			return anonymousClassDiffs;
+		Set<UMLAnonymousClassDiff> diffs = new LinkedHashSet<UMLAnonymousClassDiff>(anonymousClassDiffs);
+		for(PendingAnonymousClassDiff pending : pendingAnonymousClassDiffs) {
+			if(!diffs.contains(pending.anonymousClassDiff()) && isMapped(pending.statement1(), pending.statement2())) {
+				diffs.add(pending.anonymousClassDiff());
+			}
+		}
+		return diffs;
+	}
+
+	private boolean isMapped(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1() == statement1 && mapping.getFragment2() == statement2) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void addAnonymousClassDiff(UMLAnonymousClassDiff anonymousClassDiff) {
+		anonymousClassDiffs.add(anonymousClassDiff);
+	}
+
+	//the anonymous classes without operations matched by their names, i.e., Python dictionaries and TypeScript object literals
+	public boolean matchedThroughAttributes(UMLAnonymousClassDiff anonymousClassDiff) {
+		for(PendingAnonymousClassDiff pending : pendingAnonymousClassDiffs) {
+			if(pending.anonymousClassDiff() == anonymousClassDiff) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void addPendingAnonymousClassDiff(UMLAnonymousClassDiff anonymousClassDiff, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		pendingAnonymousClassDiffs.add(new PendingAnonymousClassDiff(anonymousClassDiff, statement1, statement2));
 	}
 
 	public Set<AbstractCodeMapping> getMappings() {

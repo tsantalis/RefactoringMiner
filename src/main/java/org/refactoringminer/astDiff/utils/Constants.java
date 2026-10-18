@@ -448,6 +448,7 @@ public class Constants {
     public final String PARAMETERS = "parameters";
     public final String DEFAULT_PARAMETER = "default_parameter";
     public final String PATTERN_LIST = "pattern_list";
+    public final String DICTIONARY = "dictionary";
     public final String DICTIONARY_SPLAT_PATTERN = "dictionary_splat_pattern";
     public final String SPLAT_DOUBLE = "**";
     public final String LIST_SPLAT_PATTERN = "list_splat_pattern";

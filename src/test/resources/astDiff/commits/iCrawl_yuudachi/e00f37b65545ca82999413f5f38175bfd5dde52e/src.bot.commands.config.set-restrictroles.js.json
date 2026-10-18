@@ -1572,17 +1572,6 @@
   "firstEndPos" : 560,
   "secondEndPos" : 609
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "message",
-  "secondLabel" : "message",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "required_parameter",
-  "firstPos" : 553,
-  "secondPos" : 1201,
-  "firstEndPos" : 560,
-  "secondEndPos" : 1208
-}, {
   "firstType" : "=>",
   "secondType" : "=>",
   "firstLabel" : "=>",
@@ -1769,17 +1758,6 @@
   "secondPos" : 709,
   "firstEndPos" : 743,
   "secondEndPos" : 813
-}, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
-  "firstLabel" : "message",
-  "secondLabel" : "message",
-  "firstParentType" : "arrow_function",
-  "secondParentType" : "required_parameter",
-  "firstPos" : 650,
-  "secondPos" : 602,
-  "firstEndPos" : 657,
-  "secondEndPos" : 609
 }, {
   "firstType" : "identifier",
   "secondType" : "required_parameter",
@@ -2266,15 +2244,26 @@
   "secondEndPos" : 992
 }, {
   "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "message",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 829,
+  "secondPos" : 900,
+  "firstEndPos" : 836,
+  "secondEndPos" : 916
+}, {
+  "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "message",
   "secondLabel" : "message",
   "firstParentType" : "arrow_function",
   "secondParentType" : "required_parameter",
   "firstPos" : 829,
-  "secondPos" : 1008,
+  "secondPos" : 900,
   "firstEndPos" : 836,
-  "secondEndPos" : 1015
+  "secondEndPos" : 907
 }, {
   "firstType" : "=>",
   "secondType" : "=>",
@@ -2464,15 +2453,26 @@
   "secondEndPos" : 1111
 }, {
   "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "message",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 926,
+  "secondPos" : 1008,
+  "firstEndPos" : 933,
+  "secondEndPos" : 1024
+}, {
+  "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "message",
   "secondLabel" : "message",
   "firstParentType" : "arrow_function",
   "secondParentType" : "required_parameter",
   "firstPos" : 926,
-  "secondPos" : 710,
+  "secondPos" : 1008,
   "firstEndPos" : 933,
-  "secondEndPos" : 717
+  "secondEndPos" : 1015
 }, {
   "firstType" : "=>",
   "secondType" : "=>",
@@ -2937,15 +2937,26 @@
   "secondEndPos" : 1296
 }, {
   "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "message",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 1108,
+  "secondPos" : 1201,
+  "firstEndPos" : 1115,
+  "secondEndPos" : 1217
+}, {
+  "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "message",
   "secondLabel" : "message",
   "firstParentType" : "arrow_function",
   "secondParentType" : "required_parameter",
   "firstPos" : 1108,
-  "secondPos" : 1312,
+  "secondPos" : 1201,
   "firstEndPos" : 1115,
-  "secondEndPos" : 1319
+  "secondEndPos" : 1208
 }, {
   "firstType" : "=>",
   "secondType" : "=>",
@@ -3135,15 +3146,26 @@
   "secondEndPos" : 1418
 }, {
   "firstType" : "identifier",
+  "secondType" : "required_parameter",
+  "firstLabel" : "message",
+  "secondLabel" : "",
+  "firstParentType" : "arrow_function",
+  "secondParentType" : "formal_parameters",
+  "firstPos" : 1208,
+  "secondPos" : 1312,
+  "firstEndPos" : 1215,
+  "secondEndPos" : 1328
+}, {
+  "firstType" : "identifier",
   "secondType" : "identifier",
   "firstLabel" : "message",
   "secondLabel" : "message",
   "firstParentType" : "arrow_function",
   "secondParentType" : "required_parameter",
   "firstPos" : 1208,
-  "secondPos" : 900,
+  "secondPos" : 1312,
   "firstEndPos" : 1215,
-  "secondEndPos" : 907
+  "secondEndPos" : 1319
 }, {
   "firstType" : "=>",
   "secondType" : "=>",

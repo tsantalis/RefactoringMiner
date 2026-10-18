@@ -744,6 +744,17 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	//the conditionals within the operations of anonymous classes, i.e., object literals with functions, are matched by the anonymous class diffs
+	private static boolean containsAnonymousClassWithOperations(AbstractCodeFragment statement, UMLOperationBodyMapper mapper, boolean first) {
+		for(AnonymousClassDeclarationObject anonymousClassDeclaration : statement.getAnonymousClassDeclarations()) {
+			UMLAnonymousClass anonymousClass = first ? mapper.findAnonymousClass1(anonymousClassDeclaration) : mapper.findAnonymousClass2(anonymousClassDeclaration);
+			if(anonymousClass != null && !anonymousClass.getOperations().isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected static boolean containsAnonymousClass(String s) {
 		String[] lines = s.split("\n");
 		for(String line : lines) {
@@ -4197,7 +4208,8 @@ public class StringBasedHeuristics {
 		ObjectCreation creationCoveringTheEntireStatement2 = call2 instanceof ObjectCreation ? (ObjectCreation)call2 : null;
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
-		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1, LANG1) && !containsMethodSignatureOfAnonymousClass(s2, LANG2)) {
+		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1, LANG1) && !containsMethodSignatureOfAnonymousClass(s2, LANG2) &&
+				!containsAnonymousClassWithOperations(statement1, mapper, true) && !containsAnonymousClassWithOperations(statement2, mapper, false)) {
 			List<String> ternaryConditionals1 = new ArrayList<>();
 			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 				String condition = ternary.getCondition().getString();

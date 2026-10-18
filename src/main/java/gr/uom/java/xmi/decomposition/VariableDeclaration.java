@@ -90,6 +90,7 @@ import com.caoccao.javet.swc4j.ast.expr.Swc4jAstThisExpr;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstObjectLit;
 import com.caoccao.javet.swc4j.ast.expr.lit.Swc4jAstStr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstExpr;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstAssignTarget;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstForHead;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstKey;
@@ -381,6 +382,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			signature.append(": ").append(type.toString());
 		}
 		this.actualSignature = signature.toString();
+	}
+
+	//the key of a dictionary entry declares an attribute of the anonymous class of the dictionary, i.e., "batch_size": 64, named after the key like a TypeScript string key
+	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath, LangASTNode key, int scopeEndOffset, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, key, CodeElementType.VARIABLE_DECLARATION_EXPRESSION);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = fileContent.substring(key.getStartChar(), key.getEndChar());
+		this.type = new InferredType();
+		this.scope = new VariableScope(filePath, key.getStartChar(), scopeEndOffset);
 	}
 
 	public VariableDeclaration(LangCompilationUnit cu, String sourceFolder, String filePath,
@@ -1374,6 +1386,37 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 				typeAnnotation =  rest.getTypeAnn().get();
 		}
 		return typeAnnotation;
+	}
+
+	//the entry of a parameter in its pattern, with its default value as initializer,
+	//i.e., port = 0, selectedAriaKey = 'aria-selected', onFocus: onFocusCallback and ...other in function f(port = 0, { selectedAriaKey = 'aria-selected', onFocus: onFocusCallback, ...other })
+	public void setParameterEntry(Swc4jAstBindingIdent identifier, String sourceFolder, String filePath, VariableDeclarationContainer container,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		ISwc4jAst entry = identifier;
+		ISwc4jAstExpr defaultValue = null;
+		ISwc4jAst parent = identifier.getParent();
+		if(parent instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == identifier) {
+			defaultValue = assignPat.getRight();
+			entry = assignPat;
+			parent = assignPat.getParent();
+		}
+		else if(parent instanceof Swc4jAstAssignPatProp assignPatProp && assignPatProp.getKey() == identifier) {
+			defaultValue = assignPatProp.getValue().orElse(null);
+			entry = assignPatProp;
+			parent = assignPatProp.getParent();
+		}
+		if(parent instanceof Swc4jAstKeyValuePatProp keyValuePatProp && keyValuePatProp.getValue() == entry) {
+			entry = keyValuePatProp;
+		}
+		else if(parent instanceof Swc4jAstRestPat restPat && restPat.getArg() == entry) {
+			entry = restPat;
+		}
+		if(entry != identifier) {
+			this.locationInfo = new LocationInfo(sourceFolder, filePath, entry.getSpan(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		}
+		if(defaultValue != null) {
+			this.initializer = new AbstractExpression(sourceFolder, filePath, defaultValue, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, new ArrayList<>());
+		}
 	}
 
 	public static List<Swc4jAstBindingIdent> extractVariables(ISwc4jAstPat namePat) {

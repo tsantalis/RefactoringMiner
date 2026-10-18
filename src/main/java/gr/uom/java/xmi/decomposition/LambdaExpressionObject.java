@@ -269,6 +269,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 				else {
 					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
 				}
+				parameter.setParameterEntry(identifier, sourceFolder, filePath, this, activeVariableDeclarations, fileContent);
 				this.parameters.add(parameter);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
@@ -332,6 +333,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 				else {
 					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
 				}
+				parameter.setParameterEntry(identifier, sourceFolder, filePath, this, activeVariableDeclarations, fileContent);
 				this.parameters.add(parameter);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);

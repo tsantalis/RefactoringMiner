@@ -714,6 +714,39 @@
   "firstEndPos" : 184,
   "secondEndPos" : 366
 }, {
+  "firstType" : "object_pattern",
+  "secondType" : "object_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment_pattern",
+  "secondParentType" : "required_parameter",
+  "firstPos" : 184,
+  "secondPos" : 366,
+  "firstEndPos" : 307,
+  "secondEndPos" : 474
+}, {
+  "firstType" : "{",
+  "secondType" : "{",
+  "firstLabel" : "{",
+  "secondLabel" : "{",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 184,
+  "secondPos" : 366,
+  "firstEndPos" : 185,
+  "secondEndPos" : 367
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 188,
+  "secondPos" : 370,
+  "firstEndPos" : 216,
+  "secondEndPos" : 393
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "themes",
@@ -724,6 +757,50 @@
   "secondPos" : 370,
   "firstEndPos" : 194,
   "secondEndPos" : 376
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 195,
+  "secondPos" : 377,
+  "firstEndPos" : 196,
+  "secondEndPos" : 378
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "playroomThemes",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 197,
+  "secondPos" : 379,
+  "firstEndPos" : 216,
+  "secondEndPos" : 393
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 216,
+  "secondPos" : 393,
+  "firstEndPos" : 217,
+  "secondEndPos" : 394
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 220,
+  "secondPos" : 397,
+  "firstEndPos" : 256,
+  "secondEndPos" : 428
 }, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
@@ -736,6 +813,50 @@
   "firstEndPos" : 230,
   "secondEndPos" : 407
 }, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 231,
+  "secondPos" : 408,
+  "firstEndPos" : 232,
+  "secondEndPos" : 409
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "playroomComponents",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 233,
+  "secondPos" : 410,
+  "firstEndPos" : 256,
+  "secondEndPos" : 428
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 256,
+  "secondPos" : 428,
+  "firstEndPos" : 257,
+  "secondEndPos" : 429
+}, {
+  "firstType" : "object_assignment_pattern",
+  "secondType" : "object_assignment_pattern",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 260,
+  "secondPos" : 432,
+  "firstEndPos" : 304,
+  "secondEndPos" : 471
+}, {
   "firstType" : "shorthand_property_identifier_pattern",
   "secondType" : "shorthand_property_identifier_pattern",
   "firstLabel" : "FrameComponent",
@@ -746,6 +867,50 @@
   "secondPos" : 432,
   "firstEndPos" : 274,
   "secondEndPos" : 446
+}, {
+  "firstType" : "=",
+  "secondType" : "=",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 275,
+  "secondPos" : 447,
+  "firstEndPos" : 276,
+  "secondEndPos" : 448
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "identifier",
+  "firstLabel" : "",
+  "secondLabel" : "PlayroomFrameComponent",
+  "firstParentType" : "object_assignment_pattern",
+  "secondParentType" : "object_assignment_pattern",
+  "firstPos" : 277,
+  "secondPos" : 449,
+  "firstEndPos" : 304,
+  "secondEndPos" : 471
+}, {
+  "firstType" : ",",
+  "secondType" : ",",
+  "firstLabel" : ",",
+  "secondLabel" : ",",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 304,
+  "secondPos" : 471,
+  "firstEndPos" : 305,
+  "secondEndPos" : 472
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "object_pattern",
+  "secondParentType" : "object_pattern",
+  "firstPos" : 306,
+  "secondPos" : 473,
+  "firstEndPos" : 307,
+  "secondEndPos" : 474
 }, {
   "firstType" : ")",
   "secondType" : ")",

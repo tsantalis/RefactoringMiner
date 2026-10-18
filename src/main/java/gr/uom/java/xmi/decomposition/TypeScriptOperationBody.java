@@ -1076,6 +1076,7 @@ public class TypeScriptOperationBody extends OperationBody {
 				else {
 					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation2, identifier, operation, activeVariableDeclarations, fileContent);
 				}
+				parameter.setParameterEntry(identifier, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					parameter.setParameter(true);

@@ -5,7 +5,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +24,6 @@ import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstPat;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstStmt;
 import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAstTsFnParam;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstArrayPat;
-import com.caoccao.javet.swc4j.ast.pat.Swc4jAstAssignPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstBindingIdent;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstObjectPat;
 import com.caoccao.javet.swc4j.ast.pat.Swc4jAstRestPat;
@@ -50,7 +48,6 @@ import com.github.gumtreediff.tree.TreeContext;
 
 import extension.umladapter.UMLAdapterUtil;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.TypeScriptOperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -244,7 +241,7 @@ public class TypeScriptFileProcessor {
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
 				parameter.setParameter(true);
-				setDefaultValue(parameter, identifier, pat, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
+				parameter.setParameterEntry(identifier, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					umlParameter.setVariableDeclaration(parameter);
@@ -264,14 +261,6 @@ public class TypeScriptFileProcessor {
 		String text = fileContent.substring(startSignatureOffset, endSignatureOffset);
 		operation.setActualSignature(text);
 		return operation;
-	}
-
-	//the default value of a parameter is its initializer, i.e., function start(port = 0)
-	private static void setDefaultValue(VariableDeclaration parameter, Swc4jAstBindingIdent identifier, ISwc4jAstPat pat, String sourceFolder, String filePath,
-			UMLOperation operation, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
-		if(pat instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == identifier) {
-			parameter.setInitializer(new AbstractExpression(sourceFolder, filePath, assignPat.getRight(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, operation, activeVariableDeclarations, fileContent, Collections.emptyList()));
-		}
 	}
 
 	public static UMLOperation processConstructor(String sourceFolder, String filePath, Swc4jAstConstructor functionDecl,
@@ -295,7 +284,7 @@ public class TypeScriptFileProcessor {
 				for(Swc4jAstBindingIdent identifier : identifiers) {
 					VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
 					parameter.setParameter(true);
-					setDefaultValue(parameter, identifier, pat, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
+					parameter.setParameterEntry(identifier, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 					if(parameter.getType() != null) {
 						UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 						umlParameter.setVariableDeclaration(parameter);
@@ -353,6 +342,7 @@ public class TypeScriptFileProcessor {
 				Swc4jAstTsTypeAnn typeAnnotation = identifier.getTypeAnn().isPresent() ? identifier.getTypeAnn().get() : null;
 				VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
 				parameter.setParameter(true);
+				parameter.setParameterEntry(identifier, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					umlParameter.setVariableDeclaration(parameter);
@@ -365,6 +355,7 @@ public class TypeScriptFileProcessor {
 				for(Swc4jAstBindingIdent identifier : identifiers) {
 					VariableDeclaration parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, operation, activeVariableDeclarations, fileContent);
 					parameter.setParameter(true);
+					parameter.setParameterEntry(identifier, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 					if(parameter.getType() != null) {
 						UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 						umlParameter.setVariableDeclaration(parameter);

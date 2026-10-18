@@ -152,6 +152,21 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return index >= 0 && index < statements.size() ? statements.get(index) : null;
 	}
 
+	//the fragments, or the statements enclosing them, if both fragments are the only statements of their blocks,
+	//i.e., the if statements of if(response != null) return response; or the catch clauses of a single throw statement
+	private AbstractCodeFragment[] surroundedStatements() {
+		AbstractCodeFragment statement1 = getFragment1(), statement2 = getFragment2();
+		while(onlyStatement(statement1) && onlyStatement(statement2) && statement1.getParent().getParent() != null && statement2.getParent().getParent() != null) {
+			statement1 = statement1.getParent();
+			statement2 = statement2.getParent();
+		}
+		return new AbstractCodeFragment[] {statement1, statement2};
+	}
+
+	private static boolean onlyStatement(AbstractCodeFragment fragment) {
+		return fragment.getParent() != null && neighbour(fragment, -1) == null && neighbour(fragment, 1) == null;
+	}
+
 	//the previous and the next statements are looked up in a single pass over the mappings
 	private boolean mappedPreviousOrNextStatement() {
 		AbstractCodeFragment previous1 = neighbour(getFragment1(), -1), previous2 = neighbour(getFragment2(), -1);
@@ -261,10 +276,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return common;
 	}
 
-	//identical previous and next statements, where the start or end of both blocks counts as identical
+	//identical previous and next statements, where the start or end of both blocks counts as identical,
+	//of the enclosing statements for fragments without neighbours, unlike their mapped neighbours, which might be mapped wrongly
 	private boolean identicalNeighbours() {
-		AbstractCodeFragment previous1 = neighbour(getFragment1(), -1), previous2 = neighbour(getFragment2(), -1);
-		AbstractCodeFragment next1 = neighbour(getFragment1(), 1), next2 = neighbour(getFragment2(), 1);
+		AbstractCodeFragment[] statements = surroundedStatements();
+		AbstractCodeFragment previous1 = neighbour(statements[0], -1), previous2 = neighbour(statements[1], -1);
+		AbstractCodeFragment next1 = neighbour(statements[0], 1), next2 = neighbour(statements[1], 1);
 		if((previous1 == null && next1 == null) || (previous2 == null && next2 == null)) {
 			return false;
 		}

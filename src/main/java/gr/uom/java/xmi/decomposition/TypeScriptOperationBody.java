@@ -567,7 +567,8 @@ public class TypeScriptOperationBody extends OperationBody {
 					}
 					else if(declarator.getInit().get() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
 						//List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(declarator.getName());
-						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl, CodeElementType.TYPE_DECLARATION, fileContent);
+						//the class is the object literal, as in the AST; the declaration is a statement of the container
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.TYPE_DECLARATION, fileContent);
 						List<UMLImport> imports = new ArrayList<>();
 						String codePath = getAnonymousCodePath(objectLiteral, fileContent);
 						UMLClass umlClass = new UMLClass(container.getClassName(), codePath, location, true, imports);
@@ -587,7 +588,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						return;
 					}
 					else if(declarator.getInit().get() instanceof Swc4jAstAssignExpr assignExpr && assignExpr.getRight() instanceof Swc4jAstObjectLit objectLiteral && objectLiteral.getProps().size() > 0) {
-						LocationInfo location = new LocationInfo(sourceFolder, filePath, variableDecl, CodeElementType.TYPE_DECLARATION, fileContent);
+						LocationInfo location = new LocationInfo(sourceFolder, filePath, objectLiteral, CodeElementType.TYPE_DECLARATION, fileContent);
 						List<UMLImport> imports = new ArrayList<>();
 						String codePath = getAnonymousCodePath(objectLiteral, fileContent);
 						UMLClass umlClass = new UMLClass(container.getClassName(), codePath, location, true, imports);

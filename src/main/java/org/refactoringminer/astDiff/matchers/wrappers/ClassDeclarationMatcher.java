@@ -86,44 +86,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.INTERFACE_DECLARATION);
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
-            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
-            if(srcTypeDeclaration == null)
-                srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT);
-            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
-            if(dstTypeDeclaration == null)
-                dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT);
-            if(srcTypeDeclaration == null) {
-                Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.PAIR);
-                Tree t2 = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.LEXICAL_DECLARATION);
-                if(t1 != null && t2 == null) {
-                    srcTypeDeclaration = t1;
-                }
-                else if(t1 == null && t2 != null) {
-                    srcTypeDeclaration = t2;
-                }
-                else if(t1 != null && t2 != null) {
-                    if(t1.getLength() > t2.getLength())
-                        srcTypeDeclaration = t1;
-                    else if(t2.getLength() > t1.getLength())
-                        srcTypeDeclaration = t2;
-                }
-            }
-            if(dstTypeDeclaration == null) {
-                Tree t1 = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.PAIR);
-                Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.LEXICAL_DECLARATION);
-                if(t1 != null && t2 == null) {
-                    dstTypeDeclaration = t1;
-                }
-                else if(t1 == null && t2 != null) {
-                    dstTypeDeclaration = t2;
-                }
-                else if(t1 != null && t2 != null) {
-                    if(t1.getLength() > t2.getLength())
-                        dstTypeDeclaration = t1;
-                    else if(t2.getLength() > t1.getLength())
-                        dstTypeDeclaration = t2;
-                }
-            }
+            //a Kotlin object or a TypeScript object literal
+            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION,LANG1.OBJECT);
+            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION,LANG2.OBJECT);
         }
         if(classDiff.getOriginalClass().isObject() && !classDiff.getNextClass().isObject()) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);

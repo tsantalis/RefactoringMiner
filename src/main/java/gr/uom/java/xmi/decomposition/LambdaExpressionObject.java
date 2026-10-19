@@ -244,7 +244,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstArrowExpr arrowExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.owner = owner;
 		this.asString = fileContent.substring(arrowExpression.getSpan().getStart(), arrowExpression.getSpan().getEnd());
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, arrowExpression, CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		List<ISwc4jAstPat> params = arrowExpression.getParams();
 		for(ISwc4jAstPat param : params) {
@@ -306,7 +306,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	public LambdaExpressionObject(String sourceFolder, String filePath, Swc4jAstFnExpr functionExpression, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, List<UMLClass> typeDeclarations) {
 		this.owner = owner;
 		this.asString = fileContent.substring(functionExpression.getSpan().getStart(), functionExpression.getSpan().getEnd());
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, functionExpression.getSpan(), CodeElementType.LAMBDA_EXPRESSION, fileContent);
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, functionExpression, CodeElementType.LAMBDA_EXPRESSION, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		Swc4jAstFunction function = functionExpression.getFunction();
 		List<Swc4jAstParam> params = function.getParams();

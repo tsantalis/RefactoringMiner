@@ -19,6 +19,20 @@ import org.jetbrains.kotlin.com.intellij.psi.PsiElement;
 import org.jetbrains.kotlin.psi.KtElement;
 import org.jetbrains.kotlin.psi.KtFile;
 
+import com.caoccao.javet.swc4j.ast.interfaces.ISwc4jAst;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateMethod;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstConstructor;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstClassProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstPrivateProp;
+import com.caoccao.javet.swc4j.ast.clazz.Swc4jAstAutoAccessor;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsPropertySignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsIndexSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsMethodSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsGetterSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsSetterSignature;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsCallSignatureDecl;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConstructSignatureDecl;
 import com.caoccao.javet.swc4j.span.Swc4jSpan;
 
 import extension.ast.node.LangASTNode;
@@ -178,7 +192,53 @@ public class LocationInfo {
 		this.endLine = computeLine(fileContent, Math.max(startOffset, endOffset - 1));
 	}
 
-	public LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
+	public LocationInfo(String sourceFolder, String filePath, ISwc4jAst node, CodeElementType codeElementType, String fileContent) {
+		this(sourceFolder, filePath, node.getSpan(), codeElementType, fileContent);
+		if(endsBeforeSeparator(node)) {
+			int end = endBeforeSeparator(fileContent, this.startOffset, this.endOffset);
+			if(end != this.endOffset) {
+				this.endOffset = end;
+				this.length = end - this.startOffset;
+				this.endLine = computeLine(fileContent, Math.max(this.startOffset, end - 1));
+			}
+		}
+	}
+
+	//the class and interface members without a body end before their trailing ; or , as in the AST, i.e., x: number; and f(): void;
+	private static boolean endsBeforeSeparator(ISwc4jAst node) {
+		if(node instanceof Swc4jAstClassMethod method) {
+			return method.getFunction().getBody().isEmpty();
+		}
+		if(node instanceof Swc4jAstPrivateMethod method) {
+			return method.getFunction().getBody().isEmpty();
+		}
+		if(node instanceof Swc4jAstConstructor constructor) {
+			return constructor.getBody().isEmpty();
+		}
+		return node instanceof Swc4jAstClassProp || node instanceof Swc4jAstPrivateProp || node instanceof Swc4jAstAutoAccessor ||
+				node instanceof Swc4jAstTsPropertySignature || node instanceof Swc4jAstTsIndexSignature || node instanceof Swc4jAstTsMethodSignature ||
+				node instanceof Swc4jAstTsGetterSignature || node instanceof Swc4jAstTsSetterSignature ||
+				node instanceof Swc4jAstTsCallSignatureDecl || node instanceof Swc4jAstTsConstructSignatureDecl;
+	}
+
+	//the end before a trailing ; or , and the whitespace before it
+	public static int endBeforeSeparator(String content, int start, int end) {
+		int separator = end - 1;
+		while(separator > start && Character.isWhitespace(content.charAt(separator))) {
+			separator--;
+		}
+		if(content.charAt(separator) == ';' || content.charAt(separator) == ',') {
+			int trimmed = separator;
+			while(trimmed > start && Character.isWhitespace(content.charAt(trimmed - 1))) {
+				trimmed--;
+			}
+			return trimmed;
+		}
+		return end;
+	}
+
+	//only for the TypeScript comments, which are not AST nodes; the AST nodes use the constructor with the node, which aligns the members with the AST
+	LocationInfo(String sourceFolder, String filePath, Swc4jSpan span, CodeElementType codeElementType, String fileContent) {
 		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;

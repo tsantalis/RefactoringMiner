@@ -115,7 +115,7 @@ public class TypeScriptFileProcessor {
 				String sourceFolder = UMLAdapterUtil.extractSourceFolder(filePath);
 				int extensionLength = filePath.endsWith(".tsx") || filePath.endsWith(".jsx") ? 4 : 3;
 				String moduleName = filePath.contains("/") ? filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length() - extensionLength) : filePath.substring(0, filePath.length() - extensionLength);
-				LocationInfo location = new LocationInfo(sourceFolder, filePath, module.getSpan(), CodeElementType.TYPE_DECLARATION, fileContent);
+				LocationInfo location = new LocationInfo(sourceFolder, filePath, module, CodeElementType.TYPE_DECLARATION, fileContent);
 				List<UMLComment> commentList = extractComments(comments, sourceFolder, filePath, fileContent);
 				UMLClass moduleClass = new UMLClass(moduleName, "__module__", location, true, imports);
 				moduleClass.setModule(true);
@@ -185,7 +185,7 @@ public class TypeScriptFileProcessor {
 	}
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstFnDecl functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getIdent().getSym(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
@@ -193,7 +193,7 @@ public class TypeScriptFileProcessor {
 	}
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstClassMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
@@ -201,7 +201,7 @@ public class TypeScriptFileProcessor {
 	}
 
 	public static UMLOperation processFunctionDeclaration(String sourceFolder, String filePath, Swc4jAstPrivateMethod functionDecl, Map<String,Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().getName(), location, className);
 		operation.setVisibility(Visibility.PRIVATE);
 		Swc4jAstFunction function = functionDecl.getFunction();
@@ -229,7 +229,7 @@ public class TypeScriptFileProcessor {
 		if(typeParams.isPresent()) {
 			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
 			for(Swc4jAstTsTypeParam param : list) {
-				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param, CodeElementType.TYPE_PARAMETER, fileContent);
 				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
 				operation.addTypeParameter(umlTypeParameter);
 			}
@@ -265,7 +265,7 @@ public class TypeScriptFileProcessor {
 
 	public static UMLOperation processConstructor(String sourceFolder, String filePath, Swc4jAstConstructor functionDecl,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className, List<UMLComment> comments) {
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, functionDecl, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(functionDecl.getKey().toString(), location, className);
 		TypeScriptOperationBody.processComments(comments, operation);
 		operation.setVisibility(Visibility.PRIVATE);
@@ -309,7 +309,7 @@ public class TypeScriptFileProcessor {
 
 	public static UMLOperation processFunctionSignature(String sourceFolder, String filePath, Swc4jAstTsMethodSignature methodSignature,
 			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent, String className) {
-		LocationInfo location = new LocationInfo(sourceFolder, filePath, methodSignature.getSpan(), CodeElementType.METHOD_DECLARATION, fileContent);
+		LocationInfo location = new LocationInfo(sourceFolder, filePath, methodSignature, CodeElementType.METHOD_DECLARATION, fileContent);
 		UMLOperation operation = new UMLOperation(methodSignature.getKey().toString(), location, className);
 		operation.setVisibility(Visibility.PUBLIC);
 		Optional<Swc4jAstTsTypeAnn> returnType = methodSignature.getTypeAnn();
@@ -322,7 +322,7 @@ public class TypeScriptFileProcessor {
 		if(typeParams.isPresent()) {
 			List<Swc4jAstTsTypeParam> list = typeParams.get().getParams();
 			for(Swc4jAstTsTypeParam param : list) {
-				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param.getSpan(), CodeElementType.TYPE_PARAMETER, fileContent);
+				LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, param, CodeElementType.TYPE_PARAMETER, fileContent);
 				UMLTypeParameter umlTypeParameter = new UMLTypeParameter(param.getName().getSym(), locationInfo);
 				operation.addTypeParameter(umlTypeParameter);
 			}

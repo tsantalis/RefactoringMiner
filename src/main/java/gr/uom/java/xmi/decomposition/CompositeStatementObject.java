@@ -115,7 +115,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	public CompositeStatementObject(String sourceFolder, String filePath, ISwc4jAst statement, int depth, CodeElementType codeElementType, String fileContent) {
-		super(new LocationInfo(sourceFolder, filePath, statement.getSpan(), codeElementType, fileContent));
+		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
 		this.setDepth(depth);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();

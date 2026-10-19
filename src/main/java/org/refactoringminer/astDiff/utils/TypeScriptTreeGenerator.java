@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
+import gr.uom.java.xmi.LocationInfo;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -1344,20 +1345,9 @@ public class TypeScriptTreeGenerator {
 		return type.equals("IdentName") || type.equals("PrivateName") || type.equals("ComputedPropName") || type.equals("Str") || type.equals("Number") || type.equals("BigInt") || type.equals("Ident");
 	}
 
-	//the end before a trailing ; or ,
+	//the end before a trailing ; or ,, the same end as the model locations of the members
 	private int trimSeparator(int start, int end) {
-		int separator = end - 1;
-		while(separator > start && Character.isWhitespace(content.charAt(separator))) {
-			separator--;
-		}
-		if(content.charAt(separator) == ';' || content.charAt(separator) == ',') {
-			int trimmed = separator;
-			while(trimmed > start && Character.isWhitespace(content.charAt(trimmed - 1))) {
-				trimmed--;
-			}
-			return trimmed;
-		}
-		return end;
+		return LocationInfo.endBeforeSeparator(content, start, end);
 	}
 
 	private Node fieldDefinition(ISwc4jAst ast) {

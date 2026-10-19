@@ -50,7 +50,7 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	public LeafExpression(String sourceFolder, String filePath, ISwc4jAst expression, CodeElementType codeElementType, VariableDeclarationContainer container, String fileContent) {
-		super(new LocationInfo(sourceFolder, filePath, expression.getSpan(), codeElementType, fileContent));
+		super(new LocationInfo(sourceFolder, filePath, expression, codeElementType, fileContent));
 		this.string = fileContent.substring(expression.getSpan().getStart(), expression.getSpan().getEnd());
 		this.container = container;
 	}

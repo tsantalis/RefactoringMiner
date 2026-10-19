@@ -2372,8 +2372,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 1643,
   "secondPos" : 1643,
-  "firstEndPos" : 1739,
-  "secondEndPos" : 1739
+  "firstEndPos" : 1968,
+  "secondEndPos" : 1968
 }, {
   "firstType" : "elif",
   "secondType" : "elif",
@@ -2544,12 +2544,12 @@
   "secondType" : "elif_clause",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
+  "firstParentType" : "elif_clause",
+  "secondParentType" : "elif_clause",
   "firstPos" : 1756,
   "secondPos" : 1756,
-  "firstEndPos" : 1818,
-  "secondEndPos" : 1818
+  "firstEndPos" : 1968,
+  "secondEndPos" : 1968
 }, {
   "firstType" : "elif",
   "secondType" : "elif",
@@ -2643,12 +2643,12 @@
   "secondType" : "elif_clause",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
+  "firstParentType" : "elif_clause",
+  "secondParentType" : "elif_clause",
   "firstPos" : 1835,
   "secondPos" : 1835,
-  "firstEndPos" : 1904,
-  "secondEndPos" : 1904
+  "firstEndPos" : 1968,
+  "secondEndPos" : 1968
 }, {
   "firstType" : "elif",
   "secondType" : "elif",
@@ -2731,8 +2731,8 @@
   "secondType" : "else_clause",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
+  "firstParentType" : "elif_clause",
+  "secondParentType" : "elif_clause",
   "firstPos" : 1921,
   "secondPos" : 1921,
   "firstEndPos" : 1968,

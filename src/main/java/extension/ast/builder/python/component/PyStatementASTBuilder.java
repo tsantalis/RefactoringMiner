@@ -26,10 +26,7 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
         List<LangASTNode> statements = new ArrayList<>();
         if (ctx.statements() != null) {
             for (PythonParser.StatementContext stmtCtx : ctx.statements().statement()) {
-                LangASTNode stmt = mainBuilder.visit(stmtCtx);
-                if (stmt != null) {
-                    statements.add(stmt);
-                }
+                statements.addAll(statements(stmtCtx));
             }
         }
         return LangASTNodeFactory.createBlock(ctx, statements);

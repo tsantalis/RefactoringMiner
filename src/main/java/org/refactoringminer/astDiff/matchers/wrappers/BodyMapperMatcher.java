@@ -389,6 +389,17 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         mappingStore.addMapping(matched.first,matched.second);
                     }
                 }
+                if(srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK) &&
+                        srcStatementNode.getParent().getType().name.equals(LANG1.ELSE) && dstStatementNode.getParent().getType().name.equals(LANG2.ELSE)) {
+                    //the else blocks are mapped by the model, even when they belong to different clauses, i.e., an elif is added before the else
+                    Tree else1 = srcStatementNode.getParent();
+                    Tree else2 = dstStatementNode.getParent();
+                    mappingStore.addMapping(else1, else2);
+                    Pair<Tree, Tree> elses = Helpers.findPairOfType(else1, else2, LANG1.ELSE_KEYWORD, LANG2.ELSE_KEYWORD);
+                    if (elses != null) {
+                        mappingStore.addMapping(elses.first,elses.second);
+                    }
+                }
                 if(srcStatementNode.getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
                     Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
                     if (matched != null) {
@@ -453,7 +464,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     return;
                 }
             }
-            if (srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.IF_STATEMENT)) {
+            //a Python elif clause is an if nested in the clause before it, like in the model, where each elif is mapped on its own
+            if ((srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.IF_STATEMENT)) ||
+                    (srcStatementNode.getType().name.equals(LANG1.ELSE_IF) && dstStatementNode.getType().name.equals(LANG2.ELSE_IF))) {
                 if(srcStatementNode.getParent().getType().name.equals(LANG1.FIELD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.FIELD_DECLARATION)) {
                     //if expression is the initializer of a property declaration
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
@@ -465,26 +478,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 else if(srcStatementNode.getParent().getType().name.equals(LANG1.STATEMENTS) && dstStatementNode.getParent().getType().name.equals(LANG2.STATEMENTS)) {
                     mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
                 }
-                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELSE_IF, LANG2.ELSE_IF);
-                if (matched != null) {
-                    mappingStore.addMapping(matched.first,matched.second);
-                    Pair<Tree, Tree> elifs = Helpers.findPairOfType(matched.first,matched.second, LANG1.ELIF_KEYWORD, LANG2.ELIF_KEYWORD);
-                    if (elifs != null) {
-                        mappingStore.addMapping(elifs.first,elifs.second);
-                    }
-                }
-                List<Tree> elseIfs1 = TreeUtilFunctions.findChildrenByTypeRecursively(srcStatementNode, LANG1.ELSE_IF);
-                List<Tree> elseIfs2 = TreeUtilFunctions.findChildrenByTypeRecursively(dstStatementNode, LANG2.ELSE_IF);
-                if(elseIfs1.size() == elseIfs2.size()) {
-                    for(int i=0; i<elseIfs1.size(); i++) {
-                        mappingStore.addMapping(elseIfs1.get(i), elseIfs2.get(i));
-                        Pair<Tree, Tree> elifs = Helpers.findPairOfType(elseIfs1.get(i), elseIfs2.get(i), LANG1.ELIF_KEYWORD, LANG2.ELIF_KEYWORD);
-                        if (elifs != null) {
-                            mappingStore.addMapping(elifs.first,elifs.second);
-                        }
-                    }
-                }
-                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELSE, LANG2.ELSE);
+                Pair<Tree, Tree> matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELSE, LANG2.ELSE);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                     Pair<Tree, Tree> elses = Helpers.findPairOfType(matched.first,matched.second, LANG1.ELSE_KEYWORD, LANG2.ELSE_KEYWORD);
@@ -493,6 +487,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     }
                 }
                 matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.IF_KEYWORD, LANG2.IF_KEYWORD);
+                if (matched != null) {
+                    mappingStore.addMapping(matched.first,matched.second);
+                }
+                matched = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.ELIF_KEYWORD, LANG2.ELIF_KEYWORD);
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }

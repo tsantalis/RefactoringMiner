@@ -31,10 +31,11 @@ public class PyCompilationUnitASTBuilder extends PyBaseASTBuilder {
         compilationUnit.setLanguage(LangSupportedEnum.PYTHON);
 
         if (ctx.statements() != null) {
+            List<LangASTNode> statements = new java.util.ArrayList<>();
             for (PythonParser.StatementContext stmtCtx : ctx.statements().statement()) {
-                LangASTNode stmt = mainBuilder.visit(stmtCtx);
-
-                if (stmt == null) continue;
+                statements.addAll(statements(stmtCtx));
+            }
+            for (LangASTNode stmt : statements) {
 
                 if (stmt instanceof LangTypeDeclaration) {
                     compilationUnit.addType((LangTypeDeclaration) stmt);
@@ -48,7 +49,7 @@ public class PyCompilationUnitASTBuilder extends PyBaseASTBuilder {
                     if (exprStatement.getExpression() instanceof LangAssignment assignment)
                         compilationUnit.addAssignment(assignment);
                     else if (exprStatement.getExpression() instanceof LangStringLiteral str) {
-                        LangComment comment = LangASTNodeFactory.createComment(ctx, str.getValue(), false, true);
+                        LangComment comment = LangASTNodeFactory.createComment(exprStatement, str.getValue(), false, true);
                         compilationUnit.addComment(comment);
                     } else {
                         compilationUnit.addStatement(stmt);

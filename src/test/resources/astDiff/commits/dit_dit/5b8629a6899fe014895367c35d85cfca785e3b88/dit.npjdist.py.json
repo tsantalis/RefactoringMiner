@@ -8169,8 +8169,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 18229,
   "secondPos" : 16336,
-  "firstEndPos" : 18381,
-  "secondEndPos" : 16480
+  "firstEndPos" : 19235,
+  "secondEndPos" : 17286
 }, {
   "firstType" : "elif",
   "secondType" : "elif",
@@ -8429,8 +8429,8 @@
   "secondType" : "elif_clause",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
+  "firstParentType" : "elif_clause",
+  "secondParentType" : "elif_clause",
   "firstPos" : 18394,
   "secondPos" : 16489,
   "firstEndPos" : 19235,
@@ -26264,8 +26264,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 41247,
   "secondPos" : 40100,
-  "firstEndPos" : 41333,
-  "secondEndPos" : 40186
+  "firstEndPos" : 41386,
+  "secondEndPos" : 40239
 }, {
   "firstType" : "elif",
   "secondType" : "elif",
@@ -26513,8 +26513,8 @@
   "secondType" : "else_clause",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
+  "firstParentType" : "elif_clause",
+  "secondParentType" : "elif_clause",
   "firstPos" : 41342,
   "secondPos" : 40195,
   "firstEndPos" : 41386,

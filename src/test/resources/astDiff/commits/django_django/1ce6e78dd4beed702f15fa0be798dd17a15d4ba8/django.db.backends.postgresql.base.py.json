@@ -11414,8 +11414,8 @@
   "secondParentType" : "if_statement",
   "firstPos" : 9658,
   "secondPos" : 9824,
-  "firstEndPos" : 9880,
-  "secondEndPos" : 10046
+  "firstEndPos" : 9949,
+  "secondEndPos" : 10115
 }, {
   "firstType" : "elif",
   "secondType" : "elif",
@@ -11773,8 +11773,8 @@
   "secondType" : "else_clause",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "if_statement",
-  "secondParentType" : "if_statement",
+  "firstParentType" : "elif_clause",
+  "secondParentType" : "elif_clause",
   "firstPos" : 9889,
   "secondPos" : 10055,
   "firstEndPos" : 9949,

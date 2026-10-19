@@ -434,6 +434,11 @@ public class LangASTNodeFactory {
         return new LangComment(commentContent, isBlockComment, isDocComment, PositionUtils.getPositionInfo(ctx));
     }
 
+    //a docstring is located at its statement, as in the AST
+    public static LangComment createComment(LangASTNode statement, String commentContent, boolean isBlockComment, boolean isDocComment) {
+        return new LangComment(commentContent, isBlockComment, isDocComment, statement.getPositionInfo());
+    }
+
     /** PATTERN */
     public static LangLiteralPattern createLiteralPattern(ParserRuleContext ctx, Object value) {
         return new LangLiteralPattern(PositionUtils.getPositionInfo(ctx), value);

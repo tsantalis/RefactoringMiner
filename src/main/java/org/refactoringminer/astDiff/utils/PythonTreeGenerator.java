@@ -582,7 +582,7 @@ public class PythonTreeGenerator {
 		}
 		if(child instanceof PythonParser.If_stmtContext ifStatement) {
 			Node node = new Node("if_statement");
-			conditional(ifStatement, node, node);
+			conditional(ifStatement, node);
 			return node;
 		}
 		if(child instanceof PythonParser.While_stmtContext whileStatement) {
@@ -760,8 +760,9 @@ public class PythonTreeGenerator {
 		return node;
 	}
 
-	//if_stmt and elif_stmt, whose elif and else clauses are flattened in the if_statement
-	private void conditional(ParserRuleContext ctx, Node ifStatement, Node clause) {
+	//if_stmt and elif_stmt, whose elif and else clauses are nested in the clause before them, like in the grammar and in the model,
+	//where an elif is an if nested in the else of the previous clause, i.e., if_statement(..., elif_clause(..., elif_clause(...), else_clause(...)))
+	private void conditional(ParserRuleContext ctx, Node clause) {
 		for(ParseTree child : children(ctx)) {
 			if(child instanceof TerminalNode terminal) {
 				clause.add(token(terminal));
@@ -774,11 +775,11 @@ public class PythonTreeGenerator {
 			}
 			else if(child instanceof PythonParser.Elif_stmtContext elifStatement) {
 				Node elifClause = new Node("elif_clause");
-				ifStatement.add(elifClause);
-				conditional(elifStatement, ifStatement, elifClause);
+				clause.add(elifClause);
+				conditional(elifStatement, elifClause);
 			}
 			else if(child instanceof PythonParser.Else_blockContext elseBlock) {
-				ifStatement.add(clause("else_clause", elseBlock));
+				clause.add(clause("else_clause", elseBlock));
 			}
 		}
 	}

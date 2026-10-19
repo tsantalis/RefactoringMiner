@@ -79,7 +79,7 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
             if (!body.getStatements().isEmpty() &&
                     body.getStatements().get(0) instanceof LangExpressionStatement stmt &&
                     stmt.getExpression() instanceof LangStringLiteral str) {
-                LangComment docstring = LangASTNodeFactory.createComment(ctx, str.getValue(), false, true);
+                LangComment docstring = LangASTNodeFactory.createComment(stmt, str.getValue(), false, true);
                 typeDeclaration.addComment(docstring);
                 body.getStatements().remove(0);
             }
@@ -174,10 +174,12 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
         LangBlock body = (LangBlock) mainBuilder.visit(ctx.block());
 
         String docstring = null;
+        LangExpressionStatement docstringStatement = null;
         if (body != null && !body.getStatements().isEmpty() &&
                 body.getStatements().get(0) instanceof LangExpressionStatement stmt &&
                 stmt.getExpression() instanceof LangStringLiteral str) {
             docstring = str.getValue();
+            docstringStatement = stmt;
             body.getStatements().remove(0);
         }
 
@@ -220,7 +222,7 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
         }
 
         if (docstring != null) {
-            LangComment comment = LangASTNodeFactory.createComment(ctx, docstring, false, true);
+            LangComment comment = LangASTNodeFactory.createComment(docstringStatement, docstring, false, true);
             methodDeclaration.addComment(comment);
         }
 

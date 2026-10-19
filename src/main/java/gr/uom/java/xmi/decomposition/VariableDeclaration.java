@@ -112,6 +112,7 @@ import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
 import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDeclarator;
+import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsParamProp;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsTypeAnn;
 
 import extension.ast.node.LangASTNode;
@@ -1233,9 +1234,25 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	}
 
 	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstBindingIdent fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this(sourceFolder, filePath, typeAnnotation, fragment, false, container, activeVariableDeclarations, fileContent);
+	}
+
+	//a parameter entry is located at its entry in the parameter pattern and has its default value as initializer
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstBindingIdent fragment, boolean parameterEntry,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this(sourceFolder, filePath, typeAnnotation, fragment, parameterEntry ? parameterEntry(fragment) : fragment, CodeElementType.VARIABLE_DECLARATION_EXPRESSION, container, activeVariableDeclarations, fileContent);
+		if(parameterEntry) {
+			this.initializer = parameterInitializer(sourceFolder, filePath, fragment, container, activeVariableDeclarations, fileContent);
+		}
+	}
+
+	//the declaration located at another AST node than its binding identifier, i.e., the index signature of its key,
+	//or the name without the type annotation of a catch clause parameter
+	public VariableDeclaration(String sourceFolder, String filePath, Swc4jAstTsTypeAnn typeAnnotation, Swc4jAstBindingIdent fragment, ISwc4jAst location, CodeElementType codeElementType,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment, CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, location, codeElementType, fileContent);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = fragment.getId().getSym();
 		if(typeAnnotation != null) {
@@ -1253,9 +1270,18 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	}
 
 	public VariableDeclaration(String sourceFolder, String filePath, UMLType typeAnnotation, Swc4jAstBindingIdent fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this(sourceFolder, filePath, typeAnnotation, fragment, false, container, activeVariableDeclarations, fileContent);
+	}
+
+	//a parameter entry is located at its entry in the parameter pattern and has its default value as initializer
+	public VariableDeclaration(String sourceFolder, String filePath, UMLType typeAnnotation, Swc4jAstBindingIdent fragment, boolean parameterEntry,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
-		this.locationInfo = new LocationInfo(sourceFolder, filePath, fragment, CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, parameterEntry ? parameterEntry(fragment) : fragment, CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		if(parameterEntry) {
+			this.initializer = parameterInitializer(sourceFolder, filePath, fragment, container, activeVariableDeclarations, fileContent);
+		}
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
 		this.variableName = fragment.getId().getSym();
 		this.type = typeAnnotation;
@@ -1388,20 +1414,16 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return typeAnnotation;
 	}
 
-	//the entry of a parameter in its pattern, with its default value as initializer,
-	//i.e., port = 0, selectedAriaKey = 'aria-selected', onFocus: onFocusCallback and ...other in function f(port = 0, { selectedAriaKey = 'aria-selected', onFocus: onFocusCallback, ...other })
-	public void setParameterEntry(Swc4jAstBindingIdent identifier, String sourceFolder, String filePath, VariableDeclarationContainer container,
-			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+	//the entry of a parameter in its pattern, whose default value is the initializer, i.e., port = 0, selectedAriaKey = 'aria-selected',
+	//onFocus: onFocusCallback, ...other and private round: number in f(port = 0, { selectedAriaKey = 'aria-selected', onFocus: onFocusCallback, ...other })
+	private static ISwc4jAst parameterEntry(Swc4jAstBindingIdent identifier) {
 		ISwc4jAst entry = identifier;
-		ISwc4jAstExpr defaultValue = null;
 		ISwc4jAst parent = identifier.getParent();
 		if(parent instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == identifier) {
-			defaultValue = assignPat.getRight();
 			entry = assignPat;
 			parent = assignPat.getParent();
 		}
 		else if(parent instanceof Swc4jAstAssignPatProp assignPatProp && assignPatProp.getKey() == identifier) {
-			defaultValue = assignPatProp.getValue().orElse(null);
 			entry = assignPatProp;
 			parent = assignPatProp.getParent();
 		}
@@ -1411,12 +1433,28 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		else if(parent instanceof Swc4jAstRestPat restPat && restPat.getArg() == entry) {
 			entry = restPat;
 		}
-		if(entry != identifier) {
-			this.locationInfo = new LocationInfo(sourceFolder, filePath, entry, CodeElementType.VARIABLE_DECLARATION_EXPRESSION, fileContent);
+		//the parameter property with its modifiers, as in the AST, i.e., private round: number
+		if(entry.getParent() instanceof Swc4jAstTsParamProp paramProp) {
+			entry = paramProp;
 		}
-		if(defaultValue != null) {
-			this.initializer = new AbstractExpression(sourceFolder, filePath, defaultValue, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, new ArrayList<>());
+		return entry;
+	}
+
+	private static ISwc4jAstExpr parameterDefaultValue(Swc4jAstBindingIdent identifier) {
+		ISwc4jAst parent = identifier.getParent();
+		if(parent instanceof Swc4jAstAssignPat assignPat && assignPat.getLeft() == identifier) {
+			return assignPat.getRight();
 		}
+		if(parent instanceof Swc4jAstAssignPatProp assignPatProp && assignPatProp.getKey() == identifier) {
+			return assignPatProp.getValue().orElse(null);
+		}
+		return null;
+	}
+
+	private AbstractExpression parameterInitializer(String sourceFolder, String filePath, Swc4jAstBindingIdent identifier, VariableDeclarationContainer container,
+			Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		ISwc4jAstExpr defaultValue = parameterDefaultValue(identifier);
+		return defaultValue != null ? new AbstractExpression(sourceFolder, filePath, defaultValue, CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, fileContent, new ArrayList<>()) : null;
 	}
 
 	public static List<Swc4jAstBindingIdent> extractVariables(ISwc4jAstPat namePat) {

@@ -68,11 +68,6 @@ public class TreeUtilFunctions {
 		if(endoffset == tree.getEndPos() + 1) {
 			endoffset = tree.getEndPos();
 		}
-		// TODO hack until we fix the module offsets
-		if (type[0].equals(LANG.MODULE)) {
-			startoffset = 0;
-			endoffset = tree.getEndPos();
-		}
 		if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo,LANG,type) : null;
 		return getTreeBetweenPositions(tree, startoffset, endoffset, LANG, type);
 	}

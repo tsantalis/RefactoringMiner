@@ -75,8 +75,9 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private void processClassDeclarationMapping(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         String AST_type1 = astType(classDiff.getOriginalClass(), LANG1);
         String AST_type2 = astType(classDiff.getNextClass(), LANG2);
-        Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,AST_type1);
-        Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,AST_type2);
+        //a module is the whole file
+        Tree srcTypeDeclaration = classDiff.getOriginalClass().isModule() ? root(srcTree) : TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,AST_type1);
+        Tree dstTypeDeclaration = classDiff.getNextClass().isModule() ? root(dstTree) : TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,AST_type2);
         if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isTypeAlias() && classDiff.getNextClass().isTypeAlias()) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_ALIAS_DECLARATION);
             dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_ALIAS_DECLARATION);
@@ -92,21 +93,12 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if(classDiff.getOriginalClass().isObject() && !classDiff.getNextClass().isObject()) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
-            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_DECLARATION);
+            //an object that becomes the functions of a file is matched with the file
+            dstTypeDeclaration = classDiff.getNextClass().isModule() ? root(dstTree) : TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_DECLARATION);
         }
         else if(!classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
-            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_DECLARATION);
+            srcTypeDeclaration = classDiff.getOriginalClass().isModule() ? root(srcTree) : TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_DECLARATION);
             dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
-        }
-        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isModule() && classDiff.getNextClass().isModule()) {
-            srcTypeDeclaration = srcTree;
-            dstTypeDeclaration = dstTree;
-        }
-        if (srcTypeDeclaration == null && dstTypeDeclaration != null && classDiff.getOriginalClass().isModule()) {
-            srcTypeDeclaration = srcTree;
-        }
-        if (srcTypeDeclaration != null && dstTypeDeclaration == null && classDiff.getNextClass().isModule()) {
-            dstTypeDeclaration = dstTree;
         }
         if (srcTypeDeclaration == null && dstTypeDeclaration == null) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.ERROR);
@@ -812,6 +804,12 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
     }
 
+    private static Tree root(Tree tree) {
+        while (tree.getParent() != null)
+            tree = tree.getParent();
+        return tree;
+    }
+
     private String astType(UMLClass umlClass, Constants LANG) {
         String type = LANG.TYPE_DECLARATION;
         if (umlClass.isEnum())
@@ -820,8 +818,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             type = LANG.ANNOTATION_TYPE_DECLARATION;
         else if (umlClass.isRecord())
             type = LANG.RECORD_DECLARATION;
-        else if (umlClass.isModule())
-            type = LANG.MODULE;
         else if (umlClass.isObject())
             type = LANG.COMPANION_OBJECT;
         else if (umlClass.isStruct())

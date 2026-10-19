@@ -1305,8 +1305,8 @@
   "secondParentType" : "statement_block",
   "firstPos" : 1153,
   "secondPos" : 796,
-  "firstEndPos" : 1322,
-  "secondEndPos" : 965
+  "firstEndPos" : 1262,
+  "secondEndPos" : 905
 }, {
   "firstType" : "const",
   "secondType" : "const",
@@ -1763,8 +1763,8 @@
   "secondType" : "comment",
   "firstLabel" : "// Avoid issues when this is called directly from array.map",
   "secondLabel" : "// Avoid issues when this is called directly from array.map",
-  "firstParentType" : "lexical_declaration",
-  "secondParentType" : "lexical_declaration",
+  "firstParentType" : "statement_block",
+  "secondParentType" : "statement_block",
   "firstPos" : 1263,
   "secondPos" : 906,
   "firstEndPos" : 1322,

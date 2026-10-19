@@ -33,6 +33,12 @@ import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsGetterSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsSetterSignature;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsCallSignatureDecl;
 import com.caoccao.javet.swc4j.ast.ts.Swc4jAstTsConstructSignatureDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstVarDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstFnDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstClassDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsInterfaceDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsTypeAliasDecl;
+import com.caoccao.javet.swc4j.ast.stmt.Swc4jAstTsEnumDecl;
 import com.caoccao.javet.swc4j.span.Swc4jSpan;
 
 import extension.ast.node.LangASTNode;
@@ -194,6 +200,21 @@ public class LocationInfo {
 
 	public LocationInfo(String sourceFolder, String filePath, ISwc4jAst node, CodeElementType codeElementType, String fileContent) {
 		this(sourceFolder, filePath, node.getSpan(), codeElementType, fileContent);
+		if(isAmbient(node)) {
+			int start = afterDeclareKeyword(fileContent, this.startOffset);
+			if(start != this.startOffset) {
+				String skipped = fileContent.substring(this.startOffset, start);
+				if(skipped.indexOf('\n') >= 0) {
+					this.startLine = computeLine(fileContent, start);
+					this.startColumn = start - (fileContent.lastIndexOf('\n', start - 1) + 1);
+				}
+				else {
+					this.startColumn += start - this.startOffset;
+				}
+				this.startOffset = start;
+				this.length = this.endOffset - start;
+			}
+		}
 		if(endsBeforeSeparator(node)) {
 			int end = endBeforeSeparator(fileContent, this.startOffset, this.endOffset);
 			if(end != this.endOffset) {
@@ -202,6 +223,27 @@ public class LocationInfo {
 				this.endLine = computeLine(fileContent, Math.max(this.startOffset, end - 1));
 			}
 		}
+	}
+
+	//the ambient declarations start after declare, as in the AST, where declare is a sibling, i.e., declare interface A {}
+	private static boolean isAmbient(ISwc4jAst node) {
+		return node instanceof Swc4jAstVarDecl declaration && declaration.isDeclare() ||
+				node instanceof Swc4jAstFnDecl function && function.isDeclare() ||
+				node instanceof Swc4jAstClassDecl clazz && clazz.isDeclare() ||
+				node instanceof Swc4jAstTsInterfaceDecl declaration && declaration.isDeclare() ||
+				node instanceof Swc4jAstTsTypeAliasDecl declaration && declaration.isDeclare() ||
+				node instanceof Swc4jAstTsEnumDecl declaration && declaration.isDeclare();
+	}
+
+	private static int afterDeclareKeyword(String content, int start) {
+		if(!content.startsWith("declare", start) || start + 7 >= content.length() || !Character.isWhitespace(content.charAt(start + 7))) {
+			return start;
+		}
+		int position = start + 7;
+		while(position < content.length() && Character.isWhitespace(content.charAt(position))) {
+			position++;
+		}
+		return position;
 	}
 
 	//the class and interface members without a body end before their trailing ; or , as in the AST, i.e., x: number; and f(): void;

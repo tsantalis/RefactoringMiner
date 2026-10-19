@@ -2184,7 +2184,8 @@ public class TypeScriptTreeGenerator {
 			"throw_statement", "break_statement", "continue_statement", "debugger_statement", "do_statement", "import_statement", "export_statement",
 			"type_alias_declaration", "import_alias", "statement_block");
 
-	//the automatic semicolon of a statement without semicolon, after the comments in its line
+	//the automatic semicolon of a statement without semicolon, before the comments in its line,
+	//so that the statement ends with its code, like its model location, and the comments are its siblings
 	private void addAutomaticSemicolons(Node node, List<Node> anchors) {
 		for(Node child : node.children) {
 			addAutomaticSemicolons(child, anchors);
@@ -2211,8 +2212,8 @@ public class TypeScriptTreeGenerator {
 			boolean inserted = position == content.length() || content.charAt(position) == '\n' || content.charAt(position) == '\r' || content.charAt(position) == '}';
 			if(position > node.end && inserted) {
 				Node anchor = new Node("automatic_semicolon");
-				anchor.start = position;
-				anchor.end = position;
+				anchor.start = node.end;
+				anchor.end = node.end;
 				anchor.parent = node;
 				anchors.add(anchor);
 			}

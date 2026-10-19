@@ -451,9 +451,10 @@ public class TypeScriptOperationBody extends OperationBody {
 					List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
 					Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
 					for(Swc4jAstBindingIdent identifier : identifiers) {
-						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+						//the exception name without its type annotation, as in the AST, i.e., queryError in catch (queryError: any)
+						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, identifier.getId(), CodeElementType.VARIABLE_DECLARATION_EXPRESSION, container, activeVariableDeclarations, fileContent);
 						catchClauseStatementObject.addVariableDeclaration(vd);
-						AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, identifier, CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent, typeDeclarations);
+						AbstractExpression variableDeclarationName = new AbstractExpression(sourceFolder, filePath, identifier.getId(), CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME, container, activeVariableDeclarations, fileContent, typeDeclarations);
 						catchClauseStatementObject.addExpression(variableDeclarationName);
 					}
 				}
@@ -1072,12 +1073,11 @@ public class TypeScriptOperationBody extends OperationBody {
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration parameter = null;
 				if(identifiers.size() == attributes.size()) {
-					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, operation, activeVariableDeclarations, fileContent);
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, true, operation, activeVariableDeclarations, fileContent);
 				}
 				else {
-					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation2, identifier, operation, activeVariableDeclarations, fileContent);
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation2, identifier, true, operation, activeVariableDeclarations, fileContent);
 				}
-				parameter.setParameterEntry(identifier, sourceFolder, filePath, operation, activeVariableDeclarations, fileContent);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
 					parameter.setParameter(true);
@@ -1533,7 +1533,8 @@ public class TypeScriptOperationBody extends OperationBody {
 					}
 					else if(param instanceof Swc4jAstBindingIdent identifier) {
 						Swc4jAstTsTypeAnn typeAnnotation = identifier.getTypeAnn().isPresent() ? identifier.getTypeAnn().get() : null;
-						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+						//the key of an index signature has no AST node of its own, the attribute is the index signature
+						VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, member, CodeElementType.FIELD_DECLARATION, container, activeVariableDeclarations, fileContent);
 						vd.setAttribute(true);
 						LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member, CodeElementType.FIELD_DECLARATION, fileContent);
 						UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());
@@ -1545,7 +1546,7 @@ public class TypeScriptOperationBody extends OperationBody {
 						Swc4jAstTsTypeAnn typeAnnotation = VariableDeclaration.extractTypeAnnotation(pat);
 						List<Swc4jAstBindingIdent> identifiers = VariableDeclaration.extractVariables(pat);
 						for(Swc4jAstBindingIdent identifier : identifiers) {
-							VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, container, activeVariableDeclarations, fileContent);
+							VariableDeclaration vd = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, member, CodeElementType.FIELD_DECLARATION, container, activeVariableDeclarations, fileContent);
 							vd.setAttribute(true);
 							LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, member, CodeElementType.FIELD_DECLARATION, fileContent);
 							UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), locationInfo, umlClass.getName());

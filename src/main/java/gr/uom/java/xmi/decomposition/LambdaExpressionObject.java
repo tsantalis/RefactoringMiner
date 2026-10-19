@@ -264,12 +264,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration parameter = null;
 				if(identifiers.size() == attributes.size()) {
-					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, this, activeVariableDeclarations, fileContent);
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, true, this, activeVariableDeclarations, fileContent);
 				}
 				else {
-					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, true, this, activeVariableDeclarations, fileContent);
 				}
-				parameter.setParameterEntry(identifier, sourceFolder, filePath, this, activeVariableDeclarations, fileContent);
 				this.parameters.add(parameter);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);
@@ -328,12 +327,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			for(Swc4jAstBindingIdent identifier : identifiers) {
 				VariableDeclaration parameter = null;
 				if(identifiers.size() == attributes.size()) {
-					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, this, activeVariableDeclarations, fileContent);
+					parameter = new VariableDeclaration(sourceFolder, filePath, attributes.get(index).getType(), identifier, true, this, activeVariableDeclarations, fileContent);
 				}
 				else {
-					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, this, activeVariableDeclarations, fileContent);
+					parameter = new VariableDeclaration(sourceFolder, filePath, typeAnnotation, identifier, true, this, activeVariableDeclarations, fileContent);
 				}
-				parameter.setParameterEntry(identifier, sourceFolder, filePath, this, activeVariableDeclarations, fileContent);
 				this.parameters.add(parameter);
 				if(parameter.getType() != null) {
 					UMLParameter umlParameter = new UMLParameter(parameter.getVariableName(), parameter.getType(), "in", false);

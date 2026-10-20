@@ -48,6 +48,8 @@ import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
@@ -3217,15 +3219,32 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	//the assigned fields of the same object, i.e., mapping.id and mapping.startPosition for the replacement of id with startPosition
-	private static boolean sameQualifierRenamedField(String variableName1, String variableName2, Replacement replacement) {
+	//the assigned fields of the same object are different fields, unless a class renames the first field to the second,
+	//i.e., mapping.id and mapping.startPosition, but not state.group_idx_list and state.group_index for the renamed group_idx_list
+	private static boolean differentFieldsOfTheSameObject(String variableName1, String variableName2, Replacement replacement, UMLOperationBodyMapper mapper) {
 		String suffix1 = "." + replacement.getBefore();
 		String suffix2 = "." + replacement.getAfter();
 		if(!variableName1.endsWith(suffix1) || !variableName2.endsWith(suffix2))
 			return false;
 		String qualifier1 = variableName1.substring(0, variableName1.length() - suffix1.length());
 		String qualifier2 = variableName2.substring(0, variableName2.length() - suffix2.length());
-		return !qualifier1.isEmpty() && qualifier1.equals(qualifier2);
+		return !qualifier1.isEmpty() && qualifier1.equals(qualifier2) && !renamedField(replacement, mapper.getModelDiff());
+	}
+
+	//a class diff removes the field before and adds the field after
+	private static boolean renamedField(Replacement replacement, UMLModelDiff modelDiff) {
+		if(modelDiff == null)
+			return false;
+		List<UMLClassBaseDiff> classDiffs = new ArrayList<>(modelDiff.getCommonClassDiffList());
+		classDiffs.addAll(modelDiff.getClassMoveDiffList());
+		classDiffs.addAll(modelDiff.getInnerClassMoveDiffList());
+		classDiffs.addAll(modelDiff.getClassRenameDiffList());
+		for(UMLClassBaseDiff classDiff : classDiffs) {
+			if(classDiff.getRemovedAttributes().stream().anyMatch(a -> a.getName().equals(replacement.getBefore())) &&
+					classDiff.getAddedAttributes().stream().anyMatch(a -> a.getName().equals(replacement.getAfter())))
+				return true;
+		}
+		return false;
 	}
 
 	protected static boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
@@ -3330,7 +3349,7 @@ public class StringBasedHeuristics {
 						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(LANG2.THIS_DOT + replacement.getAfter())) &&
 						!variableName1.equals(LANG1.THIS_DOT + variableName2) && !variableName2.equals(LANG2.THIS_DOT + variableName1))
 					variableRename = true;
-				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && sameQualifierRenamedField(variableName1, variableName2, replacement))
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && differentFieldsOfTheSameObject(variableName1, variableName2, replacement, mapper))
 					variableRename = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
 						assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()) &&

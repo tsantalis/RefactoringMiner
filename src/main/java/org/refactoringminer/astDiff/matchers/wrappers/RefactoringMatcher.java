@@ -25,15 +25,22 @@ import java.util.Set;
 public class RefactoringMatcher extends OptimizationAwareMatcher {
 
     private final List<Refactoring> refactoringList;
+    //the files of the matched trees
+    private final String srcPath;
+    private final String dstPath;
 
     public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> modelDiffRefactorings, UMLClassBaseDiff baseClassDiff) {
         super(optimizationData);
         this.refactoringList = getClassDiffRefactorings(baseClassDiff, modelDiffRefactorings);
+        this.srcPath = baseClassDiff.getOriginalClass().getLocationInfo().getFilePath();
+        this.dstPath = baseClassDiff.getNextClass().getLocationInfo().getFilePath();
     }
 
-    public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> refactoringList) {
+    public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> refactoringList, UMLOperationBodyMapper bodyMapper) {
         super(optimizationData);
         this.refactoringList = refactoringList;
+        this.srcPath = bodyMapper.getContainer1().getLocationInfo().getFilePath();
+        this.dstPath = bodyMapper.getContainer2().getLocationInfo().getFilePath();
     }
 
     @Override
@@ -261,6 +268,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 RenameVariableRefactoring renameVariableRefactoring = (RenameVariableRefactoring) refactoring;
                 VariableDeclaration originalVariable = renameVariableRefactoring.getOriginalVariable();
                 VariableDeclaration renamedVariable = renameVariableRefactoring.getRenamedVariable();
+                if (inOtherFiles(originalVariable, renamedVariable)) continue;
                 Constants LANG1 = new Constants(originalVariable.getLocationInfo().getFilePath());
                 Constants LANG2 = new Constants(renamedVariable.getLocationInfo().getFilePath());
                 Tree srcInput = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getLocationInfo(), LANG1);
@@ -284,7 +292,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
                         if (eligible)
                             for (AbstractCodeMapping abstractCodeMapping : renameVariableRefactoring.getReferences())
-                                if (abstractCodeMapping instanceof LeafMapping)
+                                if (abstractCodeMapping instanceof LeafMapping && !inOtherFiles(abstractCodeMapping.getFragment1(), abstractCodeMapping.getFragment2()))
                                     findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo(), LANG1), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo(), LANG2), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName(), LANG1, LANG2);
                         break;
                     case RENAME_VARIABLE:
@@ -297,7 +305,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                                 eligible = false;
                             }
                             if (eligible) {
-                                if (abstractCodeMapping instanceof LeafMapping) {
+                                if (abstractCodeMapping instanceof LeafMapping && !inOtherFiles(abstractCodeMapping.getFragment1(), abstractCodeMapping.getFragment2())) {
                                     findVariablesAndMatch(TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo(), LANG1), TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo(), LANG2), renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName(), LANG1, LANG2);
                                 }
                             }
@@ -374,8 +382,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 for (AbstractCodeMapping reference : renameAttributeRefactoring.getReferences()) {
                     List<LeafMapping> subExpressionMappings = reference.getSubExpressionMappings();
                     for (LeafMapping subExpressionMapping : subExpressionMappings) {
-                        if (belongToDifferentFiles(subExpressionMapping.getFragment1(), renameAttributeRefactoring.getOriginalAttribute()) ||
-                                belongToDifferentFiles(subExpressionMapping.getFragment2(), renameAttributeRefactoring.getRenamedAttribute()))
+                        if (inOtherFiles(subExpressionMapping.getFragment1(), subExpressionMapping.getFragment2()))
                             continue;
                         Constants LANG1 = new Constants(subExpressionMapping.getFragment1().getLocationInfo().getFilePath());
                         Constants LANG2 = new Constants(subExpressionMapping.getFragment2().getLocationInfo().getFilePath());
@@ -388,6 +395,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             }
             else if (refactoring instanceof InvertConditionRefactoring) {
                 InvertConditionRefactoring invertConditionRefactoring = (InvertConditionRefactoring) refactoring;
+                if (inOtherFiles(invertConditionRefactoring.getOriginalConditional(), invertConditionRefactoring.getInvertedConditional())) continue;
                 Constants LANG1 = new Constants(invertConditionRefactoring.getOriginalConditional().getLocationInfo().getFilePath());
                 Constants LANG2 = new Constants(invertConditionRefactoring.getInvertedConditional().getLocationInfo().getFilePath());
                 Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,invertConditionRefactoring.getOriginalConditional().getLocationInfo(),LANG1);
@@ -402,8 +410,9 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
 
     }
 
-    private boolean belongToDifferentFiles(LocationInfoProvider lp1, LocationInfoProvider lp2) {
-        return !lp1.getLocationInfo().getFilePath().equals(lp2.getLocationInfo().getFilePath());
+    //the refactoring elements are in other files than the matched trees, i.e., a variable renamed in a method of another file
+    private boolean inOtherFiles(LocationInfoProvider before, LocationInfoProvider after) {
+        return !before.getLocationInfo().getFilePath().equals(srcPath) || !after.getLocationInfo().getFilePath().equals(dstPath);
     }
 
     private static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {

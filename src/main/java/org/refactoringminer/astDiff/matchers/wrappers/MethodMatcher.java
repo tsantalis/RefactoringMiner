@@ -753,7 +753,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             if (refactoringProcessor){
-                new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing())).
+                new RefactoringMatcher(optimizationData, new ArrayList<>(bodyMapper.getRefactoringsAfterPostProcessing()), bodyMapper).
                         matchAndUpdateOptimizationStore(srcTree, dstTree, mappingStore);
             }
             boolean isMovedMethod = !umlOperationBodyMapper.getContainer1().getClassName().equals(umlOperationBodyMapper.getContainer2().getClassName());

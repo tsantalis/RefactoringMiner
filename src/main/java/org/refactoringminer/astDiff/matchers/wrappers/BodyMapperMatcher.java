@@ -1692,6 +1692,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             {
                 ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
                 for (AbstractCodeMapping reference : extractVariableRefactoring.getReferences()) {
+                    //the references in other files than the new container
+                    if (!reference.getFragment2().getLocationInfo().getFilePath().equals(bodyMapper.getContainer2().getLocationInfo().getFilePath()))
+                        continue;
                     for (LeafExpression variable : reference.getFragment2().getVariables()) {
                         if (variable.getString().equals(extractVariableRefactoring.getVariableDeclaration().getVariableName())) {
                             Tree referenceNode = TreeUtilFunctions.findByLocationInfo(dstTree, variable.getLocationInfo(), LANG2);

@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.IdentityHashMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -230,14 +233,17 @@ public class CppFileProcessor {
 	}
 
 	//a directive ends after the line break of its line, including the comments and continuation lines, like its AST node, i.e., #include <a.h> // b
-	//a conditional directive is located at its line, because its AST node spans the whole conditional block
-	private LocationInfo directiveLocation(String sourceFolder, IASTPreprocessorStatement statement) {
+	//a conditional directive spans the block it controls, like its AST node, i.e., #if X ... #endif
+	private LocationInfo directiveLocation(String sourceFolder, IASTPreprocessorStatement statement, Map<IASTPreprocessorStatement, Integer> conditionalBlockEnds) {
 		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, statement, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
-		if(statement instanceof IASTPreprocessorIfStatement || statement instanceof IASTPreprocessorIfdefStatement || statement instanceof IASTPreprocessorIfndefStatement ||
-				statement instanceof IASTPreprocessorElifStatement || statement instanceof IASTPreprocessorElseStatement || statement instanceof IASTPreprocessorEndifStatement) {
+		int start = locationInfo.getStartOffset();
+		if(conditionalBlockEnds.containsKey(statement)) {
+			int end = conditionalBlockEnds.get(statement);
+			return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
+		}
+		if(isConditional(statement) || statement instanceof IASTPreprocessorEndifStatement) {
 			return locationInfo;
 		}
-		int start = locationInfo.getStartOffset();
 		int end = locationInfo.getEndOffset();
 		while(end < fileContent.length() && fileContent.charAt(end) != '\n') {
 			if(fileContent.startsWith("/*", end)) {
@@ -260,12 +266,80 @@ public class CppFileProcessor {
 		return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
 	}
 
+	private static boolean isConditional(IASTPreprocessorStatement statement) {
+		return statement instanceof IASTPreprocessorIfStatement || statement instanceof IASTPreprocessorIfdefStatement || statement instanceof IASTPreprocessorIfndefStatement ||
+				statement instanceof IASTPreprocessorElifStatement || statement instanceof IASTPreprocessorElseStatement;
+	}
+
+	//the end of the block of each conditional directive, like its AST node: the end of the #endif of an #if,
+	//and the end of the last content before the #endif of an #elif or #else, which contains the next alternatives
+	private Map<IASTPreprocessorStatement, Integer> conditionalBlockEnds(IASTPreprocessorStatement[] statements) {
+		Map<IASTPreprocessorStatement, Integer> ends = new IdentityHashMap<>();
+		Deque<List<IASTPreprocessorStatement>> open = new ArrayDeque<>();
+		for(IASTPreprocessorStatement statement : statements) {
+			if(!isPartOfFile(statement)) {
+				continue;
+			}
+			if(statement instanceof IASTPreprocessorIfStatement || statement instanceof IASTPreprocessorIfdefStatement || statement instanceof IASTPreprocessorIfndefStatement) {
+				List<IASTPreprocessorStatement> conditional = new ArrayList<>();
+				conditional.add(statement);
+				open.push(conditional);
+			}
+			else if((statement instanceof IASTPreprocessorElifStatement || statement instanceof IASTPreprocessorElseStatement) && !open.isEmpty()) {
+				open.peek().add(statement);
+			}
+			else if(statement instanceof IASTPreprocessorEndifStatement && !open.isEmpty()) {
+				List<IASTPreprocessorStatement> conditional = open.pop();
+				int endifStart = statement.getFileLocation().getNodeOffset();
+				int contentEnd = endifStart;
+				while(contentEnd > 0 && Character.isWhitespace(fileContent.charAt(contentEnd - 1))) {
+					contentEnd--;
+				}
+				//the last content is a directive line ending after its line break, unless it is the #endif of a nested conditional, i.e., #include <a.h>
+				int lineStart = fileContent.lastIndexOf('\n', Math.max(0, contentEnd - 1)) + 1;
+				if(fileContent.substring(lineStart, contentEnd).trim().startsWith("#")) {
+					int hash = fileContent.indexOf('#', lineStart);
+					if(!fileContent.substring(hash + 1, directiveNameEnd(hash)).trim().equals("endif")) {
+						contentEnd = afterLineBreak(lineStart);
+					}
+				}
+				ends.put(conditional.get(0), directiveNameEnd(endifStart));
+				for(int i = 1; i < conditional.size(); i++) {
+					IASTPreprocessorStatement alternative = conditional.get(i);
+					int alternativeStart = alternative.getFileLocation().getNodeOffset();
+					int ownEnd = alternative instanceof IASTPreprocessorElseStatement ? directiveNameEnd(alternativeStart) : afterLineBreak(alternativeStart);
+					ends.put(alternative, Math.max(ownEnd, contentEnd));
+				}
+			}
+		}
+		return ends;
+	}
+
+	//the end of the name of the directive starting at the offset, i.e., the end of #endif in #endif // X
+	private int directiveNameEnd(int offset) {
+		int end = offset + 1;
+		while(end < fileContent.length() && (fileContent.charAt(end) == ' ' || fileContent.charAt(end) == '\t')) {
+			end++;
+		}
+		while(end < fileContent.length() && Character.isLetter(fileContent.charAt(end))) {
+			end++;
+		}
+		return end;
+	}
+
+	//the offset after the line break of the line starting at the offset
+	private int afterLineBreak(int offset) {
+		int lineBreak = fileContent.indexOf('\n', offset);
+		return lineBreak < 0 ? fileContent.length() : lineBreak + 1;
+	}
+
 	private void processPreprocessorStatements(String sourceFolder, UMLClass moduleClass, IASTPreprocessorStatement[] allPreprocessorStatements) {
+		Map<IASTPreprocessorStatement, Integer> conditionalBlockEnds = conditionalBlockEnds(allPreprocessorStatements);
 		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
 			if(!isPartOfFile(statement)) {
 				continue;
 			}
-			LocationInfo locationInfo = directiveLocation(sourceFolder, statement);
+			LocationInfo locationInfo = directiveLocation(sourceFolder, statement, conditionalBlockEnds);
 			IASTName nameNode;
 			String name;
 			String value;

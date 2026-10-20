@@ -169,6 +169,10 @@ public class TreeUtilFunctions {
 				else if(child.getType().name.equals(label) && child.getLabel().equals(label)) {
 					return child;
 				}
+				//a C++ specifier wraps its keyword, i.e., static in storage_class_specifier
+				else if(child.getType().name.endsWith("_specifier") && child.getChildren().size() == 1 && child.getChild(0).getLabel().equals(label)) {
+					return child;
+				}
 			}
 		}
 		return null;

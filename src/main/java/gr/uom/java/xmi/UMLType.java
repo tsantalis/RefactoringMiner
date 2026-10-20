@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTPointerOperator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTCompositeTypeSpecifier.ICPPASTBaseSpecifier;
@@ -845,7 +846,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		if(typeText.isEmpty())
 			return null;
 		typeText = typeText.replace("::", ".");
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
+		LocationInfo locationInfo = cppTypeLocation(sourceFolder, filePath, declSpecifier, fileContent);
 		UMLType umlType = UMLType.extractTypeObject(typeText, "<", ">", locationInfo, PathFileUtils.getLang(filePath));
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
@@ -862,10 +863,50 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		if(typeText.isEmpty())
 			return null;
 		typeText = typeText.replace("::", ".");
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
+		LocationInfo locationInfo = cppTypeLocation(sourceFolder, filePath, declSpecifier, fileContent);
 		UMLType umlType = UMLType.extractTypeObject(typeText, "<", ">", locationInfo, PathFileUtils.getLang(filePath));
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
+	}
+
+	//the specifiers and qualifiers around a C++ type are siblings of the type in the AST, i.e., static const int and public Base
+	private static final Set<String> CPP_TYPE_SURROUNDING_KEYWORDS = Set.of("static", "extern", "inline", "virtual", "explicit", "constexpr", "consteval", "constinit",
+			"const", "volatile", "mutable", "register", "thread_local", "typedef", "friend", "public", "protected", "private");
+
+	//the C++ type is located without the specifiers and qualifiers around it, like its AST node, i.e., int in static const int
+	private static LocationInfo cppTypeLocation(String sourceFolder, String filePath, IASTNode declSpecifier, String fileContent) {
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
+		int start = locationInfo.getStartOffset();
+		int end = locationInfo.getEndOffset();
+		while(true) {
+			int wordEnd = start;
+			while(wordEnd < end && Character.isJavaIdentifierPart(fileContent.charAt(wordEnd))) {
+				wordEnd++;
+			}
+			int next = wordEnd;
+			while(next < end && Character.isWhitespace(fileContent.charAt(next))) {
+				next++;
+			}
+			if(wordEnd == start || next == wordEnd || next >= end || !CPP_TYPE_SURROUNDING_KEYWORDS.contains(fileContent.substring(start, wordEnd)))
+				break;
+			start = next;
+		}
+		while(true) {
+			int wordStart = end;
+			while(wordStart > start && Character.isJavaIdentifierPart(fileContent.charAt(wordStart - 1))) {
+				wordStart--;
+			}
+			int previous = wordStart;
+			while(previous > start && Character.isWhitespace(fileContent.charAt(previous - 1))) {
+				previous--;
+			}
+			if(wordStart == end || previous == wordStart || previous <= start || !CPP_TYPE_SURROUNDING_KEYWORDS.contains(fileContent.substring(wordStart, end)))
+				break;
+			end = previous;
+		}
+		if(start == locationInfo.getStartOffset() && end == locationInfo.getEndOffset())
+			return locationInfo;
+		return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.TYPE, fileContent);
 	}
 
 	public static String cleanTypeText(String rawType) {

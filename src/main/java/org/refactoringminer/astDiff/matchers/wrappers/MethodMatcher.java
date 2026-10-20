@@ -916,6 +916,14 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
     }
 
+    //the declaration containing the declarator of a C++ function declaration, or the operation node itself, i.e., the field_declaration of static int f();
+    private static Tree declarationOfDeclarator(Tree operationNode) {
+        Tree node = operationNode;
+        while (node.getType().name.endsWith("_declarator") && node.getParent() != null)
+            node = node.getParent();
+        return node;
+    }
+
     private void processMethodSignature(Tree srcOperationNode, Tree dstOperationNode, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
         if (srcOperationNode == null || dstOperationNode == null) return;
         com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(srcOperationNode,dstOperationNode,LANG1.SIMPLE_NAME,LANG2.SIMPLE_NAME);
@@ -1115,26 +1123,38 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
 
         if (umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
+            //the specifiers of a C++ function declaration are siblings of its declarator, i.e., static in static int f();
+            Tree srcModifiersOwner = declarationOfDeclarator(srcOperationNode);
+            Tree dstModifiersOwner = declarationOfDeclarator(dstOperationNode);
+            if (srcModifiersOwner != srcOperationNode && dstModifiersOwner != dstOperationNode) {
+                List<Tree> qualifiers1 = TreeUtilFunctions.findChildrenByType(srcModifiersOwner, LANG1.TYPE_QUALIFIER);
+                List<Tree> qualifiers2 = TreeUtilFunctions.findChildrenByType(dstModifiersOwner, LANG2.TYPE_QUALIFIER);
+                if (qualifiers1.size() == qualifiers2.size()) {
+                    for (int i = 0; i < qualifiers1.size(); i++)
+                        if (qualifiers1.get(i).isIsoStructuralTo(qualifiers2.get(i)))
+                            mappingStore.addMappingRecursively(qualifiers1.get(i), qualifiers2.get(i));
+                }
+            }
             if (umlOperationBodyMapper.getOperation1().isStatic() && umlOperationBodyMapper.getOperation2().isStatic())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.STATIC).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.STATIC).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isFinal() && umlOperationBodyMapper.getOperation2().isFinal())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.FINAL).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.FINAL).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isAbstract() && umlOperationBodyMapper.getOperation2().isAbstract())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.ABSTRACT).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.ABSTRACT).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isSynchronized() && umlOperationBodyMapper.getOperation2().isSynchronized())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.SYNCHRONIZED).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.SYNCHRONIZED).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isSynchronized() && Constants.isCrossLanguage(LANG1, LANG2))
                 JavaToKotlinMigration.handleSynchronizedMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);
             if (Constants.isCrossLanguage(LANG1, LANG2))
                 JavaToKotlinMigration.handleOverrideMapping(mappingStore, srcOperationNode, dstOperationNode, LANG1, LANG2);
             if (umlOperationBodyMapper.getOperation1().isNative() && umlOperationBodyMapper.getOperation2().isNative())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.NATIVE).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.NATIVE).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isDefault() && umlOperationBodyMapper.getOperation2().isDefault())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.DEFAULT).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.DEFAULT).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isStrictfp() && umlOperationBodyMapper.getOperation2().isStrictfp())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.STRICTFP).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.STRICTFP).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             if (umlOperationBodyMapper.getOperation1().isInline() && umlOperationBodyMapper.getOperation2().isInline())
-                new SameModifierMatcher(LANG1, LANG2, LANG1.INLINE).match(srcOperationNode,dstOperationNode,mappingStore);
+                new SameModifierMatcher(LANG1, LANG2, LANG1.INLINE).match(srcModifiersOwner,dstModifiersOwner,mappingStore);
             new SameModifierMatcher(LANG1, LANG2, LANG1.OVERRIDE).match(srcOperationNode,dstOperationNode,mappingStore);
             new SameModifierMatcher(LANG1, LANG2, LANG1.SUSPEND).match(srcOperationNode,dstOperationNode,mappingStore);
             new SameModifierMatcher(LANG1, LANG2, LANG1.OPEN).match(srcOperationNode,dstOperationNode,mappingStore);

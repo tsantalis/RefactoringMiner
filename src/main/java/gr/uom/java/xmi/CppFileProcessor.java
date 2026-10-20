@@ -229,18 +229,43 @@ public class CppFileProcessor {
 		compilationUnitComments.removeAll(codeElementComments);
 	}
 
+	//a directive ends after the line break of its line, including the comments and continuation lines, like its AST node, i.e., #include <a.h> // b
+	//a conditional directive is located at its line, because its AST node spans the whole conditional block
+	private LocationInfo directiveLocation(String sourceFolder, IASTPreprocessorStatement statement) {
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, statement, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
+		if(statement instanceof IASTPreprocessorIfStatement || statement instanceof IASTPreprocessorIfdefStatement || statement instanceof IASTPreprocessorIfndefStatement ||
+				statement instanceof IASTPreprocessorElifStatement || statement instanceof IASTPreprocessorElseStatement || statement instanceof IASTPreprocessorEndifStatement) {
+			return locationInfo;
+		}
+		int start = locationInfo.getStartOffset();
+		int end = locationInfo.getEndOffset();
+		while(end < fileContent.length() && fileContent.charAt(end) != '\n') {
+			if(fileContent.startsWith("/*", end)) {
+				int close = fileContent.indexOf("*/", end + 2);
+				end = close < 0 ? fileContent.length() : close + 2;
+			}
+			else if(fileContent.startsWith("\\\n", end)) {
+				end += 2;
+			}
+			else if(fileContent.startsWith("\\\r\n", end)) {
+				end += 3;
+			}
+			else {
+				end++;
+			}
+		}
+		if(end < fileContent.length()) {
+			end++;
+		}
+		return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.PREPROCESSOR_DIRECTIVE, fileContent);
+	}
+
 	private void processPreprocessorStatements(String sourceFolder, UMLClass moduleClass, IASTPreprocessorStatement[] allPreprocessorStatements) {
 		for(IASTPreprocessorStatement statement : allPreprocessorStatements) {
 			if(!isPartOfFile(statement)) {
 				continue;
 			}
-			LocationInfo locationInfo = new LocationInfo(
-				sourceFolder,
-				filePath,
-				statement,
-				CodeElementType.PREPROCESSOR_DIRECTIVE,
-				fileContent
-			);	
+			LocationInfo locationInfo = directiveLocation(sourceFolder, statement);
 			IASTName nameNode;
 			String name;
 			String value;
@@ -1238,7 +1263,10 @@ public class CppFileProcessor {
 			UMLOperation operation = null;
 			IASTName name = elaboratedTypeSpecifier.getName();
 			String fullName = name.toString();
-			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
+			//a friend declaration is located with its semicolon, like its AST node, i.e., friend class F;
+			LocationInfo locationInfo = elaboratedTypeSpecifier.isFriend() ?
+					new LocationInfo(sourceFolder, filePath, simpleDeclaration, CodeElementType.FORWARD_DECLARATION, fileContent) :
+					new LocationInfo(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
 			String[] tokens = elaboratedTypeSpecifier.toString().split("\s");
 			if(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof IASTFunctionDeclarator functionDeclarator) {
 				fullName = fullName + "." + functionDeclarator.getName().toString();
@@ -1340,6 +1368,7 @@ public class CppFileProcessor {
 			if(!skip) {
 				UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 				umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
+				umlAttribute.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
 				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 				variableDeclaration.setAttribute(true);
 				umlAttribute.setVariableDeclaration(variableDeclaration);

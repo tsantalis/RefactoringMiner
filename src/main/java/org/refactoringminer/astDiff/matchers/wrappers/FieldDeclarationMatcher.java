@@ -367,13 +367,16 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, modifier, LANG1);
         Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, modifier, LANG2);
         if (srcModifierTree != null && dstModifierTree != null)
-            mappingStore.addMapping(srcModifierTree,dstModifierTree);
+            mappingStore.addMappingRecursively(srcModifierTree,dstModifierTree);
     }
 
     private Tree findAttributeModifierByLabel(Tree anyFieldDeclaration,String label, Constants LANG) {
         if (!anyFieldDeclaration.getChildren().isEmpty()) {
             for (Tree child : anyFieldDeclaration.getChildren()) {
                 if (child.getLabel().equals(label))
+                    return child;
+                //a C++ specifier wraps its keyword, i.e., static in storage_class_specifier
+                if (child.getType().name.endsWith("_specifier") && child.getChildren().size() == 1 && child.getChild(0).getLabel().equals(label))
                     return child;
                 if (child.getType().name.equals(LANG.VARIABLE_DECLARATION_FRAGMENT))
                     break;

@@ -319,20 +319,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
-        //handle case where the parent block has only a single statement and the locationInfo of compositeStatement is identical with the parent block locationInfo in Python
-        //the solution uses reflection to obtain the value of Constants value from the CodeElementType constant name
-        if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
-            String astTypeName = srcLocationInfo.getCodeElementType().name();
-            try {
-                java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
-                String value = (String) publicField.get(LANG1);
-                Tree tmp = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo, LANG1, value);
-                if(tmp != null)
-                    srcStatementNode = tmp;
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-                //e.printStackTrace();
-            }
-        }
         if(Constants.isCrossLanguage(LANG1, LANG2) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) && abstractCodeMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
             Tree statements2 = dstStatementNode;
             dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo, LANG2, LANG2.TRY_STATEMENT);
@@ -361,18 +347,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 srcStatementNode.getType().name.equals(LANG1.IF_STATEMENT) && dstLocationInfo.getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
             //the Kotlin else-if is nested in a control_structure_body with the same range, which is located instead of the if_expression
             dstStatementNode = JavaToKotlinMigration.handleElseIfMapping(mappingStore, dstStatementNode, LANG2, optimizationData.getDeferredFlattenings());
-        }
-        if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK) && !dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK)) {
-            String astTypeName = dstLocationInfo.getCodeElementType().name();
-            try {
-                java.lang.reflect.Field publicField = Constants.class.getField(astTypeName);
-                String value = (String) publicField.get(LANG2);
-                Tree tmp = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo, LANG2, value);
-                if(tmp != null)
-                    dstStatementNode = tmp;
-            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-                //e.printStackTrace();
-            }
         }
         {
             if (srcStatementNode == null || dstStatementNode == null)
@@ -1345,15 +1319,11 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             System.err.println("Tree not found for " + abstractCodeMapping);
             return;
         }
-        if(srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && !dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK)) {
-            if(srcStatementNode.getChildren().size() == 1 && srcStatementNode.getChild(0).getType().name.equals(dstStatementNode.getType().name)) {
-                srcStatementNode = srcStatementNode.getChild(0);
-            }
-        }
-        else if(!srcStatementNode.getType().name.equals(LANG1.CLASS_BLOCK) && dstStatementNode.getType().name.equals(LANG2.CLASS_BLOCK)) {
-            if(dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(srcStatementNode.getType().name)) {
-                dstStatementNode = dstStatementNode.getChild(0);
-            }
+        //the blocks with a single statement correspond when their statements are mapped, i.e., if x: raise ValueError(...) -> if y: raise ValueError(...)
+        if(srcStatementNode.getParent() != null && dstStatementNode.getParent() != null &&
+                srcStatementNode.getParent().getType().name.equals(LANG1.CLASS_BLOCK) && dstStatementNode.getParent().getType().name.equals(LANG2.CLASS_BLOCK) &&
+                srcStatementNode.getParent().getChildren().size() == 1 && dstStatementNode.getParent().getChildren().size() == 1) {
+            mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
         }
         if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
             if(srcStatementNode.getType().name.equals(LANG1.ARROW_FUNCTION) && dstStatementNode.getType().name.equals(LANG2.ARROW_FUNCTION)) {

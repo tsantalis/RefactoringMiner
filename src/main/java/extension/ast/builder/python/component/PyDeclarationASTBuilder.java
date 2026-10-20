@@ -19,6 +19,8 @@ import extension.ast.node.statement.LangExpressionStatement;
 import extension.ast.node.PositionUtils;
 import extension.base.lang.python.PythonParser;
 import gr.uom.java.xmi.Visibility;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -242,66 +244,73 @@ public class PyDeclarationASTBuilder extends PyBaseASTBuilder {
     private void processParameters(PythonParser.ParametersContext ctx, List<LangSingleVariableDeclaration> parameters) {
         if (ctx.slash_no_default() != null) {
             for (PythonParser.Param_no_defaultContext p : ctx.slash_no_default().param_no_default()) {
-                parameters.add(createParam(p.param(), null, false, false));
+                parameters.add(createParam(p.param(), null));
             }
         }
         if (ctx.slash_with_default() != null) {
             for (PythonParser.Param_no_defaultContext p : ctx.slash_with_default().param_no_default()) {
-                parameters.add(createParam(p.param(), null, false, false));
+                parameters.add(createParam(p.param(), null));
             }
             for (PythonParser.Param_with_defaultContext p : ctx.slash_with_default().param_with_default()) {
-                parameters.add(createParam(p.param(), p.default_assignment().expression(), false, false));
+                parameters.add(createParam(p.param(), p.default_assignment()));
             }
         }
         if (ctx.param_no_default() != null) {
             for (PythonParser.Param_no_defaultContext p : ctx.param_no_default()) {
-                parameters.add(createParam(p.param(), null, false, false));
+                parameters.add(createParam(p.param(), null));
             }
         }
         if (ctx.param_with_default() != null) {
             for (PythonParser.Param_with_defaultContext p : ctx.param_with_default()) {
-                parameters.add(createParam(p.param(), p.default_assignment().expression(), false, false));
+                parameters.add(createParam(p.param(), p.default_assignment()));
             }
         }
         if (ctx.star_etc() != null) {
             PythonParser.Star_etcContext s = ctx.star_etc();
             if (s.param_no_default() != null) {
-                parameters.add(createParam(s.param_no_default().param(), null, true, false));
+                PythonParser.ParamContext p = s.param_no_default().param();
+                parameters.add(createStarParam(s.STAR().getSymbol(), p.name(), p, p.annotation(), true, false));
             }
             if (s.param_no_default_star_annotation() != null) {
-                parameters.add(createParam(s.param_no_default_star_annotation().param_star_annotation().name(), null, true, false));
+                PythonParser.Param_star_annotationContext p = s.param_no_default_star_annotation().param_star_annotation();
+                parameters.add(createStarParam(s.STAR().getSymbol(), p.name(), p, null, true, false));
             }
             if (s.param_maybe_default() != null) {
                 for (PythonParser.Param_maybe_defaultContext p : s.param_maybe_default()) {
-                    parameters.add(createParam(p.param(), p.default_assignment() != null ? p.default_assignment().expression() : null, false, false));
+                    parameters.add(createParam(p.param(), p.default_assignment()));
                 }
             }
             if (s.kwds() != null) {
-                parameters.add(createParam(s.kwds().param_no_default().param(), null, false, true));
+                PythonParser.ParamContext p = s.kwds().param_no_default().param();
+                parameters.add(createStarParam(s.kwds().DOUBLESTAR().getSymbol(), p.name(), p, p.annotation(), false, true));
             }
         }
     }
 
-    private LangSingleVariableDeclaration createParam(PythonParser.ParamContext paramContext, PythonParser.ExpressionContext defaultVal, boolean isStar, boolean isDoubleStar) {
-        LangASTNode defaultValueExpression = defaultVal != null ? mainBuilder.visit(defaultVal) : null;
-        LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(paramContext.name().getText(), defaultValueExpression, paramContext);
+    //a parameter with a default value is located at both, like the default_parameter of the tree, i.e., size: int = 1
+    private LangSingleVariableDeclaration createParam(PythonParser.ParamContext paramContext, PythonParser.Default_assignmentContext defaultAssignment) {
+        LangASTNode defaultValueExpression = defaultAssignment != null ? mainBuilder.visit(defaultAssignment.expression()) : null;
+        LangSingleVariableDeclaration decl = defaultAssignment != null ?
+                LangASTNodeFactory.createSingleVariableDeclaration(paramContext.name().getText(), defaultValueExpression, paramContext, PositionUtils.getPositionInfo(paramContext, defaultAssignment)) :
+                LangASTNodeFactory.createSingleVariableDeclaration(paramContext.name().getText(), null, paramContext);
         decl.setTypeAnnotation(TypeObjectEnum.OBJECT);
         decl.setParameter(true);
-        decl.setVarArgs(isStar);
-        decl.setKwArgs(isDoubleStar);
         if (paramContext.annotation() != null) {
             decl.setTypeAnnotation(TypeObjectEnum.fromType(paramContext.annotation().expression().getText()));
         }
         return decl;
     }
 
-    private LangSingleVariableDeclaration createParam(PythonParser.NameContext name, PythonParser.ExpressionContext defaultVal, boolean isStar, boolean isDoubleStar) {
-        LangASTNode defaultValueExpression = defaultVal != null ? mainBuilder.visit(defaultVal) : null;
-        LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(name.getText(), defaultValueExpression, name);
+    //a star parameter is located at its * or **, like the list_splat_pattern and dictionary_splat_pattern of the tree, i.e., *args: int and **kwargs
+    private LangSingleVariableDeclaration createStarParam(Token star, PythonParser.NameContext name, ParserRuleContext param, PythonParser.AnnotationContext annotation, boolean isStar, boolean isDoubleStar) {
+        LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(name.getText(), null, param, PositionUtils.getPositionInfo(star, param));
         decl.setTypeAnnotation(TypeObjectEnum.OBJECT);
         decl.setParameter(true);
         decl.setVarArgs(isStar);
         decl.setKwArgs(isDoubleStar);
+        if (annotation != null) {
+            decl.setTypeAnnotation(TypeObjectEnum.fromType(annotation.expression().getText()));
+        }
         return decl;
     }
 

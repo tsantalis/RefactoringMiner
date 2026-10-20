@@ -16,9 +16,9 @@ public class LangDictionaryLiteral extends LangLiteral {
         super(NodeTypeEnum.DICTIONARY_LITERAL, positionInfo);
     }
 
-    public void addEntry(LangASTNode key, LangASTNode value) {
+    public void addEntry(LangASTNode key, LangASTNode value, PositionInfo positionInfo) {
         if (key != null && value != null) {
-            entries.add(new Entry(key, value));
+            entries.add(new Entry(key, value, positionInfo));
             addChild(key);
             addChild(value);
         }
@@ -40,13 +40,25 @@ public class LangDictionaryLiteral extends LangLiteral {
                 '}';
     }
 
+    //an entry is located at its key-value pair, i.e., 'darwin': ['open']
     public static class Entry {
         private final LangASTNode key;
         private final LangASTNode value;
+        private final PositionInfo positionInfo;
 
-        public Entry(LangASTNode key, LangASTNode value) {
+        public Entry(LangASTNode key, LangASTNode value, PositionInfo positionInfo) {
             this.key = key;
             this.value = value;
+            this.positionInfo = positionInfo;
+        }
+
+        public int getStartChar() {
+            return positionInfo.getStartChar();
+        }
+
+        //the end is exclusive, as in LangASTNode
+        public int getEndChar() {
+            return positionInfo.getEndChar() + 1;
         }
 
         public LangASTNode getKey() {

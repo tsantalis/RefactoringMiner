@@ -1825,8 +1825,8 @@
   "firstEndPos" : 3531,
   "secondEndPos" : 2863
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "dtype",
   "secondLabel" : "dtype",
   "firstParentType" : "keyword_argument",
@@ -5818,8 +5818,8 @@
   "firstEndPos" : 12040,
   "secondEndPos" : 11470
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "dtype",
   "secondLabel" : "dtype",
   "firstParentType" : "keyword_argument",
@@ -6390,8 +6390,8 @@
   "firstEndPos" : 12344,
   "secondEndPos" : 11774
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "trim",
   "secondLabel" : "trim",
   "firstParentType" : "keyword_argument",
@@ -8777,8 +8777,8 @@
   "firstEndPos" : 14812,
   "secondEndPos" : 13483
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "dtype",
   "secondLabel" : "dtype",
   "firstParentType" : "keyword_argument",
@@ -9910,6 +9910,17 @@
   "firstEndPos" : 15581,
   "secondEndPos" : 16168
 }, {
+  "firstType" : "identifier",
+  "secondType" : "identifier",
+  "firstLabel" : "set_base",
+  "secondLabel" : "copy",
+  "firstParentType" : "attribute",
+  "secondParentType" : "attribute",
+  "firstPos" : 15582,
+  "secondPos" : 16169,
+  "firstEndPos" : 15590,
+  "secondEndPos" : 16173
+}, {
   "firstType" : "argument_list",
   "secondType" : "argument_list",
   "firstLabel" : "",
@@ -9987,16 +9998,16 @@
   "firstEndPos" : 15617,
   "secondEndPos" : 16194
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "copy",
-  "secondLabel" : "copy",
+  "secondLabel" : "base",
   "firstParentType" : "keyword_argument",
-  "secondParentType" : "attribute",
+  "secondParentType" : "keyword_argument",
   "firstPos" : 15608,
-  "secondPos" : 16169,
+  "secondPos" : 16174,
   "firstEndPos" : 15612,
-  "secondEndPos" : 16173
+  "secondEndPos" : 16178
 }, {
   "firstType" : "assignment_operator_literal",
   "secondType" : "assignment_operator_literal",
@@ -11373,8 +11384,8 @@
   "firstEndPos" : 17617,
   "secondEndPos" : 18194
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "null",
   "secondLabel" : "null",
   "firstParentType" : "keyword_argument",
@@ -13122,8 +13133,8 @@
   "firstEndPos" : 19236,
   "secondEndPos" : 19813
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "null",
   "secondLabel" : "null",
   "firstParentType" : "keyword_argument",
@@ -13903,8 +13914,8 @@
   "firstEndPos" : 20599,
   "secondEndPos" : 21176
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "null",
   "secondLabel" : "null",
   "firstParentType" : "keyword_argument",
@@ -15201,8 +15212,8 @@
   "firstEndPos" : 21555,
   "secondEndPos" : 22132
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "index",
   "secondLabel" : "index",
   "firstParentType" : "keyword_argument",
@@ -15597,8 +15608,8 @@
   "firstEndPos" : 21714,
   "secondEndPos" : 22291
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "dtype",
   "secondLabel" : "dtype",
   "firstParentType" : "keyword_argument",
@@ -16169,8 +16180,8 @@
   "firstEndPos" : 22186,
   "secondEndPos" : 22991
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "pmf",
   "secondLabel" : "pmf",
   "firstParentType" : "keyword_argument",
@@ -16290,8 +16301,8 @@
   "firstEndPos" : 22185,
   "secondEndPos" : 22990
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "copy",
   "secondLabel" : "copy",
   "firstParentType" : "keyword_argument",
@@ -16334,8 +16345,8 @@
   "firstEndPos" : 22251,
   "secondEndPos" : 23056
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "outcomes",
   "secondLabel" : "outcomes",
   "firstParentType" : "keyword_argument",
@@ -16433,8 +16444,8 @@
   "firstEndPos" : 22316,
   "secondEndPos" : 23121
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "alphabet",
   "secondLabel" : "alphabet",
   "firstParentType" : "keyword_argument",
@@ -16532,8 +16543,8 @@
   "firstEndPos" : 22367,
   "secondEndPos" : 23172
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "base",
   "secondLabel" : "base",
   "firstParentType" : "keyword_argument",
@@ -16620,8 +16631,8 @@
   "firstEndPos" : 22409,
   "secondEndPos" : 23214
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "prng",
   "secondLabel" : "prng",
   "firstParentType" : "keyword_argument",
@@ -16664,8 +16675,8 @@
   "firstEndPos" : 22472,
   "secondEndPos" : 23277
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "sparse",
   "secondLabel" : "sparse",
   "firstParentType" : "keyword_argument",
@@ -21064,8 +21075,8 @@
   "firstEndPos" : 28813,
   "secondEndPos" : 29140
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "numerical",
   "secondLabel" : "numerical",
   "firstParentType" : "keyword_argument",
@@ -22637,8 +22648,8 @@
   "firstEndPos" : 30357,
   "secondEndPos" : 30663
 }, {
-  "firstType" : "identifier",
-  "secondType" : "identifier",
+  "firstType" : "keyword_identifier",
+  "secondType" : "keyword_identifier",
   "firstLabel" : "dtype",
   "secondLabel" : "dtype",
   "firstParentType" : "keyword_argument",

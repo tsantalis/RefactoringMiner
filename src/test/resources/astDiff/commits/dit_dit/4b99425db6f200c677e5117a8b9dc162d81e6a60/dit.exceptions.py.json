@@ -4124,6 +4124,17 @@
   "firstEndPos" : 3103,
   "secondEndPos" : 3517
 }, {
+  "firstType" : "call",
+  "secondType" : "call",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 3104,
+  "secondPos" : 3518,
+  "firstEndPos" : 3157,
+  "secondEndPos" : 3552
+}, {
   "firstType" : "attribute",
   "secondType" : "attribute",
   "firstLabel" : "",
@@ -4145,6 +4156,17 @@
   "secondPos" : 3522,
   "firstEndPos" : 3148,
   "secondEndPos" : 3528
+}, {
+  "firstType" : "argument_list",
+  "secondType" : "argument_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "call",
+  "secondParentType" : "call",
+  "firstPos" : 3148,
+  "secondPos" : 3528,
+  "firstEndPos" : 3157,
+  "secondEndPos" : 3552
 }, {
   "firstType" : "subscript",
   "secondType" : "subscript",

@@ -2965,6 +2965,9 @@ public class ReplacementAlgorithm {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 						invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
 				replacementInfo.addReplacement(replacement);
+				if(variableAssignmentWithEverythingReplaced(statement1, statement2, replacementInfo, operationBodyMapper)) {
+					return null;
+				}
 				return replacementInfo.getReplacements();
 			}
 		}

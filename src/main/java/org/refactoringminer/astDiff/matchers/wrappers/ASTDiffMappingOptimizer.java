@@ -4,6 +4,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.diff.StringDistance;
 import org.refactoringminer.astDiff.matchers.statement.IgnoringCommentsLeafMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -33,6 +34,20 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
         processOptimization(astDiff, optimizationData, parentContextMap, childContextMap);
 
     }
+    //adjacent string literals are a single string literal in the model, so a plain string is paired with the most similar part, i.e., 'a={}' -> 'a={}, ' 'b={}'
+    private static Tree closestPart(Tree concatenated, Tree string) {
+        Tree closest = null;
+        int minDistance = Integer.MAX_VALUE;
+        for (Tree part : concatenated.getChildren()) {
+            int distance = StringDistance.editDistance(part.getLabel(), string.getLabel());
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = part;
+            }
+        }
+        return closest;
+    }
+
     private void processOptimization(ASTDiff input, OptimizationData optimizationData, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
         Tree srcTree = input.src.getRoot();
         Tree dstTree = input.dst.getRoot();
@@ -44,10 +59,25 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
                 //Handles all string-literal cases (intra and inter file)
                 Tree srcTotal = parentContextMap.get(lastStepMapping.getFragment1().getLocationInfo().getFilePath()).getRoot();
                 Tree dstTotal = childContextMap.get(lastStepMapping.getFragment2().getLocationInfo().getFilePath()).getRoot();
-                Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), astDiff.LANG1, astDiff.LANG1.STRING_LITERAL);
-                Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2, astDiff.LANG2.STRING_LITERAL);
+                Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), astDiff.LANG1, astDiff.LANG1.STRING_LITERAL, astDiff.LANG1.CONCATENATED_STRING);
+                Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), astDiff.LANG2, astDiff.LANG2.STRING_LITERAL, astDiff.LANG2.CONCATENATED_STRING);
                 if (srcStringLiteral != null && dstStringLiteral != null) {
-                    input.getAllMappings().addMapping(srcStringLiteral, dstStringLiteral);
+                    boolean concatenated1 = srcStringLiteral.getType().name.equals(astDiff.LANG1.CONCATENATED_STRING);
+                    boolean concatenated2 = dstStringLiteral.getType().name.equals(astDiff.LANG2.CONCATENATED_STRING);
+                    if (concatenated1 && concatenated2) {
+                        if (TreeUtilFunctions.isIsomorphicTo(srcStringLiteral, dstStringLiteral))
+                            input.getAllMappings().addMappingRecursively(srcStringLiteral, dstStringLiteral);
+                        else {
+                            new LeafMatcher(astDiff.LANG1, astDiff.LANG2).match(srcStringLiteral, dstStringLiteral, input.getAllMappings());
+                            input.getAllMappings().addMapping(srcStringLiteral, dstStringLiteral);
+                        }
+                    }
+                    else if (concatenated1)
+                        input.getAllMappings().addMapping(closestPart(srcStringLiteral, dstStringLiteral), dstStringLiteral);
+                    else if (concatenated2)
+                        input.getAllMappings().addMapping(srcStringLiteral, closestPart(dstStringLiteral, srcStringLiteral));
+                    else
+                        input.getAllMappings().addMapping(srcStringLiteral, dstStringLiteral);
                 }
                 continue;
             }

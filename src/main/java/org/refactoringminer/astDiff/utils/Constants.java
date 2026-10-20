@@ -435,6 +435,8 @@ public class Constants {
     public final String RELATIVE_IMPORT = "relative_import";
     public final String FROM_KEYWORD = "from";
     public final String LINE_CONTINUATION = "line_continuation";
+    //adjacent string literals, i.e., 'a' 'b' in Python and "a" "b" in C++, are a single string literal in the model
+    public final String CONCATENATED_STRING = "concatenated_string";
     public final String FUTURE = "__future__";
     public final String RELATIVE_IMPORT_DOTTED_NAME = "dotted_name";
     public final String ELSE_IF = "elif_clause";
@@ -450,9 +452,7 @@ public class Constants {
     public final String PATTERN_LIST = "pattern_list";
     public final String DICTIONARY = "dictionary";
     public final String DICTIONARY_SPLAT_PATTERN = "dictionary_splat_pattern";
-    public final String SPLAT_DOUBLE = "**";
     public final String LIST_SPLAT_PATTERN = "list_splat_pattern";
-    public final String SPLAT_SINGLE = "*";
     public final String AS_PATTERN = "as_pattern";
     public final String CALL = "call";
     public final String SUBSCRIPT = "subscript";
@@ -460,6 +460,9 @@ public class Constants {
     public final String TYPE = "type";
     public final String WITH_STATEMENT = "with_statement";
     public final String TYPED_DEFAULT_PARAMETER = "typed_default_parameter";
+    public final String TYPED_PARAMETER = "typed_parameter";
+    public final String KEYWORD_ARGUMENT = "keyword_argument";
+    public final String KEYWORD_IDENTIFIER = "keyword_identifier";
     public final String TUPLE_PATTERN = "tuple_pattern";
 
     //Kotlin Specific

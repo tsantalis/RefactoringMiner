@@ -96,7 +96,9 @@ public class UMLParameterListDiff {
 			for(Iterator<VariableDeclaration> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				VariableDeclaration addedParameter = addedParameterIterator.next();
 				boolean typeParameterRename = removedParameter.getType() != null && addedParameter.getType() != null && map.containsKey(removedParameter.getType().toString()) && map.get(removedParameter.getType().toString()).equals(addedParameter.getType().toString());
-				if(removedParameter.equalQualifiedType(addedParameter) || typeParameterRename) {
+				//a type that is not declared is weaker evidence than a rename in the body
+				boolean declaredTypes = removedParameter.hasDeclaredType() && addedParameter.hasDeclaredType();
+				if((removedParameter.equalQualifiedType(addedParameter) || typeParameterRename) && (declaredTypes || !renamedOtherwise(removedParameter, addedParameter))) {
 					if(!existsAnotherAddedParameterWithTheSameType(removedOperation, addedOperation, addedParameter)) {
 						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
 						if(!parameterDiff.isEmpty()) {
@@ -226,6 +228,21 @@ public class UMLParameterListDiff {
 			index++;
 		}
 		return -1;
+	}
+
+	//the body renames one of the parameters to, or from, another parameter, i.e., zero_pad=False, scope=s -> variable_scope=s renames scope
+	private boolean renamedOtherwise(VariableDeclaration removedParameter, VariableDeclaration addedParameter) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof RenameVariableRefactoring rename) {
+				VariableDeclaration original = rename.getOriginalVariable();
+				VariableDeclaration renamed = rename.getRenamedVariable();
+				if((original.equals(removedParameter) && !renamed.equals(addedParameter) && renamed.isParameter()) ||
+						(renamed.equals(addedParameter) && !original.equals(removedParameter) && original.isParameter())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean existsAnotherAddedParameterWithTheSameType(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, VariableDeclaration parameter) {

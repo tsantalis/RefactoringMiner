@@ -38,6 +38,19 @@ public class PositionUtils {
         );
     }
 
+    //the range from the start of the first rule to the end of the last one, i.e., a parameter with its default value, without the comma that follows them
+    public static PositionInfo getPositionInfo(ParserRuleContext first, ParserRuleContext last) {
+        PositionInfo start = getPositionInfo(first);
+        PositionInfo end = getPositionInfo(last);
+        return new PositionInfo(start.getStartLine(), end.getEndLine(), start.getStartChar(), end.getEndChar(), start.getStartColumn(), end.getEndColumn());
+    }
+
+    //the range from a token to the end of a rule, i.e., a star parameter with its * or **
+    public static PositionInfo getPositionInfo(Token first, ParserRuleContext last) {
+        PositionInfo end = getPositionInfo(last);
+        return new PositionInfo(first.getLine(), end.getEndLine(), first.getStartIndex(), end.getEndChar(), getColumn(first), end.getEndColumn());
+    }
+
     //the NEWLINE, INDENT and DEDENT tokens of the Python lexer are layout, i.e., a DEDENT ends right before the next statement,
     //so the range of a rule ending with a block would include the following blank lines and comments
     private static boolean isLayout(Token token) {

@@ -513,8 +513,8 @@ public class LangVisitor implements LangASTVisitor {
                 LangASTNode value = entry.getValue();
                 VariableDeclaration vd = new VariableDeclaration(cu, sourceFolder, filePath, key, dictionary.getEndChar(), fileContent);
                 vd.setAttribute(true);
-                //the entry from its key to its value, like the pair of the tree
-                LocationInfo attributeLocation = new LocationInfo(sourceFolder, filePath, key.getStartChar(), value.getEndChar() - key.getStartChar(), value.getEndChar(), LocationInfo.CodeElementType.FIELD_DECLARATION, fileContent);
+                //the entry at its key-value pair, like the pair of the tree
+                LocationInfo attributeLocation = new LocationInfo(sourceFolder, filePath, entry.getStartChar(), entry.getEndChar() - entry.getStartChar(), entry.getEndChar(), LocationInfo.CodeElementType.FIELD_DECLARATION, fileContent);
                 UMLAttribute attribute = new UMLAttribute(vd.getVariableName(), vd.getType(), attributeLocation, anonymousClass.getName());
                 attribute.setVariableDeclaration(vd);
                 attribute.setVisibility(Visibility.PRIVATE);

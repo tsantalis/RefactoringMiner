@@ -67,6 +67,14 @@ public class LangASTNodeFactory {
         return decl;
     }
 
+    //the declaration is located at its own range, which includes more than its name, i.e., a parameter with its default value
+    public static LangSingleVariableDeclaration createSingleVariableDeclaration(String name, LangASTNode defaultValue, ParserRuleContext nameCtx, PositionInfo positionInfo) {
+        LangSimpleName langSimpleName = createSimpleName(name, nameCtx);
+        LangSingleVariableDeclaration decl = new LangSingleVariableDeclaration(langSimpleName, defaultValue, positionInfo);
+        decl.setTypeAnnotation(TypeObjectEnum.OBJECT);
+        return decl;
+    }
+
     public static LangSingleVariableDeclaration createSingleVariableDeclaration(String name, LangASTNode defaultValue, PositionInfo positionInfo) {
         LangSimpleName langSimpleName = new LangSimpleName(name, positionInfo);
         LangSingleVariableDeclaration decl = new LangSingleVariableDeclaration(langSimpleName, defaultValue, positionInfo);

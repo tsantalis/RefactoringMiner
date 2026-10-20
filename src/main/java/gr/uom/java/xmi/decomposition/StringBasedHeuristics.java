@@ -3217,6 +3217,17 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	//the assigned fields of the same object, i.e., mapping.id and mapping.startPosition for the replacement of id with startPosition
+	private static boolean sameQualifierRenamedField(String variableName1, String variableName2, Replacement replacement) {
+		String suffix1 = "." + replacement.getBefore();
+		String suffix2 = "." + replacement.getAfter();
+		if(!variableName1.endsWith(suffix1) || !variableName2.endsWith(suffix2))
+			return false;
+		String qualifier1 = variableName1.substring(0, variableName1.length() - suffix1.length());
+		String qualifier2 = variableName2.substring(0, variableName2.length() - suffix2.length());
+		return !qualifier1.isEmpty() && qualifier1.equals(qualifier2);
+	}
+
 	protected static boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo, UMLOperationBodyMapper mapper) {
 		Constants LANG1 = mapper.LANG1;
@@ -3319,6 +3330,8 @@ public class StringBasedHeuristics {
 						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(LANG2.THIS_DOT + replacement.getAfter())) &&
 						!variableName1.equals(LANG1.THIS_DOT + variableName2) && !variableName2.equals(LANG2.THIS_DOT + variableName1))
 					variableRename = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && sameQualifierRenamedField(variableName1, variableName2, replacement))
+					variableRename = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
 						assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()) &&
 						!mapper.getContainer1().isConstructor() && !mapper.getContainer2().isConstructor() && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
@@ -3373,6 +3386,10 @@ public class StringBasedHeuristics {
 						String name1 = withoutTemplateArguments(invocationBefore.getName());
 						String name2 = withoutTemplateArguments(invocationAfter.getName());
 						if(!name1.contains(name2) && !name2.contains(name1)) {
+							rightHandSideReplacement = true;
+						}
+						//the name, the expression and all the arguments are replaced, i.e., self._to_internal(questions[qid]) -> int(att[row:row + nrows].sum())
+						else if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION) && invocationBefore.argumentIntersection(invocationAfter).isEmpty()) {
 							rightHandSideReplacement = true;
 						}
 					}

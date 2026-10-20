@@ -43,6 +43,15 @@ public class TreeUtilFunctions {
 		}
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
+		//a block with a single statement has the range of the statement, so it is located only for a block of the model, i.e., if x: return y
+		if (isFromType(treeBetweenPositions, LANG.CLASS_BLOCK) && !locationInfo.getCodeElementType().equals(LocationInfo.CodeElementType.BLOCK)) {
+			for (Tree descendant : treeBetweenPositions.getDescendants()) {
+				if (descendant.getPos() == treeBetweenPositions.getPos() && descendant.getEndPos() == treeBetweenPositions.getEndPos()) {
+					treeBetweenPositions = descendant;
+					break;
+				}
+			}
+		}
 		if (isFromType(treeBetweenPositions, LANG.METHOD_INVOCATION_ARGUMENTS))
 		{
 			if (treeBetweenPositions.getChildren().size() > 0 )

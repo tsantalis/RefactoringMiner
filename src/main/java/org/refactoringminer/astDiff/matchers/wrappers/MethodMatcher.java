@@ -1698,6 +1698,23 @@ public class MethodMatcher extends BodyMapperMatcher{
         return tree;
     }
 
+    //the name of a Python parameter, which is the parameter itself, or the name in its default_parameter, typed_parameter, typed_default_parameter,
+    //list_splat_pattern or dictionary_splat_pattern, i.e., *args: int = ()
+    private static Tree parameterName(Tree parameter, Constants LANG) {
+        String type = parameter.getType().name;
+        if(type.equals(LANG.SIMPLE_NAME)) {
+            return parameter;
+        }
+        if((type.equals(LANG.DEFAULT_PARAMETER) || type.equals(LANG.TYPED_PARAMETER) || type.equals(LANG.TYPED_DEFAULT_PARAMETER)) && parameter.getChildren().size() > 0) {
+            return parameterName(parameter.getChild(0), LANG);
+        }
+        if((type.equals(LANG.LIST_SPLAT_PATTERN) || type.equals(LANG.DICTIONARY_SPLAT_PATTERN)) && parameter.getChildren().size() > 1 &&
+                parameter.getChild(1).getType().name.equals(LANG.SIMPLE_NAME)) {
+            return parameter.getChild(1);
+        }
+        return null;
+    }
+
     private static boolean isParameterWrapper(Tree tree, Constants LANG) {
         String type = tree.getType().name;
         return type.equals(LANG.REQUIRED_PARAMETER) || type.equals(LANG.OPTIONAL_PARAMETER) || type.equals(LANG.ASSIGNMENT_PATTERN);
@@ -1771,11 +1788,6 @@ public class MethodMatcher extends BodyMapperMatcher{
         if (rightTree.getType().name.endsWith("_comment")) {
             rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
         }
-        if(leftTree != null && leftTree.getType().name.equals(LANG1.SIMPLE_NAME) && rightTree != null && rightTree.getType().name.equals(LANG2.SIMPLE_NAME) &&
-                leftTree.getParent().getType().name.equals(LANG1.TYPED_DEFAULT_PARAMETER) && rightTree.getParent().getType().name.equals(LANG2.TYPED_DEFAULT_PARAMETER)) {
-            leftTree = leftTree.getParent();
-            rightTree = rightTree.getParent();
-        }
         if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
             if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                 mappingStore.addMappingRecursively(leftTree, rightTree);
@@ -1784,7 +1796,15 @@ public class MethodMatcher extends BodyMapperMatcher{
             }
             else {
                 new LeafMatcher(LANG1, LANG2).match(leftTree,rightTree,mappingStore);
-                mappingStore.addMapping(leftTree,rightTree);
+                Tree name1 = parameterName(leftTree, LANG1);
+                Tree name2 = parameterName(rightTree, LANG2);
+                if(leftTree.getType().name.equals(rightTree.getType().name) || name1 == null || name2 == null) {
+                    mappingStore.addMapping(leftTree,rightTree);
+                }
+                if(name1 != null && name2 != null) {
+                    //the names of the paired parameters, also when only one of them has a default value or a type, i.e., hparams=None -> filename
+                    mappingStore.addMapping(name1, name2);
+                }
             }
             if(leftTree.getParent() != null && rightTree.getParent() != null) {
                 //the commas follow the parameter in the parameter list, i.e., the TypeScript required_parameter of index in index = 0
@@ -1803,20 +1823,6 @@ public class MethodMatcher extends BodyMapperMatcher{
                     Tree t1 = parameter1.getParent().getChild(index1+2);
                     Tree t2 = parameter2.getParent().getChild(index2+2);
                     mappingStore.addMapping(t1,t2);
-                }
-                if(leftTree.getParent().getType().name.equals(LANG1.DICTIONARY_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.DICTIONARY_SPLAT_PATTERN)) {
-                    mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
-                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_DOUBLE,LANG2.SPLAT_DOUBLE);
-                    if(matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                }
-                if(leftTree.getParent().getType().name.equals(LANG1.LIST_SPLAT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.LIST_SPLAT_PATTERN)) {
-                    mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());
-                    com.github.gumtreediff.utils.Pair<Tree,Tree> matched = Helpers.findPairOfType(leftTree.getParent(),rightTree.getParent(),LANG1.SPLAT_SINGLE,LANG2.SPLAT_SINGLE);
-                    if(matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
                 }
                 if(leftTree.getParent().getType().name.equals(LANG1.OBJECT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.OBJECT_PATTERN)) {
                     mappingStore.addMapping(leftTree.getParent(),rightTree.getParent());

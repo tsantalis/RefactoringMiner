@@ -3,6 +3,7 @@ package extension.ast.builder.python.component;
 import extension.ast.builder.python.PyASTBuilder;
 import extension.ast.node.LangASTNode;
 import extension.ast.node.LangASTNodeFactory;
+import extension.ast.node.PositionUtils;
 import extension.ast.node.declaration.LangSingleVariableDeclaration;
 import extension.ast.node.expression.LangExpression;
 import extension.ast.node.expression.LangMethodInvocation;
@@ -407,12 +408,12 @@ public class PyStatementASTBuilder extends PyBaseASTBuilder {
             for (PythonParser.Key_value_patternContext kv : ctx.items_pattern().key_value_pattern()) {
                 LangASTNode key = mainBuilder.visit(kv.literal_expr() != null ? kv.literal_expr() : kv.attr());
                 LangASTNode value = mainBuilder.visit(kv.pattern());
-                dict.addEntry(key, value);
+                dict.addEntry(key, value, PositionUtils.getPositionInfo(kv));
             }
         }
         if (ctx.double_star_pattern() != null) {
             LangASTNode target = mainBuilder.visit(ctx.double_star_pattern().pattern_capture_target());
-            dict.addEntry(null, LangASTNodeFactory.createPrefixExpression(target, "**", ctx.double_star_pattern()));
+            dict.addEntry(null, LangASTNodeFactory.createPrefixExpression(target, "**", ctx.double_star_pattern()), PositionUtils.getPositionInfo(ctx.double_star_pattern()));
         }
         return dict;
     }

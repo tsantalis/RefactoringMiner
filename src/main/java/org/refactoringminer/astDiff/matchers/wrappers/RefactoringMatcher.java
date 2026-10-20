@@ -457,12 +457,12 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement,renamedVariableName,LANG2);
         if (srcRefs == null || dstRefs == null) return;
         if (srcRefs.size() == 1 && dstRefs.size() == 1)
-            optimizationData.getSubtreeMappings().addMapping(srcRefs.get(0),dstRefs.get(0));
+            addVariableMapping(srcRefs.get(0), dstRefs.get(0), originalVariableName, renamedVariableName, LANG1, LANG2);
         else{
             if (srcRefs.size() == dstRefs.size())
             {
                 for (int i = 0; i < srcRefs.size(); i++) {
-                    optimizationData.getSubtreeMappings().addMapping(srcRefs.get(i),dstRefs.get(i));
+                    addVariableMapping(srcRefs.get(i), dstRefs.get(i), originalVariableName, renamedVariableName, LANG1, LANG2);
                 }
             }
             else {
@@ -471,7 +471,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                     for (Tree dstRef : dstRefs) {
                         if (srcRef.getParent() != null && dstRef.getParent() != null &&
                                 srcRef.getParent().getType().name.equals(dstRef.getParent().getType().name)) {
-                            optimizationData.getSubtreeMappings().addMapping(srcRef, dstRef);
+                            addVariableMapping(srcRef, dstRef, originalVariableName, renamedVariableName, LANG1, LANG2);
                             break;
                         }
                     }
@@ -481,6 +481,21 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
         }
 
     }
+    //the keyword of a keyword argument named after the renamed variable is renamed too, i.e., alphabet=alphabet -> sample_space=sample_space
+    private void addVariableMapping(Tree srcRef, Tree dstRef, String originalVariableName, String renamedVariableName, Constants LANG1, Constants LANG2) {
+        optimizationData.getSubtreeMappings().addMapping(srcRef, dstRef);
+        Tree argument1 = srcRef.getParent();
+        Tree argument2 = dstRef.getParent();
+        if (argument1 != null && argument2 != null && argument1.getType().name.equals(LANG1.KEYWORD_ARGUMENT) && argument2.getType().name.equals(LANG2.KEYWORD_ARGUMENT)) {
+            Tree keyword1 = argument1.getChild(0);
+            Tree keyword2 = argument2.getChild(0);
+            if (keyword1 != srcRef && keyword2 != dstRef && keyword1.getType().name.equals(LANG1.KEYWORD_IDENTIFIER) && keyword2.getType().name.equals(LANG2.KEYWORD_IDENTIFIER) &&
+                    keyword1.getLabel().equals(originalVariableName) && keyword2.getLabel().equals(renamedVariableName)) {
+                optimizationData.getSubtreeMappings().addMapping(keyword1, keyword2);
+            }
+        }
+    }
+
     private List<Refactoring> getClassDiffRefactorings(UMLClassBaseDiff classDiff, List<Refactoring> modelDiffRefactorings) {
         List<Refactoring> classDiffRefactorings = new ArrayList<>();
         for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {

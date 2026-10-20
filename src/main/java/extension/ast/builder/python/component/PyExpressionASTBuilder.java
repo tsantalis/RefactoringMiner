@@ -4,12 +4,14 @@ import extension.ast.builder.python.PyASTBuilder;
 import extension.ast.builder.python.PyASTBuilderUtil;
 import extension.ast.node.LangASTNode;
 import extension.ast.node.LangASTNodeFactory;
+import extension.ast.node.PositionUtils;
 import extension.ast.node.expression.*;
 import extension.ast.node.literal.LangDictionaryLiteral;
 import extension.ast.node.literal.LangStringLiteral;
 import extension.ast.node.literal.LangTupleLiteral;
 import extension.base.lang.python.PythonParser;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -465,11 +467,11 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
                 if (kvCtx.kvpair() != null) {
                     LangASTNode key = mainBuilder.visit(kvCtx.kvpair().expression(0));
                     LangASTNode value = mainBuilder.visit(kvCtx.kvpair().expression(1));
-                    dict.addEntry(key, value);
+                    dict.addEntry(key, value, PositionUtils.getPositionInfo(kvCtx.kvpair()));
                 } else if (kvCtx.bitwise_or() != null) {
                     // Handle **expression
                     LangASTNode value = mainBuilder.visit(kvCtx.bitwise_or());
-                    dict.addEntry(null, LangASTNodeFactory.createPrefixExpression(value, "**", kvCtx));
+                    dict.addEntry(null, LangASTNodeFactory.createPrefixExpression(value, "**", kvCtx), PositionUtils.getPositionInfo(kvCtx));
                 }
             }
         }
@@ -573,46 +575,56 @@ public class PyExpressionASTBuilder extends PyBaseASTBuilder {
     private void processLambdaParameters(PythonParser.Lambda_parametersContext ctx, List<LangASTNode> parameters) {
         if (ctx.lambda_slash_no_default() != null) {
             for (PythonParser.Lambda_param_no_defaultContext p : ctx.lambda_slash_no_default().lambda_param_no_default()) {
-                parameters.add(createLambdaParam(p.lambda_param(), null, false, false));
+                parameters.add(createLambdaParam(p.lambda_param(), null));
             }
         }
         if (ctx.lambda_slash_with_default() != null) {
             for (PythonParser.Lambda_param_no_defaultContext p : ctx.lambda_slash_with_default().lambda_param_no_default()) {
-                parameters.add(createLambdaParam(p.lambda_param(), null, false, false));
+                parameters.add(createLambdaParam(p.lambda_param(), null));
             }
             for (PythonParser.Lambda_param_with_defaultContext p : ctx.lambda_slash_with_default().lambda_param_with_default()) {
-                parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment().expression(), false, false));
+                parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment()));
             }
         }
         if (ctx.lambda_param_no_default() != null) {
             for (PythonParser.Lambda_param_no_defaultContext p : ctx.lambda_param_no_default()) {
-                parameters.add(createLambdaParam(p.lambda_param(), null, false, false));
+                parameters.add(createLambdaParam(p.lambda_param(), null));
             }
         }
         if (ctx.lambda_param_with_default() != null) {
             for (PythonParser.Lambda_param_with_defaultContext p : ctx.lambda_param_with_default()) {
-                parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment().expression(), false, false));
+                parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment()));
             }
         }
         if (ctx.lambda_star_etc() != null) {
             PythonParser.Lambda_star_etcContext s = ctx.lambda_star_etc();
             if (s.lambda_param_no_default() != null) {
-                parameters.add(createLambdaParam(s.lambda_param_no_default().lambda_param(), null, true, false));
+                parameters.add(createLambdaStarParam(s.STAR().getSymbol(), s.lambda_param_no_default().lambda_param(), true, false));
             }
             if (s.lambda_param_maybe_default() != null) {
                 for (PythonParser.Lambda_param_maybe_defaultContext p : s.lambda_param_maybe_default()) {
-                    parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment() != null ? p.default_assignment().expression() : null, false, false));
+                    parameters.add(createLambdaParam(p.lambda_param(), p.default_assignment()));
                 }
             }
             if (s.lambda_kwds() != null) {
-                parameters.add(createLambdaParam(s.lambda_kwds().lambda_param_no_default().lambda_param(), null, false, true));
+                parameters.add(createLambdaStarParam(s.lambda_kwds().DOUBLESTAR().getSymbol(), s.lambda_kwds().lambda_param_no_default().lambda_param(), false, true));
             }
         }
     }
 
-    private LangASTNode createLambdaParam(PythonParser.Lambda_paramContext p, PythonParser.ExpressionContext defaultVal, boolean isStar, boolean isDoubleStar) {
-        LangASTNode defaultValueExpression = defaultVal != null ? mainBuilder.visit(defaultVal) : null;
-        extension.ast.node.declaration.LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(p.name().getText(), defaultValueExpression, p);
+    //a parameter with a default value is located at both, like the default_parameter of the tree, i.e., lambda x=1: x
+    private LangASTNode createLambdaParam(PythonParser.Lambda_paramContext p, PythonParser.Default_assignmentContext defaultAssignment) {
+        LangASTNode defaultValueExpression = defaultAssignment != null ? mainBuilder.visit(defaultAssignment.expression()) : null;
+        extension.ast.node.declaration.LangSingleVariableDeclaration decl = defaultAssignment != null ?
+                LangASTNodeFactory.createSingleVariableDeclaration(p.name().getText(), defaultValueExpression, p, PositionUtils.getPositionInfo(p, defaultAssignment)) :
+                LangASTNodeFactory.createSingleVariableDeclaration(p.name().getText(), null, p);
+        decl.setParameter(true);
+        return decl;
+    }
+
+    //a star parameter is located at its * or **, like the list_splat_pattern and dictionary_splat_pattern of the tree, i.e., lambda *args: args
+    private LangASTNode createLambdaStarParam(Token star, PythonParser.Lambda_paramContext p, boolean isStar, boolean isDoubleStar) {
+        extension.ast.node.declaration.LangSingleVariableDeclaration decl = LangASTNodeFactory.createSingleVariableDeclaration(p.name().getText(), null, p, PositionUtils.getPositionInfo(star, p));
         decl.setParameter(true);
         decl.setVarArgs(isStar);
         decl.setKwArgs(isDoubleStar);

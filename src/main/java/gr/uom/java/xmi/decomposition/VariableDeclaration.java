@@ -942,6 +942,14 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return false;
 	}
 
+	//the type is written in the code, unlike the inferred type of an unannotated TypeScript or Kotlin parameter, or the Object of an unannotated Python one
+	public boolean hasDeclaredType() {
+		if(type == null || type instanceof InferredType) {
+			return false;
+		}
+		return !(LANG.equals(Constants.PYTHON) && type.getClassType().equals("Object"));
+	}
+
 	public boolean equalQualifiedType(VariableDeclaration other) {
 		if(this.getType() == null && other.getType() == null) {
 			return true;

@@ -1493,7 +1493,8 @@ public class PythonTreeGenerator {
 			else if(child instanceof PythonParser.Kwarg_or_starredContext || child instanceof PythonParser.Kwarg_or_double_starredContext) {
 				ParserRuleContext argument = (ParserRuleContext) child;
 				if(argument.getChild(0) instanceof PythonParser.NameContext name) {
-					arguments.add(node("keyword_argument", identifier(name), token((TerminalNode) argument.getChild(1)), expression((ParserRuleContext) argument.getChild(2))));
+					//the name of a keyword argument is not a variable, so it is not matched with the variables, i.e., the value in ids_rank=ids_rank
+					arguments.add(node("keyword_argument", leaf("keyword_identifier", firstTerminal(name)), token((TerminalNode) argument.getChild(1)), expression((ParserRuleContext) argument.getChild(2))));
 				}
 				else if(argument.getChildCount() == 2) {
 					arguments.add(node("dictionary_splat", token((TerminalNode) argument.getChild(0)), expression((ParserRuleContext) argument.getChild(1))));

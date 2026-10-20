@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
@@ -287,6 +288,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             else {
                 new LeafMatcher(LANG1, LANG2).match(srcType,dstType,mappingStore);
             }
+            if (srcType != null && dstType != null)
+                matchTypeQualifiers(srcType, dstType, srcUMLAttribute.getType(), dstUMLAttribute.getType(), mappingStore);
             Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG1);
             Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo(),LANG2);
             mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
@@ -329,6 +332,23 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.STATIC,mappingStore);
         if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.TRANSIENT,mappingStore);
+    }
+
+    //the qualifiers of a C++ type are siblings of the type in the AST and part of the type in the model, i.e., const in static const int x
+    private void matchTypeQualifiers(Tree srcType, Tree dstType, UMLType srcUMLType, UMLType dstUMLType, ExtendedMultiMappingStore mappingStore) {
+        if (srcType.getParent() == null || dstType.getParent() == null)
+            return;
+        List<Tree> qualifiers2 = TreeUtilFunctions.findChildrenByType(dstType.getParent(), LANG2.TYPE_QUALIFIER);
+        for (Tree qualifier1 : TreeUtilFunctions.findChildrenByType(srcType.getParent(), LANG1.TYPE_QUALIFIER)) {
+            if (qualifier1.getChildren().size() != 1 || !srcUMLType.toString().contains(qualifier1.getChild(0).getLabel()))
+                continue;
+            for (Tree qualifier2 : qualifiers2) {
+                if (!mappingStore.isDstMapped(qualifier2) && qualifier1.isIsoStructuralTo(qualifier2) && dstUMLType.toString().contains(qualifier2.getChild(0).getLabel())) {
+                    mappingStore.addMappingRecursively(qualifier1, qualifier2);
+                    break;
+                }
+            }
+        }
     }
 
     private void matchFieldAnnotations(Tree srcFieldDeclaration, Tree dstFieldDeclaration, ExtendedMultiMappingStore mappingStore) {

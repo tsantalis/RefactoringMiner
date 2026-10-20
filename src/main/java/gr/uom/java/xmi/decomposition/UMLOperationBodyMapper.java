@@ -2751,7 +2751,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves1.add(lambda1.getExpression());
 			List<AbstractExpression> leaves2 = new ArrayList<AbstractExpression>();
 			leaves2.add(lambda2.getExpression());
+			int anonymousMappers = this.anonymousClassDiffs.size();
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			if(this.anonymousClassDiffs.size() > anonymousMappers && parentMapper != null) {
+				parentMapper.anonymousClassDiffs.addAll(this.anonymousClassDiffs);
+			}
 		}
 		else if(lambda1.getBody() != null && lambda2.getBody() != null) {
 			CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();

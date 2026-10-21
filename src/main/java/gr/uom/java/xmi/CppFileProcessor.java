@@ -1387,11 +1387,10 @@ public class CppFileProcessor {
 			UMLType type = UMLType.extractTypeObject(className, PathFileUtils.getLang(filePath));
 			for(IASTEnumerator enumerator : enumerators) {
 				IASTName name = enumerator.getName();
-				LocationInfo enumConstantLocation = new LocationInfo(sourceFolder, filePath, name, CodeElementType.ENUM_CONSTANT_DECLARATION, fileContent);
+				LocationInfo enumConstantLocation = new LocationInfo(sourceFolder, filePath, enumerator, CodeElementType.ENUM_CONSTANT_DECLARATION, fileContent);
 				UMLEnumConstant umlAttribute = new UMLEnumConstant(name.toString(), type, enumConstantLocation, packageName);
 				umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
-				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, name, enumSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
-				variableDeclaration.setEnumConstant(true);
+				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, enumerator, enumSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 				if(enumerator.getValue() != null) {
 					AbstractExpression expr = new AbstractExpression(sourceFolder, filePath, enumerator.getValue(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, umlAttribute, new LinkedHashMap<>(), fileContent);
 					variableDeclaration.setInitializer(expr);

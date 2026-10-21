@@ -124,12 +124,6 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
             dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
         }
-        if (srcAttr.getType().name.equals(LANG1.SIMPLE_NAME) && srcAttr.getParent().getType().name.equals(LANG1.ENUMERATOR)) {
-            srcAttr = srcAttr.getParent();
-        }
-        if (dstAttr.getType().name.equals(LANG2.SIMPLE_NAME) && dstAttr.getParent().getType().name.equals(LANG2.ENUMERATOR)) {
-            dstAttr = dstAttr.getParent();
-        }
         this.srcFieldDeclaration = srcFieldDeclaration;
         this.dstFieldDeclaration = dstFieldDeclaration;
         new CommentMatcher(optimizationData, umlCommentListDiff, LANG1, LANG2).match(srcTree, dstTree, mappingStore);

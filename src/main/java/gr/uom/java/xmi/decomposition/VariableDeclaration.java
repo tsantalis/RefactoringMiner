@@ -8,6 +8,8 @@ import java.util.Set;
 
 import org.eclipse.cdt.core.dom.ast.IASTCompositeTypeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier;
+import org.eclipse.cdt.core.dom.ast.IASTEnumerationSpecifier.IASTEnumerator;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTName;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
@@ -227,6 +229,21 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		int endOffset = scopeNode.getFileLocation().getNodeOffset() + scopeNode.getFileLocation().getNodeLength();
 		this.scope = new VariableScope(filePath, startOffset, endOffset);
 		this.actualSignature = name.getRawSignature();
+	}
+
+	public VariableDeclaration(String sourceFolder, String filePath, IASTEnumerator enumerator, IASTEnumerationSpecifier enumSpecifier,
+			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		this.locationInfo = new LocationInfo(sourceFolder, filePath, enumerator, CodeElementType.ENUM_CONSTANT_DECLARATION, fileContent);
+		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		this.variableName = enumerator.getName().toString();
+		this.type = UMLType.extractTypeObject(sourceFolder, filePath, fileContent, enumSpecifier, null, 0);
+		int startOffset = enumSpecifier.getFileLocation().getNodeOffset();
+		int endOffset = enumSpecifier.getFileLocation().getNodeOffset() + enumSpecifier.getFileLocation().getNodeLength();
+		this.scope = new VariableScope(filePath, startOffset, endOffset);
+		this.actualSignature = enumerator.getName().getRawSignature();
+		this.isEnumConstant = true;
 	}
 
 	private IASTNode getScopeNode(IASTDeclarator declarator) {

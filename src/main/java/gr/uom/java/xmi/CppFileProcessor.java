@@ -1458,7 +1458,8 @@ public class CppFileProcessor {
 
 	private UMLOperation processFunctionDeclSpecifier(IASTDeclSpecifier declSpecifier, IASTFunctionDeclarator declarator, String className, String sourceFolder, UMLAbstractClass parentContainer, Visibility currentVisibility, List<UMLComment> comments, ICPPASTTemplateParameter[] templateParameters) {
 		IASTName declaratorName = declarator.getName();
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent);
+		//a pure virtual function is located without its pure specifier, like its AST node, i.e., f() in virtual void f() = 0;
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.METHOD_DECLARATION, fileContent, true);
 		String functionName = declaratorName.toString();
 		if(functionName.isEmpty()) {
 			IASTDeclarator nested = declarator.getNestedDeclarator();

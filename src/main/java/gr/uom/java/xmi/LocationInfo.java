@@ -10,6 +10,7 @@ import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.jetbrains.kotlin.com.intellij.openapi.editor.Document;
@@ -321,11 +322,18 @@ public class LocationInfo {
 		}
 	}
 
-	//the declarator without its initializer, i.e., m_flag in bool m_flag = false; whose initializer is a sibling of the declarator in the AST
+	//the declarator without its initializer or pure specifier, i.e., m_flag in bool m_flag = false; and f() in virtual void f() = 0; whose initializer and pure specifier are siblings of the declarator in the AST
 	public LocationInfo(String sourceFolder, String filePath, IASTDeclarator declarator, CodeElementType codeElementType, String fileContent, boolean withoutInitializer) {
 		this(sourceFolder, filePath, declarator, codeElementType, fileContent);
+		int end = -1;
 		if(withoutInitializer && declarator.getInitializer() != null) {
-			int end = new LocationInfo(sourceFolder, filePath, declarator.getInitializer(), codeElementType, fileContent).startOffset;
+			end = new LocationInfo(sourceFolder, filePath, declarator.getInitializer(), codeElementType, fileContent).startOffset;
+		}
+		//the pure specifier is the last = of the declarator, after the = of the parameter defaults, i.e., f(int x = 1) = 0
+		else if(withoutInitializer && declarator instanceof ICPPASTFunctionDeclarator functionDeclarator && functionDeclarator.isPureVirtual()) {
+			end = fileContent.lastIndexOf('=', this.endOffset - 1);
+		}
+		if(end > this.startOffset) {
 			while(end > this.startOffset && Character.isWhitespace(fileContent.charAt(end - 1))) {
 				end--;
 			}

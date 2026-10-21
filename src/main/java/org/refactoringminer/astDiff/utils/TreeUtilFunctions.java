@@ -91,9 +91,6 @@ public class TreeUtilFunctions {
 				if (isFromType(t, type))
 					return t;
 			}
-			else if(t.getPos() == position && isFromType(t, type)) {
-				return t;
-			}
 		}
 		return null;
 	}

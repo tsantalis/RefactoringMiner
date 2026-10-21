@@ -250,14 +250,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1,LANG1.STATEMENTS);
         if (dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) && dstStatementNode != null && IgnoringCommentsLeafMatcher.isPartOfComments(dstStatementNode, LANG2))
             dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2,LANG2.STATEMENTS);
-        if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.IF_KEYWORD))
-            srcStatementNode = srcStatementNode.getParent();
-        if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.IF_KEYWORD))
-            dstStatementNode = dstStatementNode.getParent();
-        if (srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.SWITCH_KEYWORD))
-            srcStatementNode = srcStatementNode.getParent();
-        if (dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.SWITCH_KEYWORD))
-            dstStatementNode = dstStatementNode.getParent();
         if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
                 srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
                 srcStatementNode.getChildren().size() > 0 &&
@@ -1271,12 +1263,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS)) {
             srcStatementNode = srcStatementNode.getChild(0);
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.RETURN_KEYWORD)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.TYPE_QUALIFIER)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CASE_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.SWITCH_CASE)) {
             srcStatementNode = srcStatementNode.getParent();
         }
@@ -1291,12 +1277,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.RETURN_KEYWORD)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.TYPE_QUALIFIER)) {
-            dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CASE_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.SWITCH_CASE)) {
             dstStatementNode = dstStatementNode.getParent();

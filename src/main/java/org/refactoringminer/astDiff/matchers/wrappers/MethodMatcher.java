@@ -51,35 +51,6 @@ public class MethodMatcher extends BodyMapperMatcher{
             srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1);
             dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2);
             if (srcOperationNode != null && dstOperationNode != null) {
-            //handle case where class has only a single function and the locationInfo of function declaration is identical with the class block in Python
-            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.PRIMITIVE_TYPE)) {
-                Tree tmpSrcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
-                if(tmpSrcOperationNode != null)
-                    srcOperationNode = tmpSrcOperationNode;
-            }
-            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.PRIMITIVE_TYPE)) {
-                Tree tmpDstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
-                if(tmpDstOperationNode != null)
-                    dstOperationNode = tmpDstOperationNode;
-            }
-            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.TYPE_IDENTIFIER)) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
-            }
-            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.TYPE_IDENTIFIER)) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
-            }
-            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.QUALIFIED_IDENTIFIER)) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
-            }
-            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.QUALIFIED_IDENTIFIER)) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
-            }
-            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.STORAGE_CLASS_SPECIFIER)) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
-            }
-            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.STORAGE_CLASS_SPECIFIER)) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
-            }
             if (srcOperationNode != null && srcOperationNode.getType().name.endsWith("_comment")) {
                 srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
             }

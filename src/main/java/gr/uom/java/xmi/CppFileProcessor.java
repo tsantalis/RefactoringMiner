@@ -1430,7 +1430,7 @@ public class CppFileProcessor {
 
 	private void processAttribute(String packageName, String sourceFolder, UMLAbstractClass parentContainer,
 			Visibility currentVisibility, List<UMLComment> comments, IASTDeclSpecifier declSpecifier, IASTDeclarator declarator, ICPPASTTemplateParameter[] templateParameters) {
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent);
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declarator, CodeElementType.FIELD_DECLARATION, fileContent, VariableDeclaration.initializerOutsideDeclarator(declarator));
 		String fieldName = declarator.getName().toString();
 		if(fieldName.isEmpty() && declarator.getNestedDeclarator() != null)
 			fieldName = declarator.getNestedDeclarator().getRawSignature();

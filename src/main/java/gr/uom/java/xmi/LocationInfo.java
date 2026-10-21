@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTImageLocation;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
@@ -317,6 +318,23 @@ public class LocationInfo {
 		}
 		else {
 			init(fileContent, node.getFileLocation());
+		}
+	}
+
+	//the declarator without its initializer, i.e., m_flag in bool m_flag = false; whose initializer is a sibling of the declarator in the AST
+	public LocationInfo(String sourceFolder, String filePath, IASTDeclarator declarator, CodeElementType codeElementType, String fileContent, boolean withoutInitializer) {
+		this(sourceFolder, filePath, declarator, codeElementType, fileContent);
+		if(withoutInitializer && declarator.getInitializer() != null) {
+			int end = new LocationInfo(sourceFolder, filePath, declarator.getInitializer(), codeElementType, fileContent).startOffset;
+			while(end > this.startOffset && Character.isWhitespace(fileContent.charAt(end - 1))) {
+				end--;
+			}
+			if(end > this.startOffset && end < this.endOffset) {
+				this.endOffset = end;
+				this.length = end - this.startOffset;
+				this.endLine = computeLine(fileContent, Math.max(this.startOffset, end - 1));
+				this.endColumn = computeColumn(fileContent, Math.max(this.startOffset, end - 1));
+			}
 		}
 	}
 

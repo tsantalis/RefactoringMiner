@@ -9,6 +9,7 @@ import gr.uom.java.xmi.diff.UMLModuleDiff;
 import gr.uom.java.xmi.diff.UMLPackageInfoDiff;
 
 import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,22 @@ import java.util.Map;
 
 /* Created by pourya on 2024-05-22*/
 public class Helpers {
+    //the qualifiers of a C++ type are siblings of the type in the AST and part of the type in the model, i.e., const in static const int x and const struct S * s
+    public static void matchTypeQualifiers(Tree srcType, Tree dstType, String srcTypeText, String dstTypeText, Constants LANG1, Constants LANG2, ExtendedMultiMappingStore mappingStore) {
+        if (srcType.getParent() == null || dstType.getParent() == null)
+            return;
+        List<Tree> qualifiers2 = TreeUtilFunctions.findChildrenByType(dstType.getParent(), LANG2.TYPE_QUALIFIER);
+        for (Tree qualifier1 : TreeUtilFunctions.findChildrenByType(srcType.getParent(), LANG1.TYPE_QUALIFIER)) {
+            if (qualifier1.getChildren().size() != 1 || !srcTypeText.contains(qualifier1.getChild(0).getLabel()))
+                continue;
+            for (Tree qualifier2 : qualifiers2) {
+                if (!mappingStore.isDstMapped(qualifier2) && qualifier1.isIsoStructuralTo(qualifier2) && dstTypeText.contains(qualifier2.getChild(0).getLabel())) {
+                    mappingStore.addMappingRecursively(qualifier1, qualifier2);
+                    break;
+                }
+            }
+        }
+    }
     public static String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
         if (contextMap == null) return null;
         for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {

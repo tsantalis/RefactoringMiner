@@ -21,6 +21,10 @@ public class UMLForwardDeclaration implements Serializable, LocationInfoProvider
 		this.function = Optional.empty();
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public Optional<UMLOperation> getFunction() {
 		return function;
 	}

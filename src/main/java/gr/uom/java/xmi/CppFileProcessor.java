@@ -1338,9 +1338,10 @@ public class CppFileProcessor {
 			IASTName name = elaboratedTypeSpecifier.getName();
 			String fullName = name.toString();
 			//a friend declaration is located with its semicolon, like its AST node, i.e., friend class F;
+			//otherwise, the elaborated type is located without the specifiers and qualifiers around it, i.e., struct S in typedef struct S * T;
 			LocationInfo locationInfo = elaboratedTypeSpecifier.isFriend() ?
 					new LocationInfo(sourceFolder, filePath, simpleDeclaration, CodeElementType.FORWARD_DECLARATION, fileContent) :
-					new LocationInfo(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
+					UMLType.cppTypeLocation(sourceFolder, filePath, elaboratedTypeSpecifier, CodeElementType.FORWARD_DECLARATION, fileContent);
 			String[] tokens = elaboratedTypeSpecifier.toString().split("\s");
 			if(simpleDeclaration.getDeclarators().length > 0 && simpleDeclaration.getDeclarators()[0] instanceof IASTFunctionDeclarator functionDeclarator) {
 				fullName = fullName + "." + functionDeclarator.getName().toString();

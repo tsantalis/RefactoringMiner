@@ -846,7 +846,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		if(typeText.isEmpty())
 			return null;
 		typeText = typeText.replace("::", ".");
-		LocationInfo locationInfo = cppTypeLocation(sourceFolder, filePath, declSpecifier, fileContent);
+		LocationInfo locationInfo = cppTypeLocation(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
 		UMLType umlType = UMLType.extractTypeObject(typeText, "<", ">", locationInfo, PathFileUtils.getLang(filePath));
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
@@ -863,7 +863,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		if(typeText.isEmpty())
 			return null;
 		typeText = typeText.replace("::", ".");
-		LocationInfo locationInfo = cppTypeLocation(sourceFolder, filePath, declSpecifier, fileContent);
+		LocationInfo locationInfo = cppTypeLocation(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
 		UMLType umlType = UMLType.extractTypeObject(typeText, "<", ">", locationInfo, PathFileUtils.getLang(filePath));
 		umlType.arrayDimension += extraDimensions;
 		return umlType;
@@ -874,8 +874,8 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 			"const", "volatile", "mutable", "register", "thread_local", "typedef", "friend", "public", "protected", "private");
 
 	//the C++ type is located without the specifiers and qualifiers around it, like its AST node, i.e., int in static const int
-	private static LocationInfo cppTypeLocation(String sourceFolder, String filePath, IASTNode declSpecifier, String fileContent) {
-		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, CodeElementType.TYPE, fileContent);
+	static LocationInfo cppTypeLocation(String sourceFolder, String filePath, IASTNode declSpecifier, CodeElementType codeElementType, String fileContent) {
+		LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, declSpecifier, codeElementType, fileContent);
 		int start = locationInfo.getStartOffset();
 		int end = locationInfo.getEndOffset();
 		while(true) {
@@ -906,7 +906,7 @@ public abstract class UMLType implements Serializable, LocationInfoProvider, Ann
 		}
 		if(start == locationInfo.getStartOffset() && end == locationInfo.getEndOffset())
 			return locationInfo;
-		return new LocationInfo(sourceFolder, filePath, start, end - start, end, CodeElementType.TYPE, fileContent);
+		return new LocationInfo(sourceFolder, filePath, start, end - start, end, codeElementType, fileContent);
 	}
 
 	public static String cleanTypeText(String rawType) {

@@ -504,19 +504,12 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             UMLForwardDeclarationListDiff umlForwardDeclarationListDiff = classDiff.getForwardDeclarationListDiff().get();
             for (org.apache.commons.lang3.tuple.Pair<UMLForwardDeclaration, UMLForwardDeclaration> statementPair : umlForwardDeclarationListDiff.getCommonDeclarations()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
-                if(srcStatement != null && srcStatement.getType().name.equals(LANG1.TYPE_QUALIFIER))
-                    srcStatement = srcStatement.getParent();
-                else if(srcStatement != null && srcStatement.getType().name.equals(LANG1.TYPEDEF))
-                    srcStatement = srcStatement.getParent();
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                if(dstStatement != null && dstStatement.getType().name.equals(LANG2.TYPE_QUALIFIER))
-                    dstStatement = dstStatement.getParent();
-                else if(dstStatement != null && dstStatement.getType().name.equals(LANG2.TYPEDEF))
-                    dstStatement = dstStatement.getParent();
                 if(srcStatement != null && dstStatement != null) {
                     mappingStore.addMappingRecursively(srcStatement, dstStatement);
                     if(srcStatement.getParent() != null && dstStatement.getParent() != null) {
                         mappingStore.addMapping(srcStatement.getParent(), dstStatement.getParent());
+                        Helpers.matchTypeQualifiers(srcStatement, dstStatement, statementPair.getLeft().getType(), statementPair.getRight().getType(), LANG1, LANG2, mappingStore);
                         if(srcStatement.getParent().getType().name.equals(LANG1.TEMPLATE_DECLARATION) && dstStatement.getParent().getType().name.equals(LANG2.TEMPLATE_DECLARATION)) {
                             Pair<Tree, Tree> templates = Helpers.findPairOfType(srcStatement.getParent(), dstStatement.getParent(),LANG1.TEMPLATE_KEYWORD,LANG2.TEMPLATE_KEYWORD);
                             if (templates != null) {

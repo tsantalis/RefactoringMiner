@@ -332,6 +332,10 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.STATIC,mappingStore);
         if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.TRANSIENT,mappingStore);
+        if (srcUMLAttribute.isInline() && dstUMLAttribute.isInline())
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.INLINE,mappingStore);
+        if (srcUMLAttribute.isConstexpr() && dstUMLAttribute.isConstexpr())
+            matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,LANG1.CONSTEXPR,mappingStore);
     }
 
     //the qualifiers of a C++ type are siblings of the type in the AST and part of the type in the model, i.e., const in static const int x
@@ -395,8 +399,8 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             for (Tree child : anyFieldDeclaration.getChildren()) {
                 if (child.getLabel().equals(label))
                     return child;
-                //a C++ specifier wraps its keyword, i.e., static in storage_class_specifier
-                if (child.getType().name.endsWith("_specifier") && child.getChildren().size() == 1 && child.getChild(0).getLabel().equals(label))
+                //a C++ specifier or qualifier wraps its keyword, i.e., static in storage_class_specifier and constexpr in type_qualifier
+                if ((child.getType().name.endsWith("_specifier") || child.getType().name.equals(LANG.TYPE_QUALIFIER)) && child.getChildren().size() == 1 && child.getChild(0).getLabel().equals(label))
                     return child;
                 if (child.getType().name.equals(LANG.VARIABLE_DECLARATION_FRAGMENT))
                     break;

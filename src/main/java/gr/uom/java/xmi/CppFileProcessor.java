@@ -807,7 +807,7 @@ public class CppFileProcessor {
 		if(!astDiff) {
 			options |= GPPLanguage.OPTION_NO_IMAGE_LOCATIONS;
 		}
-		return GPPLanguage.getDefault().getASTTranslationUnit(
+		return CppLanguage.getDefault().getASTTranslationUnit(
 				content,
 				scanInfo,
 				includeProvider,
@@ -1443,6 +1443,9 @@ public class CppFileProcessor {
 				UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo, packageName);
 				umlAttribute.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 				umlAttribute.setStatic(declSpecifier.getStorageClass() == IASTDeclSpecifier.sc_static);
+				umlAttribute.setInline(declSpecifier.isInline());
+				if(declSpecifier instanceof ICPPASTDeclSpecifier cppDeclSpecifier)
+					umlAttribute.setConstexpr(cppDeclSpecifier.isConstexpr());
 				VariableDeclaration variableDeclaration = new VariableDeclaration(sourceFolder, filePath, declarator, declSpecifier, umlAttribute, new LinkedHashMap<>(), fileContent);
 				variableDeclaration.setAttribute(true);
 				umlAttribute.setVariableDeclaration(variableDeclaration);

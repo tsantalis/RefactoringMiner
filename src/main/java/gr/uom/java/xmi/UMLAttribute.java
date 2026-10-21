@@ -33,6 +33,8 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private boolean isStatic;
 	private boolean isTransient;
 	private boolean isVolatile;
+	private boolean isInline;
+	private boolean isConstexpr;
 	private List<UMLTypeParameter> typeParameters;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private VariableDeclaration variableDeclaration;
@@ -334,6 +336,22 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public void setVolatile(boolean isVolatile) {
 		this.isVolatile = isVolatile;
+	}
+
+	public boolean isInline() {
+		return isInline;
+	}
+
+	public void setInline(boolean isInline) {
+		this.isInline = isInline;
+	}
+
+	public boolean isConstexpr() {
+		return isConstexpr;
+	}
+
+	public void setConstexpr(boolean isConstexpr) {
+		this.isConstexpr = isConstexpr;
 	}
 
 	public String getNonQualifiedClassName() {

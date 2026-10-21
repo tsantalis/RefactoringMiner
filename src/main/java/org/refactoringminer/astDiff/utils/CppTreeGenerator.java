@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import gr.uom.java.xmi.CppFileProcessor;
+import gr.uom.java.xmi.CppLanguage;
 
 import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTArrayModifier;
@@ -917,7 +918,7 @@ public class CppTreeGenerator {
 		String code = prefix + builder + suffix;
 		IASTTranslationUnit translationUnit;
 		try {
-			translationUnit = GPPLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_reparsed__.cpp", code.toCharArray()), new ScannerInfo(),
+			translationUnit = CppLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_reparsed__.cpp", code.toCharArray()), new ScannerInfo(),
 					IncludeFileContentProvider.getEmptyFilesProvider(), EmptyCIndex.INSTANCE, GPPLanguage.OPTION_IS_SOURCE_UNIT, new DefaultLogService());
 		}
 		catch(Exception e) {
@@ -3155,7 +3156,7 @@ public class CppTreeGenerator {
 		String code = prefix + withoutMacroDefinitions(start, end) + "> __rm_variable__;";
 		Source previous = source;
 		try {
-			IASTTranslationUnit translationUnit = GPPLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_arguments__.cpp", code.toCharArray()), new ScannerInfo(),
+			IASTTranslationUnit translationUnit = CppLanguage.getDefault().getASTTranslationUnit(FileContent.create("__rm_arguments__.cpp", code.toCharArray()), new ScannerInfo(),
 					IncludeFileContentProvider.getEmptyFilesProvider(), EmptyCIndex.INSTANCE, GPPLanguage.OPTION_IS_SOURCE_UNIT, new DefaultLogService());
 			source = new Source(translationUnit, start - prefix.length(), true);
 			IASTDeclaration[] declarations = translationUnit.getDeclarations(false);

@@ -3618,6 +3618,17 @@
   "firstEndPos" : 1615,
   "secondEndPos" : 1605
 }, {
+  "firstType" : "compound_statement",
+  "secondType" : "compound_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "switch_statement",
+  "secondParentType" : "switch_statement",
+  "firstPos" : 1616,
+  "secondPos" : 1606,
+  "firstEndPos" : 2333,
+  "secondEndPos" : 2323
+}, {
   "firstType" : "{",
   "secondType" : "{",
   "firstLabel" : "{",
@@ -4970,6 +4981,17 @@
   "secondPos" : 2316,
   "firstEndPos" : 2327,
   "secondEndPos" : 2317
+}, {
+  "firstType" : "}",
+  "secondType" : "}",
+  "firstLabel" : "}",
+  "secondLabel" : "}",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
+  "firstPos" : 2332,
+  "secondPos" : 2322,
+  "firstEndPos" : 2333,
+  "secondEndPos" : 2323
 }, {
   "firstType" : "return_statement",
   "secondType" : "return_statement",

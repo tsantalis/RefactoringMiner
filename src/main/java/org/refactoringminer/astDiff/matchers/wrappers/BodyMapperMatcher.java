@@ -1277,9 +1277,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.TYPE_QUALIFIER)) {
             srcStatementNode = srcStatementNode.getParent();
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CONST_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.LEXICAL_DECLARATION)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CASE_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.SWITCH_CASE)) {
             srcStatementNode = srcStatementNode.getParent();
         }
@@ -1299,9 +1296,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.TYPE_QUALIFIER)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CONST_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.LEXICAL_DECLARATION)) {
             dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CASE_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.SWITCH_CASE)) {

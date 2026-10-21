@@ -504,16 +504,12 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             UMLForwardDeclarationListDiff umlForwardDeclarationListDiff = classDiff.getForwardDeclarationListDiff().get();
             for (org.apache.commons.lang3.tuple.Pair<UMLForwardDeclaration, UMLForwardDeclaration> statementPair : umlForwardDeclarationListDiff.getCommonDeclarations()) {
                 Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, statementPair.getLeft().getLocationInfo(), LANG1);
-                if(srcStatement != null && srcStatement.getType().name.equals(LANG1.FRIEND_KEYWORD))
-                    srcStatement = srcStatement.getParent();
-                else if(srcStatement != null && srcStatement.getType().name.equals(LANG1.TYPE_QUALIFIER))
+                if(srcStatement != null && srcStatement.getType().name.equals(LANG1.TYPE_QUALIFIER))
                     srcStatement = srcStatement.getParent();
                 else if(srcStatement != null && srcStatement.getType().name.equals(LANG1.TYPEDEF))
                     srcStatement = srcStatement.getParent();
                 Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, statementPair.getRight().getLocationInfo(), LANG2);
-                if(dstStatement != null && dstStatement.getType().name.equals(LANG2.FRIEND_KEYWORD))
-                    dstStatement = dstStatement.getParent();
-                else if(dstStatement != null && dstStatement.getType().name.equals(LANG2.TYPE_QUALIFIER))
+                if(dstStatement != null && dstStatement.getType().name.equals(LANG2.TYPE_QUALIFIER))
                     dstStatement = dstStatement.getParent();
                 else if(dstStatement != null && dstStatement.getType().name.equals(LANG2.TYPEDEF))
                     dstStatement = dstStatement.getParent();

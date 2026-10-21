@@ -80,12 +80,6 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
             Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree, dstLocationInfo, LANG2);
             if (srcJavaDocNode == null || dstJavaDocNode == null)
                 return;
-            if(srcJavaDocNode.getType().name.equals(LANG1.METHOD_DECLARATION) || srcJavaDocNode.getType().name.equals(LANG1.TYPE_DECLARATION)) {
-                srcJavaDocNode = TreeUtilFunctions.getTreeBetweenPositions(srcTree, srcLocationInfo.getStartOffset(), srcLocationInfo.getEndOffset(), LANG1, LANG1.EXPRESSION_STATEMENT);
-            }
-            if(dstJavaDocNode.getType().name.equals(LANG2.METHOD_DECLARATION) || dstJavaDocNode.getType().name.equals(LANG2.TYPE_DECLARATION)) {
-                dstJavaDocNode = TreeUtilFunctions.getTreeBetweenPositions(dstTree, dstLocationInfo.getStartOffset(), dstLocationInfo.getEndOffset(), LANG2, LANG2.EXPRESSION_STATEMENT);
-            }
             if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
                 if (umlJavadocDiff.isPresent() && umlJavadocDiff.get().isManyToManyReformat()) {
                     mappingStore.addMappingRecursively(srcJavaDocNode, dstJavaDocNode);

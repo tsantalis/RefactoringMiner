@@ -52,21 +52,9 @@ public class TreeUtilFunctions {
 				}
 			}
 		}
-		if (isFromType(treeBetweenPositions, LANG.METHOD_INVOCATION_ARGUMENTS))
-		{
-			if (treeBetweenPositions.getChildren().size() > 0 )
-			{
-				if (treeBetweenPositions.getChild(0).getPos() == start_offset
-						&& treeBetweenPositions.getChild(0).getEndPos() == end_offset)
-					return treeBetweenPositions.getChild(0);
-				else {
-					return treeBetweenPositions;
-				}
-			}
-			else {
-				return treeBetweenPositions;
-			}
-		}
+		if (isFromType(treeBetweenPositions, LANG.METHOD_INVOCATION_ARGUMENTS) && treeBetweenPositions.getChildren().size() > 0 &&
+				treeBetweenPositions.getChild(0).getPos() == start_offset && treeBetweenPositions.getChild(0).getEndPos() == end_offset)
+			return treeBetweenPositions.getChild(0);
 		return treeBetweenPositions;
 	}
 
@@ -102,10 +90,6 @@ public class TreeUtilFunctions {
 			if (t.getPos() >= position && t.getEndPos() <= endPosition) {
 				if (isFromType(t, type))
 					return t;
-				else if (t.getType().name.equals(LANG.CLASS_KEYWORD) && type[0].equals(LANG.TYPE_DECLARATION) &&
-						t.getParent() != null && t.getParent().getType().name.equals(LANG.TYPE_DECLARATION)) {
-					return t.getParent();
-				}
 			}
 			else if(t.getPos() == position && isFromType(t, type)) {
 				return t;

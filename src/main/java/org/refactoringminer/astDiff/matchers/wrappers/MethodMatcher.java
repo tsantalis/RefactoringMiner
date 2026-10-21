@@ -52,12 +52,6 @@ public class MethodMatcher extends BodyMapperMatcher{
             dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2);
             if (srcOperationNode != null && dstOperationNode != null) {
             //handle case where class has only a single function and the locationInfo of function declaration is identical with the class block in Python
-            if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.CLASS_BLOCK)) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
-            }
-            if (dstOperationNode != null && dstOperationNode.getType().name.equals(LANG2.CLASS_BLOCK)) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
-            }
             if (srcOperationNode != null && srcOperationNode.getType().name.equals(LANG1.PRIMITIVE_TYPE)) {
                 Tree tmpSrcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
                 if(tmpSrcOperationNode != null)

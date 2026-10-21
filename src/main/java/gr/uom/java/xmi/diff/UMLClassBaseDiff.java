@@ -450,6 +450,38 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	//the moved statements that are extracted by an Extract Method refactoring
+	private int extractedStatements(UMLOperationBodyMapper moveCodeMapper) {
+		int extractedStatementCount = 0;
+		for(Refactoring r : refactorings) {
+			if(r instanceof ExtractOperationRefactoring extract) {
+				for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+					for(AbstractCodeMapping m : extract.getBodyMapper().getMappings()) {
+						if(m.getFragment1().equals(mapping.getFragment1())) {
+							extractedStatementCount++;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return extractedStatementCount;
+	}
+
+	//the call of an extracted operation, which is explained by the Extract Method refactoring
+	private boolean callsExtractedOperation(AbstractCodeFragment fragment) {
+		for(Refactoring r : refactorings) {
+			if(r instanceof ExtractOperationRefactoring extract) {
+				for(AbstractCall invocation : extract.getExtractedOperationInvocations()) {
+					if(fragment.getLocationInfo().subsumes(invocation.getLocationInfo())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {
 		//find setUp and tearDown methods
 		Set<UMLOperationBodyMapper> setUpMappers = new LinkedHashSet<>();
@@ -517,23 +549,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
 								invalidMappings++;
 							}
+							//the call of an extracted operation is explained by the Extract Method refactoring, i.e., scheduleTick() calling the extracted backgroundHandler.post(...)
+							else if(callsExtractedOperation(mapping.getFragment2())) {
+								invalidMappings++;
+							}
 						}
 						if(moveCodeMapper.getMappings().size() > invalidMappings) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
-							int extractedStatementCount = 0;
-							for(Refactoring r : refactorings) {
-								if(r instanceof ExtractOperationRefactoring) {
-									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-									for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
-										for(AbstractCodeMapping m : extract.getBodyMapper().getMappings()) {
-											if(m.getFragment1().equals(mapping.getFragment1())) {
-												extractedStatementCount++;
-												break;
-											}
-										}
-									}
-								}
-							}
+							int extractedStatementCount = extractedStatements(moveCodeMapper);
 							boolean skip = false;
 							if(extractedStatementCount == moveCodeMapper.getMappings().size() && extractedStatementCount > 0) {
 								skip = true;
@@ -559,6 +582,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 											}
 											else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
 													mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
+												invalidMappings++;
+											}
+											//the call of an extracted operation is explained by the Extract Method refactoring, i.e., scheduleTick() calling the extracted backgroundHandler.post(...)
+											else if(callsExtractedOperation(mapping.getFragment2())) {
 												invalidMappings++;
 											}
 										}
@@ -589,6 +616,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 											}
 											else if(mapping.getFragment1() instanceof LeafExpression || mapping.getFragment1() instanceof AbstractExpression ||
 													mapping.getFragment2() instanceof LeafExpression || mapping.getFragment2() instanceof AbstractExpression) {
+												invalidMappings++;
+											}
+											//the call of an extracted operation is explained by the Extract Method refactoring, i.e., scheduleTick() calling the extracted backgroundHandler.post(...)
+											else if(callsExtractedOperation(mapping.getFragment2())) {
 												invalidMappings++;
 											}
 										}

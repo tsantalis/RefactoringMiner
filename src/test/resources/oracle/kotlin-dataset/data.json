@@ -8780,6 +8780,20 @@
     "author": "pyricau",
     "time": "4/4/19 05:25 PM",
     "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public watchForLeaks() renamed to public registerToVisibilityChanges() in class com.squareup.leakcanary.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Extract Method",
+        "description": "Extract Method private scheduleTick() extracted from public watchForLeaks() in class com.squareup.leakcanary.HeapDumpTrigger",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Move And Rename Class",
         "description": "Move And Rename Class com.squareup.leakcanary.ActivityRefWatcher moved and renamed to leaksentry.internal.ActivityDestroyWatcher",
         "comment": null,

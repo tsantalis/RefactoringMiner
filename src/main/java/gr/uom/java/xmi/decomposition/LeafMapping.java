@@ -310,6 +310,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		this.extractedStatements = extractedStatements;
 	}
 
+	private int lambdaExactMatches() {
+		int exactMatches = 0;
+		for(UMLOperationBodyMapper lambdaMapper : getLambdaMappers()) {
+			exactMatches += lambdaMapper.exactMatches();
+		}
+		return exactMatches;
+	}
+
 	@Override
 	public int compareTo(LeafMapping o) {
 		CompositeReplacement compositeReplacement1 = this.containsCompositeReplacement();
@@ -554,6 +562,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
 					if(indexDiff1 != indexDiff2) {
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+					}
+				}
+				//the bodies of the lambdas distinguish statements that differ in their lambdas, i.e., logger.debug(() -> {...}) with different messages
+				if(this.getLambdaMappers().size() > 0 && o.getLambdaMappers().size() > 0) {
+					int lambdaExactMatches1 = this.lambdaExactMatches();
+					int lambdaExactMatches2 = o.lambdaExactMatches();
+					if(lambdaExactMatches1 != lambdaExactMatches2) {
+						return -Integer.compare(lambdaExactMatches1, lambdaExactMatches2);
 					}
 				}
 				if(this.getMatchingArgumentsWithOperationInvocation() != o.getMatchingArgumentsWithOperationInvocation()) {

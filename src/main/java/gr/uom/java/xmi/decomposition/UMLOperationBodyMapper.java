@@ -11186,6 +11186,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(mapping.getFragment1().getString().contains(LANG1.LAMBDA_ARROW) || mapping.getFragment2().getString().contains(LANG2.LAMBDA_ARROW) ||
 						mapping.getFragment1().getString().contains(LANG1.METHOD_REFERENCE) || mapping.getFragment2().getString().contains(LANG2.METHOD_REFERENCE)) {
 					removeAllMappings(mappingsToBeRemoved);
+					restoreHashcodesOfRemainingMappings(mappingsToBeRemoved);
+					removeLoserLambdaMappers(leafMapping, mapping);
 				}
 				//remove from this.refactorings nested refactorings (inside anonymous or lambdas) corresponding to loser mappings
 				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
@@ -11215,6 +11217,62 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				this.refactorings.removeAll(refactoringsToBeRemoved);
 			}
+		}
+	}
+
+	//the fragments of the removed nested mappings of a loser mapping remain matched, when the lambda mappers of the winner mapping also map them
+	private void restoreHashcodesOfRemainingMappings(Set<AbstractCodeMapping> removedMappings) {
+		if(removedMappings.isEmpty())
+			return;
+		Set<AbstractCodeFragment> removedFragments1 = new HashSet<>();
+		Set<AbstractCodeFragment> removedFragments2 = new HashSet<>();
+		for(AbstractCodeMapping removed : removedMappings) {
+			removedFragments1.add(removed.getFragment1());
+			removedFragments2.add(removed.getFragment2());
+		}
+		for(AbstractCodeMapping remaining : this.mappings) {
+			if(removedFragments1.contains(remaining.getFragment1()))
+				mappingHashcodesT1.add(remaining.getFragment1().hashCode());
+			if(removedFragments2.contains(remaining.getFragment2()))
+				mappingHashcodesT2.add(remaining.getFragment2().hashCode());
+		}
+	}
+
+	//the lambda mappers of a loser mapping added their non-mapped elements and refactorings to this mapper, when the lambdas were matched to compute the replacements of the loser mapping
+	private void removeLoserLambdaMappers(LeafMapping loserMapping, LeafMapping winnerMapping) {
+		if(loserMapping.getLambdaMappers().isEmpty())
+			return;
+		Set<Refactoring> winnerRefactorings = new LinkedHashSet<>();
+		for(UMLOperationBodyMapper lambdaMapper : winnerMapping.getLambdaMappers()) {
+			winnerRefactorings.addAll(lambdaMapper.getRefactoringsAfterPostProcessing());
+		}
+		//the refactorings are compared by identity, because the equal refactorings of the winner mapping are kept
+		Map<Refactoring, Boolean> loserRefactorings = new IdentityHashMap<>();
+		for(UMLOperationBodyMapper lambdaMapper : loserMapping.getLambdaMappers()) {
+			//the lambda mappers of the same container are equal, so the winner lambda mappers are compared by identity
+			if(winnerMapping.getLambdaMappers().stream().anyMatch(winnerLambdaMapper -> winnerLambdaMapper == lambdaMapper)) {
+				continue;
+			}
+			for(AbstractCodeFragment leaf1 : lambdaMapper.getNonMappedLeavesT1()) {
+				nonMappedLeavesT1.remove(leaf1);
+			}
+			for(AbstractCodeFragment leaf2 : lambdaMapper.getNonMappedLeavesT2()) {
+				nonMappedLeavesT2.remove(leaf2);
+			}
+			for(CompositeStatementObject innerNode1 : lambdaMapper.getNonMappedInnerNodesT1()) {
+				nonMappedInnerNodesT1.remove(innerNode1);
+			}
+			for(CompositeStatementObject innerNode2 : lambdaMapper.getNonMappedInnerNodesT2()) {
+				nonMappedInnerNodesT2.remove(innerNode2);
+			}
+			for(Refactoring r : lambdaMapper.getRefactoringsAfterPostProcessing()) {
+				if(!winnerRefactorings.contains(r)) {
+					loserRefactorings.put(r, Boolean.TRUE);
+				}
+			}
+		}
+		if(!loserRefactorings.isEmpty()) {
+			refactorings.removeIf(loserRefactorings::containsKey);
 		}
 	}
 

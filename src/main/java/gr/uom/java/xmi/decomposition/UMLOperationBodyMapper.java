@@ -8016,7 +8016,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall())) && mappings.size() > 0 && !allMappingsAreKeywords() && !identicalPreviousAndNextStatement) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
-							for(LeafMapping mapping : mappingSet) {
+							for(LeafMapping mapping : candidatesWithoutBetterMatch(mappingSet, leaf2, leaves2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic)) {
 								int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
 								double parentEditDistanceSum = mapping.levelParentEditDistanceSum();
 								if(!levelParentEditDistanceSum.containsKey(parentEditDistanceSum)) {
@@ -10874,6 +10874,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return mappings.size() > 1 && mappings.equals(commonParentMappings);
+	}
+
+	//the candidates for leaf2 whose fragment1 has no strictly better match, in both parent edit distance and line distance, to another unmatched identical statement,
+	//i.e., the last statement of an unchanged block is not matched to its identical statement added elsewhere
+	private List<LeafMapping> candidatesWithoutBetterMatch(TreeSet<LeafMapping> mappingSet, AbstractCodeFragment leaf2, List<? extends AbstractCodeFragment> leaves2,
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, boolean isomorphic) {
+		List<LeafMapping> candidates = new ArrayList<>();
+		for(LeafMapping mapping : mappingSet) {
+			double parentEditDistanceSum = mapping.levelParentEditDistanceSum();
+			int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+			boolean betterMatch = false;
+			for(AbstractCodeFragment other2 : leaves2) {
+				if(!other2.equals(leaf2) && !alreadyMatched2(other2) && other2.getString().equals(leaf2.getString())) {
+					LeafMapping alternative = createLeafMapping(mapping.getFragment1(), other2, parameterToArgumentMap, equalNumberOfAssertions, isomorphic);
+					if(alternative.levelParentEditDistanceSum() < parentEditDistanceSum && lineDistanceFromExistingMappings1(alternative).getMiddle() < lineDistance) {
+						betterMatch = true;
+						break;
+					}
+				}
+			}
+			if(!betterMatch) {
+				candidates.add(mapping);
+			}
+		}
+		return candidates.isEmpty() ? new ArrayList<>(mappingSet) : candidates;
 	}
 
 	private Triple<Integer, Integer, Integer> lineDistanceFromExistingMappings1(AbstractCodeMapping mapping) {

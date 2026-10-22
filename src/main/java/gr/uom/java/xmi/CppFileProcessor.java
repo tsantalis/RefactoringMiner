@@ -38,6 +38,7 @@ import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTTemplateDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
 import org.eclipse.cdt.core.dom.ast.IASTNodeLocation;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
 import org.eclipse.cdt.core.dom.ast.IASTProblem;
 import org.eclipse.cdt.core.dom.ast.IASTProblemDeclaration;
@@ -102,6 +103,7 @@ import org.eclipse.cdt.core.parser.ExtendedScannerInfo;
 import org.eclipse.cdt.core.parser.FileContent;
 import org.eclipse.cdt.core.parser.IncludeFileContentProvider;
 import org.eclipse.cdt.core.parser.ScannerInfo;
+import org.eclipse.cdt.internal.core.dom.parser.ASTQueries;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTASMDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTAmbiguousSimpleDeclaration;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionDefinition;
@@ -165,13 +167,14 @@ public class CppFileProcessor {
 		this.preprocessor = new CppPreprocessor(this);
 		try {
 			if(PathFileUtils.isCppFile(filePath) || PathFileUtils.isCFile(filePath)) {
-				IASTTranslationUnit ast = parse(filePath, fileContent, astDiff);
-				this.emptyMacroExpansions = emptyMacroExpansions(ast);
+				IASTTranslationUnit treeAst = parse(filePath, fileContent, astDiff);
 				if (astDiff) {
-					//a single parse for the model and the AST diff tree
-					TreeContext treeContext = CppTreeGenerator.generate(fileContent, ast);
+					//a single parse for the model and the AST diff tree, unless the model needs the declarations wrapped in macro calls
+					TreeContext treeContext = CppTreeGenerator.generate(fileContent, treeAst);
 					this.umlModel.getTreeContextMap().put(filePath, treeContext);
 				}
+				IASTTranslationUnit ast = withoutDeclarationMacros(treeAst, filePath, fileContent, astDiff);
+				this.emptyMacroExpansions = emptyMacroExpansions(ast);
 				String sourceFolder = extractCppSourceFolder();
 				List<UMLComment> comments = extractInternalComments(ast.getComments(), sourceFolder, filePath, fileContent);
 				this.umlModel.getCommentMap().put(filePath, comments);
@@ -1045,6 +1048,101 @@ public class CppFileProcessor {
 			}
 		});
 		return problems[0];
+	}
+
+	//CDT locates the declarations expanded from a function-like macro at the whole macro call, i.e., DEPRECATED(LLAMA_API void f(int x), "use g instead");,
+	//so the file is parsed again for the model with the macro calls wrapping declarations blanked, which keeps the declarations of the macro arguments
+	//at their offsets, while the AST diff tree keeps the macro calls
+	private static IASTTranslationUnit withoutDeclarationMacros(IASTTranslationUnit translationUnit, String filePath, String fileContent, boolean astDiff) throws CoreException {
+		Map<Integer, Integer> expansionEnds = new HashMap<>();
+		for(IASTPreprocessorMacroExpansion expansion : translationUnit.getMacroExpansions()) {
+			IASTFileLocation location = expansion.getFileLocation();
+			if(location != null && expansion.isPartOfTranslationUnitFile() && expansion.getMacroDefinition() instanceof IASTPreprocessorFunctionStyleMacroDefinition) {
+				expansionEnds.put(location.getNodeOffset(), location.getNodeOffset() + location.getNodeLength());
+			}
+		}
+		if(expansionEnds.isEmpty()) {
+			return translationUnit;
+		}
+		char[] content = fileContent.toCharArray();
+		boolean[] blanked = {false};
+		translationUnit.accept(new ASTVisitor() {
+			{
+				shouldVisitDeclarations = true;
+			}
+
+			@Override
+			public int visit(IASTDeclaration declaration) {
+				IASTFileLocation location = declaration.getFileLocation();
+				if(declaration instanceof IASTSimpleDeclaration simpleDeclaration && simpleDeclaration.getDeclarators().length == 1 && location != null
+						&& isPartOfFile(declaration) && expansionEnds.containsKey(location.getNodeOffset())) {
+					int start = location.getNodeOffset();
+					int close = expansionEnds.get(start) - 1;
+					int open = fileContent.indexOf('(', start);
+					//the declared name is located at the whole macro call too, so it is found in the text of the arguments
+					String name = ASTQueries.findInnermostDeclarator(simpleDeclaration.getDeclarators()[0]).getName().toString();
+					if(open < 0 || open >= close || fileContent.charAt(close) != ')' || name.isEmpty()) {
+						return PROCESS_SKIP;
+					}
+					Pattern declaredName = Pattern.compile("(?<![\\w:])" + Pattern.quote(name) + "\\s*\\(");
+					//the argument of the macro call with the declared name, i.e., LLAMA_API void f(int x)
+					for(int[] argument : macroArguments(fileContent, open, close)) {
+						if(declaredName.matcher(fileContent).region(argument[0], argument[1]).find()) {
+							blank(content, start, argument[0]);
+							blank(content, argument[1], close + 1);
+							blanked[0] = true;
+							break;
+						}
+					}
+					return PROCESS_SKIP;
+				}
+				return PROCESS_CONTINUE;
+			}
+		});
+		if(!blanked[0]) {
+			return translationUnit;
+		}
+		IASTTranslationUnit reparsed = parse(filePath, new String(content), astDiff);
+		return problems(reparsed) <= problems(translationUnit) ? reparsed : translationUnit;
+	}
+
+	//the start and end offsets of the arguments of the macro call between the parentheses, separated by the commas outside nested parentheses, brackets, braces and literals
+	private static List<int[]> macroArguments(String fileContent, int open, int close) {
+		List<int[]> arguments = new ArrayList<>();
+		int depth = 0;
+		int argumentStart = open + 1;
+		for(int i = open + 1; i < close; i++) {
+			char c = fileContent.charAt(i);
+			if(c == '"' || c == '\'') {
+				//the literal up to its closing quote
+				for(i++; i < close && fileContent.charAt(i) != c; i++) {
+					if(fileContent.charAt(i) == '\\') {
+						i++;
+					}
+				}
+			}
+			else if(c == '(' || c == '[' || c == '{') {
+				depth++;
+			}
+			else if(c == ')' || c == ']' || c == '}') {
+				depth--;
+			}
+			else if(c == ',' && depth == 0) {
+				arguments.add(new int[] {argumentStart, i});
+				argumentStart = i + 1;
+			}
+		}
+		arguments.add(new int[] {argumentStart, close});
+		return arguments;
+	}
+
+	//the characters between the offsets replaced with spaces, keeping the line breaks and thus the offsets and the lines
+	private static void blank(char[] content, int start, int end) {
+		for(int i = start; i < end; i++) {
+			if(content[i] != '\n' && content[i] != '\r') {
+				content[i] = ' ';
+			}
+		}
 	}
 
 	public Visibility processDeclaration(String packageName, String sourceFolder, UMLAbstractClass parentContainer,

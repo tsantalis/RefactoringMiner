@@ -1412,8 +1412,10 @@ public class CppTreeGenerator {
 			String previous = i > 0 ? tokenText(tokens.get(i - 1)) : ";";
 			String next = tokenText(tokens.get(i + 1));
 			String afterNext = i + 2 < tokens.size() ? tokenText(tokens.get(i + 2)) : "";
-			//a type, the macro and the declarator, i.e., T absl_nonnull x, where the type does not follow an empty macro of the file, i.e., llama_token in LLAMA_API llama_token f()
-			boolean afterType = (isPlainIdentifier(previous) && !emptyMacros.contains(previous) || previous.equals(">") || previous.equals("*") || previous.equals("&") || previous.equals("&&"))
+			//a type, the macro and the declarator, i.e., T absl_nonnull x, where the type does not follow an empty macro of the file, i.e., llama_token in LLAMA_API llama_token f(),
+			//and does not end with the parameters of a template, i.e., > in template <typename T> R f()
+			boolean afterType = (isPlainIdentifier(previous) && !emptyMacros.contains(previous) || previous.equals(">") && !closesTemplateParameters(tokens, i - 1)
+					|| previous.equals("*") || previous.equals("&") || previous.equals("&&"))
 					&& isPlainIdentifier(next) && (afterNext.equals(",") || afterNext.equals(")") || afterNext.equals("=") || afterNext.equals(";")
 					|| afterNext.equals("(") || afterNext.equals("[") || afterNext.equals("{"));
 			//the macro at the start of a declaration, i.e., LLAMA_API int f()
@@ -1476,6 +1478,27 @@ public class CppTreeGenerator {
 			}
 		}
 		return annotations;
+	}
+
+	//whether the > at the index closes the parameters of a template, i.e., template <typename T>
+	private boolean closesTemplateParameters(List<int[]> tokens, int index) {
+		int depth = 0;
+		for(int k = index; k >= 0; k--) {
+			String text = tokenText(tokens.get(k));
+			if(text.equals(">")) {
+				depth++;
+			}
+			else if(text.equals(">>")) {
+				depth += 2;
+			}
+			else if(text.equals("<") && --depth == 0) {
+				return k > 0 && tokenText(tokens.get(k - 1)).equals("template");
+			}
+			else if(text.equals(";") || text.equals("{") || text.equals("}")) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 	private static boolean isAccessSpecifier(String token) {
@@ -2030,9 +2053,25 @@ public class CppTreeGenerator {
 			if(source.reparsed) {
 				return error(start(declaration), end(declaration));
 			}
-			return orDeclaration(reparseDeclaration(start(declaration), end(declaration), context), declaration, context);
+			return orDeclaration(macroFunctionDefinition(reparseDeclaration(start(declaration), end(declaration), context), declaration), declaration, context);
 		}
 		return declaration(declaration, context);
+	}
+
+	//the call of a macro followed by a body is a function definition when the macro is expanded to one,
+	//i.e., MATCHER_P(IsEven, n, "") {...} of the gmock stub, unlike TEST_CASE("x", "[y]") {...} of a macro that is not known
+	private List<Node> macroFunctionDefinition(List<Node> nodes, IASTDeclaration declaration) {
+		IASTDeclaration definition = declaration instanceof ICPPASTTemplateDeclaration template ? template.getDeclaration() : declaration;
+		if(!(definition instanceof IASTFunctionDefinition) || nodes.size() != 2) {
+			return nodes;
+		}
+		Node statement = nodes.get(0);
+		Node body = nodes.get(1);
+		if(statement.type.equals("expression_statement") && statement.children.size() == 1 && statement.first().type.equals("call_expression")
+				&& body.type.equals("compound_statement") && statement.start == start(declaration) && body.end == end(declaration)) {
+			return List.of(node("function_definition", statement.start, body.end, statement.first(), body));
+		}
+		return nodes;
 	}
 
 	//the nodes parsed again, or the declaration of CDT when they have errors and CDT parsed it, i.e., with the macros of a header that is not available

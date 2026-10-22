@@ -2025,12 +2025,23 @@
 }, {
   "firstType" : "preproc_arg",
   "secondType" : "preproc_arg",
-  "firstLabel" : "2084 // Maximum URL Length in Chrome: 2083",
-  "secondLabel" : "2084 // Maximum URL Length in Chrome: 2083",
+  "firstLabel" : "2084",
+  "secondLabel" : "2084",
   "firstParentType" : "preproc_def",
   "secondParentType" : "preproc_def",
   "firstPos" : 996,
   "secondPos" : 1015,
+  "firstEndPos" : 1000,
+  "secondEndPos" : 1019
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// Maximum URL Length in Chrome: 2083",
+  "secondLabel" : "// Maximum URL Length in Chrome: 2083",
+  "firstParentType" : "preproc_def",
+  "secondParentType" : "preproc_def",
+  "firstPos" : 1001,
+  "secondPos" : 1020,
   "firstEndPos" : 1038,
   "secondEndPos" : 1057
 }, {

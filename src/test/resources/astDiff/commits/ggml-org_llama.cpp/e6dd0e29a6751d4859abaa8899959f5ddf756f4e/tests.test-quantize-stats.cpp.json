@@ -914,12 +914,23 @@
 }, {
   "firstType" : "preproc_arg",
   "secondType" : "preproc_arg",
-  "firstLabel" : "warning(disable: 4244 4267) // possible loss of data",
-  "secondLabel" : "warning(disable: 4244 4267) // possible loss of data",
+  "firstLabel" : "warning(disable: 4244 4267)",
+  "secondLabel" : "warning(disable: 4244 4267)",
   "firstParentType" : "preproc_call",
   "secondParentType" : "preproc_call",
   "firstPos" : 392,
   "secondPos" : 392,
+  "firstEndPos" : 419,
+  "secondEndPos" : 419
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// possible loss of data",
+  "secondLabel" : "// possible loss of data",
+  "firstParentType" : "preproc_call",
+  "secondParentType" : "preproc_call",
+  "firstPos" : 420,
+  "secondPos" : 420,
   "firstEndPos" : 444,
   "secondEndPos" : 444
 }, {

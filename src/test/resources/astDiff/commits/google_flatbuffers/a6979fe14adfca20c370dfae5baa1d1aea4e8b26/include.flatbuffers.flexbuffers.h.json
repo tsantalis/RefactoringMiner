@@ -529,12 +529,23 @@
 }, {
   "firstType" : "preproc_arg",
   "secondType" : "preproc_arg",
-  "firstLabel" : "warning(disable : 4127)  // C4127: conditional expression is constant",
-  "secondLabel" : "warning(disable : 4127)  // C4127: conditional expression is constant",
+  "firstLabel" : "warning(disable : 4127)",
+  "secondLabel" : "warning(disable : 4127)",
   "firstParentType" : "preproc_call",
   "secondParentType" : "preproc_call",
   "firstPos" : 987,
   "secondPos" : 987,
+  "firstEndPos" : 1010,
+  "secondEndPos" : 1010
+}, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// C4127: conditional expression is constant",
+  "secondLabel" : "// C4127: conditional expression is constant",
+  "firstParentType" : "preproc_call",
+  "secondParentType" : "preproc_call",
+  "firstPos" : 1012,
+  "secondPos" : 1012,
   "firstEndPos" : 1056,
   "secondEndPos" : 1056
 }, {
@@ -191148,14 +191159,14 @@
 }, {
   "firstType" : "preproc_arg",
   "secondType" : "preproc_arg",
-  "firstLabel" : "if (reuse_tracker_) {                                         \\\n    auto packed_type = PACKED_TYPE;                             \\\n    auto existing = (*reuse_tracker_)[P - buf_];                \\\n    if (existing == packed_type) return true;                   \\\n    ",
-  "secondLabel" : "if (reuse_tracker_) {                                         \\\n    auto packed_type = PACKED_TYPE;                             \\\n    auto existing = (*reuse_tracker_)[P - buf_];                \\\n    if (existing == packed_type) return true;                   \\\n    ",
+  "firstLabel" : "if (reuse_tracker_) {                                         \\\n    auto packed_type = PACKED_TYPE;                             \\\n    auto existing = (*reuse_tracker_)[P - buf_];                \\\n    if (existing == packed_type) return true;                   \\",
+  "secondLabel" : "if (reuse_tracker_) {                                         \\\n    auto packed_type = PACKED_TYPE;                             \\\n    auto existing = (*reuse_tracker_)[P - buf_];                \\\n    if (existing == packed_type) return true;                   \\",
   "firstParentType" : "preproc_function_def",
   "secondParentType" : "preproc_function_def",
   "firstPos" : 62101,
   "secondPos" : 62101,
-  "firstEndPos" : 62367,
-  "secondEndPos" : 62367
+  "firstEndPos" : 62362,
+  "secondEndPos" : 62362
 }, {
   "firstType" : "comment",
   "secondType" : "comment",

@@ -4255,7 +4255,8 @@ public class CppTreeGenerator {
 		}
 	}
 
-	//the text after the directive name until the end of the line or a block comment
+	//the text after the directive name until the end of the line or a comment, which is a comment node like in the model,
+	//i.e., warning(disable : 4127) in #pragma warning(disable : 4127) // C4127: conditional expression is constant
 	private Node preprocArgument(int start, int end) {
 		int offset = start;
 		while(offset < end && (content.charAt(offset) == ' ' || content.charAt(offset) == '\t' || content.charAt(offset) == '\\' && isLineBreak(offset + 1))) {
@@ -4266,16 +4267,27 @@ public class CppTreeGenerator {
 		}
 		int argumentEnd = offset;
 		while(argumentEnd < end) {
-			if(content.startsWith("/*", argumentEnd)) {
+			char c = content.charAt(argumentEnd);
+			if(content.startsWith("/*", argumentEnd) || content.startsWith("//", argumentEnd)) {
 				break;
 			}
+			if(c == '"' || c == '\'') {
+				//the literal up to its closing quote, i.e., "http://example.com" in #define URL "http://example.com"
+				for(argumentEnd++; argumentEnd < end && content.charAt(argumentEnd) != c; argumentEnd++) {
+					if(content.charAt(argumentEnd) == '\\') {
+						argumentEnd++;
+					}
+				}
+			}
 			argumentEnd++;
+		}
+		argumentEnd = Math.min(argumentEnd, end);
+		while(argumentEnd > offset && Character.isWhitespace(content.charAt(argumentEnd - 1))) {
+			argumentEnd--;
 		}
 		if(argumentEnd == offset) {
 			return null;
 		}
-		//the line comments are part of the argument
-		comments.subMap(offset, argumentEnd).clear();
 		return leaf("preproc_arg", offset, argumentEnd);
 	}
 

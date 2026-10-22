@@ -3411,7 +3411,7 @@ public class CppTreeGenerator {
 
 	private Node statementKind(IASTStatement statement) {
 		if(statement instanceof IASTCompoundStatement compound) {
-			return compoundStatement(compound, false);
+			return compoundStatement(compound);
 		}
 		if(statement instanceof IASTExpressionStatement expressionStatement) {
 			IASTExpression expression = expressionStatement.getExpression();
@@ -3455,7 +3455,7 @@ public class CppTreeGenerator {
 		if(statement instanceof IASTSwitchStatement switchStatement) {
 			IASTNode controller = switchStatement instanceof ICPPASTSwitchStatement cpp && cpp.getControllerDeclaration() != null ? cpp.getControllerDeclaration() : switchStatement.getControllerExpression();
 			IASTStatement initializer = switchStatement instanceof ICPPASTSwitchStatement cpp ? cpp.getInitializerStatement() : null;
-			Node body = switchStatement.getBody() instanceof IASTCompoundStatement compound ? compoundStatement(compound, true) : statement(switchStatement.getBody());
+			Node body = switchStatement.getBody() instanceof IASTCompoundStatement compound ? compoundStatement(compound) : statement(switchStatement.getBody());
 			return node("switch_statement", statement, conditionClause(start(statement), controller, initializer, body == null ? end(statement) : body.start), body);
 		}
 		if(statement instanceof IASTCaseStatement caseStatement) {
@@ -3508,7 +3508,7 @@ public class CppTreeGenerator {
 		return node("catch_clause", handler, node("parameter_list", open, close + 1, parameters), body);
 	}
 
-	private Node compoundStatement(IASTCompoundStatement compound, boolean switchBody) {
+	private Node compoundStatement(IASTCompoundStatement compound) {
 		List<Node> children = new ArrayList<>();
 		IASTStatement[] statements = compound.getStatements();
 		List<IASTStatement> active = new ArrayList<>();
@@ -3541,34 +3541,7 @@ public class CppTreeGenerator {
 			}
 		}
 		children.addAll(inactive(source.translationUnit, start(compound) + 1, end(compound) - 1, Context.BLOCK, active.toArray(new IASTNode[0])));
-		Node node = node("compound_statement", compound, children);
-		if(switchBody) {
-			groupCases(node);
-		}
-		return node;
-	}
-
-	//the statements after a case label are children of the case statement
-	private static void groupCases(Node node) {
-		List<Node> children = new ArrayList<>();
-		Node current = null;
-		for(Node child : node.children) {
-			if(child.type.equals("case_statement")) {
-				current = child;
-				children.add(child);
-			}
-			else if(current != null && !child.type.equals("}")) {
-				current.add(child);
-				current.end = child.end;
-			}
-			else {
-				children.add(child);
-			}
-		}
-		node.children.clear();
-		for(Node child : children) {
-			node.add(child);
-		}
+		return node("compound_statement", compound, children);
 	}
 
 	private Node ifStatement(IASTIfStatement ifStatement) {

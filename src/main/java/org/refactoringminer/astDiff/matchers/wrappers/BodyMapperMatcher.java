@@ -464,18 +464,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
-                Pair<Tree, Tree> conditionClauses = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONDITION_CLAUSE, LANG2.CONDITION_CLAUSE);
-                if (conditionClauses != null) {
-                    mappingStore.addMapping(conditionClauses.first,conditionClauses.second);
-                    matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                }
+                matchConditionClauses(srcStatementNode, dstStatementNode, mappingStore);
                 Pair<Tree, Tree> parenthesized = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PARENTHESIZED_EXPRESSION, LANG2.PARENTHESIZED_EXPRESSION);
                 if (parenthesized != null) {
                     mappingStore.addMapping(parenthesized.first,parenthesized.second);
@@ -759,18 +748,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
-                Pair<Tree, Tree> conditionClauses = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONDITION_CLAUSE, LANG2.CONDITION_CLAUSE);
-                if (conditionClauses != null) {
-                    mappingStore.addMapping(conditionClauses.first,conditionClauses.second);
-                    matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                }
+                matchConditionClauses(srcStatementNode, dstStatementNode, mappingStore);
                 Pair<Tree, Tree> parenthesized = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PARENTHESIZED_EXPRESSION, LANG2.PARENTHESIZED_EXPRESSION);
                 if (parenthesized != null) {
                     mappingStore.addMapping(parenthesized.first,parenthesized.second);
@@ -824,18 +802,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (matched != null) {
                     mappingStore.addMapping(matched.first,matched.second);
                 }
-                Pair<Tree, Tree> conditionClauses = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONDITION_CLAUSE, LANG2.CONDITION_CLAUSE);
-                if (conditionClauses != null) {
-                    mappingStore.addMapping(conditionClauses.first,conditionClauses.second);
-                    matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                    matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
-                    if (matched != null) {
-                        mappingStore.addMapping(matched.first,matched.second);
-                    }
-                }
+                matchConditionClauses(srcStatementNode, dstStatementNode, mappingStore);
                 Pair<Tree, Tree> parenthesized = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.PARENTHESIZED_EXPRESSION, LANG2.PARENTHESIZED_EXPRESSION);
                 if (parenthesized != null) {
                     mappingStore.addMapping(parenthesized.first,parenthesized.second);
@@ -895,6 +862,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                     matchEmptyStatements(finallyBlocks.first, finallyBlocks.second, mappingStore, LANG1, LANG2);
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode,dstStatementNode,mappingStore);
             } else if (!srcStatementNode.getType().name.equals(LANG1.BLOCK) && !dstStatementNode.getType().name.equals(LANG2.BLOCK)) {
+                //the conditions of composites of different kinds, i.e., if (f(x)) -> switch (g(x))
+                matchConditionClauses(srcStatementNode, dstStatementNode, mappingStore);
                 new CompositeMatcher(abstractCodeMapping, LANG1, LANG2).match(srcStatementNode, dstStatementNode, mappingStore);
             }
             matchChildrenWithMappedContent(srcStatementNode, dstStatementNode, LANG1.CONTROL_STRUCTURE_BODY, LANG2.CONTROL_STRUCTURE_BODY, mappingStore);
@@ -902,6 +871,22 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    //the condition clauses of the mapped composites with their parentheses, i.e., (x) in if (x) and switch (x)
+    private void matchConditionClauses(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
+        Pair<Tree, Tree> conditionClauses = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.CONDITION_CLAUSE, LANG2.CONDITION_CLAUSE);
+        if (conditionClauses != null) {
+            mappingStore.addMapping(conditionClauses.first,conditionClauses.second);
+            Pair<Tree, Tree> matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.OPENING_PARENTHESIS, LANG2.OPENING_PARENTHESIS);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
+            matched = Helpers.findPairOfType(conditionClauses.first,conditionClauses.second, LANG1.CLOSING_PARENTHESIS, LANG2.CLOSING_PARENTHESIS);
+            if (matched != null) {
+                mappingStore.addMapping(matched.first,matched.second);
+            }
         }
     }
 

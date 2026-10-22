@@ -1668,8 +1668,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 763,
   "secondPos" : 763,
-  "firstEndPos" : 822,
-  "secondEndPos" : 822
+  "firstEndPos" : 795,
+  "secondEndPos" : 795
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -1708,8 +1708,8 @@
   "secondType" : "return_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 808,
   "secondPos" : 808,
   "firstEndPos" : 822,
@@ -1789,8 +1789,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 831,
   "secondPos" : 831,
-  "firstEndPos" : 898,
-  "secondEndPos" : 898
+  "firstEndPos" : 867,
+  "secondEndPos" : 867
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -1829,8 +1829,8 @@
   "secondType" : "return_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 880,
   "secondPos" : 880,
   "firstEndPos" : 898,
@@ -1910,8 +1910,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 907,
   "secondPos" : 907,
-  "firstEndPos" : 972,
-  "secondEndPos" : 972
+  "firstEndPos" : 942,
+  "secondEndPos" : 942
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -1950,8 +1950,8 @@
   "secondType" : "return_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 955,
   "secondPos" : 955,
   "firstEndPos" : 972,
@@ -15627,8 +15627,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 6191,
   "secondPos" : 7034,
-  "firstEndPos" : 6337,
-  "secondEndPos" : 7180
+  "firstEndPos" : 6227,
+  "secondEndPos" : 7070
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -15667,8 +15667,8 @@
   "secondType" : "comment",
   "firstLabel" : "// skip CPU backends since they are handled separately",
   "secondLabel" : "// skip CPU backends since they are handled separately",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 6252,
   "secondPos" : 7095,
   "firstEndPos" : 6306,
@@ -15678,8 +15678,8 @@
   "secondType" : "break_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 6331,
   "secondPos" : 7174,
   "firstEndPos" : 6337,
@@ -15715,8 +15715,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 6359,
   "secondPos" : 7202,
-  "firstEndPos" : 8159,
-  "secondEndPos" : 9002
+  "firstEndPos" : 6393,
+  "secondEndPos" : 7236
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -15755,8 +15755,8 @@
   "secondType" : "compound_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 6394,
   "secondPos" : 7237,
   "firstEndPos" : 8159,
@@ -19081,8 +19081,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 8181,
   "secondPos" : 9024,
-  "firstEndPos" : 8377,
-  "secondEndPos" : 9220
+  "firstEndPos" : 8216,
+  "secondEndPos" : 9059
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -19121,8 +19121,8 @@
   "secondType" : "if_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 8241,
   "secondPos" : 9084,
   "firstEndPos" : 8346,
@@ -19473,8 +19473,8 @@
   "secondType" : "break_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 8371,
   "secondPos" : 9214,
   "firstEndPos" : 8377,
@@ -19510,8 +19510,8 @@
   "secondParentType" : "compound_statement",
   "firstPos" : 8398,
   "secondPos" : 9241,
-  "firstEndPos" : 8484,
-  "secondEndPos" : 9327
+  "firstEndPos" : 8433,
+  "secondEndPos" : 9276
 }, {
   "firstType" : "case",
   "secondType" : "case",
@@ -19550,8 +19550,8 @@
   "secondType" : "expression_statement",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "case_statement",
-  "secondParentType" : "case_statement",
+  "firstParentType" : "compound_statement",
+  "secondParentType" : "compound_statement",
   "firstPos" : 8458,
   "secondPos" : 9301,
   "firstEndPos" : 8484,

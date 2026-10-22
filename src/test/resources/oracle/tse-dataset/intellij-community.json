@@ -248,7 +248,7 @@
         {
           "type": "MOVE_RENAME_CLASS",
           "description": "Move And Rename Class\tcom.intellij.ui.mac.MacPathChooserDialog moved and renamed to com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
-          "validation": true
+          "validation": false
         },
         {
           "type": "MOVE_RENAME_CLASS",
@@ -339,6 +339,71 @@
         }
       ],
       "baseline": [
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic MacPathChooserDialog(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.ui.mac.MacPathChooserDialog to package NativeFileChooserDialogImpl(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_AND_RENAME_OPERATION",
+          "description": "Move And Rename Method\tpublic WinPathChooserDialog(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.ui.win.WinPathChooserDialog to package NativeFileChooserDialogImpl(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate myChosenFiles : VirtualFile[] from class com.intellij.ui.mac.MacPathChooserDialog to private myChosenFiles : VirtualFile[] from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate myChosenFiles : VirtualFile[] from class com.intellij.ui.win.WinPathChooserDialog to private myChosenFiles : VirtualFile[] from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate myFileDialog : FileDialog from class com.intellij.ui.mac.MacPathChooserDialog to private myFileDialog : FileDialog from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate myFileDialog : FileDialog from class com.intellij.ui.win.WinPathChooserDialog to private myFileDialog : FileDialog from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate myTitle : String from class com.intellij.ui.mac.MacPathChooserDialog to private myTitle : String from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_ATTRIBUTE",
+          "description": "Move Attribute\tprivate myTitle : String from class com.intellij.ui.win.WinPathChooserDialog to private myTitle : String from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.ui.mac.MacPathChooserDialog to public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.ui.win.WinPathChooserDialog to public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.ui.mac.MacPathChooserDialog to public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "MOVE_OPERATION",
+          "description": "Move Method\tpublic choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.ui.win.WinPathChooserDialog to public choose(toSelect VirtualFile, callback Consumer<? super List<VirtualFile>>) : void from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
+          "type": "RENAME_VARIABLE",
+          "description": "Rename Variable\tfiles : null to __ : null in method public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
         {
           "type": "CHANGE_VARIABLE_TYPE",
           "description": "Change Variable Type\tchosenFiles : var to myChosenFiles : VirtualFile[] in method public choose(project Project, toSelect VirtualFile...) : VirtualFile @NotNull [] from class com.intellij.openapi.fileChooser.impl.NewFileChooserDialogImpl",

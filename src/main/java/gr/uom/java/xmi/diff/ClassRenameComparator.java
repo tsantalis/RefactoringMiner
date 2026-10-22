@@ -28,7 +28,15 @@ public class ClassRenameComparator implements Comparator<UMLClassRenameDiff> {
 			else {
 				double packageDistance1 = o1.getRenamedClass().normalizedPackageNameDistance(o1.getOriginalClass());
 				double packageDistance2 = o2.getRenamedClass().normalizedPackageNameDistance(o2.getOriginalClass());
-				return Double.compare(packageDistance1, packageDistance2);
+				if(packageDistance1 != packageDistance2) {
+					return Double.compare(packageDistance1, packageDistance2);
+				}
+				//distinct candidates are never equal, otherwise the TreeSet of candidates keeps only one of them
+				int originalNames = o1.getOriginalClass().getName().compareTo(o2.getOriginalClass().getName());
+				if(originalNames != 0) {
+					return originalNames;
+				}
+				return o1.getRenamedClass().getName().compareTo(o2.getRenamedClass().getName());
 			}
 		}
 	}

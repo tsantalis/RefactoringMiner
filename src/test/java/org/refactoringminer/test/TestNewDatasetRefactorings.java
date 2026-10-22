@@ -57,6 +57,6 @@ public class TestNewDatasetRefactorings {
 				.or(Refactorings.MoveAnnotation.getValue());
 		TestBuilder test = new TestBuilder(detector, REPOS, types);
 		RefactoringPopulator.feedTSERefactoringInstances(test);
-		test.assertExpectationsWithGitHubAPI(3577, 26, 52);
+		test.assertExpectationsWithGitHubAPI(3585, 26, 56);
 	}
 }

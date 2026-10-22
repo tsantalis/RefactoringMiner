@@ -1057,6 +1057,28 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	//the candidates whose original class has the superclass of its renamed class, when some of them have it,
+	//i.e., the edge- and level-triggered variants of a test merged into a test with their superclass, but not the tests of other superclasses with identical members
+	private TreeSet<UMLClassRenameDiff> withConsistentSuperclass(TreeSet<UMLClassRenameDiff> union) {
+		TreeSet<UMLClassRenameDiff> sameSuperclass = new TreeSet<>();
+		for(UMLClassRenameDiff renameDiff : union) {
+			UMLType superclass = renameDiff.getRenamedClass().getSuperclass();
+			if(superclass != null && superclass.equals(renameDiff.getOriginalClass().getSuperclass())) {
+				sameSuperclass.add(renameDiff);
+			}
+		}
+		return sameSuperclass.isEmpty() ? union : sameSuperclass;
+	}
+
+	private static boolean containsOriginalClass(Set<UMLClassRenameDiff> union, UMLClass originalClass) {
+		for(UMLClassRenameDiff renameDiff : union) {
+			if(renameDiff.getOriginalClass().equals(originalClass)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean inheritanceRelationshipBetweenMergedClasses(Set<UMLClassRenameDiff> union) {
 		if(union.size() > 1) {
 			UMLClass originalClass = null;
@@ -1221,20 +1243,24 @@ public class UMLModelDiff {
 					}
 				}
 				if(matcher instanceof UMLClassMatcher.RelaxedRename || renameMatcherWithFalseMatchResult) {
-					if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union) && !partialModel()) {
-						UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
+					TreeSet<UMLClassRenameDiff> consistentUnion = withConsistentSuperclass(union);
+					if(!containsOriginalClass(consistentUnion, removedClass)) {
+						consistentUnion = new TreeSet<>();
+					}
+					if(sameRenamedClass(consistentUnion) && !inheritanceRelationshipBetweenMergedClasses(consistentUnion) && !partialModel()) {
+						UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(consistentUnion);
 						classMergeDiffList.add(mergeDiff);
-						for(UMLClassRenameDiff renameDiff : union) {
+						for(UMLClassRenameDiff renameDiff : consistentUnion) {
 							addedClasses.remove(renameDiff.getRenamedClass());
 							mergedClassesToBeRemoved.add(renameDiff.getOriginalClass());
 						}
 						removedClassIterator.remove();
 						mergeFound = true;
 					}
-					else if(sameOriginalClass(union) && !inheritanceRelationshipBetweenSplitClasses(union) && !partialModel()) {
-						UMLClassSplitDiff splitDiff = new UMLClassSplitDiff(union);
+					else if(sameOriginalClass(consistentUnion) && !inheritanceRelationshipBetweenSplitClasses(consistentUnion) && !partialModel()) {
+						UMLClassSplitDiff splitDiff = new UMLClassSplitDiff(consistentUnion);
 						classSplitDiffList.add(splitDiff);
-						for(UMLClassRenameDiff renameDiff : union) {
+						for(UMLClassRenameDiff renameDiff : consistentUnion) {
 							addedClasses.remove(renameDiff.getRenamedClass());
 							mergedClassesToBeRemoved.add(renameDiff.getOriginalClass());
 						}
@@ -1299,19 +1325,20 @@ public class UMLModelDiff {
 					union.addAll(renameDiffSet);
 				}
 				if(matcher instanceof UMLClassMatcher.RelaxedRename) {
-					if(sameRenamedClass(union) && !inheritanceRelationshipBetweenMergedClasses(union) && !partialModel()) {
-						UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(union);
+					TreeSet<UMLClassRenameDiff> consistentUnion = withConsistentSuperclass(union);
+					if(sameRenamedClass(consistentUnion) && !inheritanceRelationshipBetweenMergedClasses(consistentUnion) && !partialModel()) {
+						UMLClassMergeDiff mergeDiff = new UMLClassMergeDiff(consistentUnion);
 						classMergeDiffList.add(mergeDiff);
-						for(UMLClassRenameDiff renameDiff : union) {
+						for(UMLClassRenameDiff renameDiff : consistentUnion) {
 							removedClasses.remove(renameDiff.getOriginalClass());
 						}
 						addedClassIterator.remove();
 						mergeFound = true;
 					}
-					else if(sameOriginalClass(union) && !inheritanceRelationshipBetweenSplitClasses(union) && !partialModel()) {
-						UMLClassSplitDiff splitDiff = new UMLClassSplitDiff(union);
+					else if(sameOriginalClass(consistentUnion) && !inheritanceRelationshipBetweenSplitClasses(consistentUnion) && !partialModel()) {
+						UMLClassSplitDiff splitDiff = new UMLClassSplitDiff(consistentUnion);
 						classSplitDiffList.add(splitDiff);
-						for(UMLClassRenameDiff renameDiff : union) {
+						for(UMLClassRenameDiff renameDiff : consistentUnion) {
 							removedClasses.remove(renameDiff.getOriginalClass());
 						}
 						addedClassIterator.remove();

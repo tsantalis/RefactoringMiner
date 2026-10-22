@@ -379,15 +379,22 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             }
             else if (refactoring instanceof RenameAttributeRefactoring) {
                 RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;
+                String originalName = renameAttributeRefactoring.getOriginalAttribute().getName();
+                String renamedName = renameAttributeRefactoring.getRenamedAttribute().getName();
                 for (AbstractCodeMapping reference : renameAttributeRefactoring.getReferences()) {
                     List<LeafMapping> subExpressionMappings = reference.getSubExpressionMappings();
                     for (LeafMapping subExpressionMapping : subExpressionMappings) {
                         if (inOtherFiles(subExpressionMapping.getFragment1(), subExpressionMapping.getFragment2()))
                             continue;
+                        //the names of the renamed attribute, while the other sub-expressions of the reference are matched with the reference,
+                        //i.e., use_mmap -> load_mode, but not model == other.model, in return model == other.model && use_mmap == other.use_mmap;
+                        if (!subExpressionMapping.getFragment1().getString().equals(originalName) || !subExpressionMapping.getFragment2().getString().equals(renamedName))
+                            continue;
                         Constants LANG1 = new Constants(subExpressionMapping.getFragment1().getLocationInfo().getFilePath());
                         Constants LANG2 = new Constants(subExpressionMapping.getFragment2().getLocationInfo().getFilePath());
-                        Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), LANG1, LANG1.SIMPLE_NAME);
-                        Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), LANG2, LANG2.SIMPLE_NAME);
+                        //the name of a member is a field identifier in C++, i.e., use_mmap in mparams.use_mmap
+                        Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), LANG1, LANG1.SIMPLE_NAME, LANG1.FIELD_IDENTIFIER);
+                        Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), LANG2, LANG2.SIMPLE_NAME, LANG2.FIELD_IDENTIFIER);
                         if (srcSimpleName != null && dstSimpleName != null)
                             optimizationData.getSubtreeMappings().addMapping(srcSimpleName,dstSimpleName);
                     }

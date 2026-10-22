@@ -340,6 +340,11 @@
       ],
       "baseline": [
         {
+          "type": "INLINE_OPERATION",
+          "description": "Inline Method\tprivate initExtendedProperties() : void inlined to package NativeFileChooserDialogImpl(descriptor FileChooserDescriptor, parent Component, project Project) in class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
+          "validation": true
+        },
+        {
           "type": "MOVE_AND_RENAME_OPERATION",
           "description": "Move And Rename Method\tpublic MacPathChooserDialog(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.ui.mac.MacPathChooserDialog to package NativeFileChooserDialogImpl(descriptor FileChooserDescriptor, parent Component, project Project) from class com.intellij.openapi.fileChooser.impl.NativeFileChooserDialogImpl",
           "validation": true

@@ -1672,17 +1672,6 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
     }
 
-    //the node of the parameter in the parameter list, i.e., the TypeScript required_parameter or JavaScript assignment_pattern wrapping the identifier
-    private static Tree parameterInList(Tree tree, Constants LANG) {
-        Tree parent = tree.getParent();
-        String parentType = parent.getType().name;
-        if((parentType.equals(LANG.REQUIRED_PARAMETER) || parentType.equals(LANG.OPTIONAL_PARAMETER) || parentType.equals(LANG.ASSIGNMENT_PATTERN)) &&
-                parent.getParent() != null && parent.getParent().getType().name.equals(LANG.FORMAL_PARAMETERS)) {
-            return parent;
-        }
-        return tree;
-    }
-
     //the name of a Python parameter, which is the parameter itself, or the name in its default_parameter, typed_parameter, typed_default_parameter,
     //list_splat_pattern or dictionary_splat_pattern, i.e., *args: int = ()
     private static Tree parameterName(Tree parameter, Constants LANG) {
@@ -1792,21 +1781,19 @@ public class MethodMatcher extends BodyMapperMatcher{
                 }
             }
             if(leftTree.getParent() != null && rightTree.getParent() != null) {
-                //the commas follow the parameter in the parameter list, i.e., the TypeScript required_parameter of index in index = 0
-                Tree parameter1 = parameterInList(leftTree, LANG1);
-                Tree parameter2 = parameterInList(rightTree, LANG2);
-                int index1 = parameter1.getParent().getChildPosition(parameter1);
-                int index2 = parameter2.getParent().getChildPosition(parameter2);
-                if(parameter1.getParent().getChildren().size() > index1+1 && parameter1.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
-                        parameter2.getParent().getChildren().size() > index2+1 && parameter2.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
-                    Tree t1 = parameter1.getParent().getChild(index1+1);
-                    Tree t2 = parameter2.getParent().getChild(index2+1);
+                //the commas follow the parameter in the parameter list
+                int index1 = leftTree.getParent().getChildPosition(leftTree);
+                int index2 = rightTree.getParent().getChildPosition(rightTree);
+                if(leftTree.getParent().getChildren().size() > index1+1 && leftTree.getParent().getChild(index1+1).getType().name.equals(LANG1.COMMA) &&
+                        rightTree.getParent().getChildren().size() > index2+1 && rightTree.getParent().getChild(index2+1).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = leftTree.getParent().getChild(index1+1);
+                    Tree t2 = rightTree.getParent().getChild(index2+1);
                     mappingStore.addMapping(t1,t2);
                 }
-                if(parameter1.getParent().getChildren().size() > index1+2 && parameter1.getParent().getChild(index1+2).getType().name.equals(LANG1.COMMA) &&
-                        parameter2.getParent().getChildren().size() > index2+2 && parameter2.getParent().getChild(index2+2).getType().name.equals(LANG2.COMMA)) {
-                    Tree t1 = parameter1.getParent().getChild(index1+2);
-                    Tree t2 = parameter2.getParent().getChild(index2+2);
+                if(leftTree.getParent().getChildren().size() > index1+2 && leftTree.getParent().getChild(index1+2).getType().name.equals(LANG1.COMMA) &&
+                        rightTree.getParent().getChildren().size() > index2+2 && rightTree.getParent().getChild(index2+2).getType().name.equals(LANG2.COMMA)) {
+                    Tree t1 = leftTree.getParent().getChild(index1+2);
+                    Tree t2 = rightTree.getParent().getChild(index2+2);
                     mappingStore.addMapping(t1,t2);
                 }
                 if(leftTree.getParent().getType().name.equals(LANG1.OBJECT_PATTERN) && rightTree.getParent().getType().name.equals(LANG2.OBJECT_PATTERN)) {

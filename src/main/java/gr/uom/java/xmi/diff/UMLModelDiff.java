@@ -3486,15 +3486,15 @@ public class UMLModelDiff {
 			if(removedAttribute == null) {
 				removedAttribute = classDiff.containsRemovedAttributeWithTheSameNameIgnoringChangedType(addedAttribute);
 			}
+			UMLAttributeDiff renameDiff = null;
 			if(removedAttribute == null) {
-				boolean renameFound = false;
 				for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
 					if((diff.isRenamed() || diff.isTypeChanged()) && diff.getRemovedAttribute().equalsIgnoringChangedVisibility(addedAttribute)) {
-						renameFound = true;
+						renameDiff = diff;
 						break;
 					}
 				}
-				if(renameFound) {
+				if(renameDiff != null) {
 					removedAttribute = classDiff.getOriginalClass().containsAttributeWithTheSameSignature(addedAttribute);
 				}
 			}
@@ -3503,6 +3503,12 @@ public class UMLModelDiff {
 			}
 			if(removedAttribute != null) {
 				classDiff.getRemovedAttributes().remove(removedAttribute);
+				//the attribute moved to the added class is no longer renamed in the original class, i.e., file_index moved to the extracted MultiFileScanJob instead of renamed to scan_chunk_file_index,
+				//while an attribute with a changed type keeps its declaration in the original class, i.e., val context = GraphContext() -> val context: GraphContext in the interface HeapGraph
+				if(renameDiff != null && renameDiff.isRenamed() && renameDiff.getRemovedAttribute().equals(removedAttribute)) {
+					classDiff.getAttributeDiffList().remove(renameDiff);
+					classDiff.getAddedAttributes().add(renameDiff.getAddedAttribute());
+				}
 				Refactoring ref = null;
 				ArrayList<UMLOperationBodyMapper> operationBodyMapperList = new ArrayList<>();
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, operationBodyMapperList);

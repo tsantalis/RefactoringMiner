@@ -1462,6 +1462,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         }
         matchParentStatements(srcStatementNode, dstStatementNode, mappingStore);
+        matchEqualOperatorsOfInitializers(srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
         boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
         boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
         boolean _abstractExpWithNonCompositeOwner = _abstractExp;
@@ -1497,6 +1498,22 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (!abstractCodeMapping.getRefactorings().isEmpty()) {
             leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+        }
+    }
+
+    //the = before the mapped initializers, i.e., idx_t file_index = DConstants::INVALID_INDEX; -> idx_t scan_chunk_file_index = DConstants::INVALID_INDEX;
+    private void matchEqualOperatorsOfInitializers(Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping mapping, ExtendedMultiMappingStore mappingStore) {
+        if(!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER) ||
+                !mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_INITIALIZER))
+            return;
+        int srcPosition = srcStatementNode.getParent() != null ? srcStatementNode.positionInParent() : 0;
+        int dstPosition = dstStatementNode.getParent() != null ? dstStatementNode.positionInParent() : 0;
+        if(srcPosition > 0 && dstPosition > 0) {
+            Tree srcPrevious = srcStatementNode.getParent().getChild(srcPosition-1);
+            Tree dstPrevious = dstStatementNode.getParent().getChild(dstPosition-1);
+            if(srcPrevious.getType().name.equals(LANG1.EQUAL_OPERATOR) && dstPrevious.getType().name.equals(LANG2.EQUAL_OPERATOR)) {
+                mappingStore.addMapping(srcPrevious, dstPrevious);
+            }
         }
     }
 

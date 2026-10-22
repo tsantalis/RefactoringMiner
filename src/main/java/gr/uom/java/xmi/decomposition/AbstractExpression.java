@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.cdt.core.dom.ast.IASTEqualsInitializer;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
@@ -212,7 +213,8 @@ public class AbstractExpression extends AbstractCodeFragment {
 	}
 
 	public AbstractExpression(String sourceFolder, String filePath, IASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
-		super(new LocationInfo(sourceFolder, filePath, expression, codeElementType, fileContent));
+		//the initializer is located at the value after =, which is a sibling of = in the AST, i.e., int x = 10; and void f(int x = 10)
+		super(new LocationInfo(sourceFolder, filePath, expression instanceof IASTEqualsInitializer equalsInitializer ? equalsInitializer.getInitializerClause() : expression, codeElementType, fileContent));
 		CppVisitor visitor = new CppVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
 		expression.accept(visitor);
 		this.variables = visitor.getVariables();

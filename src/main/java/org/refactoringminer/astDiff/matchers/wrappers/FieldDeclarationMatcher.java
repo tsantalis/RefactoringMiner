@@ -76,8 +76,15 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1);
         Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2);
         if (srcAttr == null || dstAttr == null) return;
-        Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.FIELD_DECLARATION);
-        Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.FIELD_DECLARATION);
+        //a C++ enumerator is its own declaration, and not the field declaring its enum in a class, i.e., A = 1 in enum E { A = 1 };
+        Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.ENUMERATOR);
+        Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.ENUMERATOR);
+        if (srcFieldDeclaration == null) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.FIELD_DECLARATION);
+        }
+        if (dstFieldDeclaration == null) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.FIELD_DECLARATION);
+        }
         if (srcFieldDeclaration == null) {
             srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.DECLARATION);
         }
@@ -110,6 +117,13 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (dstFieldDeclaration == null && dstAttr.getType().name.equals(LANG2.VARIABLE_DECLARATOR)) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.LEXICAL_DECLARATION);
+        }
+        //the C++ type definitions are their own declarations, i.e., typedef int T;
+        if (srcFieldDeclaration == null) {
+            srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.TYPE_DEFINITION);
+        }
+        if (dstFieldDeclaration == null) {
+            dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.TYPE_DEFINITION);
         }
         if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
             srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.FIELD_DECLARATION);

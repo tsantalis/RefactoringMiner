@@ -1248,12 +1248,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS)) {
             srcStatementNode = srcStatementNode.getChild(0);
         }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.CASE_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.SWITCH_CASE)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.DEFAULT_KEYWORD) && srcStatementNode.getParent().getType().name.equals(LANG1.SWITCH_CASE)) {
-            srcStatementNode = srcStatementNode.getParent();
-        }
         else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.ERROR)) {
             Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
             if(tmpSrcStatement != null)
@@ -1262,12 +1256,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
         if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
             dstStatementNode = dstStatementNode.getChild(0);
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.CASE_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.SWITCH_CASE)) {
-            dstStatementNode = dstStatementNode.getParent();
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.DEFAULT_KEYWORD) && dstStatementNode.getParent().getType().name.equals(LANG2.SWITCH_CASE)) {
-            dstStatementNode = dstStatementNode.getParent();
         }
         else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.ERROR)) {
             Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);

@@ -310,7 +310,7 @@ public class LocationInfo {
 		if (locations.length == 1 && locations[0] instanceof IASTMacroExpansionLocation) {
 			IASTMacroExpansionLocation macroLocation = (IASTMacroExpansionLocation) locations[0];
 			IASTImageLocation imageLocation = getImageLocation(node);
-			if(isSourceMacroArgument(node, imageLocation)) {
+			if(isSourceMacroArgument(node, imageLocation) && withinMacroArgument(fileContent, imageLocation)) {
 				init(fileContent, imageLocation);
 			}
 			else {
@@ -379,6 +379,35 @@ public class LocationInfo {
 		}
 		IASTTranslationUnit translationUnit = node.getTranslationUnit();
 		return translationUnit != null && translationUnit.getFilePath().equals(imageLocation.getFileName());
+	}
+
+	//the node made of the tokens of a single argument of the macro call, otherwise it is located at the macro call,
+	//i.e., the declarator of version, () in MOCK_METHOD(std::string, version, (), (const)) is made of two arguments separated by a comma outside parentheses
+	private static boolean withinMacroArgument(String fileContent, IASTFileLocation imageLocation) {
+		int start = imageLocation.getNodeOffset();
+		int end = Math.min(start + imageLocation.getNodeLength(), fileContent.length());
+		int depth = 0;
+		for(int i = start; i < end; i++) {
+			char c = fileContent.charAt(i);
+			if(c == '"' || c == '\'') {
+				//the literal up to its closing quote
+				for(i++; i < end && fileContent.charAt(i) != c; i++) {
+					if(fileContent.charAt(i) == '\\') {
+						i++;
+					}
+				}
+			}
+			else if(c == '(') {
+				depth++;
+			}
+			else if(c == ')') {
+				depth--;
+			}
+			else if(c == ',' && depth == 0) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void init(String fileContent, IASTFileLocation fileLocation) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -63,6 +64,8 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorEndifStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfdefStatement;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorIfndefStatement;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTProblem;
@@ -336,6 +339,8 @@ public class CppTreeGenerator {
 	//the comments and the directives
 	private final TreeMap<Integer, Integer> extras = new TreeMap<>();
 	private Source source;
+	//the macros of the file expanded to nothing, i.e., LLAMA_API in #define LLAMA_API, which the code parsed again does not know
+	private Set<String> emptyMacros = Set.of();
 
 	private CppTreeGenerator(String content) {
 		this.content = content;
@@ -1399,11 +1404,16 @@ public class CppTreeGenerator {
 			if(!isPlainIdentifier(token)) {
 				continue;
 			}
+			//a macro of the file expanded to nothing, i.e., LLAMA_API in DEPRECATED(LLAMA_API llama_token f(), "...")
+			if(emptyMacros.contains(token)) {
+				annotations.add(token);
+				continue;
+			}
 			String previous = i > 0 ? tokenText(tokens.get(i - 1)) : ";";
 			String next = tokenText(tokens.get(i + 1));
 			String afterNext = i + 2 < tokens.size() ? tokenText(tokens.get(i + 2)) : "";
-			//a type, the macro and the declarator, i.e., T absl_nonnull x
-			boolean afterType = (isPlainIdentifier(previous) || previous.equals(">") || previous.equals("*") || previous.equals("&") || previous.equals("&&"))
+			//a type, the macro and the declarator, i.e., T absl_nonnull x, where the type does not follow an empty macro of the file, i.e., llama_token in LLAMA_API llama_token f()
+			boolean afterType = (isPlainIdentifier(previous) && !emptyMacros.contains(previous) || previous.equals(">") || previous.equals("*") || previous.equals("&") || previous.equals("&&"))
 					&& isPlainIdentifier(next) && (afterNext.equals(",") || afterNext.equals(")") || afterNext.equals("=") || afterNext.equals(";")
 					|| afterNext.equals("(") || afterNext.equals("[") || afterNext.equals("{"));
 			//the macro at the start of a declaration, i.e., LLAMA_API int f()
@@ -1899,6 +1909,12 @@ public class CppTreeGenerator {
 
 	private Node translationUnit(IASTTranslationUnit translationUnit) {
 		source = new Source(translationUnit, 0, false);
+		emptyMacros = new HashSet<>();
+		for(IASTPreprocessorMacroDefinition definition : translationUnit.getMacroDefinitions()) {
+			if(definition.isActive() && !(definition instanceof IASTPreprocessorFunctionStyleMacroDefinition) && definition.getExpansion().isBlank()) {
+				emptyMacros.add(definition.getName().toString());
+			}
+		}
 		List<Node> children = new ArrayList<>();
 		IASTDeclaration[] declarations = activeDeclarations(translationUnit.getDeclarations(false));
 		children.addAll(declarations(declarations, Context.TOP));

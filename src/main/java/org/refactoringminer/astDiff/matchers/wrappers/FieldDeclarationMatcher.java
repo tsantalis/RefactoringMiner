@@ -125,16 +125,20 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         if (dstFieldDeclaration == null) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.TYPE_DEFINITION);
         }
-        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+        //the Kotlin property declarations around properties located at their leading comments, and the class parameters declaring properties,
+        //while in the other languages the attribute is its declaration when there is none around it, i.e., the pair of an object literal
+        boolean kotlin1 = PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath());
+        boolean kotlin2 = PathFileUtils.isKotlinFile(dstUMLAttribute.getLocationInfo().getFilePath());
+        if (kotlin1 && (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment"))) {
             srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.FIELD_DECLARATION);
         }
-        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+        if (kotlin2 && (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment"))) {
             dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.FIELD_DECLARATION);
         }
-        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
+        if (kotlin1 && (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment"))) {
             srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.CLASS_PARAMETER);
         }
-        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
+        if (kotlin2 && (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment"))) {
             dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
         }
         this.srcFieldDeclaration = srcFieldDeclaration;

@@ -1202,6 +1202,11 @@ public class CppTreeGenerator {
 
 	//a macro call whose arguments are not expressions, i.e., ASSIGN_OR_RETURN(auto x, f()); with each argument parsed again as an expression or as a parameter
 	private Node macroCallStatement(int start, int end) {
+		return macroCallStatement(start, end, false);
+	}
+
+	//the call may have no semicolon when it is a member of a class, i.e., DEFINE_PROP(bool, decorate, true, EFFECT) expanded to a field and methods
+	private Node macroCallStatement(int start, int end, boolean optionalSemicolon) {
 		int nameStart = skip(start, end);
 		if(nameStart >= end || !isIdentifierStart(content.charAt(nameStart))) {
 			return null;
@@ -1213,7 +1218,8 @@ public class CppTreeGenerator {
 		}
 		int close = matching(open, end);
 		int semicolon = skip(close + 1, end);
-		if(close >= end || !tokenAt(semicolon).equals(";") || skip(semicolon + 1, end) < end) {
+		boolean withoutSemicolon = optionalSemicolon && close < end && semicolon >= end;
+		if(close >= end || !withoutSemicolon && (!tokenAt(semicolon).equals(";") || skip(semicolon + 1, end) < end)) {
 			return null;
 		}
 		List<Node> arguments = new ArrayList<>();
@@ -1245,7 +1251,7 @@ public class CppTreeGenerator {
 			}
 		}
 		Node call = node("call_expression", nameStart, close + 1, leaf("identifier", nameStart, nameEnd), node("argument_list", open, close + 1, arguments));
-		return node("expression_statement", nameStart, semicolon + 1, call);
+		return node("expression_statement", nameStart, withoutSemicolon ? close + 1 : semicolon + 1, call);
 	}
 
 	//the argument of a macro call as an expression or as a parameter declaration
@@ -1988,7 +1994,8 @@ public class CppTreeGenerator {
 				nodes.add(declarationOrReparsed(sorted[i], context));
 			}
 			else if(source.reparsed) {
-				nodes.add(error(start, end));
+				Node call = context == Context.CLASS ? macroCallStatement(start, end, true) : null;
+				nodes.add(call != null ? call : error(start, end));
 			}
 			else {
 				nodes.addAll(reparseDeclaration(start, end, context));
@@ -2067,7 +2074,8 @@ public class CppTreeGenerator {
 		if(reparse(declaration) && !(declaration instanceof ICPPASTNamespaceDefinition) && !(declaration instanceof ICPPASTLinkageSpecification)
 				&& !isClassDefinition(declaration) && !isFunctionWithMacroFreeHeader(declaration)) {
 			if(source.reparsed) {
-				return error(start(declaration), end(declaration));
+				Node call = context == Context.CLASS ? macroCallStatement(start(declaration), end(declaration), true) : null;
+				return call != null ? call : error(start(declaration), end(declaration));
 			}
 			return orDeclaration(macroFunctionDefinition(reparseDeclaration(start(declaration), end(declaration), context), declaration), declaration, context);
 		}

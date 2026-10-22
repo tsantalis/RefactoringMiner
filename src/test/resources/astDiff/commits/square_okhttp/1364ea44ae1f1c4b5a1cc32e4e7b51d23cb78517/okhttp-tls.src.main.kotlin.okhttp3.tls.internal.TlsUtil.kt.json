@@ -2089,27 +2089,27 @@
   "firstEndPos" : 1585,
   "secondEndPos" : 1741
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns an SSL client for this host's localhost address. */",
-  "secondLabel" : "/** Returns an SSL client for this host's localhost address. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1593,
-  "secondPos" : 1749,
-  "firstEndPos" : 1656,
-  "secondEndPos" : 1812
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1659,
-  "secondPos" : 1815,
+  "firstPos" : 1593,
+  "secondPos" : 1749,
   "firstEndPos" : 1722,
   "secondEndPos" : 1878
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns an SSL client for this host's localhost address. */",
+  "secondLabel" : "/** Returns an SSL client for this host's localhost address. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1593,
+  "secondPos" : 1749,
+  "firstEndPos" : 1656,
+  "secondEndPos" : 1812
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2254,27 +2254,27 @@
   "firstEndPos" : 1722,
   "secondEndPos" : 1878
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns a trust manager that trusts `trustedCertificates`. */",
-  "secondLabel" : "/** Returns a trust manager that trusts `trustedCertificates`. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1726,
-  "secondPos" : 1882,
-  "firstEndPos" : 1791,
-  "secondEndPos" : 1947
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1794,
-  "secondPos" : 1950,
+  "firstPos" : 1726,
+  "secondPos" : 1882,
   "firstEndPos" : 2442,
   "secondEndPos" : 2928
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns a trust manager that trusts `trustedCertificates`. */",
+  "secondLabel" : "/** Returns a trust manager that trusts `trustedCertificates`. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1726,
+  "secondPos" : 1882,
+  "firstEndPos" : 1791,
+  "secondEndPos" : 1947
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -4003,27 +4003,27 @@
   "firstEndPos" : 2438,
   "secondEndPos" : 2661
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a key manager for the held certificate and its chain. Returns an empty key manager if\n   * `heldCertificate` is null.\n   */",
-  "secondLabel" : "/**\n   * Returns a key manager for the held certificate and its chain. Returns an empty key manager if\n   * `heldCertificate` is null.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2446,
-  "secondPos" : 2932,
-  "firstEndPos" : 2586,
-  "secondEndPos" : 3072
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2589,
-  "secondPos" : 3075,
+  "firstPos" : 2446,
+  "secondPos" : 2932,
   "firstEndPos" : 3418,
   "secondEndPos" : 3904
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a key manager for the held certificate and its chain. Returns an empty key manager if\n   * `heldCertificate` is null.\n   */",
+  "secondLabel" : "/**\n   * Returns a key manager for the held certificate and its chain. Returns an empty key manager if\n   * `heldCertificate` is null.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2446,
+  "secondPos" : 2932,
+  "firstEndPos" : 2586,
+  "secondEndPos" : 3072
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

@@ -362,27 +362,27 @@
   "firstEndPos" : 884,
   "secondEndPos" : 817
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n */",
-  "secondLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1043,
-  "secondPos" : 819,
-  "firstEndPos" : 1127,
-  "secondEndPos" : 906
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1128,
-  "secondPos" : 907,
+  "firstPos" : 1043,
+  "secondPos" : 819,
   "firstEndPos" : 3424,
   "secondEndPos" : 2992
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n */",
+  "secondLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n *\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1043,
+  "secondPos" : 819,
+  "firstEndPos" : 1127,
+  "secondEndPos" : 906
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

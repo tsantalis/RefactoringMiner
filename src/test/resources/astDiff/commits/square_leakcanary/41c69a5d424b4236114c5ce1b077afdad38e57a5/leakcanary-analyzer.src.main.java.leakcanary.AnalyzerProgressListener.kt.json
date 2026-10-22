@@ -61,7 +61,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 20,
-  "secondPos" : 78,
+  "secondPos" : 20,
   "firstEndPos" : 735,
   "secondEndPos" : 590
 }, {
@@ -98,27 +98,27 @@
   "firstEndPos" : 735,
   "secondEndPos" : 590
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// These steps should be defined in the order in which they occur.",
-  "secondLabel" : "// These steps are defined in the order in which they occur.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 60,
-  "secondPos" : 118,
-  "firstEndPos" : 126,
-  "secondEndPos" : 178
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 129,
-  "secondPos" : 181,
+  "firstPos" : 60,
+  "secondPos" : 118,
   "firstEndPos" : 556,
   "secondEndPos" : 411
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// These steps should be defined in the order in which they occur.",
+  "secondLabel" : "// These steps are defined in the order in which they occur.",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 60,
+  "secondPos" : 118,
+  "firstEndPos" : 126,
+  "secondEndPos" : 178
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

@@ -329,27 +329,27 @@
   "firstEndPos" : 233,
   "secondEndPos" : 201
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Exposes high level APIs to compute and render a dominator tree. This class\n * needs to be public to be used by other LeakCanary modules but is internal and\n * its API might change at any moment.\n *\n * Note that the exposed APIs are not optimized for speed, memory or IO.\n *\n * Eventually this capability should become part of the Shark public APIs, please\n * open an issue if you'd like to use this directly.\n */",
-  "secondLabel" : "/**\n * Exposes high level APIs to compute and render a dominator tree. This class\n * needs to be public to be used by other LeakCanary modules but is internal and\n * its API might change at any moment.\n *\n * Note that the exposed APIs are not optimized for speed, memory or IO.\n *\n * Eventually this capability should become part of the Shark public APIs, please\n * open an issue if you'd like to use this directly.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 337,
-  "secondPos" : 247,
-  "firstEndPos" : 756,
-  "secondEndPos" : 666
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 757,
-  "secondPos" : 667,
+  "firstPos" : 337,
+  "secondPos" : 247,
   "firstEndPos" : 5309,
   "secondEndPos" : 5031
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Exposes high level APIs to compute and render a dominator tree. This class\n * needs to be public to be used by other LeakCanary modules but is internal and\n * its API might change at any moment.\n *\n * Note that the exposed APIs are not optimized for speed, memory or IO.\n *\n * Eventually this capability should become part of the Shark public APIs, please\n * open an issue if you'd like to use this directly.\n */",
+  "secondLabel" : "/**\n * Exposes high level APIs to compute and render a dominator tree. This class\n * needs to be public to be used by other LeakCanary modules but is internal and\n * its API might change at any moment.\n *\n * Note that the exposed APIs are not optimized for speed, memory or IO.\n *\n * Eventually this capability should become part of the Shark public APIs, please\n * open an issue if you'd like to use this directly.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 337,
+  "secondPos" : 247,
+  "firstEndPos" : 756,
+  "secondEndPos" : 666
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

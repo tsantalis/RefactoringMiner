@@ -626,27 +626,27 @@
   "firstEndPos" : 948,
   "secondEndPos" : 948
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This service runs in a main app process.\n */",
-  "secondLabel" : "/**\n * This service runs in a main app process.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 950,
-  "secondPos" : 950,
-  "firstEndPos" : 1001,
-  "secondEndPos" : 1001
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1002,
-  "secondPos" : 1002,
+  "firstPos" : 950,
+  "secondPos" : 950,
   "firstEndPos" : 2885,
   "secondEndPos" : 2877
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This service runs in a main app process.\n */",
+  "secondLabel" : "/**\n * This service runs in a main app process.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 950,
+  "secondPos" : 950,
+  "firstEndPos" : 1001,
+  "secondEndPos" : 1001
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

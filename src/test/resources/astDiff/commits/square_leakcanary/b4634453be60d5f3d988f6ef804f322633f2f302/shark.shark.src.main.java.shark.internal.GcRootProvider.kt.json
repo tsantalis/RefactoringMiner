@@ -494,27 +494,27 @@
   "firstEndPos" : 503,
   "secondEndPos" : 319
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Extracted from PathFinder, this should eventually be part of public API surface\n * and we should likely also revisit the gc root type filtering which happens during\n * heap parsing, as that's not really a concern for the heap parser and more for path\n * finding. There are probably memory concerns as well there though. We could:\n * - compress the storing of these roots\n * - keep only the roots locations and read / deserialize as needed\n * - Ensure a unique / consistent view of roots by doing the work of GcRootProvider\n * at parsing time and keeping that list.\n */",
-  "secondLabel" : "/**\n * TODO Extracted from PathFinder, this should eventually be part of public API surface\n *  and we should likely also revisit the gc root type filtering which happens during\n *  heap parsing, as that's not really a concern for the heap parser and more for path\n *  finding. There are probably memory concerns as well there though. We could:\n *  - compress the storing of these roots\n *  - keep only the roots locations and read / deserialize as needed\n *  - Ensure a unique / consistent view of roots by doing the work of GcRootProvider\n *  at parsing time and keeping that list.\n *\n *  A [GcRootProvider] that matches roots against [referenceMatchers].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 528,
-  "secondPos" : 357,
-  "firstEndPos" : 1103,
-  "secondEndPos" : 1018
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1104,
-  "secondPos" : 1019,
+  "firstPos" : 528,
+  "secondPos" : 357,
   "firstEndPos" : 5672,
   "secondEndPos" : 5382
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Extracted from PathFinder, this should eventually be part of public API surface\n * and we should likely also revisit the gc root type filtering which happens during\n * heap parsing, as that's not really a concern for the heap parser and more for path\n * finding. There are probably memory concerns as well there though. We could:\n * - compress the storing of these roots\n * - keep only the roots locations and read / deserialize as needed\n * - Ensure a unique / consistent view of roots by doing the work of GcRootProvider\n * at parsing time and keeping that list.\n */",
+  "secondLabel" : "/**\n * TODO Extracted from PathFinder, this should eventually be part of public API surface\n *  and we should likely also revisit the gc root type filtering which happens during\n *  heap parsing, as that's not really a concern for the heap parser and more for path\n *  finding. There are probably memory concerns as well there though. We could:\n *  - compress the storing of these roots\n *  - keep only the roots locations and read / deserialize as needed\n *  - Ensure a unique / consistent view of roots by doing the work of GcRootProvider\n *  at parsing time and keeping that list.\n *\n *  A [GcRootProvider] that matches roots against [referenceMatchers].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 528,
+  "secondPos" : 357,
+  "firstEndPos" : 1103,
+  "secondEndPos" : 1018
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -875,7 +875,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
   "firstPos" : 1653,
-  "secondPos" : 93,
+  "secondPos" : 15,
   "firstEndPos" : 1793,
   "secondEndPos" : 225
 }, {
@@ -3585,27 +3585,27 @@
   "firstEndPos" : 3401,
   "secondEndPos" : 3095
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
-  "secondLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3445,
-  "secondPos" : 3139,
-  "firstEndPos" : 3719,
-  "secondEndPos" : 3413
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3722,
-  "secondPos" : 3416,
+  "firstPos" : 3445,
+  "secondPos" : 3139,
   "firstEndPos" : 5670,
   "secondEndPos" : 5380
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
+  "secondLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3445,
+  "secondPos" : 3139,
+  "firstEndPos" : 3719,
+  "secondEndPos" : 3413
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

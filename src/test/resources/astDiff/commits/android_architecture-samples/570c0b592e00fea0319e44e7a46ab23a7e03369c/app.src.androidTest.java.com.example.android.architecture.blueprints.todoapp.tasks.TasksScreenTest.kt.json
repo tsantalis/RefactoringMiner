@@ -3618,27 +3618,27 @@
   "firstEndPos" : 3101,
   "secondEndPos" : 3025
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
-  "secondLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3103,
-  "secondPos" : 3027,
-  "firstEndPos" : 3193,
-  "secondEndPos" : 3117
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3194,
-  "secondPos" : 3118,
+  "firstPos" : 3103,
+  "secondPos" : 3027,
   "firstEndPos" : 23574,
   "secondEndPos" : 22838
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
+  "secondLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3103,
+  "secondPos" : 3027,
+  "firstEndPos" : 3193,
+  "secondEndPos" : 3117
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4333,27 +4333,27 @@
   "firstEndPos" : 3399,
   "secondEndPos" : 3323
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
-  "secondLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3406,
-  "secondPos" : 3330,
-  "firstEndPos" : 3560,
-  "secondEndPos" : 3484
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3565,
-  "secondPos" : 3489,
+  "firstPos" : 3406,
+  "secondPos" : 3330,
   "firstEndPos" : 3718,
   "secondEndPos" : 3642
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
+  "secondLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3406,
+  "secondPos" : 3330,
+  "firstEndPos" : 3560,
+  "secondEndPos" : 3484
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4773,27 +4773,27 @@
   "firstEndPos" : 3712,
   "secondEndPos" : 3636
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "secondLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3724,
-  "secondPos" : 3648,
-  "firstEndPos" : 4055,
-  "secondEndPos" : 3979
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4060,
-  "secondPos" : 3984,
+  "firstPos" : 3724,
+  "secondPos" : 3648,
   "firstEndPos" : 4201,
   "secondEndPos" : 4125
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "secondLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3724,
+  "secondPos" : 3648,
+  "firstEndPos" : 4055,
+  "secondEndPos" : 3979
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -5103,27 +5103,27 @@
   "firstEndPos" : 4194,
   "secondEndPos" : 4118
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4207,
-  "secondPos" : 4131,
-  "firstEndPos" : 4318,
-  "secondEndPos" : 4242
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4323,
-  "secondPos" : 4247,
+  "firstPos" : 4207,
+  "secondPos" : 4131,
   "firstEndPos" : 4467,
   "secondEndPos" : 4391
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4207,
+  "secondPos" : 4131,
+  "firstEndPos" : 4318,
+  "secondEndPos" : 4242
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -5433,27 +5433,27 @@
   "firstEndPos" : 4460,
   "secondEndPos" : 4384
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
-  "secondLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4771,
-  "secondPos" : 4397,
-  "firstEndPos" : 5048,
-  "secondEndPos" : 4674
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5053,
-  "secondPos" : 4679,
+  "firstPos" : 4771,
+  "secondPos" : 4397,
   "firstEndPos" : 5618,
   "secondEndPos" : 5244
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
+  "secondLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4771,
+  "secondPos" : 4397,
+  "firstEndPos" : 5048,
+  "secondEndPos" : 4674
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -11615,27 +11615,27 @@
   "firstEndPos" : 7488,
   "secondEndPos" : 7114
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7502,
-  "secondPos" : 7128,
-  "firstEndPos" : 7564,
-  "secondEndPos" : 7190
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7569,
-  "secondPos" : 7195,
+  "firstPos" : 7502,
+  "secondPos" : 7128,
   "firstEndPos" : 8167,
   "secondEndPos" : 7793
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7502,
+  "secondPos" : 7128,
+  "firstEndPos" : 7564,
+  "secondEndPos" : 7190
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -13320,27 +13320,27 @@
   "firstEndPos" : 8159,
   "secondEndPos" : 7785
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8173,
-  "secondPos" : 7799,
-  "firstEndPos" : 8235,
-  "secondEndPos" : 7861
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8240,
-  "secondPos" : 7866,
+  "firstPos" : 8173,
+  "secondPos" : 7799,
   "firstEndPos" : 8881,
   "secondEndPos" : 8507
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 8173,
+  "secondPos" : 7799,
+  "firstEndPos" : 8235,
+  "secondEndPos" : 7861
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -15179,27 +15179,27 @@
   "firstEndPos" : 8872,
   "secondEndPos" : 8498
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8887,
-  "secondPos" : 8513,
-  "firstEndPos" : 8949,
-  "secondEndPos" : 8575
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8954,
-  "secondPos" : 8580,
+  "firstPos" : 8887,
+  "secondPos" : 8513,
   "firstEndPos" : 9524,
   "secondEndPos" : 9150
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 8887,
+  "secondPos" : 8513,
+  "firstEndPos" : 8949,
+  "secondEndPos" : 8575
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -16708,27 +16708,27 @@
   "firstEndPos" : 9516,
   "secondEndPos" : 9142
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9530,
-  "secondPos" : 9156,
-  "firstEndPos" : 9592,
-  "secondEndPos" : 9218
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9597,
-  "secondPos" : 9223,
+  "firstPos" : 9530,
+  "secondPos" : 9156,
   "firstEndPos" : 10329,
   "secondEndPos" : 9955
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 9530,
+  "secondPos" : 9156,
+  "firstEndPos" : 9592,
+  "secondEndPos" : 9218
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -18655,27 +18655,27 @@
   "firstEndPos" : 10322,
   "secondEndPos" : 9948
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 10335,
-  "secondPos" : 9961,
-  "firstEndPos" : 10397,
-  "secondEndPos" : 10023
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10402,
-  "secondPos" : 10028,
+  "firstPos" : 10335,
+  "secondPos" : 9961,
   "firstEndPos" : 11189,
   "secondEndPos" : 10815
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 10335,
+  "secondPos" : 9961,
+  "firstEndPos" : 10397,
+  "secondEndPos" : 10023
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -20756,27 +20756,27 @@
   "firstEndPos" : 11181,
   "secondEndPos" : 10807
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 11195,
-  "secondPos" : 10821,
-  "firstEndPos" : 11257,
-  "secondEndPos" : 10883
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 11262,
-  "secondPos" : 10888,
+  "firstPos" : 11195,
+  "secondPos" : 10821,
   "firstEndPos" : 12027,
   "secondEndPos" : 11653
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 11195,
+  "secondPos" : 10821,
+  "firstEndPos" : 11257,
+  "secondEndPos" : 10883
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -33681,27 +33681,27 @@
   "firstEndPos" : 16924,
   "secondEndPos" : 16188
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 16938,
-  "secondPos" : 16202,
-  "firstEndPos" : 17000,
-  "secondEndPos" : 16264
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 17005,
-  "secondPos" : 16269,
+  "firstPos" : 16938,
+  "secondPos" : 16202,
   "firstEndPos" : 17685,
   "secondEndPos" : 16949
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 16938,
+  "secondPos" : 16202,
+  "firstEndPos" : 17000,
+  "secondEndPos" : 16264
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -35243,27 +35243,27 @@
   "firstEndPos" : 17678,
   "secondEndPos" : 16942
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 17691,
-  "secondPos" : 16955,
-  "firstEndPos" : 17753,
-  "secondEndPos" : 17017
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 17758,
-  "secondPos" : 17022,
+  "firstPos" : 17691,
+  "secondPos" : 16955,
   "firstEndPos" : 18540,
   "secondEndPos" : 17804
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 17691,
+  "secondPos" : 16955,
+  "firstEndPos" : 17753,
+  "secondEndPos" : 17017
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -37135,27 +37135,27 @@
   "firstEndPos" : 18532,
   "secondEndPos" : 17796
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 18546,
-  "secondPos" : 17810,
-  "firstEndPos" : 18601,
-  "secondEndPos" : 17865
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 18606,
-  "secondPos" : 17870,
+  "firstPos" : 18546,
+  "secondPos" : 17810,
   "firstEndPos" : 19530,
   "secondEndPos" : 18794
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 18546,
+  "secondPos" : 17810,
+  "firstEndPos" : 18601,
+  "secondEndPos" : 17865
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -39456,27 +39456,27 @@
   "firstEndPos" : 19521,
   "secondEndPos" : 18785
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 19536,
-  "secondPos" : 18800,
-  "firstEndPos" : 19591,
-  "secondEndPos" : 18855
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 19596,
-  "secondPos" : 18860,
+  "firstPos" : 19536,
+  "secondPos" : 18800,
   "firstEndPos" : 20941,
   "secondEndPos" : 20205
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 19536,
+  "secondPos" : 18800,
+  "firstEndPos" : 19591,
+  "secondEndPos" : 18855
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -42712,27 +42712,27 @@
   "firstEndPos" : 20934,
   "secondEndPos" : 20198
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 20947,
-  "secondPos" : 20211,
-  "firstEndPos" : 21009,
-  "secondEndPos" : 20273
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21014,
-  "secondPos" : 20278,
+  "firstPos" : 20947,
+  "secondPos" : 20211,
   "firstEndPos" : 21376,
   "secondEndPos" : 20640
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 20947,
+  "secondPos" : 20211,
+  "firstEndPos" : 21009,
+  "secondEndPos" : 20273
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -43504,27 +43504,27 @@
   "firstEndPos" : 21368,
   "secondEndPos" : 20632
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 21382,
-  "secondPos" : 20646,
-  "firstEndPos" : 21444,
-  "secondEndPos" : 20708
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21449,
-  "secondPos" : 20713,
+  "firstPos" : 21382,
+  "secondPos" : 20646,
   "firstEndPos" : 21838,
   "secondEndPos" : 21102
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 21382,
+  "secondPos" : 20646,
+  "firstEndPos" : 21444,
+  "secondEndPos" : 20708
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -44351,27 +44351,27 @@
   "firstEndPos" : 21829,
   "secondEndPos" : 21093
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 21844,
-  "secondPos" : 21108,
-  "firstEndPos" : 21906,
-  "secondEndPos" : 21170
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21911,
-  "secondPos" : 21175,
+  "firstPos" : 21844,
+  "secondPos" : 21108,
   "firstEndPos" : 22294,
   "secondEndPos" : 21558
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "secondLabel" : "// TODO Move this to TasksSingleScreenTest once #4810 is fixed",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 21844,
+  "secondPos" : 21108,
+  "firstEndPos" : 21906,
+  "secondEndPos" : 21170
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

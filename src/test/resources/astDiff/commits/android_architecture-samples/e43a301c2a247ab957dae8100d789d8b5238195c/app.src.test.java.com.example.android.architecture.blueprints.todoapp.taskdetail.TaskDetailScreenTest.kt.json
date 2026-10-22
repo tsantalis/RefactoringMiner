@@ -1836,27 +1836,27 @@
   "firstEndPos" : 1776,
   "secondEndPos" : 1816
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
-  "secondLabel" : "/**\n * Integration test for the Task Details screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1778,
-  "secondPos" : 1818,
-  "firstEndPos" : 1868,
-  "secondEndPos" : 1874
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1869,
-  "secondPos" : 1875,
+  "firstPos" : 1778,
+  "secondPos" : 1818,
   "firstEndPos" : 4706,
   "secondEndPos" : 4582
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
+  "secondLabel" : "/**\n * Integration test for the Task Details screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1778,
+  "secondPos" : 1818,
+  "firstEndPos" : 1868,
+  "secondEndPos" : 1874
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

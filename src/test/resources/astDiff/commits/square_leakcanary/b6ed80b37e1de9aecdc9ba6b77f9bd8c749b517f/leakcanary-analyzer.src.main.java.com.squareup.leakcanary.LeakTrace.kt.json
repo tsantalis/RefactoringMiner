@@ -175,27 +175,27 @@
   "firstEndPos" : 243,
   "secondEndPos" : 191
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A chain of references that constitute the shortest strong reference path from a leaking instance\n * to the GC roots. Fixing the leak usually means breaking one of the references in that chain.\n */",
-  "secondLabel" : "/**\n * A chain of references that constitute the shortest strong reference path from a leaking instance\n * to the GC roots. Fixing the leak usually means breaking one of the references in that chain.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 245,
-  "secondPos" : 193,
-  "firstEndPos" : 448,
-  "secondEndPos" : 396
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 449,
-  "secondPos" : 397,
+  "firstPos" : 245,
+  "secondPos" : 193,
   "firstEndPos" : 2380,
   "secondEndPos" : 2328
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A chain of references that constitute the shortest strong reference path from a leaking instance\n * to the GC roots. Fixing the leak usually means breaking one of the references in that chain.\n */",
+  "secondLabel" : "/**\n * A chain of references that constitute the shortest strong reference path from a leaking instance\n * to the GC roots. Fixing the leak usually means breaking one of the references in that chain.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 245,
+  "secondPos" : 193,
+  "firstEndPos" : 448,
+  "secondEndPos" : 396
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

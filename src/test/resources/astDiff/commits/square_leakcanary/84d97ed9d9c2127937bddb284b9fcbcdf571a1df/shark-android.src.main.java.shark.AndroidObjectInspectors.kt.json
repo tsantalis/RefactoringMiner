@@ -197,27 +197,27 @@
   "firstEndPos" : 711,
   "secondEndPos" : 711
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n *\n * Most developers should use the entire set of default [ObjectInspector] by calling [appDefaults],\n * unless there's a bug and you temporarily want to remove an inspector.\n */",
-  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n *\n * Most developers should use the entire set of default [ObjectInspector] by calling [appDefaults],\n * unless there's a bug and you temporarily want to remove an inspector.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 713,
-  "secondPos" : 713,
-  "firstEndPos" : 1368,
-  "secondEndPos" : 1368
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1369,
-  "secondPos" : 1369,
+  "firstPos" : 713,
+  "secondPos" : 713,
   "firstEndPos" : 13092,
   "secondEndPos" : 12732
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n *\n * Most developers should use the entire set of default [ObjectInspector] by calling [appDefaults],\n * unless there's a bug and you temporarily want to remove an inspector.\n */",
+  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n *\n * Most developers should use the entire set of default [ObjectInspector] by calling [appDefaults],\n * unless there's a bug and you temporarily want to remove an inspector.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 713,
+  "secondPos" : 713,
+  "firstEndPos" : 1368,
+  "secondEndPos" : 1368
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -20140,27 +20140,27 @@
   "firstEndPos" : 13090,
   "secondEndPos" : 12730
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** @see AndroidObjectInspectors */",
-  "secondLabel" : "/** @see AndroidObjectInspectors */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 12922,
-  "secondPos" : 12562,
-  "firstEndPos" : 12957,
-  "secondEndPos" : 12597
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 12962,
-  "secondPos" : 12602,
+  "firstPos" : 12922,
+  "secondPos" : 12562,
   "firstEndPos" : 13000,
   "secondEndPos" : 12640
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** @see AndroidObjectInspectors */",
+  "secondLabel" : "/** @see AndroidObjectInspectors */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 12922,
+  "secondPos" : 12562,
+  "firstEndPos" : 12957,
+  "secondEndPos" : 12597
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -20855,27 +20855,27 @@
   "firstEndPos" : 13247,
   "secondEndPos" : 12887
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Recursively unwraps `this` [HeapInstance] as a ContextWrapper until an Activity is found in which case it is\n * returned. Returns null if no activity was found.\n */",
-  "secondLabel" : "/**\n * Recursively unwraps `this` [HeapInstance] as a ContextWrapper until an Activity is found in which case it is\n * returned. Returns null if no activity was found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 13252,
-  "secondPos" : 12892,
-  "firstEndPos" : 13423,
-  "secondEndPos" : 13063
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 13424,
-  "secondPos" : 13064,
+  "firstPos" : 13252,
+  "secondPos" : 12892,
   "firstEndPos" : 14305,
   "secondEndPos" : 13945
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Recursively unwraps `this` [HeapInstance] as a ContextWrapper until an Activity is found in which case it is\n * returned. Returns null if no activity was found.\n */",
+  "secondLabel" : "/**\n * Recursively unwraps `this` [HeapInstance] as a ContextWrapper until an Activity is found in which case it is\n * returned. Returns null if no activity was found.\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 13252,
+  "secondPos" : 12892,
+  "firstEndPos" : 13423,
+  "secondEndPos" : 13063
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

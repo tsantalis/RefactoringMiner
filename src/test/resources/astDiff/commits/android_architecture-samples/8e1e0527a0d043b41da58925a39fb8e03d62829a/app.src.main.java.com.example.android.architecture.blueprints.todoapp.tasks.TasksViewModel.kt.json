@@ -1946,27 +1946,27 @@
   "firstEndPos" : 1918,
   "secondEndPos" : 1918
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewModel for the task list screen.\n */",
-  "secondLabel" : "/**\n * ViewModel for the task list screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1920,
-  "secondPos" : 1920,
-  "firstEndPos" : 1966,
-  "secondEndPos" : 1966
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1967,
-  "secondPos" : 1967,
+  "firstPos" : 1920,
+  "secondPos" : 1920,
   "firstEndPos" : 8636,
   "secondEndPos" : 8087
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewModel for the task list screen.\n */",
+  "secondLabel" : "/**\n * ViewModel for the task list screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1920,
+  "secondPos" : 1920,
+  "firstEndPos" : 1966,
+  "secondEndPos" : 1966
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -5807,27 +5807,27 @@
   "firstEndPos" : 3344,
   "secondEndPos" : 3344
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Not used at the moment",
-  "secondLabel" : "// Not used at the moment",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3350,
-  "secondPos" : 3350,
-  "firstEndPos" : 3375,
-  "secondEndPos" : 3375
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3380,
-  "secondPos" : 3380,
+  "firstPos" : 3350,
+  "secondPos" : 3350,
   "firstEndPos" : 3439,
   "secondEndPos" : 3439
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Not used at the moment",
+  "secondLabel" : "// Not used at the moment",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3350,
+  "secondPos" : 3350,
+  "firstEndPos" : 3375,
+  "secondEndPos" : 3375
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -6148,27 +6148,27 @@
   "firstEndPos" : 3747,
   "secondEndPos" : 3492
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// This LiveData depends on another so we can use a transformation.",
-  "secondLabel" : "// This LiveData depends on another so we can use a transformation.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3753,
-  "secondPos" : 3498,
-  "firstEndPos" : 3820,
-  "secondEndPos" : 3565
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3825,
-  "secondPos" : 3570,
+  "firstPos" : 3753,
+  "secondPos" : 3498,
   "firstEndPos" : 3912,
   "secondEndPos" : 3657
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// This LiveData depends on another so we can use a transformation.",
+  "secondLabel" : "// This LiveData depends on another so we can use a transformation.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3753,
+  "secondPos" : 3498,
+  "firstEndPos" : 3820,
+  "secondEndPos" : 3565
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6742,27 +6742,27 @@
   "firstEndPos" : 4019,
   "secondEndPos" : 3764
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
-  "secondLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4032,
-  "secondPos" : 3777,
-  "firstEndPos" : 4240,
-  "secondEndPos" : 3985
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4245,
-  "secondPos" : 3990,
+  "firstPos" : 4032,
+  "secondPos" : 3777,
   "firstEndPos" : 5190,
   "secondEndPos" : 4935
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
+  "secondLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4032,
+  "secondPos" : 3777,
+  "firstEndPos" : 4240,
+  "secondEndPos" : 3985
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -12891,27 +12891,27 @@
   "firstEndPos" : 7636,
   "secondEndPos" : 7087
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * @param forceUpdate Pass in true to refresh the data in the [TasksDataSource]\n     */",
-  "secondLabel" : "/**\n     * @param forceUpdate Pass in true to refresh the data in the [TasksDataSource]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7648,
-  "secondPos" : 7099,
-  "firstEndPos" : 7743,
-  "secondEndPos" : 7194
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7748,
-  "secondPos" : 7199,
+  "firstPos" : 7648,
+  "secondPos" : 7099,
   "firstEndPos" : 7832,
   "secondEndPos" : 7283
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * @param forceUpdate Pass in true to refresh the data in the [TasksDataSource]\n     */",
+  "secondLabel" : "/**\n     * @param forceUpdate Pass in true to refresh the data in the [TasksDataSource]\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7648,
+  "secondPos" : 7099,
+  "firstEndPos" : 7743,
+  "secondEndPos" : 7194
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -14772,27 +14772,27 @@
   "firstEndPos" : 8628,
   "secondEndPos" : 8079
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Used to save the current filtering in SavedStateHandle.",
-  "secondLabel" : "// Used to save the current filtering in SavedStateHandle.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 8638,
-  "secondPos" : 8089,
-  "firstEndPos" : 8696,
-  "secondEndPos" : 8147
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 8697,
-  "secondPos" : 8148,
+  "firstPos" : 8638,
+  "secondPos" : 8089,
   "firstEndPos" : 8768,
   "secondEndPos" : 8219
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Used to save the current filtering in SavedStateHandle.",
+  "secondLabel" : "// Used to save the current filtering in SavedStateHandle.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8638,
+  "secondPos" : 8089,
+  "firstEndPos" : 8696,
+  "secondEndPos" : 8147
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

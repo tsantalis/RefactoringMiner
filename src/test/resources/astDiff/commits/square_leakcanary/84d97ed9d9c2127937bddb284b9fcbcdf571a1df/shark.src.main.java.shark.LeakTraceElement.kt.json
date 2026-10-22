@@ -252,27 +252,27 @@
   "firstEndPos" : 615,
   "secondEndPos" : 626
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
-  "secondLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in\n   * [LeakTrace.elements]. Null if this is the last element in the leak trace, ie the leaking\n   * object.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 109,
-  "secondPos" : 109,
-  "firstEndPos" : 297,
-  "secondEndPos" : 308
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 300,
-  "secondPos" : 311,
+  "firstPos" : 109,
+  "secondPos" : 109,
   "firstEndPos" : 329,
   "secondEndPos" : 340
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
+  "secondLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in\n   * [LeakTrace.elements]. Null if this is the last element in the leak trace, ie the leaking\n   * object.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 109,
+  "secondPos" : 109,
+  "firstEndPos" : 297,
+  "secondEndPos" : 308
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -472,27 +472,27 @@
   "firstEndPos" : 378,
   "secondEndPos" : 389
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
-  "secondLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 383,
-  "secondPos" : 394,
-  "firstEndPos" : 534,
-  "secondEndPos" : 545
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 537,
-  "secondPos" : 548,
+  "firstPos" : 383,
+  "secondPos" : 394,
   "firstEndPos" : 561,
   "secondEndPos" : 572
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
+  "secondLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 383,
+  "secondPos" : 394,
+  "firstEndPos" : 534,
+  "secondEndPos" : 545
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -703,27 +703,27 @@
   "firstEndPos" : 927,
   "secondEndPos" : 938
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
-  "secondLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 636,
-  "secondPos" : 647,
-  "firstEndPos" : 698,
-  "secondEndPos" : 709
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 701,
-  "secondPos" : 712,
+  "firstPos" : 636,
+  "secondPos" : 647,
   "firstEndPos" : 763,
   "secondEndPos" : 774
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
+  "secondLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 636,
+  "secondPos" : 647,
+  "firstEndPos" : 698,
+  "secondEndPos" : 709
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

@@ -120,27 +120,27 @@
   "firstEndPos" : 289,
   "secondEndPos" : 342
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A chain of references that constitute the shortest strong reference path from a GC root to the\n * leaking object. Fixing the leak usually means breaking one of the references in that chain.\n */",
-  "secondLabel" : "/**\n * The best strong reference path from a GC root to the leaking object. \"Best\" here means the\n * shortest prioritized path. A large number of distinct paths can generally be found leading\n * to a leaking object. Shark prioritizes paths that don't go through known\n * [LibraryLeakReferenceMatcher] (because those are known to create leaks so it's more interesting\n * to find other paths causing leaks), then it prioritize paths that don't go through java local\n * gc roots (because those are harder to reason about). Taking those priorities into account,\n * finding the shortest path means there are less [ReferencePathElement] that can be suspected to\n * cause the leak.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 315,
-  "secondPos" : 344,
-  "firstEndPos" : 515,
-  "secondEndPos" : 1022
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 516,
-  "secondPos" : 1023,
+  "firstPos" : 315,
+  "secondPos" : 344,
   "firstEndPos" : 3101,
   "secondEndPos" : 6860
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A chain of references that constitute the shortest strong reference path from a GC root to the\n * leaking object. Fixing the leak usually means breaking one of the references in that chain.\n */",
+  "secondLabel" : "/**\n * The best strong reference path from a GC root to the leaking object. \"Best\" here means the\n * shortest prioritized path. A large number of distinct paths can generally be found leading\n * to a leaking object. Shark prioritizes paths that don't go through known\n * [LibraryLeakReferenceMatcher] (because those are known to create leaks so it's more interesting\n * to find other paths causing leaks), then it prioritize paths that don't go through java local\n * gc roots (because those are harder to reason about). Taking those priorities into account,\n * finding the shortest path means there are less [ReferencePathElement] that can be suspected to\n * cause the leak.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 315,
+  "secondPos" : 344,
+  "firstEndPos" : 515,
+  "secondEndPos" : 1022
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -209,26 +209,48 @@
   "secondEndPos" : 1533
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/** This field is kept to support backward compatible deserialization. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 540,
-  "secondPos" : 5443,
-  "firstEndPos" : 576,
-  "secondEndPos" : 5516
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 540,
-  "secondPos" : 5519,
+  "secondPos" : 5443,
   "firstEndPos" : 576,
   "secondEndPos" : 5571
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 540,
+  "secondPos" : 5527,
+  "firstEndPos" : 543,
+  "secondEndPos" : 5530
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 540,
+  "secondPos" : 5527,
+  "firstEndPos" : 543,
+  "secondEndPos" : 5530
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "elements",
+  "secondLabel" : "elements",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 544,
+  "secondPos" : 5531,
+  "firstEndPos" : 552,
+  "secondEndPos" : 5539
 }, {
   "firstType" : "user_type",
   "secondType" : "user_type",
@@ -380,7 +402,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 692,
-  "secondPos" : 2677,
+  "secondPos" : 2313,
   "firstEndPos" : 985,
   "secondEndPos" : 2987
 }, {
@@ -1023,26 +1045,37 @@
   "secondEndPos" : 4329
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A SHA1 hash that represents this leak trace. This can be useful to group together similar\n   * leak traces.\n   *\n   * The signature is a hash of [suspectReferenceSubpath].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 1318,
-  "secondPos" : 1904,
-  "firstEndPos" : 1347,
-  "secondEndPos" : 2090
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 1318,
-  "secondPos" : 2093,
+  "secondPos" : 1904,
   "firstEndPos" : 1347,
   "secondEndPos" : 2114
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1326,
+  "secondPos" : 2093,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 2096
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1326,
+  "secondPos" : 2093,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 2096
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -1067,26 +1100,37 @@
   "secondEndPos" : 2114
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A SHA1 hash that represents this leak trace. This can be useful to group together similar\n   * leak traces.\n   *\n   * The signature is a hash of [suspectReferenceSubpath].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 1500,
-  "secondPos" : 1904,
-  "firstEndPos" : 1516,
-  "secondEndPos" : 2090
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 1500,
-  "secondPos" : 2093,
+  "secondPos" : 1904,
   "firstEndPos" : 1516,
   "secondEndPos" : 2114
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1500,
+  "secondPos" : 2093,
+  "firstEndPos" : 1503,
+  "secondEndPos" : 2096
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1500,
+  "secondPos" : 2093,
+  "firstEndPos" : 1503,
+  "secondEndPos" : 2096
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -2398,26 +2442,37 @@
   "secondEndPos" : 6785
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A SHA1 hash that represents this leak trace. This can be useful to group together similar\n   * leak traces.\n   *\n   * The signature is a hash of [suspectReferenceSubpath].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 3097,
-  "secondPos" : 1904,
-  "firstEndPos" : 3113,
-  "secondEndPos" : 2090
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 3097,
-  "secondPos" : 2093,
+  "secondPos" : 1904,
   "firstEndPos" : 3113,
   "secondEndPos" : 2114
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3097,
+  "secondPos" : 2093,
+  "firstEndPos" : 3100,
+  "secondEndPos" : 2096
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 3097,
+  "secondPos" : 2093,
+  "firstEndPos" : 3100,
+  "secondEndPos" : 2096
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -2441,27 +2496,60 @@
   "firstEndPos" : 3113,
   "secondEndPos" : 2114
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "secondLabel" : "/**\n   * The minimum number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 3960,
-  "secondPos" : 1326,
-  "firstEndPos" : 4124,
-  "secondEndPos" : 1498
-}, {
   "firstType" : "property_declaration",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 4127,
-  "secondPos" : 1501,
+  "firstPos" : 3960,
+  "secondPos" : 1326,
   "firstEndPos" : 4166,
   "secondEndPos" : 1531
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "secondLabel" : "/**\n   * The minimum number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3960,
+  "secondPos" : 1326,
+  "firstEndPos" : 4124,
+  "secondEndPos" : 1498
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4136,
+  "secondPos" : 1501,
+  "firstEndPos" : 4139,
+  "secondEndPos" : 1504
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 4136,
+  "secondPos" : 1501,
+  "firstEndPos" : 4139,
+  "secondEndPos" : 1504
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "retainedHeapByteSize",
+  "secondLabel" : "retainedHeapByteSize",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4140,
+  "secondPos" : 1505,
+  "firstEndPos" : 4160,
+  "secondEndPos" : 1525
 }, {
   "firstType" : "nullable_type",
   "secondType" : "nullable_type",

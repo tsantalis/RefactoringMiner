@@ -538,27 +538,27 @@
   "firstEndPos" : 898,
   "secondEndPos" : 898
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Simple non-reflection SocketAdapter for Conscrypt.\n */",
-  "secondLabel" : "/**\n * Simple non-reflection SocketAdapter for Conscrypt.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 900,
-  "secondPos" : 900,
-  "firstEndPos" : 961,
-  "secondEndPos" : 961
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 962,
-  "secondPos" : 962,
+  "firstPos" : 900,
+  "secondPos" : 900,
   "firstEndPos" : 2192,
   "secondEndPos" : 2215
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Simple non-reflection SocketAdapter for Conscrypt.\n */",
+  "secondLabel" : "/**\n * Simple non-reflection SocketAdapter for Conscrypt.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 900,
+  "secondPos" : 900,
+  "firstEndPos" : 961,
+  "secondEndPos" : 961
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

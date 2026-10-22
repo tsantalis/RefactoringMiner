@@ -1605,27 +1605,27 @@
   "firstEndPos" : 1845,
   "secondEndPos" : 1881
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1847,
-  "secondPos" : 1883,
-  "firstEndPos" : 2190,
-  "secondEndPos" : 2226
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2191,
-  "secondPos" : 2227,
+  "firstPos" : 1847,
+  "secondPos" : 1883,
   "firstEndPos" : 10965,
   "secondEndPos" : 10986
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1847,
+  "secondPos" : 1883,
+  "firstEndPos" : 2190,
+  "secondEndPos" : 2226
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1693,27 +1693,27 @@
   "firstEndPos" : 10965,
   "secondEndPos" : 10986
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
-  "secondLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2230,
-  "secondPos" : 2266,
-  "firstEndPos" : 2360,
-  "secondEndPos" : 2396
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2363,
-  "secondPos" : 2399,
+  "firstPos" : 2230,
+  "secondPos" : 2266,
   "firstEndPos" : 2681,
   "secondEndPos" : 2717
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
+  "secondLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2230,
+  "secondPos" : 2266,
+  "firstEndPos" : 2360,
+  "secondEndPos" : 2396
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2716,27 +2716,27 @@
   "firstEndPos" : 2669,
   "secondEndPos" : 2705
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Set of instances to visit */",
-  "secondLabel" : "/** Set of instances to visit */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2684,
-  "secondPos" : 2720,
-  "firstEndPos" : 2716,
-  "secondEndPos" : 2752
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2719,
-  "secondPos" : 2755,
+  "firstPos" : 2684,
+  "secondPos" : 2720,
   "firstEndPos" : 2773,
   "secondEndPos" : 2809
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Set of instances to visit */",
+  "secondLabel" : "/** Set of instances to visit */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2684,
+  "secondPos" : 2720,
+  "firstEndPos" : 2716,
+  "secondEndPos" : 2752
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -21504,12 +21504,23 @@
   "firstEndPos" : 10717,
   "secondEndPos" : 10738
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 10724,
+  "secondPos" : 10745,
+  "firstEndPos" : 10959,
+  "secondEndPos" : 10980
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Since NEVER_REACHABLE never ends up in the queue, we use its value to mean \"ALWAYS_REACHABLE\"",
   "secondLabel" : "// Since NEVER_REACHABLE never ends up in the queue, we use its value to mean \"ALWAYS_REACHABLE\"",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 10724,
   "secondPos" : 10745,
   "firstEndPos" : 10820,
@@ -21519,23 +21530,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// For this to work we need NEVER_REACHABLE to be declared as the first enum value.",
   "secondLabel" : "// For this to work we need NEVER_REACHABLE to be declared as the first enum value.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 10825,
   "secondPos" : 10846,
   "firstEndPos" : 10908,
   "secondEndPos" : 10929
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 10913,
-  "secondPos" : 10934,
-  "firstEndPos" : 10959,
-  "secondEndPos" : 10980
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

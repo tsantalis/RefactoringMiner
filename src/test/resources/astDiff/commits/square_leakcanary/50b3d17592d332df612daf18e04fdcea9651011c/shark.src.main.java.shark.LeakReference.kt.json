@@ -384,27 +384,27 @@
   "firstEndPos" : 864,
   "secondEndPos" : 228
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A single field in a [LeakTraceElement].\n */",
-  "secondLabel" : "/**\n * This class is kept to support backward compatible deserialization.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 866,
-  "secondPos" : 230,
-  "firstEndPos" : 916,
-  "secondEndPos" : 307
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 917,
-  "secondPos" : 308,
+  "firstPos" : 866,
+  "secondPos" : 230,
   "firstEndPos" : 1463,
   "secondEndPos" : 995
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A single field in a [LeakTraceElement].\n */",
+  "secondLabel" : "/**\n * This class is kept to support backward compatible deserialization.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 866,
+  "secondPos" : 230,
+  "firstEndPos" : 916,
+  "secondEndPos" : 307
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -449,17 +449,6 @@
   "secondPos" : 357,
   "firstEndPos" : 959,
   "secondEndPos" : 404
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 945,
-  "secondPos" : 357,
-  "firstEndPos" : 948,
-  "secondEndPos" : 364
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -526,17 +515,6 @@
   "secondPos" : 407,
   "firstEndPos" : 979,
   "secondEndPos" : 439
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 963,
-  "secondPos" : 407,
-  "firstEndPos" : 966,
-  "secondEndPos" : 414
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

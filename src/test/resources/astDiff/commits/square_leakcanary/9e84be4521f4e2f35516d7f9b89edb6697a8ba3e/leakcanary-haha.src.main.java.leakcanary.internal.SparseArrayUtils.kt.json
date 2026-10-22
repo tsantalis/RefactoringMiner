@@ -8227,27 +8227,27 @@
   "firstEndPos" : 2871,
   "secondEndPos" : 3910
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Android array helpers use 2. C++ uses 2. ArrayList uses 1.5\n   * We're dealing with large arrays here so being conservative is good for memory.\n   */",
-  "secondLabel" : "/**\n   * Android array helpers use 2. C++ uses 2. ArrayList uses 1.5\n   * We're dealing with large arrays here so being conservative is good for memory.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2879,
-  "secondPos" : 3918,
-  "firstEndPos" : 3037,
-  "secondEndPos" : 4076
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3040,
-  "secondPos" : 4079,
+  "firstPos" : 2879,
+  "secondPos" : 3918,
   "firstEndPos" : 3108,
   "secondEndPos" : 4147
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Android array helpers use 2. C++ uses 2. ArrayList uses 1.5\n   * We're dealing with large arrays here so being conservative is good for memory.\n   */",
+  "secondLabel" : "/**\n   * Android array helpers use 2. C++ uses 2. ArrayList uses 1.5\n   * We're dealing with large arrays here so being conservative is good for memory.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2879,
+  "secondPos" : 3918,
+  "firstEndPos" : 3037,
+  "secondEndPos" : 4076
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

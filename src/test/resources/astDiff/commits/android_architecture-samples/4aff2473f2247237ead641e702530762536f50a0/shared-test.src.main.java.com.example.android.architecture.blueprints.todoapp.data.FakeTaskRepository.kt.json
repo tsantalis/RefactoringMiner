@@ -725,27 +725,27 @@
   "firstEndPos" : 1027,
   "secondEndPos" : 1027
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Implementation of a tasks repository with static access to the data for easy testing.\n */",
-  "secondLabel" : "/**\n * Implementation of a tasks repository with static access to the data for easy testing.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1029,
-  "secondPos" : 1029,
-  "firstEndPos" : 1125,
-  "secondEndPos" : 1125
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1126,
-  "secondPos" : 1126,
+  "firstPos" : 1029,
+  "secondPos" : 1029,
   "firstEndPos" : 4556,
   "secondEndPos" : 4546
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Implementation of a tasks repository with static access to the data for easy testing.\n */",
+  "secondLabel" : "/**\n * Implementation of a tasks repository with static access to the data for easy testing.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1029,
+  "secondPos" : 1029,
+  "firstEndPos" : 1125,
+  "secondEndPos" : 1125
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

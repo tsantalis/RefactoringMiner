@@ -615,27 +615,27 @@
   "firstEndPos" : 263,
   "secondEndPos" : 324
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Visible activities are any activity started but not stopped yet. An activity can be paused\n   * yet visible: this will happen when another activity shows on top with a transparent background\n   * and the activity behind won't get touch inputs but still need to render / animate.\n   */",
-  "secondLabel" : "/**\n   * Visible activities are any activity started but not stopped yet. An activity can be paused\n   * yet visible: this will happen when another activity shows on top with a transparent background\n   * and the activity behind won't get touch inputs but still need to render / animate.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 267,
-  "secondPos" : 328,
-  "firstEndPos" : 560,
-  "secondEndPos" : 621
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 563,
-  "secondPos" : 624,
+  "firstPos" : 267,
+  "secondPos" : 328,
   "firstEndPos" : 612,
   "secondEndPos" : 673
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Visible activities are any activity started but not stopped yet. An activity can be paused\n   * yet visible: this will happen when another activity shows on top with a transparent background\n   * and the activity behind won't get touch inputs but still need to render / animate.\n   */",
+  "secondLabel" : "/**\n   * Visible activities are any activity started but not stopped yet. An activity can be paused\n   * yet visible: this will happen when another activity shows on top with a transparent background\n   * and the activity behind won't get touch inputs but still need to render / animate.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 267,
+  "secondPos" : 328,
+  "firstEndPos" : 560,
+  "secondEndPos" : 621
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

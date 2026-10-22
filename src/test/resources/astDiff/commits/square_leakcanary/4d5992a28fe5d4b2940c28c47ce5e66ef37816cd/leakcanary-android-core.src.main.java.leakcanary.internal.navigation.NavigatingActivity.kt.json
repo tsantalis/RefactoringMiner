@@ -604,27 +604,27 @@
   "firstEndPos" : 319,
   "secondEndPos" : 319
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A simple backstack navigating activity\n */",
-  "secondLabel" : "/**\n * A simple backstack navigating activity\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 354,
-  "secondPos" : 359,
-  "firstEndPos" : 403,
-  "secondEndPos" : 408
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 404,
-  "secondPos" : 409,
+  "firstPos" : 354,
+  "secondPos" : 359,
   "firstEndPos" : 4165,
   "secondEndPos" : 4170
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A simple backstack navigating activity\n */",
+  "secondLabel" : "/**\n * A simple backstack navigating activity\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 354,
+  "secondPos" : 359,
+  "firstEndPos" : 403,
+  "secondEndPos" : 408
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

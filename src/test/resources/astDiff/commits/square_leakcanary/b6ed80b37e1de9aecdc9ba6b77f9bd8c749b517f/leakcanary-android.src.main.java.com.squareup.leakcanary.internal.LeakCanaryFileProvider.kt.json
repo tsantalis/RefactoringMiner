@@ -120,27 +120,27 @@
   "firstEndPos" : 83,
   "secondEndPos" : 70
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * There can only be one [FileProvider] provider registered per app, so we extend that class\n * just to use a distinct name.\n */",
-  "secondLabel" : "/**\n * There can only be one [FileProvider] provider registered per app, so we extend that class\n * just to use a distinct name.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 85,
-  "secondPos" : 72,
-  "firstEndPos" : 217,
-  "secondEndPos" : 204
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 218,
-  "secondPos" : 205,
+  "firstPos" : 85,
+  "secondPos" : 72,
   "firstEndPos" : 263,
   "secondEndPos" : 250
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * There can only be one [FileProvider] provider registered per app, so we extend that class\n * just to use a distinct name.\n */",
+  "secondLabel" : "/**\n * There can only be one [FileProvider] provider registered per app, so we extend that class\n * just to use a distinct name.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 85,
+  "secondPos" : 72,
+  "firstEndPos" : 217,
+  "secondEndPos" : 204
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

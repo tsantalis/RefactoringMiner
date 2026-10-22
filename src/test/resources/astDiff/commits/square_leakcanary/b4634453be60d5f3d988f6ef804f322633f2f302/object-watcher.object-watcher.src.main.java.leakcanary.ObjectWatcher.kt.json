@@ -307,12 +307,23 @@
   "firstEndPos" : 737,
   "secondEndPos" : 715
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 739,
+  "secondPos" : 739,
+  "firstEndPos" : 6776,
+  "secondEndPos" : 6048
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * [ObjectWatcher] can be passed objects to [watch]. It will create [KeyedWeakReference] instances\n * that reference watches objects, and check if those references have been cleared as expected on\n * the [checkRetainedExecutor] executor. If not, these objects are considered retained and\n * [ObjectWatcher] will then notify registered [OnObjectRetainedListener]s on that executor thread.\n *\n * [checkRetainedExecutor] is expected to run its tasks on a background thread, with a significant\n * delay to give the GC the opportunity to identify weakly reachable objects.\n *\n * [ObjectWatcher] is thread safe.\n */",
   "secondLabel" : "/**\n * [ObjectWatcher] can be passed objects to [watch]. It will create [KeyedWeakReference] instances\n * that reference watches objects, and check if those references have been cleared as expected on\n * the [checkRetainedExecutor] executor. If not, these objects are considered retained and\n * [ObjectWatcher] will then notify registered [OnObjectRetainedListener]s on that executor thread.\n *\n * [checkRetainedExecutor] is expected to run its tasks on a background thread, with a significant\n * delay to give the GC the opportunity to identify weakly reachable objects.\n *\n * [ObjectWatcher] is thread safe.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 739,
   "secondPos" : 739,
   "firstEndPos" : 1352,
@@ -322,8 +333,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Thread safe by locking on all methods, which is reasonably efficient given how often",
   "secondLabel" : "// Thread safe by locking on all methods, which is reasonably efficient given how often",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 1353,
   "secondPos" : 1353,
   "firstEndPos" : 1440,
@@ -333,23 +344,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// these methods are accessed.",
   "secondLabel" : "// these methods are accessed.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 1441,
   "secondPos" : 1441,
   "firstEndPos" : 1471,
   "secondEndPos" : 1471
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1472,
-  "secondPos" : 1472,
-  "firstEndPos" : 6776,
-  "secondEndPos" : 6048
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -593,27 +593,27 @@
   "firstEndPos" : 1578,
   "secondEndPos" : 1578
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
-  "secondLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1582,
-  "secondPos" : 1582,
-  "firstEndPos" : 1660,
-  "secondEndPos" : 1660
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1663,
-  "secondPos" : 1663,
+  "firstPos" : 1582,
+  "secondPos" : 1582,
   "firstEndPos" : 1710,
   "secondEndPos" : 1710
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
+  "secondLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1582,
+  "secondPos" : 1582,
+  "firstEndPos" : 1660,
+  "secondEndPos" : 1660
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1022,27 +1022,27 @@
   "firstEndPos" : 1820,
   "secondEndPos" : 1820
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * References passed to [watch].\n   */",
-  "secondLabel" : "/**\n   * References passed to [watch].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1824,
-  "secondPos" : 1824,
-  "firstEndPos" : 1868,
-  "secondEndPos" : 1868
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1871,
-  "secondPos" : 1871,
+  "firstPos" : 1824,
+  "secondPos" : 1824,
   "firstEndPos" : 1942,
   "secondEndPos" : 1942
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * References passed to [watch].\n   */",
+  "secondLabel" : "/**\n   * References passed to [watch].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1824,
+  "secondPos" : 1824,
+  "firstEndPos" : 1868,
+  "secondEndPos" : 1868
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1440,27 +1440,27 @@
   "firstEndPos" : 1987,
   "secondEndPos" : 1987
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
-  "secondLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1991,
-  "secondPos" : 1991,
-  "firstEndPos" : 2147,
-  "secondEndPos" : 2147
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2150,
-  "secondPos" : 2150,
+  "firstPos" : 1991,
+  "secondPos" : 1991,
   "firstEndPos" : 2181,
   "secondEndPos" : 2181
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
+  "secondLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1991,
+  "secondPos" : 1991,
+  "firstEndPos" : 2147,
+  "secondEndPos" : 2147
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1946,27 +1946,27 @@
   "firstEndPos" : 2315,
   "secondEndPos" : 2315
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns the number of retained objects, ie the number of watched objects that aren't weakly\n   * reachable, and have been watched for long enough to be considered retained.\n   */",
-  "secondLabel" : "/**\n   * Returns the number of retained objects, ie the number of watched objects that aren't weakly\n   * reachable, and have been watched for long enough to be considered retained.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2327,
-  "secondPos" : 2327,
-  "firstEndPos" : 2514,
-  "secondEndPos" : 2514
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2517,
-  "secondPos" : 2517,
+  "firstPos" : 2327,
+  "secondPos" : 2327,
   "firstEndPos" : 2545,
   "secondEndPos" : 2545
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns the number of retained objects, ie the number of watched objects that aren't weakly\n   * reachable, and have been watched for long enough to be considered retained.\n   */",
+  "secondLabel" : "/**\n   * Returns the number of retained objects, ie the number of watched objects that aren't weakly\n   * reachable, and have been watched for long enough to be considered retained.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2327,
+  "secondPos" : 2327,
+  "firstEndPos" : 2514,
+  "secondEndPos" : 2514
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2452,27 +2452,27 @@
   "firstEndPos" : 2681,
   "secondEndPos" : 2681
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
-  "secondLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2693,
-  "secondPos" : 2693,
-  "firstEndPos" : 2861,
-  "secondEndPos" : 2861
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2864,
-  "secondPos" : 2864,
+  "firstPos" : 2693,
+  "secondPos" : 2693,
   "firstEndPos" : 2894,
   "secondEndPos" : 2894
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
+  "secondLabel" : "/**\n   * Returns true if there are watched objects that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2693,
+  "secondPos" : 2693,
+  "firstEndPos" : 2861,
+  "secondEndPos" : 2861
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2771,27 +2771,27 @@
   "firstEndPos" : 2998,
   "secondEndPos" : 2998
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns the objects that are currently considered retained. Useful for logging purposes.\n   * Be careful with those objects and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
-  "secondLabel" : "/**\n   * Returns the objects that are currently considered retained. Useful for logging purposes.\n   * Be careful with those objects and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3008,
-  "secondPos" : 3008,
-  "firstEndPos" : 3249,
-  "secondEndPos" : 3249
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3252,
-  "secondPos" : 3252,
+  "firstPos" : 3008,
+  "secondPos" : 3008,
   "firstEndPos" : 3282,
   "secondEndPos" : 3282
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns the objects that are currently considered retained. Useful for logging purposes.\n   * Be careful with those objects and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
+  "secondLabel" : "/**\n   * Returns the objects that are currently considered retained. Useful for logging purposes.\n   * Be careful with those objects and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3008,
+  "secondPos" : 3008,
+  "firstEndPos" : 3249,
+  "secondEndPos" : 3249
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6302,27 +6302,27 @@
   "firstEndPos" : 5417,
   "secondEndPos" : 4689
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Clears all [KeyedWeakReference] that were created before [heapDumpUptimeMillis] (based on\n   * [clock] [Clock.uptimeMillis])\n   */",
-  "secondLabel" : "/**\n   * Clears all [KeyedWeakReference] that were created before [heapDumpUptimeMillis] (based on\n   * [clock] [Clock.uptimeMillis])\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5432,
-  "secondPos" : 4704,
-  "firstEndPos" : 5571,
-  "secondEndPos" : 4843
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5574,
-  "secondPos" : 4846,
+  "firstPos" : 5432,
+  "secondPos" : 4704,
   "firstEndPos" : 5869,
   "secondEndPos" : 5141
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Clears all [KeyedWeakReference] that were created before [heapDumpUptimeMillis] (based on\n   * [clock] [Clock.uptimeMillis])\n   */",
+  "secondLabel" : "/**\n   * Clears all [KeyedWeakReference] that were created before [heapDumpUptimeMillis] (based on\n   * [clock] [Clock.uptimeMillis])\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5432,
+  "secondPos" : 4704,
+  "firstEndPos" : 5571,
+  "secondEndPos" : 4843
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -7138,27 +7138,27 @@
   "firstEndPos" : 5864,
   "secondEndPos" : 5136
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Clears all [KeyedWeakReference]\n   */",
-  "secondLabel" : "/**\n   * Clears all [KeyedWeakReference]\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5873,
-  "secondPos" : 5145,
-  "firstEndPos" : 5919,
-  "secondEndPos" : 5191
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5922,
-  "secondPos" : 5194,
+  "firstPos" : 5873,
+  "secondPos" : 5145,
   "firstEndPos" : 6043,
   "secondEndPos" : 5315
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Clears all [KeyedWeakReference]\n   */",
+  "secondLabel" : "/**\n   * Clears all [KeyedWeakReference]\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5873,
+  "secondPos" : 5145,
+  "firstEndPos" : 5919,
+  "secondEndPos" : 5191
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

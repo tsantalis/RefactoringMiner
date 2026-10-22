@@ -1385,27 +1385,27 @@
   "firstEndPos" : 457,
   "secondEndPos" : 457
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Derived from\n * [this snippet](http://www.androidsnippets.com/create-a-md5-hash-and-dump-as-a-hex-string).\n */",
-  "secondLabel" : "/**\n * Derived from\n * [this snippet](http://www.androidsnippets.com/create-a-md5-hash-and-dump-as-a-hex-string).\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 461,
-  "secondPos" : 461,
-  "firstEndPos" : 578,
-  "secondEndPos" : 578
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 579,
-  "secondPos" : 579,
+  "firstPos" : 461,
+  "secondPos" : 461,
   "firstEndPos" : 1132,
   "secondEndPos" : 1132
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Derived from\n * [this snippet](http://www.androidsnippets.com/create-a-md5-hash-and-dump-as-a-hex-string).\n */",
+  "secondLabel" : "/**\n * Derived from\n * [this snippet](http://www.androidsnippets.com/create-a-md5-hash-and-dump-as-a-hex-string).\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 461,
+  "secondPos" : 461,
+  "firstEndPos" : 578,
+  "secondEndPos" : 578
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2859,27 +2859,27 @@
   "firstEndPos" : 1124,
   "secondEndPos" : 1124
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Gets the string as an array of UTF-8 bytes. */",
-  "secondLabel" : "/** Gets the string as an array of UTF-8 bytes. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1134,
-  "secondPos" : 1134,
-  "firstEndPos" : 1184,
-  "secondEndPos" : 1184
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1185,
-  "secondPos" : 1185,
+  "firstPos" : 1134,
+  "secondPos" : 1134,
   "firstEndPos" : 1247,
   "secondEndPos" : 1247
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Gets the string as an array of UTF-8 bytes. */",
+  "secondLabel" : "/** Gets the string as an array of UTF-8 bytes. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1134,
+  "secondPos" : 1134,
+  "firstEndPos" : 1184,
+  "secondEndPos" : 1184
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -296,12 +296,23 @@
   "firstEndPos" : 679,
   "secondEndPos" : 1157
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 681,
+  "secondPos" : 1232,
+  "firstEndPos" : 1176,
+  "secondEndPos" : 7616
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
   "secondLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 681,
   "secondPos" : 1232,
   "firstEndPos" : 764,
@@ -449,17 +460,6 @@
   "secondPos" : 762,
   "firstEndPos" : 769,
   "secondEndPos" : 769
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 765,
-  "secondPos" : 1316,
-  "firstEndPos" : 1176,
-  "secondEndPos" : 7616
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -681,6 +681,17 @@
   "firstEndPos" : 869,
   "secondEndPos" : 869
 }, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 864,
+  "secondPos" : 2706,
+  "firstEndPos" : 988,
+  "secondEndPos" : 4672
+}, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
   "firstLabel" : "os",
@@ -846,17 +857,6 @@
   "firstEndPos" : 974,
   "secondEndPos" : 974
 }, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 960,
-  "secondPos" : 2706,
-  "firstEndPos" : 988,
-  "secondEndPos" : 4672
-}, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
   "firstLabel" : "fun",
@@ -1021,6 +1021,17 @@
   "secondPos" : 1027,
   "firstEndPos" : 1032,
   "secondEndPos" : 1037
+}, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 1029,
+  "secondPos" : 4676,
+  "firstEndPos" : 1174,
+  "secondEndPos" : 5040
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -1219,17 +1230,6 @@
   "secondPos" : 1143,
   "firstEndPos" : 1152,
   "secondEndPos" : 1157
-}, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1150,
-  "secondPos" : 4676,
-  "firstEndPos" : 1174,
-  "secondEndPos" : 5040
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1436,7 +1436,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 1227,
-  "secondPos" : 1316,
+  "secondPos" : 1232,
   "firstEndPos" : 7542,
   "secondEndPos" : 7616
 }, {
@@ -14101,27 +14101,27 @@
   "firstEndPos" : 7447,
   "secondEndPos" : 7521
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** 10 minutes  */",
-  "secondLabel" : "/** 10 minutes  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7454,
-  "secondPos" : 7528,
-  "firstEndPos" : 7472,
-  "secondEndPos" : 7546
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7477,
-  "secondPos" : 7551,
+  "firstPos" : 7454,
+  "secondPos" : 7528,
   "firstEndPos" : 7536,
   "secondEndPos" : 7610
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** 10 minutes  */",
+  "secondLabel" : "/** 10 minutes  */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 7454,
+  "secondPos" : 7528,
+  "firstEndPos" : 7472,
+  "secondEndPos" : 7546
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

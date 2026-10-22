@@ -116,7 +116,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 49,
-  "secondPos" : 129,
+  "secondPos" : 49,
   "firstEndPos" : 1150,
   "secondEndPos" : 1417
 }, {
@@ -219,27 +219,27 @@
   "firstEndPos" : 1150,
   "secondEndPos" : 1417
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Local references held in the stack of frames of a given thread.\n   */",
-  "secondLabel" : "/**\n   * Matches local references held in the stack of frames of a given thread, identified by its name.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 99,
-  "secondPos" : 179,
-  "firstEndPos" : 177,
-  "secondEndPos" : 289
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 180,
-  "secondPos" : 292,
+  "firstPos" : 99,
+  "secondPos" : 179,
   "firstEndPos" : 362,
   "secondEndPos" : 474
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Local references held in the stack of frames of a given thread.\n   */",
+  "secondLabel" : "/**\n   * Matches local references held in the stack of frames of a given thread, identified by its name.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 99,
+  "secondPos" : 179,
+  "firstEndPos" : 177,
+  "secondEndPos" : 289
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -622,7 +622,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 366,
-  "secondPos" : 571,
+  "secondPos" : 478,
   "firstEndPos" : 574,
   "secondEndPos" : 779
 }, {
@@ -1088,27 +1088,27 @@
   "firstEndPos" : 563,
   "secondEndPos" : 768
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Excludes a member field of an instance of a class. [fieldName] can belong to a superclass\n   * and will still match for subclasses. This is to support overriding of rules for specific\n   * cases. If two exclusions for the same field name but different classname match in a class\n   * hierarchy, then the closest class in the hierarchy wins.\n   */",
-  "secondLabel" : "/**\n   * Matches instances field references, identified by [className] and [fieldName].\n   *\n   * Note: If [fieldName] is declared in a superclass it will still match for subclasses.\n   * This is to support overriding of rules for specific cases. If two [ReferenceMatcher] match for\n   * the same [fieldName] but for different [className] in a class hierarchy, then the closest\n   * class in the hierarchy wins.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 578,
-  "secondPos" : 783,
-  "firstEndPos" : 933,
-  "secondEndPos" : 1200
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 936,
-  "secondPos" : 1203,
+  "firstPos" : 578,
+  "secondPos" : 783,
   "firstEndPos" : 1148,
   "secondEndPos" : 1415
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Excludes a member field of an instance of a class. [fieldName] can belong to a superclass\n   * and will still match for subclasses. This is to support overriding of rules for specific\n   * cases. If two exclusions for the same field name but different classname match in a class\n   * hierarchy, then the closest class in the hierarchy wins.\n   */",
+  "secondLabel" : "/**\n   * Matches instances field references, identified by [className] and [fieldName].\n   *\n   * Note: If [fieldName] is declared in a superclass it will still match for subclasses.\n   * This is to support overriding of rules for specific cases. If two [ReferenceMatcher] match for\n   * the same [fieldName] but for different [className] in a class hierarchy, then the closest\n   * class in the hierarchy wins.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 578,
+  "secondPos" : 783,
+  "firstEndPos" : 933,
+  "secondEndPos" : 1200
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

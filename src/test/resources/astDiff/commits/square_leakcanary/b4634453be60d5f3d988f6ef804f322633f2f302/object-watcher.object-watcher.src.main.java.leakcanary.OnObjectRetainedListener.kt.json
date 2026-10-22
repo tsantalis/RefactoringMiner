@@ -54,27 +54,27 @@
   "firstEndPos" : 18,
   "secondEndPos" : 18
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Listener used by [ObjectWatcher] to report retained objects.\n *\n * This is a functional interface with which you can create a [OnObjectRetainedListener] from a lambda.\n */",
-  "secondLabel" : "/**\n * Listener used by [ObjectWatcher] to report retained objects.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 20,
-  "secondPos" : 20,
-  "firstEndPos" : 198,
-  "secondEndPos" : 91
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 199,
-  "secondPos" : 92,
+  "firstPos" : 20,
+  "secondPos" : 20,
   "firstEndPos" : 793,
   "secondEndPos" : 211
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Listener used by [ObjectWatcher] to report retained objects.\n *\n * This is a functional interface with which you can create a [OnObjectRetainedListener] from a lambda.\n */",
+  "secondLabel" : "/**\n * Listener used by [ObjectWatcher] to report retained objects.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 20,
+  "secondPos" : 20,
+  "firstEndPos" : 198,
+  "secondEndPos" : 91
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -120,27 +120,27 @@
   "firstEndPos" : 793,
   "secondEndPos" : 211
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A watched object became retained.\n   */",
-  "secondLabel" : "/**\n   * A watched object became retained.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 243,
-  "secondPos" : 136,
-  "firstEndPos" : 291,
-  "secondEndPos" : 184
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 294,
-  "secondPos" : 187,
+  "firstPos" : 243,
+  "secondPos" : 136,
   "firstEndPos" : 316,
   "secondEndPos" : 209
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A watched object became retained.\n   */",
+  "secondLabel" : "/**\n   * A watched object became retained.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 243,
+  "secondPos" : 136,
+  "firstEndPos" : 291,
+  "secondEndPos" : 184
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

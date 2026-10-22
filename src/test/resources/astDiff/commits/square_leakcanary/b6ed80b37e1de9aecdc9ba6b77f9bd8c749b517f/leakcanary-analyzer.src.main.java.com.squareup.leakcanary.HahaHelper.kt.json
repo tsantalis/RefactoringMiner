@@ -3420,27 +3420,27 @@
   "firstEndPos" : 2032,
   "secondEndPos" : 2019
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * This returns a string representation of any object or value passed in.\n   */",
-  "secondLabel" : "/**\n   * This returns a string representation of any object or value passed in.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2040,
-  "secondPos" : 2027,
-  "firstEndPos" : 2125,
-  "secondEndPos" : 2112
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2128,
-  "secondPos" : 2115,
+  "firstPos" : 2040,
+  "secondPos" : 2027,
   "firstEndPos" : 2613,
   "secondEndPos" : 2600
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * This returns a string representation of any object or value passed in.\n   */",
+  "secondLabel" : "/**\n   * This returns a string representation of any object or value passed in.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2040,
+  "secondPos" : 2027,
+  "firstEndPos" : 2125,
+  "secondEndPos" : 2112
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -5587,27 +5587,27 @@
   "firstEndPos" : 2841,
   "secondEndPos" : 2828
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Given a string instance from the heap dump, this returns its actual string value.  */",
-  "secondLabel" : "/** Given a string instance from the heap dump, this returns its actual string value.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2849,
-  "secondPos" : 2836,
-  "firstEndPos" : 2938,
-  "secondEndPos" : 2925
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2941,
-  "secondPos" : 2928,
+  "firstPos" : 2849,
+  "secondPos" : 2836,
   "firstEndPos" : 4703,
   "secondEndPos" : 4690
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Given a string instance from the heap dump, this returns its actual string value.  */",
+  "secondLabel" : "/** Given a string instance from the heap dump, this returns its actual string value.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2849,
+  "secondPos" : 2836,
+  "firstEndPos" : 2938,
+  "secondEndPos" : 2925
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

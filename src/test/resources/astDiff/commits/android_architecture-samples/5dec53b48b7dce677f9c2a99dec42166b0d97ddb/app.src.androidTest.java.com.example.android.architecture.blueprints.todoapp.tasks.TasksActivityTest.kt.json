@@ -2782,27 +2782,27 @@
   "firstEndPos" : 2913,
   "secondEndPos" : 2476
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2915,
-  "secondPos" : 2478,
-  "firstEndPos" : 2969,
-  "secondEndPos" : 2532
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2970,
-  "secondPos" : 2533,
+  "firstPos" : 2915,
+  "secondPos" : 2478,
   "firstEndPos" : 18076,
   "secondEndPos" : 10502
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2915,
+  "secondPos" : 2478,
+  "firstEndPos" : 2969,
+  "secondEndPos" : 2532
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3519,27 +3519,27 @@
   "firstEndPos" : 3232,
   "secondEndPos" : 2654
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
-  "secondLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3238,
-  "secondPos" : 2660,
-  "firstEndPos" : 3392,
-  "secondEndPos" : 2814
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3397,
-  "secondPos" : 2819,
+  "firstPos" : 3238,
+  "secondPos" : 2660,
   "firstEndPos" : 3607,
   "secondEndPos" : 3001
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
+  "secondLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3238,
+  "secondPos" : 2660,
+  "firstEndPos" : 3392,
+  "secondEndPos" : 2814
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3871,27 +3871,27 @@
   "firstEndPos" : 3528,
   "secondEndPos" : 2950
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "secondLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3613,
-  "secondPos" : 3007,
-  "firstEndPos" : 3944,
-  "secondEndPos" : 3338
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3949,
-  "secondPos" : 3343,
+  "firstPos" : 3613,
+  "secondPos" : 3007,
   "firstEndPos" : 4090,
   "secondEndPos" : 3484
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "secondLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3613,
+  "secondPos" : 3007,
+  "firstEndPos" : 3944,
+  "secondEndPos" : 3338
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -4201,27 +4201,27 @@
   "firstEndPos" : 4083,
   "secondEndPos" : 3477
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4096,
-  "secondPos" : 3490,
-  "firstEndPos" : 4207,
-  "secondEndPos" : 3601
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4212,
-  "secondPos" : 3606,
+  "firstPos" : 4096,
+  "secondPos" : 3490,
   "firstEndPos" : 4356,
   "secondEndPos" : 3750
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4096,
+  "secondPos" : 3490,
+  "firstEndPos" : 4207,
+  "secondEndPos" : 3601
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -8750,7 +8750,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7084,
+  "firstPos" : 7017,
   "secondPos" : 6217,
   "firstEndPos" : 7676,
   "secondEndPos" : 7116
@@ -10169,7 +10169,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7749,
+  "firstPos" : 7682,
   "secondPos" : 7122,
   "firstEndPos" : 8341,
   "secondEndPos" : 8021
@@ -11621,7 +11621,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8414,
+  "firstPos" : 8347,
   "secondPos" : 8027,
   "firstEndPos" : 8928,
   "secondEndPos" : 8642
@@ -12864,7 +12864,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9001,
+  "firstPos" : 8934,
   "secondPos" : 8648,
   "firstEndPos" : 9670,
   "secondEndPos" : 9421
@@ -14470,7 +14470,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9743,
+  "firstPos" : 9676,
   "secondPos" : 9427,
   "firstEndPos" : 10424,
   "secondEndPos" : 10212
@@ -16109,7 +16109,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10497,
+  "firstPos" : 10430,
   "secondPos" : 10218,
   "firstEndPos" : 11206,
   "secondEndPos" : 11007
@@ -27758,7 +27758,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15672,
+  "firstPos" : 15605,
   "secondPos" : 11013,
   "firstEndPos" : 15979,
   "secondEndPos" : 11416
@@ -28429,7 +28429,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16052,
+  "firstPos" : 15985,
   "secondPos" : 11422,
   "firstEndPos" : 16396,
   "secondEndPos" : 11862
@@ -29111,7 +29111,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16469,
+  "firstPos" : 16402,
   "secondPos" : 11868,
   "firstEndPos" : 16801,
   "secondEndPos" : 12296

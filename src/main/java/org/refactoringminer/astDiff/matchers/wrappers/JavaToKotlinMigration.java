@@ -3111,10 +3111,11 @@ public class JavaToKotlinMigration {
             for(Pair<Tree, Tree> pair : pairs)
                 mapSameStructure(mappingStore, pair.first, pair.second);
         }
-        //align Kotlin declaration's parent -> multiline_comment, declaration with Java declaration -> Javadoc
+        //align Kotlin declaration's parent -> multiline_comment, declaration with Java declaration -> Javadoc,
+        //unless the comment is already the first child of the Kotlin declaration, i.e., /** doc */ fun f() {...}
         Tree parent1 = srcJavadoc.getParent();
         Tree parent2 = dstComment.getParent();
-        if(parent1 != null && parent2 != null) {
+        if(parent1 != null && parent2 != null && parent2.getPos() != dstComment.getPos()) {
             Tree declaration2 = null;
             Set<Tree> dsts = mappingStore.getDsts(parent1);
             if(dsts != null) {

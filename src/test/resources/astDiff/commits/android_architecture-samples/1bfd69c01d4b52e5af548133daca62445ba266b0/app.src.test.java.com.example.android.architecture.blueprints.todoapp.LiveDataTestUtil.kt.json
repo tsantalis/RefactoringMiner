@@ -494,27 +494,27 @@
   "firstEndPos" : 920,
   "secondEndPos" : 920
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Gets the value of a [LiveData] or waits for it to have one, with a timeout.\n *\n * Use this extension from host-side (JVM) tests. It's recommended to use it alongside\n * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.\n */",
-  "secondLabel" : "/**\n * Gets the value of a [LiveData] or waits for it to have one, with a timeout.\n *\n * Use this extension from host-side (JVM) tests. It's recommended to use it alongside\n * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 922,
-  "secondPos" : 922,
-  "firstEndPos" : 1182,
-  "secondEndPos" : 1182
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1183,
-  "secondPos" : 1183,
+  "firstPos" : 922,
+  "secondPos" : 922,
   "firstEndPos" : 2058,
   "secondEndPos" : 2057
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Gets the value of a [LiveData] or waits for it to have one, with a timeout.\n *\n * Use this extension from host-side (JVM) tests. It's recommended to use it alongside\n * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.\n */",
+  "secondLabel" : "/**\n * Gets the value of a [LiveData] or waits for it to have one, with a timeout.\n *\n * Use this extension from host-side (JVM) tests. It's recommended to use it alongside\n * `InstantTaskExecutorRule` or a similar mechanism to execute tasks synchronously.\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 922,
+  "secondPos" : 922,
+  "firstEndPos" : 1182,
+  "secondEndPos" : 1182
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2903,27 +2903,27 @@
   "firstEndPos" : 2056,
   "secondEndPos" : 2055
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Observes a [LiveData] until the `block` is done executing.\n */",
-  "secondLabel" : "/**\n * Observes a [LiveData] until the `block` is done executing.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2060,
-  "secondPos" : 2059,
-  "firstEndPos" : 2129,
-  "secondEndPos" : 2128
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2130,
-  "secondPos" : 2129,
+  "firstPos" : 2060,
+  "secondPos" : 2059,
   "firstEndPos" : 2339,
   "secondEndPos" : 2338
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Observes a [LiveData] until the `block` is done executing.\n */",
+  "secondLabel" : "/**\n * Observes a [LiveData] until the `block` is done executing.\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2060,
+  "secondPos" : 2059,
+  "firstEndPos" : 2129,
+  "secondEndPos" : 2128
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

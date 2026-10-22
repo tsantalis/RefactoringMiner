@@ -923,27 +923,27 @@
   "firstEndPos" : 1113,
   "secondEndPos" : 1191
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Certificates to identify which peers to trust and also to earn the trust of those peers in kind.\n * Client and server exchange these certificates during the handshake phase of a TLS connection.\n *\n * ### Server Authentication\n *\n * This is the most common form of TLS authentication: clients verify that servers are trusted and\n * that they own the hostnames that they represent. Server authentication is required.\n *\n * To perform server authentication:\n *\n *  * The server's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The certificate's subject alternative names must match the\n *    server's hostname. The server must also have is a (possibly-empty) chain of intermediate\n *    certificates to establish trust from a root certificate to the server's certificate. The root\n *    certificate is not included in this chain.\n *  * The client's handshake certificates must include a set of trusted root certificates. They will\n *    be used to authenticate the server's certificate chain. Typically this is a set of well-known\n *    root certificates that is distributed with the HTTP client or its platform. It may be\n *    augmented by certificates private to an organization or service.\n *\n * ### Client Authentication\n *\n * This is authentication of the client by the server during the TLS handshake. Client\n * authentication is optional.\n *\n * To perform client authentication:\n *\n *  * The client's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The client must also have a (possibly-empty) chain of\n *    intermediate certificates to establish trust from a root certificate to the client's\n *    certificate. The root certificate is not included in this chain.\n *  * The server's handshake certificates must include a set of trusted root certificates. They\n *    will be used to authenticate the client's certificate chain. Typically this is not the same\n *    set of root certificates used in server authentication. Instead it will be a small set of\n *    roots private to an organization or service.\n */",
-  "secondLabel" : "/**\n * Certificates to identify which peers to trust and also to earn the trust of those peers in kind.\n * Client and server exchange these certificates during the handshake phase of a TLS connection.\n *\n * ### Server Authentication\n *\n * This is the most common form of TLS authentication: clients verify that servers are trusted and\n * that they own the hostnames that they represent. Server authentication is required.\n *\n * To perform server authentication:\n *\n *  * The server's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The certificate's subject alternative names must match the\n *    server's hostname. The server must also have is a (possibly-empty) chain of intermediate\n *    certificates to establish trust from a root certificate to the server's certificate. The root\n *    certificate is not included in this chain.\n *  * The client's handshake certificates must include a set of trusted root certificates. They will\n *    be used to authenticate the server's certificate chain. Typically this is a set of well-known\n *    root certificates that is distributed with the HTTP client or its platform. It may be\n *    augmented by certificates private to an organization or service.\n *\n * ### Client Authentication\n *\n * This is authentication of the client by the server during the TLS handshake. Client\n * authentication is optional.\n *\n * To perform client authentication:\n *\n *  * The client's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The client must also have a (possibly-empty) chain of\n *    intermediate certificates to establish trust from a root certificate to the client's\n *    certificate. The root certificate is not included in this chain.\n *  * The server's handshake certificates must include a set of trusted root certificates. They\n *    will be used to authenticate the client's certificate chain. Typically this is not the same\n *    set of root certificates used in server authentication. Instead it will be a small set of\n *    roots private to an organization or service.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1115,
-  "secondPos" : 1193,
-  "firstEndPos" : 3269,
-  "secondEndPos" : 3347
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3270,
-  "secondPos" : 3348,
+  "firstPos" : 1115,
+  "secondPos" : 1193,
   "firstEndPos" : 6613,
   "secondEndPos" : 8304
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Certificates to identify which peers to trust and also to earn the trust of those peers in kind.\n * Client and server exchange these certificates during the handshake phase of a TLS connection.\n *\n * ### Server Authentication\n *\n * This is the most common form of TLS authentication: clients verify that servers are trusted and\n * that they own the hostnames that they represent. Server authentication is required.\n *\n * To perform server authentication:\n *\n *  * The server's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The certificate's subject alternative names must match the\n *    server's hostname. The server must also have is a (possibly-empty) chain of intermediate\n *    certificates to establish trust from a root certificate to the server's certificate. The root\n *    certificate is not included in this chain.\n *  * The client's handshake certificates must include a set of trusted root certificates. They will\n *    be used to authenticate the server's certificate chain. Typically this is a set of well-known\n *    root certificates that is distributed with the HTTP client or its platform. It may be\n *    augmented by certificates private to an organization or service.\n *\n * ### Client Authentication\n *\n * This is authentication of the client by the server during the TLS handshake. Client\n * authentication is optional.\n *\n * To perform client authentication:\n *\n *  * The client's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The client must also have a (possibly-empty) chain of\n *    intermediate certificates to establish trust from a root certificate to the client's\n *    certificate. The root certificate is not included in this chain.\n *  * The server's handshake certificates must include a set of trusted root certificates. They\n *    will be used to authenticate the client's certificate chain. Typically this is not the same\n *    set of root certificates used in server authentication. Instead it will be a small set of\n *    roots private to an organization or service.\n */",
+  "secondLabel" : "/**\n * Certificates to identify which peers to trust and also to earn the trust of those peers in kind.\n * Client and server exchange these certificates during the handshake phase of a TLS connection.\n *\n * ### Server Authentication\n *\n * This is the most common form of TLS authentication: clients verify that servers are trusted and\n * that they own the hostnames that they represent. Server authentication is required.\n *\n * To perform server authentication:\n *\n *  * The server's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The certificate's subject alternative names must match the\n *    server's hostname. The server must also have is a (possibly-empty) chain of intermediate\n *    certificates to establish trust from a root certificate to the server's certificate. The root\n *    certificate is not included in this chain.\n *  * The client's handshake certificates must include a set of trusted root certificates. They will\n *    be used to authenticate the server's certificate chain. Typically this is a set of well-known\n *    root certificates that is distributed with the HTTP client or its platform. It may be\n *    augmented by certificates private to an organization or service.\n *\n * ### Client Authentication\n *\n * This is authentication of the client by the server during the TLS handshake. Client\n * authentication is optional.\n *\n * To perform client authentication:\n *\n *  * The client's handshake certificates must have a [held certificate][HeldCertificate] (a\n *    certificate and its private key). The client must also have a (possibly-empty) chain of\n *    intermediate certificates to establish trust from a root certificate to the client's\n *    certificate. The root certificate is not included in this chain.\n *  * The server's handshake certificates must include a set of trusted root certificates. They\n *    will be used to authenticate the client's certificate chain. Typically this is not the same\n *    set of root certificates used in server authentication. Instead it will be a small set of\n *    roots private to an organization or service.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1115,
+  "secondPos" : 1193,
+  "firstEndPos" : 3269,
+  "secondEndPos" : 3347
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -3926,27 +3926,27 @@
   "firstEndPos" : 4394,
   "secondEndPos" : 4472
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Configure the certificate chain to use when being authenticated. The first certificate is\n     * the held certificate, further certificates are included in the handshake so the peer can\n     * build a trusted path to a trusted root certificate.\n     *\n     * The chain should include all intermediate certificates but does not need the root certificate\n     * that we expect to be known by the remote peer. The peer already has that certificate so\n     * transmitting it is unnecessary.\n     */",
-  "secondLabel" : "/**\n     * Configure the certificate chain to use when being authenticated. The first certificate is\n     * the held certificate, further certificates are included in the handshake so the peer can\n     * build a trusted path to a trusted root certificate.\n     *\n     * The chain should include all intermediate certificates but does not need the root certificate\n     * that we expect to be known by the remote peer. The peer already has that certificate so\n     * transmitting it is unnecessary.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4400,
-  "secondPos" : 4534,
-  "firstEndPos" : 4905,
-  "secondEndPos" : 5039
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4910,
-  "secondPos" : 5044,
+  "firstPos" : 4400,
+  "secondPos" : 4534,
   "firstEndPos" : 5151,
   "secondEndPos" : 5285
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Configure the certificate chain to use when being authenticated. The first certificate is\n     * the held certificate, further certificates are included in the handshake so the peer can\n     * build a trusted path to a trusted root certificate.\n     *\n     * The chain should include all intermediate certificates but does not need the root certificate\n     * that we expect to be known by the remote peer. The peer already has that certificate so\n     * transmitting it is unnecessary.\n     */",
+  "secondLabel" : "/**\n     * Configure the certificate chain to use when being authenticated. The first certificate is\n     * the held certificate, further certificates are included in the handshake so the peer can\n     * build a trusted path to a trusted root certificate.\n     *\n     * The chain should include all intermediate certificates but does not need the root certificate\n     * that we expect to be known by the remote peer. The peer already has that certificate so\n     * transmitting it is unnecessary.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4400,
+  "secondPos" : 4534,
+  "firstEndPos" : 4905,
+  "secondEndPos" : 5039
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -4454,27 +4454,27 @@
   "firstEndPos" : 5145,
   "secondEndPos" : 5279
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Add a trusted root certificate to use when authenticating a peer. Peers must provide\n     * a chain of certificates whose root is one of these.\n     */",
-  "secondLabel" : "/**\n     * Add a trusted root certificate to use when authenticating a peer. Peers must provide\n     * a chain of certificates whose root is one of these.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5157,
-  "secondPos" : 5291,
-  "firstEndPos" : 5319,
-  "secondEndPos" : 5453
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5324,
-  "secondPos" : 5458,
+  "firstPos" : 5157,
+  "secondPos" : 5291,
   "firstEndPos" : 5441,
   "secondEndPos" : 5575
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Add a trusted root certificate to use when authenticating a peer. Peers must provide\n     * a chain of certificates whose root is one of these.\n     */",
+  "secondLabel" : "/**\n     * Add a trusted root certificate to use when authenticating a peer. Peers must provide\n     * a chain of certificates whose root is one of these.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5157,
+  "secondPos" : 5291,
+  "firstEndPos" : 5319,
+  "secondEndPos" : 5453
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -4729,27 +4729,27 @@
   "firstEndPos" : 5435,
   "secondEndPos" : 5569
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Add all of the host platform's trusted root certificates. This set varies by platform\n     * (Android vs. Java), by platform release (Android 4.4 vs. Android 9), and with user\n     * customizations.\n     *\n     * Most TLS clients that connect to hosts on the public Internet should call this method.\n     * Otherwise it is necessary to manually prepare a comprehensive set of trusted roots.\n     *\n     * If the host platform is compromised or misconfigured this may contain untrustworthy root\n     * certificates. Applications that connect to a known set of servers may be able to mitigate\n     * this problem with [certificate pinning][CertificatePinner].\n     */",
-  "secondLabel" : "/**\n     * Add all of the host platform's trusted root certificates. This set varies by platform\n     * (Android vs. Java), by platform release (Android 4.4 vs. Android 9), and with user\n     * customizations.\n     *\n     * Most TLS clients that connect to hosts on the public Internet should call this method.\n     * Otherwise it is necessary to manually prepare a comprehensive set of trusted roots.\n     *\n     * If the host platform is compromised or misconfigured this may contain untrustworthy root\n     * certificates. Applications that connect to a known set of servers may be able to mitigate\n     * this problem with [certificate pinning][CertificatePinner].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5447,
-  "secondPos" : 5581,
-  "firstEndPos" : 6123,
-  "secondEndPos" : 6257
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6128,
-  "secondPos" : 6262,
+  "firstPos" : 5447,
+  "secondPos" : 5581,
   "firstEndPos" : 6336,
   "secondEndPos" : 6470
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Add all of the host platform's trusted root certificates. This set varies by platform\n     * (Android vs. Java), by platform release (Android 4.4 vs. Android 9), and with user\n     * customizations.\n     *\n     * Most TLS clients that connect to hosts on the public Internet should call this method.\n     * Otherwise it is necessary to manually prepare a comprehensive set of trusted roots.\n     *\n     * If the host platform is compromised or misconfigured this may contain untrustworthy root\n     * certificates. Applications that connect to a known set of servers may be able to mitigate\n     * this problem with [certificate pinning][CertificatePinner].\n     */",
+  "secondLabel" : "/**\n     * Add all of the host platform's trusted root certificates. This set varies by platform\n     * (Android vs. Java), by platform release (Android 4.4 vs. Android 9), and with user\n     * customizations.\n     *\n     * Most TLS clients that connect to hosts on the public Internet should call this method.\n     * Otherwise it is necessary to manually prepare a comprehensive set of trusted roots.\n     *\n     * If the host platform is compromised or misconfigured this may contain untrustworthy root\n     * certificates. Applications that connect to a known set of servers may be able to mitigate\n     * this problem with [certificate pinning][CertificatePinner].\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5447,
+  "secondPos" : 5581,
+  "firstEndPos" : 6123,
+  "secondEndPos" : 6257
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Used to report progress by the [HeapAnalyzer].\n */",
-  "secondLabel" : "/**\n * Reports progress from the [HeapAnalyzer] as they occur, as [Step] values.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 72,
-  "secondEndPos" : 99
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 73,
-  "secondPos" : 100,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 585,
   "secondEndPos" : 1239
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Used to report progress by the [HeapAnalyzer].\n */",
+  "secondLabel" : "/**\n * Reports progress from the [HeapAnalyzer] as they occur, as [Step] values.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 72,
+  "secondEndPos" : 99
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -109,27 +109,27 @@
   "firstEndPos" : 585,
   "secondEndPos" : 1239
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// These steps are defined in the order in which they occur.",
-  "secondLabel" : "// These steps are defined in the order in which they occur.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 113,
-  "secondPos" : 142,
-  "firstEndPos" : 173,
-  "secondEndPos" : 202
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 176,
-  "secondPos" : 205,
+  "firstPos" : 113,
+  "secondPos" : 142,
   "firstEndPos" : 406,
   "secondEndPos" : 435
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// These steps are defined in the order in which they occur.",
+  "secondLabel" : "// These steps are defined in the order in which they occur.",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 113,
+  "secondPos" : 142,
+  "firstEndPos" : 173,
+  "secondEndPos" : 202
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -462,24 +462,13 @@
   "secondEndPos" : 1237
 }, {
   "firstType" : "property_declaration",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n     * A no-op [OnAnalysisProgressListener]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 469,
-  "secondPos" : 501,
-  "firstEndPos" : 579,
-  "secondEndPos" : 556
-}, {
-  "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 469,
-  "secondPos" : 561,
+  "secondPos" : 501,
   "firstEndPos" : 579,
   "secondEndPos" : 676
 }, {

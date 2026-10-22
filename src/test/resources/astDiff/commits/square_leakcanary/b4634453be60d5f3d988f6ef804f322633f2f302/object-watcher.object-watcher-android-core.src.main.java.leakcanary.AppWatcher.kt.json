@@ -538,27 +538,27 @@
   "firstEndPos" : 351,
   "secondEndPos" : 351
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * The entry point API for using [ObjectWatcher] in an Android app. [AppWatcher.objectWatcher] is\n * in charge of detecting retained objects, and [AppWatcher] is auto configured on app start to\n * pass it activity and fragment instances. Call [ObjectWatcher.watch] on [objectWatcher] to\n * watch any other object that you expect to be unreachable.\n */",
-  "secondLabel" : "/**\n * The entry point API for using [ObjectWatcher] in an Android app. [AppWatcher.objectWatcher] is\n * in charge of detecting retained objects, and [AppWatcher] is auto configured on app start to\n * pass it activity and fragment instances. Call [ObjectWatcher.watch] on [objectWatcher] to\n * watch any other object that you expect to be unreachable.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 353,
-  "secondPos" : 353,
-  "firstEndPos" : 708,
-  "secondEndPos" : 708
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 709,
-  "secondPos" : 709,
+  "firstPos" : 353,
+  "secondPos" : 353,
   "firstEndPos" : 8210,
   "secondEndPos" : 4811
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * The entry point API for using [ObjectWatcher] in an Android app. [AppWatcher.objectWatcher] is\n * in charge of detecting retained objects, and [AppWatcher] is auto configured on app start to\n * pass it activity and fragment instances. Call [ObjectWatcher.watch] on [objectWatcher] to\n * watch any other object that you expect to be unreachable.\n */",
+  "secondLabel" : "/**\n * The entry point API for using [ObjectWatcher] in an Android app. [AppWatcher.objectWatcher] is\n * in charge of detecting retained objects, and [AppWatcher] is auto configured on app start to\n * pass it activity and fragment instances. Call [ObjectWatcher.watch] on [objectWatcher] to\n * watch any other object that you expect to be unreachable.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 353,
+  "secondPos" : 353,
+  "firstEndPos" : 708,
+  "secondEndPos" : 708
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1077,27 +1077,27 @@
   "firstEndPos" : 905,
   "secondEndPos" : 905
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The [ObjectWatcher] used by AppWatcher to detect retained objects.\n   * Only set when [isInstalled] is true.\n   */",
-  "secondLabel" : "/**\n   * The [ObjectWatcher] used by AppWatcher to detect retained objects.\n   * Only set when [isInstalled] is true.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 909,
-  "secondPos" : 909,
-  "firstEndPos" : 1032,
-  "secondEndPos" : 1032
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1035,
-  "secondPos" : 1035,
+  "firstPos" : 909,
+  "secondPos" : 909,
   "firstEndPos" : 1304,
   "secondEndPos" : 1304
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The [ObjectWatcher] used by AppWatcher to detect retained objects.\n   * Only set when [isInstalled] is true.\n   */",
+  "secondLabel" : "/**\n   * The [ObjectWatcher] used by AppWatcher to detect retained objects.\n   * Only set when [isInstalled] is true.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 909,
+  "secondPos" : 909,
+  "firstEndPos" : 1032,
+  "secondEndPos" : 1032
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1726,27 +1726,27 @@
   "firstEndPos" : 1298,
   "secondEndPos" : 1298
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** @see [manualInstall] */",
-  "secondLabel" : "/** @see [manualInstall] */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1308,
-  "secondPos" : 1308,
-  "firstEndPos" : 1335,
-  "secondEndPos" : 1335
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1338,
-  "secondPos" : 1338,
+  "firstPos" : 1308,
+  "secondPos" : 1308,
   "firstEndPos" : 1362,
   "secondEndPos" : 1362
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** @see [manualInstall] */",
+  "secondLabel" : "/** @see [manualInstall] */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1308,
+  "secondPos" : 1308,
+  "firstEndPos" : 1335,
+  "secondEndPos" : 1335
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1891,27 +1891,27 @@
   "firstEndPos" : 1395,
   "secondEndPos" : 1395
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Enables usage of [AppWatcher.objectWatcher] which will expect passed in objects to become\n   * weakly reachable within [retainedDelayMillis] ms and if not will trigger LeakCanary (if\n   * LeakCanary is in the classpath).\n   *\n   * In the main process, this method is automatically called with default parameter values  on app\n   * startup. You can call this method directly to customize the installation, however you must\n   * first disable the automatic call by overriding the `leak_canary_watcher_auto_install` boolean\n   * resource:\n   *\n   * ```xml\n   * <?xml version=\"1.0\" encoding=\"utf-8\"?>\n   * <resources>\n   *   <bool name=\"leak_canary_watcher_auto_install\">false</bool>\n   * </resources>\n   * ```\n   *\n   * [watchersToInstall] can be customized to a subset of the default app watchers:\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application)\n   *   .filter { it !is RootViewWatcher }\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   *\n   * [watchersToInstall] can also be customized to ignore specific instances (e.g. here ignoring\n   * leaks of BadSdkLeakingFragment):\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application, ReachabilityWatcher { watchedObject, description ->\n   *   if (watchedObject !is BadSdkLeakingFragment) {\n   *     AppWatcher.objectWatcher.expectWeaklyReachable(watchedObject, description)\n   *   }\n   * })\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   */",
-  "secondLabel" : "/**\n   * Enables usage of [AppWatcher.objectWatcher] which will expect passed in objects to become\n   * weakly reachable within [retainedDelayMillis] ms and if not will trigger LeakCanary (if\n   * LeakCanary is in the classpath).\n   *\n   * In the main process, this method is automatically called with default parameter values  on app\n   * startup. You can call this method directly to customize the installation, however you must\n   * first disable the automatic call by overriding the `leak_canary_watcher_auto_install` boolean\n   * resource:\n   *\n   * ```xml\n   * <?xml version=\"1.0\" encoding=\"utf-8\"?>\n   * <resources>\n   *   <bool name=\"leak_canary_watcher_auto_install\">false</bool>\n   * </resources>\n   * ```\n   *\n   * [watchersToInstall] can be customized to a subset of the default app watchers:\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application)\n   *   .filter { it !is RootViewWatcher }\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   *\n   * [watchersToInstall] can also be customized to ignore specific instances (e.g. here ignoring\n   * leaks of BadSdkLeakingFragment):\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application, ReachabilityWatcher { watchedObject, description ->\n   *   if (watchedObject !is BadSdkLeakingFragment) {\n   *     AppWatcher.objectWatcher.expectWeaklyReachable(watchedObject, description)\n   *   }\n   * })\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1399,
-  "secondPos" : 1399,
-  "firstEndPos" : 3034,
-  "secondEndPos" : 3034
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3037,
-  "secondPos" : 3037,
+  "firstPos" : 1399,
+  "secondPos" : 1399,
   "firstEndPos" : 3977,
   "secondEndPos" : 3977
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Enables usage of [AppWatcher.objectWatcher] which will expect passed in objects to become\n   * weakly reachable within [retainedDelayMillis] ms and if not will trigger LeakCanary (if\n   * LeakCanary is in the classpath).\n   *\n   * In the main process, this method is automatically called with default parameter values  on app\n   * startup. You can call this method directly to customize the installation, however you must\n   * first disable the automatic call by overriding the `leak_canary_watcher_auto_install` boolean\n   * resource:\n   *\n   * ```xml\n   * <?xml version=\"1.0\" encoding=\"utf-8\"?>\n   * <resources>\n   *   <bool name=\"leak_canary_watcher_auto_install\">false</bool>\n   * </resources>\n   * ```\n   *\n   * [watchersToInstall] can be customized to a subset of the default app watchers:\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application)\n   *   .filter { it !is RootViewWatcher }\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   *\n   * [watchersToInstall] can also be customized to ignore specific instances (e.g. here ignoring\n   * leaks of BadSdkLeakingFragment):\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application, ReachabilityWatcher { watchedObject, description ->\n   *   if (watchedObject !is BadSdkLeakingFragment) {\n   *     AppWatcher.objectWatcher.expectWeaklyReachable(watchedObject, description)\n   *   }\n   * })\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   */",
+  "secondLabel" : "/**\n   * Enables usage of [AppWatcher.objectWatcher] which will expect passed in objects to become\n   * weakly reachable within [retainedDelayMillis] ms and if not will trigger LeakCanary (if\n   * LeakCanary is in the classpath).\n   *\n   * In the main process, this method is automatically called with default parameter values  on app\n   * startup. You can call this method directly to customize the installation, however you must\n   * first disable the automatic call by overriding the `leak_canary_watcher_auto_install` boolean\n   * resource:\n   *\n   * ```xml\n   * <?xml version=\"1.0\" encoding=\"utf-8\"?>\n   * <resources>\n   *   <bool name=\"leak_canary_watcher_auto_install\">false</bool>\n   * </resources>\n   * ```\n   *\n   * [watchersToInstall] can be customized to a subset of the default app watchers:\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application)\n   *   .filter { it !is RootViewWatcher }\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   *\n   * [watchersToInstall] can also be customized to ignore specific instances (e.g. here ignoring\n   * leaks of BadSdkLeakingFragment):\n   *\n   * ```kotlin\n   * val watchersToInstall = AppWatcher.appDefaultWatchers(application, ReachabilityWatcher { watchedObject, description ->\n   *   if (watchedObject !is BadSdkLeakingFragment) {\n   *     AppWatcher.objectWatcher.expectWeaklyReachable(watchedObject, description)\n   *   }\n   * })\n   * AppWatcher.manualInstall(\n   *   application = application,\n   *   watchersToInstall = watchersToInstall\n   * )\n   * ```\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1399,
+  "secondPos" : 1399,
+  "firstEndPos" : 3034,
+  "secondEndPos" : 3034
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -3486,27 +3486,27 @@
   "firstEndPos" : 3971,
   "secondEndPos" : 3971
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Creates a new list of default app [InstallableWatcher], created with the passed in\n   * [reachabilityWatcher] (which defaults to [objectWatcher]). Once installed,\n   * these watchers will pass in to [reachabilityWatcher] objects that they expect to become\n   * weakly reachable.\n   *\n   * The passed in [reachabilityWatcher] should probably delegate to [objectWatcher] but can\n   * be used to filter out specific instances.\n   */",
-  "secondLabel" : "/**\n   * Creates a new list of default app [InstallableWatcher], created with the passed in\n   * [reachabilityWatcher] (which defaults to [objectWatcher]). Once installed,\n   * these watchers will pass in to [reachabilityWatcher] objects that they expect to become\n   * weakly reachable.\n   *\n   * The passed in [reachabilityWatcher] should probably delegate to [objectWatcher] but can\n   * be used to filter out specific instances.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3981,
-  "secondPos" : 3981,
-  "firstEndPos" : 4419,
-  "secondEndPos" : 4419
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4422,
-  "secondPos" : 4422,
+  "firstPos" : 3981,
+  "secondPos" : 3981,
   "firstEndPos" : 4809,
   "secondEndPos" : 4809
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Creates a new list of default app [InstallableWatcher], created with the passed in\n   * [reachabilityWatcher] (which defaults to [objectWatcher]). Once installed,\n   * these watchers will pass in to [reachabilityWatcher] objects that they expect to become\n   * weakly reachable.\n   *\n   * The passed in [reachabilityWatcher] should probably delegate to [objectWatcher] but can\n   * be used to filter out specific instances.\n   */",
+  "secondLabel" : "/**\n   * Creates a new list of default app [InstallableWatcher], created with the passed in\n   * [reachabilityWatcher] (which defaults to [objectWatcher]). Once installed,\n   * these watchers will pass in to [reachabilityWatcher] objects that they expect to become\n   * weakly reachable.\n   *\n   * The passed in [reachabilityWatcher] should probably delegate to [objectWatcher] but can\n   * be used to filter out specific instances.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3981,
+  "secondPos" : 3981,
+  "firstEndPos" : 4419,
+  "secondEndPos" : 4419
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

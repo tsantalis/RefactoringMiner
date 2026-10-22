@@ -1407,27 +1407,27 @@
   "firstEndPos" : 607,
   "secondEndPos" : 589
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The reference from the parent to this node\n     */",
-  "secondLabel" : "/**\n     * The reference from the parent to this node\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 613,
-  "secondPos" : 595,
-  "firstEndPos" : 674,
-  "secondEndPos" : 656
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 679,
-  "secondPos" : 661,
+  "firstPos" : 613,
+  "secondPos" : 595,
   "firstEndPos" : 708,
   "secondEndPos" : 690
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The reference from the parent to this node\n     */",
+  "secondLabel" : "/**\n     * The reference from the parent to this node\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 613,
+  "secondPos" : 595,
+  "firstEndPos" : 674,
+  "secondEndPos" : 656
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

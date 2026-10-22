@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each [HprofRecord]\n * found in the heap dump which types is in the set of the recordTypes parameter passed to\n * [StreamingHprofReader.readRecords].\n *\n * This is a functional interface with which you can create a [OnHprofRecordListener] from a lambda.\n */",
-  "secondLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each [HprofRecord]\n * found in the heap dump which types is in the set of the recordTypes parameter passed to\n * [StreamingHprofReader.readRecords].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 354,
-  "secondEndPos" : 250
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 355,
-  "secondPos" : 251,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 1076,
   "secondEndPos" : 439
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each [HprofRecord]\n * found in the heap dump which types is in the set of the recordTypes parameter passed to\n * [StreamingHprofReader.readRecords].\n *\n * This is a functional interface with which you can create a [OnHprofRecordListener] from a lambda.\n */",
+  "secondLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each [HprofRecord]\n * found in the heap dump which types is in the set of the recordTypes parameter passed to\n * [StreamingHprofReader.readRecords].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 354,
+  "secondEndPos" : 250
 }, {
   "firstType" : "fun",
   "secondType" : "fun",

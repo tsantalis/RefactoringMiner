@@ -120,27 +120,27 @@
   "firstEndPos" : 653,
   "secondEndPos" : 640
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Dumps the heap into a file.  */",
-  "secondLabel" : "/** Dumps the heap into a file.  */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 655,
-  "secondPos" : 642,
-  "firstEndPos" : 690,
-  "secondEndPos" : 677
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 691,
-  "secondPos" : 678,
+  "firstPos" : 655,
+  "secondPos" : 642,
   "firstEndPos" : 1049,
   "secondEndPos" : 1036
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Dumps the heap into a file.  */",
+  "secondLabel" : "/** Dumps the heap into a file.  */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 655,
+  "secondPos" : 642,
+  "firstEndPos" : 690,
+  "secondEndPos" : 677
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -175,27 +175,27 @@
   "firstEndPos" : 1049,
   "secondEndPos" : 1036
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * @return a [File] referencing the dumped heap, or [.RETRY_LATER] if the heap could\n   * not be dumped.\n   */",
-  "secondLabel" : "/**\n   * @return a [File] referencing the dumped heap, or [.RETRY_LATER] if the heap could\n   * not be dumped.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 717,
-  "secondPos" : 704,
-  "firstEndPos" : 833,
-  "secondEndPos" : 820
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 836,
-  "secondPos" : 823,
+  "firstPos" : 717,
+  "secondPos" : 704,
   "firstEndPos" : 857,
   "secondEndPos" : 844
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * @return a [File] referencing the dumped heap, or [.RETRY_LATER] if the heap could\n   * not be dumped.\n   */",
+  "secondLabel" : "/**\n   * @return a [File] referencing the dumped heap, or [.RETRY_LATER] if the heap could\n   * not be dumped.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 717,
+  "secondPos" : 704,
+  "firstEndPos" : 833,
+  "secondEndPos" : 820
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

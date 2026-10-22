@@ -274,27 +274,27 @@
   "firstEndPos" : 720,
   "secondEndPos" : 720
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Application is extended in debug/release folder, see [ExampleTvApplication] */",
-  "secondLabel" : "/** Application is extended in debug/release folder, see [ExampleTvApplication] */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 722,
-  "secondPos" : 722,
-  "firstEndPos" : 804,
-  "secondEndPos" : 804
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 805,
-  "secondPos" : 805,
+  "firstPos" : 722,
+  "secondPos" : 722,
   "firstEndPos" : 1194,
   "secondEndPos" : 1197
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Application is extended in debug/release folder, see [ExampleTvApplication] */",
+  "secondLabel" : "/** Application is extended in debug/release folder, see [ExampleTvApplication] */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 722,
+  "secondPos" : 722,
+  "firstEndPos" : 804,
+  "secondEndPos" : 804
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

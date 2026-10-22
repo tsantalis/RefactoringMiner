@@ -1165,27 +1165,27 @@
   "firstEndPos" : 753,
   "secondEndPos" : 752
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * If you need a function of dragging item, you need to implement the interface with [BaseQuickAdapter].\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
-  "secondLabel" : "/**\n * If you need a function of dragging item, you need to implement the interface with [BaseQuickAdapter].\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 755,
-  "secondPos" : 754,
-  "firstEndPos" : 904,
-  "secondEndPos" : 903
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 905,
-  "secondPos" : 904,
+  "firstPos" : 755,
+  "secondPos" : 754,
   "firstEndPos" : 1267,
   "secondEndPos" : 1266
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * If you need a function of dragging item, you need to implement the interface with [BaseQuickAdapter].\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
+  "secondLabel" : "/**\n * If you need a function of dragging item, you need to implement the interface with [BaseQuickAdapter].\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 755,
+  "secondPos" : 754,
+  "firstEndPos" : 904,
+  "secondEndPos" : 903
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1220,27 +1220,27 @@
   "firstEndPos" : 1267,
   "secondEndPos" : 1266
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * override the method to provide a custom module.\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
-  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * override the method to provide a custom module.\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 937,
-  "secondPos" : 936,
-  "firstEndPos" : 1114,
-  "secondEndPos" : 1113
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1119,
-  "secondPos" : 1118,
+  "firstPos" : 937,
+  "secondPos" : 936,
   "firstEndPos" : 1265,
   "secondEndPos" : 1264
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * override the method to provide a custom module.\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
+  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * override the method to provide a custom module.\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 937,
+  "secondPos" : 936,
+  "firstEndPos" : 1114,
+  "secondEndPos" : 1113
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -4454,27 +4454,27 @@
   "firstEndPos" : 2861,
   "secondEndPos" : 2858
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
-  "secondLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2874,
-  "secondPos" : 2871,
-  "firstEndPos" : 2946,
-  "secondEndPos" : 2943
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2951,
-  "secondPos" : 2948,
+  "firstPos" : 2874,
+  "secondPos" : 2871,
   "firstEndPos" : 3038,
   "secondEndPos" : 3035
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
+  "secondLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2874,
+  "secondPos" : 2871,
+  "firstEndPos" : 2946,
+  "secondEndPos" : 2943
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4652,27 +4652,27 @@
   "firstEndPos" : 3032,
   "secondEndPos" : 3029
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
-  "secondLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3044,
-  "secondPos" : 3041,
-  "firstEndPos" : 3169,
-  "secondEndPos" : 3166
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3174,
-  "secondPos" : 3171,
+  "firstPos" : 3044,
+  "secondPos" : 3041,
   "firstEndPos" : 3214,
   "secondEndPos" : 3211
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
+  "secondLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3044,
+  "secondPos" : 3041,
+  "firstEndPos" : 3169,
+  "secondEndPos" : 3166
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -6676,27 +6676,27 @@
   "firstEndPos" : 4454,
   "secondEndPos" : 4451
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Callback when item dragging start if you have registered a listener.\n     */",
-  "secondLabel" : "/**\n     * Callback when item dragging start if you have registered a listener.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4460,
-  "secondPos" : 4457,
-  "firstEndPos" : 4547,
-  "secondEndPos" : 4544
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4552,
-  "secondPos" : 4549,
+  "firstPos" : 4460,
+  "secondPos" : 4457,
   "firstEndPos" : 4713,
   "secondEndPos" : 4710
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Callback when item dragging start if you have registered a listener.\n     */",
+  "secondLabel" : "/**\n     * Callback when item dragging start if you have registered a listener.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4460,
+  "secondPos" : 4457,
+  "firstEndPos" : 4547,
+  "secondEndPos" : 4544
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -7028,27 +7028,27 @@
   "firstEndPos" : 4705,
   "secondEndPos" : 4702
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Callback when item is moving.\n     */",
-  "secondLabel" : "/**\n     * Callback when item is moving.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4719,
-  "secondPos" : 4716,
-  "firstEndPos" : 4767,
-  "secondEndPos" : 4764
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4772,
-  "secondPos" : 4769,
+  "firstPos" : 4719,
+  "secondPos" : 4716,
   "firstEndPos" : 5519,
   "secondEndPos" : 5516
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Callback when item is moving.\n     */",
+  "secondLabel" : "/**\n     * Callback when item is moving.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4719,
+  "secondPos" : 4716,
+  "firstEndPos" : 4767,
+  "secondEndPos" : 4764
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -8832,27 +8832,27 @@
   "firstEndPos" : 5512,
   "secondEndPos" : 5509
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Callback when item dragging end.\n     */",
-  "secondLabel" : "/**\n     * Callback when item dragging end.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5525,
-  "secondPos" : 5522,
-  "firstEndPos" : 5576,
-  "secondEndPos" : 5573
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5581,
-  "secondPos" : 5578,
+  "firstPos" : 5525,
+  "secondPos" : 5522,
   "firstEndPos" : 5738,
   "secondEndPos" : 5735
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Callback when item dragging end.\n     */",
+  "secondLabel" : "/**\n     * Callback when item dragging end.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5525,
+  "secondPos" : 5522,
+  "firstEndPos" : 5576,
+  "secondEndPos" : 5573
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -9184,27 +9184,27 @@
   "firstEndPos" : 5730,
   "secondEndPos" : 5727
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/************************* Swipe *************************/",
-  "secondLabel" : "/************************* Swipe *************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5744,
-  "secondPos" : 5741,
-  "firstEndPos" : 5803,
-  "secondEndPos" : 5800
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5809,
-  "secondPos" : 5806,
+  "firstPos" : 5744,
+  "secondPos" : 5741,
   "firstEndPos" : 6017,
   "secondEndPos" : 6014
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/************************* Swipe *************************/",
+  "secondLabel" : "/************************* Swipe *************************/",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5744,
+  "secondPos" : 5741,
+  "firstEndPos" : 5803,
+  "secondEndPos" : 5800
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -11626,27 +11626,27 @@
   "firstEndPos" : 7030,
   "secondEndPos" : 7027
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Set a listener of dragging.\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
-  "secondLabel" : "/**\n     * Set a listener of dragging.\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7042,
-  "secondPos" : 7039,
-  "firstEndPos" : 7153,
-  "secondEndPos" : 7150
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7158,
-  "secondPos" : 7155,
+  "firstPos" : 7042,
+  "secondPos" : 7039,
   "firstEndPos" : 7295,
   "secondEndPos" : 7292
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Set a listener of dragging.\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
+  "secondLabel" : "/**\n     * Set a listener of dragging.\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7042,
+  "secondPos" : 7039,
+  "firstEndPos" : 7153,
+  "secondEndPos" : 7150
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -11879,27 +11879,27 @@
   "firstEndPos" : 7289,
   "secondEndPos" : 7286
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Set a listener of swiping.\n     */",
-  "secondLabel" : "/**\n     * Set a listener of swiping.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7301,
-  "secondPos" : 7298,
-  "firstEndPos" : 7346,
-  "secondEndPos" : 7343
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7351,
-  "secondPos" : 7348,
+  "firstPos" : 7301,
+  "secondPos" : 7298,
   "firstEndPos" : 7493,
   "secondEndPos" : 7490
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Set a listener of swiping.\n     */",
+  "secondLabel" : "/**\n     * Set a listener of swiping.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7301,
+  "secondPos" : 7298,
+  "firstEndPos" : 7346,
+  "secondEndPos" : 7343
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

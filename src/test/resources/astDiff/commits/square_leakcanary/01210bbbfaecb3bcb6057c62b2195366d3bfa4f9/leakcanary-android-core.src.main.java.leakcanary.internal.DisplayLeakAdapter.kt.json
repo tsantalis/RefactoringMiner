@@ -25827,27 +25827,27 @@
   "firstEndPos" : 12747,
   "secondEndPos" : 12668
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// https://stackoverflow.com/a/6540378/703646",
-  "secondLabel" : "// https://stackoverflow.com/a/6540378/703646",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 12753,
-  "secondPos" : 12674,
-  "firstEndPos" : 12798,
-  "secondEndPos" : 12719
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 12803,
-  "secondPos" : 12724,
+  "firstPos" : 12753,
+  "secondPos" : 12674,
   "firstEndPos" : 12984,
   "secondEndPos" : 12905
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// https://stackoverflow.com/a/6540378/703646",
+  "secondLabel" : "// https://stackoverflow.com/a/6540378/703646",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 12753,
+  "secondPos" : 12674,
+  "firstEndPos" : 12798,
+  "secondEndPos" : 12719
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

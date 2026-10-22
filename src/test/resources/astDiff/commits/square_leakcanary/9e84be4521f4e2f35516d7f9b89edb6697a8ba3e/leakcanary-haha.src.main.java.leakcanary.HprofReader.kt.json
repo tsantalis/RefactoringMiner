@@ -1913,27 +1913,27 @@
   "firstEndPos" : 1661,
   "secondEndPos" : 1720
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
-  "secondLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1663,
-  "secondPos" : 1722,
-  "firstEndPos" : 1727,
-  "secondEndPos" : 1786
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1728,
-  "secondPos" : 1787,
+  "firstPos" : 1663,
+  "secondPos" : 1722,
   "firstEndPos" : 10259,
   "secondEndPos" : 11673
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
+  "secondLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1663,
+  "secondPos" : 1722,
+  "firstEndPos" : 1727,
+  "secondEndPos" : 1786
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2605,17 +2605,6 @@
   "secondPos" : 2080,
   "firstEndPos" : 2304,
   "secondEndPos" : 2402
-}, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1974,
-  "secondPos" : 2080,
-  "firstEndPos" : 1981,
-  "secondEndPos" : 2083
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

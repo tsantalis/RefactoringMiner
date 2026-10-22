@@ -263,27 +263,27 @@
   "firstEndPos" : 2661,
   "secondEndPos" : 2620
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a map of Object id to native size as tracked by NativeAllocationRegistry$CleanerThunk\n   */",
-  "secondLabel" : "/**\n   * Returns a map of Object id to native size as tracked by NativeAllocationRegistry$CleanerThunk\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 159,
-  "secondPos" : 118,
-  "firstEndPos" : 267,
-  "secondEndPos" : 226
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 270,
-  "secondPos" : 229,
+  "firstPos" : 159,
+  "secondPos" : 118,
   "firstEndPos" : 408,
   "secondEndPos" : 367
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a map of Object id to native size as tracked by NativeAllocationRegistry$CleanerThunk\n   */",
+  "secondLabel" : "/**\n   * Returns a map of Object id to native size as tracked by NativeAllocationRegistry$CleanerThunk\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 159,
+  "secondPos" : 118,
+  "firstEndPos" : 267,
+  "secondEndPos" : 226
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

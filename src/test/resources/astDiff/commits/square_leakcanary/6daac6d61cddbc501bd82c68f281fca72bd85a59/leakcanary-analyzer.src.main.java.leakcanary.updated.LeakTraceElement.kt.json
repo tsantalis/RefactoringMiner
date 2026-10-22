@@ -351,27 +351,27 @@
   "firstEndPos" : 783,
   "secondEndPos" : 900
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
-  "secondLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 218,
-  "secondPos" : 183,
-  "firstEndPos" : 406,
-  "secondEndPos" : 371
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 409,
-  "secondPos" : 374,
+  "firstPos" : 218,
+  "secondPos" : 183,
   "firstEndPos" : 438,
   "secondEndPos" : 403
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
+  "secondLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 218,
+  "secondPos" : 183,
+  "firstEndPos" : 406,
+  "secondEndPos" : 371
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -506,24 +506,13 @@
   "secondEndPos" : 426
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * Class hierarchy for that object. The first element is [.className]. [Object]\n   * is excluded. There is always at least one element.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 466,
-  "secondPos" : 431,
-  "firstEndPos" : 496,
-  "secondEndPos" : 578
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 466,
-  "secondPos" : 581,
+  "secondPos" : 431,
   "firstEndPos" : 496,
   "secondEndPos" : 613
 }, {
@@ -582,27 +571,27 @@
   "firstEndPos" : 496,
   "secondEndPos" : 613
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Additional information, may be null.  */",
-  "secondLabel" : "/** Additional information, may be null.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 501,
-  "secondPos" : 618,
-  "firstEndPos" : 545,
-  "secondEndPos" : 662
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 548,
-  "secondPos" : 665,
+  "firstPos" : 501,
+  "secondPos" : 618,
   "firstEndPos" : 566,
   "secondEndPos" : 683
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Additional information, may be null.  */",
+  "secondLabel" : "/** Additional information, may be null.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 501,
+  "secondPos" : 618,
+  "firstEndPos" : 545,
+  "secondEndPos" : 662
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -670,27 +659,27 @@
   "firstEndPos" : 565,
   "secondEndPos" : 682
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** If not null, there was no path that could exclude this element.  */",
-  "secondLabel" : "/** If not null, there was no path that could exclude this element.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 571,
-  "secondPos" : 688,
-  "firstEndPos" : 642,
-  "secondEndPos" : 759
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 645,
-  "secondPos" : 762,
+  "firstPos" : 571,
+  "secondPos" : 688,
   "firstEndPos" : 670,
   "secondEndPos" : 787
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** If not null, there was no path that could exclude this element.  */",
+  "secondLabel" : "/** If not null, there was no path that could exclude this element.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 571,
+  "secondPos" : 688,
+  "firstEndPos" : 642,
+  "secondEndPos" : 759
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -758,27 +747,27 @@
   "firstEndPos" : 669,
   "secondEndPos" : 786
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** List of all fields (member and static) for that object.  */",
-  "secondLabel" : "/** List of all fields (member and static) for that object.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 675,
-  "secondPos" : 792,
-  "firstEndPos" : 738,
-  "secondEndPos" : 855
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 741,
-  "secondPos" : 858,
+  "firstPos" : 675,
+  "secondPos" : 792,
   "firstEndPos" : 781,
   "secondEndPos" : 898
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** List of all fields (member and static) for that object.  */",
+  "secondLabel" : "/** List of all fields (member and static) for that object.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 675,
+  "secondPos" : 792,
+  "firstEndPos" : 738,
+  "secondEndPos" : 855
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1550,27 +1539,27 @@
   "firstEndPos" : 1157,
   "secondEndPos" : 1347
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** @see [isInstanceOf][] */",
-  "secondLabel" : "/** @see [isInstanceOf][] */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1161,
-  "secondPos" : 1351,
-  "firstEndPos" : 1189,
-  "secondEndPos" : 1379
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1192,
-  "secondPos" : 1382,
+  "firstPos" : 1161,
+  "secondPos" : 1351,
   "firstEndPos" : 1298,
   "secondEndPos" : 1488
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** @see [isInstanceOf][] */",
+  "secondLabel" : "/** @see [isInstanceOf][] */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1161,
+  "secondPos" : 1351,
+  "firstEndPos" : 1189,
+  "secondEndPos" : 1379
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1891,27 +1880,27 @@
   "firstEndPos" : 1293,
   "secondEndPos" : 1483
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if this element is an instance of the provided class name, false otherwise.\n   */",
-  "secondLabel" : "/**\n   * Returns true if this element is an instance of the provided class name, false otherwise.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1302,
-  "secondPos" : 1492,
-  "firstEndPos" : 1405,
-  "secondEndPos" : 1595
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1408,
-  "secondPos" : 1598,
+  "firstPos" : 1302,
+  "secondPos" : 1492,
   "firstEndPos" : 1543,
   "secondEndPos" : 1714
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if this element is an instance of the provided class name, false otherwise.\n   */",
+  "secondLabel" : "/**\n   * Returns true if this element is an instance of the provided class name, false otherwise.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1302,
+  "secondPos" : 1492,
+  "firstEndPos" : 1405,
+  "secondEndPos" : 1595
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2199,27 +2188,27 @@
   "firstEndPos" : 1537,
   "secondEndPos" : 1708
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
-  "secondLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1547,
-  "secondPos" : 1718,
-  "firstEndPos" : 1609,
-  "secondEndPos" : 1780
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1612,
-  "secondPos" : 1783,
+  "firstPos" : 1547,
+  "secondPos" : 1718,
   "firstEndPos" : 1688,
   "secondEndPos" : 1859
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
+  "secondLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1547,
+  "secondPos" : 1718,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1780
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

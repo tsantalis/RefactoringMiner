@@ -538,27 +538,27 @@
   "firstEndPos" : 1059,
   "secondEndPos" : 1047
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Logs leak analysis results, and then shows a notification which will start [ ].\n *\n *\n * You can extend this class and override [.afterDefaultHandling] to add custom behavior, e.g. uploading the heap dump.\n */",
-  "secondLabel" : "/**\n * Logs leak analysis results, and then shows a notification which will start [ ].\n *\n *\n * You can extend this class and override [.afterDefaultHandling] to add custom behavior, e.g. uploading the heap dump.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1061,
-  "secondPos" : 1049,
-  "firstEndPos" : 1277,
-  "secondEndPos" : 1265
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1278,
-  "secondPos" : 1266,
+  "firstPos" : 1061,
+  "secondPos" : 1049,
   "firstEndPos" : 4872,
   "secondEndPos" : 4879
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Logs leak analysis results, and then shows a notification which will start [ ].\n *\n *\n * You can extend this class and override [.afterDefaultHandling] to add custom behavior, e.g. uploading the heap dump.\n */",
+  "secondLabel" : "/**\n * Logs leak analysis results, and then shows a notification which will start [ ].\n *\n *\n * You can extend this class and override [.afterDefaultHandling] to add custom behavior, e.g. uploading the heap dump.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1061,
+  "secondPos" : 1049,
+  "firstEndPos" : 1277,
+  "secondEndPos" : 1265
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -7754,27 +7754,27 @@
   "firstEndPos" : 4521,
   "secondEndPos" : 4528
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * You can override this method and do a blocking call to a server to upload the leak trace and\n   * the heap dump. Don't forget to check [AnalysisResult.leakFound] and [ ][AnalysisResult.excludedLeak] first.\n   */",
-  "secondLabel" : "/**\n   * You can override this method and do a blocking call to a server to upload the leak trace and\n   * the heap dump. Don't forget to check [AnalysisResult.leakFound] and [ ][AnalysisResult.excludedLeak] first.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4529,
-  "secondPos" : 4536,
-  "firstEndPos" : 4749,
-  "secondEndPos" : 4756
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4752,
-  "secondPos" : 4759,
+  "firstPos" : 4529,
+  "secondPos" : 4536,
   "firstEndPos" : 4870,
   "secondEndPos" : 4877
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * You can override this method and do a blocking call to a server to upload the leak trace and\n   * the heap dump. Don't forget to check [AnalysisResult.leakFound] and [ ][AnalysisResult.excludedLeak] first.\n   */",
+  "secondLabel" : "/**\n   * You can override this method and do a blocking call to a server to upload the leak trace and\n   * the heap dump. Don't forget to check [AnalysisResult.leakFound] and [ ][AnalysisResult.excludedLeak] first.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4529,
+  "secondPos" : 4536,
+  "firstEndPos" : 4749,
+  "secondEndPos" : 4756
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

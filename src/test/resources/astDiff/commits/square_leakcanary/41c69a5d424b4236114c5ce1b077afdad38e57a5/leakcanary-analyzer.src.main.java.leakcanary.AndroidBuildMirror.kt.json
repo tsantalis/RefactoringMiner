@@ -54,27 +54,27 @@
   "firstEndPos" : 18,
   "secondEndPos" : 18
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Caches values from the android.os.Build class in the heap dump.\n */",
-  "secondLabel" : "/**\n * Caches values from the android.os.Build class in the heap dump.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 20,
-  "secondPos" : 20,
-  "firstEndPos" : 94,
-  "secondEndPos" : 94
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 95,
-  "secondPos" : 95,
+  "firstPos" : 20,
+  "secondPos" : 20,
   "firstEndPos" : 283,
   "secondEndPos" : 283
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Caches values from the android.os.Build class in the heap dump.\n */",
+  "secondLabel" : "/**\n * Caches values from the android.os.Build class in the heap dump.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 20,
+  "secondPos" : 20,
+  "firstEndPos" : 94,
+  "secondEndPos" : 94
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -109,27 +109,27 @@
   "firstEndPos" : 283,
   "secondEndPos" : 283
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Value of android.os.Build.MANUFACTURER\n   */",
-  "secondLabel" : "/**\n   * Value of android.os.Build.MANUFACTURER\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 123,
-  "secondPos" : 123,
-  "firstEndPos" : 176,
-  "secondEndPos" : 176
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 179,
-  "secondPos" : 179,
+  "firstPos" : 123,
+  "secondPos" : 123,
   "firstEndPos" : 203,
   "secondEndPos" : 203
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Value of android.os.Build.MANUFACTURER\n   */",
+  "secondLabel" : "/**\n   * Value of android.os.Build.MANUFACTURER\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 123,
+  "secondPos" : 123,
+  "firstEndPos" : 176,
+  "secondEndPos" : 176
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -186,27 +186,27 @@
   "firstEndPos" : 203,
   "secondEndPos" : 203
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Value of android.os.Build.VERSION.SDK_INT\n   */",
-  "secondLabel" : "/**\n   * Value of android.os.Build.VERSION.SDK_INT\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 207,
-  "secondPos" : 207,
-  "firstEndPos" : 263,
-  "secondEndPos" : 263
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 266,
-  "secondPos" : 266,
+  "firstPos" : 207,
+  "secondPos" : 207,
   "firstEndPos" : 281,
   "secondEndPos" : 281
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Value of android.os.Build.VERSION.SDK_INT\n   */",
+  "secondLabel" : "/**\n   * Value of android.os.Build.VERSION.SDK_INT\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 207,
+  "secondPos" : 207,
+  "firstEndPos" : 263,
+  "secondEndPos" : 263
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

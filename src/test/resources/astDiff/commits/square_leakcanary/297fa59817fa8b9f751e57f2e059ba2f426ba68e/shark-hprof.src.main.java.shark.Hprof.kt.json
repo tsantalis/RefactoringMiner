@@ -175,27 +175,27 @@
   "firstEndPos" : 137,
   "secondEndPos" : 59
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * An opened Hprof file which can be read via [reader]. Open a new hprof with [open], and don't\n * forget to call [close] once done.\n */",
-  "secondLabel" : "/**\n * Hprof is deprecated, and we offer partial backward compatibility. Any code that was\n * previously using HprofReader directly now has to call [StreamingHprofReader.readerFor] or\n * [HprofRandomAcccessReader.readerFor]\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 176,
-  "secondPos" : 61,
-  "firstEndPos" : 316,
-  "secondEndPos" : 288
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 317,
-  "secondPos" : 289,
+  "firstPos" : 176,
+  "secondPos" : 61,
   "firstEndPos" : 2835,
   "secondEndPos" : 1649
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * An opened Hprof file which can be read via [reader]. Open a new hprof with [open], and don't\n * forget to call [close] once done.\n */",
+  "secondLabel" : "/**\n * Hprof is deprecated, and we offer partial backward compatibility. Any code that was\n * previously using HprofReader directly now has to call [StreamingHprofReader.readerFor] or\n * [HprofRandomAcccessReader.readerFor]\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 176,
+  "secondPos" : 61,
+  "firstEndPos" : 316,
+  "secondEndPos" : 288
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -439,27 +439,49 @@
   "firstEndPos" : 449,
   "secondEndPos" : 507
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "/** Unix timestamp at which the heap was dumped. */",
-  "secondLabel" : "",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 453,
-  "secondPos" : 531,
-  "firstEndPos" : 504,
-  "secondEndPos" : 558
-}, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
-  "firstPos" : 507,
+  "firstPos" : 453,
   "secondPos" : 531,
   "firstEndPos" : 534,
   "secondEndPos" : 558
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 507,
+  "secondPos" : 531,
+  "firstEndPos" : 510,
+  "secondEndPos" : 534
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 507,
+  "secondPos" : 531,
+  "firstEndPos" : 510,
+  "secondEndPos" : 534
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "heapDumpTimestamp",
+  "secondLabel" : "heapDumpTimestamp",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 511,
+  "secondPos" : 535,
+  "firstEndPos" : 528,
+  "secondEndPos" : 552
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -483,27 +505,49 @@
   "firstEndPos" : 534,
   "secondEndPos" : 558
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "/** Version of the opened hprof, which is tied to the runtime where the heap was dumped. */",
-  "secondLabel" : "",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 538,
-  "secondPos" : 599,
-  "firstEndPos" : 629,
-  "secondEndPos" : 629
-}, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
-  "firstPos" : 632,
+  "firstPos" : 538,
   "secondPos" : 599,
   "firstEndPos" : 662,
   "secondEndPos" : 629
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 632,
+  "secondPos" : 599,
+  "firstEndPos" : 635,
+  "secondEndPos" : 602
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 632,
+  "secondPos" : 599,
+  "firstEndPos" : 635,
+  "secondEndPos" : 602
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "hprofVersion",
+  "secondLabel" : "hprofVersion",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 636,
+  "secondPos" : 603,
+  "firstEndPos" : 648,
+  "secondEndPos" : 615
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -527,27 +571,49 @@
   "firstEndPos" : 662,
   "secondEndPos" : 629
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "/**\n   * Length of the hprof file, in bytes.\n   */",
-  "secondLabel" : "",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 666,
-  "secondPos" : 687,
-  "firstEndPos" : 716,
-  "secondEndPos" : 707
-}, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
-  "firstPos" : 719,
+  "firstPos" : 666,
   "secondPos" : 687,
   "firstEndPos" : 739,
   "secondEndPos" : 707
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 719,
+  "secondPos" : 687,
+  "firstEndPos" : 722,
+  "secondEndPos" : 690
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 719,
+  "secondPos" : 687,
+  "firstEndPos" : 722,
+  "secondEndPos" : 690
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "fileLength",
+  "secondLabel" : "fileLength",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 723,
+  "secondPos" : 691,
+  "firstEndPos" : 733,
+  "secondEndPos" : 701
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -885,7 +951,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1247,
+  "firstPos" : 1205,
   "secondPos" : 1132,
   "firstEndPos" : 1448,
   "secondEndPos" : 1414
@@ -1545,7 +1611,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1738,
+  "firstPos" : 1591,
   "secondPos" : 1441,
   "firstEndPos" : 2828,
   "secondEndPos" : 1643

@@ -384,27 +384,27 @@
   "firstEndPos" : 847,
   "secondEndPos" : 908
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * [BindingAdapter]s for the [Task]s list.\n */",
-  "secondLabel" : "/**\n * [BindingAdapter]s for the [Task]s list.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 849,
-  "secondPos" : 912,
-  "firstEndPos" : 899,
-  "secondEndPos" : 962
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 900,
-  "secondPos" : 963,
+  "firstPos" : 849,
+  "secondPos" : 912,
   "firstEndPos" : 1073,
   "secondEndPos" : 1136
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * [BindingAdapter]s for the [Task]s list.\n */",
+  "secondLabel" : "/**\n * [BindingAdapter]s for the [Task]s list.\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 849,
+  "secondPos" : 912,
+  "firstEndPos" : 899,
+  "secondEndPos" : 962
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

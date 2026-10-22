@@ -417,27 +417,27 @@
   "firstEndPos" : 237,
   "secondEndPos" : 280
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Document which thread events are called from and the blocking behavior / impact.",
-  "secondLabel" : "// TODO Document which thread events are called from and the blocking behavior / impact.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 239,
-  "secondPos" : 282,
-  "firstEndPos" : 327,
-  "secondEndPos" : 370
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 328,
-  "secondPos" : 371,
+  "firstPos" : 239,
+  "secondPos" : 282,
   "firstEndPos" : 1823,
   "secondEndPos" : 1993
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Document which thread events are called from and the blocking behavior / impact.",
+  "secondLabel" : "// TODO Document which thread events are called from and the blocking behavior / impact.",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 239,
+  "secondPos" : 282,
+  "firstEndPos" : 327,
+  "secondEndPos" : 370
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -483,27 +483,27 @@
   "firstEndPos" : 1823,
   "secondEndPos" : 1993
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Note: [Event] is [Serializable] for convenience but we currently make no guarantee\n   * that the Serialization is backward / forward compatible across LeakCanary versions, so plan\n   * accordingly.\n   */",
-  "secondLabel" : "/**\n   * Note: [Event] is [Serializable] for convenience but we currently make no guarantee\n   * that the Serialization is backward / forward compatible across LeakCanary versions, so plan\n   * accordingly.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 361,
-  "secondPos" : 404,
-  "firstEndPos" : 573,
-  "secondEndPos" : 616
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 576,
-  "secondPos" : 619,
+  "firstPos" : 361,
+  "secondPos" : 404,
   "firstEndPos" : 1792,
   "secondEndPos" : 1962
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Note: [Event] is [Serializable] for convenience but we currently make no guarantee\n   * that the Serialization is backward / forward compatible across LeakCanary versions, so plan\n   * accordingly.\n   */",
+  "secondLabel" : "/**\n   * Note: [Event] is [Serializable] for convenience but we currently make no guarantee\n   * that the Serialization is backward / forward compatible across LeakCanary versions, so plan\n   * accordingly.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 361,
+  "secondPos" : 404,
+  "firstEndPos" : 573,
+  "secondEndPos" : 616
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -604,27 +604,27 @@
   "firstEndPos" : 1792,
   "secondEndPos" : 1962
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
-  "secondLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 616,
-  "secondPos" : 659,
-  "firstEndPos" : 686,
-  "secondEndPos" : 729
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 691,
-  "secondPos" : 734,
+  "firstPos" : 616,
+  "secondPos" : 659,
   "firstEndPos" : 719,
   "secondEndPos" : 762
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
+  "secondLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 616,
+  "secondPos" : 659,
+  "firstEndPos" : 686,
+  "secondEndPos" : 729
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -703,27 +703,27 @@
   "firstEndPos" : 719,
   "secondEndPos" : 762
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
-  "secondLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 725,
-  "secondPos" : 768,
-  "firstEndPos" : 795,
-  "secondEndPos" : 838
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 800,
-  "secondPos" : 843,
+  "firstPos" : 725,
+  "secondPos" : 768,
   "firstEndPos" : 910,
   "secondEndPos" : 953
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
+  "secondLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 725,
+  "secondPos" : 768,
+  "firstEndPos" : 795,
+  "secondEndPos" : 838
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1011,27 +1011,27 @@
   "firstEndPos" : 910,
   "secondEndPos" : 953
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
-  "secondLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 916,
-  "secondPos" : 959,
-  "firstEndPos" : 986,
-  "secondEndPos" : 1029
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 991,
-  "secondPos" : 1034,
+  "firstPos" : 916,
+  "secondPos" : 959,
   "firstEndPos" : 1076,
   "secondEndPos" : 1119
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
+  "secondLabel" : "/**\n     * Sent from the \"LeakCanary-Heap-Dump\" HandlerThread.\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 916,
+  "secondPos" : 959,
+  "firstEndPos" : 986,
+  "secondEndPos" : 1029
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1253,27 +1253,27 @@
   "firstEndPos" : 1076,
   "secondEndPos" : 1119
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * [progressPercent] is a value between [0..1]\n     */",
-  "secondLabel" : "/**\n     * [progressPercent] is a value between [0..1]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1082,
-  "secondPos" : 1125,
-  "firstEndPos" : 1144,
-  "secondEndPos" : 1187
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1149,
-  "secondPos" : 1192,
+  "firstPos" : 1082,
+  "secondPos" : 1125,
   "firstEndPos" : 1230,
   "secondEndPos" : 1273
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * [progressPercent] is a value between [0..1]\n     */",
+  "secondLabel" : "/**\n     * [progressPercent] is a value between [0..1]\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1082,
+  "secondPos" : 1125,
+  "firstEndPos" : 1144,
+  "secondEndPos" : 1187
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

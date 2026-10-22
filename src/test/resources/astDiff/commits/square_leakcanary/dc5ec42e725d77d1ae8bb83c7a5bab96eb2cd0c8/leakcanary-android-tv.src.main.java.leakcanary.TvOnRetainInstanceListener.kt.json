@@ -274,27 +274,27 @@
   "firstEndPos" : 129,
   "secondEndPos" : 141
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * [OnRetainInstanceListener] implementation for Android TV devices which keeps track of the current\n * retained instances count and displays a helpful Toast message on current state of it.\n * It will notify user when heap dump is going to happen, so that users who set the\n * [LeakCanary.Config.retainedVisibleThreshold] to any value other than 1 will be aware of retain\n * instances changes. If user set threshold for heap dump to 1 then this listener becomes no-op,\n * as any retain instance change will trigger the heap dump with its own toast.\n *\n */",
-  "secondLabel" : "/**\n * [OnRetainInstanceListener] implementation for Android TV devices which keeps track of the current\n * retained instances count and displays a helpful Toast message on current state of it.\n * It will notify user when heap dump is going to happen, so that users who set the\n * [LeakCanary.Config.retainedVisibleThreshold] to any value other than 1 will be aware of retain\n * instances changes. If user set threshold for heap dump to 1 then this listener becomes no-op,\n * as any retain instance change will trigger the heap dump with its own toast.\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 131,
-  "secondPos" : 351,
-  "firstEndPos" : 690,
-  "secondEndPos" : 910
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 691,
-  "secondPos" : 911,
+  "firstPos" : 131,
+  "secondPos" : 351,
   "firstEndPos" : 2041,
   "secondEndPos" : 2433
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * [OnRetainInstanceListener] implementation for Android TV devices which keeps track of the current\n * retained instances count and displays a helpful Toast message on current state of it.\n * It will notify user when heap dump is going to happen, so that users who set the\n * [LeakCanary.Config.retainedVisibleThreshold] to any value other than 1 will be aware of retain\n * instances changes. If user set threshold for heap dump to 1 then this listener becomes no-op,\n * as any retain instance change will trigger the heap dump with its own toast.\n *\n */",
+  "secondLabel" : "/**\n * [OnRetainInstanceListener] implementation for Android TV devices which keeps track of the current\n * retained instances count and displays a helpful Toast message on current state of it.\n * It will notify user when heap dump is going to happen, so that users who set the\n * [LeakCanary.Config.retainedVisibleThreshold] to any value other than 1 will be aware of retain\n * instances changes. If user set threshold for heap dump to 1 then this listener becomes no-op,\n * as any retain instance change will trigger the heap dump with its own toast.\n *\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 131,
+  "secondPos" : 351,
+  "firstEndPos" : 690,
+  "secondEndPos" : 910
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

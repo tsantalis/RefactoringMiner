@@ -295,8 +295,30 @@ public class KotlinPsiTreeGenerator {
 
 	// ---------------------------------------------------------------- declarations
 
-	//the declaration with its leading comments, which are its first children in PSI, while they precede it in the tree-sitter tree
+	//the declaration with its leading comments, which are its first children, like in PSI and in the model, i.e., /** doc */ fun f() {...}
 	private List<Tree> declaration(ASTNode n) {
+		List<Tree> trees = declarationWithoutLeadingComments(n);
+		List<ASTNode> kids = kids(n);
+		List<Tree> leadingComments = new ArrayList<>();
+		if(DECLARATIONS.contains(type(n))) {
+			for(int i = 0; i < kids.size() && isComment(kids.get(i)); i++) {
+				leadingComments.add(comment(kids.get(i)));
+			}
+		}
+		if(!leadingComments.isEmpty() && !trees.isEmpty()) {
+			Tree declaration = trees.get(0);
+			int end = declaration.getEndPos();
+			for(int i = leadingComments.size() - 1; i >= 0; i--) {
+				declaration.insertChild(leadingComments.get(i), 0);
+				leadingComments.get(i).setParent(declaration);
+			}
+			declaration.setPos(leadingComments.get(0).getPos());
+			declaration.setLength(end - declaration.getPos());
+		}
+		return trees;
+	}
+
+	private List<Tree> declarationWithoutLeadingComments(ASTNode n) {
 		List<Tree> trees = new ArrayList<>();
 		if(isComment(n)) {
 			trees.add(comment(n));
@@ -306,7 +328,6 @@ public class KotlinPsiTreeGenerator {
 		int first = 0;
 		if(DECLARATIONS.contains(type(n))) {
 			while(first < kids.size() && isComment(kids.get(first))) {
-				trees.add(comment(kids.get(first)));
 				first++;
 			}
 		}
@@ -482,7 +503,6 @@ public class KotlinPsiTreeGenerator {
 				case "VALUE_PARAMETER_LIST" -> {
 					for(ASTNode p : kids(c)) {
 						if(type(p).equals("VALUE_PARAMETER")) {
-							addAll(t, leadingComments(p));
 							add(t, parameter(p, "class_parameter"));
 						}
 						else if(isComment(p))
@@ -612,11 +632,12 @@ public class KotlinPsiTreeGenerator {
 		return trees;
 	}
 
-	//parameter -> [parameter_modifiers?, simple_identifier, type] or class_parameter -> [modifiers?, binding_pattern_kind?, simple_identifier, type, =, default]
+	//parameter -> [parameter_modifiers?, simple_identifier, type] or class_parameter -> [comments?, modifiers?, binding_pattern_kind?, simple_identifier, type, =, default],
+	//where the class parameters keep their leading comments, like the declarations, i.e., class A(/** doc */ val x: Int)
 	private Tree parameter(ASTNode n, String type) {
 		List<ASTNode> kids = kids(n);
 		int first = 0;
-		while(first < kids.size() - 1 && isComment(kids.get(first))) first++;
+		while(type.equals("parameter") && first < kids.size() - 1 && isComment(kids.get(first))) first++;
 		Tree t = node(type, start(kids.get(first)), end(n));
 		for(ASTNode c : kids.subList(first, kids.size())) {
 			switch(type(c)) {

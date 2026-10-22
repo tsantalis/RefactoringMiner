@@ -340,27 +340,27 @@
   "firstEndPos" : 201,
   "secondEndPos" : 246
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * INTERNAL\n *\n * This class is public to be accessible from other LeakCanary modules but shouldn't be\n * called directly, the API may break at any point.\n */",
-  "secondLabel" : "/**\n * INTERNAL\n *\n * This class is public to be accessible from other LeakCanary modules but shouldn't be\n * called directly, the API may break at any point.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 203,
-  "secondPos" : 287,
-  "firstEndPos" : 365,
-  "secondEndPos" : 449
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 366,
-  "secondPos" : 450,
+  "firstPos" : 203,
+  "secondPos" : 287,
   "firstEndPos" : 1421,
   "secondEndPos" : 1505
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * INTERNAL\n *\n * This class is public to be accessible from other LeakCanary modules but shouldn't be\n * called directly, the API may break at any point.\n */",
+  "secondLabel" : "/**\n * INTERNAL\n *\n * This class is public to be accessible from other LeakCanary modules but shouldn't be\n * called directly, the API may break at any point.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 203,
+  "secondPos" : 287,
+  "firstEndPos" : 365,
+  "secondEndPos" : 449
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

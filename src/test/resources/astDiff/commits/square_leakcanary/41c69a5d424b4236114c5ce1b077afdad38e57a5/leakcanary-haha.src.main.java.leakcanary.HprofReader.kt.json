@@ -1979,27 +1979,27 @@
   "firstEndPos" : 1720,
   "secondEndPos" : 1720
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
-  "secondLabel" : "/**\n * Reads hprof content from an Okio [BufferedSource].\n *\n * Not thread safe, should be used from a single thread.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1722,
-  "secondPos" : 1722,
-  "firstEndPos" : 1786,
-  "secondEndPos" : 1843
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1787,
-  "secondPos" : 1844,
+  "firstPos" : 1722,
+  "secondPos" : 1722,
   "firstEndPos" : 11673,
   "secondEndPos" : 11730
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
+  "secondLabel" : "/**\n * Reads hprof content from an Okio [BufferedSource].\n *\n * Not thread safe, should be used from a single thread.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1722,
+  "secondPos" : 1722,
+  "firstEndPos" : 1786,
+  "secondEndPos" : 1843
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

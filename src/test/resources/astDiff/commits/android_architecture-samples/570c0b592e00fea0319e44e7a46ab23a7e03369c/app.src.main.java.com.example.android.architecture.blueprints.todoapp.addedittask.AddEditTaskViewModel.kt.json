@@ -1000,27 +1000,27 @@
   "firstEndPos" : 1241,
   "secondEndPos" : 1241
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewModel for the Add/Edit screen.\n *\n *\n * This ViewModel only exposes [ObservableField]s, so it doesn't need to extend\n * [androidx.databinding.BaseObservable] and updates are notified automatically. See\n * [com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel] for\n * how to deal with more complex scenarios.\n */",
-  "secondLabel" : "/**\n * ViewModel for the Add/Edit screen.\n *\n *\n * This ViewModel only exposes [ObservableField]s, so it doesn't need to extend\n * [androidx.databinding.BaseObservable] and updates are notified automatically. See\n * [com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel] for\n * how to deal with more complex scenarios.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1243,
-  "secondPos" : 1243,
-  "firstEndPos" : 1595,
-  "secondEndPos" : 1595
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1596,
-  "secondPos" : 1596,
+  "firstPos" : 1243,
+  "secondPos" : 1243,
   "firstEndPos" : 4837,
   "secondEndPos" : 4827
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewModel for the Add/Edit screen.\n *\n *\n * This ViewModel only exposes [ObservableField]s, so it doesn't need to extend\n * [androidx.databinding.BaseObservable] and updates are notified automatically. See\n * [com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel] for\n * how to deal with more complex scenarios.\n */",
+  "secondLabel" : "/**\n * ViewModel for the Add/Edit screen.\n *\n *\n * This ViewModel only exposes [ObservableField]s, so it doesn't need to extend\n * [androidx.databinding.BaseObservable] and updates are notified automatically. See\n * [com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel] for\n * how to deal with more complex scenarios.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1243,
+  "secondPos" : 1243,
+  "firstEndPos" : 1595,
+  "secondEndPos" : 1595
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1220,27 +1220,27 @@
   "firstEndPos" : 4837,
   "secondEndPos" : 4827
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1696,
-  "secondPos" : 1696,
-  "firstEndPos" : 1744,
-  "secondEndPos" : 1744
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1749,
-  "secondPos" : 1749,
+  "firstPos" : 1696,
+  "secondPos" : 1696,
   "firstEndPos" : 1786,
   "secondEndPos" : 1786
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1696,
+  "secondPos" : 1696,
+  "firstEndPos" : 1744,
+  "secondEndPos" : 1744
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1385,27 +1385,27 @@
   "firstEndPos" : 1786,
   "secondEndPos" : 1786
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1792,
-  "secondPos" : 1792,
-  "firstEndPos" : 1840,
-  "secondEndPos" : 1840
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1845,
-  "secondPos" : 1845,
+  "firstPos" : 1792,
+  "secondPos" : 1792,
   "firstEndPos" : 1888,
   "secondEndPos" : 1888
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1792,
+  "secondPos" : 1792,
+  "firstEndPos" : 1840,
+  "secondEndPos" : 1840
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5565,27 +5565,27 @@
   "firstEndPos" : 3520,
   "secondEndPos" : 3519
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Called when clicking on fab.",
-  "secondLabel" : "// Called when clicking on fab.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3532,
-  "secondPos" : 3531,
-  "firstEndPos" : 3563,
-  "secondEndPos" : 3562
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3568,
-  "secondPos" : 3567,
+  "firstPos" : 3532,
+  "secondPos" : 3531,
   "firstEndPos" : 4359,
   "secondEndPos" : 4349
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Called when clicking on fab.",
+  "secondLabel" : "// Called when clicking on fab.",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3532,
+  "secondPos" : 3531,
+  "firstEndPos" : 3563,
+  "secondEndPos" : 3562
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

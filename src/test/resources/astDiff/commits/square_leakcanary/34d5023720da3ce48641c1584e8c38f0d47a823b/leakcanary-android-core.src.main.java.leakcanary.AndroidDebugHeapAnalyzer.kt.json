@@ -1359,7 +1359,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 1111,
-  "secondPos" : 1519,
+  "secondPos" : 1355,
   "firstEndPos" : 6201,
   "secondEndPos" : 8009
 }, {
@@ -1671,27 +1671,27 @@
   "firstEndPos" : 1289,
   "secondEndPos" : 1706
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
-  "secondLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1293,
-  "secondPos" : 1710,
-  "firstEndPos" : 1470,
-  "secondEndPos" : 1887
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1473,
-  "secondPos" : 1890,
+  "firstPos" : 1293,
+  "secondPos" : 1710,
   "firstEndPos" : 4897,
   "secondEndPos" : 5285
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
+  "secondLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1293,
+  "secondPos" : 1710,
+  "firstEndPos" : 1470,
+  "secondEndPos" : 1887
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

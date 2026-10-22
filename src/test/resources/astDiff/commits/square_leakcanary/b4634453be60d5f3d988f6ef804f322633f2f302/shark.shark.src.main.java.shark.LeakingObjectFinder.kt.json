@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Finds the objects that are leaking, for which Shark will compute\n * leak traces.\n *\n * This is a functional interface with which you can create a [LeakingObjectFinder] from a lambda.\n */",
-  "secondLabel" : "/**\n * Finds the objects that are leaking, for which Shark will compute\n * leak traces.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 208,
-  "secondEndPos" : 106
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 209,
-  "secondPos" : 107,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 884,
   "secondEndPos" : 304
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Finds the objects that are leaking, for which Shark will compute\n * leak traces.\n *\n * This is a functional interface with which you can create a [LeakingObjectFinder] from a lambda.\n */",
+  "secondLabel" : "/**\n * Finds the objects that are leaking, for which Shark will compute\n * leak traces.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 208,
+  "secondEndPos" : 106
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -120,27 +120,27 @@
   "firstEndPos" : 884,
   "secondEndPos" : 304
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * For a given heap graph, returns a set of object ids for the objects that are leaking.\n   */",
-  "secondLabel" : "/**\n   * For a given heap graph, returns a set of object ids for the objects that are leaking.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 248,
-  "secondPos" : 146,
-  "firstEndPos" : 348,
-  "secondEndPos" : 246
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 351,
-  "secondPos" : 249,
+  "firstPos" : 248,
+  "secondPos" : 146,
   "firstEndPos" : 404,
   "secondEndPos" : 302
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * For a given heap graph, returns a set of object ids for the objects that are leaking.\n   */",
+  "secondLabel" : "/**\n   * For a given heap graph, returns a set of object ids for the objects that are leaking.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 248,
+  "secondPos" : 146,
+  "firstEndPos" : 348,
+  "secondEndPos" : 246
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

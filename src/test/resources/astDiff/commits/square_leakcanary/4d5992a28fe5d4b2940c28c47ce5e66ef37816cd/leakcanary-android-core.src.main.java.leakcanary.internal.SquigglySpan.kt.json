@@ -505,27 +505,27 @@
   "firstEndPos" : 881,
   "secondEndPos" : 881
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Inspired from https://github.com/flavienlaurent/spans and\n * https://github.com/andyxialm/WavyLineView\n */",
-  "secondLabel" : "/**\n * Inspired from https://github.com/flavienlaurent/spans and\n * https://github.com/andyxialm/WavyLineView\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 916,
-  "secondPos" : 921,
-  "firstEndPos" : 1029,
-  "secondEndPos" : 1034
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1030,
-  "secondPos" : 1035,
+  "firstPos" : 916,
+  "secondPos" : 921,
   "firstEndPos" : 3845,
   "secondEndPos" : 3850
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Inspired from https://github.com/flavienlaurent/spans and\n * https://github.com/andyxialm/WavyLineView\n */",
+  "secondLabel" : "/**\n * Inspired from https://github.com/flavienlaurent/spans and\n * https://github.com/andyxialm/WavyLineView\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 916,
+  "secondPos" : 921,
+  "firstEndPos" : 1029,
+  "secondEndPos" : 1034
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

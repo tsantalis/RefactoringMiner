@@ -2419,27 +2419,27 @@
   "firstEndPos" : 1462,
   "secondEndPos" : 1462
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 获取模块\n */",
-  "secondLabel" : "/**\n * 获取模块\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1464,
-  "secondPos" : 1464,
-  "firstEndPos" : 1479,
-  "secondEndPos" : 1479
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1480,
-  "secondPos" : 1480,
+  "firstPos" : 1464,
+  "secondPos" : 1464,
   "firstEndPos" : 2349,
   "secondEndPos" : 2349
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 获取模块\n */",
+  "secondLabel" : "/**\n * 获取模块\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1464,
+  "secondPos" : 1464,
+  "firstEndPos" : 1479,
+  "secondEndPos" : 1479
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2507,27 +2507,27 @@
   "firstEndPos" : 2349,
   "secondEndPos" : 2349
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseLoadMoreModule\n     */",
-  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseLoadMoreModule\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1530,
-  "secondPos" : 1530,
-  "firstEndPos" : 1650,
-  "secondEndPos" : 1650
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1655,
-  "secondPos" : 1655,
+  "firstPos" : 1530,
+  "secondPos" : 1530,
   "firstEndPos" : 1798,
   "secondEndPos" : 1798
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseLoadMoreModule\n     */",
+  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseLoadMoreModule\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1530,
+  "secondPos" : 1530,
+  "firstEndPos" : 1650,
+  "secondEndPos" : 1650
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2793,27 +2793,27 @@
   "firstEndPos" : 1791,
   "secondEndPos" : 1791
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseUpFetchModule\n     */",
-  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseUpFetchModule\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1804,
-  "secondPos" : 1804,
-  "firstEndPos" : 1923,
-  "secondEndPos" : 1923
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1928,
-  "secondPos" : 1928,
+  "firstPos" : 1804,
+  "secondPos" : 1804,
   "firstEndPos" : 2068,
   "secondEndPos" : 2068
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseUpFetchModule\n     */",
+  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseUpFetchModule\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1804,
+  "secondPos" : 1804,
+  "firstEndPos" : 1923,
+  "secondEndPos" : 1923
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -3079,27 +3079,27 @@
   "firstEndPos" : 2061,
   "secondEndPos" : 2061
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
-  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2074,
-  "secondPos" : 2074,
-  "firstEndPos" : 2196,
-  "secondEndPos" : 2196
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2201,
-  "secondPos" : 2201,
+  "firstPos" : 2074,
+  "secondPos" : 2074,
   "firstEndPos" : 2347,
   "secondEndPos" : 2347
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
+  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2074,
+  "secondPos" : 2074,
+  "firstEndPos" : 2196,
+  "secondEndPos" : 2196
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -3365,27 +3365,27 @@
   "firstEndPos" : 2340,
   "secondEndPos" : 2340
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Base Class\n * @param T : type of data, 数据类型\n * @param VH : BaseViewHolder\n * @constructor layoutId, data(Can null parameters, the default is empty data)\n */",
-  "secondLabel" : "/**\n * Base Class\n * @param T : type of data, 数据类型\n * @param VH : BaseViewHolder\n * @constructor layoutId, data(Can null parameters, the default is empty data)\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2351,
-  "secondPos" : 2351,
-  "firstEndPos" : 2514,
-  "secondEndPos" : 2514
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2515,
-  "secondPos" : 2515,
+  "firstPos" : 2351,
+  "secondPos" : 2351,
   "firstEndPos" : 43258,
   "secondEndPos" : 43577
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Base Class\n * @param T : type of data, 数据类型\n * @param VH : BaseViewHolder\n * @constructor layoutId, data(Can null parameters, the default is empty data)\n */",
+  "secondLabel" : "/**\n * Base Class\n * @param T : type of data, 数据类型\n * @param VH : BaseViewHolder\n * @constructor layoutId, data(Can null parameters, the default is empty data)\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2351,
+  "secondPos" : 2351,
+  "firstEndPos" : 2514,
+  "secondEndPos" : 2514
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4509,27 +4509,27 @@
   "firstEndPos" : 3076,
   "secondEndPos" : 3076
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * data, Only allowed to get.\n     * 数据, 只允许 get。\n     */",
-  "secondLabel" : "/**\n     * data, Only allowed to get.\n     * 数据, 只允许 get。\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3081,
-  "secondPos" : 3081,
-  "firstEndPos" : 3146,
-  "secondEndPos" : 3146
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3151,
-  "secondPos" : 3151,
+  "firstPos" : 3081,
+  "secondPos" : 3081,
   "firstEndPos" : 3199,
   "secondEndPos" : 3199
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * data, Only allowed to get.\n     * 数据, 只允许 get。\n     */",
+  "secondLabel" : "/**\n     * data, Only allowed to get.\n     * 数据, 只允许 get。\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3081,
+  "secondPos" : 3081,
+  "firstEndPos" : 3146,
+  "secondEndPos" : 3146
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4795,27 +4795,27 @@
   "firstEndPos" : 3216,
   "secondEndPos" : 3216
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 当显示空布局时，是否显示 Header\n     */",
-  "secondLabel" : "/**\n     * 当显示空布局时，是否显示 Header\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3226,
-  "secondPos" : 3226,
-  "firstEndPos" : 3264,
-  "secondEndPos" : 3264
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3269,
-  "secondPos" : 3269,
+  "firstPos" : 3226,
+  "secondPos" : 3226,
   "firstEndPos" : 3302,
   "secondEndPos" : 3302
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 当显示空布局时，是否显示 Header\n     */",
+  "secondLabel" : "/**\n     * 当显示空布局时，是否显示 Header\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3226,
+  "secondPos" : 3226,
+  "firstEndPos" : 3264,
+  "secondEndPos" : 3264
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4894,27 +4894,27 @@
   "firstEndPos" : 3302,
   "secondEndPos" : 3302
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** 当显示空布局时，是否显示 Foot */",
-  "secondLabel" : "/** 当显示空布局时，是否显示 Foot */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3308,
-  "secondPos" : 3308,
-  "firstEndPos" : 3332,
-  "secondEndPos" : 3332
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3337,
-  "secondPos" : 3337,
+  "firstPos" : 3308,
+  "secondPos" : 3308,
   "firstEndPos" : 3370,
   "secondEndPos" : 3370
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** 当显示空布局时，是否显示 Foot */",
+  "secondLabel" : "/** 当显示空布局时，是否显示 Foot */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3308,
+  "secondPos" : 3308,
+  "firstEndPos" : 3332,
+  "secondEndPos" : 3332
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4993,27 +4993,27 @@
   "firstEndPos" : 3370,
   "secondEndPos" : 3370
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** 是否使用空布局 */",
-  "secondLabel" : "/** 是否使用空布局 */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3376,
-  "secondPos" : 3376,
-  "firstEndPos" : 3390,
-  "secondEndPos" : 3390
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3395,
-  "secondPos" : 3395,
+  "firstPos" : 3376,
+  "secondPos" : 3376,
   "firstEndPos" : 3416,
   "secondEndPos" : 3416
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** 是否使用空布局 */",
+  "secondLabel" : "/** 是否使用空布局 */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3376,
+  "secondPos" : 3376,
+  "firstEndPos" : 3390,
+  "secondEndPos" : 3390
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5092,27 +5092,27 @@
   "firstEndPos" : 3416,
   "secondEndPos" : 3416
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * if asFlow is true, footer/header will arrange like normal item view.\n     * only works when use [GridLayoutManager],and it will ignore span size.\n     */",
-  "secondLabel" : "/**\n     * if asFlow is true, footer/header will arrange like normal item view.\n     * only works when use [GridLayoutManager],and it will ignore span size.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3422,
-  "secondPos" : 3422,
-  "firstEndPos" : 3586,
-  "secondEndPos" : 3586
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3591,
-  "secondPos" : 3591,
+  "firstPos" : 3422,
+  "secondPos" : 3422,
   "firstEndPos" : 3628,
   "secondEndPos" : 3628
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * if asFlow is true, footer/header will arrange like normal item view.\n     * only works when use [GridLayoutManager],and it will ignore span size.\n     */",
+  "secondLabel" : "/**\n     * if asFlow is true, footer/header will arrange like normal item view.\n     * only works when use [GridLayoutManager],and it will ignore span size.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3422,
+  "secondPos" : 3422,
+  "firstEndPos" : 3586,
+  "secondEndPos" : 3586
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5323,27 +5323,27 @@
   "firstEndPos" : 3670,
   "secondEndPos" : 3670
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 是否打开动画\n     */",
-  "secondLabel" : "/**\n     * 是否打开动画\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3676,
-  "secondPos" : 3676,
-  "firstEndPos" : 3701,
-  "secondEndPos" : 3701
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3706,
-  "secondPos" : 3706,
+  "firstPos" : 3676,
+  "secondPos" : 3676,
   "firstEndPos" : 3742,
   "secondEndPos" : 3742
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 是否打开动画\n     */",
+  "secondLabel" : "/**\n     * 是否打开动画\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3676,
+  "secondPos" : 3676,
+  "firstEndPos" : 3701,
+  "secondEndPos" : 3701
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5444,27 +5444,27 @@
   "firstEndPos" : 3742,
   "secondEndPos" : 3742
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 动画是否仅第一次执行\n     */",
-  "secondLabel" : "/**\n     * 动画是否仅第一次执行\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3748,
-  "secondPos" : 3748,
-  "firstEndPos" : 3777,
-  "secondEndPos" : 3777
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3782,
-  "secondPos" : 3782,
+  "firstPos" : 3748,
+  "secondPos" : 3748,
   "firstEndPos" : 3813,
   "secondEndPos" : 3813
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 动画是否仅第一次执行\n     */",
+  "secondLabel" : "/**\n     * 动画是否仅第一次执行\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3748,
+  "secondPos" : 3748,
+  "firstEndPos" : 3777,
+  "secondEndPos" : 3777
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5543,27 +5543,27 @@
   "firstEndPos" : 3813,
   "secondEndPos" : 3813
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置自定义动画\n     */",
-  "secondLabel" : "/**\n     * 设置自定义动画\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3819,
-  "secondPos" : 3819,
-  "firstEndPos" : 3845,
-  "secondEndPos" : 3845
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3850,
-  "secondPos" : 3850,
+  "firstPos" : 3819,
+  "secondPos" : 3819,
   "firstEndPos" : 3893,
   "secondEndPos" : 3893
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置自定义动画\n     */",
+  "secondLabel" : "/**\n     * 设置自定义动画\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3819,
+  "secondPos" : 3819,
+  "firstEndPos" : 3845,
+  "secondEndPos" : 3845
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5862,27 +5862,27 @@
   "firstEndPos" : 3975,
   "secondEndPos" : 3975
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 加载更多模块\n     */",
-  "secondLabel" : "/**\n     * 加载更多模块\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3991,
-  "secondPos" : 3991,
-  "firstEndPos" : 4016,
-  "secondEndPos" : 4016
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4021,
-  "secondPos" : 4021,
+  "firstPos" : 3991,
+  "secondPos" : 3991,
   "firstEndPos" : 4059,
   "secondEndPos" : 4059
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 加载更多模块\n     */",
+  "secondLabel" : "/**\n     * 加载更多模块\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3991,
+  "secondPos" : 3991,
+  "firstEndPos" : 4016,
+  "secondEndPos" : 4016
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6181,27 +6181,27 @@
   "firstEndPos" : 4199,
   "secondEndPos" : 4199
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 向上加载模块\n     */",
-  "secondLabel" : "/**\n     * 向上加载模块\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4215,
-  "secondPos" : 4215,
-  "firstEndPos" : 4240,
-  "secondEndPos" : 4240
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4245,
-  "secondPos" : 4245,
+  "firstPos" : 4215,
+  "secondPos" : 4215,
   "firstEndPos" : 4281,
   "secondEndPos" : 4281
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 向上加载模块\n     */",
+  "secondLabel" : "/**\n     * 向上加载模块\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4215,
+  "secondPos" : 4215,
+  "firstEndPos" : 4240,
+  "secondEndPos" : 4240
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6500,27 +6500,27 @@
   "firstEndPos" : 4418,
   "secondEndPos" : 4418
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 拖拽模块\n     */",
-  "secondLabel" : "/**\n     * 拖拽模块\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4434,
-  "secondPos" : 4434,
-  "firstEndPos" : 4457,
-  "secondEndPos" : 4457
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4462,
-  "secondPos" : 4462,
+  "firstPos" : 4434,
+  "secondPos" : 4434,
   "firstEndPos" : 4502,
   "secondEndPos" : 4502
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 拖拽模块\n     */",
+  "secondLabel" : "/**\n     * 拖拽模块\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4434,
+  "secondPos" : 4434,
+  "firstEndPos" : 4457,
+  "secondEndPos" : 4457
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6819,27 +6819,27 @@
   "firstEndPos" : 4645,
   "secondEndPos" : 4645
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/********************************* Private property *****************************************/",
-  "secondLabel" : "/********************************* Private property *****************************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4661,
-  "secondPos" : 4661,
-  "firstEndPos" : 4755,
-  "secondEndPos" : 4755
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4760,
-  "secondPos" : 4760,
+  "firstPos" : 4661,
+  "secondPos" : 4661,
   "firstEndPos" : 4812,
   "secondEndPos" : 4812
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/********************************* Private property *****************************************/",
+  "secondLabel" : "/********************************* Private property *****************************************/",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4661,
+  "secondPos" : 4661,
+  "firstEndPos" : 4755,
+  "secondEndPos" : 4755
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -9019,27 +9019,27 @@
   "firstEndPos" : 5675,
   "secondEndPos" : 5675
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/******************************* RecyclerView Method ****************************************/",
-  "secondLabel" : "/******************************* RecyclerView Method ****************************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5682,
-  "secondPos" : 5682,
-  "firstEndPos" : 5776,
-  "secondEndPos" : 5776
-}, {
   "firstType" : "anonymous_initializer",
   "secondType" : "anonymous_initializer",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5782,
-  "secondPos" : 5782,
+  "firstPos" : 5682,
+  "secondPos" : 5682,
   "firstEndPos" : 5816,
   "secondEndPos" : 5816
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/******************************* RecyclerView Method ****************************************/",
+  "secondLabel" : "/******************************* RecyclerView Method ****************************************/",
+  "firstParentType" : "anonymous_initializer",
+  "secondParentType" : "anonymous_initializer",
+  "firstPos" : 5682,
+  "secondPos" : 5682,
+  "firstEndPos" : 5776,
+  "secondEndPos" : 5776
 }, {
   "firstType" : "initializer_keyword",
   "secondType" : "initializer_keyword",
@@ -9107,27 +9107,27 @@
   "firstEndPos" : 5810,
   "secondEndPos" : 5810
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 检查模块\n     */",
-  "secondLabel" : "/**\n     * 检查模块\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5822,
-  "secondPos" : 5822,
-  "firstEndPos" : 5845,
-  "secondEndPos" : 5845
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5850,
-  "secondPos" : 5850,
+  "firstPos" : 5822,
+  "secondPos" : 5822,
   "firstEndPos" : 6204,
   "secondEndPos" : 6204
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 检查模块\n     */",
+  "secondLabel" : "/**\n     * 检查模块\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5822,
+  "secondPos" : 5822,
+  "firstEndPos" : 5845,
+  "secondEndPos" : 5845
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -10009,27 +10009,27 @@
   "firstEndPos" : 6187,
   "secondEndPos" : 6187
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Implement this method and use the helper to adapt the view to the given item.\n     *\n     * 实现此方法，并使用 helper 完成 item 视图的操作\n     *\n     * @param helper A fully initialized helper.\n     * @param item   The item that needs to be displayed.\n     */",
-  "secondLabel" : "/**\n     * Implement this method and use the helper to adapt the view to the given item.\n     *\n     * 实现此方法，并使用 helper 完成 item 视图的操作\n     *\n     * @param helper A fully initialized helper.\n     * @param item   The item that needs to be displayed.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6210,
-  "secondPos" : 6210,
-  "firstEndPos" : 6465,
-  "secondEndPos" : 6465
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6470,
-  "secondPos" : 6470,
+  "firstPos" : 6210,
+  "secondPos" : 6210,
   "firstEndPos" : 6521,
   "secondEndPos" : 6521
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Implement this method and use the helper to adapt the view to the given item.\n     *\n     * 实现此方法，并使用 helper 完成 item 视图的操作\n     *\n     * @param helper A fully initialized helper.\n     * @param item   The item that needs to be displayed.\n     */",
+  "secondLabel" : "/**\n     * Implement this method and use the helper to adapt the view to the given item.\n     *\n     * 实现此方法，并使用 helper 完成 item 视图的操作\n     *\n     * @param helper A fully initialized helper.\n     * @param item   The item that needs to be displayed.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6210,
+  "secondPos" : 6210,
+  "firstEndPos" : 6465,
+  "secondEndPos" : 6465
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -10207,27 +10207,27 @@
   "firstEndPos" : 6520,
   "secondEndPos" : 6520
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Optional implementation this method and use the helper to adapt the view to the given item.\n     * If use [payloads], will perform this method, Please implement this method for partial refresh.\n     * If use [RecyclerView.Adapter.notifyItemChanged(Int, Object)] with payload,\n     * Will execute this method.\n     *\n     * 可选实现，如果你是用了[payloads]刷新item，请实现此方法，进行局部刷新\n     *\n     * @param helper   A fully initialized helper.\n     * @param item     The item that needs to be displayed.\n     * @param payloads payload info.\n     */",
-  "secondLabel" : "/**\n     * Optional implementation this method and use the helper to adapt the view to the given item.\n     * If use [payloads], will perform this method, Please implement this method for partial refresh.\n     * If use [RecyclerView.Adapter.notifyItemChanged(Int, Object)] with payload,\n     * Will execute this method.\n     *\n     * 可选实现，如果你是用了[payloads]刷新item，请实现此方法，进行局部刷新\n     *\n     * @param helper   A fully initialized helper.\n     * @param item     The item that needs to be displayed.\n     * @param payloads payload info.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6527,
-  "secondPos" : 6527,
-  "firstEndPos" : 7065,
-  "secondEndPos" : 7065
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7070,
-  "secondPos" : 7070,
+  "firstPos" : 6527,
+  "secondPos" : 6527,
   "firstEndPos" : 7141,
   "secondEndPos" : 7141
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Optional implementation this method and use the helper to adapt the view to the given item.\n     * If use [payloads], will perform this method, Please implement this method for partial refresh.\n     * If use [RecyclerView.Adapter.notifyItemChanged(Int, Object)] with payload,\n     * Will execute this method.\n     *\n     * 可选实现，如果你是用了[payloads]刷新item，请实现此方法，进行局部刷新\n     *\n     * @param helper   A fully initialized helper.\n     * @param item     The item that needs to be displayed.\n     * @param payloads payload info.\n     */",
+  "secondLabel" : "/**\n     * Optional implementation this method and use the helper to adapt the view to the given item.\n     * If use [payloads], will perform this method, Please implement this method for partial refresh.\n     * If use [RecyclerView.Adapter.notifyItemChanged(Int, Object)] with payload,\n     * Will execute this method.\n     *\n     * 可选实现，如果你是用了[payloads]刷新item，请实现此方法，进行局部刷新\n     *\n     * @param helper   A fully initialized helper.\n     * @param item     The item that needs to be displayed.\n     * @param payloads payload info.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6527,
+  "secondPos" : 6527,
+  "firstEndPos" : 7065,
+  "secondEndPos" : 7065
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -13430,27 +13430,27 @@
   "firstEndPos" : 8831,
   "secondEndPos" : 8831
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Don't override this method. If need, please override [getItemCount]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     * @return Int\n     */",
-  "secondLabel" : "/**\n     * Don't override this method. If need, please override [getItemCount]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     * @return Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8843,
-  "secondPos" : 8843,
-  "firstEndPos" : 8993,
-  "secondEndPos" : 8993
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8998,
-  "secondPos" : 8998,
+  "firstPos" : 8843,
+  "secondPos" : 8843,
   "firstEndPos" : 9592,
   "secondEndPos" : 9592
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Don't override this method. If need, please override [getItemCount]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     * @return Int\n     */",
+  "secondLabel" : "/**\n     * Don't override this method. If need, please override [getItemCount]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     * @return Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 8843,
+  "secondPos" : 8843,
+  "firstEndPos" : 8993,
+  "secondEndPos" : 8993
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -14497,27 +14497,27 @@
   "firstEndPos" : 9576,
   "secondEndPos" : 9576
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Don't override this method. If need, please override [getDefItemViewType]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     *\n     * @param position Int\n     * @return Int\n     */",
-  "secondLabel" : "/**\n     * Don't override this method. If need, please override [getDefItemViewType]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     *\n     * @param position Int\n     * @return Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9598,
-  "secondPos" : 9598,
-  "firstEndPos" : 9788,
-  "secondEndPos" : 9788
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9793,
-  "secondPos" : 9793,
+  "firstPos" : 9598,
+  "secondPos" : 9598,
   "firstEndPos" : 11149,
   "secondEndPos" : 11149
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Don't override this method. If need, please override [getDefItemViewType]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     *\n     * @param position Int\n     * @return Int\n     */",
+  "secondLabel" : "/**\n     * Don't override this method. If need, please override [getDefItemViewType]\n     * 不要重写此方法，如果有需要，请重写[getDefItemViewType]\n     *\n     * @param position Int\n     * @return Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 9598,
+  "secondPos" : 9598,
+  "firstEndPos" : 9788,
+  "secondEndPos" : 9788
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -19491,27 +19491,27 @@
   "firstEndPos" : 12721,
   "secondEndPos" : 12721
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called when a view created by this holder has been attached to a window.\n     * simple to solve item will layout using all\n     * [setFullSpan]\n     *\n     * @param holder\n     */",
-  "secondLabel" : "/**\n     * Called when a view created by this holder has been attached to a window.\n     * simple to solve item will layout using all\n     * [setFullSpan]\n     *\n     * @param holder\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 12733,
-  "secondPos" : 12733,
-  "firstEndPos" : 12923,
-  "secondEndPos" : 12923
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 12928,
-  "secondPos" : 12928,
+  "firstPos" : 12733,
+  "secondPos" : 12733,
   "firstEndPos" : 13196,
   "secondEndPos" : 13196
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called when a view created by this holder has been attached to a window.\n     * simple to solve item will layout using all\n     * [setFullSpan]\n     *\n     * @param holder\n     */",
+  "secondLabel" : "/**\n     * Called when a view created by this holder has been attached to a window.\n     * simple to solve item will layout using all\n     * [setFullSpan]\n     *\n     * @param holder\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 12733,
+  "secondPos" : 12733,
+  "firstEndPos" : 12923,
+  "secondEndPos" : 12923
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -22923,27 +22923,27 @@
   "firstEndPos" : 14751,
   "secondEndPos" : 14751
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Get the data item associated with the specified position in the data set.\n     *\n     * @param position Position of the item whose data we want within the adapter's\n     * data set.\n     * @return The data at the specified position.\n     */",
-  "secondLabel" : "/**\n     * Get the data item associated with the specified position in the data set.\n     *\n     * @param position Position of the item whose data we want within the adapter's\n     * data set.\n     * @return The data at the specified position.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 14763,
-  "secondPos" : 14763,
-  "firstEndPos" : 15014,
-  "secondEndPos" : 15014
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15019,
-  "secondPos" : 15019,
+  "firstPos" : 14763,
+  "secondPos" : 14763,
   "firstEndPos" : 15111,
   "secondEndPos" : 15111
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Get the data item associated with the specified position in the data set.\n     *\n     * @param position Position of the item whose data we want within the adapter's\n     * data set.\n     * @return The data at the specified position.\n     */",
+  "secondLabel" : "/**\n     * Get the data item associated with the specified position in the data set.\n     *\n     * @param position Position of the item whose data we want within the adapter's\n     * data set.\n     * @return The data at the specified position.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 14763,
+  "secondPos" : 14763,
+  "firstEndPos" : 15014,
+  "secondEndPos" : 15014
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -23748,27 +23748,27 @@
   "firstEndPos" : 15219,
   "secondEndPos" : 15219
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 如果返回 -1，表示不存在\n     * @param item T?\n     * @return Int\n     */",
-  "secondLabel" : "/**\n     * 如果返回 -1，表示不存在\n     * @param item T?\n     * @return Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15232,
-  "secondPos" : 15232,
-  "firstEndPos" : 15305,
-  "secondEndPos" : 15305
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15310,
-  "secondPos" : 15310,
+  "firstPos" : 15232,
+  "secondPos" : 15232,
   "firstEndPos" : 15438,
   "secondEndPos" : 15438
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 如果返回 -1，表示不存在\n     * @param item T?\n     * @return Int\n     */",
+  "secondLabel" : "/**\n     * 如果返回 -1，表示不存在\n     * @param item T?\n     * @return Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 15232,
+  "secondPos" : 15232,
+  "firstEndPos" : 15305,
+  "secondEndPos" : 15305
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -24287,27 +24287,27 @@
   "firstEndPos" : 15432,
   "secondEndPos" : 15432
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 用于保存需要设置点击事件的 item\n     */",
-  "secondLabel" : "/**\n     * 用于保存需要设置点击事件的 item\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15444,
-  "secondPos" : 15444,
-  "firstEndPos" : 15481,
-  "secondEndPos" : 15481
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15486,
-  "secondPos" : 15486,
+  "firstPos" : 15444,
+  "secondPos" : 15444,
   "firstEndPos" : 15538,
   "secondEndPos" : 15538
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 用于保存需要设置点击事件的 item\n     */",
+  "secondLabel" : "/**\n     * 用于保存需要设置点击事件的 item\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 15444,
+  "secondPos" : 15444,
+  "firstEndPos" : 15481,
+  "secondEndPos" : 15481
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -24650,27 +24650,27 @@
   "firstEndPos" : 15625,
   "secondEndPos" : 15625
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置需要点击事件的子view\n     * @param viewIds IntArray\n     */",
-  "secondLabel" : "/**\n     * 设置需要点击事件的子view\n     * @param viewIds IntArray\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15637,
-  "secondPos" : 15637,
-  "firstEndPos" : 15701,
-  "secondEndPos" : 15701
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15706,
-  "secondPos" : 15706,
+  "firstPos" : 15637,
+  "secondPos" : 15637,
   "firstEndPos" : 15852,
   "secondEndPos" : 15852
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置需要点击事件的子view\n     * @param viewIds IntArray\n     */",
+  "secondLabel" : "/**\n     * 设置需要点击事件的子view\n     * @param viewIds IntArray\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 15637,
+  "secondPos" : 15637,
+  "firstEndPos" : 15701,
+  "secondEndPos" : 15701
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -25024,27 +25024,27 @@
   "firstEndPos" : 15835,
   "secondEndPos" : 15835
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 用于保存需要设置长按点击事件的 item\n     */",
-  "secondLabel" : "/**\n     * 用于保存需要设置长按点击事件的 item\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15858,
-  "secondPos" : 15858,
-  "firstEndPos" : 15897,
-  "secondEndPos" : 15897
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15902,
-  "secondPos" : 15902,
+  "firstPos" : 15858,
+  "secondPos" : 15858,
   "firstEndPos" : 15958,
   "secondEndPos" : 15958
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 用于保存需要设置长按点击事件的 item\n     */",
+  "secondLabel" : "/**\n     * 用于保存需要设置长按点击事件的 item\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 15858,
+  "secondPos" : 15858,
+  "firstEndPos" : 15897,
+  "secondEndPos" : 15897
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -25387,27 +25387,27 @@
   "firstEndPos" : 16053,
   "secondEndPos" : 16053
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置需要长按点击事件的子view\n     * @param viewIds IntArray\n     */",
-  "secondLabel" : "/**\n     * 设置需要长按点击事件的子view\n     * @param viewIds IntArray\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 16065,
-  "secondPos" : 16065,
-  "firstEndPos" : 16131,
-  "secondEndPos" : 16131
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16136,
-  "secondPos" : 16136,
+  "firstPos" : 16065,
+  "secondPos" : 16065,
   "firstEndPos" : 16290,
   "secondEndPos" : 16290
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置需要长按点击事件的子view\n     * @param viewIds IntArray\n     */",
+  "secondLabel" : "/**\n     * 设置需要长按点击事件的子view\n     * @param viewIds IntArray\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 16065,
+  "secondPos" : 16065,
+  "firstEndPos" : 16131,
+  "secondEndPos" : 16131
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -25761,27 +25761,27 @@
   "firstEndPos" : 16273,
   "secondEndPos" : 16273
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 绑定 item 点击事件\n     * @param viewHolder VH\n     */",
-  "secondLabel" : "/**\n     * 绑定 item 点击事件\n     * @param viewHolder VH\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 16296,
-  "secondPos" : 16296,
-  "firstEndPos" : 16355,
-  "secondEndPos" : 16355
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16360,
-  "secondPos" : 16360,
+  "firstPos" : 16296,
+  "secondPos" : 16296,
   "firstEndPos" : 18754,
   "secondEndPos" : 18754
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 绑定 item 点击事件\n     * @param viewHolder VH\n     */",
+  "secondLabel" : "/**\n     * 绑定 item 点击事件\n     * @param viewHolder VH\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 16296,
+  "secondPos" : 16296,
+  "firstEndPos" : 16355,
+  "secondEndPos" : 16355
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -29919,27 +29919,27 @@
   "firstEndPos" : 18683,
   "secondEndPos" : 18683
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * override this method if you want to override click event logic\n     *\n     * 如果你想重新实现 item 点击事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     */",
-  "secondLabel" : "/**\n     * override this method if you want to override click event logic\n     *\n     * 如果你想重新实现 item 点击事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 18760,
-  "secondPos" : 18760,
-  "firstEndPos" : 18922,
-  "secondEndPos" : 18922
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 18927,
-  "secondPos" : 18927,
+  "firstPos" : 18760,
+  "secondPos" : 18760,
   "firstEndPos" : 19053,
   "secondEndPos" : 19053
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * override this method if you want to override click event logic\n     *\n     * 如果你想重新实现 item 点击事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     */",
+  "secondLabel" : "/**\n     * override this method if you want to override click event logic\n     *\n     * 如果你想重新实现 item 点击事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 18760,
+  "secondPos" : 18760,
+  "firstEndPos" : 18922,
+  "secondEndPos" : 18922
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -30304,27 +30304,27 @@
   "firstEndPos" : 19046,
   "secondEndPos" : 19046
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * override this method if you want to override longClick event logic\n     *\n     * 如果你想重新实现 item 长按事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     * @return\n     */",
-  "secondLabel" : "/**\n     * override this method if you want to override longClick event logic\n     *\n     * 如果你想重新实现 item 长按事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     * @return\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 19059,
-  "secondPos" : 19059,
-  "firstEndPos" : 19240,
-  "secondEndPos" : 19240
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 19245,
-  "secondPos" : 19245,
+  "firstPos" : 19059,
+  "secondPos" : 19059,
   "firstEndPos" : 19408,
   "secondEndPos" : 19408
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * override this method if you want to override longClick event logic\n     *\n     * 如果你想重新实现 item 长按事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     * @return\n     */",
+  "secondLabel" : "/**\n     * override this method if you want to override longClick event logic\n     *\n     * 如果你想重新实现 item 长按事件逻辑，请重写此方法\n     * @param v\n     * @param position\n     * @return\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 19059,
+  "secondPos" : 19059,
+  "firstEndPos" : 19240,
+  "secondEndPos" : 19240
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -31613,27 +31613,27 @@
   "firstEndPos" : 19733,
   "secondEndPos" : 19733
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * （可选重写）当 item 的 ViewHolder创建完毕后，执行此方法。\n     * 可在此对 ViewHolder 进行处理，例如进行 DataBinding 绑定 view\n     *\n     * @param viewHolder VH\n     * @param viewType Int\n     */",
-  "secondLabel" : "/**\n     * （可选重写）当 item 的 ViewHolder创建完毕后，执行此方法。\n     * 可在此对 ViewHolder 进行处理，例如进行 DataBinding 绑定 view\n     *\n     * @param viewHolder VH\n     * @param viewType Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 19745,
-  "secondPos" : 19745,
-  "firstEndPos" : 19916,
-  "secondEndPos" : 19916
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 19921,
-  "secondPos" : 19921,
+  "firstPos" : 19745,
+  "secondPos" : 19745,
   "firstEndPos" : 19997,
   "secondEndPos" : 19997
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * （可选重写）当 item 的 ViewHolder创建完毕后，执行此方法。\n     * 可在此对 ViewHolder 进行处理，例如进行 DataBinding 绑定 view\n     *\n     * @param viewHolder VH\n     * @param viewType Int\n     */",
+  "secondLabel" : "/**\n     * （可选重写）当 item 的 ViewHolder创建完毕后，执行此方法。\n     * 可在此对 ViewHolder 进行处理，例如进行 DataBinding 绑定 view\n     *\n     * @param viewHolder VH\n     * @param viewType Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 19745,
+  "secondPos" : 19745,
+  "firstEndPos" : 19916,
+  "secondEndPos" : 19916
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -31822,27 +31822,27 @@
   "firstEndPos" : 19997,
   "secondEndPos" : 19997
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Override this method and return your data size.\n     * 重写此方法，返回你的数据数量。\n     */",
-  "secondLabel" : "/**\n     * Override this method and return your data size.\n     * 重写此方法，返回你的数据数量。\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 20003,
-  "secondPos" : 20003,
-  "firstEndPos" : 20092,
-  "secondEndPos" : 20092
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 20097,
-  "secondPos" : 20097,
+  "firstPos" : 20003,
+  "secondPos" : 20003,
   "firstEndPos" : 20171,
   "secondEndPos" : 20171
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Override this method and return your data size.\n     * 重写此方法，返回你的数据数量。\n     */",
+  "secondLabel" : "/**\n     * Override this method and return your data size.\n     * 重写此方法，返回你的数据数量。\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 20003,
+  "secondPos" : 20003,
+  "firstEndPos" : 20092,
+  "secondEndPos" : 20092
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -32053,27 +32053,27 @@
   "firstEndPos" : 20165,
   "secondEndPos" : 20165
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Override this method and return your ViewType.\n     * 重写此方法，返回你的ViewType。\n     */",
-  "secondLabel" : "/**\n     * Override this method and return your ViewType.\n     * 重写此方法，返回你的ViewType。\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 20177,
-  "secondPos" : 20177,
-  "firstEndPos" : 20269,
-  "secondEndPos" : 20269
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 20274,
-  "secondPos" : 20274,
+  "firstPos" : 20177,
+  "secondPos" : 20177,
   "firstEndPos" : 20386,
   "secondEndPos" : 20386
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Override this method and return your ViewType.\n     * 重写此方法，返回你的ViewType。\n     */",
+  "secondLabel" : "/**\n     * Override this method and return your ViewType.\n     * 重写此方法，返回你的ViewType。\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 20177,
+  "secondPos" : 20177,
+  "firstEndPos" : 20269,
+  "secondEndPos" : 20269
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -32383,27 +32383,27 @@
   "firstEndPos" : 20379,
   "secondEndPos" : 20379
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Override this method and return your ViewHolder.\n     * 重写此方法，返回你的ViewHolder。\n     */",
-  "secondLabel" : "/**\n     * Override this method and return your ViewHolder.\n     * 重写此方法，返回你的ViewHolder。\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 20392,
-  "secondPos" : 20392,
-  "firstEndPos" : 20488,
-  "secondEndPos" : 20488
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 20493,
-  "secondPos" : 20493,
+  "firstPos" : 20392,
+  "secondPos" : 20392,
   "firstEndPos" : 20636,
   "secondEndPos" : 20636
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Override this method and return your ViewHolder.\n     * 重写此方法，返回你的ViewHolder。\n     */",
+  "secondLabel" : "/**\n     * Override this method and return your ViewHolder.\n     * 重写此方法，返回你的ViewHolder。\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 20392,
+  "secondPos" : 20392,
+  "firstEndPos" : 20488,
+  "secondEndPos" : 20488
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -33197,27 +33197,27 @@
   "firstEndPos" : 20802,
   "secondEndPos" : 20802
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 创建 ViewHolder。可以重写\n     *\n     * @param view View\n     * @return VH\n     */",
-  "secondLabel" : "/**\n     * 创建 ViewHolder。可以重写\n     *\n     * @param view View\n     * @return VH\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 20816,
-  "secondPos" : 20816,
-  "firstEndPos" : 20902,
-  "secondEndPos" : 20902
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 20907,
-  "secondPos" : 20907,
+  "firstPos" : 20816,
+  "secondPos" : 20816,
   "firstEndPos" : 21437,
   "secondEndPos" : 21437
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 创建 ViewHolder。可以重写\n     *\n     * @param view View\n     * @return VH\n     */",
+  "secondLabel" : "/**\n     * 创建 ViewHolder。可以重写\n     *\n     * @param view View\n     * @return VH\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 20816,
+  "secondPos" : 20816,
+  "firstEndPos" : 20902,
+  "secondEndPos" : 20902
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -34693,27 +34693,27 @@
   "firstEndPos" : 21431,
   "secondEndPos" : 21431
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * get generic parameter VH\n     *\n     * @param z\n     * @return\n     */",
-  "secondLabel" : "/**\n     * get generic parameter VH\n     *\n     * @param z\n     * @return\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 21443,
-  "secondPos" : 21443,
-  "firstEndPos" : 21524,
-  "secondEndPos" : 21524
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21529,
-  "secondPos" : 21529,
+  "firstPos" : 21443,
+  "secondPos" : 21443,
   "firstEndPos" : 22642,
   "secondEndPos" : 22642
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * get generic parameter VH\n     *\n     * @param z\n     * @return\n     */",
+  "secondLabel" : "/**\n     * get generic parameter VH\n     *\n     * @param z\n     * @return\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 21443,
+  "secondPos" : 21443,
+  "firstEndPos" : 21524,
+  "secondEndPos" : 21524
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -36750,27 +36750,27 @@
   "firstEndPos" : 22636,
   "secondEndPos" : 22636
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * try to create Generic VH instance\n     *\n     * @param z\n     * @param view\n     * @return\n     */",
-  "secondLabel" : "/**\n     * try to create Generic VH instance\n     *\n     * @param z\n     * @param view\n     * @return\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 22648,
-  "secondPos" : 22648,
-  "firstEndPos" : 22757,
-  "secondEndPos" : 22757
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 22762,
-  "secondPos" : 22762,
+  "firstPos" : 22648,
+  "secondPos" : 22648,
   "firstEndPos" : 23788,
   "secondEndPos" : 23788
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * try to create Generic VH instance\n     *\n     * @param z\n     * @param view\n     * @return\n     */",
+  "secondLabel" : "/**\n     * try to create Generic VH instance\n     *\n     * @param z\n     * @param view\n     * @return\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 22648,
+  "secondPos" : 22648,
+  "firstEndPos" : 22757,
+  "secondEndPos" : 22757
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -39049,27 +39049,27 @@
   "firstEndPos" : 23782,
   "secondEndPos" : 23782
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When set to true, the item will layout using all span area. That means, if orientation\n     * is vertical, the view will have full width; if orientation is horizontal, the view will\n     * have full height.\n     * if the hold view use StaggeredGridLayoutManager they should using all span area\n     *\n     * @param holder True if this item should traverse all spans.\n     */",
-  "secondLabel" : "/**\n     * When set to true, the item will layout using all span area. That means, if orientation\n     * is vertical, the view will have full width; if orientation is horizontal, the view will\n     * have full height.\n     * if the hold view use StaggeredGridLayoutManager they should using all span area\n     *\n     * @param holder True if this item should traverse all spans.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 23794,
-  "secondPos" : 23794,
-  "firstEndPos" : 24179,
-  "secondEndPos" : 24179
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 24184,
-  "secondPos" : 24184,
+  "firstPos" : 23794,
+  "secondPos" : 23794,
   "firstEndPos" : 24435,
   "secondEndPos" : 24435
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When set to true, the item will layout using all span area. That means, if orientation\n     * is vertical, the view will have full width; if orientation is horizontal, the view will\n     * have full height.\n     * if the hold view use StaggeredGridLayoutManager they should using all span area\n     *\n     * @param holder True if this item should traverse all spans.\n     */",
+  "secondLabel" : "/**\n     * When set to true, the item will layout using all span area. That means, if orientation\n     * is vertical, the view will have full width; if orientation is horizontal, the view will\n     * have full height.\n     * if the hold view use StaggeredGridLayoutManager they should using all span area\n     *\n     * @param holder True if this item should traverse all spans.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 23794,
+  "secondPos" : 23794,
+  "firstEndPos" : 24179,
+  "secondEndPos" : 24179
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -39566,27 +39566,27 @@
   "firstEndPos" : 24419,
   "secondEndPos" : 24419
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * get the specific view by position,e.g. getViewByPosition(2, R.id.textView)\n     *\n     * bind [RecyclerView.setAdapter] before use!\n     */",
-  "secondLabel" : "/**\n     * get the specific view by position,e.g. getViewByPosition(2, R.id.textView)\n     *\n     * bind [RecyclerView.setAdapter] before use!\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 24441,
-  "secondPos" : 24441,
-  "firstEndPos" : 24591,
-  "secondEndPos" : 24591
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 24596,
-  "secondPos" : 24596,
+  "firstPos" : 24441,
+  "secondPos" : 24441,
   "firstEndPos" : 24910,
   "secondEndPos" : 24910
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * get the specific view by position,e.g. getViewByPosition(2, R.id.textView)\n     *\n     * bind [RecyclerView.setAdapter] before use!\n     */",
+  "secondLabel" : "/**\n     * get the specific view by position,e.g. getViewByPosition(2, R.id.textView)\n     *\n     * bind [RecyclerView.setAdapter] before use!\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 24441,
+  "secondPos" : 24441,
+  "firstEndPos" : 24591,
+  "secondEndPos" : 24591
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -40446,27 +40446,27 @@
   "firstEndPos" : 25109,
   "secondEndPos" : 25109
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/********************************************************************************************/",
-  "secondLabel" : "/********************************************************************************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 25114,
-  "secondPos" : 25114,
-  "firstEndPos" : 25208,
-  "secondEndPos" : 25208
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 25213,
-  "secondPos" : 25213,
+  "firstPos" : 25114,
+  "secondPos" : 25114,
   "firstEndPos" : 26186,
   "secondEndPos" : 26186
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/********************************************************************************************/",
+  "secondLabel" : "/********************************************************************************************/",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 25114,
+  "secondPos" : 25114,
+  "firstEndPos" : 25208,
+  "secondEndPos" : 25208
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -43526,27 +43526,27 @@
   "firstEndPos" : 26578,
   "secondEndPos" : 26578
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 是否有 HeaderLayout\n     * @return Boolean\n     */",
-  "secondLabel" : "/**\n     * 是否有 HeaderLayout\n     * @return Boolean\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 26600,
-  "secondPos" : 26600,
-  "firstEndPos" : 26658,
-  "secondEndPos" : 26658
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 26663,
-  "secondPos" : 26663,
+  "firstPos" : 26600,
+  "secondPos" : 26600,
   "firstEndPos" : 26837,
   "secondEndPos" : 26837
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 是否有 HeaderLayout\n     * @return Boolean\n     */",
+  "secondLabel" : "/**\n     * 是否有 HeaderLayout\n     * @return Boolean\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 26600,
+  "secondPos" : 26600,
+  "firstEndPos" : 26658,
+  "secondEndPos" : 26658
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -45484,27 +45484,27 @@
   "firstEndPos" : 27656,
   "secondEndPos" : 27656
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
-  "secondLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 27672,
-  "secondPos" : 27672,
-  "firstEndPos" : 27749,
-  "secondEndPos" : 27749
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 27754,
-  "secondPos" : 27754,
+  "firstPos" : 27672,
+  "secondPos" : 27672,
   "firstEndPos" : 27780,
   "secondEndPos" : 27780
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
+  "secondLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 27672,
+  "secondPos" : 27672,
+  "firstEndPos" : 27749,
+  "secondEndPos" : 27749
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -45748,27 +45748,27 @@
   "firstEndPos" : 27897,
   "secondEndPos" : 27897
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 获取头布局\n     */",
-  "secondLabel" : "/**\n     * 获取头布局\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 27928,
-  "secondPos" : 27928,
-  "firstEndPos" : 27952,
-  "secondEndPos" : 27952
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 27957,
-  "secondPos" : 27957,
+  "firstPos" : 27928,
+  "secondPos" : 27928,
   "firstEndPos" : 27988,
   "secondEndPos" : 27988
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 获取头布局\n     */",
+  "secondLabel" : "/**\n     * 获取头布局\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 27928,
+  "secondPos" : 27928,
+  "firstEndPos" : 27952,
+  "secondEndPos" : 27952
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -46100,27 +46100,27 @@
   "firstEndPos" : 28359,
   "secondEndPos" : 28359
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/********************************************************************************************/",
-  "secondLabel" : "/********************************************************************************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 28364,
-  "secondPos" : 28364,
-  "firstEndPos" : 28458,
-  "secondEndPos" : 28458
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 28463,
-  "secondPos" : 28463,
+  "firstPos" : 28364,
+  "secondPos" : 28364,
   "firstEndPos" : 29436,
   "secondEndPos" : 29436
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/********************************************************************************************/",
+  "secondLabel" : "/********************************************************************************************/",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 28364,
+  "secondPos" : 28364,
+  "firstEndPos" : 28458,
+  "secondEndPos" : 28458
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -51424,27 +51424,27 @@
   "firstEndPos" : 31026,
   "secondEndPos" : 31026
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
-  "secondLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 31042,
-  "secondPos" : 31042,
-  "firstEndPos" : 31119,
-  "secondEndPos" : 31119
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 31124,
-  "secondPos" : 31124,
+  "firstPos" : 31042,
+  "secondPos" : 31042,
   "firstEndPos" : 31150,
   "secondEndPos" : 31150
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
+  "secondLabel" : "/**\n     * if addHeaderView will be return 1, if not will be return 0\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 31042,
+  "secondPos" : 31042,
+  "firstEndPos" : 31119,
+  "secondEndPos" : 31119
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -51688,27 +51688,27 @@
   "firstEndPos" : 31267,
   "secondEndPos" : 31267
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 获取脚布局\n     * @return LinearLayout?\n     */",
-  "secondLabel" : "/**\n     * 获取脚布局\n     * @return LinearLayout?\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 31297,
-  "secondPos" : 31297,
-  "firstEndPos" : 31350,
-  "secondEndPos" : 31350
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 31355,
-  "secondPos" : 31355,
+  "firstPos" : 31297,
+  "secondPos" : 31297,
   "firstEndPos" : 31386,
   "secondEndPos" : 31386
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 获取脚布局\n     * @return LinearLayout?\n     */",
+  "secondLabel" : "/**\n     * 获取脚布局\n     * @return LinearLayout?\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 31297,
+  "secondPos" : 31297,
+  "firstEndPos" : 31350,
+  "secondEndPos" : 31350
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -52051,27 +52051,27 @@
   "firstEndPos" : 31856,
   "secondEndPos" : 31856
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置空布局视图，注意：[data]必须为空数组\n     * @param emptyView View\n     */",
-  "secondLabel" : "/**\n     * 设置空布局视图，注意：[data]必须为空数组\n     * @param emptyView View\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 31861,
-  "secondPos" : 31861,
-  "firstEndPos" : 31932,
-  "secondEndPos" : 31932
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 31937,
-  "secondPos" : 31937,
+  "firstPos" : 31861,
+  "secondPos" : 31861,
   "firstEndPos" : 33091,
   "secondEndPos" : 33091
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置空布局视图，注意：[data]必须为空数组\n     * @param emptyView View\n     */",
+  "secondLabel" : "/**\n     * 设置空布局视图，注意：[data]必须为空数组\n     * @param emptyView View\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 31861,
+  "secondPos" : 31861,
+  "firstEndPos" : 31932,
+  "secondEndPos" : 31932
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -56209,27 +56209,27 @@
   "firstEndPos" : 33683,
   "secondEndPos" : 33683
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When the current adapter is empty, the BaseQuickAdapter can display a special view\n     * called the empty view. The empty view is used to provide feedback to the user\n     * that no data is available in this AdapterView.\n     *\n     * @return The view to show if the adapter is empty.\n     */",
-  "secondLabel" : "/**\n     * When the current adapter is empty, the BaseQuickAdapter can display a special view\n     * called the empty view. The empty view is used to provide feedback to the user\n     * that no data is available in this AdapterView.\n     *\n     * @return The view to show if the adapter is empty.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 33695,
-  "secondPos" : 33695,
-  "firstEndPos" : 33999,
-  "secondEndPos" : 33999
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 34004,
-  "secondPos" : 34004,
+  "firstPos" : 33695,
+  "secondPos" : 33695,
   "firstEndPos" : 34033,
   "secondEndPos" : 34033
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When the current adapter is empty, the BaseQuickAdapter can display a special view\n     * called the empty view. The empty view is used to provide feedback to the user\n     * that no data is available in this AdapterView.\n     *\n     * @return The view to show if the adapter is empty.\n     */",
+  "secondLabel" : "/**\n     * When the current adapter is empty, the BaseQuickAdapter can display a special view\n     * called the empty view. The empty view is used to provide feedback to the user\n     * that no data is available in this AdapterView.\n     *\n     * @return The view to show if the adapter is empty.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 33695,
+  "secondPos" : 33695,
+  "firstEndPos" : 33999,
+  "secondEndPos" : 33999
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -56550,27 +56550,27 @@
   "firstEndPos" : 34292,
   "secondEndPos" : 34292
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * add animation when you want to show time\n     *\n     * @param holder\n     */",
-  "secondLabel" : "/**\n     * add animation when you want to show time\n     *\n     * @param holder\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 34298,
-  "secondPos" : 34298,
-  "firstEndPos" : 34385,
-  "secondEndPos" : 34385
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 34390,
-  "secondPos" : 34390,
+  "firstPos" : 34298,
+  "secondPos" : 34298,
   "firstEndPos" : 34918,
   "secondEndPos" : 34918
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * add animation when you want to show time\n     *\n     * @param holder\n     */",
+  "secondLabel" : "/**\n     * add animation when you want to show time\n     *\n     * @param holder\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 34298,
+  "secondPos" : 34298,
+  "firstEndPos" : 34385,
+  "secondEndPos" : 34385
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -57628,27 +57628,27 @@
   "firstEndPos" : 34888,
   "secondEndPos" : 34888
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 开始执行动画方法\n     * 可以重写此方法，实行更多行为\n     *\n     * @param anim\n     * @param index\n     */",
-  "secondLabel" : "/**\n     * 开始执行动画方法\n     * 可以重写此方法，实行更多行为\n     *\n     * @param anim\n     * @param index\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 34924,
-  "secondPos" : 34924,
-  "firstEndPos" : 35019,
-  "secondEndPos" : 35019
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 35024,
-  "secondPos" : 35024,
+  "firstPos" : 34924,
+  "secondPos" : 34924,
   "firstEndPos" : 35109,
   "secondEndPos" : 35109
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 开始执行动画方法\n     * 可以重写此方法，实行更多行为\n     *\n     * @param anim\n     * @param index\n     */",
+  "secondLabel" : "/**\n     * 开始执行动画方法\n     * 可以重写此方法，实行更多行为\n     *\n     * @param anim\n     * @param index\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 34924,
+  "secondPos" : 34924,
+  "firstEndPos" : 35019,
+  "secondEndPos" : 35019
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -57925,27 +57925,27 @@
   "firstEndPos" : 35103,
   "secondEndPos" : 35103
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 内置默认动画类型\n     */",
-  "secondLabel" : "/**\n     * 内置默认动画类型\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 35115,
-  "secondPos" : 35115,
-  "firstEndPos" : 35142,
-  "secondEndPos" : 35142
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 35147,
-  "secondPos" : 35147,
+  "firstPos" : 35115,
+  "secondPos" : 35115,
   "firstEndPos" : 35246,
   "secondEndPos" : 35246
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 内置默认动画类型\n     */",
+  "secondLabel" : "/**\n     * 内置默认动画类型\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 35115,
+  "secondPos" : 35115,
+  "firstEndPos" : 35142,
+  "secondEndPos" : 35142
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -58101,27 +58101,27 @@
   "firstEndPos" : 35240,
   "secondEndPos" : 35240
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 使用内置默认动画设置\n     * @param animationType AnimationType\n     */",
-  "secondLabel" : "/**\n     * 使用内置默认动画设置\n     * @param animationType AnimationType\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 35252,
-  "secondPos" : 35252,
-  "firstEndPos" : 35323,
-  "secondEndPos" : 35323
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 35328,
-  "secondPos" : 35328,
+  "firstPos" : 35252,
+  "secondPos" : 35252,
   "firstEndPos" : 35763,
   "secondEndPos" : 35763
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 使用内置默认动画设置\n     * @param animationType AnimationType\n     */",
+  "secondLabel" : "/**\n     * 使用内置默认动画设置\n     * @param animationType AnimationType\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 35252,
+  "secondPos" : 35252,
+  "firstEndPos" : 35323,
+  "secondEndPos" : 35323
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -58970,27 +58970,27 @@
   "firstEndPos" : 35848,
   "secondEndPos" : 35848
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例\n     *\n     * @param data\n     */",
-  "secondLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例\n     *\n     * @param data\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 35854,
-  "secondPos" : 35854,
-  "firstEndPos" : 35949,
-  "secondEndPos" : 35949
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 35954,
-  "secondPos" : 35954,
+  "firstPos" : 35854,
+  "secondPos" : 35854,
   "firstEndPos" : 36180,
   "secondEndPos" : 36180
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例\n     *\n     * @param data\n     */",
+  "secondLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例\n     *\n     * @param data\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 35854,
+  "secondPos" : 35854,
+  "firstEndPos" : 35949,
+  "secondEndPos" : 35949
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -59476,27 +59476,27 @@
   "firstEndPos" : 36173,
   "secondEndPos" : 36173
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例，替换原有内存引用。\n     * 通常情况下，如非必要，请使用[setList]修改内容\n     *\n     * @param data\n     */",
-  "secondLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例，替换原有内存引用。\n     * 通常情况下，如非必要，请使用[setList]修改内容\n     *\n     * @param data\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 36186,
-  "secondPos" : 36186,
-  "firstEndPos" : 36326,
-  "secondEndPos" : 36326
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 36331,
-  "secondPos" : 36331,
+  "firstPos" : 36186,
+  "secondPos" : 36186,
   "firstEndPos" : 36643,
   "secondEndPos" : 36643
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例，替换原有内存引用。\n     * 通常情况下，如非必要，请使用[setList]修改内容\n     *\n     * @param data\n     */",
+  "secondLabel" : "/**\n     * setting up a new instance to data;\n     * 设置新的数据实例，替换原有内存引用。\n     * 通常情况下，如非必要，请使用[setList]修改内容\n     *\n     * @param data\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 36186,
+  "secondPos" : 36186,
+  "firstEndPos" : 36326,
+  "secondEndPos" : 36326
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -60301,27 +60301,27 @@
   "firstEndPos" : 36637,
   "secondEndPos" : 36637
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * use data to replace all item in mData. this method is different [setList],\n     * it doesn't change the [BaseQuickAdapter.data] reference\n     * Deprecated, Please use [setList]\n     *\n     * @param newData data collection\n     */",
-  "secondLabel" : "/**\n     * use data to replace all item in mData. this method is different [setList],\n     * it doesn't change the [BaseQuickAdapter.data] reference\n     * Deprecated, Please use [setList]\n     *\n     * @param newData data collection\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 36649,
-  "secondPos" : 36649,
-  "firstEndPos" : 36890,
-  "secondEndPos" : 36890
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 36895,
-  "secondPos" : 36895,
+  "firstPos" : 36649,
+  "secondPos" : 36649,
   "firstEndPos" : 37059,
   "secondEndPos" : 37059
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * use data to replace all item in mData. this method is different [setList],\n     * it doesn't change the [BaseQuickAdapter.data] reference\n     * Deprecated, Please use [setList]\n     *\n     * @param newData data collection\n     */",
+  "secondLabel" : "/**\n     * use data to replace all item in mData. this method is different [setList],\n     * it doesn't change the [BaseQuickAdapter.data] reference\n     * Deprecated, Please use [setList]\n     *\n     * @param newData data collection\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 36649,
+  "secondPos" : 36649,
+  "firstEndPos" : 36890,
+  "secondEndPos" : 36890
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -60774,27 +60774,27 @@
   "firstEndPos" : 37052,
   "secondEndPos" : 37052
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 使用新的数据集合，改变原有数据集合内容。\n     * 注意：不会替换原有的内存引用，只是替换内容\n     *\n     * @param list Collection<T>?\n     */",
-  "secondLabel" : "/**\n     * 使用新的数据集合，改变原有数据集合内容。\n     * 注意：不会替换原有的内存引用，只是替换内容\n     *\n     * @param list Collection<T>?\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 37065,
-  "secondPos" : 37065,
-  "firstEndPos" : 37174,
-  "secondEndPos" : 37174
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 37179,
-  "secondPos" : 37179,
+  "firstPos" : 37065,
+  "secondPos" : 37065,
   "firstEndPos" : 37794,
   "secondEndPos" : 37794
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 使用新的数据集合，改变原有数据集合内容。\n     * 注意：不会替换原有的内存引用，只是替换内容\n     *\n     * @param list Collection<T>?\n     */",
+  "secondLabel" : "/**\n     * 使用新的数据集合，改变原有数据集合内容。\n     * 注意：不会替换原有的内存引用，只是替换内容\n     *\n     * @param list Collection<T>?\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 37065,
+  "secondPos" : 37065,
+  "firstEndPos" : 37174,
+  "secondEndPos" : 37174
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -62556,27 +62556,27 @@
   "firstEndPos" : 37788,
   "secondEndPos" : 37788
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * change data\n     * 改变某一位置数据\n     */",
-  "secondLabel" : "/**\n     * change data\n     * 改变某一位置数据\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 37800,
-  "secondPos" : 37800,
-  "firstEndPos" : 37846,
-  "secondEndPos" : 37846
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 37851,
-  "secondPos" : 37851,
+  "firstPos" : 37800,
+  "secondPos" : 37800,
   "firstEndPos" : 38069,
   "secondEndPos" : 38069
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * change data\n     * 改变某一位置数据\n     */",
+  "secondLabel" : "/**\n     * change data\n     * 改变某一位置数据\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 37800,
+  "secondPos" : 37800,
+  "firstEndPos" : 37846,
+  "secondEndPos" : 37846
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -63337,27 +63337,27 @@
   "firstEndPos" : 38062,
   "secondEndPos" : 38062
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * add one new data in to certain location\n     * 在指定位置添加一条新数据\n     *\n     * @param position\n     */",
-  "secondLabel" : "/**\n     * add one new data in to certain location\n     * 在指定位置添加一条新数据\n     *\n     * @param position\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 38075,
-  "secondPos" : 38075,
-  "firstEndPos" : 38183,
-  "secondEndPos" : 38183
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 38188,
-  "secondPos" : 38188,
+  "firstPos" : 38075,
+  "secondPos" : 38075,
   "firstEndPos" : 38391,
   "secondEndPos" : 38391
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * add one new data in to certain location\n     * 在指定位置添加一条新数据\n     *\n     * @param position\n     */",
+  "secondLabel" : "/**\n     * add one new data in to certain location\n     * 在指定位置添加一条新数据\n     *\n     * @param position\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 38075,
+  "secondPos" : 38075,
+  "firstEndPos" : 38183,
+  "secondEndPos" : 38183
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -64019,27 +64019,27 @@
   "firstEndPos" : 38384,
   "secondEndPos" : 38384
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * add one new data\n     * 添加一条新数据\n     */",
-  "secondLabel" : "/**\n     * add one new data\n     * 添加一条新数据\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 38397,
-  "secondPos" : 38397,
-  "firstEndPos" : 38447,
-  "secondEndPos" : 38447
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 38452,
-  "secondPos" : 38452,
+  "firstPos" : 38397,
+  "secondPos" : 38397,
   "firstEndPos" : 38625,
   "secondEndPos" : 38625
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * add one new data\n     * 添加一条新数据\n     */",
+  "secondLabel" : "/**\n     * add one new data\n     * 添加一条新数据\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 38397,
+  "secondPos" : 38397,
+  "firstEndPos" : 38447,
+  "secondEndPos" : 38447
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -64657,27 +64657,27 @@
   "firstEndPos" : 38618,
   "secondEndPos" : 38618
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * add new data in to certain location\n     * 在指定位置添加数据\n     *\n     * @param position the insert position\n     * @param newData  the new data collection\n     */",
-  "secondLabel" : "/**\n     * add new data in to certain location\n     * 在指定位置添加数据\n     *\n     * @param position the insert position\n     * @param newData  the new data collection\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 38631,
-  "secondPos" : 38631,
-  "firstEndPos" : 38799,
-  "secondEndPos" : 38799
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 38804,
-  "secondPos" : 38804,
+  "firstPos" : 38631,
+  "secondPos" : 38631,
   "firstEndPos" : 39058,
   "secondEndPos" : 39058
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * add new data in to certain location\n     * 在指定位置添加数据\n     *\n     * @param position the insert position\n     * @param newData  the new data collection\n     */",
+  "secondLabel" : "/**\n     * add new data in to certain location\n     * 在指定位置添加数据\n     *\n     * @param position the insert position\n     * @param newData  the new data collection\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 38631,
+  "secondPos" : 38631,
+  "firstEndPos" : 38799,
+  "secondEndPos" : 38799
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -66252,27 +66252,27 @@
   "firstEndPos" : 39296,
   "secondEndPos" : 39296
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * remove the item associated with the specified position of adapter\n     * 删除指定位置的数据\n     *\n     * @param position\n     */",
-  "secondLabel" : "/**\n     * remove the item associated with the specified position of adapter\n     * 删除指定位置的数据\n     *\n     * @param position\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 39309,
-  "secondPos" : 39309,
-  "firstEndPos" : 39440,
-  "secondEndPos" : 39440
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 39445,
-  "secondPos" : 39445,
+  "firstPos" : 39309,
+  "secondPos" : 39309,
   "firstEndPos" : 39834,
   "secondEndPos" : 39620
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * remove the item associated with the specified position of adapter\n     * 删除指定位置的数据\n     *\n     * @param position\n     */",
+  "secondLabel" : "/**\n     * remove the item associated with the specified position of adapter\n     * 删除指定位置的数据\n     *\n     * @param position\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 39309,
+  "secondPos" : 39309,
+  "firstEndPos" : 39440,
+  "secondEndPos" : 39440
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -67847,27 +67847,27 @@
   "firstEndPos" : 39987,
   "secondEndPos" : 40306
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * compatible getLoadMoreViewCount and getEmptyViewCount may change\n     *\n     * @param size Need compatible data size\n     */",
-  "secondLabel" : "/**\n     * compatible getLoadMoreViewCount and getEmptyViewCount may change\n     *\n     * @param size Need compatible data size\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 40001,
-  "secondPos" : 40320,
-  "firstEndPos" : 40136,
-  "secondEndPos" : 40455
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 40141,
-  "secondPos" : 40460,
+  "firstPos" : 40001,
+  "secondPos" : 40320,
   "firstEndPos" : 40285,
   "secondEndPos" : 40604
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * compatible getLoadMoreViewCount and getEmptyViewCount may change\n     *\n     * @param size Need compatible data size\n     */",
+  "secondLabel" : "/**\n     * compatible getLoadMoreViewCount and getEmptyViewCount may change\n     *\n     * @param size Need compatible data size\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 40001,
+  "secondPos" : 40320,
+  "firstEndPos" : 40136,
+  "secondEndPos" : 40455
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -68210,27 +68210,27 @@
   "firstEndPos" : 40269,
   "secondEndPos" : 40588
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置Diff Callback，用于快速生成 Diff Config。\n     *\n     * @param diffCallback ItemCallback<T>\n     */",
-  "secondLabel" : "/**\n     * 设置Diff Callback，用于快速生成 Diff Config。\n     *\n     * @param diffCallback ItemCallback<T>\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 40291,
-  "secondPos" : 40610,
-  "firstEndPos" : 40395,
-  "secondEndPos" : 40714
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 40400,
-  "secondPos" : 40719,
+  "firstPos" : 40291,
+  "secondPos" : 40610,
   "firstEndPos" : 40548,
   "secondEndPos" : 40867
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置Diff Callback，用于快速生成 Diff Config。\n     *\n     * @param diffCallback ItemCallback<T>\n     */",
+  "secondLabel" : "/**\n     * 设置Diff Callback，用于快速生成 Diff Config。\n     *\n     * @param diffCallback ItemCallback<T>\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 40291,
+  "secondPos" : 40610,
+  "firstEndPos" : 40395,
+  "secondEndPos" : 40714
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -68650,27 +68650,27 @@
   "firstEndPos" : 40541,
   "secondEndPos" : 40860
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置Diff Config。如需自定义线程，请使用此方法。\n     * 在使用 [setDiffNewData] 前，必须设置此方法\n     * @param config BrvahAsyncDifferConfig<T>\n     */",
-  "secondLabel" : "/**\n     * 设置Diff Config。如需自定义线程，请使用此方法。\n     * 在使用 [setDiffNewData] 前，必须设置此方法\n     * @param config BrvahAsyncDifferConfig<T>\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 40554,
-  "secondPos" : 40873,
-  "firstEndPos" : 40687,
-  "secondEndPos" : 41006
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 40692,
-  "secondPos" : 41011,
+  "firstPos" : 40554,
+  "secondPos" : 40873,
   "firstEndPos" : 40805,
   "secondEndPos" : 41124
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置Diff Config。如需自定义线程，请使用此方法。\n     * 在使用 [setDiffNewData] 前，必须设置此方法\n     * @param config BrvahAsyncDifferConfig<T>\n     */",
+  "secondLabel" : "/**\n     * 设置Diff Config。如需自定义线程，请使用此方法。\n     * 在使用 [setDiffNewData] 前，必须设置此方法\n     * @param config BrvahAsyncDifferConfig<T>\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 40554,
+  "secondPos" : 40873,
+  "firstEndPos" : 40687,
+  "secondEndPos" : 41006
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -69288,27 +69288,27 @@
   "firstEndPos" : 40997,
   "secondEndPos" : 41316
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 使用 Diff 设置新实例.\n     * 此方法为异步Diff，无需考虑性能问题.\n     * 使用之前请先设置 [setDiffCallback] 或者 [setDiffConfig].\n     *\n     * Use Diff setting up a new instance to data.\n     * This method is asynchronous.\n     *\n     * @param newData MutableList<T>?\n     */",
-  "secondLabel" : "/**\n     * 使用 Diff 设置新实例.\n     * 此方法为异步Diff，无需考虑性能问题.\n     * 使用之前请先设置 [setDiffCallback] 或者 [setDiffConfig].\n     *\n     * Use Diff setting up a new instance to data.\n     * This method is asynchronous.\n     *\n     * @param newData MutableList<T>?\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 41009,
-  "secondPos" : 41328,
-  "firstEndPos" : 41263,
-  "secondEndPos" : 41582
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 41268,
-  "secondPos" : 41587,
+  "firstPos" : 41009,
+  "secondPos" : 41328,
   "firstEndPos" : 41544,
   "secondEndPos" : 41863
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 使用 Diff 设置新实例.\n     * 此方法为异步Diff，无需考虑性能问题.\n     * 使用之前请先设置 [setDiffCallback] 或者 [setDiffConfig].\n     *\n     * Use Diff setting up a new instance to data.\n     * This method is asynchronous.\n     *\n     * @param newData MutableList<T>?\n     */",
+  "secondLabel" : "/**\n     * 使用 Diff 设置新实例.\n     * 此方法为异步Diff，无需考虑性能问题.\n     * 使用之前请先设置 [setDiffCallback] 或者 [setDiffConfig].\n     *\n     * Use Diff setting up a new instance to data.\n     * This method is asynchronous.\n     *\n     * @param newData MutableList<T>?\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 41009,
+  "secondPos" : 41328,
+  "firstEndPos" : 41263,
+  "secondEndPos" : 41582
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -69783,27 +69783,27 @@
   "firstEndPos" : 41537,
   "secondEndPos" : 41856
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 使用 DiffResult 设置新实例.\n     * Use DiffResult setting up a new instance to data.\n     *\n     * @param diffResult DiffResult\n     * @param newData New Data\n     */",
-  "secondLabel" : "/**\n     * 使用 DiffResult 设置新实例.\n     * Use DiffResult setting up a new instance to data.\n     *\n     * @param diffResult DiffResult\n     * @param newData New Data\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 41550,
-  "secondPos" : 41869,
-  "firstEndPos" : 41720,
-  "secondEndPos" : 42039
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 41725,
-  "secondPos" : 42044,
+  "firstPos" : 41550,
+  "secondPos" : 41869,
   "firstEndPos" : 42097,
   "secondEndPos" : 42416
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 使用 DiffResult 设置新实例.\n     * Use DiffResult setting up a new instance to data.\n     *\n     * @param diffResult DiffResult\n     * @param newData New Data\n     */",
+  "secondLabel" : "/**\n     * 使用 DiffResult 设置新实例.\n     * Use DiffResult setting up a new instance to data.\n     *\n     * @param diffResult DiffResult\n     * @param newData New Data\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 41550,
+  "secondPos" : 41869,
+  "firstEndPos" : 41720,
+  "secondEndPos" : 42039
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -70531,27 +70531,27 @@
   "firstEndPos" : 42091,
   "secondEndPos" : 42410
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/************************************** Set Listener ****************************************/",
-  "secondLabel" : "/************************************** Set Listener ****************************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 42103,
-  "secondPos" : 42422,
-  "firstEndPos" : 42197,
-  "secondEndPos" : 42516
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 42203,
-  "secondPos" : 42522,
+  "firstPos" : 42103,
+  "secondPos" : 42422,
   "firstEndPos" : 42328,
   "secondEndPos" : 42647
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/************************************** Set Listener ****************************************/",
+  "secondLabel" : "/************************************** Set Listener ****************************************/",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 42103,
+  "secondPos" : 42422,
+  "firstEndPos" : 42197,
+  "secondEndPos" : 42516
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

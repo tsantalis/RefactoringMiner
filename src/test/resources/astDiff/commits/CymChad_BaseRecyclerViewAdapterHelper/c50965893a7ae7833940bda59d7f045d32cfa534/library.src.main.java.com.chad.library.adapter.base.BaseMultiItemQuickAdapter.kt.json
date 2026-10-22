@@ -340,27 +340,27 @@
   "firstEndPos" : 180,
   "secondEndPos" : 180
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 多类型布局\n *\n */",
-  "secondLabel" : "/**\n * 多类型布局\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 182,
-  "secondPos" : 182,
-  "firstEndPos" : 201,
-  "secondEndPos" : 201
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 202,
-  "secondPos" : 202,
+  "firstPos" : 182,
+  "secondPos" : 182,
   "firstEndPos" : 3876,
   "secondEndPos" : 3912
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 多类型布局\n *\n */",
+  "secondLabel" : "/**\n * 多类型布局\n *\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 182,
+  "secondPos" : 182,
+  "firstEndPos" : 201,
+  "secondEndPos" : 201
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3618,27 +3618,27 @@
   "firstEndPos" : 1637,
   "secondEndPos" : 1649
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 调用此方法，设置多布局\n     * @param type Int\n     * @param listener Int\n     */",
-  "secondLabel" : "/**\n     * 调用此方法，设置多布局\n     * @param type Int\n     * @param listener Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1650,
-  "secondPos" : 1662,
-  "firstEndPos" : 1730,
-  "secondEndPos" : 1742
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1735,
-  "secondPos" : 1747,
+  "firstPos" : 1650,
+  "secondPos" : 1662,
   "firstEndPos" : 1903,
   "secondEndPos" : 1921
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 调用此方法，设置多布局\n     * @param type Int\n     * @param listener Int\n     */",
+  "secondLabel" : "/**\n     * 调用此方法，设置多布局\n     * @param type Int\n     * @param listener Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1650,
+  "secondPos" : 1662,
+  "firstEndPos" : 1730,
+  "secondEndPos" : 1742
 }, {
   "firstType" : "function_modifier",
   "secondType" : "function_modifier",

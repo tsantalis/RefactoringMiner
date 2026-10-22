@@ -725,27 +725,27 @@
   "firstEndPos" : 414,
   "secondEndPos" : 414
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This UI test looks like it should succeed, but it will actually fail because\n * it triggers a leak.\n *\n * Run this test with:\n *\n * ./gradlew leakcanary-sample:connectedCheck\n *\n * To set this up, we installed a special RefWatcher dedicated to detecting leaks in\n * instrumentation tests in [InstrumentationExampleApplication], and then added the FailTestOnLeakRunListener\n * to the config of our build.gradle:\n *\n * testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"\n *\n *\n * Why is this class named \"TuPeuxPasTest\"?\n *\n * This test fails, intentionally. In French, \"Tu peux pas test\" could mean \"you cannot test\"\n * written with poor grammar. Except, that's not what it means.\n * If you're curious, interested in French and have time to waste:\n * https://www.youtube.com/watch?v=DZZpbmAc-0A\n * https://www.youtube.com/watch?v=nHeAA6X-XUQ\n */",
-  "secondLabel" : "/**\n * This UI test looks like it should succeed, but it will actually fail because\n * it triggers a leak.\n *\n * Run this test with:\n *\n * ./gradlew leakcanary-sample:connectedCheck\n *\n * To set this up, we installed a special ObjectWatcher dedicated to detecting leaks in\n * instrumentation tests in [InstrumentationExampleApplication], and then added the FailTestOnLeakRunListener\n * to the config of our build.gradle:\n *\n * testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"\n *\n *\n * Why is this class named \"TuPeuxPasTest\"?\n *\n * This test fails, intentionally. In French, \"Tu peux pas test\" could mean \"you cannot test\"\n * written with poor grammar. Except, that's not what it means.\n * If you're curious, interested in French and have time to waste:\n * https://www.youtube.com/watch?v=DZZpbmAc-0A\n * https://www.youtube.com/watch?v=nHeAA6X-XUQ\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 416,
-  "secondPos" : 416,
-  "firstEndPos" : 1300,
-  "secondEndPos" : 1303
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1301,
-  "secondPos" : 1304,
+  "firstPos" : 416,
+  "secondPos" : 416,
   "firstEndPos" : 1610,
   "secondEndPos" : 1613
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This UI test looks like it should succeed, but it will actually fail because\n * it triggers a leak.\n *\n * Run this test with:\n *\n * ./gradlew leakcanary-sample:connectedCheck\n *\n * To set this up, we installed a special RefWatcher dedicated to detecting leaks in\n * instrumentation tests in [InstrumentationExampleApplication], and then added the FailTestOnLeakRunListener\n * to the config of our build.gradle:\n *\n * testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"\n *\n *\n * Why is this class named \"TuPeuxPasTest\"?\n *\n * This test fails, intentionally. In French, \"Tu peux pas test\" could mean \"you cannot test\"\n * written with poor grammar. Except, that's not what it means.\n * If you're curious, interested in French and have time to waste:\n * https://www.youtube.com/watch?v=DZZpbmAc-0A\n * https://www.youtube.com/watch?v=nHeAA6X-XUQ\n */",
+  "secondLabel" : "/**\n * This UI test looks like it should succeed, but it will actually fail because\n * it triggers a leak.\n *\n * Run this test with:\n *\n * ./gradlew leakcanary-sample:connectedCheck\n *\n * To set this up, we installed a special ObjectWatcher dedicated to detecting leaks in\n * instrumentation tests in [InstrumentationExampleApplication], and then added the FailTestOnLeakRunListener\n * to the config of our build.gradle:\n *\n * testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"\n *\n *\n * Why is this class named \"TuPeuxPasTest\"?\n *\n * This test fails, intentionally. In French, \"Tu peux pas test\" could mean \"you cannot test\"\n * written with poor grammar. Except, that's not what it means.\n * If you're curious, interested in French and have time to waste:\n * https://www.youtube.com/watch?v=DZZpbmAc-0A\n * https://www.youtube.com/watch?v=nHeAA6X-XUQ\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 416,
+  "secondPos" : 416,
+  "firstEndPos" : 1300,
+  "secondEndPos" : 1303
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1055,27 +1055,27 @@
   "firstEndPos" : 1398,
   "secondEndPos" : 1401
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A dummy test that fails because MainActivity is leaking\n   */",
-  "secondLabel" : "/**\n   * A dummy test that fails because MainActivity is leaking\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1403,
-  "secondPos" : 1406,
-  "firstEndPos" : 1473,
-  "secondEndPos" : 1476
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1476,
-  "secondPos" : 1479,
+  "firstPos" : 1403,
+  "secondPos" : 1406,
   "firstEndPos" : 1608,
   "secondEndPos" : 1611
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A dummy test that fails because MainActivity is leaking\n   */",
+  "secondLabel" : "/**\n   * A dummy test that fails because MainActivity is leaking\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1403,
+  "secondPos" : 1406,
+  "firstEndPos" : 1473,
+  "secondEndPos" : 1476
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

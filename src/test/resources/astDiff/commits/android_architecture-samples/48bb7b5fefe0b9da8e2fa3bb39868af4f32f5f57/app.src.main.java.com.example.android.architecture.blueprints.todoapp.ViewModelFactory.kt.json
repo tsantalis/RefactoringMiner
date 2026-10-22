@@ -813,27 +813,27 @@
   "firstEndPos" : 1199,
   "secondEndPos" : 1199
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A creator is used to inject the product ID into the ViewModel\n *\n *\n * This creator is to showcase how to inject dependencies into ViewModels. It's not\n * actually necessary in this case, as the product ID can be passed in a public method.\n */",
-  "secondLabel" : "/**\n * Factory for all ViewModels.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1201,
-  "secondPos" : 1201,
-  "firstEndPos" : 1451,
-  "secondEndPos" : 1239
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1452,
-  "secondPos" : 1240,
+  "firstPos" : 1201,
+  "secondPos" : 1201,
   "firstEndPos" : 2401,
   "secondEndPos" : 2161
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A creator is used to inject the product ID into the ViewModel\n *\n *\n * This creator is to showcase how to inject dependencies into ViewModels. It's not\n * actually necessary in this case, as the product ID can be passed in a public method.\n */",
+  "secondLabel" : "/**\n * Factory for all ViewModels.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1201,
+  "secondPos" : 1201,
+  "firstEndPos" : 1451,
+  "secondEndPos" : 1239
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

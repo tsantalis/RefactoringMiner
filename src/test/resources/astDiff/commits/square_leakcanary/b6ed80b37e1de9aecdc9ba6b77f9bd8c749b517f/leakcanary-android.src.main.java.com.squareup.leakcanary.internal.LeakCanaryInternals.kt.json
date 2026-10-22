@@ -3519,27 +3519,27 @@
   "firstEndPos" : 2584,
   "secondEndPos" : 2520
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
-  "secondLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2590,
-  "secondPos" : 2526,
-  "firstEndPos" : 2685,
-  "secondEndPos" : 2621
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2690,
-  "secondPos" : 2626,
+  "firstPos" : 2590,
+  "secondPos" : 2526,
   "firstEndPos" : 2913,
   "secondEndPos" : 2849
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
+  "secondLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2590,
+  "secondPos" : 2526,
+  "firstEndPos" : 2685,
+  "secondEndPos" : 2621
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

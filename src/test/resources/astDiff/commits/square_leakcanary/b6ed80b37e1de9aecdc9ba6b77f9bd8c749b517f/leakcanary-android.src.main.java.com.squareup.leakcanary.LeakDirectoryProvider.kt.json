@@ -175,27 +175,27 @@
   "firstEndPos" : 683,
   "secondEndPos" : 670
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
-  "secondLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 685,
-  "secondPos" : 672,
-  "firstEndPos" : 768,
-  "secondEndPos" : 755
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 769,
-  "secondPos" : 756,
+  "firstPos" : 685,
+  "secondPos" : 672,
   "firstEndPos" : 1171,
   "secondEndPos" : 1158
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
+  "secondLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 685,
+  "secondPos" : 672,
+  "firstEndPos" : 768,
+  "secondEndPos" : 755
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -384,27 +384,27 @@
   "firstEndPos" : 854,
   "secondEndPos" : 841
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * @return [HeapDumper.RETRY_LATER] if a new heap dump file could not be created.\n   */",
-  "secondLabel" : "/**\n   * @return [HeapDumper.RETRY_LATER] if a new heap dump file could not be created.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 859,
-  "secondPos" : 846,
-  "firstEndPos" : 952,
-  "secondEndPos" : 939
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 955,
-  "secondPos" : 942,
+  "firstPos" : 859,
+  "secondPos" : 846,
   "firstEndPos" : 983,
   "secondEndPos" : 970
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * @return [HeapDumper.RETRY_LATER] if a new heap dump file could not be created.\n   */",
+  "secondLabel" : "/**\n   * @return [HeapDumper.RETRY_LATER] if a new heap dump file could not be created.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 859,
+  "secondPos" : 846,
+  "firstEndPos" : 952,
+  "secondEndPos" : 939
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -538,27 +538,27 @@
   "firstEndPos" : 1020,
   "secondEndPos" : 1007
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Removes all heap dumps and analysis results, except for heap dumps that haven't been\n   * analyzed yet.\n   */",
-  "secondLabel" : "/**\n   * Removes all heap dumps and analysis results, except for heap dumps that haven't been\n   * analyzed yet.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1024,
-  "secondPos" : 1011,
-  "firstEndPos" : 1142,
-  "secondEndPos" : 1129
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1145,
-  "secondPos" : 1132,
+  "firstPos" : 1024,
+  "secondPos" : 1011,
   "firstEndPos" : 1169,
   "secondEndPos" : 1156
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Removes all heap dumps and analysis results, except for heap dumps that haven't been\n   * analyzed yet.\n   */",
+  "secondLabel" : "/**\n   * Removes all heap dumps and analysis results, except for heap dumps that haven't been\n   * analyzed yet.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1024,
+  "secondPos" : 1011,
+  "firstEndPos" : 1142,
+  "secondEndPos" : 1129
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

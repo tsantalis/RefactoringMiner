@@ -2595,12 +2595,23 @@
   "firstEndPos" : 1644,
   "secondEndPos" : 1872
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 1646,
+  "secondPos" : 1874,
+  "firstEndPos" : 6001,
+  "secondEndPos" : 12442
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Integration test for the Task List screen.\n */",
   "secondLabel" : "/**\n * Integration test for the Task List screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 1646,
   "secondPos" : 1874,
   "firstEndPos" : 1699,
@@ -2610,23 +2621,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO - Use FragmentScenario, see: https://github.com/android/android-test/issues/291",
   "secondLabel" : "// TODO - Use FragmentScenario, see: https://github.com/android/android-test/issues/291",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 1700,
   "secondPos" : 1928,
   "firstEndPos" : 1787,
   "secondEndPos" : 2015
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1788,
-  "secondPos" : 2016,
-  "firstEndPos" : 6001,
-  "secondEndPos" : 12442
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -16560,7 +16560,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7084,
+  "firstPos" : 7017,
   "secondPos" : 6217,
   "firstEndPos" : 7676,
   "secondEndPos" : 7116
@@ -17979,7 +17979,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7749,
+  "firstPos" : 7682,
   "secondPos" : 7122,
   "firstEndPos" : 8341,
   "secondEndPos" : 8021
@@ -19431,7 +19431,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8414,
+  "firstPos" : 8347,
   "secondPos" : 8027,
   "firstEndPos" : 8928,
   "secondEndPos" : 8642
@@ -20674,7 +20674,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9001,
+  "firstPos" : 8934,
   "secondPos" : 8648,
   "firstEndPos" : 9670,
   "secondEndPos" : 9421
@@ -22280,7 +22280,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9743,
+  "firstPos" : 9676,
   "secondPos" : 9427,
   "firstEndPos" : 10424,
   "secondEndPos" : 10212
@@ -23919,7 +23919,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10497,
+  "firstPos" : 10430,
   "secondPos" : 10218,
   "firstEndPos" : 11206,
   "secondEndPos" : 11007
@@ -25492,7 +25492,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15672,
+  "firstPos" : 15605,
   "secondPos" : 11013,
   "firstEndPos" : 15979,
   "secondEndPos" : 11416
@@ -26163,7 +26163,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16052,
+  "firstPos" : 15985,
   "secondPos" : 11422,
   "firstEndPos" : 16396,
   "secondEndPos" : 11862
@@ -26845,7 +26845,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16469,
+  "firstPos" : 16402,
   "secondPos" : 11868,
   "firstEndPos" : 16801,
   "secondEndPos" : 12296

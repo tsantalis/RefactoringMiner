@@ -1484,27 +1484,27 @@
   "firstEndPos" : 1541,
   "secondEndPos" : 1662
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for the statistics screen.\n */",
-  "secondLabel" : "/**\n * Integration test for the statistics screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1543,
-  "secondPos" : 1664,
-  "firstEndPos" : 1586,
-  "secondEndPos" : 1718
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1587,
-  "secondPos" : 1719,
+  "firstPos" : 1543,
+  "secondPos" : 1664,
   "firstEndPos" : 3085,
   "secondEndPos" : 3117
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for the statistics screen.\n */",
+  "secondLabel" : "/**\n * Integration test for the statistics screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1543,
+  "secondPos" : 1664,
+  "firstEndPos" : 1586,
+  "secondEndPos" : 1718
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

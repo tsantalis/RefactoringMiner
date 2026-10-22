@@ -2199,27 +2199,27 @@
   "firstEndPos" : 2929,
   "secondEndPos" : 2184
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
-  "secondLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2931,
-  "secondPos" : 2218,
-  "firstEndPos" : 2995,
-  "secondEndPos" : 2282
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2996,
-  "secondPos" : 2283,
+  "firstPos" : 2931,
+  "secondPos" : 2218,
   "firstEndPos" : 24394,
   "secondEndPos" : 24078
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
+  "secondLabel" : "/**\n * Not thread safe, should be used from a single thread.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2931,
+  "secondPos" : 2218,
+  "firstEndPos" : 2995,
+  "secondEndPos" : 2282
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2683,27 +2683,27 @@
   "firstEndPos" : 3157,
   "secondEndPos" : 2444
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * string id to (position, length)\n   * TODO Prune any string that's not used as a class name or field name\n   */",
-  "secondLabel" : "/**\n   * string id to (position, length)\n   * TODO Prune any string that's not used as a class name or field name\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3161,
-  "secondPos" : 2448,
-  "firstEndPos" : 3280,
-  "secondEndPos" : 2567
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3283,
-  "secondPos" : 2570,
+  "firstPos" : 3161,
+  "secondPos" : 2448,
   "firstEndPos" : 3356,
   "secondEndPos" : 2643
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * string id to (position, length)\n   * TODO Prune any string that's not used as a class name or field name\n   */",
+  "secondLabel" : "/**\n   * string id to (position, length)\n   * TODO Prune any string that's not used as a class name or field name\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3161,
+  "secondPos" : 2448,
+  "firstEndPos" : 3280,
+  "secondEndPos" : 2567
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2991,27 +2991,27 @@
   "firstEndPos" : 3356,
   "secondEndPos" : 2643
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * class id to string id\n   */",
-  "secondLabel" : "/**\n   * class id to string id\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3360,
-  "secondPos" : 2647,
-  "firstEndPos" : 3396,
-  "secondEndPos" : 2683
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3399,
-  "secondPos" : 2686,
+  "firstPos" : 3360,
+  "secondPos" : 2647,
   "firstEndPos" : 3450,
   "secondEndPos" : 2737
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * class id to string id\n   */",
+  "secondLabel" : "/**\n   * class id to string id\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3360,
+  "secondPos" : 2647,
+  "firstEndPos" : 3396,
+  "secondEndPos" : 2683
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -31976,27 +31976,27 @@
   "firstEndPos" : 19647,
   "secondEndPos" : 17101
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
-  "secondLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 19655,
-  "secondPos" : 17109,
-  "firstEndPos" : 19761,
-  "secondEndPos" : 17215
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 19764,
-  "secondPos" : 17218,
+  "firstPos" : 19655,
+  "secondPos" : 17109,
   "firstEndPos" : 19926,
   "secondEndPos" : 17380
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
+  "secondLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 19655,
+  "secondPos" : 17109,
+  "firstEndPos" : 19761,
+  "secondEndPos" : 17215
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -32977,27 +32977,27 @@
   "firstEndPos" : 20454,
   "secondEndPos" : 18571
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * One list of field values per class\n     */",
-  "secondLabel" : "/**\n     * One list of field values per class\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 20461,
-  "secondPos" : 18578,
-  "firstEndPos" : 20514,
-  "secondEndPos" : 18631
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 20519,
-  "secondPos" : 18636,
+  "firstPos" : 20461,
+  "secondPos" : 18578,
   "firstEndPos" : 20558,
   "secondEndPos" : 18674
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * One list of field values per class\n     */",
+  "secondLabel" : "/**\n     * One list of field values per class\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 20461,
+  "secondPos" : 18578,
+  "firstEndPos" : 20514,
+  "secondEndPos" : 18631
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -39049,27 +39049,27 @@
   "firstEndPos" : 22981,
   "secondEndPos" : 22665
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
-  "secondLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 22987,
-  "secondPos" : 22671,
-  "firstEndPos" : 23525,
-  "secondEndPos" : 23209
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 23530,
-  "secondPos" : 23214,
+  "firstPos" : 22987,
+  "secondPos" : 22671,
   "firstEndPos" : 23561,
   "secondEndPos" : 23245
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
+  "secondLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 22987,
+  "secondPos" : 22671,
+  "firstEndPos" : 23525,
+  "secondEndPos" : 23209
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

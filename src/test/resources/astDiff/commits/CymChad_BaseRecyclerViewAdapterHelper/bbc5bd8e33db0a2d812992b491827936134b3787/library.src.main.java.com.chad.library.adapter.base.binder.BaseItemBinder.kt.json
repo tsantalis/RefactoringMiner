@@ -439,27 +439,27 @@
   "firstEndPos" : 227,
   "secondEndPos" : 228
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Binder 的基类\n */",
-  "secondLabel" : "/**\n * Binder 的基类\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 229,
-  "secondPos" : 230,
-  "firstEndPos" : 250,
-  "secondEndPos" : 251
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 251,
-  "secondPos" : 252,
+  "firstPos" : 229,
+  "secondPos" : 230,
   "firstEndPos" : 4089,
   "secondEndPos" : 4091
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Binder 的基类\n */",
+  "secondLabel" : "/**\n * Binder 的基类\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 229,
+  "secondPos" : 230,
+  "firstEndPos" : 250,
+  "secondEndPos" : 251
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -1264,27 +1264,27 @@
   "firstEndPos" : 479,
   "secondEndPos" : 481
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "//    internal var _adapter: BaseBinderAdapter? = null",
-  "secondLabel" : "//    internal var _adapter: BaseBinderAdapter? = null",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 483,
-  "secondPos" : 485,
-  "firstEndPos" : 537,
-  "secondEndPos" : 539
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 542,
-  "secondPos" : 544,
+  "firstPos" : 483,
+  "secondPos" : 485,
   "firstEndPos" : 580,
   "secondEndPos" : 582
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "//    internal var _adapter: BaseBinderAdapter? = null",
+  "secondLabel" : "//    internal var _adapter: BaseBinderAdapter? = null",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 483,
+  "secondPos" : 485,
+  "firstEndPos" : 537,
+  "secondEndPos" : 539
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2034,27 +2034,27 @@
   "firstEndPos" : 1319,
   "secondEndPos" : 1321
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 在此处对设置item数据\n     * @param holder VH\n     * @param data T\n     */",
-  "secondLabel" : "/**\n     * 在此处对设置item数据\n     * @param holder VH\n     * @param data T\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1325,
-  "secondPos" : 1327,
-  "firstEndPos" : 1401,
-  "secondEndPos" : 1403
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1406,
-  "secondPos" : 1408,
+  "firstPos" : 1325,
+  "secondPos" : 1327,
   "firstEndPos" : 1447,
   "secondEndPos" : 1449
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 在此处对设置item数据\n     * @param holder VH\n     * @param data T\n     */",
+  "secondLabel" : "/**\n     * 在此处对设置item数据\n     * @param holder VH\n     * @param data T\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1325,
+  "secondPos" : 1327,
+  "firstEndPos" : 1401,
+  "secondEndPos" : 1403
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2221,27 +2221,27 @@
   "firstEndPos" : 1446,
   "secondEndPos" : 1448
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 使用局部刷新时候，会调用此方法\n     * @param holder VH\n     * @param data T\n     * @param payloads List<Any>\n     */",
-  "secondLabel" : "/**\n     * 使用局部刷新时候，会调用此方法\n     * @param holder VH\n     * @param data T\n     * @param payloads List<Any>\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1453,
-  "secondPos" : 1455,
-  "firstEndPos" : 1565,
-  "secondEndPos" : 1567
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1570,
-  "secondPos" : 1572,
+  "firstPos" : 1453,
+  "secondPos" : 1455,
   "firstEndPos" : 1631,
   "secondEndPos" : 1633
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 使用局部刷新时候，会调用此方法\n     * @param holder VH\n     * @param data T\n     * @param payloads List<Any>\n     */",
+  "secondLabel" : "/**\n     * 使用局部刷新时候，会调用此方法\n     * @param holder VH\n     * @param data T\n     * @param payloads List<Any>\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1453,
+  "secondPos" : 1455,
+  "firstEndPos" : 1565,
+  "secondEndPos" : 1567
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2716,27 +2716,27 @@
   "firstEndPos" : 1711,
   "secondEndPos" : 1713
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been attached to a window.\n     * 当此[BaseItemBinder]出现在屏幕上的时候，会调用此方法\n     *\n     * This can be used as a reasonable signal that the view is about to be seen\n     * by the user. If the [BaseItemBinder] previously freed any resources in\n     * [onViewDetachedFromWindow][.onViewDetachedFromWindow]\n     * those resources should be restored here.\n     *\n     * @param holder Holder of the view being attached\n     */",
-  "secondLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been attached to a window.\n     * 当此[BaseItemBinder]出现在屏幕上的时候，会调用此方法\n     *\n     * This can be used as a reasonable signal that the view is about to be seen\n     * by the user. If the [BaseItemBinder] previously freed any resources in\n     * [onViewDetachedFromWindow][.onViewDetachedFromWindow]\n     * those resources should be restored here.\n     *\n     * @param holder Holder of the view being attached\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1723,
-  "secondPos" : 1725,
-  "firstEndPos" : 2203,
-  "secondEndPos" : 2205
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2208,
-  "secondPos" : 2210,
+  "firstPos" : 1723,
+  "secondPos" : 1725,
   "firstEndPos" : 2254,
   "secondEndPos" : 2256
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been attached to a window.\n     * 当此[BaseItemBinder]出现在屏幕上的时候，会调用此方法\n     *\n     * This can be used as a reasonable signal that the view is about to be seen\n     * by the user. If the [BaseItemBinder] previously freed any resources in\n     * [onViewDetachedFromWindow][.onViewDetachedFromWindow]\n     * those resources should be restored here.\n     *\n     * @param holder Holder of the view being attached\n     */",
+  "secondLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been attached to a window.\n     * 当此[BaseItemBinder]出现在屏幕上的时候，会调用此方法\n     *\n     * This can be used as a reasonable signal that the view is about to be seen\n     * by the user. If the [BaseItemBinder] previously freed any resources in\n     * [onViewDetachedFromWindow][.onViewDetachedFromWindow]\n     * those resources should be restored here.\n     *\n     * @param holder Holder of the view being attached\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1723,
+  "secondPos" : 1725,
+  "firstEndPos" : 2203,
+  "secondEndPos" : 2205
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2859,27 +2859,27 @@
   "firstEndPos" : 2254,
   "secondEndPos" : 2256
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been detached from its\n     * window.\n     * 当此[BaseItemBinder]从屏幕上移除的时候，会调用此方法\n     *\n     * Becoming detached from the window is not necessarily a permanent condition;\n     * the consumer of an Adapter's views may choose to cache views offscreen while they\n     * are not visible, attaching and detaching them as appropriate.\n     *\n     * @param holder Holder of the view being detached\n     */",
-  "secondLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been detached from its\n     * window.\n     * 当此[BaseItemBinder]从屏幕上移除的时候，会调用此方法\n     *\n     * Becoming detached from the window is not necessarily a permanent condition;\n     * the consumer of an Adapter's views may choose to cache views offscreen while they\n     * are not visible, attaching and detaching them as appropriate.\n     *\n     * @param holder Holder of the view being detached\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2260,
-  "secondPos" : 2262,
-  "firstEndPos" : 2724,
-  "secondEndPos" : 2726
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2729,
-  "secondPos" : 2731,
+  "firstPos" : 2260,
+  "secondPos" : 2262,
   "firstEndPos" : 2777,
   "secondEndPos" : 2779
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been detached from its\n     * window.\n     * 当此[BaseItemBinder]从屏幕上移除的时候，会调用此方法\n     *\n     * Becoming detached from the window is not necessarily a permanent condition;\n     * the consumer of an Adapter's views may choose to cache views offscreen while they\n     * are not visible, attaching and detaching them as appropriate.\n     *\n     * @param holder Holder of the view being detached\n     */",
+  "secondLabel" : "/**\n     * Called when a view created by this [BaseItemBinder] has been detached from its\n     * window.\n     * 当此[BaseItemBinder]从屏幕上移除的时候，会调用此方法\n     *\n     * Becoming detached from the window is not necessarily a permanent condition;\n     * the consumer of an Adapter's views may choose to cache views offscreen while they\n     * are not visible, attaching and detaching them as appropriate.\n     *\n     * @param holder Holder of the view being detached\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2260,
+  "secondPos" : 2262,
+  "firstEndPos" : 2724,
+  "secondEndPos" : 2726
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3002,27 +3002,27 @@
   "firstEndPos" : 2777,
   "secondEndPos" : 2779
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * item 若想实现条目点击事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     */",
-  "secondLabel" : "/**\n     * item 若想实现条目点击事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2783,
-  "secondPos" : 2785,
-  "firstEndPos" : 2895,
-  "secondEndPos" : 2897
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2900,
-  "secondPos" : 2902,
+  "firstPos" : 2783,
+  "secondPos" : 2785,
   "firstEndPos" : 2967,
   "secondEndPos" : 2969
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * item 若想实现条目点击事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     */",
+  "secondLabel" : "/**\n     * item 若想实现条目点击事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2783,
+  "secondPos" : 2785,
+  "firstEndPos" : 2895,
+  "secondEndPos" : 2897
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3288,27 +3288,27 @@
   "firstEndPos" : 2967,
   "secondEndPos" : 2969
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * item 若想实现条目长按事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
-  "secondLabel" : "/**\n     * item 若想实现条目长按事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2973,
-  "secondPos" : 2975,
-  "firstEndPos" : 3108,
-  "secondEndPos" : 3110
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3113,
-  "secondPos" : 3115,
+  "firstPos" : 2973,
+  "secondPos" : 2975,
   "firstEndPos" : 3219,
   "secondEndPos" : 3221
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * item 若想实现条目长按事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
+  "secondLabel" : "/**\n     * item 若想实现条目长按事件则重写该方法\n     * @param holder VH\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2973,
+  "secondPos" : 2975,
+  "firstEndPos" : 3108,
+  "secondEndPos" : 3110
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3651,27 +3651,27 @@
   "firstEndPos" : 3213,
   "secondEndPos" : 3215
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * item 子控件的点击事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     */",
-  "secondLabel" : "/**\n     * item 子控件的点击事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3225,
-  "secondPos" : 3227,
-  "firstEndPos" : 3353,
-  "secondEndPos" : 3355
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3358,
-  "secondPos" : 3360,
+  "firstPos" : 3225,
+  "secondPos" : 3227,
   "firstEndPos" : 3430,
   "secondEndPos" : 3432
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * item 子控件的点击事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     */",
+  "secondLabel" : "/**\n     * item 子控件的点击事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3225,
+  "secondPos" : 3227,
+  "firstEndPos" : 3353,
+  "secondEndPos" : 3355
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3937,27 +3937,27 @@
   "firstEndPos" : 3430,
   "secondEndPos" : 3432
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * item 子控件的长按事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
-  "secondLabel" : "/**\n     * item 子控件的长按事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3436,
-  "secondPos" : 3438,
-  "firstEndPos" : 3587,
-  "secondEndPos" : 3589
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3592,
-  "secondPos" : 3594,
+  "firstPos" : 3436,
+  "secondPos" : 3438,
   "firstEndPos" : 3703,
   "secondEndPos" : 3705
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * item 子控件的长按事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
+  "secondLabel" : "/**\n     * item 子控件的长按事件\n     * @param holder VH\n     * @param view View\n     * @param data T\n     * @param position Int\n     * @return Boolean\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3436,
+  "secondPos" : 3438,
+  "firstEndPos" : 3587,
+  "secondEndPos" : 3589
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

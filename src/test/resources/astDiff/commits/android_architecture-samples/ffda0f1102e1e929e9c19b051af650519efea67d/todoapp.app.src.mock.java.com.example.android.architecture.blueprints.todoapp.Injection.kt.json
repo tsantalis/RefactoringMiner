@@ -714,27 +714,27 @@
   "firstEndPos" : 1074,
   "secondEndPos" : 1074
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Enables injection of mock implementations for\n * [TasksDataSource] at compile time. This is useful for testing, since it allows us to use\n * a fake instance of the class to isolate the dependencies and run a test hermetically.\n */",
-  "secondLabel" : "/**\n * Enables injection of mock implementations for\n * [TasksDataSource] at compile time. This is useful for testing, since it allows us to use\n * a fake instance of the class to isolate the dependencies and run a test hermetically.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1076,
-  "secondPos" : 1243,
-  "firstEndPos" : 1313,
-  "secondEndPos" : 1480
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1314,
-  "secondPos" : 1481,
+  "firstPos" : 1076,
+  "secondPos" : 1243,
   "firstEndPos" : 1516,
   "secondEndPos" : 1789
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Enables injection of mock implementations for\n * [TasksDataSource] at compile time. This is useful for testing, since it allows us to use\n * a fake instance of the class to isolate the dependencies and run a test hermetically.\n */",
+  "secondLabel" : "/**\n * Enables injection of mock implementations for\n * [TasksDataSource] at compile time. This is useful for testing, since it allows us to use\n * a fake instance of the class to isolate the dependencies and run a test hermetically.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1076,
+  "secondPos" : 1243,
+  "firstEndPos" : 1313,
+  "secondEndPos" : 1480
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

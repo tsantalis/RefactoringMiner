@@ -736,27 +736,27 @@
   "firstEndPos" : 1085,
   "secondEndPos" : 1085
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Enables injection of production implementations for\n * [TasksDataSource] at compile time.\n */",
-  "secondLabel" : "/**\n * Enables injection of production implementations for\n * [TasksDataSource] at compile time.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1087,
-  "secondPos" : 1087,
-  "firstEndPos" : 1187,
-  "secondEndPos" : 1187
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1188,
-  "secondPos" : 1188,
+  "firstPos" : 1087,
+  "secondPos" : 1087,
   "firstEndPos" : 1405,
   "secondEndPos" : 1479
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Enables injection of production implementations for\n * [TasksDataSource] at compile time.\n */",
+  "secondLabel" : "/**\n * Enables injection of production implementations for\n * [TasksDataSource] at compile time.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1087,
+  "secondPos" : 1087,
+  "firstEndPos" : 1187,
+  "secondEndPos" : 1187
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

@@ -3046,27 +3046,27 @@
   "firstEndPos" : 1305,
   "secondEndPos" : 1407
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Two char arrays to ensure we keep going after finding the first one",
-  "secondLabel" : "// Two char arrays to ensure we keep going after finding the first one",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1315,
-  "secondPos" : 1417,
-  "firstEndPos" : 1385,
-  "secondEndPos" : 1487
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1388,
-  "secondPos" : 1490,
+  "firstPos" : 1315,
+  "secondPos" : 1417,
   "firstEndPos" : 1624,
   "secondEndPos" : 1726
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Two char arrays to ensure we keep going after finding the first one",
+  "secondLabel" : "// Two char arrays to ensure we keep going after finding the first one",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1315,
+  "secondPos" : 1417,
+  "firstEndPos" : 1385,
+  "secondEndPos" : 1487
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

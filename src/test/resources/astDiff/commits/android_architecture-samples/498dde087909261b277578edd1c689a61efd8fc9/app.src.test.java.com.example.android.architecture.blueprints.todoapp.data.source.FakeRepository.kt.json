@@ -857,27 +857,27 @@
   "firstEndPos" : 1103,
   "secondEndPos" : 1103
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Implementation of a remote data source with static access to the data for easy testing.\n */",
-  "secondLabel" : "/**\n * Implementation of a remote data source with static access to the data for easy testing.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1105,
-  "secondPos" : 1105,
-  "firstEndPos" : 1203,
-  "secondEndPos" : 1203
-}, {
   "firstType" : "object_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1204,
-  "secondPos" : 1204,
+  "firstPos" : 1105,
+  "secondPos" : 1105,
   "firstEndPos" : 2991,
   "secondEndPos" : 3295
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Implementation of a remote data source with static access to the data for easy testing.\n */",
+  "secondLabel" : "/**\n * Implementation of a remote data source with static access to the data for easy testing.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1105,
+  "secondPos" : 1105,
+  "firstEndPos" : 1203,
+  "secondEndPos" : 1203
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -955,17 +955,6 @@
   "secondPos" : 1250,
   "firstEndPos" : 1328,
   "secondEndPos" : 1317
-}, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1251,
-  "secondPos" : 1250,
-  "firstEndPos" : 1258,
-  "secondEndPos" : 1253
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

@@ -1914,24 +1914,13 @@
   "secondEndPos" : 1352
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A SHA1 hash that represents this leak trace. This can be useful to group together similar\n   * leak traces.\n   *\n   * The signature is a hash of [suspectReferenceSubpath].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 1318,
-  "secondPos" : 1904,
-  "firstEndPos" : 1347,
-  "secondEndPos" : 2090
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 1318,
-  "secondPos" : 2093,
+  "secondPos" : 1904,
   "firstEndPos" : 1347,
   "secondEndPos" : 2114
 }, {
@@ -1947,24 +1936,13 @@
   "secondEndPos" : 2440
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A unique SHA1 hash that represents this group of leak traces.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.signature] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 1318,
-  "secondPos" : 5739,
-  "firstEndPos" : 1347,
-  "secondEndPos" : 5953
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 1318,
-  "secondPos" : 5956,
+  "secondPos" : 5739,
   "firstEndPos" : 1347,
   "secondEndPos" : 5986
 }, {
@@ -2002,15 +1980,15 @@
   "secondEndPos" : 1326
 }, {
   "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
+  "secondType" : "modifiers",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1318,
-  "secondPos" : 2419,
+  "secondPos" : 5956,
   "firstEndPos" : 1325,
-  "secondEndPos" : 2422
+  "secondEndPos" : 5964
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2072,11 +2050,33 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1326,
+  "secondPos" : 2093,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 2096
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
   "secondParentType" : "class_parameter",
   "firstPos" : 1326,
   "secondPos" : 2419,
   "firstEndPos" : 1329,
   "secondEndPos" : 2422
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1326,
+  "secondPos" : 5965,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 5968
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2118,9 +2118,31 @@
   "firstParentType" : "binding_pattern_kind",
   "secondParentType" : "binding_pattern_kind",
   "firstPos" : 1326,
+  "secondPos" : 2093,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 2096
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1326,
   "secondPos" : 2419,
   "firstEndPos" : 1329,
   "secondEndPos" : 2422
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1326,
+  "secondPos" : 5965,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 5968
 }, {
   "firstType" : "property_declaration_keyword",
   "secondType" : "property_declaration_keyword",

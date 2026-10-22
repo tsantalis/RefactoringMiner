@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
+import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLAttribute;
@@ -172,7 +173,17 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
 
         if(srcFieldDeclaration != null && dstFieldDeclaration != null && PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath())) {
-            mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
+            //the leading comments are matched by the CommentMatcher and JavaDocMatcher, i.e., /** doc */ val x = 1 and val x = 1
+            if(srcFieldDeclaration.getType().equals(dstFieldDeclaration.getType())) {
+                mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
+                List<Tree> srcChildren = childrenAfterComments(srcFieldDeclaration, LANG1);
+                List<Tree> dstChildren = childrenAfterComments(dstFieldDeclaration, LANG2);
+                if(srcChildren.size() == dstChildren.size()) {
+                    for(int i = 0; i < srcChildren.size(); i++) {
+                        mappingStore.addMappingRecursively(srcChildren.get(i), dstChildren.get(i));
+                    }
+                }
+            }
         }
         else if(Constants.isCrossLanguage(LANG1, LANG2)) {
             JavaToKotlinMigration.handleFieldDeclarationMapping(mappingStore, srcAttr, dstAttr, srcFieldDeclaration, dstFieldDeclaration, LANG1, LANG2, optimizationData.getDeferredFlattenings());
@@ -306,18 +317,33 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
             if (initializerMapped && srcVarDeclaration != null && dstVarDeclaration != null && !srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty()) {
                 //the leaves of the initializers are matched through the initializer mapper, i.e., the object literals of StyleSheet.create({...}) through their attributes
-                new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0),mappingStore);
+                new LeafMatcher(LANG1, LANG2).match(firstChildAfterComments(srcVarDeclaration, LANG1),firstChildAfterComments(dstVarDeclaration, LANG2),mappingStore);
                 com.github.gumtreediff.utils.Pair<Tree, Tree> equalOperators = Helpers.findPairOfType(srcVarDeclaration,dstVarDeclaration, LANG1.EQUAL_OPERATOR, LANG2.EQUAL_OPERATOR);
                 if (equalOperators != null)
                     mappingStore.addMapping(equalOperators.first,equalOperators.second);
+            }
+            else if (srcVarDeclaration != null && dstVarDeclaration != null &&
+                    (!leadingComments(srcVarDeclaration, LANG1).isEmpty() || !leadingComments(dstVarDeclaration, LANG2).isEmpty())) {
+                //the leading comments of the Kotlin property declarations are matched by the JavaDocMatcher and CommentMatcher
+                ExtendedMultiMappingStore leafMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
+                new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,leafMappings);
+                List<Tree> srcComments = leadingComments(srcVarDeclaration, LANG1);
+                List<Tree> dstComments = leadingComments(dstVarDeclaration, LANG2);
+                for (Mapping leafMapping : leafMappings) {
+                    if (!isPartOf(leafMapping.first, srcComments) && !isPartOf(leafMapping.second, dstComments))
+                        mappingStore.addMapping(leafMapping.first, leafMapping.second);
+                }
             }
             else
                 new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
             new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
                     .match(srcTree, dstTree, mappingStore);
-            if (srcVarDeclaration != null && dstVarDeclaration != null)
-                if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
-                    mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
+            if (srcVarDeclaration != null && dstVarDeclaration != null) {
+                Tree srcFirstChild = firstChildAfterComments(srcVarDeclaration, LANG1);
+                Tree dstFirstChild = firstChildAfterComments(dstVarDeclaration, LANG2);
+                if (srcFirstChild != null && dstFirstChild != null && srcFirstChild.getType().name.equals(dstFirstChild.getType().name))
+                    mappingStore.addMapping(srcFirstChild,dstFirstChild);
+            }
         }
         else {
             new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
@@ -401,5 +427,33 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             }
         }
         return null;
+    }
+
+    //the leading comments of the Kotlin property declarations, i.e., /** doc */ of /** doc */ private val x = 1
+    private static List<Tree> leadingComments(Tree tree, Constants LANG) {
+        List<Tree> children = tree.getChildren();
+        int first = 0;
+        while (first < children.size() && (children.get(first).getType().name.equals(LANG.LINE_COMMENT) || children.get(first).getType().name.equals(LANG.BLOCK_COMMENT)))
+            first++;
+        return children.subList(0, first);
+    }
+
+    //the children after the leading comments, i.e., the modifiers, val, x, =, 1 of /** doc */ private val x = 1
+    private static List<Tree> childrenAfterComments(Tree tree, Constants LANG) {
+        List<Tree> children = tree.getChildren();
+        return children.subList(leadingComments(tree, LANG).size(), children.size());
+    }
+
+    private static boolean isPartOf(Tree tree, List<Tree> comments) {
+        for (Tree comment : comments) {
+            if (comment == tree || comment.getDescendants().contains(tree))
+                return true;
+        }
+        return false;
+    }
+
+    private static Tree firstChildAfterComments(Tree tree, Constants LANG) {
+        List<Tree> children = childrenAfterComments(tree, LANG);
+        return children.isEmpty() ? null : children.get(0);
     }
 }

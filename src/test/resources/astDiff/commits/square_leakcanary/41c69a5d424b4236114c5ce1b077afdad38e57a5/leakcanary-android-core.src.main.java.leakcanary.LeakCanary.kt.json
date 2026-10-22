@@ -182,7 +182,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 200,
-  "secondPos" : 495,
+  "secondPos" : 219,
   "firstEndPos" : 3486,
   "secondEndPos" : 6466
 }, {
@@ -226,7 +226,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 223,
-  "secondPos" : 634,
+  "secondPos" : 518,
   "firstEndPos" : 3192,
   "secondEndPos" : 5587
 }, {
@@ -303,7 +303,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 246,
-  "secondPos" : 942,
+  "secondPos" : 657,
   "firstEndPos" : 274,
   "secondEndPos" : 970
 }, {
@@ -395,12 +395,23 @@
   "firstEndPos" : 274,
   "secondEndPos" : 970
 }, {
+  "firstType" : "class_parameter",
+  "secondType" : "class_parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "primary_constructor",
+  "secondParentType" : "primary_constructor",
+  "firstPos" : 280,
+  "secondPos" : 976,
+  "firstEndPos" : 532,
+  "secondEndPos" : 1296
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
   "secondLabel" : "/**\n     * Whether LeakCanary should dump the heap when enough retained instances are found. This needs\n     * to be true for LeakCanary to work, but sometimes you may want to temporarily disable\n     * LeakCanary (e.g. for a product demo).\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
   "firstPos" : 280,
   "secondPos" : 657,
   "firstEndPos" : 485,
@@ -410,23 +421,12 @@
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
   "secondLabel" : "/**\n     * If [dumpHeapWhenDebugging] is false then LeakCanary will not dump the heap\n     * when the debugger is attached. The debugger can create temporary memory leaks (for instance\n     * if a thread is blocked on a breakpoint).\n     *\n     * Defaults to false.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
   "firstPos" : 280,
   "secondPos" : 976,
   "firstEndPos" : 485,
   "secondEndPos" : 1249
-}, {
-  "firstType" : "class_parameter",
-  "secondType" : "class_parameter",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 490,
-  "secondPos" : 1254,
-  "firstEndPos" : 532,
-  "secondEndPos" : 1296
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -522,10 +522,21 @@
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1174,
-  "secondPos" : 2105,
+  "firstPos" : 538,
+  "secondPos" : 1302,
   "firstEndPos" : 1211,
   "secondEndPos" : 2142
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
+  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap after\n     * [LeakSentry.Config.watchDurationMillis] ms.\n     *\n     * The app is considered visible if it has at least one activity in started state.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     *\n     * Defaults to 5.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 538,
+  "secondPos" : 1302,
+  "firstEndPos" : 1169,
+  "secondEndPos" : 2100
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -611,7 +622,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 1218,
-  "secondPos" : 2747,
+  "secondPos" : 2149,
   "firstEndPos" : 1302,
   "secondEndPos" : 2831
 }, {
@@ -770,24 +781,13 @@
   "secondEndPos" : 2831
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n     * List of [ObjectInspector] that provide LeakCanary with insights about objects found in the\n     * heap. You can create your own [ObjectInspector] implementations, and also add\n     * a [AppSingletonInspector] instance created with the list of internal singletons.\n     *\n     * Defaults to [AndroidObjectInspectors.appDefaults]\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1309,
-  "secondPos" : 2838,
-  "firstEndPos" : 1398,
-  "secondEndPos" : 3184
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 1309,
-  "secondPos" : 3189,
+  "secondPos" : 2838,
   "firstEndPos" : 1398,
   "secondEndPos" : 3270
 }, {
@@ -929,10 +929,21 @@
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1719,
-  "secondPos" : 3568,
+  "firstPos" : 1405,
+  "secondPos" : 3277,
   "firstEndPos" : 1801,
   "secondEndPos" : 3696
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
+  "secondLabel" : "/**\n     * Called on a background thread when the heap analysis is complete.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to a [DefaultOnHeapAnalyzedListener].\n     *\n     * Defaults to [DefaultOnHeapAnalyzedListener]\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1405,
+  "secondPos" : 3277,
+  "firstEndPos" : 1714,
+  "secondEndPos" : 3563
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1000,27 +1011,27 @@
   "firstEndPos" : 1771,
   "secondEndPos" : 3620
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether to compute the total number of bytes in memory that would be reclaimed if the\n     * detected leaks didn't happen. This includes native memory associated to Java objects\n     * (e.g. bitmaps).\n     * Computing the retained heap size can slow down the leak analysis and is off by default.\n     */",
-  "secondLabel" : "/**\n     * Whether to compute the retained heap size, which is the total number of bytes in memory that\n     * would be reclaimed if the detected leaks didn't happen. This includes native memory\n     * associated to Java objects (e.g. Android bitmaps).\n     *\n     * Computing the retained heap size can slow down the analysis because it requires navigating\n     * from GC roots through the entire object graph, whereas [HeapAnalyzer] would otherwise stop\n     * as soon as all leaking instances are found.\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1807,
-  "secondPos" : 3703,
-  "firstEndPos" : 2121,
-  "secondEndPos" : 4249
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2126,
-  "secondPos" : 4254,
+  "firstPos" : 1807,
+  "secondPos" : 3703,
   "firstEndPos" : 2170,
   "secondEndPos" : 4297
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether to compute the total number of bytes in memory that would be reclaimed if the\n     * detected leaks didn't happen. This includes native memory associated to Java objects\n     * (e.g. bitmaps).\n     * Computing the retained heap size can slow down the leak analysis and is off by default.\n     */",
+  "secondLabel" : "/**\n     * Whether to compute the retained heap size, which is the total number of bytes in memory that\n     * would be reclaimed if the detected leaks didn't happen. This includes native memory\n     * associated to Java objects (e.g. Android bitmaps).\n     *\n     * Computing the retained heap size can slow down the analysis because it requires navigating\n     * from GC roots through the entire object graph, whereas [HeapAnalyzer] would otherwise stop\n     * as soon as all leaking instances are found.\n     *\n     * Defaults to true.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1807,
+  "secondPos" : 3703,
+  "firstEndPos" : 2121,
+  "secondEndPos" : 4249
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1116,10 +1127,21 @@
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2409,
-  "secondPos" : 4592,
+  "firstPos" : 2177,
+  "secondPos" : 4304,
   "firstEndPos" : 2440,
   "secondEndPos" : 4623
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * How many heap dumps are kept locally. When this threshold is reached LeakCanary starts\n     * deleting the older heap dumps. As several heap dumps may be enqueued you should avoid\n     * going down to 1 or 2.\n     */",
+  "secondLabel" : "/**\n     * How many heap dumps are kept on the Android device for this app package. When this threshold\n     * is reached LeakCanary deletes the older heap dumps. As several heap dumps may be enqueued\n     * you should avoid going down to 1 or 2.\n     *\n     * Defaults to 7.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2177,
+  "secondPos" : 4304,
+  "firstEndPos" : 2404,
+  "secondEndPos" : 4587
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1204,10 +1226,21 @@
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2743,
-  "secondPos" : 5105,
+  "firstPos" : 2447,
+  "secondPos" : 4630,
   "firstEndPos" : 2801,
   "secondEndPos" : 5163
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage first. If the\n     * WRITE_EXTERNAL_STORAGE permission is not granted and [requestWriteExternalStoragePermission]\n     * is true, then LeakCanary will display a notification to ask for that permission.\n     */",
+  "secondLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage if the\n     * WRITE_EXTERNAL_STORAGE is already granted, and otherwise uses the app storage.\n     * If the WRITE_EXTERNAL_STORAGE permission is not granted and\n     * [requestWriteExternalStoragePermission] is true, then LeakCanary will display a notification\n     * to ask for that permission.\n     *\n     * Defaults to false because that permission notification can be annoying.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2447,
+  "secondPos" : 4630,
+  "firstEndPos" : 2738,
+  "secondEndPos" : 5100
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1297,27 +1330,27 @@
   "firstEndPos" : 2801,
   "secondEndPos" : 5163
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     */",
-  "secondLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     *\n     * Defaults to false.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2808,
-  "secondPos" : 5170,
-  "firstEndPos" : 3136,
-  "secondEndPos" : 5531
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 3141,
-  "secondPos" : 5536,
+  "firstPos" : 2808,
+  "secondPos" : 5170,
   "firstEndPos" : 3188,
   "secondEndPos" : 5583
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     */",
+  "secondLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     *\n     * Defaults to false.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2808,
+  "secondPos" : 5170,
+  "firstEndPos" : 3136,
+  "secondEndPos" : 5531
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1414,7 +1447,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 3196,
-  "secondPos" : 5833,
+  "secondPos" : 5591,
   "firstEndPos" : 3305,
   "secondEndPos" : 5942
 }, {

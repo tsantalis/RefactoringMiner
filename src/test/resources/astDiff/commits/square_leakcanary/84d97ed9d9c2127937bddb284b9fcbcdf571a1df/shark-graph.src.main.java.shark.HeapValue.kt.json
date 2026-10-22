@@ -560,27 +560,27 @@
   "firstEndPos" : 349,
   "secondEndPos" : 386
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Represents a value in the heap dump, which can be an object reference or\n * a primitive type. Provides navigation capabilities.\n */",
-  "secondLabel" : "/**\n * Represents a value in the heap dump, which can be an object reference or\n * a primitive type.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 351,
-  "secondPos" : 388,
-  "firstEndPos" : 489,
-  "secondEndPos" : 492
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 490,
-  "secondPos" : 493,
+  "firstPos" : 351,
+  "secondPos" : 388,
   "firstEndPos" : 1918,
   "secondEndPos" : 3599
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Represents a value in the heap dump, which can be an object reference or\n * a primitive type. Provides navigation capabilities.\n */",
+  "secondLabel" : "/**\n * Represents a value in the heap dump, which can be an object reference or\n * a primitive type.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 351,
+  "secondPos" : 388,
+  "firstEndPos" : 489,
+  "secondEndPos" : 492
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -616,24 +616,13 @@
   "secondEndPos" : 726
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * The graph of objects in the heap, which you can use to navigate the heap.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 509,
-  "secondPos" : 512,
-  "firstEndPos" : 537,
-  "secondEndPos" : 600
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 509,
-  "secondPos" : 603,
+  "secondPos" : 512,
   "firstEndPos" : 537,
   "secondEndPos" : 623
 }, {
@@ -699,7 +688,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 541,
-  "secondPos" : 701,
+  "secondPos" : 627,
   "firstEndPos" : 564,
   "secondEndPos" : 724
 }, {
@@ -776,7 +765,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 571,
-  "secondPos" : 822,
+  "secondPos" : 732,
   "firstEndPos" : 594,
   "secondEndPos" : 845
 }, {
@@ -1051,7 +1040,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 662,
-  "secondPos" : 1000,
+  "secondPos" : 913,
   "firstEndPos" : 679,
   "secondEndPos" : 1017
 }, {
@@ -1326,7 +1315,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 744,
-  "secondPos" : 1170,
+  "secondPos" : 1082,
   "firstEndPos" : 763,
   "secondEndPos" : 1189
 }, {
@@ -1601,7 +1590,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 829,
-  "secondPos" : 1344,
+  "secondPos" : 1255,
   "firstEndPos" : 850,
   "secondEndPos" : 1365
 }, {
@@ -1876,7 +1865,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 917,
-  "secondPos" : 1519,
+  "secondPos" : 1432,
   "firstEndPos" : 934,
   "secondEndPos" : 1536
 }, {
@@ -2151,7 +2140,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 999,
-  "secondPos" : 1689,
+  "secondPos" : 1601,
   "firstEndPos" : 1018,
   "secondEndPos" : 1708
 }, {
@@ -2426,7 +2415,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1084,
-  "secondPos" : 1861,
+  "secondPos" : 1774,
   "firstEndPos" : 1099,
   "secondEndPos" : 1876
 }, {
@@ -2701,7 +2690,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1163,
-  "secondPos" : 2027,
+  "secondPos" : 1940,
   "firstEndPos" : 1180,
   "secondEndPos" : 2044
 }, {
@@ -2976,7 +2965,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1245,
-  "secondPos" : 2212,
+  "secondPos" : 2109,
   "firstEndPos" : 1266,
   "secondEndPos" : 2233
 }, {
@@ -3251,7 +3240,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1336,
-  "secondPos" : 2414,
+  "secondPos" : 2303,
   "firstEndPos" : 1364,
   "secondEndPos" : 2442
 }, {
@@ -3614,7 +3603,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1452,
-  "secondPos" : 2625,
+  "secondPos" : 2530,
   "firstEndPos" : 1480,
   "secondEndPos" : 2653
 }, {
@@ -3845,7 +3834,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1539,
-  "secondPos" : 2811,
+  "secondPos" : 2712,
   "firstEndPos" : 1570,
   "secondEndPos" : 2842
 }, {
@@ -4098,7 +4087,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1630,
-  "secondPos" : 3037,
+  "secondPos" : 2902,
   "firstEndPos" : 1655,
   "secondEndPos" : 3062
 }, {
@@ -4615,7 +4604,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1827,
-  "secondPos" : 3508,
+  "secondPos" : 3234,
   "firstEndPos" : 1916,
   "secondEndPos" : 3597
 }, {

@@ -395,27 +395,27 @@
   "firstEndPos" : 767,
   "secondEndPos" : 754
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Key used to find the retained references in the heap dump.\n   */",
-  "secondLabel" : "/**\n   * Key used to find the retained references in the heap dump.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 771,
-  "secondPos" : 758,
-  "firstEndPos" : 844,
-  "secondEndPos" : 831
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 847,
-  "secondPos" : 834,
+  "firstPos" : 771,
+  "secondPos" : 758,
   "firstEndPos" : 862,
   "secondEndPos" : 849
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Key used to find the retained references in the heap dump.\n   */",
+  "secondLabel" : "/**\n   * Key used to find the retained references in the heap dump.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 771,
+  "secondPos" : 758,
+  "firstEndPos" : 844,
+  "secondEndPos" : 831
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Extracts metadata from a hprof to be reported in [HeapAnalysisSuccess.metadata].\n *\n * This is a functional interface with which you can create a [MetadataExtractor] from a lambda.\n */",
-  "secondLabel" : "/**\n * Extracts metadata from a hprof to be reported in [HeapAnalysisSuccess.metadata].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 206,
-  "secondEndPos" : 106
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 207,
-  "secondPos" : 107,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 893,
   "secondEndPos" : 330
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Extracts metadata from a hprof to be reported in [HeapAnalysisSuccess.metadata].\n *\n * This is a functional interface with which you can create a [MetadataExtractor] from a lambda.\n */",
+  "secondLabel" : "/**\n * Extracts metadata from a hprof to be reported in [HeapAnalysisSuccess.metadata].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 206,
+  "secondEndPos" : 106
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -351,27 +351,27 @@
   "firstEndPos" : 891,
   "secondEndPos" : 328
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * A no-op [MetadataExtractor]\n     */",
-  "secondLabel" : "/**\n     * A no-op [MetadataExtractor]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 329,
-  "secondPos" : 229,
-  "firstEndPos" : 375,
-  "secondEndPos" : 275
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 380,
-  "secondPos" : 280,
+  "firstPos" : 329,
+  "secondPos" : 229,
   "firstEndPos" : 424,
   "secondEndPos" : 324
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * A no-op [MetadataExtractor]\n     */",
+  "secondLabel" : "/**\n     * A no-op [MetadataExtractor]\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 329,
+  "secondPos" : 229,
+  "firstEndPos" : 375,
+  "secondEndPos" : 275
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

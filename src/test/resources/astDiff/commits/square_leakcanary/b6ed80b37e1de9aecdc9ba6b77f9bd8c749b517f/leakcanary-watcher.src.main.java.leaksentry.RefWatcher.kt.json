@@ -318,27 +318,27 @@
   "firstEndPos" : 740,
   "secondEndPos" : 740
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
-  "secondLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 742,
-  "secondPos" : 742,
-  "firstEndPos" : 868,
-  "secondEndPos" : 868
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 869,
-  "secondPos" : 869,
+  "firstPos" : 742,
+  "secondPos" : 742,
   "firstEndPos" : 3765,
   "secondEndPos" : 3765
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
+  "secondLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 742,
+  "secondPos" : 742,
+  "firstEndPos" : 868,
+  "secondEndPos" : 868
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -725,27 +725,27 @@
   "firstEndPos" : 3765,
   "secondEndPos" : 3765
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * References passed to [watch] that haven't made it to [retainedReferences] yet.\n   */",
-  "secondLabel" : "/**\n   * References passed to [watch] that haven't made it to [retainedReferences] yet.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1027,
-  "secondPos" : 1027,
-  "firstEndPos" : 1120,
-  "secondEndPos" : 1120
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1123,
-  "secondPos" : 1123,
+  "firstPos" : 1027,
+  "secondPos" : 1027,
   "firstEndPos" : 1197,
   "secondEndPos" : 1197
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * References passed to [watch] that haven't made it to [retainedReferences] yet.\n   */",
+  "secondLabel" : "/**\n   * References passed to [watch] that haven't made it to [retainedReferences] yet.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1027,
+  "secondPos" : 1027,
+  "firstEndPos" : 1120,
+  "secondEndPos" : 1120
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -956,27 +956,27 @@
   "firstEndPos" : 1197,
   "secondEndPos" : 1197
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * References passed to [watch] that we have determined to be retained longer than they should\n   * have been.\n   */",
-  "secondLabel" : "/**\n   * References passed to [watch] that we have determined to be retained longer than they should\n   * have been.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1200,
-  "secondPos" : 1200,
-  "firstEndPos" : 1322,
-  "secondEndPos" : 1322
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1325,
-  "secondPos" : 1325,
+  "firstPos" : 1200,
+  "secondPos" : 1200,
   "firstEndPos" : 1400,
   "secondEndPos" : 1400
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * References passed to [watch] that we have determined to be retained longer than they should\n   * have been.\n   */",
+  "secondLabel" : "/**\n   * References passed to [watch] that we have determined to be retained longer than they should\n   * have been.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1200,
+  "secondPos" : 1200,
+  "firstEndPos" : 1322,
+  "secondEndPos" : 1322
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2529,27 +2529,27 @@
   "firstEndPos" : 1925,
   "secondEndPos" : 1925
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
-  "secondLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1936,
-  "secondPos" : 1936,
-  "firstEndPos" : 2009,
-  "secondEndPos" : 2009
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2012,
-  "secondPos" : 2012,
+  "firstPos" : 1936,
+  "secondPos" : 1936,
   "firstEndPos" : 2096,
   "secondEndPos" : 2096
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
+  "secondLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1936,
+  "secondPos" : 1936,
+  "firstEndPos" : 2009,
+  "secondEndPos" : 2009
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2793,27 +2793,27 @@
   "firstEndPos" : 2091,
   "secondEndPos" : 2091
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Watches the provided references and notifies registered [NewRefListener]s.\n   *\n   * @param referenceName An logical identifier for the watched object.\n   */",
-  "secondLabel" : "/**\n   * Watches the provided references and notifies registered [NewRefListener]s.\n   *\n   * @param referenceName An logical identifier for the watched object.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2100,
-  "secondPos" : 2100,
-  "firstEndPos" : 2266,
-  "secondEndPos" : 2266
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2269,
-  "secondPos" : 2269,
+  "firstPos" : 2100,
+  "secondPos" : 2100,
   "firstEndPos" : 2711,
   "secondEndPos" : 2711
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Watches the provided references and notifies registered [NewRefListener]s.\n   *\n   * @param referenceName An logical identifier for the watched object.\n   */",
+  "secondLabel" : "/**\n   * Watches the provided references and notifies registered [NewRefListener]s.\n   *\n   * @param referenceName An logical identifier for the watched object.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2100,
+  "secondPos" : 2100,
+  "firstEndPos" : 2266,
+  "secondEndPos" : 2266
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

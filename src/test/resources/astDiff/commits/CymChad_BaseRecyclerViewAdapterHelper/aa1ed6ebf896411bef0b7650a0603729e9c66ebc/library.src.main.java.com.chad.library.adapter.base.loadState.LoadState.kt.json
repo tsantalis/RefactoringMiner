@@ -263,27 +263,27 @@
   "firstEndPos" : 2563,
   "secondEndPos" : 2608
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Is not currently loading, and no error currently observed.\n     *\n     * @param endOfPaginationReached `false` if there is more data to load in the [LoadType] this\n     * [LoadState] is associated with, `true` otherwise. This parameter informs [Pager] if it\n     * should continue to make requests for additional data in this direction or if it should\n     * halt as the end of the dataset has been reached.\n     */",
-  "secondLabel" : "/**\n     * Is not currently loading, and no error currently observed.\n     *\n     * @param endOfPaginationReached\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 121,
-  "secondPos" : 569,
-  "firstEndPos" : 547,
-  "secondEndPos" : 690
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 572,
-  "secondPos" : 695,
+  "firstPos" : 121,
+  "secondPos" : 569,
   "firstEndPos" : 1300,
   "secondEndPos" : 1396
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Is not currently loading, and no error currently observed.\n     *\n     * @param endOfPaginationReached `false` if there is more data to load in the [LoadType] this\n     * [LoadState] is associated with, `true` otherwise. This parameter informs [Pager] if it\n     * should continue to make requests for additional data in this direction or if it should\n     * halt as the end of the dataset has been reached.\n     */",
+  "secondLabel" : "/**\n     * Is not currently loading, and no error currently observed.\n     *\n     * @param endOfPaginationReached\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 121,
+  "secondPos" : 569,
+  "firstEndPos" : 547,
+  "secondEndPos" : 690
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1264,17 +1264,6 @@
   "firstEndPos" : 1203,
   "secondEndPos" : 1308
 }, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1138,
-  "secondPos" : 1252,
-  "firstEndPos" : 1146,
-  "secondEndPos" : 1255
-}, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
@@ -1440,17 +1429,6 @@
   "firstEndPos" : 1284,
   "secondEndPos" : 1380
 }, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1216,
-  "secondPos" : 1321,
-  "firstEndPos" : 1224,
-  "secondEndPos" : 1324
-}, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
@@ -1605,27 +1583,27 @@
   "firstEndPos" : 1283,
   "secondEndPos" : 1379
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Loading is in progress.\n     */",
-  "secondLabel" : "/**\n     * Loading is in progress.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1306,
-  "secondPos" : 1402,
-  "firstEndPos" : 1348,
-  "secondEndPos" : 1444
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1353,
-  "secondPos" : 1449,
+  "firstPos" : 1306,
+  "secondPos" : 1402,
   "firstEndPos" : 1803,
   "secondEndPos" : 1899
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Loading is in progress.\n     */",
+  "secondLabel" : "/**\n     * Loading is in progress.\n     */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1306,
+  "secondPos" : 1402,
+  "firstEndPos" : 1348,
+  "secondEndPos" : 1444
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2507,27 +2485,27 @@
   "firstEndPos" : 1787,
   "secondEndPos" : 1883
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Loading hit an error.\n     *\n     * @param error [Throwable] that caused the load operation to generate this error state.\n     *\n     * @see androidx.paging.PagedList.retry\n     */",
-  "secondLabel" : "/**\n     * Loading hit an error.\n     *\n     * @param error [Throwable] that caused the load operation to generate this error state.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1809,
-  "secondPos" : 1905,
-  "firstEndPos" : 2000,
-  "secondEndPos" : 2045
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2005,
-  "secondPos" : 2050,
+  "firstPos" : 1809,
+  "secondPos" : 1905,
   "firstEndPos" : 2561,
   "secondEndPos" : 2606
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Loading hit an error.\n     *\n     * @param error [Throwable] that caused the load operation to generate this error state.\n     *\n     * @see androidx.paging.PagedList.retry\n     */",
+  "secondLabel" : "/**\n     * Loading hit an error.\n     *\n     * @param error [Throwable] that caused the load operation to generate this error state.\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1809,
+  "secondPos" : 1905,
+  "firstEndPos" : 2000,
+  "secondEndPos" : 2045
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

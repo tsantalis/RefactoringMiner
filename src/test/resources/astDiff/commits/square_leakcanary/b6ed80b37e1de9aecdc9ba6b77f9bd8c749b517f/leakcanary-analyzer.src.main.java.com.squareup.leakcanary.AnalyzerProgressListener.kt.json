@@ -87,27 +87,27 @@
   "firstEndPos" : 549,
   "secondEndPos" : 536
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// These steps should be defined in the order in which they occur.",
-  "secondLabel" : "// These steps should be defined in the order in which they occur.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 73,
-  "secondPos" : 60,
-  "firstEndPos" : 139,
-  "secondEndPos" : 126
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 142,
-  "secondPos" : 129,
+  "firstPos" : 73,
+  "secondPos" : 60,
   "firstEndPos" : 370,
   "secondEndPos" : 357
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// These steps should be defined in the order in which they occur.",
+  "secondLabel" : "// These steps should be defined in the order in which they occur.",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 73,
+  "secondPos" : 60,
+  "firstEndPos" : 139,
+  "secondEndPos" : 126
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

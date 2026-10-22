@@ -769,27 +769,27 @@
   "firstEndPos" : 1109,
   "secondEndPos" : 1138
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n *\n * A JUnit [RunListener] for detecting memory leaks in Android instrumentation tests. It\n * waits for the end of a test, and if the test succeeds then it will look for leaking\n * references, trigger a heap dump if needed and perform an analysis.\n *\n *  [FailTestOnLeakRunListener] can be subclassed to override\n * [skipLeakDetectionReason], [reportLeaks]\n * or [buildLeakDetectedMessage]\n *\n * @see InstrumentationLeakDetector\n */",
-  "secondLabel" : "/**\n *\n * A JUnit [RunListener] for detecting memory leaks in Android instrumentation tests. It\n * waits for the end of a test, and if the test succeeds then it will look for leaking\n * references, trigger a heap dump if needed and perform an analysis.\n *\n *  [FailTestOnLeakRunListener] can be subclassed to override\n * [skipLeakDetectionReason], [reportLeaks]\n * or [buildLeakDetectedMessage]\n *\n * @see InstrumentationLeakDetector\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1111,
-  "secondPos" : 1140,
-  "firstEndPos" : 1548,
-  "secondEndPos" : 1577
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1549,
-  "secondPos" : 1578,
+  "firstPos" : 1111,
+  "secondPos" : 1140,
   "firstEndPos" : 4779,
   "secondEndPos" : 4859
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n *\n * A JUnit [RunListener] for detecting memory leaks in Android instrumentation tests. It\n * waits for the end of a test, and if the test succeeds then it will look for leaking\n * references, trigger a heap dump if needed and perform an analysis.\n *\n *  [FailTestOnLeakRunListener] can be subclassed to override\n * [skipLeakDetectionReason], [reportLeaks]\n * or [buildLeakDetectedMessage]\n *\n * @see InstrumentationLeakDetector\n */",
+  "secondLabel" : "/**\n *\n * A JUnit [RunListener] for detecting memory leaks in Android instrumentation tests. It\n * waits for the end of a test, and if the test succeeds then it will look for leaking\n * references, trigger a heap dump if needed and perform an analysis.\n *\n *  [FailTestOnLeakRunListener] can be subclassed to override\n * [skipLeakDetectionReason], [reportLeaks]\n * or [buildLeakDetectedMessage]\n *\n * @see InstrumentationLeakDetector\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1111,
+  "secondPos" : 1140,
+  "firstEndPos" : 1548,
+  "secondEndPos" : 1577
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2408,27 +2408,27 @@
   "firstEndPos" : 2270,
   "secondEndPos" : 2299
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Can be overridden to skip leak detection based on the description provided when a test\n   * is started. Returns null to continue leak detection, or a string describing the reason for\n   * skipping otherwise.\n   */",
-  "secondLabel" : "/**\n   * Can be overridden to skip leak detection based on the description provided when a test\n   * is started. Returns null to continue leak detection, or a string describing the reason for\n   * skipping otherwise.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2279,
-  "secondPos" : 2308,
-  "firstEndPos" : 2501,
-  "secondEndPos" : 2530
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2504,
-  "secondPos" : 2533,
+  "firstPos" : 2279,
+  "secondPos" : 2308,
   "firstEndPos" : 2603,
   "secondEndPos" : 2632
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Can be overridden to skip leak detection based on the description provided when a test\n   * is started. Returns null to continue leak detection, or a string describing the reason for\n   * skipping otherwise.\n   */",
+  "secondLabel" : "/**\n   * Can be overridden to skip leak detection based on the description provided when a test\n   * is started. Returns null to continue leak detection, or a string describing the reason for\n   * skipping otherwise.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2279,
+  "secondPos" : 2308,
+  "firstEndPos" : 2501,
+  "secondEndPos" : 2530
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4542,27 +4542,27 @@
   "firstEndPos" : 3503,
   "secondEndPos" : 3582
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Can be overridden to report leaks in a different way or do additional reporting.  */",
-  "secondLabel" : "/** Can be overridden to report leaks in a different way or do additional reporting.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3512,
-  "secondPos" : 3591,
-  "firstEndPos" : 3600,
-  "secondEndPos" : 3679
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3603,
-  "secondPos" : 3682,
+  "firstPos" : 3512,
+  "secondPos" : 3591,
   "firstEndPos" : 3951,
   "secondEndPos" : 4030
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Can be overridden to report leaks in a different way or do additional reporting.  */",
+  "secondLabel" : "/** Can be overridden to report leaks in a different way or do additional reporting.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3512,
+  "secondPos" : 3591,
+  "firstEndPos" : 3600,
+  "secondEndPos" : 3679
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5334,27 +5334,27 @@
   "firstEndPos" : 3940,
   "secondEndPos" : 4019
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Can be overridden to customize the failure string message.  */",
-  "secondLabel" : "/** Can be overridden to customize the failure string message.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3955,
-  "secondPos" : 4034,
-  "firstEndPos" : 4021,
-  "secondEndPos" : 4100
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4024,
-  "secondPos" : 4103,
+  "firstPos" : 3955,
+  "secondPos" : 4034,
   "firstEndPos" : 4674,
   "secondEndPos" : 4754
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Can be overridden to customize the failure string message.  */",
+  "secondLabel" : "/** Can be overridden to customize the failure string message.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3955,
+  "secondPos" : 4034,
+  "firstEndPos" : 4021,
+  "secondEndPos" : 4100
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

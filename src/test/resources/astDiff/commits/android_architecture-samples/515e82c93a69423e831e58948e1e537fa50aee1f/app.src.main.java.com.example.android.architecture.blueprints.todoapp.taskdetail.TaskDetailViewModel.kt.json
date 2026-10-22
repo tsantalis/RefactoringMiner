@@ -1286,27 +1286,27 @@
   "firstEndPos" : 1425,
   "secondEndPos" : 1425
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewModel for the Details screen.\n */",
-  "secondLabel" : "/**\n * ViewModel for the Details screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1427,
-  "secondPos" : 1427,
-  "firstEndPos" : 1471,
-  "secondEndPos" : 1471
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1472,
-  "secondPos" : 1472,
+  "firstPos" : 1427,
+  "secondPos" : 1427,
   "firstEndPos" : 4717,
   "secondEndPos" : 4695
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewModel for the Details screen.\n */",
+  "secondLabel" : "/**\n * ViewModel for the Details screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1427,
+  "secondPos" : 1427,
+  "firstEndPos" : 1471,
+  "secondEndPos" : 1471
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4575,27 +4575,27 @@
   "firstEndPos" : 2593,
   "secondEndPos" : 2674
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// This LiveData depends on another so we can use a transformation.",
-  "secondLabel" : "// This LiveData depends on another so we can use a transformation.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2599,
-  "secondPos" : 2680,
-  "firstEndPos" : 2666,
-  "secondEndPos" : 2747
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2671,
-  "secondPos" : 2752,
+  "firstPos" : 2599,
+  "secondPos" : 2680,
   "firstEndPos" : 2792,
   "secondEndPos" : 2873
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// This LiveData depends on another so we can use a transformation.",
+  "secondLabel" : "// This LiveData depends on another so we can use a transformation.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2599,
+  "secondPos" : 2680,
+  "firstEndPos" : 2666,
+  "secondEndPos" : 2747
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

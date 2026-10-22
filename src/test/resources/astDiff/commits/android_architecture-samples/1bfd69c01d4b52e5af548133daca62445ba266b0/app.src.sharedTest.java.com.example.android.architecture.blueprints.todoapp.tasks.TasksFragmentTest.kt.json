@@ -3002,12 +3002,23 @@
   "firstEndPos" : 2694,
   "secondEndPos" : 2770
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 2696,
+  "secondPos" : 2772,
+  "firstEndPos" : 12939,
+  "secondEndPos" : 13055
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Integration test for the Task List screen.\n */",
   "secondLabel" : "/**\n * Integration test for the Task List screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 2696,
   "secondPos" : 2772,
   "firstEndPos" : 2749,
@@ -3017,23 +3028,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO - Use FragmentScenario, see: https://github.com/android/android-test/issues/291",
   "secondLabel" : "// TODO - Use FragmentScenario, see: https://github.com/android/android-test/issues/291",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 2750,
   "secondPos" : 2826,
   "firstEndPos" : 2837,
   "secondEndPos" : 2913
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2838,
-  "secondPos" : 2914,
-  "firstEndPos" : 12939,
-  "secondEndPos" : 13055
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

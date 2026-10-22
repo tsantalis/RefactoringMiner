@@ -54,27 +54,27 @@
   "firstEndPos" : 632,
   "secondEndPos" : 619
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * @param detectedLeaks Proper leaks found during instrumentation tests.\n *\n * @param excludedLeaks Excluded leaks found during instrumentation tests,\n *   based on [LeakCanary.ConfigSnapshot.excludedRefs]\n *\n * @param failures Leak analysis failures that happened when we tried to detect leaks.\n */",
-  "secondLabel" : "/**\n * @param detectedLeaks Proper leaks found during instrumentation tests.\n *\n * @param excludedLeaks Excluded leaks found during instrumentation tests,\n *   based on [LeakCanary.ConfigSnapshot.excludedRefs]\n *\n * @param failures Leak analysis failures that happened when we tried to detect leaks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 634,
-  "secondPos" : 621,
-  "firstEndPos" : 937,
-  "secondEndPos" : 924
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 938,
-  "secondPos" : 925,
+  "firstPos" : 634,
+  "secondPos" : 621,
   "firstEndPos" : 1271,
   "secondEndPos" : 1258
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * @param detectedLeaks Proper leaks found during instrumentation tests.\n *\n * @param excludedLeaks Excluded leaks found during instrumentation tests,\n *   based on [LeakCanary.ConfigSnapshot.excludedRefs]\n *\n * @param failures Leak analysis failures that happened when we tried to detect leaks.\n */",
+  "secondLabel" : "/**\n * @param detectedLeaks Proper leaks found during instrumentation tests.\n *\n * @param excludedLeaks Excluded leaks found during instrumentation tests,\n *   based on [LeakCanary.ConfigSnapshot.excludedRefs]\n *\n * @param failures Leak analysis failures that happened when we tried to detect leaks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 634,
+  "secondPos" : 621,
+  "firstEndPos" : 937,
+  "secondEndPos" : 924
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

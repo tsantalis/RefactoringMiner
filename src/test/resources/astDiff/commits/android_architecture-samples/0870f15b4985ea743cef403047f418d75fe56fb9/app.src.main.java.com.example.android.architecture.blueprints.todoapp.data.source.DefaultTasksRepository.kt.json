@@ -1110,27 +1110,27 @@
   "firstEndPos" : 1307,
   "secondEndPos" : 1307
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Concrete implementation to load tasks from the data sources into a cache.\n *\n * To simplify the sample, this repository only uses the local data source only if the remote\n * data source fails. Remote is the source of truth.\n */",
-  "secondLabel" : "/**\n * Concrete implementation to load tasks from the data sources into a cache.\n *\n * To simplify the sample, this repository only uses the local data source only if the remote\n * data source fails. Remote is the source of truth.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1309,
-  "secondPos" : 1309,
-  "firstEndPos" : 1543,
-  "secondEndPos" : 1543
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1544,
-  "secondPos" : 1544,
+  "firstPos" : 1309,
+  "secondPos" : 1309,
   "firstEndPos" : 9080,
   "secondEndPos" : 9254
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Concrete implementation to load tasks from the data sources into a cache.\n *\n * To simplify the sample, this repository only uses the local data source only if the remote\n * data source fails. Remote is the source of truth.\n */",
+  "secondLabel" : "/**\n * Concrete implementation to load tasks from the data sources into a cache.\n *\n * To simplify the sample, this repository only uses the local data source only if the remote\n * data source fails. Remote is the source of truth.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1309,
+  "secondPos" : 1309,
+  "firstEndPos" : 1543,
+  "secondEndPos" : 1543
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -6137,27 +6137,27 @@
   "firstEndPos" : 3851,
   "secondEndPos" : 3936
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID.\n     */",
-  "secondLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3866,
-  "secondPos" : 3951,
-  "firstEndPos" : 3956,
-  "secondEndPos" : 4041
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3961,
-  "secondPos" : 4046,
+  "firstPos" : 3866,
+  "secondPos" : 3951,
   "firstEndPos" : 4670,
   "secondEndPos" : 4844
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID.\n     */",
+  "secondLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3866,
+  "secondPos" : 3951,
+  "firstEndPos" : 3956,
+  "secondEndPos" : 4041
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

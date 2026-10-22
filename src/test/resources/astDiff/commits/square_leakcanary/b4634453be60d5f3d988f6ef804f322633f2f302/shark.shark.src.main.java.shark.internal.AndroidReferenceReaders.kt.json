@@ -12858,12 +12858,23 @@
   "firstEndPos" : 7335,
   "secondEndPos" : 7249
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 7342,
+  "secondPos" : 7256,
+  "firstEndPos" : 7584,
+  "secondEndPos" : 7498
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Note: not supporting the support lib version of these, which is identical but with an",
   "secondLabel" : "// Note: not supporting the support lib version of these, which is identical but with an",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 7342,
   "secondPos" : 7256,
   "firstEndPos" : 7430,
@@ -12873,23 +12884,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// \"android\" package prefix instead of \"androidx\".",
   "secondLabel" : "// \"android\" package prefix instead of \"androidx\".",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 7435,
   "secondPos" : 7349,
   "firstEndPos" : 7485,
   "secondEndPos" : 7399
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7490,
-  "secondPos" : 7404,
-  "firstEndPos" : 7584,
-  "secondEndPos" : 7498
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

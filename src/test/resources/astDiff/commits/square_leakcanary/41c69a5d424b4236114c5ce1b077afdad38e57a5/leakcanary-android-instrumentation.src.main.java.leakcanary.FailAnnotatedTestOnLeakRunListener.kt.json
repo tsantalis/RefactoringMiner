@@ -208,27 +208,27 @@
   "firstEndPos" : 104,
   "secondEndPos" : 104
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n *\n * A JUnit [RunListener] subclassing [FailTestOnLeakRunListener] for detecting memory\n * leaks in Android instrumentation tests only when the [FailTestOnLeak] annotation\n * is used.\n *\n * @see FailTestOnLeak\n */",
-  "secondLabel" : "/**\n * A JUnit [RunListener] extending [FailTestOnLeakRunListener] to detecting memory\n * leaks in Android instrumentation tests only when the [FailTestOnLeak] annotation\n * is used.\n *\n * @see FailTestOnLeak\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 106,
-  "secondPos" : 106,
-  "firstEndPos" : 324,
-  "secondEndPos" : 318
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 325,
-  "secondPos" : 319,
+  "firstPos" : 106,
+  "secondPos" : 106,
   "firstEndPos" : 638,
   "secondEndPos" : 632
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n *\n * A JUnit [RunListener] subclassing [FailTestOnLeakRunListener] for detecting memory\n * leaks in Android instrumentation tests only when the [FailTestOnLeak] annotation\n * is used.\n *\n * @see FailTestOnLeak\n */",
+  "secondLabel" : "/**\n * A JUnit [RunListener] extending [FailTestOnLeakRunListener] to detecting memory\n * leaks in Android instrumentation tests only when the [FailTestOnLeak] annotation\n * is used.\n *\n * @see FailTestOnLeak\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 106,
+  "secondPos" : 106,
+  "firstEndPos" : 324,
+  "secondEndPos" : 318
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

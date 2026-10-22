@@ -2167,24 +2167,13 @@
   "secondEndPos" : 1650
 }, {
   "firstType" : "property_declaration",
-  "secondType" : "line_comment",
-  "firstLabel" : "",
-  "secondLabel" : "// Lint is wrong about what constitutes a leak. Ironic.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1611,
-  "secondPos" : 1655,
-  "firstEndPos" : 1685,
-  "secondEndPos" : 1710
-}, {
-  "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1611,
-  "secondPos" : 1713,
+  "secondPos" : 1655,
   "firstEndPos" : 1685,
   "secondEndPos" : 1822
 }, {
@@ -2199,12 +2188,67 @@
   "firstEndPos" : 1628,
   "secondEndPos" : 1765
 }, {
+  "firstType" : "class_modifier",
+  "secondType" : "class_modifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "modifiers",
+  "secondParentType" : "modifiers",
+  "firstPos" : 1611,
+  "secondPos" : 1748,
+  "firstEndPos" : 1620,
+  "secondEndPos" : 1757
+}, {
+  "firstType" : "at",
+  "secondType" : "at",
+  "firstLabel" : "@",
+  "secondLabel" : "@",
+  "firstParentType" : "class_modifier",
+  "secondParentType" : "class_modifier",
+  "firstPos" : 1611,
+  "secondPos" : 1748,
+  "firstEndPos" : 1612,
+  "secondEndPos" : 1749
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Volatile",
+  "secondLabel" : "Volatile",
+  "firstParentType" : "user_type",
+  "secondParentType" : "user_type",
+  "firstPos" : 1612,
+  "secondPos" : 1749,
+  "firstEndPos" : 1620,
+  "secondEndPos" : 1757
+}, {
+  "firstType" : "user_type",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_modifier",
+  "secondParentType" : "class_modifier",
+  "firstPos" : 1612,
+  "secondPos" : 1749,
+  "firstEndPos" : 1620,
+  "secondEndPos" : 1757
+}, {
   "firstType" : "visibility_modifier",
   "secondType" : "visibility_modifier",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "modifiers",
   "secondParentType" : "modifiers",
+  "firstPos" : 1621,
+  "secondPos" : 1758,
+  "firstEndPos" : 1628,
+  "secondEndPos" : 1765
+}, {
+  "firstType" : "visibility_modifier",
+  "secondType" : "visibility_modifier",
+  "firstLabel" : "private",
+  "secondLabel" : "private",
+  "firstParentType" : "visibility_modifier",
+  "secondParentType" : "visibility_modifier",
   "firstPos" : 1621,
   "secondPos" : 1758,
   "firstEndPos" : 1628,
@@ -2870,27 +2914,27 @@
   "firstEndPos" : 2031,
   "secondEndPos" : 2161
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
-  "secondLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2036,
-  "secondPos" : 2166,
-  "firstEndPos" : 2131,
-  "secondEndPos" : 2261
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2134,
-  "secondPos" : 2264,
+  "firstPos" : 2036,
+  "secondPos" : 2166,
   "firstEndPos" : 2343,
   "secondEndPos" : 2473
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
+  "secondLabel" : "/** Extracts the class simple name out of a string containing a fully qualified class name.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2036,
+  "secondPos" : 2166,
+  "firstEndPos" : 2131,
+  "secondEndPos" : 2261
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

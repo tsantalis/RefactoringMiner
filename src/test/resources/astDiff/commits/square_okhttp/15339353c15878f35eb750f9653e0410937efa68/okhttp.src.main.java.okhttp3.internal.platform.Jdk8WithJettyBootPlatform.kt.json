@@ -472,27 +472,27 @@
   "firstEndPos" : 847,
   "secondEndPos" : 847
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** OpenJDK 8 with `org.mortbay.jetty.alpn:alpn-boot` in the boot class path. */",
-  "secondLabel" : "/** OpenJDK 8 with `org.mortbay.jetty.alpn:alpn-boot` in the boot class path. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 849,
-  "secondPos" : 849,
-  "firstEndPos" : 929,
-  "secondEndPos" : 929
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 930,
-  "secondPos" : 930,
+  "firstPos" : 849,
+  "secondPos" : 849,
   "firstEndPos" : 6083,
   "secondEndPos" : 6106
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** OpenJDK 8 with `org.mortbay.jetty.alpn:alpn-boot` in the boot class path. */",
+  "secondLabel" : "/** OpenJDK 8 with `org.mortbay.jetty.alpn:alpn-boot` in the boot class path. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 849,
+  "secondPos" : 849,
+  "firstEndPos" : 929,
+  "secondEndPos" : 929
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4487,27 +4487,27 @@
   "firstEndPos" : 2724,
   "secondEndPos" : 2747
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Handle the methods of ALPN's ClientProvider and ServerProvider without a compile-time\n   * dependency on those interfaces.\n   */",
-  "secondLabel" : "/**\n   * Handle the methods of ALPN's ClientProvider and ServerProvider without a compile-time\n   * dependency on those interfaces.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2739,
-  "secondPos" : 2762,
-  "firstEndPos" : 2876,
-  "secondEndPos" : 2899
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2879,
-  "secondPos" : 2902,
+  "firstPos" : 2739,
+  "secondPos" : 2762,
   "firstEndPos" : 4773,
   "secondEndPos" : 4796
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Handle the methods of ALPN's ClientProvider and ServerProvider without a compile-time\n   * dependency on those interfaces.\n   */",
+  "secondLabel" : "/**\n   * Handle the methods of ALPN's ClientProvider and ServerProvider without a compile-time\n   * dependency on those interfaces.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2739,
+  "secondPos" : 2762,
+  "firstEndPos" : 2876,
+  "secondEndPos" : 2899
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4619,27 +4619,27 @@
   "firstEndPos" : 2926,
   "secondEndPos" : 2949
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** This peer's supported protocols. */",
-  "secondLabel" : "/** This peer's supported protocols. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2932,
-  "secondPos" : 2955,
-  "firstEndPos" : 2971,
-  "secondEndPos" : 2994
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2976,
-  "secondPos" : 2999,
+  "firstPos" : 2932,
+  "secondPos" : 2955,
   "firstEndPos" : 3011,
   "secondEndPos" : 3034
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** This peer's supported protocols. */",
+  "secondLabel" : "/** This peer's supported protocols. */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2932,
+  "secondPos" : 2955,
+  "firstEndPos" : 2971,
+  "secondEndPos" : 2994
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4817,27 +4817,27 @@
   "firstEndPos" : 4773,
   "secondEndPos" : 4796
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Set when remote peer notifies ALPN is unsupported. */",
-  "secondLabel" : "/** Set when remote peer notifies ALPN is unsupported. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3042,
-  "secondPos" : 3065,
-  "firstEndPos" : 3099,
-  "secondEndPos" : 3122
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3104,
-  "secondPos" : 3127,
+  "firstPos" : 3042,
+  "secondPos" : 3065,
   "firstEndPos" : 3145,
   "secondEndPos" : 3168
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Set when remote peer notifies ALPN is unsupported. */",
+  "secondLabel" : "/** Set when remote peer notifies ALPN is unsupported. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3042,
+  "secondPos" : 3065,
+  "firstEndPos" : 3099,
+  "secondEndPos" : 3122
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4971,27 +4971,27 @@
   "firstEndPos" : 3145,
   "secondEndPos" : 3168
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The protocol the server selected. */",
-  "secondLabel" : "/** The protocol the server selected. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3150,
-  "secondPos" : 3173,
-  "firstEndPos" : 3190,
-  "secondEndPos" : 3213
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3195,
-  "secondPos" : 3218,
+  "firstPos" : 3150,
+  "secondPos" : 3173,
   "firstEndPos" : 3232,
   "secondEndPos" : 3255
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The protocol the server selected. */",
+  "secondLabel" : "/** The protocol the server selected. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3150,
+  "secondPos" : 3173,
+  "firstEndPos" : 3190,
+  "secondEndPos" : 3213
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

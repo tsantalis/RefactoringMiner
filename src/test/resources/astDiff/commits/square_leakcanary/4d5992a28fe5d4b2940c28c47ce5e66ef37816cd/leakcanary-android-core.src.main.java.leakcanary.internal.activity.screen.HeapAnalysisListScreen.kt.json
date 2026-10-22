@@ -1187,27 +1187,27 @@
   "firstEndPos" : 795,
   "secondEndPos" : 800
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Fix",
-  "secondLabel" : "// TODO Fix",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 797,
-  "secondPos" : 802,
-  "firstEndPos" : 808,
-  "secondEndPos" : 813
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 809,
-  "secondPos" : 814,
+  "firstPos" : 797,
+  "secondPos" : 802,
   "firstEndPos" : 3067,
   "secondEndPos" : 3072
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Fix",
+  "secondLabel" : "// TODO Fix",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 797,
+  "secondPos" : 802,
+  "firstEndPos" : 808,
+  "secondEndPos" : 813
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

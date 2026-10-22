@@ -61,7 +61,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 20,
-  "secondPos" : 214,
+  "secondPos" : 20,
   "firstEndPos" : 1195,
   "secondEndPos" : 1545
 }, {
@@ -138,7 +138,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 54,
-  "secondPos" : 311,
+  "secondPos" : 249,
   "firstEndPos" : 92,
   "secondEndPos" : 349
 }, {
@@ -241,27 +241,27 @@
   "firstEndPos" : 92,
   "secondEndPos" : 349
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n   * known to create leaks and are beyond your control. The shortest path finder will only go\n   * through matching references after it has exhausted references that don't match, prioritizing\n   * finding an application leak over a known library leak.\n   */",
-  "secondLabel" : "/**\n   * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n   * known to create leaks and are beyond your control. The shortest path finder will only go\n   * through matching references after it has exhausted references that don't match, prioritizing\n   * finding an application leak over a known library leak. Library leaks will be reported as\n   * [Leak.LibraryLeak] instead of [Leak.ApplicationLeak].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 96,
-  "secondPos" : 353,
-  "firstEndPos" : 452,
-  "secondEndPos" : 802
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 455,
-  "secondPos" : 805,
+  "firstPos" : 96,
+  "secondPos" : 353,
   "firstEndPos" : 916,
   "secondEndPos" : 1266
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n   * known to create leaks and are beyond your control. The shortest path finder will only go\n   * through matching references after it has exhausted references that don't match, prioritizing\n   * finding an application leak over a known library leak.\n   */",
+  "secondLabel" : "/**\n   * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n   * known to create leaks and are beyond your control. The shortest path finder will only go\n   * through matching references after it has exhausted references that don't match, prioritizing\n   * finding an application leak over a known library leak. Library leaks will be reported as\n   * [Leak.LibraryLeak] instead of [Leak.ApplicationLeak].\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 96,
+  "secondPos" : 353,
+  "firstEndPos" : 452,
+  "secondEndPos" : 802
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -516,27 +516,27 @@
   "firstEndPos" : 571,
   "secondEndPos" : 921
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether the identified leak may exist in the provided [HprofGraph]. Defaults to true. If\n     * the heap dump comes from a VM that runs a different version of the library that doesn't\n     * have the leak, then this should return false.\n     */",
-  "secondLabel" : "/**\n     * Whether the identified leak may exist in the provided [HprofGraph]. Defaults to true. If\n     * the heap dump comes from a VM that runs a different version of the library that doesn't\n     * have the leak, then this should return false.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 577,
-  "secondPos" : 927,
-  "firstEndPos" : 832,
-  "secondEndPos" : 1182
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 837,
-  "secondPos" : 1187,
+  "firstPos" : 577,
+  "secondPos" : 927,
   "firstEndPos" : 891,
   "secondEndPos" : 1241
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether the identified leak may exist in the provided [HprofGraph]. Defaults to true. If\n     * the heap dump comes from a VM that runs a different version of the library that doesn't\n     * have the leak, then this should return false.\n     */",
+  "secondLabel" : "/**\n     * Whether the identified leak may exist in the provided [HprofGraph]. Defaults to true. If\n     * the heap dump comes from a VM that runs a different version of the library that doesn't\n     * have the leak, then this should return false.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 577,
+  "secondPos" : 927,
+  "firstEndPos" : 832,
+  "secondEndPos" : 1182
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -758,27 +758,27 @@
   "firstEndPos" : 916,
   "secondEndPos" : 1266
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n   * shortest path finder will never go through matching references.\n   */",
-  "secondLabel" : "/**\n   * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n   * shortest path finder will never go through matching references.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 920,
-  "secondPos" : 1270,
-  "firstEndPos" : 1099,
-  "secondEndPos" : 1449
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1102,
-  "secondPos" : 1452,
+  "firstPos" : 920,
+  "secondPos" : 1270,
   "firstEndPos" : 1192,
   "secondEndPos" : 1542
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n   * shortest path finder will never go through matching references.\n   */",
+  "secondLabel" : "/**\n   * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n   * shortest path finder will never go through matching references.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 920,
+  "secondPos" : 1270,
+  "firstEndPos" : 1099,
+  "secondEndPos" : 1449
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

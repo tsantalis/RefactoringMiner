@@ -560,27 +560,27 @@
   "firstEndPos" : 910,
   "secondEndPos" : 913
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Internal class used to watch for fragments leaks.\n */",
-  "secondLabel" : "/**\n * Internal class used to watch for fragments leaks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 912,
-  "secondPos" : 915,
-  "firstEndPos" : 972,
-  "secondEndPos" : 975
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 973,
-  "secondPos" : 976,
+  "firstPos" : 912,
+  "secondPos" : 915,
   "firstEndPos" : 2636,
   "secondEndPos" : 2654
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Internal class used to watch for fragments leaks.\n */",
+  "secondLabel" : "/**\n * Internal class used to watch for fragments leaks.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 912,
+  "secondPos" : 915,
+  "firstEndPos" : 972,
+  "secondEndPos" : 975
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

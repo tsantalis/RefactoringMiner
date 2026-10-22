@@ -505,27 +505,27 @@
   "firstEndPos" : 925,
   "secondEndPos" : 895
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This service runs in a separate process to avoid slowing down the app process or making it run\n * out of memory.\n */",
-  "secondLabel" : "/**\n * This service runs in a separate process to avoid slowing down the app process or making it run\n * out of memory.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 927,
-  "secondPos" : 897,
-  "firstEndPos" : 1050,
-  "secondEndPos" : 1020
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1051,
-  "secondPos" : 1021,
+  "firstPos" : 927,
+  "secondPos" : 897,
   "firstEndPos" : 2675,
   "secondEndPos" : 2618
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This service runs in a separate process to avoid slowing down the app process or making it run\n * out of memory.\n */",
+  "secondLabel" : "/**\n * This service runs in a separate process to avoid slowing down the app process or making it run\n * out of memory.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 927,
+  "secondPos" : 897,
+  "firstEndPos" : 1050,
+  "secondEndPos" : 1020
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

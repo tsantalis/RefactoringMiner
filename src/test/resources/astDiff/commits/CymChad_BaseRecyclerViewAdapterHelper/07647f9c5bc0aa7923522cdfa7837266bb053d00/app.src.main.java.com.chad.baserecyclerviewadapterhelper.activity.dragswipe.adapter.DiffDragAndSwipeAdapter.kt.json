@@ -659,27 +659,27 @@
   "firstEndPos" : 455,
   "secondEndPos" : 455
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Create adapter\n */",
-  "secondLabel" : "/**\n * Create adapter\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 457,
-  "secondPos" : 457,
-  "firstEndPos" : 482,
-  "secondEndPos" : 482
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 483,
-  "secondPos" : 483,
+  "firstPos" : 457,
+  "secondPos" : 457,
   "firstEndPos" : 1053,
   "secondEndPos" : 1085
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Create adapter\n */",
+  "secondLabel" : "/**\n * Create adapter\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 457,
+  "secondPos" : 457,
+  "firstEndPos" : 482,
+  "secondEndPos" : 482
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

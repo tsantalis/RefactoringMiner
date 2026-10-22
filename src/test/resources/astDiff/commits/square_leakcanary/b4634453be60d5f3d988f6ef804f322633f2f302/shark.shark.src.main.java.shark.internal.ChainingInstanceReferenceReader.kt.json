@@ -98,27 +98,27 @@
   "firstEndPos" : 83,
   "secondEndPos" : 51
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A [ReferenceReader] that first delegates expanding to [virtualRefReaders] in order until one\n * matches (or none), and then always proceeds with [fieldRefReader]. This means any\n * synthetic ref will be on the shortest path, but we still explore the entire data structure so\n * that we correctly track which objects have been visited and correctly compute dominators and\n * retained size.\n */",
-  "secondLabel" : "/**\n * A [ReferenceReader] that first delegates expanding to [virtualRefReaders] in order until one\n * matches (or none), and then always proceeds with [fieldRefReader]. This means any\n * synthetic ref will be on the shortest path, but we still explore the entire data structure so\n * that we correctly track which objects have been visited and correctly compute dominators and\n * retained size.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 85,
-  "secondPos" : 53,
-  "firstEndPos" : 484,
-  "secondEndPos" : 452
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 485,
-  "secondPos" : 453,
+  "firstPos" : 85,
+  "secondPos" : 53,
   "firstEndPos" : 2411,
   "secondEndPos" : 2838
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A [ReferenceReader] that first delegates expanding to [virtualRefReaders] in order until one\n * matches (or none), and then always proceeds with [fieldRefReader]. This means any\n * synthetic ref will be on the shortest path, but we still explore the entire data structure so\n * that we correctly track which objects have been visited and correctly compute dominators and\n * retained size.\n */",
+  "secondLabel" : "/**\n * A [ReferenceReader] that first delegates expanding to [virtualRefReaders] in order until one\n * matches (or none), and then always proceeds with [fieldRefReader]. This means any\n * synthetic ref will be on the shortest path, but we still explore the entire data structure so\n * that we correctly track which objects have been visited and correctly compute dominators and\n * retained size.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 85,
+  "secondPos" : 53,
+  "firstEndPos" : 484,
+  "secondEndPos" : 452
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1704,27 +1704,27 @@
   "firstEndPos" : 1482,
   "secondEndPos" : 1441
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Same as [ReferenceReader] but [read] is only invoked when [matches] returns\n   * true. [matches] should return false if this [VirtualInstanceReferenceReader] implementation isn't\n   * able to expand the provided instance, in which case [ChainingInstanceReferenceReader] will delegate\n   * to the next [VirtualInstanceReferenceReader] implementation.\n   */",
-  "secondLabel" : "/**\n   * Same as [ReferenceReader] but [read] is only invoked when [matches] returns\n   * true. [matches] should return false if this [VirtualInstanceReferenceReader] implementation isn't\n   * able to expand the provided instance, in which case [ChainingInstanceReferenceReader] will delegate\n   * to the next [VirtualInstanceReferenceReader] implementation.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1490,
-  "secondPos" : 1449,
-  "firstEndPos" : 1854,
-  "secondEndPos" : 1813
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1857,
-  "secondPos" : 1816,
+  "firstPos" : 1490,
+  "secondPos" : 1449,
   "firstEndPos" : 2409,
   "secondEndPos" : 2836
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Same as [ReferenceReader] but [read] is only invoked when [matches] returns\n   * true. [matches] should return false if this [VirtualInstanceReferenceReader] implementation isn't\n   * able to expand the provided instance, in which case [ChainingInstanceReferenceReader] will delegate\n   * to the next [VirtualInstanceReferenceReader] implementation.\n   */",
+  "secondLabel" : "/**\n   * Same as [ReferenceReader] but [read] is only invoked when [matches] returns\n   * true. [matches] should return false if this [VirtualInstanceReferenceReader] implementation isn't\n   * able to expand the provided instance, in which case [ChainingInstanceReferenceReader] will delegate\n   * to the next [VirtualInstanceReferenceReader] implementation.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1490,
+  "secondPos" : 1449,
+  "firstEndPos" : 1854,
+  "secondEndPos" : 1813
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1946,27 +1946,27 @@
   "firstEndPos" : 1980,
   "secondEndPos" : 1939
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * May create a new InstanceExpander, depending on what's in the heap graph.\n     * [OptionalFactory] implementations might return a different [ReferenceReader]\n     * depending on which version of a class is present in the heap dump, or they might return null if\n     * that class is missing.\n     */",
-  "secondLabel" : "/**\n     * May create a new [VirtualInstanceReferenceReader], depending on what's in the heap graph.\n     * [OptionalFactory] implementations might return a different [ReferenceReader]\n     * depending on which version of a class is present in the heap dump, or they might return null if\n     * that class is missing.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1986,
-  "secondPos" : 1945,
-  "firstEndPos" : 2295,
-  "secondEndPos" : 2270
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2300,
-  "secondPos" : 2275,
+  "firstPos" : 1986,
+  "secondPos" : 1945,
   "firstEndPos" : 2405,
   "secondEndPos" : 2380
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * May create a new InstanceExpander, depending on what's in the heap graph.\n     * [OptionalFactory] implementations might return a different [ReferenceReader]\n     * depending on which version of a class is present in the heap dump, or they might return null if\n     * that class is missing.\n     */",
+  "secondLabel" : "/**\n     * May create a new [VirtualInstanceReferenceReader], depending on what's in the heap graph.\n     * [OptionalFactory] implementations might return a different [ReferenceReader]\n     * depending on which version of a class is present in the heap dump, or they might return null if\n     * that class is missing.\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1986,
+  "secondPos" : 1945,
+  "firstEndPos" : 2295,
+  "secondEndPos" : 2270
 }, {
   "firstType" : "fun",
   "secondType" : "fun",

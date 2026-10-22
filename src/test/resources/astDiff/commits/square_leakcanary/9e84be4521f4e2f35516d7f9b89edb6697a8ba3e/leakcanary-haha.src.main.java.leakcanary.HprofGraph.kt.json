@@ -1583,27 +1583,27 @@
   "firstEndPos" : 1652,
   "secondEndPos" : 1940
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Enables navigation through the Hprof graph of objects.\n */",
-  "secondLabel" : "/**\n * Enables navigation through the Hprof graph of objects.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1654,
-  "secondPos" : 1987,
-  "firstEndPos" : 1719,
-  "secondEndPos" : 2052
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1720,
-  "secondPos" : 2053,
+  "firstPos" : 1654,
+  "secondPos" : 1987,
   "firstEndPos" : 4937,
   "secondEndPos" : 8212
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Enables navigation through the Hprof graph of objects.\n */",
+  "secondLabel" : "/**\n * Enables navigation through the Hprof graph of objects.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1654,
+  "secondPos" : 1987,
+  "firstEndPos" : 1719,
+  "secondEndPos" : 2052
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4454,27 +4454,27 @@
   "firstEndPos" : 3443,
   "secondEndPos" : 2133
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
-  "secondLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4694,
-  "secondPos" : 2182,
-  "firstEndPos" : 4925,
-  "secondEndPos" : 2413
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4928,
-  "secondPos" : 2416,
+  "firstPos" : 4694,
+  "secondPos" : 2182,
   "firstEndPos" : 4988,
   "secondEndPos" : 2476
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
+  "secondLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4694,
+  "secondPos" : 2182,
+  "firstEndPos" : 4925,
+  "secondEndPos" : 2413
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

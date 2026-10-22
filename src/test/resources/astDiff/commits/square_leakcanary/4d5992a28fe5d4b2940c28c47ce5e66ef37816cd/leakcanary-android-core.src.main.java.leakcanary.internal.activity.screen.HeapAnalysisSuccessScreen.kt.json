@@ -1286,27 +1286,27 @@
   "firstEndPos" : 917,
   "secondEndPos" : 922
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Remove",
-  "secondLabel" : "// TODO Remove",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 919,
-  "secondPos" : 924,
-  "firstEndPos" : 933,
-  "secondEndPos" : 938
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 934,
-  "secondPos" : 939,
+  "firstPos" : 919,
+  "secondPos" : 924,
   "firstEndPos" : 4780,
   "secondEndPos" : 4984
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Remove",
+  "secondLabel" : "// TODO Remove",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 919,
+  "secondPos" : 924,
+  "firstEndPos" : 933,
+  "secondEndPos" : 938
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

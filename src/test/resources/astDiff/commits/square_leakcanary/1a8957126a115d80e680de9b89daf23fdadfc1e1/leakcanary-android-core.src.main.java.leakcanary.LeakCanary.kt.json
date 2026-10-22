@@ -593,27 +593,27 @@
   "firstEndPos" : 274,
   "secondEndPos" : 274
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
-  "secondLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 280,
-  "secondPos" : 280,
-  "firstEndPos" : 485,
-  "secondEndPos" : 485
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 490,
-  "secondPos" : 490,
+  "firstPos" : 280,
+  "secondPos" : 280,
   "firstEndPos" : 532,
   "secondEndPos" : 532
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
+  "secondLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 280,
+  "secondPos" : 280,
+  "firstEndPos" : 485,
+  "secondEndPos" : 485
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -703,27 +703,27 @@
   "firstEndPos" : 532,
   "secondEndPos" : 532
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
-  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 538,
-  "secondPos" : 538,
-  "firstEndPos" : 1169,
-  "secondEndPos" : 1169
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1174,
-  "secondPos" : 1174,
+  "firstPos" : 538,
+  "secondPos" : 538,
   "firstEndPos" : 1211,
   "secondEndPos" : 1211
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
+  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 538,
+  "secondPos" : 538,
+  "firstEndPos" : 1169,
+  "secondEndPos" : 1169
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1165,27 +1165,27 @@
   "firstEndPos" : 1406,
   "secondEndPos" : 1397
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
-  "secondLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1413,
-  "secondPos" : 1404,
-  "firstEndPos" : 1722,
-  "secondEndPos" : 1713
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1727,
-  "secondPos" : 1718,
+  "firstPos" : 1413,
+  "secondPos" : 1404,
   "firstEndPos" : 1809,
   "secondEndPos" : 1800
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
+  "secondLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1413,
+  "secondPos" : 1404,
+  "firstEndPos" : 1722,
+  "secondEndPos" : 1713
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1264,27 +1264,27 @@
   "firstEndPos" : 1809,
   "secondEndPos" : 1800
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether to compute the total number of bytes in memory that would be reclaimed if the\n     * detected leaks didn't happen. This includes native memory associated to Java objects\n     * (e.g. bitmaps).\n     * Computing the retained heap size can slow down the leak analysis and is off by default.\n     */",
-  "secondLabel" : "/**\n     * Whether to compute the total number of bytes in memory that would be reclaimed if the\n     * detected leaks didn't happen. This includes native memory associated to Java objects\n     * (e.g. bitmaps).\n     * Computing the retained heap size can slow down the leak analysis and is off by default.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1815,
-  "secondPos" : 1806,
-  "firstEndPos" : 2129,
-  "secondEndPos" : 2120
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2134,
-  "secondPos" : 2125,
+  "firstPos" : 1815,
+  "secondPos" : 1806,
   "firstEndPos" : 2178,
   "secondEndPos" : 2169
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether to compute the total number of bytes in memory that would be reclaimed if the\n     * detected leaks didn't happen. This includes native memory associated to Java objects\n     * (e.g. bitmaps).\n     * Computing the retained heap size can slow down the leak analysis and is off by default.\n     */",
+  "secondLabel" : "/**\n     * Whether to compute the total number of bytes in memory that would be reclaimed if the\n     * detected leaks didn't happen. This includes native memory associated to Java objects\n     * (e.g. bitmaps).\n     * Computing the retained heap size can slow down the leak analysis and is off by default.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1815,
+  "secondPos" : 1806,
+  "firstEndPos" : 2129,
+  "secondEndPos" : 2120
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1374,27 +1374,27 @@
   "firstEndPos" : 2178,
   "secondEndPos" : 2169
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * How many heap dumps are kept locally. When this threshold is reached LeakCanary starts\n     * deleting the older heap dumps. As several heap dumps may be enqueued you should avoid\n     * going down to 1 or 2.\n     */",
-  "secondLabel" : "/**\n     * How many heap dumps are kept locally. When this threshold is reached LeakCanary starts\n     * deleting the older heap dumps. As several heap dumps may be enqueued you should avoid\n     * going down to 1 or 2.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2185,
-  "secondPos" : 2176,
-  "firstEndPos" : 2412,
-  "secondEndPos" : 2403
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2417,
-  "secondPos" : 2408,
+  "firstPos" : 2185,
+  "secondPos" : 2176,
   "firstEndPos" : 2448,
   "secondEndPos" : 2439
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * How many heap dumps are kept locally. When this threshold is reached LeakCanary starts\n     * deleting the older heap dumps. As several heap dumps may be enqueued you should avoid\n     * going down to 1 or 2.\n     */",
+  "secondLabel" : "/**\n     * How many heap dumps are kept locally. When this threshold is reached LeakCanary starts\n     * deleting the older heap dumps. As several heap dumps may be enqueued you should avoid\n     * going down to 1 or 2.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2185,
+  "secondPos" : 2176,
+  "firstEndPos" : 2412,
+  "secondEndPos" : 2403
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1473,27 +1473,27 @@
   "firstEndPos" : 2448,
   "secondEndPos" : 2439
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage first. If the\n     * WRITE_EXTERNAL_STORAGE permission is not granted and [requestWriteExternalStoragePermission]\n     * is true, then LeakCanary will display a notification to ask for that permission.\n     */",
-  "secondLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage first. If the\n     * WRITE_EXTERNAL_STORAGE permission is not granted and [requestWriteExternalStoragePermission]\n     * is true, then LeakCanary will display a notification to ask for that permission.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2455,
-  "secondPos" : 2446,
-  "firstEndPos" : 2746,
-  "secondEndPos" : 2737
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2751,
-  "secondPos" : 2742,
+  "firstPos" : 2455,
+  "secondPos" : 2446,
   "firstEndPos" : 2809,
   "secondEndPos" : 2800
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage first. If the\n     * WRITE_EXTERNAL_STORAGE permission is not granted and [requestWriteExternalStoragePermission]\n     * is true, then LeakCanary will display a notification to ask for that permission.\n     */",
+  "secondLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage first. If the\n     * WRITE_EXTERNAL_STORAGE permission is not granted and [requestWriteExternalStoragePermission]\n     * is true, then LeakCanary will display a notification to ask for that permission.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2455,
+  "secondPos" : 2446,
+  "firstEndPos" : 2746,
+  "secondEndPos" : 2737
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1891,27 +1891,27 @@
   "firstEndPos" : 2927,
   "secondEndPos" : 2918
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** [Intent] that can be used to programmatically launch the leak display activity. */",
-  "secondLabel" : "/** [Intent] that can be used to programmatically launch the leak display activity. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2931,
-  "secondPos" : 2922,
-  "firstEndPos" : 3017,
-  "secondEndPos" : 3008
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3020,
-  "secondPos" : 3011,
+  "firstPos" : 2931,
+  "secondPos" : 2922,
   "firstEndPos" : 3049,
   "secondEndPos" : 3040
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** [Intent] that can be used to programmatically launch the leak display activity. */",
+  "secondLabel" : "/** [Intent] that can be used to programmatically launch the leak display activity. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2931,
+  "secondPos" : 2922,
+  "firstEndPos" : 3017,
+  "secondEndPos" : 3008
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

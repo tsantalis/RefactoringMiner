@@ -549,27 +549,27 @@
   "firstEndPos" : 8379,
   "secondEndPos" : 8327
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Map of objects to their dominator.\n   *\n   * If an object is dominated by more than one GC root then its dominator is set to\n   * [ValueHolder.NULL_REFERENCE].\n   */",
-  "secondLabel" : "/**\n   * Map of objects to their dominator.\n   *\n   * If an object is dominated by more than one GC root then its dominator is set to\n   * [ValueHolder.NULL_REFERENCE].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 408,
-  "secondPos" : 356,
-  "firstEndPos" : 582,
-  "secondEndPos" : 530
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 585,
-  "secondPos" : 533,
+  "firstPos" : 408,
+  "secondPos" : 356,
   "firstEndPos" : 645,
   "secondEndPos" : 593
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Map of objects to their dominator.\n   *\n   * If an object is dominated by more than one GC root then its dominator is set to\n   * [ValueHolder.NULL_REFERENCE].\n   */",
+  "secondLabel" : "/**\n   * Map of objects to their dominator.\n   *\n   * If an object is dominated by more than one GC root then its dominator is set to\n   * [ValueHolder.NULL_REFERENCE].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 408,
+  "secondPos" : 356,
+  "firstEndPos" : 582,
+  "secondEndPos" : 530
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -725,27 +725,27 @@
   "firstEndPos" : 644,
   "secondEndPos" : 592
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Records that [objectId] is a root.\n   */",
-  "secondLabel" : "/**\n   * Records that [objectId] is a root.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 649,
-  "secondPos" : 597,
-  "firstEndPos" : 698,
-  "secondEndPos" : 646
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 701,
-  "secondPos" : 649,
+  "firstPos" : 649,
+  "secondPos" : 597,
   "firstEndPos" : 822,
   "secondEndPos" : 770
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Records that [objectId] is a root.\n   */",
+  "secondLabel" : "/**\n   * Records that [objectId] is a root.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 649,
+  "secondPos" : 597,
+  "firstEndPos" : 698,
+  "secondEndPos" : 646
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1011,27 +1011,27 @@
   "firstEndPos" : 817,
   "secondEndPos" : 765
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Records that [objectId] can be reached through [parentObjectId], updating the dominator for\n   * [objectId] to be either [parentObjectId] if [objectId] has no known dominator and otherwise to\n   * the Lowest Common Dominator between [parentObjectId] and the previously determined dominator\n   * for [objectId].\n   *\n   * [parentObjectId] should already have been added via [updateDominatedAsRoot]. Failing to do\n   * that will throw [IllegalStateException] on future calls.\n   *\n   * This implementation is optimized with the assumption that the graph is visited as a breadth\n   * first search, so when objectId already has a known dominator then its dominator path is\n   * shorter than the dominator path of [parentObjectId].\n   *\n   * @return true if [objectId] already had a known dominator, false otherwise.\n   */",
-  "secondLabel" : "/**\n   * Records that [objectId] can be reached through [parentObjectId], updating the dominator for\n   * [objectId] to be either [parentObjectId] if [objectId] has no known dominator and otherwise to\n   * the Lowest Common Dominator between [parentObjectId] and the previously determined dominator\n   * for [objectId].\n   *\n   * [parentObjectId] should already have been added via [updateDominatedAsRoot]. Failing to do\n   * that will throw [IllegalStateException] on future calls.\n   *\n   * This implementation is optimized with the assumption that the graph is visited as a breadth\n   * first search, so when objectId already has a known dominator then its dominator path is\n   * shorter than the dominator path of [parentObjectId].\n   *\n   * @return true if [objectId] already had a known dominator, false otherwise.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 826,
-  "secondPos" : 774,
-  "firstEndPos" : 1652,
-  "secondEndPos" : 1600
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1655,
-  "secondPos" : 1603,
+  "firstPos" : 826,
+  "secondPos" : 774,
   "firstEndPos" : 3903,
   "secondEndPos" : 3851
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Records that [objectId] can be reached through [parentObjectId], updating the dominator for\n   * [objectId] to be either [parentObjectId] if [objectId] has no known dominator and otherwise to\n   * the Lowest Common Dominator between [parentObjectId] and the previously determined dominator\n   * for [objectId].\n   *\n   * [parentObjectId] should already have been added via [updateDominatedAsRoot]. Failing to do\n   * that will throw [IllegalStateException] on future calls.\n   *\n   * This implementation is optimized with the assumption that the graph is visited as a breadth\n   * first search, so when objectId already has a known dominator then its dominator path is\n   * shorter than the dominator path of [parentObjectId].\n   *\n   * @return true if [objectId] already had a known dominator, false otherwise.\n   */",
+  "secondLabel" : "/**\n   * Records that [objectId] can be reached through [parentObjectId], updating the dominator for\n   * [objectId] to be either [parentObjectId] if [objectId] has no known dominator and otherwise to\n   * the Lowest Common Dominator between [parentObjectId] and the previously determined dominator\n   * for [objectId].\n   *\n   * [parentObjectId] should already have been added via [updateDominatedAsRoot]. Failing to do\n   * that will throw [IllegalStateException] on future calls.\n   *\n   * This implementation is optimized with the assumption that the graph is visited as a breadth\n   * first search, so when objectId already has a known dominator then its dominator path is\n   * shorter than the dominator path of [parentObjectId].\n   *\n   * @return true if [objectId] already had a known dominator, false otherwise.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 826,
+  "secondPos" : 774,
+  "firstEndPos" : 1652,
+  "secondEndPos" : 1600
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -9041,27 +9041,27 @@
   "firstEndPos" : 5758,
   "secondEndPos" : 5706
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Computes the size retained by [retainedObjectIds] using the dominator tree built using\n   * [updateDominatedAsRoot]. The shallow size of each object is provided by [computeSize].\n   * @return a map of object id to retained size.\n   */",
-  "secondLabel" : "/**\n   * Computes the size retained by [retainedObjectIds] using the dominator tree built using\n   * [updateDominatedAsRoot]. The shallow size of each object is provided by [computeSize].\n   * @return a map of object id to retained size.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5780,
-  "secondPos" : 5728,
-  "firstEndPos" : 6023,
-  "secondEndPos" : 5971
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6026,
-  "secondPos" : 5974,
+  "firstPos" : 5780,
+  "secondPos" : 5728,
   "firstEndPos" : 8377,
   "secondEndPos" : 8325
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Computes the size retained by [retainedObjectIds] using the dominator tree built using\n   * [updateDominatedAsRoot]. The shallow size of each object is provided by [computeSize].\n   * @return a map of object id to retained size.\n   */",
+  "secondLabel" : "/**\n   * Computes the size retained by [retainedObjectIds] using the dominator tree built using\n   * [updateDominatedAsRoot]. The shallow size of each object is provided by [computeSize].\n   * @return a map of object id to retained size.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5780,
+  "secondPos" : 5728,
+  "firstEndPos" : 6023,
+  "secondEndPos" : 5971
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

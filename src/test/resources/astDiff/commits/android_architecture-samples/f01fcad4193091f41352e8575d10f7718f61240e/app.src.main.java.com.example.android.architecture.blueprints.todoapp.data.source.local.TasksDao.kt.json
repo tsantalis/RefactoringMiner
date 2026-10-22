@@ -516,27 +516,27 @@
   "firstEndPos" : 948,
   "secondEndPos" : 879
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Data Access Object for the tasks table.\n */",
-  "secondLabel" : "/**\n * Data Access Object for the tasks table.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 950,
-  "secondPos" : 881,
-  "firstEndPos" : 1000,
-  "secondEndPos" : 931
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1001,
-  "secondPos" : 932,
+  "firstPos" : 950,
+  "secondPos" : 881,
   "firstEndPos" : 3110,
   "secondEndPos" : 3071
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Data Access Object for the tasks table.\n */",
+  "secondLabel" : "/**\n * Data Access Object for the tasks table.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 950,
+  "secondPos" : 881,
+  "firstEndPos" : 1000,
+  "secondEndPos" : 931
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -626,27 +626,27 @@
   "firstEndPos" : 3110,
   "secondEndPos" : 3071
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Observes list of tasks.\n     *\n     * @return all tasks.\n     */",
-  "secondLabel" : "/**\n     * Observes list of tasks.\n     *\n     * @return all tasks.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1032,
-  "secondPos" : 963,
-  "firstEndPos" : 1107,
-  "secondEndPos" : 1038
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1112,
-  "secondPos" : 1043,
+  "firstPos" : 1032,
+  "secondPos" : 963,
   "firstEndPos" : 1182,
   "secondEndPos" : 1118
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Observes list of tasks.\n     *\n     * @return all tasks.\n     */",
+  "secondLabel" : "/**\n     * Observes list of tasks.\n     *\n     * @return all tasks.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1032,
+  "secondPos" : 963,
+  "firstEndPos" : 1107,
+  "secondEndPos" : 1038
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -901,27 +901,27 @@
   "firstEndPos" : 1180,
   "secondEndPos" : 1116
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Observes a single task.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
-  "secondLabel" : "/**\n     * Observes a single task.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1188,
-  "secondPos" : 1124,
-  "firstEndPos" : 1308,
-  "secondEndPos" : 1244
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1313,
-  "secondPos" : 1249,
+  "firstPos" : 1188,
+  "secondPos" : 1124,
   "firstEndPos" : 1418,
   "secondEndPos" : 1359
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Observes a single task.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
+  "secondLabel" : "/**\n     * Observes a single task.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1188,
+  "secondPos" : 1124,
+  "firstEndPos" : 1308,
+  "secondEndPos" : 1244
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1176,27 +1176,27 @@
   "firstEndPos" : 1417,
   "secondEndPos" : 1358
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Select all tasks from the tasks table.\n     *\n     * @return all tasks.\n     */",
-  "secondLabel" : "/**\n     * Select all tasks from the tasks table.\n     *\n     * @return all tasks.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1424,
-  "secondPos" : 1365,
-  "firstEndPos" : 1514,
-  "secondEndPos" : 1455
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1519,
-  "secondPos" : 1460,
+  "firstPos" : 1424,
+  "secondPos" : 1365,
   "firstEndPos" : 1587,
   "secondEndPos" : 1533
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Select all tasks from the tasks table.\n     *\n     * @return all tasks.\n     */",
+  "secondLabel" : "/**\n     * Select all tasks from the tasks table.\n     *\n     * @return all tasks.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1424,
+  "secondPos" : 1365,
+  "firstEndPos" : 1514,
+  "secondEndPos" : 1455
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1429,27 +1429,27 @@
   "firstEndPos" : 1586,
   "secondEndPos" : 1532
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Select a task by id.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
-  "secondLabel" : "/**\n     * Select a task by id.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1593,
-  "secondPos" : 1539,
-  "firstEndPos" : 1710,
-  "secondEndPos" : 1656
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1715,
-  "secondPos" : 1661,
+  "firstPos" : 1593,
+  "secondPos" : 1539,
   "firstEndPos" : 1819,
   "secondEndPos" : 1770
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Select a task by id.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
+  "secondLabel" : "/**\n     * Select a task by id.\n     *\n     * @param taskId the task id.\n     * @return the task with taskId.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1593,
+  "secondPos" : 1539,
+  "firstEndPos" : 1710,
+  "secondEndPos" : 1656
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1693,27 +1693,27 @@
   "firstEndPos" : 1818,
   "secondEndPos" : 1769
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Insert a task in the database. If the task already exists, replace it.\n     *\n     * @param task the task to be inserted.\n     */",
-  "secondLabel" : "/**\n     * Insert a task in the database. If the task already exists, replace it.\n     *\n     * @param task the task to be inserted.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1825,
-  "secondPos" : 1776,
-  "firstEndPos" : 1965,
-  "secondEndPos" : 1916
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1970,
-  "secondPos" : 1921,
+  "firstPos" : 1825,
+  "secondPos" : 1776,
   "firstEndPos" : 2057,
   "secondEndPos" : 2013
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Insert a task in the database. If the task already exists, replace it.\n     *\n     * @param task the task to be inserted.\n     */",
+  "secondLabel" : "/**\n     * Insert a task in the database. If the task already exists, replace it.\n     *\n     * @param task the task to be inserted.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1825,
+  "secondPos" : 1776,
+  "firstEndPos" : 1965,
+  "secondEndPos" : 1916
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1968,27 +1968,27 @@
   "firstEndPos" : 2056,
   "secondEndPos" : 2012
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Update a task.\n     *\n     * @param task task to be updated\n     * @return the number of tasks updated. This should always be 1.\n     */",
-  "secondLabel" : "/**\n     * Update a task.\n     *\n     * @param task task to be updated\n     * @return the number of tasks updated. This should always be 1.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2063,
-  "secondPos" : 2019,
-  "firstEndPos" : 2210,
-  "secondEndPos" : 2166
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2215,
-  "secondPos" : 2171,
+  "firstPos" : 2063,
+  "secondPos" : 2019,
   "firstEndPos" : 2266,
   "secondEndPos" : 2227
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Update a task.\n     *\n     * @param task task to be updated\n     * @return the number of tasks updated. This should always be 1.\n     */",
+  "secondLabel" : "/**\n     * Update a task.\n     *\n     * @param task task to be updated\n     * @return the number of tasks updated. This should always be 1.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2063,
+  "secondPos" : 2019,
+  "firstEndPos" : 2210,
+  "secondEndPos" : 2166
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2166,27 +2166,27 @@
   "firstEndPos" : 2266,
   "secondEndPos" : 2227
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Update the complete status of a task\n     *\n     * @param taskId id of the task\n     * @param completed status to be updated\n     */",
-  "secondLabel" : "/**\n     * Update the complete status of a task\n     *\n     * @param taskId id of the task\n     * @param completed status to be updated\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2272,
-  "secondPos" : 2233,
-  "firstEndPos" : 2415,
-  "secondEndPos" : 2376
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2420,
-  "secondPos" : 2381,
+  "firstPos" : 2272,
+  "secondPos" : 2233,
   "firstEndPos" : 2561,
   "secondEndPos" : 2522
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Update the complete status of a task\n     *\n     * @param taskId id of the task\n     * @param completed status to be updated\n     */",
+  "secondLabel" : "/**\n     * Update the complete status of a task\n     *\n     * @param taskId id of the task\n     * @param completed status to be updated\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2272,
+  "secondPos" : 2233,
+  "firstEndPos" : 2415,
+  "secondEndPos" : 2376
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2441,27 +2441,27 @@
   "firstEndPos" : 2560,
   "secondEndPos" : 2521
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Delete a task by id.\n     *\n     * @return the number of tasks deleted. This should always be 1.\n     */",
-  "secondLabel" : "/**\n     * Delete a task by id.\n     *\n     * @return the number of tasks deleted. This should always be 1.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2567,
-  "secondPos" : 2528,
-  "firstEndPos" : 2682,
-  "secondEndPos" : 2643
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2687,
-  "secondPos" : 2648,
+  "firstPos" : 2567,
+  "secondPos" : 2528,
   "firstEndPos" : 2790,
   "secondEndPos" : 2751
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Delete a task by id.\n     *\n     * @return the number of tasks deleted. This should always be 1.\n     */",
+  "secondLabel" : "/**\n     * Delete a task by id.\n     *\n     * @return the number of tasks deleted. This should always be 1.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2567,
+  "secondPos" : 2528,
+  "firstEndPos" : 2682,
+  "secondEndPos" : 2643
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2694,27 +2694,27 @@
   "firstEndPos" : 2790,
   "secondEndPos" : 2751
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Delete all tasks.\n     */",
-  "secondLabel" : "/**\n     * Delete all tasks.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2796,
-  "secondPos" : 2757,
-  "firstEndPos" : 2832,
-  "secondEndPos" : 2793
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2837,
-  "secondPos" : 2798,
+  "firstPos" : 2796,
+  "secondPos" : 2757,
   "firstEndPos" : 2894,
   "secondEndPos" : 2855
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Delete all tasks.\n     */",
+  "secondLabel" : "/**\n     * Delete all tasks.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2796,
+  "secondPos" : 2757,
+  "firstEndPos" : 2832,
+  "secondEndPos" : 2793
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2881,27 +2881,27 @@
   "firstEndPos" : 2894,
   "secondEndPos" : 2855
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Delete all completed tasks from the table.\n     *\n     * @return the number of tasks deleted.\n     */",
-  "secondLabel" : "/**\n     * Delete all completed tasks from the table.\n     *\n     * @return the number of tasks deleted.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2900,
-  "secondPos" : 2861,
-  "firstEndPos" : 3012,
-  "secondEndPos" : 2973
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3017,
-  "secondPos" : 2978,
+  "firstPos" : 2900,
+  "secondPos" : 2861,
   "firstEndPos" : 3108,
   "secondEndPos" : 3069
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Delete all completed tasks from the table.\n     *\n     * @return the number of tasks deleted.\n     */",
+  "secondLabel" : "/**\n     * Delete all completed tasks from the table.\n     *\n     * @return the number of tasks deleted.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2900,
+  "secondPos" : 2861,
+  "firstEndPos" : 3012,
+  "secondEndPos" : 2973
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

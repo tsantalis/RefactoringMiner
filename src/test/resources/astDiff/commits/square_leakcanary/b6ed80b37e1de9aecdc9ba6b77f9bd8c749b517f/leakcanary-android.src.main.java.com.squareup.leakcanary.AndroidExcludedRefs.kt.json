@@ -1638,12 +1638,23 @@
   "firstEndPos" : 2066,
   "secondEndPos" : 1949
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 2068,
+  "secondPos" : 1951,
+  "firstEndPos" : 34576,
+  "secondEndPos" : 34519
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [.createAppDefaults]. However, you can also pick the\n * leaks you want to ignore by creating an [EnumSet] that matches your needs and calling\n * [.createBuilder]\n */",
   "secondLabel" : "/**\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [.createAppDefaults]. However, you can also pick the\n * leaks you want to ignore by creating an [EnumSet] that matches your needs and calling\n * [.createBuilder]\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 2068,
   "secondPos" : 1951,
   "firstEndPos" : 2696,
@@ -1653,23 +1664,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Public API.",
   "secondLabel" : "// Public API.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 2697,
   "secondPos" : 2580,
   "firstEndPos" : 2711,
   "secondEndPos" : 2594
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2712,
-  "secondPos" : 2595,
-  "firstEndPos" : 34576,
-  "secondEndPos" : 34519
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -36420,27 +36420,27 @@
   "firstEndPos" : 34574,
   "secondEndPos" : 34517
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * This returns the references in the leak path that should be ignored by all on Android.\n     */",
-  "secondLabel" : "/**\n     * This returns the references in the leak path that should be ignored by all on Android.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 33330,
-  "secondPos" : 33213,
-  "firstEndPos" : 33435,
-  "secondEndPos" : 33318
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 33440,
-  "secondPos" : 33323,
+  "firstPos" : 33330,
+  "secondPos" : 33213,
   "firstEndPos" : 33696,
   "secondEndPos" : 33621
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * This returns the references in the leak path that should be ignored by all on Android.\n     */",
+  "secondLabel" : "/**\n     * This returns the references in the leak path that should be ignored by all on Android.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 33330,
+  "secondPos" : 33213,
+  "firstEndPos" : 33435,
+  "secondEndPos" : 33318
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -36794,27 +36794,27 @@
   "firstEndPos" : 33670,
   "secondEndPos" : 33595
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * This returns the references in the leak path that can be ignored for app developers. This\n     * doesn't mean there is no memory leak, to the contrary. However, some leaks are caused by bugs\n     * in AOSP or manufacturer forks of AOSP. In such cases, there is very little we can do as app\n     * developers except by resorting to serious hacks, so we remove the noise caused by those leaks.\n     */",
-  "secondLabel" : "/**\n     * This returns the references in the leak path that can be ignored for app developers. This\n     * doesn't mean there is no memory leak, to the contrary. However, some leaks are caused by bugs\n     * in AOSP or manufacturer forks of AOSP. In such cases, there is very little we can do as app\n     * developers except by resorting to serious hacks, so we remove the noise caused by those leaks.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 33702,
-  "secondPos" : 33627,
-  "firstEndPos" : 34112,
-  "secondEndPos" : 34037
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 34117,
-  "secondPos" : 34042,
+  "firstPos" : 33702,
+  "secondPos" : 33627,
   "firstEndPos" : 34245,
   "secondEndPos" : 34188
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * This returns the references in the leak path that can be ignored for app developers. This\n     * doesn't mean there is no memory leak, to the contrary. However, some leaks are caused by bugs\n     * in AOSP or manufacturer forks of AOSP. In such cases, there is very little we can do as app\n     * developers except by resorting to serious hacks, so we remove the noise caused by those leaks.\n     */",
+  "secondLabel" : "/**\n     * This returns the references in the leak path that can be ignored for app developers. This\n     * doesn't mean there is no memory leak, to the contrary. However, some leaks are caused by bugs\n     * in AOSP or manufacturer forks of AOSP. In such cases, there is very little we can do as app\n     * developers except by resorting to serious hacks, so we remove the noise caused by those leaks.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 33702,
+  "secondPos" : 33627,
+  "firstEndPos" : 34112,
+  "secondEndPos" : 34037
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

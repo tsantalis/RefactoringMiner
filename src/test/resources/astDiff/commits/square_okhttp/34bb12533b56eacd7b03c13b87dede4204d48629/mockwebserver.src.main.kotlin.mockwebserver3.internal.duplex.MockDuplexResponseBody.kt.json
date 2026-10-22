@@ -505,27 +505,27 @@
   "firstEndPos" : 1046,
   "secondEndPos" : 920
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A scriptable request/response conversation. Create the script by calling methods like\n * [receiveRequest] in the sequence they are run.\n */",
-  "secondLabel" : "/**\n * A scriptable request/response conversation. Create the script by calling methods like\n * [receiveRequest] in the sequence they are run.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1145,
-  "secondPos" : 967,
-  "firstEndPos" : 1291,
-  "secondEndPos" : 1113
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1292,
-  "secondPos" : 1114,
+  "firstPos" : 1145,
+  "secondPos" : 967,
   "firstEndPos" : 3709,
   "secondEndPos" : 3235
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A scriptable request/response conversation. Create the script by calling methods like\n * [receiveRequest] in the sequence they are run.\n */",
+  "secondLabel" : "/**\n * A scriptable request/response conversation. Create the script by calling methods like\n * [receiveRequest] in the sequence they are run.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1145,
+  "secondPos" : 967,
+  "firstEndPos" : 1291,
+  "secondEndPos" : 1113
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4960,27 +4960,27 @@
   "firstEndPos" : 2884,
   "secondEndPos" : 2559
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns a task that processes both request and response from [http2Stream]. */",
-  "secondLabel" : "/** Returns a task that processes both request and response from [stream]. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2892,
-  "secondPos" : 2567,
-  "firstEndPos" : 2974,
-  "secondEndPos" : 2644
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2977,
-  "secondPos" : 2647,
+  "firstPos" : 2892,
+  "secondPos" : 2567,
   "firstEndPos" : 3452,
   "secondEndPos" : 2986
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns a task that processes both request and response from [http2Stream]. */",
+  "secondLabel" : "/** Returns a task that processes both request and response from [stream]. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2892,
+  "secondPos" : 2567,
+  "firstEndPos" : 2974,
+  "secondEndPos" : 2644
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5895,27 +5895,27 @@
   "firstEndPos" : 3442,
   "secondEndPos" : 2976
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns once the duplex conversation completes successfully. */",
-  "secondLabel" : "/** Returns once all stream actions complete successfully. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3456,
-  "secondPos" : 2990,
-  "firstEndPos" : 3523,
-  "secondEndPos" : 3051
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3526,
-  "secondPos" : 3054,
+  "firstPos" : 3456,
+  "secondPos" : 2990,
   "firstEndPos" : 3707,
   "secondEndPos" : 3233
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns once the duplex conversation completes successfully. */",
+  "secondLabel" : "/** Returns once all stream actions complete successfully. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3456,
+  "secondPos" : 2990,
+  "firstEndPos" : 3523,
+  "secondEndPos" : 3051
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

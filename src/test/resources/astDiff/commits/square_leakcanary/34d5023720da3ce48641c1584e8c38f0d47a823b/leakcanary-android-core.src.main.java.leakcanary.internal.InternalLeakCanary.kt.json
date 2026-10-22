@@ -2826,27 +2826,27 @@
   "firstEndPos" : 1870,
   "secondEndPos" : 1829
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// You're wrong https://discuss.kotlinlang.org/t/object-or-top-level-property-name-warning/6621/7",
-  "secondLabel" : "// You're wrong https://discuss.kotlinlang.org/t/object-or-top-level-property-name-warning/6621/7",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1874,
-  "secondPos" : 1833,
-  "firstEndPos" : 1971,
-  "secondEndPos" : 1930
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1974,
-  "secondPos" : 1933,
+  "firstPos" : 1874,
+  "secondPos" : 1833,
   "firstEndPos" : 2053,
   "secondEndPos" : 2012
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// You're wrong https://discuss.kotlinlang.org/t/object-or-top-level-property-name-warning/6621/7",
+  "secondLabel" : "// You're wrong https://discuss.kotlinlang.org/t/object-or-top-level-property-name-warning/6621/7",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1874,
+  "secondPos" : 1833,
+  "firstEndPos" : 1971,
+  "secondEndPos" : 1930
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3420,12 +3420,23 @@
   "firstEndPos" : 2236,
   "secondEndPos" : 2195
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 2246,
+  "secondPos" : 2205,
+  "firstEndPos" : 2469,
+  "secondEndPos" : 2428
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// BuildConfig.LIBRARY_VERSION is stripped so this static var is how we keep it around to find",
   "secondLabel" : "// BuildConfig.LIBRARY_VERSION is stripped so this static var is how we keep it around to find",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2246,
   "secondPos" : 2205,
   "firstEndPos" : 2340,
@@ -3435,23 +3446,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// it later when parsing the heap dump.",
   "secondLabel" : "// it later when parsing the heap dump.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2343,
   "secondPos" : 2302,
   "firstEndPos" : 2382,
   "secondEndPos" : 2341
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2385,
-  "secondPos" : 2344,
-  "firstEndPos" : 2469,
-  "secondEndPos" : 2428
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

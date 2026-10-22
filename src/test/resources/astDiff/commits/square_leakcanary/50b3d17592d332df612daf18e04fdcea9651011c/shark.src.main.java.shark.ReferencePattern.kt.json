@@ -120,27 +120,27 @@
   "firstEndPos" : 42,
   "secondEndPos" : 42
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A pattern that will match references for a given [ReferenceMatcher].\n */",
-  "secondLabel" : "/**\n * A pattern that will match references for a given [ReferenceMatcher].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 44,
-  "secondPos" : 44,
-  "firstEndPos" : 123,
-  "secondEndPos" : 123
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 124,
-  "secondPos" : 124,
+  "firstPos" : 44,
+  "secondPos" : 44,
   "firstEndPos" : 1724,
   "secondEndPos" : 2216
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A pattern that will match references for a given [ReferenceMatcher].\n */",
+  "secondLabel" : "/**\n * A pattern that will match references for a given [ReferenceMatcher].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 44,
+  "secondPos" : 44,
+  "firstEndPos" : 123,
+  "secondEndPos" : 123
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -241,27 +241,27 @@
   "firstEndPos" : 1724,
   "secondEndPos" : 2216
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Matches local references held in the stack of frames of a given thread, identified by its name.\n   */",
-  "secondLabel" : "/**\n   * Matches local references held in the stack of frames of a given thread, identified by its name.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 174,
-  "secondPos" : 174,
-  "firstEndPos" : 284,
-  "secondEndPos" : 284
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 287,
-  "secondPos" : 287,
+  "firstPos" : 174,
+  "secondPos" : 174,
   "firstEndPos" : 442,
   "secondEndPos" : 542
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Matches local references held in the stack of frames of a given thread, identified by its name.\n   */",
+  "secondLabel" : "/**\n   * Matches local references held in the stack of frames of a given thread, identified by its name.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 174,
+  "secondPos" : 174,
+  "firstEndPos" : 284,
+  "secondEndPos" : 284
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -593,27 +593,27 @@
   "firstEndPos" : 437,
   "secondEndPos" : 437
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Matches static field references, identified by [className] and [fieldName].\n   */",
-  "secondLabel" : "/**\n   * Matches static field references, identified by [className] and [fieldName].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 446,
-  "secondPos" : 546,
-  "firstEndPos" : 536,
-  "secondEndPos" : 636
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 539,
-  "secondPos" : 639,
+  "firstPos" : 446,
+  "secondPos" : 546,
   "firstEndPos" : 720,
   "secondEndPos" : 919
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Matches static field references, identified by [className] and [fieldName].\n   */",
+  "secondLabel" : "/**\n   * Matches static field references, identified by [className] and [fieldName].\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 446,
+  "secondPos" : 546,
+  "firstEndPos" : 536,
+  "secondEndPos" : 636
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1033,27 +1033,27 @@
   "firstEndPos" : 715,
   "secondEndPos" : 815
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Matches instances field references, identified by [className] and [fieldName].\n   *\n   * Note: If [fieldName] is declared in a superclass it will still match for subclasses.\n   * This is to support overriding of rules for specific cases. If two [ReferenceMatcher] match for\n   * the same [fieldName] but for different [className] in a class hierarchy, then the closest\n   * class in the hierarchy wins.\n   */",
-  "secondLabel" : "/**\n   * Matches instances field references, identified by [className] and [fieldName].\n   *\n   * Note: If [fieldName] is declared in a superclass it will still match for subclasses.\n   * This is to support overriding of rules for specific cases. If two [ReferenceMatcher] match for\n   * the same [fieldName] but for different [className] in a class hierarchy, then the closest\n   * class in the hierarchy wins.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 724,
-  "secondPos" : 923,
-  "firstEndPos" : 1141,
-  "secondEndPos" : 1340
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1144,
-  "secondPos" : 1343,
+  "firstPos" : 724,
+  "secondPos" : 923,
   "firstEndPos" : 1329,
   "secondEndPos" : 1627
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Matches instances field references, identified by [className] and [fieldName].\n   *\n   * Note: If [fieldName] is declared in a superclass it will still match for subclasses.\n   * This is to support overriding of rules for specific cases. If two [ReferenceMatcher] match for\n   * the same [fieldName] but for different [className] in a class hierarchy, then the closest\n   * class in the hierarchy wins.\n   */",
+  "secondLabel" : "/**\n   * Matches instances field references, identified by [className] and [fieldName].\n   *\n   * Note: If [fieldName] is declared in a superclass it will still match for subclasses.\n   * This is to support overriding of rules for specific cases. If two [ReferenceMatcher] match for\n   * the same [fieldName] but for different [className] in a class hierarchy, then the closest\n   * class in the hierarchy wins.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 724,
+  "secondPos" : 923,
+  "firstEndPos" : 1141,
+  "secondEndPos" : 1340
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1473,27 +1473,27 @@
   "firstEndPos" : 1324,
   "secondEndPos" : 1523
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Matches native global variables (also known as jni global gc roots) that reference\n   * Java objects. The class name will match against classes, instances and object arrays with\n   * a matching class name.\n   */",
-  "secondLabel" : "/**\n   * Matches native global variables (also known as jni global gc roots) that reference\n   * Java objects. The class name will match against classes, instances and object arrays with\n   * a matching class name.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1333,
-  "secondPos" : 1631,
-  "firstEndPos" : 1553,
-  "secondEndPos" : 1851
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1556,
-  "secondPos" : 1854,
+  "firstPos" : 1333,
+  "secondPos" : 1631,
   "firstEndPos" : 1722,
   "secondEndPos" : 2120
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Matches native global variables (also known as jni global gc roots) that reference\n   * Java objects. The class name will match against classes, instances and object arrays with\n   * a matching class name.\n   */",
+  "secondLabel" : "/**\n   * Matches native global variables (also known as jni global gc roots) that reference\n   * Java objects. The class name will match against classes, instances and object arrays with\n   * a matching class name.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1333,
+  "secondPos" : 1631,
+  "firstEndPos" : 1553,
+  "secondEndPos" : 1851
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

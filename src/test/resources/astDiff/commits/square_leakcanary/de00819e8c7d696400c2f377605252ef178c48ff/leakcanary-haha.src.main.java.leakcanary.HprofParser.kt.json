@@ -2639,27 +2639,27 @@
   "firstEndPos" : 1938,
   "secondEndPos" : 1935
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A memory efficient heap dump parser.\n *\n * Expected usage: call [scan] once, which will go read through the entire heap dump, build indices,\n * and let consumers collect non indexed data (e.g. all instances of X, or all gc roots, etc).\n *\n * Then navigate on the heap using object ids which [scan] has indexed to file positions.\n *\n * This class is not thread safe, should be used from a single thread.\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share/demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev/perflib/src/main/java/com/android/tools/perflib\n *\n * Also some of the ideas come from https://github.com/square/leakcanary/pull/1278\n */",
-  "secondLabel" : "/**\n * A memory efficient heap dump parser.\n *\n * Expected usage: call [scan] once, which will go read through the entire heap dump, build indices,\n * and let consumers collect non indexed data (e.g. all instances of X, or all gc roots, etc).\n *\n * Then navigate on the heap using object ids which [scan] has indexed to file positions.\n *\n * This class is not thread safe, should be used from a single thread.\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share/demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev/perflib/src/main/java/com/android/tools/perflib\n *\n * Also some of the ideas come from https://github.com/square/leakcanary/pull/1278\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1940,
-  "secondPos" : 1937,
-  "firstEndPos" : 2831,
-  "secondEndPos" : 2828
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2832,
-  "secondPos" : 2829,
+  "firstPos" : 1940,
+  "secondPos" : 1937,
   "firstEndPos" : 29793,
   "secondEndPos" : 29950
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A memory efficient heap dump parser.\n *\n * Expected usage: call [scan] once, which will go read through the entire heap dump, build indices,\n * and let consumers collect non indexed data (e.g. all instances of X, or all gc roots, etc).\n *\n * Then navigate on the heap using object ids which [scan] has indexed to file positions.\n *\n * This class is not thread safe, should be used from a single thread.\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share/demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev/perflib/src/main/java/com/android/tools/perflib\n *\n * Also some of the ideas come from https://github.com/square/leakcanary/pull/1278\n */",
+  "secondLabel" : "/**\n * A memory efficient heap dump parser.\n *\n * Expected usage: call [scan] once, which will go read through the entire heap dump, build indices,\n * and let consumers collect non indexed data (e.g. all instances of X, or all gc roots, etc).\n *\n * Then navigate on the heap using object ids which [scan] has indexed to file positions.\n *\n * This class is not thread safe, should be used from a single thread.\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share/demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev/perflib/src/main/java/com/android/tools/perflib\n *\n * Also some of the ideas come from https://github.com/square/leakcanary/pull/1278\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1940,
+  "secondPos" : 1937,
+  "firstEndPos" : 2831,
+  "secondEndPos" : 2828
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -3123,27 +3123,27 @@
   "firstEndPos" : 2993,
   "secondEndPos" : 2990
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * string id to (position, length)\n   * We cache class names and fields names, so this only points to:\n   * - \"zygote\" (unclear which tag uses this)\n   * - stack frame method names, signatures and source file (currently not parsed)\n   * - thread names (currently not parsed)\n   */",
-  "secondLabel" : "/**\n   * string id to (position, length)\n   * We cache class names and fields names, so this only points to:\n   * - \"zygote\" (unclear which tag uses this)\n   * - stack frame method names, signatures and source file (currently not parsed)\n   * - thread names (currently not parsed)\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2997,
-  "secondPos" : 2994,
-  "firstEndPos" : 3283,
-  "secondEndPos" : 3280
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3286,
-  "secondPos" : 3283,
+  "firstPos" : 2997,
+  "secondPos" : 2994,
   "firstEndPos" : 3359,
   "secondEndPos" : 3356
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * string id to (position, length)\n   * We cache class names and fields names, so this only points to:\n   * - \"zygote\" (unclear which tag uses this)\n   * - stack frame method names, signatures and source file (currently not parsed)\n   * - thread names (currently not parsed)\n   */",
+  "secondLabel" : "/**\n   * string id to (position, length)\n   * We cache class names and fields names, so this only points to:\n   * - \"zygote\" (unclear which tag uses this)\n   * - stack frame method names, signatures and source file (currently not parsed)\n   * - thread names (currently not parsed)\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2997,
+  "secondPos" : 2994,
+  "firstEndPos" : 3283,
+  "secondEndPos" : 3280
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3431,12 +3431,23 @@
   "firstEndPos" : 3359,
   "secondEndPos" : 3356
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 3363,
+  "secondPos" : 3360,
+  "firstEndPos" : 3721,
+  "secondEndPos" : 3718
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Can we estimate the number of classnames + field names?",
   "secondLabel" : "// TODO Can we estimate the number of classnames + field names?",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3363,
   "secondPos" : 3360,
   "firstEndPos" : 3426,
@@ -3446,8 +3457,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Heap dumps show strings represent 3/4 of the memory held. Lots of common prefixes in package",
   "secondLabel" : "// Heap dumps show strings represent 3/4 of the memory held. Lots of common prefixes in package",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3429,
   "secondPos" : 3426,
   "firstEndPos" : 3524,
@@ -3457,8 +3468,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// names.",
   "secondLabel" : "// names.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3527,
   "secondPos" : 3524,
   "firstEndPos" : 3536,
@@ -3468,8 +3479,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Wondering if a trie might help here but tries typically have the string",
   "secondLabel" : "// TODO Wondering if a trie might help here but tries typically have the string",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3539,
   "secondPos" : 3536,
   "firstEndPos" : 3618,
@@ -3479,23 +3490,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// as key whereas here it's a value.",
   "secondLabel" : "// as key whereas here it's a value.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3621,
   "secondPos" : 3618,
   "firstEndPos" : 3657,
   "secondEndPos" : 3654
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3660,
-  "secondPos" : 3657,
-  "firstEndPos" : 3721,
-  "secondEndPos" : 3718
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3651,12 +3651,23 @@
   "firstEndPos" : 3720,
   "secondEndPos" : 3717
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 3725,
+  "secondPos" : 3722,
+  "firstEndPos" : 3866,
+  "secondEndPos" : 3863
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n   * class id to string id\n   */",
   "secondLabel" : "/**\n   * class id to string id\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3725,
   "secondPos" : 3722,
   "firstEndPos" : 3761,
@@ -3666,23 +3677,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Can we estimate the number of classes?",
   "secondLabel" : "// TODO Can we estimate the number of classes?",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3764,
   "secondPos" : 3761,
   "firstEndPos" : 3810,
   "secondEndPos" : 3807
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3813,
-  "secondPos" : 3810,
-  "firstEndPos" : 3866,
-  "secondEndPos" : 3863
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3838,12 +3838,23 @@
   "firstEndPos" : 3865,
   "secondEndPos" : 3862
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 3870,
+  "secondPos" : 3867,
+  "firstEndPos" : 4249,
+  "secondEndPos" : 4200
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n   * Object id to object position. The id can be for classes instances, classes, object arrays\n   * and primitive arrays\n   */",
   "secondLabel" : "/**\n   * Object id to (object position, object id metadata). Metadata is an ordinal byte for\n   * [ObjectIdMetadata]\n   * The id can be for classes instances, classes, object arrays and primitive arrays\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3870,
   "secondPos" : 3867,
   "firstEndPos" : 4000,
@@ -3853,23 +3864,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Any way we can estimate the number of objects?",
   "secondLabel" : "// TODO Any way we can estimate the number of objects?",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4003,
   "secondPos" : 4078,
   "firstEndPos" : 4057,
   "secondEndPos" : 4132
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4168,
-  "secondPos" : 4135,
-  "firstEndPos" : 4249,
-  "secondEndPos" : 4200
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4025,27 +4025,27 @@
   "firstEndPos" : 4248,
   "secondEndPos" : 4199
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
-  "secondLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4253,
-  "secondPos" : 4204,
-  "firstEndPos" : 4484,
-  "secondEndPos" : 4435
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4487,
-  "secondPos" : 4438,
+  "firstPos" : 4253,
+  "secondPos" : 4204,
   "firstEndPos" : 4547,
   "secondEndPos" : 4498
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
+  "secondLabel" : "/**\n   * LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.\n   * This is based on running InstrumentationLeakDetectorTest a bunch of time on a\n   * Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4253,
+  "secondPos" : 4204,
+  "firstEndPos" : 4484,
+  "secondEndPos" : 4435
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4278,27 +4278,27 @@
   "firstEndPos" : 4546,
   "secondEndPos" : 4497
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Class ids for primitive wrapper types\n   */",
-  "secondLabel" : "/**\n   * Class ids for primitive wrapper types\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4551,
-  "secondPos" : 4502,
-  "firstEndPos" : 4603,
-  "secondEndPos" : 4554
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4606,
-  "secondPos" : 4557,
+  "firstPos" : 4551,
+  "secondPos" : 4502,
   "firstEndPos" : 4662,
   "secondEndPos" : 4613
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Class ids for primitive wrapper types\n   */",
+  "secondLabel" : "/**\n   * Class ids for primitive wrapper types\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4551,
+  "secondPos" : 4502,
+  "firstEndPos" : 4603,
+  "secondEndPos" : 4554
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4476,27 +4476,27 @@
   "firstEndPos" : 4662,
   "secondEndPos" : 4613
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * String ids for class names of primitive wrapper types\n   */",
-  "secondLabel" : "/**\n   * String ids for class names of primitive wrapper types\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4666,
-  "secondPos" : 4617,
-  "firstEndPos" : 4734,
-  "secondEndPos" : 4685
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4737,
-  "secondPos" : 4688,
+  "firstPos" : 4666,
+  "secondPos" : 4617,
   "firstEndPos" : 4798,
   "secondEndPos" : 4749
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * String ids for class names of primitive wrapper types\n   */",
+  "secondLabel" : "/**\n   * String ids for class names of primitive wrapper types\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4666,
+  "secondPos" : 4617,
+  "firstEndPos" : 4734,
+  "secondEndPos" : 4685
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -34913,27 +34913,27 @@
   "firstEndPos" : 21857,
   "secondEndPos" : 22253
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
-  "secondLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 21865,
-  "secondPos" : 22261,
-  "firstEndPos" : 21971,
-  "secondEndPos" : 22367
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21974,
-  "secondPos" : 22370,
+  "firstPos" : 21865,
+  "secondPos" : 22261,
   "firstEndPos" : 22267,
   "secondEndPos" : 22663
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
+  "secondLabel" : "/**\n   * Those are strings for class names, fields, etc, ie not strings from the application memory.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 21865,
+  "secondPos" : 22261,
+  "firstEndPos" : 21971,
+  "secondEndPos" : 22367
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -37042,7 +37042,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 23087,
+  "firstPos" : 22811,
   "secondPos" : 23207,
   "firstEndPos" : 23205,
   "secondEndPos" : 23375
@@ -46287,27 +46287,27 @@
   "firstEndPos" : 27164,
   "secondEndPos" : 27321
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Maybe parse this?",
-  "secondLabel" : "// TODO Maybe parse this?",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 27169,
-  "secondPos" : 27326,
-  "firstEndPos" : 27194,
-  "secondEndPos" : 27351
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 27199,
-  "secondPos" : 27356,
+  "firstPos" : 27169,
+  "secondPos" : 27326,
   "firstEndPos" : 27227,
   "secondEndPos" : 27384
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Maybe parse this?",
+  "secondLabel" : "// TODO Maybe parse this?",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 27169,
+  "secondPos" : 27326,
+  "firstEndPos" : 27194,
+  "secondEndPos" : 27351
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -46694,27 +46694,27 @@
   "firstEndPos" : 27327,
   "secondEndPos" : 27484
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Maybe parse this?",
-  "secondLabel" : "// TODO Maybe parse this?",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 27332,
-  "secondPos" : 27489,
-  "firstEndPos" : 27357,
-  "secondEndPos" : 27514
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 27362,
-  "secondPos" : 27519,
+  "firstPos" : 27332,
+  "secondPos" : 27489,
   "firstEndPos" : 27391,
   "secondEndPos" : 27548
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Maybe parse this?",
+  "secondLabel" : "// TODO Maybe parse this?",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 27332,
+  "secondPos" : 27489,
+  "firstEndPos" : 27357,
+  "secondEndPos" : 27514
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -48685,27 +48685,27 @@
   "firstEndPos" : 28103,
   "secondEndPos" : 28260
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
-  "secondLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 28109,
-  "secondPos" : 28266,
-  "firstEndPos" : 28647,
-  "secondEndPos" : 28804
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 28652,
-  "secondPos" : 28809,
+  "firstPos" : 28109,
+  "secondPos" : 28266,
   "firstEndPos" : 28683,
   "secondEndPos" : 28840
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
+  "secondLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 28109,
+  "secondPos" : 28266,
+  "firstEndPos" : 28647,
+  "secondEndPos" : 28804
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

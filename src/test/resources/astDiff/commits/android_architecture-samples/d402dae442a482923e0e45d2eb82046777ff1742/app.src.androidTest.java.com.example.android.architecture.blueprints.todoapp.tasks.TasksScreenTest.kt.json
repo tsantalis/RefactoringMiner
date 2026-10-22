@@ -3387,27 +3387,27 @@
   "firstEndPos" : 3016,
   "secondEndPos" : 3101
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
-  "secondLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3018,
-  "secondPos" : 3103,
-  "firstEndPos" : 3108,
-  "secondEndPos" : 3193
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3109,
-  "secondPos" : 3194,
+  "firstPos" : 3018,
+  "secondPos" : 3103,
   "firstEndPos" : 19873,
   "secondEndPos" : 23574
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
+  "secondLabel" : "/**\n * Tests for the tasks screen, the main screen which contains a list of all tasks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3018,
+  "secondPos" : 3103,
+  "firstEndPos" : 3108,
+  "secondEndPos" : 3193
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4080,27 +4080,27 @@
   "firstEndPos" : 3640,
   "secondEndPos" : 10023
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     */",
-  "secondLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3647,
-  "secondPos" : 3406,
-  "firstEndPos" : 3728,
-  "secondEndPos" : 3560
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3733,
-  "secondPos" : 3565,
+  "firstPos" : 3647,
+  "secondPos" : 3406,
   "firstEndPos" : 3886,
   "secondEndPos" : 3718
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     */",
+  "secondLabel" : "/**\n     * Make sure the tasks repository has no tasks on initialization.\n     * The tasks repository needs to be instantiated on the main thread.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3647,
+  "secondPos" : 3406,
+  "firstEndPos" : 3728,
+  "secondEndPos" : 3560
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4520,27 +4520,27 @@
   "firstEndPos" : 3880,
   "secondEndPos" : 3712
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "secondLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3892,
-  "secondPos" : 3724,
-  "firstEndPos" : 4223,
-  "secondEndPos" : 4055
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4228,
-  "secondPos" : 4060,
+  "firstPos" : 3892,
+  "secondPos" : 3724,
   "firstEndPos" : 4369,
   "secondEndPos" : 4201
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "secondLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3892,
+  "secondPos" : 3724,
+  "firstEndPos" : 4223,
+  "secondEndPos" : 4055
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -4850,27 +4850,27 @@
   "firstEndPos" : 4362,
   "secondEndPos" : 4194
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4375,
-  "secondPos" : 4207,
-  "firstEndPos" : 4486,
-  "secondEndPos" : 4318
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4491,
-  "secondPos" : 4323,
+  "firstPos" : 4375,
+  "secondPos" : 4207,
   "firstEndPos" : 4635,
   "secondEndPos" : 4467
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4375,
+  "secondPos" : 4207,
+  "firstEndPos" : 4486,
+  "secondEndPos" : 4318
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -5279,27 +5279,27 @@
   "firstEndPos" : 4795,
   "secondEndPos" : 4682
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
-  "secondLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4802,
-  "secondPos" : 4771,
-  "firstEndPos" : 5079,
-  "secondEndPos" : 5048
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5084,
-  "secondPos" : 5053,
+  "firstPos" : 4802,
+  "secondPos" : 4771,
   "firstEndPos" : 5649,
   "secondEndPos" : 5618
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
+  "secondLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4802,
+  "secondPos" : 4771,
+  "firstEndPos" : 5079,
+  "secondEndPos" : 5048
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -10577,7 +10577,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 7254,
-  "secondPos" : 7569,
+  "secondPos" : 7502,
   "firstEndPos" : 7791,
   "secondEndPos" : 8167
 }, {
@@ -11985,7 +11985,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 7797,
-  "secondPos" : 8240,
+  "secondPos" : 8173,
   "firstEndPos" : 8368,
   "secondEndPos" : 8881
 }, {
@@ -13316,7 +13316,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 8374,
-  "secondPos" : 8954,
+  "secondPos" : 8887,
   "firstEndPos" : 8724,
   "secondEndPos" : 9524
 }, {
@@ -14163,7 +14163,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 8730,
-  "secondPos" : 9597,
+  "secondPos" : 9530,
   "firstEndPos" : 9086,
   "secondEndPos" : 10329
 }, {
@@ -15087,7 +15087,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 9092,
-  "secondPos" : 10402,
+  "secondPos" : 10335,
   "firstEndPos" : 9532,
   "secondEndPos" : 11189
 }, {
@@ -15879,7 +15879,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 9538,
-  "secondPos" : 11262,
+  "secondPos" : 11195,
   "firstEndPos" : 10159,
   "secondEndPos" : 12027
 }, {
@@ -26857,7 +26857,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 14406,
-  "secondPos" : 17005,
+  "secondPos" : 16938,
   "firstEndPos" : 14939,
   "secondEndPos" : 17685
 }, {
@@ -27660,7 +27660,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 14945,
-  "secondPos" : 17758,
+  "secondPos" : 17691,
   "firstEndPos" : 15580,
   "secondEndPos" : 18540
 }, {
@@ -28786,27 +28786,27 @@
   "firstEndPos" : 15572,
   "secondEndPos" : 18532
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15586,
-  "secondPos" : 18546,
-  "firstEndPos" : 15641,
-  "secondEndPos" : 18601
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15646,
-  "secondPos" : 18606,
+  "firstPos" : 15586,
+  "secondPos" : 18546,
   "firstEndPos" : 16386,
   "secondEndPos" : 19530
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 15586,
+  "secondPos" : 18546,
+  "firstEndPos" : 15641,
+  "secondEndPos" : 18601
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -30491,27 +30491,27 @@
   "firstEndPos" : 16377,
   "secondEndPos" : 19521
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 16392,
-  "secondPos" : 19536,
-  "firstEndPos" : 16447,
-  "secondEndPos" : 19591
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16452,
-  "secondPos" : 19596,
+  "firstPos" : 16392,
+  "secondPos" : 19536,
   "firstEndPos" : 17590,
   "secondEndPos" : 20941
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "secondLabel" : "// Blinking cursor after rotation breaks this in API 19",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 16392,
+  "secondPos" : 19536,
+  "firstEndPos" : 16447,
+  "secondEndPos" : 19591
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -32995,7 +32995,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 17596,
-  "secondPos" : 21014,
+  "secondPos" : 20947,
   "firstEndPos" : 17876,
   "secondEndPos" : 21376
 }, {
@@ -33545,7 +33545,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 17882,
-  "secondPos" : 21449,
+  "secondPos" : 21382,
   "firstEndPos" : 18182,
   "secondEndPos" : 21838
 }, {
@@ -34150,7 +34150,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 18188,
-  "secondPos" : 21911,
+  "secondPos" : 21844,
   "firstEndPos" : 18482,
   "secondEndPos" : 22294
 }, {

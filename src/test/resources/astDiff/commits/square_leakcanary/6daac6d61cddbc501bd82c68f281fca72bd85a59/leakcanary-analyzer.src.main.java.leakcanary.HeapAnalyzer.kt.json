@@ -3134,27 +3134,27 @@
   "firstEndPos" : 3034,
   "secondEndPos" : 3035
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
-  "secondLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3036,
-  "secondPos" : 3037,
-  "firstEndPos" : 3085,
-  "secondEndPos" : 3086
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3086,
-  "secondPos" : 3087,
+  "firstPos" : 3036,
+  "secondPos" : 3037,
   "firstEndPos" : 22048,
   "secondEndPos" : 22051
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
+  "secondLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3036,
+  "secondPos" : 3037,
+  "firstEndPos" : 3085,
+  "secondEndPos" : 3086
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -3959,27 +3959,27 @@
   "firstEndPos" : 3441,
   "secondEndPos" : 3442
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
-  "secondLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3449,
-  "secondPos" : 3450,
-  "firstEndPos" : 3644,
-  "secondEndPos" : 3645
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3647,
-  "secondPos" : 3648,
+  "firstPos" : 3449,
+  "secondPos" : 3450,
   "firstEndPos" : 5040,
   "secondEndPos" : 5042
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
+  "secondLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3449,
+  "secondPos" : 3450,
+  "firstEndPos" : 3644,
+  "secondEndPos" : 3645
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -6720,27 +6720,27 @@
   "firstEndPos" : 5027,
   "secondEndPos" : 5029
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
-  "secondLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5044,
-  "secondPos" : 5046,
-  "firstEndPos" : 5239,
-  "secondEndPos" : 5241
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5242,
-  "secondPos" : 5244,
+  "firstPos" : 5044,
+  "secondPos" : 5046,
   "firstEndPos" : 7180,
   "secondEndPos" : 7183
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
+  "secondLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5044,
+  "secondPos" : 5046,
+  "firstEndPos" : 5239,
+  "secondEndPos" : 5241
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -11802,27 +11802,27 @@
   "firstEndPos" : 7694,
   "secondEndPos" : 7697
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Pruning duplicates reduces memory pressure from hprof bloat added in Marshmallow.\n   */",
-  "secondLabel" : "/**\n   * Pruning duplicates reduces memory pressure from hprof bloat added in Marshmallow.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7703,
-  "secondPos" : 7706,
-  "firstEndPos" : 7799,
-  "secondEndPos" : 7802
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7802,
-  "secondPos" : 7805,
+  "firstPos" : 7703,
+  "secondPos" : 7706,
   "firstEndPos" : 8324,
   "secondEndPos" : 8327
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Pruning duplicates reduces memory pressure from hprof bloat added in Marshmallow.\n   */",
+  "secondLabel" : "/**\n   * Pruning duplicates reduces memory pressure from hprof bloat added in Marshmallow.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7703,
+  "secondPos" : 7706,
+  "firstEndPos" : 7799,
+  "secondEndPos" : 7802
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

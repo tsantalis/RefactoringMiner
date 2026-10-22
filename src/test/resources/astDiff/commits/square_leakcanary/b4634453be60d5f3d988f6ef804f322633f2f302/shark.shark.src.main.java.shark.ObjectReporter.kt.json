@@ -175,27 +175,27 @@
   "firstEndPos" : 80,
   "secondEndPos" : 80
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Enables [ObjectInspector] implementations to provide insights on [heapObject], which is\n * an object (class, instance or array) found in the heap.\n *\n * A given [ObjectReporter] only maps to one object in the heap, but is shared to many\n * [ObjectInspector] implementations and accumulates insights.\n */",
-  "secondLabel" : "/**\n * Enables [ObjectInspector] implementations to provide insights on [heapObject], which is\n * an object (class, instance or array) found in the heap.\n *\n * A given [ObjectReporter] only maps to one object in the heap, but is shared to many\n * [ObjectInspector] implementations and accumulates insights.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 82,
-  "secondPos" : 82,
-  "firstEndPos" : 392,
-  "secondEndPos" : 392
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 393,
-  "secondPos" : 393,
+  "firstPos" : 82,
+  "secondPos" : 82,
   "firstEndPos" : 1752,
   "secondEndPos" : 1505
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Enables [ObjectInspector] implementations to provide insights on [heapObject], which is\n * an object (class, instance or array) found in the heap.\n *\n * A given [ObjectReporter] only maps to one object in the heap, but is shared to many\n * [ObjectInspector] implementations and accumulates insights.\n */",
+  "secondLabel" : "/**\n * Enables [ObjectInspector] implementations to provide insights on [heapObject], which is\n * an object (class, instance or array) found in the heap.\n *\n * A given [ObjectReporter] only maps to one object in the heap, but is shared to many\n * [ObjectInspector] implementations and accumulates insights.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 82,
+  "secondPos" : 82,
+  "firstEndPos" : 392,
+  "secondEndPos" : 392
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -318,27 +318,27 @@
   "firstEndPos" : 1752,
   "secondEndPos" : 1505
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Labels that will be visible on the corresponding [heapObject] in the leak trace.\n   */",
-  "secondLabel" : "/**\n   * Labels that will be visible on the corresponding [heapObject] in the leak trace.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 459,
-  "secondPos" : 459,
-  "firstEndPos" : 554,
-  "secondEndPos" : 554
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 557,
-  "secondPos" : 557,
+  "firstPos" : 459,
+  "secondPos" : 459,
   "firstEndPos" : 591,
   "secondEndPos" : 591
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Labels that will be visible on the corresponding [heapObject] in the leak trace.\n   */",
+  "secondLabel" : "/**\n   * Labels that will be visible on the corresponding [heapObject] in the leak trace.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 459,
+  "secondPos" : 459,
+  "firstEndPos" : 554,
+  "secondEndPos" : 554
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -483,27 +483,27 @@
   "firstEndPos" : 591,
   "secondEndPos" : 591
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reasons for which this object is expected to be unreachable (ie it's leaking).\n   */",
-  "secondLabel" : "/**\n   * Reasons for which this object is expected to be unreachable (ie it's leaking).\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 595,
-  "secondPos" : 595,
-  "firstEndPos" : 688,
-  "secondEndPos" : 688
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 691,
-  "secondPos" : 691,
+  "firstPos" : 595,
+  "secondPos" : 595,
   "firstEndPos" : 734,
   "secondEndPos" : 734
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reasons for which this object is expected to be unreachable (ie it's leaking).\n   */",
+  "secondLabel" : "/**\n   * Reasons for which this object is expected to be unreachable (ie it's leaking).\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 595,
+  "secondPos" : 595,
+  "firstEndPos" : 688,
+  "secondEndPos" : 688
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -648,27 +648,27 @@
   "firstEndPos" : 734,
   "secondEndPos" : 734
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reasons for which this object is expected to be reachable (ie it's not leaking).\n   */",
-  "secondLabel" : "/**\n   * Reasons for which this object is expected to be reachable (ie it's not leaking).\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 985,
-  "secondPos" : 738,
-  "firstEndPos" : 1080,
-  "secondEndPos" : 833
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1083,
-  "secondPos" : 836,
+  "firstPos" : 985,
+  "secondPos" : 738,
   "firstEndPos" : 1129,
   "secondEndPos" : 882
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reasons for which this object is expected to be reachable (ie it's not leaking).\n   */",
+  "secondLabel" : "/**\n   * Reasons for which this object is expected to be reachable (ie it's not leaking).\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 985,
+  "secondPos" : 738,
+  "firstEndPos" : 1080,
+  "secondEndPos" : 833
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -813,27 +813,27 @@
   "firstEndPos" : 1129,
   "secondEndPos" : 882
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClass].\n   */",
-  "secondLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClass].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1133,
-  "secondPos" : 886,
-  "firstEndPos" : 1226,
-  "secondEndPos" : 979
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1229,
-  "secondPos" : 982,
+  "firstPos" : 1133,
+  "secondPos" : 886,
   "firstEndPos" : 1394,
   "secondEndPos" : 1147
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClass].\n   */",
+  "secondLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClass].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1133,
+  "secondPos" : 886,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 979
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1286,27 +1286,27 @@
   "firstEndPos" : 1389,
   "secondEndPos" : 1142
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClassName].\n   */",
-  "secondLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClassName].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1398,
-  "secondPos" : 1151,
-  "firstEndPos" : 1495,
-  "secondEndPos" : 1248
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1498,
-  "secondPos" : 1251,
+  "firstPos" : 1398,
+  "secondPos" : 1151,
   "firstEndPos" : 1750,
   "secondEndPos" : 1503
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClassName].\n   */",
+  "secondLabel" : "/**\n   * Runs [block] if [ObjectReporter.heapObject] is an instance of [expectedClassName].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1398,
+  "secondPos" : 1151,
+  "firstEndPos" : 1495,
+  "secondEndPos" : 1248
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

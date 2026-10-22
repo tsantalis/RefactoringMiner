@@ -1187,27 +1187,27 @@
   "firstEndPos" : 550,
   "secondEndPos" : 505
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
-  "secondLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 556,
-  "secondPos" : 511,
-  "firstEndPos" : 741,
-  "secondEndPos" : 696
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 746,
-  "secondPos" : 701,
+  "firstPos" : 556,
+  "secondPos" : 511,
   "firstEndPos" : 765,
   "secondEndPos" : 720
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
+  "secondLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 556,
+  "secondPos" : 511,
+  "firstEndPos" : 741,
+  "secondEndPos" : 696
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4058,27 +4058,27 @@
   "firstEndPos" : 2086,
   "secondEndPos" : 2041
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
-  "secondLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2094,
-  "secondPos" : 2049,
-  "firstEndPos" : 2467,
-  "secondEndPos" : 2422
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2474,
-  "secondPos" : 2429,
+  "firstPos" : 2094,
+  "secondPos" : 2049,
   "firstEndPos" : 4109,
   "secondEndPos" : 4703
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
+  "secondLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2094,
+  "secondPos" : 2049,
+  "firstEndPos" : 2467,
+  "secondEndPos" : 2422
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

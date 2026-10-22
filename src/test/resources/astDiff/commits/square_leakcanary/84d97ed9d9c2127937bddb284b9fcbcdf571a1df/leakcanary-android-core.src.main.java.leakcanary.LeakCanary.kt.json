@@ -450,27 +450,27 @@
   "firstEndPos" : 377,
   "secondEndPos" : 343
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * The entry point API for LeakCanary. LeakCanary builds on top of [AppWatcher]. AppWatcher\n * notifies LeakCanary of retained instances, which in turns dumps the heap, analyses it and\n * publishes the results.\n *\n * LeakCanary can be configured by updating [config].\n */",
-  "secondLabel" : "/**\n * The entry point API for LeakCanary. LeakCanary builds on top of [AppWatcher]. AppWatcher\n * notifies LeakCanary of retained instances, which in turns dumps the heap, analyses it and\n * publishes the results.\n *\n * LeakCanary can be configured by updating [config].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 379,
-  "secondPos" : 345,
-  "firstEndPos" : 654,
-  "secondEndPos" : 620
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 655,
-  "secondPos" : 621,
+  "firstPos" : 379,
+  "secondPos" : 345,
   "firstEndPos" : 6666,
   "secondEndPos" : 6613
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * The entry point API for LeakCanary. LeakCanary builds on top of [AppWatcher]. AppWatcher\n * notifies LeakCanary of retained instances, which in turns dumps the heap, analyses it and\n * publishes the results.\n *\n * LeakCanary can be configured by updating [config].\n */",
+  "secondLabel" : "/**\n * The entry point API for LeakCanary. LeakCanary builds on top of [AppWatcher]. AppWatcher\n * notifies LeakCanary of retained instances, which in turns dumps the heap, analyses it and\n * publishes the results.\n *\n * LeakCanary can be configured by updating [config].\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 379,
+  "secondPos" : 345,
+  "firstEndPos" : 654,
+  "secondEndPos" : 620
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -505,27 +505,27 @@
   "firstEndPos" : 6666,
   "secondEndPos" : 6613
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * LeakCanary configuration data class. Properties can be updated via [copy].\n   *\n   * @see [config]\n   */",
-  "secondLabel" : "/**\n   * LeakCanary configuration data class. Properties can be updated via [copy].\n   *\n   * @see [config]\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 678,
-  "secondPos" : 644,
-  "firstEndPos" : 791,
-  "secondEndPos" : 757
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 794,
-  "secondPos" : 760,
+  "firstPos" : 678,
+  "secondPos" : 644,
   "firstEndPos" : 5787,
   "secondEndPos" : 5734
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * LeakCanary configuration data class. Properties can be updated via [copy].\n   *\n   * @see [config]\n   */",
+  "secondLabel" : "/**\n   * LeakCanary configuration data class. Properties can be updated via [copy].\n   *\n   * @see [config]\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 678,
+  "secondPos" : 644,
+  "firstEndPos" : 791,
+  "secondEndPos" : 757
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -593,27 +593,27 @@
   "firstEndPos" : 5787,
   "secondEndPos" : 5734
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether LeakCanary should dump the heap when enough retained instances are found. This needs\n     * to be true for LeakCanary to work, but sometimes you may want to temporarily disable\n     * LeakCanary (e.g. for a product demo).\n     *\n     * Defaults to true.\n     */",
-  "secondLabel" : "/**\n     * Whether LeakCanary should dump the heap when enough retained instances are found. This needs\n     * to be true for LeakCanary to work, but sometimes you may want to temporarily disable\n     * LeakCanary (e.g. for a product demo).\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 817,
-  "secondPos" : 783,
-  "firstEndPos" : 1097,
-  "secondEndPos" : 1063
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1102,
-  "secondPos" : 1068,
+  "firstPos" : 817,
+  "secondPos" : 783,
   "firstEndPos" : 1130,
   "secondEndPos" : 1096
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether LeakCanary should dump the heap when enough retained instances are found. This needs\n     * to be true for LeakCanary to work, but sometimes you may want to temporarily disable\n     * LeakCanary (e.g. for a product demo).\n     *\n     * Defaults to true.\n     */",
+  "secondLabel" : "/**\n     * Whether LeakCanary should dump the heap when enough retained instances are found. This needs\n     * to be true for LeakCanary to work, but sometimes you may want to temporarily disable\n     * LeakCanary (e.g. for a product demo).\n     *\n     * Defaults to true.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 817,
+  "secondPos" : 783,
+  "firstEndPos" : 1097,
+  "secondEndPos" : 1063
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -703,27 +703,27 @@
   "firstEndPos" : 1130,
   "secondEndPos" : 1096
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * If [dumpHeapWhenDebugging] is false then LeakCanary will not dump the heap\n     * when the debugger is attached. The debugger can create temporary memory leaks (for instance\n     * if a thread is blocked on a breakpoint).\n     *\n     * Defaults to false.\n     */",
-  "secondLabel" : "/**\n     * If [dumpHeapWhenDebugging] is false then LeakCanary will not dump the heap\n     * when the debugger is attached. The debugger can create temporary memory leaks (for instance\n     * if a thread is blocked on a breakpoint).\n     *\n     * Defaults to false.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1136,
-  "secondPos" : 1102,
-  "firstEndPos" : 1409,
-  "secondEndPos" : 1375
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1414,
-  "secondPos" : 1380,
+  "firstPos" : 1136,
+  "secondPos" : 1102,
   "firstEndPos" : 1456,
   "secondEndPos" : 1422
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * If [dumpHeapWhenDebugging] is false then LeakCanary will not dump the heap\n     * when the debugger is attached. The debugger can create temporary memory leaks (for instance\n     * if a thread is blocked on a breakpoint).\n     *\n     * Defaults to false.\n     */",
+  "secondLabel" : "/**\n     * If [dumpHeapWhenDebugging] is false then LeakCanary will not dump the heap\n     * when the debugger is attached. The debugger can create temporary memory leaks (for instance\n     * if a thread is blocked on a breakpoint).\n     *\n     * Defaults to false.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1136,
+  "secondPos" : 1102,
+  "firstEndPos" : 1409,
+  "secondEndPos" : 1375
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -813,27 +813,27 @@
   "firstEndPos" : 1456,
   "secondEndPos" : 1422
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap after\n     * [AppWatcher.Config.watchDurationMillis] ms.\n     *\n     * The app is considered visible if it has at least one activity in started state.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     *\n     * Defaults to 5.\n     */",
-  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap after\n     * [AppWatcher.Config.watchDurationMillis] ms.\n     *\n     * The app is considered visible if it has at least one activity in started state.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     *\n     * Defaults to 5.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1462,
-  "secondPos" : 1428,
-  "firstEndPos" : 2260,
-  "secondEndPos" : 2226
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2265,
-  "secondPos" : 2231,
+  "firstPos" : 1462,
+  "secondPos" : 1428,
   "firstEndPos" : 2302,
   "secondEndPos" : 2268
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap after\n     * [AppWatcher.Config.watchDurationMillis] ms.\n     *\n     * The app is considered visible if it has at least one activity in started state.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     *\n     * Defaults to 5.\n     */",
+  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap after\n     * [AppWatcher.Config.watchDurationMillis] ms.\n     *\n     * The app is considered visible if it has at least one activity in started state.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     *\n     * Defaults to 5.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1462,
+  "secondPos" : 1428,
+  "firstEndPos" : 2260,
+  "secondEndPos" : 2226
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -912,27 +912,27 @@
   "firstEndPos" : 2302,
   "secondEndPos" : 2268
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Known patterns of references in the heap, lister here either to ignore them\n     * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n     *\n     * When adding your own custom [LibraryLeakReferenceMatcher] instances, you'll most\n     * likely want to set [LibraryLeakReferenceMatcher.patternApplies] with a filter that checks\n     * for the Android OS version and manufacturer. The build information can be obtained by calling\n     * the extension function [shark.HeapGraph.androidBuildMirror].\n     *\n     * Defaults to [AndroidReferenceMatchers.appDefaults]\n     */",
-  "secondLabel" : "/**\n     * Known patterns of references in the heap, lister here either to ignore them\n     * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n     *\n     * When adding your own custom [LibraryLeakReferenceMatcher] instances, you'll most\n     * likely want to set [LibraryLeakReferenceMatcher.patternApplies] with a filter that checks\n     * for the Android OS version and manufacturer. The build information can be obtained by calling\n     * [shark.AndroidBuildMirror.fromHeapGraph].\n     *\n     * Defaults to [AndroidReferenceMatchers.appDefaults]\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2309,
-  "secondPos" : 2275,
-  "firstEndPos" : 2930,
-  "secondEndPos" : 2877
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2935,
-  "secondPos" : 2882,
+  "firstPos" : 2309,
+  "secondPos" : 2275,
   "firstEndPos" : 3019,
   "secondEndPos" : 2966
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Known patterns of references in the heap, lister here either to ignore them\n     * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n     *\n     * When adding your own custom [LibraryLeakReferenceMatcher] instances, you'll most\n     * likely want to set [LibraryLeakReferenceMatcher.patternApplies] with a filter that checks\n     * for the Android OS version and manufacturer. The build information can be obtained by calling\n     * the extension function [shark.HeapGraph.androidBuildMirror].\n     *\n     * Defaults to [AndroidReferenceMatchers.appDefaults]\n     */",
+  "secondLabel" : "/**\n     * Known patterns of references in the heap, lister here either to ignore them\n     * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n     *\n     * When adding your own custom [LibraryLeakReferenceMatcher] instances, you'll most\n     * likely want to set [LibraryLeakReferenceMatcher.patternApplies] with a filter that checks\n     * for the Android OS version and manufacturer. The build information can be obtained by calling\n     * [shark.AndroidBuildMirror.fromHeapGraph].\n     *\n     * Defaults to [AndroidReferenceMatchers.appDefaults]\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2309,
+  "secondPos" : 2275,
+  "firstEndPos" : 2930,
+  "secondEndPos" : 2877
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1088,27 +1088,27 @@
   "firstEndPos" : 3019,
   "secondEndPos" : 2966
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * List of [ObjectInspector] that provide LeakCanary with insights about objects found in the\n     * heap. You can create your own [ObjectInspector] implementations, and also add\n     * a [shark.AppSingletonInspector] instance created with the list of internal singletons.\n     *\n     * Defaults to [AndroidObjectInspectors.appDefaults]\n     */",
-  "secondLabel" : "/**\n     * List of [ObjectInspector] that provide LeakCanary with insights about objects found in the\n     * heap. You can create your own [ObjectInspector] implementations, and also add\n     * a [shark.AppSingletonInspector] instance created with the list of internal singletons.\n     *\n     * Defaults to [AndroidObjectInspectors.appDefaults]\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 3026,
-  "secondPos" : 2973,
-  "firstEndPos" : 3378,
-  "secondEndPos" : 3325
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 3383,
-  "secondPos" : 3330,
+  "firstPos" : 3026,
+  "secondPos" : 2973,
   "firstEndPos" : 3464,
   "secondEndPos" : 3411
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * List of [ObjectInspector] that provide LeakCanary with insights about objects found in the\n     * heap. You can create your own [ObjectInspector] implementations, and also add\n     * a [shark.AppSingletonInspector] instance created with the list of internal singletons.\n     *\n     * Defaults to [AndroidObjectInspectors.appDefaults]\n     */",
+  "secondLabel" : "/**\n     * List of [ObjectInspector] that provide LeakCanary with insights about objects found in the\n     * heap. You can create your own [ObjectInspector] implementations, and also add\n     * a [shark.AppSingletonInspector] instance created with the list of internal singletons.\n     *\n     * Defaults to [AndroidObjectInspectors.appDefaults]\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3026,
+  "secondPos" : 2973,
+  "firstEndPos" : 3378,
+  "secondEndPos" : 3325
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1264,27 +1264,27 @@
   "firstEndPos" : 3464,
   "secondEndPos" : 3411
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called on a background thread when the heap analysis is complete.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to a [DefaultOnHeapAnalyzedListener].\n     *\n     * Defaults to [DefaultOnHeapAnalyzedListener]\n     */",
-  "secondLabel" : "/**\n     * Called on a background thread when the heap analysis is complete.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to a [DefaultOnHeapAnalyzedListener].\n     *\n     * Defaults to [DefaultOnHeapAnalyzedListener]\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 3471,
-  "secondPos" : 3418,
-  "firstEndPos" : 3757,
-  "secondEndPos" : 3704
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 3762,
-  "secondPos" : 3709,
+  "firstPos" : 3471,
+  "secondPos" : 3418,
   "firstEndPos" : 3890,
   "secondEndPos" : 3837
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called on a background thread when the heap analysis is complete.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to a [DefaultOnHeapAnalyzedListener].\n     *\n     * Defaults to [DefaultOnHeapAnalyzedListener]\n     */",
+  "secondLabel" : "/**\n     * Called on a background thread when the heap analysis is complete.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to a [DefaultOnHeapAnalyzedListener].\n     *\n     * Defaults to [DefaultOnHeapAnalyzedListener]\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3471,
+  "secondPos" : 3418,
+  "firstEndPos" : 3757,
+  "secondEndPos" : 3704
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1451,27 +1451,27 @@
   "firstEndPos" : 3884,
   "secondEndPos" : 3831
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether to compute the retained heap size, which is the total number of bytes in memory that\n     * would be reclaimed if the detected leaks didn't happen. This includes native memory\n     * associated to Java objects (e.g. Android bitmaps).\n     *\n     * Computing the retained heap size can slow down the analysis because it requires navigating\n     * from GC roots through the entire object graph, whereas [shark.HeapAnalyzer] would otherwise\n     * stop as soon as all leaking instances are found.\n     *\n     * Defaults to true.\n     */",
-  "secondLabel" : "/**\n     * Whether to compute the retained heap size, which is the total number of bytes in memory that\n     * would be reclaimed if the detected leaks didn't happen. This includes native memory\n     * associated to Java objects (e.g. Android bitmaps).\n     *\n     * Computing the retained heap size can slow down the analysis because it requires navigating\n     * from GC roots through the entire object graph, whereas [shark.HeapAnalyzer] would otherwise\n     * stop as soon as all leaking instances are found.\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 3897,
-  "secondPos" : 3844,
-  "firstEndPos" : 4449,
-  "secondEndPos" : 4396
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 4454,
-  "secondPos" : 4401,
+  "firstPos" : 3897,
+  "secondPos" : 3844,
   "firstEndPos" : 4497,
   "secondEndPos" : 4444
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether to compute the retained heap size, which is the total number of bytes in memory that\n     * would be reclaimed if the detected leaks didn't happen. This includes native memory\n     * associated to Java objects (e.g. Android bitmaps).\n     *\n     * Computing the retained heap size can slow down the analysis because it requires navigating\n     * from GC roots through the entire object graph, whereas [shark.HeapAnalyzer] would otherwise\n     * stop as soon as all leaking instances are found.\n     *\n     * Defaults to true.\n     */",
+  "secondLabel" : "/**\n     * Whether to compute the retained heap size, which is the total number of bytes in memory that\n     * would be reclaimed if the detected leaks didn't happen. This includes native memory\n     * associated to Java objects (e.g. Android bitmaps).\n     *\n     * Computing the retained heap size can slow down the analysis because it requires navigating\n     * from GC roots through the entire object graph, whereas [shark.HeapAnalyzer] would otherwise\n     * stop as soon as all leaking instances are found.\n     *\n     * Defaults to true.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3897,
+  "secondPos" : 3844,
+  "firstEndPos" : 4449,
+  "secondEndPos" : 4396
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1561,27 +1561,27 @@
   "firstEndPos" : 4497,
   "secondEndPos" : 4444
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * How many heap dumps are kept on the Android device for this app package. When this threshold\n     * is reached LeakCanary deletes the older heap dumps. As several heap dumps may be enqueued\n     * you should avoid going down to 1 or 2.\n     *\n     * Defaults to 7.\n     */",
-  "secondLabel" : "/**\n     * How many heap dumps are kept on the Android device for this app package. When this threshold\n     * is reached LeakCanary deletes the older heap dumps. As several heap dumps may be enqueued\n     * you should avoid going down to 1 or 2.\n     *\n     * Defaults to 7.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 4504,
-  "secondPos" : 4451,
-  "firstEndPos" : 4787,
-  "secondEndPos" : 4734
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 4792,
-  "secondPos" : 4739,
+  "firstPos" : 4504,
+  "secondPos" : 4451,
   "firstEndPos" : 4823,
   "secondEndPos" : 4770
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * How many heap dumps are kept on the Android device for this app package. When this threshold\n     * is reached LeakCanary deletes the older heap dumps. As several heap dumps may be enqueued\n     * you should avoid going down to 1 or 2.\n     *\n     * Defaults to 7.\n     */",
+  "secondLabel" : "/**\n     * How many heap dumps are kept on the Android device for this app package. When this threshold\n     * is reached LeakCanary deletes the older heap dumps. As several heap dumps may be enqueued\n     * you should avoid going down to 1 or 2.\n     *\n     * Defaults to 7.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4504,
+  "secondPos" : 4451,
+  "firstEndPos" : 4787,
+  "secondEndPos" : 4734
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1660,27 +1660,27 @@
   "firstEndPos" : 4823,
   "secondEndPos" : 4770
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage if the\n     * WRITE_EXTERNAL_STORAGE is already granted, and otherwise uses the app storage.\n     * If the WRITE_EXTERNAL_STORAGE permission is not granted and\n     * [requestWriteExternalStoragePermission] is true, then LeakCanary will display a notification\n     * to ask for that permission.\n     *\n     * Defaults to false because that permission notification can be annoying.\n     */",
-  "secondLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage if the\n     * WRITE_EXTERNAL_STORAGE is already granted, and otherwise uses the app storage.\n     * If the WRITE_EXTERNAL_STORAGE permission is not granted and\n     * [requestWriteExternalStoragePermission] is true, then LeakCanary will display a notification\n     * to ask for that permission.\n     *\n     * Defaults to false because that permission notification can be annoying.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 4830,
-  "secondPos" : 4777,
-  "firstEndPos" : 5300,
-  "secondEndPos" : 5247
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 5305,
-  "secondPos" : 5252,
+  "firstPos" : 4830,
+  "secondPos" : 4777,
   "firstEndPos" : 5363,
   "secondEndPos" : 5310
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage if the\n     * WRITE_EXTERNAL_STORAGE is already granted, and otherwise uses the app storage.\n     * If the WRITE_EXTERNAL_STORAGE permission is not granted and\n     * [requestWriteExternalStoragePermission] is true, then LeakCanary will display a notification\n     * to ask for that permission.\n     *\n     * Defaults to false because that permission notification can be annoying.\n     */",
+  "secondLabel" : "/**\n     * LeakCanary always attempts to store heap dumps on the external storage if the\n     * WRITE_EXTERNAL_STORAGE is already granted, and otherwise uses the app storage.\n     * If the WRITE_EXTERNAL_STORAGE permission is not granted and\n     * [requestWriteExternalStoragePermission] is true, then LeakCanary will display a notification\n     * to ask for that permission.\n     *\n     * Defaults to false because that permission notification can be annoying.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4830,
+  "secondPos" : 4777,
+  "firstEndPos" : 5300,
+  "secondEndPos" : 5247
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1770,27 +1770,27 @@
   "firstEndPos" : 5363,
   "secondEndPos" : 5310
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     *\n     * Defaults to false.\n     */",
-  "secondLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     *\n     * Defaults to false.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 5370,
-  "secondPos" : 5317,
-  "firstEndPos" : 5731,
-  "secondEndPos" : 5678
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 5736,
-  "secondPos" : 5683,
+  "firstPos" : 5370,
+  "secondPos" : 5317,
   "firstEndPos" : 5783,
   "secondEndPos" : 5730
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     *\n     * Defaults to false.\n     */",
+  "secondLabel" : "/**\n     * When true, [objectInspectors] are used to find leaks instead of only checking instances\n     * tracked by [KeyedWeakReference]. This leads to finding more leaks and shorter leak traces.\n     * However this also means the same leaking instances will be found in every heap dump for a\n     * given process life.\n     *\n     * Defaults to false.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5370,
+  "secondPos" : 5317,
+  "firstEndPos" : 5731,
+  "secondEndPos" : 5678
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1880,27 +1880,27 @@
   "firstEndPos" : 5783,
   "secondEndPos" : 5730
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The current LeakCanary configuration. Can be updated at any time, usually by replacing it with\n   * a mutated copy, e.g.:\n   *\n   * ```\n   * LeakCanary.config = LeakCanary.config.copy(computeRetainedHeapSize = true)\n   * ```\n   */",
-  "secondLabel" : "/**\n   * The current LeakCanary configuration. Can be updated at any time, usually by replacing it with\n   * a mutated copy, e.g.:\n   *\n   * ```\n   * LeakCanary.config = LeakCanary.config.copy(computeRetainedHeapSize = true)\n   * ```\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5791,
-  "secondPos" : 5738,
-  "firstEndPos" : 6030,
-  "secondEndPos" : 5977
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6033,
-  "secondPos" : 5980,
+  "firstPos" : 5791,
+  "secondPos" : 5738,
   "firstEndPos" : 6142,
   "secondEndPos" : 6089
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The current LeakCanary configuration. Can be updated at any time, usually by replacing it with\n   * a mutated copy, e.g.:\n   *\n   * ```\n   * LeakCanary.config = LeakCanary.config.copy(computeRetainedHeapSize = true)\n   * ```\n   */",
+  "secondLabel" : "/**\n   * The current LeakCanary configuration. Can be updated at any time, usually by replacing it with\n   * a mutated copy, e.g.:\n   *\n   * ```\n   * LeakCanary.config = LeakCanary.config.copy(computeRetainedHeapSize = true)\n   * ```\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5791,
+  "secondPos" : 5738,
+  "firstEndPos" : 6030,
+  "secondEndPos" : 5977
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2199,27 +2199,27 @@
   "firstEndPos" : 6142,
   "secondEndPos" : 6089
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a new [Intent] that can be used to programmatically launch the leak display activity.\n   */",
-  "secondLabel" : "/**\n   * Returns a new [Intent] that can be used to programmatically launch the leak display activity.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6146,
-  "secondPos" : 6093,
-  "firstEndPos" : 6254,
-  "secondEndPos" : 6201
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6257,
-  "secondPos" : 6204,
+  "firstPos" : 6146,
+  "secondPos" : 6093,
   "firstEndPos" : 6338,
   "secondEndPos" : 6285
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a new [Intent] that can be used to programmatically launch the leak display activity.\n   */",
+  "secondLabel" : "/**\n   * Returns a new [Intent] that can be used to programmatically launch the leak display activity.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6146,
+  "secondPos" : 6093,
+  "firstEndPos" : 6254,
+  "secondEndPos" : 6201
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2320,27 +2320,27 @@
   "firstEndPos" : 6338,
   "secondEndPos" : 6285
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Immediately triggers a heap dump and analysis, if there is at least one retained instance\n   * tracked by [AppWatcher.objectWatcher]. If there are no retained instances then the heap will not\n   * be dumped and a notification will be shown instead.\n   */",
-  "secondLabel" : "/**\n   * Immediately triggers a heap dump and analysis, if there is at least one retained instance\n   * tracked by [AppWatcher.objectWatcher]. If there are no retained instances then the heap will not\n   * be dumped and a notification will be shown instead.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6342,
-  "secondPos" : 6289,
-  "firstEndPos" : 6605,
-  "secondEndPos" : 6552
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6608,
-  "secondPos" : 6555,
+  "firstPos" : 6342,
+  "secondPos" : 6289,
   "firstEndPos" : 6664,
   "secondEndPos" : 6611
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Immediately triggers a heap dump and analysis, if there is at least one retained instance\n   * tracked by [AppWatcher.objectWatcher]. If there are no retained instances then the heap will not\n   * be dumped and a notification will be shown instead.\n   */",
+  "secondLabel" : "/**\n   * Immediately triggers a heap dump and analysis, if there is at least one retained instance\n   * tracked by [AppWatcher.objectWatcher]. If there are no retained instances then the heap will not\n   * be dumped and a notification will be shown instead.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6342,
+  "secondPos" : 6289,
+  "firstEndPos" : 6605,
+  "secondEndPos" : 6552
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

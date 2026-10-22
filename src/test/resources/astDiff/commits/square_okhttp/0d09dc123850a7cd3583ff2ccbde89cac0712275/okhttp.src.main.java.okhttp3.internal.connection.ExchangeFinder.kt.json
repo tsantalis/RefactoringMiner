@@ -736,27 +736,27 @@
   "firstEndPos" : 1061,
   "secondEndPos" : 1084
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Attempts to find the connections for a sequence of exchanges. This uses the following strategies:\n *\n *  1. If the current call already has a connection that can satisfy the request it is used. Using\n *     the same connection for an initial exchange and its follow-ups may improve locality.\n *\n *  2. If there is a connection in the pool that can satisfy the request it is used. Note that it is\n *     possible for shared exchanges to make requests to different host names! See\n *     [RealConnection.isEligible] for details.\n *\n *  3. If there's no existing connection, make a list of routes (which may require blocking DNS\n *     lookups) and attempt a new connection them. When failures occur, retries iterate the list of\n *     available routes.\n *\n * If the pool gains an eligible connection while DNS, TCP, or TLS work is in flight, this finder\n * will prefer pooled connections. Only pooled HTTP/2 connections are used for such de-duplication.\n *\n * It is possible to cancel the finding process.\n */",
-  "secondLabel" : "/**\n * Attempts to find the connections for a sequence of exchanges. This uses the following strategies:\n *\n *  1. If the current call already has a connection that can satisfy the request it is used. Using\n *     the same connection for an initial exchange and its follow-ups may improve locality.\n *\n *  2. If there is a connection in the pool that can satisfy the request it is used. Note that it is\n *     possible for shared exchanges to make requests to different host names! See\n *     [RealConnection.isEligible] for details.\n *\n *  3. If there's no existing connection, make a list of routes (which may require blocking DNS\n *     lookups) and attempt a new connection them. When failures occur, retries iterate the list of\n *     available routes.\n *\n * If the pool gains an eligible connection while DNS, TCP, or TLS work is in flight, this finder\n * will prefer pooled connections. Only pooled HTTP/2 connections are used for such de-duplication.\n *\n * It is possible to cancel the finding process.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1063,
-  "secondPos" : 1086,
-  "firstEndPos" : 2077,
-  "secondEndPos" : 2100
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2078,
-  "secondPos" : 2101,
+  "firstPos" : 1063,
+  "secondPos" : 1086,
   "firstEndPos" : 10644,
   "secondEndPos" : 10774
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Attempts to find the connections for a sequence of exchanges. This uses the following strategies:\n *\n *  1. If the current call already has a connection that can satisfy the request it is used. Using\n *     the same connection for an initial exchange and its follow-ups may improve locality.\n *\n *  2. If there is a connection in the pool that can satisfy the request it is used. Note that it is\n *     possible for shared exchanges to make requests to different host names! See\n *     [RealConnection.isEligible] for details.\n *\n *  3. If there's no existing connection, make a list of routes (which may require blocking DNS\n *     lookups) and attempt a new connection them. When failures occur, retries iterate the list of\n *     available routes.\n *\n * If the pool gains an eligible connection while DNS, TCP, or TLS work is in flight, this finder\n * will prefer pooled connections. Only pooled HTTP/2 connections are used for such de-duplication.\n *\n * It is possible to cancel the finding process.\n */",
+  "secondLabel" : "/**\n * Attempts to find the connections for a sequence of exchanges. This uses the following strategies:\n *\n *  1. If the current call already has a connection that can satisfy the request it is used. Using\n *     the same connection for an initial exchange and its follow-ups may improve locality.\n *\n *  2. If there is a connection in the pool that can satisfy the request it is used. Note that it is\n *     possible for shared exchanges to make requests to different host names! See\n *     [RealConnection.isEligible] for details.\n *\n *  3. If there's no existing connection, make a list of routes (which may require blocking DNS\n *     lookups) and attempt a new connection them. When failures occur, retries iterate the list of\n *     available routes.\n *\n * If the pool gains an eligible connection while DNS, TCP, or TLS work is in flight, this finder\n * will prefer pooled connections. Only pooled HTTP/2 connections are used for such de-duplication.\n *\n * It is possible to cancel the finding process.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1063,
+  "secondPos" : 1086,
+  "firstEndPos" : 2077,
+  "secondEndPos" : 2100
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1352,27 +1352,27 @@
   "firstEndPos" : 2320,
   "secondEndPos" : 2344
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// State guarded by connectionPool.",
-  "secondLabel" : "// State guarded by connectionPool.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2324,
-  "secondPos" : 2348,
-  "firstEndPos" : 2359,
-  "secondEndPos" : 2383
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2362,
-  "secondPos" : 2386,
+  "firstPos" : 2324,
+  "secondPos" : 2348,
   "firstEndPos" : 2482,
   "secondEndPos" : 2506
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// State guarded by connectionPool.",
+  "secondLabel" : "// State guarded by connectionPool.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2324,
+  "secondPos" : 2348,
+  "firstEndPos" : 2359,
+  "secondEndPos" : 2383
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3398,27 +3398,27 @@
   "firstEndPos" : 3337,
   "secondEndPos" : 3361
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Finds a connection and returns it if it is healthy. If it is unhealthy the process is repeated\n   * until a healthy connection is found.\n   */",
-  "secondLabel" : "/**\n   * Finds a connection and returns it if it is healthy. If it is unhealthy the process is repeated\n   * until a healthy connection is found.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3352,
-  "secondPos" : 3376,
-  "firstEndPos" : 3503,
-  "secondEndPos" : 3527
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3506,
-  "secondPos" : 3530,
+  "firstPos" : 3352,
+  "secondPos" : 3376,
   "firstEndPos" : 4578,
   "secondEndPos" : 4602
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Finds a connection and returns it if it is healthy. If it is unhealthy the process is repeated\n   * until a healthy connection is found.\n   */",
+  "secondLabel" : "/**\n   * Finds a connection and returns it if it is healthy. If it is unhealthy the process is repeated\n   * until a healthy connection is found.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3352,
+  "secondPos" : 3376,
+  "firstEndPos" : 3503,
+  "secondEndPos" : 3527
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4883,27 +4883,27 @@
   "firstEndPos" : 4568,
   "secondEndPos" : 4592
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a connection to host a new stream. This prefers the existing connection if it exists,\n   * then the pool, finally building a new connection.\n   */",
-  "secondLabel" : "/**\n   * Returns a connection to host a new stream. This prefers the existing connection if it exists,\n   * then the pool, finally building a new connection.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4582,
-  "secondPos" : 4606,
-  "firstEndPos" : 4745,
-  "secondEndPos" : 4769
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4748,
-  "secondPos" : 4772,
+  "firstPos" : 4582,
+  "secondPos" : 4606,
   "firstEndPos" : 9179,
   "secondEndPos" : 9203
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a connection to host a new stream. This prefers the existing connection if it exists,\n   * then the pool, finally building a new connection.\n   */",
+  "secondLabel" : "/**\n   * Returns a connection to host a new stream. This prefers the existing connection if it exists,\n   * then the pool, finally building a new connection.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4582,
+  "secondPos" : 4606,
+  "firstEndPos" : 4745,
+  "secondEndPos" : 4769
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -13177,27 +13177,27 @@
   "firstEndPos" : 9464,
   "secondEndPos" : 9488
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns true if there is a failure that retrying might fix. */",
-  "secondLabel" : "/** Returns true if there is a failure that retrying might fix. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9478,
-  "secondPos" : 9502,
-  "firstEndPos" : 9544,
-  "secondEndPos" : 9568
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9547,
-  "secondPos" : 9571,
+  "firstPos" : 9478,
+  "secondPos" : 9502,
   "firstEndPos" : 9655,
   "secondEndPos" : 9679
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns true if there is a failure that retrying might fix. */",
+  "secondLabel" : "/** Returns true if there is a failure that retrying might fix. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 9478,
+  "secondPos" : 9502,
+  "firstEndPos" : 9544,
+  "secondEndPos" : 9568
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -13430,27 +13430,27 @@
   "firstEndPos" : 9645,
   "secondEndPos" : 9669
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns true if a current route is still good or if there are routes we haven't tried yet. */",
-  "secondLabel" : "/** Returns true if a current route is still good or if there are routes we haven't tried yet. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9659,
-  "secondPos" : 9683,
-  "firstEndPos" : 9756,
-  "secondEndPos" : 9780
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9759,
-  "secondPos" : 9783,
+  "firstPos" : 9659,
+  "secondPos" : 9683,
   "firstEndPos" : 10188,
   "secondEndPos" : 10212
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns true if a current route is still good or if there are routes we haven't tried yet. */",
+  "secondLabel" : "/** Returns true if a current route is still good or if there are routes we haven't tried yet. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 9659,
+  "secondPos" : 9683,
+  "firstEndPos" : 9756,
+  "secondEndPos" : 9780
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -14343,27 +14343,27 @@
   "firstEndPos" : 10178,
   "secondEndPos" : 10202
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Return true if the route used for the current connection should be retried, even if the\n   * connection itself is unhealthy. The biggest gotcha here is that we shouldn't reuse routes from\n   * coalesced connections.\n   */",
-  "secondLabel" : "/**\n   * Return true if the route used for the current connection should be retried, even if the\n   * connection itself is unhealthy. The biggest gotcha here is that we shouldn't reuse routes from\n   * coalesced connections.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 10192,
-  "secondPos" : 10216,
-  "firstEndPos" : 10422,
-  "secondEndPos" : 10446
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10425,
-  "secondPos" : 10449,
+  "firstPos" : 10192,
+  "secondPos" : 10216,
   "firstEndPos" : 10642,
   "secondEndPos" : 10684
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Return true if the route used for the current connection should be retried, even if the\n   * connection itself is unhealthy. The biggest gotcha here is that we shouldn't reuse routes from\n   * coalesced connections.\n   */",
+  "secondLabel" : "/**\n   * Return true if the route used for the current connection should be retried, even if the\n   * connection itself is unhealthy. The biggest gotcha here is that we shouldn't reuse routes from\n   * coalesced connections.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 10192,
+  "secondPos" : 10216,
+  "firstEndPos" : 10422,
+  "secondEndPos" : 10446
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

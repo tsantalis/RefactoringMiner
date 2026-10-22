@@ -61,7 +61,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 15,
-  "secondPos" : 243,
+  "secondPos" : 15,
   "firstEndPos" : 771,
   "secondEndPos" : 1079
 }, {
@@ -274,27 +274,27 @@
   "firstEndPos" : 769,
   "secondEndPos" : 1077
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Utility function to create a [OnHprofRecordListener] from the passed in [block] lambda\n     * instead of using the anonymous `object : OnHprofRecordListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val listener = OnHprofRecordListener { position, record ->\n     *\n     * }\n     * ```\n     */",
-  "secondLabel" : "/**\n     * Utility function to create a [OnHprofRecordListener] from the passed in [block] lambda\n     * instead of using the anonymous `object : OnHprofRecordListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val listener = OnHprofRecordListener { position, record ->\n     *\n     * }\n     * ```\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 144,
-  "secondPos" : 452,
-  "firstEndPos" : 466,
-  "secondEndPos" : 774
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 471,
-  "secondPos" : 779,
+  "firstPos" : 144,
+  "secondPos" : 452,
   "firstEndPos" : 765,
   "secondEndPos" : 1073
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Utility function to create a [OnHprofRecordListener] from the passed in [block] lambda\n     * instead of using the anonymous `object : OnHprofRecordListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val listener = OnHprofRecordListener { position, record ->\n     *\n     * }\n     * ```\n     */",
+  "secondLabel" : "/**\n     * Utility function to create a [OnHprofRecordListener] from the passed in [block] lambda\n     * instead of using the anonymous `object : OnHprofRecordListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val listener = OnHprofRecordListener { position, record ->\n     *\n     * }\n     * ```\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 144,
+  "secondPos" : 452,
+  "firstEndPos" : 466,
+  "secondEndPos" : 774
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

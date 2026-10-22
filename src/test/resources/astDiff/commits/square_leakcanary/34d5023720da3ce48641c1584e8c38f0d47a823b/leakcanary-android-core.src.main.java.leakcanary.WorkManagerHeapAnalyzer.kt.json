@@ -538,27 +538,27 @@
   "firstEndPos" : 381,
   "secondEndPos" : 381
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis.\n */",
-  "secondLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 383,
-  "secondPos" : 405,
-  "firstEndPos" : 485,
-  "secondEndPos" : 507
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 486,
-  "secondPos" : 508,
+  "firstPos" : 383,
+  "secondPos" : 405,
   "firstEndPos" : 1556,
   "secondEndPos" : 1672
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis.\n */",
+  "secondLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 383,
+  "secondPos" : 405,
+  "firstEndPos" : 485,
+  "secondEndPos" : 507
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1176,27 +1176,27 @@
   "firstEndPos" : 770,
   "secondEndPos" : 792
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// setExpedited() requires WorkManager 2.7.0+",
-  "secondLabel" : "// setExpedited() requires WorkManager 2.7.0+",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 774,
-  "secondPos" : 796,
-  "firstEndPos" : 819,
-  "secondEndPos" : 841
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 822,
-  "secondPos" : 844,
+  "firstPos" : 774,
+  "secondPos" : 796,
   "firstEndPos" : 1012,
   "secondEndPos" : 1034
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// setExpedited() requires WorkManager 2.7.0+",
+  "secondLabel" : "// setExpedited() requires WorkManager 2.7.0+",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 774,
+  "secondPos" : 796,
+  "firstEndPos" : 819,
+  "secondEndPos" : 841
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

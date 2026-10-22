@@ -50,7 +50,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 72,
-  "secondPos" : 88,
+  "secondPos" : 15,
   "firstEndPos" : 742,
   "secondEndPos" : 756
 }, {
@@ -153,27 +153,27 @@
   "firstEndPos" : 742,
   "secondEndPos" : 756
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns the sequences of non null outgoing references from [source]. Outgoing refs\n   * can be actual JVM references or they can be virtual references when simplifying known data\n   * structures.\n   *\n   * Whenever possible, the returned sequence should be sorted in a way that ensures consistent\n   * graph traversal across heap dumps.\n   *\n   * The returned sequence may contain several [Reference] with an identical\n   * [Reference.valueObjectId].\n   */",
-  "secondLabel" : "/**\n   * Returns the sequences of non null outgoing references from [source]. Outgoing refs\n   * can be actual JVM references or they can be virtual references when simplifying known data\n   * structures.\n   *\n   * Whenever possible, the returned sequence should be sorted in a way that ensures consistent\n   * graph traversal across heap dumps.\n   *\n   * The returned sequence may contain several [Reference] with an identical\n   * [Reference.valueObjectId].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 132,
-  "secondPos" : 139,
-  "firstEndPos" : 597,
-  "secondEndPos" : 604
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 600,
-  "secondPos" : 607,
+  "firstPos" : 132,
+  "secondPos" : 139,
   "firstEndPos" : 640,
   "secondEndPos" : 647
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns the sequences of non null outgoing references from [source]. Outgoing refs\n   * can be actual JVM references or they can be virtual references when simplifying known data\n   * structures.\n   *\n   * Whenever possible, the returned sequence should be sorted in a way that ensures consistent\n   * graph traversal across heap dumps.\n   *\n   * The returned sequence may contain several [Reference] with an identical\n   * [Reference.valueObjectId].\n   */",
+  "secondLabel" : "/**\n   * Returns the sequences of non null outgoing references from [source]. Outgoing refs\n   * can be actual JVM references or they can be virtual references when simplifying known data\n   * structures.\n   *\n   * Whenever possible, the returned sequence should be sorted in a way that ensures consistent\n   * graph traversal across heap dumps.\n   *\n   * The returned sequence may contain several [Reference] with an identical\n   * [Reference.valueObjectId].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 132,
+  "secondPos" : 139,
+  "firstEndPos" : 597,
+  "secondEndPos" : 604
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

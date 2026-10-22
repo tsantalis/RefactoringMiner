@@ -263,27 +263,27 @@
   "firstEndPos" : 715,
   "secondEndPos" : 715
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
-  "secondLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 717,
-  "secondPos" : 717,
-  "firstEndPos" : 843,
-  "secondEndPos" : 843
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 844,
-  "secondPos" : 844,
+  "firstPos" : 717,
+  "secondPos" : 717,
   "firstEndPos" : 4897,
   "secondEndPos" : 4949
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
+  "secondLabel" : "/**\n * Thread safe by locking on all methods, which is reasonably efficient given how often\n * these methods are accessed.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 717,
+  "secondPos" : 717,
+  "firstEndPos" : 843,
+  "secondEndPos" : 843
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -604,27 +604,27 @@
   "firstEndPos" : 981,
   "secondEndPos" : 989
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
-  "secondLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 997,
-  "secondPos" : 1021,
-  "firstEndPos" : 1075,
-  "secondEndPos" : 1099
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1078,
-  "secondPos" : 1102,
+  "firstPos" : 997,
+  "secondPos" : 1021,
   "firstEndPos" : 1125,
   "secondEndPos" : 1149
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
+  "secondLabel" : "/**\n   * Calls to [watch] will be ignored when [isEnabled] returns false\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 997,
+  "secondPos" : 1021,
+  "firstEndPos" : 1075,
+  "secondEndPos" : 1099
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -813,27 +813,27 @@
   "firstEndPos" : 4897,
   "secondEndPos" : 4949
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * References passed to [watch].\n   */",
-  "secondLabel" : "/**\n   * References passed to [watch].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1133,
-  "secondPos" : 1157,
-  "firstEndPos" : 1177,
-  "secondEndPos" : 1201
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1180,
-  "secondPos" : 1204,
+  "firstPos" : 1133,
+  "secondPos" : 1157,
   "firstEndPos" : 1253,
   "secondEndPos" : 1277
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * References passed to [watch].\n   */",
+  "secondLabel" : "/**\n   * References passed to [watch].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1133,
+  "secondPos" : 1157,
+  "firstEndPos" : 1177,
+  "secondEndPos" : 1201
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1231,27 +1231,27 @@
   "firstEndPos" : 1298,
   "secondEndPos" : 1322
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
-  "secondLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1302,
-  "secondPos" : 1326,
-  "firstEndPos" : 1460,
-  "secondEndPos" : 1484
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1463,
-  "secondPos" : 1487,
+  "firstPos" : 1302,
+  "secondPos" : 1326,
   "firstEndPos" : 1496,
   "secondEndPos" : 1520
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
+  "secondLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, and\n   * have been watched for long enough to be considered retained.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1302,
+  "secondPos" : 1326,
+  "firstEndPos" : 1460,
+  "secondEndPos" : 1484
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2232,27 +2232,27 @@
   "firstEndPos" : 1816,
   "secondEndPos" : 1840
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
-  "secondLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1828,
-  "secondPos" : 1852,
-  "firstEndPos" : 1998,
-  "secondEndPos" : 2022
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2001,
-  "secondPos" : 2025,
+  "firstPos" : 1828,
+  "secondPos" : 1852,
   "firstEndPos" : 2033,
   "secondEndPos" : 2057
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
+  "secondLabel" : "/**\n   * Returns true if there are watched instances that aren't weakly reachable, even\n   * if they haven't been watched for long enough to be considered retained.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1828,
+  "secondPos" : 1852,
+  "firstEndPos" : 1998,
+  "secondEndPos" : 2022
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2551,27 +2551,27 @@
   "firstEndPos" : 2141,
   "secondEndPos" : 2165
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns the instances that are currently considered retained. Useful for logging purposes.\n   * Be careful with those instances and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
-  "secondLabel" : "/**\n   * Returns the instances that are currently considered retained. Useful for logging purposes.\n   * Be careful with those instances and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2151,
-  "secondPos" : 2175,
-  "firstEndPos" : 2396,
-  "secondEndPos" : 2420
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2399,
-  "secondPos" : 2423,
+  "firstPos" : 2151,
+  "secondPos" : 2175,
   "firstEndPos" : 2431,
   "secondEndPos" : 2455
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns the instances that are currently considered retained. Useful for logging purposes.\n   * Be careful with those instances and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
+  "secondLabel" : "/**\n   * Returns the instances that are currently considered retained. Useful for logging purposes.\n   * Be careful with those instances and release them ASAP as you may creating longer lived leaks\n   * then the one that are already there.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2151,
+  "secondPos" : 2175,
+  "firstEndPos" : 2396,
+  "secondEndPos" : 2420
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3596,27 +3596,27 @@
   "firstEndPos" : 2819,
   "secondEndPos" : 2843
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
-  "secondLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2829,
-  "secondPos" : 2853,
-  "firstEndPos" : 2902,
-  "secondEndPos" : 2926
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2905,
-  "secondPos" : 2929,
+  "firstPos" : 2829,
+  "secondPos" : 2853,
   "firstEndPos" : 2987,
   "secondEndPos" : 3011
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
+  "secondLabel" : "/**\n   * Identical to [.watch] with an empty string reference name.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2829,
+  "secondPos" : 2853,
+  "firstEndPos" : 2902,
+  "secondEndPos" : 2926
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -3860,27 +3860,27 @@
   "firstEndPos" : 2982,
   "secondEndPos" : 3006
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Watches the provided instances.\n   *\n   * @param name A logical identifier for the watched object.\n   */",
-  "secondLabel" : "/**\n   * Watches the provided instances.\n   *\n   * @param name A logical identifier for the watched object.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2991,
-  "secondPos" : 3015,
-  "firstEndPos" : 3104,
-  "secondEndPos" : 3128
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3107,
-  "secondPos" : 3131,
+  "firstPos" : 2991,
+  "secondPos" : 3015,
   "firstEndPos" : 3807,
   "secondEndPos" : 3831
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Watches the provided instances.\n   *\n   * @param name A logical identifier for the watched object.\n   */",
+  "secondLabel" : "/**\n   * Watches the provided instances.\n   *\n   * @param name A logical identifier for the watched object.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2991,
+  "secondPos" : 3015,
+  "firstEndPos" : 3104,
+  "secondEndPos" : 3128
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

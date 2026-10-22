@@ -538,27 +538,27 @@
   "firstEndPos" : 300,
   "secondEndPos" : 300
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 当有多种条目的时候，避免在convert()中做太多的业务逻辑，把逻辑放在对应的 ItemProvider 中。\n * 适用于以下情况：\n * 1、实体类不方便扩展，此Adapter的数据类型可以是任意类型，只需要在[getItemType]中返回对应类型\n * 2、item 类型较多，在convert()中管理起来复杂\n *\n * ViewHolder 由 [BaseItemProvider] 实现，并且每个[BaseItemProvider]可以拥有自己类型的ViewHolder类型。\n *\n * @param T data 数据类型\n * @constructor\n */",
-  "secondLabel" : "/**\n * 当有多种条目的时候，避免在convert()中做太多的业务逻辑，把逻辑放在对应的 ItemProvider 中。\n * 适用于以下情况：\n * 1、实体类不方便扩展，此Adapter的数据类型可以是任意类型，只需要在[getItemType]中返回对应类型\n * 2、item 类型较多，在convert()中管理起来复杂\n *\n * ViewHolder 由 [BaseItemProvider] 实现，并且每个[BaseItemProvider]可以拥有自己类型的ViewHolder类型。\n *\n * @param T data 数据类型\n * @constructor\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 302,
-  "secondPos" : 302,
-  "firstEndPos" : 601,
-  "secondEndPos" : 601
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 602,
-  "secondPos" : 602,
+  "firstPos" : 302,
+  "secondPos" : 302,
   "firstEndPos" : 5987,
   "secondEndPos" : 5937
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 当有多种条目的时候，避免在convert()中做太多的业务逻辑，把逻辑放在对应的 ItemProvider 中。\n * 适用于以下情况：\n * 1、实体类不方便扩展，此Adapter的数据类型可以是任意类型，只需要在[getItemType]中返回对应类型\n * 2、item 类型较多，在convert()中管理起来复杂\n *\n * ViewHolder 由 [BaseItemProvider] 实现，并且每个[BaseItemProvider]可以拥有自己类型的ViewHolder类型。\n *\n * @param T data 数据类型\n * @constructor\n */",
+  "secondLabel" : "/**\n * 当有多种条目的时候，避免在convert()中做太多的业务逻辑，把逻辑放在对应的 ItemProvider 中。\n * 适用于以下情况：\n * 1、实体类不方便扩展，此Adapter的数据类型可以是任意类型，只需要在[getItemType]中返回对应类型\n * 2、item 类型较多，在convert()中管理起来复杂\n *\n * ViewHolder 由 [BaseItemProvider] 实现，并且每个[BaseItemProvider]可以拥有自己类型的ViewHolder类型。\n *\n * @param T data 数据类型\n * @constructor\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 302,
+  "secondPos" : 302,
+  "firstEndPos" : 601,
+  "secondEndPos" : 601
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1385,27 +1385,27 @@
   "firstEndPos" : 885,
   "secondEndPos" : 835
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 返回 item 类型\n     * @param data List<T>\n     * @param position Int\n     * @return Int\n     */",
-  "secondLabel" : "/**\n     * 返回 item 类型\n     * @param data List<T>\n     * @param position Int\n     * @return Int\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 893,
-  "secondPos" : 843,
-  "firstEndPos" : 995,
-  "secondEndPos" : 945
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1000,
-  "secondPos" : 950,
+  "firstPos" : 893,
+  "secondPos" : 843,
   "firstEndPos" : 1069,
   "secondEndPos" : 1019
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 返回 item 类型\n     * @param data List<T>\n     * @param position Int\n     * @return Int\n     */",
+  "secondLabel" : "/**\n     * 返回 item 类型\n     * @param data List<T>\n     * @param position Int\n     * @return Int\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 893,
+  "secondPos" : 843,
+  "firstEndPos" : 995,
+  "secondEndPos" : 945
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1660,27 +1660,27 @@
   "firstEndPos" : 1069,
   "secondEndPos" : 1019
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 必须通过此方法，添加 provider\n     * @param provider BaseItemProvider\n     */",
-  "secondLabel" : "/**\n     * 必须通过此方法，添加 provider\n     * @param provider BaseItemProvider\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1075,
-  "secondPos" : 1025,
-  "firstEndPos" : 1153,
-  "secondEndPos" : 1103
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1158,
-  "secondPos" : 1108,
+  "firstPos" : 1075,
+  "secondPos" : 1025,
   "firstEndPos" : 1315,
   "secondEndPos" : 1265
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 必须通过此方法，添加 provider\n     * @param provider BaseItemProvider\n     */",
+  "secondLabel" : "/**\n     * 必须通过此方法，添加 provider\n     * @param provider BaseItemProvider\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1075,
+  "secondPos" : 1025,
+  "firstEndPos" : 1153,
+  "secondEndPos" : 1103
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4806,27 +4806,27 @@
   "firstEndPos" : 2384,
   "secondEndPos" : 2334
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 通过 ViewType 获取 BaseItemProvider\n     * 例如：如果ViewType经过特殊处理，可以重写此方法，获取正确的Provider\n     * （比如 ViewType 通过位运算进行的组合的）\n     *\n     * @param viewType Int\n     * @return BaseItemProvider\n     */",
-  "secondLabel" : "/**\n     * 通过 ViewType 获取 BaseItemProvider\n     * 例如：如果ViewType经过特殊处理，可以重写此方法，获取正确的Provider\n     * （比如 ViewType 通过位运算进行的组合的）\n     *\n     * @param viewType Int\n     * @return BaseItemProvider\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2397,
-  "secondPos" : 2347,
-  "firstEndPos" : 2595,
-  "secondEndPos" : 2545
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2600,
-  "secondPos" : 2550,
+  "firstPos" : 2397,
+  "secondPos" : 2347,
   "firstEndPos" : 2723,
   "secondEndPos" : 2673
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 通过 ViewType 获取 BaseItemProvider\n     * 例如：如果ViewType经过特殊处理，可以重写此方法，获取正确的Provider\n     * （比如 ViewType 通过位运算进行的组合的）\n     *\n     * @param viewType Int\n     * @return BaseItemProvider\n     */",
+  "secondLabel" : "/**\n     * 通过 ViewType 获取 BaseItemProvider\n     * 例如：如果ViewType经过特殊处理，可以重写此方法，获取正确的Provider\n     * （比如 ViewType 通过位运算进行的组合的）\n     *\n     * @param viewType Int\n     * @return BaseItemProvider\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2397,
+  "secondPos" : 2347,
+  "firstEndPos" : 2595,
+  "secondEndPos" : 2545
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

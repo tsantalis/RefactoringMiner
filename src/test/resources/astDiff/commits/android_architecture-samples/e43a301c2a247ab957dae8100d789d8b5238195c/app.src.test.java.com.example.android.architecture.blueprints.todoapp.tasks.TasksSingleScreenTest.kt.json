@@ -3134,27 +3134,27 @@
   "firstEndPos" : 1955,
   "secondEndPos" : 1955
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for the main tasks screen that do not involve having to navigate to another screen\n *\n */",
-  "secondLabel" : "/**\n * Integration test for the Task List screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1957,
-  "secondPos" : 1957,
-  "firstEndPos" : 2059,
-  "secondEndPos" : 2010
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2060,
-  "secondPos" : 2011,
+  "firstPos" : 1957,
+  "secondPos" : 1957,
   "firstEndPos" : 7494,
   "secondEndPos" : 7442
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for the main tasks screen that do not involve having to navigate to another screen\n *\n */",
+  "secondLabel" : "/**\n * Integration test for the Task List screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1957,
+  "secondPos" : 1957,
+  "firstEndPos" : 2059,
+  "secondEndPos" : 2010
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4058,27 +4058,27 @@
   "firstEndPos" : 2382,
   "secondEndPos" : 2330
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
-  "secondLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2395,
-  "secondPos" : 2343,
-  "firstEndPos" : 2672,
-  "secondEndPos" : 2620
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2677,
-  "secondPos" : 2625,
+  "firstPos" : 2395,
+  "secondPos" : 2343,
   "firstEndPos" : 3157,
   "secondEndPos" : 3105
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
+  "secondLabel" : "/**\n     * A custom [Matcher] which matches an item in a [ListView] by its text.\n     *\n     *\n     * View constraint: View must be a child of a [ListView]\n     *\n     * @param itemText the text to match\n     *\n     * @return Matcher that matches text in the given view\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2395,
+  "secondPos" : 2343,
+  "firstEndPos" : 2672,
+  "secondEndPos" : 2620
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

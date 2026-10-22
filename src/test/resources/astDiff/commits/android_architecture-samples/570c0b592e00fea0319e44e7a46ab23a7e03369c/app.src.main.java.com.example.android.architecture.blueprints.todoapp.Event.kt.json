@@ -120,27 +120,27 @@
   "firstEndPos" : 676,
   "secondEndPos" : 676
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Used as a wrapper for data that is exposed via a LiveData that represents an event.\n */",
-  "secondLabel" : "/**\n * Used as a wrapper for data that is exposed via a LiveData that represents an event.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 678,
-  "secondPos" : 714,
-  "firstEndPos" : 772,
-  "secondEndPos" : 808
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 773,
-  "secondPos" : 809,
+  "firstPos" : 678,
+  "secondPos" : 714,
   "firstEndPos" : 1280,
   "secondEndPos" : 1316
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Used as a wrapper for data that is exposed via a LiveData that represents an event.\n */",
+  "secondLabel" : "/**\n * Used as a wrapper for data that is exposed via a LiveData that represents an event.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 678,
+  "secondPos" : 714,
+  "firstEndPos" : 772,
+  "secondEndPos" : 808
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -527,27 +527,27 @@
   "firstEndPos" : 911,
   "secondEndPos" : 947
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Returns the content and prevents its use again.\n     */",
-  "secondLabel" : "/**\n     * Returns the content and prevents its use again.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 917,
-  "secondPos" : 953,
-  "firstEndPos" : 983,
-  "secondEndPos" : 1019
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 988,
-  "secondPos" : 1024,
+  "firstPos" : 917,
+  "secondPos" : 953,
   "firstEndPos" : 1163,
   "secondEndPos" : 1199
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Returns the content and prevents its use again.\n     */",
+  "secondLabel" : "/**\n     * Returns the content and prevents its use again.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 917,
+  "secondPos" : 953,
+  "firstEndPos" : 983,
+  "secondEndPos" : 1019
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -813,27 +813,27 @@
   "firstEndPos" : 1147,
   "secondEndPos" : 1183
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Returns the content, even if it's already been handled.\n     */",
-  "secondLabel" : "/**\n     * Returns the content, even if it's already been handled.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1169,
-  "secondPos" : 1205,
-  "firstEndPos" : 1243,
-  "secondEndPos" : 1279
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1248,
-  "secondPos" : 1284,
+  "firstPos" : 1169,
+  "secondPos" : 1205,
   "firstEndPos" : 1278,
   "secondEndPos" : 1314
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Returns the content, even if it's already been handled.\n     */",
+  "secondLabel" : "/**\n     * Returns the content, even if it's already been handled.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1169,
+  "secondPos" : 1205,
+  "firstEndPos" : 1243,
+  "secondEndPos" : 1279
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

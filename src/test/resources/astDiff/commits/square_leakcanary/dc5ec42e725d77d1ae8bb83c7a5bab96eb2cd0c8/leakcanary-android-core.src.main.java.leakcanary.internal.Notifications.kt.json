@@ -935,24 +935,13 @@
   "secondEndPos" : 1218
 }, {
   "firstType" : "property_declaration",
-  "secondType" : "line_comment",
-  "firstLabel" : "",
-  "secondLabel" : "// Instants apps cannot show background notifications",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1127,
-  "secondPos" : 1222,
-  "firstEndPos" : 1387,
-  "secondEndPos" : 1275
-}, {
-  "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1127,
-  "secondPos" : 1380,
+  "secondPos" : 1222,
   "firstEndPos" : 1387,
   "secondEndPos" : 1480
 }, {
@@ -1049,7 +1038,7 @@
   "firstLabel" : "// Instants apps cannot show background notifications",
   "secondLabel" : "// Instants apps cannot show background notifications",
   "firstParentType" : "control_structure_body",
-  "secondParentType" : "type_body",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1196,
   "secondPos" : 1222,
   "firstEndPos" : 1249,
@@ -1060,11 +1049,88 @@
   "firstLabel" : "// See https://github.com/square/leakcanary/issues/1197",
   "secondLabel" : "// See https://github.com/square/leakcanary/issues/1197",
   "firstParentType" : "control_structure_body",
-  "secondParentType" : "type_body",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1254,
   "secondPos" : 1278,
   "firstEndPos" : 1309,
   "secondEndPos" : 1333
+}, {
+  "firstType" : "navigation_expression",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "equality_expression",
+  "firstPos" : 1315,
+  "secondPos" : 1429,
+  "firstEndPos" : 1360,
+  "secondEndPos" : 1470
+}, {
+  "firstType" : "navigation_expression",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1315,
+  "secondPos" : 1429,
+  "firstEndPos" : 1345,
+  "secondEndPos" : 1459
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "InternalLeakCanary",
+  "secondLabel" : "InternalLeakCanary",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1315,
+  "secondPos" : 1429,
+  "firstEndPos" : 1333,
+  "secondEndPos" : 1447
+}, {
+  "firstType" : "navigation_suffix",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1333,
+  "secondPos" : 1447,
+  "firstEndPos" : 1345,
+  "secondEndPos" : 1459
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "application",
+  "secondLabel" : "application",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 1334,
+  "secondPos" : 1448,
+  "firstEndPos" : 1345,
+  "secondEndPos" : 1459
+}, {
+  "firstType" : "navigation_suffix",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 1345,
+  "secondPos" : 1459,
+  "firstEndPos" : 1360,
+  "secondEndPos" : 1470
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "packageManager",
+  "secondLabel" : "formFactor",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 1346,
+  "secondPos" : 1460,
+  "firstEndPos" : 1360,
+  "secondEndPos" : 1470
 }, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",

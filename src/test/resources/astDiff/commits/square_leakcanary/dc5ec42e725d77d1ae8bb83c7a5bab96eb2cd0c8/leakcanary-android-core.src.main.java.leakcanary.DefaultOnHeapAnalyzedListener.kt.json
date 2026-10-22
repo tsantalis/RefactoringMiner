@@ -1000,12 +1000,23 @@
   "firstEndPos" : 693,
   "secondEndPos" : 908
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 695,
+  "secondPos" : 910,
+  "firstEndPos" : 2307,
+  "secondEndPos" : 3518
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Default [OnHeapAnalyzedListener] implementation, which will store the analysis to disk and\n * show a notification summarizing the result.\n */",
   "secondLabel" : "/**\n * Default [OnHeapAnalyzedListener] implementation, which will store the analysis to disk and\n * show a notification summarizing the result.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 695,
   "secondPos" : 910,
   "firstEndPos" : 843,
@@ -1242,17 +1253,6 @@
   "firstEndPos" : 795,
   "secondEndPos" : 1214
 }, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 844,
-  "secondPos" : 1059,
-  "firstEndPos" : 2307,
-  "secondEndPos" : 3518
-}, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
   "firstLabel" : "class",
@@ -1282,7 +1282,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 864,
-  "secondPos" : 2954,
+  "secondPos" : 2665,
   "firstEndPos" : 1363,
   "secondEndPos" : 3379
 }, {

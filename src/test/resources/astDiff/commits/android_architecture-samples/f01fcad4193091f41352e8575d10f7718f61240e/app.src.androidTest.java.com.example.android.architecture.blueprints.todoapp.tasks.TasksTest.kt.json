@@ -2342,27 +2342,27 @@
   "firstEndPos" : 2226,
   "secondEndPos" : 2167
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2228,
-  "secondPos" : 2169,
-  "firstEndPos" : 2282,
-  "secondEndPos" : 2223
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2283,
-  "secondPos" : 2224,
+  "firstPos" : 2228,
+  "secondPos" : 2169,
   "firstEndPos" : 12784,
   "secondEndPos" : 12871
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2228,
+  "secondPos" : 2169,
+  "firstEndPos" : 2282,
+  "secondEndPos" : 2223
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2903,27 +2903,27 @@
   "firstEndPos" : 2425,
   "secondEndPos" : 2407
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Executes tasks in the Architecture Components in the same thread",
-  "secondLabel" : "// Executes tasks in the Architecture Components in the same thread",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2432,
-  "secondPos" : 2414,
-  "firstEndPos" : 2499,
-  "secondEndPos" : 2481
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2504,
-  "secondPos" : 2486,
+  "firstPos" : 2432,
+  "secondPos" : 2414,
   "firstEndPos" : 2584,
   "secondEndPos" : 2566
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Executes tasks in the Architecture Components in the same thread",
+  "secondLabel" : "// Executes tasks in the Architecture Components in the same thread",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2432,
+  "secondPos" : 2414,
+  "firstEndPos" : 2499,
+  "secondEndPos" : 2481
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

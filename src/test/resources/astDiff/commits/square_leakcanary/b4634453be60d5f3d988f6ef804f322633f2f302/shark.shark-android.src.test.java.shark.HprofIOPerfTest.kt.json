@@ -450,27 +450,27 @@
   "firstEndPos" : 224,
   "secondEndPos" : 224
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * IO reads is the largest factor on Shark's performance so this helps prevents\n * regressions.\n */",
-  "secondLabel" : "/**\n * IO reads is the largest factor on Shark's performance so this helps prevents\n * regressions.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 257,
-  "secondPos" : 226,
-  "firstEndPos" : 360,
-  "secondEndPos" : 329
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 361,
-  "secondPos" : 330,
+  "firstPos" : 257,
+  "secondPos" : 226,
   "firstEndPos" : 9389,
   "secondEndPos" : 9520
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * IO reads is the largest factor on Shark's performance so this helps prevents\n * regressions.\n */",
+  "secondLabel" : "/**\n * IO reads is the largest factor on Shark's performance so this helps prevents\n * regressions.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 257,
+  "secondPos" : 226,
+  "firstEndPos" : 360,
+  "secondEndPos" : 329
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

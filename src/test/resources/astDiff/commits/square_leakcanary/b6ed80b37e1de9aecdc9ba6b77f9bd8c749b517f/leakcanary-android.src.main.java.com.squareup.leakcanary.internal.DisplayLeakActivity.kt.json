@@ -2727,27 +2727,27 @@
   "firstEndPos" : 17420,
   "secondEndPos" : 17409
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// null until it's been first loaded.",
-  "secondLabel" : "// null until it's been first loaded.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2560,
-  "secondPos" : 2443,
-  "firstEndPos" : 2597,
-  "secondEndPos" : 2480
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2600,
-  "secondPos" : 2483,
+  "firstPos" : 2560,
+  "secondPos" : 2443,
   "firstEndPos" : 2652,
   "secondEndPos" : 2535
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// null until it's been first loaded.",
+  "secondLabel" : "// null until it's been first loaded.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2560,
+  "secondPos" : 2443,
+  "firstEndPos" : 2597,
+  "secondEndPos" : 2480
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -36596,27 +36596,27 @@
   "firstEndPos" : 16568,
   "secondEndPos" : 16557
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Public API.",
-  "secondLabel" : "// Public API.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 16575,
-  "secondPos" : 16564,
-  "firstEndPos" : 16589,
-  "secondEndPos" : 16578
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16594,
-  "secondPos" : 16583,
+  "firstPos" : 16575,
+  "secondPos" : 16564,
   "firstEndPos" : 16706,
   "secondEndPos" : 16695
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Public API.",
+  "secondLabel" : "// Public API.",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 16575,
+  "secondPos" : 16564,
+  "firstEndPos" : 16589,
+  "secondEndPos" : 16578
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

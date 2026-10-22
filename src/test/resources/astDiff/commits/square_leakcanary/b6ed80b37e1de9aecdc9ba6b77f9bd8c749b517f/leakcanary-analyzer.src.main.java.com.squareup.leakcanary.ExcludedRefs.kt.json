@@ -241,27 +241,27 @@
   "firstEndPos" : 737,
   "secondEndPos" : 724
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Prevents specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [ExcludedRefs], than the heap analyzer should look for a longer path with nothing\n * matching in [ExcludedRefs].\n */",
-  "secondLabel" : "/**\n * Prevents specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [ExcludedRefs], than the heap analyzer should look for a longer path with nothing\n * matching in [ExcludedRefs].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 739,
-  "secondPos" : 726,
-  "firstEndPos" : 1131,
-  "secondEndPos" : 1118
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1132,
-  "secondPos" : 1119,
+  "firstPos" : 739,
+  "secondPos" : 726,
   "firstEndPos" : 6226,
   "secondEndPos" : 6213
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Prevents specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [ExcludedRefs], than the heap analyzer should look for a longer path with nothing\n * matching in [ExcludedRefs].\n */",
+  "secondLabel" : "/**\n * Prevents specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [ExcludedRefs], than the heap analyzer should look for a longer path with nothing\n * matching in [ExcludedRefs].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 739,
+  "secondPos" : 726,
+  "firstEndPos" : 1131,
+  "secondEndPos" : 1118
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -11109,27 +11109,27 @@
   "firstEndPos" : 5423,
   "secondEndPos" : 5410
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Ignores all fields and static fields of all subclasses of the provided class name.  */",
-  "secondLabel" : "/** Ignores all fields and static fields of all subclasses of the provided class name.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5435,
-  "secondPos" : 5422,
-  "firstEndPos" : 5525,
-  "secondEndPos" : 5512
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5530,
-  "secondPos" : 5517,
+  "firstPos" : 5435,
+  "secondPos" : 5422,
   "firstEndPos" : 5718,
   "secondEndPos" : 5705
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Ignores all fields and static fields of all subclasses of the provided class name.  */",
+  "secondLabel" : "/** Ignores all fields and static fields of all subclasses of the provided class name.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5435,
+  "secondPos" : 5422,
+  "firstEndPos" : 5525,
+  "secondEndPos" : 5512
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

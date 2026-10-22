@@ -1121,27 +1121,27 @@
   "firstEndPos" : 1398,
   "secondEndPos" : 1408
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1400,
-  "secondPos" : 1410,
-  "firstEndPos" : 1743,
-  "secondEndPos" : 1753
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1744,
-  "secondPos" : 1754,
+  "firstPos" : 1400,
+  "secondPos" : 1410,
   "firstEndPos" : 9406,
   "secondEndPos" : 9416
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1400,
+  "secondPos" : 1410,
+  "firstEndPos" : 1743,
+  "secondEndPos" : 1753
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

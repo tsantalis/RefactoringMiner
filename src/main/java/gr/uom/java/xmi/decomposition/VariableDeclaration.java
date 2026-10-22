@@ -133,11 +133,13 @@ import extension.ast.node.unit.LangCompilationUnit;
 import gr.uom.java.xmi.AnnotationProvider;
 import gr.uom.java.xmi.Constants;
 import gr.uom.java.xmi.InferredType;
+import gr.uom.java.xmi.KotlinFileProcessor;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -156,6 +158,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private VariableScope scope;
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
+	private Optional<UMLJavadoc> javadoc = Optional.empty();
 	private List<UMLModifier> modifiers;
 	private String actualSignature;
 	private final Constants LANG;
@@ -774,6 +777,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return annotations;
 	}
 
+	public Optional<UMLJavadoc> getJavadoc() {
+		return javadoc;
+	}
+
 	public List<UMLModifier> getModifiers() {
 		return modifiers;
 	}
@@ -1095,6 +1102,8 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.modifiers = new ArrayList<UMLModifier>();
 		this.locationInfo = new LocationInfo(ktFile, sourceFolder, filePath, parameter, CodeElementType.SINGLE_VARIABLE_DECLARATION);
 		this.LANG = PathFileUtils.getLang(locationInfo.getFilePath());
+		//the KDoc of the parameter, i.e., class A(/** doc */ val x: Int)
+		this.javadoc = Optional.ofNullable(KotlinFileProcessor.generateDocComment(ktFile, sourceFolder, filePath, fileContent, parameter.getDocComment()));
 		KtModifierList modifierList = parameter.getModifierList();
 		if(modifierList != null) {
 			for (PsiElement modifier : modifierList.getChildren()) {

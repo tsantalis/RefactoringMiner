@@ -1209,27 +1209,27 @@
   "firstEndPos" : 1466,
   "secondEndPos" : 1387
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * UiState for the Add/Edit screen\n */",
-  "secondLabel" : "/**\n * UiState for the Add/Edit screen\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1468,
-  "secondPos" : 1389,
-  "firstEndPos" : 1510,
-  "secondEndPos" : 1431
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1511,
-  "secondPos" : 1432,
+  "firstPos" : 1468,
+  "secondPos" : 1389,
   "firstEndPos" : 1754,
   "secondEndPos" : 1675
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * UiState for the Add/Edit screen\n */",
+  "secondLabel" : "/**\n * UiState for the Add/Edit screen\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1468,
+  "secondPos" : 1389,
+  "firstEndPos" : 1510,
+  "secondEndPos" : 1431
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1869,27 +1869,27 @@
   "firstEndPos" : 1752,
   "secondEndPos" : 1673
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
-  "secondLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1756,
-  "secondPos" : 1677,
-  "firstEndPos" : 1801,
-  "secondEndPos" : 1722
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1802,
-  "secondPos" : 1723,
+  "firstPos" : 1756,
+  "secondPos" : 1677,
   "firstEndPos" : 4959,
   "secondEndPos" : 4830
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
+  "secondLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1756,
+  "secondPos" : 1677,
+  "firstEndPos" : 1801,
+  "secondEndPos" : 1722
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2485,12 +2485,23 @@
   "firstEndPos" : 2057,
   "secondEndPos" : 1978
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 2063,
+  "secondPos" : 1984,
+  "firstEndPos" : 2366,
+  "secondEndPos" : 2287
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// A MutableStateFlow needs to be created in this ViewModel. The source of truth of the current",
   "secondLabel" : "// A MutableStateFlow needs to be created in this ViewModel. The source of truth of the current",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2063,
   "secondPos" : 1984,
   "firstEndPos" : 2158,
@@ -2500,8 +2511,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// editable Task is the ViewModel, we need to mutate the UI state directly in methods such as",
   "secondLabel" : "// editable Task is the ViewModel, we need to mutate the UI state directly in methods such as",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2163,
   "secondPos" : 2084,
   "firstEndPos" : 2256,
@@ -2511,23 +2522,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// `updateTitle` or `updateDescription`",
   "secondLabel" : "// `updateTitle` or `updateDescription`",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2261,
   "secondPos" : 2182,
   "firstEndPos" : 2300,
   "secondEndPos" : 2221
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2305,
-  "secondPos" : 2226,
-  "firstEndPos" : 2366,
-  "secondEndPos" : 2287
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3101,27 +3101,27 @@
   "firstEndPos" : 2508,
   "secondEndPos" : 2429
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Called when clicking on fab.",
-  "secondLabel" : "// Called when clicking on fab.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2531,
-  "secondPos" : 2452,
-  "firstEndPos" : 2562,
-  "secondEndPos" : 2483
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2567,
-  "secondPos" : 2488,
+  "firstPos" : 2531,
+  "secondPos" : 2452,
   "firstEndPos" : 2924,
   "secondEndPos" : 2845
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Called when clicking on fab.",
+  "secondLabel" : "// Called when clicking on fab.",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2531,
+  "secondPos" : 2452,
+  "firstEndPos" : 2562,
+  "secondEndPos" : 2483
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

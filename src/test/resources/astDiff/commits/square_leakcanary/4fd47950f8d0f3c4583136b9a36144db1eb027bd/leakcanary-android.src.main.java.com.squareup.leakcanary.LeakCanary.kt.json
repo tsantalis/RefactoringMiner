@@ -1528,27 +1528,27 @@
   "firstEndPos" : 678,
   "secondEndPos" : 581
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
-  "secondLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 742,
-  "secondPos" : 585,
-  "firstEndPos" : 815,
-  "secondEndPos" : 658
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 818,
-  "secondPos" : 661,
+  "firstPos" : 742,
+  "secondPos" : 585,
   "firstEndPos" : 1006,
   "secondEndPos" : 849
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
+  "secondLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 742,
+  "secondPos" : 585,
+  "firstEndPos" : 815,
+  "secondEndPos" : 658
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1968,27 +1968,27 @@
   "firstEndPos" : 1005,
   "secondEndPos" : 848
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
-  "secondLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1010,
-  "secondPos" : 853,
-  "firstEndPos" : 1165,
-  "secondEndPos" : 1008
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1168,
-  "secondPos" : 1011,
+  "firstPos" : 1010,
+  "secondPos" : 853,
   "firstEndPos" : 1272,
   "secondEndPos" : 1115
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
+  "secondLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1010,
+  "secondPos" : 853,
+  "firstEndPos" : 1165,
+  "secondEndPos" : 1008
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2210,27 +2210,27 @@
   "firstEndPos" : 1271,
   "secondEndPos" : 1114
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * LeakCanary is automatically installed on process start with [LeakCanaryInstaller] which is\n   * automatically registered in the AndroidManifest.xml of your app. If you disabled\n   * [LeakCanaryInstaller] then you can call this method to install LeakCanary.\n   */",
-  "secondLabel" : "/**\n   * [LeakSentry] is automatically installed on process start by\n   * [leaksentry.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leaksentry.internal.LeakSentryInstaller] then you can call this\n   * method to install [LeakSentry].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1276,
-  "secondPos" : 479,
-  "firstEndPos" : 1547,
-  "secondEndPos" : 783
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1550,
-  "secondPos" : 786,
+  "firstPos" : 1276,
+  "secondPos" : 479,
   "firstEndPos" : 1635,
   "secondEndPos" : 871
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * LeakCanary is automatically installed on process start with [LeakCanaryInstaller] which is\n   * automatically registered in the AndroidManifest.xml of your app. If you disabled\n   * [LeakCanaryInstaller] then you can call this method to install LeakCanary.\n   */",
+  "secondLabel" : "/**\n   * [LeakSentry] is automatically installed on process start by\n   * [leaksentry.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leaksentry.internal.LeakSentryInstaller] then you can call this\n   * method to install [LeakSentry].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1276,
+  "secondPos" : 479,
+  "firstEndPos" : 1547,
+  "secondEndPos" : 783
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

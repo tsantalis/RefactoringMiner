@@ -54,27 +54,27 @@
   "firstEndPos" : 18,
   "secondEndPos" : 18
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * An interface to abstract the SystemClock.uptimeMillis() Android API in non Android artifacts.\n *\n * This is a functional interface with which you can create a [Clock] from a lambda.\n */",
-  "secondLabel" : "/**\n * An interface to abstract the SystemClock.uptimeMillis() Android API in non Android artifacts.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 20,
-  "secondPos" : 20,
-  "firstEndPos" : 212,
-  "secondEndPos" : 124
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 213,
-  "secondPos" : 125,
+  "firstPos" : 20,
+  "secondPos" : 20,
   "firstEndPos" : 731,
   "secondEndPos" : 266
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * An interface to abstract the SystemClock.uptimeMillis() Android API in non Android artifacts.\n *\n * This is a functional interface with which you can create a [Clock] from a lambda.\n */",
+  "secondLabel" : "/**\n * An interface to abstract the SystemClock.uptimeMillis() Android API in non Android artifacts.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 20,
+  "secondPos" : 20,
+  "firstEndPos" : 212,
+  "secondEndPos" : 124
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -120,27 +120,27 @@
   "firstEndPos" : 731,
   "secondEndPos" : 266
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * On Android VMs, this should return android.os.SystemClock.uptimeMillis().\n   */",
-  "secondLabel" : "/**\n   * On Android VMs, this should return android.os.SystemClock.uptimeMillis().\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 237,
-  "secondPos" : 149,
-  "firstEndPos" : 325,
-  "secondEndPos" : 237
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 328,
-  "secondPos" : 240,
+  "firstPos" : 237,
+  "secondPos" : 149,
   "firstEndPos" : 352,
   "secondEndPos" : 264
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * On Android VMs, this should return android.os.SystemClock.uptimeMillis().\n   */",
+  "secondLabel" : "/**\n   * On Android VMs, this should return android.os.SystemClock.uptimeMillis().\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 237,
+  "secondPos" : 149,
+  "firstEndPos" : 325,
+  "secondEndPos" : 237
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

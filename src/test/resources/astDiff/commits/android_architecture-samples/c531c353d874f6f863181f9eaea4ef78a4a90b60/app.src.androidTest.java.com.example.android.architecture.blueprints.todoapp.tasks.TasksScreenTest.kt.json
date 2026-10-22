@@ -1803,12 +1803,23 @@
   "firstEndPos" : 1813,
   "secondEndPos" : 1806
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 1815,
+  "secondPos" : 1808,
+  "firstEndPos" : 9909,
+  "secondEndPos" : 9902
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Integration test for the Task List screen.\n */",
   "secondLabel" : "/**\n * Integration test for the Task List screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 1815,
   "secondPos" : 1808,
   "firstEndPos" : 1868,
@@ -1818,23 +1829,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO - Move to the sharedTest folder when https://issuetracker.google.com/224974381 is fixed",
   "secondLabel" : "// TODO - Move to the sharedTest folder when https://issuetracker.google.com/224974381 is fixed",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 1869,
   "secondPos" : 1862,
   "firstEndPos" : 1964,
   "secondEndPos" : 1957
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1965,
-  "secondPos" : 1958,
-  "firstEndPos" : 9909,
-  "secondEndPos" : 9902
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

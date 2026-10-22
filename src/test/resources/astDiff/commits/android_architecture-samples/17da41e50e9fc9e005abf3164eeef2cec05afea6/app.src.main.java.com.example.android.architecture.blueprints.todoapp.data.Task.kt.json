@@ -373,27 +373,27 @@
   "firstEndPos" : 796,
   "secondEndPos" : 796
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Immutable model class for a Task. In order to compile with Room, we can't use @JvmOverloads to\n * generate multiple constructors.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
-  "secondLabel" : "/**\n * Immutable model class for a Task. In order to compile with Room, we can't use @JvmOverloads to\n * generate multiple constructors.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 798,
-  "secondPos" : 798,
-  "firstEndPos" : 1109,
-  "secondEndPos" : 1109
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1110,
-  "secondPos" : 1110,
+  "firstPos" : 798,
+  "secondPos" : 798,
   "firstEndPos" : 1687,
   "secondEndPos" : 1687
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Immutable model class for a Task. In order to compile with Room, we can't use @JvmOverloads to\n * generate multiple constructors.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
+  "secondLabel" : "/**\n * Immutable model class for a Task. In order to compile with Room, we can't use @JvmOverloads to\n * generate multiple constructors.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 798,
+  "secondPos" : 798,
+  "firstEndPos" : 1109,
+  "secondEndPos" : 1109
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

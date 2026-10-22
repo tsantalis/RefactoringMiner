@@ -50,7 +50,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 119,
-  "secondPos" : 98,
+  "secondPos" : 60,
   "firstEndPos" : 1716,
   "secondEndPos" : 1686
 }, {
@@ -87,27 +87,27 @@
   "firstEndPos" : 873,
   "secondEndPos" : 843
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The value of the reference, i.e. the object the reference is pointing to.\n   */",
-  "secondLabel" : "/**\n   * The value of the reference, i.e. the object the reference is pointing to.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 147,
-  "secondPos" : 117,
-  "firstEndPos" : 235,
-  "secondEndPos" : 205
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 238,
-  "secondPos" : 208,
+  "firstPos" : 147,
+  "secondPos" : 117,
   "firstEndPos" : 261,
   "secondEndPos" : 231
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The value of the reference, i.e. the object the reference is pointing to.\n   */",
+  "secondLabel" : "/**\n   * The value of the reference, i.e. the object the reference is pointing to.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 147,
+  "secondPos" : 117,
+  "firstEndPos" : 235,
+  "secondEndPos" : 205
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -164,27 +164,27 @@
   "firstEndPos" : 261,
   "secondEndPos" : 231
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Low priority references are references that should be explored after any non low priority\n   * reference has been explored. This ensures that such references are not on the shortest best\n   * path if there is any other path that doesn't include any low priority reference.\n   *\n   * This is useful to highlight references that most likely exist due to known leaks (which means\n   * we can potentially find unknown leaks instead) as well as references which are harder to\n   * interpret for developers (such as java locals).\n   */",
-  "secondLabel" : "/**\n   * Low priority references are references that should be explored after any non low priority\n   * reference has been explored. This ensures that such references are not on the shortest best\n   * path if there is any other path that doesn't include any low priority reference.\n   *\n   * This is useful to highlight references that most likely exist due to known leaks (which means\n   * we can potentially find unknown leaks instead) as well as references which are harder to\n   * interpret for developers (such as java locals).\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 266,
-  "secondPos" : 236,
-  "firstEndPos" : 804,
-  "secondEndPos" : 774
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 807,
-  "secondPos" : 777,
+  "firstPos" : 266,
+  "secondPos" : 236,
   "firstEndPos" : 833,
   "secondEndPos" : 803
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Low priority references are references that should be explored after any non low priority\n   * reference has been explored. This ensures that such references are not on the shortest best\n   * path if there is any other path that doesn't include any low priority reference.\n   *\n   * This is useful to highlight references that most likely exist due to known leaks (which means\n   * we can potentially find unknown leaks instead) as well as references which are harder to\n   * interpret for developers (such as java locals).\n   */",
+  "secondLabel" : "/**\n   * Low priority references are references that should be explored after any non low priority\n   * reference has been explored. This ensures that such references are not on the shortest best\n   * path if there is any other path that doesn't include any low priority reference.\n   *\n   * This is useful to highlight references that most likely exist due to known leaks (which means\n   * we can potentially find unknown leaks instead) as well as references which are harder to\n   * interpret for developers (such as java locals).\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 266,
+  "secondPos" : 236,
+  "firstEndPos" : 804,
+  "secondEndPos" : 774
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -560,27 +560,27 @@
   "firstEndPos" : 999,
   "secondEndPos" : 969
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Non null if this reference matches a known library leak pattern, null otherwise.\n     *\n     * Usually associated  with [Reference.isLowPriority] being true, so that the shortest path\n     * finder will only go through matching references after it has exhausted references that don't\n     * match, prioritizing finding an application leak over a known library leak.\n     */",
-  "secondLabel" : "/**\n     * Non null if this reference matches a known library leak pattern, null otherwise.\n     *\n     * Usually associated  with [Reference.isLowPriority] being true, so that the shortest path\n     * finder will only go through matching references after it has exhausted references that don't\n     * match, prioritizing finding an application leak over a known library leak.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1005,
-  "secondPos" : 975,
-  "firstEndPos" : 1389,
-  "secondEndPos" : 1359
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1394,
-  "secondPos" : 1364,
+  "firstPos" : 1005,
+  "secondPos" : 975,
   "firstEndPos" : 1446,
   "secondEndPos" : 1416
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Non null if this reference matches a known library leak pattern, null otherwise.\n     *\n     * Usually associated  with [Reference.isLowPriority] being true, so that the shortest path\n     * finder will only go through matching references after it has exhausted references that don't\n     * match, prioritizing finding an application leak over a known library leak.\n     */",
+  "secondLabel" : "/**\n     * Non null if this reference matches a known library leak pattern, null otherwise.\n     *\n     * Usually associated  with [Reference.isLowPriority] being true, so that the shortest path\n     * finder will only go through matching references after it has exhausted references that don't\n     * match, prioritizing finding an application leak over a known library leak.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1005,
+  "secondPos" : 975,
+  "firstEndPos" : 1389,
+  "secondEndPos" : 1359
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -736,27 +736,27 @@
   "firstEndPos" : 1714,
   "secondEndPos" : 1684
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Implementations should keep the minimal state they need and if needed rehydrate the objects\n     * when resolving.\n     */",
-  "secondLabel" : "/**\n     * Implementations should keep the minimal state they need and if needed rehydrate the objects\n     * when resolving.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1509,
-  "secondPos" : 1479,
-  "firstEndPos" : 1642,
-  "secondEndPos" : 1612
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1647,
-  "secondPos" : 1617,
+  "firstPos" : 1509,
+  "secondPos" : 1479,
   "firstEndPos" : 1710,
   "secondEndPos" : 1680
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Implementations should keep the minimal state they need and if needed rehydrate the objects\n     * when resolving.\n     */",
+  "secondLabel" : "/**\n     * Implementations should keep the minimal state they need and if needed rehydrate the objects\n     * when resolving.\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1509,
+  "secondPos" : 1479,
+  "firstEndPos" : 1642,
+  "secondEndPos" : 1612
 }, {
   "firstType" : "fun",
   "secondType" : "fun",

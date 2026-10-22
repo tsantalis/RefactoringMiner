@@ -373,27 +373,27 @@
   "firstEndPos" : 212,
   "secondEndPos" : 212
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 继承基类，实现默认的\"加载更多\"VH\n */",
-  "secondLabel" : "/**\n * 继承基类，实现默认的\"加载更多\"VH\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 214,
-  "secondPos" : 214,
-  "firstEndPos" : 243,
-  "secondEndPos" : 243
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 244,
-  "secondPos" : 244,
+  "firstPos" : 214,
+  "secondPos" : 214,
   "firstEndPos" : 1103,
   "secondEndPos" : 1113
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 继承基类，实现默认的\"加载更多\"VH\n */",
+  "secondLabel" : "/**\n * 继承基类，实现默认的\"加载更多\"VH\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 214,
+  "secondPos" : 214,
+  "firstEndPos" : 243,
+  "secondEndPos" : 243
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

@@ -1451,27 +1451,27 @@
   "firstEndPos" : 1595,
   "secondEndPos" : 1593
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
-  "secondLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1597,
-  "secondPos" : 1595,
-  "firstEndPos" : 1666,
-  "secondEndPos" : 1664
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1667,
-  "secondPos" : 1665,
+  "firstPos" : 1597,
+  "secondPos" : 1595,
   "firstEndPos" : 6224,
   "secondEndPos" : 6232
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
+  "secondLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1597,
+  "secondPos" : 1595,
+  "firstEndPos" : 1666,
+  "secondEndPos" : 1664
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1561,27 +1561,27 @@
   "firstEndPos" : 6224,
   "secondEndPos" : 6232
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set the main coroutines dispatcher for unit testing.",
-  "secondLabel" : "// Set the main coroutines dispatcher for unit testing.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1731,
-  "secondPos" : 1729,
-  "firstEndPos" : 1786,
-  "secondEndPos" : 1784
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1791,
-  "secondPos" : 1789,
+  "firstPos" : 1731,
+  "secondPos" : 1729,
   "firstEndPos" : 1879,
   "secondEndPos" : 1877
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set the main coroutines dispatcher for unit testing.",
+  "secondLabel" : "// Set the main coroutines dispatcher for unit testing.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1731,
+  "secondPos" : 1729,
+  "firstEndPos" : 1786,
+  "secondEndPos" : 1784
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1803,27 +1803,27 @@
   "firstEndPos" : 1879,
   "secondEndPos" : 1877
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Subject under test",
-  "secondLabel" : "// Subject under test",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1885,
-  "secondPos" : 1883,
-  "firstEndPos" : 1906,
-  "secondEndPos" : 1904
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1911,
-  "secondPos" : 1909,
+  "firstPos" : 1885,
+  "secondPos" : 1883,
   "firstEndPos" : 1972,
   "secondEndPos" : 1970
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Subject under test",
+  "secondLabel" : "// Subject under test",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1885,
+  "secondPos" : 1883,
+  "firstEndPos" : 1906,
+  "secondEndPos" : 1904
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1946,27 +1946,27 @@
   "firstEndPos" : 1972,
   "secondEndPos" : 1970
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Use a fake repository to be injected into the viewmodel",
-  "secondLabel" : "// Use a fake repository to be injected into the viewmodel",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1978,
-  "secondPos" : 1976,
-  "firstEndPos" : 2036,
-  "secondEndPos" : 2034
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2041,
-  "secondPos" : 2039,
+  "firstPos" : 1978,
+  "secondPos" : 1976,
   "firstEndPos" : 2093,
   "secondEndPos" : 2096
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Use a fake repository to be injected into the viewmodel",
+  "secondLabel" : "// Use a fake repository to be injected into the viewmodel",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1978,
+  "secondPos" : 1976,
+  "firstEndPos" : 2036,
+  "secondEndPos" : 2034
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

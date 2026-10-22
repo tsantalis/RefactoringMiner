@@ -1198,27 +1198,27 @@
   "firstEndPos" : 1035,
   "secondEndPos" : 1084
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Converts a Hprof file to another file with deobfuscated class and field names.\n */",
-  "secondLabel" : "/**\n * Converts a Hprof file to another file with deobfuscated class and field names.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1037,
-  "secondPos" : 1086,
-  "firstEndPos" : 1126,
-  "secondEndPos" : 1175
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1127,
-  "secondPos" : 1176,
+  "firstPos" : 1037,
+  "secondPos" : 1086,
   "firstEndPos" : 7792,
   "secondEndPos" : 7852
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Converts a Hprof file to another file with deobfuscated class and field names.\n */",
+  "secondLabel" : "/**\n * Converts a Hprof file to another file with deobfuscated class and field names.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1037,
+  "secondPos" : 1086,
+  "firstEndPos" : 1126,
+  "secondEndPos" : 1175
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1253,27 +1253,27 @@
   "firstEndPos" : 7792,
   "secondEndPos" : 7852
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * @see HprofDeobfuscator\n   */",
-  "secondLabel" : "/**\n   * @see HprofDeobfuscator\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1156,
-  "secondPos" : 1205,
-  "firstEndPos" : 1193,
-  "secondEndPos" : 1242
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1196,
-  "secondPos" : 1245,
+  "firstPos" : 1156,
+  "secondPos" : 1205,
   "firstEndPos" : 2056,
   "secondEndPos" : 2117
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * @see HprofDeobfuscator\n   */",
+  "secondLabel" : "/**\n   * @see HprofDeobfuscator\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1156,
+  "secondPos" : 1205,
+  "firstEndPos" : 1193,
+  "secondEndPos" : 1242
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2507,27 +2507,27 @@
   "firstEndPos" : 2046,
   "secondEndPos" : 2107
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads StringRecords and LoadClassRecord from an Hprof file and tracks maximum HprofRecord id\n   * value.\n   *\n   * @return a Triple of: hprofStringCache map, classNames map and maxId value\n   */",
-  "secondLabel" : "/**\n   * Reads StringRecords and LoadClassRecord from an Hprof file and tracks maximum HprofRecord id\n   * value.\n   *\n   * @return a Triple of: hprofStringCache map, classNames map and maxId value\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2060,
-  "secondPos" : 2121,
-  "firstEndPos" : 2263,
-  "secondEndPos" : 2324
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2266,
-  "secondPos" : 2327,
+  "firstPos" : 2060,
+  "secondPos" : 2121,
   "firstEndPos" : 3951,
   "secondEndPos" : 3949
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads StringRecords and LoadClassRecord from an Hprof file and tracks maximum HprofRecord id\n   * value.\n   *\n   * @return a Triple of: hprofStringCache map, classNames map and maxId value\n   */",
+  "secondLabel" : "/**\n   * Reads StringRecords and LoadClassRecord from an Hprof file and tracks maximum HprofRecord id\n   * value.\n   *\n   * @return a Triple of: hprofStringCache map, classNames map and maxId value\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2060,
+  "secondPos" : 2121,
+  "firstEndPos" : 2263,
+  "secondEndPos" : 2324
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -10405,27 +10405,27 @@
   "firstEndPos" : 5953,
   "secondEndPos" : 5973
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Deobfuscated ClassDumpRecord's field names. Different classes can have fields with the same\n   * names. We need to generate new StringRecords in such cases.\n   *\n   * @return a Pair of: list of HprofRecords to write and new maxId value\n   */",
-  "secondLabel" : "/**\n   * Deobfuscated ClassDumpRecord's field names. Different classes can have fields with the same\n   * names. We need to generate new StringRecords in such cases.\n   *\n   * @return a Pair of: list of HprofRecords to write and new maxId value\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5968,
-  "secondPos" : 5988,
-  "firstEndPos" : 6218,
-  "secondEndPos" : 6238
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6221,
-  "secondPos" : 6241,
+  "firstPos" : 5968,
+  "secondPos" : 5988,
   "firstEndPos" : 7790,
   "secondEndPos" : 7850
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Deobfuscated ClassDumpRecord's field names. Different classes can have fields with the same\n   * names. We need to generate new StringRecords in such cases.\n   *\n   * @return a Pair of: list of HprofRecords to write and new maxId value\n   */",
+  "secondLabel" : "/**\n   * Deobfuscated ClassDumpRecord's field names. Different classes can have fields with the same\n   * names. We need to generate new StringRecords in such cases.\n   *\n   * @return a Pair of: list of HprofRecords to write and new maxId value\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5968,
+  "secondPos" : 5988,
+  "firstEndPos" : 6218,
+  "secondEndPos" : 6238
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

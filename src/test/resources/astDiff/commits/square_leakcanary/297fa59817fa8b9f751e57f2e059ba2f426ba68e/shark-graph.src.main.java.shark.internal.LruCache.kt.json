@@ -197,27 +197,27 @@
   "firstEndPos" : 104,
   "secondEndPos" : 104
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * API is a simplified version of android.util.LruCache\n * Implementation is inspired from http://chriswu.me/blog/a-lru-cache-in-10-lines-of-java/\n */",
-  "secondLabel" : "/**\n * API is a simplified version of android.util.LruCache\n * Implementation is inspired from http://chriswu.me/blog/a-lru-cache-in-10-lines-of-java/\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 106,
-  "secondPos" : 106,
-  "firstEndPos" : 260,
-  "secondEndPos" : 260
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 261,
-  "secondPos" : 261,
+  "firstPos" : 106,
+  "secondPos" : 106,
   "firstEndPos" : 1596,
   "secondEndPos" : 1595
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * API is a simplified version of android.util.LruCache\n * Implementation is inspired from http://chriswu.me/blog/a-lru-cache-in-10-lines-of-java/\n */",
+  "secondLabel" : "/**\n * API is a simplified version of android.util.LruCache\n * Implementation is inspired from http://chriswu.me/blog/a-lru-cache-in-10-lines-of-java/\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 106,
+  "secondPos" : 106,
+  "firstEndPos" : 260,
+  "secondEndPos" : 260
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

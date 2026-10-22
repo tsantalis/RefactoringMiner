@@ -4861,27 +4861,27 @@
   "firstEndPos" : 3640,
   "secondEndPos" : 3640
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Generates Hprof files.\n *\n * Call [openWriterFor] to obtain a new instance.\n *\n * Call [write] to add records and [close] when you're done.\n */",
-  "secondLabel" : "/**\n * Generates Hprof files.\n *\n * Call [openWriterFor] to obtain a new instance.\n *\n * Call [write] to add records and [close] when you're done.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3642,
-  "secondPos" : 3642,
-  "firstEndPos" : 3792,
-  "secondEndPos" : 3792
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3793,
-  "secondPos" : 3793,
+  "firstPos" : 3642,
+  "secondPos" : 3642,
   "firstEndPos" : 16179,
   "secondEndPos" : 15274
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Generates Hprof files.\n *\n * Call [openWriterFor] to obtain a new instance.\n *\n * Call [write] to add records and [close] when you're done.\n */",
+  "secondLabel" : "/**\n * Generates Hprof files.\n *\n * Call [openWriterFor] to obtain a new instance.\n *\n * Call [write] to add records and [close] when you're done.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3642,
+  "secondPos" : 3642,
+  "firstEndPos" : 3792,
+  "secondEndPos" : 3792
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -5312,27 +5312,27 @@
   "firstEndPos" : 4368,
   "secondEndPos" : 3949
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Appends a [HprofRecord] to the heap dump. If [record] is a [HprofRecord.HeapDumpRecord] then\n   * it will not be written to an in memory buffer and written to file only when the next a record\n   * that is not a [HprofRecord.HeapDumpRecord] is written or when [close] is called.\n   */",
-  "secondLabel" : "/**\n   * Appends a [HprofRecord] to the heap dump. If [record] is a [HprofRecord.HeapDumpRecord] then\n   * it will not be written to an in memory buffer and written to file only when the next a record\n   * that is not a [HprofRecord.HeapDumpRecord] is written or when [close] is called.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4372,
-  "secondPos" : 3953,
-  "firstEndPos" : 4664,
-  "secondEndPos" : 4245
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4667,
-  "secondPos" : 4248,
+  "firstPos" : 4372,
+  "secondPos" : 3953,
   "firstEndPos" : 4726,
   "secondEndPos" : 4307
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Appends a [HprofRecord] to the heap dump. If [record] is a [HprofRecord.HeapDumpRecord] then\n   * it will not be written to an in memory buffer and written to file only when the next a record\n   * that is not a [HprofRecord.HeapDumpRecord] is written or when [close] is called.\n   */",
+  "secondLabel" : "/**\n   * Appends a [HprofRecord] to the heap dump. If [record] is a [HprofRecord.HeapDumpRecord] then\n   * it will not be written to an in memory buffer and written to file only when the next a record\n   * that is not a [HprofRecord.HeapDumpRecord] is written or when [close] is called.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4372,
+  "secondPos" : 3953,
+  "firstEndPos" : 4664,
+  "secondEndPos" : 4245
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -5532,27 +5532,27 @@
   "firstEndPos" : 4721,
   "secondEndPos" : 4302
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Helper method for creating a [ByteArray] for [InstanceDumpRecord.fieldValues] from a\n   * list of [ValueHolder].\n   */",
-  "secondLabel" : "/**\n   * Helper method for creating a [ByteArray] for [InstanceDumpRecord.fieldValues] from a\n   * list of [ValueHolder].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4730,
-  "secondPos" : 4311,
-  "firstEndPos" : 4857,
-  "secondEndPos" : 4438
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4860,
-  "secondPos" : 4441,
+  "firstPos" : 4730,
+  "secondPos" : 4311,
   "firstEndPos" : 5066,
   "secondEndPos" : 4647
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Helper method for creating a [ByteArray] for [InstanceDumpRecord.fieldValues] from a\n   * list of [ValueHolder].\n   */",
+  "secondLabel" : "/**\n   * Helper method for creating a [ByteArray] for [InstanceDumpRecord.fieldValues] from a\n   * list of [ValueHolder].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4730,
+  "secondPos" : 4311,
+  "firstEndPos" : 4857,
+  "secondEndPos" : 4438
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -6192,27 +6192,27 @@
   "firstEndPos" : 5062,
   "secondEndPos" : 4643
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Flushes to disk all [HprofRecord.HeapDumpRecord] that are currently written to the in memory\n   * buffer, then closes the file.\n   */",
-  "secondLabel" : "/**\n   * Flushes to disk all [HprofRecord.HeapDumpRecord] that are currently written to the in memory\n   * buffer, then closes the file.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5070,
-  "secondPos" : 4651,
-  "firstEndPos" : 5212,
-  "secondEndPos" : 4793
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5215,
-  "secondPos" : 4796,
+  "firstPos" : 5070,
+  "secondPos" : 4651,
   "firstEndPos" : 5285,
   "secondEndPos" : 4866
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Flushes to disk all [HprofRecord.HeapDumpRecord] that are currently written to the in memory\n   * buffer, then closes the file.\n   */",
+  "secondLabel" : "/**\n   * Flushes to disk all [HprofRecord.HeapDumpRecord] that are currently written to the in memory\n   * buffer, then closes the file.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5070,
+  "secondPos" : 4651,
+  "firstEndPos" : 5212,
+  "secondEndPos" : 4793
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

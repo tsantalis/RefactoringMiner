@@ -989,27 +989,27 @@
   "firstEndPos" : 1274,
   "secondEndPos" : 1274
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Android 29+. */",
-  "secondLabel" : "/** Android 29+. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1276,
-  "secondPos" : 1276,
-  "firstEndPos" : 1295,
-  "secondEndPos" : 1295
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1296,
-  "secondPos" : 1296,
+  "firstPos" : 1276,
+  "secondPos" : 1276,
   "firstEndPos" : 2919,
   "secondEndPos" : 2948
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Android 29+. */",
+  "secondLabel" : "/** Android 29+. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1276,
+  "secondPos" : 1276,
+  "firstEndPos" : 1295,
+  "secondEndPos" : 1295
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

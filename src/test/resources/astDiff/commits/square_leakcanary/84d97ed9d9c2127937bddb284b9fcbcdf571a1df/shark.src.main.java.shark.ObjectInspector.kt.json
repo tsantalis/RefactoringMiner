@@ -131,27 +131,27 @@
   "firstEndPos" : 60,
   "secondEndPos" : 60
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n *\n * You can create a [ObjectInspector] from a lambda by calling [invoke].\n */",
-  "secondLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n *\n * You can create a [ObjectInspector] from a lambda by calling [invoke].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 62,
-  "secondPos" : 62,
-  "firstEndPos" : 438,
-  "secondEndPos" : 438
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 439,
-  "secondPos" : 439,
+  "firstPos" : 62,
+  "secondPos" : 62,
   "firstEndPos" : 1216,
   "secondEndPos" : 1133
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n *\n * You can create a [ObjectInspector] from a lambda by calling [invoke].\n */",
+  "secondLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n *\n * You can create a [ObjectInspector] from a lambda by calling [invoke].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 62,
+  "secondPos" : 62,
+  "firstEndPos" : 438,
+  "secondEndPos" : 438
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -186,27 +186,27 @@
   "firstEndPos" : 1216,
   "secondEndPos" : 1133
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * @see [ObjectInspector]\n   */",
-  "secondLabel" : "/**\n   * @see [ObjectInspector]\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 470,
-  "secondPos" : 470,
-  "firstEndPos" : 507,
-  "secondEndPos" : 507
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 510,
-  "secondPos" : 510,
+  "firstPos" : 470,
+  "secondPos" : 470,
   "firstEndPos" : 577,
   "secondEndPos" : 547
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * @see [ObjectInspector]\n   */",
+  "secondLabel" : "/**\n   * @see [ObjectInspector]\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 470,
+  "secondPos" : 470,
+  "firstEndPos" : 507,
+  "secondEndPos" : 507
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -329,27 +329,27 @@
   "firstEndPos" : 1214,
   "secondEndPos" : 1131
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Utility function to create a [ObjectInspector] from the passed in [block] lambda instead of\n     * using the anonymous `object : OnHeapAnalyzedListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val inspector = ObjectInspector { graph, reporter ->\n     *\n     * }\n     * ```\n     */",
-  "secondLabel" : "/**\n     * Utility function to create a [ObjectInspector] from the passed in [block] lambda instead of\n     * using the anonymous `object : OnHeapAnalyzedListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val inspector = ObjectInspector { reporter ->\n     *\n     * }\n     * ```\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 604,
-  "secondPos" : 574,
-  "firstEndPos" : 915,
-  "secondEndPos" : 878
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 920,
-  "secondPos" : 883,
+  "firstPos" : 604,
+  "secondPos" : 574,
   "firstEndPos" : 1210,
   "secondEndPos" : 1127
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Utility function to create a [ObjectInspector] from the passed in [block] lambda instead of\n     * using the anonymous `object : OnHeapAnalyzedListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val inspector = ObjectInspector { graph, reporter ->\n     *\n     * }\n     * ```\n     */",
+  "secondLabel" : "/**\n     * Utility function to create a [ObjectInspector] from the passed in [block] lambda instead of\n     * using the anonymous `object : OnHeapAnalyzedListener` syntax.\n     *\n     * Usage:\n     *\n     * ```kotlin\n     * val inspector = ObjectInspector { reporter ->\n     *\n     * }\n     * ```\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 604,
+  "secondPos" : 574,
+  "firstEndPos" : 915,
+  "secondEndPos" : 878
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

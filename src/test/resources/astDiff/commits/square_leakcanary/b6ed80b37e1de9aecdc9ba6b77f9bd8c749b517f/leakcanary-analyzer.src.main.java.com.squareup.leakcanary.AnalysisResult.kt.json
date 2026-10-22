@@ -241,27 +241,27 @@
   "firstEndPos" : 1892,
   "secondEndPos" : 1879
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Key associated to the [leaksentry.KeyedWeakReference] used to detect the memory leak.\n   * When analyzing a heap dump, search for all [leaksentry.KeyedWeakReference] instances, then open\n   * the one that has its \"key\" field set to this value. Its \"referent\" field contains the\n   * leaking object. Computing the shortest path to GC roots on that leaking object should enable\n   * you to figure out the cause of the leak.\n   */",
-  "secondLabel" : "/**\n   * Key associated to the [leaksentry.KeyedWeakReference] used to detect the memory leak.\n   * When analyzing a heap dump, search for all [leaksentry.KeyedWeakReference] instances, then open\n   * the one that has its \"key\" field set to this value. Its \"referent\" field contains the\n   * leaking object. Computing the shortest path to GC roots on that leaking object should enable\n   * you to figure out the cause of the leak.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 114,
-  "secondPos" : 101,
-  "firstEndPos" : 550,
-  "secondEndPos" : 537
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 553,
-  "secondPos" : 540,
+  "firstPos" : 114,
+  "secondPos" : 101,
   "firstEndPos" : 577,
   "secondEndPos" : 564
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Key associated to the [leaksentry.KeyedWeakReference] used to detect the memory leak.\n   * When analyzing a heap dump, search for all [leaksentry.KeyedWeakReference] instances, then open\n   * the one that has its \"key\" field set to this value. Its \"referent\" field contains the\n   * leaking object. Computing the shortest path to GC roots on that leaking object should enable\n   * you to figure out the cause of the leak.\n   */",
+  "secondLabel" : "/**\n   * Key associated to the [leaksentry.KeyedWeakReference] used to detect the memory leak.\n   * When analyzing a heap dump, search for all [leaksentry.KeyedWeakReference] instances, then open\n   * the one that has its \"key\" field set to this value. Its \"referent\" field contains the\n   * leaking object. Computing the shortest path to GC roots on that leaking object should enable\n   * you to figure out the cause of the leak.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 114,
+  "secondPos" : 101,
+  "firstEndPos" : 550,
+  "secondEndPos" : 537
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -318,27 +318,27 @@
   "firstEndPos" : 577,
   "secondEndPos" : 564
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * User defined name to help identify the leaking instance.\n   */",
-  "secondLabel" : "/**\n   * User defined name to help identify the leaking instance.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 582,
-  "secondPos" : 569,
-  "firstEndPos" : 653,
-  "secondEndPos" : 640
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 656,
-  "secondPos" : 643,
+  "firstPos" : 582,
+  "secondPos" : 569,
   "firstEndPos" : 681,
   "secondEndPos" : 668
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * User defined name to help identify the leaking instance.\n   */",
+  "secondLabel" : "/**\n   * User defined name to help identify the leaking instance.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 582,
+  "secondPos" : 569,
+  "firstEndPos" : 653,
+  "secondEndPos" : 640
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -395,27 +395,27 @@
   "firstEndPos" : 681,
   "secondEndPos" : 668
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** True if a leak was found in the heap dump.  */",
-  "secondLabel" : "/** True if a leak was found in the heap dump.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 686,
-  "secondPos" : 673,
-  "firstEndPos" : 736,
-  "secondEndPos" : 723
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 739,
-  "secondPos" : 726,
+  "firstPos" : 686,
+  "secondPos" : 673,
   "firstEndPos" : 761,
   "secondEndPos" : 748
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** True if a leak was found in the heap dump.  */",
+  "secondLabel" : "/** True if a leak was found in the heap dump.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 686,
+  "secondPos" : 673,
+  "firstEndPos" : 736,
+  "secondEndPos" : 723
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -472,27 +472,27 @@
   "firstEndPos" : 761,
   "secondEndPos" : 748
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * True if [.leakFound] is true and the only path to the leaking reference is\n   * through excluded references. Usually, that means you can safely ignore this report.\n   */",
-  "secondLabel" : "/**\n   * True if [.leakFound] is true and the only path to the leaking reference is\n   * through excluded references. Usually, that means you can safely ignore this report.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 765,
-  "secondPos" : 752,
-  "firstEndPos" : 943,
-  "secondEndPos" : 930
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 946,
-  "secondPos" : 933,
+  "firstPos" : 765,
+  "secondPos" : 752,
   "firstEndPos" : 971,
   "secondEndPos" : 958
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * True if [.leakFound] is true and the only path to the leaking reference is\n   * through excluded references. Usually, that means you can safely ignore this report.\n   */",
+  "secondLabel" : "/**\n   * True if [.leakFound] is true and the only path to the leaking reference is\n   * through excluded references. Usually, that means you can safely ignore this report.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 765,
+  "secondPos" : 752,
+  "firstEndPos" : 943,
+  "secondEndPos" : 930
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -549,27 +549,27 @@
   "firstEndPos" : 971,
   "secondEndPos" : 958
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Class name of the object that leaked, null if [.failure] is not null.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "secondLabel" : "/**\n   * Class name of the object that leaked, null if [.failure] is not null.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 975,
-  "secondPos" : 962,
-  "firstEndPos" : 1144,
-  "secondEndPos" : 1131
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1147,
-  "secondPos" : 1134,
+  "firstPos" : 975,
+  "secondPos" : 962,
   "firstEndPos" : 1169,
   "secondEndPos" : 1156
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Class name of the object that leaked, null if [.failure] is not null.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
+  "secondLabel" : "/**\n   * Class name of the object that leaked, null if [.failure] is not null.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 975,
+  "secondPos" : 962,
+  "firstEndPos" : 1144,
+  "secondEndPos" : 1131
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -637,27 +637,27 @@
   "firstEndPos" : 1168,
   "secondEndPos" : 1155
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Shortest path to GC roots for the leaking object if [.leakFound] is true, null\n   * otherwise. This can be used as a unique signature for the leak.\n   */",
-  "secondLabel" : "/**\n   * Shortest path to GC roots for the leaking object if [.leakFound] is true, null\n   * otherwise. This can be used as a unique signature for the leak.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1173,
-  "secondPos" : 1160,
-  "firstEndPos" : 1335,
-  "secondEndPos" : 1322
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1338,
-  "secondPos" : 1325,
+  "firstPos" : 1173,
+  "secondPos" : 1160,
   "firstEndPos" : 1370,
   "secondEndPos" : 1357
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Shortest path to GC roots for the leaking object if [.leakFound] is true, null\n   * otherwise. This can be used as a unique signature for the leak.\n   */",
+  "secondLabel" : "/**\n   * Shortest path to GC roots for the leaking object if [.leakFound] is true, null\n   * otherwise. This can be used as a unique signature for the leak.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1173,
+  "secondPos" : 1160,
+  "firstEndPos" : 1335,
+  "secondEndPos" : 1322
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -747,27 +747,27 @@
   "firstEndPos" : 1370,
   "secondEndPos" : 1357
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Null unless the analysis failed.  */",
-  "secondLabel" : "/** Null unless the analysis failed.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1374,
-  "secondPos" : 1361,
-  "firstEndPos" : 1414,
-  "secondEndPos" : 1401
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1417,
-  "secondPos" : 1404,
+  "firstPos" : 1374,
+  "secondPos" : 1361,
   "firstEndPos" : 1447,
   "secondEndPos" : 1434
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Null unless the analysis failed.  */",
+  "secondLabel" : "/** Null unless the analysis failed.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1374,
+  "secondPos" : 1361,
+  "firstEndPos" : 1414,
+  "secondEndPos" : 1401
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -857,27 +857,27 @@
   "firstEndPos" : 1447,
   "secondEndPos" : 1434
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. [.RETAINED_HEAP_SKIPPED] if the retained heap size was not computed. 0 if\n   * [.leakFound] is false.\n   */",
-  "secondLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. [.RETAINED_HEAP_SKIPPED] if the retained heap size was not computed. 0 if\n   * [.leakFound] is false.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1451,
-  "secondPos" : 1438,
-  "firstEndPos" : 1668,
-  "secondEndPos" : 1655
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1671,
-  "secondPos" : 1658,
+  "firstPos" : 1451,
+  "secondPos" : 1438,
   "firstEndPos" : 1697,
   "secondEndPos" : 1684
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. [.RETAINED_HEAP_SKIPPED] if the retained heap size was not computed. 0 if\n   * [.leakFound] is false.\n   */",
+  "secondLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. [.RETAINED_HEAP_SKIPPED] if the retained heap size was not computed. 0 if\n   * [.leakFound] is false.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1451,
+  "secondPos" : 1438,
+  "firstEndPos" : 1668,
+  "secondEndPos" : 1655
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -934,27 +934,27 @@
   "firstEndPos" : 1697,
   "secondEndPos" : 1684
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Total time spent analyzing the heap.  */",
-  "secondLabel" : "/** Total time spent analyzing the heap.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1701,
-  "secondPos" : 1688,
-  "firstEndPos" : 1745,
-  "secondEndPos" : 1732
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1748,
-  "secondPos" : 1735,
+  "firstPos" : 1701,
+  "secondPos" : 1688,
   "firstEndPos" : 1776,
   "secondEndPos" : 1763
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Total time spent analyzing the heap.  */",
+  "secondLabel" : "/** Total time spent analyzing the heap.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1701,
+  "secondPos" : 1688,
+  "firstEndPos" : 1745,
+  "secondEndPos" : 1732
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1011,27 +1011,27 @@
   "firstEndPos" : 1776,
   "secondEndPos" : 1763
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Time from the request to watch the reference until the GC was triggered.  */",
-  "secondLabel" : "/** Time from the request to watch the reference until the GC was triggered.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1781,
-  "secondPos" : 1768,
-  "firstEndPos" : 1861,
-  "secondEndPos" : 1848
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1864,
-  "secondPos" : 1851,
+  "firstPos" : 1781,
+  "secondPos" : 1768,
   "firstEndPos" : 1889,
   "secondEndPos" : 1876
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Time from the request to watch the reference until the GC was triggered.  */",
+  "secondLabel" : "/** Time from the request to watch the reference until the GC was triggered.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1781,
+  "secondPos" : 1768,
+  "firstEndPos" : 1861,
+  "secondEndPos" : 1848
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1132,27 +1132,27 @@
   "firstEndPos" : 6091,
   "secondEndPos" : 6078
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * <p>Creates a new {@link RuntimeException} with a fake stack trace that maps the leak trace.\n   *\n   * <p>Leak traces uniquely identify memory leaks, much like stack traces uniquely identify\n   * exceptions.\n   *\n   * <p>This method enables you to upload leak traces as stack traces to your preferred\n   * exception reporting tool and benefit from the grouping and counting these tools provide out\n   * of the box. This also means you can track all leaks instead of relying on individuals\n   * reporting them when they happen.\n   *\n   * <p>The following example leak trace:\n   * <pre>\n   * * com.foo.WibbleActivity has leaked:\n   * * GC ROOT static com.foo.Bar.qux\n   * * references com.foo.Quz.context\n   * * leaks com.foo.WibbleActivity instance\n   * </pre>\n   *\n   * <p>Will turn into an exception with the following stacktrace:\n   * <pre>\n   * java.lang.RuntimeException: com.foo.WibbleActivity leak from com.foo.Bar (holder=CLASS,\n   * type=STATIC_FIELD)\n   *         at com.foo.Bar.qux(Bar.java:42)\n   *         at com.foo.Quz.context(Quz.java:42)\n   *         at com.foo.WibbleActivity.leaking(WibbleActivity.java:42)\n   * </pre>\n   */",
-  "secondLabel" : "/**\n   * <p>Creates a new {@link RuntimeException} with a fake stack trace that maps the leak trace.\n   *\n   * <p>Leak traces uniquely identify memory leaks, much like stack traces uniquely identify\n   * exceptions.\n   *\n   * <p>This method enables you to upload leak traces as stack traces to your preferred\n   * exception reporting tool and benefit from the grouping and counting these tools provide out\n   * of the box. This also means you can track all leaks instead of relying on individuals\n   * reporting them when they happen.\n   *\n   * <p>The following example leak trace:\n   * <pre>\n   * * com.foo.WibbleActivity has leaked:\n   * * GC ROOT static com.foo.Bar.qux\n   * * references com.foo.Quz.context\n   * * leaks com.foo.WibbleActivity instance\n   * </pre>\n   *\n   * <p>Will turn into an exception with the following stacktrace:\n   * <pre>\n   * java.lang.RuntimeException: com.foo.WibbleActivity leak from com.foo.Bar (holder=CLASS,\n   * type=STATIC_FIELD)\n   *         at com.foo.Bar.qux(Bar.java:42)\n   *         at com.foo.Quz.context(Quz.java:42)\n   *         at com.foo.WibbleActivity.leaking(WibbleActivity.java:42)\n   * </pre>\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1913,
-  "secondPos" : 1900,
-  "firstEndPos" : 3063,
-  "secondEndPos" : 3050
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3066,
-  "secondPos" : 3053,
+  "firstPos" : 1913,
+  "secondPos" : 1900,
   "firstEndPos" : 4057,
   "secondEndPos" : 4044
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * <p>Creates a new {@link RuntimeException} with a fake stack trace that maps the leak trace.\n   *\n   * <p>Leak traces uniquely identify memory leaks, much like stack traces uniquely identify\n   * exceptions.\n   *\n   * <p>This method enables you to upload leak traces as stack traces to your preferred\n   * exception reporting tool and benefit from the grouping and counting these tools provide out\n   * of the box. This also means you can track all leaks instead of relying on individuals\n   * reporting them when they happen.\n   *\n   * <p>The following example leak trace:\n   * <pre>\n   * * com.foo.WibbleActivity has leaked:\n   * * GC ROOT static com.foo.Bar.qux\n   * * references com.foo.Quz.context\n   * * leaks com.foo.WibbleActivity instance\n   * </pre>\n   *\n   * <p>Will turn into an exception with the following stacktrace:\n   * <pre>\n   * java.lang.RuntimeException: com.foo.WibbleActivity leak from com.foo.Bar (holder=CLASS,\n   * type=STATIC_FIELD)\n   *         at com.foo.Bar.qux(Bar.java:42)\n   *         at com.foo.Quz.context(Quz.java:42)\n   *         at com.foo.WibbleActivity.leaking(WibbleActivity.java:42)\n   * </pre>\n   */",
+  "secondLabel" : "/**\n   * <p>Creates a new {@link RuntimeException} with a fake stack trace that maps the leak trace.\n   *\n   * <p>Leak traces uniquely identify memory leaks, much like stack traces uniquely identify\n   * exceptions.\n   *\n   * <p>This method enables you to upload leak traces as stack traces to your preferred\n   * exception reporting tool and benefit from the grouping and counting these tools provide out\n   * of the box. This also means you can track all leaks instead of relying on individuals\n   * reporting them when they happen.\n   *\n   * <p>The following example leak trace:\n   * <pre>\n   * * com.foo.WibbleActivity has leaked:\n   * * GC ROOT static com.foo.Bar.qux\n   * * references com.foo.Quz.context\n   * * leaks com.foo.WibbleActivity instance\n   * </pre>\n   *\n   * <p>Will turn into an exception with the following stacktrace:\n   * <pre>\n   * java.lang.RuntimeException: com.foo.WibbleActivity leak from com.foo.Bar (holder=CLASS,\n   * type=STATIC_FIELD)\n   *         at com.foo.Bar.qux(Bar.java:42)\n   *         at com.foo.Quz.context(Quz.java:42)\n   *         at com.foo.WibbleActivity.leaking(WibbleActivity.java:42)\n   * </pre>\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1913,
+  "secondPos" : 1900,
+  "firstEndPos" : 3063,
+  "secondEndPos" : 3050
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

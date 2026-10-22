@@ -131,27 +131,27 @@
   "firstEndPos" : 62,
   "secondEndPos" : 62
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Turns BuildFilter into exclusion filters that HeapAnalyzer understand. Since retrieving from\n * the Hprof is not free, [BuildMirror] provides a caching mechanism. Make sure to use different\n * [BuildMirror] and set of filters for every hprof parsing.\n */",
-  "secondLabel" : "/**\n * Turns BuildFilter into exclusion filters that HeapAnalyzer understand. Since retrieving from\n * the Hprof is not free, [BuildMirror] provides a caching mechanism. Make sure to use different\n * [BuildMirror] and set of filters for every hprof parsing.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 64,
-  "secondPos" : 64,
-  "firstEndPos" : 325,
-  "secondEndPos" : 325
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 326,
-  "secondPos" : 326,
+  "firstPos" : 64,
+  "secondPos" : 64,
   "firstEndPos" : 841,
   "secondEndPos" : 847
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Turns BuildFilter into exclusion filters that HeapAnalyzer understand. Since retrieving from\n * the Hprof is not free, [BuildMirror] provides a caching mechanism. Make sure to use different\n * [BuildMirror] and set of filters for every hprof parsing.\n */",
+  "secondLabel" : "/**\n * Turns BuildFilter into exclusion filters that HeapAnalyzer understand. Since retrieving from\n * the Hprof is not free, [BuildMirror] provides a caching mechanism. Make sure to use different\n * [BuildMirror] and set of filters for every hprof parsing.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 64,
+  "secondPos" : 64,
+  "firstEndPos" : 325,
+  "secondEndPos" : 325
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

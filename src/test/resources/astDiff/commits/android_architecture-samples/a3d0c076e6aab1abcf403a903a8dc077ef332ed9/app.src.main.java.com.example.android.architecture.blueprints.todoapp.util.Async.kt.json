@@ -131,27 +131,27 @@
   "firstEndPos" : 681,
   "secondEndPos" : 681
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A generic class that holds a loading signal or the result of an async operation.\n */",
-  "secondLabel" : "/**\n * A generic class that holds a loading signal or the result of an async operation.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 683,
-  "secondPos" : 683,
-  "firstEndPos" : 774,
-  "secondEndPos" : 774
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 775,
-  "secondPos" : 775,
+  "firstPos" : 683,
+  "secondPos" : 683,
   "firstEndPos" : 898,
   "secondEndPos" : 963
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A generic class that holds a loading signal or the result of an async operation.\n */",
+  "secondLabel" : "/**\n * A generic class that holds a loading signal or the result of an async operation.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 683,
+  "secondPos" : 683,
+  "firstEndPos" : 774,
+  "secondEndPos" : 774
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

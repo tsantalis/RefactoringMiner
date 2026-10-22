@@ -1704,27 +1704,27 @@
   "firstEndPos" : 753,
   "secondEndPos" : 760
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The reference from the parent to this node\n     */",
-  "secondLabel" : "/**\n     * The reference from the parent to this node\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 759,
-  "secondPos" : 766,
-  "firstEndPos" : 820,
-  "secondEndPos" : 827
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 825,
-  "secondPos" : 832,
+  "firstPos" : 759,
+  "secondPos" : 766,
   "firstEndPos" : 872,
   "secondEndPos" : 898
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The reference from the parent to this node\n     */",
+  "secondLabel" : "/**\n     * The reference from the parent to this node\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 759,
+  "secondPos" : 766,
+  "firstEndPos" : 820,
+  "secondEndPos" : 827
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

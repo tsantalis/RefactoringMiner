@@ -461,12 +461,23 @@
   "firstEndPos" : 868,
   "secondEndPos" : 1302
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 870,
+  "secondPos" : 1304,
+  "firstEndPos" : 4303,
+  "secondEndPos" : 5533
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Default implementation of [TasksRepository]. Single entry point for managing tasks' data.\n */",
   "secondLabel" : "/**\n * Default implementation of [TasksRepository]. Single entry point for managing tasks' data.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
   "firstPos" : 870,
   "secondPos" : 1304,
   "firstEndPos" : 970,
@@ -515,17 +526,6 @@
   "secondPos" : 1498,
   "firstEndPos" : 974,
   "secondEndPos" : 1505
-}, {
-  "firstType" : "class_declaration",
-  "secondType" : "class_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 971,
-  "secondPos" : 1405,
-  "firstEndPos" : 4303,
-  "secondEndPos" : 5533
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4124,27 +4124,27 @@
   "firstEndPos" : 2449,
   "secondEndPos" : 3869
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID. Will return a null\n     * Task if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the remote data source.\n     */",
-  "secondLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID. Will return a null\n     * Task if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the remote data source.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2461,
-  "secondPos" : 3881,
-  "firstEndPos" : 2752,
-  "secondEndPos" : 4172
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2757,
-  "secondPos" : 4177,
+  "firstPos" : 2461,
+  "secondPos" : 3881,
   "firstEndPos" : 2978,
   "secondEndPos" : 4409
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID. Will return a null\n     * Task if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the remote data source.\n     */",
+  "secondLabel" : "/**\n     * Relies on [getTasks] to fetch data and picks the task with the same ID. Will return a null\n     * Task if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the remote data source.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2461,
+  "secondPos" : 3881,
+  "firstEndPos" : 2752,
+  "secondEndPos" : 4172
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

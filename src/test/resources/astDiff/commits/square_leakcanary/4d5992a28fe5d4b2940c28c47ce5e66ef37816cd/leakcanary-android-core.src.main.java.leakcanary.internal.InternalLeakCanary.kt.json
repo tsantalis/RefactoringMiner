@@ -9624,27 +9624,27 @@
   "firstEndPos" : 4739,
   "secondEndPos" : 4749
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a string representation of the result of a heap analysis.\n   * Context instance needed because [onLeakSentryInstalled] is not called in the leakcanary\n   * process.\n   */",
-  "secondLabel" : "/**\n   * Returns a string representation of the result of a heap analysis.\n   * Context instance needed because [onLeakSentryInstalled] is not called in the leakcanary\n   * process.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4753,
-  "secondPos" : 4763,
-  "firstEndPos" : 4940,
-  "secondEndPos" : 4950
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4943,
-  "secondPos" : 4953,
+  "firstPos" : 4753,
+  "secondPos" : 4763,
   "firstEndPos" : 7334,
   "secondEndPos" : 7344
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a string representation of the result of a heap analysis.\n   * Context instance needed because [onLeakSentryInstalled] is not called in the leakcanary\n   * process.\n   */",
+  "secondLabel" : "/**\n   * Returns a string representation of the result of a heap analysis.\n   * Context instance needed because [onLeakSentryInstalled] is not called in the leakcanary\n   * process.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4753,
+  "secondPos" : 4763,
+  "firstEndPos" : 4940,
+  "secondEndPos" : 4950
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -14915,27 +14915,27 @@
   "firstEndPos" : 7330,
   "secondEndPos" : 7340
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   *\n   * Note: We can't rely on [Application] being set here as [onLeakSentryInstalled] is called after\n   * [Application.onCreate]\n   */",
-  "secondLabel" : "/**\n   * Whether the current process is the process running the perflib heap analyzer, which is\n   * a different process than the normal app process.\n   *\n   * Note: We can't rely on [Application] being set here as [onLeakSentryInstalled] is called after\n   * [Application.onCreate]\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7338,
-  "secondPos" : 7348,
-  "firstEndPos" : 7626,
-  "secondEndPos" : 7636
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7629,
-  "secondPos" : 7639,
+  "firstPos" : 7338,
+  "secondPos" : 7348,
   "firstEndPos" : 8302,
   "secondEndPos" : 8312
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   *\n   * Note: We can't rely on [Application] being set here as [onLeakSentryInstalled] is called after\n   * [Application.onCreate]\n   */",
+  "secondLabel" : "/**\n   * Whether the current process is the process running the perflib heap analyzer, which is\n   * a different process than the normal app process.\n   *\n   * Note: We can't rely on [Application] being set here as [onLeakSentryInstalled] is called after\n   * [Application.onCreate]\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7338,
+  "secondPos" : 7348,
+  "firstEndPos" : 7626,
+  "secondEndPos" : 7636
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

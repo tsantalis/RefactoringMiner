@@ -1088,27 +1088,27 @@
   "firstEndPos" : 1385,
   "secondEndPos" : 1535
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
-  "secondLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1387,
-  "secondPos" : 1538,
-  "firstEndPos" : 1456,
-  "secondEndPos" : 1607
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1457,
-  "secondPos" : 1608,
+  "firstPos" : 1387,
+  "secondPos" : 1538,
   "firstEndPos" : 5728,
   "secondEndPos" : 6616
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
+  "secondLabel" : "/**\n * Unit tests for the implementation of [TaskDetailViewModel]\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1387,
+  "secondPos" : 1538,
+  "firstEndPos" : 1456,
+  "secondEndPos" : 1607
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1198,27 +1198,27 @@
   "firstEndPos" : 5728,
   "secondEndPos" : 6616
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Subject under test",
-  "secondLabel" : "// Subject under test",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1521,
-  "secondPos" : 1672,
-  "firstEndPos" : 1542,
-  "secondEndPos" : 1693
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1547,
-  "secondPos" : 1698,
+  "firstPos" : 1521,
+  "secondPos" : 1672,
   "firstEndPos" : 1608,
   "secondEndPos" : 1759
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Subject under test",
+  "secondLabel" : "// Subject under test",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1521,
+  "secondPos" : 1672,
+  "firstEndPos" : 1542,
+  "secondEndPos" : 1693
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1341,27 +1341,27 @@
   "firstEndPos" : 1608,
   "secondEndPos" : 1759
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Use a fake repository to be injected into the viewmodel",
-  "secondLabel" : "// Use a fake repository to be injected into the viewmodel",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1614,
-  "secondPos" : 1765,
-  "firstEndPos" : 1672,
-  "secondEndPos" : 1823
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1677,
-  "secondPos" : 1828,
+  "firstPos" : 1614,
+  "secondPos" : 1765,
   "firstEndPos" : 1729,
   "secondEndPos" : 1880
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Use a fake repository to be injected into the viewmodel",
+  "secondLabel" : "// Use a fake repository to be injected into the viewmodel",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1614,
+  "secondPos" : 1765,
+  "firstEndPos" : 1672,
+  "secondEndPos" : 1823
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1484,27 +1484,27 @@
   "firstEndPos" : 1729,
   "secondEndPos" : 1880
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set the main coroutines dispatcher for unit testing.",
-  "secondLabel" : "// Set the main coroutines dispatcher for unit testing.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1735,
-  "secondPos" : 1886,
-  "firstEndPos" : 1790,
-  "secondEndPos" : 1941
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1795,
-  "secondPos" : 1946,
+  "firstPos" : 1735,
+  "secondPos" : 1886,
   "firstEndPos" : 1883,
   "secondEndPos" : 2034
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set the main coroutines dispatcher for unit testing.",
+  "secondLabel" : "// Set the main coroutines dispatcher for unit testing.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1735,
+  "secondPos" : 1886,
+  "firstEndPos" : 1790,
+  "secondEndPos" : 1941
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1726,27 +1726,27 @@
   "firstEndPos" : 1883,
   "secondEndPos" : 2034
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Executes each task synchronously using Architecture Components.",
-  "secondLabel" : "// Executes each task synchronously using Architecture Components.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1889,
-  "secondPos" : 2040,
-  "firstEndPos" : 1955,
-  "secondEndPos" : 2106
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1960,
-  "secondPos" : 2111,
+  "firstPos" : 1889,
+  "secondPos" : 2040,
   "firstEndPos" : 2025,
   "secondEndPos" : 2176
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Executes each task synchronously using Architecture Components.",
+  "secondLabel" : "// Executes each task synchronously using Architecture Components.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1889,
+  "secondPos" : 2040,
+  "firstEndPos" : 1955,
+  "secondEndPos" : 2106
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

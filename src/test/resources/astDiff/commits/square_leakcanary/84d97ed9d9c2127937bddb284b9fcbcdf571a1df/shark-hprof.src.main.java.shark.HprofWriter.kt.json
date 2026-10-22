@@ -3596,27 +3596,27 @@
   "firstEndPos" : 2592,
   "secondEndPos" : 2624
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Generates Hprof files.\n *\n * Call [open] to create an instance, [write] to add instances and [close] when you're done.\n */",
-  "secondLabel" : "/**\n * Generates Hprof files.\n *\n * Call [open] to create an instance, [write] to add instances and [close] when you're done.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2594,
-  "secondPos" : 2626,
-  "firstEndPos" : 2723,
-  "secondEndPos" : 2755
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2724,
-  "secondPos" : 2756,
+  "firstPos" : 2594,
+  "secondPos" : 2626,
   "firstEndPos" : 13250,
   "secondEndPos" : 14649
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Generates Hprof files.\n *\n * Call [open] to create an instance, [write] to add instances and [close] when you're done.\n */",
+  "secondLabel" : "/**\n * Generates Hprof files.\n *\n * Call [open] to create an instance, [write] to add instances and [close] when you're done.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2594,
+  "secondPos" : 2626,
+  "firstEndPos" : 2723,
+  "secondEndPos" : 2755
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4054,7 +4054,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 2871,
-  "secondPos" : 3244,
+  "secondPos" : 2949,
   "firstEndPos" : 2930,
   "secondEndPos" : 3303
 }, {
@@ -30036,7 +30036,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 12715,
-  "secondPos" : 3794,
+  "secondPos" : 3649,
   "firstEndPos" : 12785,
   "secondEndPos" : 3864
 }, {
@@ -30333,7 +30333,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 12812,
-  "secondPos" : 13799,
+  "secondPos" : 13692,
   "firstEndPos" : 13244,
   "secondEndPos" : 14643
 }, {

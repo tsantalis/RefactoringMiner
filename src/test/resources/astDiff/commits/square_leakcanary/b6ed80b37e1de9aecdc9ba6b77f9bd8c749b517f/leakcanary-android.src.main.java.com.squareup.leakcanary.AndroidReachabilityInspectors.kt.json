@@ -450,27 +450,27 @@
   "firstEndPos" : 829,
   "secondEndPos" : 816
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A set of default [Reachability.Inspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knownledge of AOSP and various library\n * internals. We only make a reachability decision if we're reasonably sure such reachability is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
-  "secondLabel" : "/**\n * A set of default [Reachability.Inspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knownledge of AOSP and various library\n * internals. We only make a reachability decision if we're reasonably sure such reachability is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 831,
-  "secondPos" : 818,
-  "firstEndPos" : 1326,
-  "secondEndPos" : 1313
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1327,
-  "secondPos" : 1314,
+  "firstPos" : 831,
+  "secondPos" : 818,
   "firstEndPos" : 7056,
   "secondEndPos" : 7169
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A set of default [Reachability.Inspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knownledge of AOSP and various library\n * internals. We only make a reachability decision if we're reasonably sure such reachability is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
+  "secondLabel" : "/**\n * A set of default [Reachability.Inspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knownledge of AOSP and various library\n * internals. We only make a reachability decision if we're reasonably sure such reachability is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 831,
+  "secondPos" : 818,
+  "firstEndPos" : 1326,
+  "secondEndPos" : 1313
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

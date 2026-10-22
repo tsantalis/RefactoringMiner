@@ -263,27 +263,27 @@
   "firstEndPos" : 757,
   "secondEndPos" : 757
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Function that does some trivial computation. Used to showcase unit tests.\n */",
-  "secondLabel" : "/**\n * Function that does some trivial computation. Used to showcase unit tests.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 759,
-  "secondPos" : 759,
-  "firstEndPos" : 843,
-  "secondEndPos" : 843
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 844,
-  "secondPos" : 844,
+  "firstPos" : 759,
+  "secondPos" : 759,
   "firstEndPos" : 1313,
   "secondEndPos" : 1295
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Function that does some trivial computation. Used to showcase unit tests.\n */",
+  "secondLabel" : "/**\n * Function that does some trivial computation. Used to showcase unit tests.\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 759,
+  "secondPos" : 759,
+  "firstEndPos" : 843,
+  "secondEndPos" : 843
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -571,27 +571,27 @@
   "firstEndPos" : 899,
   "secondEndPos" : 899
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Platform using Conscrypt (conscrypt.org) if installed as the first Security Provider.\n *\n * Requires org.conscrypt:conscrypt-openjdk-uber >= 2.1.0 on the classpath.\n */",
-  "secondLabel" : "/**\n * Platform using Conscrypt (conscrypt.org) if installed as the first Security Provider.\n *\n * Requires org.conscrypt:conscrypt-openjdk-uber >= 2.1.0 on the classpath.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 901,
-  "secondPos" : 901,
-  "firstEndPos" : 1076,
-  "secondEndPos" : 1076
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1077,
-  "secondPos" : 1077,
+  "firstPos" : 901,
+  "secondPos" : 901,
   "firstEndPos" : 4442,
   "secondEndPos" : 4475
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Platform using Conscrypt (conscrypt.org) if installed as the first Security Provider.\n *\n * Requires org.conscrypt:conscrypt-openjdk-uber >= 2.1.0 on the classpath.\n */",
+  "secondLabel" : "/**\n * Platform using Conscrypt (conscrypt.org) if installed as the first Security Provider.\n *\n * Requires org.conscrypt:conscrypt-openjdk-uber >= 2.1.0 on the classpath.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 901,
+  "secondPos" : 901,
+  "firstEndPos" : 1076,
+  "secondEndPos" : 1076
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -736,12 +736,23 @@
   "firstEndPos" : 4442,
   "secondEndPos" : 4475
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 1140,
+  "secondPos" : 1140,
+  "firstEndPos" : 1372,
+  "secondEndPos" : 1372
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// n.b. We should consider defaulting to OpenJDK 11 trust manager",
   "secondLabel" : "// n.b. We should consider defaulting to OpenJDK 11 trust manager",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1140,
   "secondPos" : 1140,
   "firstEndPos" : 1205,
@@ -751,23 +762,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// https://groups.google.com/forum/#!topic/conscrypt/3vYzbesjOb4",
   "secondLabel" : "// https://groups.google.com/forum/#!topic/conscrypt/3vYzbesjOb4",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1208,
   "secondPos" : 1208,
   "firstEndPos" : 1272,
   "secondEndPos" : 1272
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1275,
-  "secondPos" : 1275,
-  "firstEndPos" : 1372,
-  "secondEndPos" : 1372
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1121,12 +1121,23 @@
   "firstEndPos" : 1372,
   "secondEndPos" : 1372
 }, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 1376,
+  "secondPos" : 1376,
+  "firstEndPos" : 1629,
+  "secondEndPos" : 1629
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// See release notes https://groups.google.com/forum/#!forum/conscrypt",
   "secondLabel" : "// See release notes https://groups.google.com/forum/#!forum/conscrypt",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1376,
   "secondPos" : 1376,
   "firstEndPos" : 1446,
@@ -1136,23 +1147,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// for version differences",
   "secondLabel" : "// for version differences",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1449,
   "secondPos" : 1449,
   "firstEndPos" : 1475,
   "secondEndPos" : 1475
-}, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1478,
-  "secondPos" : 1478,
-  "firstEndPos" : 1629,
-  "secondEndPos" : 1629
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

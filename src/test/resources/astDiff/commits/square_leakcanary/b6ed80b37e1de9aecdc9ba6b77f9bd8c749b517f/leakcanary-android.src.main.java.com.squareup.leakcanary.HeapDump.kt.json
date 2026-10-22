@@ -296,27 +296,27 @@
   "firstEndPos" : 754,
   "secondEndPos" : 741
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Data structure holding information about a heap dump.  */",
-  "secondLabel" : "/** Data structure holding information about a heap dump.  */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 756,
-  "secondPos" : 743,
-  "firstEndPos" : 817,
-  "secondEndPos" : 804
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 818,
-  "secondPos" : 805,
+  "firstPos" : 756,
+  "secondPos" : 743,
   "firstEndPos" : 4070,
   "secondEndPos" : 4057
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Data structure holding information about a heap dump.  */",
+  "secondLabel" : "/** Data structure holding information about a heap dump.  */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 756,
+  "secondPos" : 743,
+  "firstEndPos" : 817,
+  "secondEndPos" : 804
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -483,27 +483,27 @@
   "firstEndPos" : 4070,
   "secondEndPos" : 4057
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The heap dump file, which you might want to upload somewhere.  */",
-  "secondLabel" : "/** The heap dump file, which you might want to upload somewhere.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 892,
-  "secondPos" : 879,
-  "firstEndPos" : 961,
-  "secondEndPos" : 948
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 964,
-  "secondPos" : 951,
+  "firstPos" : 892,
+  "secondPos" : 879,
   "firstEndPos" : 986,
   "secondEndPos" : 973
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The heap dump file, which you might want to upload somewhere.  */",
+  "secondLabel" : "/** The heap dump file, which you might want to upload somewhere.  */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 892,
+  "secondPos" : 879,
+  "firstEndPos" : 961,
+  "secondEndPos" : 948
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -571,27 +571,27 @@
   "firstEndPos" : 986,
   "secondEndPos" : 973
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** References that should be ignored when analyzing this heap dump.  */",
-  "secondLabel" : "/** References that should be ignored when analyzing this heap dump.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 990,
-  "secondPos" : 977,
-  "firstEndPos" : 1062,
-  "secondEndPos" : 1049
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1065,
-  "secondPos" : 1052,
+  "firstPos" : 990,
+  "secondPos" : 977,
   "firstEndPos" : 1095,
   "secondEndPos" : 1082
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** References that should be ignored when analyzing this heap dump.  */",
+  "secondLabel" : "/** References that should be ignored when analyzing this heap dump.  */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 990,
+  "secondPos" : 977,
+  "firstEndPos" : 1062,
+  "secondEndPos" : 1049
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1099,27 +1099,27 @@
   "firstEndPos" : 1265,
   "secondEndPos" : 1252
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Receives a heap dump to analyze.  */",
-  "secondLabel" : "/** Receives a heap dump to analyze.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1271,
-  "secondPos" : 1258,
-  "firstEndPos" : 1311,
-  "secondEndPos" : 1298
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1314,
-  "secondPos" : 1301,
+  "firstPos" : 1271,
+  "secondPos" : 1258,
   "firstEndPos" : 1512,
   "secondEndPos" : 1499
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Receives a heap dump to analyze.  */",
+  "secondLabel" : "/** Receives a heap dump to analyze.  */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1271,
+  "secondPos" : 1258,
+  "firstEndPos" : 1311,
+  "secondEndPos" : 1298
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

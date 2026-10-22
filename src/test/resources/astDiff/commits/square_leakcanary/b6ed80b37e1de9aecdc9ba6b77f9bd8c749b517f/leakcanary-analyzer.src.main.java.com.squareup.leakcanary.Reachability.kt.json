@@ -142,27 +142,27 @@
   "firstEndPos" : 715,
   "secondEndPos" : 833
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Result returned by [Inspector.expectedReachability].  */",
-  "secondLabel" : "/** Result returned by [Inspector.expectedReachability].  */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 717,
-  "secondPos" : 835,
-  "firstEndPos" : 777,
-  "secondEndPos" : 895
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 778,
-  "secondPos" : 896,
+  "firstPos" : 717,
+  "secondPos" : 835,
   "firstEndPos" : 1919,
   "secondEndPos" : 2022
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Result returned by [Inspector.expectedReachability].  */",
+  "secondLabel" : "/** Result returned by [Inspector.expectedReachability].  */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 717,
+  "secondPos" : 835,
+  "firstEndPos" : 777,
+  "secondEndPos" : 895
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -538,27 +538,27 @@
   "firstEndPos" : 946,
   "secondEndPos" : 1064
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Evaluates whether a [LeakTraceElement] should be reachable or not.\n   *\n   * Implementations should have a public zero argument constructor as instances will be created\n   * via reflection in the LeakCanary analysis process.\n   */",
-  "secondLabel" : "/**\n   * Evaluates whether a [LeakTraceElement] should be reachable or not.\n   *\n   * Implementations should have a public zero argument constructor as instances will be created\n   * via reflection in the LeakCanary analysis process.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 954,
-  "secondPos" : 1072,
-  "firstEndPos" : 1193,
-  "secondEndPos" : 1311
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1196,
-  "secondPos" : 1314,
+  "firstPos" : 954,
+  "secondPos" : 1072,
   "firstEndPos" : 1292,
   "secondEndPos" : 1410
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Evaluates whether a [LeakTraceElement] should be reachable or not.\n   *\n   * Implementations should have a public zero argument constructor as instances will be created\n   * via reflection in the LeakCanary analysis process.\n   */",
+  "secondLabel" : "/**\n   * Evaluates whether a [LeakTraceElement] should be reachable or not.\n   *\n   * Implementations should have a public zero argument constructor as instances will be created\n   * via reflection in the LeakCanary analysis process.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 954,
+  "secondPos" : 1072,
+  "firstEndPos" : 1193,
+  "secondEndPos" : 1311
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -934,27 +934,27 @@
   "firstEndPos" : 1386,
   "secondEndPos" : 1503
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
-  "secondLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1393,
-  "secondPos" : 1510,
-  "firstEndPos" : 1464,
-  "secondEndPos" : 1581
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1469,
-  "secondPos" : 1586,
+  "firstPos" : 1393,
+  "secondPos" : 1510,
   "firstEndPos" : 1572,
   "secondEndPos" : 1682
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
+  "secondLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1393,
+  "secondPos" : 1510,
+  "firstEndPos" : 1464,
+  "secondEndPos" : 1581
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1187,27 +1187,27 @@
   "firstEndPos" : 1565,
   "secondEndPos" : 1675
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
-  "secondLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1578,
-  "secondPos" : 1688,
-  "firstEndPos" : 1661,
-  "secondEndPos" : 1771
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1666,
-  "secondPos" : 1776,
+  "firstPos" : 1578,
+  "secondPos" : 1688,
   "firstEndPos" : 1773,
   "secondEndPos" : 1876
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
+  "secondLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1578,
+  "secondPos" : 1688,
+  "firstEndPos" : 1661,
+  "secondEndPos" : 1771
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1440,27 +1440,27 @@
   "firstEndPos" : 1766,
   "secondEndPos" : 1869
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** No decision can be made about the provided instance.  */",
-  "secondLabel" : "/** No decision can be made about the provided instance.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1779,
-  "secondPos" : 1882,
-  "firstEndPos" : 1839,
-  "secondEndPos" : 1942
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1844,
-  "secondPos" : 1947,
+  "firstPos" : 1779,
+  "secondPos" : 1882,
   "firstEndPos" : 1913,
   "secondEndPos" : 2016
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** No decision can be made about the provided instance.  */",
+  "secondLabel" : "/** No decision can be made about the provided instance.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1779,
+  "secondPos" : 1882,
+  "firstEndPos" : 1839,
+  "secondEndPos" : 1942
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

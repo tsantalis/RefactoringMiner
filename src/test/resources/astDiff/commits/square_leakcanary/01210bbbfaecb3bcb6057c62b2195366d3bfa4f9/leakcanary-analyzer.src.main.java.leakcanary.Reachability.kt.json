@@ -60,7 +60,7 @@
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 896,
+  "firstPos" : 835,
   "secondPos" : 933,
   "firstEndPos" : 2050,
   "secondEndPos" : 1037
@@ -604,27 +604,27 @@
   "firstEndPos" : 1531,
   "secondEndPos" : 362
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
-  "secondLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1538,
-  "secondPos" : 369,
-  "firstEndPos" : 1609,
-  "secondEndPos" : 440
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1614,
-  "secondPos" : 445,
+  "firstPos" : 1538,
+  "secondPos" : 369,
   "firstEndPos" : 1710,
   "secondEndPos" : 566
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
+  "secondLabel" : "/** The instance was needed and therefore expected to be reachable.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1538,
+  "secondPos" : 369,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 440
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -857,27 +857,27 @@
   "firstEndPos" : 1703,
   "secondEndPos" : 559
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
-  "secondLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1716,
-  "secondPos" : 572,
-  "firstEndPos" : 1799,
-  "secondEndPos" : 655
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1804,
-  "secondPos" : 660,
+  "firstPos" : 1716,
+  "secondPos" : 572,
   "firstEndPos" : 1904,
   "secondEndPos" : 774
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
+  "secondLabel" : "/** The instance was no longer needed and therefore expected to be unreachable.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1716,
+  "secondPos" : 572,
+  "firstEndPos" : 1799,
+  "secondEndPos" : 655
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1110,27 +1110,27 @@
   "firstEndPos" : 1897,
   "secondEndPos" : 767
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** No decision can be made about the provided instance.  */",
-  "secondLabel" : "/** No decision can be made about the provided instance.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1910,
-  "secondPos" : 780,
-  "firstEndPos" : 1970,
-  "secondEndPos" : 840
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1975,
-  "secondPos" : 845,
+  "firstPos" : 1910,
+  "secondPos" : 780,
   "firstEndPos" : 2044,
   "secondEndPos" : 925
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** No decision can be made about the provided instance.  */",
+  "secondLabel" : "/** No decision can be made about the provided instance.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1910,
+  "secondPos" : 780,
+  "firstEndPos" : 1970,
+  "secondEndPos" : 840
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

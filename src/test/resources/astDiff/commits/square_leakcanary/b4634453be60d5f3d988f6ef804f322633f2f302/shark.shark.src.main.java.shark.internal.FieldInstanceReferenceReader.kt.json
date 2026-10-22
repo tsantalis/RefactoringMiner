@@ -901,27 +901,27 @@
   "firstEndPos" : 820,
   "secondEndPos" : 635
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Expands instance fields that hold non null references.\n */",
-  "secondLabel" : "/**\n * Expands instance fields that hold non null references.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 845,
-  "secondPos" : 673,
-  "firstEndPos" : 910,
-  "secondEndPos" : 738
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 911,
-  "secondPos" : 739,
+  "firstPos" : 845,
+  "secondPos" : 673,
   "firstEndPos" : 7482,
   "secondEndPos" : 7301
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Expands instance fields that hold non null references.\n */",
+  "secondLabel" : "/**\n * Expands instance fields that hold non null references.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 845,
+  "secondPos" : 673,
+  "firstEndPos" : 910,
+  "secondEndPos" : 738
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -8854,27 +8854,27 @@
   "firstEndPos" : 5404,
   "secondEndPos" : 5223
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns class hierarchy for an instance, but without it's root element, which is always\n   * java.lang.Object.\n   * Why do we want class hierarchy without java.lang.Object?\n   * In pre-M there were no ref fields in java.lang.Object; and FieldIdReader wouldn't be created\n   * Android M added shadow$_klass_ reference to class, so now it triggers extra record read.\n   * Solution: skip heap class for java.lang.Object completely when reading the records\n   * @param javaLangObjectId ID of the java.lang.Object to run comparison against\n   */",
-  "secondLabel" : "/**\n   * Returns class hierarchy for an instance, but without it's root element, which is always\n   * java.lang.Object.\n   * Why do we want class hierarchy without java.lang.Object?\n   * In pre-M there were no ref fields in java.lang.Object; and FieldIdReader wouldn't be created\n   * Android M added shadow$_klass_ reference to class, so now it triggers extra record read.\n   * Solution: skip heap class for java.lang.Object completely when reading the records\n   * @param javaLangObjectId ID of the java.lang.Object to run comparison against\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5420,
-  "secondPos" : 5239,
-  "firstEndPos" : 5969,
-  "secondEndPos" : 5788
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5972,
-  "secondPos" : 5791,
+  "firstPos" : 5420,
+  "secondPos" : 5239,
   "firstEndPos" : 6310,
   "secondEndPos" : 6129
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns class hierarchy for an instance, but without it's root element, which is always\n   * java.lang.Object.\n   * Why do we want class hierarchy without java.lang.Object?\n   * In pre-M there were no ref fields in java.lang.Object; and FieldIdReader wouldn't be created\n   * Android M added shadow$_klass_ reference to class, so now it triggers extra record read.\n   * Solution: skip heap class for java.lang.Object completely when reading the records\n   * @param javaLangObjectId ID of the java.lang.Object to run comparison against\n   */",
+  "secondLabel" : "/**\n   * Returns class hierarchy for an instance, but without it's root element, which is always\n   * java.lang.Object.\n   * Why do we want class hierarchy without java.lang.Object?\n   * In pre-M there were no ref fields in java.lang.Object; and FieldIdReader wouldn't be created\n   * Android M added shadow$_klass_ reference to class, so now it triggers extra record read.\n   * Solution: skip heap class for java.lang.Object completely when reading the records\n   * @param javaLangObjectId ID of the java.lang.Object to run comparison against\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5420,
+  "secondPos" : 5239,
+  "firstEndPos" : 5969,
+  "secondEndPos" : 5788
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

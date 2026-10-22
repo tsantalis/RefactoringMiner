@@ -219,27 +219,27 @@
   "firstEndPos" : 3140,
   "secondEndPos" : 43
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Reads hprof content from an Okio [BufferedSource].\n *\n * Not thread safe, should be used from a single thread.\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share/demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev/perflib/src/main/java/com/android/tools/perflib\n */",
-  "secondLabel" : "/**\n * Reads hprof content from an Okio [BufferedSource].\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share\n * /demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev\n * /perflib/src/main/java/com/android/tools/perflib\n *\n * Not thread safe, should be used from a single thread.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3142,
-  "secondPos" : 2977,
-  "firstEndPos" : 3655,
-  "secondEndPos" : 3498
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3656,
+  "firstPos" : 3142,
   "secondPos" : 45,
   "firstEndPos" : 37330,
   "secondEndPos" : 605
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Reads hprof content from an Okio [BufferedSource].\n *\n * Not thread safe, should be used from a single thread.\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share/demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev/perflib/src/main/java/com/android/tools/perflib\n */",
+  "secondLabel" : "/**\n * Reads hprof content from an Okio [BufferedSource].\n *\n * Binary Dump Format reference: http://hg.openjdk.java.net/jdk6/jdk6/jdk/raw-file/tip/src/share\n * /demo/jvmti/hprof/manual.html#mozTocId848088\n *\n * The Android Hprof format differs in some ways from that reference. This parser implementation\n * is largely adapted from https://android.googlesource.com/platform/tools/base/+/studio-master-dev\n * /perflib/src/main/java/com/android/tools/perflib\n *\n * Not thread safe, should be used from a single thread.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3142,
+  "secondPos" : 2977,
+  "firstEndPos" : 3655,
+  "secondEndPos" : 3498
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -395,27 +395,49 @@
   "firstEndPos" : 3747,
   "secondEndPos" : 3648
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "/**\n   * Size of Hprof identifiers. Identifiers are used to represent UTF8 strings, objects,\n   * stack traces, etc. They can have the same size as host pointers or sizeof(void*), but are not\n   * required to be.\n   */",
-  "secondLabel" : "",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 3751,
-  "secondPos" : 217,
-  "firstEndPos" : 3969,
-  "secondEndPos" : 244
-}, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
-  "firstPos" : 3972,
+  "firstPos" : 3751,
   "secondPos" : 217,
   "firstEndPos" : 3999,
   "secondEndPos" : 244
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3972,
+  "secondPos" : 217,
+  "firstEndPos" : 3975,
+  "secondEndPos" : 220
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 3972,
+  "secondPos" : 217,
+  "firstEndPos" : 3975,
+  "secondEndPos" : 220
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "identifierByteSize",
+  "secondLabel" : "identifierByteSize",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 3976,
+  "secondPos" : 221,
+  "firstEndPos" : 3994,
+  "secondEndPos" : 239
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -439,27 +461,49 @@
   "firstEndPos" : 3999,
   "secondEndPos" : 244
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "/**\n   * How many bytes have already been read from [source] when this [HprofReader] is created.\n   */",
-  "secondLabel" : "",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 4003,
-  "secondPos" : 292,
-  "firstEndPos" : 4105,
-  "secondEndPos" : 315
-}, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
-  "firstPos" : 4108,
+  "firstPos" : 4003,
   "secondPos" : 292,
   "firstEndPos" : 4136,
   "secondEndPos" : 315
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4108,
+  "secondPos" : 292,
+  "firstEndPos" : 4111,
+  "secondEndPos" : 295
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 4108,
+  "secondPos" : 292,
+  "firstEndPos" : 4111,
+  "secondEndPos" : 295
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "startPosition",
+  "secondLabel" : "startPosition",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 4112,
+  "secondPos" : 296,
+  "firstEndPos" : 4125,
+  "secondEndPos" : 309
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -494,27 +538,27 @@
   "firstEndPos" : 37330,
   "secondEndPos" : 605
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Starts at [startPosition] and increases as [HprofReader] reads bytes. This is useful\n   * for tracking the position of content in the backing [source]. This never resets.\n   */",
-  "secondLabel" : "/**\n   * How many bytes this reader has read from [source]. Can only increase.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4144,
-  "secondPos" : 3656,
-  "firstEndPos" : 4329,
-  "secondEndPos" : 3740
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4332,
-  "secondPos" : 3743,
+  "firstPos" : 4144,
+  "secondPos" : 3656,
   "firstEndPos" : 4360,
   "secondEndPos" : 3761
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Starts at [startPosition] and increases as [HprofReader] reads bytes. This is useful\n   * for tracking the position of content in the backing [source]. This never resets.\n   */",
+  "secondLabel" : "/**\n   * How many bytes this reader has read from [source]. Can only increase.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4144,
+  "secondPos" : 3656,
+  "firstEndPos" : 4329,
+  "secondEndPos" : 3740
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -720,7 +764,7 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5118,
+  "firstPos" : 4952,
   "secondPos" : 369,
   "firstEndPos" : 21277,
   "secondEndPos" : 603
@@ -15993,27 +16037,27 @@
   "firstEndPos" : 21248,
   "secondEndPos" : 17469
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a full instance record after a instance dump tag.\n   */",
-  "secondLabel" : "/**\n   * Reads a full instance record after a instance dump tag.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 21281,
-  "secondPos" : 7016,
-  "firstEndPos" : 21351,
-  "secondEndPos" : 7086
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21354,
-  "secondPos" : 7089,
+  "firstPos" : 21281,
+  "secondPos" : 7016,
   "firstEndPos" : 21779,
   "secondEndPos" : 7514
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a full instance record after a instance dump tag.\n   */",
+  "secondLabel" : "/**\n   * Reads a full instance record after a instance dump tag.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 21281,
+  "secondPos" : 7016,
+  "firstEndPos" : 21351,
+  "secondEndPos" : 7086
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -16906,27 +16950,27 @@
   "firstEndPos" : 21769,
   "secondEndPos" : 7504
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads an instance record after a instance dump tag, skipping its content.\n   */",
-  "secondLabel" : "/**\n   * Reads an instance record after a instance dump tag, skipping its content.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 21783,
-  "secondPos" : 12750,
-  "firstEndPos" : 21871,
-  "secondEndPos" : 12838
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 21874,
-  "secondPos" : 12841,
+  "firstPos" : 21783,
+  "secondPos" : 12750,
   "firstEndPos" : 22278,
   "secondEndPos" : 13165
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads an instance record after a instance dump tag, skipping its content.\n   */",
+  "secondLabel" : "/**\n   * Reads an instance record after a instance dump tag, skipping its content.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 21783,
+  "secondPos" : 12750,
+  "firstEndPos" : 21871,
+  "secondEndPos" : 12838
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -17379,27 +17423,27 @@
   "firstEndPos" : 22109,
   "secondEndPos" : 13100
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a full class record after a class dump tag.\n   */",
-  "secondLabel" : "/**\n   * Reads a full class record after a class dump tag.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 22282,
-  "secondPos" : 7679,
-  "firstEndPos" : 22346,
-  "secondEndPos" : 7743
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 22349,
-  "secondPos" : 7746,
+  "firstPos" : 22282,
+  "secondPos" : 7679,
   "firstEndPos" : 24130,
   "secondEndPos" : 9528
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a full class record after a class dump tag.\n   */",
+  "secondLabel" : "/**\n   * Reads a full class record after a class dump tag.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 22282,
+  "secondPos" : 7679,
+  "firstEndPos" : 22346,
+  "secondEndPos" : 7743
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -21020,27 +21064,27 @@
   "firstEndPos" : 24120,
   "secondEndPos" : 9518
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a class record after a class dump tag, skipping its content.\n   */",
-  "secondLabel" : "/**\n   * Reads a class record after a class dump tag, skipping its content.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 24134,
-  "secondPos" : 11333,
-  "firstEndPos" : 24215,
-  "secondEndPos" : 11414
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 24218,
-  "secondPos" : 11417,
+  "firstPos" : 24134,
+  "secondPos" : 11333,
   "firstEndPos" : 25897,
   "secondEndPos" : 12746
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a class record after a class dump tag, skipping its content.\n   */",
+  "secondLabel" : "/**\n   * Reads a class record after a class dump tag, skipping its content.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 24134,
+  "secondPos" : 11333,
+  "firstEndPos" : 24215,
+  "secondEndPos" : 11414
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -23044,27 +23088,27 @@
   "firstEndPos" : 25475,
   "secondEndPos" : 12681
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a full primitive array record after a primitive array dump tag.\n   */",
-  "secondLabel" : "/**\n   * Reads a full primitive array record after a primitive array dump tag.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 25901,
-  "secondPos" : 9532,
-  "firstEndPos" : 25985,
-  "secondEndPos" : 9616
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 25988,
-  "secondPos" : 9619,
+  "firstPos" : 25901,
+  "secondPos" : 9532,
   "firstEndPos" : 27162,
   "secondEndPos" : 10793
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a full primitive array record after a primitive array dump tag.\n   */",
+  "secondLabel" : "/**\n   * Reads a full primitive array record after a primitive array dump tag.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 25901,
+  "secondPos" : 9532,
+  "firstEndPos" : 25985,
+  "secondEndPos" : 9616
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -25519,27 +25563,27 @@
   "firstEndPos" : 27150,
   "secondEndPos" : 10781
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a primitive array record after a primitive array dump tag, skipping its content.\n   */",
-  "secondLabel" : "/**\n   * Reads a primitive array record after a primitive array dump tag, skipping its content.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 27166,
-  "secondPos" : 13617,
-  "firstEndPos" : 27267,
-  "secondEndPos" : 13718
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 27270,
-  "secondPos" : 13721,
+  "firstPos" : 27166,
+  "secondPos" : 13617,
   "firstEndPos" : 27776,
   "secondEndPos" : 14099
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a primitive array record after a primitive array dump tag, skipping its content.\n   */",
+  "secondLabel" : "/**\n   * Reads a primitive array record after a primitive array dump tag, skipping its content.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 27166,
+  "secondPos" : 13617,
+  "firstEndPos" : 27267,
+  "secondEndPos" : 13718
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -26135,27 +26179,27 @@
   "firstEndPos" : 27577,
   "secondEndPos" : 14034
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a full object array record after a object array dump tag.\n   */",
-  "secondLabel" : "/**\n   * Reads a full object array record after a object array dump tag.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 27780,
-  "secondPos" : 10797,
-  "firstEndPos" : 27858,
-  "secondEndPos" : 10875
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 27861,
-  "secondPos" : 10878,
+  "firstPos" : 27780,
+  "secondPos" : 10797,
   "firstEndPos" : 28315,
   "secondEndPos" : 11329
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a full object array record after a object array dump tag.\n   */",
+  "secondLabel" : "/**\n   * Reads a full object array record after a object array dump tag.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 27780,
+  "secondPos" : 10797,
+  "firstEndPos" : 27858,
+  "secondEndPos" : 10875
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -27059,27 +27103,27 @@
   "firstEndPos" : 28305,
   "secondEndPos" : 11319
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads an object array record after a object array dump tag, skipping its content.\n   */",
-  "secondLabel" : "/**\n   * Reads an object array record after a object array dump tag, skipping its content.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 28319,
-  "secondPos" : 13169,
-  "firstEndPos" : 28415,
-  "secondEndPos" : 13265
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 28418,
-  "secondPos" : 13268,
+  "firstPos" : 28319,
+  "secondPos" : 13169,
   "firstEndPos" : 28907,
   "secondEndPos" : 13613
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads an object array record after a object array dump tag, skipping its content.\n   */",
+  "secondLabel" : "/**\n   * Reads an object array record after a object array dump tag, skipping its content.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 28319,
+  "secondPos" : 13169,
+  "firstEndPos" : 28415,
+  "secondEndPos" : 13265
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -27521,27 +27565,27 @@
   "firstEndPos" : 28695,
   "secondEndPos" : 13548
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Reads a value in the heap dump, which can be a reference or a primitive type.\n   */",
-  "secondLabel" : "/**\n   * Reads a value in the heap dump, which can be a reference or a primitive type.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 28911,
-  "secondPos" : 15852,
-  "firstEndPos" : 29003,
-  "secondEndPos" : 15944
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 29006,
-  "secondPos" : 15947,
+  "firstPos" : 28911,
+  "secondPos" : 15852,
   "firstEndPos" : 29568,
   "secondEndPos" : 16509
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Reads a value in the heap dump, which can be a reference or a primitive type.\n   */",
+  "secondLabel" : "/**\n   * Reads a value in the heap dump, which can be a reference or a primitive type.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 28911,
+  "secondPos" : 15852,
+  "firstEndPos" : 29003,
+  "secondEndPos" : 15944
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -43724,27 +43768,27 @@
   "firstEndPos" : 35405,
   "secondEndPos" : 17853
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Maybe parse this?",
-  "secondLabel" : "// TODO Maybe parse this?",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 35411,
-  "secondPos" : 17859,
-  "firstEndPos" : 35436,
-  "secondEndPos" : 17884
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 35441,
-  "secondPos" : 17889,
+  "firstPos" : 35411,
+  "secondPos" : 17859,
   "firstEndPos" : 35479,
   "secondEndPos" : 17927
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Maybe parse this?",
+  "secondLabel" : "// TODO Maybe parse this?",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 35411,
+  "secondPos" : 17859,
+  "firstEndPos" : 35436,
+  "secondEndPos" : 17884
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -46155,27 +46199,27 @@
   "firstEndPos" : 36346,
   "secondEndPos" : 18794
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
-  "secondLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 36352,
-  "secondPos" : 18800,
-  "firstEndPos" : 36890,
-  "secondEndPos" : 19338
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 36895,
-  "secondPos" : 19343,
+  "firstPos" : 36352,
+  "secondPos" : 18800,
   "firstEndPos" : 36935,
   "secondEndPos" : 19383
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
+  "secondLabel" : "/**\n     * Android format addition\n     *\n     * Specifies information about which heap certain objects came from. When a sub-tag of this type\n     * appears in a HPROF_HEAP_DUMP or HPROF_HEAP_DUMP_SEGMENT record, entries that follow it will\n     * be associated with the specified heap.  The HEAP_DUMP_INFO data is reset at the end of the\n     * HEAP_DUMP[_SEGMENT].  Multiple HEAP_DUMP_INFO entries may appear in a single\n     * HEAP_DUMP[_SEGMENT].\n     *\n     * Format: u1: Tag value (0xFE) u4: heap ID ID: heap name string ID\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 36352,
+  "secondPos" : 18800,
+  "firstEndPos" : 36890,
+  "secondEndPos" : 19338
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -1187,27 +1187,27 @@
   "firstEndPos" : 475,
   "secondEndPos" : 475
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * [LeakSentry] is automatically installed on process start by\n   * [leaksentry.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leaksentry.internal.LeakSentryInstaller] then you can call this\n   * method to install [LeakSentry].\n   */",
-  "secondLabel" : "/**\n   * [LeakSentry] is automatically installed on process start by\n   * [leaksentry.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leaksentry.internal.LeakSentryInstaller] then you can call this\n   * method to install [LeakSentry].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 479,
-  "secondPos" : 479,
-  "firstEndPos" : 783,
-  "secondEndPos" : 783
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 786,
-  "secondPos" : 786,
+  "firstPos" : 479,
+  "secondPos" : 479,
   "firstEndPos" : 871,
   "secondEndPos" : 871
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * [LeakSentry] is automatically installed on process start by\n   * [leaksentry.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leaksentry.internal.LeakSentryInstaller] then you can call this\n   * method to install [LeakSentry].\n   */",
+  "secondLabel" : "/**\n   * [LeakSentry] is automatically installed on process start by\n   * [leaksentry.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leaksentry.internal.LeakSentryInstaller] then you can call this\n   * method to install [LeakSentry].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 479,
+  "secondPos" : 479,
+  "firstEndPos" : 783,
+  "secondEndPos" : 783
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

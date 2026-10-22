@@ -1165,27 +1165,27 @@
   "firstEndPos" : 1456,
   "secondEndPos" : 1456
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1458,
-  "secondPos" : 1458,
-  "firstEndPos" : 1679,
-  "secondEndPos" : 1679
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1680,
-  "secondPos" : 1680,
+  "firstPos" : 1458,
+  "secondPos" : 1458,
   "firstEndPos" : 9286,
   "secondEndPos" : 9456
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1458,
+  "secondPos" : 1458,
+  "firstEndPos" : 1679,
+  "secondEndPos" : 1679
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

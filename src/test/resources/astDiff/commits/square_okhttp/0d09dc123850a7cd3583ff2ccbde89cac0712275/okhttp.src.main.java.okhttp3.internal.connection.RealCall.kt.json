@@ -1891,27 +1891,27 @@
   "firstEndPos" : 1848,
   "secondEndPos" : 1802
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Bridge between OkHttp's application and network layers. This class exposes high-level application\n * layer primitives: connections, requests, responses, and streams.\n *\n * This class supports [asynchronous canceling][cancel]. This is intended to have the smallest\n * blast radius possible. If an HTTP/2 stream is active, canceling will cancel that stream but not\n * the other streams sharing its connection. But if the TLS handshake is still in progress then\n * canceling may break the entire connection.\n */",
-  "secondLabel" : "/**\n * Bridge between OkHttp's application and network layers. This class exposes high-level application\n * layer primitives: connections, requests, responses, and streams.\n *\n * This class supports [asynchronous canceling][cancel]. This is intended to have the smallest\n * blast radius possible. If an HTTP/2 stream is active, canceling will cancel that stream but not\n * the other streams sharing its connection. But if the TLS handshake is still in progress then\n * canceling may break the entire connection.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1850,
-  "secondPos" : 1804,
-  "firstEndPos" : 2365,
-  "secondEndPos" : 2319
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2366,
-  "secondPos" : 2320,
+  "firstPos" : 1850,
+  "secondPos" : 1804,
   "firstEndPos" : 17284,
   "secondEndPos" : 17536
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Bridge between OkHttp's application and network layers. This class exposes high-level application\n * layer primitives: connections, requests, responses, and streams.\n *\n * This class supports [asynchronous canceling][cancel]. This is intended to have the smallest\n * blast radius possible. If an HTTP/2 stream is active, canceling will cancel that stream but not\n * the other streams sharing its connection. But if the TLS handshake is still in progress then\n * canceling may break the entire connection.\n */",
+  "secondLabel" : "/**\n * Bridge between OkHttp's application and network layers. This class exposes high-level application\n * layer primitives: connections, requests, responses, and streams.\n *\n * This class supports [asynchronous canceling][cancel]. This is intended to have the smallest\n * blast radius possible. If an HTTP/2 stream is active, canceling will cancel that stream but not\n * the other streams sharing its connection. But if the TLS handshake is still in progress then\n * canceling may break the entire connection.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1850,
+  "secondPos" : 1804,
+  "firstEndPos" : 2365,
+  "secondEndPos" : 2319
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2023,27 +2023,27 @@
   "firstEndPos" : 4405,
   "secondEndPos" : 13618
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The application's original request unadulterated by redirects or auth headers. */",
-  "secondLabel" : "/** The application's original request unadulterated by redirects or auth headers. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2412,
-  "secondPos" : 2366,
-  "firstEndPos" : 2497,
-  "secondEndPos" : 2451
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2500,
-  "secondPos" : 2454,
+  "firstPos" : 2412,
+  "secondPos" : 2366,
   "firstEndPos" : 2528,
   "secondEndPos" : 2482
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The application's original request unadulterated by redirects or auth headers. */",
+  "secondLabel" : "/** The application's original request unadulterated by redirects or auth headers. */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2412,
+  "secondPos" : 2366,
+  "firstEndPos" : 2497,
+  "secondEndPos" : 2451
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3277,27 +3277,27 @@
   "firstEndPos" : 2911,
   "secondEndPos" : 2865
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Initialized in [callStart]. */",
-  "secondLabel" : "/** Initialized in [callStart]. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2920,
-  "secondPos" : 2874,
-  "firstEndPos" : 2954,
-  "secondEndPos" : 2908
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2957,
-  "secondPos" : 2911,
+  "firstPos" : 2920,
+  "secondPos" : 2874,
   "firstEndPos" : 2996,
   "secondEndPos" : 2950
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Initialized in [callStart]. */",
+  "secondLabel" : "/** Initialized in [callStart]. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2920,
+  "secondPos" : 2874,
+  "firstEndPos" : 2954,
+  "secondEndPos" : 2908
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3431,27 +3431,27 @@
   "firstEndPos" : 2996,
   "secondEndPos" : 2950
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Finds an exchange to send the next request and receive the next response. */",
-  "secondLabel" : "/** Finds an exchange to send the next request and receive the next response. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3000,
-  "secondPos" : 2954,
-  "firstEndPos" : 3080,
-  "secondEndPos" : 3034
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3083,
-  "secondPos" : 3037,
+  "firstPos" : 3000,
+  "secondPos" : 2954,
   "firstEndPos" : 3133,
   "secondEndPos" : 3087
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Finds an exchange to send the next request and receive the next response. */",
+  "secondLabel" : "/** Finds an exchange to send the next request and receive the next response. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3000,
+  "secondPos" : 2954,
+  "firstEndPos" : 3080,
+  "secondEndPos" : 3034
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3585,27 +3585,27 @@
   "firstEndPos" : 3133,
   "secondEndPos" : 3087
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Guarded by connectionPool.",
-  "secondLabel" : "// Guarded by connectionPool.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3257,
-  "secondPos" : 3091,
-  "firstEndPos" : 3286,
-  "secondEndPos" : 3120
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3289,
-  "secondPos" : 3123,
+  "firstPos" : 3257,
+  "secondPos" : 3091,
   "firstEndPos" : 3327,
   "secondEndPos" : 3161
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Guarded by connectionPool.",
+  "secondLabel" : "// Guarded by connectionPool.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3257,
+  "secondPos" : 3091,
+  "firstEndPos" : 3286,
+  "secondEndPos" : 3120
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4454,27 +4454,27 @@
   "firstEndPos" : 3561,
   "secondEndPos" : 3395
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Guarded by this.",
-  "secondLabel" : "// Guarded by this.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3565,
-  "secondPos" : 3399,
-  "firstEndPos" : 3584,
-  "secondEndPos" : 3418
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3587,
-  "secondPos" : 3421,
+  "firstPos" : 3565,
+  "secondPos" : 3399,
   "firstEndPos" : 3615,
   "secondEndPos" : 3449
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Guarded by this.",
+  "secondLabel" : "// Guarded by this.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3565,
+  "secondPos" : 3399,
+  "firstEndPos" : 3584,
+  "secondEndPos" : 3418
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5147,12 +5147,23 @@
   "firstEndPos" : 3879,
   "secondEndPos" : 4036
 }, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 3883,
+  "secondPos" : 4040,
+  "firstEndPos" : 4777,
+  "secondEndPos" : 4934
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n   * Immediately closes the socket connection if it's currently held. Use this to interrupt an\n   * in-flight request from any thread. It's the caller's responsibility to close the request body\n   * and response body streams; otherwise resources may be leaked.\n   *\n   * This method is safe to be called concurrently, but provides limited guarantees. If a transport\n   * layer connection has been established (such as a HTTP/2 stream) that is terminated. Otherwise\n   * if a socket connection is being established, that is terminated.\n   */",
   "secondLabel" : "/**\n   * Immediately closes the socket connection if it's currently held. Use this to interrupt an\n   * in-flight request from any thread. It's the caller's responsibility to close the request body\n   * and response body streams; otherwise resources may be leaked.\n   *\n   * This method is safe to be called concurrently, but provides limited guarantees. If a transport\n   * layer connection has been established (such as a HTTP/2 stream) that is terminated. Otherwise\n   * if a socket connection is being established, that is terminated.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 3883,
   "secondPos" : 4040,
   "firstEndPos" : 4427,
@@ -5278,17 +5289,6 @@
   "secondPos" : 13542,
   "firstEndPos" : 4206,
   "secondEndPos" : 13544
-}, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4430,
-  "secondPos" : 4587,
-  "firstEndPos" : 4777,
-  "secondEndPos" : 4934
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -11571,27 +11571,27 @@
   "firstEndPos" : 7008,
   "secondEndPos" : 7165
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Prepare to find an exchange to carry [request]. This prefers to use the existing connection\n   * if it exists.\n   */",
-  "secondLabel" : "/**\n   * Prepare for a potential trip through all of this call's network interceptors. This prepares to\n   * find an exchange to carry the request.\n   *\n   * Note that an exchange will not be needed if the request is satisfied by the cache.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7031,
-  "secondPos" : 7188,
-  "firstEndPos" : 7156,
-  "secondEndPos" : 7434
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7159,
-  "secondPos" : 7437,
+  "firstPos" : 7031,
+  "secondPos" : 7188,
   "firstEndPos" : 7889,
   "secondEndPos" : 8107
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Prepare to find an exchange to carry [request]. This prefers to use the existing connection\n   * if it exists.\n   */",
+  "secondLabel" : "/**\n   * Prepare for a potential trip through all of this call's network interceptors. This prepares to\n   * find an exchange to carry the request.\n   *\n   * Note that an exchange will not be needed if the request is satisfied by the cache.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7031,
+  "secondPos" : 7188,
+  "firstEndPos" : 7156,
+  "secondEndPos" : 7434
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -12704,27 +12704,27 @@
   "firstEndPos" : 7879,
   "secondEndPos" : 8097
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Finds a new or pooled connection to carry a forthcoming request and response. */",
-  "secondLabel" : "/** Finds a new or pooled connection to carry a forthcoming request and response. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7893,
-  "secondPos" : 8111,
-  "firstEndPos" : 7977,
-  "secondEndPos" : 8195
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7980,
-  "secondPos" : 8198,
+  "firstPos" : 7893,
+  "secondPos" : 8111,
   "firstEndPos" : 8605,
   "secondEndPos" : 8724
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Finds a new or pooled connection to carry a forthcoming request and response. */",
+  "secondLabel" : "/** Finds a new or pooled connection to carry a forthcoming request and response. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7893,
+  "secondPos" : 8111,
+  "firstEndPos" : 7977,
+  "secondEndPos" : 8195
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -14739,27 +14739,27 @@
   "firstEndPos" : 8840,
   "secondEndPos" : 8959
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Releases resources held with the request or response of [exchange]. This should be called when\n   * the request completes normally or when it fails due to an exception, in which case [e] should\n   * be non-null.\n   *\n   * If the exchange was canceled or timed out, this will wrap [e] in an exception that provides\n   * that additional context. Otherwise [e] is returned as-is.\n   */",
-  "secondLabel" : "/**\n   * Releases resources held with the request or response of [exchange]. This should be called when\n   * the request completes normally or when it fails due to an exception, in which case [e] should\n   * be non-null.\n   *\n   * If the exchange was canceled or timed out, this will wrap [e] in an exception that provides\n   * that additional context. Otherwise [e] is returned as-is.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8850,
-  "secondPos" : 8969,
-  "firstEndPos" : 9241,
-  "secondEndPos" : 9360
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9244,
-  "secondPos" : 9363,
+  "firstPos" : 8850,
+  "secondPos" : 8969,
   "firstEndPos" : 10147,
   "secondEndPos" : 10262
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Releases resources held with the request or response of [exchange]. This should be called when\n   * the request completes normally or when it fails due to an exception, in which case [e] should\n   * be non-null.\n   *\n   * If the exchange was canceled or timed out, this will wrap [e] in an exception that provides\n   * that additional context. Otherwise [e] is returned as-is.\n   */",
+  "secondLabel" : "/**\n   * Releases resources held with the request or response of [exchange]. This should be called when\n   * the request completes normally or when it fails due to an exception, in which case [e] should\n   * be non-null.\n   *\n   * If the exchange was canceled or timed out, this will wrap [e] in an exception that provides\n   * that additional context. Otherwise [e] is returned as-is.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 8850,
+  "secondPos" : 8969,
+  "firstEndPos" : 9241,
+  "secondEndPos" : 9360
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -17159,27 +17159,27 @@
   "firstEndPos" : 10325,
   "secondEndPos" : 10440
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Release the connection if it is no longer needed. This is called after each exchange completes\n   * and after the call signals that no more exchanges are expected.\n   *\n   * If the call was canceled or timed out, this will wrap [e] in an exception that provides that\n   * additional context. Otherwise [e] is returned as-is.\n   *\n   * @param force true to release the connection even if more exchanges are expected for the call.\n   */",
-  "secondLabel" : "/**\n   * Release the connection if it is no longer needed. This is called after each exchange completes\n   * and after the call signals that no more exchanges are expected.\n   *\n   * If the call was canceled or timed out, this will wrap [e] in an exception that provides that\n   * additional context. Otherwise [e] is returned as-is.\n   *\n   * @param force true to release the connection even if more exchanges are expected for the call.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 10334,
-  "secondPos" : 10449,
-  "firstEndPos" : 10777,
-  "secondEndPos" : 10892
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10780,
-  "secondPos" : 10895,
+  "firstPos" : 10334,
+  "secondPos" : 10449,
   "firstEndPos" : 11816,
   "secondEndPos" : 11931
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Release the connection if it is no longer needed. This is called after each exchange completes\n   * and after the call signals that no more exchanges are expected.\n   *\n   * If the call was canceled or timed out, this will wrap [e] in an exception that provides that\n   * additional context. Otherwise [e] is returned as-is.\n   *\n   * @param force true to release the connection even if more exchanges are expected for the call.\n   */",
+  "secondLabel" : "/**\n   * Release the connection if it is no longer needed. This is called after each exchange completes\n   * and after the call signals that no more exchanges are expected.\n   *\n   * If the call was canceled or timed out, this will wrap [e] in an exception that provides that\n   * additional context. Otherwise [e] is returned as-is.\n   *\n   * @param force true to release the connection even if more exchanges are expected for the call.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 10334,
+  "secondPos" : 10449,
+  "firstEndPos" : 10777,
+  "secondEndPos" : 10892
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -19843,27 +19843,27 @@
   "firstEndPos" : 11812,
   "secondEndPos" : 11927
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Remove this call from the connection's list of allocations. Returns a socket that the caller\n   * should close.\n   */",
-  "secondLabel" : "/**\n   * Remove this call from the connection's list of allocations. Returns a socket that the caller\n   * should close.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 11820,
-  "secondPos" : 11935,
-  "firstEndPos" : 11946,
-  "secondEndPos" : 12061
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 11949,
-  "secondPos" : 12064,
+  "firstPos" : 11820,
+  "secondPos" : 11935,
   "firstEndPos" : 12456,
   "secondEndPos" : 12571
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Remove this call from the connection's list of allocations. Returns a socket that the caller\n   * should close.\n   */",
+  "secondLabel" : "/**\n   * Remove this call from the connection's list of allocations. Returns a socket that the caller\n   * should close.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 11820,
+  "secondPos" : 11935,
+  "firstEndPos" : 11946,
+  "secondEndPos" : 12061
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -22406,27 +22406,27 @@
   "firstEndPos" : 12776,
   "secondEndPos" : 12891
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Stops applying the timeout before the call is entirely complete. This is used for WebSockets\n   * and duplex calls where the timeout only applies to the initial setup.\n   */",
-  "secondLabel" : "/**\n   * Stops applying the timeout before the call is entirely complete. This is used for WebSockets\n   * and duplex calls where the timeout only applies to the initial setup.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 12784,
-  "secondPos" : 12899,
-  "firstEndPos" : 12966,
-  "secondEndPos" : 13081
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 12969,
-  "secondPos" : 13084,
+  "firstPos" : 12784,
+  "secondPos" : 12899,
   "firstEndPos" : 13073,
   "secondEndPos" : 13188
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Stops applying the timeout before the call is entirely complete. This is used for WebSockets\n   * and duplex calls where the timeout only applies to the initial setup.\n   */",
+  "secondLabel" : "/**\n   * Stops applying the timeout before the call is entirely complete. This is used for WebSockets\n   * and duplex calls where the timeout only applies to the initial setup.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 12784,
+  "secondPos" : 12899,
+  "firstEndPos" : 12966,
+  "secondEndPos" : 13081
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -24815,27 +24815,27 @@
   "firstEndPos" : 14355,
   "secondEndPos" : 14616
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a string that describes this call. Doesn't include a full URL as that might contain\n   * sensitive information.\n   */",
-  "secondLabel" : "/**\n   * Returns a string that describes this call. Doesn't include a full URL as that might contain\n   * sensitive information.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 14359,
-  "secondPos" : 14620,
-  "firstEndPos" : 14493,
-  "secondEndPos" : 14754
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 14496,
-  "secondPos" : 14757,
+  "firstPos" : 14359,
+  "secondPos" : 14620,
   "firstEndPos" : 14681,
   "secondEndPos" : 14942
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a string that describes this call. Doesn't include a full URL as that might contain\n   * sensitive information.\n   */",
+  "secondLabel" : "/**\n   * Returns a string that describes this call. Doesn't include a full URL as that might contain\n   * sensitive information.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 14359,
+  "secondPos" : 14620,
+  "firstEndPos" : 14493,
+  "secondEndPos" : 14754
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -26223,27 +26223,27 @@
   "firstEndPos" : 15053,
   "secondEndPos" : 15270
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Attempt to enqueue this async call on [executorService]. This will attempt to clean up\n     * if the executor has been shut down by reporting the call as failed.\n     */",
-  "secondLabel" : "/**\n     * Attempt to enqueue this async call on [executorService]. This will attempt to clean up\n     * if the executor has been shut down by reporting the call as failed.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15203,
-  "secondPos" : 15455,
-  "firstEndPos" : 15383,
-  "secondEndPos" : 15635
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15388,
-  "secondPos" : 15640,
+  "firstPos" : 15203,
+  "secondPos" : 15455,
   "firstEndPos" : 15985,
   "secondEndPos" : 16237
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Attempt to enqueue this async call on [executorService]. This will attempt to clean up\n     * if the executor has been shut down by reporting the call as failed.\n     */",
+  "secondLabel" : "/**\n     * Attempt to enqueue this async call on [executorService]. This will attempt to clean up\n     * if the executor has been shut down by reporting the call as failed.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 15203,
+  "secondPos" : 15455,
+  "firstEndPos" : 15383,
+  "secondEndPos" : 15635
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -29776,27 +29776,27 @@
   "firstEndPos" : 17047,
   "secondEndPos" : 17299
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Captures the stack trace at the time the Call is executed or enqueued. This is helpful for\n     * identifying the origin of connection leaks.\n     */",
-  "secondLabel" : "/**\n     * Captures the stack trace at the time the Call is executed or enqueued. This is helpful for\n     * identifying the origin of connection leaks.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 17053,
-  "secondPos" : 17305,
-  "firstEndPos" : 17213,
-  "secondEndPos" : 17465
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 17218,
-  "secondPos" : 17470,
+  "firstPos" : 17053,
+  "secondPos" : 17305,
   "firstEndPos" : 17242,
   "secondEndPos" : 17494
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Captures the stack trace at the time the Call is executed or enqueued. This is helpful for\n     * identifying the origin of connection leaks.\n     */",
+  "secondLabel" : "/**\n     * Captures the stack trace at the time the Call is executed or enqueued. This is helpful for\n     * identifying the origin of connection leaks.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 17053,
+  "secondPos" : 17305,
+  "firstEndPos" : 17213,
+  "secondEndPos" : 17465
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

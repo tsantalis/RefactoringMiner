@@ -1132,27 +1132,27 @@
   "firstEndPos" : 1274,
   "secondEndPos" : 1250
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
-  "secondLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1276,
-  "secondPos" : 1252,
-  "firstEndPos" : 1359,
-  "secondEndPos" : 1335
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1360,
-  "secondPos" : 1336,
+  "firstPos" : 1276,
+  "secondPos" : 1252,
   "firstEndPos" : 7275,
   "secondEndPos" : 7251
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
+  "secondLabel" : "/**\n * Provides access to where heap dumps and analysis results will be stored.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1276,
+  "secondPos" : 1252,
+  "firstEndPos" : 1359,
+  "secondEndPos" : 1335
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

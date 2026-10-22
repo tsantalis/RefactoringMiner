@@ -967,27 +967,27 @@
   "firstEndPos" : 1234,
   "secondEndPos" : 1279
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the mock version, with a\n * [FakeTasksRemoteDataSource].\n */",
-  "secondLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the mock version, with a\n * [FakeTasksRemoteDataSource].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1236,
-  "secondPos" : 1281,
-  "firstEndPos" : 1356,
-  "secondEndPos" : 1401
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1358,
-  "secondPos" : 1402,
+  "firstPos" : 1236,
+  "secondPos" : 1281,
   "firstEndPos" : 2465,
   "secondEndPos" : 2564
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the mock version, with a\n * [FakeTasksRemoteDataSource].\n */",
+  "secondLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the mock version, with a\n * [FakeTasksRemoteDataSource].\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1236,
+  "secondPos" : 1281,
+  "firstEndPos" : 1356,
+  "secondEndPos" : 1401
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

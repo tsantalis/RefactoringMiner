@@ -2298,27 +2298,27 @@
   "firstEndPos" : 1847,
   "secondEndPos" : 1847
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
-  "secondLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1849,
-  "secondPos" : 1849,
-  "firstEndPos" : 1927,
-  "secondEndPos" : 1927
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1928,
-  "secondPos" : 1928,
+  "firstPos" : 1849,
+  "secondPos" : 1849,
   "firstEndPos" : 9035,
   "secondEndPos" : 9035
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
+  "secondLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1849,
+  "secondPos" : 1849,
+  "firstEndPos" : 1927,
+  "secondEndPos" : 1927
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7083,12 +7083,23 @@
   "firstEndPos" : 7094,
   "secondEndPos" : 7094
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 3723,
+  "secondPos" : 3723,
+  "firstEndPos" : 4282,
+  "secondEndPos" : 4282
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n     * Map of string id to string\n     * This currently keeps all the hprof strings that we could care about: class names,\n     * static field names and instance fields names\n     */",
   "secondLabel" : "/**\n     * Map of string id to string\n     * This currently keeps all the hprof strings that we could care about: class names,\n     * static field names and instance fields names\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3723,
   "secondPos" : 3723,
   "firstEndPos" : 3909,
@@ -7098,8 +7109,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Replacing with a radix trie reversed into a sparse array of long to trie leaf could save",
   "secondLabel" : "// TODO Replacing with a radix trie reversed into a sparse array of long to trie leaf could save",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3914,
   "secondPos" : 3914,
   "firstEndPos" : 4010,
@@ -7109,8 +7120,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// memory.",
   "secondLabel" : "// memory.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4015,
   "secondPos" : 4015,
   "firstEndPos" : 4025,
@@ -7120,8 +7131,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Another option is to switch back to reading from the file system as necessary, and keep a much",
   "secondLabel" : "// Another option is to switch back to reading from the file system as necessary, and keep a much",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4030,
   "secondPos" : 4030,
   "firstEndPos" : 4127,
@@ -7131,23 +7142,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// smaller cache for strings we need during shortest path (those are for exclusions)",
   "secondLabel" : "// smaller cache for strings we need during shortest path (those are for exclusions)",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4132,
   "secondPos" : 4132,
   "firstEndPos" : 4216,
   "secondEndPos" : 4216
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4221,
-  "secondPos" : 4221,
-  "firstEndPos" : 4282,
-  "secondEndPos" : 4282
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7303,27 +7303,27 @@
   "firstEndPos" : 4281,
   "secondEndPos" : 4281
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * class id to string id\n     */",
-  "secondLabel" : "/**\n     * class id to string id\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4288,
-  "secondPos" : 4288,
-  "firstEndPos" : 4328,
-  "secondEndPos" : 4328
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4333,
-  "secondPos" : 4333,
+  "firstPos" : 4288,
+  "secondPos" : 4288,
   "firstEndPos" : 4386,
   "secondEndPos" : 4386
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * class id to string id\n     */",
+  "secondLabel" : "/**\n     * class id to string id\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4288,
+  "secondPos" : 4288,
+  "firstEndPos" : 4328,
+  "secondEndPos" : 4328
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7479,27 +7479,27 @@
   "firstEndPos" : 4385,
   "secondEndPos" : 4385
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Object id to [IndexedObject].\n     * The id can be for classes instances, classes, object arrays and primitive arrays\n     */",
-  "secondLabel" : "/**\n     * Object id to [IndexedObject].\n     * The id can be for classes instances, classes, object arrays and primitive arrays\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4392,
-  "secondPos" : 4392,
-  "firstEndPos" : 4528,
-  "secondEndPos" : 4528
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4533,
-  "secondPos" : 4533,
+  "firstPos" : 4392,
+  "secondPos" : 4392,
   "firstEndPos" : 4611,
   "secondEndPos" : 4611
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Object id to [IndexedObject].\n     * The id can be for classes instances, classes, object arrays and primitive arrays\n     */",
+  "secondLabel" : "/**\n     * Object id to [IndexedObject].\n     * The id can be for classes instances, classes, object arrays and primitive arrays\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4392,
+  "secondPos" : 4392,
+  "firstEndPos" : 4528,
+  "secondEndPos" : 4528
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7699,27 +7699,27 @@
   "firstEndPos" : 4610,
   "secondEndPos" : 4610
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
-  "secondLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4617,
-  "secondPos" : 4617,
-  "firstEndPos" : 4673,
-  "secondEndPos" : 4673
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4678,
-  "secondPos" : 4678,
+  "firstPos" : 4617,
+  "secondPos" : 4617,
   "firstEndPos" : 4734,
   "secondEndPos" : 4734
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
+  "secondLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4617,
+  "secondPos" : 4617,
+  "firstEndPos" : 4673,
+  "secondEndPos" : 4673
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7897,27 +7897,27 @@
   "firstEndPos" : 4734,
   "secondEndPos" : 4734
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
-  "secondLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4740,
-  "secondPos" : 4740,
-  "firstEndPos" : 4812,
-  "secondEndPos" : 4812
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4817,
-  "secondPos" : 4817,
+  "firstPos" : 4740,
+  "secondPos" : 4740,
   "firstEndPos" : 4878,
   "secondEndPos" : 4878
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
+  "secondLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4740,
+  "secondPos" : 4740,
+  "firstEndPos" : 4812,
+  "secondEndPos" : 4812
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

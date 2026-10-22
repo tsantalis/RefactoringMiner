@@ -479,7 +479,7 @@
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "class_declaration",
   "firstPos" : 1529,
-  "secondPos" : 1808,
+  "secondPos" : 1643,
   "firstEndPos" : 1738,
   "secondEndPos" : 1853
 }, {
@@ -666,9 +666,42 @@
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "primary_constructor",
   "firstPos" : 1742,
-  "secondPos" : 1572,
+  "secondPos" : 1483,
   "firstEndPos" : 1860,
   "secondEndPos" : 1600
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1742,
+  "secondPos" : 1483,
+  "firstEndPos" : 1827,
+  "secondEndPos" : 1569
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "multiline_comment",
+  "firstPos" : 1746,
+  "secondPos" : 1487,
+  "firstEndPos" : 1825,
+  "secondEndPos" : 1565
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "The application's original request unadulterated by redirects or auth headers. ",
+  "secondLabel" : "The application's original request unadulterated by redirects or auth headers. ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1746,
+  "secondPos" : 1487,
+  "firstEndPos" : 1825,
+  "secondEndPos" : 1565
 }, {
   "firstType" : "SimpleName",
   "secondType" : "type_identifier",
@@ -741,7 +774,7 @@
   "firstLabel" : "// Guarded by this.",
   "secondLabel" : "// Guarded by this.",
   "firstParentType" : "TypeDeclaration",
-  "secondParentType" : "class_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1894,
   "secondPos" : 1857,
   "firstEndPos" : 1913,
@@ -754,7 +787,7 @@
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "class_declaration",
   "firstPos" : 1916,
-  "secondPos" : 1879,
+  "secondPos" : 1857,
   "firstEndPos" : 1941,
   "secondEndPos" : 1908
 }, {
@@ -3383,7 +3416,7 @@
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "class_declaration",
   "firstPos" : 4427,
-  "secondPos" : 3654,
+  "secondPos" : 3469,
   "firstEndPos" : 5264,
   "secondEndPos" : 4264
 }, {
@@ -5187,7 +5220,7 @@
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "class_declaration",
   "firstPos" : 5916,
-  "secondPos" : 5107,
+  "secondPos" : 4970,
   "firstEndPos" : 6212,
   "secondEndPos" : 5284
 }, {

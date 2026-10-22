@@ -736,27 +736,27 @@
   "firstEndPos" : 1079,
   "secondEndPos" : 1331
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Default implementation of [TaskRepository]. Single entry point for managing tasks' data.\n *\n * @param tasksNetworkDataSource - The network data source\n * @param taskDao - The local data source\n * @param coroutineDispatcher - The dispatcher to be used for long running or complex operations,\n * such as network calls or mapping many models. This is important to avoid blocking the calling\n * thread.\n */",
-  "secondLabel" : "/**\n * Default implementation of [TaskRepository]. Single entry point for managing tasks' data.\n *\n * @param networkDataSource - The network data source\n * @param localDataSource - The local data source\n * @param dispatcher - The dispatcher to be used for long running or complex operations, such as ID\n * generation or mapping many models.\n * @param scope - The coroutine scope used for deferred jobs where the result isn't important, such\n * as sending data to the network.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1081,
-  "secondPos" : 1333,
-  "firstEndPos" : 1490,
-  "secondEndPos" : 1812
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1491,
-  "secondPos" : 1813,
+  "firstPos" : 1081,
+  "secondPos" : 1333,
   "firstEndPos" : 5590,
   "secondEndPos" : 6775
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Default implementation of [TaskRepository]. Single entry point for managing tasks' data.\n *\n * @param tasksNetworkDataSource - The network data source\n * @param taskDao - The local data source\n * @param coroutineDispatcher - The dispatcher to be used for long running or complex operations,\n * such as network calls or mapping many models. This is important to avoid blocking the calling\n * thread.\n */",
+  "secondLabel" : "/**\n * Default implementation of [TaskRepository]. Single entry point for managing tasks' data.\n *\n * @param networkDataSource - The network data source\n * @param localDataSource - The local data source\n * @param dispatcher - The dispatcher to be used for long running or complex operations, such as ID\n * generation or mapping many models.\n * @param scope - The coroutine scope used for deferred jobs where the result isn't important, such\n * as sending data to the network.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1081,
+  "secondPos" : 1333,
+  "firstEndPos" : 1490,
+  "secondEndPos" : 1812
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -3658,7 +3658,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 2834,
-  "secondPos" : 5619,
+  "secondPos" : 5387,
   "firstEndPos" : 2908,
   "secondEndPos" : 5862
 }, {
@@ -5059,27 +5059,27 @@
   "firstEndPos" : 3347,
   "secondEndPos" : 3656
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Get a Task with the given ID. Will return null if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the network data source first.\n     */",
-  "secondLabel" : "/**\n     * Get a Task with the given ID. Will return null if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the network data source first.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3361,
-  "secondPos" : 3670,
-  "firstEndPos" : 3603,
-  "secondEndPos" : 3912
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3608,
-  "secondPos" : 3917,
+  "firstPos" : 3361,
+  "secondPos" : 3670,
   "firstEndPos" : 3814,
   "secondEndPos" : 4118
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Get a Task with the given ID. Will return null if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the network data source first.\n     */",
+  "secondLabel" : "/**\n     * Get a Task with the given ID. Will return null if the task cannot be found.\n     *\n     * @param taskId - The ID of the task\n     * @param forceUpdate - true if the task should be updated from the network data source first.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3361,
+  "secondPos" : 3670,
+  "firstEndPos" : 3603,
+  "secondEndPos" : 3912
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7629,7 +7629,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 5372,
-  "secondPos" : 6312,
+  "secondPos" : 5868,
   "firstEndPos" : 5588,
   "secondEndPos" : 6773
 }, {

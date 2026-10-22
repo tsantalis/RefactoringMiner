@@ -1319,27 +1319,27 @@
   "firstEndPos" : 1275,
   "secondEndPos" : 994
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
-  "secondLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1277,
-  "secondPos" : 996,
-  "firstEndPos" : 1355,
-  "secondEndPos" : 1074
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1356,
-  "secondPos" : 1075,
+  "firstPos" : 1277,
+  "secondPos" : 996,
   "firstEndPos" : 14529,
   "secondEndPos" : 13152
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
+  "secondLabel" : "/**\n * This class is not thread safe, should be used from a single thread.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1277,
+  "secondPos" : 996,
+  "firstEndPos" : 1355,
+  "secondEndPos" : 1074
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -14904,12 +14904,23 @@
   "firstEndPos" : 6790,
   "secondEndPos" : 6509
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 6797,
+  "secondPos" : 6516,
+  "firstEndPos" : 7389,
+  "secondEndPos" : 7108
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n     * Map of string id to string\n     * This currently keeps all the hprof strings that we could care about: class names,\n     * static field names and instance fields names\n     */",
   "secondLabel" : "/**\n     * Map of string id to string\n     * This currently keeps all the hprof strings that we could care about: class names,\n     * static field names and instance fields names\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 6797,
   "secondPos" : 6516,
   "firstEndPos" : 6983,
@@ -14919,8 +14930,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Replacing with a radix trie reversed into a sparse array of long to trie leaf could save",
   "secondLabel" : "// TODO Replacing with a radix trie reversed into a sparse array of long to trie leaf could save",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 6988,
   "secondPos" : 6707,
   "firstEndPos" : 7084,
@@ -14930,8 +14941,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// memory. Can be stored as 3 arrays: array of keys, array of values which are indexes into",
   "secondLabel" : "// memory. Can be stored as 3 arrays: array of keys, array of values which are indexes into",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 7089,
   "secondPos" : 6808,
   "firstEndPos" : 7180,
@@ -14941,8 +14952,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// a large array of string bytes. Each \"entry\" consists of a size, the index of the previous",
   "secondLabel" : "// a large array of string bytes. Each \"entry\" consists of a size, the index of the previous",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 7185,
   "secondPos" : 6904,
   "firstEndPos" : 7277,
@@ -14952,23 +14963,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// segment and then the segment content.",
   "secondLabel" : "// segment and then the segment content.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 7282,
   "secondPos" : 7001,
   "firstEndPos" : 7322,
   "secondEndPos" : 7041
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7328,
-  "secondPos" : 7047,
-  "firstEndPos" : 7389,
-  "secondEndPos" : 7108
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -15146,27 +15146,27 @@
   "firstEndPos" : 7389,
   "secondEndPos" : 7108
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * class id to string id\n     */",
-  "secondLabel" : "/**\n     * class id to string id\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7395,
-  "secondPos" : 7114,
-  "firstEndPos" : 7435,
-  "secondEndPos" : 7154
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7440,
-  "secondPos" : 7159,
+  "firstPos" : 7395,
+  "secondPos" : 7114,
   "firstEndPos" : 7485,
   "secondEndPos" : 7204
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * class id to string id\n     */",
+  "secondLabel" : "/**\n     * class id to string id\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 7395,
+  "secondPos" : 7114,
+  "firstEndPos" : 7435,
+  "secondEndPos" : 7154
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -16565,27 +16565,27 @@
   "firstEndPos" : 8271,
   "secondEndPos" : 7990
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
-  "secondLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8283,
-  "secondPos" : 8002,
-  "firstEndPos" : 8339,
-  "secondEndPos" : 8058
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8344,
-  "secondPos" : 8063,
+  "firstPos" : 8283,
+  "secondPos" : 8002,
   "firstEndPos" : 8400,
   "secondEndPos" : 8119
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
+  "secondLabel" : "/**\n     * Class ids for primitive wrapper types\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8283,
+  "secondPos" : 8002,
+  "firstEndPos" : 8339,
+  "secondEndPos" : 8058
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -16763,27 +16763,27 @@
   "firstEndPos" : 8400,
   "secondEndPos" : 8119
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
-  "secondLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8406,
-  "secondPos" : 8125,
-  "firstEndPos" : 8478,
-  "secondEndPos" : 8197
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8483,
-  "secondPos" : 8202,
+  "firstPos" : 8406,
+  "secondPos" : 8125,
   "firstEndPos" : 8544,
   "secondEndPos" : 8263
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
+  "secondLabel" : "/**\n     * String ids for class names of primitive wrapper types\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8406,
+  "secondPos" : 8125,
+  "firstEndPos" : 8478,
+  "secondEndPos" : 8197
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

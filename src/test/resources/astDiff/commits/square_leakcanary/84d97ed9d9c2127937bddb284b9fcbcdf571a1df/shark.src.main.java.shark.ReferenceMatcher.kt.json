@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Used to pattern match known patterns of references in the heap, either to ignore them\n * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n */",
-  "secondLabel" : "/**\n * Used to pattern match known patterns of references in the heap, either to ignore them\n * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 128,
-  "secondPos" : 15,
-  "firstEndPos" : 321,
-  "secondEndPos" : 208
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 322,
-  "secondPos" : 209,
+  "firstPos" : 128,
+  "secondPos" : 15,
   "firstEndPos" : 1651,
   "secondEndPos" : 347
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Used to pattern match known patterns of references in the heap, either to ignore them\n * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n */",
+  "secondLabel" : "/**\n * Used to pattern match known patterns of references in the heap, either to ignore them\n * ([IgnoredReferenceMatcher]) or to mark them as library leaks ([LibraryLeakReferenceMatcher]).\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 128,
+  "secondPos" : 15,
+  "firstEndPos" : 321,
+  "secondEndPos" : 208
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -142,27 +142,27 @@
   "firstEndPos" : 1651,
   "secondEndPos" : 347
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The pattern that references will be matched against. */",
-  "secondLabel" : "/** The pattern that references will be matched against. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 357,
-  "secondPos" : 244,
-  "firstEndPos" : 416,
-  "secondEndPos" : 303
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 419,
-  "secondPos" : 306,
+  "firstPos" : 357,
+  "secondPos" : 244,
   "firstEndPos" : 457,
   "secondEndPos" : 344
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The pattern that references will be matched against. */",
+  "secondLabel" : "/** The pattern that references will be matched against. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 357,
+  "secondPos" : 244,
+  "firstEndPos" : 416,
+  "secondEndPos" : 303
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -263,27 +263,27 @@
   "firstEndPos" : 457,
   "secondEndPos" : 344
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n   * known to create leaks and are beyond your control. The shortest path finder will only go\n   * through matching references after it has exhausted references that don't match, prioritizing\n   * finding an application leak over a known library leak. Library leaks will be reported as\n   * [Leak.LibraryLeak] instead of [Leak.ApplicationLeak].\n   */",
-  "secondLabel" : "/**\n * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n * known to create leaks and are beyond your control. The shortest path finder will only go\n * through matching references after it has exhausted references that don't match, prioritizing\n * finding an application leak over a known library leak. Library leaks will be reported as\n * [LibraryLeak] instead of [ApplicationLeak].\n */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "source_file",
-  "firstPos" : 461,
-  "secondPos" : 349,
-  "firstEndPos" : 910,
-  "secondEndPos" : 776
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
-  "firstPos" : 913,
-  "secondPos" : 777,
+  "firstPos" : 461,
+  "secondPos" : 349,
   "firstEndPos" : 1372,
   "secondEndPos" : 1300
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n   * known to create leaks and are beyond your control. The shortest path finder will only go\n   * through matching references after it has exhausted references that don't match, prioritizing\n   * finding an application leak over a known library leak. Library leaks will be reported as\n   * [Leak.LibraryLeak] instead of [Leak.ApplicationLeak].\n   */",
+  "secondLabel" : "/**\n * [LibraryLeakReferenceMatcher] should be used to match references in library code that are\n * known to create leaks and are beyond your control. The shortest path finder will only go\n * through matching references after it has exhausted references that don't match, prioritizing\n * finding an application leak over a known library leak. Library leaks will be reported as\n * [LibraryLeak] instead of [ApplicationLeak].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 461,
+  "secondPos" : 349,
+  "firstEndPos" : 910,
+  "secondEndPos" : 776
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -457,7 +457,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 1001,
-  "secondPos" : 943,
+  "secondPos" : 861,
   "firstEndPos" : 1029,
   "secondEndPos" : 971
 }, {
@@ -538,27 +538,27 @@
   "firstEndPos" : 1029,
   "secondEndPos" : 971
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether the identified leak may exist in the provided [HeapGraph]. Defaults to true. If\n     * the heap dump comes from a VM that runs a different version of the library that doesn't\n     * have the leak, then this should return false.\n     */",
-  "secondLabel" : "/**\n   * Whether the identified leak may exist in the provided [HeapGraph]. Defaults to true. If\n   * the heap dump comes from a VM that runs a different version of the library that doesn't\n   * have the leak, then this should return false.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1035,
-  "secondPos" : 975,
-  "firstEndPos" : 1289,
-  "secondEndPos" : 1221
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1294,
-  "secondPos" : 1224,
+  "firstPos" : 1035,
+  "secondPos" : 975,
   "firstEndPos" : 1347,
   "secondEndPos" : 1277
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether the identified leak may exist in the provided [HeapGraph]. Defaults to true. If\n     * the heap dump comes from a VM that runs a different version of the library that doesn't\n     * have the leak, then this should return false.\n     */",
+  "secondLabel" : "/**\n   * Whether the identified leak may exist in the provided [HeapGraph]. Defaults to true. If\n   * the heap dump comes from a VM that runs a different version of the library that doesn't\n   * have the leak, then this should return false.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1035,
+  "secondPos" : 975,
+  "firstEndPos" : 1289,
+  "secondEndPos" : 1221
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -780,27 +780,27 @@
   "firstEndPos" : 1372,
   "secondEndPos" : 1300
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n   * shortest path finder will never go through matching references.\n   */",
-  "secondLabel" : "/**\n * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n * shortest path finder will never go through matching references.\n */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "source_file",
-  "firstPos" : 1376,
-  "secondPos" : 1302,
-  "firstEndPos" : 1555,
-  "secondEndPos" : 1475
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
-  "firstPos" : 1558,
-  "secondPos" : 1476,
+  "firstPos" : 1376,
+  "secondPos" : 1302,
   "firstEndPos" : 1648,
   "secondEndPos" : 1566
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n   * shortest path finder will never go through matching references.\n   */",
+  "secondLabel" : "/**\n * [IgnoredReferenceMatcher] should be used to match references that cannot ever create leaks. The\n * shortest path finder will never go through matching references.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1376,
+  "secondPos" : 1302,
+  "firstEndPos" : 1555,
+  "secondEndPos" : 1475
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

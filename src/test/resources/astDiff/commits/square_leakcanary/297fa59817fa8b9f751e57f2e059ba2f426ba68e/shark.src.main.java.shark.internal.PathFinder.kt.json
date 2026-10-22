@@ -2265,27 +2265,27 @@
   "firstEndPos" : 2265,
   "secondEndPos" : 2265
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2267,
-  "secondPos" : 2267,
-  "firstEndPos" : 2478,
-  "secondEndPos" : 2478
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2479,
-  "secondPos" : 2479,
+  "firstPos" : 2267,
+  "secondPos" : 2267,
   "firstEndPos" : 26391,
   "secondEndPos" : 26730
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2267,
+  "secondPos" : 2267,
+  "firstEndPos" : 2478,
+  "secondEndPos" : 2478
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3200,27 +3200,27 @@
   "firstEndPos" : 3892,
   "secondEndPos" : 4166
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Set of objects to visit */",
-  "secondLabel" : "/** Set of objects to visit */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2923,
-  "secondPos" : 2923,
-  "firstEndPos" : 2953,
-  "secondEndPos" : 2953
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2958,
-  "secondPos" : 2958,
+  "firstPos" : 2923,
+  "secondPos" : 2923,
   "firstEndPos" : 3015,
   "secondEndPos" : 3015
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Set of objects to visit */",
+  "secondLabel" : "/** Set of objects to visit */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2923,
+  "secondPos" : 2923,
+  "firstEndPos" : 2953,
+  "secondEndPos" : 2953
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3387,27 +3387,27 @@
   "firstEndPos" : 3015,
   "secondEndPos" : 3015
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty. Should contain [JavaFrame] gc roots first,\n     * then [LibraryLeakNode].\n     */",
-  "secondLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty. Should contain [JavaFrame] gc roots first,\n     * then [LibraryLeakNode].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3021,
-  "secondPos" : 3021,
-  "firstEndPos" : 3160,
-  "secondEndPos" : 3160
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3165,
-  "secondPos" : 3165,
+  "firstPos" : 3021,
+  "secondPos" : 3021,
   "firstEndPos" : 3226,
   "secondEndPos" : 3226
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty. Should contain [JavaFrame] gc roots first,\n     * then [LibraryLeakNode].\n     */",
+  "secondLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty. Should contain [JavaFrame] gc roots first,\n     * then [LibraryLeakNode].\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3021,
+  "secondPos" : 3021,
+  "firstEndPos" : 3160,
+  "secondEndPos" : 3160
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3574,27 +3574,27 @@
   "firstEndPos" : 3226,
   "secondEndPos" : 3226
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
-  "secondLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3232,
-  "secondPos" : 3232,
-  "firstEndPos" : 3315,
-  "secondEndPos" : 3315
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3320,
-  "secondPos" : 3320,
+  "firstPos" : 3232,
+  "secondPos" : 3232,
   "firstEndPos" : 3352,
   "secondEndPos" : 3352
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
+  "secondLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3232,
+  "secondPos" : 3232,
+  "firstEndPos" : 3315,
+  "secondEndPos" : 3315
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4003,27 +4003,27 @@
   "firstEndPos" : 3432,
   "secondEndPos" : 3432
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Map of objects to their leaking dominator.\n     * If an object has been added to [toVisitSet] or [visitedSet] and is missing from\n     * [dominatedObjectIds] then it's considered \"undomitable\" ie it is dominated by gc roots\n     * and cannot be dominated by a leaking object.\n     */",
-  "secondLabel" : "/**\n     * Map of objects to their leaking dominator.\n     * If an object has been added to [toVisitSet] or [visitedSet] and is missing from\n     * [dominatedObjectIds] then it's considered \"undomitable\" ie it is dominated by gc roots\n     * and cannot be dominated by a leaking object.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3438,
-  "secondPos" : 3438,
-  "firstEndPos" : 3732,
-  "secondEndPos" : 3732
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3737,
-  "secondPos" : 3737,
+  "firstPos" : 3438,
+  "secondPos" : 3438,
   "firstEndPos" : 3782,
   "secondEndPos" : 3782
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Map of objects to their leaking dominator.\n     * If an object has been added to [toVisitSet] or [visitedSet] and is missing from\n     * [dominatedObjectIds] then it's considered \"undomitable\" ie it is dominated by gc roots\n     * and cannot be dominated by a leaking object.\n     */",
+  "secondLabel" : "/**\n     * Map of objects to their leaking dominator.\n     * If an object has been added to [toVisitSet] or [visitedSet] and is missing from\n     * [dominatedObjectIds] then it's considered \"undomitable\" ie it is dominated by gc roots\n     * and cannot be dominated by a leaking object.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3438,
+  "secondPos" : 3438,
+  "firstEndPos" : 3732,
+  "secondEndPos" : 3732
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -20987,27 +20987,27 @@
   "firstEndPos" : 12242,
   "secondEndPos" : 12559
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
-  "secondLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 12266,
-  "secondPos" : 12583,
-  "firstEndPos" : 12540,
-  "secondEndPos" : 12857
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 12543,
-  "secondPos" : 12860,
+  "firstPos" : 12266,
+  "secondPos" : 12583,
   "firstEndPos" : 13809,
   "secondEndPos" : 14126
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
+  "secondLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 12266,
+  "secondPos" : 12583,
+  "firstEndPos" : 12540,
+  "secondEndPos" : 12857
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -37905,27 +37905,27 @@
   "firstEndPos" : 20634,
   "secondEndPos" : 20973
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Every time we find a new object as we traverse the graph, we call this method.\n   *\n   * This is a twist on the traditional dominator tree / retained size algorithms: dominators here\n   * can only be retained instances, which means we don't need to track that many dominators.\n   *\n   * Here's how it works:\n   *\n   * - If [objectId] has no dominator known yet but has already been added to visit, then we know\n   * we've been here for that object already. We did not add this object to the map of dominated\n   * instances in the previous visit so it can't be dominated any more and we can stop there.\n   *\n   * - The parent of [objectId] has already been visited. If that parent is not a retained\n   * instance and has no known retained instance dominator, it cannot be dominated by a retained\n   * instance and therefore [objectId] cannot be dominated either.\n   *\n   * - The potential dominator of [objectId] is: either its parent if that parent is a retained\n   * object, or its parent's dominator (which therefore is a retained object).\n   *\n   * - If [objectId] has no known dominator, we set that potential dominator as its dominator.\n   *\n   * - If [objectId] has a known dominator, we now must find the common parent dominator between\n   * those two dominators. To find that common dominator, we compute the dominator chain for each\n   * dominator and the first found dominator is set as [objectId]'s dominator. If no common\n   * dominator was found, [objectId] cannot be dominated.\n   *\n   * @param neverEnqueued whether [updateDominator] is called right before [objectId] being added\n   * to the queue. There are a number of objects that are never added to the queue because we know\n   * they can't lead to leaks. When we mark objects as undominated and [neverEnqueued] is true,\n   * we also add these objects to visitedSet so that the next visit to [updateDominator] can be\n   * skipped early. If [neverEnqueued] is false then they'll be added to [State.toVisitSet] when\n   * enqueued.\n   */",
-  "secondLabel" : "/**\n   * Every time we find a new object as we traverse the graph, we call this method.\n   *\n   * This is a twist on the traditional dominator tree / retained size algorithms: dominators here\n   * can only be retained instances, which means we don't need to track that many dominators.\n   *\n   * Here's how it works:\n   *\n   * - If [objectId] has no dominator known yet but has already been added to visit, then we know\n   * we've been here for that object already. We did not add this object to the map of dominated\n   * instances in the previous visit so it can't be dominated any more and we can stop there.\n   *\n   * - The parent of [objectId] has already been visited. If that parent is not a retained\n   * instance and has no known retained instance dominator, it cannot be dominated by a retained\n   * instance and therefore [objectId] cannot be dominated either.\n   *\n   * - The potential dominator of [objectId] is: either its parent if that parent is a retained\n   * object, or its parent's dominator (which therefore is a retained object).\n   *\n   * - If [objectId] has no known dominator, we set that potential dominator as its dominator.\n   *\n   * - If [objectId] has a known dominator, we now must find the common parent dominator between\n   * those two dominators. To find that common dominator, we compute the dominator chain for each\n   * dominator and the first found dominator is set as [objectId]'s dominator. If no common\n   * dominator was found, [objectId] cannot be dominated.\n   *\n   * @param neverEnqueued whether [updateDominator] is called right before [objectId] being added\n   * to the queue. There are a number of objects that are never added to the queue because we know\n   * they can't lead to leaks. When we mark objects as undominated and [neverEnqueued] is true,\n   * we also add these objects to visitedSet so that the next visit to [updateDominator] can be\n   * skipped early. If [neverEnqueued] is false then they'll be added to [State.toVisitSet] when\n   * enqueued.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 20657,
-  "secondPos" : 20996,
-  "firstEndPos" : 22669,
-  "secondEndPos" : 23008
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 22672,
-  "secondPos" : 23011,
+  "firstPos" : 20657,
+  "secondPos" : 20996,
   "firstEndPos" : 25143,
   "secondEndPos" : 25482
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Every time we find a new object as we traverse the graph, we call this method.\n   *\n   * This is a twist on the traditional dominator tree / retained size algorithms: dominators here\n   * can only be retained instances, which means we don't need to track that many dominators.\n   *\n   * Here's how it works:\n   *\n   * - If [objectId] has no dominator known yet but has already been added to visit, then we know\n   * we've been here for that object already. We did not add this object to the map of dominated\n   * instances in the previous visit so it can't be dominated any more and we can stop there.\n   *\n   * - The parent of [objectId] has already been visited. If that parent is not a retained\n   * instance and has no known retained instance dominator, it cannot be dominated by a retained\n   * instance and therefore [objectId] cannot be dominated either.\n   *\n   * - The potential dominator of [objectId] is: either its parent if that parent is a retained\n   * object, or its parent's dominator (which therefore is a retained object).\n   *\n   * - If [objectId] has no known dominator, we set that potential dominator as its dominator.\n   *\n   * - If [objectId] has a known dominator, we now must find the common parent dominator between\n   * those two dominators. To find that common dominator, we compute the dominator chain for each\n   * dominator and the first found dominator is set as [objectId]'s dominator. If no common\n   * dominator was found, [objectId] cannot be dominated.\n   *\n   * @param neverEnqueued whether [updateDominator] is called right before [objectId] being added\n   * to the queue. There are a number of objects that are never added to the queue because we know\n   * they can't lead to leaks. When we mark objects as undominated and [neverEnqueued] is true,\n   * we also add these objects to visitedSet so that the next visit to [updateDominator] can be\n   * skipped early. If [neverEnqueued] is false then they'll be added to [State.toVisitSet] when\n   * enqueued.\n   */",
+  "secondLabel" : "/**\n   * Every time we find a new object as we traverse the graph, we call this method.\n   *\n   * This is a twist on the traditional dominator tree / retained size algorithms: dominators here\n   * can only be retained instances, which means we don't need to track that many dominators.\n   *\n   * Here's how it works:\n   *\n   * - If [objectId] has no dominator known yet but has already been added to visit, then we know\n   * we've been here for that object already. We did not add this object to the map of dominated\n   * instances in the previous visit so it can't be dominated any more and we can stop there.\n   *\n   * - The parent of [objectId] has already been visited. If that parent is not a retained\n   * instance and has no known retained instance dominator, it cannot be dominated by a retained\n   * instance and therefore [objectId] cannot be dominated either.\n   *\n   * - The potential dominator of [objectId] is: either its parent if that parent is a retained\n   * object, or its parent's dominator (which therefore is a retained object).\n   *\n   * - If [objectId] has no known dominator, we set that potential dominator as its dominator.\n   *\n   * - If [objectId] has a known dominator, we now must find the common parent dominator between\n   * those two dominators. To find that common dominator, we compute the dominator chain for each\n   * dominator and the first found dominator is set as [objectId]'s dominator. If no common\n   * dominator was found, [objectId] cannot be dominated.\n   *\n   * @param neverEnqueued whether [updateDominator] is called right before [objectId] being added\n   * to the queue. There are a number of objects that are never added to the queue because we know\n   * they can't lead to leaks. When we mark objects as undominated and [neverEnqueued] is true,\n   * we also add these objects to visitedSet so that the next visit to [updateDominator] can be\n   * skipped early. If [neverEnqueued] is false then they'll be added to [State.toVisitSet] when\n   * enqueued.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 20657,
+  "secondPos" : 20996,
+  "firstEndPos" : 22669,
+  "secondEndPos" : 23008
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -527,27 +527,27 @@
   "firstEndPos" : 363,
   "secondEndPos" : 382
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * kotlin方式集成案例\n */",
-  "secondLabel" : "/**\n * kotlin方式集成案例\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 365,
-  "secondPos" : 384,
-  "firstEndPos" : 388,
-  "secondEndPos" : 407
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 389,
-  "secondPos" : 408,
+  "firstPos" : 365,
+  "secondPos" : 384,
   "firstEndPos" : 1346,
   "secondEndPos" : 1365
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * kotlin方式集成案例\n */",
+  "secondLabel" : "/**\n * kotlin方式集成案例\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 365,
+  "secondPos" : 384,
+  "firstEndPos" : 388,
+  "secondEndPos" : 407
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

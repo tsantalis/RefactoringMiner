@@ -87,27 +87,27 @@
   "firstEndPos" : 129,
   "secondEndPos" : 116
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** See Android SystemClock.uptimeMillis().  */",
-  "secondLabel" : "/** See Android SystemClock.uptimeMillis().  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 53,
-  "secondPos" : 40,
-  "firstEndPos" : 100,
-  "secondEndPos" : 87
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 103,
-  "secondPos" : 90,
+  "firstPos" : 53,
+  "secondPos" : 40,
   "firstEndPos" : 127,
   "secondEndPos" : 114
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** See Android SystemClock.uptimeMillis().  */",
+  "secondLabel" : "/** See Android SystemClock.uptimeMillis().  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 53,
+  "secondPos" : 40,
+  "firstEndPos" : 100,
+  "secondEndPos" : 87
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

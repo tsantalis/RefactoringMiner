@@ -802,27 +802,27 @@
   "firstEndPos" : 1114,
   "secondEndPos" : 1201
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Exposes the data to be used in the statistics screen.\n *\n *\n * This ViewModel uses both [ObservableField]s ([ObservableBoolean]s in this case) and\n * [Bindable] getters. The values in [ObservableField]s are used directly in the layout,\n * whereas the [Bindable] getters allow us to add some logic to it. This is\n * preferable to having logic in the XML layout.\n */",
-  "secondLabel" : "/**\n * Exposes the data to be used in the statistics screen.\n *\n *\n * This ViewModel uses both [ObservableField]s ([ObservableBoolean]s in this case) and\n * [Bindable] getters. The values in [ObservableField]s are used directly in the layout,\n * whereas the [Bindable] getters allow us to add some logic to it. This is\n * preferable to having logic in the XML layout.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1116,
-  "secondPos" : 1203,
-  "firstEndPos" : 1487,
-  "secondEndPos" : 1574
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1488,
-  "secondPos" : 1575,
+  "firstPos" : 1116,
+  "secondPos" : 1203,
   "firstEndPos" : 3184,
   "secondEndPos" : 3529
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Exposes the data to be used in the statistics screen.\n *\n *\n * This ViewModel uses both [ObservableField]s ([ObservableBoolean]s in this case) and\n * [Bindable] getters. The values in [ObservableField]s are used directly in the layout,\n * whereas the [Bindable] getters allow us to add some logic to it. This is\n * preferable to having logic in the XML layout.\n */",
+  "secondLabel" : "/**\n * Exposes the data to be used in the statistics screen.\n *\n *\n * This ViewModel uses both [ObservableField]s ([ObservableBoolean]s in this case) and\n * [Bindable] getters. The values in [ObservableField]s are used directly in the layout,\n * whereas the [Bindable] getters allow us to add some logic to it. This is\n * preferable to having logic in the XML layout.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1116,
+  "secondPos" : 1203,
+  "firstEndPos" : 1487,
+  "secondEndPos" : 1574
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1682,27 +1682,27 @@
   "firstEndPos" : 1789,
   "secondEndPos" : 1876
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Controls whether the stats are shown or a \"No data\" message.\n     */",
-  "secondLabel" : "/**\n     * Controls whether the stats are shown or a \"No data\" message.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1795,
-  "secondPos" : 1882,
-  "firstEndPos" : 1874,
-  "secondEndPos" : 1961
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1879,
-  "secondPos" : 1966,
+  "firstPos" : 1795,
+  "secondPos" : 1882,
   "firstEndPos" : 1926,
   "secondEndPos" : 2013
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Controls whether the stats are shown or a \"No data\" message.\n     */",
+  "secondLabel" : "/**\n     * Controls whether the stats are shown or a \"No data\" message.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1795,
+  "secondPos" : 1882,
+  "firstEndPos" : 1874,
+  "secondEndPos" : 1961
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3970,27 +3970,27 @@
   "firstEndPos" : 2753,
   "secondEndPos" : 3035
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called when new data is ready.\n     */",
-  "secondLabel" : "/**\n     * Called when new data is ready.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2808,
-  "secondPos" : 3090,
-  "firstEndPos" : 2857,
-  "secondEndPos" : 3139
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2862,
-  "secondPos" : 3144,
+  "firstPos" : 2808,
+  "secondPos" : 3090,
   "firstEndPos" : 3182,
   "secondEndPos" : 3527
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called when new data is ready.\n     */",
+  "secondLabel" : "/**\n     * Called when new data is ready.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2808,
+  "secondPos" : 3090,
+  "firstEndPos" : 2857,
+  "secondEndPos" : 3139
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

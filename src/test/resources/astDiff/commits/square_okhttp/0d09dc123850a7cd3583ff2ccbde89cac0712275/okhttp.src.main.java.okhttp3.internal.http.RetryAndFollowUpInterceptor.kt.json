@@ -1814,27 +1814,27 @@
   "firstEndPos" : 1869,
   "secondEndPos" : 1892
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This interceptor recovers from failures and follows redirects as necessary. It may throw an\n * [IOException] if the call was canceled.\n */",
-  "secondLabel" : "/**\n * This interceptor recovers from failures and follows redirects as necessary. It may throw an\n * [IOException] if the call was canceled.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1871,
-  "secondPos" : 1894,
-  "firstEndPos" : 2016,
-  "secondEndPos" : 2039
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2017,
-  "secondPos" : 2040,
+  "firstPos" : 1871,
+  "secondPos" : 1894,
   "firstEndPos" : 11925,
   "secondEndPos" : 11997
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This interceptor recovers from failures and follows redirects as necessary. It may throw an\n * [IOException] if the call was canceled.\n */",
+  "secondLabel" : "/**\n * This interceptor recovers from failures and follows redirects as necessary. It may throw an\n * [IOException] if the call was canceled.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1871,
+  "secondPos" : 1894,
+  "firstEndPos" : 2016,
+  "secondEndPos" : 2039
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -6093,27 +6093,27 @@
   "firstEndPos" : 4405,
   "secondEndPos" : 4334
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Report and attempt to recover from a failure to communicate with a server. Returns true if\n   * `e` is recoverable, or false if the failure is permanent. Requests with a body can only\n   * be recovered if the body is buffered or if the failure occurred before the request has been\n   * sent.\n   */",
-  "secondLabel" : "/**\n   * Report and attempt to recover from a failure to communicate with a server. Returns true if\n   * `e` is recoverable, or false if the failure is permanent. Requests with a body can only\n   * be recovered if the body is buffered or if the failure occurred before the request has been\n   * sent.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4419,
-  "secondPos" : 4439,
-  "firstEndPos" : 4725,
-  "secondEndPos" : 4745
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4728,
-  "secondPos" : 4748,
+  "firstPos" : 4419,
+  "secondPos" : 4439,
   "firstEndPos" : 5358,
   "secondEndPos" : 5378
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Report and attempt to recover from a failure to communicate with a server. Returns true if\n   * `e` is recoverable, or false if the failure is permanent. Requests with a body can only\n   * be recovered if the body is buffered or if the failure occurred before the request has been\n   * sent.\n   */",
+  "secondLabel" : "/**\n   * Report and attempt to recover from a failure to communicate with a server. Returns true if\n   * `e` is recoverable, or false if the failure is permanent. Requests with a body can only\n   * be recovered if the body is buffered or if the failure occurred before the request has been\n   * sent.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4419,
+  "secondPos" : 4439,
+  "firstEndPos" : 4725,
+  "secondEndPos" : 4745
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -8843,27 +8843,27 @@
   "firstEndPos" : 6772,
   "secondEndPos" : 6792
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Figures out the HTTP request to make in response to receiving [userResponse]. This will\n   * either add authentication headers, follow redirects or handle a client request timeout. If a\n   * follow-up is either unnecessary or not applicable, this returns null.\n   */",
-  "secondLabel" : "/**\n   * Figures out the HTTP request to make in response to receiving [userResponse]. This will\n   * either add authentication headers, follow redirects or handle a client request timeout. If a\n   * follow-up is either unnecessary or not applicable, this returns null.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6780,
-  "secondPos" : 6800,
-  "firstEndPos" : 7055,
-  "secondEndPos" : 7075
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7058,
-  "secondPos" : 7078,
+  "firstPos" : 6780,
+  "secondPos" : 6800,
   "firstEndPos" : 9665,
   "secondEndPos" : 9737
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Figures out the HTTP request to make in response to receiving [userResponse]. This will\n   * either add authentication headers, follow redirects or handle a client request timeout. If a\n   * follow-up is either unnecessary or not applicable, this returns null.\n   */",
+  "secondLabel" : "/**\n   * Figures out the HTTP request to make in response to receiving [userResponse]. This will\n   * either add authentication headers, follow redirects or handle a client request timeout. If a\n   * follow-up is either unnecessary or not applicable, this returns null.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6780,
+  "secondPos" : 6800,
+  "firstEndPos" : 7055,
+  "secondEndPos" : 7075
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -17192,27 +17192,27 @@
   "firstEndPos" : 11923,
   "secondEndPos" : 11995
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * How many redirects and auth challenges should we attempt? Chrome follows 21 redirects; Firefox,\n     * curl, and wget follow 20; Safari follows 16; and HTTP/1.0 recommends 5.\n     */",
-  "secondLabel" : "/**\n     * How many redirects and auth challenges should we attempt? Chrome follows 21 redirects; Firefox,\n     * curl, and wget follow 20; Safari follows 16; and HTTP/1.0 recommends 5.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 11684,
-  "secondPos" : 11756,
-  "firstEndPos" : 11877,
-  "secondEndPos" : 11949
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 11882,
-  "secondPos" : 11954,
+  "firstPos" : 11684,
+  "secondPos" : 11756,
   "firstEndPos" : 11919,
   "secondEndPos" : 11991
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * How many redirects and auth challenges should we attempt? Chrome follows 21 redirects; Firefox,\n     * curl, and wget follow 20; Safari follows 16; and HTTP/1.0 recommends 5.\n     */",
+  "secondLabel" : "/**\n     * How many redirects and auth challenges should we attempt? Chrome follows 21 redirects; Firefox,\n     * curl, and wget follow 20; Safari follows 16; and HTTP/1.0 recommends 5.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 11684,
+  "secondPos" : 11756,
+  "firstEndPos" : 11877,
+  "secondEndPos" : 11949
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

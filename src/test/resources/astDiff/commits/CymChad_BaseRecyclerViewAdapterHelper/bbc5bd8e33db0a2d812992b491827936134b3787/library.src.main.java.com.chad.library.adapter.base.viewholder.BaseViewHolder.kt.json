@@ -648,27 +648,27 @@
   "firstEndPos" : 451,
   "secondEndPos" : 428
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewHolder 基类\n */",
-  "secondLabel" : "/**\n * ViewHolder 基类\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 453,
-  "secondPos" : 430,
-  "firstEndPos" : 477,
-  "secondEndPos" : 454
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 478,
-  "secondPos" : 455,
+  "firstPos" : 453,
+  "secondPos" : 430,
   "firstEndPos" : 3898,
   "secondEndPos" : 3471
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewHolder 基类\n */",
+  "secondLabel" : "/**\n * ViewHolder 基类\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 453,
+  "secondPos" : 430,
+  "firstEndPos" : 477,
+  "secondEndPos" : 454
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -879,27 +879,27 @@
   "firstEndPos" : 3898,
   "secondEndPos" : 3471
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Views indexed with their IDs\n     */",
-  "secondLabel" : "/**\n     * Views indexed with their IDs\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 560,
-  "secondPos" : 680,
-  "firstEndPos" : 607,
-  "secondEndPos" : 727
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 612,
-  "secondPos" : 732,
+  "firstPos" : 560,
+  "secondPos" : 680,
   "firstEndPos" : 664,
   "secondEndPos" : 784
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Views indexed with their IDs\n     */",
+  "secondLabel" : "/**\n     * Views indexed with their IDs\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 560,
+  "secondPos" : 680,
+  "firstEndPos" : 607,
+  "secondEndPos" : 727
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

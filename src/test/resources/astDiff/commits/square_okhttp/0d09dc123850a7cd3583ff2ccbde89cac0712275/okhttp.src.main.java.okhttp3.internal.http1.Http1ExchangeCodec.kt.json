@@ -1627,27 +1627,27 @@
   "firstEndPos" : 1583,
   "secondEndPos" : 1583
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A socket connection that can be used to send HTTP/1.1 messages. This class strictly enforces the\n * following lifecycle:\n *\n *  1. [Send request headers][writeRequest].\n *  2. Open a sink to write the request body. Either [known][newKnownLengthSink] or\n *     [chunked][newChunkedSink].\n *  3. Write to and then close that sink.\n *  4. [Read response headers][readResponseHeaders].\n *  5. Open a source to read the response body. Either [fixed-length][newFixedLengthSource],\n *     [chunked][newChunkedSource] or [unknown][newUnknownLengthSource].\n *  6. Read from and close that source.\n *\n * Exchanges that do not have a request body may skip creating and closing the request body.\n * Exchanges that do not have a response body can call\n * [newFixedLengthSource(0)][newFixedLengthSource] and may skip reading and closing that source.\n */",
-  "secondLabel" : "/**\n * A socket connection that can be used to send HTTP/1.1 messages. This class strictly enforces the\n * following lifecycle:\n *\n *  1. [Send request headers][writeRequest].\n *  2. Open a sink to write the request body. Either [known][newKnownLengthSink] or\n *     [chunked][newChunkedSink].\n *  3. Write to and then close that sink.\n *  4. [Read response headers][readResponseHeaders].\n *  5. Open a source to read the response body. Either [fixed-length][newFixedLengthSource],\n *     [chunked][newChunkedSource] or [unknown][newUnknownLengthSource].\n *  6. Read from and close that source.\n *\n * Exchanges that do not have a request body may skip creating and closing the request body.\n * Exchanges that do not have a response body can call\n * [newFixedLengthSource(0)][newFixedLengthSource] and may skip reading and closing that source.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1585,
-  "secondPos" : 1585,
-  "firstEndPos" : 2431,
-  "secondEndPos" : 2431
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2432,
-  "secondPos" : 2432,
+  "firstPos" : 1585,
+  "secondPos" : 1585,
   "firstEndPos" : 16856,
   "secondEndPos" : 16732
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A socket connection that can be used to send HTTP/1.1 messages. This class strictly enforces the\n * following lifecycle:\n *\n *  1. [Send request headers][writeRequest].\n *  2. Open a sink to write the request body. Either [known][newKnownLengthSink] or\n *     [chunked][newChunkedSink].\n *  3. Write to and then close that sink.\n *  4. [Read response headers][readResponseHeaders].\n *  5. Open a source to read the response body. Either [fixed-length][newFixedLengthSource],\n *     [chunked][newChunkedSource] or [unknown][newUnknownLengthSource].\n *  6. Read from and close that source.\n *\n * Exchanges that do not have a request body may skip creating and closing the request body.\n * Exchanges that do not have a response body can call\n * [newFixedLengthSource(0)][newFixedLengthSource] and may skip reading and closing that source.\n */",
+  "secondLabel" : "/**\n * A socket connection that can be used to send HTTP/1.1 messages. This class strictly enforces the\n * following lifecycle:\n *\n *  1. [Send request headers][writeRequest].\n *  2. Open a sink to write the request body. Either [known][newKnownLengthSink] or\n *     [chunked][newChunkedSink].\n *  3. Write to and then close that sink.\n *  4. [Read response headers][readResponseHeaders].\n *  5. Open a source to read the response body. Either [fixed-length][newFixedLengthSource],\n *     [chunked][newChunkedSource] or [unknown][newUnknownLengthSource].\n *  6. Read from and close that source.\n *\n * Exchanges that do not have a request body may skip creating and closing the request body.\n * Exchanges that do not have a response body can call\n * [newFixedLengthSource(0)][newFixedLengthSource] and may skip reading and closing that source.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1585,
+  "secondPos" : 1585,
+  "firstEndPos" : 2431,
+  "secondEndPos" : 2431
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1682,27 +1682,27 @@
   "firstEndPos" : 2750,
   "secondEndPos" : 2746
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The client that configures this stream. May be null for HTTPS proxy tunnels. */",
-  "secondLabel" : "/** The client that configures this stream. May be null for HTTPS proxy tunnels. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2460,
-  "secondPos" : 2460,
-  "firstEndPos" : 2543,
-  "secondEndPos" : 2543
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2546,
-  "secondPos" : 2546,
+  "firstPos" : 2460,
+  "secondPos" : 2460,
   "firstEndPos" : 2579,
   "secondEndPos" : 2579
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The client that configures this stream. May be null for HTTPS proxy tunnels. */",
+  "secondLabel" : "/** The client that configures this stream. May be null for HTTPS proxy tunnels. */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2460,
+  "secondPos" : 2460,
+  "firstEndPos" : 2543,
+  "secondEndPos" : 2543
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1803,27 +1803,27 @@
   "firstEndPos" : 2578,
   "secondEndPos" : 2578
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The connection that carries this stream. */",
-  "secondLabel" : "/** The connection that carries this stream. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2583,
-  "secondPos" : 2583,
-  "firstEndPos" : 2630,
-  "secondEndPos" : 2630
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2633,
-  "secondPos" : 2633,
+  "firstPos" : 2583,
+  "secondPos" : 2583,
   "firstEndPos" : 2676,
   "secondEndPos" : 2672
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The connection that carries this stream. */",
+  "secondLabel" : "/** The connection that carries this stream. */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2583,
+  "secondPos" : 2583,
+  "firstEndPos" : 2630,
+  "secondEndPos" : 2630
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2419,27 +2419,27 @@
   "firstEndPos" : 2851,
   "secondEndPos" : 2847
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Received trailers. Null unless the response body uses chunked transfer-encoding and includes\n   * trailers. Undefined until the end of the response body.\n   */",
-  "secondLabel" : "/**\n   * Received trailers. Null unless the response body uses chunked transfer-encoding and includes\n   * trailers. Undefined until the end of the response body.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3072,
-  "secondPos" : 3094,
-  "firstEndPos" : 3240,
-  "secondEndPos" : 3262
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3243,
-  "secondPos" : 3265,
+  "firstPos" : 3072,
+  "secondPos" : 3094,
   "firstEndPos" : 3280,
   "secondEndPos" : 3302
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Received trailers. Null unless the response body uses chunked transfer-encoding and includes\n   * trailers. Undefined until the end of the response body.\n   */",
+  "secondLabel" : "/**\n   * Received trailers. Null unless the response body uses chunked transfer-encoding and includes\n   * trailers. Undefined until the end of the response body.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3072,
+  "secondPos" : 3094,
+  "firstEndPos" : 3240,
+  "secondEndPos" : 3262
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2573,27 +2573,27 @@
   "firstEndPos" : 3280,
   "secondEndPos" : 3302
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns true if this connection is closed. */",
-  "secondLabel" : "/** Returns true if this connection is closed. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3284,
-  "secondPos" : 3306,
-  "firstEndPos" : 3333,
-  "secondEndPos" : 3355
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3336,
-  "secondPos" : 3358,
+  "firstPos" : 3284,
+  "secondPos" : 3306,
   "firstEndPos" : 3357,
   "secondEndPos" : 3379
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns true if this connection is closed. */",
+  "secondLabel" : "/** Returns true if this connection is closed. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3284,
+  "secondPos" : 3306,
+  "firstEndPos" : 3333,
+  "secondEndPos" : 3355
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3893,27 +3893,27 @@
   "firstEndPos" : 4142,
   "secondEndPos" : 4094
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Prepares the HTTP headers and sends them to the server.\n   *\n   * For streaming requests with a body, headers must be prepared **before** the output stream has\n   * been written to. Otherwise the body would need to be buffered!\n   *\n   * For non-streaming requests with a body, headers must be prepared **after** the output stream\n   * has been written to and closed. This ensures that the `Content-Length` header field receives\n   * the proper value.\n   */",
-  "secondLabel" : "/**\n   * Prepares the HTTP headers and sends them to the server.\n   *\n   * For streaming requests with a body, headers must be prepared **before** the output stream has\n   * been written to. Otherwise the body would need to be buffered!\n   *\n   * For non-streaming requests with a body, headers must be prepared **after** the output stream\n   * has been written to and closed. This ensures that the `Content-Length` header field receives\n   * the proper value.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4146,
-  "secondPos" : 4098,
-  "firstEndPos" : 4612,
-  "secondEndPos" : 4564
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4615,
-  "secondPos" : 4567,
+  "firstPos" : 4146,
+  "secondPos" : 4098,
   "firstEndPos" : 4813,
   "secondEndPos" : 4750
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Prepares the HTTP headers and sends them to the server.\n   *\n   * For streaming requests with a body, headers must be prepared **before** the output stream has\n   * been written to. Otherwise the body would need to be buffered!\n   *\n   * For non-streaming requests with a body, headers must be prepared **after** the output stream\n   * has been written to and closed. This ensures that the `Content-Length` header field receives\n   * the proper value.\n   */",
+  "secondLabel" : "/**\n   * Prepares the HTTP headers and sends them to the server.\n   *\n   * For streaming requests with a body, headers must be prepared **before** the output stream has\n   * been written to. Otherwise the body would need to be buffered!\n   *\n   * For non-streaming requests with a body, headers must be prepared **after** the output stream\n   * has been written to and closed. This ensures that the `Content-Length` header field receives\n   * the proper value.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4146,
+  "secondPos" : 4098,
+  "firstEndPos" : 4612,
+  "secondEndPos" : 4564
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -6929,27 +6929,27 @@
   "firstEndPos" : 5738,
   "secondEndPos" : 5671
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns bytes of a request header for sending on an HTTP transport. */",
-  "secondLabel" : "/** Returns bytes of a request header for sending on an HTTP transport. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5746,
-  "secondPos" : 5679,
-  "firstEndPos" : 5820,
-  "secondEndPos" : 5753
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5823,
-  "secondPos" : 5756,
+  "firstPos" : 5746,
+  "secondPos" : 5679,
   "firstEndPos" : 6225,
   "secondEndPos" : 6158
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns bytes of a request header for sending on an HTTP transport. */",
+  "secondLabel" : "/** Returns bytes of a request header for sending on an HTTP transport. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5746,
+  "secondPos" : 5679,
+  "firstEndPos" : 5820,
+  "secondEndPos" : 5753
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -10834,27 +10834,27 @@
   "firstEndPos" : 7457,
   "secondEndPos" : 7369
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Reads headers or trailers. */",
-  "secondLabel" : "/** Reads headers or trailers. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7465,
-  "secondPos" : 7377,
-  "firstEndPos" : 7498,
-  "secondEndPos" : 7410
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7501,
-  "secondPos" : 7413,
+  "firstPos" : 7465,
+  "secondPos" : 7377,
   "firstEndPos" : 7794,
   "secondEndPos" : 7706
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Reads headers or trailers. */",
+  "secondLabel" : "/** Reads headers or trailers. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7465,
+  "secondPos" : 7377,
+  "firstEndPos" : 7498,
+  "secondEndPos" : 7410
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -13903,27 +13903,27 @@
   "firstEndPos" : 8773,
   "secondEndPos" : 8679
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sets the delegate of `timeout` to [Timeout.NONE] and resets its underlying timeout\n   * to the default configuration. Use this to avoid unexpected sharing of timeouts between pooled\n   * connections.\n   */",
-  "secondLabel" : "/**\n   * Sets the delegate of `timeout` to [Timeout.NONE] and resets its underlying timeout\n   * to the default configuration. Use this to avoid unexpected sharing of timeouts between pooled\n   * connections.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8781,
-  "secondPos" : 8687,
-  "firstEndPos" : 8995,
-  "secondEndPos" : 8901
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8998,
-  "secondPos" : 8904,
+  "firstPos" : 8781,
+  "secondPos" : 8687,
   "firstEndPos" : 9197,
   "secondEndPos" : 9103
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sets the delegate of `timeout` to [Timeout.NONE] and resets its underlying timeout\n   * to the default configuration. Use this to avoid unexpected sharing of timeouts between pooled\n   * connections.\n   */",
+  "secondLabel" : "/**\n   * Sets the delegate of `timeout` to [Timeout.NONE] and resets its underlying timeout\n   * to the default configuration. Use this to avoid unexpected sharing of timeouts between pooled\n   * connections.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 8781,
+  "secondPos" : 8687,
+  "firstEndPos" : 8995,
+  "secondEndPos" : 8901
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -14453,27 +14453,27 @@
   "firstEndPos" : 9193,
   "secondEndPos" : 9099
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The response body from a CONNECT should be empty, but if it is not then we should consume it\n   * before proceeding.\n   */",
-  "secondLabel" : "/**\n   * The response body from a CONNECT should be empty, but if it is not then we should consume it\n   * before proceeding.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9201,
-  "secondPos" : 9107,
-  "firstEndPos" : 9332,
-  "secondEndPos" : 9238
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9335,
-  "secondPos" : 9241,
+  "firstPos" : 9201,
+  "secondPos" : 9107,
   "firstEndPos" : 9587,
   "secondEndPos" : 9493
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The response body from a CONNECT should be empty, but if it is not then we should consume it\n   * before proceeding.\n   */",
+  "secondLabel" : "/**\n   * The response body from a CONNECT should be empty, but if it is not then we should consume it\n   * before proceeding.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 9201,
+  "secondPos" : 9107,
+  "firstEndPos" : 9332,
+  "secondEndPos" : 9238
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -15212,27 +15212,27 @@
   "firstEndPos" : 9583,
   "secondEndPos" : 9489
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** An HTTP request body. */",
-  "secondLabel" : "/** An HTTP request body. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9591,
-  "secondPos" : 9497,
-  "firstEndPos" : 9619,
-  "secondEndPos" : 9525
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 9622,
-  "secondPos" : 9528,
+  "firstPos" : 9591,
+  "secondPos" : 9497,
   "firstEndPos" : 10308,
   "secondEndPos" : 10214
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** An HTTP request body. */",
+  "secondLabel" : "/** An HTTP request body. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 9591,
+  "secondPos" : 9497,
+  "firstEndPos" : 9619,
+  "secondEndPos" : 9525
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -17060,27 +17060,27 @@
   "firstEndPos" : 10298,
   "secondEndPos" : 10204
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * An HTTP body with alternating chunk sizes and chunk bodies. It is the caller's responsibility\n   * to buffer chunks; typically by using a buffered sink with this sink.\n   */",
-  "secondLabel" : "/**\n   * An HTTP body with alternating chunk sizes and chunk bodies. It is the caller's responsibility\n   * to buffer chunks; typically by using a buffered sink with this sink.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 10312,
-  "secondPos" : 10218,
-  "firstEndPos" : 10494,
-  "secondEndPos" : 10400
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10497,
-  "secondPos" : 10403,
+  "firstPos" : 10312,
+  "secondPos" : 10218,
   "firstEndPos" : 11340,
   "secondEndPos" : 11246
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * An HTTP body with alternating chunk sizes and chunk bodies. It is the caller's responsibility\n   * to buffer chunks; typically by using a buffered sink with this sink.\n   */",
+  "secondLabel" : "/**\n   * An HTTP body with alternating chunk sizes and chunk bodies. It is the caller's responsibility\n   * to buffer chunks; typically by using a buffered sink with this sink.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 10312,
+  "secondPos" : 10218,
+  "firstEndPos" : 10494,
+  "secondEndPos" : 10400
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -20624,27 +20624,27 @@
   "firstEndPos" : 11791,
   "secondEndPos" : 11691
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Closes the cache entry and makes the socket available for reuse. This should be invoked when\n     * the end of the body has been reached.\n     */",
-  "secondLabel" : "/**\n     * Closes the cache entry and makes the socket available for reuse. This should be invoked when\n     * the end of the body has been reached.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 11811,
-  "secondPos" : 11711,
-  "firstEndPos" : 11967,
-  "secondEndPos" : 11867
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 11972,
-  "secondPos" : 11872,
+  "firstPos" : 11811,
+  "secondPos" : 11711,
   "firstEndPos" : 12206,
   "secondEndPos" : 12106
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Closes the cache entry and makes the socket available for reuse. This should be invoked when\n     * the end of the body has been reached.\n     */",
+  "secondLabel" : "/**\n     * Closes the cache entry and makes the socket available for reuse. This should be invoked when\n     * the end of the body has been reached.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 11811,
+  "secondPos" : 11711,
+  "firstEndPos" : 11967,
+  "secondEndPos" : 11867
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -21119,27 +21119,27 @@
   "firstEndPos" : 12200,
   "secondEndPos" : 12100
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** An HTTP body with a fixed length specified in advance. */",
-  "secondLabel" : "/** An HTTP body with a fixed length specified in advance. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 12214,
-  "secondPos" : 12114,
-  "firstEndPos" : 12275,
-  "secondEndPos" : 12175
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 12278,
-  "secondPos" : 12178,
+  "firstPos" : 12214,
+  "secondPos" : 12114,
   "firstEndPos" : 13445,
   "secondEndPos" : 13333
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** An HTTP body with a fixed length specified in advance. */",
+  "secondLabel" : "/** An HTTP body with a fixed length specified in advance. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 12214,
+  "secondPos" : 12114,
+  "firstEndPos" : 12275,
+  "secondEndPos" : 12175
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -23737,27 +23737,27 @@
   "firstEndPos" : 13435,
   "secondEndPos" : 13323
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** An HTTP body with alternating chunk sizes and chunk bodies. */",
-  "secondLabel" : "/** An HTTP body with alternating chunk sizes and chunk bodies. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 13449,
-  "secondPos" : 13337,
-  "firstEndPos" : 13515,
-  "secondEndPos" : 13403
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 13518,
-  "secondPos" : 13406,
+  "firstPos" : 13449,
+  "secondPos" : 13337,
   "firstEndPos" : 15626,
   "secondEndPos" : 15502
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** An HTTP body with alternating chunk sizes and chunk bodies. */",
+  "secondLabel" : "/** An HTTP body with alternating chunk sizes and chunk bodies. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 13449,
+  "secondPos" : 13337,
+  "firstEndPos" : 13515,
+  "secondEndPos" : 13403
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -28313,27 +28313,27 @@
   "firstEndPos" : 15616,
   "secondEndPos" : 15492
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** An HTTP message body terminated by the end of the underlying stream. */",
-  "secondLabel" : "/** An HTTP message body terminated by the end of the underlying stream. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 15630,
-  "secondPos" : 15506,
-  "firstEndPos" : 15705,
-  "secondEndPos" : 15581
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 15708,
-  "secondPos" : 15584,
+  "firstPos" : 15630,
+  "secondPos" : 15506,
   "firstEndPos" : 16344,
   "secondEndPos" : 16220
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** An HTTP message body terminated by the end of the underlying stream. */",
+  "secondLabel" : "/** An HTTP message body terminated by the end of the underlying stream. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15630,
+  "secondPos" : 15506,
+  "firstEndPos" : 15705,
+  "secondEndPos" : 15581
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

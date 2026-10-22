@@ -164,27 +164,27 @@
   "firstEndPos" : 725,
   "secondEndPos" : 704
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Internal access to MockWebServer APIs. Don't use this, don't use internal, these APIs are not\n * stable.\n */",
-  "secondLabel" : "/**\n * Internal access to MockWebServer APIs. Don't use this, don't use internal, these APIs are not\n * stable.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 727,
-  "secondPos" : 706,
-  "firstEndPos" : 842,
-  "secondEndPos" : 821
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 843,
-  "secondPos" : 822,
+  "firstPos" : 727,
+  "secondPos" : 706,
   "firstEndPos" : 1075,
   "secondEndPos" : 1049
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Internal access to MockWebServer APIs. Don't use this, don't use internal, these APIs are not\n * stable.\n */",
+  "secondLabel" : "/**\n * Internal access to MockWebServer APIs. Don't use this, don't use internal, these APIs are not\n * stable.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 727,
+  "secondPos" : 706,
+  "firstEndPos" : 842,
+  "secondEndPos" : 821
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

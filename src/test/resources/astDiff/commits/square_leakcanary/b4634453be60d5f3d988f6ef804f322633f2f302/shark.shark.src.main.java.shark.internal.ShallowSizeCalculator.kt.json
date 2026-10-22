@@ -406,27 +406,27 @@
   "firstEndPos" : 317,
   "secondEndPos" : 308
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Provides approximations for the shallow size of objects in memory.\n *\n * Determining the actual shallow size of an object in memory is hard, as it changes for each VM\n * implementation, depending on the various memory layout optimizations and bit alignment.\n *\n * More on this topic: https://dev.to/pyricau/the-real-size-of-android-objects-1i2e\n */",
-  "secondLabel" : "/**\n * Provides approximations for the shallow size of objects in memory.\n *\n * Determining the actual shallow size of an object in memory is hard, as it changes for each VM\n * implementation, depending on the various memory layout optimizations and bit alignment.\n *\n * More on this topic: https://dev.to/pyricau/the-real-size-of-android-objects-1i2e\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 319,
-  "secondPos" : 310,
-  "firstEndPos" : 674,
-  "secondEndPos" : 665
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 675,
-  "secondPos" : 666,
+  "firstPos" : 319,
+  "secondPos" : 310,
   "firstEndPos" : 2729,
   "secondEndPos" : 2720
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Provides approximations for the shallow size of objects in memory.\n *\n * Determining the actual shallow size of an object in memory is hard, as it changes for each VM\n * implementation, depending on the various memory layout optimizations and bit alignment.\n *\n * More on this topic: https://dev.to/pyricau/the-real-size-of-android-objects-1i2e\n */",
+  "secondLabel" : "/**\n * Provides approximations for the shallow size of objects in memory.\n *\n * Determining the actual shallow size of an object in memory is hard, as it changes for each VM\n * implementation, depending on the various memory layout optimizations and bit alignment.\n *\n * More on this topic: https://dev.to/pyricau/the-real-size-of-android-objects-1i2e\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 319,
+  "secondPos" : 310,
+  "firstEndPos" : 674,
+  "secondEndPos" : 665
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -2023,27 +2023,27 @@
   "firstEndPos" : 2032,
   "secondEndPos" : 1921
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for scenarios that requires navigating within the app.\n */",
-  "secondLabel" : "/**\n * Tests for scenarios that requires navigating within the app.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2034,
-  "secondPos" : 1923,
-  "firstEndPos" : 2105,
-  "secondEndPos" : 1994
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2106,
-  "secondPos" : 1995,
+  "firstPos" : 2034,
+  "secondPos" : 1923,
   "firstEndPos" : 7465,
   "secondEndPos" : 7302
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for scenarios that requires navigating within the app.\n */",
+  "secondLabel" : "/**\n * Tests for scenarios that requires navigating within the app.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2034,
+  "secondPos" : 1923,
+  "firstEndPos" : 2105,
+  "secondEndPos" : 1994
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2584,27 +2584,27 @@
   "firstEndPos" : 2256,
   "secondEndPos" : 2145
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Executes tasks in the Architecture Components in the same thread",
-  "secondLabel" : "// Executes tasks in the Architecture Components in the same thread",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2263,
-  "secondPos" : 2152,
-  "firstEndPos" : 2330,
-  "secondEndPos" : 2219
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2335,
-  "secondPos" : 2224,
+  "firstPos" : 2263,
+  "secondPos" : 2152,
   "firstEndPos" : 2415,
   "secondEndPos" : 2304
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Executes tasks in the Architecture Components in the same thread",
+  "secondLabel" : "// Executes tasks in the Architecture Components in the same thread",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2263,
+  "secondPos" : 2152,
+  "firstEndPos" : 2330,
+  "secondEndPos" : 2219
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

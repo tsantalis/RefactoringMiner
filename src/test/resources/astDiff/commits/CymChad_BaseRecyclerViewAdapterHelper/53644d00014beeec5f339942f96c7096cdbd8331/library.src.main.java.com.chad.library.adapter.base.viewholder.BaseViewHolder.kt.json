@@ -692,27 +692,27 @@
   "firstEndPos" : 408,
   "secondEndPos" : 408
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewHolder 基类\n */",
-  "secondLabel" : "/**\n * ViewHolder 基类\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 410,
-  "secondPos" : 410,
-  "firstEndPos" : 434,
-  "secondEndPos" : 434
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 435,
-  "secondPos" : 435,
+  "firstPos" : 410,
+  "secondPos" : 410,
   "firstEndPos" : 3605,
   "secondEndPos" : 3601
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewHolder 基类\n */",
+  "secondLabel" : "/**\n * ViewHolder 基类\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 410,
+  "secondPos" : 410,
+  "firstEndPos" : 434,
+  "secondEndPos" : 434
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -923,27 +923,27 @@
   "firstEndPos" : 3605,
   "secondEndPos" : 3601
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Views indexed with their IDs\n     */",
-  "secondLabel" : "/**\n     * Views indexed with their IDs\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 511,
-  "secondPos" : 511,
-  "firstEndPos" : 558,
-  "secondEndPos" : 558
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 563,
-  "secondPos" : 563,
+  "firstPos" : 511,
+  "secondPos" : 511,
   "firstEndPos" : 615,
   "secondEndPos" : 615
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Views indexed with their IDs\n     */",
+  "secondLabel" : "/**\n     * Views indexed with their IDs\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 511,
+  "secondPos" : 511,
+  "firstEndPos" : 558,
+  "secondEndPos" : 558
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1143,27 +1143,27 @@
   "firstEndPos" : 615,
   "secondEndPos" : 615
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 如果使用了 DataBinding 绑定 View，可调用此方法获取 [ViewDataBinding]\n     * @return B?\n     */",
-  "secondLabel" : "/**\n     * 如果使用了 DataBinding 绑定 View，可调用此方法获取 [ViewDataBinding]\n     * @return B?\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 621,
-  "secondPos" : 621,
-  "firstEndPos" : 710,
-  "secondEndPos" : 710
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 715,
-  "secondPos" : 715,
+  "firstPos" : 621,
+  "secondPos" : 621,
   "firstEndPos" : 801,
   "secondEndPos" : 801
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 如果使用了 DataBinding 绑定 View，可调用此方法获取 [ViewDataBinding]\n     * @return B?\n     */",
+  "secondLabel" : "/**\n     * 如果使用了 DataBinding 绑定 View，可调用此方法获取 [ViewDataBinding]\n     * @return B?\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 621,
+  "secondPos" : 621,
+  "firstEndPos" : 710,
+  "secondEndPos" : 710
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

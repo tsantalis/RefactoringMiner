@@ -248,7 +248,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 135,
-  "secondPos" : 427,
+  "secondPos" : 135,
   "firstEndPos" : 1729,
   "secondEndPos" : 2481
 }, {
@@ -362,27 +362,27 @@
   "firstEndPos" : 1005,
   "secondEndPos" : 1440
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether LeakSentry should watch instances (by keeping weak references to them). Default is\n     * true in debuggable builds and false is non debuggable builds.\n     */",
-  "secondLabel" : "/**\n     * Whether LeakSentry should watch objects (by keeping weak references to them).\n     *\n     * Default to true in debuggable builds and false is non debuggable builds.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 181,
-  "secondPos" : 473,
-  "firstEndPos" : 359,
-  "secondEndPos" : 656
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 364,
-  "secondPos" : 661,
+  "firstPos" : 181,
+  "secondPos" : 473,
   "firstEndPos" : 423,
   "secondEndPos" : 720
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether LeakSentry should watch instances (by keeping weak references to them). Default is\n     * true in debuggable builds and false is non debuggable builds.\n     */",
+  "secondLabel" : "/**\n     * Whether LeakSentry should watch objects (by keeping weak references to them).\n     *\n     * Default to true in debuggable builds and false is non debuggable builds.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 181,
+  "secondPos" : 473,
+  "firstEndPos" : 359,
+  "secondEndPos" : 656
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -494,27 +494,27 @@
   "firstEndPos" : 423,
   "secondEndPos" : 720
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether LeakCanary should automatically watch destroyed activities.\n     */",
-  "secondLabel" : "/**\n     * Whether LeakSentry should automatically watch destroyed activity instances.\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 429,
-  "secondPos" : 727,
-  "firstEndPos" : 515,
-  "secondEndPos" : 853
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 520,
-  "secondPos" : 858,
+  "firstPos" : 429,
+  "secondPos" : 727,
   "firstEndPos" : 555,
   "secondEndPos" : 893
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether LeakCanary should automatically watch destroyed activities.\n     */",
+  "secondLabel" : "/**\n     * Whether LeakSentry should automatically watch destroyed activity instances.\n     *\n     * Defaults to true.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 429,
+  "secondPos" : 727,
+  "firstEndPos" : 515,
+  "secondEndPos" : 853
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -604,27 +604,27 @@
   "firstEndPos" : 555,
   "secondEndPos" : 893
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether LeakCanary should automatically watch destroyed fragments.\n     */",
-  "secondLabel" : "/**\n     * Whether LeakSentry should automatically watch destroyed fragment instances.\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 561,
-  "secondPos" : 900,
-  "firstEndPos" : 646,
-  "secondEndPos" : 1026
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 651,
-  "secondPos" : 1031,
+  "firstPos" : 561,
+  "secondPos" : 900,
   "firstEndPos" : 685,
   "secondEndPos" : 1065
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether LeakCanary should automatically watch destroyed fragments.\n     */",
+  "secondLabel" : "/**\n     * Whether LeakSentry should automatically watch destroyed fragment instances.\n     *\n     * Defaults to true.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 561,
+  "secondPos" : 900,
+  "firstEndPos" : 646,
+  "secondEndPos" : 1026
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -714,27 +714,27 @@
   "firstEndPos" : 685,
   "secondEndPos" : 1065
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Whether LeakCanary should automatically watch destroyed fragment views.\n     */",
-  "secondLabel" : "/**\n     * Whether LeakSentry should automatically watch destroyed fragment view instances.\n     *\n     * Defaults to true.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 691,
-  "secondPos" : 1072,
-  "firstEndPos" : 781,
-  "secondEndPos" : 1203
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 786,
-  "secondPos" : 1208,
+  "firstPos" : 691,
+  "secondPos" : 1072,
   "firstEndPos" : 824,
   "secondEndPos" : 1246
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Whether LeakCanary should automatically watch destroyed fragment views.\n     */",
+  "secondLabel" : "/**\n     * Whether LeakSentry should automatically watch destroyed fragment view instances.\n     *\n     * Defaults to true.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 691,
+  "secondPos" : 1072,
+  "firstEndPos" : 781,
+  "secondEndPos" : 1203
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -824,27 +824,27 @@
   "firstEndPos" : 824,
   "secondEndPos" : 1246
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * How long to wait before reporting a watched instance as retained. Default is 5 seconds.\n     */",
-  "secondLabel" : "/**\n     * How long to wait before reporting a watched object as retained.\n     *\n     * Default to 5 seconds.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 830,
-  "secondPos" : 1253,
-  "firstEndPos" : 936,
-  "secondEndPos" : 1371
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 941,
-  "secondPos" : 1376,
+  "firstPos" : 830,
+  "secondPos" : 1253,
   "firstEndPos" : 1001,
   "secondEndPos" : 1436
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * How long to wait before reporting a watched instance as retained. Default is 5 seconds.\n     */",
+  "secondLabel" : "/**\n     * How long to wait before reporting a watched object as retained.\n     *\n     * Default to 5 seconds.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 830,
+  "secondPos" : 1253,
+  "firstEndPos" : 936,
+  "secondEndPos" : 1371
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1051,7 +1051,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1009,
-  "secondPos" : 1671,
+  "secondPos" : 1444,
   "firstEndPos" : 1096,
   "secondEndPos" : 1758
 }, {
@@ -1374,27 +1374,27 @@
   "firstEndPos" : 1095,
   "secondEndPos" : 1757
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** @see [manualInstall] */",
-  "secondLabel" : "/** @see [manualInstall] */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1160,
-  "secondPos" : 1912,
-  "firstEndPos" : 1187,
-  "secondEndPos" : 1939
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1190,
-  "secondPos" : 1942,
+  "firstPos" : 1160,
+  "secondPos" : 1912,
   "firstEndPos" : 1205,
   "secondEndPos" : 1957
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** @see [manualInstall] */",
+  "secondLabel" : "/** @see [manualInstall] */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1160,
+  "secondPos" : 1912,
+  "firstEndPos" : 1187,
+  "secondEndPos" : 1939
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1517,27 +1517,27 @@
   "firstEndPos" : 1248,
   "secondEndPos" : 2000
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * [LeakSentry] is automatically installed on main process start by\n   * [leakcanary.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leakcanary.internal.LeakSentryInstaller] or you need LeakSentry\n   * or LeakCanary to run outside of the main process then you can call this method to install\n   * [LeakSentry].\n   */",
-  "secondLabel" : "/**\n   * [LeakSentry] is automatically installed on main process start by\n   * [leakcanary.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leakcanary.internal.LeakSentryInstaller] or you need LeakSentry\n   * or LeakCanary to run outside of the main process then you can call this method to install\n   * [LeakSentry].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1252,
-  "secondPos" : 2004,
-  "firstEndPos" : 1638,
-  "secondEndPos" : 2390
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1641,
-  "secondPos" : 2393,
+  "firstPos" : 1252,
+  "secondPos" : 2004,
   "firstEndPos" : 1726,
   "secondEndPos" : 2478
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * [LeakSentry] is automatically installed on main process start by\n   * [leakcanary.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leakcanary.internal.LeakSentryInstaller] or you need LeakSentry\n   * or LeakCanary to run outside of the main process then you can call this method to install\n   * [LeakSentry].\n   */",
+  "secondLabel" : "/**\n   * [LeakSentry] is automatically installed on main process start by\n   * [leakcanary.internal.LeakSentryInstaller] which is registered in the AndroidManifest.xml of\n   * your app. If you disabled [leakcanary.internal.LeakSentryInstaller] or you need LeakSentry\n   * or LeakCanary to run outside of the main process then you can call this method to install\n   * [LeakSentry].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1252,
+  "secondPos" : 2004,
+  "firstEndPos" : 1638,
+  "secondEndPos" : 2390
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

@@ -1429,27 +1429,27 @@
   "firstEndPos" : 1568,
   "secondEndPos" : 1573
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Runs into the main process and handles the result of an analysis\n */",
-  "secondLabel" : "/**\n * Runs into the main process and handles the result of an analysis\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1570,
-  "secondPos" : 1575,
-  "firstEndPos" : 1645,
-  "secondEndPos" : 1650
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1646,
-  "secondPos" : 1651,
+  "firstPos" : 1570,
+  "secondPos" : 1575,
   "firstEndPos" : 5635,
   "secondEndPos" : 5640
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Runs into the main process and handles the result of an analysis\n */",
+  "secondLabel" : "/**\n * Runs into the main process and handles the result of an analysis\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1570,
+  "secondPos" : 1575,
+  "firstEndPos" : 1645,
+  "secondEndPos" : 1650
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -6346,27 +6346,27 @@
   "firstEndPos" : 3777,
   "secondEndPos" : 3782
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
-  "secondLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3786,
-  "secondPos" : 3791,
-  "firstEndPos" : 3936,
-  "secondEndPos" : 3941
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3939,
-  "secondPos" : 3944,
+  "firstPos" : 3786,
+  "secondPos" : 3791,
   "firstEndPos" : 4169,
   "secondEndPos" : 4174
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
+  "secondLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3786,
+  "secondPos" : 3791,
+  "firstEndPos" : 3936,
+  "secondEndPos" : 3941
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -241,27 +241,27 @@
   "firstEndPos" : 73,
   "secondEndPos" : 73
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Used by the shortest path finder to create a segmented FIFO queue using a priority queue. */",
-  "secondLabel" : "/** Used by the shortest path finder to create a segmented FIFO queue using a priority queue. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 76,
-  "secondPos" : 76,
-  "firstEndPos" : 172,
-  "secondEndPos" : 172
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 175,
-  "secondPos" : 175,
+  "firstPos" : 76,
+  "secondPos" : 76,
   "firstEndPos" : 203,
   "secondEndPos" : 203
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Used by the shortest path finder to create a segmented FIFO queue using a priority queue. */",
+  "secondLabel" : "/** Used by the shortest path finder to create a segmented FIFO queue using a priority queue. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 76,
+  "secondPos" : 76,
+  "firstEndPos" : 172,
+  "secondEndPos" : 172
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -1022,27 +1022,27 @@
   "firstEndPos" : 475,
   "secondEndPos" : 459
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The reference from the parent to this node\n     */",
-  "secondLabel" : "/**\n     * The reference from the parent to this node\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 481,
-  "secondPos" : 465,
-  "firstEndPos" : 542,
-  "secondEndPos" : 526
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 547,
-  "secondPos" : 531,
+  "firstPos" : 481,
+  "secondPos" : 465,
   "firstEndPos" : 580,
   "secondEndPos" : 564
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The reference from the parent to this node\n     */",
+  "secondLabel" : "/**\n     * The reference from the parent to this node\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 481,
+  "secondPos" : 465,
+  "firstEndPos" : 542,
+  "secondEndPos" : 526
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

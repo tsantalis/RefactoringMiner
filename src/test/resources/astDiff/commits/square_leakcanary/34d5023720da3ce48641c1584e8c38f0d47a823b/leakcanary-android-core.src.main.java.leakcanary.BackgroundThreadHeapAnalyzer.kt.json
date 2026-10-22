@@ -296,27 +296,27 @@
   "firstEndPos" : 162,
   "secondEndPos" : 162
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Starts heap analysis on a background [HandlerThread] when receiving a [HeapDump] event.\n */",
-  "secondLabel" : "/**\n * Starts heap analysis on a background [HandlerThread] when receiving a [HeapDump] event.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 164,
-  "secondPos" : 262,
-  "firstEndPos" : 262,
-  "secondEndPos" : 360
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 263,
-  "secondPos" : 361,
+  "firstPos" : 164,
+  "secondPos" : 262,
   "firstEndPos" : 657,
   "secondEndPos" : 903
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Starts heap analysis on a background [HandlerThread] when receiving a [HeapDump] event.\n */",
+  "secondLabel" : "/**\n * Starts heap analysis on a background [HandlerThread] when receiving a [HeapDump] event.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 164,
+  "secondPos" : 262,
+  "firstEndPos" : 262,
+  "secondEndPos" : 360
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

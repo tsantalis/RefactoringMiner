@@ -384,27 +384,27 @@
   "firstEndPos" : 209,
   "secondEndPos" : 196
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Wraps a [HeapDump] and corresponding [AnalysisResult].\n */",
-  "secondLabel" : "/**\n * Wraps a [HeapDump] and corresponding [AnalysisResult].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 211,
-  "secondPos" : 198,
-  "firstEndPos" : 276,
-  "secondEndPos" : 263
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 277,
-  "secondPos" : 264,
+  "firstPos" : 211,
+  "secondPos" : 198,
   "firstEndPos" : 2597,
   "secondEndPos" : 2662
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Wraps a [HeapDump] and corresponding [AnalysisResult].\n */",
+  "secondLabel" : "/**\n * Wraps a [HeapDump] and corresponding [AnalysisResult].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 211,
+  "secondPos" : 198,
+  "firstEndPos" : 276,
+  "secondEndPos" : 263
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

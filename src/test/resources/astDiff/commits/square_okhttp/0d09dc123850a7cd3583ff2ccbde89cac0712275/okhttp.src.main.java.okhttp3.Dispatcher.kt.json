@@ -813,27 +813,27 @@
   "firstEndPos" : 1092,
   "secondEndPos" : 1092
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Policy on when async requests are executed.\n *\n * Each dispatcher uses an [ExecutorService] to run calls internally. If you supply your own\n * executor, it should be able to run [the configured maximum][maxRequests] number of calls\n * concurrently.\n */",
-  "secondLabel" : "/**\n * Policy on when async requests are executed.\n *\n * Each dispatcher uses an [ExecutorService] to run calls internally. If you supply your own\n * executor, it should be able to run [the configured maximum][maxRequests] number of calls\n * concurrently.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1094,
-  "secondPos" : 1094,
-  "firstEndPos" : 1353,
-  "secondEndPos" : 1353
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1354,
-  "secondPos" : 1354,
+  "firstPos" : 1094,
+  "secondPos" : 1094,
   "firstEndPos" : 8328,
   "secondEndPos" : 8311
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Policy on when async requests are executed.\n *\n * Each dispatcher uses an [ExecutorService] to run calls internally. If you supply your own\n * executor, it should be able to run [the configured maximum][maxRequests] number of calls\n * concurrently.\n */",
+  "secondLabel" : "/**\n * Policy on when async requests are executed.\n *\n * Each dispatcher uses an [ExecutorService] to run calls internally. If you supply your own\n * executor, it should be able to run [the configured maximum][maxRequests] number of calls\n * concurrently.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1094,
+  "secondPos" : 1094,
+  "firstEndPos" : 1353,
+  "secondEndPos" : 1353
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -890,27 +890,27 @@
   "firstEndPos" : 8328,
   "secondEndPos" : 8311
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The maximum number of requests to execute concurrently. Above this requests queue in memory,\n   * waiting for the running calls to complete.\n   *\n   * If more than [maxRequests] requests are in flight when this is invoked, those requests will\n   * remain in flight.\n   */",
-  "secondLabel" : "/**\n   * The maximum number of requests to execute concurrently. Above this requests queue in memory,\n   * waiting for the running calls to complete.\n   *\n   * If more than [maxRequests] requests are in flight when this is invoked, those requests will\n   * remain in flight.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1389,
-  "secondPos" : 1389,
-  "firstEndPos" : 1669,
-  "secondEndPos" : 1669
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1672,
-  "secondPos" : 1672,
+  "firstPos" : 1389,
+  "secondPos" : 1389,
   "firstEndPos" : 1710,
   "secondEndPos" : 1710
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The maximum number of requests to execute concurrently. Above this requests queue in memory,\n   * waiting for the running calls to complete.\n   *\n   * If more than [maxRequests] requests are in flight when this is invoked, those requests will\n   * remain in flight.\n   */",
+  "secondLabel" : "/**\n   * The maximum number of requests to execute concurrently. Above this requests queue in memory,\n   * waiting for the running calls to complete.\n   *\n   * If more than [maxRequests] requests are in flight when this is invoked, those requests will\n   * remain in flight.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1389,
+  "secondPos" : 1389,
+  "firstEndPos" : 1669,
+  "secondEndPos" : 1669
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1528,27 +1528,27 @@
   "firstEndPos" : 1882,
   "secondEndPos" : 1882
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The maximum number of requests for each host to execute concurrently. This limits requests by\n   * the URL's host name. Note that concurrent requests to a single IP address may still exceed this\n   * limit: multiple hostnames may share an IP address or be routed through the same HTTP proxy.\n   *\n   * If more than [maxRequestsPerHost] requests are in flight when this is invoked, those requests\n   * will remain in flight.\n   *\n   * WebSocket connections to hosts **do not** count against this limit.\n   */",
-  "secondLabel" : "/**\n   * The maximum number of requests for each host to execute concurrently. This limits requests by\n   * the URL's host name. Note that concurrent requests to a single IP address may still exceed this\n   * limit: multiple hostnames may share an IP address or be routed through the same HTTP proxy.\n   *\n   * If more than [maxRequestsPerHost] requests are in flight when this is invoked, those requests\n   * will remain in flight.\n   *\n   * WebSocket connections to hosts **do not** count against this limit.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1892,
-  "secondPos" : 1892,
-  "firstEndPos" : 2408,
-  "secondEndPos" : 2408
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2411,
-  "secondPos" : 2411,
+  "firstPos" : 1892,
+  "secondPos" : 1892,
   "firstEndPos" : 2455,
   "secondEndPos" : 2455
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The maximum number of requests for each host to execute concurrently. This limits requests by\n   * the URL's host name. Note that concurrent requests to a single IP address may still exceed this\n   * limit: multiple hostnames may share an IP address or be routed through the same HTTP proxy.\n   *\n   * If more than [maxRequestsPerHost] requests are in flight when this is invoked, those requests\n   * will remain in flight.\n   *\n   * WebSocket connections to hosts **do not** count against this limit.\n   */",
+  "secondLabel" : "/**\n   * The maximum number of requests for each host to execute concurrently. This limits requests by\n   * the URL's host name. Note that concurrent requests to a single IP address may still exceed this\n   * limit: multiple hostnames may share an IP address or be routed through the same HTTP proxy.\n   *\n   * If more than [maxRequestsPerHost] requests are in flight when this is invoked, those requests\n   * will remain in flight.\n   *\n   * WebSocket connections to hosts **do not** count against this limit.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1892,
+  "secondPos" : 1892,
+  "firstEndPos" : 2408,
+  "secondEndPos" : 2408
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2166,27 +2166,27 @@
   "firstEndPos" : 2655,
   "secondEndPos" : 2655
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A callback to be invoked each time the dispatcher becomes idle (when the number of running\n   * calls returns to zero).\n   *\n   * Note: The time at which a [call][Call] is considered idle is different depending on whether it\n   * was run [asynchronously][Call.enqueue] or [synchronously][Call.execute]. Asynchronous calls\n   * become idle after the [onResponse][Callback.onResponse] or [onFailure][Callback.onFailure]\n   * callback has returned. Synchronous calls become idle once [execute()][Call.execute] returns.\n   * This means that if you are doing synchronous calls the network layer will not truly be idle\n   * until every returned [Response] has been closed.\n   */",
-  "secondLabel" : "/**\n   * A callback to be invoked each time the dispatcher becomes idle (when the number of running\n   * calls returns to zero).\n   *\n   * Note: The time at which a [call][Call] is considered idle is different depending on whether it\n   * was run [asynchronously][Call.enqueue] or [synchronously][Call.execute]. Asynchronous calls\n   * become idle after the [onResponse][Callback.onResponse] or [onFailure][Callback.onFailure]\n   * callback has returned. Synchronous calls become idle once [execute()][Call.execute] returns.\n   * This means that if you are doing synchronous calls the network layer will not truly be idle\n   * until every returned [Response] has been closed.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2665,
-  "secondPos" : 2665,
-  "firstEndPos" : 3346,
-  "secondEndPos" : 3346
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3349,
-  "secondPos" : 3349,
+  "firstPos" : 2665,
+  "secondPos" : 2665,
   "firstEndPos" : 3423,
   "secondEndPos" : 3423
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A callback to be invoked each time the dispatcher becomes idle (when the number of running\n   * calls returns to zero).\n   *\n   * Note: The time at which a [call][Call] is considered idle is different depending on whether it\n   * was run [asynchronously][Call.enqueue] or [synchronously][Call.execute]. Asynchronous calls\n   * become idle after the [onResponse][Callback.onResponse] or [onFailure][Callback.onFailure]\n   * callback has returned. Synchronous calls become idle once [execute()][Call.execute] returns.\n   * This means that if you are doing synchronous calls the network layer will not truly be idle\n   * until every returned [Response] has been closed.\n   */",
+  "secondLabel" : "/**\n   * A callback to be invoked each time the dispatcher becomes idle (when the number of running\n   * calls returns to zero).\n   *\n   * Note: The time at which a [call][Call] is considered idle is different depending on whether it\n   * was run [asynchronously][Call.enqueue] or [synchronously][Call.execute]. Asynchronous calls\n   * become idle after the [onResponse][Callback.onResponse] or [onFailure][Callback.onFailure]\n   * callback has returned. Synchronous calls become idle once [execute()][Call.execute] returns.\n   * This means that if you are doing synchronous calls the network layer will not truly be idle\n   * until every returned [Response] has been closed.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2665,
+  "secondPos" : 2665,
+  "firstEndPos" : 3346,
+  "secondEndPos" : 3346
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3442,27 +3442,27 @@
   "firstEndPos" : 3848,
   "secondEndPos" : 3848
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Ready async calls in the order they'll be run. */",
-  "secondLabel" : "/** Ready async calls in the order they'll be run. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3858,
-  "secondPos" : 3858,
-  "firstEndPos" : 3911,
-  "secondEndPos" : 3911
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3914,
-  "secondPos" : 3914,
+  "firstPos" : 3858,
+  "secondPos" : 3858,
   "firstEndPos" : 3967,
   "secondEndPos" : 3967
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Ready async calls in the order they'll be run. */",
+  "secondLabel" : "/** Ready async calls in the order they'll be run. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3858,
+  "secondPos" : 3858,
+  "firstEndPos" : 3911,
+  "secondEndPos" : 3911
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3640,27 +3640,27 @@
   "firstEndPos" : 3967,
   "secondEndPos" : 3967
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Running asynchronous calls. Includes canceled calls that haven't finished yet. */",
-  "secondLabel" : "/** Running asynchronous calls. Includes canceled calls that haven't finished yet. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3971,
-  "secondPos" : 3971,
-  "firstEndPos" : 4056,
-  "secondEndPos" : 4056
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4059,
-  "secondPos" : 4059,
+  "firstPos" : 3971,
+  "secondPos" : 3971,
   "firstEndPos" : 4114,
   "secondEndPos" : 4114
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Running asynchronous calls. Includes canceled calls that haven't finished yet. */",
+  "secondLabel" : "/** Running asynchronous calls. Includes canceled calls that haven't finished yet. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3971,
+  "secondPos" : 3971,
+  "firstEndPos" : 4056,
+  "secondEndPos" : 4056
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3838,27 +3838,27 @@
   "firstEndPos" : 4114,
   "secondEndPos" : 4114
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Running synchronous calls. Includes canceled calls that haven't finished yet. */",
-  "secondLabel" : "/** Running synchronous calls. Includes canceled calls that haven't finished yet. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4118,
-  "secondPos" : 4118,
-  "firstEndPos" : 4202,
-  "secondEndPos" : 4202
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4205,
-  "secondPos" : 4205,
+  "firstPos" : 4118,
+  "secondPos" : 4118,
   "firstEndPos" : 4258,
   "secondEndPos" : 4258
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Running synchronous calls. Includes canceled calls that haven't finished yet. */",
+  "secondLabel" : "/** Running synchronous calls. Includes canceled calls that haven't finished yet. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4118,
+  "secondPos" : 4118,
+  "firstEndPos" : 4202,
+  "secondEndPos" : 4202
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5741,27 +5741,27 @@
   "firstEndPos" : 5117,
   "secondEndPos" : 5110
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Cancel all calls currently enqueued or executing. Includes calls executed both\n   * [synchronously][Call.execute] and [asynchronously][Call.enqueue].\n   */",
-  "secondLabel" : "/**\n   * Cancel all calls currently enqueued or executing. Includes calls executed both\n   * [synchronously][Call.execute] and [asynchronously][Call.enqueue].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5125,
-  "secondPos" : 5118,
-  "firstEndPos" : 5289,
-  "secondEndPos" : 5282
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5292,
-  "secondPos" : 5285,
+  "firstPos" : 5125,
+  "secondPos" : 5118,
   "firstEndPos" : 5528,
   "secondEndPos" : 5519
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Cancel all calls currently enqueued or executing. Includes calls executed both\n   * [synchronously][Call.execute] and [asynchronously][Call.enqueue].\n   */",
+  "secondLabel" : "/**\n   * Cancel all calls currently enqueued or executing. Includes calls executed both\n   * [synchronously][Call.execute] and [asynchronously][Call.enqueue].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5125,
+  "secondPos" : 5118,
+  "firstEndPos" : 5289,
+  "secondEndPos" : 5282
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -6159,27 +6159,27 @@
   "firstEndPos" : 5518,
   "secondEndPos" : 5509
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Promotes eligible calls from [readyAsyncCalls] to [runningAsyncCalls] and runs them on the\n   * executor service. Must not be called with synchronization because executing calls can call\n   * into user code.\n   *\n   * @return true if the dispatcher is currently running calls.\n   */",
-  "secondLabel" : "/**\n   * Promotes eligible calls from [readyAsyncCalls] to [runningAsyncCalls] and runs them on the\n   * executor service. Must not be called with synchronization because executing calls can call\n   * into user code.\n   *\n   * @return true if the dispatcher is currently running calls.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5532,
-  "secondPos" : 5523,
-  "firstEndPos" : 5823,
-  "secondEndPos" : 5814
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5826,
-  "secondPos" : 5817,
+  "firstPos" : 5532,
+  "secondPos" : 5523,
   "firstEndPos" : 6666,
   "secondEndPos" : 6653
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Promotes eligible calls from [readyAsyncCalls] to [runningAsyncCalls] and runs them on the\n   * executor service. Must not be called with synchronization because executing calls can call\n   * into user code.\n   *\n   * @return true if the dispatcher is currently running calls.\n   */",
+  "secondLabel" : "/**\n   * Promotes eligible calls from [readyAsyncCalls] to [runningAsyncCalls] and runs them on the\n   * executor service. Must not be called with synchronization because executing calls can call\n   * into user code.\n   *\n   * @return true if the dispatcher is currently running calls.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5532,
+  "secondPos" : 5523,
+  "firstEndPos" : 5823,
+  "secondEndPos" : 5814
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -8480,27 +8480,27 @@
   "firstEndPos" : 6662,
   "secondEndPos" : 6649
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Used by `Call#execute` to signal it is in-flight. */",
-  "secondLabel" : "/** Used by `Call#execute` to signal it is in-flight. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6670,
-  "secondPos" : 6657,
-  "firstEndPos" : 6726,
-  "secondEndPos" : 6713
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6729,
-  "secondPos" : 6716,
+  "firstPos" : 6670,
+  "secondPos" : 6657,
   "firstEndPos" : 6817,
   "secondEndPos" : 6804
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Used by `Call#execute` to signal it is in-flight. */",
+  "secondLabel" : "/** Used by `Call#execute` to signal it is in-flight. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6670,
+  "secondPos" : 6657,
+  "firstEndPos" : 6726,
+  "secondEndPos" : 6713
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -8777,27 +8777,27 @@
   "firstEndPos" : 6812,
   "secondEndPos" : 6799
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Used by `AsyncCall#run` to signal completion. */",
-  "secondLabel" : "/** Used by `AsyncCall#run` to signal completion. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6821,
-  "secondPos" : 6808,
-  "firstEndPos" : 6873,
-  "secondEndPos" : 6860
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6876,
-  "secondPos" : 6863,
+  "firstPos" : 6821,
+  "secondPos" : 6808,
   "firstEndPos" : 7000,
   "secondEndPos" : 6985
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Used by `AsyncCall#run` to signal completion. */",
+  "secondLabel" : "/** Used by `AsyncCall#run` to signal completion. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6821,
+  "secondPos" : 6808,
+  "firstEndPos" : 6873,
+  "secondEndPos" : 6860
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -9129,27 +9129,27 @@
   "firstEndPos" : 6995,
   "secondEndPos" : 6980
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Used by `Call#execute` to signal completion. */",
-  "secondLabel" : "/** Used by `Call#execute` to signal completion. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7004,
-  "secondPos" : 6989,
-  "firstEndPos" : 7055,
-  "secondEndPos" : 7040
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7058,
-  "secondPos" : 7043,
+  "firstPos" : 7004,
+  "secondPos" : 6989,
   "firstEndPos" : 7138,
   "secondEndPos" : 7123
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Used by `Call#execute` to signal completion. */",
+  "secondLabel" : "/** Used by `Call#execute` to signal completion. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7004,
+  "secondPos" : 6989,
+  "firstEndPos" : 7055,
+  "secondEndPos" : 7040
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -10515,27 +10515,27 @@
   "firstEndPos" : 7487,
   "secondEndPos" : 7472
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns a snapshot of the calls currently awaiting execution. */",
-  "secondLabel" : "/** Returns a snapshot of the calls currently awaiting execution. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7501,
-  "secondPos" : 7486,
-  "firstEndPos" : 7569,
-  "secondEndPos" : 7554
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7572,
-  "secondPos" : 7557,
+  "firstPos" : 7501,
+  "secondPos" : 7486,
   "firstEndPos" : 7695,
   "secondEndPos" : 7679
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns a snapshot of the calls currently awaiting execution. */",
+  "secondLabel" : "/** Returns a snapshot of the calls currently awaiting execution. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7501,
+  "secondPos" : 7486,
+  "firstEndPos" : 7569,
+  "secondEndPos" : 7554
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -10933,27 +10933,27 @@
   "firstEndPos" : 7682,
   "secondEndPos" : 7667
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns a snapshot of the calls currently being executed. */",
-  "secondLabel" : "/** Returns a snapshot of the calls currently being executed. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7699,
-  "secondPos" : 7683,
-  "firstEndPos" : 7763,
-  "secondEndPos" : 7747
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7766,
-  "secondPos" : 7750,
+  "firstPos" : 7699,
+  "secondPos" : 7683,
   "firstEndPos" : 7911,
   "secondEndPos" : 7894
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns a snapshot of the calls currently being executed. */",
+  "secondLabel" : "/** Returns a snapshot of the calls currently being executed. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7699,
+  "secondPos" : 7683,
+  "firstEndPos" : 7763,
+  "secondEndPos" : 7747
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

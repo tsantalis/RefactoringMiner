@@ -1957,27 +1957,27 @@
   "firstEndPos" : 2028,
   "secondEndPos" : 1998
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2030,
-  "secondPos" : 2000,
-  "firstEndPos" : 2241,
-  "secondEndPos" : 2211
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2242,
-  "secondPos" : 2212,
+  "firstPos" : 2030,
+  "secondPos" : 2000,
   "firstEndPos" : 21271,
   "secondEndPos" : 21332
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2030,
+  "secondPos" : 2000,
+  "firstEndPos" : 2241,
+  "secondEndPos" : 2211
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2045,27 +2045,27 @@
   "firstEndPos" : 21271,
   "secondEndPos" : 21332
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Set of instances to visit */",
-  "secondLabel" : "/** Set of instances to visit */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2281,
-  "secondPos" : 2251,
-  "firstEndPos" : 2313,
-  "secondEndPos" : 2283
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2316,
-  "secondPos" : 2286,
+  "firstPos" : 2281,
+  "secondPos" : 2251,
   "firstEndPos" : 2381,
   "secondEndPos" : 2351
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Set of instances to visit */",
+  "secondLabel" : "/** Set of instances to visit */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2281,
+  "secondPos" : 2251,
+  "firstEndPos" : 2313,
+  "secondEndPos" : 2283
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2474,27 +2474,27 @@
   "firstEndPos" : 2451,
   "secondEndPos" : 2421
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Enables fast checking of whether a node is already in the queue.\n   */",
-  "secondLabel" : "/**\n   * Enables fast checking of whether a node is already in the queue.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2454,
-  "secondPos" : 2424,
-  "firstEndPos" : 2533,
-  "secondEndPos" : 2503
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2536,
-  "secondPos" : 2506,
+  "firstPos" : 2454,
+  "secondPos" : 2424,
   "firstEndPos" : 2576,
   "secondEndPos" : 2546
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Enables fast checking of whether a node is already in the queue.\n   */",
+  "secondLabel" : "/**\n   * Enables fast checking of whether a node is already in the queue.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2454,
+  "secondPos" : 2424,
+  "firstEndPos" : 2533,
+  "secondEndPos" : 2503
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3178,27 +3178,27 @@
   "firstEndPos" : 2726,
   "secondEndPos" : 2696
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitSet] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
-  "secondLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitSet] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2731,
-  "secondPos" : 2701,
-  "firstEndPos" : 3165,
-  "secondEndPos" : 3135
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3168,
-  "secondPos" : 3138,
+  "firstPos" : 2731,
+  "secondPos" : 2701,
   "firstEndPos" : 3221,
   "secondEndPos" : 3191
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitSet] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
+  "secondLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitSet] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2731,
+  "secondPos" : 2701,
+  "firstEndPos" : 3165,
+  "secondEndPos" : 3135
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -16224,27 +16224,27 @@
   "firstEndPos" : 9914,
   "secondEndPos" : 9971
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
-  "secondLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 9938,
-  "secondPos" : 9995,
-  "firstEndPos" : 10212,
-  "secondEndPos" : 10269
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 10215,
-  "secondPos" : 10272,
+  "firstPos" : 9938,
+  "secondPos" : 9995,
   "firstEndPos" : 11277,
   "secondEndPos" : 11334
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
+  "secondLabel" : "/**\n   * Sorting GC roots to get stable shortest path\n   * Once sorted all ThreadObject Gc Roots are located before JavaLocalPattern Gc Roots.\n   * This ensures ThreadObjects are visited before JavaFrames, and threadsBySerialNumber can be\n   * built before JavaFrames.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 9938,
+  "secondPos" : 9995,
+  "firstEndPos" : 10212,
+  "secondEndPos" : 10269
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

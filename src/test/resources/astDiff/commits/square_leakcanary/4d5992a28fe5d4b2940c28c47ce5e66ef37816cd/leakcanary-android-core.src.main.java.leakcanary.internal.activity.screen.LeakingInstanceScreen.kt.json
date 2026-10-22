@@ -1220,27 +1220,27 @@
   "firstEndPos" : 930,
   "secondEndPos" : 940
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Store leaktraces in db and pass an id here (needed for grouping)",
-  "secondLabel" : "// TODO Store leaktraces in db and pass an id here (needed for grouping)",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 932,
-  "secondPos" : 942,
-  "firstEndPos" : 1004,
-  "secondEndPos" : 1014
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1005,
-  "secondPos" : 1015,
+  "firstPos" : 932,
+  "secondPos" : 942,
   "firstEndPos" : 3181,
   "secondEndPos" : 3191
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Store leaktraces in db and pass an id here (needed for grouping)",
+  "secondLabel" : "// TODO Store leaktraces in db and pass an id here (needed for grouping)",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 932,
+  "secondPos" : 942,
+  "firstEndPos" : 1004,
+  "secondEndPos" : 1014
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

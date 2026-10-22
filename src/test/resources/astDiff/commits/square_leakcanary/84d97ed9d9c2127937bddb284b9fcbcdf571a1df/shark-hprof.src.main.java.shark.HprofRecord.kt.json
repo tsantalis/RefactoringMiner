@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
-  "secondLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 115,
-  "secondEndPos" : 115
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 116,
-  "secondPos" : 116,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 5060,
   "secondEndPos" : 5181
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
+  "secondLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 115,
+  "secondEndPos" : 115
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -743,7 +743,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 394,
-  "secondPos" : 515,
+  "secondPos" : 394,
   "firstEndPos" : 434,
   "secondEndPos" : 555
 }, {
@@ -1198,27 +1198,27 @@
   "firstEndPos" : 621,
   "secondEndPos" : 742
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
-  "secondLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 627,
-  "secondPos" : 748,
-  "firstEndPos" : 812,
-  "secondEndPos" : 933
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 817,
-  "secondPos" : 938,
+  "firstPos" : 627,
+  "secondPos" : 748,
   "firstEndPos" : 836,
   "secondEndPos" : 957
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
+  "secondLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 627,
+  "secondPos" : 748,
+  "firstEndPos" : 812,
+  "secondEndPos" : 933
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3585,27 +3585,27 @@
   "firstEndPos" : 1923,
   "secondEndPos" : 2044
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
-  "secondLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1933,
-  "secondPos" : 2054,
-  "firstEndPos" : 2024,
-  "secondEndPos" : 2145
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2033,
-  "secondPos" : 2154,
+  "firstPos" : 1933,
+  "secondPos" : 2054,
   "firstEndPos" : 2059,
   "secondEndPos" : 2180
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
+  "secondLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1933,
+  "secondPos" : 2054,
+  "firstEndPos" : 2024,
+  "secondEndPos" : 2145
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4080,27 +4080,27 @@
   "firstEndPos" : 2274,
   "secondEndPos" : 2395
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
-  "secondLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2282,
-  "secondPos" : 2403,
-  "firstEndPos" : 2655,
-  "secondEndPos" : 2776
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2662,
-  "secondPos" : 2783,
+  "firstPos" : 2282,
+  "secondPos" : 2403,
   "firstEndPos" : 4936,
   "secondEndPos" : 5057
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
+  "secondLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2282,
+  "secondPos" : 2403,
+  "firstEndPos" : 2655,
+  "secondEndPos" : 2776
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

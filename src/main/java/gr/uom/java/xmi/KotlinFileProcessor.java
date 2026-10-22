@@ -127,7 +127,7 @@ public class KotlinFileProcessor {
 		compilationUnitComments.removeAll(codeElementComments);
 	}
 
-	private static UMLJavadoc generateDocComment(KtFile cu, String sourceFolder, String filePath, String fileContent, KDoc javaDoc) {
+	public static UMLJavadoc generateDocComment(KtFile cu, String sourceFolder, String filePath, String fileContent, KDoc javaDoc) {
 		UMLJavadoc doc = null;
 		if (javaDoc != null) {
 			LocationInfo locationInfo = new LocationInfo(cu, sourceFolder, filePath, javaDoc, CodeElementType.JAVADOC);
@@ -438,6 +438,8 @@ public class KotlinFileProcessor {
 						}
 					}
 					umlAttribute.setVariableDeclaration(variableDeclaration);
+					//the KDoc of the class parameters declaring properties, i.e., class A(/** doc */ val x: Int)
+					umlAttribute.setJavadoc(variableDeclaration.getJavadoc().orElse(null));
 					umlClass.addAttribute(umlAttribute);
 				}
 				else {

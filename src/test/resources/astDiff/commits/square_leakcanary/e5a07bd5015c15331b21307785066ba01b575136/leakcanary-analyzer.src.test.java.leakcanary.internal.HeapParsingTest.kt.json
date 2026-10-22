@@ -16081,27 +16081,27 @@
   "firstEndPos" : 10900,
   "secondEndPos" : 8528
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Default chunk size is 1 << 30, or 1,073,741,824 bytes.",
-  "secondLabel" : "// Default chunk size is 1 << 30, or 1,073,741,824 bytes.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 10909,
-  "secondPos" : 8537,
-  "firstEndPos" : 10966,
-  "secondEndPos" : 8594
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 10967,
-  "secondPos" : 8595,
+  "firstPos" : 10909,
+  "secondPos" : 8537,
   "firstEndPos" : 11021,
   "secondEndPos" : 8649
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Default chunk size is 1 << 30, or 1,073,741,824 bytes.",
+  "secondLabel" : "// Default chunk size is 1 << 30, or 1,073,741,824 bytes.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 10909,
+  "secondPos" : 8537,
+  "firstEndPos" : 10966,
+  "secondEndPos" : 8594
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -16224,27 +16224,27 @@
   "firstEndPos" : 11021,
   "secondEndPos" : 8649
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Eliminate wrapped, multi-byte reads across chunks in most cases.",
-  "secondLabel" : "// Eliminate wrapped, multi-byte reads across chunks in most cases.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 11023,
-  "secondPos" : 8651,
-  "firstEndPos" : 11090,
-  "secondEndPos" : 8718
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 11091,
-  "secondPos" : 8719,
+  "firstPos" : 11023,
+  "secondPos" : 8651,
   "firstEndPos" : 11137,
   "secondEndPos" : 8765
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Eliminate wrapped, multi-byte reads across chunks in most cases.",
+  "secondLabel" : "// Eliminate wrapped, multi-byte reads across chunks in most cases.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 11023,
+  "secondPos" : 8651,
+  "firstEndPos" : 11090,
+  "secondEndPos" : 8718
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

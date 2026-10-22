@@ -1539,27 +1539,27 @@
   "firstEndPos" : 1472,
   "secondEndPos" : 1441
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
-  "secondLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1474,
-  "secondPos" : 1443,
-  "firstEndPos" : 1558,
-  "secondEndPos" : 1527
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1559,
-  "secondPos" : 1528,
+  "firstPos" : 1474,
+  "secondPos" : 1443,
   "firstEndPos" : 15522,
   "secondEndPos" : 15443
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
+  "secondLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1474,
+  "secondPos" : 1443,
+  "firstEndPos" : 1558,
+  "secondEndPos" : 1527
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -22857,27 +22857,27 @@
   "firstEndPos" : 13826,
   "secondEndPos" : 13747
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Convenience method that issues two calls to the tasks repository\n     */",
-  "secondLabel" : "/**\n     * Convenience method that issues two calls to the tasks repository\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 13839,
-  "secondPos" : 13760,
-  "firstEndPos" : 13922,
-  "secondEndPos" : 13843
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 13927,
-  "secondPos" : 13848,
+  "firstPos" : 13839,
+  "secondPos" : 13760,
   "firstEndPos" : 14680,
   "secondEndPos" : 14601
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Convenience method that issues two calls to the tasks repository\n     */",
+  "secondLabel" : "/**\n     * Convenience method that issues two calls to the tasks repository\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 13839,
+  "secondPos" : 13760,
+  "firstEndPos" : 13922,
+  "secondEndPos" : 13843
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

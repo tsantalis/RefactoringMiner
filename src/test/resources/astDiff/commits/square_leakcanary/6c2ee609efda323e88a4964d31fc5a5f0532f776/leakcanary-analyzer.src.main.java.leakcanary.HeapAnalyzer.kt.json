@@ -3321,27 +3321,27 @@
   "firstEndPos" : 3420,
   "secondEndPos" : 3458
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
-  "secondLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3422,
-  "secondPos" : 3460,
-  "firstEndPos" : 3471,
-  "secondEndPos" : 3509
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3472,
-  "secondPos" : 3510,
+  "firstPos" : 3422,
+  "secondPos" : 3460,
   "firstEndPos" : 26009,
   "secondEndPos" : 26155
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
+  "secondLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3422,
+  "secondPos" : 3460,
+  "firstEndPos" : 3471,
+  "secondEndPos" : 3509
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -3497,27 +3497,27 @@
   "firstEndPos" : 26009,
   "secondEndPos" : 26155
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
-  "secondLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3560,
-  "secondPos" : 3598,
-  "firstEndPos" : 3755,
-  "secondEndPos" : 3793
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3758,
-  "secondPos" : 3796,
+  "firstPos" : 3560,
+  "secondPos" : 3598,
   "firstEndPos" : 6591,
   "secondEndPos" : 6629
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
+  "secondLabel" : "/**\n   * Searches the heap dump for a [KeyedWeakReference] instance with the corresponding key,\n   * and then computes the shortest strong reference path from that instance to the GC roots.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3560,
+  "secondPos" : 3598,
+  "firstEndPos" : 3755,
+  "secondEndPos" : 3793
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

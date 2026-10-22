@@ -241,27 +241,27 @@
   "firstEndPos" : 733,
   "secondEndPos" : 733
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common JDK objects.\n */",
-  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common JDK objects.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 735,
-  "secondPos" : 735,
-  "firstEndPos" : 818,
-  "secondEndPos" : 818
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 819,
-  "secondPos" : 819,
+  "firstPos" : 735,
+  "secondPos" : 735,
   "firstEndPos" : 5457,
   "secondEndPos" : 5381
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common JDK objects.\n */",
+  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common JDK objects.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 735,
+  "secondPos" : 735,
+  "firstEndPos" : 818,
+  "secondEndPos" : 818
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -8491,27 +8491,27 @@
   "firstEndPos" : 5320,
   "secondEndPos" : 5244
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** @see ObjectInspectors */",
-  "secondLabel" : "/** @see ObjectInspectors */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5325,
-  "secondPos" : 5249,
-  "firstEndPos" : 5353,
-  "secondEndPos" : 5277
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5358,
-  "secondPos" : 5282,
+  "firstPos" : 5325,
+  "secondPos" : 5249,
   "firstEndPos" : 5396,
   "secondEndPos" : 5320
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** @see ObjectInspectors */",
+  "secondLabel" : "/** @see ObjectInspectors */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5325,
+  "secondPos" : 5249,
+  "firstEndPos" : 5353,
+  "secondEndPos" : 5277
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

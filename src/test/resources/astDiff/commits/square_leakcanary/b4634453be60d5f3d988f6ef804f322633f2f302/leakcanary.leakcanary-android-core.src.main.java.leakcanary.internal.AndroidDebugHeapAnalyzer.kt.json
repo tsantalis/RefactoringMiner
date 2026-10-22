@@ -1561,27 +1561,27 @@
   "firstEndPos" : 1199,
   "secondEndPos" : 1199
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This should likely turn into a public API but probably better to do once it's\n * coroutine based to supports cleaner cancellation + publishing progress.\n */",
-  "secondLabel" : "/**\n * This should likely turn into a public API but probably better to do once it's\n * coroutine based to supports cleaner cancellation + publishing progress.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1201,
-  "secondPos" : 1201,
-  "firstEndPos" : 1364,
-  "secondEndPos" : 1364
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1365,
-  "secondPos" : 1365,
+  "firstPos" : 1201,
+  "secondPos" : 1201,
   "firstEndPos" : 7865,
   "secondEndPos" : 7787
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This should likely turn into a public API but probably better to do once it's\n * coroutine based to supports cleaner cancellation + publishing progress.\n */",
+  "secondLabel" : "/**\n * This should likely turn into a public API but probably better to do once it's\n * coroutine based to supports cleaner cancellation + publishing progress.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1201,
+  "secondPos" : 1201,
+  "firstEndPos" : 1364,
+  "secondEndPos" : 1364
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1924,27 +1924,27 @@
   "firstEndPos" : 1552,
   "secondEndPos" : 1552
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
-  "secondLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1556,
-  "secondPos" : 1556,
-  "firstEndPos" : 1733,
-  "secondEndPos" : 1733
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1736,
-  "secondPos" : 1736,
+  "firstPos" : 1556,
+  "secondPos" : 1556,
   "firstEndPos" : 5141,
   "secondEndPos" : 5063
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
+  "secondLabel" : "/**\n   * Runs the heap analysis on the current thread and then sends a\n   * [EventListener.Event.HeapAnalysisDone] event with the result (from the current thread as well).\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1556,
+  "secondPos" : 1556,
+  "firstEndPos" : 1733,
+  "secondEndPos" : 1733
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

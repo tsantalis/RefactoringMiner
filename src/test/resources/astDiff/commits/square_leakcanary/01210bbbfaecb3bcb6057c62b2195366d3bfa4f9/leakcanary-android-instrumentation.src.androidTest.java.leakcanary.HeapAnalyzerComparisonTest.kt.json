@@ -769,27 +769,27 @@
   "firstEndPos" : 410,
   "secondEndPos" : 410
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Instrumentation test that runs the two heap analyzer implementations on the same heap\n * dump and logs how they perform. This isn't meant to run as part of the test suite.\n */",
-  "secondLabel" : "/**\n * Instrumentation test that runs the two heap analyzer implementations on the same heap\n * dump and logs how they perform. This isn't meant to run as part of the test suite.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 412,
-  "secondPos" : 412,
-  "firstEndPos" : 594,
-  "secondEndPos" : 594
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 605,
-  "secondPos" : 595,
+  "firstPos" : 412,
+  "secondPos" : 412,
   "firstEndPos" : 4414,
   "secondEndPos" : 4404
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Instrumentation test that runs the two heap analyzer implementations on the same heap\n * dump and logs how they perform. This isn't meant to run as part of the test suite.\n */",
+  "secondLabel" : "/**\n * Instrumentation test that runs the two heap analyzer implementations on the same heap\n * dump and logs how they perform. This isn't meant to run as part of the test suite.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 412,
+  "secondPos" : 412,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

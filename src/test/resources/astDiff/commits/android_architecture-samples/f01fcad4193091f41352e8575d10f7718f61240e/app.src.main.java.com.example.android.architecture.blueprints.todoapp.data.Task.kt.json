@@ -197,27 +197,27 @@
   "firstEndPos" : 796,
   "secondEndPos" : 704
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Immutable model class for a Task. In order to compile with Room, we can't use @JvmOverloads to\n * generate multiple constructors.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
-  "secondLabel" : "/**\n * Immutable model class for a Task.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 798,
-  "secondPos" : 706,
-  "firstEndPos" : 1109,
-  "secondEndPos" : 921
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1110,
-  "secondPos" : 922,
+  "firstPos" : 798,
+  "secondPos" : 706,
   "firstEndPos" : 1687,
   "secondEndPos" : 1329
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Immutable model class for a Task. In order to compile with Room, we can't use @JvmOverloads to\n * generate multiple constructors.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
+  "secondLabel" : "/**\n * Immutable model class for a Task.\n *\n * @param title title of the task\n * @param description description of the task\n * @param isCompleted whether or not this task is completed\n * @param id id of the task\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 798,
+  "secondPos" : 706,
+  "firstEndPos" : 1109,
+  "secondEndPos" : 921
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -318,17 +318,6 @@
   "firstEndPos" : 1236,
   "secondEndPos" : 986
 }, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1186,
-  "secondPos" : 964,
-  "firstEndPos" : 1213,
-  "secondEndPos" : 967
-}, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
@@ -417,17 +406,6 @@
   "firstEndPos" : 1304,
   "secondEndPos" : 1020
 }, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1242,
-  "secondPos" : 992,
-  "firstEndPos" : 1275,
-  "secondEndPos" : 995
-}, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
@@ -515,17 +493,6 @@
   "secondPos" : 1026,
   "firstEndPos" : 1374,
   "secondEndPos" : 1058
-}, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1310,
-  "secondPos" : 1026,
-  "firstEndPos" : 1341,
-  "secondEndPos" : 1029
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -625,17 +592,6 @@
   "secondPos" : 1064,
   "firstEndPos" : 1467,
   "secondEndPos" : 1109
-}, {
-  "firstType" : "modifiers",
-  "secondType" : "binding_pattern_kind",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1380,
-  "secondPos" : 1064,
-  "firstEndPos" : 1421,
-  "secondEndPos" : 1067
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

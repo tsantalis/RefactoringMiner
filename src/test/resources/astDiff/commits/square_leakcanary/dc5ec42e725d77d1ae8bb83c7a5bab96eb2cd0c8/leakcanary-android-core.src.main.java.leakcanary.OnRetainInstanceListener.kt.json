@@ -54,27 +54,27 @@
   "firstEndPos" : 18,
   "secondEndPos" : 18
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Listener set in [LeakCanary.Config] and called by LeakCanary on a background thread when\n * the number of retained instances changes.\n *\n */",
-  "secondLabel" : "/**\n * Listener set in [LeakCanary.Config] and called by LeakCanary on a background thread when\n * the number of retained instances changes.\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 20,
-  "secondPos" : 174,
-  "firstEndPos" : 167,
-  "secondEndPos" : 321
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 168,
-  "secondPos" : 322,
+  "firstPos" : 20,
+  "secondPos" : 174,
   "firstEndPos" : 737,
   "secondEndPos" : 539
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Listener set in [LeakCanary.Config] and called by LeakCanary on a background thread when\n * the number of retained instances changes.\n *\n */",
+  "secondLabel" : "/**\n * Listener set in [LeakCanary.Config] and called by LeakCanary on a background thread when\n * the number of retained instances changes.\n *\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 20,
+  "secondPos" : 174,
+  "firstEndPos" : 167,
+  "secondEndPos" : 321
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -109,27 +109,27 @@
   "firstEndPos" : 737,
   "secondEndPos" : 539
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Called after heap dump is complete to reset retained instances count.\n   * This method allows to differentiate from calls to [onCountChanged] with parameter of `0`\n   * which can happen when retained instance gets garbage collected and therefore is not leaking.\n   */",
-  "secondLabel" : "/**\n   * Called when there's a change to the Retained Instances. See [RetainInstanceChange] for\n   * possible change events.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 443,
-  "secondPos" : 362,
-  "firstEndPos" : 719,
-  "secondEndPos" : 492
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 722,
-  "secondPos" : 495,
+  "firstPos" : 443,
+  "secondPos" : 362,
   "firstEndPos" : 735,
   "secondEndPos" : 537
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Called after heap dump is complete to reset retained instances count.\n   * This method allows to differentiate from calls to [onCountChanged] with parameter of `0`\n   * which can happen when retained instance gets garbage collected and therefore is not leaking.\n   */",
+  "secondLabel" : "/**\n   * Called when there's a change to the Retained Instances. See [RetainInstanceChange] for\n   * possible change events.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 443,
+  "secondPos" : 362,
+  "firstEndPos" : 719,
+  "secondEndPos" : 492
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

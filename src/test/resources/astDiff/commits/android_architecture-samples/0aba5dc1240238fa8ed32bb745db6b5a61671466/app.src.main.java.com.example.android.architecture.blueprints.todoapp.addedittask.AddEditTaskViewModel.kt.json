@@ -1000,27 +1000,27 @@
   "firstEndPos" : 1241,
   "secondEndPos" : 1241
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
-  "secondLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1243,
-  "secondPos" : 1243,
-  "firstEndPos" : 1288,
-  "secondEndPos" : 1288
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1289,
-  "secondPos" : 1289,
+  "firstPos" : 1243,
+  "secondPos" : 1243,
   "firstEndPos" : 4389,
   "secondEndPos" : 4406
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
+  "secondLabel" : "/**\n * ViewModel for the Add/Edit screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1243,
+  "secondPos" : 1243,
+  "firstEndPos" : 1288,
+  "secondEndPos" : 1288
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1220,27 +1220,27 @@
   "firstEndPos" : 4389,
   "secondEndPos" : 4406
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1389,
-  "secondPos" : 1389,
-  "firstEndPos" : 1437,
-  "secondEndPos" : 1437
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1442,
-  "secondPos" : 1442,
+  "firstPos" : 1389,
+  "secondPos" : 1389,
   "firstEndPos" : 1479,
   "secondEndPos" : 1479
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1389,
+  "secondPos" : 1389,
+  "firstEndPos" : 1437,
+  "secondEndPos" : 1437
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1385,27 +1385,27 @@
   "firstEndPos" : 1479,
   "secondEndPos" : 1479
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1485,
-  "secondPos" : 1485,
-  "firstEndPos" : 1533,
-  "secondEndPos" : 1533
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1538,
-  "secondPos" : 1538,
+  "firstPos" : 1485,
+  "secondPos" : 1485,
   "firstEndPos" : 1581,
   "secondEndPos" : 1581
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "secondLabel" : "// Two-way databinding, exposing MutableLiveData",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1485,
+  "secondPos" : 1485,
+  "firstEndPos" : 1533,
+  "secondEndPos" : 1533
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5455,27 +5455,27 @@
   "firstEndPos" : 3155,
   "secondEndPos" : 3162
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Called when clicking on fab.",
-  "secondLabel" : "// Called when clicking on fab.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3167,
-  "secondPos" : 3174,
-  "firstEndPos" : 3198,
-  "secondEndPos" : 3205
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3203,
-  "secondPos" : 3210,
+  "firstPos" : 3167,
+  "secondPos" : 3174,
   "firstEndPos" : 3937,
   "secondEndPos" : 3944
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Called when clicking on fab.",
+  "secondLabel" : "// Called when clicking on fab.",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3167,
+  "secondPos" : 3174,
+  "firstEndPos" : 3198,
+  "secondEndPos" : 3205
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

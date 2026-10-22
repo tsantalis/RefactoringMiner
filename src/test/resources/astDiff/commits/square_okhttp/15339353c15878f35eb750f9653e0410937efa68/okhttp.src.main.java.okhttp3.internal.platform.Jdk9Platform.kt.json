@@ -340,27 +340,27 @@
   "firstEndPos" : 766,
   "secondEndPos" : 766
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** OpenJDK 9+. */",
-  "secondLabel" : "/** OpenJDK 9+. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 768,
-  "secondPos" : 768,
-  "firstEndPos" : 786,
-  "secondEndPos" : 786
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 787,
-  "secondPos" : 787,
+  "firstPos" : 768,
+  "secondPos" : 768,
   "firstEndPos" : 2303,
   "secondEndPos" : 2326
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** OpenJDK 9+. */",
+  "secondLabel" : "/** OpenJDK 9+. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 768,
+  "secondPos" : 768,
+  "firstEndPos" : 786,
+  "secondEndPos" : 786
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

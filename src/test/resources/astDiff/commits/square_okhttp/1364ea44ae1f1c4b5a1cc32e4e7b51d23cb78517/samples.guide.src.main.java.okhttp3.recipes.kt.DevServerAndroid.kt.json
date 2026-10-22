@@ -490,7 +490,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 1240,
-  "secondPos" : 975,
+  "secondPos" : 880,
   "firstEndPos" : 3193,
   "secondEndPos" : 2346
 }, {
@@ -1385,27 +1385,27 @@
   "firstEndPos" : 1711,
   "secondEndPos" : 2342
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Android method to clean and sort certificates, called via reflection.\n   */",
-  "secondLabel" : "/** Android method to clean and sort certificates, called via reflection. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1721,
-  "secondPos" : 1378,
-  "firstEndPos" : 1805,
-  "secondEndPos" : 1454
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1808,
-  "secondPos" : 1457,
+  "firstPos" : 1721,
+  "secondPos" : 1378,
   "firstEndPos" : 2380,
   "secondEndPos" : 1963
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Android method to clean and sort certificates, called via reflection.\n   */",
+  "secondLabel" : "/** Android method to clean and sort certificates, called via reflection. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1721,
+  "secondPos" : 1378,
+  "firstEndPos" : 1805,
+  "secondEndPos" : 1454
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

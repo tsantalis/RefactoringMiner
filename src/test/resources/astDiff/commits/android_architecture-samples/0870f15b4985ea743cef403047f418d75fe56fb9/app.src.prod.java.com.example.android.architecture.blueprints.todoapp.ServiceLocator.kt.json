@@ -989,27 +989,27 @@
   "firstEndPos" : 1252,
   "secondEndPos" : 1252
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the prod version, with a\n * the \"real\" [TasksRemoteDataSource].\n */",
-  "secondLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the prod version, with a\n * the \"real\" [TasksRemoteDataSource].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1254,
-  "secondPos" : 1292,
-  "firstEndPos" : 1381,
-  "secondEndPos" : 1419
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1382,
-  "secondPos" : 1420,
+  "firstPos" : 1254,
+  "secondPos" : 1292,
   "firstEndPos" : 2063,
   "secondEndPos" : 2574
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the prod version, with a\n * the \"real\" [TasksRemoteDataSource].\n */",
+  "secondLabel" : "/**\n * A Service Locator for the [TasksRepository]. This is the prod version, with a\n * the \"real\" [TasksRemoteDataSource].\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1254,
+  "secondPos" : 1292,
+  "firstEndPos" : 1381,
+  "secondEndPos" : 1419
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

@@ -13793,27 +13793,27 @@
   "firstEndPos" : 7415,
   "secondEndPos" : 7503
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** 10 minutes  */",
-  "secondLabel" : "/** 10 minutes  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7422,
-  "secondPos" : 7510,
-  "firstEndPos" : 7440,
-  "secondEndPos" : 7528
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7445,
-  "secondPos" : 7533,
+  "firstPos" : 7422,
+  "secondPos" : 7510,
   "firstEndPos" : 7504,
   "secondEndPos" : 7592
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** 10 minutes  */",
+  "secondLabel" : "/** 10 minutes  */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 7422,
+  "secondPos" : 7510,
+  "firstEndPos" : 7440,
+  "secondEndPos" : 7528
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

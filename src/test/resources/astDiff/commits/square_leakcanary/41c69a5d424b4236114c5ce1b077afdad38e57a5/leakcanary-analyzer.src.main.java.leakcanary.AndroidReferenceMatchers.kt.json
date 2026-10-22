@@ -736,27 +736,27 @@
   "firstEndPos" : 1176,
   "secondEndPos" : 1176
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also pick the\n * leaks you want to ignore by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences]\n */",
-  "secondLabel" : "/**\n * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their\n * [add] method. A [ReferenceMatcher] is either a [IgnoredReferenceMatcher] or\n * a [LibraryLeakReferenceMatcher].\n *\n * [AndroidReferenceMatchers] is used to build the list of known references that cannot ever create\n * leaks (via [IgnoredReferenceMatcher]) as well as the list of known leaks in the Android Framework\n * and in manufacturer specific Android implementations.\n *\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also use a subset of\n * [AndroidReferenceMatchers] by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1178,
-  "secondPos" : 1178,
-  "firstEndPos" : 1805,
-  "secondEndPos" : 2291
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1806,
-  "secondPos" : 2292,
+  "firstPos" : 1178,
+  "secondPos" : 1178,
   "firstEndPos" : 41456,
   "secondEndPos" : 42170
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also pick the\n * leaks you want to ignore by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences]\n */",
+  "secondLabel" : "/**\n * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their\n * [add] method. A [ReferenceMatcher] is either a [IgnoredReferenceMatcher] or\n * a [LibraryLeakReferenceMatcher].\n *\n * [AndroidReferenceMatchers] is used to build the list of known references that cannot ever create\n * leaks (via [IgnoredReferenceMatcher]) as well as the list of known leaks in the Android Framework\n * and in manufacturer specific Android implementations.\n *\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also use a subset of\n * [AndroidReferenceMatchers] by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1178,
+  "secondPos" : 1178,
+  "firstEndPos" : 1805,
+  "secondEndPos" : 2291
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -43301,10 +43301,21 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 39572,
-  "secondPos" : 39744,
+  "firstPos" : 39157,
+  "secondPos" : 39689,
   "firstEndPos" : 39611,
   "secondEndPos" : 39783
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * This returns the references in the leak path that can be ignored for app developers. This\n     * doesn't mean there is no memory leak, to the contrary. However, some leaks are caused by bugs\n     * in AOSP or manufacturer forks of AOSP. In such cases, there is very little we can do as app\n     * developers except by resorting to serious hacks, so we remove the noise caused by those leaks.\n     */",
+  "secondLabel" : "/**\n     * @see [AndroidReferenceMatchers]\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 39157,
+  "secondPos" : 39689,
+  "firstEndPos" : 39567,
+  "secondEndPos" : 39739
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -43676,7 +43687,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 39705,
-  "secondPos" : 40007,
+  "secondPos" : 39877,
   "firstEndPos" : 39940,
   "secondEndPos" : 40260
 }, {
@@ -44501,7 +44512,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 40025,
-  "secondPos" : 40445,
+  "secondPos" : 40345,
   "firstEndPos" : 40330,
   "secondEndPos" : 40750
 }, {
@@ -45073,7 +45084,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 40336,
-  "secondPos" : 40858,
+  "secondPos" : 40756,
   "firstEndPos" : 40645,
   "secondEndPos" : 41167
 }, {
@@ -46316,7 +46327,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 41077,
-  "secondPos" : 41697,
+  "secondPos" : 41599,
   "firstEndPos" : 41281,
   "secondEndPos" : 41901
 }, {
@@ -46679,7 +46690,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 41287,
-  "secondPos" : 42001,
+  "secondPos" : 41907,
   "firstEndPos" : 41449,
   "secondEndPos" : 42163
 }, {

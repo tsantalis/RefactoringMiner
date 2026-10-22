@@ -395,27 +395,27 @@
   "firstEndPos" : 218,
   "secondEndPos" : 218
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakCanaryProcesssAppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n *\n * When using the `leakcanary-android-process` artifact instead of `leakcanary-android`,\n * [LeakCanaryProcesssAppWatcherInstaller] automatically sets up the LeakCanary code\n */",
-  "secondLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakCanaryProcessAppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n *\n * When using the `leakcanary-android-process` artifact instead of `leakcanary-android`,\n * [LeakCanaryProcessAppWatcherInstaller] automatically sets up the LeakCanary code\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 220,
-  "secondPos" : 249,
-  "firstEndPos" : 585,
-  "secondEndPos" : 612
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 586,
-  "secondPos" : 613,
+  "firstPos" : 220,
+  "secondPos" : 249,
   "firstEndPos" : 1415,
   "secondEndPos" : 1546
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakCanaryProcesssAppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n *\n * When using the `leakcanary-android-process` artifact instead of `leakcanary-android`,\n * [LeakCanaryProcesssAppWatcherInstaller] automatically sets up the LeakCanary code\n */",
+  "secondLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakCanaryProcessAppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n *\n * When using the `leakcanary-android-process` artifact instead of `leakcanary-android`,\n * [LeakCanaryProcessAppWatcherInstaller] automatically sets up the LeakCanary code\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 220,
+  "secondPos" : 249,
+  "firstEndPos" : 585,
+  "secondEndPos" : 612
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

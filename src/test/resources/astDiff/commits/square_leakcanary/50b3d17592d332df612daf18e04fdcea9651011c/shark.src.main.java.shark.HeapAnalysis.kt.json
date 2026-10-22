@@ -230,27 +230,27 @@
   "firstEndPos" : 99,
   "secondEndPos" : 99
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * The result of an analysis performed by [HeapAnalyzer], either a [HeapAnalysisSuccess] or a\n * [HeapAnalysisFailure]. This class is serializable however there are no guarantees of forward\n * compatibility.\n */",
-  "secondLabel" : "/**\n * The result of an analysis performed by [HeapAnalyzer], either a [HeapAnalysisSuccess] or a\n * [HeapAnalysisFailure]. This class is serializable however there are no guarantees of forward\n * compatibility.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 101,
-  "secondPos" : 101,
-  "firstEndPos" : 316,
-  "secondEndPos" : 316
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 317,
-  "secondPos" : 317,
+  "firstPos" : 101,
+  "secondPos" : 101,
   "firstEndPos" : 682,
   "secondEndPos" : 776
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * The result of an analysis performed by [HeapAnalyzer], either a [HeapAnalysisSuccess] or a\n * [HeapAnalysisFailure]. This class is serializable however there are no guarantees of forward\n * compatibility.\n */",
+  "secondLabel" : "/**\n * The result of an analysis performed by [HeapAnalyzer], either a [HeapAnalysisSuccess] or a\n * [HeapAnalysisFailure]. This class is serializable however there are no guarantees of forward\n * compatibility.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 101,
+  "secondPos" : 101,
+  "firstEndPos" : 316,
+  "secondEndPos" : 316
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -351,27 +351,27 @@
   "firstEndPos" : 682,
   "secondEndPos" : 776
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The hprof file that was analyzed.\n   */",
-  "secondLabel" : "/**\n   * The hprof file that was analyzed.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 362,
-  "secondPos" : 362,
-  "firstEndPos" : 410,
-  "secondEndPos" : 410
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 413,
-  "secondPos" : 413,
+  "firstPos" : 362,
+  "secondPos" : 362,
   "firstEndPos" : 444,
   "secondEndPos" : 444
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The hprof file that was analyzed.\n   */",
+  "secondLabel" : "/**\n   * The hprof file that was analyzed.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 362,
+  "secondPos" : 362,
+  "firstEndPos" : 410,
+  "secondEndPos" : 410
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -472,27 +472,27 @@
   "firstEndPos" : 444,
   "secondEndPos" : 444
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The [System.currentTimeMillis] when this [HeapAnalysis] instance was created.\n   */",
-  "secondLabel" : "/**\n   * The [System.currentTimeMillis] when this [HeapAnalysis] instance was created.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 448,
-  "secondPos" : 448,
-  "firstEndPos" : 540,
-  "secondEndPos" : 540
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 543,
-  "secondPos" : 543,
+  "firstPos" : 448,
+  "secondPos" : 448,
   "firstEndPos" : 581,
   "secondEndPos" : 581
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The [System.currentTimeMillis] when this [HeapAnalysis] instance was created.\n   */",
+  "secondLabel" : "/**\n   * The [System.currentTimeMillis] when this [HeapAnalysis] instance was created.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 448,
+  "secondPos" : 448,
+  "firstEndPos" : 540,
+  "secondEndPos" : 540
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -593,27 +593,27 @@
   "firstEndPos" : 581,
   "secondEndPos" : 581
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Total time spent analyzing the heap.\n   */",
-  "secondLabel" : "/**\n   * Total time spent analyzing the heap.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 585,
-  "secondPos" : 585,
-  "firstEndPos" : 636,
-  "secondEndPos" : 636
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 639,
-  "secondPos" : 639,
+  "firstPos" : 585,
+  "secondPos" : 585,
   "firstEndPos" : 680,
   "secondEndPos" : 680
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Total time spent analyzing the heap.\n   */",
+  "secondLabel" : "/**\n   * Total time spent analyzing the heap.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 585,
+  "secondPos" : 585,
+  "firstEndPos" : 636,
+  "secondEndPos" : 636
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -714,27 +714,27 @@
   "firstEndPos" : 680,
   "secondEndPos" : 680
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * The analysis performed by [HeapAnalyzer] did not complete successfully.\n */",
-  "secondLabel" : "/**\n * The analysis performed by [HeapAnalyzer] did not complete successfully.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 684,
-  "secondPos" : 778,
-  "firstEndPos" : 766,
-  "secondEndPos" : 860
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 767,
-  "secondPos" : 861,
+  "firstPos" : 684,
+  "secondPos" : 778,
   "firstEndPos" : 1726,
   "secondEndPos" : 1913
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * The analysis performed by [HeapAnalyzer] did not complete successfully.\n */",
+  "secondLabel" : "/**\n * The analysis performed by [HeapAnalyzer] did not complete successfully.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 684,
+  "secondPos" : 778,
+  "firstEndPos" : 766,
+  "secondEndPos" : 860
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1099,27 +1099,27 @@
   "firstEndPos" : 919,
   "secondEndPos" : 1013
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * An exception wrapping the actual exception that was thrown.\n   */",
-  "secondLabel" : "/**\n   * An exception wrapping the actual exception that was thrown.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 923,
-  "secondPos" : 1017,
-  "firstEndPos" : 997,
-  "secondEndPos" : 1091
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1000,
-  "secondPos" : 1094,
+  "firstPos" : 923,
+  "secondPos" : 1017,
   "firstEndPos" : 1036,
   "secondEndPos" : 1130
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * An exception wrapping the actual exception that was thrown.\n   */",
+  "secondLabel" : "/**\n   * An exception wrapping the actual exception that was thrown.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 923,
+  "secondPos" : 1017,
+  "firstEndPos" : 997,
+  "secondEndPos" : 1091
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1408,24 +1408,13 @@
   "secondEndPos" : 1450
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A unique SHA1 hash that represents this group of leak traces.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.signature] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 1318,
-  "secondPos" : 5739,
-  "firstEndPos" : 1347,
-  "secondEndPos" : 5953
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 1318,
-  "secondPos" : 5956,
+  "secondPos" : 5739,
   "firstEndPos" : 1347,
   "secondEndPos" : 5986
 }, {
@@ -1458,6 +1447,17 @@
   "firstParentType" : "class_parameter",
   "secondParentType" : "property_declaration",
   "firstPos" : 1318,
+  "secondPos" : 5956,
+  "firstEndPos" : 1325,
+  "secondEndPos" : 5964
+}, {
+  "firstType" : "modifiers",
+  "secondType" : "modifiers",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1318,
   "secondPos" : 7130,
   "firstEndPos" : 1325,
   "secondEndPos" : 7138
@@ -1480,6 +1480,17 @@
   "firstParentType" : "class_parameter",
   "secondParentType" : "property_declaration",
   "firstPos" : 1326,
+  "secondPos" : 5965,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 5968
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1326,
   "secondPos" : 7139,
   "firstEndPos" : 1329,
   "secondEndPos" : 7142
@@ -1494,6 +1505,17 @@
   "secondPos" : 7986,
   "firstEndPos" : 1329,
   "secondEndPos" : 7989
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1326,
+  "secondPos" : 5965,
+  "firstEndPos" : 1329,
+  "secondEndPos" : 5968
 }, {
   "firstType" : "property_declaration_keyword",
   "secondType" : "property_declaration_keyword",
@@ -1760,24 +1782,13 @@
   "secondEndPos" : 1614
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A unique SHA1 hash that represents this group of leak traces.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.signature] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 1500,
-  "secondPos" : 5739,
-  "firstEndPos" : 1516,
-  "secondEndPos" : 5953
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 1500,
-  "secondPos" : 5956,
+  "secondPos" : 5739,
   "firstEndPos" : 1516,
   "secondEndPos" : 5986
 }, {
@@ -1804,15 +1815,15 @@
   "secondEndPos" : 8007
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
+  "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "class_parameter",
   "secondParentType" : "property_declaration",
   "firstPos" : 1500,
-  "secondPos" : 7130,
+  "secondPos" : 5965,
   "firstEndPos" : 1503,
-  "secondEndPos" : 7138
+  "secondEndPos" : 5968
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1826,17 +1837,6 @@
   "secondEndPos" : 7142
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1500,
-  "secondPos" : 7977,
-  "firstEndPos" : 1503,
-  "secondEndPos" : 7985
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -1846,6 +1846,17 @@
   "secondPos" : 7986,
   "firstEndPos" : 1503,
   "secondEndPos" : 7989
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1500,
+  "secondPos" : 5965,
+  "firstEndPos" : 1503,
+  "secondEndPos" : 5968
 }, {
   "firstType" : "property_declaration_keyword",
   "secondType" : "property_declaration_keyword",
@@ -2013,17 +2024,6 @@
   "secondEndPos" : 1633
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1522,
-  "secondPos" : 5990,
-  "firstEndPos" : 1525,
-  "secondEndPos" : 5998
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -2035,17 +2035,6 @@
   "secondEndPos" : 6002
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1522,
-  "secondPos" : 7212,
-  "firstEndPos" : 1525,
-  "secondEndPos" : 7220
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -2055,17 +2044,6 @@
   "secondPos" : 7221,
   "firstEndPos" : 1525,
   "secondEndPos" : 7224
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1522,
-  "secondPos" : 8052,
-  "firstEndPos" : 1525,
-  "secondEndPos" : 8060
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2331,27 +2309,27 @@
   "firstEndPos" : 1717,
   "secondEndPos" : 1811
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * The result of a successful heap analysis performed by [HeapAnalyzer].\n */",
-  "secondLabel" : "/**\n * The result of a successful heap analysis performed by [HeapAnalyzer].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1728,
-  "secondPos" : 1915,
-  "firstEndPos" : 1808,
-  "secondEndPos" : 1995
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1809,
-  "secondPos" : 1996,
+  "firstPos" : 1728,
+  "secondPos" : 1915,
   "firstEndPos" : 3555,
   "secondEndPos" : 5155
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * The result of a successful heap analysis performed by [HeapAnalyzer].\n */",
+  "secondLabel" : "/**\n * The result of a successful heap analysis performed by [HeapAnalyzer].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1728,
+  "secondPos" : 1915,
+  "firstEndPos" : 1808,
+  "secondEndPos" : 1995
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2859,27 +2837,27 @@
   "firstEndPos" : 1997,
   "secondEndPos" : 2184
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The list of [ApplicationLeak] found in the heap dump by [HeapAnalyzer].\n   */",
-  "secondLabel" : "/**\n   * The list of [ApplicationLeak] found in the heap dump by [HeapAnalyzer].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2002,
-  "secondPos" : 2189,
-  "firstEndPos" : 2088,
-  "secondEndPos" : 2275
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2091,
-  "secondPos" : 2278,
+  "firstPos" : 2002,
+  "secondPos" : 2189,
   "firstEndPos" : 2134,
   "secondEndPos" : 2321
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The list of [ApplicationLeak] found in the heap dump by [HeapAnalyzer].\n   */",
+  "secondLabel" : "/**\n   * The list of [ApplicationLeak] found in the heap dump by [HeapAnalyzer].\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2002,
+  "secondPos" : 2189,
+  "firstEndPos" : 2088,
+  "secondEndPos" : 2275
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2980,27 +2958,27 @@
   "firstEndPos" : 2133,
   "secondEndPos" : 2320
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The list of [LibraryLeak] found in the heap dump by [HeapAnalyzer].\n   */",
-  "secondLabel" : "/**\n   * The list of [LibraryLeak] found in the heap dump by [HeapAnalyzer].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 2138,
-  "secondPos" : 2325,
-  "firstEndPos" : 2220,
-  "secondEndPos" : 2407
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2223,
-  "secondPos" : 2410,
+  "firstPos" : 2138,
+  "secondPos" : 2325,
   "firstEndPos" : 2258,
   "secondEndPos" : 2445
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The list of [LibraryLeak] found in the heap dump by [HeapAnalyzer].\n   */",
+  "secondLabel" : "/**\n   * The list of [LibraryLeak] found in the heap dump by [HeapAnalyzer].\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 2138,
+  "secondPos" : 2325,
+  "firstEndPos" : 2220,
+  "secondEndPos" : 2407
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3167,27 +3145,27 @@
   "firstEndPos" : 3555,
   "secondEndPos" : 5155
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The list of [Leak] found in the heap dump by [HeapAnalyzer], ie all [applicationLeaks] and\n   * all [libraryLeaks] in one list.\n   */",
-  "secondLabel" : "/**\n   * The list of [Leak] found in the heap dump by [HeapAnalyzer], ie all [applicationLeaks] and\n   * all [libraryLeaks] in one list.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2282,
-  "secondPos" : 2469,
-  "firstEndPos" : 2424,
-  "secondEndPos" : 2611
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2427,
-  "secondPos" : 2614,
+  "firstPos" : 2282,
+  "secondPos" : 2469,
   "firstEndPos" : 2451,
   "secondEndPos" : 2642
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The list of [Leak] found in the heap dump by [HeapAnalyzer], ie all [applicationLeaks] and\n   * all [libraryLeaks] in one list.\n   */",
+  "secondLabel" : "/**\n   * The list of [Leak] found in the heap dump by [HeapAnalyzer], ie all [applicationLeaks] and\n   * all [libraryLeaks] in one list.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2282,
+  "secondPos" : 2469,
+  "firstEndPos" : 2424,
+  "secondEndPos" : 2611
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4279,24 +4257,13 @@
   "secondEndPos" : 3319
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * A unique SHA1 hash that represents this group of leak traces.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.signature] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 3097,
-  "secondPos" : 5739,
-  "firstEndPos" : 3113,
-  "secondEndPos" : 5953
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 3097,
-  "secondPos" : 5956,
+  "secondPos" : 5739,
   "firstEndPos" : 3113,
   "secondEndPos" : 5986
 }, {
@@ -4323,15 +4290,15 @@
   "secondEndPos" : 8007
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
+  "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "class_parameter",
   "secondParentType" : "property_declaration",
   "firstPos" : 3097,
-  "secondPos" : 7130,
+  "secondPos" : 5965,
   "firstEndPos" : 3100,
-  "secondEndPos" : 7138
+  "secondEndPos" : 5968
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4345,17 +4312,6 @@
   "secondEndPos" : 7142
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 3097,
-  "secondPos" : 7977,
-  "firstEndPos" : 3100,
-  "secondEndPos" : 7985
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -4365,6 +4321,17 @@
   "secondPos" : 7986,
   "firstEndPos" : 3100,
   "secondEndPos" : 7989
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 3097,
+  "secondPos" : 5965,
+  "firstEndPos" : 3100,
+  "secondEndPos" : 5968
 }, {
   "firstType" : "property_declaration_keyword",
   "secondType" : "property_declaration_keyword",
@@ -4543,17 +4510,6 @@
   "secondEndPos" : 8089
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 3119,
-  "secondPos" : 5990,
-  "firstEndPos" : 3122,
-  "secondEndPos" : 5998
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -4565,17 +4521,6 @@
   "secondEndPos" : 6002
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 3119,
-  "secondPos" : 7212,
-  "firstEndPos" : 3122,
-  "secondEndPos" : 7220
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -4585,17 +4530,6 @@
   "secondPos" : 7221,
   "firstEndPos" : 3122,
   "secondEndPos" : 7224
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 3119,
-  "secondPos" : 8052,
-  "firstEndPos" : 3122,
-  "secondEndPos" : 8060
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5455,27 +5389,27 @@
   "firstEndPos" : 3546,
   "secondEndPos" : 3763
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A leak found by [HeapAnalyzer], either an [ApplicationLeak] or a [LibraryLeak].\n */",
-  "secondLabel" : "/**\n * A leak found by [HeapAnalyzer], either an [ApplicationLeak] or a [LibraryLeak].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3557,
-  "secondPos" : 5157,
-  "firstEndPos" : 3647,
-  "secondEndPos" : 5247
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3648,
-  "secondPos" : 5248,
+  "firstPos" : 3557,
+  "secondPos" : 5157,
   "firstEndPos" : 4921,
   "secondEndPos" : 6482
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A leak found by [HeapAnalyzer], either an [ApplicationLeak] or a [LibraryLeak].\n */",
+  "secondLabel" : "/**\n * A leak found by [HeapAnalyzer], either an [ApplicationLeak] or a [LibraryLeak].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3557,
+  "secondPos" : 5157,
+  "firstEndPos" : 3647,
+  "secondEndPos" : 5247
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -5576,27 +5510,60 @@
   "firstEndPos" : 4921,
   "secondEndPos" : 6482
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Class name of the leaking object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "secondLabel" : "/**\n   * Class name of the object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 3685,
-  "secondPos" : 156,
-  "firstEndPos" : 3818,
-  "secondEndPos" : 281
-}, {
   "firstType" : "property_declaration",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 3821,
-  "secondPos" : 284,
+  "firstPos" : 3685,
+  "secondPos" : 156,
   "firstEndPos" : 3851,
   "secondEndPos" : 305
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Class name of the leaking object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
+  "secondLabel" : "/**\n   * Class name of the object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3685,
+  "secondPos" : 156,
+  "firstEndPos" : 3818,
+  "secondEndPos" : 281
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3830,
+  "secondPos" : 284,
+  "firstEndPos" : 3833,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 3830,
+  "secondPos" : 284,
+  "firstEndPos" : 3833,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "className",
+  "secondLabel" : "className",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3834,
+  "secondPos" : 288,
+  "firstEndPos" : 3843,
+  "secondEndPos" : 297
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -5620,36 +5587,14 @@
   "firstEndPos" : 3851,
   "secondEndPos" : 305
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "secondLabel" : "/**\n   * The minimum number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 3960,
-  "secondPos" : 1326,
-  "firstEndPos" : 4124,
-  "secondEndPos" : 1498
-}, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "secondLabel" : "/**\n   * Sum of [LeakTrace.retainedHeapByteSize] for all elements in [leakTraces].\n   * Null if the retained heap size was not computed.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3960,
-  "secondPos" : 5405,
-  "firstEndPos" : 4124,
-  "secondEndPos" : 5547
-}, {
   "firstType" : "property_declaration",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 4127,
-  "secondPos" : 1501,
+  "firstPos" : 3960,
+  "secondPos" : 1326,
   "firstEndPos" : 4166,
   "secondEndPos" : 1531
 }, {
@@ -5659,10 +5604,109 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4127,
-  "secondPos" : 5550,
+  "firstPos" : 3960,
+  "secondPos" : 5405,
   "firstEndPos" : 4166,
   "secondEndPos" : 5585
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "secondLabel" : "/**\n   * The minimum number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 3960,
+  "secondPos" : 1326,
+  "firstEndPos" : 4124,
+  "secondEndPos" : 1498
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "secondLabel" : "/**\n   * Sum of [LeakTrace.retainedHeapByteSize] for all elements in [leakTraces].\n   * Null if the retained heap size was not computed.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3960,
+  "secondPos" : 5405,
+  "firstEndPos" : 4124,
+  "secondEndPos" : 5547
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4136,
+  "secondPos" : 1501,
+  "firstEndPos" : 4139,
+  "secondEndPos" : 1504
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4136,
+  "secondPos" : 5550,
+  "firstEndPos" : 4139,
+  "secondEndPos" : 5553
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 4136,
+  "secondPos" : 1501,
+  "firstEndPos" : 4139,
+  "secondEndPos" : 1504
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 4136,
+  "secondPos" : 5550,
+  "firstEndPos" : 4139,
+  "secondEndPos" : 5553
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4140,
+  "secondPos" : 5554,
+  "firstEndPos" : 4166,
+  "secondEndPos" : 5585
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "retainedHeapByteSize",
+  "secondLabel" : "retainedHeapByteSize",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4140,
+  "secondPos" : 1505,
+  "firstEndPos" : 4160,
+  "secondEndPos" : 1525
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "retainedHeapByteSize",
+  "secondLabel" : "totalRetainedHeapByteSize",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 4140,
+  "secondPos" : 5554,
+  "firstEndPos" : 4160,
+  "secondEndPos" : 5579
 }, {
   "firstType" : "nullable_type",
   "secondType" : "nullable_type",
@@ -5730,38 +5774,71 @@
   "firstEndPos" : 4165,
   "secondEndPos" : 5584
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A unique SHA1 hash that represents this group of leaks.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.leakCauses] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
-  "secondLabel" : "/**\n   * A unique SHA1 hash that represents this group of leak traces.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.signature] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4170,
-  "secondPos" : 5739,
-  "firstEndPos" : 4379,
-  "secondEndPos" : 5953
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4382,
-  "secondPos" : 5956,
+  "firstPos" : 4170,
+  "secondPos" : 5739,
   "firstEndPos" : 4395,
   "secondEndPos" : 5986
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns [className] stripped of any string content before the last period (included).\n   */",
-  "secondLabel" : "/**\n   * Returns {@link #className} without the package, ie stripped of any string content before the\n   * last period (included).\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4429,
-  "secondPos" : 585,
-  "firstEndPos" : 4529,
-  "secondEndPos" : 721
+  "firstLabel" : "/**\n   * A unique SHA1 hash that represents this group of leaks.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.leakCauses] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
+  "secondLabel" : "/**\n   * A unique SHA1 hash that represents this group of leak traces.\n   *\n   * For [ApplicationLeak] this is based on [LeakTrace.signature] and for [LibraryLeak] this is\n   * based on [LibraryLeak.pattern].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4170,
+  "secondPos" : 5739,
+  "firstEndPos" : 4379,
+  "secondEndPos" : 5953
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4382,
+  "secondPos" : 5965,
+  "firstEndPos" : 4385,
+  "secondEndPos" : 5968
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 4382,
+  "secondPos" : 5965,
+  "firstEndPos" : 4385,
+  "secondEndPos" : 5968
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "groupHash",
+  "secondLabel" : "signature",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 4386,
+  "secondPos" : 5969,
+  "firstEndPos" : 4395,
+  "secondEndPos" : 5978
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4386,
+  "secondPos" : 5969,
+  "firstEndPos" : 4395,
+  "secondEndPos" : 5986
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -5769,10 +5846,65 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4532,
-  "secondPos" : 724,
+  "firstPos" : 4429,
+  "secondPos" : 585,
   "firstEndPos" : 4559,
   "secondEndPos" : 786
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns [className] stripped of any string content before the last period (included).\n   */",
+  "secondLabel" : "/**\n   * Returns {@link #className} without the package, ie stripped of any string content before the\n   * last period (included).\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4429,
+  "secondPos" : 585,
+  "firstEndPos" : 4529,
+  "secondEndPos" : 721
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4532,
+  "secondPos" : 724,
+  "firstEndPos" : 4535,
+  "secondEndPos" : 727
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 4532,
+  "secondPos" : 724,
+  "firstEndPos" : 4535,
+  "secondEndPos" : 727
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4536,
+  "secondPos" : 728,
+  "firstEndPos" : 4559,
+  "secondEndPos" : 751
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "classSimpleName",
+  "secondLabel" : "classSimpleName",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 4536,
+  "secondPos" : 728,
+  "firstEndPos" : 4551,
+  "secondEndPos" : 743
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -6115,27 +6247,27 @@
   "firstEndPos" : 4845,
   "secondEndPos" : 6191
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A leak found by [HeapAnalyzer], where the only path to the leaking object required going\n * through a reference matched by [pattern], as provided to a [LibraryLeakReferenceMatcher]\n * instance. This is a known leak in library code that is beyond your control.\n */",
-  "secondLabel" : "/**\n * A leak found by [HeapAnalyzer], where the only path to the leaking object required going\n * through a reference matched by [pattern], as provided to a [LibraryLeakReferenceMatcher]\n * instance. This is a known leak in library code that is beyond your control.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 4923,
-  "secondPos" : 6484,
-  "firstEndPos" : 5193,
-  "secondEndPos" : 6754
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 5194,
-  "secondPos" : 6755,
+  "firstPos" : 4923,
+  "secondPos" : 6484,
   "firstEndPos" : 5828,
   "secondEndPos" : 7826
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A leak found by [HeapAnalyzer], where the only path to the leaking object required going\n * through a reference matched by [pattern], as provided to a [LibraryLeakReferenceMatcher]\n * instance. This is a known leak in library code that is beyond your control.\n */",
+  "secondLabel" : "/**\n * A leak found by [HeapAnalyzer], where the only path to the leaking object required going\n * through a reference matched by [pattern], as provided to a [LibraryLeakReferenceMatcher]\n * instance. This is a known leak in library code that is beyond your control.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 4923,
+  "secondPos" : 6484,
+  "firstEndPos" : 5193,
+  "secondEndPos" : 6754
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -6204,26 +6336,48 @@
   "secondEndPos" : 7116
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * Class name of the object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 5220,
-  "secondPos" : 156,
-  "firstEndPos" : 5250,
-  "secondEndPos" : 281
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 5220,
-  "secondPos" : 284,
+  "secondPos" : 156,
   "firstEndPos" : 5250,
   "secondEndPos" : 305
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5229,
+  "secondPos" : 284,
+  "firstEndPos" : 5232,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 5229,
+  "secondPos" : 284,
+  "firstEndPos" : 5232,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "className",
+  "secondLabel" : "className",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5233,
+  "secondPos" : 288,
+  "firstEndPos" : 5242,
+  "secondEndPos" : 297
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -6248,26 +6402,59 @@
   "secondEndPos" : 305
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/** This field is kept to support backward compatible deserialization. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 5254,
-  "secondPos" : 7412,
-  "firstEndPos" : 5287,
-  "secondEndPos" : 7485
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 5254,
-  "secondPos" : 7488,
+  "secondPos" : 7412,
   "firstEndPos" : 5287,
   "secondEndPos" : 7528
+}, {
+  "firstType" : "modifiers",
+  "secondType" : "modifiers",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5254,
+  "secondPos" : 7488,
+  "firstEndPos" : 5262,
+  "secondEndPos" : 7495
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5263,
+  "secondPos" : 7496,
+  "firstEndPos" : 5266,
+  "secondEndPos" : 7499
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 5263,
+  "secondPos" : 7496,
+  "firstEndPos" : 5266,
+  "secondEndPos" : 7499
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakTrace",
+  "secondLabel" : "leakTrace",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 5267,
+  "secondPos" : 7500,
+  "firstEndPos" : 5276,
+  "secondEndPos" : 7509
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -6292,26 +6479,59 @@
   "secondEndPos" : 7520
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/** This field is kept to support backward compatible deserialization. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 5291,
-  "secondPos" : 7531,
-  "firstEndPos" : 5330,
-  "secondEndPos" : 7604
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 5291,
-  "secondPos" : 7607,
+  "secondPos" : 7531,
   "firstEndPos" : 5330,
   "secondEndPos" : 7652
+}, {
+  "firstType" : "modifiers",
+  "secondType" : "modifiers",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5291,
+  "secondPos" : 7607,
+  "firstEndPos" : 5299,
+  "secondEndPos" : 7614
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5300,
+  "secondPos" : 7615,
+  "firstEndPos" : 5303,
+  "secondEndPos" : 7618
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 5300,
+  "secondPos" : 7615,
+  "firstEndPos" : 5303,
+  "secondEndPos" : 7618
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "retainedHeapByteSize",
+  "secondLabel" : "retainedHeapByteSize",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 5304,
+  "secondPos" : 7619,
+  "firstEndPos" : 5324,
+  "secondEndPos" : 7639
 }, {
   "firstType" : "nullable_type",
   "secondType" : "nullable_type",
@@ -6346,27 +6566,27 @@
   "firstEndPos" : 5329,
   "secondEndPos" : 7644
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The pattern that matched one of the references in [leakTrace], as provided to a\n   * [LibraryLeakReferenceMatcher] instance.\n   */",
-  "secondLabel" : "/**\n   * The pattern that matched one of the references in each of [leakTraces], as provided to a\n   * [LibraryLeakReferenceMatcher] instance.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 5334,
-  "secondPos" : 6825,
-  "firstEndPos" : 5473,
-  "secondEndPos" : 6973
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 5476,
-  "secondPos" : 6976,
+  "firstPos" : 5334,
+  "secondPos" : 6825,
   "firstEndPos" : 5505,
   "secondEndPos" : 7005
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The pattern that matched one of the references in [leakTrace], as provided to a\n   * [LibraryLeakReferenceMatcher] instance.\n   */",
+  "secondLabel" : "/**\n   * The pattern that matched one of the references in each of [leakTraces], as provided to a\n   * [LibraryLeakReferenceMatcher] instance.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5334,
+  "secondPos" : 6825,
+  "firstEndPos" : 5473,
+  "secondEndPos" : 6973
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6423,27 +6643,27 @@
   "firstEndPos" : 5505,
   "secondEndPos" : 7005
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A description that conveys what we know about this library leak.\n   */",
-  "secondLabel" : "/**\n   * A description that conveys what we know about this library leak.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 5509,
-  "secondPos" : 7009,
-  "firstEndPos" : 5588,
-  "secondEndPos" : 7088
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 5591,
-  "secondPos" : 7091,
+  "firstPos" : 5509,
+  "secondPos" : 7009,
   "firstEndPos" : 5614,
   "secondEndPos" : 7114
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A description that conveys what we know about this library leak.\n   */",
+  "secondLabel" : "/**\n   * A description that conveys what we know about this library leak.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5509,
+  "secondPos" : 7009,
+  "firstEndPos" : 5588,
+  "secondEndPos" : 7088
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -7028,27 +7248,27 @@
   "firstEndPos" : 5819,
   "secondEndPos" : 7401
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A leak found by [HeapAnalyzer] in your application.\n */",
-  "secondLabel" : "/**\n * A leak found by [HeapAnalyzer] in your application.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 5830,
-  "secondPos" : 7828,
-  "firstEndPos" : 5892,
-  "secondEndPos" : 7890
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 5893,
-  "secondPos" : 7891,
+  "firstPos" : 5830,
+  "secondPos" : 7828,
   "firstEndPos" : 6454,
   "secondEndPos" : 9009
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A leak found by [HeapAnalyzer] in your application.\n */",
+  "secondLabel" : "/**\n * A leak found by [HeapAnalyzer] in your application.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 5830,
+  "secondPos" : 7828,
+  "firstEndPos" : 5892,
+  "secondEndPos" : 7890
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -7117,26 +7337,48 @@
   "secondEndPos" : 7963
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/**\n   * Class name of the object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 5923,
-  "secondPos" : 156,
-  "firstEndPos" : 5953,
-  "secondEndPos" : 281
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 5923,
-  "secondPos" : 284,
+  "secondPos" : 156,
   "firstEndPos" : 5953,
   "secondEndPos" : 305
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5932,
+  "secondPos" : 284,
+  "firstEndPos" : 5935,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 5932,
+  "secondPos" : 284,
+  "firstEndPos" : 5935,
+  "secondEndPos" : 287
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "className",
+  "secondLabel" : "className",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5936,
+  "secondPos" : 288,
+  "firstEndPos" : 5945,
+  "secondEndPos" : 297
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -7161,26 +7403,59 @@
   "secondEndPos" : 305
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/** This field is kept to support backward compatible deserialization. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 5957,
-  "secondPos" : 8596,
-  "firstEndPos" : 5990,
-  "secondEndPos" : 8669
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 5957,
-  "secondPos" : 8672,
+  "secondPos" : 8596,
   "firstEndPos" : 5990,
   "secondEndPos" : 8712
+}, {
+  "firstType" : "modifiers",
+  "secondType" : "modifiers",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5957,
+  "secondPos" : 8672,
+  "firstEndPos" : 5965,
+  "secondEndPos" : 8679
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5966,
+  "secondPos" : 8680,
+  "firstEndPos" : 5969,
+  "secondEndPos" : 8683
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 5966,
+  "secondPos" : 8680,
+  "firstEndPos" : 5969,
+  "secondEndPos" : 8683
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "leakTrace",
+  "secondLabel" : "leakTrace",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 5970,
+  "secondPos" : 8684,
+  "firstEndPos" : 5979,
+  "secondEndPos" : 8693
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -7205,26 +7480,59 @@
   "secondEndPos" : 8704
 }, {
   "firstType" : "class_parameter",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "",
-  "secondLabel" : "/** This field is kept to support backward compatible deserialization. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "type_body",
-  "firstPos" : 5994,
-  "secondPos" : 8715,
-  "firstEndPos" : 6033,
-  "secondEndPos" : 8788
-}, {
-  "firstType" : "class_parameter",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "type_body",
   "firstPos" : 5994,
-  "secondPos" : 8791,
+  "secondPos" : 8715,
   "firstEndPos" : 6033,
   "secondEndPos" : 8836
+}, {
+  "firstType" : "modifiers",
+  "secondType" : "modifiers",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 5994,
+  "secondPos" : 8791,
+  "firstEndPos" : 6002,
+  "secondEndPos" : 8798
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 6003,
+  "secondPos" : 8799,
+  "firstEndPos" : 6006,
+  "secondEndPos" : 8802
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 6003,
+  "secondPos" : 8799,
+  "firstEndPos" : 6006,
+  "secondEndPos" : 8802
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "retainedHeapByteSize",
+  "secondLabel" : "retainedHeapByteSize",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 6007,
+  "secondPos" : 8803,
+  "firstEndPos" : 6027,
+  "secondEndPos" : 8823
 }, {
   "firstType" : "nullable_type",
   "secondType" : "nullable_type",
@@ -7325,27 +7633,27 @@
   "firstEndPos" : 6454,
   "secondEndPos" : 9009
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Required to avoid the default toString() from data classes",
-  "secondLabel" : "// Override required to avoid the default toString() from data classes",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6323,
-  "secondPos" : 8454,
-  "firstEndPos" : 6384,
-  "secondEndPos" : 8524
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6387,
-  "secondPos" : 8527,
+  "firstPos" : 6323,
+  "secondPos" : 8454,
   "firstEndPos" : 6452,
   "secondEndPos" : 8592
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Required to avoid the default toString() from data classes",
+  "secondLabel" : "// Override required to avoid the default toString() from data classes",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6323,
+  "secondPos" : 8454,
+  "firstEndPos" : 6384,
+  "secondEndPos" : 8524
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

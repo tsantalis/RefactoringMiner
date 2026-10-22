@@ -945,27 +945,27 @@
   "firstEndPos" : 1153,
   "secondEndPos" : 1153
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n */",
-  "secondLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1155,
-  "secondPos" : 1155,
-  "firstEndPos" : 1239,
-  "secondEndPos" : 1239
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1240,
-  "secondPos" : 1240,
+  "firstPos" : 1155,
+  "secondPos" : 1155,
   "firstEndPos" : 4147,
   "secondEndPos" : 4147
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n */",
+  "secondLabel" : "/**\n * Implementation of the data source that adds a latency simulating network.\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 1155,
+  "secondPos" : 1155,
+  "firstEndPos" : 1239,
+  "secondEndPos" : 1239
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1671,27 +1671,27 @@
   "firstEndPos" : 1600,
   "secondEndPos" : 1600
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
-  "secondLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1614,
-  "secondPos" : 1614,
-  "firstEndPos" : 1837,
-  "secondEndPos" : 1837
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1842,
-  "secondPos" : 1842,
+  "firstPos" : 1614,
+  "secondPos" : 1614,
   "firstEndPos" : 2093,
   "secondEndPos" : 2093
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
+  "secondLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1614,
+  "secondPos" : 1614,
+  "firstEndPos" : 1837,
+  "secondEndPos" : 1837
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2276,27 +2276,27 @@
   "firstEndPos" : 2086,
   "secondEndPos" : 2086
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
-  "secondLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2099,
-  "secondPos" : 2099,
-  "firstEndPos" : 2320,
-  "secondEndPos" : 2320
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2325,
-  "secondPos" : 2325,
+  "firstPos" : 2099,
+  "secondPos" : 2099,
   "firstEndPos" : 2621,
   "secondEndPos" : 2621
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
+  "secondLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is never fired. In a real remote data\n     * source implementation, this would be fired if the server can't be contacted or the server\n     * returns an error.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2099,
+  "secondPos" : 2099,
+  "firstEndPos" : 2320,
+  "secondEndPos" : 2320
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

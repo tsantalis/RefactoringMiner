@@ -747,27 +747,27 @@
   "firstEndPos" : 528,
   "secondEndPos" : 528
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Optional labeler that adds a label for each field of each instance in the leak trace.\n   * This can make the leak analysis large, sometimes too big to be deserialized from the Sqlite db,\n   * to this labeler is not added by default.\n   */",
-  "secondLabel" : "/**\n * Optional labeler that adds a label for each field of each instance in the leak trace.\n * This can make the leak analysis large, sometimes too big to be deserialized from the Sqlite db,\n * to this labeler is not added by default.\n */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "source_file",
-  "firstPos" : 637,
-  "secondPos" : 591,
-  "firstEndPos" : 884,
-  "secondEndPos" : 830
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
-  "firstPos" : 887,
-  "secondPos" : 831,
+  "firstPos" : 637,
+  "secondPos" : 591,
   "firstEndPos" : 3115,
   "secondEndPos" : 2936
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Optional labeler that adds a label for each field of each instance in the leak trace.\n   * This can make the leak analysis large, sometimes too big to be deserialized from the Sqlite db,\n   * to this labeler is not added by default.\n   */",
+  "secondLabel" : "/**\n * Optional labeler that adds a label for each field of each instance in the leak trace.\n * This can make the leak analysis large, sometimes too big to be deserialized from the Sqlite db,\n * to this labeler is not added by default.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 637,
+  "secondPos" : 591,
+  "firstEndPos" : 884,
+  "secondEndPos" : 830
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

@@ -120,27 +120,27 @@
   "firstEndPos" : 75,
   "secondEndPos" : 75
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Inspector that automatically marks instances of the provided class names as not leaking\n * because they're app wide singletons.\n */",
-  "secondLabel" : "/**\n * Inspector that automatically marks instances of the provided class names as not leaking\n * because they're app wide singletons.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 77,
-  "secondPos" : 77,
-  "firstEndPos" : 215,
-  "secondEndPos" : 215
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 216,
-  "secondPos" : 216,
+  "firstPos" : 77,
+  "secondPos" : 77,
   "firstEndPos" : 811,
   "secondEndPos" : 807
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Inspector that automatically marks instances of the provided class names as not leaking\n * because they're app wide singletons.\n */",
+  "secondLabel" : "/**\n * Inspector that automatically marks instances of the provided class names as not leaking\n * because they're app wide singletons.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 77,
+  "secondPos" : 77,
+  "firstEndPos" : 215,
+  "secondEndPos" : 215
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

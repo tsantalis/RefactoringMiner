@@ -61,7 +61,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 20,
-  "secondPos" : 333,
+  "secondPos" : 20,
   "firstEndPos" : 1400,
   "secondEndPos" : 2377
 }, {
@@ -930,7 +930,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 388,
-  "secondPos" : 804,
+  "secondPos" : 722,
   "firstEndPos" : 412,
   "secondEndPos" : 828
 }, {
@@ -1095,7 +1095,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 442,
-  "secondPos" : 1006,
+  "secondPos" : 858,
   "firstEndPos" : 493,
   "secondEndPos" : 1057
 }, {
@@ -1326,7 +1326,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 591,
-  "secondPos" : 1252,
+  "secondPos" : 1155,
   "firstEndPos" : 641,
   "secondEndPos" : 1302
 }, {
@@ -1491,7 +1491,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 680,
-  "secondPos" : 1437,
+  "secondPos" : 1341,
   "firstEndPos" : 740,
   "secondEndPos" : 1497
 }, {
@@ -1649,27 +1649,27 @@
   "firstEndPos" : 736,
   "secondEndPos" : 1493
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The inspector is almost sure this instance is leaking, but not 100%. This information will\n   * be used for decorating leaktraces, but [HeapAnalyzer] will not look for these instances.\n   */",
-  "secondLabel" : "/**\n   * @see [reportLeaking]\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 745,
-  "secondPos" : 1501,
-  "firstEndPos" : 944,
-  "secondEndPos" : 1536
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 947,
-  "secondPos" : 1539,
+  "firstPos" : 745,
+  "secondPos" : 1501,
   "firstEndPos" : 1059,
   "secondEndPos" : 1651
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The inspector is almost sure this instance is leaking, but not 100%. This information will\n   * be used for decorating leaktraces, but [HeapAnalyzer] will not look for these instances.\n   */",
+  "secondLabel" : "/**\n   * @see [reportLeaking]\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 745,
+  "secondPos" : 1501,
+  "firstEndPos" : 944,
+  "secondEndPos" : 1536
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1913,27 +1913,27 @@
   "firstEndPos" : 1054,
   "secondEndPos" : 1646
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The inspector is 100% sure this instance is leaking. [HeapAnalyzer] will look for these\n   * instances.\n   */",
-  "secondLabel" : "/**\n   * Call this to let LeakCanary know that this instance was expected to be unreachable, ie that\n   * it's leaking.\n   *\n   * Only call this method if you're 100% sure this instance is leaking, otherwise call\n   * [reportLikelyLeaking]. The difference is that instances that are \"likely leaking\" are not\n   * considered to be leaking instances on which LeakCanary should compute the leak trace.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1063,
-  "secondPos" : 1655,
-  "firstEndPos" : 1181,
-  "secondEndPos" : 2059
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1184,
-  "secondPos" : 2062,
+  "firstPos" : 1063,
+  "secondPos" : 1655,
   "firstEndPos" : 1284,
   "secondEndPos" : 2162
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The inspector is 100% sure this instance is leaking. [HeapAnalyzer] will look for these\n   * instances.\n   */",
+  "secondLabel" : "/**\n   * Call this to let LeakCanary know that this instance was expected to be unreachable, ie that\n   * it's leaking.\n   *\n   * Only call this method if you're 100% sure this instance is leaking, otherwise call\n   * [reportLikelyLeaking]. The difference is that instances that are \"likely leaking\" are not\n   * considered to be leaking instances on which LeakCanary should compute the leak trace.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1063,
+  "secondPos" : 1655,
+  "firstEndPos" : 1181,
+  "secondEndPos" : 2059
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2184,7 +2184,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1288,
-  "secondPos" : 2265,
+  "secondPos" : 2166,
   "firstEndPos" : 1397,
   "secondEndPos" : 2374
 }, {

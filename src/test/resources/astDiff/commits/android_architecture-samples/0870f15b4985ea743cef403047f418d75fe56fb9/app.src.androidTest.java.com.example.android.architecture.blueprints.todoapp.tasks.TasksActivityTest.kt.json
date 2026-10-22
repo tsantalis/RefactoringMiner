@@ -2716,27 +2716,27 @@
   "firstEndPos" : 2344,
   "secondEndPos" : 2601
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2346,
-  "secondPos" : 2603,
-  "firstEndPos" : 2400,
-  "secondEndPos" : 2657
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2401,
-  "secondPos" : 2658,
+  "firstPos" : 2346,
+  "secondPos" : 2603,
   "firstEndPos" : 10288,
   "secondEndPos" : 11394
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2346,
+  "secondPos" : 2603,
+  "firstEndPos" : 2400,
+  "secondEndPos" : 2657
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3574,27 +3574,27 @@
   "firstEndPos" : 2717,
   "secondEndPos" : 3169
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
-  "secondLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2729,
-  "secondPos" : 3181,
-  "firstEndPos" : 3060,
-  "secondEndPos" : 3386
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3065,
-  "secondPos" : 3391,
+  "firstPos" : 2729,
+  "secondPos" : 3181,
   "firstEndPos" : 3206,
   "secondEndPos" : 3605
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Prepare your test fixture for this test. In this case we register an IdlingResources with\n     * Espresso. IdlingResource resource is a great way to tell Espresso when your app is in an\n     * idle state. This helps Espresso to synchronize your test actions, which makes tests\n     * significantly more reliable.\n     */",
+  "secondLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2729,
+  "secondPos" : 3181,
+  "firstEndPos" : 3060,
+  "secondEndPos" : 3386
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -3904,27 +3904,27 @@
   "firstEndPos" : 3199,
   "secondEndPos" : 3525
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3212,
-  "secondPos" : 3611,
-  "firstEndPos" : 3323,
-  "secondEndPos" : 3722
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3328,
-  "secondPos" : 3727,
+  "firstPos" : 3212,
+  "secondPos" : 3611,
   "firstEndPos" : 3472,
   "secondEndPos" : 3946
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3212,
+  "secondPos" : 3611,
+  "firstEndPos" : 3323,
+  "secondEndPos" : 3722
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

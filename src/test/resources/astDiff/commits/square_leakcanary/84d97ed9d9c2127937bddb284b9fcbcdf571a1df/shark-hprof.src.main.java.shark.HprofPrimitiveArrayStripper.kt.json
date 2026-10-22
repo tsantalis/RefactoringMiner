@@ -879,27 +879,27 @@
   "firstEndPos" : 819,
   "secondEndPos" : 819
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Transforms a Hprof to all primitive arrays, which can be useful to remove PII.\n */",
-  "secondLabel" : "/**\n * Converts a Hprof file to another file with all primitive arrays replaces with empty arrays,\n * which can be useful to remove PII.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 821,
-  "secondPos" : 821,
-  "firstEndPos" : 910,
-  "secondEndPos" : 961
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 911,
-  "secondPos" : 962,
+  "firstPos" : 821,
+  "secondPos" : 821,
   "firstEndPos" : 3677,
   "secondEndPos" : 4078
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Transforms a Hprof to all primitive arrays, which can be useful to remove PII.\n */",
+  "secondLabel" : "/**\n * Converts a Hprof file to another file with all primitive arrays replaces with empty arrays,\n * which can be useful to remove PII.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 821,
+  "secondPos" : 821,
+  "firstEndPos" : 910,
+  "secondEndPos" : 961
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -941,7 +941,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 950,
-  "secondPos" : 1051,
+  "secondPos" : 1001,
   "firstEndPos" : 3674,
   "secondEndPos" : 4075
 }, {

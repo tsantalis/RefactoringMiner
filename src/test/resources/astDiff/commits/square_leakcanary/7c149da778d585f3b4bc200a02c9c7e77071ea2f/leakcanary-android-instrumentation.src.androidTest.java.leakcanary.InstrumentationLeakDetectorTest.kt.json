@@ -285,27 +285,27 @@
   "firstEndPos" : 110,
   "secondEndPos" : 149
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests that the [InstrumentationLeakDetector] can detect leaks\n * in instrumentation tests\n */",
-  "secondLabel" : "/**\n * Tests that the [InstrumentationLeakDetector] can detect leaks\n * in instrumentation tests\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 112,
-  "secondPos" : 151,
-  "firstEndPos" : 212,
-  "secondEndPos" : 251
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 213,
-  "secondPos" : 252,
+  "firstPos" : 112,
+  "secondPos" : 151,
   "firstEndPos" : 1115,
   "secondEndPos" : 697
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests that the [InstrumentationLeakDetector] can detect leaks\n * in instrumentation tests\n */",
+  "secondLabel" : "/**\n * Tests that the [InstrumentationLeakDetector] can detect leaks\n * in instrumentation tests\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 112,
+  "secondPos" : 151,
+  "firstEndPos" : 212,
+  "secondEndPos" : 251
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

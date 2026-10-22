@@ -1792,27 +1792,27 @@
   "firstEndPos" : 1800,
   "secondEndPos" : 1800
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Exposes the data to be used in the task list screen.\n *\n *\n * [BaseObservable] implements a listener registration mechanism which is notified when a\n * property changes. This is done by assigning a [Bindable] annotation to the property's\n * getter method.\n */",
-  "secondLabel" : "/**\n * Exposes the data to be used in the task list screen.\n *\n *\n * [BaseObservable] implements a listener registration mechanism which is notified when a\n * property changes. This is done by assigning a [Bindable] annotation to the property's\n * getter method.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1802,
-  "secondPos" : 1802,
-  "firstEndPos" : 2068,
-  "secondEndPos" : 2068
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2069,
-  "secondPos" : 2069,
+  "firstPos" : 1802,
+  "secondPos" : 1802,
   "firstEndPos" : 8187,
   "secondEndPos" : 8261
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Exposes the data to be used in the task list screen.\n *\n *\n * [BaseObservable] implements a listener registration mechanism which is notified when a\n * property changes. This is done by assigning a [Bindable] annotation to the property's\n * getter method.\n */",
+  "secondLabel" : "/**\n * Exposes the data to be used in the task list screen.\n *\n *\n * [BaseObservable] implements a listener registration mechanism which is notified when a\n * property changes. This is done by assigning a [Bindable] annotation to the property's\n * getter method.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1802,
+  "secondPos" : 1802,
+  "firstEndPos" : 2068,
+  "secondEndPos" : 2068
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4828,27 +4828,27 @@
   "firstEndPos" : 3080,
   "secondEndPos" : 3080
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Not used at the moment",
-  "secondLabel" : "// Not used at the moment",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3086,
-  "secondPos" : 3086,
-  "firstEndPos" : 3111,
-  "secondEndPos" : 3111
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3116,
-  "secondPos" : 3116,
+  "firstPos" : 3086,
+  "secondPos" : 3086,
   "firstEndPos" : 3175,
   "secondEndPos" : 3175
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Not used at the moment",
+  "secondLabel" : "// Not used at the moment",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3086,
+  "secondPos" : 3086,
+  "firstEndPos" : 3111,
+  "secondEndPos" : 3111
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5862,27 +5862,27 @@
   "firstEndPos" : 3430,
   "secondEndPos" : 3430
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// This LiveData depends on another so we can use a transformation.",
-  "secondLabel" : "// This LiveData depends on another so we can use a transformation.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3436,
-  "secondPos" : 3436,
-  "firstEndPos" : 3503,
-  "secondEndPos" : 3503
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3508,
-  "secondPos" : 3508,
+  "firstPos" : 3436,
+  "secondPos" : 3436,
   "firstEndPos" : 3595,
   "secondEndPos" : 3595
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// This LiveData depends on another so we can use a transformation.",
+  "secondLabel" : "// This LiveData depends on another so we can use a transformation.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3436,
+  "secondPos" : 3436,
+  "firstEndPos" : 3503,
+  "secondEndPos" : 3503
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6379,27 +6379,27 @@
   "firstEndPos" : 3683,
   "secondEndPos" : 3683
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
-  "secondLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3696,
-  "secondPos" : 3720,
-  "firstEndPos" : 3904,
-  "secondEndPos" : 3928
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3909,
-  "secondPos" : 3933,
+  "firstPos" : 3696,
+  "secondPos" : 3720,
   "firstEndPos" : 4707,
   "secondEndPos" : 4731
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
+  "secondLabel" : "/**\n     * Sets the current task filtering type.\n     *\n     * @param requestType Can be [TasksFilterType.ALL_TASKS],\n     * [TasksFilterType.COMPLETED_TASKS], or\n     * [TasksFilterType.ACTIVE_TASKS]\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3696,
+  "secondPos" : 3720,
+  "firstEndPos" : 3904,
+  "secondEndPos" : 3928
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -10020,27 +10020,27 @@
   "firstEndPos" : 5677,
   "secondEndPos" : 5701
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called by the Data Binding library and the FAB's click listener.\n     */",
-  "secondLabel" : "/**\n     * Called by the Data Binding library and the FAB's click listener.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5700,
-  "secondPos" : 5724,
-  "firstEndPos" : 5783,
-  "secondEndPos" : 5807
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5788,
-  "secondPos" : 5812,
+  "firstPos" : 5700,
+  "secondPos" : 5724,
   "firstEndPos" : 5854,
   "secondEndPos" : 5878
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called by the Data Binding library and the FAB's click listener.\n     */",
+  "secondLabel" : "/**\n     * Called by the Data Binding library and the FAB's click listener.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5700,
+  "secondPos" : 5724,
+  "firstEndPos" : 5783,
+  "secondEndPos" : 5807
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -10240,27 +10240,27 @@
   "firstEndPos" : 5847,
   "secondEndPos" : 5871
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called by the [TasksAdapter].\n     */",
-  "secondLabel" : "/**\n     * Called by the [TasksAdapter].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5860,
-  "secondPos" : 5884,
-  "firstEndPos" : 5908,
-  "secondEndPos" : 5932
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5913,
-  "secondPos" : 5937,
+  "firstPos" : 5860,
+  "secondPos" : 5884,
   "firstEndPos" : 6003,
   "secondEndPos" : 6027
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called by the [TasksAdapter].\n     */",
+  "secondLabel" : "/**\n     * Called by the [TasksAdapter].\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5860,
+  "secondPos" : 5884,
+  "firstEndPos" : 5908,
+  "secondEndPos" : 5932
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -11791,27 +11791,27 @@
   "firstEndPos" : 6591,
   "secondEndPos" : 6615
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * @param forceUpdate   Pass in true to refresh the data in the [TasksDataSource]\n     * @param showLoadingUI Pass in true to display a loading icon in the UI\n     */",
-  "secondLabel" : "/**\n     * @param forceUpdate   Pass in true to refresh the data in the [TasksDataSource]\n     * @param showLoadingUI Pass in true to display a loading icon in the UI\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6604,
-  "secondPos" : 6628,
-  "firstEndPos" : 6778,
-  "secondEndPos" : 6802
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6783,
-  "secondPos" : 6807,
+  "firstPos" : 6604,
+  "secondPos" : 6628,
   "firstEndPos" : 8185,
   "secondEndPos" : 8208
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * @param forceUpdate   Pass in true to refresh the data in the [TasksDataSource]\n     * @param showLoadingUI Pass in true to display a loading icon in the UI\n     */",
+  "secondLabel" : "/**\n     * @param forceUpdate   Pass in true to refresh the data in the [TasksDataSource]\n     * @param showLoadingUI Pass in true to display a loading icon in the UI\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6604,
+  "secondPos" : 6628,
+  "firstEndPos" : 6778,
+  "secondEndPos" : 6802
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

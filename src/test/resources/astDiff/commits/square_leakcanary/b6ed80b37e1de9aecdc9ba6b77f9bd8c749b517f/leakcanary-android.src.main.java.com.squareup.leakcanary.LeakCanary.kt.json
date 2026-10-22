@@ -1165,27 +1165,27 @@
   "firstEndPos" : 581,
   "secondEndPos" : 542
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
-  "secondLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 585,
-  "secondPos" : 546,
-  "firstEndPos" : 658,
-  "secondEndPos" : 619
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 661,
-  "secondPos" : 622,
+  "firstPos" : 585,
+  "secondPos" : 546,
   "firstEndPos" : 849,
   "secondEndPos" : 810
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
+  "secondLabel" : "/** Returns a string representation of the result of a heap analysis.  */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 585,
+  "secondPos" : 546,
+  "firstEndPos" : 658,
+  "secondEndPos" : 619
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1605,27 +1605,27 @@
   "firstEndPos" : 848,
   "secondEndPos" : 809
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
-  "secondLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 853,
-  "secondPos" : 814,
-  "firstEndPos" : 1008,
-  "secondEndPos" : 969
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1011,
-  "secondPos" : 972,
+  "firstPos" : 853,
+  "secondPos" : 814,
   "firstEndPos" : 1115,
   "secondEndPos" : 1076
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
+  "secondLabel" : "/**\n   * Whether the current process is the process running the [HeapAnalyzerService], which is\n   * a different process than the normal app process.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 853,
+  "secondPos" : 814,
+  "firstEndPos" : 1008,
+  "secondEndPos" : 969
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

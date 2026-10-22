@@ -582,12 +582,23 @@
   "firstEndPos" : 948,
   "secondEndPos" : 950
 }, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 950,
+  "secondPos" : 952,
+  "firstEndPos" : 1536,
+  "secondEndPos" : 1538
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/**\n * Data model mapping extension functions. There are three model types:\n *\n * - Task: External model exposed to other layers in the architecture.\n * Obtained using `toExternalModel`.\n *\n * - NetworkTask: Internal model used to represent a task from the network. Obtained using\n * `toNetworkModel`.\n *\n * - LocalTask: Internal model used to represent a task stored locally in a database. Obtained\n * using `toLocalModel`.\n *\n */",
   "secondLabel" : "/**\n * Data model mapping extension functions. There are three model types:\n *\n * - Task: External model exposed to other layers in the architecture.\n * Obtained using `toExternalModel`.\n *\n * - NetworkTask: Internal model used to represent a task from the network. Obtained using\n * `toNetworkModel`.\n *\n * - LocalTask: Internal model used to represent a task stored locally in a database. Obtained\n * using `toLocalModel`.\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 950,
   "secondPos" : 952,
   "firstEndPos" : 1381,
@@ -597,23 +608,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// External to local",
   "secondLabel" : "// External to local",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1383,
   "secondPos" : 1385,
   "firstEndPos" : 1403,
   "secondEndPos" : 1405
-}, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1404,
-  "secondPos" : 1406,
-  "firstEndPos" : 1536,
-  "secondEndPos" : 1538
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1143,27 +1143,27 @@
   "firstEndPos" : 1593,
   "secondEndPos" : 1595
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Local to External",
-  "secondLabel" : "// Local to External",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1596,
-  "secondPos" : 1598,
-  "firstEndPos" : 1616,
-  "secondEndPos" : 1618
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1617,
-  "secondPos" : 1619,
+  "firstPos" : 1596,
+  "secondPos" : 1598,
   "firstEndPos" : 1752,
   "secondEndPos" : 1754
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Local to External",
+  "secondLabel" : "// Local to External",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1596,
+  "secondPos" : 1598,
+  "firstEndPos" : 1616,
+  "secondEndPos" : 1618
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1462,12 +1462,23 @@
   "firstEndPos" : 1749,
   "secondEndPos" : 1751
 }, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 1754,
+  "secondPos" : 1756,
+  "firstEndPos" : 2088,
+  "secondEndPos" : 2090
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Note: JvmName is used to provide a unique name for each extension function with the same name.",
   "secondLabel" : "// Note: JvmName is used to provide a unique name for each extension function with the same name.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1754,
   "secondPos" : 1756,
   "firstEndPos" : 1851,
@@ -1477,8 +1488,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Without this, type erasure will cause compiler errors because these methods will have the same",
   "secondLabel" : "// Without this, type erasure will cause compiler errors because these methods will have the same",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1852,
   "secondPos" : 1854,
   "firstEndPos" : 1949,
@@ -1488,23 +1499,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// signature on the JVM.",
   "secondLabel" : "// signature on the JVM.",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1950,
   "secondPos" : 1952,
   "firstEndPos" : 1974,
   "secondEndPos" : 1976
-}, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1975,
-  "secondPos" : 1977,
-  "firstEndPos" : 2088,
-  "secondEndPos" : 2090
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1836,27 +1836,27 @@
   "firstEndPos" : 2087,
   "secondEndPos" : 2089
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Network to Local",
-  "secondLabel" : "// Network to Local",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2090,
-  "secondPos" : 2092,
-  "firstEndPos" : 2109,
-  "secondEndPos" : 2111
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2110,
-  "secondPos" : 2112,
+  "firstPos" : 2090,
+  "secondPos" : 2092,
   "firstEndPos" : 2274,
   "secondEndPos" : 2276
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Network to Local",
+  "secondLabel" : "// Network to Local",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2090,
+  "secondPos" : 2092,
+  "firstEndPos" : 2109,
+  "secondEndPos" : 2111
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2573,27 +2573,27 @@
   "firstEndPos" : 2385,
   "secondEndPos" : 2387
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Local to Network",
-  "secondLabel" : "// Local to Network",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2388,
-  "secondPos" : 2390,
-  "firstEndPos" : 2407,
-  "secondEndPos" : 2409
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2408,
-  "secondPos" : 2410,
+  "firstPos" : 2388,
+  "secondPos" : 2390,
   "firstEndPos" : 2604,
   "secondEndPos" : 2606
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Local to Network",
+  "secondLabel" : "// Local to Network",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2388,
+  "secondPos" : 2390,
+  "firstEndPos" : 2407,
+  "secondEndPos" : 2409
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -3035,27 +3035,27 @@
   "firstEndPos" : 2600,
   "secondEndPos" : 2602
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// External to Network",
-  "secondLabel" : "// External to Network",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2606,
-  "secondPos" : 2608,
-  "firstEndPos" : 2628,
-  "secondEndPos" : 2630
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2629,
-  "secondPos" : 2631,
+  "firstPos" : 2606,
+  "secondPos" : 2608,
   "firstEndPos" : 2688,
   "secondEndPos" : 2690
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// External to Network",
+  "secondLabel" : "// External to Network",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2606,
+  "secondPos" : 2608,
+  "firstEndPos" : 2628,
+  "secondEndPos" : 2630
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -3585,27 +3585,27 @@
   "firstEndPos" : 2781,
   "secondEndPos" : 2783
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Network to External",
-  "secondLabel" : "// Network to External",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2784,
-  "secondPos" : 2786,
-  "firstEndPos" : 2806,
-  "secondEndPos" : 2808
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2807,
-  "secondPos" : 2809,
+  "firstPos" : 2784,
+  "secondPos" : 2786,
   "firstEndPos" : 2875,
   "secondEndPos" : 2877
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Network to External",
+  "secondLabel" : "// Network to External",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2784,
+  "secondPos" : 2786,
+  "firstEndPos" : 2806,
+  "secondEndPos" : 2808
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

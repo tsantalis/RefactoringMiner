@@ -582,27 +582,27 @@
   "firstEndPos" : 899,
   "secondEndPos" : 899
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Platform using OpenJSSE (https://github.com/openjsse/openjsse) if installed as the first\n * Security Provider.\n *\n * Requires org.openjsse:openjsse >= 1.1.0 on the classpath.\n */",
-  "secondLabel" : "/**\n * Platform using OpenJSSE (https://github.com/openjsse/openjsse) if installed as the first\n * Security Provider.\n *\n * Requires org.openjsse:openjsse >= 1.1.0 on the classpath.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 901,
-  "secondPos" : 901,
-  "firstEndPos" : 1086,
-  "secondEndPos" : 1086
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1087,
-  "secondPos" : 1087,
+  "firstPos" : 901,
+  "secondPos" : 901,
   "firstEndPos" : 3588,
   "secondEndPos" : 3621
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Platform using OpenJSSE (https://github.com/openjsse/openjsse) if installed as the first\n * Security Provider.\n *\n * Requires org.openjsse:openjsse >= 1.1.0 on the classpath.\n */",
+  "secondLabel" : "/**\n * Platform using OpenJSSE (https://github.com/openjsse/openjsse) if installed as the first\n * Security Provider.\n *\n * Requires org.openjsse:openjsse >= 1.1.0 on the classpath.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 901,
+  "secondPos" : 901,
+  "firstEndPos" : 1086,
+  "secondEndPos" : 1086
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1044,12 +1044,23 @@
   "firstEndPos" : 1213,
   "secondEndPos" : 1213
 }, {
+  "firstType" : "function_declaration",
+  "secondType" : "function_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 1217,
+  "secondPos" : 1217,
+  "firstEndPos" : 1547,
+  "secondEndPos" : 1547
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Selects TLSv1.3 so we are specific about our intended version ranges (not just 1.3)",
   "secondLabel" : "// Selects TLSv1.3 so we are specific about our intended version ranges (not just 1.3)",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1217,
   "secondPos" : 1217,
   "firstEndPos" : 1303,
@@ -1059,8 +1070,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// and because it's a common pattern for VMs to have differences between supported and",
   "secondLabel" : "// and because it's a common pattern for VMs to have differences between supported and",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1306,
   "secondPos" : 1306,
   "firstEndPos" : 1392,
@@ -1070,23 +1081,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// defaulted versions for TLS based on what is requested.",
   "secondLabel" : "// defaulted versions for TLS based on what is requested.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
   "firstPos" : 1395,
   "secondPos" : 1395,
   "firstEndPos" : 1452,
   "secondEndPos" : 1452
-}, {
-  "firstType" : "function_declaration",
-  "secondType" : "function_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1455,
-  "secondPos" : 1455,
-  "firstEndPos" : 1547,
-  "secondEndPos" : 1547
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

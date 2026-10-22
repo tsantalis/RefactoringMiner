@@ -215,7 +215,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 693,
-  "secondPos" : 1214,
+  "secondPos" : 761,
   "firstEndPos" : 1254,
   "secondEndPos" : 1699
 }, {
@@ -852,10 +852,21 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1124,
-  "secondPos" : 1569,
+  "firstPos" : 923,
+  "secondPos" : 1444,
   "firstEndPos" : 1166,
   "secondEndPos" : 1611
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Compared against [heapDumpUptimeMillis] so that the Hprof Parser knows only to look at\n   * instances that were moved to retained, then used to remove weak references post heap dump.\n   **/",
+  "secondLabel" : "/**\n   * Time at which the associated object ([referent]) was considered retained, or -1 if it hasn't\n   * been yet.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 923,
+  "secondPos" : 1444,
+  "firstEndPos" : 1121,
+  "secondEndPos" : 1566
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

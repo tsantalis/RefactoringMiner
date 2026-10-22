@@ -593,27 +593,27 @@
   "firstEndPos" : 350,
   "secondEndPos" : 374
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This test makes sure there is no regression on the retained size calculation.\n */",
-  "secondLabel" : "/**\n * This test makes sure there is no regression on the retained size calculation.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 352,
-  "secondPos" : 376,
-  "firstEndPos" : 440,
-  "secondEndPos" : 464
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 441,
-  "secondPos" : 465,
+  "firstPos" : 352,
+  "secondPos" : 376,
   "firstEndPos" : 949,
   "secondEndPos" : 1043
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This test makes sure there is no regression on the retained size calculation.\n */",
+  "secondLabel" : "/**\n * This test makes sure there is no regression on the retained size calculation.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 352,
+  "secondPos" : 376,
+  "firstEndPos" : 440,
+  "secondEndPos" : 464
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

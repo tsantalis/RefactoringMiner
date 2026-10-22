@@ -285,27 +285,27 @@
   "firstEndPos" : 759,
   "secondEndPos" : 759
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * The Room Database that contains the Task table.\n *\n * Note that exportSchema should be true in production databases.\n */",
-  "secondLabel" : "/**\n * The Room Database that contains the Task table.\n *\n * Note that exportSchema should be true in production databases.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 830,
-  "secondPos" : 761,
-  "firstEndPos" : 957,
-  "secondEndPos" : 888
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 958,
-  "secondPos" : 889,
+  "firstPos" : 830,
+  "secondPos" : 761,
   "firstEndPos" : 1115,
   "secondEndPos" : 1051
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * The Room Database that contains the Task table.\n *\n * Note that exportSchema should be true in production databases.\n */",
+  "secondLabel" : "/**\n * The Room Database that contains the Task table.\n *\n * Note that exportSchema should be true in production databases.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 830,
+  "secondPos" : 761,
+  "firstEndPos" : 957,
+  "secondEndPos" : 888
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

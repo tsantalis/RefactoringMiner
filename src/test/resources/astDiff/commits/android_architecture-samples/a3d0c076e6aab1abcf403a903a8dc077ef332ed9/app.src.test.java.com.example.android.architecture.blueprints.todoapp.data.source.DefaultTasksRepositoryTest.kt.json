@@ -813,27 +813,27 @@
   "firstEndPos" : 1230,
   "secondEndPos" : 1080
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
-  "secondLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1232,
-  "secondPos" : 1082,
-  "firstEndPos" : 1316,
-  "secondEndPos" : 1166
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1317,
-  "secondPos" : 1167,
+  "firstPos" : 1232,
+  "secondPos" : 1082,
   "firstEndPos" : 10501,
   "secondEndPos" : 10081
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
+  "secondLabel" : "/**\n * Unit tests for the implementation of the in-memory repository with cache.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1232,
+  "secondPos" : 1082,
+  "firstEndPos" : 1316,
+  "secondEndPos" : 1166
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2936,27 +2936,27 @@
   "firstEndPos" : 1924,
   "secondEndPos" : 1776
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Class under test",
-  "secondLabel" : "// Class under test",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1930,
-  "secondPos" : 1782,
-  "firstEndPos" : 1949,
-  "secondEndPos" : 1801
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1954,
-  "secondPos" : 1806,
+  "firstPos" : 1930,
+  "secondPos" : 1782,
   "firstEndPos" : 2014,
   "secondEndPos" : 1866
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Class under test",
+  "secondLabel" : "// Class under test",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1930,
+  "secondPos" : 1782,
+  "firstEndPos" : 1949,
+  "secondEndPos" : 1801
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3079,27 +3079,27 @@
   "firstEndPos" : 2014,
   "secondEndPos" : 1866
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set the main coroutines dispatcher for unit testing.",
-  "secondLabel" : "// Set the main coroutines dispatcher for unit testing.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2020,
-  "secondPos" : 1872,
-  "firstEndPos" : 2075,
-  "secondEndPos" : 1927
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2080,
-  "secondPos" : 1932,
+  "firstPos" : 2020,
+  "secondPos" : 1872,
   "firstEndPos" : 2168,
   "secondEndPos" : 2020
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set the main coroutines dispatcher for unit testing.",
+  "secondLabel" : "// Set the main coroutines dispatcher for unit testing.",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2020,
+  "secondPos" : 1872,
+  "firstEndPos" : 2075,
+  "secondEndPos" : 1927
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -1484,27 +1484,27 @@
   "firstEndPos" : 1553,
   "secondEndPos" : 1553
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Android 5+. */",
-  "secondLabel" : "/** Android 5+. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1555,
-  "secondPos" : 1555,
-  "firstEndPos" : 1573,
-  "secondEndPos" : 1573
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1574,
-  "secondPos" : 1574,
+  "firstPos" : 1555,
+  "secondPos" : 1555,
   "firstEndPos" : 8263,
   "secondEndPos" : 8296
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Android 5+. */",
+  "secondLabel" : "/** Android 5+. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1555,
+  "secondPos" : 1555,
+  "firstEndPos" : 1573,
+  "secondEndPos" : 1573
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -10922,27 +10922,27 @@
   "firstEndPos" : 6425,
   "secondEndPos" : 6458
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A trust manager for Android applications that customize the trust manager.\n   *\n   * This class exploits knowledge of Android implementation details. This class is potentially\n   * much faster to initialize than [BasicTrustRootIndex] because it doesn't need to load and\n   * index trusted CA certificates.\n   */",
-  "secondLabel" : "/**\n   * A trust manager for Android applications that customize the trust manager.\n   *\n   * This class exploits knowledge of Android implementation details. This class is potentially\n   * much faster to initialize than [BasicTrustRootIndex] because it doesn't need to load and\n   * index trusted CA certificates.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6434,
-  "secondPos" : 6467,
-  "firstEndPos" : 6754,
-  "secondEndPos" : 6787
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6757,
-  "secondPos" : 6790,
+  "firstPos" : 6434,
+  "secondPos" : 6467,
   "firstEndPos" : 7364,
   "secondEndPos" : 7397
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A trust manager for Android applications that customize the trust manager.\n   *\n   * This class exploits knowledge of Android implementation details. This class is potentially\n   * much faster to initialize than [BasicTrustRootIndex] because it doesn't need to load and\n   * index trusted CA certificates.\n   */",
+  "secondLabel" : "/**\n   * A trust manager for Android applications that customize the trust manager.\n   *\n   * This class exploits knowledge of Android implementation details. This class is potentially\n   * much faster to initialize than [BasicTrustRootIndex] because it doesn't need to load and\n   * index trusted CA certificates.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 6434,
+  "secondPos" : 6467,
+  "firstEndPos" : 6754,
+  "secondEndPos" : 6787
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

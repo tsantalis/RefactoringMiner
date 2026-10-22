@@ -428,27 +428,27 @@
   "firstEndPos" : 919,
   "secondEndPos" : 903
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Concrete implementation of a data source as a db.\n */",
-  "secondLabel" : "/**\n * Concrete implementation of a data source as a db.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1577,
-  "secondPos" : 983,
-  "firstEndPos" : 1637,
-  "secondEndPos" : 1043
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1638,
-  "secondPos" : 1044,
+  "firstPos" : 1577,
+  "secondPos" : 983,
   "firstEndPos" : 7051,
   "secondEndPos" : 4349
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Concrete implementation of a data source as a db.\n */",
+  "secondLabel" : "/**\n * Concrete implementation of a data source as a db.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1577,
+  "secondPos" : 983,
+  "firstEndPos" : 1637,
+  "secondEndPos" : 1043
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -571,27 +571,27 @@
   "firstEndPos" : 7051,
   "secondEndPos" : 4349
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is fired if the database doesn't exist\n     * or the table is empty.\n     */",
-  "secondLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is fired if the database doesn't exist\n     * or the table is empty.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1794,
-  "secondPos" : 1190,
-  "firstEndPos" : 1926,
-  "secondEndPos" : 1322
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1931,
-  "secondPos" : 1327,
+  "firstPos" : 1794,
+  "secondPos" : 1190,
   "firstEndPos" : 3154,
   "secondEndPos" : 1813
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is fired if the database doesn't exist\n     * or the table is empty.\n     */",
+  "secondLabel" : "/**\n     * Note: [LoadTasksCallback.onDataNotAvailable] is fired if the database doesn't exist\n     * or the table is empty.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1794,
+  "secondPos" : 1190,
+  "firstEndPos" : 1926,
+  "secondEndPos" : 1322
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -912,27 +912,27 @@
   "firstEndPos" : 3085,
   "secondEndPos" : 1690
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is fired if the [Task] isn't\n     * found.\n     */",
-  "secondLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is fired if the [Task] isn't\n     * found.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3160,
-  "secondPos" : 1819,
-  "firstEndPos" : 3264,
-  "secondEndPos" : 1923
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3269,
-  "secondPos" : 1928,
+  "firstPos" : 3160,
+  "secondPos" : 1819,
   "firstEndPos" : 4358,
   "secondEndPos" : 2352
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is fired if the [Task] isn't\n     * found.\n     */",
+  "secondLabel" : "/**\n     * Note: [GetTaskCallback.onDataNotAvailable] is fired if the [Task] isn't\n     * found.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3160,
+  "secondPos" : 1819,
+  "firstEndPos" : 3264,
+  "secondEndPos" : 1923
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

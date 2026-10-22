@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n *\n * This is a functional interface with which you can create a [ObjectInspector] from a lambda.\n */",
-  "secondLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 413,
-  "secondEndPos" : 315
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 414,
-  "secondPos" : 316,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 1012,
   "secondEndPos" : 430
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n *\n * This is a functional interface with which you can create a [ObjectInspector] from a lambda.\n */",
+  "secondLabel" : "/**\n * Provides LeakCanary with insights about objects (classes, instances and arrays) found in the\n * heap. [inspect] will be called for each object that LeakCanary wants to know more about.\n * The implementation can then use the provided [ObjectReporter] to provide insights for that\n * object.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 413,
+  "secondEndPos" : 315
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -120,27 +120,27 @@
   "firstEndPos" : 1012,
   "secondEndPos" : 430
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * @see [ObjectInspector]\n   */",
-  "secondLabel" : "/**\n   * @see [ObjectInspector]\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 449,
-  "secondPos" : 351,
-  "firstEndPos" : 486,
-  "secondEndPos" : 388
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 489,
-  "secondPos" : 391,
+  "firstPos" : 449,
+  "secondPos" : 351,
   "firstEndPos" : 526,
   "secondEndPos" : 428
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * @see [ObjectInspector]\n   */",
+  "secondLabel" : "/**\n   * @see [ObjectInspector]\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 449,
+  "secondPos" : 351,
+  "firstEndPos" : 486,
+  "secondEndPos" : 388
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

@@ -626,27 +626,27 @@
   "firstEndPos" : 941,
   "secondEndPos" : 941
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A concrete interceptor chain that carries the entire interceptor chain: all application\n * interceptors, the OkHttp core, all network interceptors, and finally the network caller.\n *\n * If the chain is for an application interceptor then [exchange] must be null. Otherwise it is for\n * a network interceptor and [exchange] must be non-null.\n */",
-  "secondLabel" : "/**\n * A concrete interceptor chain that carries the entire interceptor chain: all application\n * interceptors, the OkHttp core, all network interceptors, and finally the network caller.\n *\n * If the chain is for an application interceptor then [exchange] must be null. Otherwise it is for\n * a network interceptor and [exchange] must be non-null.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 943,
-  "secondPos" : 943,
-  "firstEndPos" : 1294,
-  "secondEndPos" : 1294
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1295,
-  "secondPos" : 1295,
+  "firstPos" : 943,
+  "secondPos" : 943,
   "firstEndPos" : 4033,
   "secondEndPos" : 4027
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A concrete interceptor chain that carries the entire interceptor chain: all application\n * interceptors, the OkHttp core, all network interceptors, and finally the network caller.\n *\n * If the chain is for an application interceptor then [exchange] must be null. Otherwise it is for\n * a network interceptor and [exchange] must be non-null.\n */",
+  "secondLabel" : "/**\n * A concrete interceptor chain that carries the entire interceptor chain: all application\n * interceptors, the OkHttp core, all network interceptors, and finally the network caller.\n *\n * If the chain is for an application interceptor then [exchange] must be null. Otherwise it is for\n * a network interceptor and [exchange] must be non-null.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 943,
+  "secondPos" : 943,
+  "firstEndPos" : 1294,
+  "secondEndPos" : 1294
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

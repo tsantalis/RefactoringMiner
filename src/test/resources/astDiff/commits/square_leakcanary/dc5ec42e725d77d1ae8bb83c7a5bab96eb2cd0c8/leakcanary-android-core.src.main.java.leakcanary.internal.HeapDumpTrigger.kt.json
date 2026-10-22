@@ -3189,27 +3189,27 @@
   "firstEndPos" : 1608,
   "secondEndPos" : 1705
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * When the app becomes invisible, we don't dump the heap immediately. Instead we wait in case\n   * the app came back to the foreground, but also to wait for new leaks that typically occur on\n   * back press (activity destroy).\n   */",
-  "secondLabel" : "/**\n   * When the app becomes invisible, we don't dump the heap immediately. Instead we wait in case\n   * the app came back to the foreground, but also to wait for new leaks that typically occur on\n   * back press (activity destroy).\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1616,
-  "secondPos" : 1713,
-  "firstEndPos" : 1855,
-  "secondEndPos" : 1952
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1858,
-  "secondPos" : 1955,
+  "firstPos" : 1616,
+  "secondPos" : 1713,
   "firstEndPos" : 1918,
   "secondEndPos" : 2015
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * When the app becomes invisible, we don't dump the heap immediately. Instead we wait in case\n   * the app came back to the foreground, but also to wait for new leaks that typically occur on\n   * back press (activity destroy).\n   */",
+  "secondLabel" : "/**\n   * When the app becomes invisible, we don't dump the heap immediately. Instead we wait in case\n   * the app came back to the foreground, but also to wait for new leaks that typically occur on\n   * back press (activity destroy).\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1616,
+  "secondPos" : 1713,
+  "firstEndPos" : 1855,
+  "secondEndPos" : 1952
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -351,27 +351,27 @@
   "firstEndPos" : 189,
   "secondEndPos" : 189
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakSentryInstaller] is\n * used to install [leaksentry.LeakSentry] on application start.\n */",
-  "secondLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakSentryInstaller] is\n * used to install [leaksentry.LeakSentry] on application start.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 191,
-  "secondPos" : 191,
-  "firstEndPos" : 361,
-  "secondEndPos" : 361
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 362,
-  "secondPos" : 362,
+  "firstPos" : 191,
+  "secondPos" : 191,
   "firstEndPos" : 1175,
   "secondEndPos" : 1175
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakSentryInstaller] is\n * used to install [leaksentry.LeakSentry] on application start.\n */",
+  "secondLabel" : "/**\n * Content providers are loaded before the application class is created. [LeakSentryInstaller] is\n * used to install [leaksentry.LeakSentry] on application start.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 191,
+  "secondPos" : 191,
+  "firstEndPos" : 361,
+  "secondEndPos" : 361
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

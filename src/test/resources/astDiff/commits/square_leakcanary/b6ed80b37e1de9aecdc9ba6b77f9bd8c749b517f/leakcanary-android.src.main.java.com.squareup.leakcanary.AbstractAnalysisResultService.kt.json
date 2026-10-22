@@ -2320,27 +2320,27 @@
   "firstEndPos" : 1766,
   "secondEndPos" : 1868
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Called after a heap dump is analyzed, whether or not a leak was found.\n   * In [AnalyzedHeap.result] check [AnalysisResult.leakFound] and [AnalysisResult.excludedLeak] to\n   * see if there was a leak and if it can be ignored.\n   *\n   * This will be called from a background intent service thread.\n   *\n   * It's OK to block here and wait for the heap dump to be uploaded.\n   *\n   * The analyzed heap file and heap dump file will be deleted immediately after this callback\n   * returns.\n   */",
-  "secondLabel" : "/**\n   * Called after a heap dump is analyzed, whether or not a leak was found.\n   * In [AnalyzedHeap.result] check [AnalysisResult.leakFound] and [AnalysisResult.excludedLeak] to\n   * see if there was a leak and if it can be ignored.\n   *\n   * This will be called from a background intent service thread.\n   *\n   * It's OK to block here and wait for the heap dump to be uploaded.\n   *\n   * The analyzed heap file and heap dump file will be deleted immediately after this callback\n   * returns.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1780,
-  "secondPos" : 1882,
-  "firstEndPos" : 2280,
-  "secondEndPos" : 2382
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2283,
-  "secondPos" : 2385,
+  "firstPos" : 1780,
+  "secondPos" : 1882,
   "firstEndPos" : 2350,
   "secondEndPos" : 2452
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Called after a heap dump is analyzed, whether or not a leak was found.\n   * In [AnalyzedHeap.result] check [AnalysisResult.leakFound] and [AnalysisResult.excludedLeak] to\n   * see if there was a leak and if it can be ignored.\n   *\n   * This will be called from a background intent service thread.\n   *\n   * It's OK to block here and wait for the heap dump to be uploaded.\n   *\n   * The analyzed heap file and heap dump file will be deleted immediately after this callback\n   * returns.\n   */",
+  "secondLabel" : "/**\n   * Called after a heap dump is analyzed, whether or not a leak was found.\n   * In [AnalyzedHeap.result] check [AnalysisResult.leakFound] and [AnalysisResult.excludedLeak] to\n   * see if there was a leak and if it can be ignored.\n   *\n   * This will be called from a background intent service thread.\n   *\n   * It's OK to block here and wait for the heap dump to be uploaded.\n   *\n   * The analyzed heap file and heap dump file will be deleted immediately after this callback\n   * returns.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1780,
+  "secondPos" : 1882,
+  "firstEndPos" : 2280,
+  "secondEndPos" : 2382
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2485,27 +2485,27 @@
   "firstEndPos" : 2350,
   "secondEndPos" : 2452
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
-  "secondLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2354,
-  "secondPos" : 2456,
-  "firstEndPos" : 2504,
-  "secondEndPos" : 2606
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2507,
-  "secondPos" : 2609,
+  "firstPos" : 2354,
+  "secondPos" : 2456,
   "firstEndPos" : 2611,
   "secondEndPos" : 2713
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
+  "secondLabel" : "/**\n   * Called when there was an error saving or loading the analysis result. This will be called from\n   * a background intent service thread.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2354,
+  "secondPos" : 2456,
+  "firstEndPos" : 2504,
+  "secondEndPos" : 2606
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

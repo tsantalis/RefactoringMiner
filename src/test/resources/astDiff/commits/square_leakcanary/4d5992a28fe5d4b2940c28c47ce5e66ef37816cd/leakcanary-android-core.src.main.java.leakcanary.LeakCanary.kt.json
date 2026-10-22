@@ -901,27 +901,27 @@
   "firstEndPos" : 396,
   "secondEndPos" : 396
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
-  "secondLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 402,
-  "secondPos" : 402,
-  "firstEndPos" : 484,
-  "secondEndPos" : 484
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 489,
-  "secondPos" : 489,
+  "firstPos" : 402,
+  "secondPos" : 402,
   "firstEndPos" : 533,
   "secondEndPos" : 533
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
+  "secondLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 402,
+  "secondPos" : 402,
+  "firstEndPos" : 484,
+  "secondEndPos" : 484
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1198,27 +1198,27 @@
   "firstEndPos" : 582,
   "secondEndPos" : 582
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Whether the current process is the process running\n   * [leakcanary.internal.HeapAnalyzerServiceHeapAnalyzerService], which is a different process than the normal app process.\n   */",
-  "secondLabel" : "/**\n   * Whether the current process is the process running\n   * [leakcanary.internal.HeapAnalyzerServiceHeapAnalyzerService], which is a different process than the normal app process.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 586,
-  "secondPos" : 586,
-  "firstEndPos" : 776,
-  "secondEndPos" : 776
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 779,
-  "secondPos" : 779,
+  "firstPos" : 586,
+  "secondPos" : 586,
   "firstEndPos" : 966,
   "secondEndPos" : 953
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Whether the current process is the process running\n   * [leakcanary.internal.HeapAnalyzerServiceHeapAnalyzerService], which is a different process than the normal app process.\n   */",
+  "secondLabel" : "/**\n   * Whether the current process is the process running\n   * [leakcanary.internal.HeapAnalyzerServiceHeapAnalyzerService], which is a different process than the normal app process.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 586,
+  "secondPos" : 586,
+  "firstEndPos" : 776,
+  "secondEndPos" : 776
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

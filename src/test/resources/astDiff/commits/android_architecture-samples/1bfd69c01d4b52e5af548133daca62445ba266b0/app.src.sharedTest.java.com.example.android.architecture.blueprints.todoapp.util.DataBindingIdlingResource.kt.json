@@ -714,27 +714,27 @@
   "firstEndPos" : 1051,
   "secondEndPos" : 1051
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * An espresso idling resource implementation that reports idle status for all data binding\n * layouts. Data Binding uses a mechanism to post messages which Espresso doesn't track yet.\n *\n * Since this application only uses fragments, the resource only checks the fragments and their\n * children instead of the whole view tree.\n */",
-  "secondLabel" : "/**\n * An espresso idling resource implementation that reports idle status for all data binding\n * layouts. Data Binding uses a mechanism to post messages which Espresso doesn't track yet.\n *\n * Since this application only uses fragments, the resource only checks the fragments and their\n * children instead of the whole view tree.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1053,
-  "secondPos" : 1053,
-  "firstEndPos" : 1388,
-  "secondEndPos" : 1388
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1389,
-  "secondPos" : 1389,
+  "firstPos" : 1053,
+  "secondPos" : 1053,
   "firstEndPos" : 3412,
   "secondEndPos" : 3412
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * An espresso idling resource implementation that reports idle status for all data binding\n * layouts. Data Binding uses a mechanism to post messages which Espresso doesn't track yet.\n *\n * Since this application only uses fragments, the resource only checks the fragments and their\n * children instead of the whole view tree.\n */",
+  "secondLabel" : "/**\n * An espresso idling resource implementation that reports idle status for all data binding\n * layouts. Data Binding uses a mechanism to post messages which Espresso doesn't track yet.\n *\n * Since this application only uses fragments, the resource only checks the fragments and their\n * children instead of the whole view tree.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1053,
+  "secondPos" : 1053,
+  "firstEndPos" : 1388,
+  "secondEndPos" : 1388
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -802,27 +802,27 @@
   "firstEndPos" : 3412,
   "secondEndPos" : 3412
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// list of registered callbacks",
-  "secondLabel" : "// list of registered callbacks",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1444,
-  "secondPos" : 1444,
-  "firstEndPos" : 1475,
-  "secondEndPos" : 1475
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1480,
-  "secondPos" : 1480,
+  "firstPos" : 1444,
+  "secondPos" : 1444,
   "firstEndPos" : 1558,
   "secondEndPos" : 1558
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// list of registered callbacks",
+  "secondLabel" : "// list of registered callbacks",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1444,
+  "secondPos" : 1444,
+  "firstEndPos" : 1475,
+  "secondEndPos" : 1475
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1011,12 +1011,23 @@
   "firstEndPos" : 1558,
   "secondEndPos" : 1558
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 1563,
+  "secondPos" : 1563,
+  "firstEndPos" : 1746,
+  "secondEndPos" : 1746
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// give it a unique id to workaround an espresso bug where you cannot register/unregister",
   "secondLabel" : "// give it a unique id to workaround an espresso bug where you cannot register/unregister",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1563,
   "secondPos" : 1563,
   "firstEndPos" : 1652,
@@ -1026,23 +1037,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// an idling resource w/ the same name.",
   "secondLabel" : "// an idling resource w/ the same name.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1657,
   "secondPos" : 1657,
   "firstEndPos" : 1696,
   "secondEndPos" : 1696
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1701,
-  "secondPos" : 1701,
-  "firstEndPos" : 1746,
-  "secondEndPos" : 1746
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1275,12 +1275,23 @@
   "firstEndPos" : 1746,
   "secondEndPos" : 1746
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 1751,
+  "secondPos" : 1751,
+  "firstEndPos" : 1971,
+  "secondEndPos" : 1971
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// holds whether isIdle is called and the result was false. We track this to avoid calling",
   "secondLabel" : "// holds whether isIdle is called and the result was false. We track this to avoid calling",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1751,
   "secondPos" : 1751,
   "firstEndPos" : 1841,
@@ -1290,23 +1301,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// onTransitionToIdle callbacks if Espresso never thought we were idle in the first place.",
   "secondLabel" : "// onTransitionToIdle callbacks if Espresso never thought we were idle in the first place.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1846,
   "secondPos" : 1846,
   "firstEndPos" : 1936,
   "secondEndPos" : 1936
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1941,
-  "secondPos" : 1941,
-  "firstEndPos" : 1971,
-  "secondEndPos" : 1971
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3288,27 +3288,27 @@
   "firstEndPos" : 2813,
   "secondEndPos" : 2813
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Find all binding classes in all currently available fragments.\n     */",
-  "secondLabel" : "/**\n     * Find all binding classes in all currently available fragments.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2826,
-  "secondPos" : 2826,
-  "firstEndPos" : 2907,
-  "secondEndPos" : 2907
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2912,
-  "secondPos" : 2912,
+  "firstPos" : 2826,
+  "secondPos" : 2826,
   "firstEndPos" : 3410,
   "secondEndPos" : 3410
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Find all binding classes in all currently available fragments.\n     */",
+  "secondLabel" : "/**\n     * Find all binding classes in all currently available fragments.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2826,
+  "secondPos" : 2826,
+  "firstEndPos" : 2907,
+  "secondEndPos" : 2907
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4916,27 +4916,27 @@
   "firstEndPos" : 3495,
   "secondEndPos" : 3495
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Sets the activity from an [ActivityScenario] to be used from [DataBindingIdlingResource].\n */",
-  "secondLabel" : "/**\n * Sets the activity from an [ActivityScenario] to be used from [DataBindingIdlingResource].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3498,
-  "secondPos" : 3498,
-  "firstEndPos" : 3598,
-  "secondEndPos" : 3598
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3599,
-  "secondPos" : 3599,
+  "firstPos" : 3498,
+  "secondPos" : 3498,
   "firstEndPos" : 3779,
   "secondEndPos" : 3779
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Sets the activity from an [ActivityScenario] to be used from [DataBindingIdlingResource].\n */",
+  "secondLabel" : "/**\n * Sets the activity from an [ActivityScenario] to be used from [DataBindingIdlingResource].\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3498,
+  "secondPos" : 3498,
+  "firstEndPos" : 3598,
+  "secondEndPos" : 3598
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -5323,27 +5323,27 @@
   "firstEndPos" : 3771,
   "secondEndPos" : 3771
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Sets the fragment from a [FragmentScenario] to be used from [DataBindingIdlingResource].\n */",
-  "secondLabel" : "/**\n * Sets the fragment from a [FragmentScenario] to be used from [DataBindingIdlingResource].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3781,
-  "secondPos" : 3781,
-  "firstEndPos" : 3880,
-  "secondEndPos" : 3880
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3881,
-  "secondPos" : 3881,
+  "firstPos" : 3781,
+  "secondPos" : 3781,
   "firstEndPos" : 4065,
   "secondEndPos" : 4069
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Sets the fragment from a [FragmentScenario] to be used from [DataBindingIdlingResource].\n */",
+  "secondLabel" : "/**\n * Sets the fragment from a [FragmentScenario] to be used from [DataBindingIdlingResource].\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3781,
+  "secondPos" : 3781,
+  "firstEndPos" : 3880,
+  "secondEndPos" : 3880
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

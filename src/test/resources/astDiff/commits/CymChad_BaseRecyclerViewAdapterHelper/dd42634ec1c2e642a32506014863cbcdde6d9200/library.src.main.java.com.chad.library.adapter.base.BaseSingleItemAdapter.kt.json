@@ -175,27 +175,27 @@
   "firstEndPos" : 87,
   "secondEndPos" : 87
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Adapter for single item\n * 只有单个/一个 item 情况下的 Adapter\n *\n * @param T 数据类型 type of data\n * @param VH viewHolder类型 type of the viewHolder\n * @property mItem 数据  data\n * @constructor Create empty Single item adapter\n */",
-  "secondLabel" : "/**\n * Adapter for single item\n * 只有单个/一个 item 情况下的 Adapter\n *\n * @param T 数据类型 type of data\n * @param VH viewHolder类型 type of the viewHolder\n * @property mItem 数据  data\n * @constructor Create empty Single item adapter\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 89,
-  "secondPos" : 89,
-  "firstEndPos" : 311,
-  "secondEndPos" : 311
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 312,
-  "secondPos" : 312,
+  "firstPos" : 89,
+  "secondPos" : 89,
   "firstEndPos" : 2228,
   "secondEndPos" : 2260
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Adapter for single item\n * 只有单个/一个 item 情况下的 Adapter\n *\n * @param T 数据类型 type of data\n * @param VH viewHolder类型 type of the viewHolder\n * @property mItem 数据  data\n * @constructor Create empty Single item adapter\n */",
+  "secondLabel" : "/**\n * Adapter for single item\n * 只有单个/一个 item 情况下的 Adapter\n *\n * @param T 数据类型 type of data\n * @param VH viewHolder类型 type of the viewHolder\n * @property mItem 数据  data\n * @constructor Create empty Single item adapter\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 89,
+  "secondPos" : 89,
+  "firstEndPos" : 311,
+  "secondEndPos" : 311
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2232,27 +2232,27 @@
   "firstEndPos" : 992,
   "secondEndPos" : 1003
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置 item 数据（payload 方式）\n     *\n     * @param t\n     * @param payload\n     */",
-  "secondLabel" : "/**\n     * 设置 item 数据（payload 方式）\n     *\n     * @param t\n     * @param payload\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1004,
-  "secondPos" : 1015,
-  "firstEndPos" : 1090,
-  "secondEndPos" : 1101
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1095,
-  "secondPos" : 1106,
+  "firstPos" : 1004,
+  "secondPos" : 1015,
   "firstEndPos" : 1192,
   "secondEndPos" : 1203
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置 item 数据（payload 方式）\n     *\n     * @param t\n     * @param payload\n     */",
+  "secondLabel" : "/**\n     * 设置 item 数据（payload 方式）\n     *\n     * @param t\n     * @param payload\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1004,
+  "secondPos" : 1015,
+  "firstEndPos" : 1090,
+  "secondEndPos" : 1101
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2562,27 +2562,27 @@
   "firstEndPos" : 1185,
   "secondEndPos" : 1196
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 获取/设置 item 数据\n     */",
-  "secondLabel" : "/**\n     * 获取/设置 item 数据\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1198,
-  "secondPos" : 1209,
-  "firstEndPos" : 1230,
-  "secondEndPos" : 1241
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1235,
-  "secondPos" : 1246,
+  "firstPos" : 1198,
+  "secondPos" : 1209,
   "firstEndPos" : 1247,
   "secondEndPos" : 1258
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 获取/设置 item 数据\n     */",
+  "secondLabel" : "/**\n     * 获取/设置 item 数据\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1198,
+  "secondPos" : 1209,
+  "firstEndPos" : 1230,
+  "secondEndPos" : 1241
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

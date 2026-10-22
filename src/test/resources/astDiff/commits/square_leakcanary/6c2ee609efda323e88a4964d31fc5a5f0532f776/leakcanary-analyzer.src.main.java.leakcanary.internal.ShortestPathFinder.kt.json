@@ -2023,27 +2023,27 @@
   "firstEndPos" : 2260,
   "secondEndPos" : 2480
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2262,
-  "secondPos" : 2482,
-  "firstEndPos" : 2605,
-  "secondEndPos" : 2825
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2606,
-  "secondPos" : 2826,
+  "firstPos" : 2262,
+  "secondPos" : 2482,
   "firstEndPos" : 17513,
   "secondEndPos" : 20532
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, ignoring excluded\n * refs first and then including the ones that are not \"always ignorable\" as needed if no path is\n * found.\n *\n * Skips enqueuing strings as an optimization, so if the leaking reference is a string then it will\n * never be found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2262,
+  "secondPos" : 2482,
+  "firstEndPos" : 2605,
+  "secondEndPos" : 2825
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -2111,27 +2111,27 @@
   "firstEndPos" : 17513,
   "secondEndPos" : 20532
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
-  "secondLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2645,
-  "secondPos" : 2865,
-  "firstEndPos" : 2775,
-  "secondEndPos" : 2995
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2778,
-  "secondPos" : 2998,
+  "firstPos" : 2645,
+  "secondPos" : 2865,
   "firstEndPos" : 3096,
   "secondEndPos" : 3316
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
+  "secondLabel" : "/**\n   * A segmented FIFO queue. The queue is segmented by [Status]. Within each segment the elements\n   * are ordered FIFO.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2645,
+  "secondPos" : 2865,
+  "firstEndPos" : 2775,
+  "secondEndPos" : 2995
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3134,27 +3134,27 @@
   "firstEndPos" : 3084,
   "secondEndPos" : 3304
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Set of instances to visit */",
-  "secondLabel" : "/** Set of instances to visit */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3099,
-  "secondPos" : 3319,
-  "firstEndPos" : 3131,
-  "secondEndPos" : 3351
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3134,
-  "secondPos" : 3354,
+  "firstPos" : 3099,
+  "secondPos" : 3319,
   "firstEndPos" : 3188,
   "secondEndPos" : 3408
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Set of instances to visit */",
+  "secondLabel" : "/** Set of instances to visit */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3099,
+  "secondPos" : 3319,
+  "firstEndPos" : 3131,
+  "secondEndPos" : 3351
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3827,27 +3827,27 @@
   "firstEndPos" : 3333,
   "secondEndPos" : 3553
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitMap] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
-  "secondLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitMap] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3337,
-  "secondPos" : 3557,
-  "firstEndPos" : 3771,
-  "secondEndPos" : 3991
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3774,
-  "secondPos" : 3994,
+  "firstPos" : 3337,
+  "secondPos" : 3557,
   "firstEndPos" : 3827,
   "secondEndPos" : 4047
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitMap] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
+  "secondLabel" : "/**\n   * Map of instances to their leaking dominator.\n   * var because the instance will be returned by [findPaths] and replaced with a new empty map\n   * here (copying it could be expensive).\n   *\n   * If an instance has been added to [toVisitMap] or [visitedSet] and is missing from\n   * [dominatedInstances] then it's considered \"undomitable\" ie it is dominated by gc roots\n   * and cannot be dominated by a leaking instance.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3337,
+  "secondPos" : 3557,
+  "firstEndPos" : 3771,
+  "secondEndPos" : 3991
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -31591,12 +31591,23 @@
   "firstEndPos" : 17265,
   "secondEndPos" : 20284
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 17272,
+  "secondPos" : 20291,
+  "firstEndPos" : 17507,
+  "secondEndPos" : 20526
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Since NEVER_REACHABLE never ends up in the queue, we use its value to mean \"ALWAYS_REACHABLE\"",
   "secondLabel" : "// Since NEVER_REACHABLE never ends up in the queue, we use its value to mean \"ALWAYS_REACHABLE\"",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 17272,
   "secondPos" : 20291,
   "firstEndPos" : 17368,
@@ -31606,23 +31617,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// For this to work we need NEVER_REACHABLE to be declared as the first enum value.",
   "secondLabel" : "// For this to work we need NEVER_REACHABLE to be declared as the first enum value.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 17373,
   "secondPos" : 20392,
   "firstEndPos" : 17456,
   "secondEndPos" : 20475
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 17461,
-  "secondPos" : 20480,
-  "firstEndPos" : 17507,
-  "secondEndPos" : 20526
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

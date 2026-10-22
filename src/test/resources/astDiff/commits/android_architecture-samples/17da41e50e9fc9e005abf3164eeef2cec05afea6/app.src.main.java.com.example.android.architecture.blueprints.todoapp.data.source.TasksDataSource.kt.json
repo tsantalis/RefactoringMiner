@@ -351,27 +351,27 @@
   "firstEndPos" : 794,
   "secondEndPos" : 794
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Main entry point for accessing tasks data.\n */",
-  "secondLabel" : "/**\n * Main entry point for accessing tasks data.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 796,
-  "secondPos" : 796,
-  "firstEndPos" : 849,
-  "secondEndPos" : 849
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 850,
-  "secondPos" : 850,
+  "firstPos" : 796,
+  "secondPos" : 796,
   "firstEndPos" : 1471,
   "secondEndPos" : 1387
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Main entry point for accessing tasks data.\n */",
+  "secondLabel" : "/**\n * Main entry point for accessing tasks data.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 796,
+  "secondPos" : 796,
+  "firstEndPos" : 849,
+  "secondEndPos" : 849
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

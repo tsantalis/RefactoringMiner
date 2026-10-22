@@ -945,27 +945,27 @@
   "firstEndPos" : 1117,
   "secondEndPos" : 1117
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Transmits a single HTTP request and a response pair. This layers connection management and events\n * on [ExchangeCodec], which handles the actual I/O.\n */",
-  "secondLabel" : "/**\n * Transmits a single HTTP request and a response pair. This layers connection management and events\n * on [ExchangeCodec], which handles the actual I/O.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1119,
-  "secondPos" : 1119,
-  "firstEndPos" : 1280,
-  "secondEndPos" : 1280
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1281,
-  "secondPos" : 1281,
+  "firstPos" : 1119,
+  "secondPos" : 1119,
   "firstEndPos" : 9041,
   "secondEndPos" : 9042
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Transmits a single HTTP request and a response pair. This layers connection management and events\n * on [ExchangeCodec], which handles the actual I/O.\n */",
+  "secondLabel" : "/**\n * Transmits a single HTTP request and a response pair. This layers connection management and events\n * on [ExchangeCodec], which handles the actual I/O.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1119,
+  "secondPos" : 1119,
+  "firstEndPos" : 1280,
+  "secondEndPos" : 1280
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1407,27 +1407,71 @@
   "firstEndPos" : 9041,
   "secondEndPos" : 9042
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns true if the request body need not complete before the response body starts. */",
-  "secondLabel" : "/** Returns true if the request body need not complete before the response body starts. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1452,
-  "secondPos" : 1452,
-  "firstEndPos" : 1542,
-  "secondEndPos" : 1542
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1545,
-  "secondPos" : 1545,
+  "firstPos" : 1452,
+  "secondPos" : 1452,
   "firstEndPos" : 1574,
   "secondEndPos" : 1583
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns true if the request body need not complete before the response body starts. */",
+  "secondLabel" : "/** Returns true if the request body need not complete before the response body starts. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1452,
+  "secondPos" : 1452,
+  "firstEndPos" : 1542,
+  "secondEndPos" : 1542
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1545,
+  "secondPos" : 1554,
+  "firstEndPos" : 1548,
+  "secondEndPos" : 1557
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "var",
+  "secondLabel" : "var",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1545,
+  "secondPos" : 1554,
+  "firstEndPos" : 1548,
+  "secondEndPos" : 1557
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1549,
+  "secondPos" : 1558,
+  "firstEndPos" : 1566,
+  "secondEndPos" : 1575
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "isDuplex",
+  "secondLabel" : "isDuplex",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 1549,
+  "secondPos" : 1558,
+  "firstEndPos" : 1557,
+  "secondEndPos" : 1566
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -1450,6 +1494,17 @@
   "secondPos" : 1568,
   "firstEndPos" : 1566,
   "secondEndPos" : 1575
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1567,
+  "secondPos" : 1576,
+  "firstEndPos" : 1568,
+  "secondEndPos" : 1577
 }, {
   "firstType" : "boolean_literal",
   "secondType" : "boolean_literal",
@@ -8524,27 +8579,27 @@
   "firstEndPos" : 4336,
   "secondEndPos" : 4341
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Revoke this exchange's access to streams. This is necessary when a follow-up request is\n   * required but the preceding exchange hasn't completed yet.\n   */",
-  "secondLabel" : "/**\n   * Revoke this exchange's access to streams. This is necessary when a follow-up request is\n   * required but the preceding exchange hasn't completed yet.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4344,
-  "secondPos" : 4349,
-  "firstEndPos" : 4509,
-  "secondEndPos" : 4514
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4512,
-  "secondPos" : 4517,
+  "firstPos" : 4344,
+  "secondPos" : 4349,
   "firstEndPos" : 4639,
   "secondEndPos" : 4644
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Revoke this exchange's access to streams. This is necessary when a follow-up request is\n   * required but the preceding exchange hasn't completed yet.\n   */",
+  "secondLabel" : "/**\n   * Revoke this exchange's access to streams. This is necessary when a follow-up request is\n   * required but the preceding exchange hasn't completed yet.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4344,
+  "secondPos" : 4349,
+  "firstEndPos" : 4509,
+  "secondEndPos" : 4514
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -11120,27 +11175,27 @@
   "firstEndPos" : 5472,
   "secondEndPos" : 5473
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** A request body that fires events when it completes. */",
-  "secondLabel" : "/** A request body that fires events when it completes. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5481,
-  "secondPos" : 5482,
-  "firstEndPos" : 5539,
-  "secondEndPos" : 5540
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5542,
-  "secondPos" : 5543,
+  "firstPos" : 5481,
+  "secondPos" : 5482,
   "firstEndPos" : 7110,
   "secondEndPos" : 7111
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** A request body that fires events when it completes. */",
+  "secondLabel" : "/** A request body that fires events when it completes. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 5481,
+  "secondPos" : 5482,
+  "firstEndPos" : 5539,
+  "secondEndPos" : 5540
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -11318,27 +11373,27 @@
   "firstEndPos" : 5618,
   "secondEndPos" : 5619
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The exact number of bytes to be written, or -1L if that is unknown. */",
-  "secondLabel" : "/** The exact number of bytes to be written, or -1L if that is unknown. */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 5624,
-  "secondPos" : 5625,
-  "firstEndPos" : 5698,
-  "secondEndPos" : 5699
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 5703,
-  "secondPos" : 5704,
+  "firstPos" : 5624,
+  "secondPos" : 5625,
   "firstEndPos" : 5734,
   "secondEndPos" : 5735
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The exact number of bytes to be written, or -1L if that is unknown. */",
+  "secondLabel" : "/** The exact number of bytes to be written, or -1L if that is unknown. */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 5624,
+  "secondPos" : 5625,
+  "firstEndPos" : 5698,
+  "secondEndPos" : 5699
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -15179,27 +15234,27 @@
   "firstEndPos" : 7099,
   "secondEndPos" : 7100
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** A response body that fires events when it completes. */",
-  "secondLabel" : "/** A response body that fires events when it completes. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7114,
-  "secondPos" : 7115,
-  "firstEndPos" : 7173,
-  "secondEndPos" : 7174
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7176,
-  "secondPos" : 7177,
+  "firstPos" : 7114,
+  "secondPos" : 7115,
   "firstEndPos" : 9039,
   "secondEndPos" : 9040
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** A response body that fires events when it completes. */",
+  "secondLabel" : "/** A response body that fires events when it completes. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 7114,
+  "secondPos" : 7115,
+  "firstEndPos" : 7173,
+  "secondEndPos" : 7174
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

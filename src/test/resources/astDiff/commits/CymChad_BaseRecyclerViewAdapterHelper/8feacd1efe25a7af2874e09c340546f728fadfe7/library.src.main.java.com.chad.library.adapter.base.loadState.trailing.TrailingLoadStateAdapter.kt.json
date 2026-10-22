@@ -857,27 +857,27 @@
   "firstEndPos" : 533,
   "secondEndPos" : 533
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 默认实现的尾部加载更多 Adapter\n *\n * 可以通过自定义[TrailingLoadStateAdapter.ViewHolder]来修改布局\n *\n */",
-  "secondLabel" : "/**\n * 尾部加载更多 Adapter\n *\n * 自定义布局：可以通过继承此类，并自定义[TrailingLoadStateAdapter.ViewHolder]来修改布局\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 535,
-  "secondPos" : 535,
-  "firstEndPos" : 624,
-  "secondEndPos" : 631
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 625,
-  "secondPos" : 632,
+  "firstPos" : 535,
+  "secondPos" : 535,
   "firstEndPos" : 7680,
   "secondEndPos" : 7739
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 默认实现的尾部加载更多 Adapter\n *\n * 可以通过自定义[TrailingLoadStateAdapter.ViewHolder]来修改布局\n *\n */",
+  "secondLabel" : "/**\n * 尾部加载更多 Adapter\n *\n * 自定义布局：可以通过继承此类，并自定义[TrailingLoadStateAdapter.ViewHolder]来修改布局\n *\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 535,
+  "secondPos" : 535,
+  "firstEndPos" : 624,
+  "secondEndPos" : 631
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -1055,27 +1055,27 @@
   "firstEndPos" : 7680,
   "secondEndPos" : 7739
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * viewBinding 方式创建 \"加载更多\" 的 ViewHolder\n     * @param V : ViewBinding\n     * @property viewBinding V\n     * @constructor\n     */",
-  "secondLabel" : "/**\n     * viewBinding 方式创建 \"加载更多\" 的 ViewHolder\n     * @param V : ViewBinding\n     * @property viewBinding V\n     * @constructor\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 726,
-  "secondPos" : 733,
-  "firstEndPos" : 862,
-  "secondEndPos" : 869
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 867,
-  "secondPos" : 874,
+  "firstPos" : 726,
+  "secondPos" : 733,
   "firstEndPos" : 1623,
   "secondEndPos" : 1630
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * viewBinding 方式创建 \"加载更多\" 的 ViewHolder\n     * @param V : ViewBinding\n     * @property viewBinding V\n     * @constructor\n     */",
+  "secondLabel" : "/**\n     * viewBinding 方式创建 \"加载更多\" 的 ViewHolder\n     * @param V : ViewBinding\n     * @property viewBinding V\n     * @constructor\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 726,
+  "secondPos" : 733,
+  "firstEndPos" : 862,
+  "secondEndPos" : 869
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3002,27 +3002,27 @@
   "firstEndPos" : 1617,
   "secondEndPos" : 1624
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 基类，创建 \"加载更多\" 的 ViewHolder\n     */",
-  "secondLabel" : "/**\n     * 基类，创建 \"加载更多\" 的 ViewHolder\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1629,
-  "secondPos" : 1636,
-  "firstEndPos" : 1673,
-  "secondEndPos" : 1680
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1678,
-  "secondPos" : 1685,
+  "firstPos" : 1629,
+  "secondPos" : 1636,
   "firstEndPos" : 4040,
   "secondEndPos" : 4047
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 基类，创建 \"加载更多\" 的 ViewHolder\n     */",
+  "secondLabel" : "/**\n     * 基类，创建 \"加载更多\" 的 ViewHolder\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1629,
+  "secondPos" : 1636,
+  "firstEndPos" : 1673,
+  "secondEndPos" : 1680
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3607,27 +3607,27 @@
   "firstEndPos" : 1959,
   "secondEndPos" : 1966
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * 布局中的 加载更多视图\n         */",
-  "secondLabel" : "/**\n         * 布局中的 加载更多视图\n         */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1993,
-  "secondPos" : 2000,
-  "firstEndPos" : 2031,
-  "secondEndPos" : 2038
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2040,
-  "secondPos" : 2047,
+  "firstPos" : 1993,
+  "secondPos" : 2000,
   "firstEndPos" : 2089,
   "secondEndPos" : 2096
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * 布局中的 加载更多视图\n         */",
+  "secondLabel" : "/**\n         * 布局中的 加载更多视图\n         */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1993,
+  "secondPos" : 2000,
+  "firstEndPos" : 2031,
+  "secondEndPos" : 2038
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3761,27 +3761,27 @@
   "firstEndPos" : 2089,
   "secondEndPos" : 2096
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * 布局中的 加载完成布局\n         */",
-  "secondLabel" : "/**\n         * 布局中的 加载完成布局\n         */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2099,
-  "secondPos" : 2106,
-  "firstEndPos" : 2137,
-  "secondEndPos" : 2144
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2146,
-  "secondPos" : 2153,
+  "firstPos" : 2099,
+  "secondPos" : 2106,
   "firstEndPos" : 2196,
   "secondEndPos" : 2203
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * 布局中的 加载完成布局\n         */",
+  "secondLabel" : "/**\n         * 布局中的 加载完成布局\n         */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2099,
+  "secondPos" : 2106,
+  "firstEndPos" : 2137,
+  "secondEndPos" : 2144
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -3915,27 +3915,27 @@
   "firstEndPos" : 2196,
   "secondEndPos" : 2203
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * 布局中的 加载结束布局\n         */",
-  "secondLabel" : "/**\n         * 布局中的 加载结束布局\n         */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2206,
-  "secondPos" : 2213,
-  "firstEndPos" : 2244,
-  "secondEndPos" : 2251
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2253,
-  "secondPos" : 2260,
+  "firstPos" : 2206,
+  "secondPos" : 2213,
   "firstEndPos" : 2302,
   "secondEndPos" : 2309
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * 布局中的 加载结束布局\n         */",
+  "secondLabel" : "/**\n         * 布局中的 加载结束布局\n         */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2206,
+  "secondPos" : 2213,
+  "firstEndPos" : 2244,
+  "secondEndPos" : 2251
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4069,27 +4069,27 @@
   "firstEndPos" : 2302,
   "secondEndPos" : 2309
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * 布局中的 加载失败布局\n         */",
-  "secondLabel" : "/**\n         * 布局中的 加载失败布局\n         */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2312,
-  "secondPos" : 2319,
-  "firstEndPos" : 2350,
-  "secondEndPos" : 2357
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2359,
-  "secondPos" : 2366,
+  "firstPos" : 2312,
+  "secondPos" : 2319,
   "firstEndPos" : 2409,
   "secondEndPos" : 2416
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * 布局中的 加载失败布局\n         */",
+  "secondLabel" : "/**\n         * 布局中的 加载失败布局\n         */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2312,
+  "secondPos" : 2319,
+  "firstEndPos" : 2350,
+  "secondEndPos" : 2357
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4223,27 +4223,27 @@
   "firstEndPos" : 2409,
   "secondEndPos" : 2416
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * 可以重写此方法，实行自定义逻辑\n         * @param loadState LoadState\n         */",
-  "secondLabel" : "/**\n         * 可以重写此方法，实行自定义逻辑\n         * @param loadState LoadState\n         */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2419,
-  "secondPos" : 2426,
-  "firstEndPos" : 2499,
-  "secondEndPos" : 2506
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2508,
-  "secondPos" : 2515,
+  "firstPos" : 2419,
+  "secondPos" : 2426,
   "firstEndPos" : 4034,
   "secondEndPos" : 4041
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * 可以重写此方法，实行自定义逻辑\n         * @param loadState LoadState\n         */",
+  "secondLabel" : "/**\n         * 可以重写此方法，实行自定义逻辑\n         * @param loadState LoadState\n         */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2419,
+  "secondPos" : 2426,
+  "firstEndPos" : 2499,
+  "secondEndPos" : 2506
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -7479,27 +7479,27 @@
   "firstEndPos" : 3992,
   "secondEndPos" : 3999
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     *\n     */",
-  "secondLabel" : "/**\n     *\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4046,
-  "secondPos" : 4053,
-  "firstEndPos" : 4064,
-  "secondEndPos" : 4071
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4069,
-  "secondPos" : 4076,
+  "firstPos" : 4046,
+  "secondPos" : 4053,
   "firstEndPos" : 4127,
   "secondEndPos" : 4134
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     *\n     */",
+  "secondLabel" : "/**\n     *\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4046,
+  "secondPos" : 4053,
+  "firstEndPos" : 4064,
+  "secondEndPos" : 4071
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7633,27 +7633,27 @@
   "firstEndPos" : 4127,
   "secondEndPos" : 4134
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 不满一屏时，是否可以继续加载的标记位\n     */",
-  "secondLabel" : "/**\n     * 不满一屏时，是否可以继续加载的标记位\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4133,
-  "secondPos" : 4140,
-  "firstEndPos" : 4170,
-  "secondEndPos" : 4177
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4175,
-  "secondPos" : 4182,
+  "firstPos" : 4133,
+  "secondPos" : 4140,
   "firstEndPos" : 4218,
   "secondEndPos" : 4225
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 不满一屏时，是否可以继续加载的标记位\n     */",
+  "secondLabel" : "/**\n     * 不满一屏时，是否可以继续加载的标记位\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4133,
+  "secondPos" : 4140,
+  "firstEndPos" : 4170,
+  "secondEndPos" : 4177
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -7787,27 +7787,27 @@
   "firstEndPos" : 4218,
   "secondEndPos" : 4225
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 所有数据加载完毕后，是否显示\"加载结束\"\n     */",
-  "secondLabel" : "/**\n     * 所有数据加载完毕后，是否显示\"加载结束\"\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4224,
-  "secondPos" : 4231,
-  "firstEndPos" : 4263,
-  "secondEndPos" : 4270
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4268,
-  "secondPos" : 4275,
+  "firstPos" : 4224,
+  "secondPos" : 4231,
   "firstEndPos" : 4304,
   "secondEndPos" : 4311
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 所有数据加载完毕后，是否显示\"加载结束\"\n     */",
+  "secondLabel" : "/**\n     * 所有数据加载完毕后，是否显示\"加载结束\"\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4224,
+  "secondPos" : 4231,
+  "firstEndPos" : 4263,
+  "secondEndPos" : 4270
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -7908,27 +7908,27 @@
   "firstEndPos" : 4304,
   "secondEndPos" : 4311
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 是否打开自动加载更多\n     */",
-  "secondLabel" : "/**\n     * 是否打开自动加载更多\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4310,
-  "secondPos" : 4317,
-  "firstEndPos" : 4339,
-  "secondEndPos" : 4346
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4344,
-  "secondPos" : 4351,
+  "firstPos" : 4310,
+  "secondPos" : 4317,
   "firstEndPos" : 4369,
   "secondEndPos" : 4376
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 是否打开自动加载更多\n     */",
+  "secondLabel" : "/**\n     * 是否打开自动加载更多\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4310,
+  "secondPos" : 4317,
+  "firstEndPos" : 4339,
+  "secondEndPos" : 4346
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -8007,27 +8007,27 @@
   "firstEndPos" : 4369,
   "secondEndPos" : 4376
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 当自动加载更多开启，并且数据不满一屏时，是否关闭自动加载更多。默认为 false\n     */",
-  "secondLabel" : "/**\n     * 当自动加载更多开启，并且数据不满一屏时，是否关闭自动加载更多。默认为 false\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4375,
-  "secondPos" : 4382,
-  "firstEndPos" : 4434,
-  "secondEndPos" : 4441
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4439,
-  "secondPos" : 4446,
+  "firstPos" : 4375,
+  "secondPos" : 4382,
   "firstEndPos" : 4481,
   "secondEndPos" : 4488
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 当自动加载更多开启，并且数据不满一屏时，是否关闭自动加载更多。默认为 false\n     */",
+  "secondLabel" : "/**\n     * 当自动加载更多开启，并且数据不满一屏时，是否关闭自动加载更多。默认为 false\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4375,
+  "secondPos" : 4382,
+  "firstEndPos" : 4434,
+  "secondEndPos" : 4441
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -8113,7 +8113,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 4487,
-  "secondPos" : 4545,
+  "secondPos" : 4494,
   "firstEndPos" : 4922,
   "secondEndPos" : 4981
 }, {
@@ -10339,27 +10339,27 @@
   "firstEndPos" : 5575,
   "secondEndPos" : 5634
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 加载更多执行的操作\n     */",
-  "secondLabel" : "/**\n     * 加载更多执行的操作\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5587,
-  "secondPos" : 5646,
-  "firstEndPos" : 5615,
-  "secondEndPos" : 5674
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5620,
-  "secondPos" : 5679,
+  "firstPos" : 5587,
+  "secondPos" : 5646,
   "firstEndPos" : 6318,
   "secondEndPos" : 6377
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 加载更多执行的操作\n     */",
+  "secondLabel" : "/**\n     * 加载更多执行的操作\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5587,
+  "secondPos" : 5646,
+  "firstEndPos" : 5615,
+  "secondEndPos" : 5674
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

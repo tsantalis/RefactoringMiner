@@ -54,27 +54,27 @@
   "firstEndPos" : 632,
   "secondEndPos" : 619
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Gives the opportunity to skip checking if a reference is gone when the debugger is connected.\n * An attached debugger might retain references and create false positives.\n */",
-  "secondLabel" : "/**\n * Gives the opportunity to skip checking if a reference is gone when the debugger is connected.\n * An attached debugger might retain references and create false positives.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 634,
-  "secondPos" : 621,
-  "firstEndPos" : 814,
-  "secondEndPos" : 801
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 815,
-  "secondPos" : 802,
+  "firstPos" : 634,
+  "secondPos" : 621,
   "firstEndPos" : 1039,
   "secondEndPos" : 1026
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Gives the opportunity to skip checking if a reference is gone when the debugger is connected.\n * An attached debugger might retain references and create false positives.\n */",
+  "secondLabel" : "/**\n * Gives the opportunity to skip checking if a reference is gone when the debugger is connected.\n * An attached debugger might retain references and create false positives.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 634,
+  "secondPos" : 621,
+  "firstEndPos" : 814,
+  "secondEndPos" : 801
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

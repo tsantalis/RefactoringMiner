@@ -1407,27 +1407,27 @@
   "firstEndPos" : 1612,
   "secondEndPos" : 1505
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Integration test for the [TasksDataSource], which uses the [TasksDbHelper].\n */",
-  "secondLabel" : "/**\n * Integration test for the [TasksDataSource].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1614,
-  "secondPos" : 1631,
-  "firstEndPos" : 1700,
-  "secondEndPos" : 1685
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1701,
-  "secondPos" : 1686,
+  "firstPos" : 1614,
+  "secondPos" : 1631,
   "firstEndPos" : 7771,
   "secondEndPos" : 8194
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Integration test for the [TasksDataSource], which uses the [TasksDbHelper].\n */",
+  "secondLabel" : "/**\n * Integration test for the [TasksDataSource].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1614,
+  "secondPos" : 1631,
+  "firstEndPos" : 1700,
+  "secondEndPos" : 1685
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

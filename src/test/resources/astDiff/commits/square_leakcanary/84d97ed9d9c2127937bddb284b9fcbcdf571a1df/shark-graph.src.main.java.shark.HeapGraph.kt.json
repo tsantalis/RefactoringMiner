@@ -175,27 +175,27 @@
   "firstEndPos" : 104,
   "secondEndPos" : 85
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Enables navigation through the heap graph of objects.\n */",
-  "secondLabel" : "/**\n * Enables navigation through the heap graph of objects.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1066,
-  "secondPos" : 87,
-  "firstEndPos" : 1130,
-  "secondEndPos" : 151
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1131,
-  "secondPos" : 152,
+  "firstPos" : 1066,
+  "secondPos" : 87,
   "firstEndPos" : 6853,
   "secondEndPos" : 1430
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Enables navigation through the heap graph of objects.\n */",
+  "secondLabel" : "/**\n * Enables navigation through the heap graph of objects.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1066,
+  "secondPos" : 87,
+  "firstEndPos" : 1130,
+  "secondEndPos" : 151
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -505,36 +505,14 @@
   "firstEndPos" : 1269,
   "secondEndPos" : 203
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * In memory store that can be used to store objects this [HeapGraph] instance.\n   */",
-  "secondLabel" : "/**\n   * In memory store that can be used to store objects this [HeapGraph] instance.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1311,
-  "secondPos" : 206,
-  "firstEndPos" : 1402,
-  "secondEndPos" : 297
-}, {
-  "firstType" : "multiline_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "/**\n   * In memory store that can be used to store objects this [HeapGraph] instance.\n   */",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1311,
-  "secondPos" : 1427,
-  "firstEndPos" : 1402,
-  "secondEndPos" : 1464
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1405,
-  "secondPos" : 300,
+  "firstPos" : 1311,
+  "secondPos" : 206,
   "firstEndPos" : 1433,
   "secondEndPos" : 325
 }, {
@@ -544,10 +522,120 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1405,
+  "firstPos" : 1311,
   "secondPos" : 1427,
   "firstEndPos" : 1433,
   "secondEndPos" : 1464
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * In memory store that can be used to store objects this [HeapGraph] instance.\n   */",
+  "secondLabel" : "/**\n   * In memory store that can be used to store objects this [HeapGraph] instance.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1311,
+  "secondPos" : 206,
+  "firstEndPos" : 1402,
+  "secondEndPos" : 297
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1405,
+  "secondPos" : 300,
+  "firstEndPos" : 1408,
+  "secondEndPos" : 303
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1405,
+  "secondPos" : 1436,
+  "firstEndPos" : 1408,
+  "secondEndPos" : 1439
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1405,
+  "secondPos" : 300,
+  "firstEndPos" : 1408,
+  "secondEndPos" : 303
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 1405,
+  "secondPos" : 1436,
+  "firstEndPos" : 1408,
+  "secondEndPos" : 1439
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "context",
+  "secondLabel" : "context",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 1409,
+  "secondPos" : 304,
+  "firstEndPos" : 1416,
+  "secondEndPos" : 311
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "context",
+  "secondLabel" : "context",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 1409,
+  "secondPos" : 1440,
+  "firstEndPos" : 1416,
+  "secondEndPos" : 1447
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1409,
+  "secondPos" : 304,
+  "firstEndPos" : 1416,
+  "secondEndPos" : 325
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1409,
+  "secondPos" : 1440,
+  "firstEndPos" : 1416,
+  "secondEndPos" : 1447
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1417,
+  "secondPos" : 1448,
+  "firstEndPos" : 1418,
+  "secondEndPos" : 1449
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -593,27 +681,27 @@
   "firstEndPos" : 1433,
   "secondEndPos" : 1464
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * All GC roots which type matches the set passed to [HprofInMemoryIndex.createOnRecordListener].\n   */",
-  "secondLabel" : "/**\n   * All GC roots which type matches types known to this heap graph.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1437,
-  "secondPos" : 328,
-  "firstEndPos" : 1546,
-  "secondEndPos" : 406
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1549,
-  "secondPos" : 409,
+  "firstPos" : 1437,
+  "secondPos" : 328,
   "firstEndPos" : 1574,
   "secondEndPos" : 434
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * All GC roots which type matches the set passed to [HprofInMemoryIndex.createOnRecordListener].\n   */",
+  "secondLabel" : "/**\n   * All GC roots which type matches types known to this heap graph.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1437,
+  "secondPos" : 328,
+  "firstEndPos" : 1546,
+  "secondEndPos" : 406
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -725,27 +813,27 @@
   "firstEndPos" : 1573,
   "secondEndPos" : 433
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sequence of all objects in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
-  "secondLabel" : "/**\n   * Sequence of all objects in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1606,
-  "secondPos" : 437,
-  "firstEndPos" : 1717,
-  "secondEndPos" : 548
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1720,
-  "secondPos" : 551,
+  "firstPos" : 1606,
+  "secondPos" : 437,
   "firstEndPos" : 1753,
   "secondEndPos" : 584
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sequence of all objects in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
+  "secondLabel" : "/**\n   * Sequence of all objects in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1606,
+  "secondPos" : 437,
+  "firstEndPos" : 1717,
+  "secondEndPos" : 548
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -857,27 +945,27 @@
   "firstEndPos" : 1752,
   "secondEndPos" : 583
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sequence of all classes in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
-  "secondLabel" : "/**\n   * Sequence of all classes in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1898,
-  "secondPos" : 587,
-  "firstEndPos" : 2009,
-  "secondEndPos" : 698
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2012,
-  "secondPos" : 701,
+  "firstPos" : 1898,
+  "secondPos" : 587,
   "firstEndPos" : 2044,
   "secondEndPos" : 733
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sequence of all classes in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
+  "secondLabel" : "/**\n   * Sequence of all classes in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1898,
+  "secondPos" : 587,
+  "firstEndPos" : 2009,
+  "secondEndPos" : 698
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -989,27 +1077,27 @@
   "firstEndPos" : 2043,
   "secondEndPos" : 732
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Sequence of all instances in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
-  "secondLabel" : "/**\n   * Sequence of all instances in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2268,
-  "secondPos" : 736,
-  "firstEndPos" : 2381,
-  "secondEndPos" : 849
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2384,
-  "secondPos" : 852,
+  "firstPos" : 2268,
+  "secondPos" : 736,
   "firstEndPos" : 2421,
   "secondEndPos" : 889
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Sequence of all instances in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
+  "secondLabel" : "/**\n   * Sequence of all instances in the heap dump.\n   *\n   * This sequence does not trigger any IO reads.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2268,
+  "secondPos" : 736,
+  "firstEndPos" : 2381,
+  "secondEndPos" : 849
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1121,12 +1209,23 @@
   "firstEndPos" : 2420,
   "secondEndPos" : 888
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 2768,
+  "secondPos" : 2379,
+  "firstEndPos" : 3050,
+  "secondEndPos" : 2661
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.",
   "secondLabel" : "// LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2768,
   "secondPos" : 2379,
   "firstEndPos" : 2842,
@@ -1136,8 +1235,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// This is based on running InstrumentationLeakDetectorTest a bunch of time on a",
   "secondLabel" : "// This is based on running InstrumentationLeakDetectorTest a bunch of time on a",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2845,
   "secondPos" : 2456,
   "firstEndPos" : 2925,
@@ -1147,23 +1246,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K",
   "secondLabel" : "// Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2928,
   "secondPos" : 2539,
   "firstEndPos" : 2987,
   "secondEndPos" : 2598
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2990,
-  "secondPos" : 2601,
-  "firstEndPos" : 3050,
-  "secondEndPos" : 2661
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1396,25 +1484,14 @@
   "firstEndPos" : 3049,
   "secondEndPos" : 2660
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns the [HeapObject] corresponding to the provided [objectId], and throws\n   * [IllegalArgumentException] otherwise.\n   */",
-  "secondLabel" : "/**\n   * Returns the [HeapObject] corresponding to the provided [objectId], and throws\n   * [IllegalArgumentException] otherwise.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3054,
-  "secondPos" : 893,
-  "firstEndPos" : 3189,
-  "secondEndPos" : 1028
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3192,
-  "secondPos" : 1031,
+  "firstPos" : 3054,
+  "secondPos" : 893,
   "firstEndPos" : 3314,
   "secondEndPos" : 1120
 }, {
@@ -1424,10 +1501,21 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3192,
+  "firstPos" : 3054,
   "secondPos" : 2665,
   "firstEndPos" : 3314,
   "secondEndPos" : 2796
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns the [HeapObject] corresponding to the provided [objectId], and throws\n   * [IllegalArgumentException] otherwise.\n   */",
+  "secondLabel" : "/**\n   * Returns the [HeapObject] corresponding to the provided [objectId], and throws\n   * [IllegalArgumentException] otherwise.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3054,
+  "secondPos" : 893,
+  "firstEndPos" : 3189,
+  "secondEndPos" : 1028
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -1847,25 +1935,14 @@
   "firstEndPos" : 3309,
   "secondEndPos" : 2791
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns the [HeapClass] corresponding to the provided [className], or null if the\n   * class cannot be found.\n   */",
-  "secondLabel" : "/**\n   * Returns the [HeapClass] corresponding to the provided [className], or null if the\n   * class cannot be found.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3318,
-  "secondPos" : 1124,
-  "firstEndPos" : 3442,
-  "secondEndPos" : 1248
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3445,
-  "secondPos" : 1251,
+  "firstPos" : 3318,
+  "secondPos" : 1124,
   "firstEndPos" : 3658,
   "secondEndPos" : 1301
 }, {
@@ -1875,10 +1952,21 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3445,
+  "firstPos" : 3318,
   "secondPos" : 2800,
   "firstEndPos" : 3658,
   "secondEndPos" : 3022
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns the [HeapClass] corresponding to the provided [className], or null if the\n   * class cannot be found.\n   */",
+  "secondLabel" : "/**\n   * Returns the [HeapClass] corresponding to the provided [className], or null if the\n   * class cannot be found.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3318,
+  "secondPos" : 1124,
+  "firstEndPos" : 3442,
+  "secondEndPos" : 1248
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2551,25 +2639,14 @@
   "firstEndPos" : 3648,
   "secondEndPos" : 3012
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if the provided [objectId] exists in the heap dump.\n   */",
-  "secondLabel" : "/**\n   * Returns true if the provided [objectId] exists in the heap dump.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3662,
-  "secondPos" : 1305,
-  "firstEndPos" : 3741,
-  "secondEndPos" : 1384
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3744,
-  "secondPos" : 1387,
+  "firstPos" : 3662,
+  "secondPos" : 1305,
   "firstEndPos" : 3836,
   "secondEndPos" : 1428
 }, {
@@ -2579,10 +2656,21 @@
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3744,
+  "firstPos" : 3662,
   "secondPos" : 3026,
   "firstEndPos" : 3836,
   "secondEndPos" : 3127
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if the provided [objectId] exists in the heap dump.\n   */",
+  "secondLabel" : "/**\n   * Returns true if the provided [objectId] exists in the heap dump.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3662,
+  "secondPos" : 1305,
+  "firstEndPos" : 3741,
+  "secondEndPos" : 1384
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

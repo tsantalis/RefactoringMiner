@@ -1286,27 +1286,27 @@
   "firstEndPos" : 1387,
   "secondEndPos" : 1387
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Access to platform-specific features.\n *\n * ### Session Tickets\n *\n * Supported on Android 2.3+.\n * Supported on JDK 8+ via Conscrypt.\n *\n * ### ALPN (Application Layer Protocol Negotiation)\n *\n * Supported on Android 5.0+.\n *\n * Supported on OpenJDK 8 via the JettyALPN-boot library or Conscrypt.\n *\n * Supported on OpenJDK 9+ via SSLParameters and SSLSocket features.\n *\n * ### Trust Manager Extraction\n *\n * Supported on Android 2.3+ and OpenJDK 7+. There are no public APIs to recover the trust\n * manager that was used to create an [SSLSocketFactory].\n *\n * Not supported by choice on JDK9+ due to access checks.\n *\n * ### Android Cleartext Permit Detection\n *\n * Supported on Android 6.0+ via `NetworkSecurityPolicy`.\n */",
-  "secondLabel" : "/**\n * Access to platform-specific features.\n *\n * ### Session Tickets\n *\n * Supported on Android 2.3+.\n * Supported on JDK 8+ via Conscrypt.\n *\n * ### ALPN (Application Layer Protocol Negotiation)\n *\n * Supported on Android 5.0+.\n *\n * Supported on OpenJDK 8 via the JettyALPN-boot library or Conscrypt.\n *\n * Supported on OpenJDK 9+ via SSLParameters and SSLSocket features.\n *\n * ### Trust Manager Extraction\n *\n * Supported on Android 2.3+ and OpenJDK 7+. There are no public APIs to recover the trust\n * manager that was used to create an [SSLSocketFactory].\n *\n * Not supported by choice on JDK9+ due to access checks.\n *\n * ### Android Cleartext Permit Detection\n *\n * Supported on Android 6.0+ via `NetworkSecurityPolicy`.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1389,
-  "secondPos" : 1389,
-  "firstEndPos" : 2123,
-  "secondEndPos" : 2123
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2124,
-  "secondPos" : 2124,
+  "firstPos" : 1389,
+  "secondPos" : 1389,
   "firstEndPos" : 8335,
   "secondEndPos" : 8358
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Access to platform-specific features.\n *\n * ### Session Tickets\n *\n * Supported on Android 2.3+.\n * Supported on JDK 8+ via Conscrypt.\n *\n * ### ALPN (Application Layer Protocol Negotiation)\n *\n * Supported on Android 5.0+.\n *\n * Supported on OpenJDK 8 via the JettyALPN-boot library or Conscrypt.\n *\n * Supported on OpenJDK 9+ via SSLParameters and SSLSocket features.\n *\n * ### Trust Manager Extraction\n *\n * Supported on Android 2.3+ and OpenJDK 7+. There are no public APIs to recover the trust\n * manager that was used to create an [SSLSocketFactory].\n *\n * Not supported by choice on JDK9+ due to access checks.\n *\n * ### Android Cleartext Permit Detection\n *\n * Supported on Android 6.0+ via `NetworkSecurityPolicy`.\n */",
+  "secondLabel" : "/**\n * Access to platform-specific features.\n *\n * ### Session Tickets\n *\n * Supported on Android 2.3+.\n * Supported on JDK 8+ via Conscrypt.\n *\n * ### ALPN (Application Layer Protocol Negotiation)\n *\n * Supported on Android 5.0+.\n *\n * Supported on OpenJDK 8 via the JettyALPN-boot library or Conscrypt.\n *\n * Supported on OpenJDK 9+ via SSLParameters and SSLSocket features.\n *\n * ### Trust Manager Extraction\n *\n * Supported on Android 2.3+ and OpenJDK 7+. There are no public APIs to recover the trust\n * manager that was used to create an [SSLSocketFactory].\n *\n * Not supported by choice on JDK9+ due to access checks.\n *\n * ### Android Cleartext Permit Detection\n *\n * Supported on Android 6.0+ via `NetworkSecurityPolicy`.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1389,
+  "secondPos" : 1389,
+  "firstEndPos" : 2123,
+  "secondEndPos" : 2123
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -1374,27 +1374,27 @@
   "firstEndPos" : 8335,
   "secondEndPos" : 8358
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Prefix used on custom headers. */",
-  "secondLabel" : "/** Prefix used on custom headers. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2149,
-  "secondPos" : 2149,
-  "firstEndPos" : 2186,
-  "secondEndPos" : 2186
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2189,
-  "secondPos" : 2189,
+  "firstPos" : 2149,
+  "secondPos" : 2149,
   "firstEndPos" : 2215,
   "secondEndPos" : 2215
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Prefix used on custom headers. */",
+  "secondLabel" : "/** Prefix used on custom headers. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2149,
+  "secondPos" : 2149,
+  "firstEndPos" : 2186,
+  "secondEndPos" : 2186
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -3860,27 +3860,27 @@
   "firstEndPos" : 3443,
   "secondEndPos" : 3443
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Configure TLS extensions on `sslSocket` for `route`.\n   */",
-  "secondLabel" : "/**\n   * Configure TLS extensions on `sslSocket` for `route`.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3457,
-  "secondPos" : 3457,
-  "firstEndPos" : 3524,
-  "secondEndPos" : 3524
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3527,
-  "secondPos" : 3527,
+  "firstPos" : 3457,
+  "secondPos" : 3457,
   "firstEndPos" : 3647,
   "secondEndPos" : 3670
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Configure TLS extensions on `sslSocket` for `route`.\n   */",
+  "secondLabel" : "/**\n   * Configure TLS extensions on `sslSocket` for `route`.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3457,
+  "secondPos" : 3457,
+  "firstEndPos" : 3524,
+  "secondEndPos" : 3524
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4146,27 +4146,27 @@
   "firstEndPos" : 3647,
   "secondEndPos" : 3670
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Called after the TLS handshake to release resources allocated by [configureTlsExtensions]. */",
-  "secondLabel" : "/** Called after the TLS handshake to release resources allocated by [configureTlsExtensions]. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3651,
-  "secondPos" : 3674,
-  "firstEndPos" : 3748,
-  "secondEndPos" : 3771
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3751,
-  "secondPos" : 3774,
+  "firstPos" : 3651,
+  "secondPos" : 3674,
   "firstEndPos" : 3802,
   "secondEndPos" : 3825
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Called after the TLS handshake to release resources allocated by [configureTlsExtensions]. */",
+  "secondLabel" : "/** Called after the TLS handshake to release resources allocated by [configureTlsExtensions]. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3651,
+  "secondPos" : 3674,
+  "firstEndPos" : 3748,
+  "secondEndPos" : 3771
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4289,27 +4289,27 @@
   "firstEndPos" : 3802,
   "secondEndPos" : 3825
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns the negotiated protocol, or null if no protocol was negotiated. */",
-  "secondLabel" : "/** Returns the negotiated protocol, or null if no protocol was negotiated. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3806,
-  "secondPos" : 3829,
-  "firstEndPos" : 3884,
-  "secondEndPos" : 3907
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3887,
-  "secondPos" : 3910,
+  "firstPos" : 3806,
+  "secondPos" : 3829,
   "firstEndPos" : 3953,
   "secondEndPos" : 3976
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns the negotiated protocol, or null if no protocol was negotiated. */",
+  "secondLabel" : "/** Returns the negotiated protocol, or null if no protocol was negotiated. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3806,
+  "secondPos" : 3829,
+  "firstEndPos" : 3884,
+  "secondEndPos" : 3907
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -5807,27 +5807,27 @@
   "firstEndPos" : 4383,
   "secondEndPos" : 4406
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns an object that holds a stack trace created at the moment this method is executed. This\n   * should be used specifically for [java.io.Closeable] objects and in conjunction with\n   * [logCloseableLeak].\n   */",
-  "secondLabel" : "/**\n   * Returns an object that holds a stack trace created at the moment this method is executed. This\n   * should be used specifically for [java.io.Closeable] objects and in conjunction with\n   * [logCloseableLeak].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4387,
-  "secondPos" : 4410,
-  "firstEndPos" : 4610,
-  "secondEndPos" : 4633
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4613,
-  "secondPos" : 4636,
+  "firstPos" : 4387,
+  "secondPos" : 4410,
   "firstEndPos" : 4811,
   "secondEndPos" : 4834
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns an object that holds a stack trace created at the moment this method is executed. This\n   * should be used specifically for [java.io.Closeable] objects and in conjunction with\n   * [logCloseableLeak].\n   */",
+  "secondLabel" : "/**\n   * Returns an object that holds a stack trace created at the moment this method is executed. This\n   * should be used specifically for [java.io.Closeable] objects and in conjunction with\n   * [logCloseableLeak].\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4387,
+  "secondPos" : 4410,
+  "firstEndPos" : 4610,
+  "secondEndPos" : 4633
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -11175,27 +11175,27 @@
   "firstEndPos" : 6896,
   "secondEndPos" : 6919
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Attempt to match the host runtime to a capable Platform implementation. */",
-  "secondLabel" : "/** Attempt to match the host runtime to a capable Platform implementation. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6910,
-  "secondPos" : 6933,
-  "firstEndPos" : 6988,
-  "secondEndPos" : 7011
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6993,
-  "secondPos" : 7016,
+  "firstPos" : 6910,
+  "secondPos" : 6933,
   "firstEndPos" : 7887,
   "secondEndPos" : 7910
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Attempt to match the host runtime to a capable Platform implementation. */",
+  "secondLabel" : "/** Attempt to match the host runtime to a capable Platform implementation. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6910,
+  "secondPos" : 6933,
+  "firstEndPos" : 6988,
+  "secondEndPos" : 7011
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -12913,27 +12913,27 @@
   "firstEndPos" : 7881,
   "secondEndPos" : 7904
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Returns the concatenation of 8-bit, length prefixed protocol names.\n     * http://tools.ietf.org/html/draft-agl-tls-nextprotoneg-04#page-4\n     */",
-  "secondLabel" : "/**\n     * Returns the concatenation of 8-bit, length prefixed protocol names.\n     * http://tools.ietf.org/html/draft-agl-tls-nextprotoneg-04#page-4\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7893,
-  "secondPos" : 7916,
-  "firstEndPos" : 8050,
-  "secondEndPos" : 8073
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8055,
-  "secondPos" : 8078,
+  "firstPos" : 7893,
+  "secondPos" : 7916,
   "firstEndPos" : 8329,
   "secondEndPos" : 8352
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Returns the concatenation of 8-bit, length prefixed protocol names.\n     * http://tools.ietf.org/html/draft-agl-tls-nextprotoneg-04#page-4\n     */",
+  "secondLabel" : "/**\n     * Returns the concatenation of 8-bit, length prefixed protocol names.\n     * http://tools.ietf.org/html/draft-agl-tls-nextprotoneg-04#page-4\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7893,
+  "secondPos" : 7916,
+  "firstEndPos" : 8050,
+  "secondEndPos" : 8073
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

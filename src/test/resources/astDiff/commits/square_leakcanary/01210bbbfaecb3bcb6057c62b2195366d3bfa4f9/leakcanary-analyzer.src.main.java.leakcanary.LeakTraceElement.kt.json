@@ -252,27 +252,27 @@
   "firstEndPos" : 688,
   "secondEndPos" : 740
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
-  "secondLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 119,
-  "secondPos" : 119,
-  "firstEndPos" : 307,
-  "secondEndPos" : 307
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 310,
-  "secondPos" : 310,
+  "firstPos" : 119,
+  "secondPos" : 119,
   "firstEndPos" : 339,
   "secondEndPos" : 339
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
+  "secondLabel" : "/**\n   * Information about the reference that points to the next [LeakTraceElement] in the leak\n   * chain. Null if this is the last element in the leak trace, ie the leaking object.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 119,
+  "secondPos" : 119,
+  "firstEndPos" : 307,
+  "secondEndPos" : 307
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -472,27 +472,27 @@
   "firstEndPos" : 388,
   "secondEndPos" : 388
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** If not null, there was no path that could exclude this element.  */",
-  "secondLabel" : "/** If not null, there was no path that could exclude this element.  */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 393,
-  "secondPos" : 393,
-  "firstEndPos" : 464,
-  "secondEndPos" : 464
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 467,
-  "secondPos" : 467,
+  "firstPos" : 393,
+  "secondPos" : 393,
   "firstEndPos" : 503,
   "secondEndPos" : 503
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** If not null, there was no path that could exclude this element.  */",
+  "secondLabel" : "/** If not null, there was no path that could exclude this element.  */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 393,
+  "secondPos" : 393,
+  "firstEndPos" : 464,
+  "secondEndPos" : 464
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -560,27 +560,27 @@
   "firstEndPos" : 502,
   "secondEndPos" : 502
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
-  "secondLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 508,
-  "secondPos" : 508,
-  "firstEndPos" : 659,
-  "secondEndPos" : 659
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 662,
-  "secondPos" : 662,
+  "firstPos" : 508,
+  "secondPos" : 508,
   "firstEndPos" : 686,
   "secondEndPos" : 686
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
+  "secondLabel" : "/**\n   * Ordered labels that were computed during analysis. A label provides\n   * extra information that helps understand the leak trace element.\n   */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 508,
+  "secondPos" : 508,
+  "firstEndPos" : 659,
+  "secondEndPos" : 659
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -725,27 +725,27 @@
   "firstEndPos" : 1000,
   "secondEndPos" : 1052
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
-  "secondLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 709,
-  "secondPos" : 761,
-  "firstEndPos" : 771,
-  "secondEndPos" : 823
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 774,
-  "secondPos" : 826,
+  "firstPos" : 709,
+  "secondPos" : 761,
   "firstEndPos" : 836,
   "secondEndPos" : 888
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
+  "secondLabel" : "/**\n   * Returns {@link #className} without the package.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 709,
+  "secondPos" : 761,
+  "firstEndPos" : 771,
+  "secondEndPos" : 823
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

@@ -241,27 +241,27 @@
   "firstEndPos" : 758,
   "secondEndPos" : 758
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A set of default [LeakInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
-  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 760,
-  "secondPos" : 760,
-  "firstEndPos" : 1237,
-  "secondEndPos" : 1239
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1238,
-  "secondPos" : 1240,
+  "firstPos" : 760,
+  "secondPos" : 760,
   "firstEndPos" : 14865,
   "secondEndPos" : 14306
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A set of default [LeakInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
+  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 760,
+  "secondPos" : 760,
+  "firstEndPos" : 1237,
+  "secondEndPos" : 1239
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

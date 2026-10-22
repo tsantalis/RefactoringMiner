@@ -384,27 +384,27 @@
   "firstEndPos" : 213,
   "secondEndPos" : 214
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 使用 ViewBinding 快速构建 Binder\n * @param T item数据类型\n * @param VB : ViewBinding\n */",
-  "secondLabel" : "/**\n * 使用 ViewBinding 快速构建 Binder\n * @param T item数据类型\n * @param VB : ViewBinding\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 215,
-  "secondPos" : 216,
-  "firstEndPos" : 300,
-  "secondEndPos" : 301
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 301,
-  "secondPos" : 302,
+  "firstPos" : 215,
+  "secondPos" : 216,
   "firstEndPos" : 923,
   "secondEndPos" : 925
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 使用 ViewBinding 快速构建 Binder\n * @param T item数据类型\n * @param VB : ViewBinding\n */",
+  "secondLabel" : "/**\n * 使用 ViewBinding 快速构建 Binder\n * @param T item数据类型\n * @param VB : ViewBinding\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 215,
+  "secondPos" : 216,
+  "firstEndPos" : 300,
+  "secondEndPos" : 301
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -736,27 +736,27 @@
   "firstEndPos" : 923,
   "secondEndPos" : 925
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 此 Holder 不适用于其他 BaseAdapter，仅针对[BaseBinderAdapter]\n     */",
-  "secondLabel" : "/**\n     * 此 Holder 不适用于其他 BaseAdapter，仅针对[BaseBinderAdapter]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 440,
-  "secondPos" : 441,
-  "firstEndPos" : 509,
-  "secondEndPos" : 510
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 514,
-  "secondPos" : 515,
+  "firstPos" : 440,
+  "secondPos" : 441,
   "firstEndPos" : 608,
   "secondEndPos" : 610
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 此 Holder 不适用于其他 BaseAdapter，仅针对[BaseBinderAdapter]\n     */",
+  "secondLabel" : "/**\n     * 此 Holder 不适用于其他 BaseAdapter，仅针对[BaseBinderAdapter]\n     */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 440,
+  "secondPos" : 441,
+  "firstEndPos" : 509,
+  "secondEndPos" : 510
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

@@ -1737,27 +1737,27 @@
   "firstEndPos" : 1792,
   "secondEndPos" : 1799
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Display a grid of [Task]s. User can choose to view all, active or completed tasks.\n */",
-  "secondLabel" : "/**\n * Display a grid of [Task]s. User can choose to view all, active or completed tasks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1794,
-  "secondPos" : 1801,
-  "firstEndPos" : 1887,
-  "secondEndPos" : 1894
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1888,
-  "secondPos" : 1895,
+  "firstPos" : 1794,
+  "secondPos" : 1801,
   "firstEndPos" : 6002,
   "secondEndPos" : 6013
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Display a grid of [Task]s. User can choose to view all, active or completed tasks.\n */",
+  "secondLabel" : "/**\n * Display a grid of [Task]s. User can choose to view all, active or completed tasks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1794,
+  "secondPos" : 1801,
+  "firstEndPos" : 1887,
+  "secondEndPos" : 1894
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

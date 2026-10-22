@@ -61,7 +61,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 20,
-  "secondPos" : 112,
+  "secondPos" : 20,
   "firstEndPos" : 2211,
   "secondEndPos" : 2764
 }, {
@@ -138,7 +138,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 45,
-  "secondPos" : 212,
+  "secondPos" : 137,
   "firstEndPos" : 66,
   "secondEndPos" : 233
 }, {
@@ -248,7 +248,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 70,
-  "secondPos" : 274,
+  "secondPos" : 237,
   "firstEndPos" : 117,
   "secondEndPos" : 321
 }, {
@@ -439,27 +439,27 @@
   "firstEndPos" : 117,
   "secondEndPos" : 321
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A global variable in native code.\n   */",
-  "secondLabel" : "/**\n   * A global variable in native code.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 121,
-  "secondPos" : 325,
-  "firstEndPos" : 169,
-  "secondEndPos" : 373
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 172,
-  "secondPos" : 376,
+  "firstPos" : 121,
+  "secondPos" : 325,
   "firstEndPos" : 259,
   "secondEndPos" : 463
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A global variable in native code.\n   */",
+  "secondLabel" : "/**\n   * A global variable in native code.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 121,
+  "secondPos" : 325,
+  "firstEndPos" : 169,
+  "secondEndPos" : 373
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -714,27 +714,27 @@
   "firstEndPos" : 259,
   "secondEndPos" : 463
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * A local variable in native code.\n   */",
-  "secondLabel" : "/**\n   * A local variable in native code.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 263,
-  "secondPos" : 467,
-  "firstEndPos" : 310,
-  "secondEndPos" : 514
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 313,
-  "secondPos" : 517,
+  "firstPos" : 263,
+  "secondPos" : 467,
   "firstEndPos" : 494,
   "secondEndPos" : 698
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * A local variable in native code.\n   */",
+  "secondLabel" : "/**\n   * A local variable in native code.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 263,
+  "secondPos" : 467,
+  "firstEndPos" : 310,
+  "secondEndPos" : 514
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -934,27 +934,27 @@
   "firstEndPos" : 387,
   "secondEndPos" : 591
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
-  "secondLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 393,
-  "secondPos" : 597,
-  "firstEndPos" : 454,
-  "secondEndPos" : 658
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 459,
-  "secondPos" : 663,
+  "firstPos" : 393,
+  "secondPos" : 597,
   "firstEndPos" : 479,
   "secondEndPos" : 683
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
+  "secondLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 393,
+  "secondPos" : 597,
+  "firstEndPos" : 454,
+  "secondEndPos" : 658
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1066,27 +1066,27 @@
   "firstEndPos" : 494,
   "secondEndPos" : 698
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Java local variable\n   */",
-  "secondLabel" : "/**\n   * A java local variable\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 498,
-  "secondPos" : 702,
-  "firstEndPos" : 532,
-  "secondEndPos" : 738
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 535,
-  "secondPos" : 741,
+  "firstPos" : 498,
+  "secondPos" : 702,
   "firstEndPos" : 717,
   "secondEndPos" : 923
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Java local variable\n   */",
+  "secondLabel" : "/**\n   * A java local variable\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 498,
+  "secondPos" : 702,
+  "firstEndPos" : 532,
+  "secondEndPos" : 738
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1286,27 +1286,27 @@
   "firstEndPos" : 610,
   "secondEndPos" : 816
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
-  "secondLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 616,
-  "secondPos" : 822,
-  "firstEndPos" : 677,
-  "secondEndPos" : 883
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 682,
-  "secondPos" : 888,
+  "firstPos" : 616,
+  "secondPos" : 822,
   "firstEndPos" : 702,
   "secondEndPos" : 908
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
+  "secondLabel" : "/**\n     * frame number in stack trace (-1 for empty)\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 616,
+  "secondPos" : 822,
+  "firstEndPos" : 677,
+  "secondEndPos" : 883
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1418,27 +1418,27 @@
   "firstEndPos" : 717,
   "secondEndPos" : 923
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Input or output parameters in native code\n   */",
-  "secondLabel" : "/**\n   * Input or output parameters in native code\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 721,
-  "secondPos" : 927,
-  "firstEndPos" : 777,
-  "secondEndPos" : 983
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 780,
-  "secondPos" : 986,
+  "firstPos" : 721,
+  "secondPos" : 927,
   "firstEndPos" : 987,
   "secondEndPos" : 1193
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Input or output parameters in native code\n   */",
+  "secondLabel" : "/**\n   * Input or output parameters in native code\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 721,
+  "secondPos" : 927,
+  "firstEndPos" : 777,
+  "secondEndPos" : 983
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1572,27 +1572,27 @@
   "firstEndPos" : 824,
   "secondEndPos" : 1030
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Thread is sometimes not found, see:\n     * https://issuetracker.google.com/issues/122713143\n     */",
-  "secondLabel" : "/**\n     * Thread is sometimes not found, see:\n     * https://issuetracker.google.com/issues/122713143\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 830,
-  "secondPos" : 1036,
-  "firstEndPos" : 940,
-  "secondEndPos" : 1146
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 945,
-  "secondPos" : 1151,
+  "firstPos" : 830,
+  "secondPos" : 1036,
   "firstEndPos" : 972,
   "secondEndPos" : 1178
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Thread is sometimes not found, see:\n     * https://issuetracker.google.com/issues/122713143\n     */",
+  "secondLabel" : "/**\n     * Thread is sometimes not found, see:\n     * https://issuetracker.google.com/issues/122713143\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 830,
+  "secondPos" : 1036,
+  "firstEndPos" : 940,
+  "secondEndPos" : 1146
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1704,27 +1704,27 @@
   "firstEndPos" : 987,
   "secondEndPos" : 1193
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * System class\n   */",
-  "secondLabel" : "/**\n   * A system class\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 991,
-  "secondPos" : 1197,
-  "firstEndPos" : 1018,
-  "secondEndPos" : 1226
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1021,
-  "secondPos" : 1229,
+  "firstPos" : 991,
+  "secondPos" : 1197,
   "firstEndPos" : 1072,
   "secondEndPos" : 1280
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * System class\n   */",
+  "secondLabel" : "/**\n   * A system class\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 991,
+  "secondPos" : 1197,
+  "firstEndPos" : 1018,
+  "secondEndPos" : 1226
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2177,27 +2177,27 @@
   "firstEndPos" : 1168,
   "secondEndPos" : 1376
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Everything that called the wait() or notify() methods, or\n   * that is synchronized.\n   */",
-  "secondLabel" : "/**\n   * Everything that called the wait() or notify() methods, or\n   * that is synchronized.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1172,
-  "secondPos" : 1380,
-  "firstEndPos" : 1271,
-  "secondEndPos" : 1479
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1274,
-  "secondPos" : 1482,
+  "firstPos" : 1172,
+  "secondPos" : 1380,
   "firstEndPos" : 1325,
   "secondEndPos" : 1533
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Everything that called the wait() or notify() methods, or\n   * that is synchronized.\n   */",
+  "secondLabel" : "/**\n   * Everything that called the wait() or notify() methods, or\n   * that is synchronized.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1172,
+  "secondPos" : 1380,
+  "firstEndPos" : 1271,
+  "secondEndPos" : 1479
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2386,27 +2386,27 @@
   "firstEndPos" : 1325,
   "secondEndPos" : 1533
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Added at https://android.googlesource.com/platform/tools/base/+/c0f0d528c155cab32e372dac77370569a386245c\n   */",
-  "secondLabel" : "/**\n   * A thread.\n   *\n   * Added at https://android.googlesource.com/platform/tools/base/+/c0f0d528c155cab32e372dac77370569a386245c\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1329,
-  "secondPos" : 1537,
-  "firstEndPos" : 1448,
-  "secondEndPos" : 1676
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1451,
-  "secondPos" : 1679,
+  "firstPos" : 1329,
+  "secondPos" : 1537,
   "firstEndPos" : 1581,
   "secondEndPos" : 1809
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Added at https://android.googlesource.com/platform/tools/base/+/c0f0d528c155cab32e372dac77370569a386245c\n   */",
+  "secondLabel" : "/**\n   * A thread.\n   *\n   * Added at https://android.googlesource.com/platform/tools/base/+/c0f0d528c155cab32e372dac77370569a386245c\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1329,
+  "secondPos" : 1537,
+  "firstEndPos" : 1448,
+  "secondEndPos" : 1676
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2734,7 +2734,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1585,
-  "secondPos" : 1880,
+  "secondPos" : 1813,
   "firstEndPos" : 1641,
   "secondEndPos" : 1936
 }, {
@@ -2932,7 +2932,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1645,
-  "secondPos" : 2007,
+  "secondPos" : 1940,
   "firstEndPos" : 1695,
   "secondEndPos" : 2057
 }, {
@@ -3130,7 +3130,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1699,
-  "secondPos" : 2128,
+  "secondPos" : 2061,
   "firstEndPos" : 1819,
   "secondEndPos" : 2248
 }, {
@@ -3460,7 +3460,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1823,
-  "secondPos" : 2320,
+  "secondPos" : 2252,
   "firstEndPos" : 1877,
   "secondEndPos" : 2374
 }, {
@@ -3651,27 +3651,27 @@
   "firstEndPos" : 1877,
   "secondEndPos" : 2374
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * An object that is in a queue, waiting for a finalizer to run.\n   */",
-  "secondLabel" : "/**\n   * An object that is in a queue, waiting for a finalizer to run.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1881,
-  "secondPos" : 2378,
-  "firstEndPos" : 1957,
-  "secondEndPos" : 2454
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1960,
-  "secondPos" : 2457,
+  "firstPos" : 1881,
+  "secondPos" : 2378,
   "firstEndPos" : 2010,
   "secondEndPos" : 2507
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * An object that is in a queue, waiting for a finalizer to run.\n   */",
+  "secondLabel" : "/**\n   * An object that is in a queue, waiting for a finalizer to run.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1881,
+  "secondPos" : 2378,
+  "firstEndPos" : 1957,
+  "secondEndPos" : 2454
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -3867,7 +3867,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 2014,
-  "secondPos" : 2567,
+  "secondPos" : 2511,
   "firstEndPos" : 2062,
   "secondEndPos" : 2615
 }, {
@@ -4058,27 +4058,27 @@
   "firstEndPos" : 2062,
   "secondEndPos" : 2615
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * An object that is unreachable from any other root, but not a root itself.\n   */",
-  "secondLabel" : "/**\n   * An object that is unreachable from any other root, but not a root itself.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2066,
-  "secondPos" : 2619,
-  "firstEndPos" : 2154,
-  "secondEndPos" : 2707
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2157,
-  "secondPos" : 2710,
+  "firstPos" : 2066,
+  "secondPos" : 2619,
   "firstEndPos" : 2208,
   "secondEndPos" : 2761
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * An object that is unreachable from any other root, but not a root itself.\n   */",
+  "secondLabel" : "/**\n   * An object that is unreachable from any other root, but not a root itself.\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2066,
+  "secondPos" : 2619,
+  "firstEndPos" : 2154,
+  "secondEndPos" : 2707
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

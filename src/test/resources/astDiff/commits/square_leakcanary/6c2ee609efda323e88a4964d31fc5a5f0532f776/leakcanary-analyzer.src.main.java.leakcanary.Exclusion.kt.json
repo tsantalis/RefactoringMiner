@@ -186,27 +186,27 @@
   "firstEndPos" : 96,
   "secondEndPos" : 96
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Deprioritizes specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [Exclusion], than the heap analyzer should look for a longer path with nothing\n * matching in [Exclusion].\n *\n * Exclusions should be used to match patterns of known leaks that are beyond your control, for\n * examples leaks in the Android Framework or in 3rd party libraries. This won't fix the leaks,\n * and LeakCanary will still trigger, but at least it'll indicate that there's nothing you can do\n * about it.\n */",
-  "secondLabel" : "/**\n * Deprioritizes specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [Exclusion], than the heap analyzer should look for a longer path with nothing\n * matching in [Exclusion].\n *\n * Exclusions should be used to match patterns of known leaks that are beyond your control, for\n * examples leaks in the Android Framework or in 3rd party libraries. This won't fix the leaks,\n * and LeakCanary will still trigger, but at least it'll indicate that there's nothing you can do\n * about it.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 98,
-  "secondPos" : 98,
-  "firstEndPos" : 795,
-  "secondEndPos" : 795
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 796,
-  "secondPos" : 796,
+  "firstPos" : 98,
+  "secondPos" : 98,
   "firstEndPos" : 2423,
   "secondEndPos" : 2890
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Deprioritizes specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [Exclusion], than the heap analyzer should look for a longer path with nothing\n * matching in [Exclusion].\n *\n * Exclusions should be used to match patterns of known leaks that are beyond your control, for\n * examples leaks in the Android Framework or in 3rd party libraries. This won't fix the leaks,\n * and LeakCanary will still trigger, but at least it'll indicate that there's nothing you can do\n * about it.\n */",
+  "secondLabel" : "/**\n * Deprioritizes specific references from being taken into account when computing the shortest strong\n * reference path from a suspected leaking instance to the GC roots.\n *\n * This class lets you ignore known memory leaks that you known about. If the shortest path\n * matches [Exclusion], than the heap analyzer should look for a longer path with nothing\n * matching in [Exclusion].\n *\n * Exclusions should be used to match patterns of known leaks that are beyond your control, for\n * examples leaks in the Android Framework or in 3rd party libraries. This won't fix the leaks,\n * and LeakCanary will still trigger, but at least it'll indicate that there's nothing you can do\n * about it.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 98,
+  "secondPos" : 98,
+  "firstEndPos" : 795,
+  "secondEndPos" : 795
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -747,27 +747,27 @@
   "firstEndPos" : 988,
   "secondEndPos" : 988
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Note: the enum order matters for shortest paths, do not reorder",
-  "secondLabel" : "// Note: the enum order matters for shortest paths, do not reorder",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 993,
-  "secondPos" : 993,
-  "firstEndPos" : 1059,
-  "secondEndPos" : 1059
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1062,
-  "secondPos" : 1062,
+  "firstPos" : 993,
+  "secondPos" : 993,
   "firstEndPos" : 1761,
   "secondEndPos" : 1761
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Note: the enum order matters for shortest paths, do not reorder",
+  "secondLabel" : "// Note: the enum order matters for shortest paths, do not reorder",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 993,
+  "secondPos" : 993,
+  "firstEndPos" : 1059,
+  "secondEndPos" : 1059
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -813,27 +813,27 @@
   "firstEndPos" : 1761,
   "secondEndPos" : 1761
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * References matching this cannot create leaks.\n     * The shortest path finder will never go through references that match this exclusion.\n     */",
-  "secondLabel" : "/**\n     * References matching this cannot create leaks.\n     * The shortest path finder will never go through references that match this exclusion.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1086,
-  "secondPos" : 1086,
-  "firstEndPos" : 1242,
-  "secondEndPos" : 1242
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1247,
-  "secondPos" : 1247,
+  "firstPos" : 1086,
+  "secondPos" : 1086,
   "firstEndPos" : 1262,
   "secondEndPos" : 1262
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * References matching this cannot create leaks.\n     * The shortest path finder will never go through references that match this exclusion.\n     */",
+  "secondLabel" : "/**\n     * References matching this cannot create leaks.\n     * The shortest path finder will never go through references that match this exclusion.\n     */",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 1086,
+  "secondPos" : 1086,
+  "firstEndPos" : 1242,
+  "secondEndPos" : 1242
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -846,27 +846,27 @@
   "firstEndPos" : 1262,
   "secondEndPos" : 1262
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * References matching this are known to create leaks, but those leaks will not be fixed.\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that don't match any exclusion.\n     */",
-  "secondLabel" : "/**\n     * References matching this are known to create leaks, but those leaks will not be fixed.\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that don't match any exclusion.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1268,
-  "secondPos" : 1268,
-  "firstEndPos" : 1536,
-  "secondEndPos" : 1536
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1541,
-  "secondPos" : 1541,
+  "firstPos" : 1268,
+  "secondPos" : 1268,
   "firstEndPos" : 1554,
   "secondEndPos" : 1554
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * References matching this are known to create leaks, but those leaks will not be fixed.\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that don't match any exclusion.\n     */",
+  "secondLabel" : "/**\n     * References matching this are known to create leaks, but those leaks will not be fixed.\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that don't match any exclusion.\n     */",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 1268,
+  "secondPos" : 1268,
+  "firstEndPos" : 1536,
+  "secondEndPos" : 1536
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -879,27 +879,27 @@
   "firstEndPos" : 1554,
   "secondEndPos" : 1554
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that match known leak exclusions.\n     */",
-  "secondLabel" : "/**\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that match known leak exclusions.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1560,
-  "secondPos" : 1560,
-  "firstEndPos" : 1736,
-  "secondEndPos" : 1736
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1741,
-  "secondPos" : 1741,
+  "firstPos" : 1560,
+  "secondPos" : 1560,
   "firstEndPos" : 1757,
   "secondEndPos" : 1757
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that match known leak exclusions.\n     */",
+  "secondLabel" : "/**\n     * The shortest path finder will only go through references that match this exclusion after it\n     * has exhausted references that match known leak exclusions.\n     */",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 1560,
+  "secondPos" : 1560,
+  "firstEndPos" : 1736,
+  "secondEndPos" : 1736
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -1106,7 +1106,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1833,
-  "secondPos" : 1920,
+  "secondPos" : 1833,
   "firstEndPos" : 2000,
   "secondEndPos" : 2097
 }, {
@@ -1865,7 +1865,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 2217,
-  "secondPos" : 2684,
+  "secondPos" : 2314,
   "firstEndPos" : 2417,
   "secondEndPos" : 2884
 }, {

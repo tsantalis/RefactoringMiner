@@ -2672,27 +2672,27 @@
   "firstEndPos" : 1578,
   "secondEndPos" : 1597
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Sequence identical for every test run",
-  "secondLabel" : "// Sequence identical for every test run",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1583,
-  "secondPos" : 1602,
-  "firstEndPos" : 1623,
-  "secondEndPos" : 1642
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1626,
-  "secondPos" : 1645,
+  "firstPos" : 1583,
+  "secondPos" : 1602,
   "firstEndPos" : 1656,
   "secondEndPos" : 1675
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Sequence identical for every test run",
+  "secondLabel" : "// Sequence identical for every test run",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1583,
+  "secondPos" : 1602,
+  "firstEndPos" : 1623,
+  "secondEndPos" : 1642
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -395,27 +395,27 @@
   "firstEndPos" : 801,
   "secondEndPos" : 801
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** This is the last interceptor in the chain. It makes a network call to the server. */",
-  "secondLabel" : "/** This is the last interceptor in the chain. It makes a network call to the server. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 803,
-  "secondPos" : 803,
-  "firstEndPos" : 891,
-  "secondEndPos" : 891
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 892,
-  "secondPos" : 892,
+  "firstPos" : 803,
+  "secondPos" : 803,
   "firstEndPos" : 5164,
   "secondEndPos" : 5152
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** This is the last interceptor in the chain. It makes a network call to the server. */",
+  "secondLabel" : "/** This is the last interceptor in the chain. It makes a network call to the server. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 803,
+  "secondPos" : 803,
+  "firstEndPos" : 891,
+  "secondEndPos" : 891
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

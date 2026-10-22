@@ -395,27 +395,27 @@
   "firstEndPos" : 218,
   "secondEndPos" : 218
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Content providers are loaded before the application class is created. [AppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n */",
-  "secondLabel" : "/**\n * Content providers are loaded before the application class is created. [MainProcessAppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n *\n * [MainProcessAppWatcherInstaller] automatically sets up the LeakCanary code that runs in the main\n * app process.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 220,
-  "secondPos" : 220,
-  "firstEndPos" : 390,
-  "secondEndPos" : 520
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 391,
-  "secondPos" : 521,
+  "firstPos" : 220,
+  "secondPos" : 220,
   "firstEndPos" : 1601,
   "secondEndPos" : 1343
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Content providers are loaded before the application class is created. [AppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n */",
+  "secondLabel" : "/**\n * Content providers are loaded before the application class is created. [MainProcessAppWatcherInstaller] is\n * used to install [leakcanary.AppWatcher] on application start.\n *\n * [MainProcessAppWatcherInstaller] automatically sets up the LeakCanary code that runs in the main\n * app process.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 220,
+  "secondPos" : 220,
+  "firstEndPos" : 390,
+  "secondEndPos" : 520
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

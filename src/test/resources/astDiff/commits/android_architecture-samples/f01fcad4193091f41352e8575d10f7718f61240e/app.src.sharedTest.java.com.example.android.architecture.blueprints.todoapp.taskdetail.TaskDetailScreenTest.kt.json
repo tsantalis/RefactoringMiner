@@ -1759,27 +1759,27 @@
   "firstEndPos" : 1760,
   "secondEndPos" : 1770
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Integration test for the Task Details screen.\n */",
-  "secondLabel" : "/**\n * Integration test for the Task Details screen.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1762,
-  "secondPos" : 1772,
-  "firstEndPos" : 1818,
-  "secondEndPos" : 1828
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1819,
-  "secondPos" : 1829,
+  "firstPos" : 1762,
+  "secondPos" : 1772,
   "firstEndPos" : 4234,
   "secondEndPos" : 4319
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Integration test for the Task Details screen.\n */",
+  "secondLabel" : "/**\n * Integration test for the Task Details screen.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1762,
+  "secondPos" : 1772,
+  "firstEndPos" : 1818,
+  "secondEndPos" : 1828
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

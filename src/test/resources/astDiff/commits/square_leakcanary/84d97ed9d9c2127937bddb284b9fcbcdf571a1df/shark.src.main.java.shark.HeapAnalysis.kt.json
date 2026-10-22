@@ -237,7 +237,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 165,
-  "secondPos" : 317,
+  "secondPos" : 101,
   "firstEndPos" : 375,
   "secondEndPos" : 682
 }, {
@@ -347,7 +347,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 210,
-  "secondPos" : 413,
+  "secondPos" : 362,
   "firstEndPos" : 241,
   "secondEndPos" : 444
 }, {
@@ -457,7 +457,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 244,
-  "secondPos" : 543,
+  "secondPos" : 448,
   "firstEndPos" : 282,
   "secondEndPos" : 581
 }, {
@@ -560,27 +560,27 @@
   "firstEndPos" : 282,
   "secondEndPos" : 581
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Total time spent analyzing the heap.  */",
-  "secondLabel" : "/**\n   * Total time spent analyzing the heap.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 285,
-  "secondPos" : 585,
-  "firstEndPos" : 329,
-  "secondEndPos" : 636
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 332,
-  "secondPos" : 639,
+  "firstPos" : 285,
+  "secondPos" : 585,
   "firstEndPos" : 373,
   "secondEndPos" : 680
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Total time spent analyzing the heap.  */",
+  "secondLabel" : "/**\n   * Total time spent analyzing the heap.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 285,
+  "secondPos" : 585,
+  "firstEndPos" : 329,
+  "secondEndPos" : 636
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -688,7 +688,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 377,
-  "secondPos" : 767,
+  "secondPos" : 684,
   "firstEndPos" : 588,
   "secondEndPos" : 1055
 }, {
@@ -1062,7 +1062,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 533,
-  "secondPos" : 1000,
+  "secondPos" : 923,
   "firstEndPos" : 569,
   "secondEndPos" : 1036
 }, {
@@ -1183,7 +1183,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 590,
-  "secondPos" : 1138,
+  "secondPos" : 1057,
   "firstEndPos" : 922,
   "secondEndPos" : 1789
 }, {
@@ -1557,7 +1557,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 746,
-  "secondPos" : 1383,
+  "secondPos" : 1294,
   "firstEndPos" : 789,
   "secondEndPos" : 1426
 }, {
@@ -1667,7 +1667,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 793,
-  "secondPos" : 1515,
+  "secondPos" : 1430,
   "firstEndPos" : 828,
   "secondEndPos" : 1550
 }, {
@@ -1843,7 +1843,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 852,
-  "secondPos" : 1719,
+  "secondPos" : 1574,
   "firstEndPos" : 876,
   "secondEndPos" : 1743
 }, {
@@ -2041,7 +2041,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 924,
-  "secondPos" : 1882,
+  "secondPos" : 1791,
   "firstEndPos" : 2464,
   "secondEndPos" : 2998
 }, {
@@ -2144,27 +2144,27 @@
   "firstEndPos" : 2464,
   "secondEndPos" : 2998
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Class name of the leaking instance.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "secondLabel" : "/**\n   * Class name of the leaking object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 961,
-  "secondPos" : 1919,
-  "firstEndPos" : 1096,
-  "secondEndPos" : 2052
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1099,
-  "secondPos" : 2055,
+  "firstPos" : 961,
+  "secondPos" : 1919,
   "firstEndPos" : 1129,
   "secondEndPos" : 2085
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Class name of the leaking instance.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
+  "secondLabel" : "/**\n   * Class name of the leaking object.\n   * The class name format is the same as what would be returned by [Class.getName].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 961,
+  "secondPos" : 1919,
+  "firstEndPos" : 1096,
+  "secondEndPos" : 2052
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2265,27 +2265,27 @@
   "firstEndPos" : 1129,
   "secondEndPos" : 2085
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Shortest path from GC roots to the leaking object.\n   */",
-  "secondLabel" : "/**\n   * Shortest path from GC roots to the leaking object.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1133,
-  "secondPos" : 2089,
-  "firstEndPos" : 1198,
-  "secondEndPos" : 2154
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1201,
-  "secondPos" : 2157,
+  "firstPos" : 1133,
+  "secondPos" : 2089,
   "firstEndPos" : 1234,
   "secondEndPos" : 2190
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Shortest path from GC roots to the leaking object.\n   */",
+  "secondLabel" : "/**\n   * Shortest path from GC roots to the leaking object.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1133,
+  "secondPos" : 2089,
+  "firstEndPos" : 1198,
+  "secondEndPos" : 2154
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2386,27 +2386,27 @@
   "firstEndPos" : 1234,
   "secondEndPos" : 2190
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "secondLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1237,
-  "secondPos" : 2194,
-  "firstEndPos" : 1401,
-  "secondEndPos" : 2358
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1404,
-  "secondPos" : 2361,
+  "firstPos" : 1237,
+  "secondPos" : 2194,
   "firstEndPos" : 1439,
   "secondEndPos" : 2400
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "secondLabel" : "/**\n   * The number of bytes which would be freed if all references to the leaking object were\n   * released. Null if the retained heap size was not computed.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1237,
+  "secondPos" : 2194,
+  "firstEndPos" : 1401,
+  "secondEndPos" : 2358
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -2525,7 +2525,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1443,
-  "secondPos" : 2616,
+  "secondPos" : 2404,
   "firstEndPos" : 1456,
   "secondEndPos" : 2629
 }, {
@@ -2657,7 +2657,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
   "firstPos" : 1490,
-  "secondPos" : 2766,
+  "secondPos" : 2663,
   "firstEndPos" : 1517,
   "secondEndPos" : 2793
 }, {
@@ -3317,7 +3317,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
   "firstPos" : 1714,
-  "secondPos" : 3271,
+  "secondPos" : 3000,
   "firstEndPos" : 2008,
   "secondEndPos" : 3777
 }, {
@@ -3702,7 +3702,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 1858,
-  "secondPos" : 3553,
+  "secondPos" : 3411,
   "firstEndPos" : 1887,
   "secondEndPos" : 3582
 }, {
@@ -3768,7 +3768,7 @@
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
   "firstPos" : 1893,
-  "secondPos" : 3668,
+  "secondPos" : 3586,
   "firstEndPos" : 1916,
   "secondEndPos" : 3691
 }, {
@@ -4142,7 +4142,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
   "firstPos" : 2012,
-  "secondPos" : 3842,
+  "secondPos" : 3779,
   "firstEndPos" : 2462,
   "secondEndPos" : 4270
 }, {

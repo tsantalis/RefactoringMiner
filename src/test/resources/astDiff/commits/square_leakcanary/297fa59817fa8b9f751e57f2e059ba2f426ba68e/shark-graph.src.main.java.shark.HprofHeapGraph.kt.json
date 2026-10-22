@@ -2078,27 +2078,27 @@
   "firstEndPos" : 2146,
   "secondEndPos" : 1836
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A [HeapGraph] that reads from an indexed [Hprof]. Create a new instance with [indexHprof].\n */",
-  "secondLabel" : "/**\n * A [HeapGraph] that reads from an Hprof file indexed by [HprofIndex].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2148,
-  "secondPos" : 1838,
-  "firstEndPos" : 2249,
-  "secondEndPos" : 1917
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2250,
-  "secondPos" : 1918,
+  "firstPos" : 2148,
+  "secondPos" : 1838,
   "firstEndPos" : 10914,
   "secondEndPos" : 11510
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A [HeapGraph] that reads from an indexed [Hprof]. Create a new instance with [indexHprof].\n */",
+  "secondLabel" : "/**\n * A [HeapGraph] that reads from an Hprof file indexed by [HprofIndex].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2148,
+  "secondPos" : 1838,
+  "firstEndPos" : 2249,
+  "secondEndPos" : 1917
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -6863,24 +6863,13 @@
   "firstEndPos" : 3997,
   "secondEndPos" : 3722
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "property_declaration",
-  "firstLabel" : "// LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4008,
-  "secondPos" : 3733,
-  "firstEndPos" : 4082,
-  "secondEndPos" : 3812
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4230,
+  "firstPos" : 4008,
   "secondPos" : 3733,
   "firstEndPos" : 4290,
   "secondEndPos" : 3812
@@ -7116,27 +7105,27 @@
   "firstEndPos" : 4289,
   "secondEndPos" : 3811
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// java.lang.Object is the most accessed class in Heap, so we want to memoize a reference to it",
-  "secondLabel" : "// java.lang.Object is the most accessed class in Heap, so we want to memoize a reference to it",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4294,
-  "secondPos" : 3816,
-  "firstEndPos" : 4389,
-  "secondEndPos" : 3911
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4392,
-  "secondPos" : 3914,
+  "firstPos" : 4294,
+  "secondPos" : 3816,
   "firstEndPos" : 4473,
   "secondEndPos" : 3995
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// java.lang.Object is the most accessed class in Heap, so we want to memoize a reference to it",
+  "secondLabel" : "// java.lang.Object is the most accessed class in Heap, so we want to memoize a reference to it",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4294,
+  "secondPos" : 3816,
+  "firstEndPos" : 4389,
+  "secondEndPos" : 3911
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

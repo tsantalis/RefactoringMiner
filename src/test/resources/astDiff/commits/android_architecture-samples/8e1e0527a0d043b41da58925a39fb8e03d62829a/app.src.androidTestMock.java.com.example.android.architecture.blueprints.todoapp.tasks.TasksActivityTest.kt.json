@@ -3475,27 +3475,27 @@
   "firstEndPos" : 3106,
   "secondEndPos" : 2956
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 3108,
-  "secondPos" : 2958,
-  "firstEndPos" : 3162,
-  "secondEndPos" : 3012
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 3163,
-  "secondPos" : 3013,
+  "firstPos" : 3108,
+  "secondPos" : 2958,
   "firstEndPos" : 13110,
   "secondEndPos" : 12743
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "secondLabel" : "/**\n * Large End-to-End test for the tasks module.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 3108,
+  "secondPos" : 2958,
+  "firstEndPos" : 3162,
+  "secondEndPos" : 3012
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4234,27 +4234,27 @@
   "firstEndPos" : 3425,
   "secondEndPos" : 3275
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
-  "secondLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3431,
-  "secondPos" : 3281,
-  "firstEndPos" : 3508,
-  "secondEndPos" : 3358
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3513,
-  "secondPos" : 3363,
+  "firstPos" : 3431,
+  "secondPos" : 3281,
   "firstEndPos" : 3580,
   "secondEndPos" : 3430
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
+  "secondLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3431,
+  "secondPos" : 3281,
+  "firstEndPos" : 3508,
+  "secondEndPos" : 3358
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5290,27 +5290,27 @@
   "firstEndPos" : 4047,
   "secondEndPos" : 3897
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
-  "secondLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4069,
-  "secondPos" : 3919,
-  "firstEndPos" : 4274,
-  "secondEndPos" : 4124
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4279,
-  "secondPos" : 4129,
+  "firstPos" : 4069,
+  "secondPos" : 3919,
   "firstEndPos" : 4493,
   "secondEndPos" : 4343
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
+  "secondLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4069,
+  "secondPos" : 3919,
+  "firstEndPos" : 4274,
+  "secondEndPos" : 4124
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -5785,27 +5785,27 @@
   "firstEndPos" : 4486,
   "secondEndPos" : 4336
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4499,
-  "secondPos" : 4349,
-  "firstEndPos" : 4610,
-  "secondEndPos" : 4460
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4615,
-  "secondPos" : 4465,
+  "firstPos" : 4499,
+  "secondPos" : 4349,
   "firstEndPos" : 4834,
   "secondEndPos" : 4684
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4499,
+  "secondPos" : 4349,
+  "firstEndPos" : 4610,
+  "secondEndPos" : 4460
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each\n * [HprofRecordTag] found in the heap dump.\n *\n * Listener implementations are expected to read all bytes corresponding to a given tag from the\n * provided reader before returning.\n */",
-  "secondLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each\n * [HprofRecordTag] found in the heap dump.\n *\n * Listener implementations are expected to read all bytes corresponding to a given tag from the\n * provided reader before returning.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 287,
-  "secondEndPos" : 287
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 288,
-  "secondPos" : 288,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 1093,
   "secondEndPos" : 514
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each\n * [HprofRecordTag] found in the heap dump.\n *\n * Listener implementations are expected to read all bytes corresponding to a given tag from the\n * provided reader before returning.\n */",
+  "secondLabel" : "/**\n * Listener passed in to [StreamingHprofReader.readRecords], gets notified for each\n * [HprofRecordTag] found in the heap dump.\n *\n * Listener implementations are expected to read all bytes corresponding to a given tag from the\n * provided reader before returning.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 287,
+  "secondEndPos" : 287
 }, {
   "firstType" : "fun",
   "secondType" : "fun",

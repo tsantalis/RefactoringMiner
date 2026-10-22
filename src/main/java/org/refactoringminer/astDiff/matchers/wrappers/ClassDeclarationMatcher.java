@@ -8,6 +8,7 @@ import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLForwardDeclaration;
+import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLNamedExport;
 import gr.uom.java.xmi.UMLPreprocessorStatement;
 import gr.uom.java.xmi.UMLProblemDeclaration;
@@ -25,6 +26,7 @@ import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLClassRenameDiff;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLForwardDeclarationListDiff;
+import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportDiff;
 import gr.uom.java.xmi.diff.UMLNamedExportListDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
@@ -46,6 +48,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
@@ -1319,6 +1322,13 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         else if (!Constants.isCrossLanguage(LANG1, LANG2) && srcFieldDeclaration.getType().name.equals(dstFieldDeclaration.getType().name)) {
             new LeafMatcher(LANG1, LANG2).match(srcFieldDeclaration,dstFieldDeclaration,mappingStore);
             mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
+        }
+        //the KDoc of the parameters, i.e., class A(/** doc */ val x: Int)
+        if (left.getJavadoc().isPresent() && right.getJavadoc().isPresent()) {
+            UMLJavadoc leftJavadoc = left.getJavadoc().get();
+            UMLJavadoc rightJavadoc = right.getJavadoc().get();
+            new JavaDocMatcher(optimizationData, leftJavadoc, rightJavadoc, Optional.of(new UMLJavadocDiff(leftJavadoc, rightJavadoc)), LANG1, LANG2)
+                    .match(srcTypeDeclaration, dstTypeDeclaration, mappingStore);
         }
     }
 

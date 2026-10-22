@@ -1143,12 +1143,23 @@
   "firstEndPos" : 850,
   "secondEndPos" : 874
 }, {
+  "firstType" : "object_declaration",
+  "secondType" : "object_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "source_file",
+  "secondParentType" : "source_file",
+  "firstPos" : 852,
+  "secondPos" : 876,
+  "firstEndPos" : 3813,
+  "secondEndPos" : 4130
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Check android TV we probs want this disabled entirely for it and have alternative listener",
   "secondLabel" : "// TODO Check android TV we probs want this disabled entirely for it and have alternative listener",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
   "firstPos" : 852,
   "secondPos" : 876,
   "firstEndPos" : 950,
@@ -1158,23 +1169,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Add this as a default",
   "secondLabel" : "// TODO Add this as a default",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
   "firstPos" : 951,
   "secondPos" : 975,
   "firstEndPos" : 980,
   "secondEndPos" : 1004
-}, {
-  "firstType" : "object_declaration",
-  "secondType" : "object_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 981,
-  "secondPos" : 1005,
-  "firstEndPos" : 3813,
-  "secondEndPos" : 4130
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

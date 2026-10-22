@@ -109,27 +109,27 @@
   "firstEndPos" : 661,
   "secondEndPos" : 894
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A single field in a [LeakTraceElement].\n */",
-  "secondLabel" : "/**\n * A single field in a [LeakTraceElement].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 663,
-  "secondPos" : 896,
-  "firstEndPos" : 713,
-  "secondEndPos" : 946
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 714,
-  "secondPos" : 947,
+  "firstPos" : 663,
+  "secondPos" : 896,
   "firstEndPos" : 1413,
   "secondEndPos" : 1453
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A single field in a [LeakTraceElement].\n */",
+  "secondLabel" : "/**\n * A single field in a [LeakTraceElement].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 663,
+  "secondPos" : 896,
+  "firstEndPos" : 713,
+  "secondEndPos" : 946
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

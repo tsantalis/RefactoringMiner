@@ -1165,27 +1165,27 @@
   "firstEndPos" : 816,
   "secondEndPos" : 753
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
-  "secondLabel" : "/**\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 818,
-  "secondPos" : 755,
-  "firstEndPos" : 862,
-  "secondEndPos" : 799
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 863,
-  "secondPos" : 800,
+  "firstPos" : 818,
+  "secondPos" : 755,
   "firstEndPos" : 1170,
   "secondEndPos" : 1107
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
+  "secondLabel" : "/**\n * 需要【拖拽】功能的，[BaseQuickAdapter]继承此接口\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 818,
+  "secondPos" : 755,
+  "firstEndPos" : 862,
+  "secondEndPos" : 799
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1220,27 +1220,27 @@
   "firstEndPos" : 1170,
   "secondEndPos" : 1107
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
-  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 895,
-  "secondPos" : 832,
-  "firstEndPos" : 1017,
-  "secondEndPos" : 954
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1022,
-  "secondPos" : 959,
+  "firstPos" : 895,
+  "secondPos" : 832,
   "firstEndPos" : 1168,
   "secondEndPos" : 1105
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
+  "secondLabel" : "/**\n     * 重写此方法，返回自定义模块\n     * @param baseQuickAdapter BaseQuickAdapter<*, *>\n     * @return BaseExpandableModule\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 895,
+  "secondPos" : 832,
+  "firstEndPos" : 1017,
+  "secondEndPos" : 954
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -4487,27 +4487,27 @@
   "firstEndPos" : 2768,
   "secondEndPos" : 2705
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
-  "secondLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2781,
-  "secondPos" : 2718,
-  "firstEndPos" : 2853,
-  "secondEndPos" : 2790
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2858,
-  "secondPos" : 2795,
+  "firstPos" : 2781,
+  "secondPos" : 2718,
   "firstEndPos" : 2945,
   "secondEndPos" : 2882
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
+  "secondLabel" : "/**\n     * Is there a toggle view which will trigger drag event.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2781,
+  "secondPos" : 2718,
+  "firstEndPos" : 2853,
+  "secondEndPos" : 2790
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4685,27 +4685,27 @@
   "firstEndPos" : 2939,
   "secondEndPos" : 2876
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
-  "secondLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2951,
-  "secondPos" : 2888,
-  "firstEndPos" : 3076,
-  "secondEndPos" : 3013
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3081,
-  "secondPos" : 3018,
+  "firstPos" : 2951,
+  "secondPos" : 2888,
   "firstEndPos" : 3121,
   "secondEndPos" : 3058
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
+  "secondLabel" : "/**\n     * Set the drag event should be trigger on long press.\n     * Work when the toggleViewId has been set.\n     *\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2951,
+  "secondPos" : 2888,
+  "firstEndPos" : 3076,
+  "secondEndPos" : 3013
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -6698,27 +6698,27 @@
   "firstEndPos" : 4291,
   "secondEndPos" : 4228
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/************************* Drag *************************/",
-  "secondLabel" : "/************************* Drag *************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4303,
-  "secondPos" : 4240,
-  "firstEndPos" : 4361,
-  "secondEndPos" : 4298
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4367,
-  "secondPos" : 4304,
+  "firstPos" : 4303,
+  "secondPos" : 4240,
   "firstEndPos" : 4528,
   "secondEndPos" : 4465
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/************************* Drag *************************/",
+  "secondLabel" : "/************************* Drag *************************/",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4303,
+  "secondPos" : 4240,
+  "firstEndPos" : 4361,
+  "secondEndPos" : 4298
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -9184,27 +9184,27 @@
   "firstEndPos" : 5436,
   "secondEndPos" : 5373
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/************************* Swipe *************************/",
-  "secondLabel" : "/************************* Swipe *************************/",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5450,
-  "secondPos" : 5387,
-  "firstEndPos" : 5509,
-  "secondEndPos" : 5446
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5515,
-  "secondPos" : 5452,
+  "firstPos" : 5450,
+  "secondPos" : 5387,
   "firstEndPos" : 5723,
   "secondEndPos" : 5660
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/************************* Swipe *************************/",
+  "secondLabel" : "/************************* Swipe *************************/",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 5450,
+  "secondPos" : 5387,
+  "firstEndPos" : 5509,
+  "secondEndPos" : 5446
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -11626,27 +11626,27 @@
   "firstEndPos" : 6736,
   "secondEndPos" : 6673
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
-  "secondLabel" : "/**\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6748,
-  "secondPos" : 6685,
-  "firstEndPos" : 6824,
-  "secondEndPos" : 6761
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6829,
-  "secondPos" : 6766,
+  "firstPos" : 6748,
+  "secondPos" : 6685,
   "firstEndPos" : 6966,
   "secondEndPos" : 6903
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
+  "secondLabel" : "/**\n     * 设置监听\n     * @param onItemDragListener OnItemDragListener?\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6748,
+  "secondPos" : 6685,
+  "firstEndPos" : 6824,
+  "secondEndPos" : 6761
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",

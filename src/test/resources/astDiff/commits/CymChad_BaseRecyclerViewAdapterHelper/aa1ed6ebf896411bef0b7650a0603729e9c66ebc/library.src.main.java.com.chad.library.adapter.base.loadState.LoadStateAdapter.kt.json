@@ -402,7 +402,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 336,
-  "secondPos" : 295,
+  "secondPos" : 232,
   "firstEndPos" : 4432,
   "secondEndPos" : 4026
 }, {
@@ -681,27 +681,27 @@
   "firstEndPos" : 4432,
   "secondEndPos" : 4026
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * LoadState to present in the adapter.\n     *\n     * null 为初始状态\n     * Changing this property will immediately notify the Adapter to change the item it's\n     * presenting.\n     */",
-  "secondLabel" : "/**\n     * Changing this property will immediately notify the Adapter to change the item it's\n     * presenting.\n     * [LoadState.None] is the initial state.\n     *\n     * 要在适配器中显示的 LoadState。更改此属性将立即通知适配器更改 item 的样式。\n     * [LoadState.None] 为初始状态。\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 458,
-  "secondPos" : 417,
-  "firstEndPos" : 647,
-  "secondEndPos" : 674
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 652,
-  "secondPos" : 679,
+  "firstPos" : 458,
+  "secondPos" : 417,
   "firstEndPos" : 731,
   "secondEndPos" : 720
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * LoadState to present in the adapter.\n     *\n     * null 为初始状态\n     * Changing this property will immediately notify the Adapter to change the item it's\n     * presenting.\n     */",
+  "secondLabel" : "/**\n     * Changing this property will immediately notify the Adapter to change the item it's\n     * presenting.\n     * [LoadState.None] is the initial state.\n     *\n     * 要在适配器中显示的 LoadState。更改此属性将立即通知适配器更改 item 的样式。\n     * [LoadState.None] 为初始状态。\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 458,
+  "secondPos" : 417,
+  "firstEndPos" : 647,
+  "secondEndPos" : 674
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -779,6 +779,17 @@
   "secondPos" : 704,
   "firstEndPos" : 678,
   "secondEndPos" : 705
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "LoadState",
+  "secondLabel" : "LoadState",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 679,
+  "secondPos" : 706,
+  "firstEndPos" : 688,
+  "secondEndPos" : 715
 }, {
   "firstType" : "setter",
   "secondType" : "setter",
@@ -1726,27 +1737,27 @@
   "firstEndPos" : 1237,
   "secondEndPos" : 1226
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * 是否加载中\n     */",
-  "secondLabel" : "/**\n     * Is it loading.\n     *\n     * 是否加载中\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1267,
-  "secondPos" : 1256,
-  "firstEndPos" : 1291,
-  "secondEndPos" : 1309
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1296,
-  "secondPos" : 1314,
+  "firstPos" : 1267,
+  "secondPos" : 1256,
   "firstEndPos" : 1318,
   "secondEndPos" : 1336
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * 是否加载中\n     */",
+  "secondLabel" : "/**\n     * Is it loading.\n     *\n     * 是否加载中\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1267,
+  "secondPos" : 1256,
+  "firstEndPos" : 1291,
+  "secondEndPos" : 1309
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3805,27 +3816,27 @@
   "firstEndPos" : 3021,
   "secondEndPos" : 2264
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called to create a ViewHolder for the given LoadState.\n     *\n     * @param parent The ViewGroup into which the new View will be added after it is bound to\n     *               an adapter position.\n     * @param loadState The LoadState to be initially presented by the new ViewHolder.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
-  "secondLabel" : "/**\n     * Called to create a ViewHolder for the given LoadState.\n     *\n     * @param parent The ViewGroup into which the new View will be added after it is bound to\n     *               an adapter position.\n     * @param loadState The LoadState to be initially presented by the new ViewHolder.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3033,
-  "secondPos" : 2276,
-  "firstEndPos" : 3410,
-  "secondEndPos" : 2653
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3415,
-  "secondPos" : 2658,
+  "firstPos" : 3033,
+  "secondPos" : 2276,
   "firstEndPos" : 3491,
   "secondEndPos" : 2734
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called to create a ViewHolder for the given LoadState.\n     *\n     * @param parent The ViewGroup into which the new View will be added after it is bound to\n     *               an adapter position.\n     * @param loadState The LoadState to be initially presented by the new ViewHolder.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
+  "secondLabel" : "/**\n     * Called to create a ViewHolder for the given LoadState.\n     *\n     * @param parent The ViewGroup into which the new View will be added after it is bound to\n     *               an adapter position.\n     * @param loadState The LoadState to be initially presented by the new ViewHolder.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3033,
+  "secondPos" : 2276,
+  "firstEndPos" : 3410,
+  "secondEndPos" : 2653
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4003,27 +4014,27 @@
   "firstEndPos" : 3491,
   "secondEndPos" : 2734
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called to bind the passed LoadState to the ViewHolder.\n     *\n     * @param loadState LoadState to display.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
-  "secondLabel" : "/**\n     * Called to bind the passed LoadState to the ViewHolder.\n     *\n     * @param loadState LoadState to display.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3497,
-  "secondPos" : 2740,
-  "firstEndPos" : 3697,
-  "secondEndPos" : 2940
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3702,
-  "secondPos" : 2945,
+  "firstPos" : 3497,
+  "secondPos" : 2740,
   "firstEndPos" : 3765,
   "secondEndPos" : 3008
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called to bind the passed LoadState to the ViewHolder.\n     *\n     * @param loadState LoadState to display.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
+  "secondLabel" : "/**\n     * Called to bind the passed LoadState to the ViewHolder.\n     *\n     * @param loadState LoadState to display.\n     *\n     * @see [getItemViewType]\n     * @see [displayLoadStateAsItem]\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3497,
+  "secondPos" : 2740,
+  "firstEndPos" : 3697,
+  "secondEndPos" : 2940
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4179,27 +4190,27 @@
   "firstEndPos" : 3764,
   "secondEndPos" : 3007
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Override this method to use different view types per LoadState.\n     *\n     * By default, this LoadStateAdapter only uses a single view type.\n     */",
-  "secondLabel" : "/**\n     * Override this method to use different view types per LoadState.\n     *\n     * By default, this LoadStateAdapter only uses a single view type.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3771,
-  "secondPos" : 3014,
-  "firstEndPos" : 3931,
-  "secondEndPos" : 3174
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3936,
-  "secondPos" : 3179,
+  "firstPos" : 3771,
+  "secondPos" : 3014,
   "firstEndPos" : 3992,
   "secondEndPos" : 3235
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Override this method to use different view types per LoadState.\n     *\n     * By default, this LoadStateAdapter only uses a single view type.\n     */",
+  "secondLabel" : "/**\n     * Override this method to use different view types per LoadState.\n     *\n     * By default, this LoadStateAdapter only uses a single view type.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3771,
+  "secondPos" : 3014,
+  "firstEndPos" : 3931,
+  "secondEndPos" : 3174
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",
@@ -4366,27 +4377,27 @@
   "firstEndPos" : 3992,
   "secondEndPos" : 3235
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Returns true if the LoadState should be displayed as a list item when active.\n     *\n     * By default, [LoadState.Loading] and [LoadState.Error] present as list items, others do not.\n     */",
-  "secondLabel" : "/**\n     * Returns true if the LoadState should be displayed as a list item when active.\n     *\n     * By default, [LoadState.Loading] and [LoadState.Error] present as list items, others do not.\n     *\n     *\n     * 如果 LoadState 在活动时需要显示item，则返回 true。\n     * 默认情况下，[LoadState.Loading] 和 [LoadState.Error] 将会显示，其他则不显示。\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3998,
-  "secondPos" : 3241,
-  "firstEndPos" : 4200,
-  "secondEndPos" : 3566
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4205,
-  "secondPos" : 3571,
+  "firstPos" : 3998,
+  "secondPos" : 3241,
   "firstEndPos" : 4429,
   "secondEndPos" : 3719
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Returns true if the LoadState should be displayed as a list item when active.\n     *\n     * By default, [LoadState.Loading] and [LoadState.Error] present as list items, others do not.\n     */",
+  "secondLabel" : "/**\n     * Returns true if the LoadState should be displayed as a list item when active.\n     *\n     * By default, [LoadState.Loading] and [LoadState.Error] present as list items, others do not.\n     *\n     *\n     * 如果 LoadState 在活动时需要显示item，则返回 true。\n     * 默认情况下，[LoadState.Loading] 和 [LoadState.Error] 将会显示，其他则不显示。\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3998,
+  "secondPos" : 3241,
+  "firstEndPos" : 4200,
+  "secondEndPos" : 3566
 }, {
   "firstType" : "inherit_modifier",
   "secondType" : "inherit_modifier",

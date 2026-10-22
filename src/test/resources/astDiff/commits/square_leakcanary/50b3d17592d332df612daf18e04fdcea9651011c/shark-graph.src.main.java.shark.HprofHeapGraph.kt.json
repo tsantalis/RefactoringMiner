@@ -1385,27 +1385,27 @@
   "firstEndPos" : 1094,
   "secondEndPos" : 1375
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A [HeapGraph] that reads from an indexed [Hprof]. Create a new instance with [indexHprof].\n */",
-  "secondLabel" : "/**\n * A [HeapGraph] that reads from an indexed [Hprof]. Create a new instance with [indexHprof].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1096,
-  "secondPos" : 1406,
-  "firstEndPos" : 1197,
-  "secondEndPos" : 1507
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1198,
-  "secondPos" : 1508,
+  "firstPos" : 1096,
+  "secondPos" : 1406,
   "firstEndPos" : 6300,
   "secondEndPos" : 7777
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A [HeapGraph] that reads from an indexed [Hprof]. Create a new instance with [indexHprof].\n */",
+  "secondLabel" : "/**\n * A [HeapGraph] that reads from an indexed [Hprof]. Create a new instance with [indexHprof].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1096,
+  "secondPos" : 1406,
+  "firstEndPos" : 1197,
+  "secondEndPos" : 1507
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -4674,12 +4674,23 @@
   "firstEndPos" : 2367,
   "secondEndPos" : 2677
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_body",
+  "secondParentType" : "type_body",
+  "firstPos" : 2390,
+  "secondPos" : 2700,
+  "firstEndPos" : 2672,
+  "secondEndPos" : 2982
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.",
   "secondLabel" : "// LRU cache size of 3000 is a sweet spot to balance hits vs memory usage.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2390,
   "secondPos" : 2700,
   "firstEndPos" : 2464,
@@ -4689,8 +4700,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// This is based on running InstrumentationLeakDetectorTest a bunch of time on a",
   "secondLabel" : "// This is based on running InstrumentationLeakDetectorTest a bunch of time on a",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2467,
   "secondPos" : 2777,
   "firstEndPos" : 2547,
@@ -4700,23 +4711,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K",
   "secondLabel" : "// Pixel 2 XL API 28. Hit count was ~120K, miss count ~290K",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2550,
   "secondPos" : 2860,
   "firstEndPos" : 2609,
   "secondEndPos" : 2919
-}, {
-  "firstType" : "property_declaration",
-  "secondType" : "property_declaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2612,
-  "secondPos" : 2922,
-  "firstEndPos" : 2672,
-  "secondEndPos" : 2982
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

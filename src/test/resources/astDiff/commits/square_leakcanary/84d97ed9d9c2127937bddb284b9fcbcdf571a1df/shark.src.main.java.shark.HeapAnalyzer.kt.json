@@ -2485,27 +2485,27 @@
   "firstEndPos" : 2364,
   "secondEndPos" : 2310
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
-  "secondLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2366,
-  "secondPos" : 2312,
-  "firstEndPos" : 2415,
-  "secondEndPos" : 2361
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2416,
-  "secondPos" : 2362,
+  "firstPos" : 2366,
+  "secondPos" : 2312,
   "firstEndPos" : 20621,
   "secondEndPos" : 20586
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
+  "secondLabel" : "/**\n * Analyzes heap dumps to look for leaks.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2366,
+  "secondPos" : 2312,
+  "firstEndPos" : 2415,
+  "secondEndPos" : 2361
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2661,27 +2661,27 @@
   "firstEndPos" : 20621,
   "secondEndPos" : 20586
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Searches the heap dump for leaking instances and then computes the shortest strong reference\n   * path from those instances to the GC roots.\n   */",
-  "secondLabel" : "/**\n   * Searches the heap dump for leaking instances and then computes the shortest strong reference\n   * path from those instances to the GC roots.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2504,
-  "secondPos" : 2452,
-  "firstEndPos" : 2659,
-  "secondEndPos" : 2607
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2662,
-  "secondPos" : 2610,
+  "firstPos" : 2504,
+  "secondPos" : 2452,
   "firstEndPos" : 4537,
   "secondEndPos" : 4494
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Searches the heap dump for leaking instances and then computes the shortest strong reference\n   * path from those instances to the GC roots.\n   */",
+  "secondLabel" : "/**\n   * Searches the heap dump for leaking instances and then computes the shortest strong reference\n   * path from those instances to the GC roots.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2504,
+  "secondPos" : 2452,
+  "firstEndPos" : 2659,
+  "secondEndPos" : 2607
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

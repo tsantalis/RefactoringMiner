@@ -296,27 +296,27 @@
   "firstEndPos" : 810,
   "secondEndPos" : 810
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
-  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n *\n * Most developers should use the entire set of default [ObjectInspector] by calling [appDefaults],\n * unless there's a bug and you temporarily want to remove an inspector.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 812,
-  "secondPos" : 812,
-  "firstEndPos" : 1291,
-  "secondEndPos" : 1467
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1292,
-  "secondPos" : 1468,
+  "firstPos" : 812,
+  "secondPos" : 812,
   "firstEndPos" : 16827,
   "secondEndPos" : 17107
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n */",
+  "secondLabel" : "/**\n * A set of default [ObjectInspector]s that knows about common AOSP and library\n * classes.\n *\n * These are heuristics based on our experience and knowledge of AOSP and various library\n * internals. We only make a decision if we're reasonably sure the state of an object is\n * unlikely to be the result of a programmer mistake.\n *\n * For example, no matter how many mistakes we make in our code, the value of Activity.mDestroy\n * will not be influenced by those mistakes.\n *\n * Most developers should use the entire set of default [ObjectInspector] by calling [appDefaults],\n * unless there's a bug and you temporarily want to remove an inspector.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 812,
+  "secondPos" : 812,
+  "firstEndPos" : 1291,
+  "secondEndPos" : 1467
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -28606,7 +28606,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 16980,
-  "secondPos" : 17352,
+  "secondPos" : 17260,
   "firstEndPos" : 17166,
   "secondEndPos" : 17538
 }, {
@@ -29123,7 +29123,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 17168,
-  "secondPos" : 17636,
+  "secondPos" : 17540,
   "firstEndPos" : 17400,
   "secondEndPos" : 17884
 }, {
@@ -29629,7 +29629,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 17402,
-  "secondPos" : 18065,
+  "secondPos" : 17886,
   "firstEndPos" : 18297,
   "secondEndPos" : 18960
 }, {

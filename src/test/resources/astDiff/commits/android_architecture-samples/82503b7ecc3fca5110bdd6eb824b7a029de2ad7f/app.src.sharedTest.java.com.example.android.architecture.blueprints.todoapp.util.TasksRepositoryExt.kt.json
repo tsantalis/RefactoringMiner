@@ -450,27 +450,27 @@
   "firstEndPos" : 876,
   "secondEndPos" : 876
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A blocking version of TasksRepository.saveTask to minimize the number of times we have to\n * explicitly add <code>runBlocking { ... }</code> in our tests\n */",
-  "secondLabel" : "/**\n * A blocking version of TasksRepository.saveTask to minimize the number of times we have to\n * explicitly add <code>runBlocking { ... }</code> in our tests\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 878,
-  "secondPos" : 878,
-  "firstEndPos" : 1042,
-  "secondEndPos" : 1042
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1043,
-  "secondPos" : 1043,
+  "firstPos" : 878,
+  "secondPos" : 878,
   "firstEndPos" : 1150,
   "secondEndPos" : 1150
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A blocking version of TasksRepository.saveTask to minimize the number of times we have to\n * explicitly add <code>runBlocking { ... }</code> in our tests\n */",
+  "secondLabel" : "/**\n * A blocking version of TasksRepository.saveTask to minimize the number of times we have to\n * explicitly add <code>runBlocking { ... }</code> in our tests\n */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 878,
+  "secondPos" : 878,
+  "firstEndPos" : 1042,
+  "secondEndPos" : 1042
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

@@ -1715,27 +1715,27 @@
   "firstEndPos" : 778,
   "secondEndPos" : 778
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Last updated for next after 2.0-alpha-3",
-  "secondLabel" : "// Last updated for next after 2.0-alpha-3",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 697,
-  "secondPos" : 697,
-  "firstEndPos" : 739,
-  "secondEndPos" : 739
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 744,
-  "secondPos" : 744,
+  "firstPos" : 697,
+  "secondPos" : 697,
   "firstEndPos" : 774,
   "secondEndPos" : 774
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Last updated for next after 2.0-alpha-3",
+  "secondLabel" : "// Last updated for next after 2.0-alpha-3",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 697,
+  "secondPos" : 697,
+  "firstEndPos" : 739,
+  "secondEndPos" : 739
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

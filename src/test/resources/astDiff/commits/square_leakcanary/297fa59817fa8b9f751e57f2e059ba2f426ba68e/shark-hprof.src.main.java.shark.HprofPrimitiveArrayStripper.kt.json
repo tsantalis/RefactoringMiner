@@ -879,27 +879,27 @@
   "firstEndPos" : 819,
   "secondEndPos" : 861
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Converts a Hprof file to another file with all primitive arrays replaced with arrays of zeroes,\n * which can be useful to remove PII. Char arrays are handled slightly differently because 0 would\n * be the null character so instead these become arrays of '?'.\n */",
-  "secondLabel" : "/**\n * Converts a Hprof file to another file with all primitive arrays replaced with arrays of zeroes,\n * which can be useful to remove PII. Char arrays are handled slightly differently because 0 would\n * be the null character so instead these become arrays of '?'.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 821,
-  "secondPos" : 863,
-  "firstEndPos" : 1090,
-  "secondEndPos" : 1132
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1091,
-  "secondPos" : 1133,
+  "firstPos" : 821,
+  "secondPos" : 863,
   "firstEndPos" : 4746,
   "secondEndPos" : 4901
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Converts a Hprof file to another file with all primitive arrays replaced with arrays of zeroes,\n * which can be useful to remove PII. Char arrays are handled slightly differently because 0 would\n * be the null character so instead these become arrays of '?'.\n */",
+  "secondLabel" : "/**\n * Converts a Hprof file to another file with all primitive arrays replaced with arrays of zeroes,\n * which can be useful to remove PII. Char arrays are handled slightly differently because 0 would\n * be the null character so instead these become arrays of '?'.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 821,
+  "secondPos" : 863,
+  "firstEndPos" : 1090,
+  "secondEndPos" : 1132
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -934,27 +934,27 @@
   "firstEndPos" : 4746,
   "secondEndPos" : 4901
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * @see HprofPrimitiveArrayStripper\n   */",
-  "secondLabel" : "/**\n   * @see HprofPrimitiveArrayStripper\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1130,
-  "secondPos" : 1172,
-  "firstEndPos" : 1177,
-  "secondEndPos" : 1219
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1180,
-  "secondPos" : 1222,
+  "firstPos" : 1130,
+  "secondPos" : 1172,
   "firstEndPos" : 4743,
   "secondEndPos" : 1993
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * @see HprofPrimitiveArrayStripper\n   */",
+  "secondLabel" : "/**\n   * @see HprofPrimitiveArrayStripper\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1130,
+  "secondPos" : 1172,
+  "firstEndPos" : 1177,
+  "secondEndPos" : 1219
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

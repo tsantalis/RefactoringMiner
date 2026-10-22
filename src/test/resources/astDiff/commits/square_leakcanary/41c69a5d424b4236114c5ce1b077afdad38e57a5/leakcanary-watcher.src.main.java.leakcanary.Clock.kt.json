@@ -61,7 +61,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 20,
-  "secondPos" : 125,
+  "secondPos" : 20,
   "firstEndPos" : 116,
   "secondEndPos" : 262
 }, {
@@ -98,27 +98,27 @@
   "firstEndPos" : 116,
   "secondEndPos" : 262
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** See Android SystemClock.uptimeMillis().  */",
-  "secondLabel" : "/**\n   * On Android VMs, this should return android.os.SystemClock.uptimeMillis().\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 40,
-  "secondPos" : 145,
-  "firstEndPos" : 87,
-  "secondEndPos" : 233
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 90,
-  "secondPos" : 236,
+  "firstPos" : 40,
+  "secondPos" : 145,
   "firstEndPos" : 114,
   "secondEndPos" : 260
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** See Android SystemClock.uptimeMillis().  */",
+  "secondLabel" : "/**\n   * On Android VMs, this should return android.os.SystemClock.uptimeMillis().\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 40,
+  "secondPos" : 145,
+  "firstEndPos" : 87,
+  "secondEndPos" : 233
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

@@ -3167,27 +3167,27 @@
   "firstEndPos" : 1440,
   "secondEndPos" : 1624
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
-  "secondLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1448,
-  "secondPos" : 1632,
-  "firstEndPos" : 1821,
-  "secondEndPos" : 2005
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1828,
-  "secondPos" : 2012,
+  "firstPos" : 1448,
+  "secondPos" : 1632,
   "firstEndPos" : 3463,
   "secondEndPos" : 3647
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
+  "secondLabel" : "/**\n       * Note: we could move the arrays to the parent class as a ByteString or ByteArray\n       * and then each subtype can create a new array of the right type if needed.\n       * However, experimenting with live parsing has shown that we never to read arrays except\n       * when we want to display leak trace information, in which case we do need the data.\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1448,
+  "secondPos" : 1632,
+  "firstEndPos" : 1821,
+  "secondEndPos" : 2005
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

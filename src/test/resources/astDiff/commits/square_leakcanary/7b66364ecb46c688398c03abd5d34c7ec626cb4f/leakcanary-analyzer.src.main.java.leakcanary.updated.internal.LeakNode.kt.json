@@ -175,27 +175,27 @@
   "firstEndPos" : 96,
   "secondEndPos" : 101
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * TODO We can improve memory usage but turning this into two longs: instance object id and parent\n * object id. \"Exclusion\" and \"leakReference\" can be reconstructed once we have the leak chain,\n * costing a few extra reads. Currently exclusion and leakReference are mostly null so use up 0\n * bytes, so it's 8 bits for instance and 32 bits for parent, which we could change to 8 bits,\n * a reduction of 40% (currently 5Mb of nodes with InstrumentationLeakDetectorTest)\n *\n */",
-  "secondLabel" : "/**\n * TODO We can improve memory usage but turning this into two longs: instance object id and parent\n * object id. \"Exclusion\" and \"leakReference\" can be reconstructed once we have the leak chain,\n * costing a few extra reads. Currently exclusion and leakReference are mostly null so use up 0\n * bytes, so it's 8 bits for instance and 32 bits for parent, which we could change to 8 bits,\n * a reduction of 40% (currently 5Mb of nodes with InstrumentationLeakDetectorTest)\n *\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 98,
-  "secondPos" : 103,
-  "firstEndPos" : 578,
-  "secondEndPos" : 583
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 579,
-  "secondPos" : 584,
+  "firstPos" : 98,
+  "secondPos" : 103,
   "firstEndPos" : 722,
   "secondEndPos" : 727
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * TODO We can improve memory usage but turning this into two longs: instance object id and parent\n * object id. \"Exclusion\" and \"leakReference\" can be reconstructed once we have the leak chain,\n * costing a few extra reads. Currently exclusion and leakReference are mostly null so use up 0\n * bytes, so it's 8 bits for instance and 32 bits for parent, which we could change to 8 bits,\n * a reduction of 40% (currently 5Mb of nodes with InstrumentationLeakDetectorTest)\n *\n */",
+  "secondLabel" : "/**\n * TODO We can improve memory usage but turning this into two longs: instance object id and parent\n * object id. \"Exclusion\" and \"leakReference\" can be reconstructed once we have the leak chain,\n * costing a few extra reads. Currently exclusion and leakReference are mostly null so use up 0\n * bytes, so it's 8 bits for instance and 32 bits for parent, which we could change to 8 bits,\n * a reduction of 40% (currently 5Mb of nodes with InstrumentationLeakDetectorTest)\n *\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 98,
+  "secondPos" : 103,
+  "firstEndPos" : 578,
+  "secondEndPos" : 583
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

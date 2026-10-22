@@ -692,27 +692,27 @@
   "firstEndPos" : 531,
   "secondEndPos" : 531
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis in\n * a dedicated :leakcanary process\n */",
-  "secondLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis in\n * a dedicated :leakcanary process\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 533,
-  "secondPos" : 555,
-  "firstEndPos" : 672,
-  "secondEndPos" : 694
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 673,
-  "secondPos" : 695,
+  "firstPos" : 533,
+  "secondPos" : 555,
   "firstEndPos" : 1689,
   "secondEndPos" : 1841
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis in\n * a dedicated :leakcanary process\n */",
+  "secondLabel" : "/**\n * When receiving a [HeapDump] event, starts a WorkManager worker that performs heap analysis in\n * a dedicated :leakcanary process\n */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 533,
+  "secondPos" : 555,
+  "firstEndPos" : 672,
+  "secondEndPos" : 694
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

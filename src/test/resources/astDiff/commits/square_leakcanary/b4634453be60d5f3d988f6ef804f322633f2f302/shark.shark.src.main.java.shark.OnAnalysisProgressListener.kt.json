@@ -120,27 +120,27 @@
   "firstEndPos" : 38,
   "secondEndPos" : 38
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Reports progress from the [HeapAnalyzer] as they occur, as [Step] values.\n *\n * This is a functional interface with which you can create a [OnAnalysisProgressListener] from a lambda.\n */",
-  "secondLabel" : "/**\n * Reports progress from the [HeapAnalyzer] as they occur, as [Step] values.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 40,
-  "secondPos" : 40,
-  "firstEndPos" : 233,
-  "secondEndPos" : 124
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 234,
-  "secondPos" : 125,
+  "firstPos" : 40,
+  "secondPos" : 40,
   "firstEndPos" : 1548,
   "secondEndPos" : 959
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Reports progress from the [HeapAnalyzer] as they occur, as [Step] values.\n *\n * This is a functional interface with which you can create a [OnAnalysisProgressListener] from a lambda.\n */",
+  "secondLabel" : "/**\n * Reports progress from the [HeapAnalyzer] as they occur, as [Step] values.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 40,
+  "secondPos" : 40,
+  "firstEndPos" : 233,
+  "secondEndPos" : 124
 }, {
   "firstType" : "fun",
   "secondType" : "fun",
@@ -186,27 +186,27 @@
   "firstEndPos" : 1548,
   "secondEndPos" : 959
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// These steps are defined in the order in which they occur.",
-  "secondLabel" : "// These steps are defined in the order in which they occur.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 280,
-  "secondPos" : 171,
-  "firstEndPos" : 340,
-  "secondEndPos" : 231
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 343,
-  "secondPos" : 234,
+  "firstPos" : 280,
+  "secondPos" : 171,
   "firstEndPos" : 899,
   "secondEndPos" : 786
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// These steps are defined in the order in which they occur.",
+  "secondLabel" : "// These steps are defined in the order in which they occur.",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 280,
+  "secondPos" : 171,
+  "firstEndPos" : 340,
+  "secondEndPos" : 231
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1451,27 +1451,27 @@
   "firstEndPos" : 1546,
   "secondEndPos" : 957
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * A no-op [OnAnalysisProgressListener]\n     */",
-  "secondLabel" : "/**\n     * A no-op [OnAnalysisProgressListener]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 965,
-  "secondPos" : 852,
-  "firstEndPos" : 1020,
-  "secondEndPos" : 907
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1025,
-  "secondPos" : 912,
+  "firstPos" : 965,
+  "secondPos" : 852,
   "firstEndPos" : 1066,
   "secondEndPos" : 953
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * A no-op [OnAnalysisProgressListener]\n     */",
+  "secondLabel" : "/**\n     * A no-op [OnAnalysisProgressListener]\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 965,
+  "secondPos" : 852,
+  "firstEndPos" : 1020,
+  "secondEndPos" : 907
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

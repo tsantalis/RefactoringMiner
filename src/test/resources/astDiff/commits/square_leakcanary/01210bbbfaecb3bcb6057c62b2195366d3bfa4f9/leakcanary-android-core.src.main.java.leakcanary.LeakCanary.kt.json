@@ -461,27 +461,27 @@
   "firstEndPos" : 238,
   "secondEndPos" : 310
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
-  "secondLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 244,
-  "secondPos" : 316,
-  "firstEndPos" : 449,
-  "secondEndPos" : 521
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 454,
-  "secondPos" : 526,
+  "firstPos" : 244,
+  "secondPos" : 316,
   "firstEndPos" : 496,
   "secondEndPos" : 568
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
+  "secondLabel" : "/**\n     * The debugger can create temporary memory leaks (for instance if a thread is blocked on a\n     * breakpoint) so by default LeakCanary does not dump the heap when the debugger is attached.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 244,
+  "secondPos" : 316,
+  "firstEndPos" : 449,
+  "secondEndPos" : 521
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -571,27 +571,27 @@
   "firstEndPos" : 496,
   "secondEndPos" : 568
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
-  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 502,
-  "secondPos" : 574,
-  "firstEndPos" : 1133,
-  "secondEndPos" : 1205
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1138,
-  "secondPos" : 1210,
+  "firstPos" : 502,
+  "secondPos" : 574,
   "firstEndPos" : 1175,
   "secondEndPos" : 1247
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
+  "secondLabel" : "/**\n     * When the app is visible, LeakCanary will wait for at least\n     * [retainedVisibleThreshold] retained instances before dumping the heap. Dumping the heap\n     * freezes the UI and can be frustrating for developers who are trying to work. This is\n     * especially frustrating as the Android Framework has a number of leaks that cannot easily\n     * be fixed.\n     *\n     * When the app becomes invisible, LeakCanary dumps the heap immediately.\n     *\n     * A higher threshold means LeakCanary will dump the heap less often, therefore it won't be\n     * bothering developers as much but it could miss some leaks.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 502,
+  "secondPos" : 574,
+  "firstEndPos" : 1133,
+  "secondEndPos" : 1205
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -824,27 +824,27 @@
   "firstEndPos" : 1297,
   "secondEndPos" : 1354
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
-  "secondLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1309,
-  "secondPos" : 1366,
-  "firstEndPos" : 1391,
-  "secondEndPos" : 1448
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1396,
-  "secondPos" : 1453,
+  "firstPos" : 1309,
+  "secondPos" : 1366,
   "firstEndPos" : 1440,
   "secondEndPos" : 1497
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
+  "secondLabel" : "/**\n     * Note: this is currently not implemented in the new heap parser.\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1309,
+  "secondPos" : 1366,
+  "firstEndPos" : 1391,
+  "secondEndPos" : 1448
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1385,27 +1385,27 @@
   "firstEndPos" : 1675,
   "secondEndPos" : 1707
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
-  "secondLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1687,
-  "secondPos" : 1719,
-  "firstEndPos" : 1996,
-  "secondEndPos" : 2028
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 2001,
-  "secondPos" : 2033,
+  "firstPos" : 1687,
+  "secondPos" : 1719,
   "firstEndPos" : 2096,
   "secondEndPos" : 2115
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
+  "secondLabel" : "/**\n     * Called with the heap analysis result from a background thread.\n     * The heap dump file will be removed immediately after this function is invoked.\n     * If you want leaks to be added to the activity that lists leaks, make sure to delegate\n     * calls to [DefaultAnalysisResultListener].\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1687,
+  "secondPos" : 1719,
+  "firstEndPos" : 1996,
+  "secondEndPos" : 2028
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

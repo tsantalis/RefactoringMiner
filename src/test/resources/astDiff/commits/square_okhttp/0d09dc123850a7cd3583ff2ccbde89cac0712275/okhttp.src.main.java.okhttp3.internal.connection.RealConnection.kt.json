@@ -3398,27 +3398,27 @@
   "firstEndPos" : 2926,
   "secondEndPos" : 2926
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** The low-level TCP socket. */",
-  "secondLabel" : "/** The low-level TCP socket. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2930,
-  "secondPos" : 2930,
-  "firstEndPos" : 2962,
-  "secondEndPos" : 2962
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2965,
-  "secondPos" : 2965,
+  "firstPos" : 2930,
+  "secondPos" : 2930,
   "firstEndPos" : 3002,
   "secondEndPos" : 3002
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** The low-level TCP socket. */",
+  "secondLabel" : "/** The low-level TCP socket. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2930,
+  "secondPos" : 2930,
+  "firstEndPos" : 2962,
+  "secondEndPos" : 2962
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3552,27 +3552,27 @@
   "firstEndPos" : 3002,
   "secondEndPos" : 3002
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The application layer socket. Either an [SSLSocket] layered over [rawSocket], or [rawSocket]\n   * itself if this connection does not use SSL.\n   */",
-  "secondLabel" : "/**\n   * The application layer socket. Either an [SSLSocket] layered over [rawSocket], or [rawSocket]\n   * itself if this connection does not use SSL.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3006,
-  "secondPos" : 3006,
-  "firstEndPos" : 3162,
-  "secondEndPos" : 3162
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3165,
-  "secondPos" : 3165,
+  "firstPos" : 3006,
+  "secondPos" : 3006,
   "firstEndPos" : 3199,
   "secondEndPos" : 3199
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The application layer socket. Either an [SSLSocket] layered over [rawSocket], or [rawSocket]\n   * itself if this connection does not use SSL.\n   */",
+  "secondLabel" : "/**\n   * The application layer socket. Either an [SSLSocket] layered over [rawSocket], or [rawSocket]\n   * itself if this connection does not use SSL.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3006,
+  "secondPos" : 3006,
+  "firstEndPos" : 3162,
+  "secondEndPos" : 3162
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4432,27 +4432,27 @@
   "firstEndPos" : 3505,
   "secondEndPos" : 3505
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * If true, no new exchanges can be created on this connection. Once true this is always true.\n   * Guarded by [connectionPool].\n   */",
-  "secondLabel" : "/**\n   * If true, no new exchanges can be created on this connection. Once true this is always true.\n   * Guarded by [connectionPool].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3509,
-  "secondPos" : 3509,
-  "firstEndPos" : 3649,
-  "secondEndPos" : 3649
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3652,
-  "secondPos" : 3652,
+  "firstPos" : 3509,
+  "secondPos" : 3509,
   "firstEndPos" : 3678,
   "secondEndPos" : 3678
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * If true, no new exchanges can be created on this connection. Once true this is always true.\n   * Guarded by [connectionPool].\n   */",
+  "secondLabel" : "/**\n   * If true, no new exchanges can be created on this connection. Once true this is always true.\n   * Guarded by [connectionPool].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3509,
+  "secondPos" : 3509,
+  "firstEndPos" : 3649,
+  "secondEndPos" : 3649
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4531,27 +4531,27 @@
   "firstEndPos" : 3678,
   "secondEndPos" : 3678
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The number of times there was a problem establishing a stream that could be due to route\n   * chosen. Guarded by [connectionPool].\n   */",
-  "secondLabel" : "/**\n   * The number of times there was a problem establishing a stream that could be due to route\n   * chosen. Guarded by [connectionPool].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3682,
-  "secondPos" : 3682,
-  "firstEndPos" : 3827,
-  "secondEndPos" : 3827
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3830,
-  "secondPos" : 3830,
+  "firstPos" : 3682,
+  "secondPos" : 3682,
   "firstEndPos" : 3864,
   "secondEndPos" : 3864
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The number of times there was a problem establishing a stream that could be due to route\n   * chosen. Guarded by [connectionPool].\n   */",
+  "secondLabel" : "/**\n   * The number of times there was a problem establishing a stream that could be due to route\n   * chosen. Guarded by [connectionPool].\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3682,
+  "secondPos" : 3682,
+  "firstEndPos" : 3827,
+  "secondEndPos" : 3827
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4872,27 +4872,27 @@
   "firstEndPos" : 3934,
   "secondEndPos" : 3934
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * The maximum number of concurrent streams that can be carried by this connection. If\n   * `allocations.size() < allocationLimit` then new streams can be created on this connection.\n   */",
-  "secondLabel" : "/**\n   * The maximum number of concurrent streams that can be carried by this connection. If\n   * `allocations.size() < allocationLimit` then new streams can be created on this connection.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3938,
-  "secondPos" : 3938,
-  "firstEndPos" : 4132,
-  "secondEndPos" : 4132
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4135,
-  "secondPos" : 4135,
+  "firstPos" : 3938,
+  "secondPos" : 3938,
   "firstEndPos" : 4166,
   "secondEndPos" : 4166
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * The maximum number of concurrent streams that can be carried by this connection. If\n   * `allocations.size() < allocationLimit` then new streams can be created on this connection.\n   */",
+  "secondLabel" : "/**\n   * The maximum number of concurrent streams that can be carried by this connection. If\n   * `allocations.size() < allocationLimit` then new streams can be created on this connection.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3938,
+  "secondPos" : 3938,
+  "firstEndPos" : 4132,
+  "secondEndPos" : 4132
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4993,27 +4993,27 @@
   "firstEndPos" : 4166,
   "secondEndPos" : 4166
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Current calls carried by this connection. */",
-  "secondLabel" : "/** Current calls carried by this connection. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4170,
-  "secondPos" : 4170,
-  "firstEndPos" : 4218,
-  "secondEndPos" : 4218
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4221,
-  "secondPos" : 4221,
+  "firstPos" : 4170,
+  "secondPos" : 4170,
   "firstEndPos" : 4269,
   "secondEndPos" : 4269
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Current calls carried by this connection. */",
+  "secondLabel" : "/** Current calls carried by this connection. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4170,
+  "secondPos" : 4170,
+  "firstEndPos" : 4218,
+  "secondEndPos" : 4218
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5202,27 +5202,27 @@
   "firstEndPos" : 4269,
   "secondEndPos" : 4269
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Nanotime timestamp when `allocations.size()` reached zero. */",
-  "secondLabel" : "/** Nanotime timestamp when `allocations.size()` reached zero. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4273,
-  "secondPos" : 4273,
-  "firstEndPos" : 4338,
-  "secondEndPos" : 4338
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4341,
-  "secondPos" : 4341,
+  "firstPos" : 4273,
+  "secondPos" : 4273,
   "firstEndPos" : 4382,
   "secondEndPos" : 4382
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Nanotime timestamp when `allocations.size()` reached zero. */",
+  "secondLabel" : "/** Nanotime timestamp when `allocations.size()` reached zero. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4273,
+  "secondPos" : 4273,
+  "firstEndPos" : 4338,
+  "secondEndPos" : 4338
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -5356,27 +5356,27 @@
   "firstEndPos" : 4382,
   "secondEndPos" : 4382
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if this is an HTTP/2 connection. Such connections can be used in multiple HTTP\n   * requests simultaneously.\n   */",
-  "secondLabel" : "/**\n   * Returns true if this is an HTTP/2 connection. Such connections can be used in multiple HTTP\n   * requests simultaneously.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4386,
-  "secondPos" : 4386,
-  "firstEndPos" : 4522,
-  "secondEndPos" : 4522
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4525,
-  "secondPos" : 4525,
+  "firstPos" : 4386,
+  "secondPos" : 4386,
   "firstEndPos" : 4551,
   "secondEndPos" : 4551
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if this is an HTTP/2 connection. Such connections can be used in multiple HTTP\n   * requests simultaneously.\n   */",
+  "secondLabel" : "/**\n   * Returns true if this is an HTTP/2 connection. Such connections can be used in multiple HTTP\n   * requests simultaneously.\n   */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4386,
+  "secondPos" : 4386,
+  "firstEndPos" : 4522,
+  "secondEndPos" : 4522
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5521,27 +5521,27 @@
   "firstEndPos" : 4587,
   "secondEndPos" : 4587
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Prevent further exchanges from being created on this connection. */",
-  "secondLabel" : "/** Prevent further exchanges from being created on this connection. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4591,
-  "secondPos" : 4591,
-  "firstEndPos" : 4662,
-  "secondEndPos" : 4662
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4665,
-  "secondPos" : 4665,
+  "firstPos" : 4591,
+  "secondPos" : 4591,
   "firstEndPos" : 4809,
   "secondEndPos" : 4809
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Prevent further exchanges from being created on this connection. */",
+  "secondLabel" : "/** Prevent further exchanges from being created on this connection. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 4591,
+  "secondPos" : 4591,
+  "firstEndPos" : 4662,
+  "secondEndPos" : 4662
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -10944,27 +10944,27 @@
   "firstEndPos" : 7403,
   "secondEndPos" : 7403
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Does all the work to build an HTTPS connection over a proxy tunnel. The catch here is that a\n   * proxy server can issue an auth challenge and then close the connection.\n   */",
-  "secondLabel" : "/**\n   * Does all the work to build an HTTPS connection over a proxy tunnel. The catch here is that a\n   * proxy server can issue an auth challenge and then close the connection.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7420,
-  "secondPos" : 7420,
-  "firstEndPos" : 7604,
-  "secondEndPos" : 7604
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7607,
-  "secondPos" : 7607,
+  "firstPos" : 7420,
+  "secondPos" : 7420,
   "firstEndPos" : 8466,
   "secondEndPos" : 8466
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Does all the work to build an HTTPS connection over a proxy tunnel. The catch here is that a\n   * proxy server can issue an auth challenge and then close the connection.\n   */",
+  "secondLabel" : "/**\n   * Does all the work to build an HTTPS connection over a proxy tunnel. The catch here is that a\n   * proxy server can issue an auth challenge and then close the connection.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7420,
+  "secondPos" : 7420,
+  "firstEndPos" : 7604,
+  "secondEndPos" : 7604
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -12616,27 +12616,27 @@
   "firstEndPos" : 8455,
   "secondEndPos" : 8455
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Does all the work necessary to build a full HTTP or HTTPS connection on a raw socket. */",
-  "secondLabel" : "/** Does all the work necessary to build a full HTTP or HTTPS connection on a raw socket. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8470,
-  "secondPos" : 8470,
-  "firstEndPos" : 8562,
-  "secondEndPos" : 8562
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8565,
-  "secondPos" : 8565,
+  "firstPos" : 8470,
+  "secondPos" : 8470,
   "firstEndPos" : 9786,
   "secondEndPos" : 9786
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Does all the work necessary to build a full HTTP or HTTPS connection on a raw socket. */",
+  "secondLabel" : "/** Does all the work necessary to build a full HTTP or HTTPS connection on a raw socket. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 8470,
+  "secondPos" : 8470,
+  "firstEndPos" : 8562,
+  "secondEndPos" : 8562
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -25387,27 +25387,27 @@
   "firstEndPos" : 14173,
   "secondEndPos" : 14173
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * To make an HTTPS connection over an HTTP proxy, send an unencrypted CONNECT request to create\n   * the proxy connection. This may need to be retried if the proxy requires authorization.\n   */",
-  "secondLabel" : "/**\n   * To make an HTTPS connection over an HTTP proxy, send an unencrypted CONNECT request to create\n   * the proxy connection. This may need to be retried if the proxy requires authorization.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 14195,
-  "secondPos" : 14195,
-  "firstEndPos" : 14395,
-  "secondEndPos" : 14395
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 14398,
-  "secondPos" : 14398,
+  "firstPos" : 14195,
+  "secondPos" : 14195,
   "firstEndPos" : 16356,
   "secondEndPos" : 16356
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * To make an HTTPS connection over an HTTP proxy, send an unencrypted CONNECT request to create\n   * the proxy connection. This may need to be retried if the proxy requires authorization.\n   */",
+  "secondLabel" : "/**\n   * To make an HTTPS connection over an HTTP proxy, send an unencrypted CONNECT request to create\n   * the proxy connection. This may need to be retried if the proxy requires authorization.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 14195,
+  "secondPos" : 14195,
+  "firstEndPos" : 14395,
+  "secondEndPos" : 14395
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -29457,27 +29457,27 @@
   "firstEndPos" : 16335,
   "secondEndPos" : 16335
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns a request that creates a TLS tunnel via an HTTP proxy. Everything in the tunnel request\n   * is sent unencrypted to the proxy server, so tunnels include only the minimum set of headers.\n   * This avoids sending potentially sensitive data like HTTP cookies to the proxy unencrypted.\n   *\n   * In order to support preemptive authentication we pass a fake \"Auth Failed\" response to the\n   * authenticator. This gives the authenticator the option to customize the CONNECT request. It can\n   * decline to do so by returning null, in which case OkHttp will use it as-is.\n   */",
-  "secondLabel" : "/**\n   * Returns a request that creates a TLS tunnel via an HTTP proxy. Everything in the tunnel request\n   * is sent unencrypted to the proxy server, so tunnels include only the minimum set of headers.\n   * This avoids sending potentially sensitive data like HTTP cookies to the proxy unencrypted.\n   *\n   * In order to support preemptive authentication we pass a fake \"Auth Failed\" response to the\n   * authenticator. This gives the authenticator the option to customize the CONNECT request. It can\n   * decline to do so by returning null, in which case OkHttp will use it as-is.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 16360,
-  "secondPos" : 16360,
-  "firstEndPos" : 16947,
-  "secondEndPos" : 16947
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 16950,
-  "secondPos" : 16950,
+  "firstPos" : 16360,
+  "secondPos" : 16360,
   "firstEndPos" : 17930,
   "secondEndPos" : 17930
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns a request that creates a TLS tunnel via an HTTP proxy. Everything in the tunnel request\n   * is sent unencrypted to the proxy server, so tunnels include only the minimum set of headers.\n   * This avoids sending potentially sensitive data like HTTP cookies to the proxy unencrypted.\n   *\n   * In order to support preemptive authentication we pass a fake \"Auth Failed\" response to the\n   * authenticator. This gives the authenticator the option to customize the CONNECT request. It can\n   * decline to do so by returning null, in which case OkHttp will use it as-is.\n   */",
+  "secondLabel" : "/**\n   * Returns a request that creates a TLS tunnel via an HTTP proxy. Everything in the tunnel request\n   * is sent unencrypted to the proxy server, so tunnels include only the minimum set of headers.\n   * This avoids sending potentially sensitive data like HTTP cookies to the proxy unencrypted.\n   *\n   * In order to support preemptive authentication we pass a fake \"Auth Failed\" response to the\n   * authenticator. This gives the authenticator the option to customize the CONNECT request. It can\n   * decline to do so by returning null, in which case OkHttp will use it as-is.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 16360,
+  "secondPos" : 16360,
+  "firstEndPos" : 16947,
+  "secondEndPos" : 16947
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -32174,27 +32174,27 @@
   "firstEndPos" : 17926,
   "secondEndPos" : 17926
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if this connection can carry a stream allocation to `address`. If non-null\n   * `route` is the resolved route for a connection.\n   */",
-  "secondLabel" : "/**\n   * Returns true if this connection can carry a stream allocation to `address`. If non-null\n   * `route` is the resolved route for a connection.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 17934,
-  "secondPos" : 17934,
-  "firstEndPos" : 18089,
-  "secondEndPos" : 18089
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 18092,
-  "secondPos" : 18092,
+  "firstPos" : 17934,
+  "secondPos" : 17934,
   "firstEndPos" : 19675,
   "secondEndPos" : 19675
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if this connection can carry a stream allocation to `address`. If non-null\n   * `route` is the resolved route for a connection.\n   */",
+  "secondLabel" : "/**\n   * Returns true if this connection can carry a stream allocation to `address`. If non-null\n   * `route` is the resolved route for a connection.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 17934,
+  "secondPos" : 17934,
+  "firstEndPos" : 18089,
+  "secondEndPos" : 18089
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -34550,27 +34550,27 @@
   "firstEndPos" : 19671,
   "secondEndPos" : 19671
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Returns true if this connection's route has the same address as any of [candidates]. This\n   * requires us to have a DNS address for both hosts, which only happens after route planning. We\n   * can't coalesce connections that use a proxy, since proxies don't tell us the origin server's IP\n   * address.\n   */",
-  "secondLabel" : "/**\n   * Returns true if this connection's route has the same address as any of [candidates]. This\n   * requires us to have a DNS address for both hosts, which only happens after route planning. We\n   * can't coalesce connections that use a proxy, since proxies don't tell us the origin server's IP\n   * address.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 19679,
-  "secondPos" : 19679,
-  "firstEndPos" : 19997,
-  "secondEndPos" : 19997
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 20000,
-  "secondPos" : 20000,
+  "firstPos" : 19679,
+  "secondPos" : 19679,
   "firstEndPos" : 20250,
   "secondEndPos" : 20250
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Returns true if this connection's route has the same address as any of [candidates]. This\n   * requires us to have a DNS address for both hosts, which only happens after route planning. We\n   * can't coalesce connections that use a proxy, since proxies don't tell us the origin server's IP\n   * address.\n   */",
+  "secondLabel" : "/**\n   * Returns true if this connection's route has the same address as any of [candidates]. This\n   * requires us to have a DNS address for both hosts, which only happens after route planning. We\n   * can't coalesce connections that use a proxy, since proxies don't tell us the origin server's IP\n   * address.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 19679,
+  "secondPos" : 19679,
+  "firstEndPos" : 19997,
+  "secondEndPos" : 19997
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -40490,27 +40490,27 @@
   "firstEndPos" : 22047,
   "secondEndPos" : 22046
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns true if this connection is ready to host new streams. */",
-  "secondLabel" : "/** Returns true if this connection is ready to host new streams. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 22051,
-  "secondPos" : 22050,
-  "firstEndPos" : 22119,
-  "secondEndPos" : 22118
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 22122,
-  "secondPos" : 22121,
+  "firstPos" : 22051,
+  "secondPos" : 22050,
   "firstEndPos" : 22938,
   "secondEndPos" : 22937
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns true if this connection is ready to host new streams. */",
+  "secondLabel" : "/** Returns true if this connection is ready to host new streams. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 22051,
+  "secondPos" : 22050,
+  "firstEndPos" : 22119,
+  "secondEndPos" : 22118
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -42272,27 +42272,27 @@
   "firstEndPos" : 22934,
   "secondEndPos" : 22933
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Refuse incoming streams. */",
-  "secondLabel" : "/** Refuse incoming streams. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 22942,
-  "secondPos" : 22941,
-  "firstEndPos" : 22973,
-  "secondEndPos" : 22972
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 22976,
-  "secondPos" : 22975,
+  "firstPos" : 22942,
+  "secondPos" : 22941,
   "firstEndPos" : 23103,
   "secondEndPos" : 23102
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Refuse incoming streams. */",
+  "secondLabel" : "/** Refuse incoming streams. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 22942,
+  "secondPos" : 22941,
+  "firstEndPos" : 22973,
+  "secondEndPos" : 22972
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -42701,27 +42701,27 @@
   "firstEndPos" : 23098,
   "secondEndPos" : 23097
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** When settings are received, adjust the allocation limit. */",
-  "secondLabel" : "/** When settings are received, adjust the allocation limit. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 23107,
-  "secondPos" : 23106,
-  "firstEndPos" : 23170,
-  "secondEndPos" : 23169
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 23173,
-  "secondPos" : 23172,
+  "firstPos" : 23107,
+  "secondPos" : 23106,
   "firstEndPos" : 23351,
   "secondEndPos" : 23350
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** When settings are received, adjust the allocation limit. */",
+  "secondLabel" : "/** When settings are received, adjust the allocation limit. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 23107,
+  "secondPos" : 23106,
+  "firstEndPos" : 23170,
+  "secondEndPos" : 23169
 }, {
   "firstType" : "member_modifier",
   "secondType" : "member_modifier",
@@ -43284,27 +43284,27 @@
   "firstEndPos" : 23403,
   "secondEndPos" : 23402
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Track a bad route in the route database. Other routes will be attempted first. */",
-  "secondLabel" : "/** Track a bad route in the route database. Other routes will be attempted first. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 23407,
-  "secondPos" : 23406,
-  "firstEndPos" : 23492,
-  "secondEndPos" : 23491
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 23495,
-  "secondPos" : 23494,
+  "firstPos" : 23407,
+  "secondPos" : 23406,
   "firstEndPos" : 23930,
   "secondEndPos" : 23929
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Track a bad route in the route database. Other routes will be attempted first. */",
+  "secondLabel" : "/** Track a bad route in the route database. Other routes will be attempted first. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 23407,
+  "secondPos" : 23406,
+  "firstEndPos" : 23492,
+  "secondEndPos" : 23491
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -44395,27 +44395,27 @@
   "firstEndPos" : 23925,
   "secondEndPos" : 23924
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Track a failure using this connection. This may prevent both the connection and its route from\n   * being used for future exchanges.\n   */",
-  "secondLabel" : "/**\n   * Track a failure using this connection. This may prevent both the connection and its route from\n   * being used for future exchanges.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 23934,
-  "secondPos" : 23933,
-  "firstEndPos" : 24081,
-  "secondEndPos" : 24080
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 24084,
-  "secondPos" : 24083,
+  "firstPos" : 23934,
+  "secondPos" : 23933,
   "firstEndPos" : 25263,
   "secondEndPos" : 25262
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Track a failure using this connection. This may prevent both the connection and its route from\n   * being used for future exchanges.\n   */",
+  "secondLabel" : "/**\n   * Track a failure using this connection. This may prevent both the connection and its route from\n   * being used for future exchanges.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 23934,
+  "secondPos" : 23933,
+  "firstEndPos" : 24081,
+  "secondEndPos" : 24080
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

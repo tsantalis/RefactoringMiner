@@ -1902,27 +1902,27 @@
   "firstEndPos" : 1562,
   "secondEndPos" : 1562
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * RV适配器\n     */",
-  "secondLabel" : "/**\n     * RV适配器\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1568,
-  "secondPos" : 1568,
-  "firstEndPos" : 1592,
-  "secondEndPos" : 1592
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1597,
-  "secondPos" : 1597,
+  "firstPos" : 1568,
+  "secondPos" : 1568,
   "firstEndPos" : 1697,
   "secondEndPos" : 1697
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * RV适配器\n     */",
+  "secondLabel" : "/**\n     * RV适配器\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1568,
+  "secondPos" : 1568,
+  "firstEndPos" : 1592,
+  "secondEndPos" : 1592
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

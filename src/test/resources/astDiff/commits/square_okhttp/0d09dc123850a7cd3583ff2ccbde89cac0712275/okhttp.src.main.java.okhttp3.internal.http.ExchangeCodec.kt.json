@@ -439,27 +439,27 @@
   "firstEndPos" : 833,
   "secondEndPos" : 833
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Encodes HTTP requests and decodes HTTP responses. */",
-  "secondLabel" : "/** Encodes HTTP requests and decodes HTTP responses. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 835,
-  "secondPos" : 835,
-  "firstEndPos" : 891,
-  "secondEndPos" : 891
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 892,
-  "secondPos" : 892,
+  "firstPos" : 835,
+  "secondPos" : 835,
   "firstEndPos" : 2724,
   "secondEndPos" : 2720
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Encodes HTTP requests and decodes HTTP responses. */",
+  "secondLabel" : "/** Encodes HTTP requests and decodes HTTP responses. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 835,
+  "secondPos" : 835,
+  "firstEndPos" : 891,
+  "secondEndPos" : 891
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -494,27 +494,27 @@
   "firstEndPos" : 2724,
   "secondEndPos" : 2720
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns an output stream where the request body can be streamed. */",
-  "secondLabel" : "/** Returns an output stream where the request body can be streamed. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1015,
-  "secondPos" : 1011,
-  "firstEndPos" : 1086,
-  "secondEndPos" : 1082
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1089,
-  "secondPos" : 1085,
+  "firstPos" : 1015,
+  "secondPos" : 1011,
   "firstEndPos" : 1185,
   "secondEndPos" : 1181
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns an output stream where the request body can be streamed. */",
+  "secondLabel" : "/** Returns an output stream where the request body can be streamed. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1015,
+  "secondPos" : 1011,
+  "firstEndPos" : 1086,
+  "secondEndPos" : 1082
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -791,27 +791,27 @@
   "firstEndPos" : 1185,
   "secondEndPos" : 1181
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** This should update the HTTP engine's sentRequestMillis field. */",
-  "secondLabel" : "/** This should update the HTTP engine's sentRequestMillis field. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1189,
-  "secondPos" : 1185,
-  "firstEndPos" : 1257,
-  "secondEndPos" : 1253
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1260,
-  "secondPos" : 1256,
+  "firstPos" : 1189,
+  "secondPos" : 1185,
   "firstEndPos" : 1331,
   "secondEndPos" : 1327
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** This should update the HTTP engine's sentRequestMillis field. */",
+  "secondLabel" : "/** This should update the HTTP engine's sentRequestMillis field. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1189,
+  "secondPos" : 1185,
+  "firstEndPos" : 1257,
+  "secondEndPos" : 1253
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1022,27 +1022,27 @@
   "firstEndPos" : 1330,
   "secondEndPos" : 1326
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Flush the request to the underlying socket. */",
-  "secondLabel" : "/** Flush the request to the underlying socket. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1335,
-  "secondPos" : 1331,
-  "firstEndPos" : 1385,
-  "secondEndPos" : 1381
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1388,
-  "secondPos" : 1384,
+  "firstPos" : 1335,
+  "secondPos" : 1331,
   "firstEndPos" : 1436,
   "secondEndPos" : 1432
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Flush the request to the underlying socket. */",
+  "secondLabel" : "/** Flush the request to the underlying socket. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1335,
+  "secondPos" : 1331,
+  "firstEndPos" : 1385,
+  "secondEndPos" : 1381
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1209,27 +1209,27 @@
   "firstEndPos" : 1436,
   "secondEndPos" : 1432
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Flush the request to the underlying socket and signal no more bytes will be transmitted. */",
-  "secondLabel" : "/** Flush the request to the underlying socket and signal no more bytes will be transmitted. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1440,
-  "secondPos" : 1436,
-  "firstEndPos" : 1535,
-  "secondEndPos" : 1531
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1538,
-  "secondPos" : 1534,
+  "firstPos" : 1440,
+  "secondPos" : 1436,
   "firstEndPos" : 1587,
   "secondEndPos" : 1583
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Flush the request to the underlying socket and signal no more bytes will be transmitted. */",
+  "secondLabel" : "/** Flush the request to the underlying socket and signal no more bytes will be transmitted. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1440,
+  "secondPos" : 1436,
+  "firstEndPos" : 1535,
+  "secondEndPos" : 1531
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -1396,27 +1396,27 @@
   "firstEndPos" : 1587,
   "secondEndPos" : 1583
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Parses bytes of a response header from an HTTP transport.\n   *\n   * @param expectContinue true to return null if this is an intermediate response with a \"100\"\n   * response code. Otherwise this method never returns null.\n   */",
-  "secondLabel" : "/**\n   * Parses bytes of a response header from an HTTP transport.\n   *\n   * @param expectContinue true to return null if this is an intermediate response with a \"100\"\n   * response code. Otherwise this method never returns null.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1591,
-  "secondPos" : 1587,
-  "firstEndPos" : 1826,
-  "secondEndPos" : 1822
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1829,
-  "secondPos" : 1825,
+  "firstPos" : 1591,
+  "secondPos" : 1587,
   "firstEndPos" : 1926,
   "secondEndPos" : 1922
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Parses bytes of a response header from an HTTP transport.\n   *\n   * @param expectContinue true to return null if this is an intermediate response with a \"100\"\n   * response code. Otherwise this method never returns null.\n   */",
+  "secondLabel" : "/**\n   * Parses bytes of a response header from an HTTP transport.\n   *\n   * @param expectContinue true to return null if this is an intermediate response with a \"100\"\n   * response code. Otherwise this method never returns null.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 1591,
+  "secondPos" : 1587,
+  "firstEndPos" : 1826,
+  "secondEndPos" : 1822
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2155,27 +2155,27 @@
   "firstEndPos" : 2099,
   "secondEndPos" : 2095
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns the trailers after the HTTP response. May be empty. */",
-  "secondLabel" : "/** Returns the trailers after the HTTP response. May be empty. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2103,
-  "secondPos" : 2099,
-  "firstEndPos" : 2169,
-  "secondEndPos" : 2165
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2172,
-  "secondPos" : 2168,
+  "firstPos" : 2103,
+  "secondPos" : 2099,
   "firstEndPos" : 2225,
   "secondEndPos" : 2221
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns the trailers after the HTTP response. May be empty. */",
+  "secondLabel" : "/** Returns the trailers after the HTTP response. May be empty. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2103,
+  "secondPos" : 2099,
+  "firstEndPos" : 2169,
+  "secondEndPos" : 2165
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -2364,27 +2364,27 @@
   "firstEndPos" : 2225,
   "secondEndPos" : 2221
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Cancel this stream. Resources held by this stream will be cleaned up, though not synchronously.\n   * That may happen later by the connection pool thread.\n   */",
-  "secondLabel" : "/**\n   * Cancel this stream. Resources held by this stream will be cleaned up, though not synchronously.\n   * That may happen later by the connection pool thread.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2229,
-  "secondPos" : 2225,
-  "firstEndPos" : 2397,
-  "secondEndPos" : 2393
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2400,
-  "secondPos" : 2396,
+  "firstPos" : 2229,
+  "secondPos" : 2225,
   "firstEndPos" : 2412,
   "secondEndPos" : 2408
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Cancel this stream. Resources held by this stream will be cleaned up, though not synchronously.\n   * That may happen later by the connection pool thread.\n   */",
+  "secondLabel" : "/**\n   * Cancel this stream. Resources held by this stream will be cleaned up, though not synchronously.\n   * That may happen later by the connection pool thread.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 2229,
+  "secondPos" : 2225,
+  "firstEndPos" : 2397,
+  "secondEndPos" : 2393
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -2463,27 +2463,27 @@
   "firstEndPos" : 2722,
   "secondEndPos" : 2718
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * The timeout to use while discarding a stream of input data. Since this is used for connection\n     * reuse, this timeout should be significantly less than the time it takes to establish a new\n     * connection.\n     */",
-  "secondLabel" : "/**\n     * The timeout to use while discarding a stream of input data. Since this is used for connection\n     * reuse, this timeout should be significantly less than the time it takes to establish a new\n     * connection.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2439,
-  "secondPos" : 2435,
-  "firstEndPos" : 2668,
-  "secondEndPos" : 2664
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2673,
-  "secondPos" : 2669,
+  "firstPos" : 2439,
+  "secondPos" : 2435,
   "firstEndPos" : 2718,
   "secondEndPos" : 2714
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * The timeout to use while discarding a stream of input data. Since this is used for connection\n     * reuse, this timeout should be significantly less than the time it takes to establish a new\n     * connection.\n     */",
+  "secondLabel" : "/**\n     * The timeout to use while discarding a stream of input data. Since this is used for connection\n     * reuse, this timeout should be significantly less than the time it takes to establish a new\n     * connection.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2439,
+  "secondPos" : 2435,
+  "firstEndPos" : 2668,
+  "secondEndPos" : 2664
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

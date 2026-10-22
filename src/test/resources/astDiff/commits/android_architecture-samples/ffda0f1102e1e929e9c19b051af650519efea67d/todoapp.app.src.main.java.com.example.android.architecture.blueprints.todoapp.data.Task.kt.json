@@ -197,27 +197,27 @@
   "firstEndPos" : 704,
   "secondEndPos" : 844
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Immutable model class for a Task.\n * @param title       title of the task\n *\n * @param description description of the task\n *\n * @param id          id of the task\n *\n * @param completed   true if the task is completed, false if it's active\n */",
-  "secondLabel" : "/**\n * Immutable model class for a Task.\n * @param title       title of the task\n *\n * @param description description of the task\n *\n * @param id          id of the task\n *\n * @param completed   true if the task is completed, false if it's active\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 706,
-  "secondPos" : 846,
-  "firstEndPos" : 956,
-  "secondEndPos" : 1096
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 957,
-  "secondPos" : 1097,
+  "firstPos" : 706,
+  "secondPos" : 846,
   "firstEndPos" : 1368,
   "secondEndPos" : 1673
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Immutable model class for a Task.\n * @param title       title of the task\n *\n * @param description description of the task\n *\n * @param id          id of the task\n *\n * @param completed   true if the task is completed, false if it's active\n */",
+  "secondLabel" : "/**\n * Immutable model class for a Task.\n * @param title       title of the task\n *\n * @param description description of the task\n *\n * @param id          id of the task\n *\n * @param completed   true if the task is completed, false if it's active\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 706,
+  "secondPos" : 846,
+  "firstEndPos" : 956,
+  "secondEndPos" : 1096
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -363,17 +363,6 @@
   "secondEndPos" : 1222
 }, {
   "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1008,
-  "secondPos" : 1177,
-  "firstEndPos" : 1011,
-  "secondEndPos" : 1204
-}, {
-  "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
   "firstLabel" : "",
   "secondLabel" : "",
@@ -438,17 +427,6 @@
   "secondPos" : 1232,
   "firstEndPos" : 1063,
   "secondEndPos" : 1294
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1035,
-  "secondPos" : 1232,
-  "firstEndPos" : 1038,
-  "secondEndPos" : 1265
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -537,17 +515,6 @@
   "secondPos" : 1304,
   "firstEndPos" : 1118,
   "secondEndPos" : 1391
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 1073,
-  "secondPos" : 1304,
-  "firstEndPos" : 1076,
-  "secondEndPos" : 1345
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -779,17 +746,6 @@
   "secondPos" : 1401,
   "firstEndPos" : 1151,
   "secondEndPos" : 1456
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "property_declaration",
-  "firstPos" : 1128,
-  "secondPos" : 1401,
-  "firstEndPos" : 1131,
-  "secondEndPos" : 1432
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

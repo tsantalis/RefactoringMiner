@@ -3233,27 +3233,27 @@
   "firstEndPos" : 2754,
   "secondEndPos" : 2754
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Tests for the [DrawerLayout] layout component in [TasksActivity] which manages\n * navigation within the app.\n */",
-  "secondLabel" : "/**\n * Tests for the [DrawerLayout] layout component in [TasksActivity] which manages\n * navigation within the app.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2756,
-  "secondPos" : 2756,
-  "firstEndPos" : 2875,
-  "secondEndPos" : 2875
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2876,
-  "secondPos" : 2876,
+  "firstPos" : 2756,
+  "secondPos" : 2756,
   "firstEndPos" : 9350,
   "secondEndPos" : 9329
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Tests for the [DrawerLayout] layout component in [TasksActivity] which manages\n * navigation within the app.\n */",
+  "secondLabel" : "/**\n * Tests for the [DrawerLayout] layout component in [TasksActivity] which manages\n * navigation within the app.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2756,
+  "secondPos" : 2756,
+  "firstEndPos" : 2875,
+  "secondEndPos" : 2875
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3596,27 +3596,27 @@
   "firstEndPos" : 3002,
   "secondEndPos" : 3002
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
-  "secondLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3008,
-  "secondPos" : 3008,
-  "firstEndPos" : 3085,
-  "secondEndPos" : 3085
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3090,
-  "secondPos" : 3090,
+  "firstPos" : 3008,
+  "secondPos" : 3008,
   "firstEndPos" : 3157,
   "secondEndPos" : 3157
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
+  "secondLabel" : "// An Idling Resource that waits for Data Binding to have no pending bindings",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3008,
+  "secondPos" : 3008,
+  "firstEndPos" : 3085,
+  "secondEndPos" : 3085
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -4641,27 +4641,27 @@
   "firstEndPos" : 3494,
   "secondEndPos" : 3494
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
-  "secondLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3506,
-  "secondPos" : 3506,
-  "firstEndPos" : 3711,
-  "secondEndPos" : 3711
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3716,
-  "secondPos" : 3716,
+  "firstPos" : 3506,
+  "secondPos" : 3506,
   "firstEndPos" : 3930,
   "secondEndPos" : 3930
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
+  "secondLabel" : "/**\n     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations\n     * are not scheduled in the main Looper (for example when executed on a different thread).\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3506,
+  "secondPos" : 3506,
+  "firstEndPos" : 3711,
+  "secondEndPos" : 3711
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -5136,27 +5136,27 @@
   "firstEndPos" : 3923,
   "secondEndPos" : 3923
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3936,
-  "secondPos" : 3936,
-  "firstEndPos" : 4047,
-  "secondEndPos" : 4047
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4052,
-  "secondPos" : 4052,
+  "firstPos" : 3936,
+  "secondPos" : 3936,
   "firstEndPos" : 4271,
   "secondEndPos" : 4271
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "secondLabel" : "/**\n     * Unregister your Idling Resource so it can be garbage collected and does not leak any memory.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 3936,
+  "secondPos" : 3936,
+  "firstEndPos" : 4047,
+  "secondEndPos" : 4047
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

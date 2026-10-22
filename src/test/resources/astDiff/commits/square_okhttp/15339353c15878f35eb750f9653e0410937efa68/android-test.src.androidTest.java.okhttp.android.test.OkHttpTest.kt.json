@@ -3035,27 +3035,27 @@
   "firstEndPos" : 2448,
   "secondEndPos" : 2448
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Run with \"./gradlew :android-test:connectedCheck\" and make sure ANDROID_SDK_ROOT is set.\n */",
-  "secondLabel" : "/**\n * Run with \"./gradlew :android-test:connectedCheck\" and make sure ANDROID_SDK_ROOT is set.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 2450,
-  "secondPos" : 2450,
-  "firstEndPos" : 2549,
-  "secondEndPos" : 2549
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2550,
-  "secondPos" : 2550,
+  "firstPos" : 2450,
+  "secondPos" : 2450,
   "firstEndPos" : 16796,
   "secondEndPos" : 17086
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Run with \"./gradlew :android-test:connectedCheck\" and make sure ANDROID_SDK_ROOT is set.\n */",
+  "secondLabel" : "/**\n * Run with \"./gradlew :android-test:connectedCheck\" and make sure ANDROID_SDK_ROOT is set.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2450,
+  "secondPos" : 2450,
+  "firstEndPos" : 2549,
+  "secondEndPos" : 2549
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",

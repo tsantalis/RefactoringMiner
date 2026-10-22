@@ -670,27 +670,27 @@
   "firstEndPos" : 1136,
   "secondEndPos" : 1102
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their\n * [add] method. A [ReferenceMatcher] is either a [IgnoredReferenceMatcher] or\n * a [LibraryLeakReferenceMatcher].\n *\n * [AndroidReferenceMatchers] is used to build the list of known references that cannot ever create\n * leaks (via [IgnoredReferenceMatcher]) as well as the list of known leaks in the Android Framework\n * and in manufacturer specific Android implementations.\n *\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also use a subset of\n * [AndroidReferenceMatchers] by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences].\n */",
-  "secondLabel" : "/**\n * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their\n * [add] method. A [ReferenceMatcher] is either a [IgnoredReferenceMatcher] or\n * a [LibraryLeakReferenceMatcher].\n *\n * [AndroidReferenceMatchers] is used to build the list of known references that cannot ever create\n * leaks (via [IgnoredReferenceMatcher]) as well as the list of known leaks in the Android Framework\n * and in manufacturer specific Android implementations.\n *\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also use a subset of\n * [AndroidReferenceMatchers] by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences].\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1138,
-  "secondPos" : 1104,
-  "firstEndPos" : 2251,
-  "secondEndPos" : 2217
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2252,
-  "secondPos" : 2218,
+  "firstPos" : 1138,
+  "secondPos" : 1104,
   "firstEndPos" : 42126,
   "secondEndPos" : 42253
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their\n * [add] method. A [ReferenceMatcher] is either a [IgnoredReferenceMatcher] or\n * a [LibraryLeakReferenceMatcher].\n *\n * [AndroidReferenceMatchers] is used to build the list of known references that cannot ever create\n * leaks (via [IgnoredReferenceMatcher]) as well as the list of known leaks in the Android Framework\n * and in manufacturer specific Android implementations.\n *\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also use a subset of\n * [AndroidReferenceMatchers] by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences].\n */",
+  "secondLabel" : "/**\n * [AndroidReferenceMatchers] values add [ReferenceMatcher] instances to a global list via their\n * [add] method. A [ReferenceMatcher] is either a [IgnoredReferenceMatcher] or\n * a [LibraryLeakReferenceMatcher].\n *\n * [AndroidReferenceMatchers] is used to build the list of known references that cannot ever create\n * leaks (via [IgnoredReferenceMatcher]) as well as the list of known leaks in the Android Framework\n * and in manufacturer specific Android implementations.\n *\n * This class is a work in progress. You can help by reporting leak traces that seem to be caused\n * by the Android SDK, here: https://github.com/square/leakcanary/issues/new\n *\n * We filter on SDK versions and Manufacturers because many of those leaks are specific to a given\n * manufacturer implementation, they usually share their builds across multiple models, and the\n * leaks eventually get fixed in newer versions.\n *\n * Most app developers should use [appDefaults]. However, you can also use a subset of\n * [AndroidReferenceMatchers] by creating an [EnumSet] that matches your needs and calling\n * [buildKnownReferences].\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1138,
+  "secondPos" : 1104,
+  "firstEndPos" : 2251,
+  "secondEndPos" : 2217
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -42899,27 +42899,27 @@
   "firstEndPos" : 39189,
   "secondEndPos" : 39155
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Returns a list of [ReferenceMatcher] that only contains [IgnoredReferenceMatcher] and no\n     * [LibraryLeakReferenceMatcher].\n     */",
-  "secondLabel" : "/**\n     * Returns a list of [ReferenceMatcher] that only contains [IgnoredReferenceMatcher] and no\n     * [LibraryLeakReferenceMatcher].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 39196,
-  "secondPos" : 39162,
-  "firstEndPos" : 39341,
-  "secondEndPos" : 39307
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 39346,
-  "secondPos" : 39312,
+  "firstPos" : 39196,
+  "secondPos" : 39162,
   "firstEndPos" : 39395,
   "secondEndPos" : 39361
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Returns a list of [ReferenceMatcher] that only contains [IgnoredReferenceMatcher] and no\n     * [LibraryLeakReferenceMatcher].\n     */",
+  "secondLabel" : "/**\n     * Returns a list of [ReferenceMatcher] that only contains [IgnoredReferenceMatcher] and no\n     * [LibraryLeakReferenceMatcher].\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 39196,
+  "secondPos" : 39162,
+  "firstEndPos" : 39341,
+  "secondEndPos" : 39307
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -43306,27 +43306,27 @@
   "firstEndPos" : 39619,
   "secondEndPos" : 39585
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * @see [AndroidReferenceMatchers]\n     */",
-  "secondLabel" : "/**\n     * @see [AndroidReferenceMatchers]\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 39645,
-  "secondPos" : 39611,
-  "firstEndPos" : 39695,
-  "secondEndPos" : 39661
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 39700,
-  "secondPos" : 39666,
+  "firstPos" : 39645,
+  "secondPos" : 39611,
   "firstEndPos" : 39739,
   "secondEndPos" : 39705
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * @see [AndroidReferenceMatchers]\n     */",
+  "secondLabel" : "/**\n     * @see [AndroidReferenceMatchers]\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 39645,
+  "secondPos" : 39611,
+  "firstEndPos" : 39695,
+  "secondEndPos" : 39661
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -43691,27 +43691,27 @@
   "firstEndPos" : 39825,
   "secondEndPos" : 39791
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Builds a list of [ReferenceMatcher] from the [referenceMatchers] set of\n     * [AndroidReferenceMatchers].\n     */",
-  "secondLabel" : "/**\n     * Builds a list of [ReferenceMatcher] from the [referenceMatchers] set of\n     * [AndroidReferenceMatchers].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 39833,
-  "secondPos" : 39799,
-  "firstEndPos" : 39958,
-  "secondEndPos" : 39924
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 39963,
-  "secondPos" : 39929,
+  "firstPos" : 39833,
+  "secondPos" : 39799,
   "firstEndPos" : 40216,
   "secondEndPos" : 40182
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Builds a list of [ReferenceMatcher] from the [referenceMatchers] set of\n     * [AndroidReferenceMatchers].\n     */",
+  "secondLabel" : "/**\n     * Builds a list of [ReferenceMatcher] from the [referenceMatchers] set of\n     * [AndroidReferenceMatchers].\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 39833,
+  "secondPos" : 39799,
+  "firstEndPos" : 39958,
+  "secondEndPos" : 39924
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -44527,27 +44527,27 @@
   "firstEndPos" : 40289,
   "secondEndPos" : 40255
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [StaticFieldPattern].\n     */",
-  "secondLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [StaticFieldPattern].\n     * [description] should convey what we know about this library leak.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 40301,
-  "secondPos" : 40267,
-  "firstEndPos" : 40396,
-  "secondEndPos" : 40435
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 40401,
-  "secondPos" : 40440,
+  "firstPos" : 40301,
+  "secondPos" : 40267,
   "firstEndPos" : 40706,
   "secondEndPos" : 40745
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [StaticFieldPattern].\n     */",
+  "secondLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [StaticFieldPattern].\n     * [description] should convey what we know about this library leak.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 40301,
+  "secondPos" : 40267,
+  "firstEndPos" : 40396,
+  "secondEndPos" : 40435
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -45110,27 +45110,27 @@
   "firstEndPos" : 40699,
   "secondEndPos" : 40738
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [InstanceFieldPattern].\n     */",
-  "secondLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [InstanceFieldPattern].\n     * [description] should convey what we know about this library leak.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 40712,
-  "secondPos" : 40751,
-  "firstEndPos" : 40809,
-  "secondEndPos" : 40921
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 40814,
-  "secondPos" : 40926,
+  "firstPos" : 40712,
+  "secondPos" : 40751,
   "firstEndPos" : 41123,
   "secondEndPos" : 41235
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [InstanceFieldPattern].\n     */",
+  "secondLabel" : "/**\n     * Creates a [LibraryLeakReferenceMatcher] that matches a [InstanceFieldPattern].\n     * [description] should convey what we know about this library leak.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 40712,
+  "secondPos" : 40751,
+  "firstEndPos" : 40809,
+  "secondEndPos" : 40921
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -46331,27 +46331,27 @@
   "firstEndPos" : 41523,
   "secondEndPos" : 41650
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [InstanceFieldPattern].\n     */",
-  "secondLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [InstanceFieldPattern].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 41555,
-  "secondPos" : 41682,
-  "firstEndPos" : 41648,
-  "secondEndPos" : 41775
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 41653,
-  "secondPos" : 41780,
+  "firstPos" : 41555,
+  "secondPos" : 41682,
   "firstEndPos" : 41857,
   "secondEndPos" : 41984
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [InstanceFieldPattern].\n     */",
+  "secondLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [InstanceFieldPattern].\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 41555,
+  "secondPos" : 41682,
+  "firstEndPos" : 41648,
+  "secondEndPos" : 41775
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",
@@ -46705,27 +46705,27 @@
   "firstEndPos" : 41849,
   "secondEndPos" : 41976
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [JavaLocalPattern].\n     */",
-  "secondLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [JavaLocalPattern].\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 41863,
-  "secondPos" : 41990,
-  "firstEndPos" : 41952,
-  "secondEndPos" : 42079
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 41957,
-  "secondPos" : 42084,
+  "firstPos" : 41863,
+  "secondPos" : 41990,
   "firstEndPos" : 42119,
   "secondEndPos" : 42246
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [JavaLocalPattern].\n     */",
+  "secondLabel" : "/**\n     * Creates a [IgnoredReferenceMatcher] that matches a [JavaLocalPattern].\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 41863,
+  "secondPos" : 41990,
+  "firstEndPos" : 41952,
+  "secondEndPos" : 42079
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

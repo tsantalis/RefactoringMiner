@@ -472,27 +472,27 @@
   "firstEndPos" : 914,
   "secondEndPos" : 997
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * TODO Update this doc to match LeakCanary 2.0\n *\n * [InstrumentationLeakDetector] can be used to detect memory leaks in instrumentation tests.\n *\n * To use it, you need to:\n *\n *  * Install a custom RefWatcher that will not trigger heapdumps while the tests run.\n *  * Add an instrumentation test listener (a [RunListener]) that will invoke\n * [detectLeaks]\n *\n * ### Installing the instrumentation RefWatcher\n *\n * For [detectLeaks] to work correctly, the [RefWatcher] must keep track of\n * references but not trigger any heap dump until this [detectLeaks] runs, otherwise an\n * analysis in progress might prevent this listener from performing its own analysis.\n *\n * Create and install the [RefWatcher] instance using\n * [instrumentationRefWatcher] instead of\n * [LeakCanary.install] or [LeakCanary.refWatcher].\n *\n * ```\n * public class InstrumentationExampleApplication extends ExampleApplication {\n *  @Override protected void setupLeakCanary() {\n *    InstrumentationLeakDetector.instrumentationRefWatcher(this)\n *      .buildAndInstall();\n *  }\n * }\n * ```\n *\n * ### Add an instrumentation test listener\n *\n * LeakCanary provides [FailTestOnLeakRunListener], but you should feel free to implement\n * your own [RunListener] and call [.detectLeaks] directly if you need a more custom\n * behavior (for instance running it only once per test suite, or reporting to a backend).\n *\n * All you need to do is add the following to the defaultConfig of your build.gradle:\n *\n * `testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"`\n *\n * Then you can run your instrumentation tests via Gradle as usually, and they will fail when\n * a memory leak is detected:\n *\n * `./gradlew leakcanary-sample:connectedCheck`\n *\n * If instead you want to run UI tests via adb, add a *listener* execution argument to\n * your command line for running the UI tests:\n * `-e listener leakcanary.FailTestOnLeakRunListener`. The full command line\n * should look something like this:\n * ```\n * adb shell am instrument \\\\\n * -w com.android.foo/android.support.test.runner.AndroidJUnitRunner \\\\\n * -e listener leakcanary.FailTestOnLeakRunListener\n * ```\n *\n * ### Rationale\n * Instead of using the [FailTestOnLeakRunListener], one could simply enable LeakCanary in\n * instrumentation tests.\n *\n * This approach would have two disadvantages:\n *\n *  * Heap dumps freeze the VM, and the leak analysis is IO and CPU heavy. This can slow down\n * the test and introduce flakiness\n *  * The leak analysis is asynchronous by default, and happens in a separate process. This means\n * the tests could finish and the process die before the analysis is finished.\n *\n * The approach taken here is to collect all references to watch as you run the test, but not\n * do any heap dump during the test. Then, at the end, if any of the watched objects is still in\n * memory we dump the heap and perform a blocking analysis. There is only one heap dump performed,\n * no matter the number of objects leaking, and then we iterate on the leaking references in the\n * heap dump and provide all result in a [InstrumentationLeakResults].\n */",
-  "secondLabel" : "/**\n * TODO Update this doc to match LeakCanary 2.0\n *\n * [InstrumentationLeakDetector] can be used to detect memory leaks in instrumentation tests.\n *\n * To use it, you need to:\n *\n *  * Install a custom RefWatcher that will not trigger heapdumps while the tests run.\n *  * Add an instrumentation test listener (a [RunListener]) that will invoke\n * [detectLeaks]\n *\n * ### Installing the instrumentation RefWatcher\n *\n * For [detectLeaks] to work correctly, the [RefWatcher] must keep track of\n * references but not trigger any heap dump until this [detectLeaks] runs, otherwise an\n * analysis in progress might prevent this listener from performing its own analysis.\n *\n * Create and install the [RefWatcher] instance using\n * [instrumentationRefWatcher] instead of\n * [LeakCanary.install] or [LeakCanary.refWatcher].\n *\n * ```\n * public class InstrumentationExampleApplication extends ExampleApplication {\n *  @Override protected void setupLeakCanary() {\n *    InstrumentationLeakDetector.instrumentationRefWatcher(this)\n *      .buildAndInstall();\n *  }\n * }\n * ```\n *\n * ### Add an instrumentation test listener\n *\n * LeakCanary provides [FailTestOnLeakRunListener], but you should feel free to implement\n * your own [RunListener] and call [.detectLeaks] directly if you need a more custom\n * behavior (for instance running it only once per test suite, or reporting to a backend).\n *\n * All you need to do is add the following to the defaultConfig of your build.gradle:\n *\n * `testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"`\n *\n * Then you can run your instrumentation tests via Gradle as usually, and they will fail when\n * a memory leak is detected:\n *\n * `./gradlew leakcanary-sample:connectedCheck`\n *\n * If instead you want to run UI tests via adb, add a *listener* execution argument to\n * your command line for running the UI tests:\n * `-e listener leakcanary.FailTestOnLeakRunListener`. The full command line\n * should look something like this:\n * ```\n * adb shell am instrument \\\\\n * -w com.android.foo/android.support.test.runner.AndroidJUnitRunner \\\\\n * -e listener leakcanary.FailTestOnLeakRunListener\n * ```\n *\n * ### Rationale\n * Instead of using the [FailTestOnLeakRunListener], one could simply enable LeakCanary in\n * instrumentation tests.\n *\n * This approach would have two disadvantages:\n *\n *  * Heap dumps freeze the VM, and the leak analysis is IO and CPU heavy. This can slow down\n * the test and introduce flakiness\n *  * The leak analysis is asynchronous by default, and happens in a separate process. This means\n * the tests could finish and the process die before the analysis is finished.\n *\n * The approach taken here is to collect all references to watch as you run the test, but not\n * do any heap dump during the test. Then, at the end, if any of the watched objects is still in\n * memory we dump the heap and perform a blocking analysis. There is only one heap dump performed,\n * no matter the number of objects leaking.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 916,
-  "secondPos" : 999,
-  "firstEndPos" : 4041,
-  "secondEndPos" : 4000
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 4042,
-  "secondPos" : 4001,
+  "firstPos" : 916,
+  "secondPos" : 999,
   "firstEndPos" : 7747,
   "secondEndPos" : 7069
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * TODO Update this doc to match LeakCanary 2.0\n *\n * [InstrumentationLeakDetector] can be used to detect memory leaks in instrumentation tests.\n *\n * To use it, you need to:\n *\n *  * Install a custom RefWatcher that will not trigger heapdumps while the tests run.\n *  * Add an instrumentation test listener (a [RunListener]) that will invoke\n * [detectLeaks]\n *\n * ### Installing the instrumentation RefWatcher\n *\n * For [detectLeaks] to work correctly, the [RefWatcher] must keep track of\n * references but not trigger any heap dump until this [detectLeaks] runs, otherwise an\n * analysis in progress might prevent this listener from performing its own analysis.\n *\n * Create and install the [RefWatcher] instance using\n * [instrumentationRefWatcher] instead of\n * [LeakCanary.install] or [LeakCanary.refWatcher].\n *\n * ```\n * public class InstrumentationExampleApplication extends ExampleApplication {\n *  @Override protected void setupLeakCanary() {\n *    InstrumentationLeakDetector.instrumentationRefWatcher(this)\n *      .buildAndInstall();\n *  }\n * }\n * ```\n *\n * ### Add an instrumentation test listener\n *\n * LeakCanary provides [FailTestOnLeakRunListener], but you should feel free to implement\n * your own [RunListener] and call [.detectLeaks] directly if you need a more custom\n * behavior (for instance running it only once per test suite, or reporting to a backend).\n *\n * All you need to do is add the following to the defaultConfig of your build.gradle:\n *\n * `testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"`\n *\n * Then you can run your instrumentation tests via Gradle as usually, and they will fail when\n * a memory leak is detected:\n *\n * `./gradlew leakcanary-sample:connectedCheck`\n *\n * If instead you want to run UI tests via adb, add a *listener* execution argument to\n * your command line for running the UI tests:\n * `-e listener leakcanary.FailTestOnLeakRunListener`. The full command line\n * should look something like this:\n * ```\n * adb shell am instrument \\\\\n * -w com.android.foo/android.support.test.runner.AndroidJUnitRunner \\\\\n * -e listener leakcanary.FailTestOnLeakRunListener\n * ```\n *\n * ### Rationale\n * Instead of using the [FailTestOnLeakRunListener], one could simply enable LeakCanary in\n * instrumentation tests.\n *\n * This approach would have two disadvantages:\n *\n *  * Heap dumps freeze the VM, and the leak analysis is IO and CPU heavy. This can slow down\n * the test and introduce flakiness\n *  * The leak analysis is asynchronous by default, and happens in a separate process. This means\n * the tests could finish and the process die before the analysis is finished.\n *\n * The approach taken here is to collect all references to watch as you run the test, but not\n * do any heap dump during the test. Then, at the end, if any of the watched objects is still in\n * memory we dump the heap and perform a blocking analysis. There is only one heap dump performed,\n * no matter the number of objects leaking, and then we iterate on the leaking references in the\n * heap dump and provide all result in a [InstrumentationLeakResults].\n */",
+  "secondLabel" : "/**\n * TODO Update this doc to match LeakCanary 2.0\n *\n * [InstrumentationLeakDetector] can be used to detect memory leaks in instrumentation tests.\n *\n * To use it, you need to:\n *\n *  * Install a custom RefWatcher that will not trigger heapdumps while the tests run.\n *  * Add an instrumentation test listener (a [RunListener]) that will invoke\n * [detectLeaks]\n *\n * ### Installing the instrumentation RefWatcher\n *\n * For [detectLeaks] to work correctly, the [RefWatcher] must keep track of\n * references but not trigger any heap dump until this [detectLeaks] runs, otherwise an\n * analysis in progress might prevent this listener from performing its own analysis.\n *\n * Create and install the [RefWatcher] instance using\n * [instrumentationRefWatcher] instead of\n * [LeakCanary.install] or [LeakCanary.refWatcher].\n *\n * ```\n * public class InstrumentationExampleApplication extends ExampleApplication {\n *  @Override protected void setupLeakCanary() {\n *    InstrumentationLeakDetector.instrumentationRefWatcher(this)\n *      .buildAndInstall();\n *  }\n * }\n * ```\n *\n * ### Add an instrumentation test listener\n *\n * LeakCanary provides [FailTestOnLeakRunListener], but you should feel free to implement\n * your own [RunListener] and call [.detectLeaks] directly if you need a more custom\n * behavior (for instance running it only once per test suite, or reporting to a backend).\n *\n * All you need to do is add the following to the defaultConfig of your build.gradle:\n *\n * `testInstrumentationRunnerArgument \"listener\", \"leakcanary.FailTestOnLeakRunListener\"`\n *\n * Then you can run your instrumentation tests via Gradle as usually, and they will fail when\n * a memory leak is detected:\n *\n * `./gradlew leakcanary-sample:connectedCheck`\n *\n * If instead you want to run UI tests via adb, add a *listener* execution argument to\n * your command line for running the UI tests:\n * `-e listener leakcanary.FailTestOnLeakRunListener`. The full command line\n * should look something like this:\n * ```\n * adb shell am instrument \\\\\n * -w com.android.foo/android.support.test.runner.AndroidJUnitRunner \\\\\n * -e listener leakcanary.FailTestOnLeakRunListener\n * ```\n *\n * ### Rationale\n * Instead of using the [FailTestOnLeakRunListener], one could simply enable LeakCanary in\n * instrumentation tests.\n *\n * This approach would have two disadvantages:\n *\n *  * Heap dumps freeze the VM, and the leak analysis is IO and CPU heavy. This can slow down\n * the test and introduce flakiness\n *  * The leak analysis is asynchronous by default, and happens in a separate process. This means\n * the tests could finish and the process die before the analysis is finished.\n *\n * The approach taken here is to collect all references to watch as you run the test, but not\n * do any heap dump during the test. Then, at the end, if any of the watched objects is still in\n * memory we dump the heap and perform a blocking analysis. There is only one heap dump performed,\n * no matter the number of objects leaking.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 916,
+  "secondPos" : 999,
+  "firstEndPos" : 4041,
+  "secondEndPos" : 4000
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4652,27 +4652,27 @@
   "firstEndPos" : 7745,
   "secondEndPos" : 7067
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Configures LeakCanary to not dump the heap so that instrumentation tests run smoothly,\n     * and we can look for leaks at the end of a test. This is automatically called by\n     * [FailTestOnLeakRunListener] when the tests start running.\n     */",
-  "secondLabel" : "/**\n     * Configures LeakCanary to not dump the heap so that instrumentation tests run smoothly,\n     * and we can look for leaks at the end of a test. This is automatically called by\n     * [FailTestOnLeakRunListener] when the tests start running.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 7386,
-  "secondPos" : 6708,
-  "firstEndPos" : 7643,
-  "secondEndPos" : 6965
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 7648,
-  "secondPos" : 6970,
+  "firstPos" : 7386,
+  "secondPos" : 6708,
   "firstEndPos" : 7741,
   "secondEndPos" : 7063
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Configures LeakCanary to not dump the heap so that instrumentation tests run smoothly,\n     * and we can look for leaks at the end of a test. This is automatically called by\n     * [FailTestOnLeakRunListener] when the tests start running.\n     */",
+  "secondLabel" : "/**\n     * Configures LeakCanary to not dump the heap so that instrumentation tests run smoothly,\n     * and we can look for leaks at the end of a test. This is automatically called by\n     * [FailTestOnLeakRunListener] when the tests start running.\n     */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 7386,
+  "secondPos" : 6708,
+  "firstEndPos" : 7643,
+  "secondEndPos" : 6965
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

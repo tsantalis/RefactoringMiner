@@ -54,27 +54,27 @@
   "firstEndPos" : 18,
   "secondEndPos" : 18
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n *\n * An [Annotation] class to be used in conjunction with [FailAnnotatedTestOnLeakRunListener]\n * for detecting memory leaks. When using [FailAnnotatedTestOnLeakRunListener], the tests\n * should be annotated with this class in order for the listener to detect memory leaks.\n *\n * @see FailAnnotatedTestOnLeakRunListener\n */",
-  "secondLabel" : "/**\n * An [Annotation] class to be used in conjunction with [FailAnnotatedTestOnLeakRunListener]\n * for detecting memory leaks. When using [FailAnnotatedTestOnLeakRunListener], the tests\n * should be annotated with this class in order for the listener to detect memory leaks.\n *\n * @see FailAnnotatedTestOnLeakRunListener\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 20,
-  "secondPos" : 20,
-  "firstEndPos" : 348,
-  "secondEndPos" : 345
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 349,
-  "secondPos" : 346,
+  "firstPos" : 20,
+  "secondPos" : 20,
   "firstEndPos" : 455,
   "secondEndPos" : 452
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n *\n * An [Annotation] class to be used in conjunction with [FailAnnotatedTestOnLeakRunListener]\n * for detecting memory leaks. When using [FailAnnotatedTestOnLeakRunListener], the tests\n * should be annotated with this class in order for the listener to detect memory leaks.\n *\n * @see FailAnnotatedTestOnLeakRunListener\n */",
+  "secondLabel" : "/**\n * An [Annotation] class to be used in conjunction with [FailAnnotatedTestOnLeakRunListener]\n * for detecting memory leaks. When using [FailAnnotatedTestOnLeakRunListener], the tests\n * should be annotated with this class in order for the listener to detect memory leaks.\n *\n * @see FailAnnotatedTestOnLeakRunListener\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 20,
+  "secondPos" : 20,
+  "firstEndPos" : 348,
+  "secondEndPos" : 345
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

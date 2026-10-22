@@ -670,27 +670,27 @@
   "firstEndPos" : 802,
   "secondEndPos" : 732
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
-  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 804,
-  "secondPos" : 734,
-  "firstEndPos" : 1015,
-  "secondEndPos" : 945
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1016,
-  "secondPos" : 946,
+  "firstPos" : 804,
+  "secondPos" : 734,
   "firstEndPos" : 8065,
   "secondEndPos" : 8810
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
+  "secondLabel" : "/**\n * Not thread safe.\n *\n * Finds the shortest path from leaking references to a gc root, first ignoring references\n * identified as \"to visit last\" and then visiting them as needed if no path is\n * found.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 804,
+  "secondPos" : 734,
+  "firstEndPos" : 1015,
+  "secondEndPos" : 945
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1084,7 +1084,7 @@
   "firstParentType" : "type_body",
   "secondParentType" : "source_file",
   "firstPos" : 1244,
-  "secondPos" : 75,
+  "secondPos" : 56,
   "firstEndPos" : 1367,
   "secondEndPos" : 192
 }, {
@@ -1726,27 +1726,27 @@
   "firstEndPos" : 2231,
   "secondEndPos" : 3076
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * Tracks visited objecs and their dominator.\n       * If an object is not in [dominatorTree] then it hasn't been enqueued yet.\n       * If an object is in [dominatorTree] but not in [State.toVisitSet] nor [State.toVisitLastSet]\n       * then it has already been dequeued.\n       *\n       * If an object is dominated by more than one GC root then its dominator is set to\n       * [ValueHolder.NULL_REFERENCE].\n       */",
-  "secondLabel" : "/**\n       * Tracks visited objects and their dominator.\n       * If an object is not in [dominatorTree] then it hasn't been enqueued yet.\n       * If an object is in [dominatorTree] but not in [State.toVisitSet] nor [State.toVisitLastSet]\n       * then it has already been dequeued.\n       *\n       * If an object is dominated by more than one GC root then its dominator is set to\n       * [ValueHolder.NULL_REFERENCE].\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1559,
-  "secondPos" : 2403,
-  "firstEndPos" : 1988,
-  "secondEndPos" : 2833
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1995,
-  "secondPos" : 2840,
+  "firstPos" : 1559,
+  "secondPos" : 2403,
   "firstEndPos" : 2046,
   "secondEndPos" : 2891
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * Tracks visited objecs and their dominator.\n       * If an object is not in [dominatorTree] then it hasn't been enqueued yet.\n       * If an object is in [dominatorTree] but not in [State.toVisitSet] nor [State.toVisitLastSet]\n       * then it has already been dequeued.\n       *\n       * If an object is dominated by more than one GC root then its dominator is set to\n       * [ValueHolder.NULL_REFERENCE].\n       */",
+  "secondLabel" : "/**\n       * Tracks visited objects and their dominator.\n       * If an object is not in [dominatorTree] then it hasn't been enqueued yet.\n       * If an object is in [dominatorTree] but not in [State.toVisitSet] nor [State.toVisitLastSet]\n       * then it has already been dequeued.\n       *\n       * If an object is dominated by more than one GC root then its dominator is set to\n       * [ValueHolder.NULL_REFERENCE].\n       */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 1559,
+  "secondPos" : 2403,
+  "firstEndPos" : 1988,
+  "secondEndPos" : 2833
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -2375,27 +2375,27 @@
   "firstEndPos" : 2564,
   "secondEndPos" : 3409
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * Set of visited objects.\n       */",
-  "secondLabel" : "/**\n       * Set of visited objects.\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2299,
-  "secondPos" : 3144,
-  "firstEndPos" : 2345,
-  "secondEndPos" : 3190
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2352,
-  "secondPos" : 3197,
+  "firstPos" : 2299,
+  "secondPos" : 3144,
   "firstEndPos" : 2409,
   "secondEndPos" : 3254
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * Set of visited objects.\n       */",
+  "secondLabel" : "/**\n       * Set of visited objects.\n       */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2299,
+  "secondPos" : 3144,
+  "firstEndPos" : 2345,
+  "secondEndPos" : 3190
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -3167,27 +3167,27 @@
   "firstEndPos" : 3657,
   "secondEndPos" : 4502
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Set of objects to visit */",
-  "secondLabel" : "/** Set of objects to visit */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2721,
-  "secondPos" : 3566,
-  "firstEndPos" : 2751,
-  "secondEndPos" : 3596
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2756,
-  "secondPos" : 3601,
+  "firstPos" : 2721,
+  "secondPos" : 3566,
   "firstEndPos" : 2813,
   "secondEndPos" : 3658
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Set of objects to visit */",
+  "secondLabel" : "/** Set of objects to visit */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2721,
+  "secondPos" : 3566,
+  "firstEndPos" : 2751,
+  "secondEndPos" : 3596
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3354,27 +3354,27 @@
   "firstEndPos" : 2813,
   "secondEndPos" : 3658
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty.\n     */",
-  "secondLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2819,
-  "secondPos" : 3664,
-  "firstEndPos" : 2884,
-  "secondEndPos" : 3729
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2889,
-  "secondPos" : 3734,
+  "firstPos" : 2819,
+  "secondPos" : 3664,
   "firstEndPos" : 2950,
   "secondEndPos" : 3795
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty.\n     */",
+  "secondLabel" : "/**\n     * Objects to visit when [toVisitQueue] is empty.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2819,
+  "secondPos" : 3664,
+  "firstEndPos" : 2884,
+  "secondEndPos" : 3729
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3541,27 +3541,27 @@
   "firstEndPos" : 2950,
   "secondEndPos" : 3795
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
-  "secondLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2956,
-  "secondPos" : 3801,
-  "firstEndPos" : 3039,
-  "secondEndPos" : 3884
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3044,
-  "secondPos" : 3889,
+  "firstPos" : 2956,
+  "secondPos" : 3801,
   "firstEndPos" : 3077,
   "secondEndPos" : 3922
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
+  "secondLabel" : "/**\n     * Enables fast checking of whether a node is already in the queue.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 2956,
+  "secondPos" : 3801,
+  "firstEndPos" : 3039,
+  "secondEndPos" : 3884
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -3793,17 +3793,6 @@
   "secondPos" : 3970,
   "firstEndPos" : 3152,
   "secondEndPos" : 3997
-}, {
-  "firstType" : "binding_pattern_kind",
-  "secondType" : "modifiers",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "class_parameter",
-  "secondParentType" : "class_parameter",
-  "firstPos" : 3125,
-  "secondPos" : 1190,
-  "firstEndPos" : 3128,
-  "secondEndPos" : 1197
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4399,27 +4388,27 @@
   "firstEndPos" : 3372,
   "secondEndPos" : 4217
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * A marker for when we're done exploring the graph of higher priority references and start\n     * visiting the lower priority references, at which point we won't add any reference to\n     * the high priority queue anymore.\n     */",
-  "secondLabel" : "/**\n     * A marker for when we're done exploring the graph of higher priority references and start\n     * visiting the lower priority references, at which point we won't add any reference to\n     * the high priority queue anymore.\n     */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3385,
-  "secondPos" : 4230,
-  "firstEndPos" : 3624,
-  "secondEndPos" : 4469
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3629,
-  "secondPos" : 4474,
+  "firstPos" : 3385,
+  "secondPos" : 4230,
   "firstEndPos" : 3653,
   "secondEndPos" : 4498
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * A marker for when we're done exploring the graph of higher priority references and start\n     * visiting the lower priority references, at which point we won't add any reference to\n     * the high priority queue anymore.\n     */",
+  "secondLabel" : "/**\n     * A marker for when we're done exploring the graph of higher priority references and start\n     * visiting the lower priority references, at which point we won't add any reference to\n     * the high priority queue anymore.\n     */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 3385,
+  "secondPos" : 4230,
+  "firstEndPos" : 3624,
+  "secondEndPos" : 4469
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",

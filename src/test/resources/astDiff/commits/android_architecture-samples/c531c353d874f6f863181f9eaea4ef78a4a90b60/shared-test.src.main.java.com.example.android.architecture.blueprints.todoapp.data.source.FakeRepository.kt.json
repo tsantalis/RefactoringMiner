@@ -582,27 +582,27 @@
   "firstEndPos" : 1081,
   "secondEndPos" : 1005
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Implementation of a remote data source with static access to the data for easy testing.\n */",
-  "secondLabel" : "/**\n * Implementation of a tasks repository with static access to the data for easy testing.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1083,
-  "secondPos" : 1007,
-  "firstEndPos" : 1181,
-  "secondEndPos" : 1103
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 1182,
-  "secondPos" : 1104,
+  "firstPos" : 1083,
+  "secondPos" : 1007,
   "firstEndPos" : 4476,
   "secondEndPos" : 4403
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Implementation of a remote data source with static access to the data for easy testing.\n */",
+  "secondLabel" : "/**\n * Implementation of a tasks repository with static access to the data for easy testing.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1083,
+  "secondPos" : 1007,
+  "firstEndPos" : 1181,
+  "secondEndPos" : 1103
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

@@ -2078,27 +2078,27 @@
   "firstEndPos" : 1951,
   "secondEndPos" : 1951
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Encode requests and responses using HTTP/2 frames. */",
-  "secondLabel" : "/** Encode requests and responses using HTTP/2 frames. */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 1953,
-  "secondPos" : 1953,
-  "firstEndPos" : 2010,
-  "secondEndPos" : 2010
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 2011,
-  "secondPos" : 2011,
+  "firstPos" : 1953,
+  "secondPos" : 1953,
   "firstEndPos" : 7023,
   "secondEndPos" : 6949
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Encode requests and responses using HTTP/2 frames. */",
+  "secondLabel" : "/** Encode requests and responses using HTTP/2 frames. */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 1953,
+  "secondPos" : 1953,
+  "firstEndPos" : 2010,
+  "secondEndPos" : 2010
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -8667,27 +8667,27 @@
   "firstEndPos" : 4646,
   "secondEndPos" : 4572
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** See http://tools.ietf.org/html/draft-ietf-httpbis-http2-09#section-8.1.3. */",
-  "secondLabel" : "/** See http://tools.ietf.org/html/draft-ietf-httpbis-http2-09#section-8.1.3. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4653,
-  "secondPos" : 4579,
-  "firstEndPos" : 4733,
-  "secondEndPos" : 4659
-}, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4738,
-  "secondPos" : 4664,
+  "firstPos" : 4653,
+  "secondPos" : 4579,
   "firstEndPos" : 5066,
   "secondEndPos" : 4992
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** See http://tools.ietf.org/html/draft-ietf-httpbis-http2-09#section-8.1.3. */",
+  "secondLabel" : "/** See http://tools.ietf.org/html/draft-ietf-httpbis-http2-09#section-8.1.3. */",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4653,
+  "secondPos" : 4579,
+  "firstEndPos" : 4733,
+  "secondEndPos" : 4659
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -12187,27 +12187,27 @@
   "firstEndPos" : 6116,
   "secondEndPos" : 6042
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/** Returns headers for a name value block containing an HTTP/2 response. */",
-  "secondLabel" : "/** Returns headers for a name value block containing an HTTP/2 response. */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 6128,
-  "secondPos" : 6054,
-  "firstEndPos" : 6204,
-  "secondEndPos" : 6130
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 6209,
-  "secondPos" : 6135,
+  "firstPos" : 6128,
+  "secondPos" : 6054,
   "firstEndPos" : 7017,
   "secondEndPos" : 6943
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/** Returns headers for a name value block containing an HTTP/2 response. */",
+  "secondLabel" : "/** Returns headers for a name value block containing an HTTP/2 response. */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 6128,
+  "secondPos" : 6054,
+  "firstEndPos" : 6204,
+  "secondEndPos" : 6130
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

@@ -131,27 +131,27 @@
   "firstEndPos" : 684,
   "secondEndPos" : 671
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * This is intended to only be used with a single thread executor.\n */",
-  "secondLabel" : "/**\n * This is intended to only be used with a single thread executor.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 686,
-  "secondPos" : 673,
-  "firstEndPos" : 760,
-  "secondEndPos" : 747
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 761,
-  "secondPos" : 748,
+  "firstPos" : 686,
+  "secondPos" : 673,
   "firstEndPos" : 1006,
   "secondEndPos" : 993
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * This is intended to only be used with a single thread executor.\n */",
+  "secondLabel" : "/**\n * This is intended to only be used with a single thread executor.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 686,
+  "secondPos" : 673,
+  "firstEndPos" : 760,
+  "secondEndPos" : 747
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",

@@ -490,7 +490,7 @@
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
   "firstPos" : 268,
-  "secondPos" : 672,
+  "secondPos" : 268,
   "firstEndPos" : 3343,
   "secondEndPos" : 3747
 }, {
@@ -714,27 +714,27 @@
   "firstEndPos" : 356,
   "secondEndPos" : 760
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Whether the current process is the process running the heap analyzer, which is\n   * a different process than the normal app process.\n   */",
-  "secondLabel" : "/**\n   * Whether the current process is the process running the heap analyzer, which is\n   * a different process than the normal app process.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 360,
-  "secondPos" : 764,
-  "firstEndPos" : 507,
-  "secondEndPos" : 911
-}, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 510,
-  "secondPos" : 914,
+  "firstPos" : 360,
+  "secondPos" : 764,
   "firstEndPos" : 1151,
   "secondEndPos" : 1555
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Whether the current process is the process running the heap analyzer, which is\n   * a different process than the normal app process.\n   */",
+  "secondLabel" : "/**\n   * Whether the current process is the process running the heap analyzer, which is\n   * a different process than the normal app process.\n   */",
+  "firstParentType" : "function_declaration",
+  "secondParentType" : "function_declaration",
+  "firstPos" : 360,
+  "secondPos" : 764,
+  "firstEndPos" : 507,
+  "secondEndPos" : 911
 }, {
   "firstType" : "function_keyword",
   "secondType" : "function_keyword",

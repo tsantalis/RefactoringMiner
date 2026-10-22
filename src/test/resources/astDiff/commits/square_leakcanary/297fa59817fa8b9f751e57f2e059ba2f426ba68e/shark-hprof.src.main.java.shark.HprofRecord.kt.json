@@ -54,27 +54,27 @@
   "firstEndPos" : 13,
   "secondEndPos" : 13
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
-  "secondLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 15,
-  "secondPos" : 15,
-  "firstEndPos" : 115,
-  "secondEndPos" : 115
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 116,
-  "secondPos" : 116,
+  "firstPos" : 15,
+  "secondPos" : 15,
   "firstEndPos" : 9624,
   "secondEndPos" : 9846
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
+  "secondLabel" : "/**\n * A Hprof record. These data structure map 1:1 with how records are written in hprof files.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 15,
+  "secondPos" : 15,
+  "firstEndPos" : 115,
+  "secondEndPos" : 115
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -373,27 +373,27 @@
   "firstEndPos" : 225,
   "secondEndPos" : 225
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n   * reused after each call to [OnHprofRecordListener.onHprofRecord].\n   */",
-  "secondLabel" : "/**\n   * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n   * reused after each call to [OnHprofRecordListener.onHprofRecord].\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 229,
-  "secondPos" : 229,
-  "firstEndPos" : 401,
-  "secondEndPos" : 401
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 404,
-  "secondPos" : 404,
+  "firstPos" : 229,
+  "secondPos" : 229,
   "firstEndPos" : 940,
   "secondEndPos" : 940
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n   * reused after each call to [OnHprofRecordListener.onHprofRecord].\n   */",
+  "secondLabel" : "/**\n   * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n   * reused after each call to [OnHprofRecordListener.onHprofRecord].\n   */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 229,
+  "secondPos" : 229,
+  "firstEndPos" : 401,
+  "secondEndPos" : 401
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -1539,27 +1539,27 @@
   "firstEndPos" : 930,
   "secondEndPos" : 930
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Terminates a series of heap dump segments. Concatenation of heap dump segments equals a\n   * heap dump.\n   */",
-  "secondLabel" : "/**\n   * Terminates a series of heap dump segments. Concatenation of heap dump segments equals a\n   * heap dump.\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 944,
-  "secondPos" : 944,
-  "firstEndPos" : 1062,
-  "secondEndPos" : 1062
-}, {
   "firstType" : "object_declaration",
   "secondType" : "object_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1065,
-  "secondPos" : 1065,
+  "firstPos" : 944,
+  "secondPos" : 944,
   "firstEndPos" : 1105,
   "secondEndPos" : 1105
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Terminates a series of heap dump segments. Concatenation of heap dump segments equals a\n   * heap dump.\n   */",
+  "secondLabel" : "/**\n   * Terminates a series of heap dump segments. Concatenation of heap dump segments equals a\n   * heap dump.\n   */",
+  "firstParentType" : "object_declaration",
+  "secondParentType" : "object_declaration",
+  "firstPos" : 944,
+  "secondPos" : 944,
+  "firstEndPos" : 1062,
+  "secondEndPos" : 1062
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -2012,27 +2012,27 @@
   "firstEndPos" : 1292,
   "secondEndPos" : 1292
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
-  "secondLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 1298,
-  "secondPos" : 1298,
-  "firstEndPos" : 1483,
-  "secondEndPos" : 1483
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 1488,
-  "secondPos" : 1488,
+  "firstPos" : 1298,
+  "secondPos" : 1298,
   "firstEndPos" : 1507,
   "secondEndPos" : 1507
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
+  "secondLabel" : "/**\n     * >0 line number\n     * 0 no line information available\n     * -1 unknown location\n     * -2 compiled method (Not implemented)\n     * -3 native method (Not implemented)\n     */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 1298,
+  "secondPos" : 1298,
+  "firstEndPos" : 1483,
+  "secondEndPos" : 1483
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4157,27 +4157,27 @@
   "firstEndPos" : 2454,
   "secondEndPos" : 2454
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ClassDumpRecord] for when you don't need the class content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ClassDumpRecord] for when you don't need the class content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2480,
-  "secondPos" : 2480,
-  "firstEndPos" : 2832,
-  "secondEndPos" : 2832
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2839,
-  "secondPos" : 2839,
+  "firstPos" : 2480,
+  "secondPos" : 2480,
   "firstEndPos" : 4069,
   "secondEndPos" : 4125
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ClassDumpRecord] for when you don't need the class content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ClassDumpRecord] for when you don't need the class content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 2480,
+  "secondPos" : 2480,
+  "firstEndPos" : 2832,
+  "secondEndPos" : 2832
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -6830,27 +6830,27 @@
   "firstEndPos" : 4191,
   "secondEndPos" : 4247
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
-  "secondLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
-  "firstParentType" : "primary_constructor",
-  "secondParentType" : "primary_constructor",
-  "firstPos" : 4201,
-  "secondPos" : 4257,
-  "firstEndPos" : 4292,
-  "secondEndPos" : 4348
-}, {
   "firstType" : "class_parameter",
   "secondType" : "class_parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "primary_constructor",
   "secondParentType" : "primary_constructor",
-  "firstPos" : 4301,
-  "secondPos" : 4357,
+  "firstPos" : 4201,
+  "secondPos" : 4257,
   "firstEndPos" : 4327,
   "secondEndPos" : 4383
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
+  "secondLabel" : "/**\n         * Instance field values (this class, followed by super class, etc)\n         */",
+  "firstParentType" : "class_parameter",
+  "secondParentType" : "class_parameter",
+  "firstPos" : 4201,
+  "secondPos" : 4257,
+  "firstEndPos" : 4292,
+  "secondEndPos" : 4348
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6962,27 +6962,27 @@
   "firstEndPos" : 4352,
   "secondEndPos" : 4408
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [InstanceDumpRecord] for when you don't need the instance content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [InstanceDumpRecord] for when you don't need the instance content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4360,
-  "secondPos" : 4416,
-  "firstEndPos" : 4718,
-  "secondEndPos" : 4774
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4725,
-  "secondPos" : 4781,
+  "firstPos" : 4360,
+  "secondPos" : 4416,
   "firstEndPos" : 5172,
   "secondEndPos" : 5282
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [InstanceDumpRecord] for when you don't need the instance content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [InstanceDumpRecord] for when you don't need the instance content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 4360,
+  "secondPos" : 4416,
+  "firstEndPos" : 4718,
+  "secondEndPos" : 4774
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -8238,27 +8238,27 @@
   "firstEndPos" : 5362,
   "secondEndPos" : 5472
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ObjectArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ObjectArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 5370,
-  "secondPos" : 5480,
-  "firstEndPos" : 5728,
-  "secondEndPos" : 5838
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 5735,
-  "secondPos" : 5845,
+  "firstPos" : 5370,
+  "secondPos" : 5480,
   "firstEndPos" : 6294,
   "secondEndPos" : 6460
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ObjectArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [ObjectArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 5370,
+  "secondPos" : 5480,
+  "firstEndPos" : 5728,
+  "secondEndPos" : 5838
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -14354,27 +14354,27 @@
   "firstEndPos" : 8558,
   "secondEndPos" : 8724
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [PrimitiveArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [PrimitiveArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 8584,
-  "secondPos" : 8750,
-  "firstEndPos" : 8945,
-  "secondEndPos" : 9111
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 8952,
-  "secondPos" : 9118,
+  "firstPos" : 8584,
+  "secondPos" : 8750,
   "firstEndPos" : 9500,
   "secondEndPos" : 9722
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [PrimitiveArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "secondLabel" : "/**\n       * This isn't a real record type as found in the heap dump. It's an alternative to\n       * [PrimitiveArrayDumpRecord] for when you don't need the array content.\n       *\n       * To limit object allocation while parsing, [HprofReader] uses a single instance which is\n       * reused after each call to [OnHprofRecordListener.onHprofRecord].\n       */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 8584,
+  "secondPos" : 8750,
+  "firstEndPos" : 8945,
+  "secondEndPos" : 9111
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",

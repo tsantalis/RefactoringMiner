@@ -153,27 +153,27 @@
   "firstEndPos" : 269,
   "secondEndPos" : 219
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n * Defines [VirtualInstanceReferenceReader] factories for common Apache Harmony data structures.\n *\n * Note: the expanders target the direct classes and don't target subclasses, as these might\n * include additional out going references that would be missed.\n */",
-  "secondLabel" : "/**\n * Defines [VirtualInstanceReferenceReader] factories for common Apache Harmony data structures.\n *\n * Note: the expanders target the direct classes and don't target subclasses, as these might\n * include additional out going references that would be missed.\n */",
-  "firstParentType" : "source_file",
-  "secondParentType" : "source_file",
-  "firstPos" : 271,
-  "secondPos" : 403,
-  "firstEndPos" : 536,
-  "secondEndPos" : 668
-}, {
   "firstType" : "class_declaration",
   "secondType" : "class_declaration",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "source_file",
   "secondParentType" : "source_file",
-  "firstPos" : 537,
-  "secondPos" : 669,
+  "firstPos" : 271,
+  "secondPos" : 403,
   "firstEndPos" : 6118,
   "secondEndPos" : 6235
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n * Defines [VirtualInstanceReferenceReader] factories for common Apache Harmony data structures.\n *\n * Note: the expanders target the direct classes and don't target subclasses, as these might\n * include additional out going references that would be missed.\n */",
+  "secondLabel" : "/**\n * Defines [VirtualInstanceReferenceReader] factories for common Apache Harmony data structures.\n *\n * Note: the expanders target the direct classes and don't target subclasses, as these might\n * include additional out going references that would be missed.\n */",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "class_declaration",
+  "firstPos" : 271,
+  "secondPos" : 403,
+  "firstEndPos" : 536,
+  "secondEndPos" : 668
 }, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
@@ -252,27 +252,27 @@
   "firstEndPos" : 6118,
   "secondEndPos" : 6235
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/LinkedList.java",
-  "secondLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/LinkedList.java",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 612,
-  "secondPos" : 735,
-  "firstEndPos" : 740,
-  "secondEndPos" : 863
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 743,
-  "secondPos" : 866,
+  "firstPos" : 612,
+  "secondPos" : 735,
   "firstEndPos" : 1408,
   "secondEndPos" : 1531
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/LinkedList.java",
+  "secondLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/LinkedList.java",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 612,
+  "secondPos" : 735,
+  "firstEndPos" : 740,
+  "secondEndPos" : 863
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -1539,27 +1539,27 @@
   "firstEndPos" : 1388,
   "secondEndPos" : 1511
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/ArrayList.java",
-  "secondLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/ArrayList.java",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 1413,
-  "secondPos" : 1536,
-  "firstEndPos" : 1540,
-  "secondEndPos" : 1663
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 1543,
-  "secondPos" : 1666,
+  "firstPos" : 1413,
+  "secondPos" : 1536,
   "firstEndPos" : 2146,
   "secondEndPos" : 2269
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/ArrayList.java",
+  "secondLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/ArrayList.java",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 1413,
+  "secondPos" : 1536,
+  "firstEndPos" : 1540,
+  "secondEndPos" : 1663
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -2771,27 +2771,27 @@
   "firstEndPos" : 2126,
   "secondEndPos" : 2249
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/concurrent/CopyOnWriteArrayList.java",
-  "secondLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/concurrent/CopyOnWriteArrayList.java",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 2151,
-  "secondPos" : 2274,
-  "firstEndPos" : 2300,
-  "secondEndPos" : 2423
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 2303,
-  "secondPos" : 2426,
+  "firstPos" : 2151,
+  "secondPos" : 2274,
   "firstEndPos" : 2976,
   "secondEndPos" : 3099
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/concurrent/CopyOnWriteArrayList.java",
+  "secondLabel" : "// https://cs.android.com/android/platform/superproject/+/android-6.0.1_r81:libcore/luni/src/main/java/java/util/concurrent/CopyOnWriteArrayList.java",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 2151,
+  "secondPos" : 2274,
+  "firstEndPos" : 2300,
+  "secondEndPos" : 2423
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -4003,27 +4003,27 @@
   "firstEndPos" : 3106,
   "secondEndPos" : 3229
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Handles HashMap & LinkedHashMap\n   */",
-  "secondLabel" : "/**\n   * Handles HashMap & LinkedHashMap\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 3109,
-  "secondPos" : 3232,
-  "firstEndPos" : 3155,
-  "secondEndPos" : 3278
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 3158,
-  "secondPos" : 3281,
+  "firstPos" : 3109,
+  "secondPos" : 3232,
   "firstEndPos" : 4349,
   "secondEndPos" : 4472
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Handles HashMap & LinkedHashMap\n   */",
+  "secondLabel" : "/**\n   * Handles HashMap & LinkedHashMap\n   */",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 3109,
+  "secondPos" : 3232,
+  "firstEndPos" : 3155,
+  "secondEndPos" : 3278
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -6247,27 +6247,27 @@
   "firstEndPos" : 4479,
   "secondEndPos" : 4602
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n   * Handles HashSet & LinkedHashSet\n   */",
-  "secondLabel" : "/**\n   * Handles HashSet & LinkedHashSet\n   */",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
-  "firstPos" : 4482,
-  "secondPos" : 4605,
-  "firstEndPos" : 4528,
-  "secondEndPos" : 4651
-}, {
   "firstType" : "enum_entry",
   "secondType" : "enum_entry",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "type_body",
   "secondParentType" : "type_body",
-  "firstPos" : 4531,
-  "secondPos" : 4654,
+  "firstPos" : 4482,
+  "secondPos" : 4605,
   "firstEndPos" : 6111,
   "secondEndPos" : 6228
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n   * Handles HashSet & LinkedHashSet\n   */",
+  "secondLabel" : "/**\n   * Handles HashSet & LinkedHashSet\n   */",
+  "firstParentType" : "enum_entry",
+  "secondParentType" : "enum_entry",
+  "firstPos" : 4482,
+  "secondPos" : 4605,
+  "firstEndPos" : 4528,
+  "secondEndPos" : 4651
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

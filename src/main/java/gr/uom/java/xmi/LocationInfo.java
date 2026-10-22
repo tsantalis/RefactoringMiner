@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.cdt.core.dom.ast.IASTDeclarator;
+import org.eclipse.cdt.core.dom.ast.IASTFieldDeclarator;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 import org.eclipse.cdt.core.dom.ast.IASTImageLocation;
 import org.eclipse.cdt.core.dom.ast.IASTMacroExpansionLocation;
@@ -322,7 +323,7 @@ public class LocationInfo {
 		}
 	}
 
-	//the declarator without its initializer or pure specifier, i.e., m_flag in bool m_flag = false; and f() in virtual void f() = 0; whose initializer and pure specifier are siblings of the declarator in the AST
+	//the declarator without its initializer, pure specifier or bit-field size, i.e., m_flag in bool m_flag = false; and f() in virtual void f() = 0; whose initializer and pure specifier are siblings of the declarator in the AST
 	public LocationInfo(String sourceFolder, String filePath, IASTDeclarator declarator, CodeElementType codeElementType, String fileContent, boolean withoutInitializer) {
 		this(sourceFolder, filePath, declarator, codeElementType, fileContent);
 		int end = -1;
@@ -332,6 +333,22 @@ public class LocationInfo {
 		//the pure specifier is the last = of the declarator, after the = of the parameter defaults, i.e., f(int x = 1) = 0
 		else if(withoutInitializer && declarator instanceof ICPPASTFunctionDeclarator functionDeclarator && functionDeclarator.isPureVirtual()) {
 			end = fileContent.lastIndexOf('=', this.endOffset - 1);
+		}
+		//the size of a bit-field is a sibling of the declarator in the AST, i.e., buffer in bool buffer : 1;
+		else if(withoutInitializer && declarator instanceof IASTFieldDeclarator fieldDeclarator && fieldDeclarator.getBitFieldSize() != null) {
+			int size = new LocationInfo(sourceFolder, filePath, fieldDeclarator.getBitFieldSize(), codeElementType, fileContent).startOffset;
+			end = fileContent.lastIndexOf(':', size - 1);
+		}
+		//a macro after the name is a sibling of the declarator in the AST, i.e., x in int x ABSL_GUARDED_BY(mu);
+		if(withoutInitializer) {
+			int declaratorEnd = end > this.startOffset ? end : this.endOffset;
+			while(declaratorEnd > this.startOffset && Character.isWhitespace(fileContent.charAt(declaratorEnd - 1))) {
+				declaratorEnd--;
+			}
+			int macroStart = trailingMacroExpansionStart(declarator, declaratorEnd);
+			if(macroStart > this.startOffset) {
+				end = macroStart;
+			}
 		}
 		if(end > this.startOffset) {
 			while(end > this.startOffset && Character.isWhitespace(fileContent.charAt(end - 1))) {
@@ -347,6 +364,24 @@ public class LocationInfo {
 	}
 
 	private LocationInfo() {
+	}
+
+	//the start of the macro expansions at the end of the declarator before the offset, or -1
+	private static int trailingMacroExpansionStart(IASTDeclarator declarator, int end) {
+		IASTNodeLocation[] locations = declarator.getNodeLocations();
+		int start = -1;
+		for(int i = locations.length - 1; i > 0; i--) {
+			IASTNodeLocation location = locations[i];
+			IASTFileLocation fileLocation = location.asFileLocation();
+			if(fileLocation == null || fileLocation.getNodeOffset() >= end) {
+				continue;
+			}
+			if(!(location instanceof IASTMacroExpansionLocation)) {
+				break;
+			}
+			start = fileLocation.getNodeOffset();
+		}
+		return start;
 	}
 
 	//the same location starting earlier in the file, i.e., at the macros expanded to nothing before a C++ declaration

@@ -9,6 +9,8 @@ import org.eclipse.cdt.core.dom.ast.IASTAttributeOwner;
 import org.eclipse.cdt.core.dom.ast.IASTAttributeSpecifier;
 import org.eclipse.cdt.core.dom.ast.IASTDeclarationStatement;
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import org.eclipse.cdt.core.dom.ast.IASTExpressionStatement;
+import org.eclipse.cdt.core.dom.ast.IASTForStatement;
 import org.eclipse.cdt.core.dom.ast.IASTStatement;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -375,7 +377,9 @@ public class StatementObject extends AbstractStatement {
 	public StatementObject(String sourceFolder, String filePath,
 			IASTStatement statement, int depth, CodeElementType codeElementType,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {
-		super(new LocationInfo(sourceFolder, filePath, statement, codeElementType, fileContent));
+		//the expression initializing a for loop is located without the semicolon, which belongs to the for statement in the AST, i.e., c = 0 in for (c = 0; c < n; c++)
+		super(new LocationInfo(sourceFolder, filePath, statement instanceof IASTExpressionStatement expressionStatement && statement.getParent() instanceof IASTForStatement forStatement
+				&& forStatement.getInitializerStatement() == statement ? expressionStatement.getExpression() : statement, codeElementType, fileContent));
 		this.locationInfo = withAttributes(statement, locationInfo, fileContent);
 		CppVisitor visitor = new CppVisitor(sourceFolder, filePath, container, activeVariableDeclarations, fileContent);
 		statement.accept(visitor);

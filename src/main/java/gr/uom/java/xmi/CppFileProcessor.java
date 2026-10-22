@@ -91,6 +91,10 @@ import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTConversionName;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTElaboratedTypeSpecifier;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTForStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTIfStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTSwitchStatement;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTWhileStatement;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTEnumerationSpecifier;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDeclarator;
 import org.eclipse.cdt.core.dom.ast.cpp.ICPPASTFunctionDefinition;
@@ -529,7 +533,19 @@ public class CppFileProcessor {
 		//i.e., std::vector<T> x = e; as (std::vector < T) > x = e, so the file is parsed again with the declarations of these types in the included file
 		String types = misparsedTemplateTypes(translationUnit, fileContent, preamble);
 		if(!types.isEmpty()) {
-			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, preamble.isEmpty() ? types : preamble + "\n" + types);
+			String extendedPreamble = preamble.isEmpty() ? types : preamble + "\n" + types;
+			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, extendedPreamble);
+			if(problems(reparsed) <= problems(translationUnit)) {
+				translationUnit = reparsed;
+				preamble = extendedPreamble;
+			}
+		}
+		//CDT parses the conditions starting with a name it does not know as declarations of variables whose type is the name,
+		//i.e., if (m_isX11 && m_xwaylandSurface) as the declaration of the reference m_xwaylandSurface of type m_isX11,
+		//which a condition cannot declare without an initializer, so the file is parsed again with these names declared as variables in the included file
+		String variables = misparsedConditions(translationUnit);
+		if(!variables.isEmpty()) {
+			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, preamble.isEmpty() ? variables : preamble + "\n" + variables);
 			if(problems(reparsed) <= problems(translationUnit)) {
 				translationUnit = reparsed;
 			}
@@ -700,6 +716,31 @@ public class CppFileProcessor {
 			"long", "mutable", "namespace", "new", "noexcept", "nullptr", "operator", "private", "protected", "public", "register", "reinterpret_cast", "requires",
 			"return", "short", "signed", "sizeof", "static", "static_assert", "static_cast", "struct", "switch", "template", "this", "thread_local", "throw", "true",
 			"try", "typedef", "typeid", "typename", "union", "unsigned", "using", "virtual", "void", "volatile", "wchar_t", "while");
+
+	//the declarations of the unknown names that CDT parsed as the types of condition declarations without an initializer, i.e., extern int m_isX11;
+	private static String misparsedConditions(IASTTranslationUnit translationUnit) {
+		Set<String> declarations = new LinkedHashSet<>();
+		translationUnit.accept(new ASTVisitor() {
+			{
+				shouldVisitStatements = true;
+			}
+
+			@Override
+			public int visit(IASTStatement statement) {
+				IASTDeclaration condition = statement instanceof ICPPASTIfStatement ifStatement ? ifStatement.getConditionDeclaration() :
+					statement instanceof ICPPASTWhileStatement whileStatement ? whileStatement.getConditionDeclaration() :
+					statement instanceof ICPPASTSwitchStatement switchStatement ? switchStatement.getControllerDeclaration() :
+					statement instanceof ICPPASTForStatement forStatement ? forStatement.getConditionDeclaration() : null;
+				if(condition instanceof IASTSimpleDeclaration simple && isPartOfFile(condition) && simple.getDeclarators().length == 1
+						&& simple.getDeclarators()[0].getInitializer() == null && simple.getDeclSpecifier() instanceof IASTNamedTypeSpecifier named
+						&& named.getName().getLastName() == named.getName() && named.getName().resolveBinding() instanceof IProblemBinding) {
+					declarations.add("extern int " + named.getName() + ";");
+				}
+				return PROCESS_CONTINUE;
+			}
+		});
+		return String.join("\n", declarations);
+	}
 
 	//the definitions of the unknown macros at the start of declarations, which are followed by a declaration specifier that cannot follow a type
 	private static String unknownDeclarationMacros(IASTTranslationUnit translationUnit, String fileContent) {
@@ -1387,7 +1428,8 @@ public class CppFileProcessor {
 					className = declarators[0].getName().toString();
 				}
 			}
-			LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
+			//the class is located without the specifiers of the declaration, like its AST node, i.e., struct S {...} in static constexpr struct S {...} s;
+			LocationInfo locationInfo = UMLType.cppTypeLocation(sourceFolder, filePath, compositeTypeSpecifier, CodeElementType.TYPE_DECLARATION, fileContent);
 			UMLClass umlClass = new UMLClass(packageName, className, locationInfo, true, new ArrayList<>());
 			umlClass.setVisibility(currentVisibility != null ? currentVisibility : Visibility.PUBLIC);
 			if(compositeTypeSpecifier instanceof ICPPASTCompositeTypeSpecifier cppCompositeTypeSpecifier) {

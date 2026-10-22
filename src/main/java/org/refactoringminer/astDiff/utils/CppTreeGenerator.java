@@ -2007,7 +2007,8 @@ public class CppTreeGenerator {
 		return extra != null && extra.getValue() > offset;
 	}
 
-	//the macros expanded to nothing before a declaration, i.e., LLAMA_API in LLAMA_API int f();, which are not in the location of the declaration, are its first children
+	//the macros expanded to nothing before a declaration, i.e., LLAMA_API in LLAMA_API int f();, which are not in the location of the declaration, are its first children,
+	//and so are the calls of these macros, i.e., ABSL_DEPRECATED("...") in ABSL_DEPRECATED("...") static int f();
 	private void absorbEmptyMacros(List<Node> nodes) {
 		int previousEnd = 0;
 		for(Node node : nodes) {
@@ -2018,9 +2019,10 @@ public class CppTreeGenerator {
 					for(int[] expansion : source.expansions) {
 						if(expansion[0] >= previousEnd && expansion[1] <= node.start && skip(expansion[1], node.start) == node.start && !inExtra(expansion[0])) {
 							List<Node> tokens = tokens(expansion[0], expansion[1]);
-							if(tokens.size() == 1 && tokens.get(0).type.equals("identifier")) {
-								node.children.add(0, tokens.get(0));
-								tokens.get(0).parent = node;
+							Node macro = tokens.size() == 1 && tokens.get(0).type.equals("identifier") ? tokens.get(0) : macroCall(expansion[0], expansion[1]);
+							if(macro != null) {
+								node.children.add(0, macro);
+								macro.parent = node;
 								node.start = expansion[0];
 								absorbed = true;
 							}
@@ -2031,6 +2033,20 @@ public class CppTreeGenerator {
 			}
 			previousEnd = Math.max(previousEnd, node.end);
 		}
+	}
+
+	//the call of a macro between the offsets as a call with its arguments parsed again, i.e., ABSL_DEPRECATED("...")
+	private Node macroCall(int start, int end) {
+		int nameEnd = start + tokenAt(start).length();
+		int open = skip(nameEnd, end);
+		if(!isIdentifierStart(content.charAt(start)) || open >= end || !tokenAt(open).equals("(") || matching(open, end) != end - 1) {
+			return null;
+		}
+		Node arguments = reparseArgumentList(open, end);
+		if(arguments == null || failed(List.of(arguments))) {
+			arguments = node("argument_list", open, end, new ArrayList<>());
+		}
+		return node("call_expression", start, end, leaf("identifier", start, nameEnd), arguments);
 	}
 
 	private IASTDeclaration[] activeDeclarations(IASTDeclaration[] declarations) {

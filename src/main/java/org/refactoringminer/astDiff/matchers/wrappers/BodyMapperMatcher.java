@@ -22,6 +22,7 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+import org.refactoringminer.util.PathFileUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +68,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
                 //the comments inside the anonymous class, which are not inside its operations
                 new CommentMatcher(optimizationData, anonymousClassDiff.getCommentListDiff(), LANG1, LANG2).match(srcTree,dstTree,mappingStore);
+                //the object literals of JavaScript and TypeScript and the dictionaries of Python, which the anonymous classes of the other languages are not
+                if(!hasObjectLiterals(anonymousClassDiff.getOriginalClass().getLocationInfo().getFilePath()) || !hasObjectLiterals(anonymousClassDiff.getNextClass().getLocationInfo().getFilePath())) {
+                    continue;
+                }
                 Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,anonymousClassDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT,LANG1.DICTIONARY);
                 Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,anonymousClassDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT,LANG2.DICTIONARY);
                 if(srcTypeDeclaration != null && dstTypeDeclaration != null) {
@@ -1157,6 +1162,10 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 }
             }
         }
+    }
+
+    private static boolean hasObjectLiterals(String filePath) {
+        return PathFileUtils.isJavaScriptFile(filePath) || PathFileUtils.isTypeScriptFile(filePath) || PathFileUtils.isPythonFile(filePath);
     }
 
     private static boolean unmapped(Set<Tree> mapped) {

@@ -78,14 +78,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         //a module is the whole file
         Tree srcTypeDeclaration = classDiff.getOriginalClass().isModule() ? root(srcTree) : TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,AST_types1);
         Tree dstTypeDeclaration = classDiff.getNextClass().isModule() ? root(dstTree) : TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,AST_types2);
-        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isTypeAlias() && classDiff.getNextClass().isTypeAlias()) {
-            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_ALIAS_DECLARATION);
-            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_ALIAS_DECLARATION);
-        }
-        if (srcTypeDeclaration == null && dstTypeDeclaration == null && classDiff.getOriginalClass().isInterface() && classDiff.getNextClass().isInterface()) {
-            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.INTERFACE_DECLARATION);
-            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.INTERFACE_DECLARATION);
-        }
         if(classDiff.getOriginalClass().isObject() && !classDiff.getNextClass().isObject()) {
             srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
             //an object that becomes the functions of a file is matched with the file
@@ -786,7 +778,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         return tree;
     }
 
-    //the types of the node of the class, i.e., a Kotlin companion object, a Kotlin object declaration or a TypeScript object literal for an object
+    //the types of the node of the class, i.e., a Kotlin companion object, a Kotlin object declaration or a TypeScript object literal for an object,
+    //and a Java or Kotlin type declaration or a TypeScript interface declaration for an interface
     private String[] astTypes(UMLClass umlClass, Constants LANG) {
         if (umlClass.isEnum())
             return new String[] {LANG.ENUM_DECLARATION};
@@ -800,6 +793,10 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             return new String[] {LANG.STRUCT_SPECIFIER};
         if (umlClass.isUnion())
             return new String[] {LANG.UNION_SPECIFIER};
+        if (umlClass.isTypeAlias())
+            return new String[] {LANG.TYPE_DECLARATION, LANG.TYPE_ALIAS_DECLARATION};
+        if (umlClass.isInterface())
+            return new String[] {LANG.TYPE_DECLARATION, LANG.INTERFACE_DECLARATION};
         return new String[] {LANG.TYPE_DECLARATION};
     }
 

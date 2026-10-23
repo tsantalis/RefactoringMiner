@@ -2,8 +2,10 @@ package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -135,9 +137,12 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	}
 
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
+		//the pairs of the attributes matched from the original to the next class, whose diffs are not created again from the next to the original class
+		Map<UMLAttribute, UMLAttribute> matchedAttributes = new IdentityHashMap<>();
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
 			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
     		if(matchingAttribute != null) {
+    			matchedAttributes.put(attribute, matchingAttribute);
     			UMLAttributeDiff attributeDiff = classDiff != null ?
     					new UMLAttributeDiff(attribute, matchingAttribute, classDiff, modelDiff) :
     					new UMLAttributeDiff(attribute, matchingAttribute, operationBodyMapperList);
@@ -164,6 +169,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     	for(UMLAttribute attribute : nextClass.getAttributes()) {
     		UMLAttribute matchingAttribute = originalClass.containsAttribute(attribute);
     		if(matchingAttribute != null) {
+    			if(matchedAttributes.get(matchingAttribute) == attribute)
+    				continue;
     			UMLAttributeDiff attributeDiff = classDiff != null ?
     					new UMLAttributeDiff(matchingAttribute, attribute, classDiff, modelDiff) :
     					new UMLAttributeDiff(matchingAttribute, attribute, operationBodyMapperList);

@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.IdentityHashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -17,6 +20,8 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 	}
 
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
+		//the pairs of the attributes matched from the original to the next class, whose diffs are not created again from the next to the original class
+		Map<UMLAttribute, UMLAttribute> matchedAttributes = new IdentityHashMap<>();
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
 			UMLAttribute matchingAttribute = nextClass.containsAttribute(attribute);
 			if(matchingAttribute == null && originalClass.getTypeDeclarationKind().equals("class") && nextClass.getTypeDeclarationKind().equals("enum")) {
@@ -26,6 +31,7 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			this.reportRemovedAttribute(attribute);
     		}
     		else {
+    			matchedAttributes.put(attribute, matchingAttribute);
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute, this, modelDiff);
     			if(!attributeDiff.isEmpty()) {
 	    			refactorings.addAll(attributeDiff.getRefactorings());
@@ -53,6 +59,8 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			this.reportAddedAttribute(attribute);
     		}
     		else {
+    			if(matchedAttributes.get(matchingAttribute) == attribute)
+    				continue;
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute, this, modelDiff);
     			if(!attributeDiff.isEmpty()) {
 	    			refactorings.addAll(attributeDiff.getRefactorings());

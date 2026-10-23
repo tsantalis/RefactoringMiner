@@ -578,7 +578,8 @@ public class KotlinFileProcessor {
 					OperationBody operationBody = new KotlinOperationBody(ktFile, sourceFolder, filePath, constructor.getBodyBlockExpression(), umlConstructor, umlClass.getAttributes(), fileContent);
 					umlConstructor.setBody(operationBody);
 				}
-				if (constructor.getDelegationCall() != null) {
+				//a constructor without : this(...) or : super(...) has an implicit delegation call without text
+				if (constructor.getDelegationCall() != null && !constructor.getDelegationCall().isImplicit()) {
 					KtConstructorDelegationCall call = constructor.getDelegationCall();
 					AbstractExpression defaultExpression = new AbstractExpression(ktFile, sourceFolder, filePath, call, CodeElementType.FUNCTION_INITIALIZER_EXPRESSION, umlConstructor, activeVariableDeclarations, fileContent);
 					umlConstructor.setDefaultExpression(defaultExpression);

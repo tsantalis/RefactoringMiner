@@ -6090,8 +6090,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 4341,
   "secondPos" : 4341,
-  "firstEndPos" : 4531,
-  "secondEndPos" : 4531
+  "firstEndPos" : 4568,
+  "secondEndPos" : 4568
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -6174,8 +6174,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4536,
   "secondPos" : 4536,
   "firstEndPos" : 4568,
@@ -6420,8 +6420,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 4690,
   "secondPos" : 4690,
-  "firstEndPos" : 4742,
-  "secondEndPos" : 4742
+  "firstEndPos" : 5030,
+  "secondEndPos" : 5030
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -6526,8 +6526,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4747,
   "secondPos" : 4747,
   "firstEndPos" : 4909,
@@ -6834,8 +6834,8 @@
   "secondType" : "setter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4914,
   "secondPos" : 4914,
   "firstEndPos" : 5030,
@@ -7971,8 +7971,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 5624,
   "secondPos" : 5624,
-  "firstEndPos" : 5637,
-  "secondEndPos" : 5637
+  "firstEndPos" : 5693,
+  "secondEndPos" : 5693
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -8044,8 +8044,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 5642,
   "secondPos" : 5642,
   "firstEndPos" : 5693,
@@ -8158,8 +8158,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 5697,
   "secondPos" : 5697,
-  "firstEndPos" : 5717,
-  "secondEndPos" : 5717
+  "firstEndPos" : 5809,
+  "secondEndPos" : 5809
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -8231,8 +8231,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 5722,
   "secondPos" : 5722,
   "firstEndPos" : 5809,
@@ -8675,8 +8675,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 6140,
   "secondPos" : 6140,
-  "firstEndPos" : 6523,
-  "secondEndPos" : 6523
+  "firstEndPos" : 7070,
+  "secondEndPos" : 7070
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -9100,8 +9100,8 @@
   "secondType" : "setter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 6528,
   "secondPos" : 6528,
   "firstEndPos" : 7070,
@@ -50046,8 +50046,8 @@
   "secondParentType" : "statements",
   "firstPos" : 26562,
   "secondPos" : 26568,
-  "firstEndPos" : 26603,
-  "secondEndPos" : 26609
+  "firstEndPos" : 26625,
+  "secondEndPos" : 26631
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -50218,8 +50218,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Has host and port.",
   "secondLabel" : "// Has host and port.",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 26604,
   "secondPos" : 26610,
   "firstEndPos" : 26625,
@@ -79163,8 +79163,8 @@
   "secondParentType" : "statements",
   "firstPos" : 37830,
   "secondPos" : 37836,
-  "firstEndPos" : 37863,
-  "secondEndPos" : 37869
+  "firstEndPos" : 37898,
+  "secondEndPos" : 37904
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -79313,8 +79313,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// No chunked encoding for HTTP/2.",
   "secondLabel" : "// No chunked encoding for HTTP/2.",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 37864,
   "secondPos" : 37870,
   "firstEndPos" : 37898,

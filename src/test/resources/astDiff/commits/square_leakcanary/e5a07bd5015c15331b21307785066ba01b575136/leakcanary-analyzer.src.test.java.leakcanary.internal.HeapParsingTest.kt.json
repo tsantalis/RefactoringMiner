@@ -8499,8 +8499,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 8178,
   "secondPos" : 5806,
-  "firstEndPos" : 8195,
-  "secondEndPos" : 5823
+  "firstEndPos" : 8229,
+  "secondEndPos" : 5857
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -8583,8 +8583,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 8200,
   "secondPos" : 5828,
   "firstEndPos" : 8229,
@@ -8664,8 +8664,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 8233,
   "secondPos" : 5861,
-  "firstEndPos" : 8251,
-  "secondEndPos" : 5879
+  "firstEndPos" : 8285,
+  "secondEndPos" : 5913
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -8748,8 +8748,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 8256,
   "secondPos" : 5884,
   "firstEndPos" : 8285,
@@ -10559,12 +10559,23 @@
   "firstEndPos" : 8800,
   "secondEndPos" : 6428
 }, {
-  "firstType" : "class_modifier",
-  "secondType" : "class_modifier",
+  "firstType" : "assignment",
+  "secondType" : "assignment",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
+  "firstPos" : 8820,
+  "secondPos" : 6448,
+  "firstEndPos" : 8903,
+  "secondEndPos" : 6531
+}, {
+  "firstType" : "class_modifier",
+  "secondType" : "class_modifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
   "firstPos" : 8820,
   "secondPos" : 6448,
   "firstEndPos" : 8847,
@@ -10657,6 +10668,171 @@
   "secondPos" : 6459,
   "firstEndPos" : 8845,
   "secondEndPos" : 6473
+}, {
+  "firstType" : "directly_assignable_expression",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 8852,
+  "secondPos" : 6480,
+  "firstEndPos" : 8868,
+  "secondEndPos" : 6496
+}, {
+  "firstType" : "this",
+  "secondType" : "this",
+  "firstLabel" : "this",
+  "secondLabel" : "this",
+  "firstParentType" : "this_expression",
+  "secondParentType" : "this_expression",
+  "firstPos" : 8852,
+  "secondPos" : 6480,
+  "firstEndPos" : 8856,
+  "secondEndPos" : 6484
+}, {
+  "firstType" : "this_expression",
+  "secondType" : "this_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "directly_assignable_expression",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 8852,
+  "secondPos" : 6480,
+  "firstEndPos" : 8856,
+  "secondEndPos" : 6484
+}, {
+  "firstType" : "navigation_suffix",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "directly_assignable_expression",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 8856,
+  "secondPos" : 6484,
+  "firstEndPos" : 8868,
+  "secondEndPos" : 6496
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "byteBuffers",
+  "secondLabel" : "byteBuffers",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 8857,
+  "secondPos" : 6485,
+  "firstEndPos" : 8868,
+  "secondEndPos" : 6496
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 8869,
+  "secondPos" : 6497,
+  "firstEndPos" : 8870,
+  "secondEndPos" : 6498
+}, {
+  "firstType" : "as_expression",
+  "secondType" : "as_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 8871,
+  "secondPos" : 6499,
+  "firstEndPos" : 8903,
+  "secondEndPos" : 6531
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "byteBuffers",
+  "secondLabel" : "byteBuffers",
+  "firstParentType" : "as_expression",
+  "secondParentType" : "as_expression",
+  "firstPos" : 8871,
+  "secondPos" : 6499,
+  "firstEndPos" : 8882,
+  "secondEndPos" : 6510
+}, {
+  "firstType" : "type_conversion_or_type_alias_keyword",
+  "secondType" : "type_conversion_or_type_alias_keyword",
+  "firstLabel" : "as",
+  "secondLabel" : "as",
+  "firstParentType" : "as_expression",
+  "secondParentType" : "as_expression",
+  "firstPos" : 8883,
+  "secondPos" : 6511,
+  "firstEndPos" : 8885,
+  "secondEndPos" : 6513
+}, {
+  "firstType" : "user_type",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "as_expression",
+  "secondParentType" : "as_expression",
+  "firstPos" : 8886,
+  "secondPos" : 6514,
+  "firstEndPos" : 8903,
+  "secondEndPos" : 6531
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Array",
+  "secondLabel" : "Array",
+  "firstParentType" : "user_type",
+  "secondParentType" : "user_type",
+  "firstPos" : 8886,
+  "secondPos" : 6514,
+  "firstEndPos" : 8891,
+  "secondEndPos" : 6519
+}, {
+  "firstType" : "type_arguments",
+  "secondType" : "type_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "user_type",
+  "secondParentType" : "user_type",
+  "firstPos" : 8891,
+  "secondPos" : 6519,
+  "firstEndPos" : 8903,
+  "secondEndPos" : 6531
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "ByteBuffer",
+  "secondLabel" : "ByteBuffer",
+  "firstParentType" : "user_type",
+  "secondParentType" : "user_type",
+  "firstPos" : 8892,
+  "secondPos" : 6520,
+  "firstEndPos" : 8902,
+  "secondEndPos" : 6530
+}, {
+  "firstType" : "type_projection",
+  "secondType" : "type_projection",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_arguments",
+  "secondParentType" : "type_arguments",
+  "firstPos" : 8892,
+  "secondPos" : 6520,
+  "firstEndPos" : 8902,
+  "secondEndPos" : 6530
+}, {
+  "firstType" : "user_type",
+  "secondType" : "user_type",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "type_projection",
+  "secondParentType" : "type_projection",
+  "firstPos" : 8892,
+  "secondPos" : 6520,
+  "firstEndPos" : 8902,
+  "secondEndPos" : 6530
 }, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",

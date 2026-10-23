@@ -1572,17 +1572,6 @@
   "firstEndPos" : 950,
   "secondEndPos" : 1211
 }, {
-  "firstType" : "affectation_operator",
-  "secondType" : "affectation_operator",
-  "firstLabel" : "=",
-  "secondLabel" : "=",
-  "firstParentType" : "property_declaration",
-  "secondParentType" : "function_body",
-  "firstPos" : 951,
-  "secondPos" : 1218,
-  "firstEndPos" : 952,
-  "secondEndPos" : 1219
-}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -1657,8 +1646,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 980,
   "secondPos" : 1234,
-  "firstEndPos" : 1042,
-  "secondEndPos" : 1296
+  "firstEndPos" : 1280,
+  "secondEndPos" : 1534
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -1741,8 +1730,8 @@
   "secondType" : "setter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1051,
   "secondPos" : 1305,
   "firstEndPos" : 1128,
@@ -1906,8 +1895,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1137,
   "secondPos" : 1391,
   "firstEndPos" : 1280,
@@ -2174,8 +2163,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 1286,
   "secondPos" : 1540,
-  "firstEndPos" : 1349,
-  "secondEndPos" : 1603
+  "firstEndPos" : 1589,
+  "secondEndPos" : 1843
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -2258,8 +2247,8 @@
   "secondType" : "setter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1358,
   "secondPos" : 1612,
   "firstEndPos" : 1436,
@@ -2423,8 +2412,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 1445,
   "secondPos" : 1699,
   "firstEndPos" : 1589,

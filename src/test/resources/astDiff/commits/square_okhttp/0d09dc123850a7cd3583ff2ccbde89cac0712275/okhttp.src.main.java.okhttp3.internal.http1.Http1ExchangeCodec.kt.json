@@ -2581,8 +2581,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 3284,
   "secondPos" : 3306,
-  "firstEndPos" : 3357,
-  "secondEndPos" : 3379
+  "firstEndPos" : 3391,
+  "secondEndPos" : 3413
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -2665,8 +2665,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 3362,
   "secondPos" : 3384,
   "firstEndPos" : 3391,
@@ -30389,8 +30389,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 16413,
   "secondPos" : 16289,
-  "firstEndPos" : 16445,
-  "secondEndPos" : 16321
+  "firstEndPos" : 16501,
+  "secondEndPos" : 16377
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -30506,8 +30506,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Idle connections are ready to write request headers.",
   "secondLabel" : "// Idle connections are ready to write request headers.",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 16446,
   "secondPos" : 16322,
   "firstEndPos" : 16501,

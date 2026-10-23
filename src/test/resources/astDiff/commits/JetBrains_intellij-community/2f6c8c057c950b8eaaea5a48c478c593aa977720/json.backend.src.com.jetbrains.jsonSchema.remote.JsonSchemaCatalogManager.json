@@ -13430,6 +13430,28 @@
   "firstEndPos" : 11306,
   "secondEndPos" : 2603
 }, {
+  "firstType" : "TypeDeclaration",
+  "secondType" : "companion_object",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "type_body",
+  "firstPos" : 11323,
+  "secondPos" : 1741,
+  "firstEndPos" : 12327,
+  "secondEndPos" : 3167
+}, {
+  "firstType" : "TYPE_DECLARATION_KIND",
+  "secondType" : "type_keyword",
+  "firstLabel" : "class",
+  "secondLabel" : "object",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "companion_object",
+  "firstPos" : 11344,
+  "secondPos" : 1751,
+  "firstEndPos" : 11349,
+  "secondEndPos" : 1757
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",

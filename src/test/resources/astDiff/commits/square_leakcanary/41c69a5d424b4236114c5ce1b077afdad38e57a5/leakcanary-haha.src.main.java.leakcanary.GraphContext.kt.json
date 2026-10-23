@@ -2199,6 +2199,17 @@
   "firstEndPos" : 648,
   "secondEndPos" : 995
 }, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 600,
+  "secondPos" : 947,
+  "firstEndPos" : 644,
+  "secondEndPos" : 991
+}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
@@ -2214,8 +2225,8 @@
   "secondType" : "class_modifier",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
   "firstPos" : 600,
   "secondPos" : 947,
   "firstEndPos" : 627,
@@ -2308,4 +2319,48 @@
   "secondPos" : 958,
   "firstEndPos" : 625,
   "secondEndPos" : 972
+}, {
+  "firstType" : "directly_assignable_expression",
+  "secondType" : "directly_assignable_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 632,
+  "secondPos" : 979,
+  "firstEndPos" : 637,
+  "secondEndPos" : 984
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "store",
+  "secondLabel" : "store",
+  "firstParentType" : "directly_assignable_expression",
+  "secondParentType" : "directly_assignable_expression",
+  "firstPos" : 632,
+  "secondPos" : 979,
+  "firstEndPos" : 637,
+  "secondEndPos" : 984
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "-=",
+  "secondLabel" : "-=",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 638,
+  "secondPos" : 985,
+  "firstEndPos" : 640,
+  "secondEndPos" : 987
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "key",
+  "secondLabel" : "key",
+  "firstParentType" : "assignment",
+  "secondParentType" : "assignment",
+  "firstPos" : 641,
+  "secondPos" : 988,
+  "firstEndPos" : 644,
+  "secondEndPos" : 991
 } ]

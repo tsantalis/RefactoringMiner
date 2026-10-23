@@ -1107,10 +1107,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 if (typeAnnotation != null) {
                     mappingStore.addMappingRecursively(typeAnnotation.first,typeAnnotation.second);
                 }
-                Pair<Tree, Tree> types = Helpers.findPairOfType(srcStatementNode,dstStatementNode, LANG1.USER_TYPE, LANG2.USER_TYPE);
-                if (types != null) {
-                    mappingStore.addMappingRecursively(types.first,types.second);
-                }
                 Pair<Tree,Tree> parameter_lists = Helpers.findPairOfType(srcStatementNode,dstStatementNode,LANG1.PARAMETER_LIST,LANG2.PARAMETER_LIST);
                 if (parameter_lists != null) {
                     mappingStore.addMapping(parameter_lists.first,parameter_lists.second);
@@ -1133,7 +1129,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                         if (identifiers != null) {
                             mappingStore.addMapping(identifiers.first,identifiers.second);
                         }
-                        types = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.PRIMITIVE_TYPE, LANG2.PRIMITIVE_TYPE);
+                        Pair<Tree, Tree> types = Helpers.findPairOfType(parameterDeclarations.first,parameterDeclarations.second, LANG1.PRIMITIVE_TYPE, LANG2.PRIMITIVE_TYPE);
                         if (types != null) {
                             mappingStore.addMappingRecursively(types.first,types.second);
                         }

@@ -26089,7 +26089,7 @@
   "firstPos" : 27021,
   "secondPos" : 24683,
   "firstEndPos" : 27066,
-  "secondEndPos" : 24724
+  "secondEndPos" : 24746
 }, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "affectation_operator",
@@ -26184,7 +26184,7 @@
   "firstLabel" : "// Has host and port.",
   "secondLabel" : "// Has host and port.",
   "firstParentType" : "Block",
-  "secondParentType" : "function_body",
+  "secondParentType" : "property_declaration",
   "firstPos" : 27067,
   "secondPos" : 24725,
   "firstEndPos" : 27088,
@@ -37265,7 +37265,7 @@
   "firstPos" : 37197,
   "secondPos" : 32979,
   "firstEndPos" : 37248,
-  "secondEndPos" : 33012
+  "secondEndPos" : 33047
 }, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "affectation_operator",
@@ -37316,7 +37316,7 @@
   "firstLabel" : "// No chunked encoding for HTTP/2.",
   "secondLabel" : "// No chunked encoding for HTTP/2.",
   "firstParentType" : "Block",
-  "secondParentType" : "function_body",
+  "secondParentType" : "property_declaration",
   "firstPos" : 37249,
   "secondPos" : 33013,
   "firstEndPos" : 37283,
@@ -41852,7 +41852,7 @@
   "firstPos" : 40583,
   "secondPos" : 36101,
   "firstEndPos" : 40634,
-  "secondEndPos" : 36134
+  "secondEndPos" : 36169
 }, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "affectation_operator",
@@ -41903,7 +41903,7 @@
   "firstLabel" : "// No chunked encoding for HTTP/2.",
   "secondLabel" : "// No chunked encoding for HTTP/2.",
   "firstParentType" : "Block",
-  "secondParentType" : "control_structure_body",
+  "secondParentType" : "property_declaration",
   "firstPos" : 40635,
   "secondPos" : 36135,
   "firstEndPos" : 40669,

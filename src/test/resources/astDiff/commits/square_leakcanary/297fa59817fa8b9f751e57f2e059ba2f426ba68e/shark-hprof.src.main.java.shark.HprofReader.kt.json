@@ -404,7 +404,7 @@
   "firstPos" : 3751,
   "secondPos" : 217,
   "firstEndPos" : 3999,
-  "secondEndPos" : 244
+  "secondEndPos" : 288
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -470,7 +470,7 @@
   "firstPos" : 4003,
   "secondPos" : 292,
   "firstEndPos" : 4136,
-  "secondEndPos" : 315
+  "secondEndPos" : 365
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -546,8 +546,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 4144,
   "secondPos" : 3656,
-  "firstEndPos" : 4360,
-  "secondEndPos" : 3761
+  "firstEndPos" : 4377,
+  "secondEndPos" : 3777
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -630,8 +630,8 @@
   "secondType" : "setter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 4365,
   "secondPos" : 3766,
   "firstEndPos" : 4377,

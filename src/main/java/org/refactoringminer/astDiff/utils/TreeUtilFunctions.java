@@ -28,9 +28,6 @@ public class TreeUtilFunctions {
 		if (locationInfo == null) return null;
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
-		if(end_offset == tree.getEndPos() + 1) {
-			end_offset = tree.getEndPos();
-		}
 		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo,LANG) : null;
 		return findByLocationInfoNoLookAhead(tree, locationInfo, LANG);
 	}
@@ -38,9 +35,6 @@ public class TreeUtilFunctions {
 	public static Tree findByLocationInfoNoLookAhead(Tree tree, LocationInfo locationInfo, Constants LANG) {
 		int start_offset = locationInfo.getStartOffset();
 		int end_offset = locationInfo.getEndOffset();
-		if(end_offset == tree.getEndPos() + 1) {
-			end_offset = tree.getEndPos();
-		}
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
 		//a block with a single statement has the range of the statement, so it is located only for a block of the model, i.e., if x: return y
@@ -62,9 +56,6 @@ public class TreeUtilFunctions {
 		if (locationInfo == null) return null;
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
-		if(endoffset == tree.getEndPos() + 1) {
-			endoffset = tree.getEndPos();
-		}
 		if (tree.getPos() > startoffset || tree.getEndPos() < endoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo,LANG,type) : null;
 		return getTreeBetweenPositions(tree, startoffset, endoffset, LANG, type);
 	}
@@ -165,7 +156,12 @@ public class TreeUtilFunctions {
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
 		if (isFromType(tree, LANG.ANONYMOUS_CLASS_DECLARATION)) return copy;
+		//the leading comments of a declaration are matched by the JavaDocMatcher and CommentMatcher, and the accessors of a Kotlin property as operations
+		boolean leadingComment = LANG.isDeclaration(tree.getType().name);
 		for (Tree child : tree.getChildren()) {
+			leadingComment = leadingComment && isFromType(child, LANG.LINE_COMMENT, LANG.BLOCK_COMMENT);
+			if (leadingComment || isFromType(child, LANG.GETTER, LANG.SETTER))
+				continue;
 			Tree childCopy = deepCopyWithMapPruning(child,cpyMap,LANG);
 			if (childCopy != null)
 				copy.addChild(childCopy);

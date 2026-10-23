@@ -313,18 +313,6 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
                 if (equalOperators != null)
                     mappingStore.addMapping(equalOperators.first,equalOperators.second);
             }
-            else if (srcVarDeclaration != null && dstVarDeclaration != null &&
-                    (!leadingComments(srcVarDeclaration, LANG1).isEmpty() || !leadingComments(dstVarDeclaration, LANG2).isEmpty())) {
-                //the leading comments of the Kotlin property declarations are matched by the JavaDocMatcher and CommentMatcher
-                ExtendedMultiMappingStore leafMappings = new ExtendedMultiMappingStore(srcTree, dstTree, LANG1, LANG2);
-                new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,leafMappings);
-                List<Tree> srcComments = leadingComments(srcVarDeclaration, LANG1);
-                List<Tree> dstComments = leadingComments(dstVarDeclaration, LANG2);
-                for (Mapping leafMapping : leafMappings) {
-                    if (!isPartOf(leafMapping.first, srcComments) && !isPartOf(leafMapping.second, dstComments))
-                        mappingStore.addMapping(leafMapping.first, leafMapping.second);
-                }
-            }
             else
                 new LeafMatcher(LANG1, LANG2).match(srcVarDeclaration,dstVarDeclaration,mappingStore);
             new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff, LANG1, LANG2)
@@ -429,18 +417,14 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         return children.subList(0, first);
     }
 
-    //the children after the leading comments, i.e., the modifiers, val, x, =, 1 of /** doc */ private val x = 1
+    //the children after the leading comments and before the accessors, i.e., the modifiers, val, x, =, 1 of /** doc */ private val x = 1 get() = field
+    //the accessors are matched as operations
     private static List<Tree> childrenAfterComments(Tree tree, Constants LANG) {
         List<Tree> children = tree.getChildren();
-        return children.subList(leadingComments(tree, LANG).size(), children.size());
-    }
-
-    private static boolean isPartOf(Tree tree, List<Tree> comments) {
-        for (Tree comment : comments) {
-            if (comment == tree || comment.getDescendants().contains(tree))
-                return true;
-        }
-        return false;
+        int end = 0;
+        while (end < children.size() && !children.get(end).getType().name.equals(LANG.GETTER) && !children.get(end).getType().name.equals(LANG.SETTER))
+            end++;
+        return children.subList(Math.min(leadingComments(tree, LANG).size(), end), end);
     }
 
     private static Tree firstChildAfterComments(Tree tree, Constants LANG) {

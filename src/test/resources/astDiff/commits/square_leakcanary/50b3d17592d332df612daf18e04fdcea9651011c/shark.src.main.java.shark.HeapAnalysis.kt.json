@@ -1427,7 +1427,7 @@
   "firstPos" : 1318,
   "secondPos" : 7130,
   "firstEndPos" : 1347,
-  "secondEndPos" : 7160
+  "secondEndPos" : 7208
 }, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
@@ -1438,7 +1438,7 @@
   "firstPos" : 1318,
   "secondPos" : 7977,
   "firstEndPos" : 1347,
-  "secondEndPos" : 8007
+  "secondEndPos" : 8048
 }, {
   "firstType" : "modifiers",
   "secondType" : "modifiers",
@@ -1801,7 +1801,7 @@
   "firstPos" : 1500,
   "secondPos" : 7130,
   "firstEndPos" : 1516,
-  "secondEndPos" : 7160
+  "secondEndPos" : 7208
 }, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
@@ -1812,7 +1812,7 @@
   "firstPos" : 1500,
   "secondPos" : 7977,
   "firstEndPos" : 1516,
-  "secondEndPos" : 8007
+  "secondEndPos" : 8048
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -1977,7 +1977,7 @@
   "firstPos" : 1522,
   "secondPos" : 7212,
   "firstEndPos" : 1545,
-  "secondEndPos" : 7249
+  "secondEndPos" : 7280
 }, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
@@ -1988,7 +1988,7 @@
   "firstPos" : 1522,
   "secondPos" : 8052,
   "firstEndPos" : 1545,
-  "secondEndPos" : 8089
+  "secondEndPos" : 8450
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3153,8 +3153,8 @@
   "secondParentType" : "type_body",
   "firstPos" : 2282,
   "secondPos" : 2469,
-  "firstEndPos" : 2451,
-  "secondEndPos" : 2642
+  "firstEndPos" : 2495,
+  "secondEndPos" : 2712
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -3281,8 +3281,8 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
-  "secondParentType" : "type_body",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
   "firstPos" : 2456,
   "secondPos" : 2647,
   "firstEndPos" : 2495,
@@ -4276,7 +4276,7 @@
   "firstPos" : 3097,
   "secondPos" : 7130,
   "firstEndPos" : 3113,
-  "secondEndPos" : 7160
+  "secondEndPos" : 7208
 }, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
@@ -4287,7 +4287,7 @@
   "firstPos" : 3097,
   "secondPos" : 7977,
   "firstEndPos" : 3113,
-  "secondEndPos" : 8007
+  "secondEndPos" : 8048
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -4496,7 +4496,7 @@
   "firstPos" : 3119,
   "secondPos" : 7212,
   "firstEndPos" : 3142,
-  "secondEndPos" : 7249
+  "secondEndPos" : 7280
 }, {
   "firstType" : "class_parameter",
   "secondType" : "property_declaration",
@@ -4507,7 +4507,7 @@
   "firstPos" : 3119,
   "secondPos" : 8052,
   "firstEndPos" : 3142,
-  "secondEndPos" : 8089
+  "secondEndPos" : 8450
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -5607,7 +5607,7 @@
   "firstPos" : 3960,
   "secondPos" : 5405,
   "firstEndPos" : 4166,
-  "secondEndPos" : 5585
+  "secondEndPos" : 5735
 }, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
@@ -5782,7 +5782,7 @@
   "secondParentType" : "type_body",
   "firstPos" : 4170,
   "secondPos" : 5739,
-  "firstEndPos" : 4395,
+  "firstEndPos" : 4425,
   "secondEndPos" : 5986
 }, {
   "firstType" : "multiline_comment",
@@ -5848,7 +5848,7 @@
   "secondParentType" : "type_body",
   "firstPos" : 4429,
   "secondPos" : 585,
-  "firstEndPos" : 4559,
+  "firstEndPos" : 4710,
   "secondEndPos" : 786
 }, {
   "firstType" : "multiline_comment",
@@ -5932,7 +5932,7 @@
   "secondType" : "getter",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "type_body",
+  "firstParentType" : "property_declaration",
   "secondParentType" : "property_declaration",
   "firstPos" : 4564,
   "secondPos" : 752,

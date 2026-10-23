@@ -81,19 +81,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         //a module is the whole file
         Tree srcTypeDeclaration = classDiff.getOriginalClass().isModule() ? root(srcTree) : TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,AST_types1);
         Tree dstTypeDeclaration = classDiff.getNextClass().isModule() ? root(dstTree) : TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,AST_types2);
-        if(classDiff.getOriginalClass().isObject() && !classDiff.getNextClass().isObject()) {
-            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.OBJECT_DECLARATION);
-            //an object that becomes the functions of a file is matched with the file
-            dstTypeDeclaration = classDiff.getNextClass().isModule() ? root(dstTree) : TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.TYPE_DECLARATION);
-        }
-        else if(!classDiff.getOriginalClass().isObject() && classDiff.getNextClass().isObject()) {
-            srcTypeDeclaration = classDiff.getOriginalClass().isModule() ? root(srcTree) : TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.TYPE_DECLARATION);
-            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.OBJECT_DECLARATION);
-        }
-        if (srcTypeDeclaration == null && dstTypeDeclaration == null) {
-            srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),LANG1,LANG1.ERROR);
-            dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),LANG2,LANG2.ERROR);
-        }
         if(classDiff.getTypeAliasListDiff().isPresent()) {
             processTypeAliasList(srcTree, dstTree, classDiff.getTypeAliasListDiff().get(), mappingStore);
         }

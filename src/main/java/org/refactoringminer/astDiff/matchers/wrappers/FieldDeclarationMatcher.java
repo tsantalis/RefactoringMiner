@@ -77,9 +77,15 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1);
         Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2);
         if (srcAttr == null || dstAttr == null) return;
-        //a C++ enumerator is its own declaration, and not the field declaring its enum in a class, i.e., A = 1 in enum E { A = 1 };
+        //a C++ enumerator, a Kotlin enum entry or class parameter is its own declaration, and not the field declaring its enum in a class, i.e., A = 1 in enum E { A = 1 };
         Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.ENUMERATOR);
         Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.ENUMERATOR);
+        if (srcFieldDeclaration == null && (srcAttr.getType().name.equals(LANG1.ENUM_ENTRY) || srcAttr.getType().name.equals(LANG1.CLASS_PARAMETER))) {
+            srcFieldDeclaration = srcAttr;
+        }
+        if (dstFieldDeclaration == null && (dstAttr.getType().name.equals(LANG2.ENUM_ENTRY) || dstAttr.getType().name.equals(LANG2.CLASS_PARAMETER))) {
+            dstFieldDeclaration = dstAttr;
+        }
         if (srcFieldDeclaration == null) {
             srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, LANG1.FIELD_DECLARATION);
         }
@@ -125,22 +131,6 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         if (dstFieldDeclaration == null) {
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, LANG2.TYPE_DEFINITION);
-        }
-        //the Kotlin property declarations around properties located at their leading comments, and the class parameters declaring properties,
-        //while in the other languages the attribute is its declaration when there is none around it, i.e., the pair of an object literal
-        boolean kotlin1 = PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath());
-        boolean kotlin2 = PathFileUtils.isKotlinFile(dstUMLAttribute.getLocationInfo().getFilePath());
-        if (kotlin1 && (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment"))) {
-            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.FIELD_DECLARATION);
-        }
-        if (kotlin2 && (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment"))) {
-            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.FIELD_DECLARATION);
-        }
-        if (kotlin1 && (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment"))) {
-            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo(), LANG1, LANG1.CLASS_PARAMETER);
-        }
-        if (kotlin2 && (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment"))) {
-            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
         }
         this.srcFieldDeclaration = srcFieldDeclaration;
         this.dstFieldDeclaration = dstFieldDeclaration;

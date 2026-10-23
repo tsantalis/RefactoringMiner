@@ -468,11 +468,9 @@ public class KotlinPsiTreeGenerator {
 		return t;
 	}
 
+	//the enum entry with its trailing comma or semicolon, like in PSI and in the model, i.e., A(1),
 	private Tree enumEntry(ASTNode n, List<ASTNode> rest) {
 		Tree t = declarationNode("enum_entry", n, rest);
-		int last = rest.size() - 1;
-		while(last > 0 && (Set.of("COMMA", "SEMICOLON").contains(type(rest.get(last))) || isComment(rest.get(last)))) last--;
-		t.setLength(end(rest.get(last)) - t.getPos());
 		for(ASTNode c : rest) {
 			switch(type(c)) {
 				case "MODIFIER_LIST" -> add(t, modifiers(c));

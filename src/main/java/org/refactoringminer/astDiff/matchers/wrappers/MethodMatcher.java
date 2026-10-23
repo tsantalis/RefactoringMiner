@@ -663,11 +663,11 @@ public class MethodMatcher extends BodyMapperMatcher{
             if(srcTree.getType().name.equals(LANG1.MODULE) || srcTree.getType().name.equals(LANG1.PROGRAM))
                 srcOperationNode = srcTree;
             else
-                srcOperationNode = findInitializer(srcTree, umlOperationBodyMapper.getContainer1(), LANG1);
+                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo(), LANG1);
             if(dstTree.getType().name.equals(LANG2.MODULE) || dstTree.getType().name.equals(LANG2.PROGRAM))
                 dstOperationNode = dstTree;
             else
-                dstOperationNode = findInitializer(dstTree, umlOperationBodyMapper.getContainer2(), LANG2);
+                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo(), LANG2);
             if (srcOperationNode != null && dstOperationNode != null) {
                 if (srcOperationNode.getType().name.equals(LANG1.INITIALIZER) && dstOperationNode.getType().name.equals(LANG2.INITIALIZER)) {
                     mappingStore.addMapping(srcOperationNode, dstOperationNode);
@@ -1519,18 +1519,6 @@ public class MethodMatcher extends BodyMapperMatcher{
                 mappingStore.addMappingRecursively(templateTypes.first,templateTypes.second);
             }
         }
-    }
-
-    //the initializer is searched by type, as its location might include the comments preceding it, which are its siblings in the tree, i.e., Kotlin /** ... */ init { ... },
-    //while the other containers, i.e., the attribute of a mapped field initializer, are found by their location
-    private static Tree findInitializer(Tree tree, VariableDeclarationContainer container, Constants LANG) {
-        LocationInfo locationInfo = container.getLocationInfo();
-        if (container instanceof UMLInitializer && !LANG.INITIALIZER.isEmpty()) {
-            Tree initializer = TreeUtilFunctions.findByLocationInfo(tree, locationInfo, LANG, LANG.INITIALIZER);
-            if (initializer != null && initializer.getType().name.equals(LANG.INITIALIZER))
-                return initializer;
-        }
-        return TreeUtilFunctions.findByLocationInfo(tree, locationInfo, LANG);
     }
 
     private void processOperationDiff(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {

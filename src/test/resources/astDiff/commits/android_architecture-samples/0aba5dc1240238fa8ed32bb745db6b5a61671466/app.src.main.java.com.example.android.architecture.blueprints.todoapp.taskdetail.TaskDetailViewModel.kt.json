@@ -6277,8 +6277,8 @@
   "secondParentType" : "function_value_parameters",
   "firstPos" : 3284,
   "secondPos" : 3265,
-  "firstEndPos" : 3305,
-  "secondEndPos" : 3286
+  "firstEndPos" : 3313,
+  "secondEndPos" : 3294
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -6317,8 +6317,8 @@
   "secondType" : "affectation_operator",
   "firstLabel" : "=",
   "secondLabel" : "=",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 3306,
   "secondPos" : 3287,
   "firstEndPos" : 3307,
@@ -6328,8 +6328,8 @@
   "secondType" : "boolean_literal",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 3308,
   "secondPos" : 3289,
   "firstEndPos" : 3313,
@@ -9030,6 +9030,17 @@
   "firstEndPos" : 4482,
   "secondEndPos" : 4463
 }, {
+  "firstType" : "parameter",
+  "secondType" : "parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_value_parameters",
+  "secondParentType" : "function_value_parameters",
+  "firstPos" : 4458,
+  "secondPos" : 4439,
+  "firstEndPos" : 4481,
+  "secondEndPos" : 4462
+}, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
   "firstLabel" : "",
@@ -9045,8 +9056,8 @@
   "secondType" : "parameter_modifiers",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 4458,
   "secondPos" : 4439,
   "firstEndPos" : 4468,
@@ -9084,17 +9095,6 @@
   "secondPos" : 4440,
   "firstEndPos" : 4468,
   "secondEndPos" : 4449
-}, {
-  "firstType" : "parameter",
-  "secondType" : "parameter",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
-  "firstPos" : 4469,
-  "secondPos" : 4450,
-  "firstEndPos" : 4481,
-  "secondEndPos" : 4462
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

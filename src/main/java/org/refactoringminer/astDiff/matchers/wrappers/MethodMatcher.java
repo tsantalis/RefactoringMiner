@@ -51,12 +51,6 @@ public class MethodMatcher extends BodyMapperMatcher{
             srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1);
             dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2);
             if (srcOperationNode != null && dstOperationNode != null) {
-            if (srcOperationNode != null && srcOperationNode.getType().name.endsWith("_comment")) {
-                srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1, LANG1.METHOD_DECLARATION);
-            }
-            if (dstOperationNode != null && dstOperationNode.getType().name.endsWith("_comment")) {
-                dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2, LANG2.METHOD_DECLARATION);
-            }
             if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getParent().getType().name.equals(LANG1.DECORATED_METHOD)) {
                 srcOperationNode = srcOperationNode.getParent();
             }
@@ -1758,12 +1752,6 @@ public class MethodMatcher extends BodyMapperMatcher{
         Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo(),LANG1);
         Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo(),LANG2);
         if (leftTree == null || rightTree == null) return;
-        if (leftTree.getType().name.endsWith("_comment")) {
-            leftTree = TreeUtilFunctions.findByLocationInfo(srcTree, leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
-        }
-        if (rightTree.getType().name.endsWith("_comment")) {
-            rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
-        }
         if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
             if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
                 mappingStore.addMappingRecursively(leftTree, rightTree);
@@ -1820,16 +1808,6 @@ public class MethodMatcher extends BodyMapperMatcher{
                         processPatternDefault(requiredParameter1, requiredParameter2, mappingStore);
                         mapFollowingComma(requiredParameter1, requiredParameter2, mappingStore);
                     }
-                }
-            }
-            if(leftTree.getType().name.equals(LANG1.PARAMETER_MODIFIERS) && rightTree.getType().name.equals(LANG2.PARAMETER_MODIFIERS)) {
-                Tree leftParameter = TreeUtilFunctions.findByLocationInfo(leftTree.getParent(), leftVarDecl.getLocationInfo(), LANG1, LANG1.PARAMETER);
-                Tree rightParameter = TreeUtilFunctions.findByLocationInfo(rightTree.getParent(), rightVarDecl.getLocationInfo(), LANG2, LANG2.PARAMETER);
-                if (TreeUtilFunctions.isIsomorphicTo(leftParameter, rightParameter))
-                    mappingStore.addMappingRecursively(leftParameter, rightParameter);
-                else {
-                    new LeafMatcher(LANG1, LANG2).match(leftParameter,rightParameter,mappingStore);
-                    mappingStore.addMapping(leftParameter,rightParameter);
                 }
             }
             if(leftVarDecl.getInitializer() != null && rightVarDecl.getInitializer() != null) {

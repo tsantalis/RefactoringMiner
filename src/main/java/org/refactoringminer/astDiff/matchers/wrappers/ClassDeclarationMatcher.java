@@ -1308,12 +1308,6 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     private void processPrimaryConstructorParameterPair(Tree srcTypeDeclaration, Tree dstTypeDeclaration, VariableDeclaration left, VariableDeclaration right, ExtendedMultiMappingStore mappingStore) {
         Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, left.getLocationInfo(), LANG1);
         Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, right.getLocationInfo(), LANG2);
-        if (srcFieldDeclaration == null || srcFieldDeclaration.getType().name.endsWith("_comment")) {
-            srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, left.getLocationInfo(), LANG1, LANG1.CLASS_PARAMETER);
-        }
-        if (dstFieldDeclaration == null || dstFieldDeclaration.getType().name.endsWith("_comment")) {
-            dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTypeDeclaration, right.getLocationInfo(), LANG2, LANG2.CLASS_PARAMETER);
-        }
         if (srcFieldDeclaration == null || dstFieldDeclaration == null)
             return;
         if (srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))

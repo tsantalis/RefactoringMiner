@@ -1055,6 +1055,17 @@
   "firstEndPos" : 857,
   "secondEndPos" : 941
 }, {
+  "firstType" : "parameter",
+  "secondType" : "parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_value_parameters",
+  "secondParentType" : "function_value_parameters",
+  "firstPos" : 820,
+  "secondPos" : 904,
+  "firstEndPos" : 856,
+  "secondEndPos" : 940
+}, {
   "firstType" : "class_modifier",
   "secondType" : "class_modifier",
   "firstLabel" : "",
@@ -1070,8 +1081,8 @@
   "secondType" : "parameter_modifiers",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 820,
   "secondPos" : 904,
   "firstEndPos" : 829,
@@ -1109,17 +1120,6 @@
   "secondPos" : 905,
   "firstEndPos" : 829,
   "secondEndPos" : 913
-}, {
-  "firstType" : "parameter",
-  "secondType" : "parameter",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
-  "firstPos" : 830,
-  "secondPos" : 914,
-  "firstEndPos" : 856,
-  "secondEndPos" : 940
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

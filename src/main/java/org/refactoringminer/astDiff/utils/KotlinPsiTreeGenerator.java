@@ -592,54 +592,19 @@ public class KotlinPsiTreeGenerator {
 	private Tree functionValueParameters(ASTNode n) {
 		Tree t = node("function_value_parameters", n);
 		for(ASTNode c : kids(n)) {
-			if(type(c).equals("VALUE_PARAMETER")) {
-				addAll(t, leadingComments(c));
-				//the default value is a sibling of the parameter, as in the tree-sitter tree, i.e., function_value_parameters -> [parameter, =, value]
-				ASTNode eq = kid(c, "EQ");
-				Tree p = parameter(c, "parameter");
-				//the modifiers are a sibling of the parameter, as in the tree-sitter tree, i.e., function_value_parameters -> [parameter_modifiers, parameter]
-				if(!p.getChildren().isEmpty() && p.getChild(0).getType().name.equals("parameter_modifiers")) {
-					Tree m = p.getChild(0);
-					p.getChildren().remove(0);
-					p.setPos(p.getChild(0).getPos());
-					p.setLength(end(c) - p.getPos());
-					add(t, m);
-				}
-				if(eq != null) {
-					int index = 0;
-					while(index < p.getChildren().size() && p.getChild(index).getPos() < start(eq)) index++;
-					List<Tree> defaults = new ArrayList<>(p.getChildren().subList(index, p.getChildren().size()));
-					p.getChildren().removeAll(defaults);
-					p.setLength(p.getChildren().get(p.getChildren().size() - 1).getEndPos() - p.getPos());
-					add(t, p);
-					addAll(t, defaults);
-				}
-				else add(t, p);
-			}
+			if(type(c).equals("VALUE_PARAMETER"))
+				add(t, parameter(c, "parameter"));
 			else if(isComment(c))
 				add(t, comment(c));
 		}
 		return t;
 	}
 
-	//the comments preceding a parameter, which are its first children in PSI
-	private List<Tree> leadingComments(ASTNode n) {
-		List<Tree> trees = new ArrayList<>();
-		for(ASTNode c : kids(n)) {
-			if(!isComment(c)) break;
-			trees.add(comment(c));
-		}
-		return trees;
-	}
-
-	//parameter -> [parameter_modifiers?, simple_identifier, type] or class_parameter -> [comments?, modifiers?, binding_pattern_kind?, simple_identifier, type, =, default],
-	//where the class parameters keep their leading comments, like the declarations, i.e., class A(/** doc */ val x: Int)
+	//parameter -> [comments?, parameter_modifiers?, simple_identifier, type, =, default] or class_parameter -> [comments?, modifiers?, binding_pattern_kind?, simple_identifier, type, =, default],
+	//where the parameters keep their leading comments, modifiers and default values, like the declarations and the model, i.e., fun f(/** doc */ @A x: Int = 1)
 	private Tree parameter(ASTNode n, String type) {
-		List<ASTNode> kids = kids(n);
-		int first = 0;
-		while(type.equals("parameter") && first < kids.size() - 1 && isComment(kids.get(first))) first++;
-		Tree t = node(type, start(kids.get(first)), end(n));
-		for(ASTNode c : kids.subList(first, kids.size())) {
+		Tree t = node(type, n);
+		for(ASTNode c : kids(n)) {
 			switch(type(c)) {
 				case "MODIFIER_LIST" -> add(t, type.equals("parameter") ? parameterModifiers(c) : modifiers(c));
 				case "val", "var" -> add(t, bindingPatternKind(c));

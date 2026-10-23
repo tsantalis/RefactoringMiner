@@ -3266,27 +3266,27 @@
   "firstEndPos" : 2187,
   "secondEndPos" : 2214
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/**\n     * If [sourceBytesPerPixel] > 0 then [sourceHeight] will be ignored.\n     */",
-  "secondLabel" : "/**\n     * If [sourceBytesPerPixel] > 0 then [sourceHeight] will be ignored.\n     */",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
-  "firstPos" : 2193,
-  "secondPos" : 2220,
-  "firstEndPos" : 2277,
-  "secondEndPos" : 2304
-}, {
   "firstType" : "parameter",
   "secondType" : "parameter",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_value_parameters",
   "secondParentType" : "function_value_parameters",
-  "firstPos" : 2282,
-  "secondPos" : 2309,
+  "firstPos" : 2193,
+  "secondPos" : 2220,
   "firstEndPos" : 2306,
   "secondEndPos" : 2333
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/**\n     * If [sourceBytesPerPixel] > 0 then [sourceHeight] will be ignored.\n     */",
+  "secondLabel" : "/**\n     * If [sourceBytesPerPixel] > 0 then [sourceHeight] will be ignored.\n     */",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
+  "firstPos" : 2193,
+  "secondPos" : 2220,
+  "firstEndPos" : 2277,
+  "secondEndPos" : 2304
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

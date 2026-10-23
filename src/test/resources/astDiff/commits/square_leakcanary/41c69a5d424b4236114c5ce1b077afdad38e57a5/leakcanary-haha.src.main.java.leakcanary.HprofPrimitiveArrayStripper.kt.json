@@ -1129,8 +1129,8 @@
   "secondParentType" : "function_value_parameters",
   "firstPos" : 1008,
   "secondPos" : 1098,
-  "firstEndPos" : 1029,
-  "secondEndPos" : 1119
+  "firstEndPos" : 1221,
+  "secondEndPos" : 1311
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -1169,8 +1169,8 @@
   "secondType" : "affectation_operator",
   "firstLabel" : "=",
   "secondLabel" : "=",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 1030,
   "secondPos" : 1120,
   "firstEndPos" : 1031,
@@ -1180,8 +1180,8 @@
   "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 1032,
   "secondPos" : 1122,
   "firstEndPos" : 1221,

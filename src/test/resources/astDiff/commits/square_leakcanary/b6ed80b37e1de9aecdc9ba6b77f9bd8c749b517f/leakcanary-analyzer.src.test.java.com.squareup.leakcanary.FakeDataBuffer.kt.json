@@ -1088,6 +1088,17 @@
   "firstEndPos" : 415,
   "secondEndPos" : 402
 }, {
+  "firstType" : "parameter",
+  "secondType" : "parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_value_parameters",
+  "secondParentType" : "function_value_parameters",
+  "firstPos" : 398,
+  "secondPos" : 385,
+  "firstEndPos" : 414,
+  "secondEndPos" : 401
+}, {
   "firstType" : "parameter_modifier",
   "secondType" : "parameter_modifier",
   "firstLabel" : "vararg",
@@ -1114,23 +1125,12 @@
   "secondType" : "parameter_modifiers",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 398,
   "secondPos" : 385,
   "firstEndPos" : 404,
   "secondEndPos" : 391
-}, {
-  "firstType" : "parameter",
-  "secondType" : "parameter",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
-  "firstPos" : 405,
-  "secondPos" : 392,
-  "firstEndPos" : 414,
-  "secondEndPos" : 401
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -1341,6 +1341,17 @@
   "firstEndPos" : 509,
   "secondEndPos" : 496
 }, {
+  "firstType" : "parameter",
+  "secondType" : "parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_value_parameters",
+  "secondParentType" : "function_value_parameters",
+  "firstPos" : 485,
+  "secondPos" : 472,
+  "firstEndPos" : 508,
+  "secondEndPos" : 495
+}, {
   "firstType" : "parameter_modifier",
   "secondType" : "parameter_modifier",
   "firstLabel" : "vararg",
@@ -1367,23 +1378,12 @@
   "secondType" : "parameter_modifiers",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 485,
   "secondPos" : 472,
   "firstEndPos" : 491,
   "secondEndPos" : 478
-}, {
-  "firstType" : "parameter",
-  "secondType" : "parameter",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_value_parameters",
-  "secondParentType" : "function_value_parameters",
-  "firstPos" : 492,
-  "secondPos" : 479,
-  "firstEndPos" : 508,
-  "secondEndPos" : 495
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

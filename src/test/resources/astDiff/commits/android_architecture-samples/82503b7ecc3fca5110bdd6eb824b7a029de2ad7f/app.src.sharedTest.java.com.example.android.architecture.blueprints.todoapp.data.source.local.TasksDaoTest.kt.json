@@ -1429,12 +1429,23 @@
   "firstEndPos" : 1614,
   "secondEndPos" : 1664
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1327,
+  "secondPos" : 1377,
+  "firstEndPos" : 1608,
+  "secondEndPos" : 1658
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// using an in-memory database because the information stored here disappears when the",
   "secondLabel" : "// using an in-memory database because the information stored here disappears when the",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1327,
   "secondPos" : 1377,
   "firstEndPos" : 1413,
@@ -1444,8 +1455,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// process is killed",
   "secondLabel" : "// process is killed",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1422,
   "secondPos" : 1472,
   "firstEndPos" : 1442,
@@ -1457,17 +1468,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1451,
-  "secondPos" : 1501,
-  "firstEndPos" : 1608,
-  "secondEndPos" : 1658
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 1451,
   "secondPos" : 1501,
   "firstEndPos" : 1608,
@@ -2172,8 +2172,8 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1749,
-  "secondPos" : 1799,
+  "firstPos" : 1716,
+  "secondPos" : 1766,
   "firstEndPos" : 2073,
   "secondEndPos" : 2362
 }, {
@@ -2738,27 +2738,27 @@
   "firstEndPos" : 2684,
   "secondEndPos" : 2973
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given that a task is inserted",
-  "secondLabel" : "// Given that a task is inserted",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2140,
-  "secondPos" : 2429,
-  "firstEndPos" : 2172,
-  "secondEndPos" : 2461
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2181,
-  "secondPos" : 2470,
+  "firstPos" : 2140,
+  "secondPos" : 2429,
   "firstEndPos" : 2678,
   "secondEndPos" : 2967
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given that a task is inserted",
+  "secondLabel" : "// Given that a task is inserted",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2140,
+  "secondPos" : 2429,
+  "firstEndPos" : 2172,
+  "secondEndPos" : 2461
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3921,8 +3921,8 @@
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2785,
-  "secondPos" : 3074,
+  "firstPos" : 2752,
+  "secondPos" : 3041,
   "firstEndPos" : 3175,
   "secondEndPos" : 3685
 }, {
@@ -4729,27 +4729,27 @@
   "firstEndPos" : 3757,
   "secondEndPos" : 4267
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When inserting a task",
-  "secondLabel" : "// When inserting a task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3234,
-  "secondPos" : 3744,
-  "firstEndPos" : 3258,
-  "secondEndPos" : 3768
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3267,
-  "secondPos" : 3777,
+  "firstPos" : 3234,
+  "secondPos" : 3744,
   "firstEndPos" : 3751,
   "secondEndPos" : 4261
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When inserting a task",
+  "secondLabel" : "// When inserting a task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3234,
+  "secondPos" : 3744,
+  "firstEndPos" : 3258,
+  "secondEndPos" : 3768
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5807,27 +5807,27 @@
   "firstEndPos" : 4277,
   "secondEndPos" : 4787
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When inserting a task",
-  "secondLabel" : "// When inserting a task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3815,
-  "secondPos" : 4325,
-  "firstEndPos" : 3839,
-  "secondEndPos" : 4349
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3848,
-  "secondPos" : 4358,
+  "firstPos" : 3815,
+  "secondPos" : 4325,
   "firstEndPos" : 4271,
   "secondEndPos" : 4781
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When inserting a task",
+  "secondLabel" : "// When inserting a task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3815,
+  "secondPos" : 4325,
+  "firstEndPos" : 3839,
+  "secondEndPos" : 4349
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6929,27 +6929,27 @@
   "firstEndPos" : 4688,
   "secondEndPos" : 5198
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a task inserted",
-  "secondLabel" : "// Given a task inserted",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4353,
-  "secondPos" : 4863,
-  "firstEndPos" : 4377,
-  "secondEndPos" : 4887
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4386,
-  "secondPos" : 4896,
+  "firstPos" : 4353,
+  "secondPos" : 4863,
   "firstEndPos" : 4682,
   "secondEndPos" : 5192
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a task inserted",
+  "secondLabel" : "// Given a task inserted",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4353,
+  "secondPos" : 4863,
+  "firstEndPos" : 4377,
+  "secondEndPos" : 4887
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7908,27 +7908,27 @@
   "firstEndPos" : 5075,
   "secondEndPos" : 5585
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a task inserted",
-  "secondLabel" : "// Given a task inserted",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4761,
-  "secondPos" : 5271,
-  "firstEndPos" : 4785,
-  "secondEndPos" : 5295
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4794,
-  "secondPos" : 5304,
+  "firstPos" : 4761,
+  "secondPos" : 5271,
   "firstEndPos" : 5069,
   "secondEndPos" : 5579
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a task inserted",
+  "secondLabel" : "// Given a task inserted",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4761,
+  "secondPos" : 5271,
+  "firstEndPos" : 4785,
+  "secondEndPos" : 5295
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8832,27 +8832,27 @@
   "firstEndPos" : 5496,
   "secondEndPos" : 6006
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a completed task inserted",
-  "secondLabel" : "// Given a completed task inserted",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5157,
-  "secondPos" : 5667,
-  "firstEndPos" : 5191,
-  "secondEndPos" : 5701
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5200,
-  "secondPos" : 5710,
+  "firstPos" : 5157,
+  "secondPos" : 5667,
   "firstEndPos" : 5490,
   "secondEndPos" : 6000
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a completed task inserted",
+  "secondLabel" : "// Given a completed task inserted",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5157,
+  "secondPos" : 5667,
+  "firstEndPos" : 5191,
+  "secondEndPos" : 5701
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

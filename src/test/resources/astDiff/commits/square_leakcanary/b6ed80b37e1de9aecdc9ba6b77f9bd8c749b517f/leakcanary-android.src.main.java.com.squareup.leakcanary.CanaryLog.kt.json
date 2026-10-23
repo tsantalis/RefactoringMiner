@@ -2804,23 +2804,23 @@
   "firstEndPos" : 952,
   "secondEndPos" : 939
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 959,
-  "secondPos" : 946,
-  "firstEndPos" : 981,
-  "secondEndPos" : 968
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
+  "firstPos" : 953,
+  "secondPos" : 940,
+  "firstEndPos" : 985,
+  "secondEndPos" : 972
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 959,
   "secondPos" : 946,
   "firstEndPos" : 981,
@@ -3530,27 +3530,27 @@
   "firstEndPos" : 1378,
   "secondEndPos" : 1361
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1218,
-  "secondPos" : 1211,
-  "firstEndPos" : 1295,
-  "secondEndPos" : 1288
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1302,
-  "secondPos" : 1295,
+  "firstPos" : 1218,
+  "secondPos" : 1211,
   "firstEndPos" : 1372,
   "secondEndPos" : 1355
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1218,
+  "secondPos" : 1211,
+  "firstEndPos" : 1295,
+  "secondEndPos" : 1288
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3937,27 +3937,27 @@
   "firstEndPos" : 1652,
   "secondEndPos" : 1625
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1481,
-  "secondPos" : 1464,
-  "firstEndPos" : 1558,
-  "secondEndPos" : 1541
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1565,
-  "secondPos" : 1548,
+  "firstPos" : 1481,
+  "secondPos" : 1464,
   "firstEndPos" : 1646,
   "secondEndPos" : 1619
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1481,
+  "secondPos" : 1464,
+  "firstEndPos" : 1558,
+  "secondEndPos" : 1541
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

@@ -3981,23 +3981,23 @@
   "firstEndPos" : 2753,
   "secondEndPos" : 2883
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2542,
-  "secondPos" : 2672,
-  "firstEndPos" : 2620,
-  "secondEndPos" : 2750
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 2534,
+  "secondPos" : 2664,
+  "firstEndPos" : 2626,
+  "secondEndPos" : 2756
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2542,
   "secondPos" : 2672,
   "firstEndPos" : 2620,
@@ -4240,10 +4240,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 2656,
-  "secondPos" : 2786,
-  "firstEndPos" : 2747,
-  "secondEndPos" : 2877
+  "firstPos" : 2648,
+  "secondPos" : 2778,
+  "firstEndPos" : 2753,
+  "secondEndPos" : 2883
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -4861,23 +4861,23 @@
   "firstEndPos" : 3143,
   "secondEndPos" : 3273
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2924,
-  "secondPos" : 3054,
-  "firstEndPos" : 3026,
-  "secondEndPos" : 3156
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 2916,
+  "secondPos" : 3046,
+  "firstEndPos" : 3032,
+  "secondEndPos" : 3162
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2924,
   "secondPos" : 3054,
   "firstEndPos" : 3026,
@@ -5125,12 +5125,23 @@
   "firstEndPos" : 3085,
   "secondEndPos" : 3215
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 3087,
+  "secondPos" : 3217,
+  "firstEndPos" : 3143,
+  "secondEndPos" : 3273
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Service is disabled.",
   "secondLabel" : "// Service is disabled.",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3095,
   "secondPos" : 3225,
   "firstEndPos" : 3118,
@@ -5142,17 +5153,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 3125,
-  "secondPos" : 3255,
-  "firstEndPos" : 3137,
-  "secondEndPos" : 3267
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
   "firstPos" : 3125,
   "secondPos" : 3255,
   "firstEndPos" : 3137,
@@ -6533,23 +6533,23 @@
   "firstEndPos" : 4140,
   "secondEndPos" : 4270
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 3888,
-  "secondPos" : 4018,
-  "firstEndPos" : 3942,
-  "secondEndPos" : 4072
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 3880,
+  "secondPos" : 4010,
+  "firstEndPos" : 3948,
+  "secondEndPos" : 4078
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3888,
   "secondPos" : 4018,
   "firstEndPos" : 3942,
@@ -6676,27 +6676,27 @@
   "firstEndPos" : 3984,
   "secondEndPos" : 4114
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// https://github.com/square/leakcanary/issues/948",
-  "secondLabel" : "// https://github.com/square/leakcanary/issues/948",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
-  "firstPos" : 3994,
-  "secondPos" : 4124,
-  "firstEndPos" : 4044,
-  "secondEndPos" : 4174
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 4051,
-  "secondPos" : 4181,
-  "firstEndPos" : 4134,
-  "secondEndPos" : 4264
+  "firstPos" : 3986,
+  "secondPos" : 4116,
+  "firstEndPos" : 4140,
+  "secondEndPos" : 4270
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// https://github.com/square/leakcanary/issues/948",
+  "secondLabel" : "// https://github.com/square/leakcanary/issues/948",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3994,
+  "secondPos" : 4124,
+  "firstEndPos" : 4044,
+  "secondEndPos" : 4174
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8821,23 +8821,23 @@
   "firstEndPos" : 5238,
   "secondEndPos" : 5368
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 5075,
-  "secondPos" : 5205,
-  "firstEndPos" : 5131,
-  "secondEndPos" : 5261
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 5067,
+  "secondPos" : 5197,
+  "firstEndPos" : 5137,
+  "secondEndPos" : 5267
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5075,
   "secondPos" : 5205,
   "firstEndPos" : 5131,

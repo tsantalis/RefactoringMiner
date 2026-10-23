@@ -2144,27 +2144,27 @@
   "firstEndPos" : 2952,
   "secondEndPos" : 3031
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Respond immediately with cache if available and not dirty",
-  "secondLabel" : "// Respond immediately with cache if available and not dirty",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 1967,
-  "secondPos" : 2039,
-  "firstEndPos" : 2027,
-  "secondEndPos" : 2099
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2040,
-  "secondPos" : 2112,
+  "firstPos" : 1967,
+  "secondPos" : 2039,
   "firstEndPos" : 2942,
   "secondEndPos" : 3021
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Respond immediately with cache if available and not dirty",
+  "secondLabel" : "// Respond immediately with cache if available and not dirty",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1967,
+  "secondPos" : 2039,
+  "firstEndPos" : 2027,
+  "secondEndPos" : 2099
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -4674,27 +4674,27 @@
   "firstEndPos" : 3860,
   "secondEndPos" : 3945
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Remote first",
-  "secondLabel" : "// Remote first",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3058,
-  "secondPos" : 3143,
-  "firstEndPos" : 3073,
-  "secondEndPos" : 3158
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3082,
-  "secondPos" : 3167,
+  "firstPos" : 3058,
+  "secondPos" : 3143,
   "firstEndPos" : 3854,
   "secondEndPos" : 3939
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Remote first",
+  "secondLabel" : "// Remote first",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3058,
+  "secondPos" : 3143,
+  "firstEndPos" : 3073,
+  "secondEndPos" : 3158
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -6511,27 +6511,27 @@
   "firstEndPos" : 4670,
   "secondEndPos" : 4838
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Respond immediately with cache if available",
-  "secondLabel" : "// Respond immediately with cache if available",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4092,
-  "secondPos" : 4249,
-  "firstEndPos" : 4138,
-  "secondEndPos" : 4295
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4151,
-  "secondPos" : 4308,
+  "firstPos" : 4092,
+  "secondPos" : 4249,
   "firstEndPos" : 4664,
   "secondEndPos" : 4828
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Respond immediately with cache if available",
+  "secondLabel" : "// Respond immediately with cache if available",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4092,
+  "secondPos" : 4249,
+  "firstEndPos" : 4138,
+  "secondEndPos" : 4295
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -7798,27 +7798,27 @@
   "firstEndPos" : 5575,
   "secondEndPos" : 5749
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Remote first",
-  "secondLabel" : "// Remote first",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 4807,
-  "secondPos" : 4981,
-  "firstEndPos" : 4822,
-  "secondEndPos" : 4996
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 4831,
-  "secondPos" : 5005,
+  "firstPos" : 4807,
+  "secondPos" : 4981,
   "firstEndPos" : 5569,
   "secondEndPos" : 5743
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Remote first",
+  "secondLabel" : "// Remote first",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4807,
+  "secondPos" : 4981,
+  "firstEndPos" : 4822,
+  "secondEndPos" : 4996
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -9459,12 +9459,23 @@
   "firstEndPos" : 5905,
   "secondEndPos" : 6079
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 5633,
+  "secondPos" : 5807,
+  "firstEndPos" : 5899,
+  "secondEndPos" : 6073
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Do in memory cache update to keep the app UI up to date",
   "secondLabel" : "// Do in memory cache update to keep the app UI up to date",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5633,
   "secondPos" : 5807,
   "firstEndPos" : 5691,
@@ -9476,17 +9487,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 5700,
-  "secondPos" : 5874,
-  "firstEndPos" : 5899,
-  "secondEndPos" : 6073
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 5700,
   "secondPos" : 5874,
   "firstEndPos" : 5899,
@@ -10152,12 +10152,23 @@
   "firstEndPos" : 6281,
   "secondEndPos" : 6455
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 5967,
+  "secondPos" : 6141,
+  "firstEndPos" : 6275,
+  "secondEndPos" : 6449
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Do in memory cache update to keep the app UI up to date",
   "secondLabel" : "// Do in memory cache update to keep the app UI up to date",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5967,
   "secondPos" : 6141,
   "firstEndPos" : 6025,
@@ -10169,17 +10180,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 6034,
-  "secondPos" : 6208,
-  "firstEndPos" : 6275,
-  "secondEndPos" : 6449
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 6034,
   "secondPos" : 6208,
   "firstEndPos" : 6275,
@@ -11571,12 +11571,23 @@
   "firstEndPos" : 6884,
   "secondEndPos" : 7058
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 6568,
+  "secondPos" : 6742,
+  "firstEndPos" : 6878,
+  "secondEndPos" : 7052
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Do in memory cache update to keep the app UI up to date",
   "secondLabel" : "// Do in memory cache update to keep the app UI up to date",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6568,
   "secondPos" : 6742,
   "firstEndPos" : 6626,
@@ -11588,17 +11599,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 6635,
-  "secondPos" : 6809,
-  "firstEndPos" : 6878,
-  "secondEndPos" : 7052
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
   "firstPos" : 6635,
   "secondPos" : 6809,
   "firstEndPos" : 6878,

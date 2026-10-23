@@ -1341,23 +1341,23 @@
   "firstEndPos" : 1748,
   "secondEndPos" : 1476
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1613,
-  "secondPos" : 1433,
-  "firstEndPos" : 1646,
-  "secondEndPos" : 1466
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "control_structure_body",
+  "firstPos" : 1595,
+  "secondPos" : 1433,
+  "firstEndPos" : 1660,
+  "secondEndPos" : 1466
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1613,
   "secondPos" : 1433,
   "firstEndPos" : 1646,
@@ -2463,27 +2463,27 @@
   "firstEndPos" : 2243,
   "secondEndPos" : 1963
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Real apps might want to do a proper sync, deleting, modifying or adding each task.",
-  "secondLabel" : "// Real apps might want to do a proper sync, deleting, modifying or adding each task.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "statements",
-  "firstPos" : 2295,
-  "secondPos" : 1973,
-  "firstEndPos" : 2380,
-  "secondEndPos" : 2058
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2393,
+  "firstPos" : 2295,
   "secondPos" : 1913,
   "firstEndPos" : 2543,
   "secondEndPos" : 2200
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Real apps might want to do a proper sync, deleting, modifying or adding each task.",
+  "secondLabel" : "// Real apps might want to do a proper sync, deleting, modifying or adding each task.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2295,
+  "secondPos" : 1973,
+  "firstEndPos" : 2380,
+  "secondEndPos" : 2058
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

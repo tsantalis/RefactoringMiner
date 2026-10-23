@@ -4498,12 +4498,23 @@
   "firstEndPos" : 3948,
   "secondEndPos" : 3798
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 3619,
+  "secondPos" : 3469,
+  "firstEndPos" : 3942,
+  "secondEndPos" : 3792
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Run on UI thread to make sure the same instance of the SL is used.",
   "secondLabel" : "// Run on UI thread to make sure the same instance of the SL is used.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3619,
   "secondPos" : 3469,
   "firstEndPos" : 3688,
@@ -4515,17 +4526,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 3697,
-  "secondPos" : 3547,
-  "firstEndPos" : 3942,
-  "secondEndPos" : 3792
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 3697,
   "secondPos" : 3547,
   "firstEndPos" : 3942,

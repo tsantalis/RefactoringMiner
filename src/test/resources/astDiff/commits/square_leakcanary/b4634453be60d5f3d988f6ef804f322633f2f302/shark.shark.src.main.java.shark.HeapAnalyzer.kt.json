@@ -4124,23 +4124,23 @@
   "firstEndPos" : 5496,
   "secondEndPos" : 4167
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4241,
-  "secondPos" : 2912,
-  "firstEndPos" : 5234,
-  "secondEndPos" : 3905
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 4233,
+  "secondPos" : 2904,
+  "firstEndPos" : 5240,
+  "secondEndPos" : 3911
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4241,
   "secondPos" : 2912,
   "firstEndPos" : 5234,
@@ -6159,23 +6159,23 @@
   "firstEndPos" : 5268,
   "secondEndPos" : 3939
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 5278,
-  "secondPos" : 3949,
-  "firstEndPos" : 5490,
-  "secondEndPos" : 4161
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 5270,
+  "secondPos" : 3941,
+  "firstEndPos" : 5496,
+  "secondEndPos" : 4167
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5278,
   "secondPos" : 3949,
   "firstEndPos" : 5490,
@@ -8134,10 +8134,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 8651,
-  "secondPos" : 5688,
-  "firstEndPos" : 8922,
-  "secondEndPos" : 8128
+  "firstPos" : 8643,
+  "secondPos" : 5680,
+  "firstEndPos" : 8928,
+  "secondEndPos" : 8134
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -8348,23 +8348,23 @@
   "firstEndPos" : 8956,
   "secondEndPos" : 8162
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 8966,
-  "secondPos" : 8172,
-  "firstEndPos" : 9205,
-  "secondEndPos" : 8411
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 8958,
+  "secondPos" : 8164,
+  "firstEndPos" : 9211,
+  "secondEndPos" : 8417
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 8966,
   "secondPos" : 8172,
   "firstEndPos" : 9205,
@@ -8762,9 +8762,9 @@
   "firstParentType" : "function_body",
   "secondParentType" : "try_expression",
   "firstPos" : 9434,
-  "secondPos" : 5688,
+  "secondPos" : 5680,
   "firstEndPos" : 10593,
-  "secondEndPos" : 8128
+  "secondEndPos" : 8134
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -16642,12 +16642,23 @@
   "firstEndPos" : 13575,
   "secondEndPos" : 6284
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 13582,
+  "secondPos" : 6291,
+  "firstEndPos" : 13986,
+  "secondEndPos" : 6695
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Go through the linked list of nodes and build the reverse list of instances from",
   "secondLabel" : "// Go through the linked list of nodes and build the reverse list of instances from",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 13582,
   "secondPos" : 6291,
   "firstEndPos" : 13665,
@@ -16657,23 +16668,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// root to leaking.",
   "secondLabel" : "// root to leaking.",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 13672,
   "secondPos" : 6381,
   "firstEndPos" : 13691,
   "secondEndPos" : 6400
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 13698,
-  "secondPos" : 6407,
-  "firstEndPos" : 13986,
-  "secondEndPos" : 6695
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -31532,7 +31532,7 @@
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
   "firstPos" : 19688,
-  "secondPos" : 12384,
+  "secondPos" : 12337,
   "firstEndPos" : 19814,
   "secondEndPos" : 12510
 }, {
@@ -38840,27 +38840,27 @@
   "firstEndPos" : 23272,
   "secondEndPos" : 15955
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// The last element should always be leaking.",
-  "secondLabel" : "// The last element should always be leaking.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 22956,
-  "secondPos" : 15639,
-  "firstEndPos" : 23001,
-  "secondEndPos" : 15684
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 23014,
-  "secondPos" : 15697,
+  "firstPos" : 22956,
+  "secondPos" : 15639,
   "firstEndPos" : 23260,
   "secondEndPos" : 15943
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// The last element should always be leaking.",
+  "secondLabel" : "// The last element should always be leaking.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 22956,
+  "secondPos" : 15639,
+  "firstEndPos" : 23001,
+  "secondEndPos" : 15684
 }, {
   "firstType" : "when_expression",
   "secondType" : "when_expression",
@@ -42030,12 +42030,23 @@
   "firstEndPos" : 25618,
   "secondEndPos" : 18301
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 24765,
+  "secondPos" : 17448,
+  "firstEndPos" : 25612,
+  "secondEndPos" : 18295
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// We already know the status of firstLeakingElementIndex and lastElementIndex",
   "secondLabel" : "// We already know the status of firstLeakingElementIndex and lastElementIndex",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 24765,
   "secondPos" : 17448,
   "firstEndPos" : 24843,
@@ -42047,17 +42058,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 24850,
-  "secondPos" : 17533,
-  "firstEndPos" : 25612,
-  "secondEndPos" : 18295
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 24850,
   "secondPos" : 17533,
   "firstEndPos" : 25612,

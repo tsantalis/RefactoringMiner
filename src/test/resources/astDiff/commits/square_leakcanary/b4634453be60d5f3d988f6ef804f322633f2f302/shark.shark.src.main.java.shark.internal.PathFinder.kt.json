@@ -11714,27 +11714,27 @@
   "firstEndPos" : 7846,
   "secondEndPos" : 8589
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Move from \"visit last\" to \"visit first\" queue.",
-  "secondLabel" : "// Move from \"visit last\" to \"visit first\" queue.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 7534,
-  "secondPos" : 8277,
-  "firstEndPos" : 7583,
-  "secondEndPos" : 8326
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 7594,
-  "secondPos" : 8337,
+  "firstPos" : 7534,
+  "secondPos" : 8277,
   "firstEndPos" : 7836,
   "secondEndPos" : 8579
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Move from \"visit last\" to \"visit first\" queue.",
+  "secondLabel" : "// Move from \"visit last\" to \"visit first\" queue.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7534,
+  "secondPos" : 8277,
+  "firstEndPos" : 7583,
+  "secondEndPos" : 8326
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

@@ -1297,23 +1297,23 @@
   "firstEndPos" : 616,
   "secondEndPos" : 616
 }, {
-  "firstType" : "if_expression",
-  "secondType" : "if_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 627,
-  "secondPos" : 627,
-  "firstEndPos" : 754,
-  "secondEndPos" : 754
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
+  "firstPos" : 617,
+  "secondPos" : 617,
+  "firstEndPos" : 760,
+  "secondEndPos" : 760
+}, {
+  "firstType" : "if_expression",
+  "secondType" : "if_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 627,
   "secondPos" : 627,
   "firstEndPos" : 754,
@@ -6467,27 +6467,27 @@
   "firstEndPos" : 3936,
   "secondEndPos" : 3948
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 先移除，再添加",
-  "secondLabel" : "// 先移除，再添加",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3371,
-  "secondPos" : 3378,
-  "firstEndPos" : 3381,
-  "secondEndPos" : 3388
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3390,
-  "secondPos" : 3397,
+  "firstPos" : 3371,
+  "secondPos" : 3378,
   "firstEndPos" : 3930,
   "secondEndPos" : 3942
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 先移除，再添加",
+  "secondLabel" : "// 先移除，再添加",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3371,
+  "secondPos" : 3378,
+  "firstEndPos" : 3381,
+  "secondEndPos" : 3388
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -21735,27 +21735,27 @@
   "firstEndPos" : 11714,
   "secondEndPos" : 11731
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 如果是展开状态 或者需要设置为展开状态",
-  "secondLabel" : "// 如果是展开状态 或者需要设置为展开状态",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 11256,
-  "secondPos" : 11273,
-  "firstEndPos" : 11278,
-  "secondEndPos" : 11295
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 11295,
-  "secondPos" : 11312,
+  "firstPos" : 11256,
+  "secondPos" : 11273,
   "firstEndPos" : 11700,
   "secondEndPos" : 11717
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 如果是展开状态 或者需要设置为展开状态",
+  "secondLabel" : "// 如果是展开状态 或者需要设置为展开状态",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 11256,
+  "secondPos" : 11273,
+  "firstEndPos" : 11278,
+  "secondEndPos" : 11295
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -34330,27 +34330,27 @@
   "firstEndPos" : 18778,
   "secondEndPos" : 18795
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 从顶部开始位置循环",
-  "secondLabel" : "// 从顶部开始位置循环",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 18464,
-  "secondPos" : 18481,
-  "firstEndPos" : 18476,
-  "secondEndPos" : 18493
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 18489,
-  "secondPos" : 18506,
+  "firstPos" : 18464,
+  "secondPos" : 18481,
   "firstEndPos" : 18768,
   "secondEndPos" : 18785
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 从顶部开始位置循环",
+  "secondLabel" : "// 从顶部开始位置循环",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 18464,
+  "secondPos" : 18481,
+  "firstEndPos" : 18476,
+  "secondEndPos" : 18493
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

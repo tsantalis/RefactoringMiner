@@ -4674,27 +4674,27 @@
   "firstEndPos" : 3757,
   "secondEndPos" : 3794
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// WHEN - Enter invalid title and description combination and click save",
-  "secondLabel" : "// WHEN - Enter invalid title and description combination and click save",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3199,
-  "secondPos" : 3236,
-  "firstEndPos" : 3271,
-  "secondEndPos" : 3308
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3280,
-  "secondPos" : 3317,
+  "firstPos" : 3199,
+  "secondPos" : 3236,
   "firstEndPos" : 3751,
   "secondEndPos" : 3788
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// WHEN - Enter invalid title and description combination and click save",
+  "secondLabel" : "// WHEN - Enter invalid title and description combination and click save",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3199,
+  "secondPos" : 3236,
+  "firstEndPos" : 3271,
+  "secondEndPos" : 3308
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5851,27 +5851,27 @@
   "firstEndPos" : 4406,
   "secondEndPos" : 4445
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// WHEN - Valid title and description combination and click save",
-  "secondLabel" : "// WHEN - Valid title and description combination and click save",
-  "firstParentType" : "function_body",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3807,
-  "secondPos" : 3854,
-  "firstEndPos" : 3871,
-  "secondEndPos" : 3918
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3880,
-  "secondPos" : 3927,
+  "firstPos" : 3807,
+  "secondPos" : 3854,
   "firstEndPos" : 4400,
   "secondEndPos" : 4439
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// WHEN - Valid title and description combination and click save",
+  "secondLabel" : "// WHEN - Valid title and description combination and click save",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3807,
+  "secondPos" : 3854,
+  "firstEndPos" : 3871,
+  "secondEndPos" : 3918
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

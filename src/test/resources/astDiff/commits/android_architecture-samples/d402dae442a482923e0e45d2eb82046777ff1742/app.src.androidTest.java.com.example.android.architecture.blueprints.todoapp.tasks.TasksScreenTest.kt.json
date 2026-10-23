@@ -3988,9 +3988,9 @@
   "firstParentType" : "call_suffix",
   "secondParentType" : "call_suffix",
   "firstPos" : 3614,
-  "secondPos" : 9997,
+  "secondPos" : 13423,
   "firstEndPos" : 3641,
-  "secondEndPos" : 10024
+  "secondEndPos" : 13450
 }, {
   "firstType" : "navigation_expression",
   "secondType" : "navigation_expression",
@@ -3999,9 +3999,9 @@
   "firstParentType" : "value_argument",
   "secondParentType" : "value_argument",
   "firstPos" : 3615,
-  "secondPos" : 9998,
+  "secondPos" : 13424,
   "firstEndPos" : 3640,
-  "secondEndPos" : 10023
+  "secondEndPos" : 13449
 }, {
   "firstType" : "value_argument",
   "secondType" : "value_argument",
@@ -4010,9 +4010,9 @@
   "firstParentType" : "value_arguments",
   "secondParentType" : "value_arguments",
   "firstPos" : 3615,
-  "secondPos" : 9998,
+  "secondPos" : 13424,
   "firstEndPos" : 3640,
-  "secondEndPos" : 10023
+  "secondEndPos" : 13449
 }, {
   "firstType" : "callable_reference",
   "secondType" : "callable_reference",
@@ -4021,9 +4021,9 @@
   "firstParentType" : "navigation_expression",
   "secondParentType" : "navigation_expression",
   "firstPos" : 3615,
-  "secondPos" : 9998,
+  "secondPos" : 13424,
   "firstEndPos" : 3635,
-  "secondEndPos" : 10018
+  "secondEndPos" : 13444
 }, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
@@ -4032,9 +4032,9 @@
   "firstParentType" : "callable_reference",
   "secondParentType" : "callable_reference",
   "firstPos" : 3615,
-  "secondPos" : 9998,
+  "secondPos" : 13424,
   "firstEndPos" : 3628,
-  "secondEndPos" : 10011
+  "secondEndPos" : 13437
 }, {
   "firstType" : "reference_extraction_operator",
   "secondType" : "reference_extraction_operator",
@@ -4043,9 +4043,9 @@
   "firstParentType" : "callable_reference",
   "secondParentType" : "callable_reference",
   "firstPos" : 3628,
-  "secondPos" : 10011,
+  "secondPos" : 13437,
   "firstEndPos" : 3630,
-  "secondEndPos" : 10013
+  "secondEndPos" : 13439
 }, {
   "firstType" : "type_keyword",
   "secondType" : "type_keyword",
@@ -4054,9 +4054,9 @@
   "firstParentType" : "callable_reference",
   "secondParentType" : "callable_reference",
   "firstPos" : 3630,
-  "secondPos" : 10013,
+  "secondPos" : 13439,
   "firstEndPos" : 3635,
-  "secondEndPos" : 10018
+  "secondEndPos" : 13444
 }, {
   "firstType" : "navigation_suffix",
   "secondType" : "navigation_suffix",
@@ -4065,9 +4065,9 @@
   "firstParentType" : "navigation_expression",
   "secondParentType" : "navigation_expression",
   "firstPos" : 3635,
-  "secondPos" : 10018,
+  "secondPos" : 13444,
   "firstEndPos" : 3640,
-  "secondEndPos" : 10023
+  "secondEndPos" : 13449
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -4076,9 +4076,9 @@
   "firstParentType" : "navigation_suffix",
   "secondParentType" : "navigation_suffix",
   "firstPos" : 3636,
-  "secondPos" : 10019,
+  "secondPos" : 13445,
   "firstEndPos" : 3640,
-  "secondEndPos" : 10023
+  "secondEndPos" : 13449
 }, {
   "firstType" : "function_declaration",
   "secondType" : "function_declaration",
@@ -6742,27 +6742,27 @@
   "firstEndPos" : 5939,
   "secondEndPos" : 5991
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Click on the add task button",
-  "secondLabel" : "// Click on the add task button",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 5715,
-  "secondPos" : 5767,
-  "firstEndPos" : 5746,
-  "secondEndPos" : 5798
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 5755,
+  "firstPos" : 5715,
   "secondPos" : 5684,
   "firstEndPos" : 5933,
   "secondEndPos" : 5985
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Click on the add task button",
+  "secondLabel" : "// Click on the add task button",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5715,
+  "secondPos" : 5767,
+  "firstEndPos" : 5746,
+  "secondEndPos" : 5798
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7562,7 +7562,7 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 6008,
+  "firstPos" : 5980,
   "secondPos" : 6032,
   "firstEndPos" : 7040,
   "secondEndPos" : 7176
@@ -13425,8 +13425,8 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 8443,
-  "secondPos" : 9047,
+  "firstPos" : 8413,
+  "secondPos" : 8993,
   "firstEndPos" : 8718,
   "secondEndPos" : 9518
 }, {
@@ -14266,27 +14266,27 @@
   "firstEndPos" : 9086,
   "secondEndPos" : 10329
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add 2 active tasks",
-  "secondLabel" : "// Add 2 active tasks and one completed task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 8772,
-  "secondPos" : 9639,
-  "firstEndPos" : 8793,
-  "secondEndPos" : 9683
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 8802,
-  "secondPos" : 9692,
+  "firstPos" : 8772,
+  "secondPos" : 9639,
   "firstEndPos" : 9080,
   "secondEndPos" : 10323
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add 2 active tasks",
+  "secondLabel" : "// Add 2 active tasks and one completed task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 8772,
+  "secondPos" : 9639,
+  "firstEndPos" : 8793,
+  "secondEndPos" : 9683
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -15190,27 +15190,27 @@
   "firstEndPos" : 9532,
   "secondEndPos" : 11189
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add 2 completed tasks",
-  "secondLabel" : "// Add one active task and 2 completed tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 9137,
-  "secondPos" : 10447,
-  "firstEndPos" : 9161,
-  "secondEndPos" : 10491
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 9170,
-  "secondPos" : 10500,
+  "firstPos" : 9137,
+  "secondPos" : 10447,
   "firstEndPos" : 9526,
   "secondEndPos" : 11183
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add 2 completed tasks",
+  "secondLabel" : "// Add one active task and 2 completed tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 9137,
+  "secondPos" : 10447,
+  "firstEndPos" : 9161,
+  "secondEndPos" : 10491
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -15989,7 +15989,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 9584,
-  "secondPos" : 11362,
+  "secondPos" : 11308,
   "firstEndPos" : 10153,
   "secondEndPos" : 12021
 }, {
@@ -18391,27 +18391,27 @@
   "firstEndPos" : 11160,
   "secondEndPos" : 13192
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add 2 active tasks",
-  "secondLabel" : "// Add 2 active tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 10672,
-  "secondPos" : 12704,
-  "firstEndPos" : 10693,
-  "secondEndPos" : 12725
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 10702,
+  "firstPos" : 10672,
   "secondPos" : 12622,
   "firstEndPos" : 11154,
   "secondEndPos" : 13186
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add 2 active tasks",
+  "secondLabel" : "// Add 2 active tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 10672,
+  "secondPos" : 12704,
+  "firstEndPos" : 10693,
+  "secondEndPos" : 12725
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -19872,7 +19872,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 11246,
-  "secondPos" : 13307,
+  "secondPos" : 13278,
   "firstEndPos" : 11879,
   "secondEndPos" : 14044
 }, {
@@ -19925,7 +19925,7 @@
   "firstLabel" : "// Add 1 active task",
   "secondLabel" : "// Add 1 active task",
   "firstParentType" : "statements",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 11270,
   "secondPos" : 13278,
   "firstEndPos" : 11290,
@@ -21500,7 +21500,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 11967,
-  "secondPos" : 14164,
+  "secondPos" : 14132,
   "firstEndPos" : 12642,
   "secondEndPos" : 14952
 }, {
@@ -21553,7 +21553,7 @@
   "firstLabel" : "// Add 1 completed task",
   "secondLabel" : "// Add 1 completed task",
   "firstParentType" : "statements",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 11991,
   "secondPos" : 14132,
   "firstEndPos" : 12014,
@@ -23106,7 +23106,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 12742,
-  "secondPos" : 15080,
+  "secondPos" : 15051,
   "firstEndPos" : 13500,
   "secondEndPos" : 15955
 }, {
@@ -23159,7 +23159,7 @@
   "firstLabel" : "// Add 1 active task",
   "secondLabel" : "// Add 1 active task",
   "firstParentType" : "statements",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 12766,
   "secondPos" : 15051,
   "firstEndPos" : 12786,
@@ -25108,7 +25108,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 13601,
-  "secondPos" : 16088,
+  "secondPos" : 16056,
   "firstEndPos" : 14394,
   "secondEndPos" : 16926
 }, {
@@ -25161,7 +25161,7 @@
   "firstLabel" : "// Add 1 completed task",
   "secondLabel" : "// Add 1 completed task",
   "firstParentType" : "statements",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 13625,
   "secondPos" : 16056,
   "firstEndPos" : 13648,
@@ -26966,8 +26966,8 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 14504,
-  "secondPos" : 17102,
+  "firstPos" : 14472,
+  "secondPos" : 17070,
   "firstEndPos" : 14933,
   "secondEndPos" : 17679
 }, {
@@ -27769,8 +27769,8 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 15046,
-  "secondPos" : 17858,
+  "firstPos" : 15014,
+  "secondPos" : 17826,
   "firstEndPos" : 15574,
   "secondEndPos" : 18534
 }, {
@@ -29023,8 +29023,8 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 15785,
-  "secondPos" : 18745,
+  "firstPos" : 15753,
+  "secondPos" : 18713,
   "firstEndPos" : 16380,
   "secondEndPos" : 19524
 }, {
@@ -30728,8 +30728,8 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 16588,
-  "secondPos" : 19732,
+  "firstPos" : 16556,
+  "secondPos" : 19700,
   "firstEndPos" : 17584,
   "secondEndPos" : 20935
 }, {
@@ -33098,27 +33098,27 @@
   "firstEndPos" : 17876,
   "secondEndPos" : 21376
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
-  "secondLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 17664,
-  "secondPos" : 21164,
-  "firstEndPos" : 17731,
-  "secondEndPos" : 21231
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 17740,
+  "firstPos" : 17664,
   "secondPos" : 21082,
   "firstEndPos" : 17870,
   "secondEndPos" : 21370
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
+  "secondLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 17664,
+  "secondPos" : 21164,
+  "firstEndPos" : 17731,
+  "secondEndPos" : 21231
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -33648,27 +33648,27 @@
   "firstEndPos" : 18182,
   "secondEndPos" : 21838
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
-  "secondLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 17959,
-  "secondPos" : 21608,
-  "firstEndPos" : 18026,
-  "secondEndPos" : 21675
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 18035,
+  "firstPos" : 17959,
   "secondPos" : 21526,
   "firstEndPos" : 18176,
   "secondEndPos" : 21832
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
+  "secondLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 17959,
+  "secondPos" : 21608,
+  "firstEndPos" : 18026,
+  "secondEndPos" : 21675
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -34253,27 +34253,27 @@
   "firstEndPos" : 18482,
   "secondEndPos" : 22294
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
-  "secondLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 18262,
-  "secondPos" : 22067,
-  "firstEndPos" : 18329,
-  "secondEndPos" : 22134
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 18338,
+  "firstPos" : 18262,
   "secondPos" : 21985,
   "firstEndPos" : 18476,
   "secondEndPos" : 22288
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
+  "secondLabel" : "// Given an empty list of tasks, make sure \"All tasks\" filter is on",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 18262,
+  "secondPos" : 22067,
+  "firstEndPos" : 18329,
+  "secondEndPos" : 22134
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -36970,27 +36970,27 @@
   "firstEndPos" : 19608,
   "secondEndPos" : 23420
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Click on the add task button",
-  "secondLabel" : "// Click on the add task button",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 19043,
-  "secondPos" : 22855,
-  "firstEndPos" : 19074,
-  "secondEndPos" : 22886
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 19083,
-  "secondPos" : 22895,
+  "firstPos" : 19043,
+  "secondPos" : 22855,
   "firstEndPos" : 19602,
   "secondEndPos" : 23414
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Click on the add task button",
+  "secondLabel" : "// Click on the add task button",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 19043,
+  "secondPos" : 22855,
+  "firstEndPos" : 19074,
+  "secondEndPos" : 22886
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

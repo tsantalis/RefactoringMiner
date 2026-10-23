@@ -1792,12 +1792,23 @@
   "firstEndPos" : 3447,
   "secondEndPos" : 3764
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1256,
+  "secondPos" : 1280,
+  "firstEndPos" : 3443,
+  "secondEndPos" : 3760
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Unify Notifications.buildNotification vs Notifications.showNotification",
   "secondLabel" : "// TODO Unify Notifications.buildNotification vs Notifications.showNotification",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1256,
   "secondPos" : 1280,
   "firstEndPos" : 1335,
@@ -1807,23 +1818,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// We need to bring in the retained count notifications first though.",
   "secondLabel" : "// We need to bring in the retained count notifications first though.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1340,
   "secondPos" : 1364,
   "firstEndPos" : 1409,
   "secondEndPos" : 1433
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1414,
-  "secondPos" : 1438,
-  "firstEndPos" : 3443,
-  "secondEndPos" : 3760
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",

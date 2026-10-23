@@ -1781,12 +1781,23 @@
   "firstEndPos" : 1876,
   "secondEndPos" : 2022
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1689,
+  "secondPos" : 1835,
+  "firstEndPos" : 1870,
+  "secondEndPos" : 2016
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Given some tasks",
   "secondLabel" : "// Given some tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1689,
   "secondPos" : 1835,
   "firstEndPos" : 1708,
@@ -1798,17 +1809,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1717,
-  "secondPos" : 1863,
-  "firstEndPos" : 1870,
-  "secondEndPos" : 2016
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 1717,
   "secondPos" : 1863,
   "firstEndPos" : 1870,
@@ -2243,27 +2243,27 @@
   "firstEndPos" : 3083,
   "secondEndPos" : 3115
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given some tasks",
-  "secondLabel" : "// Given some tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1935,
-  "secondPos" : 2081,
-  "firstEndPos" : 1954,
-  "secondEndPos" : 2100
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1963,
-  "secondPos" : 2109,
+  "firstPos" : 1935,
+  "secondPos" : 2081,
   "firstEndPos" : 3077,
   "secondEndPos" : 3109
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given some tasks",
+  "secondLabel" : "// Given some tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1935,
+  "secondPos" : 2081,
+  "firstEndPos" : 1954,
+  "secondEndPos" : 2100
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3776,7 +3776,7 @@
   "secondType" : "line_comment",
   "firstLabel" : "// check that both info boxes are displayed and contain the correct info",
   "secondLabel" : "// check that both info boxes are displayed and contain the correct info",
-  "firstParentType" : "lambda_literal",
+  "firstParentType" : "statements",
   "secondParentType" : "statements",
   "firstPos" : 2624,
   "secondPos" : 2682,

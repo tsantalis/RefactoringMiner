@@ -8403,12 +8403,23 @@
   "firstEndPos" : 4627,
   "secondEndPos" : 4703
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 4642,
+  "secondPos" : 4716,
+  "firstEndPos" : 5564,
+  "secondEndPos" : 5600
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// HprofWriter automatically emits HeapDumpEndRecord, because it flushes",
   "secondLabel" : "// HprofWriter automatically emits HeapDumpEndRecord, because it flushes",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4642,
   "secondPos" : 4716,
   "firstEndPos" : 4714,
@@ -8418,23 +8429,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// all continuous heap dump sub records as one heap dump record.",
   "secondLabel" : "// all continuous heap dump sub records as one heap dump record.",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4729,
   "secondPos" : 4801,
   "firstEndPos" : 4793,
   "secondEndPos" : 4865
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4808,
-  "secondPos" : 4878,
-  "firstEndPos" : 5564,
-  "secondEndPos" : 5600
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",

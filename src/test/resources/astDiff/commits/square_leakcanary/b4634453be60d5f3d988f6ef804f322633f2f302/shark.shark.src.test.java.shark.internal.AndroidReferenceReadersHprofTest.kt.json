@@ -3629,27 +3629,27 @@
   "firstEndPos" : 2262,
   "secondEndPos" : 2021
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// This hprof happens to have an ArraySet in it.",
-  "secondLabel" : "// This hprof happens to have an ArraySet in it.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1755,
-  "secondPos" : 1514,
-  "firstEndPos" : 1803,
-  "secondEndPos" : 1562
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1808,
-  "secondPos" : 1567,
+  "firstPos" : 1755,
+  "secondPos" : 1514,
   "firstEndPos" : 2258,
   "secondEndPos" : 2017
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// This hprof happens to have an ArraySet in it.",
+  "secondLabel" : "// This hprof happens to have an ArraySet in it.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1755,
+  "secondPos" : 1514,
+  "firstEndPos" : 1803,
+  "secondEndPos" : 1562
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

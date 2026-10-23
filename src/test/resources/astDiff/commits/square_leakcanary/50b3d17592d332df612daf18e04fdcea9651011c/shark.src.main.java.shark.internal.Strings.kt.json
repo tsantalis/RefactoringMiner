@@ -1616,27 +1616,27 @@
   "firstEndPos" : 1130,
   "secondEndPos" : 1130
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Create MD5 Hash.",
-  "secondLabel" : "// Create MD5 Hash.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 663,
-  "secondPos" : 663,
-  "firstEndPos" : 682,
-  "secondEndPos" : 682
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 687,
-  "secondPos" : 687,
-  "firstEndPos" : 1007,
-  "secondEndPos" : 1007
+  "firstPos" : 657,
+  "secondPos" : 657,
+  "firstEndPos" : 1011,
+  "secondEndPos" : 1011
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Create MD5 Hash.",
+  "secondLabel" : "// Create MD5 Hash.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 663,
+  "secondPos" : 663,
+  "firstEndPos" : 682,
+  "secondEndPos" : 682
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -2738,23 +2738,23 @@
   "firstEndPos" : 1046,
   "secondEndPos" : 1046
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1054,
-  "secondPos" : 1054,
-  "firstEndPos" : 1126,
-  "secondEndPos" : 1126
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 1048,
+  "secondPos" : 1048,
+  "firstEndPos" : 1130,
+  "secondEndPos" : 1130
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1054,
   "secondPos" : 1054,
   "firstEndPos" : 1126,

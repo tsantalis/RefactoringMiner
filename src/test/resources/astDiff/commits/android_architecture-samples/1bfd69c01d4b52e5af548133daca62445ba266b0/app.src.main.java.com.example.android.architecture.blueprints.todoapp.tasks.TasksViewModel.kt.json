@@ -7380,27 +7380,27 @@
   "firstEndPos" : 3922,
   "secondEndPos" : 3922
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set initial state",
-  "secondLabel" : "// Set initial state",
-  "firstParentType" : "anonymous_initializer",
-  "secondParentType" : "anonymous_initializer",
-  "firstPos" : 3933,
-  "secondPos" : 3933,
-  "firstEndPos" : 3953,
-  "secondEndPos" : 3953
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
-  "firstPos" : 3962,
-  "secondPos" : 3962,
-  "firstEndPos" : 4020,
-  "secondEndPos" : 4020
+  "firstPos" : 3923,
+  "secondPos" : 3923,
+  "firstEndPos" : 4026,
+  "secondEndPos" : 4026
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set initial state",
+  "secondLabel" : "// Set initial state",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3933,
+  "secondPos" : 3933,
+  "firstEndPos" : 3953,
+  "secondEndPos" : 3953
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -13056,27 +13056,27 @@
   "firstEndPos" : 7642,
   "secondEndPos" : 7642
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO: This is a good case for liveData builder. Replace when stable.",
-  "secondLabel" : "// TODO: This is a good case for liveData builder. Replace when stable.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 7102,
-  "secondPos" : 7102,
-  "firstEndPos" : 7173,
-  "secondEndPos" : 7173
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 7182,
-  "secondPos" : 7182,
+  "firstPos" : 7102,
+  "secondPos" : 7102,
   "firstEndPos" : 7636,
   "secondEndPos" : 7636
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO: This is a good case for liveData builder. Replace when stable.",
+  "secondLabel" : "// TODO: This is a good case for liveData builder. Replace when stable.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7102,
+  "secondPos" : 7102,
+  "firstEndPos" : 7173,
+  "secondEndPos" : 7173
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

@@ -1341,12 +1341,23 @@
   "firstEndPos" : 1375,
   "secondEndPos" : 1301
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 951,
+  "secondPos" : 877,
+  "firstEndPos" : 1371,
+  "secondEndPos" : 1297
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// This could happen if the callbacks were registered after some activities were already",
   "secondLabel" : "// This could happen if the callbacks were registered after some activities were already",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 951,
   "secondPos" : 877,
   "firstEndPos" : 1039,
@@ -1356,23 +1367,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// started. In that case we effectively considers those past activities as not visible.",
   "secondLabel" : "// started. In that case we effectively considers those past activities as not visible.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1044,
   "secondPos" : 970,
   "firstEndPos" : 1131,
   "secondEndPos" : 1057
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1136,
-  "secondPos" : 1062,
-  "firstEndPos" : 1371,
-  "secondEndPos" : 1297
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",

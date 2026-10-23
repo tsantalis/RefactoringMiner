@@ -3530,27 +3530,27 @@
   "firstEndPos" : 2744,
   "secondEndPos" : 2767
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Enable ALPN.",
-  "secondLabel" : "// Enable ALPN.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 2557,
-  "secondPos" : 2580,
-  "firstEndPos" : 2572,
-  "secondEndPos" : 2595
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 2581,
-  "secondPos" : 2604,
+  "firstPos" : 2557,
+  "secondPos" : 2580,
   "firstEndPos" : 2736,
   "secondEndPos" : 2759
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Enable ALPN.",
+  "secondLabel" : "// Enable ALPN.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2557,
+  "secondPos" : 2580,
+  "firstEndPos" : 2572,
+  "secondEndPos" : 2595
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -4828,27 +4828,27 @@
   "firstEndPos" : 3487,
   "secondEndPos" : 3520
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
-  "secondLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 3275,
-  "secondPos" : 3308,
-  "firstEndPos" : 3362,
-  "secondEndPos" : 3395
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 3369,
-  "secondPos" : 3402,
-  "firstEndPos" : 3427,
-  "secondEndPos" : 3460
+  "firstPos" : 3267,
+  "secondPos" : 3300,
+  "firstEndPos" : 3433,
+  "secondEndPos" : 3466
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
+  "secondLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3275,
+  "secondPos" : 3308,
+  "firstEndPos" : 3362,
+  "secondEndPos" : 3395
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5026,6 +5026,17 @@
   "firstEndPos" : 3466,
   "secondEndPos" : 3499
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 3468,
+  "secondPos" : 3501,
+  "firstEndPos" : 3487,
+  "secondEndPos" : 3520
+}, {
   "firstType" : "boolean_literal",
   "secondType" : "boolean_literal",
   "firstLabel" : "",
@@ -5043,17 +5054,6 @@
   "secondLabel" : "false",
   "firstParentType" : "boolean_literal",
   "secondParentType" : "boolean_literal",
-  "firstPos" : 3476,
-  "secondPos" : 3509,
-  "firstEndPos" : 3481,
-  "secondEndPos" : 3514
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
   "firstPos" : 3476,
   "secondPos" : 3509,
   "firstEndPos" : 3481,

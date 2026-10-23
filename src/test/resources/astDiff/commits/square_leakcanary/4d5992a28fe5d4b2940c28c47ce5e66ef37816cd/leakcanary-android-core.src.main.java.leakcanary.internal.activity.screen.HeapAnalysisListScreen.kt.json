@@ -1814,27 +1814,27 @@
   "firstEndPos" : 3064,
   "secondEndPos" : 3069
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO String res",
-  "secondLabel" : "// TODO String res",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 1002,
-  "secondPos" : 1007,
-  "firstEndPos" : 1020,
-  "secondEndPos" : 1025
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 1027,
-  "secondPos" : 1032,
+  "firstPos" : 1002,
+  "secondPos" : 1007,
   "firstEndPos" : 3058,
   "secondEndPos" : 3063
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO String res",
+  "secondLabel" : "// TODO String res",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1002,
+  "secondPos" : 1007,
+  "firstEndPos" : 1020,
+  "secondEndPos" : 1025
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

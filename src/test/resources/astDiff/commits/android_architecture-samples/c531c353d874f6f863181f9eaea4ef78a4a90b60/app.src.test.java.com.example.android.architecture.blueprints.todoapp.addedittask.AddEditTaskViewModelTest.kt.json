@@ -2331,12 +2331,23 @@
   "firstEndPos" : 2275,
   "secondEndPos" : 2283
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 2136,
+  "secondPos" : 2139,
+  "firstEndPos" : 2269,
+  "secondEndPos" : 2277
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// We initialise the repository with no tasks",
   "secondLabel" : "// We initialise the repository with no tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2136,
   "secondPos" : 2139,
   "firstEndPos" : 2181,
@@ -2348,17 +2359,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 2190,
-  "secondPos" : 2193,
-  "firstEndPos" : 2269,
-  "secondEndPos" : 2277
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 2190,
   "secondPos" : 2193,
   "firstEndPos" : 2269,
@@ -4333,27 +4333,27 @@
   "firstEndPos" : 3723,
   "secondEndPos" : 3731
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
-  "secondLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3103,
-  "secondPos" : 3111,
-  "firstEndPos" : 3179,
-  "secondEndPos" : 3187
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3188,
-  "secondPos" : 3196,
+  "firstPos" : 3103,
+  "secondPos" : 3111,
   "firstEndPos" : 3717,
   "secondEndPos" : 3725
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
+  "secondLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3103,
+  "secondPos" : 3111,
+  "firstEndPos" : 3179,
+  "secondEndPos" : 3187
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

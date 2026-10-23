@@ -8414,27 +8414,27 @@
   "firstEndPos" : 21368,
   "secondEndPos" : 21790
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// type of the record",
-  "secondLabel" : "// type of the record",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6106,
-  "secondPos" : 6057,
-  "firstEndPos" : 6127,
-  "secondEndPos" : 6078
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 6134,
-  "secondPos" : 6085,
+  "firstPos" : 6106,
+  "secondPos" : 6057,
   "firstEndPos" : 21362,
   "secondEndPos" : 21784
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// type of the record",
+  "secondLabel" : "// type of the record",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6106,
+  "secondPos" : 6057,
+  "firstEndPos" : 6127,
+  "secondEndPos" : 6078
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -23055,27 +23055,27 @@
   "firstEndPos" : 14633,
   "secondEndPos" : 14622
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 14499,
-  "secondPos" : 14488,
-  "firstEndPos" : 14521,
-  "secondEndPos" : 14510
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 14542,
-  "secondPos" : 14531,
+  "firstPos" : 14499,
+  "secondPos" : 14488,
   "firstEndPos" : 14613,
   "secondEndPos" : 14602
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 14499,
+  "secondPos" : 14488,
+  "firstEndPos" : 14521,
+  "secondEndPos" : 14510
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -36079,12 +36079,23 @@
   "firstEndPos" : 22475,
   "secondEndPos" : 22871
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 22397,
+  "secondPos" : 22793,
+  "firstEndPos" : 22471,
+  "secondEndPos" : 22867
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// String, primitive types",
   "secondLabel" : "// String, primitive types",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 22397,
   "secondPos" : 22793,
   "firstEndPos" : 22423,
@@ -36096,17 +36107,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 22428,
-  "secondPos" : 22824,
-  "firstEndPos" : 22471,
-  "secondEndPos" : 22867
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 22428,
   "secondPos" : 22824,
   "firstEndPos" : 22471,

@@ -2282,10 +2282,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 2733,
-  "secondPos" : 2757,
-  "firstEndPos" : 3187,
-  "secondEndPos" : 3211
+  "firstPos" : 2725,
+  "secondPos" : 2749,
+  "firstEndPos" : 3193,
+  "secondEndPos" : 3217
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -3129,10 +3129,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 3228,
-  "secondPos" : 3252,
-  "firstEndPos" : 3256,
-  "secondEndPos" : 3280
+  "firstPos" : 3220,
+  "secondPos" : 3244,
+  "firstEndPos" : 3262,
+  "secondEndPos" : 3286
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3261,10 +3261,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 3294,
-  "secondPos" : 3318,
-  "firstEndPos" : 3338,
-  "secondEndPos" : 3362
+  "firstPos" : 3286,
+  "secondPos" : 3310,
+  "firstEndPos" : 3344,
+  "secondEndPos" : 3368
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6808,27 +6808,27 @@
   "firstEndPos" : 5680,
   "secondEndPos" : 5704
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// We had an already-allocated connection and it's good.",
-  "secondLabel" : "// We had an already-allocated connection and it's good.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 5549,
-  "secondPos" : 5573,
-  "firstEndPos" : 5605,
-  "secondEndPos" : 5629
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 5614,
-  "secondPos" : 5638,
+  "firstPos" : 5549,
+  "secondPos" : 5573,
   "firstEndPos" : 5672,
   "secondEndPos" : 5696
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// We had an already-allocated connection and it's good.",
+  "secondLabel" : "// We had an already-allocated connection and it's good.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5549,
+  "secondPos" : 5573,
+  "firstEndPos" : 5605,
+  "secondEndPos" : 5629
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -7039,12 +7039,23 @@
   "firstEndPos" : 6059,
   "secondEndPos" : 6083
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 5718,
+  "secondPos" : 5742,
+  "firstEndPos" : 6051,
+  "secondEndPos" : 6075
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Attempt to get a connection from the pool.",
   "secondLabel" : "// Attempt to get a connection from the pool.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5718,
   "secondPos" : 5742,
   "firstEndPos" : 5763,
@@ -7056,17 +7067,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 5772,
-  "secondPos" : 5796,
-  "firstEndPos" : 6051,
-  "secondEndPos" : 6075
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 5772,
   "secondPos" : 5796,
   "firstEndPos" : 6051,
@@ -8183,12 +8183,23 @@
   "firstEndPos" : 6429,
   "secondEndPos" : 6453
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 6332,
+  "secondPos" : 6356,
+  "firstEndPos" : 6423,
+  "secondEndPos" : 6447
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// If we found an already-allocated or pooled connection, we're done.",
   "secondLabel" : "// If we found an already-allocated or pooled connection, we're done.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6332,
   "secondPos" : 6356,
   "firstEndPos" : 6401,
@@ -8200,17 +8211,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 6408,
-  "secondPos" : 6432,
-  "firstEndPos" : 6423,
-  "secondEndPos" : 6447
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 6408,
   "secondPos" : 6432,
   "firstEndPos" : 6423,
@@ -9349,12 +9349,23 @@
   "firstEndPos" : 7267,
   "secondEndPos" : 7291
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 6886,
+  "secondPos" : 6910,
+  "firstEndPos" : 7259,
+  "secondEndPos" : 7283
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Now that we have a set of IP addresses, make another attempt at getting a connection from",
   "secondLabel" : "// Now that we have a set of IP addresses, make another attempt at getting a connection from",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6886,
   "secondPos" : 6910,
   "firstEndPos" : 6978,
@@ -9364,23 +9375,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// the pool. This could match due to connection coalescing.",
   "secondLabel" : "// the pool. This could match due to connection coalescing.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6987,
   "secondPos" : 7011,
   "firstEndPos" : 7046,
   "secondEndPos" : 7070
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 7055,
-  "secondPos" : 7079,
-  "firstEndPos" : 7259,
-  "secondEndPos" : 7283
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -11648,27 +11648,27 @@
   "firstEndPos" : 8967,
   "secondEndPos" : 8991
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// We lost the race! Close the connection we created and return the pooled connection.",
-  "secondLabel" : "// We lost the race! Close the connection we created and return the pooled connection.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 8545,
-  "secondPos" : 8569,
-  "firstEndPos" : 8631,
-  "secondEndPos" : 8655
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 8640,
-  "secondPos" : 8664,
+  "firstPos" : 8545,
+  "secondPos" : 8569,
   "firstEndPos" : 8959,
   "secondEndPos" : 8983
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// We lost the race! Close the connection we created and return the pooled connection.",
+  "secondLabel" : "// We lost the race! Close the connection we created and return the pooled connection.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 8545,
+  "secondPos" : 8569,
+  "firstEndPos" : 8631,
+  "secondEndPos" : 8655
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -13837,27 +13837,27 @@
   "firstEndPos" : 10101,
   "secondEndPos" : 10125
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Lock in the route because retryCurrentRoute() is racy and we don't want to call it twice.",
-  "secondLabel" : "// Lock in the route because retryCurrentRoute() is racy and we don't want to call it twice.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 9930,
-  "secondPos" : 9954,
-  "firstEndPos" : 10022,
-  "secondEndPos" : 10046
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 10031,
-  "secondPos" : 10055,
+  "firstPos" : 9930,
+  "secondPos" : 9954,
   "firstEndPos" : 10093,
   "secondEndPos" : 10117
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Lock in the route because retryCurrentRoute() is racy and we don't want to call it twice.",
+  "secondLabel" : "// Lock in the route because retryCurrentRoute() is racy and we don't want to call it twice.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 9930,
+  "secondPos" : 9954,
+  "firstEndPos" : 10022,
+  "secondEndPos" : 10046
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

@@ -2287,12 +2287,23 @@
   "firstEndPos" : 2743,
   "secondEndPos" : 4799
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 2042,
+  "secondPos" : 3996,
+  "firstEndPos" : 2735,
+  "secondEndPos" : 4787
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// TODO 1 analysis = many leaks, which is currently unsupported by the rest of the pipeline.",
   "secondLabel" : "// TODO 1 analysis = many leaks, which is currently unsupported by the rest of the pipeline.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2042,
   "secondPos" : 3996,
   "firstEndPos" : 2134,
@@ -2302,8 +2313,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// We temporarily ignore this problem by replacing the heapdump file with a fake file for",
   "secondLabel" : "// We temporarily ignore this problem by replacing the heapdump file with a fake file for",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2143,
   "secondPos" : 4101,
   "firstEndPos" : 2232,
@@ -2313,23 +2324,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// all heap dumps but the first one.",
   "secondLabel" : "// all heap dumps but the first one.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2241,
   "secondPos" : 4203,
   "firstEndPos" : 2277,
   "secondEndPos" : 4239
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 2286,
-  "secondPos" : 4252,
-  "firstEndPos" : 2735,
-  "secondEndPos" : 4787
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -2733,10 +2733,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 2440,
-  "secondPos" : 4430,
-  "firstEndPos" : 2536,
-  "secondEndPos" : 4547
+  "firstPos" : 2428,
+  "secondPos" : 4414,
+  "firstEndPos" : 2546,
+  "secondEndPos" : 4561
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -3002,23 +3002,23 @@
   "firstEndPos" : 2568,
   "secondEndPos" : 4583
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2582,
-  "secondPos" : 4601,
-  "firstEndPos" : 2590,
-  "secondEndPos" : 4618
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 2570,
+  "secondPos" : 4585,
+  "firstEndPos" : 2600,
+  "secondEndPos" : 4632
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2582,
   "secondPos" : 4601,
   "firstEndPos" : 2590,

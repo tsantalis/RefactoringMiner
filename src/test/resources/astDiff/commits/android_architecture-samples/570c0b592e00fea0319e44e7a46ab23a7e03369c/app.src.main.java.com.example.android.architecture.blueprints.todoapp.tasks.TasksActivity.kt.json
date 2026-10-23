@@ -2925,27 +2925,27 @@
   "firstEndPos" : 3582,
   "secondEndPos" : 2178
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Open the navigation drawer when the home icon is selected from the toolbar.",
-  "secondLabel" : "// Open the navigation drawer when the home icon is selected from the toolbar.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 3396,
-  "secondPos" : 2004,
-  "firstEndPos" : 3474,
-  "secondEndPos" : 2082
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 3495,
-  "secondPos" : 2099,
+  "firstPos" : 3396,
+  "secondPos" : 2004,
   "firstEndPos" : 3564,
   "secondEndPos" : 2164
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Open the navigation drawer when the home icon is selected from the toolbar.",
+  "secondLabel" : "// Open the navigation drawer when the home icon is selected from the toolbar.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3396,
+  "secondPos" : 2004,
+  "firstEndPos" : 3474,
+  "secondEndPos" : 2082
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

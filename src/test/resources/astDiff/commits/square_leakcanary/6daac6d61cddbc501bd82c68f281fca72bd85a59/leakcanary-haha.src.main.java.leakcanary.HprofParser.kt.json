@@ -7182,27 +7182,27 @@
   "firstEndPos" : 17992,
   "secondEndPos" : 17992
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// type of the record",
-  "secondLabel" : "// type of the record",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 4574,
-  "secondPos" : 4574,
-  "firstEndPos" : 4595,
-  "secondEndPos" : 4595
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 4602,
-  "secondPos" : 4602,
+  "firstPos" : 4574,
+  "secondPos" : 4574,
   "firstEndPos" : 17986,
   "secondEndPos" : 17986
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// type of the record",
+  "secondLabel" : "// type of the record",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4574,
+  "secondPos" : 4574,
+  "firstEndPos" : 4595,
+  "secondEndPos" : 4595
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -19777,27 +19777,27 @@
   "firstEndPos" : 11937,
   "secondEndPos" : 11937
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 11803,
-  "secondPos" : 11803,
-  "firstEndPos" : 11825,
-  "secondEndPos" : 11825
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 11846,
-  "secondPos" : 11846,
+  "firstPos" : 11803,
+  "secondPos" : 11803,
   "firstEndPos" : 11917,
   "secondEndPos" : 11917
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 11803,
+  "secondPos" : 11803,
+  "firstEndPos" : 11825,
+  "secondEndPos" : 11825
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -31580,12 +31580,23 @@
   "firstEndPos" : 18611,
   "secondEndPos" : 18611
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 18468,
+  "secondPos" : 18468,
+  "firstEndPos" : 18607,
+  "secondEndPos" : 18607
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Add an in memory cache for most common JDK classes",
   "secondLabel" : "// TODO Add an in memory cache for most common JDK classes",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 18468,
   "secondPos" : 18468,
   "firstEndPos" : 18526,
@@ -31595,8 +31606,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// String, primitive types",
   "secondLabel" : "// String, primitive types",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 18531,
   "secondPos" : 18531,
   "firstEndPos" : 18557,
@@ -31608,17 +31619,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 18562,
-  "secondPos" : 18562,
-  "firstEndPos" : 18607,
-  "secondEndPos" : 18607
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 18562,
   "secondPos" : 18562,
   "firstEndPos" : 18607,

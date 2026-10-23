@@ -2760,27 +2760,27 @@
   "firstEndPos" : 3380,
   "secondEndPos" : 3402
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// GIVEN - Add active (incomplete) task to the DB",
-  "secondLabel" : "// GIVEN - Add active (incomplete) task to the DB",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2289,
-  "secondPos" : 2311,
-  "firstEndPos" : 2338,
-  "secondEndPos" : 2360
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2347,
-  "secondPos" : 2369,
+  "firstPos" : 2289,
+  "secondPos" : 2311,
   "firstEndPos" : 3374,
   "secondEndPos" : 3396
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// GIVEN - Add active (incomplete) task to the DB",
+  "secondLabel" : "// GIVEN - Add active (incomplete) task to the DB",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2289,
+  "secondPos" : 2311,
+  "firstEndPos" : 2338,
+  "secondEndPos" : 2360
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -5972,27 +5972,27 @@
   "firstEndPos" : 4537,
   "secondEndPos" : 4559
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// GIVEN - Add completed task to the DB",
-  "secondLabel" : "// GIVEN - Add completed task to the DB",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3447,
-  "secondPos" : 3469,
-  "firstEndPos" : 3486,
-  "secondEndPos" : 3508
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3495,
-  "secondPos" : 3517,
+  "firstPos" : 3447,
+  "secondPos" : 3469,
   "firstEndPos" : 4531,
   "secondEndPos" : 4553
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// GIVEN - Add completed task to the DB",
+  "secondLabel" : "// GIVEN - Add completed task to the DB",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3447,
+  "secondPos" : 3469,
+  "firstEndPos" : 3486,
+  "secondEndPos" : 3508
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

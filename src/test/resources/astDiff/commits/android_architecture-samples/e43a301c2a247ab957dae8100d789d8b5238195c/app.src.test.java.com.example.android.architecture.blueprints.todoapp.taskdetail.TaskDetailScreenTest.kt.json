@@ -2826,27 +2826,27 @@
   "firstEndPos" : 3452,
   "secondEndPos" : 3400
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// GIVEN - Add active (incomplete) task to the DB",
-  "secondLabel" : "// GIVEN - Add active (incomplete) task to the DB",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2266,
-  "secondPos" : 2286,
-  "firstEndPos" : 2315,
-  "secondEndPos" : 2335
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2324,
-  "secondPos" : 2344,
+  "firstPos" : 2266,
+  "secondPos" : 2286,
   "firstEndPos" : 3446,
   "secondEndPos" : 3394
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// GIVEN - Add active (incomplete) task to the DB",
+  "secondLabel" : "// GIVEN - Add active (incomplete) task to the DB",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2266,
+  "secondPos" : 2286,
+  "firstEndPos" : 2315,
+  "secondEndPos" : 2335
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -3677,7 +3677,7 @@
   "secondType" : "line_comment",
   "firstLabel" : "// make sure that the title/description are both shown and correct",
   "secondLabel" : "// make sure that the title/description are both shown and correct",
-  "firstParentType" : "lambda_literal",
+  "firstParentType" : "statements",
   "secondParentType" : "statements",
   "firstPos" : 2770,
   "secondPos" : 2756,
@@ -6104,27 +6104,27 @@
   "firstEndPos" : 4704,
   "secondEndPos" : 4580
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// GIVEN - Add completed task to the DB",
-  "secondLabel" : "// GIVEN - Add completed task to the DB",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3519,
-  "secondPos" : 3467,
-  "firstEndPos" : 3558,
-  "secondEndPos" : 3506
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3567,
-  "secondPos" : 3515,
+  "firstPos" : 3519,
+  "secondPos" : 3467,
   "firstEndPos" : 4698,
   "secondEndPos" : 4574
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// GIVEN - Add completed task to the DB",
+  "secondLabel" : "// GIVEN - Add completed task to the DB",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3519,
+  "secondPos" : 3467,
+  "firstEndPos" : 3558,
+  "secondEndPos" : 3506
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -6955,7 +6955,7 @@
   "secondType" : "line_comment",
   "firstLabel" : "// make sure that the title/description are both shown and correct",
   "secondLabel" : "// make sure that the title/description are both shown and correct",
-  "firstParentType" : "lambda_literal",
+  "firstParentType" : "statements",
   "secondParentType" : "statements",
   "firstPos" : 4024,
   "secondPos" : 3938,

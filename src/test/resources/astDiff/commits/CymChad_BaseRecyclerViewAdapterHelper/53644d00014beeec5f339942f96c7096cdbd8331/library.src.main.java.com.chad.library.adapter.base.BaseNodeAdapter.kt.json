@@ -1473,23 +1473,23 @@
   "firstEndPos" : 728,
   "secondEndPos" : 705
 }, {
-  "firstType" : "if_expression",
-  "secondType" : "if_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 739,
-  "secondPos" : 716,
-  "firstEndPos" : 878,
-  "secondEndPos" : 855
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
+  "firstPos" : 729,
+  "secondPos" : 706,
+  "firstEndPos" : 884,
+  "secondEndPos" : 861
+}, {
+  "firstType" : "if_expression",
+  "secondType" : "if_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 739,
   "secondPos" : 716,
   "firstEndPos" : 878,
@@ -7160,25 +7160,14 @@
   "firstEndPos" : 3972,
   "secondEndPos" : 4271
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 先移除，再添加",
-  "secondLabel" : "// 先移除，再添加",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3714,
-  "secondPos" : 3691,
-  "firstEndPos" : 3724,
-  "secondEndPos" : 3701
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3733,
-  "secondPos" : 3710,
+  "firstPos" : 3714,
+  "secondPos" : 3691,
   "firstEndPos" : 3966,
   "secondEndPos" : 4265
 }, {
@@ -7188,10 +7177,21 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 3733,
+  "firstPos" : 3714,
   "secondPos" : 3904,
   "firstEndPos" : 3966,
   "secondEndPos" : 3971
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 先移除，再添加",
+  "secondLabel" : "// 先移除，再添加",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3714,
+  "secondPos" : 3691,
+  "firstEndPos" : 3724,
+  "secondEndPos" : 3701
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -8040,12 +8040,23 @@
   "firstEndPos" : 4280,
   "secondEndPos" : 4579
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 4164,
+  "secondPos" : 4463,
+  "firstEndPos" : 4274,
+  "secondEndPos" : 4573
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// 不是同一个引用才清空列表",
   "secondLabel" : "// 不是同一个引用才清空列表",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4164,
   "secondPos" : 4463,
   "firstEndPos" : 4179,
@@ -8057,17 +8068,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 4188,
-  "secondPos" : 4487,
-  "firstEndPos" : 4274,
-  "secondEndPos" : 4573
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 4188,
   "secondPos" : 4487,
   "firstEndPos" : 4274,
@@ -23528,27 +23528,27 @@
   "firstEndPos" : 12329,
   "secondEndPos" : 12808
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 如果是展开状态 或者需要设置为展开状态",
-  "secondLabel" : "// 如果是展开状态 或者需要设置为展开状态",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 11871,
-  "secondPos" : 12350,
-  "firstEndPos" : 11893,
-  "secondEndPos" : 12372
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 11910,
-  "secondPos" : 12389,
+  "firstPos" : 11871,
+  "secondPos" : 12350,
   "firstEndPos" : 12315,
   "secondEndPos" : 12794
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 如果是展开状态 或者需要设置为展开状态",
+  "secondLabel" : "// 如果是展开状态 或者需要设置为展开状态",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 11871,
+  "secondPos" : 12350,
+  "firstEndPos" : 11893,
+  "secondEndPos" : 12372
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -35254,27 +35254,27 @@
   "firstEndPos" : 18606,
   "secondEndPos" : 19882
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 从顶部开始位置循环",
-  "secondLabel" : "// 从顶部开始位置循环",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 18309,
-  "secondPos" : 19568,
-  "firstEndPos" : 18321,
-  "secondEndPos" : 19580
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 18334,
-  "secondPos" : 19593,
+  "firstPos" : 18309,
+  "secondPos" : 19568,
   "firstEndPos" : 18596,
   "secondEndPos" : 19872
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 从顶部开始位置循环",
+  "secondLabel" : "// 从顶部开始位置循环",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 18309,
+  "secondPos" : 19568,
+  "firstEndPos" : 18321,
+  "secondEndPos" : 19580
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

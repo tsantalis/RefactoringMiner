@@ -3442,12 +3442,23 @@
   "firstEndPos" : 2493,
   "secondEndPos" : 2662
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 2506,
+  "secondPos" : 2675,
+  "firstEndPos" : 2567,
+  "secondEndPos" : 2736
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Already loading, ignore.",
   "secondLabel" : "// Already loading, ignore.",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2506,
   "secondPos" : 2675,
   "firstEndPos" : 2533,
@@ -3459,17 +3470,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 2546,
-  "secondPos" : 2715,
-  "firstEndPos" : 2567,
-  "secondEndPos" : 2736
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
   "firstPos" : 2546,
   "secondPos" : 2715,
   "firstEndPos" : 2567,
@@ -3673,27 +3673,27 @@
   "firstEndPos" : 2746,
   "secondEndPos" : 2915
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// No need to populate, it's a new task",
-  "secondLabel" : "// No need to populate, it's a new task",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 2649,
-  "secondPos" : 2818,
-  "firstEndPos" : 2688,
-  "secondEndPos" : 2857
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 2701,
-  "secondPos" : 2870,
+  "firstPos" : 2649,
+  "secondPos" : 2818,
   "firstEndPos" : 2736,
   "secondEndPos" : 2905
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// No need to populate, it's a new task",
+  "secondLabel" : "// No need to populate, it's a new task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2649,
+  "secondPos" : 2818,
+  "firstEndPos" : 2688,
+  "secondEndPos" : 2857
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -3816,12 +3816,23 @@
   "firstEndPos" : 2858,
   "secondEndPos" : 3027
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 2787,
+  "secondPos" : 2956,
+  "firstEndPos" : 2848,
+  "secondEndPos" : 3017
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// No need to populate, already have data.",
   "secondLabel" : "// No need to populate, already have data.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2787,
   "secondPos" : 2956,
   "firstEndPos" : 2829,
@@ -3844,17 +3855,6 @@
   "secondLabel" : "return",
   "firstParentType" : "jump_expression",
   "secondParentType" : "jump_expression",
-  "firstPos" : 2842,
-  "secondPos" : 3011,
-  "firstEndPos" : 2848,
-  "secondEndPos" : 3017
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 2842,
   "secondPos" : 3011,
   "firstEndPos" : 2848,

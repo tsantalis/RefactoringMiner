@@ -709,10 +709,10 @@
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
-  "firstPos" : 1022,
-  "secondPos" : 1064,
-  "firstEndPos" : 1363,
-  "secondEndPos" : 1405
+  "firstPos" : 1012,
+  "secondPos" : 1054,
+  "firstEndPos" : 1369,
+  "secondEndPos" : 1411
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -1308,27 +1308,27 @@
   "firstEndPos" : 1605,
   "secondEndPos" : 1647
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Simulate network by delaying the execution.",
-  "secondLabel" : "// Simulate network by delaying the execution.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1437,
-  "secondPos" : 1479,
-  "firstEndPos" : 1483,
-  "secondEndPos" : 1525
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1492,
-  "secondPos" : 1534,
+  "firstPos" : 1437,
+  "secondPos" : 1479,
   "firstEndPos" : 1599,
   "secondEndPos" : 1641
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Simulate network by delaying the execution.",
+  "secondLabel" : "// Simulate network by delaying the execution.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1437,
+  "secondPos" : 1479,
+  "firstEndPos" : 1483,
+  "secondEndPos" : 1525
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -1803,27 +1803,27 @@
   "firstEndPos" : 1874,
   "secondEndPos" : 1916
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Simulate network by delaying the execution.",
-  "secondLabel" : "// Simulate network by delaying the execution.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1678,
-  "secondPos" : 1720,
-  "firstEndPos" : 1724,
-  "secondEndPos" : 1766
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1733,
-  "secondPos" : 1775,
+  "firstPos" : 1678,
+  "secondPos" : 1720,
   "firstEndPos" : 1868,
   "secondEndPos" : 1910
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Simulate network by delaying the execution.",
+  "secondLabel" : "// Simulate network by delaying the execution.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1678,
+  "secondPos" : 1720,
+  "firstEndPos" : 1724,
+  "secondEndPos" : 1766
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

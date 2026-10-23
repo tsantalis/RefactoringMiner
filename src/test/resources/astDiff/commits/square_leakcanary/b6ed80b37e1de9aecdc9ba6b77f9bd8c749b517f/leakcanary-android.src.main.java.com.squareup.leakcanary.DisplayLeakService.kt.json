@@ -5323,27 +5323,27 @@
   "firstEndPos" : 3818,
   "secondEndPos" : 3825
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// New notification id every second.",
-  "secondLabel" : "// New notification id every second.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3580,
-  "secondPos" : 3587,
-  "firstEndPos" : 3616,
-  "secondEndPos" : 3623
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3621,
-  "secondPos" : 3628,
+  "firstPos" : 3580,
+  "secondPos" : 3587,
   "firstEndPos" : 3814,
   "secondEndPos" : 3821
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// New notification id every second.",
+  "secondLabel" : "// New notification id every second.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3580,
+  "secondPos" : 3587,
+  "firstEndPos" : 3616,
+  "secondEndPos" : 3623
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

@@ -13401,7 +13401,7 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Goal is to get a stable shortest path",
   "secondLabel" : "// Sorting GC roots to get stable shortest path",
-  "firstParentType" : "function_body",
+  "firstParentType" : "statements",
   "secondParentType" : "statements",
   "firstPos" : 8332,
   "secondPos" : 8528,
@@ -20932,27 +20932,27 @@
   "firstEndPos" : 12877,
   "secondEndPos" : 15896
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 0L is null",
-  "secondLabel" : "// 0L is null",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 11982,
-  "secondPos" : 15006,
-  "firstEndPos" : 11995,
-  "secondEndPos" : 15019
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 12000,
-  "secondPos" : 15024,
+  "firstPos" : 11982,
+  "secondPos" : 15006,
   "firstEndPos" : 12873,
   "secondEndPos" : 15892
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 0L is null",
+  "secondLabel" : "// 0L is null",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 11982,
+  "secondPos" : 15006,
+  "firstEndPos" : 11995,
+  "secondEndPos" : 15019
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -26278,12 +26278,23 @@
   "firstEndPos" : 14866,
   "secondEndPos" : 17885
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 14535,
+  "secondPos" : 17554,
+  "firstEndPos" : 14860,
+  "secondEndPos" : 17879
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// parent is not a retained instance and parent has no dominator, but it must have been",
   "secondLabel" : "// parent is not a retained instance and parent has no dominator, but it must have been",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 14535,
   "secondPos" : 17554,
   "firstEndPos" : 14622,
@@ -26293,23 +26304,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// visited therefore we know parent belongs to undominated.",
   "secondLabel" : "// visited therefore we know parent belongs to undominated.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 14629,
   "secondPos" : 17648,
   "firstEndPos" : 14688,
   "secondEndPos" : 17707
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 14695,
-  "secondPos" : 17714,
-  "firstEndPos" : 14860,
-  "secondEndPos" : 17879
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",

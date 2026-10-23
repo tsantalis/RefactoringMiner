@@ -6687,27 +6687,27 @@
   "firstEndPos" : 3459,
   "secondEndPos" : 3541
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set initial state",
-  "secondLabel" : "// Set initial state",
-  "firstParentType" : "anonymous_initializer",
-  "secondParentType" : "anonymous_initializer",
-  "firstPos" : 3470,
-  "secondPos" : 3552,
-  "firstEndPos" : 3490,
-  "secondEndPos" : 3572
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
-  "firstPos" : 3499,
-  "secondPos" : 3581,
-  "firstEndPos" : 3562,
-  "secondEndPos" : 3644
+  "firstPos" : 3460,
+  "secondPos" : 3542,
+  "firstEndPos" : 3568,
+  "secondEndPos" : 3650
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set initial state",
+  "secondLabel" : "// Set initial state",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3470,
+  "secondPos" : 3552,
+  "firstEndPos" : 3490,
+  "secondEndPos" : 3572
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -12381,7 +12381,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 6744,
-  "secondPos" : 6805,
+  "secondPos" : 6725,
   "firstEndPos" : 7343,
   "secondEndPos" : 7255
 }, {
@@ -12390,7 +12390,7 @@
   "firstLabel" : "// TODO: This is a good case for liveData builder. Replace when stable.",
   "secondLabel" : "// TODO: This is a good case for liveData builder. Replace when stable.",
   "firstParentType" : "statements",
-  "secondParentType" : "function_body",
+  "secondParentType" : "statements",
   "firstPos" : 6778,
   "secondPos" : 6725,
   "firstEndPos" : 6849,

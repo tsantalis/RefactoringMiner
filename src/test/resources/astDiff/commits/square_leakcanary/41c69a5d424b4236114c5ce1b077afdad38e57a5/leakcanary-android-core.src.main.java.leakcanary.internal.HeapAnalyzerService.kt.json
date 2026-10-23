@@ -5686,12 +5686,23 @@
   "firstEndPos" : 3469,
   "secondEndPos" : 3428
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 3406,
+  "secondPos" : 3365,
+  "firstEndPos" : 3461,
+  "secondEndPos" : 3420
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Pre-O behavior.",
   "secondLabel" : "// Pre-O behavior.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3406,
   "secondPos" : 3365,
   "firstEndPos" : 3424,
@@ -5703,17 +5714,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 3433,
-  "secondPos" : 3392,
-  "firstEndPos" : 3461,
-  "secondEndPos" : 3420
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 3433,
   "secondPos" : 3392,
   "firstEndPos" : 3461,

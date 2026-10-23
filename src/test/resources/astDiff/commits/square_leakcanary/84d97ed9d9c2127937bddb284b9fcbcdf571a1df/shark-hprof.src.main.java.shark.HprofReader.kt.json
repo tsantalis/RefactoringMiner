@@ -7545,27 +7545,27 @@
   "firstEndPos" : 18176,
   "secondEndPos" : 18909
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// type of the record",
-  "secondLabel" : "// type of the record",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 5255,
-  "secondPos" : 5952,
-  "firstEndPos" : 5276,
-  "secondEndPos" : 5973
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 5283,
-  "secondPos" : 5980,
+  "firstPos" : 5255,
+  "secondPos" : 5952,
   "firstEndPos" : 18170,
   "secondEndPos" : 18903
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// type of the record",
+  "secondLabel" : "// type of the record",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5255,
+  "secondPos" : 5952,
+  "firstEndPos" : 5276,
+  "secondEndPos" : 5973
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -29732,27 +29732,27 @@
   "firstEndPos" : 19367,
   "secondEndPos" : 20239
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 19275,
-  "secondPos" : 20147,
-  "firstEndPos" : 19297,
-  "secondEndPos" : 20169
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 19304,
-  "secondPos" : 20176,
+  "firstPos" : 19275,
+  "secondPos" : 20147,
   "firstEndPos" : 19361,
   "secondEndPos" : 20233
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 19275,
+  "secondPos" : 20147,
+  "firstEndPos" : 19297,
+  "secondEndPos" : 20169
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -44373,12 +44373,23 @@
   "firstEndPos" : 25235,
   "secondEndPos" : 26372
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 24920,
+  "secondPos" : 26055,
+  "firstEndPos" : 25231,
+  "secondEndPos" : 26368
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// As long as we don't interpret IDs, reading signed values here is fine.",
   "secondLabel" : "// As long as we don't interpret IDs, reading signed values here is fine.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 24920,
   "secondPos" : 26055,
   "firstEndPos" : 24993,
@@ -44390,17 +44401,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 24998,
-  "secondPos" : 26133,
-  "firstEndPos" : 25231,
-  "secondEndPos" : 26368
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 24998,
   "secondPos" : 26133,
   "firstEndPos" : 25231,
@@ -47816,27 +47816,27 @@
   "firstEndPos" : 26364,
   "secondEndPos" : 27519
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 26272,
-  "secondPos" : 27427,
-  "firstEndPos" : 26294,
-  "secondEndPos" : 27449
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 26301,
-  "secondPos" : 27456,
+  "firstPos" : 26272,
+  "secondPos" : 27427,
   "firstEndPos" : 26358,
   "secondEndPos" : 27513
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 26272,
+  "secondPos" : 27427,
+  "firstEndPos" : 26294,
+  "secondEndPos" : 27449
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

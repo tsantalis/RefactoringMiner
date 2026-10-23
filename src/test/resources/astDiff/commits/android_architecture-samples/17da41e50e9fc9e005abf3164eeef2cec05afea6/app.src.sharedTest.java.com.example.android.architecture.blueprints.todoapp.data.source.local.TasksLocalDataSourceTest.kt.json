@@ -2595,27 +2595,27 @@
   "firstEndPos" : 2541,
   "secondEndPos" : 2485
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// using an in-memory database for testing, since it doesn't survive killing the process",
-  "secondLabel" : "// using an in-memory database for testing, since it doesn't survive killing the process",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2149,
-  "secondPos" : 2111,
-  "firstEndPos" : 2237,
-  "secondEndPos" : 2199
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2246,
-  "secondPos" : 2208,
+  "firstPos" : 2149,
+  "secondPos" : 2111,
   "firstEndPos" : 2535,
   "secondEndPos" : 2479
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// using an in-memory database for testing, since it doesn't survive killing the process",
+  "secondLabel" : "// using an in-memory database for testing, since it doesn't survive killing the process",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2149,
+  "secondPos" : 2111,
+  "firstEndPos" : 2237,
+  "secondEndPos" : 2199
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -3596,27 +3596,27 @@
   "firstEndPos" : 3110,
   "secondEndPos" : 3054
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// GIVEN - a new task saved in the database",
-  "secondLabel" : "// GIVEN - a new task saved in the database",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2669,
-  "secondPos" : 2613,
-  "firstEndPos" : 2712,
-  "secondEndPos" : 2656
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2721,
-  "secondPos" : 2665,
+  "firstPos" : 2669,
+  "secondPos" : 2613,
   "firstEndPos" : 3104,
   "secondEndPos" : 3048
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// GIVEN - a new task saved in the database",
+  "secondLabel" : "// GIVEN - a new task saved in the database",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2669,
+  "secondPos" : 2613,
+  "firstEndPos" : 2712,
+  "secondEndPos" : 2656
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -4916,27 +4916,27 @@
   "firstEndPos" : 3671,
   "secondEndPos" : 3618
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a new task in the persistent repository",
-  "secondLabel" : "// Given a new task in the persistent repository",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3189,
-  "secondPos" : 3133,
-  "firstEndPos" : 3237,
-  "secondEndPos" : 3181
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3246,
-  "secondPos" : 3190,
+  "firstPos" : 3189,
+  "secondPos" : 3133,
   "firstEndPos" : 3665,
   "secondEndPos" : 3612
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a new task in the persistent repository",
+  "secondLabel" : "// Given a new task in the persistent repository",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3189,
+  "secondPos" : 3133,
+  "firstEndPos" : 3237,
+  "secondEndPos" : 3181
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -6093,27 +6093,27 @@
   "firstEndPos" : 4215,
   "secondEndPos" : 4165
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a new completed task in the persistent repository",
-  "secondLabel" : "// Given a new completed task in the persistent repository",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3748,
-  "secondPos" : 3695,
-  "firstEndPos" : 3806,
-  "secondEndPos" : 3753
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3815,
-  "secondPos" : 3762,
+  "firstPos" : 3748,
+  "secondPos" : 3695,
   "firstEndPos" : 4209,
   "secondEndPos" : 4159
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a new completed task in the persistent repository",
+  "secondLabel" : "// Given a new completed task in the persistent repository",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3748,
+  "secondPos" : 3695,
+  "firstEndPos" : 3806,
+  "secondEndPos" : 3753
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -7303,27 +7303,27 @@
   "firstEndPos" : 5158,
   "secondEndPos" : 5114
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given 2 new completed tasks and 1 active task in the persistent repository",
-  "secondLabel" : "// Given 2 new completed tasks and 1 active task in the persistent repository",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4295,
-  "secondPos" : 4245,
-  "firstEndPos" : 4372,
-  "secondEndPos" : 4322
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4381,
-  "secondPos" : 4331,
+  "firstPos" : 4295,
+  "secondPos" : 4245,
   "firstEndPos" : 5152,
   "secondEndPos" : 5108
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given 2 new completed tasks and 1 active task in the persistent repository",
+  "secondLabel" : "// Given 2 new completed tasks and 1 active task in the persistent repository",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4295,
+  "secondPos" : 4245,
+  "firstEndPos" : 4372,
+  "secondEndPos" : 4322
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -9459,27 +9459,27 @@
   "firstEndPos" : 5624,
   "secondEndPos" : 5580
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a new task in the persistent repository and a mocked callback",
-  "secondLabel" : "// Given a new task in the persistent repository and a mocked callback",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5240,
-  "secondPos" : 5196,
-  "firstEndPos" : 5310,
-  "secondEndPos" : 5266
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5319,
-  "secondPos" : 5275,
+  "firstPos" : 5240,
+  "secondPos" : 5196,
   "firstEndPos" : 5618,
   "secondEndPos" : 5574
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a new task in the persistent repository and a mocked callback",
+  "secondLabel" : "// Given a new task in the persistent repository and a mocked callback",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5240,
+  "secondPos" : 5196,
+  "firstEndPos" : 5310,
+  "secondEndPos" : 5266
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -10361,27 +10361,27 @@
   "firstEndPos" : 6071,
   "secondEndPos" : 6027
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given 2 new tasks in the persistent repository",
-  "secondLabel" : "// Given 2 new tasks in the persistent repository",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5694,
-  "secondPos" : 5650,
-  "firstEndPos" : 5743,
-  "secondEndPos" : 5699
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5752,
-  "secondPos" : 5708,
+  "firstPos" : 5694,
+  "secondPos" : 5650,
   "firstEndPos" : 6065,
   "secondEndPos" : 6021
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given 2 new tasks in the persistent repository",
+  "secondLabel" : "// Given 2 new tasks in the persistent repository",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5694,
+  "secondPos" : 5650,
+  "firstEndPos" : 5743,
+  "secondEndPos" : 5699
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

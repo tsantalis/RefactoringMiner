@@ -1649,23 +1649,23 @@
   "firstEndPos" : 1655,
   "secondEndPos" : 1655
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1530,
-  "secondPos" : 1530,
-  "firstEndPos" : 1563,
-  "secondEndPos" : 1563
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 1512,
+  "secondPos" : 1512,
+  "firstEndPos" : 1577,
+  "secondEndPos" : 1577
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1530,
   "secondPos" : 1530,
   "firstEndPos" : 1563,
@@ -1748,23 +1748,23 @@
   "firstEndPos" : 1598,
   "secondEndPos" : 1598
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1618,
-  "secondPos" : 1618,
-  "firstEndPos" : 1641,
-  "secondEndPos" : 1641
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 1600,
+  "secondPos" : 1600,
+  "firstEndPos" : 1655,
+  "secondEndPos" : 1655
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1618,
   "secondPos" : 1618,
   "firstEndPos" : 1641,
@@ -3068,27 +3068,27 @@
   "firstEndPos" : 2429,
   "secondEndPos" : 2429
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Real apps might want to do a proper sync.",
-  "secondLabel" : "// Real apps might want to do a proper sync.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 2212,
-  "secondPos" : 2212,
-  "firstEndPos" : 2256,
-  "secondEndPos" : 2256
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 2269,
-  "secondPos" : 2269,
+  "firstPos" : 2212,
+  "secondPos" : 2212,
   "firstEndPos" : 2419,
   "secondEndPos" : 2419
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Real apps might want to do a proper sync.",
+  "secondLabel" : "// Real apps might want to do a proper sync.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2212,
+  "secondPos" : 2212,
+  "firstEndPos" : 2256,
+  "secondEndPos" : 2256
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5241,7 +5241,7 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3402,
+  "firstPos" : 3297,
   "secondPos" : 3296,
   "firstEndPos" : 3571,
   "secondEndPos" : 3441
@@ -5802,7 +5802,7 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3744,
+  "firstPos" : 3639,
   "secondPos" : 3509,
   "firstEndPos" : 3957,
   "secondEndPos" : 3662
@@ -7188,7 +7188,7 @@
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4386,
+  "firstPos" : 4281,
   "secondPos" : 3986,
   "firstEndPos" : 4601,
   "secondEndPos" : 4139

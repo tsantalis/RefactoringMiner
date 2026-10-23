@@ -2694,27 +2694,27 @@
   "firstEndPos" : 2068,
   "secondEndPos" : 2055
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Reset the animation to avoid flickering.",
-  "secondLabel" : "// Reset the animation to avoid flickering.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1966,
-  "secondPos" : 1953,
-  "firstEndPos" : 2009,
-  "secondEndPos" : 1996
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2014,
-  "secondPos" : 2001,
+  "firstPos" : 1966,
+  "secondPos" : 1953,
   "firstEndPos" : 2064,
   "secondEndPos" : 2051
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Reset the animation to avoid flickering.",
+  "secondLabel" : "// Reset the animation to avoid flickering.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1966,
+  "secondPos" : 1953,
+  "firstEndPos" : 2009,
+  "secondEndPos" : 1996
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

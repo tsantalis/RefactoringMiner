@@ -3409,27 +3409,27 @@
   "firstEndPos" : 2240,
   "secondEndPos" : 2534
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "//此处判断，是否可以长按拖动",
-  "secondLabel" : "//此处判断，是否可以长按拖动",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2063,
-  "secondPos" : 2355,
-  "firstEndPos" : 2078,
-  "secondEndPos" : 2370
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2087,
-  "secondPos" : 2379,
+  "firstPos" : 2063,
+  "secondPos" : 2355,
   "firstEndPos" : 2234,
   "secondEndPos" : 2528
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "//此处判断，是否可以长按拖动",
+  "secondLabel" : "//此处判断，是否可以长按拖动",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2063,
+  "secondPos" : 2355,
+  "firstEndPos" : 2078,
+  "secondEndPos" : 2370
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",

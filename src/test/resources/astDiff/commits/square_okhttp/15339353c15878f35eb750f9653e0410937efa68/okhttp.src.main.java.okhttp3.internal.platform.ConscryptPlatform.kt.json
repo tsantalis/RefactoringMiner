@@ -2122,27 +2122,27 @@
   "firstEndPos" : 2432,
   "secondEndPos" : 2432
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// org.conscrypt.SSLParametersImpl",
-  "secondLabel" : "// org.conscrypt.SSLParametersImpl",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 1974,
-  "secondPos" : 1974,
-  "firstEndPos" : 2008,
-  "secondEndPos" : 2008
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 2019,
-  "secondPos" : 2019,
-  "firstEndPos" : 2246,
-  "secondEndPos" : 2246
+  "firstPos" : 1962,
+  "secondPos" : 1962,
+  "firstEndPos" : 2256,
+  "secondEndPos" : 2256
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// org.conscrypt.SSLParametersImpl",
+  "secondLabel" : "// org.conscrypt.SSLParametersImpl",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1974,
+  "secondPos" : 1974,
+  "firstEndPos" : 2008,
+  "secondEndPos" : 2008
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -2771,23 +2771,23 @@
   "firstEndPos" : 2276,
   "secondEndPos" : 2276
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2290,
-  "secondPos" : 2290,
-  "firstEndPos" : 2422,
-  "secondEndPos" : 2422
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 2278,
+  "secondPos" : 2278,
+  "firstEndPos" : 2432,
+  "secondEndPos" : 2432
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2290,
   "secondPos" : 2290,
   "firstEndPos" : 2422,
@@ -3310,27 +3310,27 @@
   "firstEndPos" : 2844,
   "secondEndPos" : 2867
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Enable session tickets.",
-  "secondLabel" : "// Enable session tickets.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 2615,
-  "secondPos" : 2638,
-  "firstEndPos" : 2641,
-  "secondEndPos" : 2664
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 2648,
-  "secondPos" : 2671,
+  "firstPos" : 2615,
+  "secondPos" : 2638,
   "firstEndPos" : 2838,
   "secondEndPos" : 2861
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Enable session tickets.",
+  "secondLabel" : "// Enable session tickets.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2615,
+  "secondPos" : 2638,
+  "firstEndPos" : 2641,
+  "secondEndPos" : 2664
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5169,12 +5169,23 @@
   "firstEndPos" : 3565,
   "secondEndPos" : 3598
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 3471,
+  "secondPos" : 3504,
+  "firstEndPos" : 3559,
+  "secondEndPos" : 3592
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// OkHttp will verify",
   "secondLabel" : "// OkHttp will verify",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3471,
   "secondPos" : 3504,
   "firstEndPos" : 3492,
@@ -5186,17 +5197,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 3499,
-  "secondPos" : 3532,
-  "firstEndPos" : 3559,
-  "secondEndPos" : 3592
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 3499,
   "secondPos" : 3532,
   "firstEndPos" : 3559,
@@ -5576,27 +5576,27 @@
   "firstEndPos" : 3949,
   "secondEndPos" : 3982
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
-  "secondLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 3635,
-  "secondPos" : 3668,
-  "firstEndPos" : 3722,
-  "secondEndPos" : 3755
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 3729,
-  "secondPos" : 3762,
-  "firstEndPos" : 3889,
-  "secondEndPos" : 3922
+  "firstPos" : 3627,
+  "secondPos" : 3660,
+  "firstEndPos" : 3895,
+  "secondEndPos" : 3928
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
+  "secondLabel" : "// Trigger an early exception over a fatal error, prefer a RuntimeException over Error.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3635,
+  "secondPos" : 3668,
+  "firstEndPos" : 3722,
+  "secondEndPos" : 3755
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6093,6 +6093,17 @@
   "firstEndPos" : 3928,
   "secondEndPos" : 3961
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 3930,
+  "secondPos" : 3963,
+  "firstEndPos" : 3949,
+  "secondEndPos" : 3982
+}, {
   "firstType" : "boolean_literal",
   "secondType" : "boolean_literal",
   "firstLabel" : "",
@@ -6110,17 +6121,6 @@
   "secondLabel" : "false",
   "firstParentType" : "boolean_literal",
   "secondParentType" : "boolean_literal",
-  "firstPos" : 3938,
-  "secondPos" : 3971,
-  "firstEndPos" : 3943,
-  "secondEndPos" : 3976
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
   "firstPos" : 3938,
   "secondPos" : 3971,
   "firstEndPos" : 3943,

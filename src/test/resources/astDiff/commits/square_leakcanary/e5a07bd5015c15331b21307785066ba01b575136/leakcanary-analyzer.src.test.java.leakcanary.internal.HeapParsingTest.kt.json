@@ -8849,10 +8849,10 @@
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
-  "firstPos" : 8300,
-  "secondPos" : 5928,
-  "firstEndPos" : 8903,
-  "secondEndPos" : 6531
+  "firstPos" : 8294,
+  "secondPos" : 5922,
+  "firstEndPos" : 8907,
+  "secondEndPos" : 6535
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -10768,23 +10768,23 @@
   "firstEndPos" : 9215,
   "secondEndPos" : 6843
 }, {
-  "firstType" : "for_statement",
-  "secondType" : "for_statement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 8950,
-  "secondPos" : 6578,
-  "firstEndPos" : 9062,
-  "secondEndPos" : 6690
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 8942,
+  "secondPos" : 6570,
+  "firstEndPos" : 9068,
+  "secondEndPos" : 6696
+}, {
+  "firstType" : "for_statement",
+  "secondType" : "for_statement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 8950,
   "secondPos" : 6578,
   "firstEndPos" : 9062,
@@ -11192,10 +11192,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 9099,
-  "secondPos" : 6727,
-  "firstEndPos" : 9209,
-  "secondEndPos" : 6837
+  "firstPos" : 9091,
+  "secondPos" : 6719,
+  "firstEndPos" : 9215,
+  "secondEndPos" : 6843
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -14211,27 +14211,27 @@
   "firstEndPos" : 10846,
   "secondEndPos" : 8474
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Wrapped read",
-  "secondLabel" : "// Wrapped read",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 10199,
-  "secondPos" : 7827,
-  "firstEndPos" : 10214,
-  "secondEndPos" : 7842
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 10223,
-  "secondPos" : 7851,
+  "firstPos" : 10199,
+  "secondPos" : 7827,
   "firstEndPos" : 10838,
   "secondEndPos" : 8466
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Wrapped read",
+  "secondLabel" : "// Wrapped read",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 10199,
+  "secondPos" : 7827,
+  "firstEndPos" : 10214,
+  "secondEndPos" : 7842
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

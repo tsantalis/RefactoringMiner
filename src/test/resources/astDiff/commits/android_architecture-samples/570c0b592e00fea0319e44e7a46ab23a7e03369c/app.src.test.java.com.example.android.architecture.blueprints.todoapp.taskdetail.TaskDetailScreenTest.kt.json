@@ -1590,7 +1590,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 2340,
-  "secondPos" : 1741,
+  "secondPos" : 1683,
   "firstEndPos" : 3369,
   "secondEndPos" : 2913
 }, {
@@ -1781,27 +1781,27 @@
   "firstEndPos" : 3369,
   "secondEndPos" : 2913
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// make sure that the title/description are both shown and correct",
-  "secondLabel" : "// make sure that the title/description are both shown and correct",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2696,
-  "secondPos" : 2237,
-  "firstEndPos" : 2762,
-  "secondEndPos" : 2303
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2775,
-  "secondPos" : 2316,
+  "firstPos" : 2696,
+  "secondPos" : 2237,
   "firstEndPos" : 3359,
   "secondEndPos" : 2903
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// make sure that the title/description are both shown and correct",
+  "secondLabel" : "// make sure that the title/description are both shown and correct",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2696,
+  "secondPos" : 2237,
+  "firstEndPos" : 2762,
+  "secondEndPos" : 2303
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -4186,7 +4186,7 @@
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
   "firstPos" : 3442,
-  "secondPos" : 3034,
+  "secondPos" : 2986,
   "firstEndPos" : 4472,
   "secondEndPos" : 4215
 }, {
@@ -4377,27 +4377,27 @@
   "firstEndPos" : 4472,
   "secondEndPos" : 4215
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// make sure that the title/description are both shown and correct",
-  "secondLabel" : "// make sure that the title/description are both shown and correct",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3804,
-  "secondPos" : 3541,
-  "firstEndPos" : 3870,
-  "secondEndPos" : 3607
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3883,
-  "secondPos" : 3620,
+  "firstPos" : 3804,
+  "secondPos" : 3541,
   "firstEndPos" : 4462,
   "secondEndPos" : 4205
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// make sure that the title/description are both shown and correct",
+  "secondLabel" : "// make sure that the title/description are both shown and correct",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3804,
+  "secondPos" : 3541,
+  "firstEndPos" : 3870,
+  "secondEndPos" : 3607
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

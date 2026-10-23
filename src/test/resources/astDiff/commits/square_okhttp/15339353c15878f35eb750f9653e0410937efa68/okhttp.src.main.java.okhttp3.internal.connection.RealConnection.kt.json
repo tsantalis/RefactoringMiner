@@ -8189,10 +8189,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 5972,
-  "secondPos" : 5972,
-  "firstEndPos" : 6535,
-  "secondEndPos" : 6535
+  "firstPos" : 5962,
+  "secondPos" : 5962,
+  "firstEndPos" : 6543,
+  "secondEndPos" : 6543
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -8524,12 +8524,23 @@
   "firstEndPos" : 6246,
   "secondEndPos" : 6246
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 6137,
+  "secondPos" : 6137,
+  "firstEndPos" : 6234,
+  "secondEndPos" : 6234
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// We were unable to connect the tunnel but properly closed down our resources.",
   "secondLabel" : "// We were unable to connect the tunnel but properly closed down our resources.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6137,
   "secondPos" : 6137,
   "firstEndPos" : 6216,
@@ -8552,17 +8563,6 @@
   "secondLabel" : "break",
   "firstParentType" : "jump_expression",
   "secondParentType" : "jump_expression",
-  "firstPos" : 6229,
-  "secondPos" : 6229,
-  "firstEndPos" : 6234,
-  "secondEndPos" : 6234
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 6229,
   "secondPos" : 6229,
   "firstEndPos" : 6234,
@@ -9157,10 +9157,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 6577,
-  "secondPos" : 6577,
-  "firstEndPos" : 7203,
-  "secondEndPos" : 7203
+  "firstPos" : 6567,
+  "secondPos" : 6567,
+  "firstEndPos" : 7211,
+  "secondEndPos" : 7211
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -14178,23 +14178,23 @@
   "firstEndPos" : 9313,
   "secondEndPos" : 9313
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 9082,
-  "secondPos" : 9082,
-  "firstEndPos" : 9158,
-  "secondEndPos" : 9158
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 9074,
+  "secondPos" : 9074,
+  "firstEndPos" : 9164,
+  "secondEndPos" : 9164
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 9082,
   "secondPos" : 9082,
   "firstEndPos" : 9158,
@@ -14486,23 +14486,23 @@
   "firstEndPos" : 9191,
   "secondEndPos" : 9191
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 9201,
-  "secondPos" : 9201,
-  "firstEndPos" : 9307,
-  "secondEndPos" : 9307
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 9193,
+  "secondPos" : 9193,
+  "firstEndPos" : 9313,
+  "secondEndPos" : 9313
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 9201,
   "secondPos" : 9201,
   "firstEndPos" : 9307,
@@ -14877,10 +14877,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 9559,
-  "secondPos" : 9559,
-  "firstEndPos" : 9634,
-  "secondEndPos" : 9634
+  "firstPos" : 9551,
+  "secondPos" : 9551,
+  "firstEndPos" : 9640,
+  "secondEndPos" : 9640
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -15300,23 +15300,23 @@
   "firstEndPos" : 9673,
   "secondEndPos" : 9673
 }, {
-  "firstType" : "if_expression",
-  "secondType" : "if_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 9683,
-  "secondPos" : 9683,
-  "firstEndPos" : 9763,
-  "secondEndPos" : 9763
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 9675,
+  "secondPos" : 9675,
+  "firstEndPos" : 9769,
+  "secondEndPos" : 9769
+}, {
+  "firstType" : "if_expression",
+  "secondType" : "if_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 9683,
   "secondPos" : 9683,
   "firstEndPos" : 9763,
@@ -19689,27 +19689,27 @@
   "firstEndPos" : 14156,
   "secondEndPos" : 14174
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Create the wrapper over the connected socket.",
-  "secondLabel" : "// Create the wrapper over the connected socket.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 11456,
-  "secondPos" : 11456,
-  "firstEndPos" : 11504,
-  "secondEndPos" : 11504
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 11511,
-  "secondPos" : 11511,
-  "firstEndPos" : 13982,
-  "secondEndPos" : 14000
+  "firstPos" : 11448,
+  "secondPos" : 11448,
+  "firstEndPos" : 13988,
+  "secondEndPos" : 14006
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Create the wrapper over the connected socket.",
+  "secondLabel" : "// Create the wrapper over the connected socket.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 11456,
+  "secondPos" : 11456,
+  "firstEndPos" : 11504,
+  "secondEndPos" : 11504
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -24865,10 +24865,10 @@
   "secondLabel" : "",
   "firstParentType" : "finally_block",
   "secondParentType" : "finally_block",
-  "firstPos" : 14005,
-  "secondPos" : 14023,
-  "firstEndPos" : 14150,
-  "secondEndPos" : 14168
+  "firstPos" : 13997,
+  "secondPos" : 14015,
+  "firstEndPos" : 14156,
+  "secondEndPos" : 14174
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -27906,12 +27906,23 @@
   "firstEndPos" : 15889,
   "secondEndPos" : 15907
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 15337,
+  "secondPos" : 15355,
+  "firstEndPos" : 15879,
+  "secondEndPos" : 15897
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Assume the server won't send a TLS ServerHello until we send a TLS ClientHello. If",
   "secondLabel" : "// Assume the server won't send a TLS ServerHello until we send a TLS ClientHello. If",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15337,
   "secondPos" : 15355,
   "firstEndPos" : 15422,
@@ -27921,8 +27932,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// that happens, then we will have buffered bytes that are needed by the SSLSocket!",
   "secondLabel" : "// that happens, then we will have buffered bytes that are needed by the SSLSocket!",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15433,
   "secondPos" : 15451,
   "firstEndPos" : 15516,
@@ -27932,8 +27943,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// This check is imperfect: it doesn't tell us whether a handshake will succeed, just",
   "secondLabel" : "// This check is imperfect: it doesn't tell us whether a handshake will succeed, just",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15527,
   "secondPos" : 15545,
   "firstEndPos" : 15612,
@@ -27943,23 +27954,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// that it will almost certainly fail because the proxy has sent unexpected data.",
   "secondLabel" : "// that it will almost certainly fail because the proxy has sent unexpected data.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15623,
   "secondPos" : 15641,
   "firstEndPos" : 15704,
   "secondEndPos" : 15722
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 15715,
-  "secondPos" : 15733,
-  "firstEndPos" : 15879,
-  "secondEndPos" : 15897
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -32339,27 +32339,27 @@
   "firstEndPos" : 19651,
   "secondEndPos" : 19669
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// If this connection is not accepting new exchanges, we're done.",
-  "secondLabel" : "// If this connection is not accepting new exchanges, we're done.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 18140,
-  "secondPos" : 18158,
-  "firstEndPos" : 18205,
-  "secondEndPos" : 18223
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 18210,
-  "secondPos" : 18228,
+  "firstPos" : 18140,
+  "secondPos" : 18158,
   "firstEndPos" : 19647,
   "secondEndPos" : 19665
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// If this connection is not accepting new exchanges, we're done.",
+  "secondLabel" : "// If this connection is not accepting new exchanges, we're done.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 18140,
+  "secondPos" : 18158,
+  "firstEndPos" : 18205,
+  "secondEndPos" : 18223
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -33956,23 +33956,23 @@
   "firstEndPos" : 19571,
   "secondEndPos" : 19589
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 19417,
-  "secondPos" : 19435,
-  "firstEndPos" : 19500,
-  "secondEndPos" : 19518
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 19409,
+  "secondPos" : 19427,
+  "firstEndPos" : 19506,
+  "secondEndPos" : 19524
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 19417,
   "secondPos" : 19435,
   "firstEndPos" : 19500,
@@ -34341,23 +34341,23 @@
   "firstEndPos" : 19543,
   "secondEndPos" : 19561
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 19553,
-  "secondPos" : 19571,
-  "firstEndPos" : 19565,
-  "secondEndPos" : 19583
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 19545,
+  "secondPos" : 19563,
+  "firstEndPos" : 19571,
+  "secondEndPos" : 19589
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 19553,
   "secondPos" : 19571,
   "firstEndPos" : 19565,
@@ -40204,12 +40204,23 @@
   "firstEndPos" : 21980,
   "secondEndPos" : 21998
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 21881,
+  "secondPos" : 21899,
+  "firstEndPos" : 21976,
+  "secondEndPos" : 21994
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Close the raw socket so we don't end up doing synchronous I/O.",
   "secondLabel" : "// Close the raw socket so we don't end up doing synchronous I/O.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 21881,
   "secondPos" : 21899,
   "firstEndPos" : 21946,
@@ -40221,17 +40232,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 21951,
-  "secondPos" : 21969,
-  "firstEndPos" : 21976,
-  "secondEndPos" : 21994
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 21951,
   "secondPos" : 21969,
   "firstEndPos" : 21976,
@@ -41596,10 +41596,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 22516,
-  "secondPos" : 22534,
-  "firstEndPos" : 22703,
-  "secondEndPos" : 22721
+  "firstPos" : 22506,
+  "secondPos" : 22524,
+  "firstEndPos" : 22711,
+  "secondEndPos" : 22729
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -41728,10 +41728,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 22575,
-  "secondPos" : 22593,
-  "firstEndPos" : 22632,
-  "secondEndPos" : 22650
+  "firstPos" : 22563,
+  "secondPos" : 22581,
+  "firstEndPos" : 22642,
+  "secondEndPos" : 22660
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -41942,23 +41942,23 @@
   "firstEndPos" : 22703,
   "secondEndPos" : 22721
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 22663,
-  "secondPos" : 22681,
-  "firstEndPos" : 22693,
-  "secondEndPos" : 22711
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "finally_block",
   "secondParentType" : "finally_block",
+  "firstPos" : 22651,
+  "secondPos" : 22669,
+  "firstEndPos" : 22703,
+  "secondEndPos" : 22721
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 22663,
   "secondPos" : 22681,
   "firstEndPos" : 22693,
@@ -42146,10 +42146,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 22832,
-  "secondPos" : 22850,
-  "firstEndPos" : 22880,
-  "secondEndPos" : 22898
+  "firstPos" : 22822,
+  "secondPos" : 22840,
+  "firstEndPos" : 22888,
+  "secondEndPos" : 22906
 }, {
   "firstType" : "jump_expression",
   "secondType" : "jump_expression",
@@ -43867,27 +43867,27 @@
   "firstEndPos" : 24013,
   "secondEndPos" : 24031
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Retry REFUSED_STREAM errors once on the same connection.",
-  "secondLabel" : "// Retry REFUSED_STREAM errors once on the same connection.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 23783,
-  "secondPos" : 23801,
-  "firstEndPos" : 23842,
-  "secondEndPos" : 23860
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 23855,
-  "secondPos" : 23873,
+  "firstPos" : 23783,
+  "secondPos" : 23801,
   "firstEndPos" : 24001,
   "secondEndPos" : 24019
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Retry REFUSED_STREAM errors once on the same connection.",
+  "secondLabel" : "// Retry REFUSED_STREAM errors once on the same connection.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 23783,
+  "secondPos" : 23801,
+  "firstEndPos" : 23842,
+  "secondEndPos" : 23860
 }, {
   "firstType" : "postfix_expression",
   "secondType" : "postfix_expression",
@@ -44190,8 +44190,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Keep the connection for CANCEL errors.",
   "secondLabel" : "// Keep the connection for CANCEL errors.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 24059,
   "secondPos" : 24077,
   "firstEndPos" : 24100,
@@ -44230,27 +44230,27 @@
   "firstEndPos" : 24268,
   "secondEndPos" : 24286
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Everything else wants a fresh connection.",
-  "secondLabel" : "// Everything else wants a fresh connection.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 24146,
-  "secondPos" : 24164,
-  "firstEndPos" : 24190,
-  "secondEndPos" : 24208
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 24203,
-  "secondPos" : 24221,
+  "firstPos" : 24146,
+  "secondPos" : 24164,
   "firstEndPos" : 24256,
   "secondEndPos" : 24274
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Everything else wants a fresh connection.",
+  "secondLabel" : "// Everything else wants a fresh connection.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 24146,
+  "secondPos" : 24164,
+  "firstEndPos" : 24190,
+  "secondEndPos" : 24208
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

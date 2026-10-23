@@ -2837,12 +2837,23 @@
   "firstEndPos" : 2454,
   "secondEndPos" : 2722
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1972,
+  "secondPos" : 2083,
+  "firstEndPos" : 2450,
+  "secondEndPos" : 2718
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// No TLS extensions if the socket class is custom.",
   "secondLabel" : "// No TLS extensions if the socket class is custom.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1972,
   "secondPos" : 2083,
   "firstEndPos" : 2023,
@@ -2854,17 +2865,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 2028,
-  "secondPos" : 2139,
-  "firstEndPos" : 2450,
-  "secondEndPos" : 2718
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 2028,
   "secondPos" : 2139,
   "firstEndPos" : 2450,
@@ -2969,27 +2969,27 @@
   "firstEndPos" : 2444,
   "secondEndPos" : 2712
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Enable session tickets.",
-  "secondLabel" : "// Enable session tickets.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 2080,
-  "secondPos" : 2191,
-  "firstEndPos" : 2106,
-  "secondEndPos" : 2217
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 2115,
-  "secondPos" : 2226,
-  "firstEndPos" : 2281,
-  "secondEndPos" : 2549
+  "firstPos" : 2070,
+  "secondPos" : 2181,
+  "firstEndPos" : 2289,
+  "secondEndPos" : 2557
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Enable session tickets.",
+  "secondLabel" : "// Enable session tickets.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2080,
+  "secondPos" : 2191,
+  "firstEndPos" : 2106,
+  "secondEndPos" : 2217
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3387,23 +3387,23 @@
   "firstEndPos" : 2322,
   "secondEndPos" : 2590
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2334,
-  "secondPos" : 2602,
-  "firstEndPos" : 2357,
-  "secondEndPos" : 2625
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 2324,
+  "secondPos" : 2592,
+  "firstEndPos" : 2365,
+  "secondEndPos" : 2633
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2334,
   "secondPos" : 2602,
   "firstEndPos" : 2357,
@@ -3530,23 +3530,23 @@
   "firstEndPos" : 2401,
   "secondEndPos" : 2669
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2413,
-  "secondPos" : 2681,
-  "firstEndPos" : 2436,
-  "secondEndPos" : 2704
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 2403,
+  "secondPos" : 2671,
+  "firstEndPos" : 2444,
+  "secondEndPos" : 2712
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2413,
   "secondPos" : 2681,
   "firstEndPos" : 2436,
@@ -3794,27 +3794,27 @@
   "firstEndPos" : 3177,
   "secondEndPos" : 3445
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// No TLS extensions if the socket class is custom.",
-  "secondLabel" : "// No TLS extensions if the socket class is custom.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2528,
-  "secondPos" : 2796,
-  "firstEndPos" : 2579,
-  "secondEndPos" : 2847
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2584,
-  "secondPos" : 2852,
+  "firstPos" : 2528,
+  "secondPos" : 2796,
   "firstEndPos" : 3173,
   "secondEndPos" : 3441
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// No TLS extensions if the socket class is custom.",
+  "secondLabel" : "// No TLS extensions if the socket class is custom.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2528,
+  "secondPos" : 2796,
+  "firstEndPos" : 2579,
+  "secondEndPos" : 2847
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -4009,10 +4009,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 2665,
-  "secondPos" : 2933,
-  "firstEndPos" : 2820,
-  "secondEndPos" : 3088
+  "firstPos" : 2657,
+  "secondPos" : 2925,
+  "firstEndPos" : 2826,
+  "secondEndPos" : 3094
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -4493,10 +4493,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 2869,
-  "secondPos" : 3137,
-  "firstEndPos" : 3020,
-  "secondEndPos" : 3288
+  "firstPos" : 2859,
+  "secondPos" : 3127,
+  "firstEndPos" : 3026,
+  "secondEndPos" : 3294
 }, {
   "firstType" : "when_expression",
   "secondType" : "when_expression",
@@ -4773,23 +4773,23 @@
   "firstEndPos" : 3059,
   "secondEndPos" : 3327
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 3069,
-  "secondPos" : 3337,
-  "firstEndPos" : 3092,
-  "secondEndPos" : 3360
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 3061,
+  "secondPos" : 3329,
+  "firstEndPos" : 3098,
+  "secondEndPos" : 3366
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3069,
   "secondPos" : 3337,
   "firstEndPos" : 3092,
@@ -4916,23 +4916,23 @@
   "firstEndPos" : 3134,
   "secondEndPos" : 3402
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 3144,
-  "secondPos" : 3412,
-  "firstEndPos" : 3167,
-  "secondEndPos" : 3435
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 3136,
+  "secondPos" : 3404,
+  "firstEndPos" : 3173,
+  "secondEndPos" : 3441
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3144,
   "secondPos" : 3412,
   "firstEndPos" : 3167,
@@ -5241,10 +5241,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 3291,
-  "secondPos" : 3559,
-  "firstEndPos" : 3464,
-  "secondEndPos" : 3732
+  "firstPos" : 3281,
+  "secondPos" : 3549,
+  "firstEndPos" : 3472,
+  "secondEndPos" : 3740
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -5780,10 +5780,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 3504,
-  "secondPos" : 3772,
-  "firstEndPos" : 3586,
-  "secondEndPos" : 3854
+  "firstPos" : 3494,
+  "secondPos" : 3762,
+  "firstEndPos" : 3594,
+  "secondEndPos" : 3862
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

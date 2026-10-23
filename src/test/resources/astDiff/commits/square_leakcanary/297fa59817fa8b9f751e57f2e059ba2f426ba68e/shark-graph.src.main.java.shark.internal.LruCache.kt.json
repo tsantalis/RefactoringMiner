@@ -1336,10 +1336,10 @@
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
-  "firstPos" : 572,
-  "secondPos" : 572,
-  "firstEndPos" : 871,
-  "secondEndPos" : 870
+  "firstPos" : 566,
+  "secondPos" : 566,
+  "firstEndPos" : 875,
+  "secondEndPos" : 874
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -2452,27 +2452,27 @@
   "firstEndPos" : 1094,
   "secondEndPos" : 1093
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// get() moves the key to the front",
-  "secondLabel" : "// get() moves the key to the front",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 915,
-  "secondPos" : 914,
-  "firstEndPos" : 950,
-  "secondEndPos" : 949
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 955,
-  "secondPos" : 954,
+  "firstPos" : 915,
+  "secondPos" : 914,
   "firstEndPos" : 1090,
   "secondEndPos" : 1089
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// get() moves the key to the front",
+  "secondLabel" : "// get() moves the key to the front",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 915,
+  "secondPos" : 914,
+  "firstEndPos" : 950,
+  "secondEndPos" : 949
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

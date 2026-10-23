@@ -3860,27 +3860,27 @@
   "firstEndPos" : 23686,
   "secondEndPos" : 21333
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// type of the record",
-  "secondLabel" : "// type of the record",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6455,
-  "secondPos" : 6364,
-  "firstEndPos" : 6476,
-  "secondEndPos" : 6385
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 6483,
-  "secondPos" : 6392,
+  "firstPos" : 6455,
+  "secondPos" : 6364,
   "firstEndPos" : 23680,
   "secondEndPos" : 21327
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// type of the record",
+  "secondLabel" : "// type of the record",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6455,
+  "secondPos" : 6364,
+  "firstEndPos" : 6476,
+  "secondEndPos" : 6385
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -12330,27 +12330,27 @@
   "firstEndPos" : 16069,
   "secondEndPos" : 8539
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 15935,
-  "secondPos" : 8447,
-  "firstEndPos" : 15957,
-  "secondEndPos" : 8469
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 15978,
-  "secondPos" : 8476,
+  "firstPos" : 15935,
+  "secondPos" : 8447,
   "firstEndPos" : 16049,
   "secondEndPos" : 8533
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 15935,
+  "secondPos" : 8447,
+  "firstEndPos" : 15957,
+  "secondEndPos" : 8469
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -18534,12 +18534,23 @@
   "firstEndPos" : 24197,
   "secondEndPos" : 2363
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 24119,
+  "secondPos" : 2285,
+  "firstEndPos" : 24193,
+  "secondEndPos" : 2359
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// String, primitive types",
   "secondLabel" : "// String, primitive types",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 24119,
   "secondPos" : 2285,
   "firstEndPos" : 24145,
@@ -18551,17 +18562,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 24150,
-  "secondPos" : 2316,
-  "firstEndPos" : 24193,
-  "secondEndPos" : 2359
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 24150,
   "secondPos" : 2316,
   "firstEndPos" : 24193,
@@ -18831,12 +18831,23 @@
   "firstEndPos" : 24404,
   "secondEndPos" : 2570
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 24245,
+  "secondPos" : 2411,
+  "firstEndPos" : 24400,
+  "secondEndPos" : 2566
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Note: this performs two linear scans over arrays",
   "secondLabel" : "// Note: this performs two linear scans over arrays",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 24245,
   "secondPos" : 2411,
   "firstEndPos" : 24296,
@@ -18848,17 +18859,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 24301,
-  "secondPos" : 2467,
-  "firstEndPos" : 24400,
-  "secondEndPos" : 2566
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 24301,
   "secondPos" : 2467,
   "firstEndPos" : 24400,

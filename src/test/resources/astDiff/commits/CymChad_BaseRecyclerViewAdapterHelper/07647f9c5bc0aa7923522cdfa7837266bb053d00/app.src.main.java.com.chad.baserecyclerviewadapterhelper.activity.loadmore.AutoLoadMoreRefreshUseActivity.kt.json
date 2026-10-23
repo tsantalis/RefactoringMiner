@@ -4190,27 +4190,27 @@
   "firstEndPos" : 2890,
   "secondEndPos" : 2890
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 使用默认的\"加载更多\"的样式",
-  "secondLabel" : "// 使用默认的\"加载更多\"的样式",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2256,
-  "secondPos" : 2256,
-  "firstEndPos" : 2273,
-  "secondEndPos" : 2273
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2282,
-  "secondPos" : 2282,
+  "firstPos" : 2256,
+  "secondPos" : 2256,
   "firstEndPos" : 2884,
   "secondEndPos" : 2884
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 使用默认的\"加载更多\"的样式",
+  "secondLabel" : "// 使用默认的\"加载更多\"的样式",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2256,
+  "secondPos" : 2256,
+  "firstEndPos" : 2273,
+  "secondEndPos" : 2273
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -6445,27 +6445,27 @@
   "firstEndPos" : 3511,
   "secondEndPos" : 3511
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 下拉刷新，需要重置页数",
-  "secondLabel" : "// 下拉刷新，需要重置页数",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3375,
-  "secondPos" : 3375,
-  "firstEndPos" : 3389,
-  "secondEndPos" : 3389
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3398,
-  "secondPos" : 3398,
+  "firstPos" : 3375,
+  "secondPos" : 3375,
   "firstEndPos" : 3505,
   "secondEndPos" : 3505
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 下拉刷新，需要重置页数",
+  "secondLabel" : "// 下拉刷新，需要重置页数",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3375,
+  "secondPos" : 3375,
+  "firstEndPos" : 3389,
+  "secondEndPos" : 3389
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7391,12 +7391,23 @@
   "firstEndPos" : 3985,
   "secondEndPos" : 3984
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 3811,
+  "secondPos" : 3810,
+  "firstEndPos" : 3967,
+  "secondEndPos" : 3966
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// 如果是加载的第一页数据，用 submitList()",
   "secondLabel" : "// 如果是加载的第一页数据，用 submitList()",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3811,
   "secondPos" : 3810,
   "firstEndPos" : 3840,
@@ -7406,8 +7417,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// If it is the first page of data loaded, use submitList().",
   "secondLabel" : "// If it is the first page of data loaded, use submitList().",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3861,
   "secondPos" : 3860,
   "firstEndPos" : 3921,
@@ -7419,17 +7430,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 3942,
-  "secondPos" : 3941,
-  "firstEndPos" : 3967,
-  "secondEndPos" : 3966
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 3942,
   "secondPos" : 3941,
   "firstEndPos" : 3967,
@@ -7545,12 +7545,23 @@
   "firstEndPos" : 4086,
   "secondEndPos" : 4085
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 4013,
+  "secondPos" : 4012,
+  "firstEndPos" : 4068,
+  "secondEndPos" : 4067
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "//不是第一页，则用add",
   "secondLabel" : "//不是第一页，则用add",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4013,
   "secondPos" : 4012,
   "firstEndPos" : 4026,
@@ -7562,17 +7573,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 4047,
-  "secondPos" : 4046,
-  "firstEndPos" : 4068,
-  "secondEndPos" : 4067
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 4047,
   "secondPos" : 4046,
   "firstEndPos" : 4068,
@@ -7798,27 +7798,27 @@
   "firstEndPos" : 4575,
   "secondEndPos" : 4574
 }, {
-  "firstType" : "multiline_comment",
-  "secondType" : "multiline_comment",
-  "firstLabel" : "/*\n                    Set the status to not loaded, and there is no paging data.\n                    设置状态为未加载，并且没有分页数据了\n                     */",
-  "secondLabel" : "/*\n                    Set the status to not loaded, and there is no paging data.\n                    设置状态为未加载，并且没有分页数据了\n                     */",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 4293,
-  "secondPos" : 4292,
-  "firstEndPos" : 4437,
-  "secondEndPos" : 4436
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 4458,
-  "secondPos" : 4457,
+  "firstPos" : 4293,
+  "secondPos" : 4292,
   "firstEndPos" : 4557,
   "secondEndPos" : 4556
+}, {
+  "firstType" : "multiline_comment",
+  "secondType" : "multiline_comment",
+  "firstLabel" : "/*\n                    Set the status to not loaded, and there is no paging data.\n                    设置状态为未加载，并且没有分页数据了\n                     */",
+  "secondLabel" : "/*\n                    Set the status to not loaded, and there is no paging data.\n                    设置状态为未加载，并且没有分页数据了\n                     */",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4293,
+  "secondPos" : 4292,
+  "firstEndPos" : 4437,
+  "secondEndPos" : 4436
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -8117,12 +8117,23 @@
   "firstEndPos" : 4842,
   "secondEndPos" : 4841
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 4603,
+  "secondPos" : 4602,
+  "firstEndPos" : 4824,
+  "secondEndPos" : 4823
+}, {
   "firstType" : "multiline_comment",
   "secondType" : "multiline_comment",
   "firstLabel" : "/*\n                    Set the state to not loaded, and there is also paginated data\n                    设置状态为未加载，并且还有分页数据\n                     */",
   "secondLabel" : "/*\n                    Set the state to not loaded, and there is also paginated data\n                    设置状态为未加载，并且还有分页数据\n                     */",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4603,
   "secondPos" : 4602,
   "firstEndPos" : 4749,
@@ -8134,17 +8145,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 4770,
-  "secondPos" : 4769,
-  "firstEndPos" : 4824,
-  "secondEndPos" : 4823
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 4770,
   "secondPos" : 4769,
   "firstEndPos" : 4824,
@@ -9839,10 +9839,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 5480,
-  "secondPos" : 5479,
-  "firstEndPos" : 5500,
-  "secondEndPos" : 5499
+  "firstPos" : 5462,
+  "secondPos" : 5461,
+  "firstEndPos" : 5514,
+  "secondEndPos" : 5513
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

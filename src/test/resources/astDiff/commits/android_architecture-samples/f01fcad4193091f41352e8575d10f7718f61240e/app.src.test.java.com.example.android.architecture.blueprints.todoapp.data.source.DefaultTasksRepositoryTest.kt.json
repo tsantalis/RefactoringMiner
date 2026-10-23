@@ -4850,27 +4850,27 @@
   "firstEndPos" : 3327,
   "secondEndPos" : 3871
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Trigger the repository to load tasks from the remote data source",
-  "secondLabel" : "// Trigger the repository to load tasks from the remote data source",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2789,
-  "secondPos" : 3314,
-  "firstEndPos" : 2856,
-  "secondEndPos" : 3381
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2865,
-  "secondPos" : 3390,
+  "firstPos" : 2789,
+  "secondPos" : 3314,
   "firstEndPos" : 3321,
   "secondEndPos" : 3865
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Trigger the repository to load tasks from the remote data source",
+  "secondLabel" : "// Trigger the repository to load tasks from the remote data source",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2789,
+  "secondPos" : 3314,
+  "firstEndPos" : 2856,
+  "secondEndPos" : 3381
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -5730,27 +5730,27 @@
   "firstEndPos" : 3636,
   "secondEndPos" : 4200
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When tasks are requested from the tasks repository",
-  "secondLabel" : "// When tasks are requested from the tasks repository",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3415,
-  "secondPos" : 3959,
-  "firstEndPos" : 3468,
-  "secondEndPos" : 4012
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3477,
-  "secondPos" : 4021,
+  "firstPos" : 3415,
+  "secondPos" : 3959,
   "firstEndPos" : 3630,
   "secondEndPos" : 4194
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When tasks are requested from the tasks repository",
+  "secondLabel" : "// When tasks are requested from the tasks repository",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3415,
+  "secondPos" : 3959,
+  "firstEndPos" : 3468,
+  "secondEndPos" : 4012
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -6269,27 +6269,27 @@
   "firstEndPos" : 4207,
   "secondEndPos" : 4881
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Make sure newTask is not in the remote or local datasources",
-  "secondLabel" : "// Make sure newTask is not in the remote or local datasources",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3709,
-  "secondPos" : 4273,
-  "firstEndPos" : 3771,
-  "secondEndPos" : 4335
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3780,
-  "secondPos" : 4344,
+  "firstPos" : 3709,
+  "secondPos" : 4273,
   "firstEndPos" : 4201,
   "secondEndPos" : 4875
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Make sure newTask is not in the remote or local datasources",
+  "secondLabel" : "// Make sure newTask is not in the remote or local datasources",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3709,
+  "secondPos" : 4273,
+  "firstEndPos" : 3771,
+  "secondEndPos" : 4335
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7072,27 +7072,27 @@
   "firstEndPos" : 4883,
   "secondEndPos" : 5576
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// First call returns from REMOTE",
-  "secondLabel" : "// First call returns from REMOTE",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4301,
-  "secondPos" : 4975,
-  "firstEndPos" : 4334,
-  "secondEndPos" : 5008
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4343,
-  "secondPos" : 5017,
+  "firstPos" : 4301,
+  "secondPos" : 4975,
   "firstEndPos" : 4877,
   "secondEndPos" : 5570
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// First call returns from REMOTE",
+  "secondLabel" : "// First call returns from REMOTE",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4301,
+  "secondPos" : 4975,
+  "firstEndPos" : 4334,
+  "secondEndPos" : 5008
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -8326,27 +8326,27 @@
   "firstEndPos" : 5220,
   "secondEndPos" : 5914
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Make remote data source unavailable",
-  "secondLabel" : "// Make remote data source unavailable",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5012,
-  "secondPos" : 5705,
-  "firstEndPos" : 5050,
-  "secondEndPos" : 5743
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5059,
-  "secondPos" : 5752,
+  "firstPos" : 5012,
+  "secondPos" : 5705,
   "firstEndPos" : 5214,
   "secondEndPos" : 5908
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Make remote data source unavailable",
+  "secondLabel" : "// Make remote data source unavailable",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5012,
+  "secondPos" : 5705,
+  "firstEndPos" : 5050,
+  "secondEndPos" : 5743
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -8733,27 +8733,27 @@
   "firstEndPos" : 5578,
   "secondEndPos" : 6292
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When the remote data source is unavailable",
-  "secondLabel" : "// When the remote data source is unavailable",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5342,
-  "secondPos" : 6036,
-  "firstEndPos" : 5387,
-  "secondEndPos" : 6081
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5400,
-  "secondPos" : 6094,
+  "firstPos" : 5342,
+  "secondPos" : 6036,
   "firstEndPos" : 5568,
   "secondEndPos" : 6282
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When the remote data source is unavailable",
+  "secondLabel" : "// When the remote data source is unavailable",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5342,
+  "secondPos" : 6036,
+  "firstEndPos" : 5387,
+  "secondEndPos" : 6081
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -9338,27 +9338,27 @@
   "firstEndPos" : 5906,
   "secondEndPos" : 6621
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When both sources are unavailable",
-  "secondLabel" : "// When both sources are unavailable",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5701,
-  "secondPos" : 6415,
-  "firstEndPos" : 5737,
-  "secondEndPos" : 6451
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5746,
-  "secondPos" : 6460,
+  "firstPos" : 5701,
+  "secondPos" : 6415,
   "firstEndPos" : 5900,
   "secondEndPos" : 6615
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When both sources are unavailable",
+  "secondLabel" : "// When both sources are unavailable",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5701,
+  "secondPos" : 6415,
+  "firstEndPos" : 5737,
+  "secondEndPos" : 6451
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -10779,27 +10779,27 @@
   "firstEndPos" : 6789,
   "secondEndPos" : 7600
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Save a task",
-  "secondLabel" : "// Save a task",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 6417,
-  "secondPos" : 7185,
-  "firstEndPos" : 6431,
-  "secondEndPos" : 7199
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 6440,
-  "secondPos" : 7208,
+  "firstPos" : 6417,
+  "secondPos" : 7185,
   "firstEndPos" : 6783,
   "secondEndPos" : 7594
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Save a task",
+  "secondLabel" : "// Save a task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6417,
+  "secondPos" : 7185,
+  "firstEndPos" : 6431,
+  "secondEndPos" : 7199
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -11758,27 +11758,27 @@
   "firstEndPos" : 7295,
   "secondEndPos" : 8149
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Save a task",
-  "secondLabel" : "// Save a task",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 6879,
-  "secondPos" : 7690,
-  "firstEndPos" : 6893,
-  "secondEndPos" : 7704
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 6902,
-  "secondPos" : 7713,
+  "firstPos" : 6879,
+  "secondPos" : 7690,
   "firstEndPos" : 7289,
   "secondEndPos" : 8143
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Save a task",
+  "secondLabel" : "// Save a task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6879,
+  "secondPos" : 7690,
+  "firstEndPos" : 6893,
+  "secondEndPos" : 7704
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -12869,27 +12869,27 @@
   "firstEndPos" : 7872,
   "secondEndPos" : 8760
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Obtain a task from the local data source",
-  "secondLabel" : "// Obtain a task from the local data source",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 7379,
-  "secondPos" : 8233,
-  "firstEndPos" : 7422,
-  "secondEndPos" : 8276
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 7431,
-  "secondPos" : 8285,
+  "firstPos" : 7379,
+  "secondPos" : 8233,
   "firstEndPos" : 7866,
   "secondEndPos" : 8754
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Obtain a task from the local data source",
+  "secondLabel" : "// Obtain a task from the local data source",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7379,
+  "secondPos" : 8233,
+  "firstEndPos" : 7422,
+  "secondEndPos" : 8276
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -13925,27 +13925,27 @@
   "firstEndPos" : 8690,
   "secondEndPos" : 9614
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Trigger the repository to load data, which loads from remote and caches",
-  "secondLabel" : "// Trigger the repository to load data, which loads from remote and caches",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 7935,
-  "secondPos" : 8823,
-  "firstEndPos" : 8009,
-  "secondEndPos" : 8897
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 8018,
-  "secondPos" : 8906,
+  "firstPos" : 7935,
+  "secondPos" : 8823,
   "firstEndPos" : 8684,
   "secondEndPos" : 9608
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Trigger the repository to load data, which loads from remote and caches",
+  "secondLabel" : "// Trigger the repository to load data, which loads from remote and caches",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7935,
+  "secondPos" : 8823,
+  "firstEndPos" : 8009,
+  "secondEndPos" : 8897
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",

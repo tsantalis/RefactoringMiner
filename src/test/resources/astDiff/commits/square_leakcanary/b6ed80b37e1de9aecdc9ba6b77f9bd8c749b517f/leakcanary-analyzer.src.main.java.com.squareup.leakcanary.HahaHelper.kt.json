@@ -7776,27 +7776,27 @@
   "firstEndPos" : 4602,
   "secondEndPos" : 4589
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// In API 26, Strings are now internally represented as byte arrays.",
-  "secondLabel" : "// In API 26, Strings are now internally represented as byte arrays.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 3796,
-  "secondPos" : 3783,
-  "firstEndPos" : 3864,
-  "secondEndPos" : 3851
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 3871,
-  "secondPos" : 3858,
+  "firstPos" : 3796,
+  "secondPos" : 3783,
   "firstEndPos" : 4595,
   "secondEndPos" : 4582
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// In API 26, Strings are now internally represented as byte arrays.",
+  "secondLabel" : "// In API 26, Strings are now internally represented as byte arrays.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3796,
+  "secondPos" : 3783,
+  "firstEndPos" : 3864,
+  "secondEndPos" : 3851
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -7936,10 +7936,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 4003,
-  "secondPos" : 3990,
-  "firstEndPos" : 4351,
-  "secondEndPos" : 4338
+  "firstPos" : 3993,
+  "secondPos" : 3980,
+  "firstEndPos" : 4359,
+  "secondEndPos" : 4346
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -8953,23 +8953,23 @@
   "firstEndPos" : 4391,
   "secondEndPos" : 4378
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4403,
-  "secondPos" : 4390,
-  "firstEndPos" : 4428,
-  "secondEndPos" : 4415
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 4393,
+  "secondPos" : 4380,
+  "firstEndPos" : 4436,
+  "secondEndPos" : 4423
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4403,
   "secondPos" : 4390,
   "firstEndPos" : 4428,
@@ -9096,23 +9096,23 @@
   "firstEndPos" : 4469,
   "secondEndPos" : 4456
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4481,
-  "secondPos" : 4468,
-  "firstEndPos" : 4506,
-  "secondEndPos" : 4493
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 4471,
+  "secondPos" : 4458,
+  "firstEndPos" : 4514,
+  "secondEndPos" : 4501
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4481,
   "secondPos" : 4468,
   "firstEndPos" : 4506,
@@ -9239,23 +9239,23 @@
   "firstEndPos" : 4550,
   "secondEndPos" : 4537
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4562,
-  "secondPos" : 4549,
-  "firstEndPos" : 4587,
-  "secondEndPos" : 4574
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 4552,
+  "secondPos" : 4539,
+  "firstEndPos" : 4595,
+  "secondEndPos" : 4582
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4562,
   "secondPos" : 4549,
   "firstEndPos" : 4587,

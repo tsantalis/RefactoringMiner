@@ -6566,12 +6566,23 @@
   "firstEndPos" : 3511,
   "secondEndPos" : 3509
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 2748,
+  "secondPos" : 2746,
+  "firstEndPos" : 3507,
+  "secondEndPos" : 3505
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Generate a self-signed cert for the server to serve and the client to trust.",
   "secondLabel" : "// Generate a self-signed cert for the server to serve and the client to trust.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2748,
   "secondPos" : 2746,
   "firstEndPos" : 2827,
@@ -6581,23 +6592,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// can't use TlsUtil.localhost with a non OpenJSSE trust manager",
   "secondLabel" : "// can't use TlsUtil.localhost with a non OpenJSSE trust manager",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2832,
   "secondPos" : 2830,
   "firstEndPos" : 2896,
   "secondEndPos" : 2894
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2901,
-  "secondPos" : 2899,
-  "firstEndPos" : 3507,
-  "secondEndPos" : 3505
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

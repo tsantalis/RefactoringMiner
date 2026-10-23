@@ -6258,12 +6258,23 @@
   "firstEndPos" : 3605,
   "secondEndPos" : 3605
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "anonymous_initializer",
+  "secondParentType" : "anonymous_initializer",
+  "firstPos" : 3606,
+  "secondPos" : 3606,
+  "firstEndPos" : 3690,
+  "secondEndPos" : 3714
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Set initial state",
   "secondLabel" : "// Set initial state",
-  "firstParentType" : "anonymous_initializer",
-  "secondParentType" : "anonymous_initializer",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3616,
   "secondPos" : 3616,
   "firstEndPos" : 3636,
@@ -6279,17 +6290,6 @@
   "secondPos" : 3645,
   "firstEndPos" : 3684,
   "secondEndPos" : 3684
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "anonymous_initializer",
-  "secondParentType" : "anonymous_initializer",
-  "firstPos" : 3645,
-  "secondPos" : 3645,
-  "firstEndPos" : 3684,
-  "secondEndPos" : 3708
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",

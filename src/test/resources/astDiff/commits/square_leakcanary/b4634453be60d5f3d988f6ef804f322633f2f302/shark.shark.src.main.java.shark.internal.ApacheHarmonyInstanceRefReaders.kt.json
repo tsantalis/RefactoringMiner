@@ -8315,27 +8315,27 @@
   "firstEndPos" : 6093,
   "secondEndPos" : 6210
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// \"HashSet.backingMap\" is never null.",
-  "secondLabel" : "// \"HashSet.backingMap\" is never null.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 5462,
-  "secondPos" : 5583,
-  "firstEndPos" : 5500,
-  "secondEndPos" : 5621
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 5511,
-  "secondPos" : 5632,
+  "firstPos" : 5462,
+  "secondPos" : 5583,
   "firstEndPos" : 6083,
   "secondEndPos" : 6200
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// \"HashSet.backingMap\" is never null.",
+  "secondLabel" : "// \"HashSet.backingMap\" is never null.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5462,
+  "secondPos" : 5583,
+  "firstEndPos" : 5500,
+  "secondEndPos" : 5621
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

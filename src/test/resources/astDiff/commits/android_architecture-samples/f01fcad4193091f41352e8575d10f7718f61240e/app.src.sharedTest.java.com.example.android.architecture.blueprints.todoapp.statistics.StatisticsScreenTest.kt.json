@@ -2936,24 +2936,13 @@
   "firstEndPos" : 3160,
   "secondEndPos" : 3158
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given some tasks",
-  "secondLabel" : "// Given some tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2193,
-  "secondPos" : 2171,
-  "firstEndPos" : 2212,
-  "secondEndPos" : 2190
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2221,
+  "firstPos" : 2193,
   "secondPos" : 1987,
   "firstEndPos" : 3154,
   "secondEndPos" : 2082
@@ -2964,10 +2953,21 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2221,
-  "secondPos" : 2199,
+  "firstPos" : 2193,
+  "secondPos" : 2171,
   "firstEndPos" : 3154,
   "secondEndPos" : 3152
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given some tasks",
+  "secondLabel" : "// Given some tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2193,
+  "secondPos" : 2171,
+  "firstEndPos" : 2212,
+  "secondEndPos" : 2190
 }, {
   "firstType" : "statements",
   "secondType" : "statements",

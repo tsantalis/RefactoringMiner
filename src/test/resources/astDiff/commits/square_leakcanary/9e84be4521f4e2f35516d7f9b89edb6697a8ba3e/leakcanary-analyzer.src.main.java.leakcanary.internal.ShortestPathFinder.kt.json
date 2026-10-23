@@ -16147,27 +16147,27 @@
   "firstEndPos" : 10238,
   "secondEndPos" : 10710
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// visitOrder is unused as this root node isn't enqueued.",
-  "secondLabel" : "// visitOrder is unused as this root node isn't enqueued.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 9655,
-  "secondPos" : 10127,
-  "firstEndPos" : 9712,
-  "secondEndPos" : 10184
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 9725,
-  "secondPos" : 10197,
+  "firstPos" : 9655,
+  "secondPos" : 10127,
   "firstEndPos" : 10226,
   "secondEndPos" : 10698
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// visitOrder is unused as this root node isn't enqueued.",
+  "secondLabel" : "// visitOrder is unused as this root node isn't enqueued.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 9655,
+  "secondPos" : 10127,
+  "firstEndPos" : 9712,
+  "secondEndPos" : 10184
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -17786,27 +17786,27 @@
   "firstEndPos" : 11201,
   "secondEndPos" : 11437
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Sorting based on type name first. In reverse order so that ThreadObject is before JavaLocalExclusion",
-  "secondLabel" : "// Sorting based on type name first. In reverse order so that ThreadObject is before JavaLocalExclusion",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 11208,
-  "secondPos" : 11444,
-  "firstEndPos" : 11311,
-  "secondEndPos" : 11547
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 11318,
-  "secondPos" : 11554,
+  "firstPos" : 11208,
+  "secondPos" : 11444,
   "firstEndPos" : 11553,
   "secondEndPos" : 11789
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Sorting based on type name first. In reverse order so that ThreadObject is before JavaLocalExclusion",
+  "secondLabel" : "// Sorting based on type name first. In reverse order so that ThreadObject is before JavaLocalExclusion",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 11208,
+  "secondPos" : 11444,
+  "firstEndPos" : 11311,
+  "secondEndPos" : 11547
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -25134,25 +25134,14 @@
   "firstEndPos" : 15442,
   "secondEndPos" : 16196
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// 0L is null",
-  "secondLabel" : "// 0L is null",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 14553,
-  "secondPos" : 14791,
-  "firstEndPos" : 14566,
-  "secondEndPos" : 14804
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 14571,
-  "secondPos" : 14809,
+  "firstPos" : 14553,
+  "secondPos" : 14791,
   "firstEndPos" : 15438,
   "secondEndPos" : 16192
 }, {
@@ -25162,10 +25151,21 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 14571,
+  "firstPos" : 14553,
   "secondPos" : 15386,
   "firstEndPos" : 15438,
   "secondEndPos" : 16009
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// 0L is null",
+  "secondLabel" : "// 0L is null",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 14553,
+  "secondPos" : 14791,
+  "firstEndPos" : 14566,
+  "secondEndPos" : 14804
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -27306,7 +27306,7 @@
   "firstLabel" : "// String internal array is never enqueued",
   "secondLabel" : "// String internal array is never enqueued",
   "firstParentType" : "when_expression",
-  "secondParentType" : "control_structure_body",
+  "secondParentType" : "statements",
   "firstPos" : 15671,
   "secondPos" : 16491,
   "firstEndPos" : 15713,
@@ -27922,7 +27922,7 @@
   "firstLabel" : "// Primitive wrapper array elements are never enqueued",
   "secondLabel" : "// Primitive wrapper array elements are never enqueued",
   "firstParentType" : "when_expression",
-  "secondParentType" : "control_structure_body",
+  "secondParentType" : "statements",
   "firstPos" : 16081,
   "secondPos" : 16987,
   "firstEndPos" : 16135,
@@ -29666,12 +29666,23 @@
   "firstEndPos" : 17374,
   "secondEndPos" : 18319
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 17043,
+  "secondPos" : 17988,
+  "firstEndPos" : 17368,
+  "secondEndPos" : 18313
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// parent is not a retained instance and parent has no dominator, but it must have been",
   "secondLabel" : "// parent is not a retained instance and parent has no dominator, but it must have been",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 17043,
   "secondPos" : 17988,
   "firstEndPos" : 17130,
@@ -29681,23 +29692,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// visited therefore we know parent belongs to undominated.",
   "secondLabel" : "// visited therefore we know parent belongs to undominated.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 17137,
   "secondPos" : 18082,
   "firstEndPos" : 17196,
   "secondEndPos" : 18141
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 17203,
-  "secondPos" : 18148,
-  "firstEndPos" : 17368,
-  "secondEndPos" : 18313
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -32531,7 +32531,7 @@
   "firstLabel" : "// String internal array is never enqueued",
   "secondLabel" : "// String internal array is never enqueued",
   "firstParentType" : "when_expression",
-  "secondParentType" : "control_structure_body",
+  "secondParentType" : "statements",
   "firstPos" : 18625,
   "secondPos" : 19635,
   "firstEndPos" : 18667,
@@ -33103,7 +33103,7 @@
   "firstLabel" : "// Primitive wrapper array elements are never enqueued",
   "secondLabel" : "// Primitive wrapper array elements are never enqueued",
   "firstParentType" : "when_expression",
-  "secondParentType" : "control_structure_body",
+  "secondParentType" : "statements",
   "firstPos" : 19026,
   "secondPos" : 20068,
   "firstEndPos" : 19080,

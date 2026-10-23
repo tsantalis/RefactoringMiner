@@ -2672,27 +2672,27 @@
   "firstEndPos" : 2063,
   "secondEndPos" : 2068
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Reset the animation to avoid flickering.",
-  "secondLabel" : "// Reset the animation to avoid flickering.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1961,
-  "secondPos" : 1966,
-  "firstEndPos" : 2004,
-  "secondEndPos" : 2009
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2009,
-  "secondPos" : 2014,
+  "firstPos" : 1961,
+  "secondPos" : 1966,
   "firstEndPos" : 2059,
   "secondEndPos" : 2064
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Reset the animation to avoid flickering.",
+  "secondLabel" : "// Reset the animation to avoid flickering.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1961,
+  "secondPos" : 1966,
+  "firstEndPos" : 2004,
+  "secondEndPos" : 2009
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

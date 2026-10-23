@@ -1495,27 +1495,27 @@
   "firstEndPos" : 3146,
   "secondEndPos" : 3133
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
-  "secondLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1048,
-  "secondPos" : 1035,
-  "firstEndPos" : 1116,
-  "secondEndPos" : 1103
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1121,
-  "secondPos" : 1108,
+  "firstPos" : 1048,
+  "secondPos" : 1035,
   "firstEndPos" : 3142,
   "secondEndPos" : 3129
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
+  "secondLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1048,
+  "secondPos" : 1035,
+  "firstEndPos" : 1116,
+  "secondEndPos" : 1103
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

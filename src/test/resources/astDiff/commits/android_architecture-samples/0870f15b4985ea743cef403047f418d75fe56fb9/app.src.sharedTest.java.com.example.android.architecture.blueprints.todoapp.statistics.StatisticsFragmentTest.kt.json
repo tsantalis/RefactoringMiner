@@ -2793,27 +2793,27 @@
   "firstEndPos" : 3228,
   "secondEndPos" : 4351
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given some tasks",
-  "secondLabel" : "// Given some tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2238,
-  "secondPos" : 3285,
-  "firstEndPos" : 2257,
-  "secondEndPos" : 3304
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2266,
-  "secondPos" : 3313,
+  "firstPos" : 2238,
+  "secondPos" : 3285,
   "firstEndPos" : 3222,
   "secondEndPos" : 4345
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given some tasks",
+  "secondLabel" : "// Given some tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2238,
+  "secondPos" : 3285,
+  "firstEndPos" : 2257,
+  "secondEndPos" : 3304
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

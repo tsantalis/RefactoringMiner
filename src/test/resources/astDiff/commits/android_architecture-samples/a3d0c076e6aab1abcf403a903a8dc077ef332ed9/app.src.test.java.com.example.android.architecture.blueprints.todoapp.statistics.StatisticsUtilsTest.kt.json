@@ -2452,27 +2452,27 @@
   "firstEndPos" : 2506,
   "secondEndPos" : 2506
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given 3 completed tasks and 2 active tasks",
-  "secondLabel" : "// Given 3 completed tasks and 2 active tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1886,
-  "secondPos" : 1886,
-  "firstEndPos" : 1931,
-  "secondEndPos" : 1931
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1940,
-  "secondPos" : 1940,
+  "firstPos" : 1886,
+  "secondPos" : 1886,
   "firstEndPos" : 2500,
   "secondEndPos" : 2500
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given 3 completed tasks and 2 active tasks",
+  "secondLabel" : "// Given 3 completed tasks and 2 active tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1886,
+  "secondPos" : 1886,
+  "firstEndPos" : 1931,
+  "secondEndPos" : 1931
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -4080,27 +4080,27 @@
   "firstEndPos" : 3157,
   "secondEndPos" : 2829
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When there are no tasks",
-  "secondLabel" : "// When there are no tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2899,
-  "secondPos" : 2571,
-  "firstEndPos" : 2925,
-  "secondEndPos" : 2597
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2934,
-  "secondPos" : 2606,
+  "firstPos" : 2899,
+  "secondPos" : 2571,
   "firstEndPos" : 3151,
   "secondEndPos" : 2823
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When there are no tasks",
+  "secondLabel" : "// When there are no tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2899,
+  "secondPos" : 2571,
+  "firstEndPos" : 2925,
+  "secondEndPos" : 2597
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

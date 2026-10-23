@@ -923,27 +923,27 @@
   "firstEndPos" : 1981,
   "secondEndPos" : 2374
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Do nothing if count hasn't changed",
-  "secondLabel" : "// Do nothing if count hasn't changed",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 941,
-  "secondPos" : 1334,
-  "firstEndPos" : 978,
-  "secondEndPos" : 1371
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 983,
-  "secondPos" : 1376,
+  "firstPos" : 941,
+  "secondPos" : 1334,
   "firstEndPos" : 1977,
   "secondEndPos" : 2370
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Do nothing if count hasn't changed",
+  "secondLabel" : "// Do nothing if count hasn't changed",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 941,
+  "secondPos" : 1334,
+  "firstEndPos" : 978,
+  "secondEndPos" : 1371
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -1803,23 +1803,23 @@
   "firstEndPos" : 1971,
   "secondEndPos" : 2364
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1817,
-  "secondPos" : 2210,
-  "firstEndPos" : 1876,
-  "secondEndPos" : 2269
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 1807,
+  "secondPos" : 2200,
+  "firstEndPos" : 1884,
+  "secondEndPos" : 2277
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1817,
   "secondPos" : 2210,
   "firstEndPos" : 1876,

@@ -890,27 +890,27 @@
   "firstEndPos" : 470,
   "secondEndPos" : 817
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 326,
-  "secondPos" : 673,
-  "firstEndPos" : 403,
-  "secondEndPos" : 750
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 408,
-  "secondPos" : 755,
+  "firstPos" : 326,
+  "secondPos" : 673,
   "firstEndPos" : 466,
   "secondEndPos" : 813
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 326,
+  "secondPos" : 673,
+  "firstEndPos" : 403,
+  "secondEndPos" : 750
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -1407,27 +1407,27 @@
   "firstEndPos" : 716,
   "secondEndPos" : 1093
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 561,
-  "secondPos" : 938,
-  "firstEndPos" : 638,
-  "secondEndPos" : 1015
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 643,
-  "secondPos" : 1020,
+  "firstPos" : 561,
+  "secondPos" : 938,
   "firstEndPos" : 712,
   "secondEndPos" : 1089
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "secondLabel" : "// Local variable to prevent the ref from becoming null after the null check.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 561,
+  "secondPos" : 938,
+  "firstEndPos" : 638,
+  "secondEndPos" : 1015
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

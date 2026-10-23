@@ -11318,12 +11318,23 @@
   "firstEndPos" : 5254,
   "secondEndPos" : 5352
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 4949,
+  "secondPos" : 5047,
+  "firstEndPos" : 5250,
+  "secondEndPos" : 5348
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// As long as we don't interpret IDs, reading signed values here is fine.",
   "secondLabel" : "// As long as we don't interpret IDs, reading signed values here is fine.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4949,
   "secondPos" : 5047,
   "firstEndPos" : 5022,
@@ -11335,17 +11346,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 5027,
-  "secondPos" : 5125,
-  "firstEndPos" : 5250,
-  "secondEndPos" : 5348
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 5027,
   "secondPos" : 5125,
   "firstEndPos" : 5250,
@@ -14585,27 +14585,27 @@
   "firstEndPos" : 7961,
   "secondEndPos" : 8021
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// stack trace serial number",
-  "secondLabel" : "// stack trace serial number",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 6251,
-  "secondPos" : 6311,
-  "firstEndPos" : 6279,
-  "secondEndPos" : 6339
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 6284,
+  "firstPos" : 6251,
   "secondPos" : 6289,
   "firstEndPos" : 7957,
   "secondEndPos" : 8017
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// stack trace serial number",
+  "secondLabel" : "// stack trace serial number",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6251,
+  "secondPos" : 6311,
+  "firstEndPos" : 6279,
+  "secondEndPos" : 6339
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -15652,27 +15652,27 @@
   "firstEndPos" : 6933,
   "secondEndPos" : 6993
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6841,
-  "secondPos" : 6901,
-  "firstEndPos" : 6863,
-  "secondEndPos" : 6923
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 6870,
-  "secondPos" : 6930,
+  "firstPos" : 6841,
+  "secondPos" : 6901,
   "firstEndPos" : 6927,
   "secondEndPos" : 6987
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6841,
+  "secondPos" : 6901,
+  "firstEndPos" : 6863,
+  "secondEndPos" : 6923
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -18160,27 +18160,27 @@
   "firstEndPos" : 8410,
   "secondEndPos" : 9266
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// stack trace serial number",
-  "secondLabel" : "// stack trace serial number",
-  "firstParentType" : "function_body",
-  "secondParentType" : "statements",
-  "firstPos" : 8042,
-  "secondPos" : 8898,
-  "firstEndPos" : 8070,
-  "secondEndPos" : 8926
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 8075,
+  "firstPos" : 8042,
   "secondPos" : 8876,
   "firstEndPos" : 8406,
   "secondEndPos" : 9262
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// stack trace serial number",
+  "secondLabel" : "// stack trace serial number",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 8042,
+  "secondPos" : 8898,
+  "firstEndPos" : 8070,
+  "secondEndPos" : 8926
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -23847,27 +23847,27 @@
   "firstEndPos" : 16069,
   "secondEndPos" : 8539
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 15935,
-  "secondPos" : 8447,
-  "firstEndPos" : 15957,
-  "secondEndPos" : 8469
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 15978,
-  "secondPos" : 8476,
+  "firstPos" : 15935,
+  "secondPos" : 8447,
   "firstEndPos" : 16049,
   "secondEndPos" : 8533
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 15935,
+  "secondPos" : 8447,
+  "firstEndPos" : 15957,
+  "secondEndPos" : 8469
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

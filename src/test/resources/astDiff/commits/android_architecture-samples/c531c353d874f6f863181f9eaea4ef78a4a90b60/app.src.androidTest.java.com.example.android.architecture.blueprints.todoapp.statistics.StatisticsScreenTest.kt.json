@@ -3057,27 +3057,27 @@
   "firstEndPos" : 3158,
   "secondEndPos" : 3151
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given some tasks",
-  "secondLabel" : "// Given some tasks",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2171,
-  "secondPos" : 2164,
-  "firstEndPos" : 2190,
-  "secondEndPos" : 2183
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2199,
-  "secondPos" : 2192,
+  "firstPos" : 2171,
+  "secondPos" : 2164,
   "firstEndPos" : 3152,
   "secondEndPos" : 3145
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given some tasks",
+  "secondLabel" : "// Given some tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2171,
+  "secondPos" : 2164,
+  "firstEndPos" : 2190,
+  "secondEndPos" : 2183
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

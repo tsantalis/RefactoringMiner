@@ -1132,23 +1132,23 @@
   "firstEndPos" : 823,
   "secondEndPos" : 1227
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 660,
-  "secondPos" : 1064,
-  "firstEndPos" : 769,
-  "secondEndPos" : 1173
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 652,
+  "secondPos" : 1056,
+  "firstEndPos" : 775,
+  "secondEndPos" : 1179
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 660,
   "secondPos" : 1064,
   "firstEndPos" : 769,
@@ -1462,23 +1462,23 @@
   "firstEndPos" : 795,
   "secondEndPos" : 1199
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 805,
-  "secondPos" : 1209,
-  "firstEndPos" : 817,
-  "secondEndPos" : 1221
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 797,
+  "secondPos" : 1201,
+  "firstEndPos" : 823,
+  "secondEndPos" : 1227
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 805,
   "secondPos" : 1209,
   "firstEndPos" : 817,
@@ -2452,23 +2452,23 @@
   "firstEndPos" : 1584,
   "secondEndPos" : 1988
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1358,
-  "secondPos" : 1762,
-  "firstEndPos" : 1451,
-  "secondEndPos" : 1855
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 1350,
+  "secondPos" : 1754,
+  "firstEndPos" : 1457,
+  "secondEndPos" : 1861
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1358,
   "secondPos" : 1762,
   "firstEndPos" : 1451,
@@ -2744,10 +2744,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 1487,
-  "secondPos" : 1891,
-  "firstEndPos" : 1578,
-  "secondEndPos" : 1982
+  "firstPos" : 1479,
+  "secondPos" : 1883,
+  "firstEndPos" : 1584,
+  "secondEndPos" : 1988
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3365,23 +3365,23 @@
   "firstEndPos" : 1974,
   "secondEndPos" : 2378
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1755,
-  "secondPos" : 2159,
-  "firstEndPos" : 1857,
-  "secondEndPos" : 2261
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 1747,
+  "secondPos" : 2151,
+  "firstEndPos" : 1863,
+  "secondEndPos" : 2267
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1755,
   "secondPos" : 2159,
   "firstEndPos" : 1857,
@@ -3629,12 +3629,23 @@
   "firstEndPos" : 1916,
   "secondEndPos" : 2320
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 1918,
+  "secondPos" : 2322,
+  "firstEndPos" : 1974,
+  "secondEndPos" : 2378
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Service is disabled.",
   "secondLabel" : "// Service is disabled.",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1926,
   "secondPos" : 2330,
   "firstEndPos" : 1949,
@@ -3646,17 +3657,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1956,
-  "secondPos" : 2360,
-  "firstEndPos" : 1968,
-  "secondEndPos" : 2372
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
   "firstPos" : 1956,
   "secondPos" : 2360,
   "firstEndPos" : 1968,
@@ -5037,23 +5037,23 @@
   "firstEndPos" : 2971,
   "secondEndPos" : 3375
 }, {
-  "firstType" : "assignment",
-  "secondType" : "assignment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2719,
-  "secondPos" : 3123,
-  "firstEndPos" : 2773,
-  "secondEndPos" : 3177
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 2711,
+  "secondPos" : 3115,
+  "firstEndPos" : 2779,
+  "secondEndPos" : 3183
+}, {
+  "firstType" : "assignment",
+  "secondType" : "assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2719,
   "secondPos" : 3123,
   "firstEndPos" : 2773,
@@ -5180,27 +5180,27 @@
   "firstEndPos" : 2815,
   "secondEndPos" : 3219
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// https://github.com/square/leakcanary/issues/948",
-  "secondLabel" : "// https://github.com/square/leakcanary/issues/948",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
-  "firstPos" : 2825,
-  "secondPos" : 3229,
-  "firstEndPos" : 2875,
-  "secondEndPos" : 3279
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 2882,
-  "secondPos" : 3286,
-  "firstEndPos" : 2965,
-  "secondEndPos" : 3369
+  "firstPos" : 2817,
+  "secondPos" : 3221,
+  "firstEndPos" : 2971,
+  "secondEndPos" : 3375
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// https://github.com/square/leakcanary/issues/948",
+  "secondLabel" : "// https://github.com/square/leakcanary/issues/948",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2825,
+  "secondPos" : 3229,
+  "firstEndPos" : 2875,
+  "secondEndPos" : 3279
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

@@ -2100,12 +2100,23 @@
   "firstEndPos" : 2041,
   "secondEndPos" : 2064
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1705,
+  "secondPos" : 1728,
+  "firstEndPos" : 2037,
+  "secondEndPos" : 2060
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// No TLS extensions if the socket class is custom.",
   "secondLabel" : "// No TLS extensions if the socket class is custom.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1705,
   "secondPos" : 1728,
   "firstEndPos" : 1756,
@@ -2117,17 +2128,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1761,
-  "secondPos" : 1784,
-  "firstEndPos" : 2037,
-  "secondEndPos" : 2060
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 1761,
   "secondPos" : 1784,
   "firstEndPos" : 2037,
@@ -2210,27 +2210,27 @@
   "firstEndPos" : 2037,
   "secondEndPos" : 2060
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Enable session tickets.",
-  "secondLabel" : "// Enable session tickets.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 1799,
-  "secondPos" : 1822,
-  "firstEndPos" : 1825,
-  "secondEndPos" : 1848
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 1832,
-  "secondPos" : 1855,
+  "firstPos" : 1799,
+  "secondPos" : 1822,
   "firstEndPos" : 2031,
   "secondEndPos" : 2054
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Enable session tickets.",
+  "secondLabel" : "// Enable session tickets.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1799,
+  "secondPos" : 1822,
+  "firstEndPos" : 1825,
+  "secondEndPos" : 1848
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

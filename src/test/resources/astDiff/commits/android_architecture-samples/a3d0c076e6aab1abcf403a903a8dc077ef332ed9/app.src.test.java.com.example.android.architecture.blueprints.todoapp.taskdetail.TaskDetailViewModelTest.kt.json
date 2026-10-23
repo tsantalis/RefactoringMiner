@@ -4212,27 +4212,27 @@
   "firstEndPos" : 3546,
   "secondEndPos" : 3467
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Verify that the task was active initially",
-  "secondLabel" : "// Verify that the task was active initially",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2935,
-  "secondPos" : 2856,
-  "firstEndPos" : 2979,
-  "secondEndPos" : 2900
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2988,
-  "secondPos" : 2909,
+  "firstPos" : 2935,
+  "secondPos" : 2856,
   "firstEndPos" : 3540,
   "secondEndPos" : 3461
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Verify that the task was active initially",
+  "secondLabel" : "// Verify that the task was active initially",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2935,
+  "secondPos" : 2856,
+  "firstEndPos" : 2979,
+  "secondEndPos" : 2900
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7600,27 +7600,27 @@
   "firstEndPos" : 4515,
   "secondEndPos" : 4634
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a repository that returns errors",
-  "secondLabel" : "// Given a repository that throws errors",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4354,
-  "secondPos" : 4269,
-  "firstEndPos" : 4395,
-  "secondEndPos" : 4309
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4404,
-  "secondPos" : 4318,
+  "firstPos" : 4354,
+  "secondPos" : 4269,
   "firstEndPos" : 4509,
   "secondEndPos" : 4628
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a repository that returns errors",
+  "secondLabel" : "// Given a repository that throws errors",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4354,
+  "secondPos" : 4269,
+  "firstEndPos" : 4395,
+  "secondEndPos" : 4309
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -9019,27 +9019,27 @@
   "firstEndPos" : 5467,
   "secondEndPos" : 6149
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
-  "secondLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4884,
-  "secondPos" : 5566,
-  "firstEndPos" : 4960,
-  "secondEndPos" : 5642
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4969,
-  "secondPos" : 5651,
+  "firstPos" : 4884,
+  "secondPos" : 5566,
   "firstEndPos" : 5461,
   "secondEndPos" : 6143
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
+  "secondLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4884,
+  "secondPos" : 5566,
+  "firstEndPos" : 4960,
+  "secondEndPos" : 5642
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

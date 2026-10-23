@@ -250,11 +250,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1);
         LocationInfo dstLocationInfo = compositeStatementObjectMapping.getFragment2().getLocationInfo();
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2);
-        //the location of a Kotlin block includes its leading comments, which precede the statements node, i.e., a lambda body starting with a comment
-        if (srcLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) && srcStatementNode != null && IgnoringCommentsLeafMatcher.isPartOfComments(srcStatementNode, LANG1))
-            srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1,LANG1.STATEMENTS);
-        if (dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) && dstStatementNode != null && IgnoringCommentsLeafMatcher.isPartOfComments(dstStatementNode, LANG2))
-            dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2,LANG2.STATEMENTS);
         if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
                 srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
                 srcStatementNode.getChildren().size() > 0 &&

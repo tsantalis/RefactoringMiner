@@ -2386,27 +2386,27 @@
   "firstEndPos" : 2609,
   "secondEndPos" : 2609
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// We initialise the tasks to 3, with one active and two completed",
-  "secondLabel" : "// We initialise the tasks to 3, with one active and two completed",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2197,
-  "secondPos" : 2197,
-  "firstEndPos" : 2263,
-  "secondEndPos" : 2263
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2272,
-  "secondPos" : 2272,
+  "firstPos" : 2197,
+  "secondPos" : 2197,
   "firstEndPos" : 2603,
   "secondEndPos" : 2603
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// We initialise the tasks to 3, with one active and two completed",
+  "secondLabel" : "// We initialise the tasks to 3, with one active and two completed",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2197,
+  "secondPos" : 2197,
+  "firstEndPos" : 2263,
+  "secondEndPos" : 2263
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -3574,27 +3574,27 @@
   "firstEndPos" : 3504,
   "secondEndPos" : 3504
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
-  "secondLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2706,
-  "secondPos" : 2706,
-  "firstEndPos" : 2782,
-  "secondEndPos" : 2782
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2791,
-  "secondPos" : 2791,
+  "firstPos" : 2706,
+  "secondPos" : 2706,
   "firstEndPos" : 3498,
   "secondEndPos" : 3498
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
+  "secondLabel" : "// Set Main dispatcher to not run coroutines eagerly, for just this one test",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2706,
+  "secondPos" : 2706,
+  "firstEndPos" : 2782,
+  "secondEndPos" : 2782
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5048,12 +5048,23 @@
   "firstEndPos" : 4049,
   "secondEndPos" : 4049
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 3591,
+  "secondPos" : 3591,
+  "firstEndPos" : 4043,
+  "secondEndPos" : 4043
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Given an initialized TasksViewModel with initialized tasks",
   "secondLabel" : "// Given an initialized TasksViewModel with initialized tasks",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3591,
   "secondPos" : 3591,
   "firstEndPos" : 3652,
@@ -5063,23 +5074,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// When loading of Tasks is requested",
   "secondLabel" : "// When loading of Tasks is requested",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3661,
   "secondPos" : 3661,
   "firstEndPos" : 3698,
   "secondEndPos" : 3698
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3707,
-  "secondPos" : 3707,
-  "firstEndPos" : 4043,
-  "secondEndPos" : 4043
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6049,12 +6049,23 @@
   "firstEndPos" : 4600,
   "secondEndPos" : 4600
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 4139,
+  "secondPos" : 4139,
+  "firstEndPos" : 4594,
+  "secondEndPos" : 4594
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Given an initialized TasksViewModel with initialized tasks",
   "secondLabel" : "// Given an initialized TasksViewModel with initialized tasks",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4139,
   "secondPos" : 4139,
   "firstEndPos" : 4200,
@@ -6064,23 +6075,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// When loading of Tasks is requested",
   "secondLabel" : "// When loading of Tasks is requested",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4209,
   "secondPos" : 4209,
   "firstEndPos" : 4246,
   "secondEndPos" : 4246
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4255,
-  "secondPos" : 4255,
-  "firstEndPos" : 4594,
-  "secondEndPos" : 4594
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7050,27 +7050,27 @@
   "firstEndPos" : 5144,
   "secondEndPos" : 5148
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Make the repository return errors",
-  "secondLabel" : "// Make the repository throw errors",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4658,
-  "secondPos" : 4658,
-  "firstEndPos" : 4694,
-  "secondEndPos" : 4693
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 4703,
-  "secondPos" : 4702,
+  "firstPos" : 4658,
+  "secondPos" : 4658,
   "firstEndPos" : 5138,
   "secondEndPos" : 5142
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Make the repository return errors",
+  "secondLabel" : "// Make the repository throw errors",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4658,
+  "secondPos" : 4658,
+  "firstEndPos" : 4694,
+  "secondEndPos" : 4693
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8348,27 +8348,27 @@
   "firstEndPos" : 5853,
   "secondEndPos" : 5857
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When completed tasks are cleared",
-  "secondLabel" : "// When completed tasks are cleared",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5218,
-  "secondPos" : 5222,
-  "firstEndPos" : 5253,
-  "secondEndPos" : 5257
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 5262,
-  "secondPos" : 5266,
+  "firstPos" : 5218,
+  "secondPos" : 5222,
   "firstEndPos" : 5847,
   "secondEndPos" : 5851
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When completed tasks are cleared",
+  "secondLabel" : "// When completed tasks are cleared",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5218,
+  "secondPos" : 5222,
+  "firstEndPos" : 5253,
+  "secondEndPos" : 5257
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -9822,27 +9822,27 @@
   "firstEndPos" : 6236,
   "secondEndPos" : 6240
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When the viewmodel receives a result from another destination",
-  "secondLabel" : "// When the viewmodel receives a result from another destination",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 5941,
-  "secondPos" : 5945,
-  "firstEndPos" : 6005,
-  "secondEndPos" : 6009
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 6014,
-  "secondPos" : 6018,
+  "firstPos" : 5941,
+  "secondPos" : 5945,
   "firstEndPos" : 6230,
   "secondEndPos" : 6234
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When the viewmodel receives a result from another destination",
+  "secondLabel" : "// When the viewmodel receives a result from another destination",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5941,
+  "secondPos" : 5945,
+  "firstEndPos" : 6005,
+  "secondEndPos" : 6009
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -10482,27 +10482,27 @@
   "firstEndPos" : 6622,
   "secondEndPos" : 6626
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When the viewmodel receives a result from another destination",
-  "secondLabel" : "// When the viewmodel receives a result from another destination",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 6323,
-  "secondPos" : 6327,
-  "firstEndPos" : 6387,
-  "secondEndPos" : 6391
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 6396,
-  "secondPos" : 6400,
+  "firstPos" : 6323,
+  "secondPos" : 6327,
   "firstEndPos" : 6616,
   "secondEndPos" : 6620
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When the viewmodel receives a result from another destination",
+  "secondLabel" : "// When the viewmodel receives a result from another destination",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6323,
+  "secondPos" : 6327,
+  "firstEndPos" : 6387,
+  "secondEndPos" : 6391
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -11142,27 +11142,27 @@
   "firstEndPos" : 7011,
   "secondEndPos" : 7015
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When the viewmodel receives a result from another destination",
-  "secondLabel" : "// When the viewmodel receives a result from another destination",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 6712,
-  "secondPos" : 6716,
-  "firstEndPos" : 6776,
-  "secondEndPos" : 6780
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 6785,
-  "secondPos" : 6789,
+  "firstPos" : 6712,
+  "secondPos" : 6716,
   "firstEndPos" : 7005,
   "secondEndPos" : 7009
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When the viewmodel receives a result from another destination",
+  "secondLabel" : "// When the viewmodel receives a result from another destination",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6712,
+  "secondPos" : 6716,
+  "firstEndPos" : 6776,
+  "secondEndPos" : 6780
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -11802,27 +11802,27 @@
   "firstEndPos" : 7578,
   "secondEndPos" : 7582
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// With a repository that has an active task",
-  "secondLabel" : "// With a repository that has an active task",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 7089,
-  "secondPos" : 7093,
-  "firstEndPos" : 7133,
-  "secondEndPos" : 7137
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 7142,
-  "secondPos" : 7146,
+  "firstPos" : 7089,
+  "secondPos" : 7093,
   "firstEndPos" : 7572,
   "secondEndPos" : 7576
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// With a repository that has an active task",
+  "secondLabel" : "// With a repository that has an active task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7089,
+  "secondPos" : 7093,
+  "firstEndPos" : 7133,
+  "secondEndPos" : 7137
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -13133,27 +13133,27 @@
   "firstEndPos" : 8146,
   "secondEndPos" : 8150
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// With a repository that has a completed task",
-  "secondLabel" : "// With a repository that has a completed task",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 7656,
-  "secondPos" : 7660,
-  "firstEndPos" : 7702,
-  "secondEndPos" : 7706
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 7711,
-  "secondPos" : 7715,
+  "firstPos" : 7656,
+  "secondPos" : 7660,
   "firstEndPos" : 8140,
   "secondEndPos" : 8144
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// With a repository that has a completed task",
+  "secondLabel" : "// With a repository that has a completed task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7656,
+  "secondPos" : 7660,
+  "firstEndPos" : 7702,
+  "secondEndPos" : 7706
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

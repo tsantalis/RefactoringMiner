@@ -4245,27 +4245,27 @@
   "firstEndPos" : 21273,
   "secondEndPos" : 17500
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// type of the record",
-  "secondLabel" : "// type of the record",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6977,
-  "secondPos" : 4288,
-  "firstEndPos" : 6998,
-  "secondEndPos" : 4309
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 7005,
-  "secondPos" : 4318,
+  "firstPos" : 6977,
+  "secondPos" : 4288,
   "firstEndPos" : 21267,
   "secondEndPos" : 17492
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// type of the record",
+  "secondLabel" : "// type of the record",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6977,
+  "secondPos" : 4288,
+  "firstEndPos" : 6998,
+  "secondEndPos" : 4309
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -18688,27 +18688,27 @@
   "firstEndPos" : 23102,
   "secondEndPos" : 8500
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 23010,
-  "secondPos" : 8407,
-  "firstEndPos" : 23032,
-  "secondEndPos" : 8429
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 23039,
-  "secondPos" : 8436,
+  "firstPos" : 23010,
+  "secondPos" : 8407,
   "firstEndPos" : 23096,
   "secondEndPos" : 8494
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 23010,
+  "secondPos" : 8407,
+  "firstEndPos" : 23032,
+  "secondEndPos" : 8429
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -21955,27 +21955,27 @@
   "firstEndPos" : 24985,
   "secondEndPos" : 12199
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 24893,
-  "secondPos" : 12105,
-  "firstEndPos" : 24915,
-  "secondEndPos" : 12127
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 24922,
-  "secondPos" : 12134,
+  "firstPos" : 24893,
+  "secondPos" : 12105,
   "firstEndPos" : 24979,
   "secondEndPos" : 12193
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 24893,
+  "secondPos" : 12105,
+  "firstEndPos" : 24915,
+  "secondEndPos" : 12127
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -35034,12 +35034,23 @@
   "firstEndPos" : 32177,
   "secondEndPos" : 18719
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 31860,
+  "secondPos" : 18402,
+  "firstEndPos" : 32173,
+  "secondEndPos" : 18715
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// As long as we don't interpret IDs, reading signed values here is fine.",
   "secondLabel" : "// As long as we don't interpret IDs, reading signed values here is fine.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 31860,
   "secondPos" : 18402,
   "firstEndPos" : 31933,
@@ -35051,17 +35062,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 31938,
-  "secondPos" : 18480,
-  "firstEndPos" : 32173,
-  "secondEndPos" : 18715
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 31938,
   "secondPos" : 18480,
   "firstEndPos" : 32173,
@@ -38246,27 +38246,27 @@
   "firstEndPos" : 33326,
   "secondEndPos" : 14738
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// constant pool index",
-  "secondLabel" : "// constant pool index",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 33234,
-  "secondPos" : 14645,
-  "firstEndPos" : 33256,
-  "secondEndPos" : 14667
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 33263,
-  "secondPos" : 14674,
+  "firstPos" : 33234,
+  "secondPos" : 14645,
   "firstEndPos" : 33320,
   "secondEndPos" : 14732
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// constant pool index",
+  "secondLabel" : "// constant pool index",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 33234,
+  "secondPos" : 14645,
+  "firstEndPos" : 33256,
+  "secondEndPos" : 14667
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

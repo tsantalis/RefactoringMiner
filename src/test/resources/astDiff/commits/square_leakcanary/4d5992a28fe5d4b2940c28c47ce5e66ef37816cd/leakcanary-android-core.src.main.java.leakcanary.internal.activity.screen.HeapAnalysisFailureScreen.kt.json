@@ -3860,27 +3860,27 @@
   "firstEndPos" : 1966,
   "secondEndPos" : 1981
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Add version information",
-  "secondLabel" : "// TODO Add version information",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 1847,
-  "secondPos" : 1862,
-  "firstEndPos" : 1878,
-  "secondEndPos" : 1893
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 1893,
-  "secondPos" : 1908,
+  "firstPos" : 1847,
+  "secondPos" : 1862,
   "firstEndPos" : 1952,
   "secondEndPos" : 1967
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Add version information",
+  "secondLabel" : "// TODO Add version information",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1847,
+  "secondPos" : 1862,
+  "firstEndPos" : 1878,
+  "secondEndPos" : 1893
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

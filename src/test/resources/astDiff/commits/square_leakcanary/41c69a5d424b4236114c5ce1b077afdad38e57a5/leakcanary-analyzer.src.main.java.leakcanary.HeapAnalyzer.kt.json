@@ -4119,10 +4119,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 3656,
-  "secondPos" : 3600,
-  "firstEndPos" : 4678,
-  "secondEndPos" : 4619
+  "firstPos" : 3648,
+  "secondPos" : 3592,
+  "firstEndPos" : 4684,
+  "secondEndPos" : 4625
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6181,23 +6181,23 @@
   "firstEndPos" : 4712,
   "secondEndPos" : 4653
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4722,
-  "secondPos" : 4663,
-  "firstEndPos" : 4882,
-  "secondEndPos" : 4823
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 4714,
+  "secondPos" : 4655,
+  "firstEndPos" : 4888,
+  "secondEndPos" : 4829
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4722,
   "secondPos" : 4663,
   "firstEndPos" : 4882,
@@ -9921,12 +9921,23 @@
   "firstEndPos" : 6748,
   "secondEndPos" : 6680
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 6338,
+  "secondPos" : 6270,
+  "firstEndPos" : 6742,
+  "secondEndPos" : 6674
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Go through the linked list of nodes and build the reverse list of instances from",
   "secondLabel" : "// Go through the linked list of nodes and build the reverse list of instances from",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6338,
   "secondPos" : 6270,
   "firstEndPos" : 6421,
@@ -9936,23 +9947,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// root to leaking.",
   "secondLabel" : "// root to leaking.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6428,
   "secondPos" : 6360,
   "firstEndPos" : 6447,
   "secondEndPos" : 6379
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6454,
-  "secondPos" : 6386,
-  "firstEndPos" : 6742,
-  "secondEndPos" : 6674
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -11648,12 +11648,23 @@
   "firstEndPos" : 7242,
   "secondEndPos" : 7174
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 7116,
+  "secondPos" : 7048,
+  "firstEndPos" : 7236,
+  "secondEndPos" : 7168
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Replace any preexisting children, this is shorter.",
   "secondLabel" : "// Replace any preexisting children, this is shorter.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 7116,
   "secondPos" : 7048,
   "firstEndPos" : 7169,
@@ -11665,17 +11676,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 7176,
-  "secondPos" : 7108,
-  "firstEndPos" : 7236,
-  "secondEndPos" : 7168
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 7176,
   "secondPos" : 7108,
   "firstEndPos" : 7236,
@@ -18842,12 +18842,23 @@
   "firstEndPos" : 11211,
   "secondEndPos" : 11123
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 11218,
+  "secondPos" : 11130,
+  "firstEndPos" : 11632,
+  "secondEndPos" : 11874
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Avoid double reporting as those sizes will move up to the root dominator",
   "secondLabel" : "// Avoid double reporting as those sizes will move up to the root dominator",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 11218,
   "secondPos" : 11130,
   "firstEndPos" : 11293,
@@ -18859,17 +18870,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 11300,
-  "secondPos" : 11212,
-  "firstEndPos" : 11632,
-  "secondEndPos" : 11874
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
   "firstPos" : 11300,
   "secondPos" : 11212,
   "firstEndPos" : 11632,
@@ -34110,27 +34110,27 @@
   "firstEndPos" : 19518,
   "secondEndPos" : 19774
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// NOT_LEAKING always wins over LEAKING",
-  "secondLabel" : "// NOT_LEAKING always wins over LEAKING",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 18352,
-  "secondPos" : 18608,
-  "firstEndPos" : 18391,
-  "secondEndPos" : 18647
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 18396,
-  "secondPos" : 18652,
+  "firstPos" : 18352,
+  "secondPos" : 18608,
   "firstEndPos" : 19514,
   "secondEndPos" : 19770
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// NOT_LEAKING always wins over LEAKING",
+  "secondLabel" : "// NOT_LEAKING always wins over LEAKING",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 18352,
+  "secondPos" : 18608,
+  "firstEndPos" : 18391,
+  "secondEndPos" : 18647
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

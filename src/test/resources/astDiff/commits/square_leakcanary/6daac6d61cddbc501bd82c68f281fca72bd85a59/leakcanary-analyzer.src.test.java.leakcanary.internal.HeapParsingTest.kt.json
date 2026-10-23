@@ -3376,27 +3376,27 @@
   "firstEndPos" : 4202,
   "secondEndPos" : 7367
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Why is ThreadObject ignored?",
-  "secondLabel" : "// TODO Why is ThreadObject ignored?",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3693,
-  "secondPos" : 6858,
-  "firstEndPos" : 3729,
-  "secondEndPos" : 6894
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3740,
-  "secondPos" : 6905,
+  "firstPos" : 3693,
+  "secondPos" : 6858,
   "firstEndPos" : 4192,
   "secondEndPos" : 7357
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Why is ThreadObject ignored?",
+  "secondLabel" : "// TODO Why is ThreadObject ignored?",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3693,
+  "secondPos" : 6858,
+  "firstEndPos" : 3729,
+  "secondEndPos" : 6894
 }, {
   "firstType" : "when_expression",
   "secondType" : "when_expression",

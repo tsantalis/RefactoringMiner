@@ -819,10 +819,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 600,
-  "secondPos" : 622,
-  "firstEndPos" : 653,
-  "secondEndPos" : 675
+  "firstPos" : 592,
+  "secondPos" : 614,
+  "firstEndPos" : 659,
+  "secondEndPos" : 681
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -1000,6 +1000,17 @@
   "firstEndPos" : 685,
   "secondEndPos" : 707
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 687,
+  "secondPos" : 709,
+  "firstEndPos" : 706,
+  "secondEndPos" : 728
+}, {
   "firstType" : "boolean_literal",
   "secondType" : "boolean_literal",
   "firstLabel" : "",
@@ -1017,17 +1028,6 @@
   "secondLabel" : "false",
   "firstParentType" : "boolean_literal",
   "secondParentType" : "boolean_literal",
-  "firstPos" : 695,
-  "secondPos" : 717,
-  "firstEndPos" : 700,
-  "secondEndPos" : 722
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
   "firstPos" : 695,
   "secondPos" : 717,
   "firstEndPos" : 700,
@@ -1380,10 +1380,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 897,
-  "secondPos" : 919,
-  "firstEndPos" : 955,
-  "secondEndPos" : 977
+  "firstPos" : 889,
+  "secondPos" : 911,
+  "firstEndPos" : 961,
+  "secondEndPos" : 983
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -1561,6 +1561,17 @@
   "firstEndPos" : 987,
   "secondEndPos" : 1009
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 989,
+  "secondPos" : 1011,
+  "firstEndPos" : 1008,
+  "secondEndPos" : 1030
+}, {
   "firstType" : "boolean_literal",
   "secondType" : "boolean_literal",
   "firstLabel" : "",
@@ -1578,17 +1589,6 @@
   "secondLabel" : "false",
   "firstParentType" : "boolean_literal",
   "secondParentType" : "boolean_literal",
-  "firstPos" : 997,
-  "secondPos" : 1019,
-  "firstEndPos" : 1002,
-  "secondEndPos" : 1024
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
   "firstPos" : 997,
   "secondPos" : 1019,
   "firstEndPos" : 1002,

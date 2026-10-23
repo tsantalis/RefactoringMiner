@@ -3277,27 +3277,27 @@
   "firstEndPos" : 1875,
   "secondEndPos" : 1875
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// No need to scheduleTick, new refs always schedule one.",
-  "secondLabel" : "// No need to scheduleTick, new refs always schedule one.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 1658,
-  "secondPos" : 1658,
-  "firstEndPos" : 1715,
-  "secondEndPos" : 1715
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 1722,
-  "secondPos" : 1722,
+  "firstPos" : 1658,
+  "secondPos" : 1658,
   "firstEndPos" : 1869,
   "secondEndPos" : 1869
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// No need to scheduleTick, new refs always schedule one.",
+  "secondLabel" : "// No need to scheduleTick, new refs always schedule one.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1658,
+  "secondPos" : 1658,
+  "firstEndPos" : 1715,
+  "secondEndPos" : 1715
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

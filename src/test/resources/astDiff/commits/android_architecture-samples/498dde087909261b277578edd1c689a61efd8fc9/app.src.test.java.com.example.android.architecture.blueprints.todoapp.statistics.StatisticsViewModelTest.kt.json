@@ -2249,7 +2249,7 @@
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2215,
+  "firstPos" : 2140,
   "secondPos" : 2493,
   "firstEndPos" : 2579,
   "secondEndPos" : 2564
@@ -3321,34 +3321,34 @@
   "firstEndPos" : 2993,
   "secondEndPos" : 3021
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given an initialized StatisticsViewModel with no tasks",
-  "secondLabel" : "// Given an initialized StatisticsViewModel with no tasks",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2673,
-  "secondPos" : 2658,
-  "firstEndPos" : 2730,
-  "secondEndPos" : 2715
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2739,
-  "secondPos" : 2771,
+  "firstPos" : 2673,
+  "secondPos" : 2658,
   "firstEndPos" : 2987,
   "secondEndPos" : 3015
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given an initialized StatisticsViewModel with no tasks",
+  "secondLabel" : "// Given an initialized StatisticsViewModel with no tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2673,
+  "secondPos" : 2658,
+  "firstEndPos" : 2730,
+  "secondEndPos" : 2715
 }, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// When loading of Tasks is requested",
   "secondLabel" : "// When loading of Tasks is requested",
   "firstParentType" : "statements",
-  "secondParentType" : "lambda_literal",
+  "secondParentType" : "statements",
   "firstPos" : 2781,
   "secondPos" : 2725,
   "firstEndPos" : 2818,
@@ -3827,27 +3827,27 @@
   "firstEndPos" : 3304,
   "secondEndPos" : 3966
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When loading of Tasks is requested",
-  "secondLabel" : "// When loading of Tasks is requested",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "statements",
-  "firstPos" : 3087,
-  "secondPos" : 3482,
-  "firstEndPos" : 3124,
-  "secondEndPos" : 3519
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "function_body",
-  "firstPos" : 3133,
-  "secondPos" : 3176,
+  "firstPos" : 3087,
+  "secondPos" : 3101,
   "firstEndPos" : 3298,
   "secondEndPos" : 3960
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When loading of Tasks is requested",
+  "secondLabel" : "// When loading of Tasks is requested",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3087,
+  "secondPos" : 3482,
+  "firstEndPos" : 3124,
+  "secondEndPos" : 3519
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

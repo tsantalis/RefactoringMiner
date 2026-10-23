@@ -7794,9 +7794,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 7512,
-  "secondPos" : 6334,
+  "secondPos" : 6324,
   "firstEndPos" : 7549,
-  "secondEndPos" : 6352
+  "secondEndPos" : 6360
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -9059,9 +9059,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 8397,
-  "secondPos" : 7056,
+  "secondPos" : 7048,
   "firstEndPos" : 8435,
-  "secondEndPos" : 7109
+  "secondEndPos" : 7115
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -10357,9 +10357,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 9073,
-  "secondPos" : 7766,
+  "secondPos" : 7758,
   "firstEndPos" : 9179,
-  "secondEndPos" : 7871
+  "secondEndPos" : 7877
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -12029,9 +12029,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 10042,
-  "secondPos" : 8709,
+  "secondPos" : 8701,
   "firstEndPos" : 10127,
-  "secondEndPos" : 8786
+  "secondEndPos" : 8792
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -18695,9 +18695,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 14036,
-  "secondPos" : 12532,
+  "secondPos" : 12522,
   "firstEndPos" : 14229,
-  "secondEndPos" : 12706
+  "secondEndPos" : 12714
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -19003,9 +19003,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 14252,
-  "secondPos" : 12748,
+  "secondPos" : 12738,
   "firstEndPos" : 14276,
-  "secondEndPos" : 12753
+  "secondEndPos" : 12761
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "jump_expression",
@@ -19960,9 +19960,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 14821,
-  "secondPos" : 13297,
+  "secondPos" : 13289,
   "firstEndPos" : 14944,
-  "secondEndPos" : 13413
+  "secondEndPos" : 13419
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -22116,9 +22116,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 16742,
-  "secondPos" : 14840,
+  "secondPos" : 14832,
   "firstEndPos" : 16799,
-  "secondEndPos" : 14882
+  "secondEndPos" : 14888
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "navigation_expression",
@@ -24822,9 +24822,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 18544,
-  "secondPos" : 16468,
+  "secondPos" : 16460,
   "firstEndPos" : 18645,
-  "secondEndPos" : 16554
+  "secondEndPos" : 16560
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "navigation_expression",
@@ -24954,9 +24954,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 18673,
-  "secondPos" : 16597,
+  "secondPos" : 16589,
   "firstEndPos" : 18734,
-  "secondEndPos" : 16638
+  "secondEndPos" : 16644
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -27671,9 +27671,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 20275,
-  "secondPos" : 18010,
+  "secondPos" : 18002,
   "firstEndPos" : 20379,
-  "secondEndPos" : 18102
+  "secondEndPos" : 18108
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
@@ -27847,9 +27847,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 20422,
-  "secondPos" : 18160,
+  "secondPos" : 18152,
   "firstEndPos" : 20614,
-  "secondEndPos" : 18324
+  "secondEndPos" : 18330
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -28078,16 +28078,16 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 20689,
-  "secondPos" : 18453,
+  "secondPos" : 18399,
   "firstEndPos" : 20849,
-  "secondEndPos" : 18555
+  "secondEndPos" : 18561
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// Treating this use case as user error",
   "secondLabel" : "// Treating this use case as user error",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 20697,
   "secondPos" : 18407,
   "firstEndPos" : 20736,
@@ -28265,9 +28265,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 20892,
-  "secondPos" : 18613,
+  "secondPos" : 18605,
   "firstEndPos" : 21094,
-  "secondEndPos" : 18787
+  "secondEndPos" : 18793
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -35811,9 +35811,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 26014,
-  "secondPos" : 23015,
+  "secondPos" : 23007,
   "firstEndPos" : 26058,
-  "secondEndPos" : 23049
+  "secondEndPos" : 23055
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",

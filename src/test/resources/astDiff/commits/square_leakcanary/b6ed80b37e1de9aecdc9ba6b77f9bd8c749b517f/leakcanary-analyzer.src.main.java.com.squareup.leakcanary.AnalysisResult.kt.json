@@ -4553,12 +4553,23 @@
   "firstEndPos" : 4899,
   "secondEndPos" : 4886
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 4423,
+  "secondPos" : 4410,
+  "firstEndPos" : 4893,
+  "secondEndPos" : 4880
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// TODO Here we might be able to fill in referenceKey, referenceName and watchDurationMs",
   "secondLabel" : "// TODO Here we might be able to fill in referenceKey, referenceName and watchDurationMs",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4423,
   "secondPos" : 4410,
   "firstEndPos" : 4511,
@@ -4570,17 +4581,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 4518,
-  "secondPos" : 4505,
-  "firstEndPos" : 4893,
-  "secondEndPos" : 4880
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 4518,
   "secondPos" : 4505,
   "firstEndPos" : 4893,

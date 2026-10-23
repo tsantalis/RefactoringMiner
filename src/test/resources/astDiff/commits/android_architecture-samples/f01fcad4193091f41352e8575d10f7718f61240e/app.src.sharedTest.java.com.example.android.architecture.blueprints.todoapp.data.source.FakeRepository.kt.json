@@ -2456,8 +2456,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// Tasks already refreshed",
   "secondLabel" : "// Tasks already refreshed",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1780,
   "secondPos" : 1780,
   "firstEndPos" : 1806,
@@ -3607,6 +3607,17 @@
   "firstEndPos" : 2195,
   "secondEndPos" : 2386
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 2193,
+  "secondPos" : 1987,
+  "firstEndPos" : 3154,
+  "secondEndPos" : 2082
+}, {
   "firstType" : "type_identifier",
   "secondType" : "type_identifier",
   "firstLabel" : "String",
@@ -3672,17 +3683,6 @@
   "secondPos" : 2409,
   "firstEndPos" : 2225,
   "secondEndPos" : 2416
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2221,
-  "secondPos" : 1987,
-  "firstEndPos" : 3154,
-  "secondEndPos" : 2082
 }, {
   "firstType" : "nullable_type",
   "secondType" : "nullable_type",

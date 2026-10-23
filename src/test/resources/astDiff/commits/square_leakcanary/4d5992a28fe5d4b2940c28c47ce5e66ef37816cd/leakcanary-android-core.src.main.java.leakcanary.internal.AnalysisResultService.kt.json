@@ -3277,23 +3277,23 @@
   "firstEndPos" : 2581,
   "secondEndPos" : 2586
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2481,
-  "secondPos" : 2486,
-  "firstEndPos" : 2509,
-  "secondEndPos" : 2514
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 2473,
+  "secondPos" : 2478,
+  "firstEndPos" : 2515,
+  "secondEndPos" : 2520
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2481,
   "secondPos" : 2486,
   "firstEndPos" : 2509,
@@ -3365,23 +3365,23 @@
   "firstEndPos" : 2581,
   "secondEndPos" : 2586
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2532,
-  "secondPos" : 2537,
-  "firstEndPos" : 2575,
-  "secondEndPos" : 2580
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "finally_block",
   "secondParentType" : "finally_block",
+  "firstPos" : 2524,
+  "secondPos" : 2529,
+  "firstEndPos" : 2581,
+  "secondEndPos" : 2586
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2532,
   "secondPos" : 2537,
   "firstEndPos" : 2575,
@@ -3651,27 +3651,27 @@
   "firstEndPos" : 3782,
   "secondEndPos" : 3787
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
-  "secondLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2650,
-  "secondPos" : 2655,
-  "firstEndPos" : 2718,
-  "secondEndPos" : 2723
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2723,
-  "secondPos" : 2728,
+  "firstPos" : 2650,
+  "secondPos" : 2655,
   "firstEndPos" : 3778,
   "secondEndPos" : 3783
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
+  "secondLabel" : "// TODO better log that include leakcanary version, exclusions, etc.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2650,
+  "secondPos" : 2655,
+  "firstEndPos" : 2718,
+  "secondEndPos" : 2723
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -7138,27 +7138,27 @@
   "firstEndPos" : 4532,
   "secondEndPos" : 4537
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// New notification id every second.",
-  "secondLabel" : "// New notification id every second.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 4298,
-  "secondPos" : 4303,
-  "firstEndPos" : 4334,
-  "secondEndPos" : 4339
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 4339,
-  "secondPos" : 4344,
+  "firstPos" : 4298,
+  "secondPos" : 4303,
   "firstEndPos" : 4528,
   "secondEndPos" : 4533
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// New notification id every second.",
+  "secondLabel" : "// New notification id every second.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4298,
+  "secondPos" : 4303,
+  "firstEndPos" : 4334,
+  "secondEndPos" : 4339
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

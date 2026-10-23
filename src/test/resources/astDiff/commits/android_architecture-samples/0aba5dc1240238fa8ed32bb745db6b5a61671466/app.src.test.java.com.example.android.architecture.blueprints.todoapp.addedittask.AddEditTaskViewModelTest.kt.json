@@ -2364,27 +2364,27 @@
   "firstEndPos" : 2341,
   "secondEndPos" : 2341
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// We initialise the repository with no tasks",
-  "secondLabel" : "// We initialise the repository with no tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2142,
-  "secondPos" : 2142,
-  "firstEndPos" : 2187,
-  "secondEndPos" : 2187
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2196,
-  "secondPos" : 2196,
+  "firstPos" : 2142,
+  "secondPos" : 2142,
   "firstEndPos" : 2335,
   "secondEndPos" : 2335
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// We initialise the repository with no tasks",
+  "secondLabel" : "// We initialise the repository with no tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2142,
+  "secondPos" : 2142,
+  "firstEndPos" : 2187,
+  "secondEndPos" : 2187
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -3959,27 +3959,27 @@
   "firstEndPos" : 3509,
   "secondEndPos" : 3509
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Pause dispatcher so we can verify initial values",
-  "secondLabel" : "// Pause dispatcher so we can verify initial values",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2993,
-  "secondPos" : 2993,
-  "firstEndPos" : 3044,
-  "secondEndPos" : 3044
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3053,
-  "secondPos" : 3053,
+  "firstPos" : 2993,
+  "secondPos" : 2993,
   "firstEndPos" : 3503,
   "secondEndPos" : 3503
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Pause dispatcher so we can verify initial values",
+  "secondLabel" : "// Pause dispatcher so we can verify initial values",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2993,
+  "secondPos" : 2993,
+  "firstEndPos" : 3044,
+  "secondEndPos" : 3044
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -4861,27 +4861,27 @@
   "firstEndPos" : 3999,
   "secondEndPos" : 3999
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add task to repository",
-  "secondLabel" : "// Add task to repository",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3561,
-  "secondPos" : 3561,
-  "firstEndPos" : 3586,
-  "secondEndPos" : 3586
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3595,
-  "secondPos" : 3595,
+  "firstPos" : 3561,
+  "secondPos" : 3561,
   "firstEndPos" : 3993,
   "secondEndPos" : 3993
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add task to repository",
+  "secondLabel" : "// Add task to repository",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3561,
+  "secondPos" : 3561,
+  "firstEndPos" : 3586,
+  "secondEndPos" : 3586
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

@@ -1260,9 +1260,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 2613,
-  "secondPos" : 2553,
+  "secondPos" : 2545,
   "firstEndPos" : 2667,
-  "secondEndPos" : 2592
+  "secondEndPos" : 2598
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -1392,9 +1392,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 2693,
-  "secondPos" : 2633,
+  "secondPos" : 2625,
   "firstEndPos" : 2786,
-  "secondEndPos" : 2706
+  "secondEndPos" : 2712
 }, {
   "firstType" : "IfStatement",
   "secondType" : "if_expression",
@@ -1590,16 +1590,16 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 2816,
-  "secondPos" : 2893,
+  "secondPos" : 2743,
   "firstEndPos" : 3104,
-  "secondEndPos" : 3019
+  "secondEndPos" : 3025
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// On android 8.0, socket.connect throws a ClassCastException due to a bug",
   "secondLabel" : "// On android 8.0, socket.connect throws a ClassCastException due to a bug",
   "firstParentType" : "Block",
-  "secondParentType" : "catch_block",
+  "secondParentType" : "statements",
   "firstPos" : 2824,
   "secondPos" : 2751,
   "firstEndPos" : 2898,
@@ -1610,7 +1610,7 @@
   "firstLabel" : "// see https://issuetracker.google.com/issues/63649622",
   "secondLabel" : "// see https://issuetracker.google.com/issues/63649622",
   "firstParentType" : "Block",
-  "secondParentType" : "catch_block",
+  "secondParentType" : "statements",
   "firstPos" : 2905,
   "secondPos" : 2832,
   "firstEndPos" : 2959,
@@ -2118,9 +2118,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 3498,
-  "secondPos" : 3425,
+  "secondPos" : 3415,
   "firstEndPos" : 3792,
-  "secondEndPos" : 3700
+  "secondEndPos" : 3708
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -2437,9 +2437,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 3826,
-  "secondPos" : 3753,
+  "secondPos" : 3743,
   "firstEndPos" : 3888,
-  "secondEndPos" : 3796
+  "secondEndPos" : 3804
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -3031,16 +3031,16 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 4406,
-  "secondPos" : 4341,
+  "secondPos" : 4292,
   "firstEndPos" : 4755,
-  "secondEndPos" : 4632
+  "secondEndPos" : 4638
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// Enable SNI and session tickets.",
   "secondLabel" : "// Enable SNI and session tickets.",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 4414,
   "secondPos" : 4300,
   "firstEndPos" : 4448,
@@ -3438,9 +3438,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 4817,
-  "secondPos" : 4681,
+  "secondPos" : 4673,
   "firstEndPos" : 4859,
-  "secondEndPos" : 4704
+  "secondEndPos" : 4710
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "jump_expression",
@@ -3900,9 +3900,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 5288,
-  "secondPos" : 5116,
+  "secondPos" : 5106,
   "firstEndPos" : 5330,
-  "secondEndPos" : 5139
+  "secondEndPos" : 5147
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "jump_expression",
@@ -5671,9 +5671,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 6482,
-  "secondPos" : 6485,
+  "secondPos" : 6477,
   "firstEndPos" : 6829,
-  "secondEndPos" : 6796
+  "secondEndPos" : 6802
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -6078,9 +6078,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 6887,
-  "secondPos" : 6845,
+  "secondPos" : 6837,
   "firstEndPos" : 6952,
-  "secondEndPos" : 6888
+  "secondEndPos" : 6894
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "call_expression",
@@ -6144,9 +6144,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 7041,
-  "secondPos" : 7028,
+  "secondPos" : 7020,
   "firstEndPos" : 7124,
-  "secondEndPos" : 7092
+  "secondEndPos" : 7098
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "jump_expression",
@@ -6408,9 +6408,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 7330,
-  "secondPos" : 7570,
+  "secondPos" : 7564,
   "firstEndPos" : 7570,
-  "secondEndPos" : 7787
+  "secondEndPos" : 7791
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -6694,9 +6694,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 7603,
-  "secondPos" : 7831,
+  "secondPos" : 7825,
   "firstEndPos" : 7710,
-  "secondEndPos" : 7916
+  "secondEndPos" : 7920
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "call_expression",
@@ -6980,9 +6980,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 7916,
-  "secondPos" : 8157,
+  "secondPos" : 8151,
   "firstEndPos" : 8132,
-  "secondEndPos" : 8344
+  "secondEndPos" : 8348
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -7233,9 +7233,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 8165,
-  "secondPos" : 8388,
+  "secondPos" : 8382,
   "firstEndPos" : 8230,
-  "secondEndPos" : 8431
+  "secondEndPos" : 8435
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "call_expression",
@@ -7387,9 +7387,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 8339,
-  "secondPos" : 8560,
+  "secondPos" : 8550,
   "firstEndPos" : 8825,
-  "secondEndPos" : 9045
+  "secondEndPos" : 9053
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -8003,9 +8003,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 8846,
-  "secondPos" : 9085,
+  "secondPos" : 9075,
   "firstEndPos" : 8916,
-  "secondEndPos" : 9133
+  "secondEndPos" : 9141
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "call_expression",
@@ -8124,9 +8124,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 9088,
-  "secondPos" : 13785,
+  "secondPos" : 13775,
   "firstEndPos" : 9269,
-  "secondEndPos" : 13952
+  "secondEndPos" : 13960
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
@@ -8377,9 +8377,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 9309,
-  "secondPos" : 14011,
+  "secondPos" : 14001,
   "firstEndPos" : 9362,
-  "secondEndPos" : 14049
+  "secondEndPos" : 14057
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -8498,9 +8498,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 9412,
-  "secondPos" : 14124,
+  "secondPos" : 14112,
   "firstEndPos" : 9979,
-  "secondEndPos" : 14698
+  "secondEndPos" : 14708
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -9334,16 +9334,16 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 10247,
-  "secondPos" : 9412,
+  "secondPos" : 9232,
   "firstEndPos" : 10665,
-  "secondEndPos" : 9620
+  "secondEndPos" : 9624
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",
   "firstLabel" : "// From org.conscrypt.TrustManagerImpl, we want the method with this signature:",
   "secondLabel" : "// From org.conscrypt.TrustManagerImpl, we want the method with this signature:",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 10255,
   "secondPos" : 9238,
   "firstEndPos" : 10334,
@@ -9354,7 +9354,7 @@
   "firstLabel" : "// private TrustAnchor findTrustAnchorByIssuerAndSignature(X509Certificate lastCert);",
   "secondLabel" : "// private TrustAnchor findTrustAnchorByIssuerAndSignature(X509Certificate lastCert);",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 10341,
   "secondPos" : 9322,
   "firstEndPos" : 10426,
@@ -9466,9 +9466,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 10698,
-  "secondPos" : 9664,
+  "secondPos" : 9658,
   "firstEndPos" : 10759,
-  "secondEndPos" : 9703
+  "secondEndPos" : 9707
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "call_expression",
@@ -9939,9 +9939,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 11643,
-  "secondPos" : 10332,
+  "secondPos" : 10324,
   "firstEndPos" : 11877,
-  "secondEndPos" : 10521
+  "secondEndPos" : 10527
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "as_expression",
@@ -10159,9 +10159,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 11914,
-  "secondPos" : 10573,
+  "secondPos" : 10565,
   "firstEndPos" : 12075,
-  "secondEndPos" : 10677
+  "secondEndPos" : 10683
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -10390,9 +10390,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 12109,
-  "secondPos" : 10726,
+  "secondPos" : 10718,
   "firstEndPos" : 12155,
-  "secondEndPos" : 10749
+  "secondEndPos" : 10755
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "jump_expression",
@@ -11072,9 +11072,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 13046,
-  "secondPos" : 11405,
+  "secondPos" : 11393,
   "firstEndPos" : 13213,
-  "secondEndPos" : 11546
+  "secondEndPos" : 11556
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -11567,9 +11567,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 13422,
-  "secondPos" : 11776,
+  "secondPos" : 11764,
   "firstEndPos" : 13515,
-  "secondEndPos" : 11847
+  "secondEndPos" : 11857
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "call_expression",
@@ -11963,9 +11963,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 13713,
-  "secondPos" : 12113,
+  "secondPos" : 12101,
   "firstEndPos" : 13992,
-  "secondEndPos" : 12377
+  "secondEndPos" : 12387
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -12436,9 +12436,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 14019,
-  "secondPos" : 12427,
+  "secondPos" : 12415,
   "firstEndPos" : 14114,
-  "secondEndPos" : 12505
+  "secondEndPos" : 12515
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "assignment",
@@ -13030,9 +13030,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 15021,
-  "secondPos" : 13214,
+  "secondPos" : 13204,
   "firstEndPos" : 15248,
-  "secondEndPos" : 13349
+  "secondEndPos" : 13357
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -13228,9 +13228,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 15282,
-  "secondPos" : 13402,
+  "secondPos" : 13392,
   "firstEndPos" : 15366,
-  "secondEndPos" : 13463
+  "secondEndPos" : 13471
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "jump_expression",
@@ -13338,9 +13338,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 15403,
-  "secondPos" : 13519,
+  "secondPos" : 13509,
   "firstEndPos" : 15433,
-  "secondEndPos" : 13523
+  "secondEndPos" : 13531
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "null",
@@ -13536,9 +13536,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 16331,
-  "secondPos" : 2129,
+  "secondPos" : 2119,
   "firstEndPos" : 16390,
-  "secondEndPos" : 2169
+  "secondEndPos" : 2177
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -13701,9 +13701,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 16478,
-  "secondPos" : 2247,
+  "secondPos" : 2239,
   "firstEndPos" : 16529,
-  "secondEndPos" : 2283
+  "secondEndPos" : 2289
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "jump_expression",
@@ -13833,9 +13833,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 16565,
-  "secondPos" : 2334,
+  "secondPos" : 2326,
   "firstEndPos" : 16633,
-  "secondEndPos" : 2383
+  "secondEndPos" : 2389
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "jump_expression",

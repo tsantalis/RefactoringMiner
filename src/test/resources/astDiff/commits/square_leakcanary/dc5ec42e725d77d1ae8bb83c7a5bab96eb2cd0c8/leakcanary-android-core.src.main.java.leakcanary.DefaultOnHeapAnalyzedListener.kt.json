@@ -1484,12 +1484,23 @@
   "firstEndPos" : 942,
   "secondEndPos" : 1157
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 926,
+  "secondPos" : 2984,
+  "firstEndPos" : 1359,
+  "secondEndPos" : 3375
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Post the Toast into main thread and wrap it with try-catch in case Toast crashes (it happens)",
   "secondLabel" : "// Post the Toast into main thread and wrap it with try-catch in case Toast crashes (it happens)",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 926,
   "secondPos" : 2984,
   "firstEndPos" : 1022,
@@ -1781,17 +1792,6 @@
   "firstEndPos" : 1037,
   "secondEndPos" : 1308
 }, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1027,
-  "secondPos" : 3085,
-  "firstEndPos" : 1359,
-  "secondEndPos" : 3375
-}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -1957,6 +1957,17 @@
   "firstEndPos" : 1052,
   "secondEndPos" : 1323
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "try_expression",
+  "secondParentType" : "try_expression",
+  "firstPos" : 1052,
+  "secondPos" : 3110,
+  "firstEndPos" : 1224,
+  "secondEndPos" : 3282
+}, {
   "firstType" : "affectation_operator",
   "secondType" : "affectation_operator",
   "firstLabel" : "=",
@@ -2029,17 +2040,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1062,
-  "secondPos" : 3120,
-  "firstEndPos" : 1216,
-  "secondEndPos" : 3274
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
   "firstPos" : 1062,
   "secondPos" : 3120,
   "firstEndPos" : 1216,

@@ -4806,23 +4806,23 @@
   "firstEndPos" : 2481,
   "secondEndPos" : 2483
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2372,
-  "secondPos" : 2374,
-  "firstEndPos" : 2403,
-  "secondEndPos" : 2405
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 2364,
+  "secondPos" : 2366,
+  "firstEndPos" : 2409,
+  "secondEndPos" : 2411
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2372,
   "secondPos" : 2374,
   "firstEndPos" : 2403,
@@ -4938,23 +4938,23 @@
   "firstEndPos" : 2440,
   "secondEndPos" : 2442
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 2450,
-  "secondPos" : 2452,
-  "firstEndPos" : 2475,
-  "secondEndPos" : 2477
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 2442,
+  "secondPos" : 2444,
+  "firstEndPos" : 2481,
+  "secondEndPos" : 2483
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2450,
   "secondPos" : 2452,
   "firstEndPos" : 2475,
@@ -7351,6 +7351,17 @@
   "secondType" : "line_comment",
   "firstLabel" : "// no op",
   "secondLabel" : "// no op",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3446,
+  "secondPos" : 3448,
+  "firstEndPos" : 3454,
+  "secondEndPos" : 3456
+}, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
   "firstPos" : 3446,

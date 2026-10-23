@@ -2848,23 +2848,23 @@
   "firstEndPos" : 1787,
   "secondEndPos" : 1724
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 1798,
-  "secondPos" : 1735,
-  "firstEndPos" : 1813,
-  "secondEndPos" : 1750
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
+  "firstPos" : 1788,
+  "secondPos" : 1725,
+  "firstEndPos" : 1819,
+  "secondEndPos" : 1756
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1798,
   "secondPos" : 1735,
   "firstEndPos" : 1813,
@@ -10339,27 +10339,27 @@
   "firstEndPos" : 6328,
   "secondEndPos" : 6265
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "//            baseQuickAdapter.items.removeAt(pos)",
-  "secondLabel" : "//            baseQuickAdapter.items.removeAt(pos)",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6077,
-  "secondPos" : 6014,
-  "firstEndPos" : 6127,
-  "secondEndPos" : 6064
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 6140,
-  "secondPos" : 6077,
+  "firstPos" : 6077,
+  "secondPos" : 6014,
   "firstEndPos" : 6318,
   "secondEndPos" : 6255
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "//            baseQuickAdapter.items.removeAt(pos)",
+  "secondLabel" : "//            baseQuickAdapter.items.removeAt(pos)",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6077,
+  "secondPos" : 6014,
+  "firstEndPos" : 6127,
+  "secondEndPos" : 6064
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

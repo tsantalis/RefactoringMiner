@@ -3486,12 +3486,23 @@
   "firstEndPos" : 2944,
   "secondEndPos" : 2940
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 2555,
+  "secondPos" : 2551,
+  "firstEndPos" : 2938,
+  "secondEndPos" : 2934
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// GIVEN - On the \"Add Task\" screen.",
   "secondLabel" : "// GIVEN - On the \"Add Task\" screen.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2555,
   "secondPos" : 2551,
   "firstEndPos" : 2591,
@@ -3503,17 +3514,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 2600,
-  "secondPos" : 2596,
-  "firstEndPos" : 2938,
-  "secondEndPos" : 2934
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 2600,
   "secondPos" : 2596,
   "firstEndPos" : 2938,
@@ -4080,27 +4080,27 @@
   "firstEndPos" : 3555,
   "secondEndPos" : 3551
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// WHEN - Enter invalid title and description combination and click save",
-  "secondLabel" : "// WHEN - Enter invalid title and description combination and click save",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2997,
-  "secondPos" : 2993,
-  "firstEndPos" : 3069,
-  "secondEndPos" : 3065
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3078,
-  "secondPos" : 3074,
+  "firstPos" : 2997,
+  "secondPos" : 2993,
   "firstEndPos" : 3549,
   "secondEndPos" : 3545
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// WHEN - Enter invalid title and description combination and click save",
+  "secondLabel" : "// WHEN - Enter invalid title and description combination and click save",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2997,
+  "secondPos" : 2993,
+  "firstEndPos" : 3069,
+  "secondEndPos" : 3065
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5257,27 +5257,27 @@
   "firstEndPos" : 4229,
   "secondEndPos" : 4225
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// WHEN - Valid title and description combination and click save",
-  "secondLabel" : "// WHEN - Valid title and description combination and click save",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3605,
-  "secondPos" : 3601,
-  "firstEndPos" : 3669,
-  "secondEndPos" : 3665
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3678,
-  "secondPos" : 3674,
+  "firstPos" : 3605,
+  "secondPos" : 3601,
   "firstEndPos" : 4223,
   "secondEndPos" : 4219
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// WHEN - Valid title and description combination and click save",
+  "secondLabel" : "// WHEN - Valid title and description combination and click save",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3605,
+  "secondPos" : 3601,
+  "firstEndPos" : 3669,
+  "secondEndPos" : 3665
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

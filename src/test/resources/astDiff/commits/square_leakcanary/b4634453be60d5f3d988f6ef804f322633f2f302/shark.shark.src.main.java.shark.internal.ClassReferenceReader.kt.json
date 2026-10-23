@@ -819,10 +819,10 @@
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
-  "firstPos" : 637,
-  "secondPos" : 447,
-  "firstEndPos" : 1300,
-  "secondEndPos" : 1110
+  "firstPos" : 631,
+  "secondPos" : 441,
+  "firstEndPos" : 1304,
+  "secondEndPos" : 1114
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -3057,27 +3057,27 @@
   "firstEndPos" : 1518,
   "secondEndPos" : 1328
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// not non null: no null + no primitives.",
-  "secondLabel" : "// not non null: no null + no primitives.",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 1525,
-  "secondPos" : 1335,
-  "firstEndPos" : 1566,
-  "secondEndPos" : 1376
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 1573,
-  "secondPos" : 1383,
+  "firstPos" : 1525,
+  "secondPos" : 1335,
   "firstEndPos" : 2732,
   "secondEndPos" : 2542
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// not non null: no null + no primitives.",
+  "secondLabel" : "// not non null: no null + no primitives.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1525,
+  "secondPos" : 1335,
+  "firstEndPos" : 1566,
+  "secondEndPos" : 1376
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",

@@ -1649,27 +1649,27 @@
   "firstEndPos" : 2030,
   "secondEndPos" : 1982
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given some tasks",
-  "secondLabel" : "// Given some tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1646,
-  "secondPos" : 1687,
-  "firstEndPos" : 1665,
-  "secondEndPos" : 1706
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 1674,
-  "secondPos" : 1715,
+  "firstPos" : 1646,
+  "secondPos" : 1687,
   "firstEndPos" : 2024,
   "secondEndPos" : 1976
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given some tasks",
+  "secondLabel" : "// Given some tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1646,
+  "secondPos" : 1687,
+  "firstEndPos" : 1665,
+  "secondEndPos" : 1706
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -3409,27 +3409,27 @@
   "firstEndPos" : 2937,
   "secondEndPos" : 2898
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// check that both info boxes are displayed and contain the correct info",
-  "secondLabel" : "// check that both info boxes are displayed and contain the correct info",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 2484,
-  "secondPos" : 2445,
-  "firstEndPos" : 2556,
-  "secondEndPos" : 2517
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 2569,
-  "secondPos" : 2530,
+  "firstPos" : 2484,
+  "secondPos" : 2445,
   "firstEndPos" : 2927,
   "secondEndPos" : 2888
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// check that both info boxes are displayed and contain the correct info",
+  "secondLabel" : "// check that both info boxes are displayed and contain the correct info",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2484,
+  "secondPos" : 2445,
+  "firstEndPos" : 2556,
+  "secondEndPos" : 2517
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

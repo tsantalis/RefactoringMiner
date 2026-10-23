@@ -10746,27 +10746,27 @@
   "firstEndPos" : 21553,
   "secondEndPos" : 21554
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// type of the record",
-  "secondLabel" : "// type of the record",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 6585,
-  "secondPos" : 6586,
-  "firstEndPos" : 6606,
-  "secondEndPos" : 6607
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
-  "firstPos" : 6613,
-  "secondPos" : 6614,
+  "firstPos" : 6585,
+  "secondPos" : 6586,
   "firstEndPos" : 21547,
   "secondEndPos" : 21548
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// type of the record",
+  "secondLabel" : "// type of the record",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 6585,
+  "secondPos" : 6586,
+  "firstEndPos" : 6606,
+  "secondEndPos" : 6607
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

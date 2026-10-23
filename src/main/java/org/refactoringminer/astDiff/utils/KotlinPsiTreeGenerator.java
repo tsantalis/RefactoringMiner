@@ -716,7 +716,7 @@ public class KotlinPsiTreeGenerator {
 		for(ASTNode c : rest) {
 			switch(type(c)) {
 				case "init" -> add(t, leaf("initializer_keyword", c));
-				case "BLOCK" -> addAll(t, blockStatements(c));
+				case "BLOCK" -> add(t, bracedStatements(c));
 				default -> {
 					if(isComment(c)) add(t, comment(c));
 				}
@@ -743,7 +743,7 @@ public class KotlinPsiTreeGenerator {
 					}
 					add(t, d);
 				}
-				case "BLOCK" -> addAll(t, blockStatements(c));
+				case "BLOCK" -> add(t, bracedStatements(c));
 				default -> {
 					if(isComment(c)) add(t, comment(c));
 				}
@@ -978,21 +978,8 @@ public class KotlinPsiTreeGenerator {
 		return t;
 	}
 
-	//the statements of a block, from the first to the last statement, without the braces
-	//an empty try, catch or finally block is a statements node spanning its braces, with the comments inside them, so that it is matched with an empty Java block
-	private List<Tree> tryBlockStatements(ASTNode block) {
-		List<ASTNode> inside = kids(block).stream().filter(c -> !type(c).equals("LBRACE") && !type(c).equals("RBRACE")).toList();
-		ASTNode lbrace = kid(block, "LBRACE"), rbrace = kid(block, "RBRACE");
-		if(lbrace == null || rbrace == null || !inside.stream().allMatch(c -> isComment(c)))
-			return blockStatements(block);
-		Tree t = node("statements", start(lbrace), end(rbrace));
-		for(ASTNode c : inside)
-			add(t, comment(c));
-		return List.of(t);
-	}
-
+	//the statements of a block without the braces, with the comments before and after them, like the block in the model, i.e., a lambda body starting with a comment
 	private List<Tree> blockStatements(ASTNode block) {
-		List<Tree> trees = new ArrayList<>();
 		List<Tree> statements = new ArrayList<>();
 		for(ASTNode c : kids(block)) {
 			switch(type(c)) {
@@ -1000,20 +987,26 @@ public class KotlinPsiTreeGenerator {
 				default -> statements.addAll(declaration(c));
 			}
 		}
-		//the comments before the first statement are siblings of the statements, while the comments after the last statement are part of them
-		int first = 0, last = statements.size() - 1;
-		while(first <= last && isComment(statements.get(first))) first++;
-		trees.addAll(statements.subList(0, first));
-		if(first <= last) {
-			Tree span = span("statements", new ArrayList<>(statements.subList(first, last + 1)));
-			//the semicolon terminating the last statement is part of the statements
-			for(ASTNode c : kids(block)) {
-				if(type(c).equals("SEMICOLON") && start(c) == span.getEndPos()) span.setLength(end(c) - span.getPos());
-			}
-			trees.add(span);
+		if(statements.isEmpty())
+			return statements;
+		Tree span = span("statements", statements);
+		//the semicolon terminating the last statement is part of the statements
+		for(ASTNode c : kids(block)) {
+			if(type(c).equals("SEMICOLON") && start(c) == span.getEndPos()) span.setLength(end(c) - span.getPos());
 		}
-		trees.addAll(statements.subList(last + 1, statements.size()));
-		return trees;
+		return List.of(span);
+	}
+
+	//the statements of a block that has no other node in the tree, spanning its braces like the block in the model, i.e., init { ... } and try { ... }
+	private Tree bracedStatements(ASTNode block) {
+		Tree t = node("statements", block);
+		for(ASTNode c : kids(block)) {
+			switch(type(c)) {
+				case "LBRACE", "RBRACE", "SEMICOLON" -> {}
+				default -> addAll(t, declaration(c));
+			}
+		}
+		return t;
 	}
 
 	// ---------------------------------------------------------------- expressions
@@ -1739,7 +1732,7 @@ public class KotlinPsiTreeGenerator {
 		Tree t = node("try_expression", n);
 		for(ASTNode c : kids(n)) {
 			switch(type(c)) {
-				case "BLOCK" -> addAll(t, tryBlockStatements(c));
+				case "BLOCK" -> add(t, bracedStatements(c));
 				case "CATCH" -> {
 					Tree catchBlock = node("catch_block", c);
 					for(ASTNode e : kids(c)) {
@@ -1758,7 +1751,7 @@ public class KotlinPsiTreeGenerator {
 									}
 								}
 							}
-							case "BLOCK" -> addAll(catchBlock, tryBlockStatements(e));
+							case "BLOCK" -> add(catchBlock, bracedStatements(e));
 							default -> {}
 						}
 					}
@@ -1767,7 +1760,7 @@ public class KotlinPsiTreeGenerator {
 				case "FINALLY" -> {
 					Tree finallyBlock = node("finally_block", c);
 					for(ASTNode e : kids(c)) {
-						if(type(e).equals("BLOCK")) addAll(finallyBlock, tryBlockStatements(e));
+						if(type(e).equals("BLOCK")) add(finallyBlock, bracedStatements(e));
 					}
 					add(t, finallyBlock);
 				}

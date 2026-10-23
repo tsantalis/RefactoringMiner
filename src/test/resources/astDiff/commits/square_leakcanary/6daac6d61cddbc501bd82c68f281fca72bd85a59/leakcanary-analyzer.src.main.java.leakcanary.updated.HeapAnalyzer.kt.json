@@ -4212,27 +4212,27 @@
   "firstEndPos" : 4202,
   "secondEndPos" : 7367
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// TODO Why is ThreadObject ignored?",
-  "secondLabel" : "// TODO Why is ThreadObject ignored?",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 3693,
-  "secondPos" : 6858,
-  "firstEndPos" : 3729,
-  "secondEndPos" : 6894
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 3740,
-  "secondPos" : 6905,
+  "firstPos" : 3693,
+  "secondPos" : 6858,
   "firstEndPos" : 4192,
   "secondEndPos" : 7357
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// TODO Why is ThreadObject ignored?",
+  "secondLabel" : "// TODO Why is ThreadObject ignored?",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3693,
+  "secondPos" : 6858,
+  "firstEndPos" : 3729,
+  "secondEndPos" : 6894
 }, {
   "firstType" : "when_expression",
   "secondType" : "when_expression",
@@ -6005,6 +6005,28 @@
   "firstEndPos" : 5712,
   "secondEndPos" : 5618
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "try_expression",
+  "secondParentType" : "function_body",
+  "firstPos" : 4206,
+  "secondPos" : 3445,
+  "firstEndPos" : 5512,
+  "secondEndPos" : 5618
+}, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "try_expression",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 4206,
+  "secondPos" : 3950,
+  "firstEndPos" : 5512,
+  "secondEndPos" : 5400
+}, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
   "firstLabel" : "",
@@ -6048,28 +6070,6 @@
   "secondPos" : 7378,
   "firstEndPos" : 4218,
   "secondEndPos" : 7383
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "function_body",
-  "firstPos" : 4214,
-  "secondPos" : 3445,
-  "firstEndPos" : 5506,
-  "secondEndPos" : 5618
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 4214,
-  "secondPos" : 3950,
-  "firstEndPos" : 5506,
-  "secondEndPos" : 5400
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8524,23 +8524,23 @@
   "firstEndPos" : 5540,
   "secondEndPos" : 5446
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 5550,
-  "secondPos" : 5456,
-  "firstEndPos" : 5706,
-  "secondEndPos" : 5612
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 5542,
+  "secondPos" : 5448,
+  "firstEndPos" : 5712,
+  "secondEndPos" : 5618
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5550,
   "secondPos" : 5456,
   "firstEndPos" : 5706,
@@ -11076,12 +11076,23 @@
   "firstEndPos" : 8206,
   "secondEndPos" : 9203
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 8213,
+  "secondPos" : 9210,
+  "firstEndPos" : 8432,
+  "secondEndPos" : 9496
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// This could happen if RefWatcher removed weakly reachable references after providing",
   "secondLabel" : "// This could happen if RefWatcher removed weakly reachable references after providing",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 8213,
   "secondPos" : 9210,
   "firstEndPos" : 8299,
@@ -11091,23 +11102,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// the set of retained keys",
   "secondLabel" : "// the set of retained keys",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 8306,
   "secondPos" : 9303,
   "firstEndPos" : 8333,
   "secondEndPos" : 9330
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 8340,
-  "secondPos" : 9337,
-  "firstEndPos" : 8432,
-  "secondEndPos" : 9496
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -17561,10 +17561,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 13091,
-  "secondPos" : 13145,
-  "firstEndPos" : 13236,
-  "secondEndPos" : 13290
+  "firstPos" : 13081,
+  "secondPos" : 13135,
+  "firstEndPos" : 13244,
+  "secondEndPos" : 13298
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -17918,23 +17918,23 @@
   "firstEndPos" : 13264,
   "secondEndPos" : 13318
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 13276,
-  "secondPos" : 13330,
-  "firstEndPos" : 13301,
-  "secondEndPos" : 13355
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 13266,
+  "secondPos" : 13320,
+  "firstEndPos" : 13309,
+  "secondEndPos" : 13363
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 13276,
   "secondPos" : 13330,
   "firstEndPos" : 13301,
@@ -22120,12 +22120,23 @@
   "firstEndPos" : 15514,
   "secondEndPos" : 15642
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 15466,
+  "secondPos" : 15594,
+  "firstEndPos" : 15508,
+  "secondEndPos" : 15636
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Ignore any root node.",
   "secondLabel" : "// Ignore any root node.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15466,
   "secondPos" : 15594,
   "firstEndPos" : 15490,
@@ -22137,17 +22148,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 15497,
-  "secondPos" : 15625,
-  "firstEndPos" : 15508,
-  "secondEndPos" : 15636
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 15497,
   "secondPos" : 15625,
   "firstEndPos" : 15508,
@@ -23418,12 +23418,23 @@
   "firstEndPos" : 17473,
   "secondEndPos" : 18061
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "try_expression",
+  "secondParentType" : "try_expression",
+  "firstPos" : 16783,
+  "secondPos" : 17353,
+  "firstEndPos" : 17419,
+  "secondEndPos" : 18007
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// This is an anonymous class implementing an interface. The API does not give access",
   "secondLabel" : "// This is an anonymous class implementing an interface. The API does not give access",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 16797,
   "secondPos" : 17367,
   "firstEndPos" : 16882,
@@ -23433,8 +23444,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// to the interfaces implemented by the class. We check if it's in the class path and",
   "secondLabel" : "// to the interfaces implemented by the class. We check if it's in the class path and",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 16895,
   "secondPos" : 17465,
   "firstEndPos" : 16980,
@@ -23444,23 +23455,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// use that instead.",
   "secondLabel" : "// use that instead.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 16993,
   "secondPos" : 17563,
   "firstEndPos" : 17013,
   "secondEndPos" : 17583
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 17026,
-  "secondPos" : 17596,
-  "firstEndPos" : 17407,
-  "secondEndPos" : 17995
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -25141,7 +25141,7 @@
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
   "firstPos" : 18038,
-  "secondPos" : 18855,
+  "secondPos" : 18679,
   "firstEndPos" : 18291,
   "secondEndPos" : 19190
 }, {
@@ -25185,7 +25185,7 @@
   "firstParentType" : "control_structure_body",
   "secondParentType" : "control_structure_body",
   "firstPos" : 18142,
-  "secondPos" : 18855,
+  "secondPos" : 18679,
   "firstEndPos" : 18283,
   "secondEndPos" : 19190
 }, {

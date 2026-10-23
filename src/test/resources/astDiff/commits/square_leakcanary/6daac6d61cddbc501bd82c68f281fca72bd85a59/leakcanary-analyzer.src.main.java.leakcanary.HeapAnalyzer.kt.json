@@ -5054,10 +5054,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 4221,
-  "secondPos" : 4222,
-  "firstEndPos" : 4931,
-  "secondEndPos" : 4933
+  "firstPos" : 4213,
+  "secondPos" : 4214,
+  "firstEndPos" : 4937,
+  "secondEndPos" : 4939
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6511,23 +6511,23 @@
   "firstEndPos" : 4957,
   "secondEndPos" : 4959
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4967,
-  "secondPos" : 4969,
-  "firstEndPos" : 5029,
-  "secondEndPos" : 5031
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 4959,
+  "secondPos" : 4961,
+  "firstEndPos" : 5035,
+  "secondEndPos" : 5037
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4967,
   "secondPos" : 4969,
   "firstEndPos" : 5029,
@@ -7683,10 +7683,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 5678,
-  "secondPos" : 5680,
-  "firstEndPos" : 6970,
-  "secondEndPos" : 6973
+  "firstPos" : 5670,
+  "secondPos" : 5672,
+  "firstEndPos" : 6976,
+  "secondEndPos" : 6979
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -10350,23 +10350,23 @@
   "firstEndPos" : 7004,
   "secondEndPos" : 7007
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 7014,
-  "secondPos" : 7017,
-  "firstEndPos" : 7170,
-  "secondEndPos" : 7173
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 7006,
+  "secondPos" : 7009,
+  "firstEndPos" : 7176,
+  "secondEndPos" : 7179
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 7014,
   "secondPos" : 7017,
   "firstEndPos" : 7170,
@@ -11945,27 +11945,27 @@
   "firstEndPos" : 8324,
   "secondEndPos" : 8327
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// THashMap has a smaller memory footprint than HashMap.",
-  "secondLabel" : "// THashMap has a smaller memory footprint than HashMap.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 7860,
-  "secondPos" : 7863,
-  "firstEndPos" : 7916,
-  "secondEndPos" : 7919
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 7921,
-  "secondPos" : 7924,
+  "firstPos" : 7860,
+  "secondPos" : 7863,
   "firstEndPos" : 8320,
   "secondEndPos" : 8323
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// THashMap has a smaller memory footprint than HashMap.",
+  "secondLabel" : "// THashMap has a smaller memory footprint than HashMap.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7860,
+  "secondPos" : 7863,
+  "firstEndPos" : 7916,
+  "secondEndPos" : 7919
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -16059,12 +16059,23 @@
   "firstEndPos" : 9665,
   "secondEndPos" : 9668
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 9672,
+  "secondPos" : 9675,
+  "firstEndPos" : 9891,
+  "secondEndPos" : 9894
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// This could happen if RefWatcher removed weakly reachable references after providing",
   "secondLabel" : "// This could happen if RefWatcher removed weakly reachable references after providing",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 9672,
   "secondPos" : 9675,
   "firstEndPos" : 9758,
@@ -16074,23 +16085,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// the set of retained keys",
   "secondLabel" : "// the set of retained keys",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 9765,
   "secondPos" : 9768,
   "firstEndPos" : 9792,
   "secondEndPos" : 9795
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 9799,
-  "secondPos" : 9802,
-  "firstEndPos" : 9891,
-  "secondEndPos" : 9894
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -27736,10 +27736,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 15410,
-  "secondPos" : 15413,
-  "firstEndPos" : 15555,
-  "secondEndPos" : 15558
+  "firstPos" : 15400,
+  "secondPos" : 15403,
+  "firstEndPos" : 15563,
+  "secondEndPos" : 15566
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -28093,23 +28093,23 @@
   "firstEndPos" : 15583,
   "secondEndPos" : 15586
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 15595,
-  "secondPos" : 15598,
-  "firstEndPos" : 15620,
-  "secondEndPos" : 15623
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 15585,
+  "secondPos" : 15588,
+  "firstEndPos" : 15628,
+  "secondEndPos" : 15631
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15595,
   "secondPos" : 15598,
   "firstEndPos" : 15620,
@@ -32295,12 +32295,23 @@
   "firstEndPos" : 17833,
   "secondEndPos" : 17836
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 17785,
+  "secondPos" : 17788,
+  "firstEndPos" : 17827,
+  "secondEndPos" : 17830
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Ignore any root node.",
   "secondLabel" : "// Ignore any root node.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 17785,
   "secondPos" : 17788,
   "firstEndPos" : 17809,
@@ -32312,17 +32323,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 17816,
-  "secondPos" : 17819,
-  "firstEndPos" : 17827,
-  "secondEndPos" : 17830
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 17816,
   "secondPos" : 17819,
   "firstEndPos" : 17827,
@@ -35485,12 +35485,23 @@
   "firstEndPos" : 19792,
   "secondEndPos" : 19795
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "try_expression",
+  "secondParentType" : "try_expression",
+  "firstPos" : 19102,
+  "secondPos" : 19105,
+  "firstEndPos" : 19738,
+  "secondEndPos" : 19741
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// This is an anonymous class implementing an interface. The API does not give access",
   "secondLabel" : "// This is an anonymous class implementing an interface. The API does not give access",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 19116,
   "secondPos" : 19119,
   "firstEndPos" : 19201,
@@ -35500,8 +35511,8 @@
   "secondType" : "line_comment",
   "firstLabel" : "// to the interfaces implemented by the class. We check if it's in the class path and",
   "secondLabel" : "// to the interfaces implemented by the class. We check if it's in the class path and",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 19214,
   "secondPos" : 19217,
   "firstEndPos" : 19299,
@@ -35511,23 +35522,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// use that instead.",
   "secondLabel" : "// use that instead.",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 19312,
   "secondPos" : 19315,
   "firstEndPos" : 19332,
   "secondEndPos" : 19335
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "try_expression",
-  "secondParentType" : "try_expression",
-  "firstPos" : 19345,
-  "secondPos" : 19348,
-  "firstEndPos" : 19726,
-  "secondEndPos" : 19729
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

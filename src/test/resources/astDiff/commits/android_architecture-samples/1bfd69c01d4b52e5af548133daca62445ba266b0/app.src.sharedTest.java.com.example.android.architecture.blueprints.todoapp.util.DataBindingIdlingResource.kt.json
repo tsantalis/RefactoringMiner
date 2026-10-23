@@ -2265,12 +2265,23 @@
   "firstEndPos" : 2415,
   "secondEndPos" : 2415
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 2282,
+  "secondPos" : 2282,
+  "firstEndPos" : 2401,
+  "secondEndPos" : 2401
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// notify observers to avoid espresso race detector",
   "secondLabel" : "// notify observers to avoid espresso race detector",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 2282,
   "secondPos" : 2282,
   "firstEndPos" : 2333,
@@ -2282,17 +2293,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 2350,
-  "secondPos" : 2350,
-  "firstEndPos" : 2401,
-  "secondEndPos" : 2401
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 2350,
   "secondPos" : 2350,
   "firstEndPos" : 2401,

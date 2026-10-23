@@ -1352,12 +1352,23 @@
   "firstEndPos" : 2244,
   "secondEndPos" : 2645
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1804,
+  "secondPos" : 2206,
+  "firstEndPos" : 2238,
+  "secondEndPos" : 2639
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// ID creation might be a complex operation so it's executed using the supplied",
   "secondLabel" : "// ID creation might be a complex operation so it's executed using the supplied",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1804,
   "secondPos" : 2206,
   "firstEndPos" : 1883,
@@ -1367,23 +1378,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// coroutine dispatcher",
   "secondLabel" : "// coroutine dispatcher",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1892,
   "secondPos" : 2294,
   "firstEndPos" : 1915,
   "secondEndPos" : 2317
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 1924,
-  "secondPos" : 2326,
-  "firstEndPos" : 2238,
-  "secondEndPos" : 2639
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -7783,9 +7783,9 @@
   "firstParentType" : "lambda_literal",
   "secondParentType" : "try_expression",
   "firstPos" : 5470,
-  "secondPos" : 6404,
+  "secondPos" : 6386,
   "firstEndPos" : 5572,
-  "secondEndPos" : 6513
+  "secondEndPos" : 6527
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

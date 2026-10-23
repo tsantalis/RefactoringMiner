@@ -7446,12 +7446,23 @@
   "firstEndPos" : 4895,
   "secondEndPos" : 4947
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 4520,
+  "secondPos" : 4572,
+  "firstEndPos" : 4891,
+  "secondEndPos" : 4943
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// WeakReferences are enqueued as soon as the object to which they point to becomes weakly",
   "secondLabel" : "// WeakReferences are enqueued as soon as the object to which they point to becomes weakly",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4520,
   "secondPos" : 4572,
   "firstEndPos" : 4610,
@@ -7461,23 +7472,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// reachable. This is before finalization or garbage collection has actually happened.",
   "secondLabel" : "// reachable. This is before finalization or garbage collection has actually happened.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4615,
   "secondPos" : 4667,
   "firstEndPos" : 4701,
   "secondEndPos" : 4753
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 4706,
-  "secondPos" : 4758,
-  "firstEndPos" : 4891,
-  "secondEndPos" : 4943
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

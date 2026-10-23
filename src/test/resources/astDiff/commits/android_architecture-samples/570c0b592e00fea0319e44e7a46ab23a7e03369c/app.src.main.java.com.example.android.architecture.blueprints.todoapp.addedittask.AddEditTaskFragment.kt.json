@@ -1968,12 +1968,23 @@
   "firstEndPos" : 1925,
   "secondEndPos" : 3116
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1801,
+  "secondPos" : 3024,
+  "firstEndPos" : 1919,
+  "secondEndPos" : 3110
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Add or edit an existing task?",
   "secondLabel" : "// Add or edit an existing task?",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1801,
   "secondPos" : 3024,
   "firstEndPos" : 1833,
@@ -1985,17 +1996,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1842,
-  "secondPos" : 3065,
-  "firstEndPos" : 1919,
-  "secondEndPos" : 3110
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 1842,
   "secondPos" : 3065,
   "firstEndPos" : 1919,

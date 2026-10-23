@@ -3882,27 +3882,27 @@
   "firstEndPos" : 2932,
   "secondEndPos" : 3160
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// GIVEN - On the home screen",
-  "secondLabel" : "// GIVEN - On the home screen",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2274,
-  "secondPos" : 2502,
-  "firstEndPos" : 2303,
-  "secondEndPos" : 2531
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2312,
-  "secondPos" : 2540,
+  "firstPos" : 2274,
+  "secondPos" : 2502,
   "firstEndPos" : 2926,
   "secondEndPos" : 3154
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// GIVEN - On the home screen",
+  "secondLabel" : "// GIVEN - On the home screen",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2274,
+  "secondPos" : 2502,
+  "firstEndPos" : 2303,
+  "secondEndPos" : 2531
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -5609,12 +5609,23 @@
   "firstEndPos" : 3444,
   "secondEndPos" : 3656
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 3014,
+  "secondPos" : 3226,
+  "firstEndPos" : 3438,
+  "secondEndPos" : 3650
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// GIVEN - One task already in the repository",
   "secondLabel" : "// GIVEN - One task already in the repository",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 3014,
   "secondPos" : 3226,
   "firstEndPos" : 3059,
@@ -5685,17 +5696,6 @@
   "secondPos" : 10351,
   "firstEndPos" : 3072,
   "secondEndPos" : 10359
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3068,
-  "secondPos" : 3280,
-  "firstEndPos" : 3438,
-  "secondEndPos" : 3650
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -19535,27 +19535,27 @@
   "firstEndPos" : 8928,
   "secondEndPos" : 8642
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add one active task and one completed task",
-  "secondLabel" : "// Add one active task and one completed task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 8453,
-  "secondPos" : 8066,
-  "firstEndPos" : 8498,
-  "secondEndPos" : 8111
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 8507,
-  "secondPos" : 8120,
+  "firstPos" : 8453,
+  "secondPos" : 8066,
   "firstEndPos" : 8922,
   "secondEndPos" : 8636
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add one active task and one completed task",
+  "secondLabel" : "// Add one active task and one completed task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 8453,
+  "secondPos" : 8066,
+  "firstEndPos" : 8498,
+  "secondEndPos" : 8111
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -20778,27 +20778,27 @@
   "firstEndPos" : 9670,
   "secondEndPos" : 9421
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add 2 active tasks and one completed task",
-  "secondLabel" : "// Add 2 active tasks and one completed task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 9043,
-  "secondPos" : 8690,
-  "firstEndPos" : 9087,
-  "secondEndPos" : 8734
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 9096,
-  "secondPos" : 8743,
+  "firstPos" : 9043,
+  "secondPos" : 8690,
   "firstEndPos" : 9664,
   "secondEndPos" : 9415
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add 2 active tasks and one completed task",
+  "secondLabel" : "// Add 2 active tasks and one completed task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 9043,
+  "secondPos" : 8690,
+  "firstEndPos" : 9087,
+  "secondEndPos" : 8734
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -22384,27 +22384,27 @@
   "firstEndPos" : 10424,
   "secondEndPos" : 10212
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add one active task and 2 completed tasks",
-  "secondLabel" : "// Add one active task and 2 completed tasks",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 9788,
-  "secondPos" : 9472,
-  "firstEndPos" : 9832,
-  "secondEndPos" : 9516
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 9841,
-  "secondPos" : 9525,
+  "firstPos" : 9788,
+  "secondPos" : 9472,
   "firstEndPos" : 10418,
   "secondEndPos" : 10206
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add one active task and 2 completed tasks",
+  "secondLabel" : "// Add one active task and 2 completed tasks",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 9788,
+  "secondPos" : 9472,
+  "firstEndPos" : 9832,
+  "secondEndPos" : 9516
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -24023,27 +24023,27 @@
   "firstEndPos" : 11206,
   "secondEndPos" : 11007
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Add one active task and one completed task",
-  "secondLabel" : "// Add one active task and one completed task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 10543,
-  "secondPos" : 10264,
-  "firstEndPos" : 10588,
-  "secondEndPos" : 10309
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 10597,
-  "secondPos" : 10318,
+  "firstPos" : 10543,
+  "secondPos" : 10264,
   "firstEndPos" : 11200,
   "secondEndPos" : 11001
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Add one active task and one completed task",
+  "secondLabel" : "// Add one active task and one completed task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 10543,
+  "secondPos" : 10264,
+  "firstEndPos" : 10588,
+  "secondEndPos" : 10309
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

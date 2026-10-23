@@ -3712,10 +3712,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 3588,
-  "secondPos" : 3396,
-  "firstEndPos" : 4469,
-  "secondEndPos" : 4448
+  "firstPos" : 3580,
+  "secondPos" : 3388,
+  "firstEndPos" : 4475,
+  "secondEndPos" : 4454
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -5477,23 +5477,23 @@
   "firstEndPos" : 4503,
   "secondEndPos" : 4482
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 4513,
-  "secondPos" : 4492,
-  "firstEndPos" : 4673,
-  "secondEndPos" : 4652
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 4505,
+  "secondPos" : 4484,
+  "firstEndPos" : 4679,
+  "secondEndPos" : 4658
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 4513,
   "secondPos" : 4492,
   "firstEndPos" : 4673,
@@ -8678,12 +8678,23 @@
   "firstEndPos" : 6218,
   "secondEndPos" : 6197
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 5808,
+  "secondPos" : 5787,
+  "firstEndPos" : 6212,
+  "secondEndPos" : 6191
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Go through the linked list of nodes and build the reverse list of instances from",
   "secondLabel" : "// Go through the linked list of nodes and build the reverse list of instances from",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5808,
   "secondPos" : 5787,
   "firstEndPos" : 5891,
@@ -8693,23 +8704,12 @@
   "secondType" : "line_comment",
   "firstLabel" : "// root to leaking.",
   "secondLabel" : "// root to leaking.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 5898,
   "secondPos" : 5877,
   "firstEndPos" : 5917,
   "secondEndPos" : 5896
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 5924,
-  "secondPos" : 5903,
-  "firstEndPos" : 6212,
-  "secondEndPos" : 6191
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -10405,12 +10405,23 @@
   "firstEndPos" : 6712,
   "secondEndPos" : 6691
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 6586,
+  "secondPos" : 6565,
+  "firstEndPos" : 6706,
+  "secondEndPos" : 6685
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Replace any preexisting children, this is shorter.",
   "secondLabel" : "// Replace any preexisting children, this is shorter.",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 6586,
   "secondPos" : 6565,
   "firstEndPos" : 6639,
@@ -10422,17 +10433,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 6646,
-  "secondPos" : 6625,
-  "firstEndPos" : 6706,
-  "secondEndPos" : 6685
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 6646,
   "secondPos" : 6625,
   "firstEndPos" : 6706,
@@ -17786,12 +17786,23 @@
   "firstEndPos" : 10794,
   "secondEndPos" : 10773
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "lambda_literal",
+  "secondParentType" : "lambda_literal",
+  "firstPos" : 10801,
+  "secondPos" : 10780,
+  "firstEndPos" : 11523,
+  "secondEndPos" : 11502
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// Avoid double reporting as those sizes will move up to the root dominator",
   "secondLabel" : "// Avoid double reporting as those sizes will move up to the root dominator",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 10801,
   "secondPos" : 10780,
   "firstEndPos" : 10876,
@@ -17803,17 +17814,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 10883,
-  "secondPos" : 10862,
-  "firstEndPos" : 11523,
-  "secondEndPos" : 11502
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
   "firstPos" : 10883,
   "secondPos" : 10862,
   "firstEndPos" : 11523,
@@ -30007,6 +30007,17 @@
   "firstEndPos" : 18794,
   "secondEndPos" : 20608
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 18542,
+  "secondPos" : 20231,
+  "firstEndPos" : 18788,
+  "secondEndPos" : 20602
+}, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
   "firstLabel" : "",
@@ -30015,17 +30026,6 @@
   "secondParentType" : "statements",
   "firstPos" : 18581,
   "secondPos" : 20309,
-  "firstEndPos" : 18788,
-  "secondEndPos" : 20602
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
-  "firstPos" : 18581,
-  "secondPos" : 20231,
   "firstEndPos" : 18788,
   "secondEndPos" : 20602
 }, {

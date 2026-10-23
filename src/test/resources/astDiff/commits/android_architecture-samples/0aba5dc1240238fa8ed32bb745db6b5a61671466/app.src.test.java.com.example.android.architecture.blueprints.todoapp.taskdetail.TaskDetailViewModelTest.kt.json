@@ -6060,27 +6060,27 @@
   "firstEndPos" : 4250,
   "secondEndPos" : 4244
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Given a repository that returns errors",
-  "secondLabel" : "// Given a repository that returns errors",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 3925,
-  "secondPos" : 3919,
-  "firstEndPos" : 3966,
-  "secondEndPos" : 3960
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 3975,
-  "secondPos" : 3969,
+  "firstPos" : 3925,
+  "secondPos" : 3919,
   "firstEndPos" : 4244,
   "secondEndPos" : 4238
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Given a repository that returns errors",
+  "secondLabel" : "// Given a repository that returns errors",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 3925,
+  "secondPos" : 3919,
+  "firstEndPos" : 3966,
+  "secondEndPos" : 3960
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -6676,27 +6676,27 @@
   "firstEndPos" : 4523,
   "secondEndPos" : 4514
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Before setting the Snackbar text, get its current value",
-  "secondLabel" : "// Before setting the Snackbar text, get its current value",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 4307,
-  "secondPos" : 4301,
-  "firstEndPos" : 4365,
-  "secondEndPos" : 4359
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 4374,
-  "secondPos" : 4368,
+  "firstPos" : 4307,
+  "secondPos" : 4301,
   "firstEndPos" : 4517,
   "secondEndPos" : 4508
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Before setting the Snackbar text, get its current value",
+  "secondLabel" : "// Before setting the Snackbar text, get its current value",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4307,
+  "secondPos" : 4301,
+  "firstEndPos" : 4365,
+  "secondEndPos" : 4359
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -7105,27 +7105,27 @@
   "firstEndPos" : 4821,
   "secondEndPos" : 4810
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// When opening a new task",
-  "secondLabel" : "// When opening a new task",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 4581,
-  "secondPos" : 4572,
-  "firstEndPos" : 4607,
-  "secondEndPos" : 4598
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 4616,
-  "secondPos" : 4607,
+  "firstPos" : 4581,
+  "secondPos" : 4572,
   "firstEndPos" : 4815,
   "secondEndPos" : 4804
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// When opening a new task",
+  "secondLabel" : "// When opening a new task",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 4581,
+  "secondPos" : 4572,
+  "firstEndPos" : 4607,
+  "secondEndPos" : 4598
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -8557,27 +8557,27 @@
   "firstEndPos" : 5726,
   "secondEndPos" : 5715
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Pause dispatcher so we can verify initial values",
-  "secondLabel" : "// Pause dispatcher so we can verify initial values",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 5213,
-  "secondPos" : 5202,
-  "firstEndPos" : 5264,
-  "secondEndPos" : 5253
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 5273,
-  "secondPos" : 5262,
+  "firstPos" : 5213,
+  "secondPos" : 5202,
   "firstEndPos" : 5720,
   "secondEndPos" : 5709
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Pause dispatcher so we can verify initial values",
+  "secondLabel" : "// Pause dispatcher so we can verify initial values",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 5213,
+  "secondPos" : 5202,
+  "firstEndPos" : 5264,
+  "secondEndPos" : 5253
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",

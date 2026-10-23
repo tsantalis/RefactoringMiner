@@ -2364,12 +2364,23 @@
   "firstEndPos" : 2040,
   "secondEndPos" : 2069
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_body",
+  "secondParentType" : "function_body",
+  "firstPos" : 1874,
+  "secondPos" : 1893,
+  "firstEndPos" : 2036,
+  "secondEndPos" : 2065
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// No TLS extensions if the socket class is custom.",
   "secondLabel" : "// No TLS extensions if the socket class is custom.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 1874,
   "secondPos" : 1893,
   "firstEndPos" : 1925,
@@ -2381,17 +2392,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 1930,
-  "secondPos" : 1949,
-  "firstEndPos" : 2036,
-  "secondEndPos" : 2065
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
   "firstPos" : 1930,
   "secondPos" : 1949,
   "firstEndPos" : 2036,

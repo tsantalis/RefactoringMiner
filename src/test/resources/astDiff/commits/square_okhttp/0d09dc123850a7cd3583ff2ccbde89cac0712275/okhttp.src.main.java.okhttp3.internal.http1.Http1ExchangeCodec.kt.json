@@ -8816,10 +8816,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 6439,
-  "secondPos" : 6372,
-  "firstEndPos" : 7028,
-  "secondEndPos" : 6961
+  "firstPos" : 6431,
+  "secondPos" : 6364,
+  "firstEndPos" : 7034,
+  "secondEndPos" : 6967
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -10207,27 +10207,27 @@
   "firstEndPos" : 7057,
   "secondEndPos" : 6990
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Provide more context if the server ends the stream before sending a response.",
-  "secondLabel" : "// Provide more context if the server ends the stream before sending a response.",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
-  "firstPos" : 7067,
-  "secondPos" : 7000,
-  "firstEndPos" : 7147,
-  "secondEndPos" : 7080
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 7154,
-  "secondPos" : 7087,
-  "firstEndPos" : 7295,
-  "secondEndPos" : 7207
+  "firstPos" : 7059,
+  "secondPos" : 6992,
+  "firstEndPos" : 7301,
+  "secondEndPos" : 7213
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Provide more context if the server ends the stream before sending a response.",
+  "secondLabel" : "// Provide more context if the server ends the stream before sending a response.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 7067,
+  "secondPos" : 7000,
+  "firstEndPos" : 7147,
+  "secondEndPos" : 7080
 }, {
   "firstType" : "jump_expression",
   "secondType" : "jump_expression",
@@ -20294,23 +20294,23 @@
   "firstEndPos" : 11799,
   "secondEndPos" : 11699
 }, {
-  "firstType" : "call_expression",
-  "secondType" : "call_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 11641,
-  "secondPos" : 11547,
-  "firstEndPos" : 11669,
-  "secondEndPos" : 11575
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
+  "firstPos" : 11631,
+  "secondPos" : 11537,
+  "firstEndPos" : 11677,
+  "secondEndPos" : 11583
+}, {
+  "firstType" : "call_expression",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 11641,
   "secondPos" : 11547,
   "firstEndPos" : 11669,
@@ -20476,10 +20476,10 @@
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
-  "firstPos" : 11711,
-  "secondPos" : 11617,
-  "firstEndPos" : 11791,
-  "secondEndPos" : 11691
+  "firstPos" : 11701,
+  "secondPos" : 11607,
+  "firstEndPos" : 11799,
+  "secondEndPos" : 11699
 }, {
   "firstType" : "call_expression",
   "secondType" : "call_expression",
@@ -21460,23 +21460,23 @@
   "firstEndPos" : 12407,
   "secondEndPos" : 12307
 }, {
-  "firstType" : "if_expression",
-  "secondType" : "if_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 12416,
-  "secondPos" : 12316,
-  "firstEndPos" : 12482,
-  "secondEndPos" : 12382
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "anonymous_initializer",
   "secondParentType" : "anonymous_initializer",
+  "firstPos" : 12408,
+  "secondPos" : 12308,
+  "firstEndPos" : 12488,
+  "secondEndPos" : 12388
+}, {
+  "firstType" : "if_expression",
+  "secondType" : "if_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 12416,
   "secondPos" : 12316,
   "firstEndPos" : 12482,
@@ -26102,27 +26102,27 @@
   "firstEndPos" : 15316,
   "secondEndPos" : 15198
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Read the suffix of the previous chunk.",
-  "secondLabel" : "// Read the suffix of the previous chunk.",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 14480,
-  "secondPos" : 14362,
-  "firstEndPos" : 14521,
-  "secondEndPos" : 14403
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 14528,
-  "secondPos" : 14410,
+  "firstPos" : 14480,
+  "secondPos" : 14362,
   "firstEndPos" : 15310,
   "secondEndPos" : 15192
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Read the suffix of the previous chunk.",
+  "secondLabel" : "// Read the suffix of the previous chunk.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 14480,
+  "secondPos" : 14362,
+  "firstEndPos" : 14521,
+  "secondEndPos" : 14403
 }, {
   "firstType" : "if_expression",
   "secondType" : "if_expression",
@@ -26295,10 +26295,10 @@
   "secondLabel" : "",
   "firstParentType" : "try_expression",
   "secondParentType" : "try_expression",
-  "firstPos" : 14637,
-  "secondPos" : 14519,
-  "firstEndPos" : 15013,
-  "secondEndPos" : 14895
+  "firstPos" : 14627,
+  "secondPos" : 14509,
+  "firstEndPos" : 15021,
+  "secondEndPos" : 14903
 }, {
   "firstType" : "assignment",
   "secondType" : "assignment",
@@ -27202,23 +27202,23 @@
   "firstEndPos" : 15053,
   "secondEndPos" : 14935
 }, {
-  "firstType" : "jump_expression",
-  "secondType" : "jump_expression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "statements",
-  "secondParentType" : "statements",
-  "firstPos" : 15065,
-  "secondPos" : 14947,
-  "firstEndPos" : 15099,
-  "secondEndPos" : 14981
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "catch_block",
   "secondParentType" : "catch_block",
+  "firstPos" : 15055,
+  "secondPos" : 14937,
+  "firstEndPos" : 15107,
+  "secondEndPos" : 14989
+}, {
+  "firstType" : "jump_expression",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 15065,
   "secondPos" : 14947,
   "firstEndPos" : 15099,

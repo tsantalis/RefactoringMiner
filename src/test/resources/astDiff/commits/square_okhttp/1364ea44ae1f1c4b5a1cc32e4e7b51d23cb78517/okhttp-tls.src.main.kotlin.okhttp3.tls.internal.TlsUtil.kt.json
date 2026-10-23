@@ -1154,27 +1154,27 @@
   "firstEndPos" : 1589,
   "secondEndPos" : 1745
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Generate a self-signed cert for the server to serve and the client to trust.",
-  "secondLabel" : "// Generate a self-signed cert for the server to serve and the client to trust.",
-  "firstParentType" : "lambda_literal",
-  "secondParentType" : "lambda_literal",
-  "firstPos" : 1148,
-  "secondPos" : 1304,
-  "firstEndPos" : 1227,
-  "secondEndPos" : 1383
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "lambda_literal",
   "secondParentType" : "lambda_literal",
-  "firstPos" : 1232,
-  "secondPos" : 1388,
+  "firstPos" : 1148,
+  "secondPos" : 1304,
   "firstEndPos" : 1585,
   "secondEndPos" : 1741
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Generate a self-signed cert for the server to serve and the client to trust.",
+  "secondLabel" : "// Generate a self-signed cert for the server to serve and the client to trust.",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 1148,
+  "secondPos" : 1304,
+  "firstEndPos" : 1227,
+  "secondEndPos" : 1383
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

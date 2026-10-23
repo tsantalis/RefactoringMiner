@@ -13254,12 +13254,23 @@
   "firstEndPos" : 7366,
   "secondEndPos" : 7176
 }, {
+  "firstType" : "statements",
+  "secondType" : "statements",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "control_structure_body",
+  "secondParentType" : "control_structure_body",
+  "firstPos" : 7236,
+  "secondPos" : 7046,
+  "firstEndPos" : 7346,
+  "secondEndPos" : 7156
+}, {
   "firstType" : "line_comment",
   "secondType" : "line_comment",
   "firstLabel" : "// No array index in groups",
   "secondLabel" : "// No array index in groups",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
   "firstPos" : 7236,
   "secondPos" : 7046,
   "firstEndPos" : 7263,
@@ -13271,17 +13282,6 @@
   "secondLabel" : "",
   "firstParentType" : "statements",
   "secondParentType" : "statements",
-  "firstPos" : 7284,
-  "secondPos" : 7094,
-  "firstEndPos" : 7346,
-  "secondEndPos" : 7156
-}, {
-  "firstType" : "statements",
-  "secondType" : "statements",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "control_structure_body",
-  "secondParentType" : "control_structure_body",
   "firstPos" : 7284,
   "secondPos" : 7094,
   "firstEndPos" : 7346,

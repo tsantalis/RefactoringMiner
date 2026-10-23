@@ -3640,27 +3640,27 @@
   "firstEndPos" : 2530,
   "secondEndPos" : 2249
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// String, primitive types",
-  "secondLabel" : "// String, primitive types",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2306,
-  "secondPos" : 2025,
-  "firstEndPos" : 2332,
-  "secondEndPos" : 2051
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2337,
-  "secondPos" : 2056,
+  "firstPos" : 2306,
+  "secondPos" : 2025,
   "firstEndPos" : 2526,
   "secondEndPos" : 2245
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// String, primitive types",
+  "secondLabel" : "// String, primitive types",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2306,
+  "secondPos" : 2025,
+  "firstEndPos" : 2332,
+  "secondEndPos" : 2051
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",
@@ -4223,27 +4223,27 @@
   "firstEndPos" : 2904,
   "secondEndPos" : 2623
 }, {
-  "firstType" : "line_comment",
-  "secondType" : "line_comment",
-  "firstLabel" : "// Note: this performs two linear scans over arrays",
-  "secondLabel" : "// Note: this performs two linear scans over arrays",
-  "firstParentType" : "function_body",
-  "secondParentType" : "function_body",
-  "firstPos" : 2578,
-  "secondPos" : 2297,
-  "firstEndPos" : 2629,
-  "secondEndPos" : 2348
-}, {
   "firstType" : "statements",
   "secondType" : "statements",
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "function_body",
   "secondParentType" : "function_body",
-  "firstPos" : 2634,
-  "secondPos" : 2353,
+  "firstPos" : 2578,
+  "secondPos" : 2297,
   "firstEndPos" : 2900,
   "secondEndPos" : 2619
+}, {
+  "firstType" : "line_comment",
+  "secondType" : "line_comment",
+  "firstLabel" : "// Note: this performs two linear scans over arrays",
+  "secondLabel" : "// Note: this performs two linear scans over arrays",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 2578,
+  "secondPos" : 2297,
+  "firstEndPos" : 2629,
+  "secondEndPos" : 2348
 }, {
   "firstType" : "property_declaration",
   "secondType" : "property_declaration",

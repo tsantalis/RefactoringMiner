@@ -1247,7 +1247,7 @@
   "firstLabel" : "// Attempt to get the trust manager from an OpenJDK socket factory. We attempt this on all",
   "secondLabel" : "// Attempt to get the trust manager from an OpenJDK socket factory. We attempt this on all",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 2936,
   "secondPos" : 2969,
   "firstEndPos" : 3026,
@@ -1258,7 +1258,7 @@
   "firstLabel" : "// platforms in order to support Robolectric, which mixes classes from both Android and the",
   "secondLabel" : "// platforms in order to support Robolectric, which mixes classes from both Android and the",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 3031,
   "secondPos" : 3066,
   "firstEndPos" : 3122,
@@ -1269,7 +1269,7 @@
   "firstLabel" : "// Oracle JDK. Note that we don't support HTTP/2 or other nice features on Robolectric.",
   "secondLabel" : "// Oracle JDK. Note that we don't support HTTP/2 or other nice features on Robolectric.",
   "firstParentType" : "Block",
-  "secondParentType" : "try_expression",
+  "secondParentType" : "statements",
   "firstPos" : 3127,
   "secondPos" : 3164,
   "firstEndPos" : 3214,
@@ -1293,9 +1293,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 3223,
-  "secondPos" : 3258,
+  "secondPos" : 2961,
   "firstEndPos" : 3518,
-  "secondEndPos" : 3502
+  "secondEndPos" : 3508
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",
@@ -1634,9 +1634,9 @@
   "firstParentType" : "CatchClause",
   "secondParentType" : "catch_block",
   "firstPos" : 3552,
-  "secondPos" : 3551,
+  "secondPos" : 3543,
   "firstEndPos" : 3578,
-  "secondEndPos" : 3555
+  "secondEndPos" : 3561
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "null",
@@ -5352,9 +5352,9 @@
   "firstParentType" : "TryStatement",
   "secondParentType" : "try_expression",
   "firstPos" : 8369,
-  "secondPos" : 8318,
+  "secondPos" : 8306,
   "firstEndPos" : 8603,
-  "secondEndPos" : 8520
+  "secondEndPos" : 8530
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "property_declaration",

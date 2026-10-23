@@ -633,6 +633,7 @@ public class Constants {
     public final String EXPORT_CLAUSE = "export_clause";
     public final String LABELED = "labeled_statement";
     public final String STATEMENT_IDENTIFIER = "statement_identifier";
+    public final String LABEL = "label";
     public final String PROGRAM = "program"; // This is the root of all trees in TypeScript
     public final String ENUM_KEYWORD = "enum";
     public final String ENUM_BODY = "enum_body";

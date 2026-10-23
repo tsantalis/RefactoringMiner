@@ -41694,7 +41694,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "property_declaration",
-  "secondParentType" : "when_subject",
+  "secondParentType" : "property_declaration",
   "firstPos" : 26699,
   "secondPos" : 25262,
   "firstEndPos" : 26720,
@@ -41787,6 +41787,28 @@
   "secondPos" : 25243,
   "firstEndPos" : 26744,
   "secondEndPos" : 25284
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "property_declaration",
+  "firstLabel" : "valueRecord",
+  "secondLabel" : "",
+  "firstParentType" : "when_subject",
+  "secondParentType" : "when_subject",
+  "firstPos" : 26732,
+  "secondPos" : 25244,
+  "firstEndPos" : 26743,
+  "secondEndPos" : 25283
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "valueRecord",
+  "secondLabel" : "valueRecord",
+  "firstParentType" : "when_subject",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 26732,
+  "secondPos" : 25248,
+  "firstEndPos" : 26743,
+  "secondEndPos" : 25259
 }, {
   "firstType" : "when_entry",
   "secondType" : "when_entry",

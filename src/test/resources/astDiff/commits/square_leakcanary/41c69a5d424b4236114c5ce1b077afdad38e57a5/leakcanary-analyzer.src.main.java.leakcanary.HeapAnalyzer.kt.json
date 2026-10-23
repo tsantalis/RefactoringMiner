@@ -4403,7 +4403,7 @@
   "secondType" : "call_expression",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "when_subject",
+  "firstParentType" : "property_declaration",
   "secondParentType" : "control_structure_body",
   "firstPos" : 3734,
   "secondPos" : 11627,
@@ -6148,12 +6148,23 @@
   "firstEndPos" : 4888,
   "secondEndPos" : 4829
 }, {
+  "firstType" : "parameter",
+  "secondType" : "parameter",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "catch_block",
+  "secondParentType" : "catch_block",
+  "firstPos" : 4692,
+  "secondPos" : 4633,
+  "firstEndPos" : 4712,
+  "secondEndPos" : 4653
+}, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
   "firstLabel" : "exception",
   "secondLabel" : "exception",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 4692,
   "secondPos" : 4633,
   "firstEndPos" : 4701,
@@ -6174,8 +6185,8 @@
   "secondType" : "user_type",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "catch_block",
-  "secondParentType" : "catch_block",
+  "firstParentType" : "parameter",
+  "secondParentType" : "parameter",
   "firstPos" : 4703,
   "secondPos" : 4644,
   "firstEndPos" : 4712,
@@ -19276,11 +19287,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "statements",
-  "secondParentType" : "statements",
+  "secondParentType" : "when_subject",
   "firstPos" : 11471,
-  "secondPos" : 11383,
+  "secondPos" : 11407,
   "firstEndPos" : 11546,
-  "secondEndPos" : 11788
+  "secondEndPos" : 11464
 }, {
   "firstType" : "binding_pattern_kind",
   "secondType" : "binding_pattern_kind",
@@ -19289,9 +19300,9 @@
   "firstParentType" : "property_declaration",
   "secondParentType" : "property_declaration",
   "firstPos" : 11471,
-  "secondPos" : 11383,
+  "secondPos" : 11407,
   "firstEndPos" : 11474,
-  "secondEndPos" : 11386
+  "secondEndPos" : 11410
 }, {
   "firstType" : "property_declaration_keyword",
   "secondType" : "property_declaration_keyword",
@@ -19300,9 +19311,9 @@
   "firstParentType" : "binding_pattern_kind",
   "secondParentType" : "binding_pattern_kind",
   "firstPos" : 11471,
-  "secondPos" : 11383,
+  "secondPos" : 11407,
   "firstEndPos" : 11474,
-  "secondEndPos" : 11386
+  "secondEndPos" : 11410
 }, {
   "firstType" : "simple_identifier",
   "secondType" : "simple_identifier",
@@ -19331,7 +19342,7 @@
   "firstLabel" : "=",
   "secondLabel" : "=",
   "firstParentType" : "property_declaration",
-  "secondParentType" : "when_subject",
+  "secondParentType" : "property_declaration",
   "firstPos" : 11487,
   "secondPos" : 11424,
   "firstEndPos" : 11488,
@@ -19353,7 +19364,7 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "value_argument",
-  "secondParentType" : "when_subject",
+  "secondParentType" : "property_declaration",
   "firstPos" : 11514,
   "secondPos" : 11426,
   "firstEndPos" : 11545,

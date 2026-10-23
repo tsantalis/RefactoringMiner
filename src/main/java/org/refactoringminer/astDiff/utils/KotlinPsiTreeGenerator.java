@@ -384,11 +384,13 @@ public class KotlinPsiTreeGenerator {
 				else trees.add(expression(n));
 			}
 			case "LABELED_EXPRESSION" -> {
-				//a labeled statement is a label followed by the statement, as in the tree-sitter tree, i.e., outer@ for (...)
+				//a labeled statement is the label and the statement, like the labeled statement in the model, i.e., outer@ for (...)
+				Tree t = node("labeled_statement", n);
 				for(ASTNode c : kids(n)) {
-					if(type(c).equals("LABEL_QUALIFIER")) trees.add(leaf("label", c));
-					else trees.addAll(declaration(c));
+					if(type(c).equals("LABEL_QUALIFIER")) add(t, leaf("label", c));
+					else for(Tree d : declaration(c)) add(t, d);
 				}
+				trees.add(t);
 			}
 			default -> trees.add(expression(n));
 		}
@@ -1672,12 +1674,8 @@ public class KotlinPsiTreeGenerator {
 						//the subject of when, when_subject -> expression, including the parentheses
 						Tree s = node("when_subject", lpar != null ? start(lpar) : start(c), rpar != null ? end(rpar) : end(c));
 						if(type(c).equals("PROPERTY")) {
-							//when (val x = y), as when_subject -> [property_declaration_keyword, variable_declaration, affectation_operator, y] in the tree-sitter tree
-							for(Tree d : declaration(c)) {
-								if(!d.getType().name.equals("property_declaration")) { add(s, d); continue; }
-								for(Tree p : new ArrayList<>(d.getChildren()))
-									add(s, p.getType().name.equals("binding_pattern_kind") ? p.getChild(0) : p);
-							}
+							//when (val x = y), as when_subject -> property_declaration, like the subject in the model
+							for(Tree d : declaration(c)) add(s, d);
 						}
 						else
 							add(s, expression(c));
@@ -1738,17 +1736,9 @@ public class KotlinPsiTreeGenerator {
 					for(ASTNode e : kids(c)) {
 						switch(type(e)) {
 							case "VALUE_PARAMETER_LIST" -> {
+								//the exception is a parameter, like the variable declaration of the catch clause in the model
 								for(ASTNode p : kids(e)) {
-									if(type(p).equals("VALUE_PARAMETER")) {
-										for(ASTNode x : kids(p)) {
-											switch(type(x)) {
-												case "IDENTIFIER" -> add(catchBlock, simpleIdentifier(x));
-												case "TYPE_REFERENCE" -> add(catchBlock, typeTree(x));
-												case "MODIFIER_LIST" -> add(catchBlock, modifiers(x));
-												default -> {}
-											}
-										}
-									}
+									if(type(p).equals("VALUE_PARAMETER")) add(catchBlock, parameter(p, "parameter"));
 								}
 							}
 							case "BLOCK" -> add(catchBlock, bracedStatements(e));

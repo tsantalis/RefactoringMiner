@@ -39,14 +39,22 @@ public class JavaToKotlinMigration {
     public static void handleCompositeMapping(ExtendedMultiMappingStore mappingStore, Tree srcStatementNode, Tree dstStatementNode, Constants LANG1, Constants LANG2, DeferredFlattenings deferredFlattenings) {
         if(srcStatementNode.getType().name.equals(LANG1.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(LANG2.CATCH_CLAUSE)) {
             Tree singleVariableDeclaration1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SINGLE_VARIABLE_DECLARATION);
-            if(singleVariableDeclaration1 != null) {
-                handleParameterMapping(mappingStore, singleVariableDeclaration1, dstStatementNode, LANG1, LANG2, deferredFlattenings);
-                deferredFlattenings.flattenKeepingMappings(srcStatementNode, singleVariableDeclaration1);
+            Tree parameter2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.PARAMETER);
+            if(singleVariableDeclaration1 != null && parameter2 != null) {
+                handleParameterMapping(mappingStore, singleVariableDeclaration1, parameter2, LANG1, LANG2, deferredFlattenings);
             }
             Tree block1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.BLOCK);
             Tree block2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS);
             if(block1 != null && block2 != null) {
                 mappingStore.addMapping(block1, block2);
+            }
+        }
+        else if(srcStatementNode.getType().name.equals(LANG1.LABELED_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.LABELED)) {
+            //the labels of the labeled statements, i.e., outer: for (...) -> outer@ for (...)
+            Tree label1 = TreeUtilFunctions.findChildByType(srcStatementNode, LANG1.SIMPLE_NAME);
+            Tree label2 = TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.LABEL);
+            if(label1 != null && label2 != null) {
+                mappingStore.addMapping(label1, label2);
             }
         }
         else if(srcStatementNode.getType().name.equals(LANG1.TRY_STATEMENT) && dstStatementNode.getType().name.equals(LANG2.TRY_STATEMENT)) {

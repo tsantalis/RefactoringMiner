@@ -2,8 +2,10 @@ package org.refactoringminer.astDiff.matchers.statement;
 
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.decomposition.*;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -38,8 +40,15 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 	public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
 		if (src.getType().name.equals(LANG1.LABELED_STATEMENT) && dst.getType().name.equals(LANG2.LABELED_STATEMENT))
 			mappingStore.addMapping(src.getChild(0),dst.getChild(0));
-		else
+		else {
 			process(src,dst,mappingStore);
+			if (src.getType().name.equals(LANG1.LABELED) && dst.getType().name.equals(LANG2.LABELED)) {
+				//the labels of the labeled statements, i.e., outer@ for (...)
+				Pair<Tree, Tree> labels = Helpers.findPairOfType(src, dst, LANG1.LABEL, LANG2.LABEL);
+				if (labels != null)
+					mappingStore.addMapping(labels.first, labels.second);
+			}
+		}
 	}
 	private void process(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
 		Map<Tree, Tree> cpyToSrc = new HashMap<>();

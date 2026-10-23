@@ -163,8 +163,9 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         }
 
         if(srcFieldDeclaration != null && dstFieldDeclaration != null && PathFileUtils.isKotlinFile(srcUMLAttribute.getLocationInfo().getFilePath())) {
-            //the leading comments are matched by the CommentMatcher and JavaDocMatcher, i.e., /** doc */ val x = 1 and val x = 1
-            if(srcFieldDeclaration.getType().equals(dstFieldDeclaration.getType())) {
+            //the leading comments are matched by the CommentMatcher and JavaDocMatcher, i.e., /** doc */ val x = 1 and val x = 1,
+            //while the enum entries are not paired by position, as their bodies may differ in structure
+            if(srcFieldDeclaration.getType().equals(dstFieldDeclaration.getType()) && !srcFieldDeclaration.getType().name.equals(LANG1.ENUM_ENTRY)) {
                 mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
                 List<Tree> srcChildren = childrenAfterComments(srcFieldDeclaration, LANG1);
                 List<Tree> dstChildren = childrenAfterComments(dstFieldDeclaration, LANG2);

@@ -141,6 +141,8 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             } else if (refactoring instanceof ExtractOperationRefactoring) {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
+                //the method extracted and moved to another file is matched with the trees of that file
+                if (inOtherFiles(bodyMapper.getContainer1(), bodyMapper.getContainer2())) continue;
                 Constants LANG1 = new Constants(bodyMapper.getContainer1().getLocationInfo().getFilePath());
                 Constants LANG2 = new Constants(bodyMapper.getContainer2().getLocationInfo().getFilePath());
                 new BodyMapperMatcher(optimizationData, bodyMapper, true, LANG1, LANG2).match(srcTree,dstTree,mappingStore);

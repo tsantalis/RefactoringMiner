@@ -1,8 +1,10 @@
 package org.refactoringminer.astDiff.utils;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -197,6 +199,7 @@ public class CppTreeGenerator {
 		Node root = generator.translationUnit(translationUnit);
 		generator.addDirectives(root);
 		generator.groupConditionals(root);
+		generator.ungroupedDirectives(root);
 		generator.addComments(root);
 		context.setRoot(generator.toTree(root, context));
 		return context;
@@ -338,6 +341,8 @@ public class CppTreeGenerator {
 	private final TreeMap<Integer, Integer> comments = new TreeMap<>();
 	//the start and end offsets of the preprocessor directives, without the line break
 	private final TreeMap<Integer, Integer> directives = new TreeMap<>();
+	//the start of the #if, #ifdef or #ifndef of each #endif
+	private final Map<Integer, Integer> conditionalStarts = new HashMap<>();
 	//the comments and the directives
 	private final TreeMap<Integer, Integer> extras = new TreeMap<>();
 	private Source source;
@@ -977,7 +982,8 @@ public class CppTreeGenerator {
 			source = previous;
 		}
 		//the code outside the parsed nodes, i.e., the closing brace of the prefix that closed early
-		nodes.removeIf(n -> n == null || n.start < start || n.end > end);
+		//the empty problem that CDT gives at the end of the code without a closing brace
+		nodes.removeIf(n -> n == null || n.start < start || n.end > end || n.type.equals("ERROR") && n.start == n.end);
 		absorbMacros(nodes, start);
 		return nodes;
 	}
@@ -2436,6 +2442,10 @@ public class CppTreeGenerator {
 			children.add(statement(function.getBody()));
 		}
 		Node node = node("function_definition", function, children);
+		//the body without its closing brace, which ends after the function definition of CDT
+		if(!children.isEmpty()) {
+			node.end = Math.max(node.end, children.get(children.size() - 1).end);
+		}
 		wrapModifiers(node);
 		if(friend) {
 			Node friendToken = null;
@@ -3637,6 +3647,10 @@ public class CppTreeGenerator {
 			}
 		}
 		children.addAll(inactive(source.translationUnit, start(compound) + 1, end(compound) - 1, Context.BLOCK, active.toArray(new IASTNode[0])));
+		//the body without its closing brace, which CDT gives as empty at the opening brace, i.e., TEST(A, B) { in an inactive branch
+		if(end(compound) == start(compound) && content.startsWith("{", start(compound))) {
+			return node("compound_statement", start(compound), start(compound) + 1, children);
+		}
 		return node("compound_statement", compound, children);
 	}
 
@@ -3676,15 +3690,20 @@ public class CppTreeGenerator {
 		return node("condition_clause", open, close + 1, children);
 	}
 
-	//a declaration in a condition, whose initializer is not in an init_declarator
+	//a declaration in a condition, whose declarator and initializer are in an init_declarator like in the other declarations,
+	//where the variable of the model is located, i.e., int should_continue = index < 2 in for(int index = 0; int should_continue = index < 2; ++index)
 	private Node conditionDeclaration(IASTSimpleDeclaration declaration) {
 		List<Node> children = new ArrayList<>();
 		children.add(declSpecifier(declaration.getDeclSpecifier()));
 		for(IASTDeclarator declarator : declaration.getDeclarators()) {
-			children.add(declaratorCore(declarator, NameKind.IDENTIFIER, false));
+			Node core = declaratorCore(declarator, NameKind.IDENTIFIER, false);
 			IASTInitializer initializer = declarator.getInitializer();
 			if(initializer != null && hasLocation(initializer)) {
-				children.add(initializer(initializer));
+				Node value = initializer(initializer);
+				children.add(node("init_declarator", core.start, value.end, core, value));
+			}
+			else {
+				children.add(core);
 			}
 		}
 		Node node = node("declaration", declaration, children);
@@ -4200,8 +4219,15 @@ public class CppTreeGenerator {
 	private void addDirectives(Node root) {
 		List<Node> leaves = new ArrayList<>();
 		collectLeaves(root, leaves);
+		Deque<Integer> open = new ArrayDeque<>();
 		for(var entry : directives.entrySet()) {
 			Node directive = directive(entry.getKey(), entry.getValue());
+			if(directive.type.equals("#if") || directive.type.equals("#ifdef") || directive.type.equals("#ifndef")) {
+				open.push(directive.start);
+			}
+			else if(directive.type.equals("#endif") && !open.isEmpty()) {
+				conditionalStarts.put(directive.start, open.pop());
+			}
 			insertExtra(root, leaves, directive);
 		}
 	}
@@ -4535,21 +4561,29 @@ public class CppTreeGenerator {
 		boolean grouped = true;
 		while(grouped) {
 			grouped = false;
-			//the innermost conditional, without conditional directives between its directives
-			int open = -1;
-			for(int i = 0; i < children.size(); i++) {
-				String type = children.get(i).type;
-				if(type.equals("#if") || type.equals("#ifdef") || type.equals("#ifndef")) {
-					open = i;
-				}
-				else if(type.equals("#endif") && open >= 0) {
-					group(node, open, i);
-					grouped = true;
-					break;
+			//the innermost conditional, without conditional directives between its directives,
+			//whose #if is a sibling of its #endif, i.e., not the #ifdef of #ifdef X\nextern "C" {\n#endif
+			for(int i = 0; i < children.size() && !grouped; i++) {
+				if(children.get(i).type.equals("#endif") && conditionalStarts.containsKey(children.get(i).start)) {
+					int start = conditionalStarts.get(children.get(i).start);
+					for(int open = i - 1; open >= 0; open--) {
+						if(children.get(open).start == start && children.get(open).type.startsWith("#if")) {
+							group(node, open, i);
+							grouped = true;
+							break;
+						}
+					}
 				}
 			}
 		}
-		//the directives without their conditional
+	}
+
+	//the directives without their conditional, after the grouping, which can move them into the conditionals of the parent nodes
+	private void ungroupedDirectives(Node node) {
+		List<Node> children = node.children;
+		for(Node child : children) {
+			ungroupedDirectives(child);
+		}
 		for(int i = 0; i < children.size(); i++) {
 			Node child = children.get(i);
 			if(child.type.startsWith("#") && !child.leaf) {

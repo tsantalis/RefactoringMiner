@@ -211,6 +211,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             processAnonymousArgumentReplacedWithLambdaInExtractedMethod(srcTree, dstTree, bodyMapper, mappingStore);
             return;
         }
+        //the call site in another file than the inlined method, i.e., a method moved to another file and inlined, is not in the tree
+        if (!bodyMapper.getOperationInvocation().getLocationInfo().getFilePath().equals(bodyMapper.getContainer1().getLocationInfo().getFilePath()))
+            return;
         Tree call1 = TreeUtilFunctions.findByLocationInfo(srcTree, bodyMapper.getOperationInvocation().getLocationInfo(), LANG1, LANG1.METHOD_INVOCATION);
         if (call1 == null)
             return;
@@ -227,6 +230,9 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     //post-processing of the call site of the extracted method, whose argument is a lambda replacing an anonymous class passed as argument in the extracted statement,
     //i.e., pushExecutor.execute(new NamedRunnable("OkHttp %s", connectionName) {...}) extracted as pushExecutorExecute("OkHttp $connectionName") {...}
     private void processAnonymousArgumentReplacedWithLambdaInExtractedMethod(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
+        //the call site in another file than the extracted method, i.e., a method extracted and moved to another file, is not in the tree
+        if (!bodyMapper.getOperationInvocation().getLocationInfo().getFilePath().equals(bodyMapper.getContainer2().getLocationInfo().getFilePath()))
+            return;
         Tree callSite2 = TreeUtilFunctions.findByLocationInfo(dstTree, bodyMapper.getOperationInvocation().getLocationInfo(), LANG2, LANG2.METHOD_INVOCATION);
         if (callSite2 == null)
             return;

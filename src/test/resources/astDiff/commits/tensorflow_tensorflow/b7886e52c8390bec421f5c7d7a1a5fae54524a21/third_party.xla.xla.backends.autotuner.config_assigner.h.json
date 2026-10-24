@@ -4883,6 +4883,17 @@
   "firstEndPos" : 3159,
   "secondEndPos" : 4917
 }, {
+  "firstType" : "comment",
+  "secondType" : "comment",
+  "firstLabel" : "// Dumps the autotuning logs to the specified file path.",
+  "secondLabel" : "// Dumps the autotuning logs to the specified file path, vlogs if requested.",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
+  "firstPos" : 3163,
+  "secondPos" : 5586,
+  "firstEndPos" : 3219,
+  "secondEndPos" : 5662
+}, {
   "firstType" : "reference_declarator",
   "secondType" : "reference_declarator",
   "firstLabel" : "",
@@ -4955,6 +4966,83 @@
   "secondLabel" : "",
   "firstParentType" : "field_declaration_list",
   "secondParentType" : "field_declaration_list",
+  "firstPos" : 3222,
+  "secondPos" : 5665,
+  "firstEndPos" : 3252,
+  "secondEndPos" : 5695
+}, {
+  "firstType" : "qualified_identifier",
+  "secondType" : "qualified_identifier",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 3222,
+  "secondPos" : 5665,
+  "firstEndPos" : 3234,
+  "secondEndPos" : 5677
+}, {
+  "firstType" : "namespace_identifier",
+  "secondType" : "namespace_identifier",
+  "firstLabel" : "absl",
+  "secondLabel" : "absl",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 3222,
+  "secondPos" : 5665,
+  "firstEndPos" : 3226,
+  "secondEndPos" : 5669
+}, {
+  "firstType" : "::",
+  "secondType" : "::",
+  "firstLabel" : "::",
+  "secondLabel" : "::",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 3226,
+  "secondPos" : 5669,
+  "firstEndPos" : 3228,
+  "secondEndPos" : 5671
+}, {
+  "firstType" : "type_identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "Status",
+  "secondLabel" : "Status",
+  "firstParentType" : "qualified_identifier",
+  "secondParentType" : "qualified_identifier",
+  "firstPos" : 3228,
+  "secondPos" : 5671,
+  "firstEndPos" : 3234,
+  "secondEndPos" : 5677
+}, {
+  "firstType" : "function_declarator",
+  "secondType" : "function_declarator",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 3235,
+  "secondPos" : 5678,
+  "firstEndPos" : 3251,
+  "secondEndPos" : 5694
+}, {
+  "firstType" : "field_identifier",
+  "secondType" : "field_identifier",
+  "firstLabel" : "DumpLogsToFile",
+  "secondLabel" : "DumpTuningLogs",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 3235,
+  "secondPos" : 5678,
+  "firstEndPos" : 3249,
+  "secondEndPos" : 5692
+}, {
+  "firstType" : "field_declaration",
+  "secondType" : "field_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "field_declaration_list",
+  "secondParentType" : "field_declaration_list",
   "firstPos" : 3238,
   "secondPos" : 3267,
   "firstEndPos" : 3437,
@@ -5004,6 +5092,39 @@
   "firstEndPos" : 3250,
   "secondEndPos" : 3279
 }, {
+  "firstType" : "parameter_list",
+  "secondType" : "parameter_list",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "function_declarator",
+  "secondParentType" : "function_declarator",
+  "firstPos" : 3249,
+  "secondPos" : 5692,
+  "firstEndPos" : 3251,
+  "secondEndPos" : 5694
+}, {
+  "firstType" : "(",
+  "secondType" : "(",
+  "firstLabel" : "(",
+  "secondLabel" : "(",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3249,
+  "secondPos" : 5692,
+  "firstEndPos" : 3250,
+  "secondEndPos" : 5693
+}, {
+  "firstType" : ")",
+  "secondType" : ")",
+  "firstLabel" : ")",
+  "secondLabel" : ")",
+  "firstParentType" : "parameter_list",
+  "secondParentType" : "parameter_list",
+  "firstPos" : 3250,
+  "secondPos" : 5693,
+  "firstEndPos" : 3251,
+  "secondEndPos" : 5694
+}, {
   "firstType" : "function_declarator",
   "secondType" : "function_declarator",
   "firstLabel" : "",
@@ -5025,6 +5146,17 @@
   "secondPos" : 3280,
   "firstEndPos" : 3264,
   "secondEndPos" : 3293
+}, {
+  "firstType" : ";",
+  "secondType" : ";",
+  "firstLabel" : ";",
+  "secondLabel" : ";",
+  "firstParentType" : "field_declaration",
+  "secondParentType" : "field_declaration",
+  "firstPos" : 3251,
+  "secondPos" : 5694,
+  "firstEndPos" : 3252,
+  "secondEndPos" : 5695
 }, {
   "firstType" : "parameter_list",
   "secondType" : "parameter_list",

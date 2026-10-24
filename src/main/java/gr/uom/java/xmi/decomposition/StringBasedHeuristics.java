@@ -194,6 +194,11 @@ public class StringBasedHeuristics {
 						declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
 					return true;
 				}
+				//Java variable declaration replaced with Kotlin variable declaration with the same initializer, i.e., int b1 = 0; -> var b1 = 0
+				if(declaration1.getInitializer() != null && declaration2.getInitializer() != null &&
+						declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.getInitializer().getString().equals(declaration2.getInitializer().getString())) {
+					return true;
+				}
 			}
 			String temp = new String(s1);
 			Set<Replacement> appliedReplacements = new LinkedHashSet<>();
@@ -395,6 +400,14 @@ public class StringBasedHeuristics {
 				}
 				if(!ss1.contains(" += ") && ss2.contains(" += ")) {
 					ss2 = ss2.replaceAll(" += ", "+=");
+				}
+				//the Java compound assignment with a bitwise operator is an assignment with a Kotlin infix function, i.e., b1 |= x; -> b1 = b1 or x
+				Matcher bitwiseAssignment2 = Pattern.compile("^(\\S+) = \\1 (or|and|xor) (.+)$").matcher(ss2);
+				if(bitwiseAssignment2.matches()) {
+					String operator = bitwiseAssignment2.group(2).equals("or") ? "|" : bitwiseAssignment2.group(2).equals("and") ? "&" : "^";
+					if(ss1.startsWith(bitwiseAssignment2.group(1) + operator + "=")) {
+						ss2 = bitwiseAssignment2.group(1) + operator + "=" + bitwiseAssignment2.group(3);
+					}
 				}
 				if(ss1.contains("(int)") && !ss2.contains("(int)")) {
 					ss1 = ss1.replaceAll("\\(int\\)", "");

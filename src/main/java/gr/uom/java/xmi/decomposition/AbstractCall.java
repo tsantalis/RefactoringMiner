@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 import java.util.Map;
 import java.util.Set;
 
@@ -810,6 +811,11 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
+		return renamedWithIdenticalExpressionAndDifferentArguments(call, replacementInfo, parameterToArgumentMap, distance, lambdaMappers, () -> false);
+	}
+
+	//matchingRemovedAddedOperations: the calls are of an operation removed and of an operation added in the same class, evaluated last as it searches the model
+	public boolean renamedWithIdenticalExpressionAndDifferentArguments(AbstractCall call, ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap, double distance, List<UMLOperationBodyMapper> lambdaMappers, BooleanSupplier matchingRemovedAddedOperations) {
 		boolean allExactLambdaMappers = lambdaMappers.size() > 0;
 		for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 			if(!lambdaMapper.allMappingsAreExactMatches()) {
@@ -820,10 +826,11 @@ public abstract class AbstractCall extends LeafExpression {
 		if(LANG.equals(Constants.PYTHON)) distance = 0;
 		return getExpression() != null && call.getExpression() != null &&
 				identicalExpression(call, replacementInfo, parameterToArgumentMap) &&
-				(normalizedNameDistance(call) <= distance || commonNameTokensExceptForOne(call) || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call)) &&
 				!equalArguments(call) &&
 				!this.argumentContainsAnonymousClassDeclaration() && !call.argumentContainsAnonymousClassDeclaration() &&
-				(this.argumentContainsLambda() == call.argumentContainsLambda() || this.identicalName(call));
+				(this.argumentContainsLambda() == call.argumentContainsLambda() || this.identicalName(call)) &&
+				(normalizedNameDistance(call) <= distance || commonNameTokensExceptForOne(call) || allExactLambdaMappers || (this.methodNameContainsArgumentName() && call.methodNameContainsArgumentName()) || argumentIntersectionContainsClassInstanceCreation(call) ||
+						matchingRemovedAddedOperations.getAsBoolean());
 	}
 
 	private boolean commonNameTokensExceptForOne(AbstractCall call) {

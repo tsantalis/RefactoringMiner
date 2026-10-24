@@ -383,14 +383,15 @@ public class ObjectCreation extends AbstractCall {
 			// TODO replace with stringify
 			this.arguments.add(argument.getText());
 		}
-		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression) {
+		//the receiver of the creation is the receiver of the qualified expression it is selected from, while the first creation of a chain has no receiver, i.e., ContentValues() in ContentValues().apply {...}
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression && dotQualifiedExpression.getSelectorExpression() == invocation) {
 			KtExpression receiver = dotQualifiedExpression.getReceiverExpression();
 			if(receiver != null) {
 				// TODO replace with stringify
 				this.expression = receiver.getText();
 			}
 		}
-		else if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression) {
+		else if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression && safeQualifiedExpression.getSelectorExpression() == invocation) {
 			KtExpression receiver = safeQualifiedExpression.getReceiverExpression();
 			if(receiver != null) {
 				// TODO replace with stringify
@@ -399,10 +400,11 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
+	//a call selected from a receiver is located at the qualified expression, while the first call of a chain is located at itself, i.e., assertThat(x) in assertThat(x).isEqualTo(y)
 	private static KtExpression input(KtCallExpression invocation) {
-		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression)
+		if(invocation.getParent() instanceof KtDotQualifiedExpression dotQualifiedExpression && dotQualifiedExpression.getSelectorExpression() == invocation)
 			return dotQualifiedExpression;
-		if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression)
+		if(invocation.getParent() instanceof KtSafeQualifiedExpression safeQualifiedExpression && safeQualifiedExpression.getSelectorExpression() == invocation)
 			return safeQualifiedExpression;
 		return invocation;
 	}

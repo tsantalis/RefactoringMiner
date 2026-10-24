@@ -12185,6 +12185,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							return 1;
 						}
 					}
+					int thisConsistentCallRenames = this.consistentCallRenames();
+					int otherConsistentCallRenames = operationBodyMapper.consistentCallRenames();
+					if(thisConsistentCallRenames != otherConsistentCallRenames) {
+						return -Integer.compare(thisConsistentCallRenames, otherConsistentCallRenames);
+					}
 					int thisEditDistance = this.editDistance();
 					int otherEditDistance = operationBodyMapper.editDistance();
 					if(thisEditDistance != otherEditDistance) {
@@ -12233,6 +12238,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	//the renamed calls that agree with the call renames of the mappers already in the class diff, minus those that contradict them,
+	//i.e., reachableInstance(x) -> notLeaking(x) agrees with reachableInstance -> notLeaking in other test methods, reachableInstance(x) -> leaking(x) contradicts it
+	private int consistentCallRenames() {
+		if(!(classDiff instanceof UMLClassBaseDiff baseDiff) || baseDiff.getConsistentMethodInvocationRenames() == null)
+			return 0;
+		return consistentCallRenames(baseDiff.getConsistentMethodInvocationRenames());
+	}
+
+	public int consistentCallRenames(Map<MethodInvocationReplacement, UMLOperationBodyMapper> establishedRenames) {
+		int count = 0;
+		for(MethodInvocationReplacement replacement : getMethodInvocationRenameReplacements()) {
+			String nameBefore = replacement.getInvokedOperationBefore().getName();
+			String nameAfter = replacement.getInvokedOperationAfter().getName();
+			if(nameBefore.equals(nameAfter))
+				continue;
+			for(MethodInvocationReplacement established : establishedRenames.keySet()) {
+				String establishedBefore = established.getInvokedOperationBefore().getName();
+				String establishedAfter = established.getInvokedOperationAfter().getName();
+				if(establishedBefore.equals(nameBefore) && !establishedBefore.equals(establishedAfter)) {
+					count += establishedAfter.equals(nameAfter) ? 1 : -1;
+					break;
+				}
+			}
+		}
+		return count;
 	}
 
 	private List<String> stringLiteralIntersection() {

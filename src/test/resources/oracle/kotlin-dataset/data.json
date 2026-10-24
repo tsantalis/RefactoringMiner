@@ -1221,6 +1221,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": null
+    }, {
+        "type": "Inline Variable",
+        "description": "Inline Variable result : Inferred in method public completeTask_activeTaskToServiceAPIUpdatesCache() from class com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepositoryTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -6063,6 +6070,13 @@
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
         "validators": "Nikos"
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public reachableWinsConflicts() renamed to public notLeakingWinsConflicts() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
     }],
     "refDiffExecutionTime": 0
 }, {
@@ -8030,6 +8044,20 @@
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute onRefRetained : () -> Unit to onInstanceRetained : Inferred in class leakcanary.RefWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type onRefRetained : () -> Unit to onInstanceRetained : Inferred in class leakcanary.RefWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Rename Method",
         "description": "Rename Method public watchFragments(activity Activity) renamed to public invoke(activity Activity) in class leakcanary.internal.AndroidOFragmentDestroyWatcher",
         "comment": null,
@@ -8470,6 +8498,34 @@
     }, {
         "type": "Change Attribute Type",
         "description": "Change Attribute Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.ActivityDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.AndroidXFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.AndroidXFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.AndroidOFragmentDestroyWatcher",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Change Attribute Type",
+        "description": "Change Attribute Type refWatcher : RefWatcher to objectWatcher : ObjectWatcher in class leakcanary.internal.AndroidOFragmentDestroyWatcher",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",
@@ -9485,7 +9541,7 @@
         "type": "Split Method",
         "description": "Split Method public sameLeakTraceSameGroup() to [public leakingWhenFurtherUpIsleaking(), public notLeakingWhenFurtherDownIsNotLeaking()] in class shark.LeakStatusTest",
         "comment": null,
-        "validation": "TP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {
@@ -10198,6 +10254,20 @@
     }, {
         "type": "Rename Variable",
         "description": "Rename Variable staticString : Inferred to static : Inferred in method private getNextElementString(leakTrace LeakTrace, element ReferencePathElement, index Int) : String from class shark.LeakTrace.Companion",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Attribute",
+        "description": "Rename Attribute groupDescription : String to shortDescription : String in class leakcanary.internal.activity.db.LeakTable.LeakProjection",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public sameLeakTraceSameGroup() renamed to public sameLeakTraceSameSignature() in class shark.LeakStatusTest",
         "comment": null,
         "validation": "TP",
         "detectionTools": "RefactoringMiner",

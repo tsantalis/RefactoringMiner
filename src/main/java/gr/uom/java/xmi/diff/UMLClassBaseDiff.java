@@ -167,6 +167,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.removedAttributes.add(umlAttribute);
 	}
 
+	//the operations of the class diff are processed before the other class diffs map their bodies, so that their calls can use the removed and added operations of this class
+	private boolean operationsProcessed;
+
+	public void processOperationsBeforeBodies() throws RefactoringMinerTimedOutException {
+		processOperations();
+		operationsProcessed = true;
+	}
+
 	public void process() throws RefactoringMinerTimedOutException {
 		processPrimaryConstructors();
 		if(getOriginalClass().getFunctionType().isPresent() && getNextClass().getFunctionType().isPresent()) {
@@ -195,7 +203,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processTypeParameters();
 		processEnumConstants();
 		processInheritance();
-		processOperations();
+		if(!operationsProcessed)
+			processOperations();
 		createBodyMappers();
 		processAnonymousClasses();
 		processAnonymousClassesReplacedWithLambdas();

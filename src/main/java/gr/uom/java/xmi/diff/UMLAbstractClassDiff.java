@@ -161,8 +161,15 @@ public abstract class UMLAbstractClassDiff {
 		this.modelDiff = modelDiff;
 		this.interfaceListDiff = new UMLTypeListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
 		this.permittedTypeListDiff = new UMLTypeListDiff(originalClass.getPermittedTypes(), nextClass.getPermittedTypes());
-		this.consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
 		processAnnotations();
+	}
+
+	//computed when the operations are paired, from the class diffs processed before this class diff
+	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> getConsistentMethodInvocationRenamesInModel() {
+		if(consistentMethodInvocationRenamesInModel == null) {
+			consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
+		}
+		return consistentMethodInvocationRenamesInModel;
 	}
 
 	public List<UMLOperation> getAddedNestedOperations() {
@@ -573,7 +580,7 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	protected boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {
+	protected boolean mapperListContainsOperation(VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			if(mapper.getContainer1().equals(operation1) || mapper.getContainer2().equals(operation2))
 				return true;
@@ -1339,6 +1346,18 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			processMapperRefactorings(mapper, refactorings);
 		}
+		//the attributes of this class referenced in the initializers of other attributes, i.e., in an anonymous class or lambda assigned to an attribute
+		for(UMLAttributeDiff attributeDiff : attributeDiffList) {
+			if(attributeDiff.getInitializerMapper().isPresent()) {
+				Set<CandidateAttributeRefactoring> candidates = new LinkedHashSet<CandidateAttributeRefactoring>();
+				for(CandidateAttributeRefactoring candidate : attributeDiff.getInitializerMapper().get().getCandidateAttributeRenames()) {
+					if(findAttributeInOriginalClass(candidate.getOriginalVariableName()) != null && findAttributeInNextClass(candidate.getRenamedVariableName()) != null) {
+						candidates.add(candidate);
+					}
+				}
+				processCandidateAttributeRenames(candidates, refactorings);
+			}
+		}
 		refactorings.addAll(inferAttributeMergesAndSplits(renameMap, refactorings));
 		for(MergeVariableReplacement merge : mergeMap.keySet()) {
 			Set<UMLAttribute> mergedAttributes = new LinkedHashSet<UMLAttribute>();
@@ -1686,7 +1705,32 @@ public abstract class UMLAbstractClassDiff {
 				refactorings.add(newRefactoring);
 			}
 		}
-		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
+		processCandidateAttributeRenames(mapper.getCandidateAttributeRenames(), refactorings);
+		for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
+			int movedAttributes = movedAttributeCount(candidate);
+			if(movedAttributes != candidate.getMergedVariables().size()) {
+				Set<String> before = new LinkedHashSet<String>();
+				for(String mergedVariable : candidate.getMergedVariables()) {
+					before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG1));
+				}
+				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG2);
+				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
+				processMerge(mergeMap, merge, candidate);
+			}
+		}
+		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
+			Set<String> after = new LinkedHashSet<String>();
+			for(String splitVariable : candidate.getSplitVariables()) {
+				after.add(PrefixSuffixUtils.normalize(splitVariable, LANG2));
+			}
+			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable(), LANG1);
+			SplitVariableReplacement split = new SplitVariableReplacement(before, after);
+			processSplit(splitMap, split, candidate);
+		}
+	}
+
+	private void processCandidateAttributeRenames(Set<CandidateAttributeRefactoring> candidates, List<Refactoring> refactorings) {
+		for(CandidateAttributeRefactoring candidate : candidates) {
 			if(!multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(candidate, refactorings)) {
 				String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName(), LANG1);
 				String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName(), LANG2);
@@ -1708,27 +1752,6 @@ public abstract class UMLAbstractClassDiff {
 					renameMap.put(renamePattern, set);
 				}
 			}
-		}
-		for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
-			int movedAttributes = movedAttributeCount(candidate);
-			if(movedAttributes != candidate.getMergedVariables().size()) {
-				Set<String> before = new LinkedHashSet<String>();
-				for(String mergedVariable : candidate.getMergedVariables()) {
-					before.add(PrefixSuffixUtils.normalize(mergedVariable, LANG1));
-				}
-				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable(), LANG2);
-				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
-				processMerge(mergeMap, merge, candidate);
-			}
-		}
-		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
-			Set<String> after = new LinkedHashSet<String>();
-			for(String splitVariable : candidate.getSplitVariables()) {
-				after.add(PrefixSuffixUtils.normalize(splitVariable, LANG2));
-			}
-			String before = PrefixSuffixUtils.normalize(candidate.getOldVariable(), LANG1);
-			SplitVariableReplacement split = new SplitVariableReplacement(before, after);
-			processSplit(splitMap, split, candidate);
 		}
 	}
 
@@ -3380,8 +3403,8 @@ public abstract class UMLAbstractClassDiff {
 							int mapperSetSize = mapperSet.size();
 							if(bestMapper != null) {
 								//check for consistent method renames in modelDiff
-								for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
-									UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+								for(MethodInvocationReplacement replacement : getConsistentMethodInvocationRenamesInModel().keySet()) {
+									UMLOperationBodyMapper mapper = getConsistentMethodInvocationRenamesInModel().get(replacement);
 									if(replacement.getInvokedOperationBefore().matchesOperation(bestMapper.getContainer1(), mapper.getContainer1(), mapper.getClassDiff(), modelDiff)) {
 										for(Iterator<UMLOperation> addedOperationIterator2 = addedOperations.iterator(); addedOperationIterator2.hasNext();) {
 											UMLOperation addedOperation2 = addedOperationIterator2.next();
@@ -3886,7 +3909,16 @@ public abstract class UMLAbstractClassDiff {
 
 	private boolean modelDiffContainsConflictingMoveOperationRefactoring(UMLOperationBodyMapper mapper) {
 		if(modelDiff != null) {
-			return modelDiff.refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(mapper);
+			MoveOperationRefactoring move = modelDiff.anotherMoveRefactoringWithTheSameRemovedOperation(mapper);
+			if(move == null)
+				return false;
+			//a move between the classes of this class diff was found before the classes were matched, without the renames of the calls in this class diff,
+			//so the mapper renaming the calls more consistently with them wins, i.e., reachableInstance(x) -> notLeaking(x) as in the other test methods
+			if(move.getOriginalOperation().getClassName().equals(getOriginalClassName()) && move.getMovedOperation().getClassName().equals(getNextClassName()) &&
+					consistentMethodInvocationRenames != null &&
+					mapper.consistentCallRenames(consistentMethodInvocationRenames) > move.getBodyMapper().consistentCallRenames(consistentMethodInvocationRenames))
+				return false;
+			return true;
 		}
 		return false;
 	}
@@ -4495,8 +4527,8 @@ public abstract class UMLAbstractClassDiff {
 					}
 				}
 				if(!found) {
-					for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
-						UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+					for(MethodInvocationReplacement replacement : getConsistentMethodInvocationRenamesInModel().keySet()) {
+						UMLOperationBodyMapper mapper = getConsistentMethodInvocationRenamesInModel().get(replacement);
 						if(mapper.nonMappedElementsT1() <= 1 && mapper.nonMappedElementsT2() <= 1 &&
 								replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
 								replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
@@ -4525,8 +4557,8 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 			if(!found) {
-				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
-					UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+				for(MethodInvocationReplacement replacement : getConsistentMethodInvocationRenamesInModel().keySet()) {
+					UMLOperationBodyMapper mapper = getConsistentMethodInvocationRenamesInModel().get(replacement);
 					if(mapper.nonMappedElementsT1() == 0 && mapper.nonMappedElementsT2() == 0 &&
 							replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
 							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
@@ -5145,11 +5177,11 @@ public abstract class UMLAbstractClassDiff {
 				return null;
 			}
 		}
-		consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenamesInModel);
+		consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper, getConsistentMethodInvocationRenamesInModel());
 		if(mapperSet.size() > 1 && consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {
 			for(int i=1; i<mapperList.size(); i++) {
 				UMLOperationBodyMapper mapper = mapperList.get(i);
-				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenamesInModel);
+				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper, getConsistentMethodInvocationRenamesInModel());
 				if(consistentMethodInvocationRenameMismatchesForCurrentMapper < consistentMethodInvocationRenameMismatchesForBestMapper &&
 						mapper.getContainer1().isConstructor() == mapper.getContainer2().isConstructor() &&
 						mapper.getContainer1().isGetter() == mapper.getContainer2().isGetter() &&

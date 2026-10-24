@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.psi.KtFile;
 import org.jetbrains.kotlin.psi.KtLabeledExpression;
 import org.jetbrains.kotlin.psi.KtLambdaExpression;
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression;
+import org.jetbrains.kotlin.psi.KtQualifiedExpression;
 import org.jetbrains.kotlin.psi.KtObjectDeclaration;
 import org.jetbrains.kotlin.psi.KtObjectLiteralExpression;
 import org.jetbrains.kotlin.psi.KtParenthesizedExpression;
@@ -449,6 +450,20 @@ public class KotlinVisitor extends KtVisitor<Object, Object> {
 		}
 		if (expression.getSelectorExpression() != null)
 			this.visitExpression(expression.getSelectorExpression(), data);
+		//the receiver of a property access through a chain of properties is a qualified name, like the qualifier of a Java QualifiedName, i.e., hprof.reader in hprof.reader.identifierByteSize
+		if(expression.getSelectorExpression() instanceof KtNameReferenceExpression && expression.getReceiverExpression() instanceof KtDotQualifiedExpression receiver &&
+				isPropertyChain(receiver) && !(expression.getParent() instanceof KtQualifiedExpression parent && parent.getReceiverExpression() == expression)) {
+			LeafExpression qualifiedName = new LeafExpression(cu, sourceFolder, filePath, receiver, CodeElementType.QUALIFIED_NAME, container);
+			variables.add(qualifiedName);
+		}
+	}
+
+	//a chain of property accesses starting with a variable, i.e., hprof.reader
+	private static boolean isPropertyChain(KtExpression expression) {
+		if(expression instanceof KtNameReferenceExpression name)
+			return !Character.isUpperCase(name.getReferencedName().charAt(0));
+		return expression instanceof KtDotQualifiedExpression qualified && qualified.getSelectorExpression() instanceof KtNameReferenceExpression &&
+				isPropertyChain(qualified.getReceiverExpression());
 	}
 
 	private void processSafeQualifiedExpression(KtSafeQualifiedExpression safeQualifiedExpression, Object data) {

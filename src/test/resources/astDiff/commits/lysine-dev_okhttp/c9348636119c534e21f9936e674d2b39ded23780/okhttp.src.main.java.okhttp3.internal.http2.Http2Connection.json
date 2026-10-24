@@ -2023,6 +2023,28 @@
   "firstEndPos" : 4708,
   "secondEndPos" : 4168
 }, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4711,
+  "secondPos" : 4171,
+  "firstEndPos" : 4725,
+  "secondEndPos" : 4543
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Settings",
+  "secondLabel" : "Settings",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 4715,
+  "secondPos" : 4171,
+  "firstEndPos" : 4723,
+  "secondEndPos" : 4179
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
   "firstLabel" : "",
@@ -2099,6 +2121,28 @@
   "secondPos" : 4673,
   "firstEndPos" : 4878,
   "secondEndPos" : 4685
+}, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 4881,
+  "secondPos" : 4688,
+  "firstEndPos" : 4895,
+  "secondEndPos" : 4840
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Settings",
+  "secondLabel" : "Settings",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 4885,
+  "secondPos" : 4688,
+  "firstEndPos" : 4893,
+  "secondEndPos" : 4696
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "property_declaration",
@@ -13308,6 +13352,72 @@
   "secondPos" : 15767,
   "firstEndPos" : 17688,
   "secondEndPos" : 15768
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 17746,
+  "secondPos" : 15826,
+  "firstEndPos" : 17781,
+  "secondEndPos" : 15882
+}, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 17746,
+  "secondPos" : 15826,
+  "firstEndPos" : 17772,
+  "secondEndPos" : 15874
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 17746,
+  "secondPos" : 15826,
+  "firstEndPos" : 17772,
+  "secondEndPos" : 15880
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "Thread",
+  "secondLabel" : "Thread",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 17750,
+  "secondPos" : 15826,
+  "firstEndPos" : 17756,
+  "secondEndPos" : 15832
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "readerRunnable",
+  "secondLabel" : "readerRunnable",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 17757,
+  "secondPos" : 15833,
+  "firstEndPos" : 17771,
+  "secondEndPos" : 15847
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "start",
+  "secondLabel" : "start",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "call_expression",
+  "firstPos" : 17773,
+  "secondPos" : 15875,
+  "firstEndPos" : 17778,
+  "secondEndPos" : 15880
 }, {
   "firstType" : "LineComment",
   "secondType" : "line_comment",

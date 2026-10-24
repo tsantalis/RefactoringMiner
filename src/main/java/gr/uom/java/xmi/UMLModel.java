@@ -249,12 +249,19 @@ public class UMLModel {
     			}
     		}
     	}
+    	//the removed and added operations of all classes are known before the bodies of the operations are mapped
+    	List<UMLClassDiff> classDiffs = new ArrayList<>();
     	for(UMLClass umlClass : list) {
     		if(umlModel.classList.contains(umlClass)) {
     			UMLClassDiff classDiff = new UMLClassDiff(umlClass, umlModel.getClass(umlClass), modelDiff);
-    			classDiff.process();
-    			modelDiff.addUMLClassDiff(classDiff);
+    			classDiff.processOperationsBeforeBodies();
+    			modelDiff.addClassDiffWithProcessedOperations(classDiff);
+    			classDiffs.add(classDiff);
     		}
+    	}
+    	for(UMLClassDiff classDiff : classDiffs) {
+    		classDiff.process();
+    		modelDiff.addUMLClassDiff(classDiff);
     	}
     	//modelDiff.checkForMovedClasses(umlModel.repositoryDirectories, new UMLClassMatcher.RelaxedMove());
     	modelDiff.checkForRenamedClasses(new UMLClassMatcher.RelaxedRename());

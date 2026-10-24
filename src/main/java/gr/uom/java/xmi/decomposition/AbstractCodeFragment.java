@@ -460,7 +460,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public AbstractCall creationCoveringEntireFragment() {
 		String statement = getString();
 		for(AbstractCall creation : getCreations()) {
-			String objectCreation = creation.getString();
+			String objectCreation = withScopeFunctionsOnReceiver(creation);
 			if((objectCreation + LANG.STATEMENT_TERMINATION).equals(statement) || objectCreation.equals(statement)) {
 				creation.coverage = StatementCoverageType.ONLY_CALL;
 				return creation;
@@ -481,6 +481,20 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		return null;
+	}
+
+	//the Kotlin scope functions returning their receiver cover the same statement as the receiver, i.e., GregorianCalendar(UTC).apply {...} and GregorianCalendar(UTC)
+	private String withScopeFunctionsOnReceiver(AbstractCall creation) {
+		String string = creation.getString();
+		if(LANG.equals(Constants.KOTLIN)) {
+			for(AbstractCall invocation : getMethodInvocations()) {
+				if((invocation.getName().equals("apply") || invocation.getName().equals("also")) && string.equals(invocation.getExpression()) &&
+						invocation.getLocationInfo().getStartOffset() == creation.getLocationInfo().getStartOffset()) {
+					string = invocation.getString();
+				}
+			}
+		}
+		return string;
 	}
 
 	public AbstractCall invocationCoveringEntireFragment() {

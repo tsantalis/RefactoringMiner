@@ -15883,6 +15883,138 @@
   "firstEndPos" : 8139,
   "secondEndPos" : 7975
 }, {
+  "firstType" : "property_declaration",
+  "secondType" : "property_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "statements",
+  "secondParentType" : "statements",
+  "firstPos" : 8146,
+  "secondPos" : 7982,
+  "firstEndPos" : 8333,
+  "secondEndPos" : 8212
+}, {
+  "firstType" : "binding_pattern_kind",
+  "secondType" : "binding_pattern_kind",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8146,
+  "secondPos" : 7982,
+  "firstEndPos" : 8149,
+  "secondEndPos" : 7985
+}, {
+  "firstType" : "property_declaration_keyword",
+  "secondType" : "property_declaration_keyword",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "binding_pattern_kind",
+  "secondParentType" : "binding_pattern_kind",
+  "firstPos" : 8146,
+  "secondPos" : 7982,
+  "firstEndPos" : 8149,
+  "secondEndPos" : 7985
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "reachabilityString",
+  "secondLabel" : "reachabilityString",
+  "firstParentType" : "variable_declaration",
+  "secondParentType" : "variable_declaration",
+  "firstPos" : 8150,
+  "secondPos" : 7986,
+  "firstEndPos" : 8168,
+  "secondEndPos" : 8004
+}, {
+  "firstType" : "variable_declaration",
+  "secondType" : "variable_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8150,
+  "secondPos" : 7986,
+  "firstEndPos" : 8168,
+  "secondEndPos" : 8004
+}, {
+  "firstType" : "affectation_operator",
+  "secondType" : "affectation_operator",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8169,
+  "secondPos" : 8005,
+  "firstEndPos" : 8170,
+  "secondEndPos" : 8006
+}, {
+  "firstType" : "when_expression",
+  "secondType" : "when_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "property_declaration",
+  "secondParentType" : "property_declaration",
+  "firstPos" : 8171,
+  "secondPos" : 8007,
+  "firstEndPos" : 8333,
+  "secondEndPos" : 8212
+}, {
+  "firstType" : "when_subject",
+  "secondType" : "when_subject",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_expression",
+  "secondParentType" : "when_expression",
+  "firstPos" : 8176,
+  "secondPos" : 8012,
+  "firstEndPos" : 8197,
+  "secondEndPos" : 8048
+}, {
+  "firstType" : "navigation_expression",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "when_subject",
+  "secondParentType" : "when_subject",
+  "firstPos" : 8177,
+  "secondPos" : 8013,
+  "firstEndPos" : 8196,
+  "secondEndPos" : 8047
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "navigation_expression",
+  "firstLabel" : "reachability",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 8177,
+  "secondPos" : 8013,
+  "firstEndPos" : 8189,
+  "secondEndPos" : 8040
+}, {
+  "firstType" : "navigation_suffix",
+  "secondType" : "navigation_suffix",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "navigation_expression",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 8189,
+  "secondPos" : 8040,
+  "firstEndPos" : 8196,
+  "secondEndPos" : 8047
+}, {
+  "firstType" : "simple_identifier",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "status",
+  "secondLabel" : "status",
+  "firstParentType" : "navigation_suffix",
+  "secondParentType" : "navigation_suffix",
+  "firstPos" : 8190,
+  "secondPos" : 8041,
+  "firstEndPos" : 8196,
+  "secondEndPos" : 8047
+}, {
   "firstType" : "when_entry",
   "secondType" : "when_entry",
   "firstLabel" : "",

@@ -176,6 +176,23 @@ public class UMLModelDiff {
 		}
 	}
 
+	//the calls of an operation removed and of an operation added with an identical body in the same class, in any class diff of the model,
+	//i.e., listener.onReset() -> listener.onChange(Reset) of a listener interface whose onReset() is renamed to onChange(change)
+	public boolean matchesPairOfRemovedAddedOperationsWithIdenticalBody(AbstractCall call1, AbstractCall call2, VariableDeclarationContainer container1, VariableDeclarationContainer container2, UMLAbstractClassDiff classDiff) {
+		for(UMLClassDiff diff : classDiffsWithProcessedOperations) {
+			for(UMLOperation removedOperation : diff.getRemovedOperations()) {
+				if(removedOperation.getName().equals(call1.getName()) && call1.matchesOperation(removedOperation, container1, classDiff, this)) {
+					for(UMLOperation addedOperation : diff.getAddedOperations()) {
+						if(addedOperation.getName().equals(call2.getName()) && removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode() &&
+								call2.matchesOperation(addedOperation, container2, classDiff, this))
+							return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public UMLModel getParentModel() {
 		return parentModel;
 	}
@@ -355,6 +372,13 @@ public class UMLModelDiff {
 
 	public void reportRemovedRealization(UMLRealization umlRealization) {
 		this.removedRealizations.add(umlRealization);
+	}
+
+	//the common class diffs whose removed and added operations are known, before their bodies are mapped
+	private List<UMLClassDiff> classDiffsWithProcessedOperations = new ArrayList<>();
+
+	public void addClassDiffWithProcessedOperations(UMLClassDiff classDiff) {
+		this.classDiffsWithProcessedOperations.add(classDiff);
 	}
 
 	public void addUMLClassDiff(UMLClassDiff classDiff) {
@@ -4791,7 +4815,8 @@ public class UMLModelDiff {
 							addedClasses.remove(childClass);
 							removeExtractSuperclassRefactorings(childClass);
 							for(MoveOperationRefactoring moveRef : refs) {
-								if(!renameDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
+								//the class diff may have paired the operations of a tentative move differently
+								if(!renameDiff.mapperListContainsOperation(moveRef.getOriginalOperation(), moveRef.getMovedOperation())) {
 									renameDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
 								}
 								refactorings.remove(moveRef);
@@ -4824,7 +4849,8 @@ public class UMLModelDiff {
 							addedClasses.remove(childClass);
 							removeExtractSuperclassRefactorings(childClass);
 							for(MoveOperationRefactoring moveRef : refs) {
-								if(!moveDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
+								//the class diff may have paired the operations of a tentative move differently
+								if(!moveDiff.mapperListContainsOperation(moveRef.getOriginalOperation(), moveRef.getMovedOperation())) {
 									moveDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
 								}
 								refactorings.remove(moveRef);
@@ -8938,17 +8964,17 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(UMLOperationBodyMapper mapper) {
+	public MoveOperationRefactoring anotherMoveRefactoringWithTheSameRemovedOperation(UMLOperationBodyMapper mapper) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MoveOperationRefactoring) {
 				MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;
 				if(moveRefactoring.getOriginalOperation().equals(mapper.getOperation1()) &&
 						!moveRefactoring.getMovedOperation().equals(mapper.getOperation2())) {
-					return true;
+					return moveRefactoring;
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(VariableDeclarationContainer addedOperation) {

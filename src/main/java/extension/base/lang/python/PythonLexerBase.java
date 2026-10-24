@@ -35,13 +35,13 @@ import org.antlr.v4.runtime.misc.Pair;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class PythonLexerBase extends Lexer {
     private static final Map<String, Integer> LEXER_MODES_FOR_ISTRING_START = new HashMap<>();
 
-    private static final int INVALID_LENGTH = -1;
     private static final String ERR_TXT = " ERROR: ";
     private static final int TAB_LENGTH = 8;
 
@@ -49,6 +49,8 @@ public abstract class PythonLexerBase extends Lexer {
 
     // Indentation handling
     private Deque<Integer> indentLengthStack;
+    // the indentation lengths with tabs of length 1, which CPython compares with the lengths to report the inconsistent use of tabs and spaces
+    private Deque<Integer> altIndentLengthStack;
     private Deque<Token> pendingTokens;
 
     private int previousPendingTokenType;
@@ -68,9 +70,6 @@ public abstract class PythonLexerBase extends Lexer {
     private Deque<Integer> lexerModeStack;
 
     // Indentation diagnostics
-    private boolean wasSpaceIndentation;
-    private boolean wasTabIndentation;
-    private boolean wasIndentationMixedWithSpacesAndTabs;
 
     // Current / lookahead tokens
     private Token curToken;
@@ -90,6 +89,7 @@ public abstract class PythonLexerBase extends Lexer {
     private void init() {
         this.encodingName = "";
         this.indentLengthStack = new ArrayDeque<>();
+        this.altIndentLengthStack = new ArrayDeque<>();
         this.pendingTokens = new ArrayDeque<>();
         this.previousPendingTokenType = 0;
         this.lastPendingTokenTypeFromDefaultChannel = 0;
@@ -100,9 +100,6 @@ public abstract class PythonLexerBase extends Lexer {
         this.curISTRING_MIDDLEtokenType = 0;
         this.curLexerMode = Lexer.DEFAULT_MODE;
         this.lexerModeStack = new ArrayDeque<>();
-        this.wasSpaceIndentation = false;
-        this.wasTabIndentation = false;
-        this.wasIndentationMixedWithSpacesAndTabs = false;
         this.curToken = null;
         this.ffgToken = null;
     }
@@ -187,6 +184,7 @@ public abstract class PythonLexerBase extends Lexer {
     // - insert leading INDENT if first statement is indented
     private void handleStartOfInput() {
         this.indentLengthStack.push(0); // this will never be popped off
+        this.altIndentLengthStack.push(0);
 
         if (this.curToken.getType() == PythonLexer.BOM) {
             this.setCurrentAndFollowingTokens();
@@ -264,29 +262,34 @@ public abstract class PythonLexerBase extends Lexer {
                     final int indentationLength = this.ffgToken.getType() == Token.EOF ?
                                                   0 :
                                                   this.getIndentationLength(this.curToken.getText());
+                    final int altIndentationLength = this.ffgToken.getType() == Token.EOF ?
+                                                  0 :
+                                                  this.getAltIndentationLength(this.curToken.getText());
 
-                    if (indentationLength != PythonLexerBase.INVALID_LENGTH) {
+                    if (this.isConsistentIndentation(indentationLength, altIndentationLength)) {
                         this.addPendingToken(this.curToken); // WS token
-                        this.insertIndentOrDedentToken(indentationLength); // may insert INDENT token or DEDENT token(s)
+                        this.insertIndentOrDedentToken(indentationLength, altIndentationLength); // may insert INDENT token or DEDENT token(s)
                     } else {
                         this.reportError("inconsistent use of tabs and spaces in indentation");
                     }
                 } else { // We're at a newline followed by a statement (there is no whitespace before the statement)
-                    this.insertIndentOrDedentToken(0); // may insert DEDENT token(s)
+                    this.insertIndentOrDedentToken(0, 0); // may insert DEDENT token(s)
                 }
         }
     }
 
-    private void insertIndentOrDedentToken(final int indentLength) {
+    private void insertIndentOrDedentToken(final int indentLength, final int altIndentLength) {
         int prevIndentLength = this.indentLengthStack.peek();
         if (indentLength > prevIndentLength) {
             this.createAndAddPendingToken(PythonLexer.INDENT, null, this.ffgToken);
             this.indentLengthStack.push(indentLength);
+            this.altIndentLengthStack.push(altIndentLength);
             return;
         }
 
         while (indentLength < prevIndentLength) { // more than 1 DEDENT token may be inserted to the token stream
             this.indentLengthStack.pop();
+            this.altIndentLengthStack.pop();
             prevIndentLength = this.indentLengthStack.peek();
             if (indentLength <= prevIndentLength) {
                 this.createAndAddPendingToken(PythonLexer.DEDENT, null, this.ffgToken);
@@ -691,7 +694,7 @@ public abstract class PythonLexerBase extends Lexer {
             default: // insert an extra trailing NEWLINE token that serves as the end of the last statement
                 this.createAndAddPendingToken(PythonLexer.NEWLINE, null, this.ffgToken); // ffgToken is EOF
         }
-        this.insertIndentOrDedentToken(0); // Now insert as much trailing DEDENT tokens as needed
+        this.insertIndentOrDedentToken(0, 0); // Now insert as much trailing DEDENT tokens as needed
     }
 
     private void handleEOFtoken() {
@@ -734,11 +737,9 @@ public abstract class PythonLexerBase extends Lexer {
         for (char ch : indentText.toCharArray()) {
             switch (ch) {
                 case ' ':
-                    this.wasSpaceIndentation = true;
                     length += 1;
                     break;
                 case '\t':
-                    this.wasTabIndentation = true;
                     length += PythonLexerBase.TAB_LENGTH - (length % PythonLexerBase.TAB_LENGTH);
                     break;
                 case '\f': // form feed
@@ -746,14 +747,41 @@ public abstract class PythonLexerBase extends Lexer {
                     break;
             }
         }
+        return length;
+    }
 
-        if (this.wasTabIndentation && this.wasSpaceIndentation) {
-            if (!(this.wasIndentationMixedWithSpacesAndTabs)) {
-                this.wasIndentationMixedWithSpacesAndTabs = true;
-                length = PythonLexerBase.INVALID_LENGTH; // only for the first inconsistent indent
+    // the indentation length with tabs of length 1
+    private int getAltIndentationLength(final String indentText) {
+        int length = 0;
+        for (char ch : indentText.toCharArray()) {
+            switch (ch) {
+                case ' ', '\t':
+                    length += 1;
+                    break;
+                case '\f': // form feed
+                    length = 0;
+                    break;
             }
         }
         return length;
+    }
+
+    // whether the indentation compares with the enclosing indentations the same way with tabs of length 8 and of length 1, like in CPython,
+    // i.e., 8 spaces followed by a tab is deeper than 8 spaces with both tab lengths
+    private boolean isConsistentIndentation(final int indentLength, final int altIndentLength) {
+        Iterator<Integer> lengths = this.indentLengthStack.iterator();
+        Iterator<Integer> altLengths = this.altIndentLengthStack.iterator();
+        int prevIndentLength = lengths.next();
+        int prevAltIndentLength = altLengths.next();
+        if (indentLength > prevIndentLength) {
+            return altIndentLength > prevAltIndentLength;
+        }
+        while (indentLength < prevIndentLength && lengths.hasNext()) {
+            prevIndentLength = lengths.next();
+            prevAltIndentLength = altLengths.next();
+        }
+        // an indentation between two enclosing indentations is an inconsistent dedent
+        return indentLength != prevIndentLength || altIndentLength == prevAltIndentLength;
     }
 
     private void reportLexerError(final String errMsg) {

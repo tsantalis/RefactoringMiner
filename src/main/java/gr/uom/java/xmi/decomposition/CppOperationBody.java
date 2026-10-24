@@ -271,7 +271,8 @@ public class CppOperationBody extends OperationBody {
 			//CDT splits a statement into problems at an argument it cannot parse, i.e., ASSIGN_OR_RETURN(auto x, f({{a, b}}, c));
 			List<AbstractStatement> siblings = parent.getStatements();
 			if(!siblings.isEmpty() && siblings.get(siblings.size() - 1) instanceof StatementObject previous &&
-					previous.getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT) && CppVisitor.unbalancedParentheses(previous.getString())) {
+					previous.getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT) &&
+					CppVisitor.unbalancedParentheses(fileContent.substring(previous.getLocationInfo().getStartOffset(), previous.getLocationInfo().getEndOffset()))) {
 				previous.extendTo(problemStatement, fileContent);
 				return;
 			}

@@ -70,6 +70,7 @@ import org.eclipse.cdt.core.dom.ast.IASTPreprocessorFunctionStyleMacroDefinition
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorMacroExpansion;
 import org.eclipse.cdt.core.dom.ast.IASTPreprocessorStatement;
 import org.eclipse.cdt.core.dom.ast.IASTProblem;
+import org.eclipse.cdt.core.dom.ast.IASTProblemDeclaration;
 import org.eclipse.cdt.core.dom.ast.IASTProblemHolder;
 import org.eclipse.cdt.core.dom.ast.IASTReturnStatement;
 import org.eclipse.cdt.core.dom.ast.IASTSimpleDeclSpecifier;
@@ -1256,6 +1257,53 @@ public class CppTreeGenerator {
 	}
 
 	//the argument of a macro call as an expression or as a parameter declaration
+	//the declaration whose type is the call of a macro, like the macro_type_specifier of tree-sitter, i.e., typedef GTEST_REMOVE_REFERENCE_AND_CONST_(Container) RawContainer;
+	private Node macroTypeDeclaration(int start, int end, Context context) {
+		List<Node> children = new ArrayList<>();
+		int offset = skip(start, end);
+		boolean typedef = tokenAt(offset).equals("typedef");
+		if(typedef) {
+			children.add(leaf("typedef", offset, offset + "typedef".length()));
+			offset = skip(offset + "typedef".length(), end);
+		}
+		if(offset >= end || !isIdentifierStart(content.charAt(offset))) {
+			return null;
+		}
+		int nameEnd = offset + tokenAt(offset).length();
+		int open = skip(nameEnd, end);
+		if(open >= end || !tokenAt(open).equals("(")) {
+			return null;
+		}
+		int close = matching(open, end);
+		int declarator = skip(close + 1, end);
+		if(close >= end || declarator >= end || !isIdentifierStart(content.charAt(declarator))) {
+			return null;
+		}
+		//the specifiers after the parameters of a constructor are not names, i.e., S(S&&) noexcept;
+		if(KEYWORDS.contains(tokenAt(declarator)) || KEYWORDS.contains(tokenAt(offset))) {
+			return null;
+		}
+		int declaratorEnd = declarator + tokenAt(declarator).length();
+		int semicolon = skip(declaratorEnd, end);
+		if(semicolon >= end || !tokenAt(semicolon).equals(";") || skip(semicolon + 1, end) < end) {
+			return null;
+		}
+		List<Node> type = new ArrayList<>();
+		for(Node token : tokens(open + 1, close)) {
+			type.add(token.type.equals("identifier") ? leaf("type_identifier", token.start, token.end) : token);
+		}
+		if(type.isEmpty()) {
+			return null;
+		}
+		Node descriptor = node("type_descriptor", type.get(0).start, type.get(type.size() - 1).end, type);
+		children.add(node("macro_type_specifier", offset, close + 1, leaf("identifier", offset, nameEnd), leaf("(", open, open + 1), descriptor, leaf(")", close, close + 1)));
+		String name = typedef ? "type_identifier" : context == Context.CLASS ? "field_identifier" : "identifier";
+		children.add(leaf(name, declarator, declaratorEnd));
+		children.add(leaf(";", semicolon, semicolon + 1));
+		String kind = typedef ? "type_definition" : context == Context.CLASS ? "field_declaration" : "declaration";
+		return node(kind, children.get(0).start, semicolon + 1, children);
+	}
+
 	private Node macroArgument(int start, int end) {
 		Map<Integer, String> callInsertions = new HashMap<>();
 		callInsertions.put(start, CALL + "(");
@@ -1673,6 +1721,13 @@ public class CppTreeGenerator {
 
 	//the statement parsed again, or the nodes parsed again in an error node
 	private Node single(List<Node> nodes, IASTStatement statement) {
+		//a declaration that CDT split after the call of the macro of its type
+		if(nodes.size() > 1 || failed(nodes)) {
+			Node macroTypeDeclaration = macroTypeDeclaration(start(statement), end(statement), Context.BLOCK);
+			if(macroTypeDeclaration != null) {
+				return macroTypeDeclaration;
+			}
+		}
 		if(nodes.size() == 1) {
 			return nodes.get(0);
 		}
@@ -1996,6 +2051,9 @@ public class CppTreeGenerator {
 			}
 			else if(source.reparsed) {
 				Node call = context == Context.CLASS ? macroCallStatement(start, end, true) : null;
+				if(call == null) {
+					call = macroTypeDeclaration(start, end, context);
+				}
 				nodes.add(call != null ? call : error(start, end));
 			}
 			else {
@@ -2068,6 +2126,11 @@ public class CppTreeGenerator {
 	}
 
 	private Node declarationOrReparsed(IASTDeclaration declaration, Context context) {
+		//NAME(...) name; is not valid C++ unless NAME is a macro, which CDT reads as a type with a parenthesized declarator
+		Node macroTypeDeclaration = declaration instanceof IASTSimpleDeclaration || declaration instanceof IASTProblemDeclaration ? macroTypeDeclaration(start(declaration), end(declaration), context) : null;
+		if(macroTypeDeclaration != null) {
+			return macroTypeDeclaration;
+		}
 		if(!source.reparsed && !(declaration instanceof ICPPASTNamespaceDefinition) && !(declaration instanceof ICPPASTLinkageSpecification)
 				&& !isClassDefinition(declaration) && misparsedTemplate(declaration, true)) {
 			return orDeclaration(reparseDeclaration(start(declaration), end(declaration), context), declaration, context);
@@ -2076,6 +2139,9 @@ public class CppTreeGenerator {
 				&& !isClassDefinition(declaration) && !isFunctionWithMacroFreeHeader(declaration)) {
 			if(source.reparsed) {
 				Node call = context == Context.CLASS ? macroCallStatement(start(declaration), end(declaration), true) : null;
+				if(call == null) {
+					call = macroTypeDeclaration(start(declaration), end(declaration), context);
+				}
 				return call != null ? call : error(start(declaration), end(declaration));
 			}
 			return orDeclaration(macroFunctionDefinition(reparseDeclaration(start(declaration), end(declaration), context), declaration), declaration, context);
@@ -3388,6 +3454,11 @@ public class CppTreeGenerator {
 			direct = false;
 			return statementKind(statement);
 		}
+		//NAME(...) name; is not valid C++ unless NAME is a macro, which CDT reads as a type with a parenthesized declarator
+		Node macroTypeDeclaration = statement instanceof IASTDeclarationStatement ? macroTypeDeclaration(start(statement), end(statement), Context.BLOCK) : null;
+		if(macroTypeDeclaration != null) {
+			return macroTypeDeclaration;
+		}
 		Set<String> functions = statement instanceof IASTCompoundStatement ? new LinkedHashSet<>() : misparsedCalls(statement, true, new LinkedHashSet<>());
 		functions.removeAll(source.functions);
 		if(!functions.isEmpty()) {
@@ -3530,6 +3601,19 @@ public class CppTreeGenerator {
 		}
 		for(int i = 0; i < active.size(); i++) {
 			IASTStatement statement = active.get(i);
+			//a declaration whose type is the call of a macro, which CDT split after the call, i.e., typedef GTEST_REMOVE_REFERENCE_AND_CONST_(Container) RawContainer;
+			if(statement instanceof IASTDeclarationStatement && !content.substring(start(statement), end(statement)).stripTrailing().endsWith(";")) {
+				int k = i + 1;
+				while(k < active.size() && !content.substring(start(statement), end(active.get(k))).stripTrailing().endsWith(";")) {
+					k++;
+				}
+				Node macroTypeDeclaration = k < active.size() ? macroTypeDeclaration(start(statement), end(active.get(k)), Context.BLOCK) : null;
+				if(macroTypeDeclaration != null) {
+					children.add(macroTypeDeclaration);
+					i = k;
+					continue;
+				}
+			}
 			//a macro expansion or a problem followed by the semicolon or the rest of the statement, i.e., CHECK(x); where the macro ends with a semicolon,
 			//or ASSIGN_OR_RETURN(auto x, f({{a, b}}, c)); that CDT split at the argument it cannot parse, like the problem statement of the model
 			int end = end(statement);

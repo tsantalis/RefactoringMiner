@@ -298,6 +298,14 @@ public class UMLModelAdapter {
     public static UMLOperation createUMLOperation(LangMethodDeclaration methodDecl, String className, String sourceFolder, String filePath, String fileContent, List<UMLComment> comments, Map<String, Set<VariableDeclaration>> activeVariableDeclarations) {
         int startSignatureOffset = methodDecl.getStartChar();
         LocationInfo locationInfo = new LocationInfo(sourceFolder, filePath, methodDecl, LocationInfo.CodeElementType.METHOD_DECLARATION);
+        //a decorated method starts at its first decorator, like the decorated definition of the tree, i.e., @staticmethod def f(): ...
+        int decoratedStart = startSignatureOffset;
+        for (LangAnnotation annotation : methodDecl.getAnnotations()) {
+            decoratedStart = Math.min(decoratedStart, annotation.getStartChar());
+        }
+        if (decoratedStart < startSignatureOffset) {
+            locationInfo = new LocationInfo(sourceFolder, filePath, decoratedStart, methodDecl.getEndChar() - decoratedStart, methodDecl.getEndChar(), LocationInfo.CodeElementType.METHOD_DECLARATION, fileContent);
+        }
         LangSupportedEnum language = LangSupportedEnum.fromFileName(filePath);
         String operationName = methodDecl.getName();
         UMLOperation umlOperation = new UMLOperation(operationName, locationInfo, className);

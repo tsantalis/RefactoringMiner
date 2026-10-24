@@ -51,12 +51,6 @@ public class MethodMatcher extends BodyMapperMatcher{
             srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo(), LANG1);
             dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo(), LANG2);
             if (srcOperationNode != null && dstOperationNode != null) {
-            if (srcOperationNode != null && srcOperationNode.getParent() != null && srcOperationNode.getParent().getType().name.equals(LANG1.DECORATED_METHOD)) {
-                srcOperationNode = srcOperationNode.getParent();
-            }
-            if (dstOperationNode != null && dstOperationNode.getParent() != null && dstOperationNode.getParent().getType().name.equals(LANG2.DECORATED_METHOD)) {
-                dstOperationNode = dstOperationNode.getParent();
-            }
             if (srcOperationNode == null || !LANG1.isMethod(srcOperationNode.getType().name)) return;
             if (dstOperationNode == null || !LANG2.isMethod(dstOperationNode.getType().name)) return;
             new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), umlOperationBodyMapper.getJavadocDiff(), LANG1, LANG2)

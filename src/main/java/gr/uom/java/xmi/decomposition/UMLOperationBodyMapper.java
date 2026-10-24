@@ -143,6 +143,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean identicalLambdaBodyMapper;
 	private boolean moveCode;
 	private boolean anonymousCollapse;
+	//the statements containing the lambdas expanded in the body, keyed by the root composite of the lambda body
+	private Map<CompositeStatementObject, AbstractCodeFragment> expandedLambdaOwners = new LinkedHashMap<CompositeStatementObject, AbstractCodeFragment>();
 	private transient AdvancedAssertionMigrationMatcher advancedAssertionMigrationMatcher;
 	private AbstractCall operationInvocation;
 	private Map<String, String> parameterToArgumentMap1;
@@ -3746,10 +3748,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					collectNestedLambdaExpressions(lambda, nestedLambdas);
 					if(!withinAnonymousClass(lambda, statement, anonymousClassList)) {
 						expandLambda(lambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+						registerExpandedLambdaOwner(lambda, statement);
 					}
 					for(LambdaExpressionObject nestedLambda : nestedLambdas) {
 						if(!withinAnonymousClass(nestedLambda, statement, anonymousClassList)) {
 							expandLambda(nestedLambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+							AbstractCodeFragment owner = statement;
+							for(AbstractCodeFragment leaf : leaves) {
+								if(leaf != statement && leaf.getLambdas().contains(nestedLambda)) {
+									owner = leaf;
+									break;
+								}
+							}
+							registerExpandedLambdaOwner(nestedLambda, owner);
 						}
 					}
 				}
@@ -3773,6 +3784,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private void registerExpandedLambdaOwner(LambdaExpressionObject lambda, AbstractCodeFragment owner) {
+		if(lambda.getBody() != null) {
+			expandedLambdaOwners.put(lambda.getBody().getCompositeStatement(), owner);
+		}
+	}
+
+	//the depth of a statement of an expanded lambda in the body of the operation, i.e., the depth of the statement with the lambda plus the depth in the lambda
+	private int depthInBody(AbstractCodeFragment fragment) {
+		CompositeStatementObject root = fragment.getParent();
+		if(root == null && fragment instanceof CompositeStatementObject composite) {
+			root = composite;
+		}
+		while(root != null && root.getParent() != null) {
+			root = root.getParent();
+		}
+		AbstractCodeFragment owner = root != null ? expandedLambdaOwners.get(root) : null;
+		return owner != null ? depthInBody(owner) + fragment.getDepth() : fragment.getDepth();
 	}
 
 	private void expandLambda(LambdaExpressionObject lambda, List<AbstractCodeFragment> leaves,
@@ -10185,7 +10215,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					int depthDifference = fragment.getDepth() - mapping.getFragment1().getDepth();
+					int depthDifference = depthInBody(fragment) - depthInBody(mapping.getFragment1());
 					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2 - (directlyNested ? 2 : 0)) {
 						if(!parentMap.containsKey(fragment.getParent())) {
 							parentMap.put(fragment.getParent(), mapping);
@@ -10435,7 +10465,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							directlyNested = true;
 						}
 					}
-					int depthDifference = fragment.getDepth() - mapping.getFragment2().getDepth();
+					int depthDifference = depthInBody(fragment) - depthInBody(mapping.getFragment2());
 					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2 - (directlyNested ? 2 : 0)) {
 						if(!parentMap.containsKey(fragment.getParent())) {
 							parentMap.put(fragment.getParent(), mapping);

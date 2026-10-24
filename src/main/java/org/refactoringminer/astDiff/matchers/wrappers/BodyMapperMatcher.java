@@ -425,6 +425,15 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             else if(Constants.isCrossLanguage(LANG1, LANG2)) {
                 boolean skip = srcStatementNode.getType().name.equals(LANG1.BLOCK) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) && !dstStatementNode.getParent().getType().name.equals(LANG2.LAMBDA_LITERAL);
                 if(!skip) {
+                    //the Java finally block has no node for the finally keyword, so it is the counterpart of the statements of the Kotlin finally block,
+                    //which are flattened into the try expression like the Java finally block in the try statement
+                    Tree finallyStatements2 = srcStatementNode.getType().name.equals(LANG1.BLOCK) && dstStatementNode.getType().name.equals(LANG2.FINALLY_BLOCK) ?
+                            TreeUtilFunctions.findChildByType(dstStatementNode, LANG2.STATEMENTS) : null;
+                    if(finallyStatements2 != null) {
+                        mappingStore.addMapping(srcStatementNode, finallyStatements2);
+                        optimizationData.getDeferredFlattenings().flattenKeepingMappings(dstStatementNode.getParent(), dstStatementNode);
+                        return;
+                    }
                     mappingStore.addMapping(srcStatementNode, dstStatementNode);
                     JavaToKotlinMigration.handleCompositeMapping(mappingStore, srcStatementNode, dstStatementNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                     return;

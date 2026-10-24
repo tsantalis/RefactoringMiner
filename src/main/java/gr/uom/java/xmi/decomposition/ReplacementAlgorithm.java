@@ -378,6 +378,16 @@ public class ReplacementAlgorithm {
 		AbstractCall invocationCoveringTheEntireStatement2 = inlinedVariableInitializer(statement2, invocationCoveringEntireFragment2, invocationCoveringEntireFragment1);
 		AbstractCall assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
 		AbstractCall assignmentInvocationCoveringTheEntireStatement2 = invocationCoveringTheEntireStatement2 == null ? statement2.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement2;
+		//the variable assigned with a call on an inlined variable is assigned with the Kotlin run returning the call, i.e., payload = buffer.readByteString() and payload = Buffer().run {...; readByteString()}
+		if(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null &&
+				assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null &&
+				statement1.getString().contains(LANG1.ASSIGNMENT) && statement2.getString().contains(LANG2.ASSIGNMENT) &&
+				statement1.getString().substring(0, statement1.getString().indexOf(LANG1.ASSIGNMENT)).equals(statement2.getString().substring(0, statement2.getString().indexOf(LANG2.ASSIGNMENT))) &&
+				matchCallOnInlinedVariableWithRun(assignmentInvocationCoveringTheEntireStatement1, assignmentInvocationCoveringTheEntireStatement2, statement2, replacementInfo, container1, container2)) {
+			Replacement replacement = new MethodInvocationReplacement(assignmentInvocationCoveringTheEntireStatement1.actualString(), assignmentInvocationCoveringTheEntireStatement2.actualString(), assignmentInvocationCoveringTheEntireStatement1, assignmentInvocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+			replacementInfo.addReplacement(replacement);
+			return replacementInfo.getReplacements();
+		}
 		AbstractCall temp1 = statement1.creationCoveringEntireFragment();
 		ObjectCreation creationCoveringTheEntireStatement1 = temp1 instanceof ObjectCreation ? (ObjectCreation)temp1 : null;
 		AbstractCall temp2 = statement2.creationCoveringEntireFragment();
@@ -5615,6 +5625,47 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return result;
+	}
+
+	//the Kotlin run on the creation initializing the variable of the call returns the call as its last statement, i.e., buffer.readByteString() with Buffer buffer = new Buffer() and Buffer().run {...; readByteString()},
+	//and the creations and the calls are mapped as sub-expressions
+	private static boolean matchCallOnInlinedVariableWithRun(AbstractCall invocation1, AbstractCall invocation2, AbstractCodeFragment statement2, ReplacementInfo replacementInfo,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		if(!invocation2.getName().equals("run") || invocation2.arguments().size() != 1 || invocation2.getExpression() == null || invocation1.getExpression() == null) {
+			return false;
+		}
+		AbstractCall lastCall = null;
+		for(LambdaExpressionObject lambda : statement2.getLambdas()) {
+			if(lambda.getString().equals(invocation2.arguments().get(0)) && lambda.getBody() != null) {
+				List<AbstractStatement> statements = lambda.getBody().getCompositeStatement().getStatements();
+				if(statements.size() > 0) {
+					lastCall = statements.get(statements.size()-1).invocationCoveringEntireFragment();
+				}
+			}
+		}
+		if(lastCall == null || lastCall.getExpression() != null || !lastCall.getName().equals(invocation1.getName()) || !lastCall.equalArguments(invocation1)) {
+			return false;
+		}
+		AbstractCall creation2 = null;
+		for(AbstractCall creation : statement2.getCreations()) {
+			if(creation.getString().equals(invocation2.getExpression()) && creation.getLocationInfo().getStartOffset() == invocation2.getLocationInfo().getStartOffset()) {
+				creation2 = creation;
+			}
+		}
+		if(creation2 instanceof ObjectCreation) {
+			for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
+				VariableDeclaration declaration = fragment1.getVariableDeclaration(invocation1.getExpression());
+				if(declaration != null && declaration.getInitializer() != null) {
+					AbstractCall creation1 = fragment1.creationCoveringEntireFragment();
+					if(creation1 instanceof ObjectCreation && ((ObjectCreation)creation1).getType().equals(((ObjectCreation)creation2).getType())) {
+						replacementInfo.addSubExpressionMapping(new LeafMapping(creation1, creation2, container1, container2));
+						replacementInfo.addSubExpressionMapping(new LeafMapping(invocation1, lastCall, container1, container2));
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static Map<String, List<AbstractCall>> convertToMap(List<AbstractCall> calls) {

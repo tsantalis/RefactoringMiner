@@ -250,55 +250,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcLocationInfo,LANG1);
         LocationInfo dstLocationInfo = compositeStatementObjectMapping.getFragment2().getLocationInfo();
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo,LANG2);
-        if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
-                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
-                srcStatementNode.getChildren().size() > 0 &&
-                srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION)) {
-            srcStatementNode = srcStatementNode.getChild(0);
-        }
-        if (compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
-                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
-                dstStatementNode.getChildren().size() > 0 &&
-                dstStatementNode.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
-            dstStatementNode = dstStatementNode.getChild(0);
-        }
-        //resource.use {} and ignoreIoExceptions {} are modeled as try statements, and they are the only statement of the enclosing statements with the same location (Kotlin to Kotlin)
-        if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
-                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
-                srcStatementNode.getChildren().size() == 1 &&
-                srcStatementNode.getChild(0).getType().name.equals(LANG1.METHOD_INVOCATION)) {
-            srcStatementNode = srcStatementNode.getChild(0);
-        }
-        if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
-                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
-                dstStatementNode.getChildren().size() == 1 &&
-                dstStatementNode.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
-            dstStatementNode = dstStatementNode.getChild(0);
-        }
-        if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
-                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
-                srcStatementNode.getChildren().size() > 0 &&
-                srcStatementNode.getChild(0).getType().name.equals(LANG1.WHILE_STATEMENT)) {
-            srcStatementNode = srcStatementNode.getChild(0);
-        }
-        if (compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
-                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
-                dstStatementNode.getChildren().size() > 0 &&
-                dstStatementNode.getChild(0).getType().name.equals(LANG2.WHILE_STATEMENT)) {
-            dstStatementNode = dstStatementNode.getChild(0);
-        }
-        if (compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
-                srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS) &&
-                srcStatementNode.getChildren().size() > 0 &&
-                srcStatementNode.getChild(0).getType().name.equals(LANG1.IF_STATEMENT)) {
-            srcStatementNode = srcStatementNode.getChild(0);
-        }
-        if (compositeStatementObjectMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
-                dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
-                dstStatementNode.getChildren().size() > 0 &&
-                dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
-            dstStatementNode = dstStatementNode.getChild(0);
-        }
         //the Kotlin else branch has the same range as the nested if of an else if, i.e., if (a) {...} else if (b) {...}
         //in a cross-language diff, the else branch is flattened by JavaToKotlinMigration.handleElseIfMapping, as Java has no counterpart
         if (!Constants.isCrossLanguage(LANG1, LANG2) && compositeStatementObjectMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
@@ -1254,19 +1205,13 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             }
         }
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo(),LANG1);
-        if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.STATEMENTS)) {
-            srcStatementNode = srcStatementNode.getChild(0);
-        }
-        else if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.ERROR)) {
+        if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.ERROR)) {
             Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
             if(tmpSrcStatement != null)
                 srcStatementNode = tmpSrcStatement;
         }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
-        if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.STATEMENTS)) {
-            dstStatementNode = dstStatementNode.getChild(0);
-        }
-        else if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.ERROR)) {
+        if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.ERROR)) {
             Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
             if(tmpDstStatement != null)
                 dstStatementNode = tmpDstStatement;

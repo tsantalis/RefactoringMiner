@@ -37,19 +37,24 @@ public class TreeUtilFunctions {
 		int end_offset = locationInfo.getEndOffset();
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
-		//a block with a single statement has the range of the statement, so it is located only for a block of the model, i.e., if x: return y
-		if (isFromType(treeBetweenPositions, LANG.CLASS_BLOCK) && !locationInfo.getCodeElementType().equals(LocationInfo.CodeElementType.BLOCK)) {
-			for (Tree descendant : treeBetweenPositions.getDescendants()) {
-				if (descendant.getPos() == treeBetweenPositions.getPos() && descendant.getEndPos() == treeBetweenPositions.getEndPos()) {
-					treeBetweenPositions = descendant;
-					break;
-				}
+		//a wrapper with a single child has the range of the child, so it is located only for a block of the model,
+		//i.e., the block of if x: return y, the statements of a Kotlin statement, or the arguments of f(x)
+		if (!locationInfo.getCodeElementType().equals(LocationInfo.CodeElementType.BLOCK)) {
+			while (isFromType(treeBetweenPositions, LANG.CLASS_BLOCK, LANG.STATEMENTS, LANG.METHOD_INVOCATION_ARGUMENTS)) {
+				Tree child = childWithSameRange(treeBetweenPositions);
+				if (child == null) break;
+				treeBetweenPositions = child;
 			}
 		}
-		if (isFromType(treeBetweenPositions, LANG.METHOD_INVOCATION_ARGUMENTS) && treeBetweenPositions.getChildren().size() > 0 &&
-				treeBetweenPositions.getChild(0).getPos() == start_offset && treeBetweenPositions.getChild(0).getEndPos() == end_offset)
-			return treeBetweenPositions.getChild(0);
 		return treeBetweenPositions;
+	}
+
+	private static Tree childWithSameRange(Tree tree) {
+		for (Tree child : tree.getChildren()) {
+			if (child.getPos() == tree.getPos() && child.getEndPos() == tree.getEndPos())
+				return child;
+		}
+		return null;
 	}
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, Constants LANG, String... type){

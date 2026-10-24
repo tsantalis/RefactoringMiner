@@ -374,6 +374,15 @@ public class StatementObject extends AbstractStatement {
 		return locationInfo;
 	}
 
+	//the problem statement extended with the rest of the statement that CDT split, i.e., , c)); in ASSIGN_OR_RETURN(auto x, f({{a, b}}, c));
+	void extendTo(IASTStatement next, String fileContent) {
+		int start = locationInfo.getStartOffset();
+		int end = next.getFileLocation().getNodeOffset() + next.getFileLocation().getNodeLength();
+		this.locationInfo = new LocationInfo(locationInfo.getSourceFolder(), locationInfo.getFilePath(), start, end - start, end, locationInfo.getCodeElementType(), fileContent);
+		this.statement = CppVisitor.singleLine(fileContent.substring(start, end)) + "\n";
+		this.actualSignature = this.statement;
+	}
+
 	public StatementObject(String sourceFolder, String filePath,
 			IASTStatement statement, int depth, CodeElementType codeElementType,
 			VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String fileContent) {

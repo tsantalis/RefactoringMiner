@@ -224,6 +224,36 @@ public class CppVisitor extends ASTVisitor {
 
 	//the line breaks and the indentation of a construct written on several lines as one space, or as nothing after ( and [ and before ) ] , . and ->,
 	//so that the code is compared like the code written on one line, i.e., f(\n    a,\n    b) as f(a, b)
+	//whether the code opens more parentheses than it closes, outside string and character literals and comments, i.e., ASSIGN_OR_RETURN(auto x, f({{a, b}}
+	public static boolean unbalancedParentheses(String code) {
+		int depth = 0;
+		for(int i = 0; i < code.length(); i++) {
+			char c = code.charAt(i);
+			if(c == '"' || c == '\'') {
+				for(i++; i < code.length() && code.charAt(i) != c; i++) {
+					if(code.charAt(i) == '\\') {
+						i++;
+					}
+				}
+			}
+			else if(c == '/' && i + 1 < code.length() && code.charAt(i + 1) == '/') {
+				int end = code.indexOf('\n', i);
+				i = end < 0 ? code.length() : end;
+			}
+			else if(c == '/' && i + 1 < code.length() && code.charAt(i + 1) == '*') {
+				int end = code.indexOf("*/", i + 2);
+				i = end < 0 ? code.length() : end + 1;
+			}
+			else if(c == '(') {
+				depth++;
+			}
+			else if(c == ')') {
+				depth--;
+			}
+		}
+		return depth > 0;
+	}
+
 	public static String singleLine(String code) {
 		if(code.indexOf('\n') < 0) {
 			return code;

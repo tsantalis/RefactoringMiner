@@ -268,6 +268,13 @@ public class CppOperationBody extends OperationBody {
 			addStatementInVariableScopes(child);
 		}
 		else if(statement instanceof IASTProblemStatement problemStatement) {
+			//CDT splits a statement into problems at an argument it cannot parse, i.e., ASSIGN_OR_RETURN(auto x, f({{a, b}}, c));
+			List<AbstractStatement> siblings = parent.getStatements();
+			if(!siblings.isEmpty() && siblings.get(siblings.size() - 1) instanceof StatementObject previous &&
+					previous.getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT) && CppVisitor.unbalancedParentheses(previous.getString())) {
+				previous.extendTo(problemStatement, fileContent);
+				return;
+			}
 			StatementObject child = new StatementObject(sourceFolder, filePath, problemStatement, parent.getDepth()+1, CodeElementType.PROBLEM_STATEMENT, container, activeVariableDeclarations, fileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);

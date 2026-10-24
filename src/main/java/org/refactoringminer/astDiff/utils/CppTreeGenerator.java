@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import gr.uom.java.xmi.CppFileProcessor;
+import gr.uom.java.xmi.decomposition.CppVisitor;
 import gr.uom.java.xmi.CppLanguage;
 
 import org.eclipse.cdt.core.dom.ast.IASTArrayDeclarator;
@@ -3396,7 +3397,9 @@ public class CppTreeGenerator {
 		}
 		if((reparse(statement) || !source.reparsed && misparsedTemplate(statement, true)) && !(statement instanceof IASTCompoundStatement)) {
 			if(source.reparsed) {
-				return error(start(statement), end(statement));
+				//the call of a macro in a function parsed again, i.e., TF_ASSERT_OK_AND_ASSIGN(auto x, f()); in TEST(A, B) {...}
+				Node call = macroCallStatement(start(statement), end(statement));
+				return call != null ? call : error(start(statement), end(statement));
 			}
 			if(statement instanceof IASTDeclarationStatement declarationStatement && isFunctionWithMacroFreeHeader(declarationStatement.getDeclaration())) {
 				return declaration(declarationStatement.getDeclaration(), Context.BLOCK);
@@ -3527,12 +3530,13 @@ public class CppTreeGenerator {
 		}
 		for(int i = 0; i < active.size(); i++) {
 			IASTStatement statement = active.get(i);
-			//a macro expansion or a problem followed by the semicolon or the rest of the statement, i.e., CHECK(x); where the macro ends with a semicolon
+			//a macro expansion or a problem followed by the semicolon or the rest of the statement, i.e., CHECK(x); where the macro ends with a semicolon,
+			//or ASSIGN_OR_RETURN(auto x, f({{a, b}}, c)); that CDT split at the argument it cannot parse, like the problem statement of the model
 			int end = end(statement);
 			int j = i + 1;
-			if(!source.reparsed && (reparse(statement) && !(statement instanceof IASTCompoundStatement))) {
-				while(j < active.size() && !content.substring(start(statement), end).stripTrailing().endsWith(";")
-						&& !content.substring(start(statement), end).stripTrailing().endsWith("}")
+			if(reparse(statement) && !(statement instanceof IASTCompoundStatement)) {
+				while(j < active.size() && (CppVisitor.unbalancedParentheses(content.substring(start(statement), end))
+						|| !content.substring(start(statement), end).stripTrailing().endsWith(";") && !content.substring(start(statement), end).stripTrailing().endsWith("}"))
 						&& (active.get(j) instanceof IASTNullStatement || active.get(j) instanceof IASTProblemHolder)) {
 					end = end(active.get(j));
 					j++;

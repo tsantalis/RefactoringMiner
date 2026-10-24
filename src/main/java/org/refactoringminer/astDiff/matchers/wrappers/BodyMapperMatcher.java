@@ -1164,46 +1164,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     }
     private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
         LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
-        if(leafMapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT) && leafMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.PROBLEM_STATEMENT)) {
-            Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo(),LANG1);
-            Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
-            if (srcStatementNode == null || dstStatementNode == null) {
-                System.err.println("Tree not found for " + abstractCodeMapping);
-                return;
-            }
-            if(srcStatementNode.getType().name.endsWith("_statement") && dstStatementNode.getType().name.endsWith("_statement")) {
-                
-            }
-            else {
-                while(srcStatementNode.getParent() != null && !srcStatementNode.getType().name.endsWith("_statement") && (!srcStatementNode.getType().name.equals(LANG1.FUNCTION_DECLARATOR) || srcStatementNode.getParent().getType().name.equals(LANG1.FUNCTION_DECLARATOR))) {
-                    srcStatementNode = srcStatementNode.getParent();
-                }
-                while(dstStatementNode.getParent() != null && !dstStatementNode.getType().name.endsWith("_statement") && (!dstStatementNode.getType().name.equals(LANG2.FUNCTION_DECLARATOR) || dstStatementNode.getParent().getType().name.equals(LANG2.FUNCTION_DECLARATOR))) {
-                    dstStatementNode = dstStatementNode.getParent();
-                }
-                if(srcStatementNode.getType().name.equals(dstStatementNode.getType().name)) {
-                    mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
-                    if(srcStatementNode.getParent().getType().name.equals(LANG1.COMPOUND_STATEMENT) && dstStatementNode.getParent().getType().name.equals(LANG2.COMPOUND_STATEMENT)) {
-                        mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> opening = Helpers.findPairOfType(srcStatementNode.getParent(), dstStatementNode.getParent(), LANG1.OPENING_CURLY_BRACE, LANG2.OPENING_CURLY_BRACE);
-                        if (opening != null) {
-                            mappingStore.addMapping(opening.first,opening.second);
-                        }
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> closing = Helpers.findPairOfType(srcStatementNode.getParent(), dstStatementNode.getParent(), LANG1.CLOSING_CURLY_BRACE, LANG2.CLOSING_CURLY_BRACE);
-                        if (closing != null) {
-                            mappingStore.addMapping(closing.first,closing.second);
-                        }
-                    }
-                    if(!isPartOfExtractedMethod && srcStatementNode.getParent().getType().name.equals(LANG1.METHOD_DECLARATION) && dstStatementNode.getParent().getType().name.equals(LANG2.METHOD_DECLARATION)) {
-                        mappingStore.addMapping(srcStatementNode.getParent(), dstStatementNode.getParent());
-                        com.github.gumtreediff.utils.Pair<Tree,Tree> compounds = Helpers.findPairOfType(srcStatementNode.getParent(), dstStatementNode.getParent(), LANG1.COMPOUND_STATEMENT, LANG2.COMPOUND_STATEMENT);
-                        if(compounds != null && compounds.first.isIsomorphicTo(compounds.second)) {
-                            mappingStore.addMappingRecursively(compounds.first, compounds.second);
-                        }
-                    }
-                }
-            }
-        }
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo(),LANG1);
         if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.ERROR)) {
             Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);

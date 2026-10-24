@@ -1176,6 +1176,50 @@
   "firstEndPos" : 2535,
   "secondEndPos" : 2048
 }, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 2290,
+  "secondPos" : 1934,
+  "firstEndPos" : 2360,
+  "secondEndPos" : 2044
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 2314,
+  "secondPos" : 1941,
+  "firstEndPos" : 2359,
+  "secondEndPos" : 1986
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "getSubjectAltNames",
+  "secondLabel" : "getSubjectAltNames",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 2314,
+  "secondPos" : 1941,
+  "firstEndPos" : 2332,
+  "secondEndPos" : 1959
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 2333,
+  "secondPos" : 1959,
+  "firstEndPos" : 2358,
+  "secondEndPos" : 1986
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "function_declaration",
   "firstLabel" : "",
@@ -1516,6 +1560,50 @@
   "secondPos" : 2238,
   "firstEndPos" : 2734,
   "secondEndPos" : 2247
+}, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "jump_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "function_body",
+  "firstPos" : 2741,
+  "secondPos" : 2253,
+  "firstEndPos" : 2811,
+  "secondEndPos" : 2352
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "call_expression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "navigation_expression",
+  "firstPos" : 2765,
+  "secondPos" : 2260,
+  "firstEndPos" : 2810,
+  "secondEndPos" : 2305
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "simple_identifier",
+  "firstLabel" : "getSubjectAltNames",
+  "secondLabel" : "getSubjectAltNames",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 2765,
+  "secondPos" : 2260,
+  "firstEndPos" : 2783,
+  "secondEndPos" : 2278
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "value_arguments",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "call_expression",
+  "firstPos" : 2784,
+  "secondPos" : 2278,
+  "firstEndPos" : 2809,
+  "secondEndPos" : 2305
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "call_expression",

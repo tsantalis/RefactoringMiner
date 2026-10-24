@@ -484,7 +484,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	//the Kotlin scope functions returning their receiver cover the same statement as the receiver, i.e., GregorianCalendar(UTC).apply {...} and GregorianCalendar(UTC)
-	private String withScopeFunctionsOnReceiver(AbstractCall creation) {
+	String withScopeFunctionsOnReceiver(AbstractCall creation) {
 		String string = creation.getString();
 		if(LANG.equals(Constants.KOTLIN)) {
 			for(AbstractCall invocation : getMethodInvocations()) {
@@ -495,6 +495,37 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		return string;
+	}
+
+	//the first call of a Kotlin chain followed only by calls with a lambda argument, i.e., getSubjectAltNames(certificate, ALT_DNS_NAME) in return getSubjectAltNames(certificate, ALT_DNS_NAME).any {...}
+	public AbstractCall firstCallOfChainCoveringEntireFragment(AbstractCall invocationCoveringEntireFragment) {
+		if(LANG.equals(Constants.KOTLIN)) {
+			for(AbstractCall invocation : getMethodInvocations()) {
+				if(invocation != invocationCoveringEntireFragment && invocation.getExpression() == null &&
+						invocation.getLocationInfo().getStartOffset() == invocationCoveringEntireFragment.getLocationInfo().getStartOffset()) {
+					String string = invocation.getString();
+					for(AbstractCall call : getMethodInvocations()) {
+						if(call.arguments().size() == 1 && isLambda(call.arguments().get(0)) && string.equals(call.getExpression()) &&
+								call.getLocationInfo().getStartOffset() == invocation.getLocationInfo().getStartOffset()) {
+							string = call.getString();
+						}
+					}
+					if(string.equals(invocationCoveringEntireFragment.getString())) {
+						invocation.coverage = invocationCoveringEntireFragment.coverage;
+						return invocation;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	private boolean isLambda(String argument) {
+		for(LambdaExpressionObject lambda : getLambdas()) {
+			if(lambda.getString().equals(argument))
+				return true;
+		}
+		return false;
 	}
 
 	public AbstractCall invocationCoveringEntireFragment() {

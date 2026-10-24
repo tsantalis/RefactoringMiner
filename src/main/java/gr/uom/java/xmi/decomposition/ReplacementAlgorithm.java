@@ -108,6 +108,19 @@ public class ReplacementAlgorithm {
 				assertThatArgument1, baseArgument2, asInstanceOfText, container1, container2, replacementInfo);
 	}
 
+	//the variable initialized with the other call is inlined as the first call of a chain, i.e., List<String> altNames = getSubjectAltNames(certificate, ALT_DNS_NAME) and return getSubjectAltNames(certificate, ALT_DNS_NAME).any {...}
+	private static AbstractCall inlinedVariableInitializer(AbstractCodeFragment statement, AbstractCall invocationCoveringTheEntireStatement, AbstractCall otherInvocationCoveringTheEntireStatement) {
+		if(invocationCoveringTheEntireStatement != null && otherInvocationCoveringTheEntireStatement != null &&
+				otherInvocationCoveringTheEntireStatement.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL) &&
+				!invocationCoveringTheEntireStatement.getName().equals(otherInvocationCoveringTheEntireStatement.getName())) {
+			AbstractCall firstCall = statement.firstCallOfChainCoveringEntireFragment(invocationCoveringTheEntireStatement);
+			if(firstCall != null && firstCall.getName().equals(otherInvocationCoveringTheEntireStatement.getName())) {
+				return firstCall;
+			}
+		}
+		return invocationCoveringTheEntireStatement;
+	}
+
 	private static boolean matchCollapsedAssertJTypeCheck(AbstractCodeFragment statement1, AbstractCodeFragment statement2, AbstractCall invocationCoveringTheEntireStatement1,
 			AbstractCall invocationCoveringTheEntireStatement2, String assertThatArgument1, String baseArgument2, String asInstanceOfText,
 			VariableDeclarationContainer container1, VariableDeclarationContainer container2, ReplacementInfo replacementInfo) {
@@ -359,8 +372,10 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		AbstractCall invocationCoveringTheEntireStatement1 = statement1.invocationCoveringEntireFragment();
-		AbstractCall invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
+		AbstractCall invocationCoveringEntireFragment1 = statement1.invocationCoveringEntireFragment();
+		AbstractCall invocationCoveringEntireFragment2 = statement2.invocationCoveringEntireFragment();
+		AbstractCall invocationCoveringTheEntireStatement1 = inlinedVariableInitializer(statement1, invocationCoveringEntireFragment1, invocationCoveringEntireFragment2);
+		AbstractCall invocationCoveringTheEntireStatement2 = inlinedVariableInitializer(statement2, invocationCoveringEntireFragment2, invocationCoveringEntireFragment1);
 		AbstractCall assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
 		AbstractCall assignmentInvocationCoveringTheEntireStatement2 = invocationCoveringTheEntireStatement2 == null ? statement2.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement2;
 		AbstractCall temp1 = statement1.creationCoveringEntireFragment();
@@ -1108,8 +1123,8 @@ public class ReplacementAlgorithm {
 			}
 		}
 		findReplacements(creations1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
-		findReplacements(variablesToBeConsidered1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
-		findReplacements(creations1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
+		findReplacements(variablesToBeConsidered1, withScopeFunctionsOnReceiver(statement2, creations2, creationMap2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
+		findReplacements(withScopeFunctionsOnReceiver(statement1, creations1, creationMap1), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(variables1, convertLambdasToStringSet(lambdas2), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 		findReplacements(convertLambdasToStringSet(lambdas1), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_LAMBDA, container1, container2, classDiff);
 		if(statement1.getString().startsWith(LANG1.THROW_SPACE) && statement2.getString().startsWith(LANG2.THROW_SPACE) && creationCoveringTheEntireStatement2 != null && creations2.isEmpty()) {
@@ -5580,6 +5595,26 @@ public class ReplacementAlgorithm {
 		else {
 			removeCommonElements(strings1, strings2);
 		}
+	}
+
+	//the creation followed by a Kotlin scope function returning its receiver replaces a variable as a whole, i.e., buf and Buffer().apply {...}
+	private static Set<String> withScopeFunctionsOnReceiver(AbstractCodeFragment statement, Set<String> creations, Map<String, List<AbstractCall>> creationMap) {
+		Set<String> result = new LinkedHashSet<String>();
+		for(String creation : creations) {
+			result.add(creation);
+			if(creationMap.containsKey(creation)) {
+				for(AbstractCall call : creationMap.get(creation)) {
+					String string = call.getString();
+					if(string != null) {
+						String withScopeFunctions = statement.withScopeFunctionsOnReceiver(call);
+						if(!withScopeFunctions.equals(string)) {
+							result.add(creation + withScopeFunctions.substring(string.length()));
+						}
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 	private static Map<String, List<AbstractCall>> convertToMap(List<AbstractCall> calls) {

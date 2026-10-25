@@ -182,7 +182,7 @@ public class Constants {
 			RECORD_DECLARATION = "class_declaration";
 			PREFIX_EXPRESSION = "prefix_expression";
 			METHOD_INVOCATION_ARGUMENTS = "arguments";
-			STRING_LITERAL = "string_literal";
+			STRING_LITERAL = "string";
 			CHARACTER_LITERAL = "character_literal";
 			BOOLEAN_LITERAL = "boolean_literal"; // True, False labels //TODO introduce List of values
 			NULL_LITERAL = "null_literal";
@@ -492,6 +492,7 @@ public class Constants {
     public final String AFFECTATION_OPERATOR = "affectation_operator";
     public final String COMPANION_OBJECT = "companion_object";
     public final String OBJECT_DECLARATION = "object_declaration";
+    public final String ABSTRACT_CLASS_DECLARATION = "abstract_class_declaration";
     public final String OBJECT_LITERAL = "object_literal";
     public final String WHEN_ENTRY = "when_entry";
     public final String WHEN_CONDITION = "when_condition";

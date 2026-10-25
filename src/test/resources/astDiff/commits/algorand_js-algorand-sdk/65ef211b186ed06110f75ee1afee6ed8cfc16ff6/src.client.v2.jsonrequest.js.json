@@ -10,6 +10,39 @@
   "firstEndPos" : 2365,
   "secondEndPos" : 2944
 }, {
+  "firstType" : "class_declaration",
+  "secondType" : "abstract_class_declaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "program",
+  "secondParentType" : "program",
+  "firstPos" : 0,
+  "secondPos" : 259,
+  "firstEndPos" : 2329,
+  "secondEndPos" : 2943
+}, {
+  "firstType" : "class",
+  "secondType" : "class",
+  "firstLabel" : "class",
+  "secondLabel" : "class",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "abstract_class_declaration",
+  "firstPos" : 0,
+  "secondPos" : 268,
+  "firstEndPos" : 5,
+  "secondEndPos" : 273
+}, {
+  "firstType" : "identifier",
+  "secondType" : "type_identifier",
+  "firstLabel" : "JSONRequest",
+  "secondLabel" : "JSONRequest",
+  "firstParentType" : "class_declaration",
+  "secondParentType" : "abstract_class_declaration",
+  "firstPos" : 6,
+  "secondPos" : 274,
+  "firstEndPos" : 17,
+  "secondEndPos" : 285
+}, {
   "firstType" : "comment",
   "secondType" : "comment",
   "firstLabel" : "/**\n   * @param {HttpClient} client HTTPClient object.\n   * @param {\"default\" | \"safe\" | \"mixed\" | \"bigint\" | undefined} intDecoding The method to use\n   *   for decoding integers from this request's response. See the setIntDecoding method for more\n   *   details.\n   */",

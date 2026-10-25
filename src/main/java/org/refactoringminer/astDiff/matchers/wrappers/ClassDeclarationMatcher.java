@@ -787,7 +787,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             return new String[] {LANG.TYPE_DECLARATION, LANG.TYPE_ALIAS_DECLARATION};
         if (umlClass.isInterface())
             return new String[] {LANG.TYPE_DECLARATION, LANG.INTERFACE_DECLARATION};
-        return new String[] {LANG.TYPE_DECLARATION};
+        //the TypeScript abstract classes have their own node type
+        return new String[] {LANG.TYPE_DECLARATION, LANG.ABSTRACT_CLASS_DECLARATION};
     }
 
     private void processClassBlock(Tree srcTypeDeclaration, Tree dstTypeDeclaration, ExtendedMultiMappingStore mappingStore) {

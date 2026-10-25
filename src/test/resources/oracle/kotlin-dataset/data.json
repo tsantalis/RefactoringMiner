@@ -10665,7 +10665,7 @@
         "type": "Replace Loop With Pipeline",
         "description": "Replace Loop With Pipeline for(i in values.indices) with instance.classHierarchy[0].staticFieldNames.forEachIndexed { index, fieldName -> in method private describeFields(parser HprofParser, record ObjectRecord) : List<LeakReference> from class leakcanary.updated.HeapAnalyzer",
         "comment": null,
-        "validation": "TP",
+        "validation": "FP",
         "detectionTools": "RefactoringMiner",
         "validators": null
     }, {

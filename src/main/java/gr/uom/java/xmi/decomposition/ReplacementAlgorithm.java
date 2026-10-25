@@ -20,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PathFileUtils;
@@ -70,6 +71,19 @@ public class ReplacementAlgorithm {
 				if(set.contains(prefix)) {
 					return s;
 				}
+			}
+		}
+		return null;
+	}
+
+	private static Pair<AbstractExpression, AbstractExpression> sameConditionInIfAndWhenEntry(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+			List<AbstractExpression> conditions1 = ((CompositeStatementObject)statement1).getExpressions();
+			List<AbstractExpression> conditions2 = ((CompositeStatementObject)statement2).getExpressions().stream()
+					.filter(e -> e.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY_CONDITION)).toList();
+			if(conditions1.size() == 1 && conditions2.size() == 1 && conditions1.get(0).getString().equals(conditions2.get(0).getString())) {
+				return Pair.of(conditions1.get(0), conditions2.get(0));
 			}
 		}
 		return null;
@@ -2235,6 +2249,12 @@ public class ReplacementAlgorithm {
 			if(expressions1.size() == 1 && expressions2.size() == 1 && expressions1.get(0).getString().equals(expressions2.get(0).getString())) {
 				return replacementInfo.getReplacements();
 			}
+		}
+		//match if with when entry having the same condition, i.e., if(x > 0) -> x > 0 -> {...}
+		Pair<AbstractExpression, AbstractExpression> sameConditions = sameConditionInIfAndWhenEntry(statement1, statement2);
+		if(sameConditions != null) {
+			replacementInfo.addSubExpressionMapping(new LeafMapping(sameConditions.getLeft(), sameConditions.getRight(), container1, container2));
+			return replacementInfo.getReplacements();
 		}
 		//match traditional for with enhanced for
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) &&

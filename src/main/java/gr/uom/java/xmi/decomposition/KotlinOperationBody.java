@@ -557,16 +557,6 @@ public class KotlinOperationBody extends OperationBody {
 			child.addStatement(grandChild);
 			addStatementInVariableScopes(grandChild);
 		}
-		KtExpression elseExpression = whenStatement.getElseExpression();
-		if(elseExpression != null) {
-			if(elseExpression instanceof KtBlockExpression bodyExpression) {
-				processStatement(ktFile, sourceFolder, filePath, child, bodyExpression, fileContent);
-			}
-			else {
-				AbstractExpression expr = new AbstractExpression(ktFile, sourceFolder, filePath, elseExpression, CodeElementType.WHEN_ELSE_EXPRESSION, container, activeVariableDeclarations, fileContent);
-				child.addExpression(expr);
-			}
-		}
 		return child;
 	}
 }

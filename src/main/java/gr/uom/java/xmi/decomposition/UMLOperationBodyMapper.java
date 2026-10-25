@@ -12379,8 +12379,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private double compositeChildMatchingScore(CompositeStatementObject comp1, CompositeStatementObject comp2, 
 			Optional<ReplacementInfo> replacementInfo, Set<AbstractCodeMapping> mappings,
 			List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
-		List<AbstractStatement> compStatements1 = comp1.getStatements();
-		List<AbstractStatement> compStatements2 = comp2.getStatements();
+		AbstractStatement ifBranch1 = ifBranchComparedWithWhenEntry(comp1, comp2);
+		AbstractStatement ifBranch2 = ifBranchComparedWithWhenEntry(comp2, comp1);
+		List<AbstractStatement> compStatements1 = ifBranch1 != null ? List.of(ifBranch1) : comp1.getStatements();
+		List<AbstractStatement> compStatements2 = ifBranch2 != null ? List.of(ifBranch2) : comp2.getStatements();
 		int childrenSize1 = compStatements1.size();
 		int childrenSize2 = compStatements2.size();
 		List<CompositeStatementObject> nestedTryCatch1 = getNestedTryCatch(compStatements1);
@@ -12445,8 +12447,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		if(mappedChildrenSize == 0) {
-			List<AbstractCodeFragment> leaves1 = comp1.getLeaves();
-			List<AbstractCodeFragment> leaves2 = comp2.getLeaves();
+			List<AbstractCodeFragment> leaves1 = ifBranch1 != null ? ifBranch1.getLeaves() : comp1.getLeaves();
+			List<AbstractCodeFragment> leaves2 = ifBranch2 != null ? ifBranch2.getLeaves() : comp2.getLeaves();
 			if(replacementInfo.isPresent()) {
 				ReplacementInfo info = replacementInfo.get();
 				List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
@@ -12656,6 +12658,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return 0;
 		else
 			return (double)mappedChildrenSize/(double)max;
+	}
+
+	//a when entry corresponds to a single branch of an if-else-if chain, so the else branch nested under the if is excluded
+	private static AbstractStatement ifBranchComparedWithWhenEntry(CompositeStatementObject comp, CompositeStatementObject other) {
+		if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && comp.getStatements().size() == 2 &&
+				other.getLocationInfo().getCodeElementType().equals(CodeElementType.WHEN_ENTRY)) {
+			return comp.getStatements().get(0);
+		}
+		return null;
 	}
 
 	private Set<CompositeStatementObject> constructIfElseIfChain(AbstractCodeFragment fragment) {

@@ -1,8 +1,6 @@
 package org.refactoringminer.astDiff.tests;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.jgrapht.Graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
@@ -38,19 +36,18 @@ import java.util.stream.Stream;
  * notes of its case are updated. The notes of a case describe what is still missing or noisy in its output.
  * <p>
  * Every case also checks the invariants of the representation (see {@link #testInvariants}). The output of each case
- * is written to {@value #ACTUAL_DIR}, to be compared with the expectations. A case is added by its dataset entry and the
- * commit its reviews were submitted on; its expectations are written from its output once that output was read against
+ * is written to {@value #ACTUAL_DIR}, to be compared with the expectations. A case is added by its dataset entry, its
+ * repository, the base commit of its pull request and the commit its reviews were submitted on; its expectations are written from its output once that output was read against
  * the raw diff of the range and the code of both revisions. The files a case reads are cached in {@value #CACHE_PATH}:
  * a case already cached runs with no GitHub access, and a new one reads GitHub once, with the token of
  * github-oauth.properties.
  */
 public class RepresentationTest {
 
-    private static final String DATASET_PATH = "dataset/contextCRBench";
-    private static final String ORACLE_DATA_PATH = "src/test/resources/oracle/narrator/representations.json";
+    private static final String ORACLE_DATA_PATH = "src/test/resources/narrator/representations.json";
     private static final String ACTUAL_DIR = "build/narrator/representations";
     // The files read from GitHub, kept so that later runs need no GitHub access
-    private static final String CACHE_PATH = "src/test/resources/oracle/narrator/cache";
+    private static final String CACHE_PATH = "src/test/resources/narrator/cache";
     private static final Pattern ELEMENT = Pattern.compile("<(diff|dependency)((?: [a-z_]+=\"[^\"]*\")*)>\\n(.*?)\\n</\\1>", Pattern.DOTALL);
     private static final Pattern ATTRIBUTE = Pattern.compile("([a-z_]+)=\"([^\"]*)\"");
     private static final Map<String, Representation> REPRESENTATIONS = new HashMap<>();
@@ -136,10 +133,7 @@ public class RepresentationTest {
             return representation;
         }
 
-        String content = Files.readString(Path.of(DATASET_PATH, testCase.dataset + ".json"));
-        JsonObject json = JsonParser.parseString(content).getAsJsonObject();
-        String url = "https://github.com/" + json.get("full_name").getAsString() + "/compare/"
-                + json.get("base_commit").getAsString() + "..." + testCase.commit;
+        String url = "https://github.com/" + testCase.repository + "/compare/" + testCase.base_commit + "..." + testCase.commit;
 
         Graph<Node, Edge> graph = Driver.getCompareGraph(url);
         List<Cluster> clusters = new Clusterer(graph).getClusters();
@@ -257,7 +251,9 @@ public class RepresentationTest {
 
     public static class TestCase {
         public String dataset;
+        public String repository;
         public String commit;
+        public String base_commit;
         public String description;
         public List<String> notes = List.of();
         public List<Expectation> expectations = List.of();

@@ -22,16 +22,15 @@ import java.util.stream.Stream;
 
 public class ReceiverTypeTest {
 
-    private static final String DATASET_PATH = "dataset/contextCRBench";
     // The files read from GitHub, kept so that later runs need no GitHub access
-    private static final String CACHE_PATH = "src/test/resources/oracle/narrator/cache";
+    private static final String CACHE_PATH = "src/test/resources/narrator/cache";
 
     static {
         // The cases share one JVM, and the HTTP/2 connection of the default connector gets its streams reset while
         // downloading the recursive trees of large repositories one after the other
         System.setProperty("test.github.connector", "urlconnection");
     }
-    private static final String ORACLE_DATA_PATH = "src/test/resources/oracle/narrator/receivers.json";
+    private static final String ORACLE_DATA_PATH = "src/test/resources/narrator/receivers.json";
     private static final Map<String, State> STATES = new HashMap<>();
 
     static Stream<Arguments> testCases() throws IOException {
@@ -87,9 +86,7 @@ public class ReceiverTypeTest {
             return state;
         }
 
-        String content = Files.readString(Path.of(DATASET_PATH, testCase.dataset + ".json"));
-        JsonObject json = JsonParser.parseString(content).getAsJsonObject();
-        String repo = json.get("full_name").getAsString();
+        String repo = testCase.repository;
 
         RepositoryStateFiles files = new RepositoryStateFiles(
                 () -> new GitHistoryRefactoringMinerImpl().getGitHubRepository("https://github.com/" + repo),
@@ -156,6 +153,7 @@ public class ReceiverTypeTest {
 
     public static class TestCase {
         public String dataset;
+        public String repository;
         public String commit;
         public List<String> files;
         public List<Receiver> receivers;

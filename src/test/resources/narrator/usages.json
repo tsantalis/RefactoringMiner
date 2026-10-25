@@ -1,6 +1,7 @@
 [
   {
     "dataset": "netty_netty_10360",
+    "repository": "netty/netty",
     "commit": "a97aaeb9548039924c55ea51893f0d11704fcf60",
     "files": [
       "codec-http/src/main/java/io/netty/handler/codec/http/multipart/AbstractDiskHttpData.java",
@@ -290,6 +291,7 @@
   },
   {
     "dataset": "netty_netty_11934",
+    "repository": "netty/netty",
     "commit": "1588e59a2dc86f3d4641c263ef2ba88998b65a4b",
     "files": [
       "common/src/main/java/io/netty/util/internal/InternalThreadLocalMap.java",
@@ -511,6 +513,7 @@
   },
   {
     "dataset": "bazelbuild_bazel_12064",
+    "repository": "bazelbuild/bazel",
     "commit": "ac76ab6add1781e0d03dd72832cfc868465c2345",
     "files": [
       "src/main/java/com/google/devtools/build/lib/remote/RemoteModule.java",
@@ -652,6 +655,7 @@
   },
   {
     "dataset": "oracle_graal_3662",
+    "repository": "oracle/graal",
     "commit": "74964161962d4111a715f95f6d475315e59e691b",
     "files": [
       "substratevm/src/com.oracle.svm.jfr/src/com/oracle/svm/jfr/JfrEventSubstitution.java",
@@ -733,6 +737,7 @@
   },
   {
     "dataset": "redisson_redisson_802",
+    "repository": "redisson/redisson",
     "commit": "a3c206d86e1b4be1d4717b7f15b6b850e50169d6",
     "files": [
       "redisson/src/main/java/org/redisson/config/Config.java",
@@ -811,6 +816,7 @@
   },
   {
     "dataset": "bumptech_glide_30",
+    "repository": "bumptech/glide",
     "commit": "f83b7e59356f490c19d154d29b1007ff82f58a06",
     "files": [
       "library/src/com/bumptech/glide/Glide.java",
@@ -926,6 +932,7 @@
   },
   {
     "dataset": "TeamNewPipe_NewPipe_3156",
+    "repository": "TeamNewPipe/NewPipe",
     "commit": "c4230c63ef794cd1791bf0c4883583f41aa59aa2",
     "files": [
       "app/src/main/java/org/schabi/newpipe/MainActivity.java",
@@ -987,6 +994,7 @@
   },
   {
     "dataset": "spring-projects_spring-framework_28774",
+    "repository": "spring-projects/spring-framework",
     "commit": "85bf884c69977bb27ef0a62fa64eef58096a9a80",
     "files": [
       "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
@@ -1028,6 +1036,7 @@
   },
   {
     "dataset": "spring-projects_spring-framework_26366",
+    "repository": "spring-projects/spring-framework",
     "commit": "27f58716dc4a3aad18561610009a789fb32fa595",
     "files": [
       "spring-web/src/main/java/org/springframework/web/method/HandlerMethod.java",
@@ -1071,6 +1080,7 @@
   },
   {
     "dataset": "bazelbuild_bazel_7226",
+    "repository": "bazelbuild/bazel",
     "commit": "4bc2c6f1c31da49a4a3ad9d36d2adb9f33082d75",
     "files": [
       "src/main/java/com/google/devtools/build/lib/skyframe/RegisteredToolchainsCycleReporter.java",
@@ -1197,6 +1207,7 @@
   },
   {
     "dataset": "elastic_elasticsearch_104354",
+    "repository": "elastic/elasticsearch",
     "commit": "0b713e59fc77e0202fd97bd135706e3c5d0bf2f9",
     "files": [
       "server/src/main/java/org/elasticsearch/snapshots/SnapshotsService.java"
@@ -1296,6 +1307,7 @@
   },
   {
     "dataset": "elastic_elasticsearch_111973",
+    "repository": "elastic/elasticsearch",
     "commit": "b71d5c0826dff12af573ad412fdd7f0ee2fd6ce4",
     "files": [
       "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/type/InvalidMappedField.java",
@@ -1427,6 +1439,7 @@
   },
   {
     "dataset": "elastic_elasticsearch_116496",
+    "repository": "elastic/elasticsearch",
     "commit": "ba83c001f897609f9bf0e2f2dc75e070b97cda1b",
     "files": [
       "x-pack/plugin/esql-core/src/main/java/org/elasticsearch/xpack/esql/core/expression/FieldAttribute.java",
@@ -1455,6 +1468,7 @@
   },
   {
     "dataset": "netty_netty_10490",
+    "repository": "netty/netty",
     "commit": "c4f599a7a158a8624e1be364195316204709aaf5",
     "files": [
       "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java",
@@ -1582,6 +1596,7 @@
   },
   {
     "dataset": "TeamNewPipe_NewPipe_7341",
+    "repository": "TeamNewPipe/NewPipe",
     "commit": "e588abd4e7414faa8ee0a02e895f404ff5f32e41",
     "files": [
       "app/src/main/java/org/schabi/newpipe/player/Player.java",
@@ -1666,6 +1681,7 @@
   },
   {
     "dataset": "apache_rocketmq_6680",
+    "repository": "apache/rocketmq",
     "commit": "330a467ed0868d7317ca1e9fd05148948f961169",
     "files": [
       "broker/src/main/java/org/apache/rocketmq/broker/client/ConsumerManager.java",
@@ -1755,6 +1771,7 @@
   },
   {
     "dataset": "bazelbuild_bazel_15426",
+    "repository": "bazelbuild/bazel",
     "commit": "7f69ffc846d0059a2272a247a537fdf47c47c97e",
     "files": [
       "src/main/java/com/google/devtools/build/lib/skyframe/AspectFunction.java"
@@ -1784,6 +1801,7 @@
   },
   {
     "dataset": "elastic_elasticsearch_112626",
+    "repository": "elastic/elasticsearch",
     "commit": "8c58585ee9dcd3b04fc93e07f7aeb93791ca0c3c",
     "files": [
       "server/src/main/java/org/elasticsearch/threadpool/Scheduler.java",
@@ -1835,6 +1853,7 @@
   },
   {
     "dataset": "elastic_elasticsearch_67398",
+    "repository": "elastic/elasticsearch",
     "commit": "29192e591cb62f1b6ace13073fda23b448f69be3",
     "files": [
       "server/src/main/java/org/elasticsearch/search/SearchService.java",
@@ -1866,6 +1885,7 @@
   },
   {
     "dataset": "elastic_elasticsearch_71758",
+    "repository": "elastic/elasticsearch",
     "commit": "2cca9961a782f1c6b7873013f9379b4701badc07",
     "files": [
       "server/src/main/java/org/elasticsearch/search/aggregations/bucket/histogram/InternalHistogram.java",
@@ -1897,6 +1917,7 @@
   },
   {
     "dataset": "netty_netty_14031",
+    "repository": "netty/netty",
     "commit": "d3a7403924f4a1bc4aa14603d6abb0f677ad8077",
     "files": [
       "transport-classes-epoll/src/main/java/io/netty/channel/epoll/EpollDatagramChannel.java"
@@ -1922,6 +1943,7 @@
   },
   {
     "dataset": "oracle_graal_10135",
+    "repository": "oracle/graal",
     "commit": "c55983ced7d01676c68f4a4aaf33e0f9fc4dd23a",
     "files": [
       "truffle/src/com.oracle.truffle.runtime/src/com/oracle/truffle/runtime/hotspot/HotSpotTruffleRuntime.java"

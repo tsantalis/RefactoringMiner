@@ -1,7 +1,9 @@
 [
   {
     "dataset": "apache_rocketmq_8916",
+    "repository": "apache/rocketmq",
     "commit": "4292756632843522b792a8c97ff7890c351d361c",
+    "base_commit": "2bbc852361132db8697a5788197aa31f5e89d4a1",
     "description": "HandleData#lock returns the lock time and expires; unlock takes it; every call site is updated",
     "notes": [
       "The added import of AtomicLong is not shown, as no import is; a swapped or wrong import would be invisible."
@@ -47,7 +49,9 @@
   },
   {
     "dataset": "apache_rocketmq_8231",
+    "repository": "apache/rocketmq",
     "commit": "30127b88490cde0ff04cf7fabb3e17ab7c3ef067",
+    "base_commit": "7a5ea90cb79cc28ae86c368f22d1ab7d2f6f24cc",
     "description": "the NotifyClientTerminationRequest branch wraps its statement in a blank-name check, in two files (an else-if branch in one, an if in the other)",
     "notes": [],
     "expectations": [
@@ -79,7 +83,9 @@
   },
   {
     "dataset": "apache_rocketmq_9087",
+    "repository": "apache/rocketmq",
     "commit": "95e2886e7a6f90e28643f53188900eb9b10e3dff",
+    "base_commit": "7722ce78eef7864eb5bcae125b538be980f0569e",
     "description": "resetting offsets guards a null counter, fixes the queue id passed to clearCache and commits the pull offset",
     "notes": [
       "Dependencies do not say which revision they come from: `int queueId` is used only by the removed argument (where it is informative: the replaced argument was the queue id of the request, -1 when every queue is reset).",
@@ -103,7 +109,9 @@
   },
   {
     "dataset": "apache_rocketmq_9214",
+    "repository": "apache/rocketmq",
     "commit": "baaab33cf0ee82e359b1df6c86d6526913a695bc",
+    "base_commit": "5936695b384d457ed9b6b17ad135a148e11e562a",
     "description": "the fetcher takes the earliest message time from the flat file metadata (the later of the commit log and consume queue minimums, -1 if none) instead of reading the first commit log message; the store takes the minimum of the valid local and remote times (a local 0 now counts)",
     "notes": [
       "Deleted code brings its dependencies, which add nothing to judging the removal: the removed latency metrics and debug log of TieredMessageStore (the log field, the metrics constants and helpers), and the removed commit log read of MessageStoreFetcherImpl (getCommitLogMinOffset, getCommitLogAsync, STORE_TIMESTAMP_POSITION, getStoreTimeStamp)."
@@ -138,7 +146,9 @@
   },
   {
     "dataset": "bazelbuild_bazel_23150",
+    "repository": "bazelbuild/bazel",
     "commit": "fcc654c8b707640106a9d164136b27a5974e960e",
+    "base_commit": "3a416240888159846f07c6d85b722f414b3b1198",
     "description": "a native netty error on a call of a shared connection makes the factory forget its underlying connection (a new onFatalError callback), so that the next create() opens a new one; a test covers it",
     "notes": [
       "The test reads SharedConnection#getUnderlyingConnection through implicitly typed lambda parameters, which are not bound.",
@@ -179,7 +189,9 @@
   },
   {
     "dataset": "bazelbuild_bazel_25259",
+    "repository": "bazelbuild/bazel",
     "commit": "3785a4943b69c2a36492535552f3f946c5e139ca",
+    "base_commit": "95bbed03758a7651916d0708a892f5342a0421c5",
     "description": "custom flags to propagate are canonicalized by a converter and compared in canonical form",
     "notes": [
       "The unchanged define filter of the exec transition (`customFlagsToPropagate.contains(define.getKey())`), for which the converter returns --define keys as they are, is not shown (an unchanged user of the option whose converter changed).",
@@ -214,7 +226,9 @@
   },
   {
     "dataset": "spring-projects_spring-boot_40493",
+    "repository": "spring-projects/spring-boot",
     "commit": "df1845c4baa1d6707c6e0657cd7c9d46245f570f",
+    "base_commit": "6e37567a9d9932fdecd8ace18bb28a570e0827a9",
     "description": "authentication parameter values (not keys) are JSON-escaped; the tests use a value needing escapes",
     "notes": [],
     "expectations": [
@@ -240,7 +254,9 @@
   },
   {
     "dataset": "spring-projects_spring-framework_32034",
+    "repository": "spring-projects/spring-framework",
     "commit": "70d3cc35e347473e3d01f8b75b01c701846c410b",
+    "base_commit": "faba044735ad173d96b4b1adab62752b48b2c758",
     "description": "RestClient applies the defaultRequest consumer of its builder to every request",
     "notes": [
       "A one-line copyright bump prints the whole 15-line license comment as context.",
@@ -284,7 +300,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_120097",
+    "repository": "elastic/elasticsearch",
     "commit": "c2dac876d6410c38f75eb75792279aeeae837964",
+    "base_commit": "c638f746763733532e3c9db018ea72916955ac3a",
     "description": "the Kibana thread pool test disables rebalancing and replicas, drops its investigation logging and is unmuted",
     "notes": [
       "The carried-over assertAcked, whose argument the added setSettings step changes, is printed as a dependency; the other dependencies of the index creation are new (setSettings, Settings.builder(), put and SETTING_NUMBER_OF_REPLICAS).",
@@ -321,7 +339,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_110046",
+    "repository": "elastic/elasticsearch",
     "commit": "4b88d7ddfa68ba7a9b45e9000709391092bc2be1",
+    "base_commit": "5c87eef89d6262624491810ef083001b36b0f6fe",
     "description": "ES|QL replaces the shared mutable QueryParams.EMPTY by a new QueryParams per request and parse; QueryParams gets final fields, size() and addTokenParam() replace positionalParams()/positionalParamTokens(), parsingErrors() returns an Iterator, and equals/hashCode are added",
     "notes": [
       "A comment moved onto the line of its field is a diff of its own, which prints the new field line as added again, besides the diff of the field.",
@@ -359,7 +379,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_115312",
+    "repository": "elastic/elasticsearch",
     "commit": "e4bbc25e0c77a97d51650be840def70a91b9cd95",
+    "base_commit": "57532e7b7fb1348c8abf50b225932cddea5937a9",
     "description": "filtered grouping unwraps a filtered intermediate input (a ClassCastException) and the ordinals segment aggregator releases its prepared inputs (a breaker leak); the test case extracts channels() for a new intermediate row test",
     "notes": [
       "The record accessor next() called by the fix is not resolved: the record header declaring the component `next` is printed for no diff.",
@@ -385,7 +407,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_110118",
+    "repository": "elastic/elasticsearch",
     "commit": "8561e5397961c2e3c9ae2161ff951c6441620bbc",
+    "base_commit": "f0afd9165064edf9d3e18a5b960e57bf96de71f2",
     "description": "the test takes its ref only once a response is processed",
     "notes": [
       "The moved incRef balances only because the unchanged RestActionListener#onResponse runs ensureOpen() before processResponse and sends a closed channel to onFailure; that caller of the overridden processResponse is not shown.",
@@ -420,7 +444,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_103817",
+    "repository": "elastic/elasticsearch",
     "commit": "50dd67c6e14b7c3bf1d4a1d481afbac75d78dfab",
+    "base_commit": "ad28dc9a6ca525e4f6cd2a9bf72c177cd4063ce2",
     "description": "stateWithoutSnapshot copies the shard generations of a removed snapshot into other in-progress snapshots only for shards present in the ShardGenerations the finalization wrote (EMPTY on failure paths), so that an index deleted during finalization no longer gets a still referenced shard index blob deleted",
     "notes": [
       "The new IT test brings about 40 dependencies, mostly trivial getters and builder setters."
@@ -461,7 +487,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_107947",
+    "repository": "elastic/elasticsearch",
     "commit": "31542d85974de34e2462e9779d64bd7788991b43",
+    "base_commit": "98ed236f2bd58c0c3460a77493b231fd37a05cb9",
     "description": "ES|QL configuration functions get equals and hashCode over their configuration, the redundant equals/hashCode overrides of other functions are removed in favour of those of Function, the unused RationalUnaryPredicate is deleted; tests build functions with a configuration",
     "notes": [
       "Constructors used by the tests are printed with their whole @FunctionInfo/@Param annotations.",
@@ -508,7 +536,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_121109",
+    "repository": "elastic/elasticsearch",
     "commit": "cb251a46573e7ce3630574ddd6c06d23165ac72c",
+    "base_commit": "0d2db063ec4d8e95941e3b92dc150e294e5f0689",
     "description": "copy_to contexts get a Wrapper constructor resetting dynamic from the root mapping",
     "notes": [
       "The fix takes effect through the unchanged `new Wrapper(root(), this)` in createCopyToContext, which now resolves to the new constructor as root() returns RootObjectMapper; neither that call, root(), nor the overload Wrapper(ObjectMapper, DocumentParserContext) it resolved to before (inheriting in.dynamic) is shown.",
@@ -537,7 +567,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_120617",
+    "repository": "elastic/elasticsearch",
     "commit": "151e4eded28b12e7b4ae8142599efbb8d947df55",
+    "base_commit": "9ffe3c88354da86a806d1ee4cd64d4939362e389",
     "description": "lookup joins stop running their lookups with the enrich origin (only the enrich service keeps it), so that document level security applies; the lookup index checks move from the analyzer to a post-analysis verification that also rejects aliases and patterns",
     "notes": [
       "The EsRelation accessors the new verification calls (indexMode, indexNameWithModes, indexPattern, concreteIndices) are not printed: they are called on the lambda parameter of forEachDown(Class<E>, Consumer<? super E>), whose type is not resolved.",
@@ -571,7 +603,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_104911",
+    "repository": "elastic/elasticsearch",
     "commit": "ef0529b5923b98ec54ae8d0e41620c15671e6952",
+    "base_commit": "4c4463305630010e1d362b867bf83033b1e63d6e",
     "description": "aggregations reject unsigned_long and their @FunctionInfo and @Param types drop it; count_distinct and the aggregate mapper accept version",
     "notes": [
       "The only test of the version support (countVersion in stats.csv-spec) and the regenerated signatures of show.csv-spec are not shown.",
@@ -600,7 +634,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_123290",
+    "repository": "elastic/elasticsearch",
     "commit": "3b5672cb173515aa2860c8a11db96a1d9dadf469",
+    "base_commit": "1d3106f288e7cfd4f2b52ea23f1103de8ce71545",
     "description": "driver status reports iterations and cpu time since the last report instead of since the start",
     "notes": [
       "The test brings 25 dependencies: test helpers (randomLong, randomList, assertThat, logger), TimeValue factories, the trivial DriverStatus/DriverProfile getters and the whole Driver constructor.",
@@ -642,7 +678,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_118370",
+    "repository": "elastic/elasticsearch",
     "commit": "bf75a92ce9bcdc60e55c9e6ce391b8fa5c51d107",
+    "base_commit": "d5589d7fca0e3481d6617a28da9483ed1db83494",
     "description": "the source provider keeps one provider per thread; the test forces doc partitioning to exercise it",
     "notes": [
       "The test brings trivial declarations it calls as dependencies: the Settings.Builder overloads, Settings.builder(), the QueryPragmas constructor and getSettings(), and the ESTestCase#assertThat wrapper.",
@@ -679,7 +717,9 @@
   },
   {
     "dataset": "netty_netty_14188",
+    "repository": "netty/netty",
     "commit": "4aca40b727475de98a42f6e44ce803e063ca9d63",
+    "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
     "description": "the scope id is dropped from an IPv6 address when it is 0 and the address is not link-local (a non-zero scope id is kept); a new test covers a global and a link-local address",
     "notes": [],
     "expectations": [
@@ -705,7 +745,9 @@
   },
   {
     "dataset": "TeamNewPipe_NewPipe_11654",
+    "repository": "TeamNewPipe/NewPipe",
     "commit": "e1c0f00bac63bae3ee9356bacbecaf7901136817",
+    "base_commit": "05a87da82746c09aa431eca184ede93d58071021",
     "description": "the comments view gets a scroll-to-top button",
     "notes": [],
     "expectations": [
@@ -725,7 +767,9 @@
   },
   {
     "dataset": "netty_netty_14332",
+    "repository": "netty/netty",
     "commit": "abf3989074441f967c6c27288fc183306651e21a",
+    "base_commit": "5a9b28a4157f79bb69331b0979e73c2eb8b2bb3f",
     "description": "adaptive byte bufs are pooled in a queue of their magazine instead of a recycler",
     "notes": [
       "The removed retainedSlice/retainedDuplicate overrides bring the super implementations taking over (useful) along with the code only their removed lines used (readerIndex/writerIndex/readableBytes, ensureAccessible, the handle field, PooledSlicedByteBuf/PooledDuplicatedByteBuf.newInstance).",
@@ -761,7 +805,9 @@
   },
   {
     "dataset": "oracle_graal_10135",
+    "repository": "oracle/graal",
     "commit": "c55983ced7d01676c68f4a4aaf33e0f9fc4dd23a",
+    "base_commit": "cb464855ea73fa08e27715e9f32f5f2e87dc41ad",
     "description": "Truffle submits compilations according to the compilation activity mode of HotSpot",
     "notes": [
       "submitForCompilation calls getCompilationActivityMode, which this change adds as an interface default (in the diff of the enum) and overrides in HotSpotTruffleRuntime; both diffs serve the call.",
@@ -796,7 +842,9 @@
   },
   {
     "dataset": "apache_rocketmq_8130",
+    "repository": "apache/rocketmq",
     "commit": "230fe546425afcb4750ae30a123b120ec503098d",
+    "base_commit": "609196890765b89116e12745279d287b91eae2ee",
     "description": "topics get a reserve time attribute that the tiered store uses as the file reserved hours of their flat files",
     "notes": [
       "The trivial getters the new method calls (getMessageStore, getTopicName, getAttributes, getMetadataStore) are printed as dependencies; so are the storeConfig field of FlatFileStore and the storeConfig parameter of init, used only by removed code.",
@@ -833,7 +881,9 @@
   },
   {
     "dataset": "apache_rocketmq_8290",
+    "repository": "apache/rocketmq",
     "commit": "83b3bebfac92a372fab18ad2c0c243096ea02be7",
+    "base_commit": "1a73e015b8c764a39d2a03a5a58bf26a78638986",
     "description": "the trace bean picks an IPv4 or IPv6 string for the local address; network utilities are merged and cleaned up",
     "notes": [
       "isInternalIP, changed by a diff showing only its 172 and 192 branches, is printed whole again as a dependency of its callers; that copy is the only element showing its `ip.length != 4` check, which the new static block of TraceBean hits with an IPv6 address from getIP. The ideal shows that check once, not by reprinting the method.",
@@ -883,7 +933,9 @@
   },
   {
     "dataset": "netty_netty_14818",
+    "repository": "netty/netty",
     "commit": "3cf53d6c996e29b667016a527dd96ea3e31e5c55",
+    "base_commit": "3517081b6c8c22263d7ae98c79080498f2d04d69",
     "description": "io_uring reads with IORING_RECV_MULTISHOT when the kernel supports it",
     "notes": [
       "readComplete is printed whole (its new guard and `pending` sit directly in its body). The outer `} finally {` reads as removed and added, as the old finally block is mapped to the new inner finally that received its statements; the rest of the rewritten finally reads as removed and added code.",
@@ -938,7 +990,9 @@
   },
   {
     "dataset": "netty_netty_14480",
+    "repository": "netty/netty",
     "commit": "69b7c08f8862f5a035db663bdaaab09261c456e7",
+    "base_commit": "e3b92c3a940038ebf19d7eb2c3436436e3d8c0a3",
     "description": "the bounded input stream counts the bytes actually read and checks the bound after reading",
     "notes": [
       "checkMaxBytesRead carries moved_from both read methods (and they moved_to it), though no code moved: only its numRead names can pair with the numRead of statements removed from them (to be checked against the mapping of RM)."
@@ -960,7 +1014,9 @@
   },
   {
     "dataset": "apache_rocketmq_8403",
+    "repository": "apache/rocketmq",
     "commit": "2c790b30f49c87ac31857bda3f661c2a05b50352",
+    "base_commit": "d9d53d58cf7f32143485f12d4851d5c119d0855a",
     "description": "consume queues can append through the file channel, under a new store config flag",
     "notes": [
       "The new flag field is printed at the top of the chapter, apart from its accessors, which it alone serves."
@@ -1000,7 +1056,9 @@
   },
   {
     "dataset": "netty_netty_14076",
+    "repository": "netty/netty",
     "commit": "55b0e70f00aaf4d4841b56049f6fbe1e57f0e323",
+    "base_commit": "5085cef149134951c94a02a743ed70025c8cdad4",
     "description": "buffers derived from read-only buffers share the reference count of their parent",
     "notes": [
       "ReadOnlyUnsafeDirectByteBuf now inherits the changed duplicate/slice of ReadOnlyByteBufferBuf, which it extends; the hierarchy is not shown.",
@@ -1032,7 +1090,9 @@
   },
   {
     "dataset": "spring-projects_spring-boot_39813",
+    "repository": "spring-projects/spring-boot",
     "commit": "0c1976d7b19100934e29e6a3520be91130afe0f3",
+    "base_commit": "1130ec54a955525bd2a375728fd140dc8b920702",
     "description": "the JPA auto-configuration passes a ManagedClassNameFilter bean to the managed types scanner",
     "notes": [
       "Each copyright bump prints the whole 15-line license header.",
@@ -1062,7 +1122,9 @@
   },
   {
     "dataset": "netty_netty_14584",
+    "repository": "netty/netty",
     "commit": "61a9d605b6b86ffd925ff294123e59e5d3fa1d63",
+    "base_commit": "6138a5a39cdbf6e9212d02bd9d02edb36c6618b5",
     "description": "the central queue capacity of the adaptive allocator is capped with Math.min(2, ...) (meant as Math.max)",
     "notes": [
       "Nothing shows the unchanged users of CENTRAL_QUEUE_CAPACITY: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes; unchanged users of a changed declaration are not represented. Only the javadoc in the diff (a default of availableProcessors()) hints that min caps wrongly."
@@ -1084,7 +1146,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_116583",
+    "repository": "elastic/elasticsearch",
     "commit": "8a7615ee4660d42151c537baaf76d66781fb4e1d",
+    "base_commit": "3ebc1f48aaed8bfaecbb86881503373f9bda2491",
     "description": "an enrich request from a node before 8.14 reads a null input data type, which the term query switch handles",
     "notes": [
       "The null flows from readFrom through the TransportRequest constructor into termQueryList; nothing links the three diffs, as unchanged code carries the value.",
@@ -1135,7 +1199,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_106682",
+    "repository": "elastic/elasticsearch",
     "commit": "a9ee568c4a09807d3b76c97e5bce9a2822edd1c8",
+    "base_commit": "fb17da0647b9dffe00449587dc80171eb14c9a35",
     "description": "a missing routing hash is derived from the id; the test of a null id is removed",
     "notes": [
       "The removed test brings 15 dependencies; except the SourceToParse constructor (showing the null id that now hits the new assert), they (settings builders, test helpers, the whole IndexShard#prepareIndex) tell nothing about why it is removed.",
@@ -1164,7 +1230,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_119134",
+    "repository": "elastic/elasticsearch",
     "commit": "a8335f79231c049065b5445bdac41e60c751c503",
+    "base_commit": "97a3540496e1f281ebab79401c9c6e24d570e461",
     "description": "downsampling copies ignore_malformed of the timestamp field and sets the index setting at creation; the test randomizes it",
     "notes": [
       "createDownsampleIndex is printed whole (about 60 lines) for an added if, as a statement reads within its block; its tail (the cluster state task applying copyIndexMetadata after the creation) is the second settings path the change moves the setting out of, so it is relevant context.",
@@ -1200,7 +1268,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_113768",
+    "repository": "elastic/elasticsearch",
     "commit": "dfcff13472c5694f73b86cc8a5c07e89a0db8c53",
+    "base_commit": "539d4fdff56492ca7f6b8e59384006650a1ed946",
     "description": "a retried recovery target keeps a placeholder permit so that its assertion holds; restoreFileFromSnapshot also asserts it has references",
     "notes": [
       "The assignment of the placeholder in retryCopy is printed alone, without the copy of the permit taken just before it and the comment explaining it.",
@@ -1230,7 +1300,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_112688",
+    "repository": "elastic/elasticsearch",
     "commit": "99964189066bbd0b06e9fddb087c27420145ce14",
+    "base_commit": "f367d2799fa8f02e6d8ca904aad189770d4d7cc3",
     "description": "the cache stats assertions of a test are retried with assertBusy; the test is unmuted",
     "notes": [
       "The whole test method (about 100 lines) is printed for a wrap of its last statements.",
@@ -1272,7 +1344,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_106413",
+    "repository": "elastic/elasticsearch",
     "commit": "379fd4de421ea0ce4f583e909bd7f7d22de88152",
+    "base_commit": "720188e95f8e29d78117d61b402fb2ce50be06c0",
     "description": "a transform whose auth state is red fails to start with a permission error; the listener is rewritten with delegateFailureAndWrap",
     "notes": [
       "onStart is printed whole (about 170 lines) for edits at its top and a declaration moved to its middle; the moved declaration's uses are far below.",
@@ -1307,7 +1381,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_111779",
+    "repository": "elastic/elasticsearch",
     "commit": "5772e825bf229e1cd80234585741589c6cbf507a",
+    "base_commit": "fd916c221ae51b621dc5eb4d93b8f5a10bbc6d49",
     "description": "a single value query read without a PlanStreamInput skips its source with the new Source.readEmpty",
     "notes": [
       "Test helpers (assertThat, randomInt) and stream primitives (readInt, writeInt) are printed as dependencies."
@@ -1329,7 +1405,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_110251",
+    "repository": "elastic/elasticsearch",
     "commit": "c92cc3209782d2da16969cbc5bcfa0e683b8e52e",
+    "base_commit": "2f3f09fb1f6a19aa83945a9a4f40001d4c63436f",
     "description": "index sorting is allowed with nested objects; writers set the parent field and sort fields under nested objects are rejected",
     "notes": [
       "Removing static from newTemporaryAppendingIndexWriter/newTemporaryEmptyIndexWriter follows from newTemporaryIndexWriterConfig reading hasIndexSort; nothing links them, the calls being unchanged code.",
@@ -1368,7 +1446,9 @@
   },
   {
     "dataset": "netty_netty_14803",
+    "repository": "netty/netty",
     "commit": "eb4dd8f319355218f179eba239718311e8b2d379",
+    "base_commit": "f3311e5db4c9d9559fac96bb2f48295d63f58b67",
     "description": "a frame stream takes the id of the stream it is set to",
     "notes": [
       "The callers of setStreamAndProperty, which tell whether the assert above the change can fail, are not shown: onStreamActive0 and the push promise read with a new frame stream whose id is -1, and onStreamAdded with a frame stream whose id initializeNewStream already set to the id of the stream."
@@ -1396,7 +1476,9 @@
   },
   {
     "dataset": "apache_rocketmq_8964",
+    "repository": "apache/rocketmq",
     "commit": "b97f60f8b604eabdf9fe07995891c02ac45f0efd",
+    "base_commit": "9202de34c30db004db26f4976f165595af1b8bd3",
     "description": "push consumers fail sending a message back when the broker has no master address",
     "notes": [
       "The else branch is printed from its own line; neither the condition choosing it nor the enclosing catch (Throwable) handling the new throw (logging and falling back to sendMessageBackAsNormalMessage, as needRetry is true) is shown.",
@@ -1419,7 +1501,9 @@
   },
   {
     "dataset": "netty_netty_14582",
+    "repository": "netty/netty",
     "commit": "3f2f1436476efb04f90d9fc1d18165295dcebaa7",
+    "base_commit": "58ec269ae467689449dbfb23676536f06d1216c4",
     "description": "the central queue capacity of the adaptive allocator is capped with Math.min(2, ...) (meant as Math.max)",
     "notes": [
       "Nothing shows the unchanged users of CENTRAL_QUEUE_CAPACITY: the static check `CENTRAL_QUEUE_CAPACITY < 2` that throws (which Math.min(2, 1) still fails on a one-core host) and the queue it sizes; unchanged users of a changed declaration are not represented. Only the javadoc in the diff (a default of availableProcessors()) hints that min caps wrongly."
@@ -1435,7 +1519,9 @@
   },
   {
     "dataset": "bazelbuild_bazel_23301",
+    "repository": "bazelbuild/bazel",
     "commit": "07b01b2c626cb3ee63ebac9481d359986058d963",
+    "base_commit": "ea7df052e09ff969a96a04ecaa3083bdaa06318e",
     "description": "vendor mode takes the lookup keys of the targets with getLookupKey; a Python test covers alias targets",
     "notes": [
       "The removed import of ConfiguredTargetKey is not shown, as no import of a modified file is.",
@@ -1458,7 +1544,9 @@
   },
   {
     "dataset": "apache_rocketmq_9218",
+    "repository": "apache/rocketmq",
     "commit": "a989d3c50f3f62bce8eb9f6e67b940b266bb6225",
+    "base_commit": "988c826921de5ed7eda3d88c22c705c6dc470e24",
     "description": "pop lag, inflight and available counts skip the pop buffer when the pop consumer KV service is enabled; a duplicate fallback is removed",
     "notes": [
       "The fallback after the if/else of getAvailableMsgCount (`if (pullOffset < 0) pullOffset = brokerOffset;`), which makes the removed one a duplicate (the review comment), is not shown: the diff ends with the if statement.",
@@ -1482,7 +1570,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_105994",
+    "repository": "elastic/elasticsearch",
     "commit": "6da64669f1feb09bf7adcef51ff011d48b4fde81",
+    "base_commit": "6fbf9892aa6964151c7491ba8e6b5a00336bba84",
     "description": "a nested kNN pre-filter that might match nested docs is restricted to parent docs",
     "notes": [
       "The YAML REST tests of the fix are not shown."
@@ -1510,7 +1600,9 @@
   },
   {
     "dataset": "bazelbuild_bazel_24714",
+    "repository": "bazelbuild/bazel",
     "commit": "b01e1451ff022d8e098acc4e1db684b5ad235d62",
+    "base_commit": "7d2bc79fdae52f1420b0e04904f26154ff1f48bf",
     "description": "cgroup v2 cpu.max parsing skips the first token by \\S+ and reads 'max' as no limit",
     "notes": [
       "Path#getPathFile and the Cpu#getCpus declaration are printed as dependencies of the tests.",
@@ -1539,7 +1631,9 @@
   },
   {
     "dataset": "apache_rocketmq_8626",
+    "repository": "apache/rocketmq",
     "commit": "3c9b3b81eaec373ad879718c02705357f3f3c02b",
+    "base_commit": "720c87e85dd95be8e56166a7f00c652ce0f1d458",
     "description": "the period of the name server address update becomes a broker config",
     "notes": [],
     "expectations": [
@@ -1559,7 +1653,9 @@
   },
   {
     "dataset": "netty_netty_14141",
+    "repository": "netty/netty",
     "commit": "2e906adddb20431a36d7915a9cf6e1f7bf424cad",
+    "base_commit": "217df76c40be0f9d4f82e8cf05d68ea07a23f42f",
     "description": "an unresolved IPv6 host already in brackets is not bracketed again",
     "notes": [],
     "expectations": [
@@ -1585,7 +1681,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_114899",
+    "repository": "elastic/elasticsearch",
     "commit": "ef2760e05bdc3865b5819beba173c30c09644fa5",
+    "base_commit": "6f608803302230a24c2d81fc9c4b863eb3513cb8",
     "description": "aggregate references leave out the attributes of aliased groupings",
     "notes": [
       "The capability added is read only by the csv-spec test, which is not shown.",
@@ -1615,7 +1713,9 @@
   },
   {
     "dataset": "netty_netty_14562",
+    "repository": "netty/netty",
     "commit": "89539237773689e09307d2cf59c60c1325a04456",
+    "base_commit": "dc999c4b87d5023bfcf9ec73a8d7481e7bf5bdbf",
     "description": "TooLongFrameException messages give the limit and the actual length",
     "notes": [
       "RM reports the first throw of decodeBinaryFrame as deleted and inserted while it maps the identical second one, with the argument inserted; the output reads the same.",
@@ -1645,7 +1745,9 @@
   },
   {
     "dataset": "bazelbuild_bazel_25203",
+    "repository": "bazelbuild/bazel",
     "commit": "0041f86fa2223efcf4ee5cf5772ee0feea3c4956",
+    "base_commit": "690ee50011826d8a626513b500f38a51d0acea4a",
     "description": "BEP test results always carry the exit code of the spawn",
     "notes": [
       "Each test method changed by one assertion is printed whole (46 to 102 lines each), and so is extractExecutionInfo (71 lines, mostly the timing breakdown chain) for its one added statement.",
@@ -1674,7 +1776,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_123438",
+    "repository": "elastic/elasticsearch",
     "commit": "b934036f85b2afc123ff0dd82b2f09b69775e839",
+    "base_commit": "39a2e88964eed986feedf76099c2dcd27709379c",
     "description": "registering a compute group task handles its cancellation by failing the listener",
     "notes": [],
     "expectations": [
@@ -1694,7 +1798,9 @@
   },
   {
     "dataset": "apache_rocketmq_8593",
+    "repository": "apache/rocketmq",
     "commit": "44b01cc4a0ad4e9372d850b781513c7b42d42c5d",
+    "base_commit": "00a05a5faa40a0c8f8deb59f0c8058e62b9bd747",
     "description": "a blocked orderly pop returns the rest count without the queue backlog",
     "notes": [
       "The parameters topic and queueId, three local declarations (isOrder, offset, future), the brokerController field, getMessageStore and getMaxOffsetInQueue are printed as dependencies, mostly of the removed accumulation; the declaration of offset shows its first value, not the reassigned one the removed line uses.",
@@ -1724,7 +1830,9 @@
   },
   {
     "dataset": "netty_netty_13903",
+    "repository": "netty/netty",
     "commit": "b0bf6a0a0a6d56e7f67b0a886558af24cc357be8",
+    "base_commit": "a09cc1620c9f8ac0cb17851b85a051459ee02964",
     "description": "HTTP/2 frames and frame streams get consistent hashCode and equals",
     "notes": [
       "The unchanged equals of AbstractHttp2StreamFrame and DefaultHttp2PingFrame, which the changed hashCode methods must agree with, are not shown (no relation links a hashCode to the equals of its class)."
@@ -1746,7 +1854,9 @@
   },
   {
     "dataset": "netty_netty_14187",
+    "repository": "netty/netty",
     "commit": "ffc63d1f3e09d517f50e80777442b1b8f991788c",
+    "base_commit": "b360abcca17bd86c7306ba4bdfdb22432bbcd5fd",
     "description": "HTTP decoders check versions strictly through new valueOf and constructor overloads",
     "notes": [
       "Code arriving unchanged in the new valueOf and constructor brings its dependencies: the assigned fields (protocolName, majorVersion, ...), checkNonEmptyAfterTrim, HTTP_1_1_STRING, HTTP_1_1, version0 and checkNotNull; they also serve the removed bodies of the delegating originals."
@@ -1780,7 +1890,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_116075",
+    "repository": "elastic/elasticsearch",
     "commit": "e16e68cbd8562f36674a020c3bfe6827291a2827",
+    "base_commit": "6cf45366d5ba34f97c40d79439b769e6ad9ab581",
     "description": "the synthetic source provider skips creating a mapper service when the source mode setting or the index mode decides",
     "notes": [
       "Each added counter assertion of the tests prints its whole test block; ESTestCase#assertThat is printed as a dependency."
@@ -1808,7 +1920,9 @@
   },
   {
     "dataset": "netty_netty_14516",
+    "repository": "netty/netty",
     "commit": "74c96289e05163be8200d2955cacf8585c7cf0da",
+    "base_commit": "8930d29851ca9d1185eea621f9a72ce8b75d9610",
     "description": "adaptive allocator chunks attach to and detach from magazines so that the used memory stays right",
     "notes": [
       "The attach in Magazine#allocate reads within its if, without the poll of the central queue before it that tells where the chunk comes from.",
@@ -1833,7 +1947,9 @@
   },
   {
     "dataset": "apache_rocketmq_8024",
+    "repository": "apache/rocketmq",
     "commit": "bb2a791ccc7696e619c74f75841de50625509ea2",
+    "base_commit": "63bb9e2a839d4e0caadccce8553f89a249c5bbff",
     "description": "pull consumers get pullBlockIfNotFoundWithMessageSelector overloads",
     "notes": [
       "The new DefaultMQPullConsumer methods pass mq without queueWithNamespace, unlike the pullBlockIfNotFound next to them; that neighbour is unrelated code and not shown."
@@ -1849,7 +1965,9 @@
   },
   {
     "dataset": "netty_netty_14557",
+    "repository": "netty/netty",
     "commit": "08760f73f74f680bd3b2e4e81f5830d318ad67ba",
+    "base_commit": "23746603dce38e18802ceed859772c76aabf6414",
     "description": "the event loop passes a time quantum in nanoseconds to runAllTasks(long timeoutNanos), which was given the task count 4096 before",
     "notes": [
       "The two constructors taking the quantum in milliseconds assign it to the nanosecond field without converting it; both sides of that are shown."
@@ -1878,7 +1996,9 @@
   },
   {
     "dataset": "apache_rocketmq_9197",
+    "repository": "apache/rocketmq",
     "commit": "c94ea10e6782c9779f2041719a0704325e379d77",
+    "base_commit": "6cccff82f42d7c8326774c88334b4616b0a46e5e",
     "description": "notifications return polling stats in a NotifyResult; the broker flags a full polling",
     "notes": [
       "NotifyResult is printed before the broker change, between the field and the accessors of NotificationResponseHeader, far from the client diffs it serves.",
@@ -1915,7 +2035,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_111936",
+    "repository": "elastic/elasticsearch",
     "commit": "6b2bc9a060d081182acf77f40ce90af03f2de487",
+    "base_commit": "0cf9c54f6583a82de05c4543b123c6c1f190092f",
     "description": "XContentGenerator#copyCurrentEvent copies big integers and big decimals",
     "notes": [
       "The new test brings 26 dependencies, 16 of them the XContentBuilder methods building its input (only field(String, BigInteger) and field(String, BigDecimal) bear on the fix).",
@@ -1951,7 +2073,9 @@
   },
   {
     "dataset": "apache_rocketmq_8685",
+    "repository": "apache/rocketmq",
     "commit": "581f08f5df5b670eb56d0ebe3598f80e4d6db82b",
+    "base_commit": "ba8148f746a9ba6244de365485d7245cb52b90c4",
     "description": "a go-away reconnects only the channel that received it (no reconnect interval anymore) and its transparent retry carries the extFields of the request; logs carry the channel id",
     "notes": [
       "Log edits directly in a method body or in a lambda are one-line diffs."
@@ -1967,7 +2091,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_110603",
+    "repository": "elastic/elasticsearch",
     "commit": "f51dd2cd5350241e08accfe888e0c06d72861868",
+    "base_commit": "fbcde9c0fd40c3f461af0cefe1af6eabe9da5091",
     "description": "date field mappers keep the data stream timestamp at a well-known key so that the timestamp and tsid mappers read it without iterating fields; test mapper services apply the default mapping of the index mode",
     "notes": [],
     "expectations": [
@@ -1999,7 +2125,9 @@
   },
   {
     "dataset": "bazelbuild_bazel_23374",
+    "repository": "bazelbuild/bazel",
     "commit": "ab672a32fa3004d4c14790dd571f1b9379d9201b",
+    "base_commit": "4b9d30a2e954aea2466ecb6a3da1737ee5e30a0d",
     "description": "the minimal BEP upload mode marks unimportant paths omitted when reading their metadata",
     "notes": [
       "Each existing test now passing RemoteBuildEventUploadMode.ALL to newArtifactUploader is a two-line diff.",
@@ -2024,7 +2152,9 @@
   },
   {
     "dataset": "elastic_elasticsearch_109236",
+    "repository": "elastic/elasticsearch",
     "commit": "6a7ead09642a6651493888acffd9785016912e7d",
+    "base_commit": "3f23c151803a5fe057ed0c2f484445b060b178ef",
     "description": "responses of requests pruned on a closed connection fork to the executor of their handler",
     "notes": [
       "Adding a setting to ClusterSettings prints the whole Stream.of list of about 390 settings.",
@@ -2049,7 +2179,9 @@
   },
   {
     "dataset": "apache_rocketmq_8663",
+    "repository": "apache/rocketmq",
     "commit": "530cb62a1f9a8ac509b028428e4d1516c8f99250",
+    "base_commit": "2956f6d46b03c5d8b06b06063313386d0a1f68d5",
     "description": "an opt-in adaptive back-off lock (useABSLock, false by default) is added beside the existing put message locks and chosen in the CommitLog constructor",
     "notes": [
       "The existing PutMessageReentrantLock and PutMessageSpinLock, which BackOffReentrantLock copies and BackOffSpinLock re-implements with back-off, and the PutMessageLock interface whose methods the new interface redeclares, are not shown.",
@@ -2066,7 +2198,9 @@
   },
   {
     "dataset": "netty_netty_14031",
+    "repository": "netty/netty",
     "commit": "d3a7403924f4a1bc4aa14603d6abb0f677ad8077",
+    "base_commit": "7ed972d070f9c1f8d89cc226568e61e3b5f2a6f5",
     "description": "epoll drops edge-triggered mode: every read loop ends with shouldStopReading/clearEpollIn instead of epollInFinally; EpollMode and its setters are deprecated no-ops; the ET/LT variants of six tests are merged into one test each",
     "notes": [
       "RM reports each ET/LT pair of tests as a Merge Class into one EpollSocket*Test, but its AST diff maps only the moved newFactories(): the class declarations, the license header, the package and the imports of both merged classes are unmapped, so each family prints as two whole deleted files and one whole added file (about 120 lines for a 9-line change), where the raw diff shows the ET test renamed with configure() removed.",

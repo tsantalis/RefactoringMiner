@@ -1269,7 +1269,7 @@ public class PythonTreeGenerator {
 	}
 
 	private Node expression(ParserRuleContext ctx) {
-		if(hasError(ctx)) {
+		if(hasError(ctx) && !withoutClosingToken(ctx)) {
 			return error(ctx);
 		}
 		List<ParseTree> children = children(ctx);
@@ -1823,6 +1823,32 @@ public class PythonTreeGenerator {
 			}
 		}
 		return false;
+	}
+
+	//a collection whose elements parsed without errors, but whose closing token is missing because of the next tokens,
+	//i.e., the dictionary {"a": 1, "b": 2 of {"a": 1, "b": 2 "c": 3}, which is converted with its elements like in the model
+	private static boolean withoutClosingToken(ParserRuleContext ctx) {
+		if(ctx.exception == null || !(ctx instanceof PythonParser.DictContext || ctx instanceof PythonParser.ListContext
+				|| ctx instanceof PythonParser.SetContext || ctx instanceof PythonParser.TupleContext)) {
+			return false;
+		}
+		List<ParseTree> children = children(ctx);
+		if(children.isEmpty() || isClosingToken(children.get(children.size() - 1))) {
+			return false;
+		}
+		for(ParseTree child : children) {
+			if(hasSyntaxError(child)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean isClosingToken(ParseTree tree) {
+		return tree instanceof TerminalNode terminal && switch(terminal.getSymbol().getType()) {
+			case PythonParser.RBRACE, PythonParser.RSQB, PythonParser.RPAR -> true;
+			default -> false;
+		};
 	}
 
 	//an ERROR node with the tokens of the erroneous code

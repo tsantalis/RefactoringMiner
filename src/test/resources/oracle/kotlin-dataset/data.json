@@ -5343,6 +5343,20 @@
     "author": "pyricau",
     "time": "5/7/19 10:56 AM",
     "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public gcRootsReachable() renamed to public gcRootsNotLeaking() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
+        "type": "Rename Method",
+        "description": "Rename Method public leakingInstanceUnreachable() renamed to public leakingInstanceLeaking() in class leakcanary.internal.LeakStatusTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Move Class",
         "description": "Move Class leakcanary.Labeler.AllFieldsLabeler moved to leakcanary.AllFieldsLabeler",
         "comment": null,
@@ -8836,6 +8850,13 @@
     "author": "pyricau",
     "time": "4/4/19 05:25 PM",
     "refactorings": [{
+        "type": "Rename Method",
+        "description": "Rename Method public unreachable object not tracked() renamed to public unreachable object not retained() in class leaksentry.RefWatcherTest",
+        "comment": null,
+        "validation": "TP",
+        "detectionTools": "RefactoringMiner",
+        "validators": null
+    }, {
         "type": "Rename Method",
         "description": "Rename Method public watchForLeaks() renamed to public registerToVisibilityChanges() in class com.squareup.leakcanary.HeapDumpTrigger",
         "comment": null,

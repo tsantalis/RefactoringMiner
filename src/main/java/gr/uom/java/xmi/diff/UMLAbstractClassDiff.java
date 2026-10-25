@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -2896,6 +2897,33 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
+	//whether another removed operation sharing statements with the added operation of the mapper has a closer name to it than the split operation,
+	//i.e., two similar test methods renamed together are not split methods of one of them
+	private boolean betterMatchedByOtherRemovedOperation(UMLOperationBodyMapper mapper, List<UMLOperation> removedOperations) {
+		if(!(mapper.getContainer2() instanceof UMLOperation addedOperation) || addedOperation.getBody() == null) {
+			return false;
+		}
+		double nameDistance = mapper.getOperation1().normalizedNameDistance(addedOperation);
+		Set<String> addedStatements = null;
+		for(UMLOperation otherRemovedOperation : removedOperations) {
+			if(!otherRemovedOperation.equals(mapper.getContainer1()) && otherRemovedOperation.getBody() != null && !containsMapperForOperation1(otherRemovedOperation) &&
+					otherRemovedOperation.normalizedNameDistance(addedOperation) < nameDistance) {
+				if(addedStatements == null) {
+					addedStatements = new HashSet<>();
+					for(AbstractCodeFragment leaf : addedOperation.getBody().getCompositeStatement().getLeaves()) {
+						addedStatements.add(leaf.getString());
+					}
+				}
+				for(AbstractCodeFragment leaf : otherRemovedOperation.getBody().getCompositeStatement().getLeaves()) {
+					if(addedStatements.contains(leaf.getString())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	protected void checkForOperationSignatureChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
 		for(UMLOperation op1 : removedOperations) {
 			for(UMLOperation op2 : removedOperations) {
@@ -3069,7 +3097,8 @@ public abstract class UMLAbstractClassDiff {
 					CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
 					newCandidate.setOriginalMethodBeforeSplit(removedOperation);
 					for(UMLOperationBodyMapper mapper : mapperSet) {
-						if(mapper.allMappingsAreIdentical() && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter()) {
+						if(mapper.allMappingsAreIdentical() && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter() &&
+								!betterMatchedByOtherRemovedOperation(mapper, removedOperations)) {
 							exactMappers.add(mapper);
 							newCandidate.addSplitMethod(mapper.getContainer2());
 						}
@@ -3120,7 +3149,8 @@ public abstract class UMLAbstractClassDiff {
 					}
 					if((initialNumberOfAddedOperations <= 2 || initialNumberOfRemovedOperations <= 2 || mappersWithParameterizedTest.size() == mapperSet.size()) && commonMappingCount > 0 && uniqueMappingCount > 0 && (mappingCounter.size() == 1 || mappersWithZeroAddedStatements.size() == mapperSet.size())) {
 						for(UMLOperationBodyMapper mapper : mapperSet) {
-							if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter()) {
+							if(!mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) && !mapper.getContainer2().isGetter() && !mapper.getContainer2().isSetter() &&
+									!betterMatchedByOtherRemovedOperation(mapper, removedOperations)) {
 								newCandidate.addSplitMethod(mapper.getContainer2());
 							}
 						}

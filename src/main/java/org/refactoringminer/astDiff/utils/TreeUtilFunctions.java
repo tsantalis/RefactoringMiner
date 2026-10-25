@@ -38,9 +38,9 @@ public class TreeUtilFunctions {
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
 		//a wrapper with a single child has the range of the child, so it is located only for a block of the model,
-		//i.e., the block of if x: return y, the statements of a Kotlin statement, or the arguments of f(x)
+		//i.e., the block of if x: return y, the statements of a Kotlin statement, the arguments of f(x), or the parameters of the Kotlin lambda { x -> ... }
 		if (!locationInfo.getCodeElementType().equals(LocationInfo.CodeElementType.BLOCK)) {
-			while (isFromType(treeBetweenPositions, LANG.CLASS_BLOCK, LANG.STATEMENTS, LANG.METHOD_INVOCATION_ARGUMENTS)) {
+			while (isFromType(treeBetweenPositions, LANG.CLASS_BLOCK, LANG.STATEMENTS, LANG.METHOD_INVOCATION_ARGUMENTS, LANG.LAMBDA_PARAMETERS)) {
 				Tree child = childWithSameRange(treeBetweenPositions);
 				if (child == null) break;
 				treeBetweenPositions = child;

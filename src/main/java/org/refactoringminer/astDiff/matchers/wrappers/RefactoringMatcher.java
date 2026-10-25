@@ -72,9 +72,6 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         if (variableDeclaration != null) {
                             Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo(),LANG1);
                             Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo(),LANG2);
-                            if(dstNode.getType().name.equals(LANG2.LAMBDA_PARAMETERS) && dstNode.getChildren().size() > 0) {
-                                dstNode = dstNode.getChild(0);
-                            }
                             if(Constants.isCrossLanguage(LANG1, LANG2)) {
                                 JavaToKotlinMigration.handleParameterMapping(mappingStore, srcNode, dstNode, LANG1, LANG2, optimizationData.getDeferredFlattenings());
                             }

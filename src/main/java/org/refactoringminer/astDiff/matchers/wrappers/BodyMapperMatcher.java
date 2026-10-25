@@ -271,15 +271,6 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
                 dstStatementNode.getChildren().size() == 1 && dstStatementNode.getChild(0).getType().name.equals(LANG2.IF_STATEMENT)) {
             dstStatementNode = dstStatementNode.getChild(0);
         }
-        if(Constants.isCrossLanguage(LANG1, LANG2) && dstStatementNode.getType().name.equals(LANG2.STATEMENTS) && abstractCodeMapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
-            Tree statements2 = dstStatementNode;
-            dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstLocationInfo, LANG2, LANG2.TRY_STATEMENT);
-            //ignoreIoExceptions {} is modeled as a try statement, and it is the only statement of the enclosing statements with the same location
-            if((dstStatementNode == null || !dstStatementNode.getType().name.equals(LANG2.TRY_STATEMENT)) && statements2.getChildren().size() == 1 &&
-                    statements2.getChild(0).getType().name.equals(LANG2.METHOD_INVOCATION)) {
-                dstStatementNode = statements2.getChild(0);
-            }
-        }
         //the statements of a lambda aligned with a Java Block are moved to the lambda_literal including the braces of the block, i.e., synchronized(this) {...}
         if(Constants.isCrossLanguage(LANG1, LANG2) && dstStatementNode != null && dstLocationInfo.getCodeElementType().equals(CodeElementType.BLOCK) &&
                 !dstStatementNode.getType().name.equals(LANG2.STATEMENTS) &&
@@ -1174,17 +1165,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
         LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
         Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo(),LANG1);
-        if(srcStatementNode != null && srcStatementNode.getType().name.equals(LANG1.ERROR)) {
-            Tree tmpSrcStatement = TreeUtilFunctions.getParentUntilType(srcStatementNode, LANG1.EXPRESSION_STATEMENT);
-            if(tmpSrcStatement != null)
-                srcStatementNode = tmpSrcStatement;
-        }
         Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo(),LANG2);
-        if(dstStatementNode != null && dstStatementNode.getType().name.equals(LANG2.ERROR)) {
-            Tree tmpDstStatement = TreeUtilFunctions.getParentUntilType(dstStatementNode, LANG2.EXPRESSION_STATEMENT);
-            if(tmpDstStatement != null)
-                dstStatementNode = tmpDstStatement;
-        }
         if (srcStatementNode == null || dstStatementNode == null) {
             System.err.println("Tree not found for " + abstractCodeMapping);
             return;

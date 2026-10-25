@@ -579,7 +579,7 @@ public class CppFileProcessor {
 		//CDT parses the conditions starting with a name it does not know as declarations of variables whose type is the name,
 		//i.e., if (m_isX11 && m_xwaylandSurface) as the declaration of the reference m_xwaylandSurface of type m_isX11,
 		//which a condition cannot declare without an initializer, so the file is parsed again with these names declared as variables in the included file
-		String variables = misparsedConditions(translationUnit);
+		String variables = misparsedConditions(translationUnit, fileContent);
 		if(!variables.isEmpty()) {
 			String extendedPreamble = preamble.isEmpty() ? variables : preamble + "\n" + variables;
 			IASTTranslationUnit reparsed = parse(filePath, fileContent, astDiff, extendedPreamble);
@@ -764,9 +764,12 @@ public class CppFileProcessor {
 			"return", "short", "signed", "sizeof", "static", "static_assert", "static_cast", "struct", "switch", "template", "this", "thread_local", "throw", "true",
 			"try", "typedef", "typeid", "typename", "union", "unsigned", "using", "virtual", "void", "volatile", "wchar_t", "while");
 
-	//the declarations of the unknown names that CDT parsed as the types of condition declarations without an initializer, i.e., extern int m_isX11;
-	private static String misparsedConditions(IASTTranslationUnit translationUnit) {
+	//the declarations of the unknown names that CDT parsed as the types of condition declarations without an initializer, i.e., extern int m_isX11;,
+	//and of the unknown classes of the member functions containing them, whose scope CDT cannot look the names up in, i.e., struct A {}; for void A::f() {...}
+	private static String misparsedConditions(IASTTranslationUnit translationUnit, String fileContent) {
 		Set<String> declarations = new LinkedHashSet<>();
+		//the names used as types in the file, which are computed once per name
+		Map<String, Boolean> types = new HashMap<>();
 		translationUnit.accept(new ASTVisitor() {
 			{
 				shouldVisitStatements = true;
@@ -782,6 +785,10 @@ public class CppFileProcessor {
 						&& simple.getDeclarators()[0].getInitializer() == null && simple.getDeclSpecifier() instanceof IASTNamedTypeSpecifier named
 						&& named.getName().getLastName() == named.getName() && named.getName().resolveBinding() instanceof IProblemBinding) {
 					declarations.add("extern int " + named.getName() + ";");
+					String owner = ownerClassDeclaration(statement, fileContent, types);
+					if(owner != null) {
+						declarations.add(owner);
+					}
 				}
 				return PROCESS_CONTINUE;
 			}
@@ -1018,9 +1025,9 @@ public class CppFileProcessor {
 		return inNamespaces(namespaces, "template<class... __rm_t__> int " + lastName + "(...);");
 	}
 
-	//the definition of the unknown class of the member function that contains the expression, i.e., A in void A::f() {...}, in the namespaces of the member function
-	private static String ownerClassDeclaration(IASTExpression expression, String fileContent, Map<String, Boolean> types) {
-		IASTNode parent = expression.getParent();
+	//the definition of the unknown class of the member function that contains the node, i.e., A in void A::f() {...}, in the namespaces of the member function
+	private static String ownerClassDeclaration(IASTNode node, String fileContent, Map<String, Boolean> types) {
+		IASTNode parent = node.getParent();
 		while(parent != null && !(parent instanceof IASTFunctionDefinition)) {
 			parent = parent.getParent();
 		}
